@@ -46,7 +46,9 @@
       Note that you must first have visitor rights to apply for roles.
       <br /><br />
       <span class="subhead">
-        <a href="#" onclick="document.location = document.location; return false">Try logging in again....</a><br /><br />
+        <a 
+          tal:attributes="href request/URL0"
+          >Try logging in again....</a><br /><br />
       </span>
      </div>
     </div>
