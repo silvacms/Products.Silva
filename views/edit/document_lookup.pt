@@ -98,7 +98,7 @@
                 chooses to upload/create something, he ends up in the Contents screen,
                 where there is no "place reference" button - nasty javascript needed.
               </tal:block>
-              <tr class="top-controls"  replace="nothing">
+              <tr class="top-controls" tal:replace="nothing">
                 <td colspan="6">
                   <div style="float: left;"
                     tal:condition="may_change_content">
@@ -301,7 +301,7 @@
                       />
                       <label 
                         tal:condition="default_document"
-                        tal:attributes="for asset/id">
+                        tal:attributes="for identifier">
                         &#8211;
                       </label>
                     </td>
@@ -312,7 +312,7 @@
                       <label tal:attributes="title asset/meta_type; for asset/id">
                         <img tal:replace="structure python:view.render_icon(asset)" />
                       </label>
-                      <label title="editor" tal:attributes="for asset/id"
+                      <label style="text-transform: none" title="editor" tal:attributes="for identifier"
                         tal:content="structure asset/id"
                         i18n:attributes="title"
                       >
@@ -328,12 +328,14 @@
                       _______ title cell _______
                     </tal:block>
                     <td>
-                      <label title="preview" tal:content="python: asset.get_title() == '' and default or asset.get_title()"
-                        tal:attributes="for asset/id"
-                        i18n:attributes="title"
-                      >
-                        no title
-                      </label>
+                      <a class="blacklink"
+                          title="view" 
+                          tal:content="python: asset.get_title() == '' and default or asset.get_title()"
+                          tal:attributes="href asset/absolute_url"
+                          i18n:attributes="title"
+                        >
+                        <i>view</i>
+                      </a>
                     </td>
                     <tal:block replace="nothing">
                       _______ modified date cell _______
