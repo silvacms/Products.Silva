@@ -79,7 +79,7 @@
             accesskey="e"
             i18n:attributes="title"
             i18n:translate="export">
-            Export...
+            export...
           </a>
           <h3 i18n:translate="import_silva_xml">
             import Silva xml (.slv)
