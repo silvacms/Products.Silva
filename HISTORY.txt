@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.1 alpha 1
+   
+    Bugs fixed
+
+      - Some small usability and bug fixes in Kupu
+
   0.9.3 kupu 1 beta
 
     Features added
