@@ -358,12 +358,13 @@ class SilvaExportRootProducer(xmlexport.BaseProducer):
         self.endElement('silva')
         
 class ExportSettings(xmlexport.BaseSettings):
-    def __init__(self, asDocument=True, outputEncoding='utf-8', workflow=True, allVersions=True, withSubPublications=True, otherContent=True):
+    def __init__(self, asDocument=True, outputEncoding='utf-8', workflow=True, allVersions=True, withSubPublications=True, otherContent=True, renderExternal=False):
         xmlexport.BaseSettings.__init__(self, asDocument, outputEncoding)
         self._workflow = workflow
         self._all_versions = allVersions
         self._with_sub_publications = withSubPublications
         self._other_content = otherContent
+        self._render_external = renderExternal
         
     def setWithSubPublications(self, with_sub_publications):
         self._with_sub_publications = with_sub_publications
@@ -388,7 +389,10 @@ class ExportSettings(xmlexport.BaseSettings):
 
     def otherContent(self):
         return self._other_content
-        
+
+    def externalRendering(self):
+        return self._render_external
+    
 class ExportInfo:
     def __init__(self):
         self._asset_paths = {}
