@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.69 $
+# $Revision: 1.70 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -253,9 +253,10 @@ class Root(Publication):
                     while len(pvs) > 1:
                         # remove from list of previous versions and 
                         # from container (Document)
-                        v = pvs.pop(0)[0]
-                        item.manage_delObjects([str(v)])
-                        print 'Removed old version %s/%s' % (item.absolute_url(), v)
+                        v = str(pvs.pop(0)[0])
+                        if v in item.objectIds():
+                            item.manage_delObjects([v])
+                            print 'Removed old version %s/%s' % (item.absolute_url(), v)
             elif IContainer.isImplementedBy(item):
                 self.delete_old_versions(item)
         return 'Done!'
