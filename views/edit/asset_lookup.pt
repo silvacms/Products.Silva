@@ -39,7 +39,7 @@
   </td>
   <td align="right">
     <form action="." name="silvaObjects" method="POST">
-      <tal:block condition="not:silva_permissions/ChangeSilvaContent">
+      <tal:block condition="python: not silva_permissions['ChangeSilvaContent'] or filter == 'Asset'">
         &nbsp;
       </tal:block>
       <tal:block condition="python: silva_permissions['ChangeSilvaContent'] and filter != 'Asset'">
