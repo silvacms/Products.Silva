@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 import unittest
 import Zope
 Zope.startup()
@@ -18,10 +18,10 @@ def add_helper(object, typename, id, title):
     return getattr(object, id)
 
 # need to monkey patch preview and view
-def preview(self):
+def preview(self, view_type='public'):
     return render_preview(self)
 
-def view(self):
+def view(self, view_type='public'):
     return render_view(self)
 
 def render_preview(self):
