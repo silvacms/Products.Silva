@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.52 $
+# $Revision: 1.53 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -65,6 +65,14 @@ class Document(VersionedContent):
             'location' : '',
             'publisher' : ''
             }
+
+    def manage_afterClone(self, obj):
+        """Closes the public version (if it exists)
+        """
+        Document.inheritedAttribute('manage_afterClone')(self, obj)
+        if self.get_public_version():
+            self.close_version()
+        
         
 #    def manage_afterClone(self, obj):
 #        """We were copied, make sure we're not public.
