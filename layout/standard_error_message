@@ -13,14 +13,18 @@
       </div>
     </div>
     <div class="margins" tal:condition="python: (options['error_type'] == 'Unauthorized' and here.service_members.allow_subscription())">
-      You are not allowed to view this page without the right credentials. If you have a valid login for this part of the site, click the refresh button on your webbrowser's toolbar to retry logging in. If not, choose one of the following options:<br /><br />
+      You are not allowed to view this page without the right credentials. Choose one of the following options:<br /><br />
       <div tal:condition="here/service_members/get_subscription_url">
         <a tal:attributes="href string:service_resources/${here/service_members/get_subscription_url}" href="become_visitor" tal:condition="here/service_members/get_subscription_url">Click here to become a visitor to the site. As a visitor, you can view certain objects unauthenticated users can't view.</a><br /><br />
       </div>
       <a href="public/request_roles">If you already are a visitor, click here to request a role which allows access to the current object. Note that you have to be a visitor to apply for roles.</a><br /><br />
-      <span style="color: red; font-weight: bold;">Error: <span tal:replace="options/error_value" /></span>
+      <a href="#" onclick="document.location = document.location; return false">You can click here to retry logging in.</a><br /><br />
     </div>
-    <div class="margins" tal:condition="python: (options['error_type'] != 'Unauthorized' or not here.service_members.allow_subscription())">
+    <div class="margins" tal:condition="python: (options['error_type'] == 'Unauthorized' and not here.service_members.allow_subscription())">
+      <h2 class="error">Unauthorized</h2>
+      You are not allowed to view this page without the right credentials. <a href="#" onclick="document.location = document.location">Click here</a> to try logging in again.<br /><br />
+    </div>
+    <div class="margins" tal:condition="python: options['error_type'] != 'Unauthorized'">
 
       <h2>System problem</h2>
       <p>Something went wrong. If you're testing, the information below is important. <br />
