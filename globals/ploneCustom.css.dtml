@@ -217,6 +217,7 @@ img.icon {
 div.personalBar {
     text-align: center;
     background: #39424d;
+    background: &dtml-listingTopBackground;;
   margin: 0em 0em 0em 0em;
     padding: 0.1em 16px 0.2em 16px;
   border-collapse: collapse;

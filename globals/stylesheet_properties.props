@@ -129,7 +129,7 @@ destructiveButtonFontColor:string=#e6c7b8
 cancelButtonBackground:string=#666668
 cancelButtonPadding:string=0em 2em 0.1em 2em
 cancelButtonBorder:string=1px solid #b9c2c1
-cancelButtonFontColor:string=#d6d1e0;
+cancelButtonFontColor:string=#d6d1e0
 
 boxBorder:string=1px solid #A3A3A3
 boxHeaderBackground:string=#E5E5E5
