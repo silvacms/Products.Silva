@@ -23,9 +23,11 @@ if new_minimal_role != 'None':
     else:
         message = 'Object was already closed to unauthenticated users'
 else:
-    if model.sec_is_closed_to_public():
+    if model.sec_is_closed_to_public() == 1:
         model.sec_open_to_public()
         message = 'Object is now open to unauthenticated users'
+    elif model.sec_is_closed_to_public() > 1:
+        message = 'Object is closed from a higher level and cannot be opened from this one'
     else:
         message = 'Object was already open to unauthenticated users'
 

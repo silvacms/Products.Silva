@@ -436,7 +436,7 @@
   </tr>
   <tr class="controls" align="right">
     <td>
-      <input class="button" type="submit" value="Set restriction">
+      <input class="button" type="submit" value="Set restriction" tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')">
     </td>
   </tr>
 </table>
