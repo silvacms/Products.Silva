@@ -1,6 +1,8 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
+# Python
+from StringIO import StringIO
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -40,12 +42,6 @@ class DemoObject(CatalogedVersionedContent):
 
     __implements__ = IVersionedContent
        
-    def __init__(self, id):
-        """The constructor, does not do much in this case (just maps to
-        the constructor of the parent).
-        """
-        DemoObject.inheritedAttribute('__init__')(self, id)
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'to_xml')
     def to_xml(self, context):
@@ -80,7 +76,7 @@ class DemoObjectVersion(CatalogedVersion):
     def __init__(self, id, title):
         """Set id and initialize the ParsedXML tree.
         """
-        self.id = id
+        DemoObjectVersion.inheritedAttribute('__init__')(self, id, title)
         self._info = ''
         self._number = 0
         self._date = DateTime()
@@ -181,8 +177,9 @@ def manage_addDemoObject(self, id, title, REQUEST=None):
     self._setObject(id, object)
     object = getattr(self, id)
     # add first version
-    object._setObject('0', DemoObjectVersion('0', title))
+    object.manage_addProduct['Silva'].manage_addDemoObjectVersion('0', title)
     object.create_version('0', None, None)
+    getattr(object, '0').index_object()
     add_and_edit(self, id, REQUEST)
     return ''
 
@@ -198,7 +195,7 @@ def manage_addDemoObjectVersion(self, id, title, REQUEST=None):
     version = self._getOb(id)
     # FIXME: Ugh. I get unicode from formulator but this will not validate
     # when using the metadata system. So first make it into utf-8 again..
-    version.set_title(title.encode('utf-8'))
+    version.set_title(title)
 
     add_and_edit(self, id, REQUEST)
     return ''
