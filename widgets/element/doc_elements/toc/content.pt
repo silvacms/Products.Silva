@@ -5,7 +5,7 @@
     model request/ghost_model | request/model;
     toc_depth python: int(test(node.hasAttribute('toc_depth'), node.getAttribute('toc_depth'), -1));
     public options/public | nothing;
-    
+    title_method python: test(public, 'get_title', 'get_title_editable');
     tree python: here.get_tree(model=model, toc_depth=toc_depth, public=public);
     
     append_to_url options/append_to_url | string:edit/tab_edit;
@@ -17,7 +17,7 @@
         tal:define="
           indent python:obj[0]; 
           item python:obj[1];
-          title python:obj[1].get_title();
+          title python:getattr(obj[1], title_method)();
           url string:${item/absolute_url}/${append_to_url}"
         tal:condition="python:not (hasattr(item, 'hide_from_tocs') and item.hide_from_tocs)"
         >
