@@ -115,7 +115,10 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
                               'default_editor')
     def default_editor(self):
         """Return the id of the default editor"""
-        return 'field editor'
+        if hasattr(self, 'kupu'):
+            return 'kupu'
+        else:
+            return 'field editor'
 
 Globals.InitializeClass(SimpleMember)
 
