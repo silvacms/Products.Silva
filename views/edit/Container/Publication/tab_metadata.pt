@@ -42,9 +42,6 @@
       </td>
     </tr>
   </table>
-  <tal:block condition="not: silva_permissions/ApproveSilvaContent">
-    &nbsp;
-  </tal:block>
 </metal:block>
 <metal:fill fill-slot="more_control">
 <form method="POST"
