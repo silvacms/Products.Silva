@@ -19,10 +19,16 @@ except FormValidationError, e:
         message_type="error", message=context.render_form_errors(e))
 
 changed = []
+current_connection_id = model.connection_id()
+new_connection_id = result['connection_id']
+if current_connection_id != new_connection_id:
+    model.set_connection_id(new_connection_id)
+    changed.append(('connection id', '%s to %s' % (
+        current_connection_id, new_connection_id)))
+
 current_title = model.get_title_html()
 new_title = model.input_convert(result['object_title'])
 if current_title != new_title:
-    model.sec_update_last_author_info()
     model.set_title(new_title)
     changed.append(('title', '%s to %s' % (
         current_title, model.get_title_html())))
@@ -66,6 +72,7 @@ if not changed:
         message_type="feedback", 
         message="Nothing changed")
 else:
+    model.sec_update_last_author_info()
     return view.tab_edit(
         message_type="feedback", 
         message="Settings changed: %s" % (
