@@ -15,6 +15,7 @@
 
 <div class="margins">
 <h2>Import options for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
+<a href="#" onClick="document.location = 'tab_edit_import'; return false;">&lt;&lt; refresh this page &gt;&gt;</a><br />
 
 <div class="worksheet borders top bottom left right">
 
@@ -43,13 +44,13 @@
           </tr>
 
           <tr class="focus-cycle" valign="top">
-            <td align="left">
+            <td align="left" width="20%">
                 File to upload:
             </td>
             <td align="left">
                 <input type="file" name="importfile" />
             </td>
-            <td align="right">
+            <td align="right" width="35%">
                 Choose an XML file to import (must be valid Silva XML)
             </td>
           </tr>
@@ -57,6 +58,80 @@
           <tr class="controls">
             <td colspan="3" align="right">
                 <input class="button" type="submit" name="tab_edit_import_xml:method" value=" Import " />
+            </td>
+          </tr>
+        </table>
+
+      </form>
+
+    </td>
+  </tr>
+
+</table>
+
+<table width="100%" cellspacing="0" cellpadding="5" border="0" tal:condition="docma_running">
+  <tr>
+    <td>
+
+      <form action="." enctype="multipart/form-data" method="POST">
+        <table width="100%" cellspacing="0" cellpadding="3" border="0">
+
+          <tr>
+            <td colspan="3">
+              <h3>Upload Word document (.doc)
+                <img src="pixel.gif" width="1px" height="14px"
+                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+              </h3>
+            </td>
+          </tr>
+
+          <tr class="topcontrols">
+            <td style="background:#b0cbd0;" align="left" colspan="3">
+              <img src="pixel.gif" width="1px" height="14px"
+                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+              &nbsp;
+            </td>
+          </tr>
+
+          <tr class="focus-cycle" valign="top">
+            <td align="left" width="20%">
+                File to upload:
+            </td>
+            <td align="left">
+                <input type="file" name="importfile" />
+            </td>
+            <td align="right" width="35%">
+                Choose a Word file to upload. Note that this file will be processed and then placed on the list of finished items, so you can import it anywhere in Silva.
+            </td>
+          </tr>
+
+          <tr class="focus-cycle" valign="top">
+            <td align="left" width="20%">
+                E-mail address:
+            </td>
+            <td align="left">
+                <input type="text" name="email" style="width: 100%" />
+            </td>
+            <td align="right">
+                An e-mail will be sent to you when the item is processed.
+            </td>
+          </tr>
+
+          <tr class="focus-cycle" valign="top">
+            <td align="left" width="20%">
+                Description:
+            </td>
+            <td align="left">
+                <textarea name="description"></textarea>
+            </td>
+            <td align="right">
+                This description will be shown in the queue and the list of processed items.
+            </td>
+          </tr>
+
+          <tr class="controls">
+            <td colspan="3" align="right">
+                <input class="button" type="submit" name="tab_edit_import_docma:method" value=" Import " />
             </td>
           </tr>
         </table>
@@ -112,7 +187,7 @@
           </tr>
 
           <tr class="topcontrols">
-            <td style="background:#b0cbd0;" align="left" colspan="5">
+            <td style="background:#c0dbe0;" align="left" colspan="5">
               <img src="pixel.gif" width="1px" height="14px"
                 tal:attributes="src string:${silva_root}/globals/pixel.gif" />
               &nbsp;
@@ -165,7 +240,7 @@
           </tr>
 
           <tr class="topcontrols">
-            <td style="background:#c0dbe0;" align="left" colspan="4">
+            <td style="background:#b0cbd0;" align="left" colspan="4">
               <img src="pixel.gif" width="1px" height="14px"
                 tal:attributes="src string:${silva_root}/globals/pixel.gif" />
               &nbsp;
