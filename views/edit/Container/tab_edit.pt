@@ -478,7 +478,7 @@
                         />
                       </div>
                       &nbsp;
-                      <input class="button"
+                      <input class="navigation"
                         name="tab_edit_rename_start:method"
                         type="submit"
                         value="rename..."
