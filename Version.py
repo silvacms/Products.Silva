@@ -19,8 +19,6 @@ class Version(SimpleItem):
     object_type = 'versioned_content'
     _title = '[No title yet]'
 
-    banaan = ViewAttribute('banaan', 'render_view')
-    
     def __init__(self, id, title):
         self.id = id
         self._title = title
