@@ -209,6 +209,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             ids = self.objectIds()
             for copy_id in copy_ids:
                 if copy_id in ids:
+                    # FIXME: actually this does not reflect Zope's behavior,
+                    # it has copy2_of, so we need to handle that..
                     paste_ids.append('copy_of_%s' % copy_id)
                 else:
                     paste_ids.append(copy_id)
@@ -236,6 +238,61 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         for paste_id in paste_ids:
             helpers.unapprove_close_helper(getattr(self, paste_id))
             
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_paste')
+    def action_paste_to_ghost(self, REQUEST):
+        """Paste what is on clipboard to ghost.
+        """
+        # create ghosts for each item on clipboard
+        ids = self.objectIds()
+        for item in self.cb_dataItems():
+            paste_id = item.id
+            while paste_id in ids:
+                if Interfaces.VersionedContent.isImplementedBy(item):
+                    paste_id = 'ghost_of_%s' % paste_id
+                else:
+                    paste_id = 'copy_of_%s' % paste_id
+            self._ghost_paste(paste_id, item, REQUEST)
+
+    def _ghost_paste(self, paste_id, item, REQUEST):
+        if Interfaces.Container.isImplementedBy(item):
+            # copy the container (but not its content)
+            if item.meta_type == 'Silva Folder':
+                self.manage_addProduct['Silva'].manage_addFolder(
+                    paste_id, item.get_title(), 0)
+            elif item.meta_type == 'Silva Publication':
+                self.manage_addProduct['Silva'].manage_addPublication(
+                    paste_id, item.get_title())
+            else:
+                raise NotImplementedError,\
+                      "Unknown container ghost copy (%s)." % item.meta_type
+            container = getattr(self, paste_id)
+            for object in item.get_ordered_publishables():
+                container._ghost_paste(object.id, object, REQUEST)
+            # FIXME: ghost copy nonactives as well?
+            for object in item.get_assets():
+                container._ghost_paste(object.id, object, REQUEST)
+        elif Interfaces.VersionedContent.isImplementedBy(item):
+            if item.meta_type == 'Silva Ghost':
+                # copy ghost
+                version_id = item.get_public_version()
+                if version_id is None:
+                    version_id = item.get_next_version()
+                if version_id is None:
+                    version_id = item.get_last_closed_version()
+                version = getattr(item, version_id)
+                self.manage_addProduct['Silva'].manage_addGhost(
+                    paste_id, version.get_content_url())
+            else:
+                # create ghost of item
+                self.manage_addProduct['Silva'].manage_addGhost(
+                    paste_id, item.absolute_url())
+        else:
+            # this is an object that just needs to be copied
+            item = item._getCopy(self)
+            item._setId(paste_id)
+            self._setObject(paste_id, item)
+        
     # ACCESSORS
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

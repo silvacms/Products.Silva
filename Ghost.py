@@ -64,14 +64,13 @@ class GhostVersion(SimpleItem.SimpleItem):
     
     def __init__(self, id, content_url):
         self.id = id
-        self._content_url = content_url
+        self.set_content_url(content_url)
 
     def set_content_url(self, content_url):
         """Set content url.
         """
         # FIXME: should never ever be allowed to point to a ghost
         # or a container - do a lot of tests
-
         # simplify url
         scheme, netloc, path, parameters, query, fragment = \
                 urlparse.urlparse(content_url)
