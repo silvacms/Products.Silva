@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  Development
+
+    Bugs fixed:
+    
+      - Fixed problem with vanishing paragraphs after a save in Kupu.
+
   1.1.2
 
   1.1.1
