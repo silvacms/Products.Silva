@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.49 $
+$Revision: 1.50 $
 
 Silva changes
   
@@ -8,6 +8,11 @@ Silva changes
 
     Features Added
 
+        - Unicode support. All content and meta data can contain any character
+          defined by the unicode standard. On upgrade you have replace or
+          update your index_html set the the correct encoding; the default
+          index_html does this.
+          
         - High resolution image support. If you have PIL installed images can
           be both converted to JPEG or PNG and arbitary scaled for web
           presentation. The high resolution image can be used for printing. 
