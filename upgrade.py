@@ -404,8 +404,7 @@ upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
 # the old names can refer to a Zope Property, an attribute or a method on the object
 # note that this mapping is used to find out the fields that should be
 # converted, so all to-be-converted fields should be mentioned
-set_el_name_mapping = {'silva-content': {'short_title': 'shorttitle',
-                                    },
+set_el_name_mapping = {'silva-content': {},
                         'silva-extra': {'document_comment': 'comment', 
                                         'container_comment': 'comment',
                                         'contact_email': 'contactemail',
@@ -528,6 +527,12 @@ def replace_container_title_092(obj):
     del obj._title
     if type(title) != type(u''):
         title = unicode(title, 'cp1252', 'replace')
+    short_title = obj.getProperty('short_title')
+    if not short_title:
+        short_title = getattr(obj, 'short_title', None)
+        if short_title is not None:
+            del obj.short_title
+        
     default = obj.get_default()
     if default is not None:
         #print 'Setting title', title.encode('ascii', 'replace'), 'on default of', obj.id
@@ -538,16 +543,31 @@ def replace_container_title_092(obj):
         default._title = title
     else:
         obj.manage_addProduct['Silva'].manage_addDocument('index', title)
+        default = obj.index
+    if short_title is not None:
+        # set it to the default for now, the replace_object_title method
+        # will pick it up then
+        default.short_title = short_title
 
 def replace_object_title_092(obj):
     """Move the title to the metadata
     """
+    # get the metadata sets for the object
+    ms = obj.service_metadata
+
     #print 'Replace object title for', obj.id
     if not '_title' in obj.aq_base.__dict__.keys():
         #print 'No title available on', obj.absolute_url()
         return
     #print obj.absolute_url()
     title = obj.aq_inner._title
+    short_title = obj.getProperty('short_title')
+    if not short_title:
+        short_title = getattr(obj, 'short_title', None)
+    if short_title is not None and type(short_title) != type(u''):
+        short_title = unicode(short_title, 'cp1252', 'replace')
+        if short_title is not None:
+            del obj.short_title
     #print 'Title:', title.encode('ascii', 'replace')
     #print 'Plain title attribute:', obj.aq_inner.title
     #print dir(obj.aq_inner)
@@ -562,6 +582,14 @@ def replace_object_title_092(obj):
         object.set_title(title)
         #print type(title)
         #print type(object.title)
+        
+        if short_title is not None:
+            binding = ms.getMetadata(object)
+            if binding is None:
+                #print 'Binding object:', object.meta_type
+                continue
+            if set_name in binding.getSetNames():
+                binding._setData(values, set_id=set_name, reindex=0)
 
 upgrade_registry.register('Silva Root', replace_container_title_092, '0.9.2')
 upgrade_registry.register('Silva Publication', replace_container_title_092, '0.9.2')
