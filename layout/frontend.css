@@ -406,6 +406,10 @@ div.public a:hover {
   text-decoration : none;
 }
 
+a img {
+  border: 0;
+}
+  
 </dtml-let>
 
 /* end cascade */
