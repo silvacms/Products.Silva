@@ -1,6 +1,6 @@
 
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -44,32 +44,28 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         #
         # first use something not subscribable at all
         emailaddress = "foo@localhost"
-        self._testException(
-            errors.SubscriptionError, 
-            'content is not subscribable',
+        self.assertRaises(
+            errors.NotSubscribableError, 
             self.service.requestSubscription, self.service, emailaddress)
         # even if all parameters are correct, content has to have its subscribability set
         emailaddress = "foo@localhost"
-        self._testException(
-            errors.SubscriptionError, 
-            'content is not subscribable',
+        self.assertRaises(
+            errors.NotSubscribableError, 
             self.service.requestSubscription, self.doc, emailaddress)
         # Set subscribability, invalid emailaddress though
         emailaddress = "foo bar baz"
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
-        self._testException(
-            errors.SubscriptionError, 
-            'emailaddress not valid',
+        self.assertRaises(
+            errors.InvalidEmailaddressError, 
             self.service.requestSubscription, self.doc, emailaddress)
         # emailaddress already subscribed
         emailaddress = "foo@localhost.com"
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
         subscr.subscribe(emailaddress)
-        self._testException(
+        self.assertRaises(
             errors.AlreadySubscribedError, 
-            'emailaddress already subscribed',
             self.service.requestSubscription, self.doc, emailaddress)
 
     def test_requestCancellation(self):
@@ -78,21 +74,18 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         #
         # first use something not subscribable at all
         emailaddress = "foo@localhost"
-        self._testException(
-            errors.SubscriptionError, 
-            'content does not support subscriptions',
+        self.assertRaises(
+            errors.NotSubscribableError,
             self.service.requestCancellation, self.service, emailaddress)
         # invalid emailaddress
         emailaddress = "foo bar baz"
-        self._testException(
-            errors.SubscriptionError, 
-            'emailaddress not valid',
+        self.assertRaises(
+            errors.InvalidEmailaddressError, 
             self.service.requestCancellation, self.doc, emailaddress)
         # emailaddress was not subscribed
         emailaddress = "foo@localhost.com"
-        self._testException(
+        self.assertRaises(
             errors.NotSubscribedError, 
-            'emailaddress was not subscribed',
             self.service.requestCancellation, self.doc, emailaddress)
             
     def _testException(self, klass, message, method, *args, **kwargs):
@@ -145,7 +138,7 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         self.service.unsubscribe(ref, emailaddress, token)
         # and again, should raise an exception
         self.assertRaises(
-            errors.SubscriptionError, 
+            errors.CancellationError, 
             self.service.unsubscribe, ref, emailaddress, token)
         # for an invalid content ref an exception should be raised too
         emailaddress = "foo2@bar.com"
@@ -154,7 +147,7 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         token = subscr.generateConfirmationToken(emailaddress)
         ref = self.service._create_ref(self.service) # use something not subscribable
         self.assertRaises(
-            errors.SubscriptionError, 
+            errors.CancellationError, 
             self.service.unsubscribe, ref, emailaddress, token)
 
 def test_suite():
