@@ -64,12 +64,12 @@ for ref in refs:
             not_approved.append((get_name(obj), 'version already public'))
             continue
         obj.create_copy()
-
+    # publish
     if publish_now_flag:
         obj.set_unapproved_version_publication_datetime(now)
     else:
         obj.set_unapproved_version_publication_datetime(publish_datetime)
-
+    # expire
     if expiration_datetime:
         obj.set_unapproved_version_expiration_datetime(expiration_datetime)
     if clear_expiration_flag:
