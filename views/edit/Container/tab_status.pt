@@ -17,7 +17,7 @@
   tal:define="
     objects model/get_processed_status_tree;
     
-    refs request/refs | options/refs | python: [];
+    refs options/refs | python: [];
     redisplay_timing_form request/redisplay_timing_form | options/redisplay_timing_form | python: 1;
 
     global approveables nothing;

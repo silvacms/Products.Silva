@@ -33,6 +33,7 @@ for id in ids:
         inactives.append(item.id)
 
 result = model.move_to(actives, int(new_position)-1)
+
 if result:
     message = 'Object(s) %s moved' % view.quotify_list(actives)
     if inactives:

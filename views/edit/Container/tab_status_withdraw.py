@@ -38,7 +38,6 @@ Request for approval was withdrawn via a bulk operation in the publish screen of
     approved_ids.append(obj.id)
 
 if approved_ids:
-    request.set('refs', [])
     request.set('redisplay_timing_form', 0)
     msg.append( 'Withdrawn request for approval for: %s' % view.quotify_list(approved_ids))
 

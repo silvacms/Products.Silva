@@ -32,5 +32,5 @@ if deactivated:
 else:
    message = 'Could not deactivate %s.' % view.quotify_list(not_deactivated)
    message_type = 'error'
-
+   
 return view.tab_edit(message_type=message_type, message=message)

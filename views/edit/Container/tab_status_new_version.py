@@ -18,7 +18,8 @@ try:
 except FormValidationError, e:
     return view.tab_status(
         message_type='error', 
-        message=view.render_form_errors(e))
+        message=view.render_form_errors(e),
+        refs=refs)
 
 copied_ids = []
 not_copied = []
@@ -40,7 +41,6 @@ for ref in refs:
     copied_ids.append(get_name(obj))
 
 if copied_ids:
-    request.set('refs', [])
     request.set('redisplay_timing_form', 0)
     msg.append( 'Created a new version for: %s' % view.quotify_list(copied_ids) )
 

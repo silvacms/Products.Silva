@@ -18,7 +18,8 @@ try:
 except FormValidationError, e:
     return view.tab_status(
         message_type='error', 
-        message=view.render_form_errors(e))
+        message=view.render_form_errors(e),
+        refs=refs)
 
 revoked_ids = []
 not_revoked = []
@@ -40,7 +41,6 @@ for ref in refs:
     revoked_ids.append(get_name(obj))
 
 if revoked_ids:
-    request.set('refs', [])
     request.set('redisplay_timing_form', 0)
     msg.append( 'Revoked approval of: %s' % view.quotify_list(revoked_ids) )
 

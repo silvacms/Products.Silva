@@ -9,6 +9,7 @@
 ##
 model = context.REQUEST.model
 view = context
+
 if not context.REQUEST.has_key('__cp'):
     return view.tab_edit(message_type="error", message="No content available to paste.")
 

@@ -20,7 +20,7 @@
     default_document model/get_default;
     publishables model/get_processed_items;
     assets model/get_processed_assets;
-    ids request/ids | options/ids | python: [];
+    ids options/ids | python: [];
     position request/position | options/position | nothing;
     iterate string:odd;
 ">

@@ -18,7 +18,8 @@ try:
 except FormValidationError, e:
     return view.tab_status(
         message_type="error", 
-        message=view.render_form_errors(e))
+        message=view.render_form_errors(e),
+        refs=refs)
 
 msg = []
 approved_ids = []
@@ -46,7 +47,6 @@ Request for approval was rejected via a bulk operation in the publish screen of 
     approved_ids.append(obj.id)
 
 if approved_ids:
-    request.set('refs', [])
     request.set('redisplay_timing_form', 0)
     msg.append( 'Rejected request for approval for: %s' % view.quotify_list(approved_ids))
 
@@ -55,5 +55,5 @@ if not_approved:
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()
-    
+
 return view.tab_status(message_type='feedback', message=('<br />'.join(msg)) )
