@@ -265,6 +265,7 @@
                         title="publish"
                         tal:condition="item_info/is_container"
                         tal:attributes="href string:${item_info/item_url}/edit/tab_status"
+                        i18n:attributes="title"
                       >
                         <em i18n:translate="">n/a</em>
                       </a>
