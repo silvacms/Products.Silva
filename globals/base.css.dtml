@@ -522,86 +522,34 @@ a:hover {
 }
 
 /* pseudo form button selectors, matches button style */
-a.buttonlink:link {
-    font-size : 11px; 
+a.buttonlink {
+    font-size : 10px; 
     font-weight : normal; 
     font-family : verdana, arial, helvetica, sans-serif;
     color : #bce4ee; 
     background : #666666;
-    border-left : 1px solid #a2c9cc;
-    border-top : 1px solid #a2c9cc;
-    border-right : 1px solid #a2c9cc;
-    border-bottom : 1px solid #a2c9cc;
+    border : 1px solid #a2c9cc;
     text-decoration : none;
-    padding : 2px;
-}
-a.buttonlink:visited {
-    font-size : 11px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #bce4ee; 
-    background : #666666;
-    border-left : 1px solid #a2c9cc;
-    border-top : 1px solid #a2c9cc;
-    border-right : 1px solid #a2c9cc;
-    border-bottom : 1px solid #a2c9cc;
-    text-decoration : none;
-    padding : 2px;
+    padding : 0.2em 0.5em 0.1em 0.5em;
 }
 a.buttonlink:hover {
-    font-size : 11px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
     color : #bff1ff; 
     background : #74748b; 
-    border-left : 1px solid #a2c9cc;
-    border-top : 1px solid #a2c9cc;
-    border-right : 1px solid #a2c9cc;
-    border-bottom : 1px solid #a2c9cc;
-    text-decoration : none;
-    padding : 2px;
 }
-
-a.cancellink:link {
-    font-size : 11px; 
+a.cancellink {
+    font-size : 10px; 
     font-weight : normal; 
     font-family : verdana, arial, helvetica, sans-serif;
     color : #dddddd; 
     background : #676767;
-    border-left : 1px solid #cccccc;
-    border-top : 1px solid #cccccc;
-    border-right : 1px solid #cccccc;
-    border-bottom : 1px solid #cccccc;
+    border : 1px solid #cccccc;
     text-decoration : none;
-    padding : 2px;
-}
-a.cancellink:visited {
-    font-size : 11px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #dddddd; 
-    background : #676767;
-    border-left : 1px solid #cccccc;
-    border-top : 1px solid #cccccc;
-    border-right : 1px solid #cccccc;
-    border-bottom : 1px solid #cccccc;
-    text-decoration : none;
-    padding : 2px;
+    padding : 0.2em 0.5em 0.1em 0.5em;
 }
 a.cancellink:hover {
-    font-size : 11px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
     color : #bff1ff; 
     background : #74748b; 
-    border-left : 1px solid #a2c9cc;
-    border-top : 1px solid #a2c9cc;
-    border-right : 1px solid #a2c9cc;
-    border-bottom : 1px solid #a2c9cc;
-    text-decoration : none;
-    padding : 2px;
 }
-
 /* highlighting index links */
 a.index-element {
     background-color : #aa0000;
