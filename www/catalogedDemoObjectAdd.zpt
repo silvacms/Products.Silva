@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.2 $
+Version of this file: $Revision: 1.3 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -26,7 +26,7 @@ Add Silva DemoObject
   </tr>
   <tr>
     <td align="left" valign="top">
-    <div i18n:transalte="title" class="form-label">
+    <div i18n:translate="title" class="form-label">
     title
     </div>
     </td>
