@@ -13,6 +13,10 @@
 <div tal:omit-tag="" metal:fill-slot="main">
 <!-- ____________________________ start index_html/slot main ___________________________ -->
 
+<tal:block condition="view/REQUEST/focus | nothing">
+<script language="JavaScript" tal:content="string:document.location = 'tab_edit_import#${view/REQUEST/focus}';" />
+</tal:block>
+
 <div class="margins">
 <h3><a href="tab_edit" title="Up to top of Edit tab">Contents
   <img tal:attributes="src string:${silva_root}/globals/up_gray.gif" width="16" height="11" border="0" alt="Up to top of Edit tab" /></a></h3>
@@ -218,25 +222,23 @@
 
           <tr>
             <td colspan="5">
-              <h3>Queue of items to process
-                <img src="pixel.gif" width="1px" height="14px"
-                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+              <h3><a name="queue">Queue of items to process</a>
               </h3>
             </td>
           </tr>
 
           <tr class="topcontrols">
             <td align="right" colspan="5">
-              <a class="buttonlink" href="#" onClick="document.location = 'tab_edit_import'; return false;" title="Reload to update the queue lists - alt r" accesskey="r"> <u>R</u>efresh queue lists </a>
+              <a class="buttonlink" href="#" onClick="document.location = 'tab_edit_import?focus=queue'; return false;" title="Reload to update the queue lists - alt r" accesskey="r">&nbsp;<u>R</u>efresh queue lists&nbsp;</a>
             </td>
           </tr>
 
           <tr>
-            <th align="left" width="8%">Job&nbsp;id:</th>
-            <th align="left" width="15%">Job&nbsp;owner:</th>
-            <th align="left">Description:</th>
-            <th align="left" width="15%">Status:</th>
-            <th align="left" width="10%">Estimated&nbsp;time:</th>
+            <th align="left" width="8%">Job&nbsp;id</th>
+            <th align="left" width="15%">Job&nbsp;owner</th>
+            <th align="left">Description</th>
+            <th align="left" width="15%">Status</th>
+            <th align="left" width="10%">Estimated&nbsp;time</th>
           </tr>
 
           <tr tal:repeat="job queue" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
@@ -270,16 +272,14 @@
           <tr>
             <td colspan="5">
               <h3>List of processed items
-                <img src="pixel.gif" width="1px" height="14px"
-                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
               </h3>
             </td>
           </tr>
 
           <tr>
-            <th align="left" colspan="2" width="8%">Job&nbsp;id:</th>
-            <th align="left" width="10%">Type:</th>
-            <th align="left">Description:</th>
+            <th align="left" colspan="2" width="8%">Job&nbsp;id</th>
+            <th align="left" width="10%">Type</th>
+            <th align="left">Description</th>
           </tr>
 
           <tr tal:repeat="job finished_jobs" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
