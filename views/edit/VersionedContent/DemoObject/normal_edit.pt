@@ -8,9 +8,17 @@
     breadcrumb_vein string:Editor;
 ">
 
-<table class="columns columns1">
+<table class="columns columns2">
   <tbody>
     <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
+      <td class="left"
+        tal:define="template_id string:tab_edit">
+        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+      </td>
+
       <tal:block replace="nothing">
         _____________________ main _____________________
       </tal:block>
@@ -43,7 +51,7 @@
         <th>
           Content
         </th>
-        <th width="40%">
+        <th width="30%">
           Note
         </th>
       </tr>

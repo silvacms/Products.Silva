@@ -7,7 +7,7 @@
     breadcrumb_vein string:Edit;
 ">
 
-<table class="columns columns2">
+<table class="columns columns3">
   <tbody>
     <tr>
       <tal:block replace="nothing">
@@ -78,6 +78,12 @@
   </table>
 </form>
 
+      </td>
+      <tal:block replace="nothing">
+        _____________________ right column _____________________
+      </tal:block>
+      <td class="right">        
+        &nbsp;
       </td>
     </tr>
   </tbody>

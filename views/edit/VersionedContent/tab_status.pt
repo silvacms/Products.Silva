@@ -21,7 +21,7 @@
     next python:model.get_next_version() is not None;
     " >
 
-<table class="columns columns2">
+<table class="columns columns3">
   <tbody>
     <tr>
       <td class="left">
@@ -238,6 +238,12 @@ If you wish you can make an editable copy by going to the <a href="tab_edit"><sp
 </div>
 </tal:replace>
 
+      </td>
+      <tal:block replace="nothing">
+        _____________________ right column _____________________
+      </tal:block>
+      <td class="right">        
+        &nbsp;
       </td>
     </tr>
   </tbody>

@@ -9,7 +9,7 @@
 
 <metal:define-macro define-macro="editor"
   tal:define="icon python:view.render_icon(model)">
-<table class="columns columns2">
+<table class="columns columns3">
   <tbody>
     <tr>
       <tal:block replace="nothing">
@@ -18,7 +18,6 @@
       <td class="left"
         tal:define="template_id string:tab_edit">
         <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
-        <metal:block define-slot="info" />
       </td>
 
       <tal:block replace="nothing">
@@ -65,7 +64,7 @@
         <th>
           Content
         </th>
-        <th width="40%">
+        <th width="30%">
           Note
         </th>
       </tr>
@@ -112,6 +111,12 @@
 </metal:define-slot>
 
       </td>
+      <tal:block replace="nothing">
+        _____________________ right column _____________________
+      </tal:block>
+      <td class="right">        
+        <metal:block define-slot="info" />
+      </td>
     </tr>
   </tbody>
 </table>
@@ -124,14 +129,17 @@
   ______________ for File and Image ______________
 </tal:block>
 <metal:define-macro define-macro="uploader">
-<form method="POST" name="form" action="." enctype="multipart/form-data">
+<form method="POST"
+  action="."
+  name="form"
+  enctype="multipart/form-data">
   <table class="listing">
     <thead>
       <tal:block replace="nothing">
         ______________ top controls row ______________
       </tal:block>
       <tr class="top-controls">
-        <td colspan="3">
+        <td colspan="2">
           <h3>
             Upload
           </h3>
@@ -146,26 +154,18 @@
         <th colspan="2">
           Content
         </th>
-        <th width="27%"            tal:replace="nothing">
-          Note
-        </th>
       </tr>
 
       <tal:repeat repeat="field fields">
       <tal:define define="iterate repeat/field/odd">
-      <tr tal:attributes="class python:test(iterate, 'even', 'odd')">
+      <tr tal:attributes="class python: iterate and 'even' or 'odd'">
       <td class="field-title">
         <span tal:replace="python:field['title']">
           Title</span><span class="warning"
           tal:condition="python:field.is_required()">*</span>
       </td>
-      <td colspan="2">
+      <td>
         <input tal:replace="structure python:field.render_from_request(request)" />
-      </td>
-      <td            tal:replace="nothing">
-        <span tal:replace="structure python:field.get_value('description')">
-        comments here (field description)
-        </span>&nbsp;
       </td>
       </tr>
       </tal:define>
@@ -175,7 +175,7 @@
     <tfoot>
       <tr class="controls">
         <td class="align-right"
-          colspan="3">
+          colspan="2">
           <input class="button"
             type="submit"
             name="upload_submit:method"
