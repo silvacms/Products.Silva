@@ -38,13 +38,13 @@ shade26:string=#373e42
 nightShade:string=black
 
 
-workspace:string=#dde5ee
-contentWorkspace:string=#eceeee
-
 mainFont:string=70% Verdana, Helvetica, Arial, sans-serif
 mainBackground:string=#91989b
 mainFontColor:string=#red
 mainLinkColor:string=#000080
+
+workspace:string=#dde5ee
+contentWorkspace:string=#eceeee
 
 pathBarBackground:string=#b0c4d8
 
@@ -58,26 +58,35 @@ mainTabFontWeight:string=normal
 mainTabFontColor:string=#e3ecff
 mainTabFontColorSelected:string=#424244
 
-headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
-headingSize1:string=150%
-headingSize2:string=130%
-headingSize3:string=115%
-headingSize4:string=110%
-headingSize5:string=105%
-headingSize6:string=100%
-
 contentTabBackground:string=#729b87
 contentTabBackgroundRecede:string=#8fb39e
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
-messageFont:string=bold 100% Verdana, Helvetica, Arial, sans-serif
-messageBackground:string=#d9f4eb
-messageBorder:string=1px solid #555577
 
-textTransform:string=lowercase
+listingTopBackground:string=#c4d6e7
+listingTopControlsBackground:string=#616d73
+listingControlsBackground:string=#6c797f
+listingInterControlsBackground:string=#77858c
+listingDividerBackground:string=#6c7a7f
+listingBorder:string=1px solid #77858c
+
+listingTopHeadingColor:string=#2d2d4c
+listingTopControlsHeadingColor:string=#d0e4f6
+
+listingHeaderBackground:string=#829199
+listingHeaderFontColor:string=#e0eefc
+listingLinkHover:string=underline
+listingEvenBackground:string=#cfdbe7
+listingOddBackground:string=#d7e4f0
+
+listingTopBackgroundContent:string=#c5d4ca
+listingTopHeadingColorContent:string=#51545c
+listingTopControlsHeadingColorContent:string=#ddeee3
+
 evenRowBackground:string=#c6d2dd
 oddRowBackground:string=#cde0f2
+
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 inputFontColor:string=#333767
@@ -107,31 +116,16 @@ cancelButtonPadding:string=0 0.2em
 cancelButtonBorder:string=1px solid #b9c2c1
 cancelButtonFontColor:string=#ccd7d6
 
+textTransform:string=lowercase
 
-listingTopBackground:string=#c4d6e7
-listingTopControlsBackground:string=#616d73
-listingControlsBackground:string=#6c797f
-listingInterControlsBackground:string=#77858c
-listingDividerBackground:string=#6c7a7f
-listingBorder:string=1px solid #77858c
+headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
+headingSize1:string=150%
+headingSize2:string=130%
+headingSize3:string=115%
+headingSize4:string=110%
+headingSize5:string=105%
+headingSize6:string=100%
 
-listingTopHeadingColor:string=#2d2d4c
-listingTopControlsHeadingColor:string=#d0e4f6
-
-listingHeaderBackground:string=#829199
-listingHeaderFontColor:string=#e0eefc
-listingLinkHover:string=underline
-listingEvenBackground:string=#cfdbe7
-listingOddBackground:string=#d7e4f0
-
-listingTopBackgroundContent:string=#c5d4ca
-listingTopHeadingColorContent:string=#51545c
-listingTopControlsHeadingColorContent:string=#ddeee3
-
-
-
-
-
-
-
-
+messageFont:string=bold 100% Verdana, Helvetica, Arial, sans-serif
+messageBackground:string=#d9f4eb
+messageBorder:string=1px solid #555577
