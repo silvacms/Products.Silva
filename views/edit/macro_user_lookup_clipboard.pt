@@ -10,7 +10,11 @@
 
 <metal:block define-macro="clipboard">
   <div class="highlight"
-    style="padding: 0.5em; width: 18em; margin: 0em 0em 1em 1em;">
+    style="
+      padding: 0.5em; 
+      width: 18em; 
+      margin: 0em 0em 1em 1em;
+      border: 1px solid #567275;">
     <metal:block define-macro="clipboard_no_style">
       <form action="."
         method="POST"

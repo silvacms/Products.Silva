@@ -42,7 +42,11 @@
 <!-- actual macro where layout is done -->
 <metal:block define-macro="listing">
   <div class="highlight"
-    style="padding: 0.5em; width: 18em; margin: 0em 0em 2em 1em;">
+    style="
+      padding: 0.5em; 
+      width: 18em; 
+      margin: 0em 0em 2em 1em;
+      border: 1px solid #567275;">
     <metal:block define-macro="listing_no_style">
       <!-- this form deliberately has no submit buttons; filled in in slots -->
       <form action="."
