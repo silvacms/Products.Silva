@@ -12,7 +12,7 @@
       title python:obj[1].get_title_html()">
   <img width="12" height="14"
     tal:condition="python:indent > 0"
-    tal:attributes="width python:indent * 32;
+    tal:attributes="width python:indent * 24;
       src string:${here/silva_root}/globals/pixel.gif" />
   <a href="edit" class="toc-link"
     tal:attributes="href string:${item/absolute_url}"
