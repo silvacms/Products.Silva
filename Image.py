@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.25 2003/03/05 10:19:58 zagy Exp $
+# $Id: Image.py,v 1.26 2003/03/21 14:13:19 zagy Exp $
 
 # Python
 import re
@@ -212,12 +212,14 @@ class Image(Asset):
         if img is None:
             img = self.image
         if isinstance(img, OFS.Image.Image):
-            image_file = StringIO(str(img.data))
-            image = PIL.Image.open(image_file)
+            image_reference = StringIO(str(img.data))
         else:            
-            image_file_name = img._get_filename(
-                img.filename)
-            image = PIL.Image.open(image_file_name)
+            image_reference = img._get_filename(img.filename)
+        try:
+            image = PIL.Image.open(image_reference)
+        except IOError:
+            get_transaction().abort()
+            raise
         return image
 
     def _createWebPresentation(self):
