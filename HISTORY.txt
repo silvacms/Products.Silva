@@ -7,8 +7,8 @@ Silva changes
 
     Bugs fixed
 
-      - Removed problematic region from index_html Python script that in some
-        situations broke custom LayoutServices.
+      - Removed problematic code from index_html Python script that
+        accidentally triggered an experimental layout service.
 
       - Fixed bug in Kupu transformations that broke tables with incomplete
         alignment information.
