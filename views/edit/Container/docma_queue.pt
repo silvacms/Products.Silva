@@ -3,9 +3,8 @@
               global active_tab string:tab_edit;
               global breadcrumb_vein string:Import;
               global lastclass string:focus-cycle;
-              global silva_permissions here/get_silva_permissions;
               global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
-              global silva_root here/get_root;
+              global root_url here/get_root;
               global format options/format | python: None;
               " 
   >
@@ -151,7 +150,7 @@
                 colspan="5">
                 <img height="3"
                   width="1"
-                  tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+                  tal:attributes="src string:${root_url}/globals/pixel.gif" />
               </td>
             </tr>
           </table>
@@ -253,7 +252,7 @@
               <td align="right"
                 colspan="2">
 
-                <tal:block condition="silva_permissions/ChangeSilvaContent">
+                <tal:block condition="may_change_content">
                   &nbsp;&nbsp;
                   <input class="warningbutton"
                     accesskey="x"

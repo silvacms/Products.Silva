@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global breadcrumb_vein string:Addables;
+    global active_tab string:tab_metadata;
+">
+
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
+
+<tal:block define="
+  global view here;
+  global model request/model;
+  global fields python:view.settings_addables_form.get_fields();
+  "
+  tal:condition="python:request['AUTHENTICATED_USER'].has_permission('Approve silva content', request.model)"
+>
+
+<form method="POST" name="form" action="settings_addables_submit">
+  <table class="columns columns2">
+    <tbody>
+      <tr>
+        <td class="left">
+          <span tal:replace="nothing">
+            _____________________ sidebar subtable _____________________
+          </span>
+          <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_metadata', breadcrumb_vein)" />
+        </td>
+        <td class="main">
+
+          <span tal:replace="nothing">
+            _____________________ inner table  _____________________
+          </span>
+
+            <table class="listing">
+              <thead>
+                <tr tal:replace="nothing">
+                  ______________ vein + title row ______________
+                </tr>
+                <tr>
+                  <td class="top"
+                    colspan="3">
+                    <h2>
+                      <img tal:replace="structure python:view.render_icon(model)" />
+                      settings for: <span tal:replace="structure string:${model/id}&amp;nbsp; &amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
+                    </h2>
+                  </td>
+                </tr>
+
+                <tr tal:replace="nothing">
+                  ______________ top controls row ______________
+                </tr>
+                <tr class="top-controls">
+                  <td class="align-right"
+                    colspan="3">
+                    <div class="buttons">
+                      <a class="navigation"
+                        href="tab_metadata"
+                        title="Edit this publication's metadata: alt-c"
+                        accesskey="c"
+                      >
+                        Configure metadata...
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </thead>
+            </table>
+
+
+            <table class="listing">
+              <thead>
+                <tr tal:replace="nothing">
+                  ______________ icon + vein + title row ______________
+                </tr>
+                <tr>
+                  <td class="top"
+                    colspan="3">
+                    <h2>
+                      <img tal:replace="structure python:view.render_icon(model)" />
+                      addable settings
+                    </h2>
+                  </td>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <th class="align-right" width="12%">
+                    Element
+                  </th>
+                  <th>
+                    Content
+                  </th>
+                  <th width="30%">
+                    Note
+                  </th>
+                </tr>
+
+                <tal:repeat repeat="field fields">
+                  <tal:define define="oddrow repeat/field/odd">
+                    <tr valign="top"
+                      tal:attributes="class python:oddrow and 'even' or 'odd'">
+                      <td class="align-right">
+                        <span tal:replace="structure python: field.title().lower()">Title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
+                      </td>
+                      <td>
+                        <input tal:replace="structure python:field.render(value=model.getProperty(field.id))" />
+                      </td>
+                      <td>
+                        <span tal:replace="python:field.get_value('description')">
+                          comments here (field description)
+                        </span><br />
+                        <span tal:condition="python:field.id == 'contact_name' or field.id == 'contact_email'" tal:omit-tag="">(<i tal:content="python:getattr(model, field.id, 'None')"></i>)</span>
+                      </td>
+                    </tr>
+                  </tal:define>
+                </tal:repeat>
+              </tbody>
+
+              <tfoot>
+                <tr class="controls">
+                  <td class="align-right"
+                    colspan="3">
+                    <input class="button"
+                      type="submit"
+                      name="form_submitted"
+                      value="Save addables data"
+                      title="Save addable settings for this publication: alt-a"
+                      accesskey="a" 
+                    />
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+</tal:block>
+</metal:block>
+</metal:block>
+</html>

@@ -8,7 +8,7 @@
 ##title=
 ##
 if dt is not None:
-    return "%02d %s %04d" % (dt.day(), dt.aMonth().lower(), dt.year())
+    return "%02d %s %s" % (dt.day(), dt.aMonth().lower(), dt.yy())
 else:
     return ''
 

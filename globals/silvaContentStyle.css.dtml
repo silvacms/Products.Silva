@@ -1,0 +1,37 @@
+<dtml-let last_modified="_.DateTime()-14"
+      expires="_.DateTime()+7" >
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
+</dtml-let>
+
+/* This style sheet contains Silva specific styles for Content views */
+
+body {
+  background: #aaabaa;
+}
+
+div.workspace {
+  background: #e6e6ee;
+}
+
+div.pathBar{
+  background: #b3d4bf;
+}
+
+div.tabs a.selected {
+  background: #b3d4bf;
+  border-bottom: #b3d4bf 1px solid;
+}
+
+div.tabs a:hover {
+  background: #b3d4bf;
+
+}
+
+div.footer {
+  background: #b3d4bf;
+}
+
+

@@ -24,14 +24,14 @@
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr class="halfline" tal:condition="python:is_embedded">
 <td class="transparent" colspan="4">
-<a name="focus"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2"></a>
+<a name="focus"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></a>
 </td>
 </tr>
 <div metal:use-macro="container/macro_helpers/macros/edit_top" tal:omit-tag="" />
 <tr class="controls-cycle" tal:condition="enable_save">
   <td class="transparent"></td>
   <td colspan="2"><div metal:define-slot="embed_controls">&nbsp;</div></td>
-  <td class="transparent"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" border="0"></td>
+  <td class="transparent"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" border="0" /></td>
 </tr>
 <div metal:use-macro="container/macro_helpers/macros/normal_insert" tal:omit-tag="" />
 </table>
@@ -48,7 +48,7 @@
 <comment comment="--Is there a better place for this spacer lines?--" tal:omit-tag=""/>
 <tr class="halfline" notal:condition="python:not is_embedded">
   <td class="transparent" colspan="4">
-    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16">
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" />
   </td>
 </tr>
 

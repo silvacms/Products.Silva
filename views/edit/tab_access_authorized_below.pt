@@ -1,26 +1,32 @@
-<tal:block define="
-  global active_tab string:tab_access;
-  global breadcrumb_vein string:Emails;
-  " />
-  <html metal:use-macro="here/macro_index/macros/master">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html tal:omit-tag=""
+    lang="en"
+    xml:lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:notal="http://www.infrae.com/silva/notal"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    tal:define="
+      active_tab string:tab_access;
+      breadcrumb_vein string:Emails;"
+  >
+  <metal:block use-macro="here/macro_index/macros/master">
     <div class="margins" metal:fill-slot="main">
 
       <h3><a href="tab_access" title="Up to top of Access tab">
         <img width="9" height="9" border="0" alt="Up to top of Access tab"
-          tal:attributes="src string:${silva_root}/globals/up_gray.gif" />
-          Access
-        </a>
+          tal:attributes="src string:${root_url}/globals/up_gray.gif" />
+        Access
+      </a>
       </h3>
       <h2 class="worksheet"><img src="%s" width="16" height="16" alt="%s"
-        tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+        tal:replace="structure python:view.render_icon(model)" />&nbsp;
         Authorized users below this level
       </h2>
       <div class="hilight borders top bottom left right"
         style="padding: 0.5em; margin: 1em 3%; 2em 3%;">
         <tal:check
           condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
-          <tal:trigger
-            define="dummy python:model.security_trigger()" />
           <!-- this form deliberately has no submit button -->
           <form action="." method="POST">
             <table cellspacing="0" cellpadding="3" border="0">
@@ -43,4 +49,5 @@
         </tal:check>
       </div>
     </div>
+  </metal:block>
   </html>

@@ -53,7 +53,7 @@
         <p>In any case, you can use your back button to return to the previous page.</p>
         <p>Sorry for the irritation.</p>
 
-        <hr noshade />
+        <hr class="netscape4" size="" />
         <h4>Error Type: <span class="error" tal:content="structure options/error_type|string:unknwon">error_type</span></h4>
         <h4>Error Value: <span class="error" tal:content="structure options/error_value|string:unknown"></span></h4>
         <h4>Error info:</h4>

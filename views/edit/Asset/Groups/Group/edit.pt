@@ -12,7 +12,7 @@
             border="0"
             height="16"
             width="16"
-            tal:attributes="src string:${view/silva_root}/globals/left.gif" />
+            tal:attributes="src string:${view/root_url}/globals/left.gif" />
           Back
         </a>
       </h3>

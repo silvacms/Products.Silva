@@ -1,0 +1,45 @@
+<html lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  >
+<body>
+<metal:block define-macro="select_all">
+  <input name="all"
+    type="checkbox"
+    value="whatever"
+    id="all"
+    title="Select all"
+    onChange="toggleSelect();"
+  />
+  <label for="all"
+    accesskey="a">
+    Select all
+  </label>
+  <script type="text/javascript"
+    xml:space="preserve">
+    <!--
+    isSelected = false;
+
+    function toggleSelect() {
+      if (isSelected == false) {
+        for (i = 0; i < document.silvaObjects.length; i++)
+          document.silvaObjects.elements[i].checked = true ;
+        isSelected = true;
+        //document.silvaObjects.selectButton.value = "Deselect all";
+        return isSelected;
+      }
+      else {
+        for (i = 0; i < document.silvaObjects.length; i++)
+          document.silvaObjects.elements[i].checked = false ;
+        isSelected = false;
+        //document.silvaObjects.selectButton.value = "Select all";
+        return isSelected;
+      }
+    }
+    //-->
+  </script>
+</metal:block>
+</body>
+</html>

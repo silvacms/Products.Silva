@@ -1,7 +1,7 @@
 <div metal:define-macro="edit_top" tal:omit-tag="">
 <tr class="halfline" tal:condition="python:not is_embedded">
   <td class="transparent" colspan="4">
-    <a name="focus"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2"></a>
+    <a name="focus"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></a>
   </td>
 </tr>
 <tr>

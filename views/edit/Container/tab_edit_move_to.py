@@ -11,7 +11,14 @@ model = context.REQUEST.model
 view = context
 
 if ids is None or new_position is None:
-    return view.tab_edit(message_type="error", message="Nothing was selected, so nothing was moved.")
+    return view.tab_edit(
+        message_type="error", 
+        message="Nothing was selected, so nothing was moved.")
+
+if new_position == 'Position':
+    return view.tab_edit(
+        message_type="error", 
+        message="First choose a position number.")
 
 actives = []
 inactives = []
@@ -30,4 +37,6 @@ if result:
         message += ', <span class="error">but could not move %s</span>' % view.quotify_list(inactives)
     return view.tab_edit(message_type="feedback", message=message)
 else:
-    return view.tab_edit(message_type="error", message="Could not move %s." % view.quotify_list(ids))
+    return view.tab_edit(
+        message_type="error", 
+        message="Could not move %s." % view.quotify_list(ids))

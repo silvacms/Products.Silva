@@ -1,75 +1,173 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en"
-    xml:lang="en"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:metal="http://xml.zope.org/namespaces/metal"
-    xmlns:notal="http://www.infrae.com/silva/notal"
-    xmlns:tal="http://xml.zope.org/namespaces/tal" 
-    metal:define-macro="master"
-    tal:define="
-      silva_root here/silva_root;
-      view here;
-      model request/model;
-     ">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html metal:define-macro="master"
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    view here;
+    model request/model;
+    trigger model/security_trigger;
+
+    type model/meta_type;
+    url model/absolute_url;
+    title model/get_title_html;
+    
+    root_url model/get_root_url;
+
+    containing_folder model/..;
+    publication model/get_publication;
+    containing_publication publication/../get_publication | publication;
+    
+    content_type view/set_content_type;
+
+    silva_permissions view/get_silva_permissions;
+    may_approve_content silva_permissions/ApproveSilvaContent | nothing;
+    may_change_content silva_permissions/ChangeSilvaContent | nothing;"
+  >
 <head>
-<title tal:content="structure python:model.get_title_html()">Title</title>
-<link rel="shortcut icon" href="globals/favicon.ico"
-  tal:attributes="href here/globals/favicon.ico/absolute_url" />
-<link rel="stylesheet" href="globals/base.css"
-  tal:attributes="href here/globals/base.css/absolute_url" />
-<link rel="stylesheet" href="globals/silva.css"
-  tal:attributes="href here/globals/silva.css/absolute_url" />
-<link rel="stylesheet" href="frontend.css"
+<title tal:content="structure title">
+  Title
+</title>
+<link href="globals/favicon.ico"
+  rel="shortcut icon"
+  tal:attributes="href string:${root_url}/globals/favicon.ico"
+/>
+<!-- Temp Stylesheets -->
+<link href="globals/base.css"
+  rel="stylesheet"
+  tal:attributes="href string:${root_url}/globals/base.css"
+/>
+<link href="globals/silva.css"
+  rel="stylesheet"
+  tal:replace="nothing"
+  tal:attributes="href string:${root_url}/globals/silva.css"
+/>
+<link href="frontend.css"
+  rel="stylesheet"
   tal:condition="python:template.id == 'tab_preview'"
-  tal:attributes="href model/frontend.css/absolute_url" />
-<script tal:replace="nothing"> 
-  _______ application specific stylesheet extension _______ </script>
-<link rel="stylesheet" href="ext_stylesheet"
-  tal:condition="python:hasattr(here, 'extension_style_url')"
-  tal:attributes="href python:here.extension_style_url()" />
-<style tal:define="local_style view/local_style"
-  tal:condition="local_style"
-  tal:content="structure local_style">color container tabs green</style>
-<meta http-equiv="Content-Script-Type" content="text/javascript" />
-<script tal:replace="nothing"> _______ editor hooks _______ </script>
-<script type="text/javascript" language="JavaScript"
+  tal:attributes="href string:${root_url}/frontend.css"
+/>
+<!-- Plone Stylesheets -->
+<style media="all"
+  type="text/css"
+  xml:space="preserve"
+>
+@import url(globals/plone.css);
+@import url(globals/ploneCustom.css);
+</style>
+<link href="globals/silva.css"
+  rel="stylesheet"
+  tal:attributes="href string:${root_url}/globals/silva.css"
+/>
+<link href="globals/silvaContentStyle.css"
+  rel="stylesheet"
+  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css;"
+  tal:condition="python: not model.implements_container()"
+/>
+<!-- Plone Javascript -->
+<script type="text/javascript"
+  xml:space="preserve"
+  tal:replace="nothing"
+  tal:attributes="src string:${root_url}/globals/plone_javascripts.js"
+>
+</script>
+<script xml:space="preserve"
+  tal:replace="nothing"
+>
+_______ application specific stylesheet extension _______
+</script>
+<link href="ext_stylesheet"
+  rel="stylesheet"
+  tal:condition="view/extension_style_url | nothing"
+  tal:attributes="href view/extension_style_url"
+/>
+<style type="text/css"
+  xml:space="preserve"
+  tal:condition="python: template.id == 'tab_preview'"
+>
+div.workspace {background: #e6e6ee;}
+</style>
+<script xml:space="preserve"
+  tal:replace="nothing"
+>
+_______ editor hooks _______
+</script>
+<script language="JavaScript"
+  type="text/javascript"
+  xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_bxe'"
-  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url">
+  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url"
+>
+
 </script>
-<script type="text/javascript" language="JavaScript"
+<script language="JavaScript"
+  type="text/javascript"
+  xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
-  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url">
-</script>
-<script type="text/javascript" language="JavaScript"
+  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url"
+/>
+<script language="JavaScript"
+  type="text/javascript"
+  xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_eopro'"
-  tal:content="python: template.tab_edit_eopro_js()">
-</script>
+  tal:content="python: template.tab_edit_eopro_js()"
+/>
 </head>
-<body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
-  tal:attributes="onload python: test(template.id == 'tab_edit_bxe',
-    'BX_load(\'%s/bxe/bxe_config.xml\')' % (model.absolute_url()),
-    'if (window.focus_editor) window.focus_editor()')">
-<tal:block replace="nothing">Previous onload tests facilitate Bitflux editor support</tal:block>
-<span class="halfline"
-  tal:condition="python:template.id != 'tab_preview'"><br /></span>
-<!-- __________________________ start feedback _________________________ -->
-<tal:block
-  define="type options/message_type | request/message_type | nothing;
-          msg options/message | request/message | nothing"
-  condition="type">
-<div class="feedback" tal:condition="python:type == 'feedback'">
-<span tal:replace="structure msg">message</span>&nbsp;&nbsp;<span tal:replace="string:(${here/service_utils/backend_now_to_str})">datetime</span>
-</div>
-<div class="feedback" tal:condition="python:type == 'error'">
-<span class="error" tal:content="structure msg">message</span>
-</div>
+<body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
+
+<tal:block replace="nothing">
+  Previous onload tests facilitate Bitflux editor support
 </tal:block>
-<!-- __________________________ end feedback __________________________ -->
+
+<span tal:replace="nothing">
+<!-- _____________________ start workspace _____________________ -->
+</span>
+<div class="workspace">
+
+<span class="halfline"
+  tal:condition="python:template.id != 'tab_preview'"
+>
+  <br clear="none" />
+</span>
+
+<span tal:replace="nothing">
+<!-- _______ start feedback _______ -->
+</span>
+<tal:block 
+  define="
+    type options/message_type | request/message_type | nothing;
+    msg options/message | request/message | nothing;"
+  condition="type"
+>
+  <div class="feedback"
+    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'"
+  >
+    <span tal:replace="structure msg">
+      message
+    </span>
+    &nbsp;&nbsp;
+    <span tal:replace="string:(${here/service_utils/backend_now_to_str})"
+      tal:condition="python:type != 'alert'">
+      datetime
+    </span>
+  </div>
+</tal:block>
+<span tal:replace="nothing">
+<!-- _______ end feedback _______ -->
+</span>
+
 <!-- ____________________________ main start ___________________________ -->
 <div metal:define-slot="main">
-Here the local content (a.k.a. "model") is inserted (this text will be replaced).
+  Here the local content (a.k.a. "model") is inserted (this text will be replaced).
 </div>
 <!-- ____________________________ main ends ____________________________ -->
+
+
+<span tal:replace="nothing">
+<!-- _____________________ workspace ends _____________________ -->
+</span>
+</div>
 </body>
 </html>

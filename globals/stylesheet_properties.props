@@ -1,0 +1,141 @@
+plone_skin:string=Plone Core
+
+noShade:string=white
+shade98:string=#f3f3fa
+shade96:string=#eeeef5
+shade94:string=#e9e9f0
+shade92:string=#e4e4eb
+shade90:string=#dfdfe6
+shade88:string=#dadae1
+shade86:string=#d5d5dc
+shade84:string=#d0d0d7
+shade82:string=#cbcbd1
+shade80:string=#c6c6cc
+shade78:string=#c1c1c7
+shade76:string=#bcbcc2
+shade74:string=#b7b7bd
+shade72:string=#b2b2b8
+shade70:string=#adadb3
+shade68:string=#a8a8ae
+shade66:string=#a3a3a8
+shade64:string=#9e9ea3
+shade62:string=#99999e
+shade60:string=#949499
+shade58:string=#909094
+shade56:string=#8b8b8f
+shade54:string=#86868a
+shade52:string=#818185
+shade50:string=#7c7c7f
+shade48:string=#77777a
+shade46:string=#727275
+shade44:string=#6d6d70
+shade42:string=#68686b
+shade40:string=#636366
+
+shade36:string=#59595c
+
+shade30:string=#4a4a4c
+
+shade26:string=#424244
+
+nightShade:string=black
+
+
+mainFont:string=70% Verdana, Helvetica, Arial, sans-serif
+mainBackground:string=#555555
+mainFontColor:string=#4a4a4c
+mainLinkColor:string=#193367
+mainTabBorderColor:string=#4a4a4c
+mainTabBorderColorSelected:string=#636366
+mainTabBackground:string=#a7c6c4
+mainTabBackgroundNotSelected:string=#77777a
+mainTabBackdrop:string=#302b36
+mainTabFontWeight:string=normal
+mainTabFontColor:string=#dce6e8
+mainTabFontColorSelected:string=#424244
+
+headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
+headingFontColor:string=#444446
+headingSize1:string=150%
+headingSize2:string=135%
+headingSize3:string=120%
+headingSize4:string=110%
+headingSize5:string=105%
+headingSize6:string=100%
+
+descriptionFont:string=bold 80% Verdana, Helvetica, Arial, sans-serif
+
+contentFont:string=80% Verdana, Helvetica, Arial, sans-serif
+contentBackground:string=#D6D6D6
+contentImageBorder:string=0
+contentLinkActiveColor:string=Red
+contentLinkVisitedColor:string=Purple
+contentTabBorder:string=1px solid #A3A3A3
+contentTabBackground:string=#E5E5E5
+contentTabBackgroundNotSelected:string=White
+contentTabBackdrop:string=transparent
+contentTabFontWeight:string=normal
+contentTabFontColor:string=#808080
+contentTabFontColorSelected:string=#808080
+
+preBorder:string=1px solid #A3A3A3
+preBackground:string=#E5E5E5
+
+messageFont:string=bold 100% Verdana, Helvetica, Arial, sans-serif
+messageBackground:string=#E5E5E5
+messageBorder:string=1px solid #909094
+
+textTransform:string=lowercase
+noBorder:string=none
+evenRowBackground:string=#cbcbd1
+oddRowBackground:string=#dfdfe6
+groupBorder:string=1px solid #A3A3A3
+requiredField:string=url(required.gif) right no-repeat
+
+inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
+inputBorder:string=1px solid #A3A3A3
+
+contextButtonBackground:string=#555555
+contextButtonPadding:string=0em 0.1em 0.1em 0
+contextButtonFontColor:string=#ace6bf
+
+standaloneButtonBackground:string=#555555
+standaloneButtonPadding:string=0em 2em 0.1em 2em
+standaloneButtonFontColor:string=#bce4ee
+
+destructiveButtonBackground:string=#FFCE7B 9px 1px no-repeat
+destructiveButtonPadding:string=1px 1px 1px 15px
+destructiveButtonBorder:string=1px solid #FFA500
+destructiveButtonFontColor:string=Black
+
+buttonWeight:string=normal
+
+boxBorder:string=1px solid #A3A3A3
+boxHeaderBackground:string=#E5E5E5
+boxHeaderFontColor:string=#808080
+boxLinkBackground:string=url(linkTransparent.gif) -0.5em 0px no-repeat
+boxLinkColor:string=Black
+boxEvenBackground:string=#F8F8F8
+boxOddBackground:string=White
+boxHighlight:string=2px solid #FFCF7F
+
+listingBorder:string=1px solid #7c7c7f
+listingHeaderBackground:string=white
+listingHeaderFontColor:string=#555557
+listingLinkHover:string=underline
+listingEvenBackground:string=#dfdfe6
+listingOddBackground:string=#d0d0d7
+
+topBackground:string=#BEBEBE
+topMargin:string=0
+topPadding:string=0
+
+logoMargin:string=1em 0em 1em 2em
+logoPadding:string=0
+
+searchMargin:string=3em 0em 0em 0em
+searchPadding:string=0em 2em 0em 0em
+searchFontColor:string=#808080
+
+footerBackground:string=#E5E5E6
+footerBorder:string=1px solid #A3A3A4

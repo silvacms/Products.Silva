@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.2 $
+Version of this file: $Revision: 1.3 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -47,7 +47,7 @@ Add Silva Group.
   <tr>
     <td align="left" valign="top">
     <div class="form-label">
-    Only create asset:<br>(no further action is taken)
+    Only create asset:<br />(no further action is taken)
     </div>
     </td>
     <td align="left" valign="top">

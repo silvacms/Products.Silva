@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.10 $
+  CVS:        $Revision: 1.11 $
 
 Silva
 
@@ -69,3 +69,5 @@ Using Silva
 License
   
   Silva is released under the BSD license. See 'LICENSE.txt'.
+  
+  

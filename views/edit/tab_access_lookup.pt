@@ -1,208 +1,218 @@
-<tal:block define="
-  global active_tab string:tab_access;
-  global breadcrumb_vein string:Lookup;
-  " />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global active_tab string:tab_access;
+    global breadcrumb_vein string:Lookup;
+  ">
 <metal:block use-macro="here/macro_index/macros/master">
-  <div class="margins"
-    metal:fill-slot="main">
+<metal:block fill-slot="main">
 
-    <script type="text/javascript" 
-      tal:content="structure python:here.focus_editor('name')" />
+<script type="text/javascript" 
+  tal:content="structure python:here.focus_editor('name')">
+  focus cursor
+</script>
 
-    <h3>
-      <a href="lookup_back_link"
-        title="Up to top of Access tab"
-        tal:attributes="href here/lookup_back_link">
-        <img alt="Up to top of Access tab"
-          border="0"
-          height="16"
-          width="16"
-          tal:attributes="src string:${silva_root}/globals/left.gif" />
-        Back
-      </a>
-    </h3>
-    <h2 class="worksheet"><img src="%s" width="16" height="16" alt="%s"
-    tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-      Users lookup at <span class="folder-title" 
-        tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
-    </h2>
-    <div class="worksheet borders top bottom left right"
-      tal:define="global no_entry string:-"
-      tal:condition="python:view.has_access()">
-      <table border="0"
-        cellpadding="5"
-        cellspacing="0"
-        width="100%">
-        <tr>
-          <td>
-            <h3>
-              Search
-            </h3>
-          </td>
-          <td>
-            <h3>
-              Selection
-            </h3>
-          </td>
-        </tr>
-        <tr align="left"
-          valign="top">
-          <td width="50%">
-            <form action="lookup_search"
-              method="POST">
-              <table border="0"
-                cellpadding="3"
-                cellspacing="0"
-                width="100%">
-                <tr class="topcontrols">
-                  <th align="left"
-                    colspan="2">
-                    <span class="tablehead4">
-                      User search
-                    </span>
-                  </th>
-                </tr>
-                <tr class="focus">
-                  <td class="rowhead"
-                    colspan="2">
-                    Name (or part of name):
-                    <br />
-                    <input class="textarea"
-                      name="name"
-                      style="width:100%;"
-                      type="text"
-                      value="" />
-                  </td>
-                </tr>
-                <tr class="controls">
-                  <td colspan="2" align="right">
-                    <input class="button"
-                      accesskey="s"                      
-                      title="Search - alt-s"
-                      type="submit"
-                      value="Search" />
-                  </td>
-                </tr>
-                <tr>
-                  <td align="left"
-                    colspan="2">
-                    &nbsp;
-                  </td>
-                </tr>
-              </table>
-            </form>
-              <!-- __________________________ search results ______________________________ -->
-            <form action="lookup_add_to_selection" method="POST">
-              <table border="0"
-                cellpadding="3"
-                cellspacing="0"
-                width="100%">
-                <tr class="topcontrols">
-                  <th align="left"
-                    colspan="2">
-                    <span class="tablehead4">
-                      Search results
-                    </span>
-                  </th>
-                </tr>
-                <tal:block define="global lookup_result options/results | nothing" />
-              <!-- If many items in result; put a second button on top as well. 
-                Is this UI-wise "done" or "not done"? -->
-                <tr class="topcontrols"
-                  tal:condition="python:lookup_result and len(lookup_result) > 3">
-                  <td align="right"
-                    colspan="2">
-                    <img height="18px"
-                      src="pixel.gif"
-                      width="1px"
-                      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-                    <input class="button"
-                      accesskey="a"                      
-                      title="Add checked users to your selection list on the right - ctrl-a"
-                      type="submit"
-                      value="Add to selection" />
-                  </td>
-                </tr>
-              <!-- Listing loop -->
-                <tal:block repeat="member lookup_result">
-                  <tr class="focus"
-                    tal:define="oddrow repeat/member/odd"
-                    tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
-                    <td align="left"
-                      valign="top"
-                      width="1%">
-                      <input name="userids:list"
-                        type="checkbox"
-                        value=""
-                        tal:attributes="value member/userid" />
-                    </td>
-                    <td>
-                      <span class="subhead"
-                        tal:content="member/fullname" />
-                      &nbsp;
-                      <br />
-                      <span class="subhead">
-                        email:
-                      </span>
-                      <span tal:replace="member/email" />
-                      <br />
-                    </td>
-                  </tr>
-                </tal:block>
-                <tr class="focus"
-                  tal:condition="python:not lookup_result">
-                  <td align="left"
-                    colspan="2"
-                    valign="top">
-                    <i>
-                      (no search results)
-                    </i>
-                  </td>
-                </tr>
-                <tr class="controls">
-                  <td align="right"
-                    colspan="2">
-                    <input class="button"
-                      accesskey="a"                      
-                      title="Add checked users to your selection list on the right - ctrl-a"
-                      type="submit"
-                      value="Add to selection"
-                      tal:condition="lookup_result" />
-                  </td>
-                </tr>
-              </table>
-            </form>
-          </td>
-        <!-- __________________________ selection ______________________________ -->
-          <td>
-              <!-- Clipboard -->
-              <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
-                <metal:block fill-slot="clipboard_lookup_action">
-                  <!-- fill slot to suppress lookup button -->
-                </metal:block>
-                <metal:block fill-slot="clipboard_actions">
+<h3>
+  <a href="lookup_back_link"
+    title="Up to top of Access tab"
+    tal:attributes="href here/lookup_back_link">
+    <img alt="Up to top of Access tab"
+      border="0"
+      height="16"
+      width="16"
+      tal:attributes="src string:${root_url}/globals/left.gif" />
+    Back
+  </a>
+</h3>
+<h2 class="worksheet">
+  <img tal:replace="structure python:view.render_icon(model)" />&nbsp;
+  Users lookup at <span class="folder-title" tal:content="structure string:&amp;#xab;${model/get_title_or_id_html}&amp;#xbb;">title here</span>
+</h2>
+<div class="worksheet borders top bottom left right"
+  tal:define="global no_entry string:-"
+  tal:condition="python:view.has_access()">
+  <table border="0"
+    cellpadding="5"
+    cellspacing="0"
+    width="100%">
+    <tr>
+      <td>
+        <h3>
+          Search
+        </h3>
+      </td>
+      <td>
+        <h3>
+          Selection
+        </h3>
+      </td>
+    </tr>
+    <tr align="left"
+      valign="top">
+      <td width="50%">
+        <form action="lookup_search"
+          method="POST">
+          <table border="0"
+            cellpadding="3"
+            cellspacing="0"
+            width="100%">
+            <tr class="topcontrols">
+              <th align="left"
+                colspan="2">
+                <span class="tablehead4">
+                  User search
+                </span>
+              </th>
+            </tr>
+            <tr class="focus">
+              <td class="rowhead"
+                colspan="2">
+                Name (or part of name):
+                <br />
+                <input class="textarea"
+                  name="name"
+                  style="width:100%;"
+                  type="text"
+                  value="" />
+              </td>
+            </tr>
+            <tr class="controls">
+              <td colspan="2" align="right">
+                <input class="button"
+                  accesskey="s"                      
+                  title="Search - alt-s"
+                  type="submit"
+                  value="Search" />
+              </td>
+            </tr>
+            <tr>
+              <td align="left"
+                colspan="2">
+                &nbsp;
+              </td>
+            </tr>
+          </table>
+        </form>
+          <!-- __________________________ search results ______________________________ -->
+        <form action="lookup_add_to_selection" method="POST">
+          <table border="0"
+            cellpadding="3"
+            cellspacing="0"
+            width="100%">
+            <tr class="topcontrols">
+              <th align="left"
+                colspan="2">
+                <span class="tablehead4">
+                  Search results
+                </span>
+              </th>
+            </tr>
+            <tal:block define="global lookup_result options/results | nothing" />
+          <!-- If many items in result; put a second button on top as well. 
+            Is this UI-wise "done" or "not done"? -->
+            <tr class="topcontrols"
+              tal:condition="python:lookup_result and len(lookup_result) > 3">
+              <td align="right"
+                colspan="2">
+                <img height="18px"
+                  src="pixel.gif"
+                  width="1px"
+                  tal:attributes="src string:${root_url}/globals/pixel.gif" />
+                <input class="button"
+                  accesskey="a"                      
+                  title="Add checked users to your selection list on the right - ctrl-a"
+                  type="submit"
+                  value="Add to selection" />
+              </td>
+            </tr>
+          <!-- Listing loop -->
+            <tal:block repeat="member lookup_result">
+              <tr class="focus"
+                tal:define="oddrow repeat/member/odd"
+                tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
+                <td align="left"
+                  valign="top"
+                  width="1%">
+                  <input name="userids:list"
+                    type="checkbox"
+                    value=""
+                    tal:attributes="value member/userid" />
+                </td>
+                <td>
+                  <span class="subhead"
+                    tal:content="member/fullname" />
                   &nbsp;
-                  <a class="buttonlink" 
-                    accesskey="u"
-                    title="Return to the top of the access tab with this selection - ctrl-u"
-                    style="float: right;"
-                    href="lookup_back_link"
-                    tal:attributes="href here/lookup_back_link">
-                    Use selection...
-                  </a>
-                  <input class="warningbutton"
-                    accesskey="d"
-                    name="lookup_remove_from_selection:method"
-                    style="float: left;"
-                    title="Remove users from your selection: alt-d"
-                    type="submit"
-                    value="Deselect" />
-                </metal:block>
-              </metal:block>
-          </td>
-        <!-- ________________________ end selection ____________________________ -->
-        </tr>
-      </table>
-    </div>
-  </div>
+                  <br />
+                  <span class="subhead">
+                    email:
+                  </span>
+                  <span tal:replace="member/email | no_entry" />
+                  <br />
+                </td>
+              </tr>
+            </tal:block>
+            <tr class="focus"
+              tal:condition="python:not lookup_result">
+              <td align="left"
+                colspan="2"
+                valign="top">
+                <i>
+                  (no search results)
+                </i>
+              </td>
+            </tr>
+            <tr class="controls">
+              <td align="right"
+                colspan="2">
+                <input class="button"
+                  accesskey="a"                      
+                  title="Add checked users to your selection list on the right - ctrl-a"
+                  type="submit"
+                  value="Add to selection"
+                  tal:condition="lookup_result" />
+              </td>
+            </tr>
+          </table>
+        </form>
+      </td>
+    <!-- __________________________ selection ______________________________ -->
+      <td>
+          <!-- Clipboard -->
+          <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
+            <metal:block fill-slot="clipboard_lookup_action">
+              <!-- fill slot to suppress lookup button -->
+            </metal:block>
+            <metal:block fill-slot="clipboard_actions">
+              &nbsp;
+              <a class="buttonlink" 
+                accesskey="u"
+                title="Return to the top of the access tab with this selection - ctrl-u"
+                style="float: right;"
+                href="lookup_back_link"
+                tal:attributes="href here/lookup_back_link">
+                Use selection...
+              </a>
+              <input class="warningbutton"
+                accesskey="d"
+                name="lookup_remove_from_selection:method"
+                style="float: left;"
+                title="Remove users from your selection: alt-d"
+                type="submit"
+                value="Deselect" />
+            </metal:block>
+          </metal:block>
+      </td>
+    <!-- ________________________ end selection ____________________________ -->
+    </tr>
+  </table>
+</div>
+
 </metal:block>
+</metal:block>
+</html>

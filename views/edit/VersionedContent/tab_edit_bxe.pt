@@ -1,14 +1,22 @@
-<!-- ___________________________ start index_html ___________________________ -->
-<tal:block define="global breadcrumb_vein string:BXE;" />
-<html metal:use-macro="here/macro_index/macros/master">
-<div metal:fill-slot="main" tal:omit-tag="">
-<!-- ___________________________ start index_html/slot main ___________________________ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global breadcrumb_vein string:BXE;
+  ">
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
 
-<tal:block tal:define="dummy python:model.security_trigger();
-                       global could_lock model/sec_create_lock;
-                       global unapproved_version model/get_unapproved_version;" />
+<tal:block tal:define="
+  global could_lock model/sec_create_lock;
+  global unapproved_version model/get_unapproved_version;" />
 
-        <div id="bxe_area">
+  <div id="bxe_area">
     <noscript>
 
     <h2><span tal:replace="here/title_or_id">content title or id</span>
@@ -20,6 +28,8 @@
 
     <a tal:condition="python: request.HTTP_REFERER or nothing"
       tal:attributes="href request/HTTP_REFERER">Back</a>
+
+    </noscript>
 
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
 <tal:block tal:condition="python:unapproved_version and not could_lock">
@@ -56,8 +66,8 @@
 </form>
 </div>
 
-<!-- ___________________________ end index_html/slot main ___________________________ -->
 </div>
 
+</metal:block>
+</metal:block>
 </html>
-<!-- ___________________________ end index_html ___________________________ -->

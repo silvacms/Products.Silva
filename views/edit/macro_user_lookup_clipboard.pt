@@ -1,3 +1,13 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  >
+
 <metal:block define-macro="clipboard">
   <div class="hilight borders top bottom left right"
     style="padding: 0.5em; width: 23em; float: right; margin: 0em 0em 2em 1em;">
@@ -68,3 +78,5 @@
     </metal:block>
   </div>
 </metal:block>
+
+</html>

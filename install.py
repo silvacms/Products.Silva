@@ -90,6 +90,10 @@ def install(root):
     if not hasattr(root, 'service_resources'):
         # folder containing some extra views and resources
         root.manage_addFolder('service_resources')
+    # do the same for the sidebar service
+    if not hasattr(root, 'service_sidebar'):
+        root.manage_addProduct['Silva'].manage_addSidebarService('service_sidebar', '')
+        
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     add_fss_directory_view(root.service_resources, 'Silva', __file__, 'resources')

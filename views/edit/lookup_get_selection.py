@@ -1,7 +1,8 @@
 request = context.REQUEST
 session = request.SESSION
+model = request.model
 
-key = ('silva_lookup_selection', context.silva_root())
+key = ('silva_lookup_selection', model.get_root_url())
 
 if not session.has_key(key):
     session[key] = {}

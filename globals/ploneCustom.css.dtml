@@ -1,0 +1,631 @@
+<dtml-let last_modified="_.DateTime()-14"
+          expires="_.DateTime()+7" >
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
+</dtml-let>
+
+/*
+**  Silva style sheet classes
+**
+**  Alexander Limi (limi@plone.org) - October 2002
+**
+*/
+
+/* {border: 1px dotted red; } */
+
+<dtml-with stylesheet_properties>
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+    margin: 0em 0em 1em 0em;
+    padding: 0;
+  border: none;
+}
+
+div.workspace {
+  background : &dtml-shade70;;
+}
+
+pre {
+    font-size: 180%;
+}
+
+.readable {
+  max-width : 40em;
+  /* for IE5 */
+  width : 512px;
+  line-height: 1.3em;
+    text-align: left;
+}
+
+
+/* _____________________________________________________________ tabs _____ */
+
+div.tabs {
+    background: &dtml-mainTabBackdrop;;
+    border-collapse: collapse;
+    padding: 0em 0em 0em 2em;
+    white-space: nowrap;
+}
+
+div.tabs img {
+    vertical-align: bottom;
+    padding: 0;
+}
+
+div.tabs a {
+    /* The normal, unselected tabs. They are all links */
+    background: &dtml-mainTabBackgroundNotSelected;;
+    border-width: 1px;
+    border-style: solid solid none solid;
+    margin: 0;
+    padding: 0em 1.5em;
+}
+
+div.tabs a:hover {
+    background: &dtml-mainTabBackground;;
+  text-decoration: none;
+}
+
+div.tabs a.selected {
+    /* The selected tab. There's only one of these */
+    background: &dtml-mainTabBackground;;
+    border-style: solid solid none solid;
+    border-bottom: &dtml-mainTabBackground; 1px solid;
+}
+
+div.tabs a.recede {
+  /* The parent tab of a subscreen. There might be one of these :) */
+  color: &dtml-mainTabFontColorSelected;;
+  background: #93a9a8;
+  border-style: solid solid solid solid;
+  border-bottom: &dtml-shade50; 1px solid;
+}
+
+div.tabs a.recede:hover {
+    background: &dtml-mainTabBackground;;
+}
+
+div.tabs a.left {
+    /* The left side of the tab. */
+    border-style: solid none none solid;
+  padding: 0em 0em 0em 0.2em;
+}
+
+div.tabs a.left:hover {
+    border-style: solid none none solid;
+}
+
+div.tabs a.right {
+    /* The right side of the tab. */
+    border-style: solid solid none none;
+    margin-left: -0.4em;
+  padding: 0em 0em 0em 0.4em;
+}
+
+div.tabs a.right:hover {
+    border-style: solid solid none none;
+}
+
+div.tabs a.normal {
+    color: &dtml-shade40;;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    text-transform: none;
+    font-size: 100%;
+}
+
+
+/* _________________________________________________________ path bar _____ */
+
+div.pathBar {
+  font-size: 90%;
+    background: &dtml-mainTabBackground;;
+    padding: 0.1em 16px;
+}
+
+div.pathBar a {
+	color: &dtml-mainLinkColor;;
+    font-weight: &dtml-mainTabFontWeight;;
+    padding: 0 ! important;
+    margin: 0 ! important;
+    text-transform: none;
+}
+
+div.pathBar a.visited {
+	color: &dtml-mainTabFontColorSelected;;
+}
+
+div.pathBar a.manage {
+	color: &dtml-mainTabFontColor;;
+    margin-left: 0.5em ! important;
+}
+
+div.pathBar img {
+    vertical-align: middle;
+}
+
+
+/* ___________________________________________________________ footer _____ */
+
+div.footer {
+  font-size: 94%;
+    background: &dtml-mainTabBackground;;
+  margin: 0.5em 0em 0em 0em;
+    padding: 0em 16px 0.1em 16px;
+    border-top: &dtml-shade60; 1px solid;
+    border-bottom: none;
+}
+
+div.footer a {
+	color: &dtml-mainLinkColor;;
+    font-weight: &dtml-mainTabFontWeight;;
+    padding: 0;
+    margin: 0;
+    text-transform: none;
+}
+
+img.icon {
+    margin-right: 0.2em;
+}
+
+
+/* _____________________________________________________ personal bar _____ */
+
+div.personalBar {
+    text-align: left;
+    background: &dtml-mainTabBackdrop;;
+  margin: 0em 0em 0em 0em;
+    padding: 0.1em 16px 0.2em 16px;
+  border-collapse: collapse;
+}
+
+div.personalBar a {
+  color: #8fb4ac;
+    padding: 0 ! important;
+    margin: 0 ! important;
+    text-transform: none;
+}
+
+div.personalBar img {
+    vertical-align: middle;
+}
+
+
+/* ____________________________________________________ table columns _____ */
+
+table.columns {
+  margin-top : 1em;
+}
+
+/* 3 column table */
+table.columns td.left {
+    width: 20%;
+    padding: 0 8px 0 8px ! important;
+}
+table.columns td.main {
+    width: 60%;
+    padding: 0 8px 0 0;
+}
+table.columns td.right {
+    width: 20%;
+    padding: 0 8px 0 0 ! important;
+}
+
+/* 2 column table */
+table.columns2 td.left {
+    width: 20%;
+    padding: 0 0 0 8px ! important;
+}
+table.columns2 td.main {
+    width: 80%;
+    padding: 0 8px 0 8px;
+}
+
+/* 1 column table */
+table.columns1 {
+    width: 100%;
+    padding: 0 8px 0 8px;
+}
+
+/* ____________________________________________________ table listing _____ */
+
+table.listing {
+    color: #444444;
+    width: 100%;
+    margin: 0em 0em 1em 0em;    
+}
+
+table.listing tfoot {
+  border-top: &dtml-listingBorder; ! important;
+}
+
+table.listing tr.controls {
+    background-color: &dtml-shade42;;
+}
+
+table.listing tr.top-controls {
+    background-color: &dtml-shade50;;
+}
+
+table.listing tr.controls-1 {
+    background-color: &dtml-shade50;;
+}
+
+table.listing tr.fixed, td.fixed {
+    background-color: &dtml-shade78;;
+}
+
+tr.divider, th.divider, td.divider {
+  font-size : 45%;
+  background : &dtml-shade36;;
+}
+
+table.listing th {
+    text-align: left;
+    color: #e8f3f5;
+    background-color: &dtml-shade60;;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+}
+
+table.listing th.listing-left {
+  width: 4%;
+  text-align: left;
+}
+
+table.listing th.listing-right {
+  width: 4%;
+  text-align: right;
+}
+
+table.listing th.controls {
+  padding: 0em 0.6em 0em 0.6em;
+}
+
+/* not in use? */
+table.listing th.empty {
+    border: none;
+    border-bottom: &dtml-boxBorder;;
+}
+
+/* not in use? */
+table.listing th img {
+    vertical-align: bottom;
+    padding: 0;
+}
+
+table.listing th.align-left, table.listing td.align-left {
+  text-align: left;
+}
+
+table.listing th.align-right, table.listing td.align-right {
+  text-align: right;
+}
+
+table.listing td {
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+    vertical-align: top;
+}
+
+table.listing td.top {
+  color: &dtml-shade86;;
+  background-color: &dtml-shade40;;
+    border-top: &dtml-listingBorder; ! important;
+    border-left: &dtml-listingBorder; ! important;
+    border-right: &dtml-listingBorder; ! important;
+    padding-top: 0em ! important;
+    padding-bottom: 0em ! important;
+    vertical-align: bottom;
+}
+
+table.listing td.top h2 {
+  color: #d1e8e8;
+    text-align: left;
+    margin: 0em 0.5em 0.1em 0.4em;
+    display: inline;
+    border: none;
+    float: left;
+}
+
+/* not in use */
+table.listing td.top div.addMenu {
+    padding-left: 0.4em;
+    display: inline;
+    float: left;
+}
+
+table.listing td.top h2 img {
+    vertical-align: top;
+}
+
+table.listing tr.top-controls td {
+  vertical-align: top;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+}
+
+table.listing tr.top-controls h3 {
+  color: #d3ebeb;
+  margin: 0em 0.2em 0.1em 0.2em;
+  display: inline;
+  border: none;
+  float: left;
+}
+
+table.listing tr.top-controls div.buttons {
+    padding: 0.2em 0;
+}
+
+table.listing td.listing-left {
+  text-align: left;
+  padding: 0em 0.6em 0em 0.6em;
+  white-space: nowrap;
+}
+
+table.listing td.listing-right {
+  text-align: right;
+  padding: 0em 0.6em 0em 0.6em;
+  white-space: nowrap;
+}
+
+table.listing tr.controls td, tr.controls-1 td {
+  padding: 0em 0.4em 0em 0.4em;
+}
+
+/* experimental */
+table.sublisting {
+  margin-top : 1em;
+}
+
+
+/* ______________ sidebar navigation ______________ */
+
+table.listing th.top {
+    color: #e3eef0;
+    background: &dtml-mainTabBackgroundNotSelected;;
+    vertical-align: bottom;
+    text-align: center;
+}
+
+/* text of link follows the tab style */
+table.listing th.top a.normal:link {
+    color: &dtml-mainTabFontColor;;
+}
+
+table.listing th.top a.normal:visited {
+    color: &dtml-mainTabFontColor;;
+}
+
+table.listing th.top a.normal:hover {
+    color: &dtml-mainTabFontColorSelected;;
+    text-decoration: none;
+}
+
+table.listing div.vein:hover { 
+    color: &dtml-mainTabFontColorSelected;;
+    background: &dtml-mainTabBackground;;
+}
+
+table.listing a.top {
+    background: &dtml-mainTabBackgroundNotSelected;;
+    float: left;
+    margin: 0em 0em 0em -0.6em;
+    border-right: &dtml-listingBorder;;
+    padding-left: 0.2em;
+    padding-right: 0.4em;
+}
+
+table.listing a.up {
+    background: &dtml-mainTabBackgroundNotSelected;;
+    float: right;
+    margin: 0em -0.6em 0em 0em;
+    border-left: &dtml-listingBorder;;
+    padding-left: 0.2em;
+    padding-right: 0.4em;
+}
+
+table.listing a.top:hover {
+    color: &dtml-mainTabBackground;;
+    background: &dtml-mainTabBackground;;
+    border-style: solid solid none none;
+    padding-left: 0.2em;
+    padding-right: 0.4em;
+  text-decoration: none;
+}
+
+table.listing a.up:hover {
+    color: &dtml-mainTabBackground;;
+    background: &dtml-mainTabBackground;;
+    border-style: solid none none solid;
+    padding-left: 0.2em;
+    padding-right: 0.4em;
+  text-decoration: none;
+}
+
+
+/* _______ pseudo form button selectors, matches button style _______ */
+
+table.listing a.button:link {
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-contextButtonFontColor;;
+  background: &dtml-contextButtonBackground;;
+  border : 1px solid #a3ccb1;
+  margin: 0.1em 0.2em;
+  padding: 0em 2em 0.1em 2em;
+  text-decoration : none;
+  text-transform: &dtml-textTransform;;
+}
+table.listing a.button:visited {
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-contextButtonFontColor;;
+  background: &dtml-contextButtonBackground;;
+  border : 1px solid #a3ccb1;
+  margin: 0.1em 0.2em;
+  padding: 0em 2em 0.1em 2em;
+  text-decoration : none;
+  text-transform: &dtml-textTransform;;
+}
+table.listing a.button:hover {
+  color : #bfffd3; 
+  background : #606b80; 
+  cursor : pointer;
+}
+
+/* _______ navigation between screens _______ */
+
+table.listing a.navigation:link {
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-standaloneButtonFontColor;;
+  background: &dtml-standaloneButtonBackground;;
+  border : 1px solid #a2c9cc;
+  margin: 0.1em 0.2em;
+  padding: &dtml-standaloneButtonPadding;;
+  text-decoration : none;
+  text-transform: &dtml-textTransform;;
+}
+table.listing a.navigation:visited {
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-standaloneButtonFontColor;;
+  background: &dtml-standaloneButtonBackground;;
+  border : 1px solid #a2c9cc;
+  margin: 0.1em 0.2em;
+  padding: &dtml-standaloneButtonPadding;;
+  text-decoration : none;
+  text-transform: &dtml-textTransform;;
+}
+table.listing a.navigation:hover {
+  color : #bff1ff; 
+  background : #74748b; 
+  cursor : pointer;
+}
+
+
+/* _______________________________________________________ form stuff _____ */
+
+form.focus-box {
+  /* for IE5 */
+  width : 90%;
+  max-width : 55em; 
+  margin : 1em 8px 0em 8px;
+}
+
+form.compact {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+  color : #333333;
+  background : #e3eef0;
+  border : 1px solid &dtml-shade60;;
+  margin-top: 1px;
+}
+ 
+textarea {
+  color : #333333;  
+  background : #e3eef0;
+  border : 1px solid &dtml-shade60;;
+}
+
+textarea.readable {
+  font: 100% Verdana, Helvetica, Arial, sans-serif;
+}
+
+select {
+    color: &dtml-contextButtonFontColor;;
+  background: &dtml-shade36;;
+  font-size: 90% ! important;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+input[type="checkbox"] {
+  color : #333333;
+  background : &dtml-shade70;;
+  border : 1px solid &dtml-shade60;;
+}
+ 
+/* Plone buttons, "ported" to Silva class names */
+
+input.navigation {
+    font-weight: &dtml-buttonWeight;;
+  color: &dtml-standaloneButtonFontColor;;
+  background: &dtml-standaloneButtonBackground;;
+  border : 1px solid #a2c9cc;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: &dtml-contextButtonPadding;;
+    cursor: pointer;
+    text-transform: &dtml-textTransform;;
+}
+
+input.button {
+    font-weight: &dtml-buttonWeight;;
+    color: &dtml-contextButtonFontColor;;
+  background : &dtml-contextButtonBackground;;
+  border: 1px solid #a3ccb1;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: &dtml-contextButtonPadding;;
+    cursor: pointer;
+    text-transform: &dtml-textTransform;;
+}
+
+input.warning {
+    font-weight: &dtml-buttonWeight;;
+  color : #f0c0c0; 
+  background : #4a4a4c;
+  border: 1px solid #d7acac;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: &dtml-contextButtonPadding;;
+    cursor: pointer;
+    text-transform: &dtml-textTransform;;
+}
+
+input.cancel {
+    font-weight: &dtml-buttonWeight;;
+  color : #dddddd; 
+  background : #676767;
+  border : 1px solid #cccccc;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: &dtml-contextButtonPadding;;
+    cursor: pointer;
+    text-transform: &dtml-textTransform;;
+}
+
+
+
+/* Plone message box aliased to Silva name */
+
+div.feedback {
+    color: #555555;
+    background: #f3f3d9;
+    border: &dtml-messageBorder;;
+    margin: 6px 8px -0.2em 8px;
+    padding: 0.2em 0.6em 0.4em 0.6em;
+}
+
+div.alert {
+    color: #3c2d50;
+    background: #f7d1d1;
+    border: &dtml-messageBorder;;
+    margin: 6px 8px -0.2em 8px;
+    padding: 0.2em 0.6em 0.4em 0.6em;
+}
+
+div.feedback a {
+	color: &dtml-mainFontColor;;
+    text-decoration: underline;
+}
+
+
+</dtml-with>
+

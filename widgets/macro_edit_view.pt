@@ -29,7 +29,7 @@
   <td tal:condition="not:disable_notes">
     <div metal:define-slot="edit_notes">_____ notes get slotted in ____ </div>
   </td>
-  <td class="transparent"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" border="0"></td>
+  <td class="transparent"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" border="0" /></td>
 </tr>
 <tr class="controls">
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_start" tal:omit-tag="" />

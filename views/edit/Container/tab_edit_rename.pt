@@ -1,11 +1,16 @@
-<!-- ___________________________ start index_html ___________________________ -->
-<tal:block define="global breadcrumb_vein string:Contents;
-                   global active_tab string:tab_edit;
-                   " />
-<html metal:use-macro="here/macro_index/macros/master">
-
-<div class="margins" metal:fill-slot="main">
-<!-- ___________________________ start index_html/slot main ___________________________ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global breadcrumb_vein string:Contents;
+    global active_tab string:tab_edit;"
+  tal:omit-tag="">
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
 
 <tal:condition condition="python:view.REQUEST.has_key('ids')">
 <tal:init define="global objects view/REQUEST/ids" />
@@ -83,6 +88,6 @@ No items to rename!<br />
 <a href="#" tal:attributes="href python:'/'.join(model.getPhysicalPath()) + '/edit'">Edit</a>
 </tal:condition>
 
-</div>
-
+</metal:block>
+</metal:block>
 </html>

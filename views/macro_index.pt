@@ -1,161 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html metal:define-macro="master"
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    silva_root here/silva_root;
     view here;
     model request/model;
-    dummy here/set_content_type;
-    ">
+    trigger model/security_trigger;
+
+    type model/meta_type;
+    url model/absolute_url;
+    title model/get_title_html;
+    
+    root_url model/get_root_url;
+
+    containing_folder model/..;
+    publication model/get_publication;
+    containing_publication publication/../get_publication | publication;
+    
+    content_type view/set_content_type;
+
+    silva_permissions view/get_silva_permissions;
+    may_approve_content silva_permissions/ApproveSilvaContent | nothing;
+    may_change_content silva_permissions/ChangeSilvaContent | nothing;"
+  >
 <head>
-<title tal:content="structure python:model.get_title_html()">Title</title>
-<link rel="shortcut icon" href="globals/favicon.ico"
-  tal:attributes="href here/globals/favicon.ico/absolute_url" />
-<link rel="stylesheet" href="globals/base.css"
-  tal:attributes="href here/globals/base.css/absolute_url" />
-<link rel="stylesheet" href="globals/silva.css"
-  tal:attributes="href here/globals/silva.css/absolute_url" />
-<link rel="stylesheet" href="frontend.css"
+<title tal:content="structure title">
+  Title
+</title>
+<link href="globals/favicon.ico"
+  rel="shortcut icon"
+  tal:attributes="href string:${root_url}/globals/favicon.ico"
+/>
+<!-- Temp Stylesheets -->
+<link href="globals/base.css"
+  rel="stylesheet"
+  tal:attributes="href string:${root_url}/globals/base.css"
+/>
+<link href="globals/silva.css"
+  rel="stylesheet"
+  tal:replace="nothing"
+  tal:attributes="href string:${root_url}/globals/silva.css"
+/>
+<link href="frontend.css"
+  rel="stylesheet"
   tal:condition="python:template.id == 'tab_preview'"
-  tal:attributes="href model/frontend.css/absolute_url" />
-<script tal:replace="nothing"> 
-  _______ application specific stylesheet extension _______ </script>
-<link rel="stylesheet" href="ext_stylesheet"
-  tal:condition="python:hasattr(here, 'extension_style_url')"
-  tal:attributes="href python:here.extension_style_url()" />
-<style tal:define="local_style view/local_style"
-  tal:condition="local_style"
-  tal:content="structure local_style">color container tabs green</style>
-<meta http-equiv="Content-Script-Type" content="text/javascript" />
-<script tal:replace="nothing"> _______ editor hooks _______ </script>
-<script type="text/javascript" language="JavaScript"
+  tal:attributes="href string:${root_url}/frontend.css"
+/>
+<!-- Plone Stylesheets -->
+<style media="all"
+  type="text/css"
+  xml:space="preserve"
+>
+@import url(globals/plone.css);
+@import url(globals/ploneCustom.css);
+</style>
+<link href="globals/silva.css"
+  rel="stylesheet"
+  tal:attributes="href string:${root_url}/globals/silva.css"
+/>
+<link href="globals/silvaContentStyle.css"
+  rel="stylesheet"
+  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css;"
+  tal:condition="python: not model.implements_container()"
+/>
+<!-- Plone Javascript -->
+<script type="text/javascript"
+  xml:space="preserve"
+  tal:replace="nothing"
+  tal:attributes="src string:${root_url}/globals/plone_javascripts.js"
+>
+</script>
+<script xml:space="preserve"
+  tal:replace="nothing"
+>
+_______ application specific stylesheet extension _______
+</script>
+<link href="ext_stylesheet"
+  rel="stylesheet"
+  tal:condition="view/extension_style_url | nothing"
+  tal:attributes="href view/extension_style_url"
+/>
+<style type="text/css"
+  xml:space="preserve"
+  tal:condition="python: template.id == 'tab_preview'"
+>
+div.workspace {background: #e6e6ee;}
+</style>
+<script xml:space="preserve"
+  tal:replace="nothing"
+>
+_______ editor hooks _______
+</script>
+<script language="JavaScript"
+  type="text/javascript"
+  xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_bxe'"
-  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url">
+  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url"
+>
+
 </script>
-<script type="text/javascript" language="JavaScript"
+<script language="JavaScript"
+  type="text/javascript"
+  xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
-  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url">
-</script>
-<script type="text/javascript" language="JavaScript"
+  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url"
+/>
+<script language="JavaScript"
+  type="text/javascript"
+  xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_eopro'"
-  tal:content="structure python: template.tab_edit_eopro_js()">
-</script>
+  tal:content="python: template.tab_edit_eopro_js()"
+/>
 </head>
-<body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
-  tal:attributes="onload python: test(template.id == 'tab_edit_bxe',
-    'BX_load(\'%s/bxe/bxe_config.xml\')' % (model.absolute_url()),
-    'if (window.focus_editor) window.focus_editor()')">
-<tal:block replace="nothing">Previous onload tests facilitate Bitflux editor support</tal:block>
-<!-- ____________________________ start tabs ___________________________ -->
-<tabs metal:use-macro="here/macro_tabs/macros/tabs" tal:omit-tag="">
-  Tab bar plugs in here....
-</tabs>
-<!-- ____________________________ end tabs _____________________________ -->
-<!-- __________________________ start feedback _________________________ -->
-<tal:block
-  define="type options/message_type | request/message_type | nothing;
-          msg options/message | request/message | nothing"
-  condition="type">
-<div class="feedback" tal:condition="python:type == 'feedback'">
-<span tal:replace="structure msg">message</span>&nbsp;&nbsp;<span tal:replace="string:(${here/service_utils/backend_now_to_str})">datetime</span>
-</div>
-<div class="alert" tal:condition="python:type == 'error'">
-<span tal:replace="structure msg">message</span>
-</div>
+<body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
+
+<tal:block replace="nothing">
+  Previous onload tests facilitate Bitflux editor support
 </tal:block>
-<!-- __________________________ end feedback __________________________ -->
+
+<!-- ____________________________ start tabs ___________________________ -->
+<metal:block use-macro="here/macro_tabs/macros/tabs">
+  Tab bar plugs in here....
+</metal:block>
+<!-- ____________________________ end tabs _____________________________ -->
+<span tal:replace="nothing">
+<!-- _____________________ start workspace _____________________ -->
+</span>
+<div class="workspace">
+
+<span class="halfline"
+  tal:condition="python:template.id != 'tab_preview'"
+>
+  <br clear="none" />
+</span>
+
+<span tal:replace="nothing">
+<!-- _______ start feedback _______ -->
+</span>
+<tal:block 
+  define="
+    type options/message_type | request/message_type | nothing;
+    msg options/message | request/message | nothing;"
+  condition="type"
+>
+  <div class="feedback"
+    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'"
+  >
+    <span tal:replace="structure msg">
+      message
+    </span>
+    &nbsp;&nbsp;
+    <span tal:replace="string:(${here/service_utils/backend_now_to_str})"
+      tal:condition="python:type != 'alert'">
+      datetime
+    </span>
+  </div>
+</tal:block>
+<span tal:replace="nothing">
+<!-- _______ end feedback _______ -->
+</span>
+
 <!-- ____________________________ main start ___________________________ -->
 <div metal:define-slot="main">
   Here the local content (a.k.a. "model") is inserted (this text will be replaced).
 </div>
 <!-- ____________________________ main ends ____________________________ -->
-<!-- ___________________________ footer start __________________________ -->
-<div style="clear: both;">
 
-<span tal:replace="nothing"> _______ white space + jump to top _______ </span>
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
-<tr tal:attributes="bgcolor python: template.id == 'tab_preview' and '#d1d4d8' or None">
-<td width="2%">
-<a href="#top" title="jump to top: alt-t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
-</td>
-<td align="right" colspan="3">
-<tal:block condition="python: template.id == 'tab_preview'">
-<span tal:replace="nothing"> _______ link to see page in public/local style, if in use _______ </span>
-<div style="margin-right:2%;"><span class="widebody"><a tal:attributes="href string:${model/absolute_url}/preview_html" title="See the complete public layout: alt-;" accesskey=";" target="_blank">Presentation preview</a></span></div>
-</tal:block>
-</td>
-<td width="2%">
-<a href="#top" title="jump to top: alt-t" accesskey="t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
-</td>
-</tr>
-
-<span tal:replace="nothing"> _______ border _______ </span>
-<tr>
-<td colspan="5" class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
-</tr>
-
-<span tal:replace="nothing"> _______ page info _______ </span>
-<tr>
-<td class="tab-up" width="2%">
-<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="11" />
-</td>
-<td class="tab-up" width="30%">
-<span class="breadcrumb">
-Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email',None)"><span class="index-link" tal:content="model/contact_name|string:no name"></span></a>
+<span tal:replace="nothing">
+<!-- ______________ footer start ______________ -->
 </span>
-</td>
-<td class="tab-up" align="center" width="36%">
-<span class="breadcrumb"
-  tal:condition="python: getattr(model, 'contact_email', '') != ''">
-  Email:
-  <a tal:attributes="href python:'mailto:%s'% getattr(model, 'contact_email', nothing)"><span class="index-link" tal:content="model/contact_email | nothing"></span></a>
+<span tal:replace="nothing">
+<!-- _______ white space + jump to top _______ -->
 </span>
-&nbsp;&nbsp;
-</td>
-<td class="tab-up" align="right" width="30%">
-<span class="breadcrumb">
-<a title="Leave Silva and see the published version: alt-:" accesskey=":"
-  tal:attributes="href model/absolute_url">See public version</a>
+<div>
+  <div style="float: left;">
+    <a href="#top"
+      title="jump to top: alt-t"
+    >
+      <img alt="jump to top"
+        border="0"
+        height="16"
+        width="16"
+        tal:attributes="src string:${root_url}/globals/up_to_top_gray.gif"
+      />
+    </a>
+  </div>
+  <div style="float: right;">
+    <a accesskey="t"
+      href="#top"
+      title="jump to top: alt-t"
+    >
+      <img alt="jump to top"
+        border="0"
+        height="16"
+        width="16"
+        tal:attributes="src string:${root_url}/globals/up_to_top_gray.gif"
+      />
+    </a>
+  </div>
+  &nbsp;
+</div>
+
+<span tal:replace="nothing">
+<!-- _______ page info _______ -->
 </span>
-</td>
-<td class="tab-up" width="2%">
-<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
-</td>
-</tr>
+<div class="footer">
+  <div style="float: left;">
+    Contact person:
+    <a shape="rect"
+      tal:attributes="href python:'mailto:%s' % getattr(model, 'contact_email', None)"
+    >
+      <span tal:replace="model/contact_name | string:no name" />
+    </a>
+  </div>
+  <div style="float: right;">
+    <a shape="rect"
+      tal:attributes="href url"
+    >
+      See public version
+    </a>
+  </div>
+  <span tal:condition="python: getattr(model, 'contact_email', '') != ''"
+    tal:omit-tag=""
+  >
+    Email:
+    <a tal:attributes="href python:'mailto:%s'% getattr(model, 'contact_email', nothing)">
+      <span class="index-link"
+        tal:content="model/contact_email | nothing"
+      />
+    </a>
+  </span>
+  &nbsp;
+</div>
 
-<span tal:replace="nothing"> _______ user info _______ </span>
-<tr valign="bottom"
-  tal:define="userid request/AUTHENTICATED_USER/getUserName">
-<td class="footer" width="2%">
-<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="12" />
-</td>
-<td class="footer" width="30%">
-<a class="footer" title="Change your settings: alt-~" accesskey="~" href="#"
-  tal:attributes="onclick string: userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450,height=350,resizable=no');; userWindow.focus();; return false;;">
-  <img tal:attributes="src string:${silva_root}/globals/user.gif" width="8" height="9" border="0"/>
-  User settings
-</a>
-</td>
-<td class="footer" align="center" width="36%">
-<a class="footer" tal:attributes="href string:public/request_roles?last_url=${model/absolute_url}" title="Request an additional role in this location: alt-," accesskey=","
-  tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()">
-  Request access
-</a>
-</td>
-<td class="footer" align="right" width="30%">
-<a class="footer" href="logout" title="Logout of Silva: alt-q" accesskey="q">Logout&nbsp;<span tal:condition="here/get_user_role" tal:replace="structure string:${here/get_user_role}&nbsp;" /><span tal:replace="userid" /></a>
-</td>
-<td class="footer" width="2%">
-<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
-</td>
-</tr>
+<span tal:replace="nothing">
+<!-- _______ user tools _______ -->
+</span>
+<div class="personalBar"
+  tal:define="userid request/AUTHENTICATED_USER/getUserName"
+>
+  <div style="float: left;">
+    <a accesskey="~"
+      href="#"
+      title="Change your settings: alt-~"
+      tal:attributes="
+        onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=350, resizable=no');;
+        userWindow.focus();;
+        return false;;"
+    >
+      <img border="0"
+        height="9"
+        width="8"
+        tal:attributes="src string:${root_url}/globals/user.gif"
+      />
+      User settings
+    </a>
+  </div>
+  <div style="float: right;">
+    <a accesskey="q"
+      href="logout"
+      title="Logout of Silva: alt-q"
+    >
+      Logout
+      <span tal:condition="here/get_user_role"
+        tal:replace="
+          structure string:${here/get_user_role}&nbsp;"
+      />
+      <span tal:replace="userid" />
+    </a>
+  </div>
+  <a accesskey=","
+    shape="rect"
+    title="Request an additional role in this location: alt-,"
+    tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()"
+    tal:attributes="href string:public/request_roles?last_url=${url}"
+  >
+    Request access
+  </a>
+  <a name="bottom">
+    &nbsp;
+  </a>
+</div>
+<span tal:replace="nothing">
+<!-- ______________ footer ends ______________ -->
+</span>
 
-<span tal:replace="nothing"> _______ border _______ </span>
-<tr>
-<td colspan="5" class="tab-bg"><a name="bottom"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="2" border="0"/></a></td>
-</tr>
-</table>
+<span tal:replace="nothing">
+<!-- _____________________ workspace ends _____________________ -->
+</span>
+</div>
+ 
 <!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
 
-</div>
-<!-- ___________________________ footer ends ___________________________ -->
 </body>
 </html>

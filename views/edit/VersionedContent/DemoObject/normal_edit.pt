@@ -1,4 +1,4 @@
-<init tal:define="global silva_root here/silva_root;
+<init tal:define="global root_url here/root_url;
   global model request/model; 
   global editable model/get_editable;
   global view here;
@@ -7,7 +7,7 @@
 <br />
 <table width="100%" cellspacing="0" cellpadding="1" border="0">
 <tr valign="top">
-<td width="16"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" alt="not editable" /></td>
+<td width="16"><img tal:attributes="src string:${root_url}/globals/pixel.gif" width="16" height="16" border="0" alt="not editable" /></td>
 <td colspan="3" width="98%">
 <div class="front3">&nbsp;Demo-details for: <span tal:replace="structure python:model.get_title_or_id_html()" /></div>
 </td>
@@ -67,7 +67,7 @@ Some information
 
 <content-editor tal:omit-tag="">
 <tr comment="DemoAddable Content" class="focus" valign="top">
-  <td width="16" class="transparent" ><a href="content_mode"><img tal:attributes="src string:${silva_root}/globals/edit_element.gif" width="16" height="16" border="0" alt="edit element" /></a></td>
+  <td width="16" class="transparent" ><a href="content_mode"><img tal:attributes="src string:${root_url}/globals/edit_element.gif" width="16" height="16" border="0" alt="edit element" /></a></td>
   <td class="rowhead" align="right"><a href="content_mode">Content</a></td>
   <td align="right">&nbsp;</td>
   <td colspan="2"><p tal:replace="structure here/get_content" /><p tal:condition="not: here/get_content" tal:replace="structure string:(nothing filled in)" /></td>

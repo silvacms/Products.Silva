@@ -9,7 +9,6 @@
 ##
 model = context.REQUEST.model
 view = context
-silva_permissions = view.get_silva_permissions()
 
 from DateTime import DateTime
 from Products.Formulator.Errors import FormValidationError
@@ -41,6 +40,7 @@ not_changed = []
 msg = []
 
 get_name = context.tab_status_get_name
+silva_permissions = view.get_silva_permissions()
 
 for ref in refs:
     obj = model.resolve_ref(ref)

@@ -1,23 +1,31 @@
-<tal:block define="
-  global active_tab string:tab_edit;
-  global breadcrumb_vein string:Add;
-  global mode_asset request/mode_asset | python:0;
-  global use_macro python: (mode_asset and [here.macro_no_tabs] or 
-    [here.macro_index])[0]
-  " />
-
-<!-- ___________________________ start index_html ___________________________ -->
-<html metal:use-macro="use_macro/macros/master">
-
-<div class="margins" metal:fill-slot="main">
-<!-- ___________________________ start index_html/slot main ___________________________ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global active_tab string:tab_edit;
+    global breadcrumb_vein string:Add;
+    global active_tab string:tab_edit;
+    global breadcrumb_vein string:Add;
+    global mode_asset request/mode_asset | python:0;
+    global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]
+  ">
+<metal:block metal:use-macro="use_macro/macros/master">
+<metal:block fill-slot="main">
+  <script type="text/javascript" 
+    tal:content="structure python:here.focus_editor('field_object_id')" />
 
 <h2><img src="%s" width="16" height="16" alt="%s"
-     tal:replace="structure python:view.render_icon(request.meta_type)" />&nbsp;
+     tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />&nbsp;
   Add new <span tal:replace="request/meta_type" />
 </h2>
 <script type="text/javascript" 
   tal:content="structure python:here.focus_editor('field_object_id')" />
+
 <form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
 <input type="hidden" name="mode_asset:int" value="0"
@@ -83,6 +91,6 @@ id: no spaces or special characters besides an underscore (_).
 </table>
 </form>
 
-</div>
-
+</metal:block>
+</metal:block>
 </html>

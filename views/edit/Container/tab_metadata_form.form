@@ -19,7 +19,7 @@
           <max_length></max_length>
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
-          <display_width type="int">60</display_width>
+          <display_width type="int">40</display_width>
           <unicode type="int">1</unicode>
           <required type="int">0</required>
           <css_class></css_class>
@@ -27,7 +27,7 @@
           <title>Short title</title>
           <truncate type="int">0</truncate>
           <description></description>
-          <extra></extra>
+          <extra>style="width: 100%;"</extra>
         </values>
         <tales>
         </tales>
@@ -39,15 +39,15 @@
           <max_length></max_length>
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
-          <display_width type="int">60</display_width>
+          <display_width type="int">40</display_width>
           <unicode type="int">1</unicode>
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
           <title>Subject</title>
           <truncate type="int">0</truncate>
-          <description>If blank, this subject will be inherited</description>
-          <extra></extra>
+          <description>If blank, content will be inherited</description>
+          <extra>style="width: 100%;"</extra>
         </values>
         <tales>
         </tales>
@@ -59,15 +59,15 @@
           <max_length></max_length>
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
-          <display_width type="int">60</display_width>
+          <display_width type="int">40</display_width>
           <unicode type="int">1</unicode>
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
           <title>Contact&amp;nbsp;name</title>
           <truncate type="int">0</truncate>
-          <description>If blank, contact info will be inherited</description>
-          <extra></extra>
+          <description>If blank, content will be inherited</description>
+          <extra>style="width: 100%;"</extra>
         </values>
         <tales>
         </tales>
@@ -79,14 +79,14 @@
           <max_length></max_length>
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
-          <display_width type="int">60</display_width>
+          <display_width type="int">40</display_width>
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
           <title>Contact&amp;nbsp;email</title>
           <truncate type="int">0</truncate>
-          <description>If blank, contact info will be inherited</description>
-          <extra></extra>
+          <description>If blank, content will be inherited</description>
+          <extra>style="width: 100%;"</extra>
         </values>
         <tales>
         </tales>
@@ -99,15 +99,15 @@
           <max_length></max_length>
           <max_lines></max_lines>
           <unicode type="int">1</unicode>
-          <width type="int">58</width>
+          <width type="int">40</width>
           <external_validator></external_validator>
           <height type="int">4</height>
           <required type="int">0</required>
-          <css_class></css_class>
+          <css_class>readable</css_class>
           <default></default>
           <title>Comment</title>
           <description>For internal use</description>
-          <extra></extra>
+          <extra>style="width: 100%;"</extra>
         </values>
         <tales>
         </tales>

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -28,6 +28,7 @@ class EditorSupport(SimpleItem):
     """XML editor support. """
     
     security = ClassSecurityInfo()
+
     meta_type = 'Silva Editor Support Service'
 
     _silva_markup = {

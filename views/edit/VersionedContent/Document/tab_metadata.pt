@@ -1,144 +1,143 @@
-<tal:block define="global breadcrumb_vein string:Metadata;" />
-<!-- ___________________________ start index_html ___________________________ -->
-<html  metal:use-macro="here/macro_index/macros/master">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global breadcrumb_vein string:Metadata;
+  ">
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
 
-<div class="margins"
-  metal:fill-slot="main">
-<!-- ___________________________ start index_html/slot main ___________________________ -->
-
-<h2><img tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-  Metadata for: <span class="document-title" tal:content="structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
-</h2>
-
-<init tal:omit-tag=""
+<tal:block tal:omit-tag=""
   tal:define="global fields python:view.tab_metadata_form.get_fields()" />
 
-<form method="POST" name="form" action="tab_metadata_submit">
+<form class="focus-box" method="POST" name="form" action="tab_metadata_submit">
+<table class="listing">
+<thead>
+  <tr>
+    <td class="top location" colspan="3">
+    <h2>
+      <img tal:replace="structure python:view.render_icon(model)" />
+      Metadata for <span class="document-title" tal:content="structure string:&amp;#xab;${model/get_title_or_id_html}&amp;#xbb;">title here</span>
+    </h2>
+    </td>
+  </tr>
+</thead>
 
-<table width="96%" cellspacing="0" cellpadding="3" border="0"
-  tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
-                  cellpadding container/table_cellpadding; border container/table_border">
-<tr>
-<th align="left">
-Element
-</th>
-<th align="right">
-&nbsp;
-</th>
-<th align="left">
-Content
-</th>
-<th align="left" width="40%">
-Note
-</th>
-</tr>
+<tbody>
+  <tr>
+    <th class="right"
+      width="12%">
+      Element
+    </th>
+    <th>
+      Content
+    </th>
+    <th width="30%">
+      Note
+    </th>
+  </tr>
 
-<fieldset class="logic"
-  tal:repeat="field fields"
-  tal:omit-tag="">
+  <tal:repeat repeat="field fields">
+  <tal:define define="oddrow repeat/field/odd">
+  <tr valign="top"
+    tal:attributes="class python:oddrow and 'odd' or 'even'">
+    <td class="right">
+      <span tal:replace="structure python: field.title().lower()">Title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
+    </td>
+    <td>
+      <input tal:replace="structure python:field.render(value=test(field.id == 'document_title', model.get_title_editable(), model.getProperty(field.id)) )" />
+    </td>
+    <td>
+      <span tal:replace="python:field.get_value('description')">
+      comments here (field description)
+      </span>
+      <span tal:condition="python:field.id == 'contact_name' or field.id == 'contact_email'" tal:omit-tag="">(<i tal:content="python:getattr(model, field.id, 'None')"></i>)</span>
+    </td>
+  </tr>
+  </tal:define>
+  </tal:repeat>
+</tbody>
 
-<rowset class="logic"
-  tal:define="oddrow repeat/field/odd"
-  tal:omit-tag="">
+<tfoot>
+  <tr class="controls">
+    <td class="right"
+      colspan="3">
+      <input class="button" 
+        type="submit"
+        name="form_submitted"
+        value="Save metadata"
+        title="Access key: alt-s"
+        accesskey="s"
+      />
+    </td>
+  </tr>
+</tfoot>
+</table>
 
-<tr class="focus" valign="top"
-  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
-<td align="right">
-<span tal:replace="structure string:${field/title}:">Title</span>
-</td>
-<td align="right">
-<span class="warning"
-  tal:condition="python:field.is_required()">
-*
-</span>
-<span class="logic"
-  tal:condition="not:python:field.is_required()"
-  tal:omit-tag="">
-&nbsp;
-</span>
-</td>
-<td align="left">
-<input tal:replace="structure python:field.render(value=test(field.id == 'document_title', model.get_title_editable(), model.getProperty(field.id)) )" />
-</td>
-<td>
-<span tal:replace="python:field.get_value('description')">
-comments here (field description)
-</span><br />
-<span tal:condition="python:field.id == 'contact_name' or field.id == 'contact_email'" tal:omit-tag="">(<i tal:content="python:getattr(model, field.id, 'None')"></i>)</span>
-</td>
-</tr>
-</rowset>
-</fieldset>
+<br />
 
-<tr class="controls">
-<td colspan="4" align="right">
-<input class="button" type="submit"
-       name="form_submitted" value=" change item " title="Access key: alt-s" accesskey="s"
-       tal:attributes="value string: Save metadata " />
-</td>
-</tr>
+<span tal:replace="nothing"> ______________ metadata from system ______________ </span>
+<h3>
+  Automatically stored metadata
+</h3>
 
-<tr>
-  <td colspan="4" align="right">&nbsp;</td>
-</tr>
-
-<tr valign="top">
-  <td align="right">
-    Creator:
-  </td>
-  <td>&nbsp;</td>
-  <td>
-    ( not yet )
-  </td>
-  <td>&nbsp;</td>
-</tr>
-
+<table>
 <tr valign="top">
   <td align="right">
     Creation date:
   </td>
-  <td>&nbsp;</td>
   <td tal:content="python:view.service_utils.backend_datetime_to_str(model.get_creation_datetime())">
     Creation datetime
   </td>
-  <td>&nbsp;</td>
+  <td>
+    &nbsp;
+  </td>
 </tr>
+
 <tr valign="top">
   <td align="right">
     Modification date:
   </td>
-  <td>&nbsp;</td>
   <td tal:content="python:view.service_utils.backend_datetime_to_str(model.get_modification_datetime())">
     11 oct 2001
   </td>
-  <td>&nbsp;</td>
+  <td>
+    &nbsp;
+  </td>
 </tr>
+
 <tr valign="top">
   <td align="right">
     Last author:
   </td>
-  <td>&nbsp;</td>
-  <td tal:define="author_info model/sec_get_last_author_info" tal:condition="author_info">
+  <td tal:define="author_info model/sec_get_last_author_info"
+    tal:condition="author_info">
     <a tal:attributes="href author_info/email"><span tal:replace="author_info/fullname" /></a>
   </td>
   <td tal:condition="not:model/sec_get_last_author_info">&nbsp;</td>
-  <td>&nbsp;</td>
 </tr>
+
 <tr valign="top">
   <td align="right">
     Chief Editor(s):
   </td>
-  <td>&nbsp;</td>
   <td>
     <span tal:replace="python:', '.join([ch.fullname() for ch in here.get_nearest_chiefeditors()])" />
   </td>
-  <td>&nbsp;</td>
+  <td>
+    &nbsp;
+  </td>
 </tr>
+
 <tr valign="top">
   <td align="right">
     Manager(s):
   </td>
-  <td>&nbsp;</td>
   <td>
     <span tal:replace="python:', '.join([m.fullname() for m in here.get_nearest_managers()])" /> <br />
   </td>
@@ -146,29 +145,31 @@ comments here (field description)
     Only in emergencies.
   </td>
 </tr>
+
 <tr valign="top">
   <td align="right">
     Location:
   </td>
-  <td>&nbsp;</td>
   <td colspan="2">
     <a tal:attributes="href model/absolute_url" tal:content="model/absolute_url"></a>
   </td>
 </tr>
-<span tal:replace="nothing"> _______ fixme: show Publisher after metadata refactoring _______ </span>
+
+<tr tal:replace="nothing"> _______ XXX fixme: show Publisher after metadata refactoring _______ </tr>
 <tr valign="top" tal:replace="nothing">
   <td align="right">
     Publisher:
   </td>
-  <td>&nbsp;</td>
   <td>
     Publisher name
   </td>
-  <td>&nbsp;</td>
+  <td>
+    &nbsp;
+  </td>
 </tr>
 </table>
 </form>
-<!-- ___________________________ end index_html/slot main ___________________________ -->
-</div>
+
+</metal:block>
+</metal:block>
 </html>
-<!-- ___________________________ end index_html ___________________________ -->

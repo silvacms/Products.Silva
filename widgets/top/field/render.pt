@@ -12,7 +12,7 @@
     <a tal:attributes="href string:${url_start}/up" title="Up to parent: alt-u" accesskey="u"><img tal:attributes="src string:${silva_root}/globals/edit_parent.gif" width="16" height="16" border="0" alt="edit parent" /></a>
   </td>
   <td class="topcontrols">
-    <span class="tablehead3">&nbsp;Element editor&nbsp;
+    <span class="tablehead3">&nbsp;Element editor&nbsp;</span>
   </td>
   <td width="16">
     <a tal:attributes="href string:${url_start}/up" title="Up to parent"><img tal:attributes="src string:${silva_root}/globals/edit_parent.gif" width="16" height="16" border="0" alt="edit parent" /></a>

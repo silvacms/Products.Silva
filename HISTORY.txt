@@ -11,6 +11,10 @@ Silva changes
           defined by the unicode standard. On upgrade you have replace or
           update your index_html set the the correct encoding; the default
           index_html does this.
+
+        - Sidebar caching. For performance reasons, the sidebar is now cached,
+          making it possible to use it throughout the site without slowing
+          down page rendering.
           
         - High resolution image support. If you have PIL installed images can
           be both converted to JPEG or PNG and arbitrary scaled for web
@@ -38,7 +42,7 @@ Silva changes
           it's unique (in the past, a bug in creating a unique id kept the
           status of a document 'public' in some cases).
         
-	- Fixed problems arising from allowing to create content objects
+	    - Fixed problems arising from allowing to create content objects
           which may shadow important internal objects (issue321) or 
           cause unfriendly Zope error messages (issue189)
 

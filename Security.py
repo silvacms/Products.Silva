@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.54 $
+# $Revision: 1.55 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -331,7 +331,7 @@ class Security(AccessManager):
             return noneMember.__of__(self)
         else:
             return info.__of__(self)
-        
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_update_last_author_info')
     def sec_update_last_author_info(self):

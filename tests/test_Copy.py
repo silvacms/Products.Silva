@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 import unittest
 import Zope
 Zope.startup()
@@ -108,7 +108,6 @@ class CopyTestCase(unittest.TestCase):
             self.tearDown()
             raise
           
-    
     def tearDown(self):
         get_transaction().abort()
         self.connection.close()

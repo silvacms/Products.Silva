@@ -3,7 +3,6 @@
                   global active_tab string:tab_status;
                   global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
                   global lastclass string:focus-cycle;
-                  global silva_permissions here/get_silva_permissions;
                   global breadcrumb_vein string:Status;
                   " />
 
@@ -15,12 +14,12 @@
 
 <div class="margins">
 <h3><a href="tab_status" title="Up to Publish tab">
-    <img tal:attributes="src string:${silva_root}/globals/up_gray.gif" width="9" height="9" border="0" alt="Up to top of Edit tab" />
+    <img tal:attributes="src string:${root_url}/globals/up_gray.gif" width="9" height="9" border="0" alt="Up to top of Edit tab" />
     Publish
   </a>
 </h3>
 <h2 class="worksheet"><img src="%s" width="16" height="16" alt="%s"
-    tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    tal:replace="structure python:view.render_icon(model)" />&nbsp;
 Export options for <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_html}&#xbb;">title here</span>
 </h2>
 
@@ -99,7 +98,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
 
           <tr>
             <td colspan="3">
-              <h3><img tal:attributes="src string:${silva_root}/globals/docma.gif" width="16" height="16" border="0" alt="Docma icon" />&nbsp;
+              <h3><img tal:attributes="src string:${root_url}/globals/docma.gif" width="16" height="16" border="0" alt="Docma icon" />&nbsp;
 	        Export to Docma (.doc)</h3>
             </td>
           </tr>
@@ -152,7 +151,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
 
           <tr class="controls">
             <td colspan="3" align="right">
-            <tal:block condition="silva_permissions/ChangeSilvaContent">
+            <tal:block condition="may_change_content">
                 &nbsp;&nbsp;<input class="button" type="submit" name="tab_status_silva2word:method" value="Export to Docma" title="Export the current container to Word: alt-d" accesskey="d" />
             </tal:block>
             </td>
@@ -211,7 +210,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
           </tr>
 
           <tr>
-            <td class="divider" colspan="5"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="3" /></td>
+            <td class="divider" colspan="5"><img tal:attributes="src string:${root_url}/globals/pixel.gif" width="1" height="3" /></td>
           </tr>
 
         </table>
@@ -233,7 +232,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
       border="0"
       height="16"
       width="16"
-      tal:attributes="src string:${silva_root}/globals/left.gif" />
+      tal:attributes="src string:${root_url}/globals/left.gif" />
     Import
   </a>
 </h3>

@@ -1,244 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global breadcrumb_vein string:Access;
+    global active_tab string:tab_access;
+  ">
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
+
 <tal:block define="
-    global breadcrumb_vein string:Groups;
-    global active_tab string:tab_access;" />
-<html metal:use-macro="here/macro_index/macros/master">
-  <div class="margins"
-    metal:fill-slot="main">
-    <tal:block define="
-        dummy python:model.security_trigger();
-        allow_subscription model/service_members/allow_subscription | nothing;"
-      condition="view/has_access">
-      <h3>
-        <a href="tab_access"
-          title="Up to top of Access tab" >          
-          <img alt="Up to top of Access tab"
-            border="0"
-            height="16"
-            width="16"
-            tal:attributes="src string:${silva_root}/globals/left.gif" />
-          Back
-        </a>
-      </h3>
-     <div class="worksheet">
-     <h2>
-        <img alt="%s"
-          height="16"
-          src="%s"
-          width="16"
-          tal:replace="structure python:view.render_icon(model.meta_type)" />
-        &nbsp; Groups administration for
-        <span class="folder-title"
-          tal:content="
-            structure string:&#xab;${model/get_title_or_id_html}&#xbb;">
-          title
-        </span>
-      </h2>
-      <h3>
-        Group definitions
-      </h3>
-      <div style="width: 30%; float: right; margin: 0em 0em 2em 1em;">
-        <div class="hilight borders top bottom left right"
-          style="padding: 0.5em; margin-bottom: 2em;" >
-          <b>
-            Add a normal group
-          </b>
-          <br />
-          <i>
-            (a group defined by a list of users)
-          </i>
-          <form name="focusbox" 
-            action="add_object_submit" 
-            method="POST" 
-            enctype="multipart/form-data">
-            <table>
-              <tr>
-                <td>
-                  id
-                </td>
-                <td>
-                  <span class="warning">
-                    *
-                  </span>
-                </td>
-                <td style="width: 20em;">
-                  <input size="20" 
-                    value="" 
-                    type="text" 
-                    name="field_object_id" 
-                    style="width:100%;" />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  title
-                </td>
-                <td>
-                  &nbsp;
-                </td>
-                <td>
-                  <input size="20" 
-                    value="" 
-                    type="text" 
-                    name="field_object_title" 
-                    style="width:100%;" />
-                </td>
-              </tr>
-              <tr>
-                <td colspan="3" align="right">
-                  <input type="hidden" name="meta_type" value="Silva Group" />
-                  <input class="button" type="submit" name="add_submit" value="Add group" title="Access key: alt-a" accesskey="a" />
-                </td>
-              </tr>
-            </table>
-          </form>
-        </div>
-        <div class="hilight borders top bottom left right"
-          style="padding: 0.5em; margin-bottom: 2em;" >
-          <b>
-            Add a virtual group
-          </b>
-          <br />
-          <i>
-            (a group defined by a list of normal groups)
-          </i>
-          <form name="focusbox" 
-            action="add_object_submit" 
-            method="POST" 
-            enctype="multipart/form-data">
-            <table>
-              <tr>
-                <td>
-                  id
-                </td>
-                <td>
-                  <span class="warning">
-                    *
-                  </span>
-                </td>
-                <td  style="width: 20em;">
-                  <input size="20" 
-                    value="" 
-                    type="text" 
-                    name="field_object_id" 
-                    style="width:100%;" />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  title
-                </td>
-                <td>
-                  &nbsp;
-                </td>
-                <td>
-                  <input size="20" 
-                    value="" 
-                    type="text" 
-                    name="field_object_title" 
-                    style="width:100%;" />
-                </td>
-              </tr>
-              <tr>
-                <td colspan="3" align="right">
-                  <input type="hidden" name="meta_type" value="Silva Virtual Group" />
-                  <input class="button" type="submit" name="add_submit" value="Add virtual group" title="Access key: alt-v" accesskey="v" />
-                </td>
-              </tr>
-            </table>
-          </form>
-        </div>
-      </div>
-      <div tal:define="groups view/get_locally_defined_groups">
-        <form id="group_assets"
-          name="group_assets"
-          action="tab_access_groups_delete"
-          method="post">
-          <table border="0"
-            cellpadding="3"
-            cellspacing="0"
-            width="50%">
+  allow_subscription model/service_members/allow_subscription | nothing;"
+  condition="view/has_access">
+  <h3>
+    <a href="tab_access"
+      title="Up to top of Access tab" >          
+      <img alt="Up to top of Access tab"
+        border="0"
+        height="16"
+        width="16"
+        tal:attributes="src string:${root_url}/globals/left.gif" />
+      Back
+    </a>
+  </h3>
+  <div class="worksheet">
+  <h2>
+     <img tal:replace="structure python:view.render_icon(model)" />
+     &nbsp; Group definitions for
+     <span class="folder-title"
+       tal:content="structure string:&amp;#xab;${model/get_title_or_id_html}&amp;#xbb;">
+       title
+     </span>
+   </h2>
+   <h3>
+     Group definitions
+   </h3>
+
+
+
+    <div style="width: 30%; float: right; margin: 0em 0em 2em 1em;">
+      <div class="hilight borders top bottom left right"
+        style="padding: 0.5em; margin-bottom: 2em;" >
+        <b>
+          Add a normal group
+        </b>
+        <br />
+        <i>
+          (a group defined by a list of users)
+        </i>
+        <form name="focusbox" 
+          action="add_object_submit" 
+          method="POST" 
+          enctype="multipart/form-data">
+          <table>
             <tr>
-              <th align="left"
-                colspan="9">
-                <tal:block condition="not:groups">
-                  No
-                </tal:block>
-                Groups defined in this folder
-              </th>
-            </tr>
-            <tal:block repeat="group groups">
-              <tal:block define="oddrow repeat/group/odd">
-                <tr class="focus-cycle"
-                  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
-                  <td nowrap="1">
-                    <input class="warningbox"
-                      name="groupids:list"
-                      type="checkbox"
-                      value=""
-                      tal:attributes="value group/id;" />
-                    <a class="blacklink"
-                      href="asset"
-                      title="Edit"
-                      tal:attributes="
-                        href string:${group/absolute_url}/edit;
-                        title group/meta_type">
-                      <img tal:replace="structure python:view.render_icon(group.meta_type)" />
-                    </a>
-                  </td>
-                  <td>
-                    <a class="blacklink"
-                      href="asset"
-                      title="Edit this group"
-                      tal:attributes="href string:${group/absolute_url}/edit">
-                      <tal:block replace="group/id">
-                        id
-                      </tal:block>
-                    </a>
-                  </td>
-                  <td>
-                    <a class="blacklink"
-                      href="asset"
-                      title="Edit this group"
-                      tal:attributes="href string:${group/absolute_url}/edit">
-                    <tal:block replace="structure group/get_title_html">
-                      title
-                    </tal:block>                    
-                    </a>
-                  </td>
-                  <td>
-                    (<i tal:content="structure group/meta_type">
-                      title
-                    </i>)
-                  </td>
-                  <td>
-                    <tal:block replace="structure python:view.service_utils.backend_short_datetime_to_str(group.get_modification_datetime()) or default">
-                      -
-                    </tal:block>
-                  </td>
-                  <td tal:content="python:group.sec_get_last_author_info().fullname()">
-                    author name
-                  </td>
-                </tr>
-              </tal:block>
-            </tal:block>
-            <tr class="controls">
-              <td align="left"
-                colspan="4">
-                <input class="warningbutton"
-                  accesskey="d"
-                  title="Delete selected groups: alt-d"
-                  type="submit"
-                  value="Delete"
-                  onClick="return confirm('Really delete?')"
-                  tal:condition="groups" />
+              <td>
+                id
               </td>
-              <td align="right"
-                colspan="2">
+              <td>
+                <span class="warning">
+                  *
+                </span>
+              </td>
+              <td style="width: 20em;">
+                <input size="20" 
+                  value="" 
+                  type="text" 
+                  name="field_object_id" 
+                  style="width:100%;" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                title
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                <input size="20" 
+                  value="" 
+                  type="text" 
+                  name="field_object_title" 
+                  style="width:100%;" />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" align="right">
+                <input type="hidden" name="meta_type" value="Silva Group" />
+                <input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
               </td>
             </tr>
           </table>
         </form>
       </div>
-    </tal:block>
+      <div class="hilight borders top bottom left right"
+        style="padding: 0.5em; margin-bottom: 2em;" >
+        <b>
+          Add a virtual group
+        </b>
+        <br />
+        <i>
+          (a group defined by a list of normal groups)
+        </i>
+        <form name="focusbox" 
+          action="add_object_submit" 
+          method="POST" 
+          enctype="multipart/form-data">
+          <table>
+            <tr>
+              <td>
+                id
+              </td>
+              <td>
+                <span class="warning">
+                  *
+                </span>
+              </td>
+              <td  style="width: 20em;">
+                <input size="20" 
+                  value="" 
+                  type="text" 
+                  name="field_object_id" 
+                  style="width:100%;" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                title
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                <input size="20" 
+                  value="" 
+                  type="text" 
+                  name="field_object_title" 
+                  style="width:100%;" />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" align="right">
+                <input type="hidden" name="meta_type" value="Silva Virtual Group" />
+                <input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+    <div tal:define="groups view/get_locally_defined_groups">
+      <form id="group_assets"
+        name="group_assets"
+        action="tab_access_groups_delete"
+        method="post">
+        <table border="0"
+          cellpadding="3"
+          cellspacing="0"
+          width="50%">
+          <tr>
+            <th align="left"
+              colspan="9">
+              <tal:block condition="not:groups">
+                No
+              </tal:block>
+              Groups defined in this folder
+            </th>
+          </tr>
+          <tal:block repeat="group groups">
+            <tal:block define="oddrow repeat/group/odd">
+              <tr class="focus-cycle"
+                tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+                <td nowrap="1">
+                  <input class="warningbox"
+                    name="groupids:list"
+                    type="checkbox"
+                    value=""
+                    tal:attributes="value group/id;" />
+                  <a class="blacklink"
+                    href="asset"
+                    title="Edit"
+                    tal:attributes="
+                      href string:${group/absolute_url}/edit;
+                      title group/meta_type">
+                    <img tal:replace="structure python:view.render_icon(group)" />
+                  </a>
+                </td>
+                <td>
+                  <a class="blacklink"
+                    href="asset"
+                    title="Edit this group"
+                    tal:attributes="href string:${group/absolute_url}/edit">
+                    <tal:block replace="group/id">
+                      id
+                    </tal:block>
+                  </a>
+                </td>
+                <td>
+                  <a class="blacklink"
+                    href="asset"
+                    title="Edit this asset"
+                    tal:attributes="href string:${group/absolute_url}/edit">
+                  <tal:block replace="structure group/get_title_or_id_html">
+                    title
+                  </tal:block>                    
+                  </a>
+                </td>
+                <td>
+                  (<i tal:content="structure group/meta_type">
+                    title
+                  </i>)
+                </td>
+                <td>
+                  <tal:block replace="structure python:view.service_utils.backend_short_datetime_to_str(group.get_modification_datetime()) or default">
+                    -
+                  </tal:block>
+                </td>
+                <td tal:content="python:group.sec_get_last_author_info().fullname()">
+                  author name
+                </td>
+              </tr>
+            </tal:block>
+          </tal:block>
+          <tr class="controls">
+            <td align="left"
+              colspan="4">
+              <input class="warningbutton"
+                accesskey="d"
+                title="Delete selected groups: alt-d"
+                type="submit"
+                value="Delete"
+                onClick="return confirm('Really delete?')"
+                tal:condition="groups" />
+            </td>
+            <td align="right"
+              colspan="2">
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
   </div>
+</tal:block>
+
+</metal:block>
+</metal:block>
 </html>

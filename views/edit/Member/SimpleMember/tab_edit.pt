@@ -9,15 +9,13 @@
     metal:use-macro="here/macro_no_tabs/macros/master">
 <metal:slot fill-slot="main">
 <tal:block define="
-    global view here;
-    global dummy model/security_trigger;
-    global fields view/memberform/get_fields;
-    global silva_permissions here/get_silva_permissions;
-    global message_type request/SESSION/message_type | nothing;
-    global message request/SESSION/message | nothing;
+    view here;
+    dummy view/security_trigger;
+    fields view/memberform/get_fields;
+    message_type request/SESSION/message_type | nothing;
+    message request/SESSION/message | nothing;
     dummy view/clear_message;
-    dummy view/set_content_type;
-" />
+">
 
 <tal:block condition="message">
 <div class="feedback" tal:condition="python:message_type == 'feedback'">
@@ -32,7 +30,7 @@
 
 <h2>Member data of &#xab;<span tal:replace="model/id" />&#xbb;</h2>
 
-<tal:block condition="silva_permissions/ChangeSilvaAccess">
+<tal:block condition="may_change_content">
 
 <form action="." method="POST" tal:attributes="action python:model.absolute_url()+'/edit'" accepted-charset="UTF-8">
 <table border="0" cellspacing="0" cellpadding="3">
@@ -61,6 +59,7 @@
       <input class="button" type="submit" name="approve_visitor:method" value="Approve now"
         title="Approve member: alt-a" accesskey="a"
         tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != request.AUTHENTICATED_USER.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()" />
+      </span>
     </td>
   </tr>
 
@@ -89,5 +88,6 @@ You are not allowed to edit membership data of member <span tal:content="model/i
   <tal:comment condition="nothing">Add read only view here?</tal:comment>
 </tal:block>
 </div>
+</tal:block>
 </metal:slot>
 </html>

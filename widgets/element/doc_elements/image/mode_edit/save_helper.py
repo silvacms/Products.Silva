@@ -7,7 +7,7 @@
 ##parameters=
 ##title=
 ##
-# $Id: save_helper.py,v 1.12 2003/03/14 17:28:34 zagy Exp $
+# $Id: save_helper.py,v 1.13 2003/04/28 10:19:52 jw Exp $
 request = context.REQUEST
 node = request.node
 
@@ -26,4 +26,3 @@ else:
 
 image_path = request['path']
 node.setAttribute('path', node.input_convert(image_path))
-

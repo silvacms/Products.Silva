@@ -11,7 +11,7 @@
 /* required, but you _MUST_ backup before upgrading to new version.  */
 
 
-/* _________________________________________________________ element typography _____ */
+/* _________________________________________________ element typography _____ */
 
 /* header-like elements for table cells, prevents extra line space */
 
@@ -40,97 +40,7 @@ pre {
   color : #473f69; 
 }
 
-/* for IE 5 compatibility */
-p.nobullet {
-}
-
-
-/* _________________________________________________________ table definitions _____ */
-
-table.silvatable {
-  empty-cells: show;
-  border-collapse: collapse;
-}       
-table.silvatable tr {
-  vertical-align: top;
-}
-table.silvatable tr.rowheading {
-  font-weight: bold;
-}
-
-table.plain {
-  border-style: none;
-}
-
-table.listing tr.rowheading td {
-  border-bottom: 3px solid black;
-}
-
-table.grid td {
-  border: 2px solid black;
-}
-
-table.datagrid td {
-  border: 2px solid black;
-}
-table.datagrid tr.rowheading td {
-  border-top-style: none;
-  border-left-style: none;
-  border-right-style: none;  
-}
-
-/* light gray bg on just-edited elements */
-td.post-focus {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  color: #003333;
-  background-color : #dddddd; 
-}
-
-/* creates bg which becomes border around table cells */
-.table-bg {
-  background-color : #555555; 
-}
-
-/* light gray bg for just-edited lists (prevents line space before, use with div) */
-.post-focus {
-  background-color : #dddddd;
-}
-
-/* hilite row for selected item */
-tr.hilite {
-  background-color : #8cb0b0; 
-}
-
-.borders {
-  border-width : 1px;
-  border-color : #090909;
-  border-style : none;
-  }
-
-.topleft {
-  border-top-style : solid;
-  border-left-style : solid;
-  }
-
-.top {
-  border-top-style : solid;
-  }
-
-.left {
-  border-left-style : solid;
-  }
-
-.bottom {
-  border-bottom-style : solid;
-  }
-
-.right {
-  border-right-style : solid;
-  }
-
-
-/* __________________________________________________ align/float definitions _____ */
+/* __________________________________________ align/float definitions _____ */
 
 .image-left {
   text-align: left;
@@ -157,60 +67,158 @@ tr.hilite {
 }
 
 
-/* _________________________________________________________ link definitions _____ */
+/* ___________________________________________ form style definitions _____ */
 
-/* redlink selectors */
-a.redlink:link {
+input:focus, textarea:focus { 
+  color : #333355; 
+  background : #e3f0e4 none; 
+}
+
+input:hover, textarea:hover { 
+  color : #333355; 
+  background : #e3f0e4 none; 
+}
+
+select:focus { 
+  color : #bfffd3; 
+  background : #69878c; 
+}
+
+select:hover { 
+  color : #bfffd3; 
+  background : #69878c; 
+}
+
+input:focus:hover, textarea:focus:hover { 
+  color : #333355; 
+  background : #e3f0e4;
+}
+
+input.button[type="submit"]:hover, 
+button[type="button"]:hover { 
+  color : #bfffd3; 
+  background : #69878c; 
+}
+
+input.button[type="submit"]:focus, 
+button[type="button"]:focus { 
+  color : #bfffd3; 
+  background : #008a8a;
+}
+
+input[type="submit"]:hover, 
+input[type="button"]:hover { 
+  color : #bfffd3; 
+  background : #69878c; 
+}
+
+input[type="submit"]:focus, 
+input[type="button"]:focus { 
+  color : #bfffd3; 
+  background : #008a8a;
+}
+
+/* image button */
+input.imagebutton {
+  background : transparent;
+  border : 0;
+}
+
+input[type="checkbox"]:focus, 
+input[type="radio"]:focus { 
+  color : #777; 
+  background : #dee9eb none; 
+}
+
+input[type="checkbox"]:hover, 
+input[type="radio"]:hover { 
+  color : #777; 
+  background : #b9e3e8 none; 
+}
+
+input.warningbox {
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #3f4570;
+  background : #ead5d3;
+  border-left : 1px solid #333333;
+  border-top : 1px solid #333333;
+  border-right : 1px solid #333333;
+  border-bottom : 1px solid #333333;
+}
+
+
+/* _________________________________________________ link definitions _____ */
+
+a:link {
+  color : #000040;
+  text-decoration : none;
+}
+a:visited {
+  color : #000040;
+  text-decoration : none;
+}
+a:active {
+  color : #3399cc;
+}
+a:hover {
+  color : #000030;
+  text-decoration : underline;
+}
+
+/* draft (red) selectors */
+a.draft:link {
   color : #cc0000;
   text-decoration : none;
 }
-a.redlink:visited {
+a.draft:visited {
   color : #cc0000;
   text-decoration : none;
 }
-a.redlink:hover {
+a.draft:hover {
   color : #cc0000;
   text-decoration : underline;
 }
 
-/* yellow selectors */
-a.yellowlink:link {
+/* pending (yellow) selectors */
+a.pending:link {
   color : #8f7f01;
   text-decoration : none;
 }
-a.yellowlink:visited {
+a.pending:visited {
   color : #8f7f01;
   text-decoration : none;
 }
-a.yellowlink:hover {
+a.pending:hover {
   color : #8f7f01;
   text-decoration : underline;
 }
 
-/* greenlink selectors */
-a.greenlink:link {
+/* approved (green) selectors */
+a.approved:link {
   color : #007746;
   text-decoration : none;
 }
-a.greenlink:visited {
+a.approved:visited {
   color : #007746;
   text-decoration : none;
 }
-a.greenlink:hover {
+a.approved:hover {
   color : #007746;
   text-decoration : underline;
 }
 
-/* bluelink selectors */
-a.bluelink:link {
+/* published (blue) selectors */
+a.published:link {
   color : #000080;
   text-decoration : none;
 }
-a.bluelink:visited {
+a.published:visited {
   color : #000080;
   text-decoration : none;
 }
-a.bluelink:hover {
+a.published:hover {
   color : #000080;
   text-decoration : underline;
 }
@@ -229,45 +237,40 @@ a.blacklink:hover {
   text-decoration : underline;
 }
 
-/* graylink selectors */
-a.graylink:link {
+/* closed (gray) selectors */
+a.closed:link {
   color : #777777;
   text-decoration : none;
 }
-a.graylink:visited {
+a.closed:visited {
   color : #777777;
   text-decoration : none;
 }
-a.graylink:hover {
+a.closed:hover {
   color : #777777;
   text-decoration : underline;
 }
 
-/* underlinelink (blue) selectors */
-a.underlinelink:link {
+/* underline (blue) selectors */
+a.underline:link {
   color : #000080;
   text-decoration : underline;
 }
-a.underlinelink:visited {
+a.underline:visited {
   color : #000080;
   text-decoration : underline;
 }
-a.underlinelink:hover {
+a.underline:hover {
   color : #005050;
   text-decoration : none;
 }
 
-
-
-/* _________________________________________________________ local styles _____ */
-
-.folder-title {
-  color : #007152;
+.idea {
+  color : #634d82;
 }
 
-.document-title {
-  color : #4d857f;
-}
+
+/* _____________________________________________________ local styles _____ */
 
 /* highlighting index links */
 a.index-element {
@@ -275,14 +278,53 @@ a.index-element {
   text-decoration : none;
 }
 
-.position-relative {
-  position:relative;
+/* was ebebeb e9e5ec */
+.hilight {
+  background : #ebecef;
+}
+
+/* form datetime field punctuation */
+.punctuation {
+  font-family : impact, verdana, arial, helvetica, sans-serif;
+  font-size : 15px; 
+}
+
+.required {
+  font-family : impact, verdana, arial, helvetica, sans-serif;
+  font-size : 18px;
+  color: #cc0000;
+}
+
+.warning {
+  color : #aa0000;
+}
+
+.error {
+  color : #cc0000;
+    /* negate plone error selector */
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: none;
+}
+
+.fault {
+  color : #ff1111;
+}
+
+/* a little white space */
+.halfline {
+  font-size : 2px; 
+  margin-top : 2px;
+  margin-bottom : 2px;
 }
 
 
-/* header-like elements for table cells in tab_edit, prevents extra line space */
-/* _____ adjust these selectors to match styles in frontend.css ______________ */
+/* ____________________________________ forms editor rendering styles _____ */
 
+/* header-like elements for table cells in editor, prevents extra line space */
+/* in lousy browsers */
 .front1 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 17pt; 

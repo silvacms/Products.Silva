@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.68 $
+# $Revision: 1.69 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -17,6 +17,9 @@ import DocmaService
 import Group
 import VirtualGroup
 import EditorSupportNested
+import SidebarCache
+import SidebarService
+
 # enable Formulator support for FileSystemSite
 from Products.Formulator import FSForm
 # so we can register directories for FileSystemSite
@@ -95,6 +98,13 @@ def initialize(context):
         icon = "www/editorservice.gif"
         )
 
+    context.registerClass(
+        SidebarService.SidebarService,
+        constructors = (SidebarService.manage_addSidebarServiceForm, 
+                        SidebarService.manage_addSidebarService),
+        icon = ""
+        )
+
     # register xml import functions
     # we let the xml import functionality of Publication handle any root elements, since a Silva instance can not import another root
     importer_registry.register_tag('silva_root', Publication.xml_import_handler)
@@ -103,6 +113,7 @@ def initialize(context):
     importer_registry.register_tag('silva_document', Document.xml_import_handler)
     importer_registry.register_tag('silva_demoobject', DemoObject.xml_import_handler)
 
+    # register the FileSystemSite directories
     registerDirectory('views', globals())
     registerDirectory('resources', globals())
     registerDirectory('widgets', globals())

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.94 $
+# $Revision: 1.95 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -17,6 +17,7 @@ from IVersionedContent import IVersionedContent
 from ISilvaObject import ISilvaObject
 from IAsset import IAsset
 from IPublication import IPublication
+from IRoot import IRoot
 # Silva
 from SilvaObject import SilvaObject
 from Publishable import Publishable
@@ -60,6 +61,26 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         Folder.inheritedAttribute('__init__')(self, id, title)
         self._ordered_ids = []
 
+    def manage_afterAdd(self, item, container):
+        Folder.inheritedAttribute('manage_afterAdd')(self, item, container)
+        self._invalidate_sidebar(item)
+
+    def manage_beforeDelete(self, item, container):
+        Folder.inheritedAttribute('manage_beforeDelete')(self, item, container)
+        self._invalidate_sidebar(item)
+
+    def manage_afterClone(self, item):
+        Folder.inheritedAttribute('manage_afterClone')(self, item)
+        self._invalidate_sidebar(item)
+
+    def _invalidate_sidebar(self, item):
+        if not IContainer.isImplementedBy(item):
+            return
+        service_sidebar = self.aq_inner.service_sidebar
+        service_sidebar.invalidate(item)
+        if IPublication.isImplementedBy(item) and not IRoot.isImplementedBy(item):
+            service_sidebar.invalidate(item.aq_inner.aq_parent)
+
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'move_object_up')
@@ -73,6 +94,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             return 0
         if i == 0:
             return 0
+        self._invalidate_sidebar(getattr(self, id))
         ids[i], ids[i - 1] = ids[i - 1], ids[i]
         self._ordered_ids = ids
         return 1
@@ -89,6 +111,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             return 0
         if i == len(ids) - 1:
             return 0
+        self._invalidate_sidebar(getattr(self, id))
         ids[i], ids[i + 1] = ids[i + 1], ids[i]
         self._ordered_ids = ids
         return 1
@@ -113,6 +136,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         move_ids = move_ids_in_order
         move_ids.reverse()
         for move_id in move_ids:
+            self._invalidate_sidebar(getattr(self, move_id))
             ids.insert(index, move_id)
         ids = [id for id in ids if id is not None]
         self._ordered_ids = ids
@@ -191,6 +215,12 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         if orig_id != new_id:
             self.manage_renameObject(orig_id, new_id)
             return 1
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
+    def set_title(self, title):
+        Folder.inheritedAttribute('set_title')(self, title)
+        self._invalidate_sidebar(self)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_delete')
@@ -673,15 +703,17 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 l.append((indent, item))
 
     def _get_status_tree_helper(self, l, indent, depth):
+        if IContainer.isImplementedBy(self):
+            default = self.get_default()
+            if default is not None:
+                l.append((indent, default))
+
         for item in self.get_ordered_publishables():
-            if IContainer.isImplementedBy(item):
-                default = item.get_default()
-                if default is not None:
-                    l.append((indent, default))
-                if (depth == -1 or indent < depth) and item.is_transparent():
-                    item._get_status_tree_helper(l, indent + 1, depth)
-            else:
-                l.append((indent, item))
+            l.append((indent, item))
+            if not IContainer.isImplementedBy(item):
+                continue
+            if (depth == -1 or indent < depth) and item.is_transparent():
+                item._get_status_tree_helper(l, indent+1, depth)
 
     def create_ref(self, obj):
         """Create a moniker for the object.

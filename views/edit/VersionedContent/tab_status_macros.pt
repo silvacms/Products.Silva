@@ -1,7 +1,17 @@
-_____________________ Author requests approval _______________________________
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  >
+
+<span tal:replace="nothing"> _______ Author requests approval _______ </span>
 <div metal:define-macro="request_approval" tal:omit-tag="">
 
-<h3>Request Approval<span tal:condition="python:silva_permissions['ChangeSilvaContent'] and unapproved and published"> for new version</span></h3>
+<h3>Request Approval<span tal:condition="python:may_change_content and unapproved and published"> for new version</span></h3>
 
 <form action="tab_status_request" method="POST">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
@@ -82,11 +92,10 @@ If this content should expire, set the time.&nbsp;
 </table>
 </form>
 </div>
+<span tal:replace="nothing"> _______ / Author requests approval _______ </span>
 
-_____________________ /Author requests approval _________________________________
 
-
-_____________________ Author / Editor withdraws request for  approval _________________________________
+<span tal:replace="nothing"> _______ Author/Editor withdraws request for  approval _______ </span>
 <div metal:define-macro="withdraw_request_approval" tal:omit-tag="">
 <form action="tab_status_withdraw" method="POST">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
@@ -94,7 +103,7 @@ _____________________ Author / Editor withdraws request for  approval __________
                   cellpadding container/table_cellpadding; border container/table_border">
 <tr>
 <th align="left" colspan="2">
-<span tal:omit-tag="" tal:replace="python:test(silva_permissions['ApproveSilvaContent'],'Reject',default)">Withdraw</span> request for approval
+<span tal:omit-tag="" tal:replace="python:test(may_approve_content,'Reject',default)">Withdraw</span> request for approval
 </th>
 </tr>
 <tr class="focus">
@@ -108,11 +117,11 @@ with the following comments:
 </tal:if>
 </td></tr>
 <tr>
-<input type="hidden" name="rejection_status" tal:attributes="value python:test(silva_permissions['ApproveSilvaContent'], 'true', 'false')" />
+<input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
 <input type="hidden" name="tab_name" value="publish" />
 <th align="left" colspan="2">
 Add message on 
-<span tal:replace="python:test(silva_permissions['ApproveSilvaContent'],'rejection',default)">withdraw</span>:
+<span tal:replace="python:test(may_approve_content,'rejection',default)">withdraw</span>:
 </th>
 </tr>
 <tr class="focus-cycle">
@@ -132,7 +141,7 @@ The message may be viewed by interested authors.
 </td>
 <td align="right" width="40%">
 <input type="submit" value=" Withdraw approval " class="button"  title="Access key: alt-r" accesskey="r"
-  tal:attributes="value python:test(silva_permissions['ApproveSilvaContent'],' Reject approval request ',' Withdraw approval request ')" />
+  tal:attributes="value python:test(may_approve_content,' Reject approval request ',' Withdraw approval request ')" />
 </td>
 </tr>
 </table>
@@ -140,17 +149,13 @@ The message may be viewed by interested authors.
 <br />
 <br />
 </div>
-
-_____________________ /Author / Editor withdraws request for  approval _________________________________
-
+<span tal:replace="nothing"> _______ / Author/Editor withdraws request for  approval _______ </span>
 
 
-_____________________ Editor approves or rejects ________________________
+<span tal:replace="nothing"> _______ Editor approves or rejects _______ </span>
 <div metal:define-macro="approve_new" tal:omit-tag="">
 
-<span tal:replace="nothing"> ______________ approve section ______________ </span>
-
-<h3>Approve<span tal:condition="python:silva_permissions['ChangeSilvaContent'] and unapproved and published"> new version</span></h3>
+<h3>Approve<span tal:condition="python:may_change_content and unapproved and published"> new version</span></h3>
 
 <form action="tab_status_approve" method="POST">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
@@ -222,10 +227,10 @@ If this content should expire, set the time.&nbsp;
 <br />
 <br />
 </div>
-_____________________ / Editor approves or rejects _________________________
+<span tal:replace="nothing"> _______ / Editor approves or rejects _______ </span>
 
 
-_____________________ Editor can change settings _______________________
+<span tal:replace="nothing"> _______ Editor can change settings _______ </span>
 <div metal:define-macro="approved_editor" tal:omit-tag="">
 
 <form action="tab_status_change_settings" method="POST">
@@ -263,8 +268,8 @@ If this content should expire, set the time.&nbsp;
 &nbsp;
 </td>
 <td align="right">
-<label for="expires_flag" title="Access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label><field
-    tal:replace="structure python:view.tab_status_form_change_settings.expires_flag.render(model.get_next_version_expiration_datetime() is not None)" />
+<label for="expires_flag" title="Access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label>
+<field tal:replace="structure python:view.tab_status_form_change_settings.expires_flag.render(model.get_next_version_expiration_datetime() is not None)" />
 </td>
 </tr>
 
@@ -284,14 +289,13 @@ If this content should expire, set the time.&nbsp;
 </tr>
 </table>
 </form>
-
 <br />
 <br />
 
 </div>
-_____________________ / Editor can change settings _________________________
+<span tal:replace="nothing"> _______ / Editor can change settings _______ </span>
 
-_____________________ revoke approval ________________________________________
+<span tal:replace="nothing"> _______ Revoke approval _______ </span>
 <div metal:define-macro="revoke_approval" tal:omit-tag="">
 <form action="tab_status_revoke" method="POST">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
@@ -319,10 +323,35 @@ If further editing is required, first revoke the approval.
 <br />
 <br />
 </div>
-_____________________ /revoke approval __________________________________________
+<span tal:replace="nothing"> _______ / Revoke approval _______ </span>
 
+<span tal:replace="nothing"> _______ Revert to previous _______ </span>
+<div metal:define-macro="revert_to_previous" tal:omit-tag="">
+<form action="tab_status_revert_to_previous" method="POST">
+<table width="96%" cellspacing="0" cellpadding="3" border="0"
+  tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
+                  cellpadding container/table_cellpadding; border container/table_border">
+<tr class="controls">
+<th align="left">
+Revert to previous version
+</th>
+</tr>
+<tr class="focus">
+<td>
+The current editable version can be replaced with the current or previous published version (to return to the original state). This can not be undone afterwards and will discard all changes made to the current version.
+</td>
+</tr>
+<tr class="controls">
+<td align="right">
+<input class="button" type="submit" value=" Revert to previous " title="Access key: alt-c" accesskey="c" />
+</td>
+</tr>
+</table>
+</form>
+</div>
+<span tal:replace="nothing"> _______ / Revert to previous _______ </span>
 
-_____________________ manual close ___________________________________________
+<span tal:replace="nothing"> _______ Manual close _______ </span>
 <div metal:define-macro="manual_close" tal:omit-tag="">
 <form action="tab_status_close" method="POST">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
@@ -346,5 +375,6 @@ If necessary, the published version of this content can be manually closed (take
 </table>
 </form>
 </div>
-_____________________ /manual close _____________________________________________
+<span tal:replace="nothing"> _______ / Manual close _______ </span>
 
+</html>

@@ -53,4 +53,3 @@ for id, value in result.items():
 return context.tab_metadata(
     message_type="feedback", message="Metadata changed for: %s" % (
         context.quotify_list_ext(changed_metadata)))
-
