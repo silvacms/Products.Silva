@@ -2,9 +2,11 @@ from __future__ import nested_scopes
 
 import string
 import re
+import os
 
 # zope imports
 import zLOG
+from Globals import package_home
 
 # silva imports
 from Products.Silva.interfaces import IUpgrader, IContainer
@@ -265,8 +267,40 @@ class UpgradeTime:
         binding.setValues('silva-extra', timings)
         return obj
 
+class SimpleMetadataUpgrade:
+    """simple metadata upgrade, meaning: remove old set, add new set
+
+        NOTE: this doesn't handle severe changes to the set, i.e. removing
+        or renaming fields. Adding should be fine though.
+    """
+
+    __implements__ = IUpgrader
+
+    def __init__(self, name, filename):
+        """constructor
+
+            name: name in service_metadata
+            fiename: path to xml description of metadata set
+        """
+        self.name = name
+        self.filename = filename
+
+    def upgrade(self, service_metadata):
+        collection = service_metadata.getCollection()
+        if self.name in collection.objectIds():
+            collection.manage_delObjects([self.name])
+        fh = open(self.filename, 'r')
+        collection.importSet(fh)
+        return service_metadata
 
 def initialize():
+    home = package_home(globals())
+    xml_home = os.path.join(home, 'doc')
+    metadata_upgardes = ['silva-extra', 'silva-content']
+    for set in metadata_upgardes:
+        up = SimpleMetadataUpgrade(set, os.path.join(xml_home, '%s.xml' % set))
+        upgrade.registry.registerUpgrader(up, '0.9.3',
+            'Advanced Metadata Tool')
     upgrade.registry.registerUpgrader(UpgradeTime(), '0.9.3',
         upgrade.AnyMetaType)
     upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.3',
