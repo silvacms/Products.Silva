@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36 $
+  CVS:        $Revision: 1.37 $
 
 Installing Silva
 
@@ -57,40 +57,10 @@ Installing Silva
         "Silva-
         0.9.XXX.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.XXX.tgz
   
-    XMLWidgets (0.XXX)
+    SilvaViews (0.XXX)
 
-      A system that builds on top of ParsedXML to assist in the
-      rendering of editor, as well as in the generation of the HTML
-      for the public pages.
+      ...
 
-      XMLWidgets can be found here:
-
-        "XMLWidgets":http://www.zope.org/Members/faassen/XMLWidgets
-
-      or just download:
-
-        "XMLWidgets-0.XXX.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.XXX.tgz
-
-    ParsedXML (1.3.1)
-
-      A system that allows the storage of XML documents in the Zope
-      Object Database. Allows DOM access as well as ways to construct
-      references to individual nodes. Silva Document uses this to
-      store its data.
-
-      ParsedXML depends on the PyXML library for some of its
-      operation; the Python interpreter that is used to run Zope must
-      have access to a recent version of PyXML (0.7 works. 0.8.1
-      should also work, but let us know!).
-
-      ParsedXML can be found here:
- 
-        "ParsedXML":http://www.zope.org/Members/faassen/ParsedXML
-
-      or just download:
-
-        "ParsedXML-1.3.1.tgz":http://www.zope.org/Members/faassen/ParsedXML/ParsedXML-1.3.1.tgz
-   
     Formulator (1.XXX)
 
       A system for the construction and validation of web forms, used
@@ -166,6 +136,40 @@ Installing Silva
 
       ...      
 
+    XMLWidgets (0.XXX)
+
+      A system that builds on top of ParsedXML to assist in the
+      rendering of editor, as well as in the generation of the HTML
+      for the public pages.
+
+      XMLWidgets can be found here:
+
+        "XMLWidgets":http://www.zope.org/Members/faassen/XMLWidgets
+
+      or just download:
+
+        "XMLWidgets-0.XXX.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.XXX.tgz
+
+    ParsedXML (1.3.1)
+
+      A system that allows the storage of XML documents in the Zope
+      Object Database. Allows DOM access as well as ways to construct
+      references to individual nodes. Silva Document uses this to
+      store its data.
+
+      ParsedXML depends on the PyXML library for some of its
+      operation; the Python interpreter that is used to run Zope must
+      have access to a recent version of PyXML (0.7 works. 0.8.1
+      should also work, but let us know!).
+
+      ParsedXML can be found here:
+ 
+        "ParsedXML":http://www.zope.org/Members/faassen/ParsedXML
+
+      or just download:
+
+        "ParsedXML-1.3.1.tgz":http://www.zope.org/Members/faassen/ParsedXML/ParsedXML-1.3.1.tgz
+   
     Groups (0.XXX)
 
       If you want to take advantage of Groups support, please
