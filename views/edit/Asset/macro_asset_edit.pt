@@ -45,7 +45,8 @@
       </tr>
       <tal:block replace="nothing">
         ______________ top controls row ______________
-      </tal:block>
+        </tal:block>
+        <metal:block define-slot='title_metadata'>
       <tr class="top-controls">
         <td colspan="2">
           <h3 i18n:translate="title_metadata">
@@ -55,8 +56,10 @@
           </h3>
         </td>
       </tr>
+      </metal:block>
     </thead>
 
+    <metal:block define-slot='title_editor'>
     <tbody tal:define="fields view/form/get_fields">
       <tr>
         <th class="align-right"
@@ -100,6 +103,7 @@
         </td>
       </tr>
     </tfoot>
+    </metal:block>
   </table>
 </form>
 
