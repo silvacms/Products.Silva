@@ -1,7 +1,6 @@
 ##bind context=context
 ##parameters=size
 """convert size to a human readable format
-    
     size: int, size of a file in bytes
     returns str, like '8.2M'
 """
@@ -19,5 +18,5 @@ while size > threshold and magnitude:
 
 if int(size) == size:
     return '%i%s' % (size, mag)
-return '%.2f%s' % (size, mag)
+return '%.1f %s' % (size, mag)
 
