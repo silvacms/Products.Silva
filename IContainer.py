@@ -71,16 +71,19 @@ class IContainer(ISilvaObject, IPublishable):
     def get_container():
         """Get the nearest container in the acquisition hierarchy.
         (this one)
+        PUBLIC
         """
         pass
 
     def container_url():
         """Get the url of the nearest container.
+        PUBLIC
         """
         pass
     
     def is_transparent():
         """Show this subtree in get_tree().
+        PUBLIC
         """
         pass
 
@@ -94,6 +97,7 @@ class IContainer(ISilvaObject, IPublishable):
     def get_default():
         """Get the default content object of the folder. If
         no default is available, return None.
+        PUBLIC
         """
         pass
 
@@ -112,11 +116,13 @@ class IContainer(ISilvaObject, IPublishable):
     def get_assets():
         """Get a list of non-publishable objects in this folder.
         (not in any order).
+        PUBLIC
         """
         pass
 
     def get_assets_of_type():
         """Get list of assets of a certain meta_type.
+        PUBLIC
         """
         pass
     
@@ -129,11 +135,13 @@ class IContainer(ISilvaObject, IPublishable):
     def get_container_tree():
         """Get flattened tree of all sub-containers.
         This is a list of indent, object tuples.
+        PUBLIC
         """
         pass
 
     def get_public_tree():
         """Get tree of all publishables that are public.
+        PUBLIC
         """
         pass
 

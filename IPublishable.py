@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 import Interface
 
 class IPublishable(Interface.Base):
@@ -18,6 +18,7 @@ class IPublishable(Interface.Base):
     # ACCESSORS
     def is_published():
         """Return true if this object is visible to the public.
+        PUBLIC
         """
         pass
 
@@ -30,6 +31,7 @@ class IPublishable(Interface.Base):
     def is_active():
         """Returns true if this object is actually active and
         in the table of contents.
+        PUBLIC
         """
         pass
 

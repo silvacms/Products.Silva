@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 import Interface
 
 class ISecurity(Interface.Base):
@@ -43,8 +43,14 @@ class ISecurity(Interface.Base):
 
     def sec_is_open_to_public():
         """Check whether this is viewable by the public.
+        PUBLIC
         """
 
+    def sec_is_closed_to_public():
+        """Check whether this is closed to the public.
+        PUBLIC
+        """
+        
     def sec_is_locked():
         """Check whether this object is locked by a user currently
         editing.
@@ -138,3 +144,9 @@ class ISecurity(Interface.Base):
         level of the tree.
         """
         pass
+
+    def sec_get_last_author_info():
+        """Get information about the last author of this object.
+        This is *not* the last author of the public version of this
+        object.
+        """

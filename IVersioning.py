@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import Interface
 
 class IVersioning(Interface.Base):
@@ -94,6 +94,7 @@ class IVersioning(Interface.Base):
 
     def is_version_published():
         """Check whether there exists a published version.
+        PUBLIC
         """
         pass
 
@@ -169,18 +170,21 @@ class IVersioning(Interface.Base):
 
     def get_public_version_publication_datetime():
         """Get the publication datetime of the public version.
+        PUBLIC
         """
         pass
 
     def get_public_version_expiration_datetime():
         """Get the expiration datetime of the public version, or
         None if this version never expires.
+        PUBLIC
         """
         pass
 
     def get_public_version_status():
         """Get the status of the published version.
         Result can be 'published', 'closed', or 'no_public_version'
+        PUBLIC
         """
         pass
 

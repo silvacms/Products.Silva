@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 from ISecurity import ISecurity
 
 class ISilvaObject(ISecurity):
@@ -30,28 +30,33 @@ class ISilvaObject(ISecurity):
     # ACCESSORS
     def get_title():
         """The title of the content object.
+        PUBLIC
         """
         pass
 
     def get_title_or_id():
         """The title or id of the content object.
+        PUBLIC
         """
         pass
 
     def get_creation_datetime():
         """Creation datetime of the object. Return None if not supported.
+        PUBLIC
         """
         pass
 
     def get_modification_datetime():
         """Last modification datetime of the object. Return None if not
         supported.
+        PUBLIC
         """
         pass
 
     def get_breadcrumbs():
         """Get the objects above this item, until the Silva Root, in
         order from Silva Root.
+        PUBLIC
         """
         pass
         
@@ -86,6 +91,7 @@ class ISilvaObject(ISecurity):
         """Render this object using the public view defined in the view registry.
         This should use methods on the object itself and the version object
         obtained by get_viewable() to render the object to HTML.
+        PUBLIC
         """
         pass
 
