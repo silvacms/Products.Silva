@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74 $
+# $Revision: 1.74.4.1 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -94,7 +94,7 @@ class Security(AccessManager):
         """
         if self.sec_is_locked():
             return 0
-        username = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        username = getSecurityManager().getUser().getUserName()
         dt = DateTime()
         self._lock_info = username, dt
         return 1
@@ -118,7 +118,7 @@ class Security(AccessManager):
         current_dt = DateTime()
         if current_dt - dt >= LOCK_DURATION:
             return 0
-        current_username = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        current_username = getSecurityManager().getUser().getUserName()
         return username != current_username
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -126,7 +126,7 @@ class Security(AccessManager):
     def sec_have_management_rights(self):
         """Check whether we have management rights here.
         """
-        return self.REQUEST.AUTHENTICATED_USER.has_role(['Manager'], self)
+        return getSecurityManager().getUser().has_role(['Manager'], self)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_get_user_ids')
