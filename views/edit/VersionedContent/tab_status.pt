@@ -323,6 +323,14 @@ _______ manual close section here _______
             </tr>
             <tr class="controls">
               <td class="align-right" colspan="7">
+                <input class="transport"
+                  type="submit"
+                  name="tab_status_view_versions_start:method"
+                  title="view the selected versions next to each other"
+                  value="compare"
+                  accesskey="c"
+                  i18n:attributes="value;title;accesskey compare_accesskey"
+                />
                 <input class="warning"
                   type="submit"
                   name="tab_status_delete_versions:method"
