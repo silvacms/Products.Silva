@@ -1,5 +1,104 @@
-<form action="submit" method="POST">
-<p>Link URL: <input type="text" name="url" tal:attributes="value python:request.model.get_editable().get_url()" /></p>
-<p><input type="submit" value=" change link" /></p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  tal:define="
+    view here;
+    model request/model;
+    root_url model/get_root_url;
+    title model/get_title_editable;
+    vein string:editor;
+">
+
+<table class="columns columns3">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
+      <td class="left"
+        tal:define="template_id string:tab_edit">
+        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ main _____________________
+      </tal:block>
+      <td class="main">
+
+<form action="submit"
+  method="POST">
+  <table class="listing">
+    <thead>
+      <tal:block replace="nothing">
+        ______________ vein + title row ______________
+      </tal:block>
+      <tr>
+        <td class="top"
+          colspan="3">
+          <h2>
+            <img tal:replace="structure python:view.render_icon(model)" />
+            <span style="text-transform:lowercase;"
+              tal:content="model/meta_type">Meta type</span> 
+            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+          </h2>
+        </td>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr>
+        <th class="align-right"
+          width="12%"
+          i18n:translate="attributes">
+          attributes
+        </th>
+        <th colspan="2"
+          i18n:translate="content">
+          content
+        </th>
+      </tr>
+
+      <tr class="even">
+        <td class="align-right">
+          link url
+        </td>
+      <td colspan="2">
+        <input style="width:100%;"
+          type="text"
+          name="url"
+          tal:attributes="value python:request.model.get_editable().get_url()"
+        />
+      </td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr class="controls">
+        <td class="align-right"
+          colspan="3">
+          <input class="button"
+            type="submit"
+            value="change link"
+            title="access key: alt-c"
+            accesskey="c"
+            i18n:attributes="value title accesskey"
+           />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
 </form>
+
+      </td>
+      <tal:block replace="nothing">
+        _____________________ right column _____________________ 
+      </tal:block>
+      <td class="right">        
+        &nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</html>
 
