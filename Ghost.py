@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.44 $
+# $Revision: 1.45 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -123,8 +123,12 @@ class GhostVersion(SimpleItem.SimpleItem):
         """
         if self._content_path is None:
             return None
-        object = self.unrestrictedTraverse(self._content_path)
-        return '/' + object.absolute_url(1)
+	try: 
+            object = self.unrestrictedTraverse(self._content_path)
+            return '/' + object.absolute_url(1)
+	except KeyError:
+	    # KeyError is what unrestrictedTraverse raises if it cannot find the object
+	    return None
 
     def _get_content_object(self, path):
         """Get content object for a url.
