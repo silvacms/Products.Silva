@@ -4,7 +4,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
 # Author: Jan-Wijbrand Kolman (jw@infrae.com)
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 #
 # Issues:
 #  * Testing, testing, testing. It would be rather horrible to 
@@ -117,7 +117,8 @@ class PrettyZPT(saxutils.DefaultHandler):
         if element['data']:
             self.printCharacters(element['data'])
         self.printEndElement(name, element['attrs'], element['childs'], element['textnodes'])
-        self._indent_level -= 1
+        if not name in NO_INDENT_ON:
+            self._indent_level -= 1
 
     def characters(self, ch):
         #collect data within this element
