@@ -171,13 +171,13 @@
                         onkeypress="handle_default_action(this, event, 'tab_edit_copy')"
                       />
                       <label 
-                        tal:condition="d/is_default"
+                        tal:condition="python: publishables[0]['item_id'] == 'index'"
                         tal:content="repeat/d/index"
                         tal:attributes="for d/item_id">
                         # with default doc, starts at 0
                       </label>
                       <label 
-                        tal:condition="not: d/is_default"
+                        tal:condition="python: not publishables[0]['item_id'] == 'index'"
                         tal:content="repeat/d/number"
                         tal:attributes="for d/item_id">
                         # without default doc, starts at 1
