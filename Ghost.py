@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.61 $
+# $Revision: 1.62 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -93,6 +93,7 @@ class GhostVersion(CatalogedVersion):
     def __init__(self, id):
         GhostVersion.inheritedAttribute('__init__')(
             self, id, '[Ghost title bug]')
+        self._content_path = None
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
