@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  next version
+
+    Bugs fixed
+
+      - Improvements in the upgrade code, esp. for large databases. 
+
   0.9.3
 
     Features Added
