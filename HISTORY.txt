@@ -12,6 +12,10 @@ Silva changes
 
     Bugs Fixed
 
+      - Fixed bug that made Internet Explorer generate paths to images in
+        Kupu that couldn't be reached by unauthorized users (issues 1165 
+        and 1168).
+
       - Updated footer of the Silva documentation template, used to mention
         incorrect Silva and Zope versions.
 
