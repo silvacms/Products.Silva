@@ -83,10 +83,10 @@
               <tr>
                 <td class="top"
                   colspan="3">
-                  <h2 tal:attributes="title string:id: ${model/id}" i18n:translate="">
+                  <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
-                    export from
-                    &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;
+                    <tal:block i18n:translate="">export from
+                      &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;</tal:block>
                   </h2>
                 </td>
               </tr>
@@ -103,9 +103,11 @@
                     </a>
                   <h3 i18n:translate="">
                     export to Silva xml (.xml)
-                    <tal:condition condition="view/service_docmapdf | nothing" i18n:name="or_adobe">
-                      <tal:block i18n:translate="">or Adobe PDF (.pdf)</tal:block>
-                    </tal:condition>
+                    <tal:block i18n:name="or_adobe">
+                      <tal:condition condition="view/service_docmapdf | nothing">
+                        <tal:block i18n:translate="">or Adobe PDF (.pdf)</tal:block>
+                      </tal:condition>
+                    </tal:block>
                   </h3>
                 </td>
               </tr>

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 25 18:31:02 2004\n"
+"POT-Creation-Date: Thu Nov 25 18:40:07 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -356,7 +356,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit_import.pt:96
 #: /views/edit/Container/tab_edit_import.pt:165
 #: /views/edit/Container/tab_edit_import.pt:303
-#: /views/edit/Container/tab_status_export.pt:328
+#: /views/edit/Container/tab_status_export.pt:330
 #: /views/edit/Container/GhostFolder/tab_edit.pt:71
 #: /views/edit/Container/Publication/settings_addables.pt:78
 #: /views/edit/Container/Publication/tab_metadata.pt:88
@@ -422,8 +422,8 @@ msgstr ""
 #: /views/add/Ghost/add_form.pt:106
 #: /views/add/GhostFolder/add_form.pt:114
 #: /views/edit/Container/tab_access_groups.pt:138
-#: /views/edit/Container/tab_status_export.pt:169
-#: /views/edit/Container/tab_status_export.pt:178
+#: /views/edit/Container/tab_status_export.pt:171
+#: /views/edit/Container/tab_status_export.pt:180
 #: /views/edit/VersionedContent/tab_status.pt:237
 msgid "access key: alt-e"
 msgstr ""
@@ -1102,12 +1102,12 @@ msgid "owner"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:230
-#: /views/edit/Container/tab_status_export.pt:476
+#: /views/edit/Container/tab_status_export.pt:478
 msgid "there's no undo: alt-x"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:230
-#: /views/edit/Container/tab_status_export.pt:476
+#: /views/edit/Container/tab_status_export.pt:478
 msgid "remove"
 msgstr ""
 
@@ -1123,7 +1123,7 @@ msgstr ""
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:164
 #: /views/edit/Container/tab_edit_import.pt:342
-#: /views/edit/Container/tab_status_export.pt:431
+#: /views/edit/Container/tab_status_export.pt:433
 msgid "description"
 msgstr ""
 
@@ -1531,17 +1531,17 @@ msgid "import zip"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:234
-#: /views/edit/Container/tab_status_export.pt:261
+#: /views/edit/Container/tab_status_export.pt:263
 msgid "access key: alt-z"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:271
-#: /views/edit/Container/tab_status_export.pt:300
+#: /views/edit/Container/tab_status_export.pt:302
 msgid "docma icon"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:279
-#: /views/edit/Container/tab_status_export.pt:308
+#: /views/edit/Container/tab_status_export.pt:310
 msgid "docma facilities"
 msgstr ""
 
@@ -1554,17 +1554,17 @@ msgid "Locate a Word file to upload. It'll be converted and appear in the list o
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:326
-#: /views/edit/Container/tab_status_export.pt:392
+#: /views/edit/Container/tab_status_export.pt:394
 msgid "email address"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:336
-#: /views/edit/Container/tab_status_export.pt:402
+#: /views/edit/Container/tab_status_export.pt:404
 msgid "An e-mail will be sent to you when the item is processed."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:350
-#: /views/edit/Container/tab_status_export.pt:440
+#: /views/edit/Container/tab_status_export.pt:442
 msgid "This description will be shown in the queue and the list of processed items."
 msgstr ""
 
@@ -1971,77 +1971,77 @@ msgstr ""
 msgid "export to Silva xml (.xml) ${or_adobe}"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:116
-#: /views/edit/Container/tab_status_export.pt:210
-#: /views/edit/Container/tab_status_export.pt:324
+#: /views/edit/Container/tab_status_export.pt:118
+#: /views/edit/Container/tab_status_export.pt:212
+#: /views/edit/Container/tab_status_export.pt:326
 msgid "options"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:129
-#: /views/edit/Container/tab_status_export.pt:223
-#: /views/edit/Container/tab_status_export.pt:339
+#: /views/edit/Container/tab_status_export.pt:131
+#: /views/edit/Container/tab_status_export.pt:225
+#: /views/edit/Container/tab_status_export.pt:341
 msgid "include sub publications?"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:146
-#: /views/edit/Container/tab_status_export.pt:356
+#: /views/edit/Container/tab_status_export.pt:148
+#: /views/edit/Container/tab_status_export.pt:358
 msgid "export newest versions?"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:157
-#: /views/edit/Container/tab_status_export.pt:367
+#: /views/edit/Container/tab_status_export.pt:159
+#: /views/edit/Container/tab_status_export.pt:369
 msgid "If not checked the published version is exported."
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:169
+#: /views/edit/Container/tab_status_export.pt:171
 msgid "export pdf"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:178
+#: /views/edit/Container/tab_status_export.pt:180
 msgid "export xml"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:201
+#: /views/edit/Container/tab_status_export.pt:203
 msgid "full media export (.zip)"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:240
+#: /views/edit/Container/tab_status_export.pt:242
 msgid "export only last version?"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:251
+#: /views/edit/Container/tab_status_export.pt:253
 msgid "Check to export only the last version."
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:261
+#: /views/edit/Container/tab_status_export.pt:263
 msgid "export zip"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:315
+#: /views/edit/Container/tab_status_export.pt:317
 msgid "export to Docma (.doc)"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:374
+#: /views/edit/Container/tab_status_export.pt:376
 msgid "export closed content?"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:385
+#: /views/edit/Container/tab_status_export.pt:387
 msgid "Check to include closed content in the export."
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:408
+#: /views/edit/Container/tab_status_export.pt:410
 msgid "choose a template"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:415
+#: /views/edit/Container/tab_status_export.pt:417
 msgid "none"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:451
+#: /views/edit/Container/tab_status_export.pt:453
 msgid "export to Docma"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:451
+#: /views/edit/Container/tab_status_export.pt:453
 msgid "export the selection to word: alt-d"
 msgstr ""
 
@@ -3047,9 +3047,9 @@ msgstr ""
 #: /views/edit/Container/tab_edit_import.pt:99
 #: /views/edit/Container/tab_edit_import.pt:168
 #: /views/edit/Container/tab_edit_import.pt:306
-#: /views/edit/Container/tab_status_export.pt:122
-#: /views/edit/Container/tab_status_export.pt:216
-#: /views/edit/Container/tab_status_export.pt:331
+#: /views/edit/Container/tab_status_export.pt:124
+#: /views/edit/Container/tab_status_export.pt:218
+#: /views/edit/Container/tab_status_export.pt:333
 #: /views/edit/Container/GhostFolder/tab_edit.pt:74
 #: /views/edit/Container/Publication/settings_addables.pt:81
 #: /views/edit/Container/Publication/tab_metadata.pt:94
