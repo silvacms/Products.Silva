@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -147,7 +147,7 @@ class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
         time.sleep(SECOND/4.0)
         self.assert_(not doc.is_cached())
         self.assertNotEquals(data, doc.view())
-        
+
 class ViewCacheVirtualHostTestCase(ViewCacheTestCase):
     def afterSetUp(self):
         # Run all tests in a virtual host setup:
@@ -204,7 +204,7 @@ class ViewCacheVirtualHostTestCase(ViewCacheTestCase):
         self.assert_(not doc.is_cached())
         data2 = doc.view()
         self.assert_(doc.is_cached())
-        self.assertNotEquals(data1, data2)        
+        self.assertNotEquals(data1, data2)
         
 if __name__ == '__main__':
     framework()
