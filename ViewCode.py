@@ -69,7 +69,7 @@ class ViewCode:
 
             if not status: 
                 status_style = public_status.lower()
-                status = 'n/a'
+                status = 'none'
             else:
                 status_style = status.lower()
 
