@@ -12,6 +12,11 @@ Silva changes
       - Link objects now accept other protocols in the URL too (https,
         news, ftp, mailto).
 
+      - Subscriptions feature: visitors can now easily subscribe to 
+        publish events of VersionedContent objects (like Silva Documents).
+        If a visitor is subscribed, he will receive notifications by email
+        whenever a publication event for this object is triggered.
+
     Bugs fixed
 
       - Fixed incorrect recursive call for get_public_tree_helper
