@@ -16,15 +16,15 @@ dict = { 'Silva Root' : 'silva.gif',
          'Silva Contact Info' : 'silvacontactinfo.gif',
          'Silva Ghost' : 'silvaghost.gif',
          'Silva DemoObject' : 'silvageneric.gif',
+         'Silva News NewsSource' : 'silvanewssource.png',
+         'Silva News NewsFilter' : 'silvanewsfilter.png',
+         'Silva News AgendaFilter' : 'silvaagendafilter.png',
+         'Silva News NewsViewer' : 'silvanewsviewer.png',
+         'Silva News AgendaViewer' : 'silvaagendaviewer.png',
+         'Silva News RSSViewer' : 'silvarssviewer.png',
          'Silva News NewsItem' : 'silvanewsitem.gif',
-         'Silva News AgendaItem' : 'silvaagendaitem.gif',
-         'Silva News Article' : 'silvanewsitem.gif',
-         'Silva News NewsSource' : 'silvanewssource.gif',
-         'Silva News NewsFilter' : 'silvanewsfilter.gif',
-         'Silva News AgendaFilter' : 'silvanewsfilter.gif',
-         'Silva News NewsViewer' : 'silvanewsviewer.gif',
-         'Silva News AgendaViewer' : 'silvaagendaviewer.gif',
-         'Silva News RSSViewer' : 'silvanewsviewer.gif'
+         'Silva News AgendaItem' : 'silvaagendaitem.png',
+         'Silva News Article' : 'silvanewsitem.png',
          }
 
 icon_name = dict.get(meta_type, 'silvageneric.gif')

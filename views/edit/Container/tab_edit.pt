@@ -69,7 +69,7 @@
           <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" />
           <a href="top" title="Up to publication top"
             tal:define="url python:model.get_publication().absolute_url()"
-            tal:attributes="href string:${url}/edit/tab_edit"><img tal:attributes="src string:${silva_root}/globals/silvapublication.gif" width="16" height="16" border="0" alt="Silva Publication" /></a>
+            tal:attributes="href string:${url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(model.meta_type)" /></a>
           <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
             tal:attributes="href string:${url}/edit/tab_edit"><span tal:replace="structure python:model.get_publication().get_title_or_id_html()">Publication top</span></a>
         </td>
