@@ -30,7 +30,8 @@
               </div>
             </td>
           </tr>
-          <tr tal:repeat="member python:clipboard_members.values()">
+          <tr tal:repeat="userid python:clipboard_members.keys()">
+            <tal:block define="member python: model.sec_get_member(userid)">
             <td width="1%">
               <input name="userids:list"
                 type="checkbox"
@@ -40,6 +41,7 @@
             <td tal:content="member/fullname">
               Name
             </td>
+            </tal:block>
           </tr>
           <tr tal:condition="not:clipboard_members">
             <td>
