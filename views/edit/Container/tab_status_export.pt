@@ -74,7 +74,7 @@
                 <input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
             </td>
             <td colspan="2" align="right">
-                <input class="button" type="submit" name="download_xml:method" value=" Export "  title="Access key: alt-e" accesskey="e"/>
+                <input class="button" type="submit" name="download_xml:method" value=" Export " title="Access key: alt-e" accesskey="e" />
             </td>
           </tr>
         </table>
@@ -222,7 +222,7 @@
           <tr class="controls">
             <td colspan="3" align="right">
             <tal:block condition="silva_permissions/ChangeSilvaContent">
-                &nbsp;&nbsp;<input class="button" type="submit" name="tab_status_silva2word:method" value=" Export " title="Export the current location to Word" />
+                &nbsp;&nbsp;<input class="button" type="submit" name="tab_status_silva2word:method" value="Export to Docma" title="Export the current container to Word: alt-d" accesskey="d" />
             </tal:block>
             </td>
           </tr>
