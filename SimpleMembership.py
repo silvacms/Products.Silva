@@ -6,13 +6,13 @@ import Globals
 from DateTime import DateTime
 
 # silva
+from Security import Security
 from IMembership import IMember, IMemberService
-from Content import Content
 from Membership import cloneMember, Member
 import SilvaPermissions
 from helpers import add_and_edit
 
-class SimpleMember(Member, SimpleItem.SimpleItem):
+class SimpleMember(Member, Security, SimpleItem.SimpleItem):
     """Silva Simple Member"""
 
     __implements__ = IMember
@@ -31,7 +31,7 @@ class SimpleMember(Member, SimpleItem.SimpleItem):
 
     def manage_afterAdd(self, item, container):
         # make the user chiefeditor of his own object
-        self.sec_assign(self.id, 'ChiefEditor')
+        self.aq_inner.sec_assign(self.id, 'ChiefEditor')
 
     def manage_beforeDelete(self, item, container):
         pass
