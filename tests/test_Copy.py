@@ -57,6 +57,7 @@ class CopyTestCase(unittest.TestCase):
         self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
         self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
         self.folder4 = folder4 = add_helper(sroot, 'Folder', 'folder4', 'Folder4')
+        self.folder4.manage_main = lambda *foo, **bar: None
         self.folder5 = folder5 = add_helper(sroot, 'Folder', 'folder5', 'Folder5')
         self.folder5.manage_main = lambda *foo, **bar: None
         self.subdoc = subdoc = add_helper(folder4, 'Document', 'subdoc', 'Subdoc')
@@ -138,6 +139,22 @@ class CopyTestCase(unittest.TestCase):
         # original *should* be published
         self.assert_(self.subdoc.is_version_published())
 
+    def test_cut1(self):
+        # try to cut object to paste it to the same folder
+        self.sroot.action_cut(['doc1'], self.REQUEST)
+        self.sroot.action_paste(self.REQUEST)
+        self.assert_(hasattr(self.sroot, 'doc1'))
+
+    def test_cut2(self):
+        # try to cut object and paste it into another folder
+        self.sroot.action_cut(['doc1'], self.REQUEST)
+        self.sroot.folder4.action_paste(self.REQUEST)
+        self.assert_(not hasattr(self.sroot, 'doc1'))
+        self.assert_(hasattr(self.sroot.folder4, 'doc1'))
+
+    # should add unit tests for cut-pasting approved content
+    # could occur if content is approved after its put on clipboard..
+    
     def test_delete1(self):
         # just delete doc1, it should work
         self.assert_(self.sroot.is_delete_allowed('doc1'))

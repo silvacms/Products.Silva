@@ -5,6 +5,7 @@ from OFS import Folder, SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
+from OFS.CopySupport import _cb_decode # HACK
 # Silva
 from SilvaObject import SilvaObject
 from Publishable import Publishable
@@ -161,7 +162,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """Delete objects.
         """
         # check whether deletion is allowed
-        deletable_ids = [id for id in ids if self.is_deleted_allowed(id)]
+        deletable_ids = [id for id in ids if self.is_delete_allowed(id)]
         self.manage_delObjects(deletable_ids)
          
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -187,17 +188,44 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def action_paste(self, REQUEST):
         """Paste objects on clipboard.
         """
-        # items on clipboard should be unapproved & closed, but
-        # only the *copies*
-        copy_ids = [item.id for item in self.cb_dataItems()]
-        # modify ids to copy_to if necessary
-        paste_ids = []
-        ids = self.objectIds()
-        for copy_id in copy_ids:
-            if copy_id in ids:
-                paste_ids.append('copy_of_%s' % copy_id)
+        # HACK
+        # determine if we're cut-paste or copy-pasting, wish we
+        # didn't have to..
+        if not REQUEST.has_key('__cp'):
+            return
+        op, ref = _cb_decode(REQUEST['__cp'])
+
+        if op == 0:
+            # copy-paste operation
+            # items on clipboard should be unapproved & closed, but
+            # only the *copies*
+            copy_ids = [item.id for item in self.cb_dataItems()]
+            # modify ids to copy_to if necessary
+            paste_ids = []
+            ids = self.objectIds()
+            for copy_id in copy_ids:
+                if copy_id in ids:
+                    paste_ids.append('copy_of_%s' % copy_id)
+                else:
+                    paste_ids.append(copy_id)
+        else:
+            # cut-paste operation
+            cut_ids = [item.id for item in self.cb_dataItems()]
+            # check where we're cutting from
+            cut_container = item.get_container()
+            # if not cutting to the same folder as we came from
+            if self != cut_container:
+                # modify ids to copy_to if necessary
+                paste_ids = []
+                ids = self.objectIds()
+                for cut_id in cut_ids:
+                    if cut_id in ids:
+                        paste_ids.append('copy_of_%s' % cut_id)
+                    else:
+                        paste_ids.append(cut_id)
             else:
-                paste_ids.append(copy_id)
+                # no changes to cut_ids 
+                paste_ids = cut_ids
         # now we do the paste
         self.manage_pasteObjects(REQUEST=REQUEST)
         # now unapprove & close everything just pasted
