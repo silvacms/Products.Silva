@@ -554,10 +554,12 @@
               </tr>
               <tr class="even">
                 <td>
-                  <tal:block condition="info/is_public">Open to the public</tal:block>
-                  <tal:block condition="not: info/is_public"
-                    tal:content="selected_role">role</tal:block>
-                  <tal:block condition="info/acquired">(acquired).</tal:block>
+                  <i>
+                    <tal:block condition="info/is_public">Open to the public</tal:block>
+                    <tal:block condition="not: info/is_public"
+                      tal:content="selected_role">role</tal:block>
+                    <tal:block condition="info/acquired">(acquired).</tal:block>
+                  </i>
                 </td>
                 <td i18n:translate="setting_an_access_restriction"> 
                   Setting an access restriction here affects objects on this and lower levels.
@@ -569,8 +571,18 @@
             </tal:block>
             <tfoot>
               <tr class="controls">
-                <td class="align-right"
-                  colspan="2">
+                <td>
+                  <input
+                    class="cancel"
+                    type="submit"
+                    name="tab_access_acquire_minimum_role_submit:method"
+                    value="acquire restriction"
+                    title="cancel the access restriction at this level, making it inherit from above"
+                    i18n:attributes="title value"
+                    tal:condition="not:acquired"
+                  />
+                </td>
+                <td class="align-right">
                   <select 
                     class="manipulator"
                     name="role"
@@ -588,16 +600,7 @@
                     value="set restriction"
                     title="restrict access to users with a specific role"
                     i18n:attributes="title value"
-                    />
-                  <input
-                    class="button"
-                    type="submit"
-                    name="tab_access_acquire_minimum_role_submit:method"
-                    value="acquire restriction"
-                    title="make access restriction be inherited from above"
-                    i18n:attributes="title value"
-                    tal:condition="not:acquired"
-                    />
+                  />
                 </td>
               </tr>
             </tfoot>
