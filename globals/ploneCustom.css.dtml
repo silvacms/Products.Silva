@@ -233,6 +233,7 @@ div.personalBar a {
     padding: 0 ! important;
     margin: 0 ! important;
     text-transform: none;
+    cursor: pointer;
 }
 
 div.personalBar img {

@@ -216,7 +216,7 @@ function handle_default_action(element, event, action)
 >
   <div style="float: left;">
     <a title="Change your settings: alt-~"
-       accesskey="~"
+      accesskey="~"
       tal:attributes="
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
         userWindow.focus();;
@@ -231,8 +231,8 @@ function handle_default_action(element, event, action)
     </a>
   </div>
   <div style="float: right;">
-    <a accesskey="q"
-      href="logout"
+    <a href="logout"
+      accesskey="q"
       title="Logout of Silva: alt-q"
     >
       logout
