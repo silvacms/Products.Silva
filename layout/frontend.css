@@ -1,59 +1,67 @@
-/* _________________ stylesheet for Silva 0.9.3+ frontend _________________ */
-/*
-**  Instructions to set caching headers. Inside comments area to play nicer with CSS editors.
-**
-** <dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+1" >
-**   <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
-**   <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
-**   <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
-**   <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
-** </dtml-let>
-*/
+<dtml-let last_modified="_.DateTime()-14"
+          expires="_.DateTime()+7" >
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
+</dtml-let>
 
-/* _______ Silva customers can insert their own frontend styles ____________ */
-/* _______ Changes made will be reflected in the Silva preview _____________ */
+/* _______________ stylesheet for Silva 0.9.x frontend ________________ */
+/* _______ Silva customers can insert their own frontend styles _______ */
 
 body {
   font: 70% Verdana, Helvetica, Arial, sans-serif;
-  background-image: url(globals/skyfade.gif); 
+  background-image: url(/sylph/globals/skyfade.gif); 
   background-repeat: repeat-x;
   background-color: #dde5ee;
   color: #2d374c;
   margin: 0;
-  padding: 0;
 }
   
 h1, h2, h3, h4, h5 {
   color : #455885;
-  margin : 0.7em 0em 0.3em 0em;
+  margin : 1.4em 0em 0em 0em;
+  padding: 0;
+/*  border: 1px dotted red; */
 }
 
 h2 {
-  font-size : 150%;
-  margin-top : 0;
+  margin-top : 0.5em;
 }
 
 h3 {
-  font-size : 140%;
+  font-size : 135%;
 }
 
 h4 {
-  font-size : 130%;
-}
-
-h5 {
   font-size : 120%;
 }
 
+h5 {
+  font-size : 105%;
+}
+
 h6 {
-  font-size : 110%;
+  font-size : 90%;
   color : #676767;
 }
 
 h6.minor {
-  font-size : 110%;
+  font-size : 90%;
   font-weight : normal;
   color : #454545;
+}
+
+.subhead {
+  font-weight : bold;  
+  font-family : verdana, arial, helvetica, sans-serif;
+  color: #333767;
+  line-height : 1.6em;
+} 
+
+
+p {
+  margin : 0.7em 0em;
 }
 
 p.lead {
@@ -72,14 +80,6 @@ pre {
   border: none;
 }
 
-abbr, acronym {
-  border-bottom: 1px dotted #454545;
-  cursor: help;
-}
-
-
-/* ______________________________________________ navigation selectors _____ */
-
 span.breadcrumb a {
   text-decoration : none;
 }  
@@ -95,7 +95,7 @@ a.index-element {
 }
 
 
-/* _____________________________________________ silva table selectors _____ */
+/* ______________ silva table styles ______________ */
 
 table.silvatable {
   empty-cells: show;
@@ -155,11 +155,11 @@ td.even table td {
 }
 
 
-/* _________________________________________________ silva list styles _____ */
+/* __________________________________________________ silva list styles _____ */
 
 /* override plone image bullets */
 ul {
-    list-style-image: none; 
+  list-style-image: none; 
 }
 
 ul.disc {
@@ -175,7 +175,7 @@ ul.circle {
 } 
 
 ul.nobullet { 	 
-   list-style-type: none; 	 
+  list-style-type: none; 	 
  }
 
 ol.decimal {
@@ -208,13 +208,33 @@ dd {
 }
 
 
+/* ____________________________________________________________ links _____ */
+
+div.public a:link {
+  color : #0000aa;
+  text-decoration : underline;
+}
+div.public a:visited {
+  color : #4a00b2;
+  text-decoration : underline;
+}
+div.public a:active {
+  color : #3399cc;
+}
+div.public a:hover {
+  color : #0000ff;
+  text-decoration : none;
+}
+
+
 /* defines the width of the text in the preview/public layout */
 .public {
   margin-left : 5em;
   padding-top : 2em;
-  max-width : 40em;
+  max-width : 44em;
   /* for IE5 */
   width : 512px;
+  line-height : 1.5em;
 }
 
 
