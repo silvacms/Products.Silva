@@ -18,9 +18,8 @@
   name="silvaObjects"
   tal:define="
     default_document model/get_default;
-    default_doc_list python: test(default_document, [default_document], []);
-    publishables python: default_doc_list + model.get_ordered_publishables();
-    assets model/get_assets;
+    publishables model/get_processed_items;
+    assets model/get_processed_assets;
     ids request/ids | options/ids | python: [];
     position request/position | options/position | nothing;
     iterate string:odd;
@@ -153,38 +152,34 @@
                 ______________ default + publishables ______________
               </tal:block>
               <tal:repeat
-                repeat="item publishables">
+                repeat="d publishables">
                 <tal:define define="
-                  is_default python: item is default_document;
-                  item_url item/absolute_url;
-                  status_style python:item.get_object_status()[1];
-                  iterate repeat/item/odd">
+                  iterate repeat/d/odd">
                   <tr tal:attributes="class python: iterate and 'odd' or 'even'">
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
                     </tal:block>
-                    <td class="listing-left"
-                      tal:define="item_id item/id">
+                    <td class="listing-left">
                       <input name="ids:list"
                         type="checkbox"
                         value="value"
                         tal:attributes="
-                          value item_id;
-                          id item_id;
-                          checked python: item_id in ids and 'checked' or nothing;
+                          value d/item_id;
+                          id d/item_id;
+                          checked python: d['item_id'] in ids and 'checked' or nothing;
                           "
                         onkeypress="handle_default_action(this, event, 'tab_edit_copy')"
                       />
                       <label 
-                        tal:condition="default_document"
-                        tal:content="repeat/item/index"
-                        tal:attributes="for item_id">
+                        tal:condition="d/is_default"
+                        tal:content="repeat/d/index"
+                        tal:attributes="for d/item_id">
                         # with default doc, starts at 0
                       </label>
                       <label 
-                        tal:condition="not: default_document"
-                        tal:content="repeat/item/number"
-                        tal:attributes="for item_id">
+                        tal:condition="not: d/is_default"
+                        tal:content="repeat/d/number"
+                        tal:attributes="for d/item_id">
                         # without default doc, starts at 1
                       </label>
                     </td>
@@ -194,16 +189,16 @@
                     <td>
                       <a class="icon"
                         tal:attributes="
-                          href python:model.get_editor_link(item);
-                          title item/meta_type;">
-                        <img tal:replace="structure python:view.render_icon(item)" />
+                          href d/editor_link;
+                          title d/meta_type;">
+                        <img tal:replace="structure d/rendered_icon" />
                       </a>
                       <a class="blacklink"
                         title="modify"
-                        tal:content="item/id"
+                        tal:content="d/item_id"
                         tal:attributes="
-                          href python:model.get_editor_link(item);
-                          class status_style;"
+                          href d/editor_link;
+                          class d/status_style;"
                       >
                         id
                       </a>
@@ -212,10 +207,7 @@
                         height="10"
                         title="content is approved or published"
                         width="10"
-                        tal:define="
-                          is_published item/is_version_published | nothing;
-                          is_approved item/is_version_approved | nothing"
-                        tal:condition="python:is_published or is_approved"
+                        tal:condition="d/is_published_or_approved"
                         tal:attributes="src string:${root_url}/globals/checkmark.gif"
                       />
                     </td>
@@ -226,28 +218,28 @@
                       <a class="blacklink"
                         title="preview"
                         tal:attributes="
-                          href string:${item_url}/edit/tab_preview;
-                          class status_style;"
-                        tal:content="python:(item.get_title_editable() or default)">
+                          href string:${d/item_url}/edit/tab_preview;
+                          class d/status_style;"
+                        tal:content="python:(d['title_editable'] or default)">
                         <i i18n:translate="no_title">no title</i>
                       </a>
                     </td>
                     <tal:block replace="nothing">
                       _______ modified date / properties downlink cell _______
                     </tal:block>
-                    <td tal:define="modification_time item/get_modification_datetime | nothing">
+                    <td>
                       <a class="blacklink"
                         title="properties"
-                        tal:condition="modification_time"
-                        tal:attributes="href string:${item_url}/edit/tab_metadata"
-                        tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
+                        tal:condition="d/has_modification_time"
+                        tal:attributes="href string:${d/item_url}/edit/tab_metadata"
+                        tal:content="structure d/modification_time"
                       >
                         date
                       </a>
                       <a class="closed"
                         title="properties"
-                        tal:condition="not:modification_time"
-                        tal:attributes="href string:${item_url}/edit/tab_metadata"
+                        tal:condition="not:d/has_modification_time"
+                        tal:attributes="href string:${d/item_url}/edit/tab_metadata"
                         i18n:translate="n/a"
                       >
                       <i>n/a</i>
@@ -256,26 +248,26 @@
                     <tal:block replace="nothing">
                       _______ author / publish downlink cell _______
                     </tal:block>
-                    <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
+                    <td>
                       <a class="blacklink"
                         title="publish"
-                        tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
-                        tal:attributes="href string:${item_url}/edit/tab_status"
-                        tal:content="structure last_author"
+                        tal:condition="d/is_versioned_content"
+                        tal:attributes="href string:${d/item_url}/edit/tab_status"
+                        tal:content="structure d/last_author"
                       >
                         authorname
                       </a>
                       <a class="closed"
                         title="publish"
-                        tal:condition="python:item.implements_container()"
-                        tal:attributes="href string:${item_url}/edit/tab_status"
+                        tal:condition="d/is_container"
+                        tal:attributes="href string:${d/item_url}/edit/tab_status"
                         i18n:translate="n/a"
                       >
                         <i>n/a</i>
                       </a>
                       <span 
-                        tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
-                        tal:replace="last_author">
+                        tal:condition="d/is_content"
+                        tal:replace="d/last_author">
                         authorname
                       </span>
                     </td>
@@ -283,10 +275,10 @@
                       _______ move symbols _______
                     </tal:block>
                     <td class="listing-right">
-                      <tal:block condition="python:may_change_content and not is_default">
+                      <tal:block condition="python:may_change_content and not d['is_default']">
                         <a class="icon"
                           title="move down"
-                          tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item/id}"
+                          tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${d/item_id}"
                           i18n:attributes="title"
                         >
                           <img alt="Move down"
@@ -297,7 +289,7 @@
                         </a>
                         <a class="icon"
                           title="move up"
-                          tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item/id}"
+                          tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${d/item_id}"
                           i18n:attributes="title"
                         >
                           <img alt="Move up"
@@ -312,7 +304,7 @@
                   <tal:block replace="nothing">
                     ______________ sync cycling of row colors ______________
                   </tal:block>
-                  <tal:condition condition="repeat/item/end">
+                  <tal:condition condition="repeat/d/end">
                     <tal:define define="global iterate python:iterate == 1 and 'odd' or 'even'" />
                   </tal:condition>
                 </tal:define>
@@ -324,17 +316,15 @@
               </tal:block>
               <tal:block 
                 condition="python:len(assets)"
-                repeat="asset assets">
+                repeat="d assets">
 
                 <tal:block define="
-                  asset_url asset/absolute_url;
                   odd_even python: iterate == 'odd' and 'odd' or 'even';
-                  iterate repeat/asset/?odd_even;
+                  iterate repeat/d/?odd_even;
                   ">
                   <tr 
                     tal:define="
-                      title python:(asset.get_title());
-                      show_top_border repeat/asset/start;"
+                      show_top_border repeat/d/start;"
                     tal:attributes="
                       class python: iterate and 'odd' or 'even';
                       style python: show_top_border and 'border-top: 1px solid #77858c' or nothing">
@@ -345,12 +335,12 @@
                       <input name="ids:list"
                         type="checkbox"
                         tal:attributes="
-                          value asset/id;
-                          id asset/id;"
+                          value d/asset_id;
+                          id d/asset_id;"
                       />
                       <label 
                         tal:condition="default_document"
-                        tal:attributes="for asset/id">
+                        tal:attributes="for d/asset_id">
                         &#8211;
                       </label>
                     </td>
@@ -360,15 +350,15 @@
                     <td>
                       <a class="icon"
                         tal:attributes="
-                          href  python:model.get_editor_link(asset);
-                          title asset/meta_type;">
-                        <img tal:replace="structure python:view.render_icon(asset)" />
+                          href  d/editor_link;
+                          title d/meta_type;">
+                        <img tal:replace="structure d/rendered_icon" />
                       </a>
                       <a class="blacklink"
                         href="asset"
                         title="editor"
-                        tal:attributes="href python:model.get_editor_link(asset)"
-                        tal:content="structure asset/id"
+                        tal:attributes="href d/editor_link"
+                        tal:content="structure d/asset_id"
                         i18n:attributes="title"
                       >
                         id
@@ -385,10 +375,10 @@
                     <td>
                       <a class="blacklink"
                         title="preview"
-                        tal:content="python: asset.get_title() == '' and default or asset.get_title()"
+                        tal:content="python: d['title'] or default"
                         tal:attributes="
-                          href string:${asset_url}/edit/tab_preview;
-                          class python: asset.get_title() == '' and 'closed' or 'blacklink'"
+                          href string:${d/asset_url}/edit/tab_preview;
+                          class d/blacklink_class"
                         i18n:attributes="title"
                       >
                         <i i18n:translate="view">view</i>
@@ -397,19 +387,19 @@
                     <tal:block replace="nothing">
                       _______ modified date cell _______
                     </tal:block>
-                    <td tal:define="modification_time asset/get_modification_datetime | nothing">
+                    <td>
                       <a class="blacklink"
                         title="properties"
-                        tal:condition="modification_time"
-                        tal:attributes="href string:${asset_url}/edit/tab_metadata"
-                        tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
+                        tal:condition="d/has_modification_time"
+                        tal:attributes="href string:${d/asset_url}/edit/tab_metadata"
+                        tal:content="structure d/modification_time"
                         >
                          date
                       </a>
                       <a class="closed"
                         title="properties"
-                        tal:condition="not: modification_time"
-                        tal:attributes="href string:${asset_url}/edit/tab_metadata">
+                        tal:condition="not: d/has_modification_time"
+                        tal:attributes="href string:${d/asset_url}/edit/tab_metadata">
                         <i i18n:translate="unknown">
                           unknown
                         </i>
@@ -419,7 +409,7 @@
                       _______ author cell _______
                     </tal:block>
                     <td tal:content="structure last_author"
-                      tal:define="last_author python:(asset.sec_get_last_author_info().fullname() or default)">
+                      tal:define="last_author python:d['last_author'] or default">
                       unknown
                     </td>
                     <tal:block replace="nothing">

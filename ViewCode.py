@@ -1,10 +1,11 @@
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from Acquisition import aq_base
 
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle, icon
 
+from Products.Silva.interfaces import IVersionedContent, IContent, IContainer
 
 class ViewCode:
     """A mixin to expose view specific code to the pagetemplates
@@ -20,8 +21,9 @@ class ViewCode:
         """Returns the link where a client goes to when he clicks an object in tab_edit
         """
         tab = 'tab_edit'
-        if not self.REQUEST['AUTHENTICATED_USER'].has_permission(
-                    SilvaPermissions.ChangeSilvaContent, target):
+
+        if not getSecurityManager().getUser().has_permission(
+            SilvaPermissions.ChangeSilvaContent, target):
             tab = 'tab_preview'
 
         return '%s/edit/%s' % (target.absolute_url(), tab)
@@ -93,6 +95,76 @@ class ViewCode:
 
         return (status, status_style, public_status)
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_processed_items')
+    def get_processed_items(self):
+        default = self.get_default()
+        if default is not None:
+            publishables = [default]
+        else:
+            publishables = []
+        publishables.extend(self.get_ordered_publishables())
+
+        result = []
+        render_icon = self.render_icon
+        for item in publishables:
+            status = item.get_object_status()
+            modification_datetime = item.get_modification_datetime()
+            is_published = status[2] == 'published'
+            is_approved = status[0] == 'approved'
+            is_versioned_content = IVersionedContent.isImplementedBy(item)
+            d = {
+                'item': item,
+                'item_id': item.id,
+                'title_editable': item.get_title_editable(),
+                'meta_type': item.meta_type,
+                'item_url': item.absolute_url(),
+                'editor_link': self.get_editor_link(item),
+                'status_style': status[1],
+                'has_modification_time': modification_datetime,
+                'modification_time': mangle.DateTime(modification_datetime).toShortStr(),
+                'last_author': item.sec_get_last_author_info().fullname(),
+              
+                'is_default': item is default,
+                'is_container': IContainer.isImplementedBy(item),
+                'is_versioned_content': is_versioned_content,
+                'is_content': IContent.isImplementedBy(item) and not is_versioned_content,
+                'is_published': is_published,
+                'is_approved': is_approved,
+                'is_published_or_approved': is_published or is_approved,
+                'rendered_icon': render_icon(item),
+                }
+            result.append(d)
+        return result
+    
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_processed_asset_tree')
+    def get_processed_assets(self):
+        result = []
+        render_icon = self.render_icon
+  
+        for asset in self.get_assets():
+            title = asset.get_title()
+            modification_datetime = asset.get_modification_datetime()
+            d = {
+                'asset_id': asset.id,
+                'asset_url': asset.absolute_url(),
+                'meta_type': asset.meta_type,
+                'last_author': asset.sec_get_last_author_info().fullname(),
+                'title': title,
+                'editor_link': self.get_editor_link(asset),
+                'rendered_icon': render_icon(asset),
+                'has_modification_time': modification_datetime,
+                'modification_time': mangle.DateTime(modification_datetime).toShortStr(),
+                }
+            if title:
+                d['blacklink_class'] = 'blacklink'
+            else:
+                d['blacklink_class'] = 'closed'
+            result.append(d)
+        return result
+                
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'get_processed_status_tree')
     def get_processed_status_tree(self):
         tree = self.get_status_tree()
