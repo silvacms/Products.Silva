@@ -19,7 +19,7 @@ def check_reserved_ids(obj):
             while (check_valid_id(obj, id, 1) or
                     id in obj.objectIds()):
                 id = 'renamed_%s' % id
-            obj.manage_renameObject(oid, id)
+            obj.manage_renameObject(o.id, id)
             illegal_urls.append(o.absolute_url())
         if IContainer.isImplementedBy(o):
             illegal_urls += check_reserved_ids(o)
