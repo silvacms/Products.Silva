@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.13 2004/04/16 09:00:24 kitblake Exp $
+# $Id: Image.py,v 1.50.4.1.6.14 2004/04/16 09:29:59 kitblake Exp $
 
 # Python
 import re, string 
@@ -454,11 +454,10 @@ class Image(Asset):
         """ returns Image orientation (string) """
         width, height = self.getDimensions()
         if width == height:
-            return "Square"
+            return "square"
         elif width > height:
-            return "Landscape"
-        
-        return "Portrait"
+            return "landscape"
+        return "portrait"
         
     def getTransformation(self):
         """image cropped or scaled"""

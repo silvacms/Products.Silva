@@ -979,17 +979,17 @@ div.info p span.orientation {
   margin-top: 0.3em;
 }
 
-div.info p span.Portrait {
+div.info p span.portrait {
   width: 4.5em;
   height: 6em;
 }
 
-div.info p span.Landscape {
-  width: 7em;
+div.info p span.landscape {
+  width: 6.5em;
   height: 3.5em;
 }
 
-div.info p span.Square {
+div.info p span.square {
   width: 4em;
   height: 4em;
 }
