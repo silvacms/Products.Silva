@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.112 $
+# $Revision: 1.112.6.1 $
 
 import ContainerPolicy
 
@@ -122,6 +122,8 @@ def initialize(context):
                                    Folder.xml_import_handler)
     importer_registry.register_tag('silva_ghostfolder',
                                    GhostFolder.xml_import_handler)
+    importer_registry.register_tag('silva_link',
+                                   Link.xml_import_handler)
 
     # register the FileSystemSite directories
     registerDirectory('views', globals())
