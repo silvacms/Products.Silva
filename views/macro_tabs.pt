@@ -12,6 +12,7 @@
   active_tab active_tab | nothing;
   selected_tab_id template/id;
   breadcrumb_vein breadcrumb_vein | nothing;
+  mangle python:modules['Products'].Silva.mangle;
 ">
 <!-- Breadcrumbs -->
   <div class="pathBar">

@@ -24,6 +24,7 @@
     silva_permissions view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content silva_permissions/ChangeSilvaContent | nothing;
+    mangle python:modules['Products'].Silva.mangle;
 ">
 
 <head>
