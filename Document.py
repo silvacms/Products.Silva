@@ -52,12 +52,8 @@ class Document(VersionedContent):
         Document.inheritedAttribute('__init__')(self, id, title)
 
         self._metadata = {
-            'document_title' : title,
             'subject' : '',
-            'description' : '',
-            'expires_flag': 0,
-            'audience' : None,
-            'language': 'Dutch'
+            'description' : ''
             }
         
         self._automatic_metadata = {
@@ -121,6 +117,8 @@ class Document(VersionedContent):
     def get_metadata(self, name):
         """Get meta data.
         """
+        if name == 'title':
+            return self.get_title()
         return self._metadata.get(name, None)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -128,6 +126,9 @@ class Document(VersionedContent):
     def set_metadata(self, name, value):
         """Set meta data.
         """
+        if name == 'title':
+            self.set_title(value)
+            return
         if not self._metadata.has_key(name):
             return
         self._metadata[name] = value
