@@ -166,16 +166,7 @@ def upgrade_list_titles_in_parsed_xml(top):
                     continue
                 upgrade_list_titles_in_parsed_xml(list_child)
         if child.nodeName == 'image':
-            if child.hasAttribute('image_id'):
-                id = child.getAttribute('image_id')
-                # XXX somehow, this way the image is not found...
-                image = getattr(top, id, None)
-                newpath = id
-                if image:
-                    newpath = unicode('/'.join(image.getPhysicalPath()))
-                child.removeAttribute('image_id')
-                child.setAttribute('path', newpath)
-            elif child.hasAttribute('image_path'):
+            if child.hasAttribute('image_path'):
                 path = child.getAttribute('image_path')
                 newpath = path
                 try:
@@ -189,6 +180,17 @@ def upgrade_list_titles_in_parsed_xml(top):
                         except:
                             newpath = path 
                 child.removeAttribute('image_path')
+                if child.hasAttribute('image_id'):
+                     child.removeAttribute('image_id')
+                child.setAttribute('path', newpath)
+            elif child.hasAttribute('image_id'):
+                id = child.getAttribute('image_id')
+                # XXX somehow, this way the image is not found...
+                image = getattr(top.get_container(), id, None)
+                newpath = id
+                if image:
+                    newpath = unicode('/'.join(image.getPhysicalPath()))
+                child.removeAttribute('image_id')
                 child.setAttribute('path', newpath)
         if child.nodeName == 'table':
             for table_child in child.childNodes:
@@ -232,11 +234,13 @@ upgrade_registry = UpgradeRegistry()
 # Some upgrade stuff
 def upgrade_document(obj):
     for o in obj.objectValues():
-        upgrade_list_titles_in_parsed_xml(o.documentElement)
+        if o.meta_type == 'ParsedXML':
+            upgrade_list_titles_in_parsed_xml(o.documentElement)
 
 def upgrade_demoobject(obj):
     for o in obj.objectValues():
-        upgrade_list_titles_in_parsed_xml(o.content.documentElement)
+        if o.meta_type == 'Silva DemoObject Version':
+            upgrade_list_titles_in_parsed_xml(o.content.documentElement)
 
 upgrade_registry.register('Silva Document', upgrade_document)
 upgrade_registry.register('Silva DemoObject', upgrade_demoobject)
