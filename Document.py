@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.65 $
+# $Revision: 1.66 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -156,6 +156,7 @@ class Document(CatalogedVersionedContent):
         """Render object to XML.
         """
         f = context.f
+
         if context.last_version == 1:
             version_id = self.get_next_version()
             if version_id is None:
@@ -214,25 +215,22 @@ class Document(CatalogedVersionedContent):
         """provide xml/xhtml/html (GET requests) and (heuristic) 
            back-transforming to xml/xhtml/html (POST requests)
         """
+        from cStringIO import StringIO
         transformer = EditorTransformer(editor=editor)
 
         if string is None:
-            ctx = Context(url=self.absolute_url())
-            string = self.get_xml(last_version=1, with_sub_publications=0)
-            htmlnode = transformer.to_target(sourceobj=string, context=ctx)
+            ctx = Context(f=StringIO(), last_version=1, url=self.absolute_url())
+            self.to_xml(ctx)
+            htmlnode = transformer.to_target(sourceobj=ctx.f.getvalue(), context=ctx)
             return htmlnode.asBytes(encoding=encoding)
         else:
             version = self.get_editable()
             if version is None:
                 raise "Hey, no version to store to!"
             
-            ctx = Context(id=self.id,
-                            title=self.get_title(),
-                            url=self.absolute_url())
-            
+            ctx = Context(url=self.absolute_url())
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
-            title = silvanode.find('title')[0].content.asBytes(encoding='utf8')
-            title = unicode(title, 'utf8')
+            title = silvanode.find_one('title').extract_text()
             docnode = silvanode.find_one('doc')
             content = docnode.asBytes(encoding="UTF8")
             version.content.manage_edit(content)  # needs utf8-encoded string
