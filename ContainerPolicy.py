@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 
 # zope
 from Globals import InitializeClass
@@ -113,4 +113,16 @@ class _SemiGhostPolicy(Persistent):
             'index', title)
         container.index.sec_update_last_author_info()
 SemiGhostPolicy = _SemiGhostPolicy()
+
+
+class _AutoTOCPolicy(Persistent):
+
+    __implements__ = IContainerPolicy
+
+    def createDefaultDocument(self, container, title):
+        container.manage_addProduct['Silva'].manage_addAutoTOC(
+            'index', title)
+        container.index.sec_update_last_author_info()
+AutoTOCPolicy = _AutoTOCPolicy()
+
 

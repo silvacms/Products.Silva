@@ -9,7 +9,7 @@ from Products.FileSystemSite.utils import minimalpath, expandpath
 from Products.ProxyIndex.ProxyIndex import RecordStyle
 
 from Products.Silva.ContainerPolicy import \
-    NothingPolicy, SimpleContentPolicy, SemiGhostPolicy
+    NothingPolicy, SimpleContentPolicy, SemiGhostPolicy, AutoTOCPolicy
 from SimpleMembership import SimpleMemberService
 
 def add_fss_directory_view(obj, name, base, *args):
@@ -186,8 +186,8 @@ def configureMetadata(root):
         {'type':'Silva SQL Data Source',    'chain':'silva-content, silva-extra'},
         {'type':'Silva Simple Content',     'chain':'silva-content, silva-extra'},
         {'type':'Silva Semi Ghost', 'chain': 'silva-content, silva-extra'},
+        {'type': 'Silva AutoTOC', 'chain': 'silva-content, silva-extra'},
         )
-
     mapping.editMappings(default, tm)
 
     # initialize the default set if not already initialized
@@ -440,7 +440,7 @@ def registerViews(reg):
                  ['public', 'SQLDataSource'])
     reg.register('public', 'Silva Ghost Folder', ['public', 'Folder'])
     reg.register('public', 'Silva Semi Ghost', ['public', 'SemiGhost'])
-    
+    reg.register('public', 'Silva AutoTOC', ['public', 'AutoTOC'])
 
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
@@ -566,6 +566,7 @@ def configureContainerPolicies(root):
     cpr.register('None', NothingPolicy)
     cpr.register('Simple Content', SimpleContentPolicy)
     cpr.register('First Published', SemiGhostPolicy)
+    cpr.register('Auto TOC', AutoTOCPolicy)
 
 
 if __name__ == '__main__':
