@@ -99,8 +99,7 @@ class SetHandler(BaseHandler):
             self._metadata_set = attrs[(None, 'id')]
             self._parent_handler._metadata[self._metadata_set] = {}
         else:
-            # XXX do something other than ignore the namespace
-            namespace, self._metadata_key = name
+            self._metadata_key = name[1]
             
     def characters(self, chrs):
         if self._metadata_key is not None:
