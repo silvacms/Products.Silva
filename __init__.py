@@ -1,4 +1,5 @@
-import Document, Folder, Root, ViewRegistry, Publication, Ghost, ContactInfo
+import Document, Folder, Root, ViewRegistry,\
+       Publication, Ghost, ContactInfo, Image
 
 def initialize(context):
      context.registerClass(
@@ -46,3 +47,8 @@ def initialize(context):
                           ContactInfo.manage_addContactInfo)
           )
      
+     context.registerClass(
+          Image.Image,
+          constructors = (Image.manage_addImageForm,
+                          Image.manage_addImage)
+          )
