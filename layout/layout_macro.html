@@ -34,42 +34,31 @@
   <!-- Start related links -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
-  <!-- Access navigation links - remove if not needed for better performance -->
-  <tal:define define="
-    root python:here.meta_type == 'Silva Root';
-    surround here/surroundlinks; 
-    first python:surround[0];
-    previous python: surround[1];
-    next python:surround[2];
-    last python:surround[3];">
+  <!-- Access navigation links - more to come after the beta -->
+  <tal:block define="
+    at_root python:here.meta_type == 'Silva Root';
+    publication python:here.get_publication();
+  ">
+  <link rel="Home" title="Top page of site" 
+    tal:condition="not: at_root"
+    tal:attributes="href python:here.get_root().absolute_url()" />
   <link rel="top" title="Up to top of publication" 
-    tal:condition="not: root"
-    tal:attributes="href python:here.get_publication().absolute_url()" />
+    tal:condition="python: here.id != publication.id"
+    tal:attributes="href publication/absolute_url" />
   <link rel="up" href="../" title="Up a level" 
-    tal:condition="not: root"
+    tal:condition="not: at_root"
     tal:attributes="href python: here.id == 'index' and '../../' or '../'" />
-  <link rel="first" title="First document" 
-    tal:condition="first"
-    tal:attributes="href first/absolute_url" />
-  <link rel="previous" title="Previous document" 
-    tal:condition="previous"
-    tal:attributes="href previous/absolute_url" />
-  <link rel="next" title="Next document" 
-    tal:condition="next"
-    tal:attributes="href next/absolute_url" />
-  <link rel="last" title="Last document" 
-    tal:condition="last"
-    tal:attributes="href last/absolute_url" />
-  </tal:define>
+  </tal:block>
   <!-- /End access navigation links -->
   <link rel="copyright" title="Copyright"
     tal:attributes="href here/copyright/absolute_url | nothing" />
-  <link rel="alternate" type="application/rss+xml" href="./rss" title="RSS" />
   <!-- /End related links -->
   <!-- Begin stylesheets -->
   <link rel="stylesheet" type="text/css" media="all"
     tal:attributes="href here/frontend.css/absolute_url | nothing" />
   <link metal:define-slot="style" tal:omit-tag="" />
+  <link rel="stylesheet" type="text/css" media="print"
+    tal:attributes="href here/print.css/absolute_url | nothing" />
   <!-- /End stylesheets -->
   <script metal:define-slot="script" type="text/javascript"
     tal:replace="nothing">

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.15 2004/05/26 12:27:33 guido Exp $
+# $Id: install.py,v 1.97.4.9.4.16 2004/05/28 05:06:59 kitblake Exp $
 """Install for Silva Core
 """
 # Python
@@ -373,7 +373,7 @@ def configureLayout(root, default_if_existent=0):
                'copyright',]:
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
-    for id in ['index_html.py', 'preview_html.py', 'surroundlinks.py',
+    for id in ['index_html.py', 'preview_html.py', 'print.css',
                'get_metadata_element.py', 'get_layout_macro.py', ]:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
         
