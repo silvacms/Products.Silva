@@ -301,14 +301,13 @@ class ContainerTestCase(ContainerBaseTestCase):
 
     def test_get_default(self):
         # add default to root
-        self.root.manage_addProduct['Silva']
-        #.manage_addDocument('index', 'Default')
+        self.root.manage_addProduct['Silva'].manage_addDocument('index', 'Default')
         self.assertEquals(getattr(self.root, 'index'), self.root.get_default())
         # issue 47: index created by test user
         # XXX should strip the '(not in ldap)' if using LDAPUserManagement?
-        self.assertEquals('TestUser',
+        self.assertEquals('test_user_1_',
                           self.folder4.index.sec_get_last_author_info().userid())
-        self.assertEquals('TestUser',
+        self.assertEquals('test_user_1_',
                           self.publication5.index.sec_get_last_author_info().userid())
         # delete default object
         self.folder4.action_delete(['index'])
