@@ -72,10 +72,10 @@
 
           <tr class="controls">
             <td>
-                <button class="cancel" type="submit" name="edit_cancel" onClick="history.back()" title="Access key: alt-c" accesskey="c"> <u>C</u>ancel </button>
+                <input class="cancelbutton" type="submit" value=" Cancel " name="edit_cancel" onClick="history.back()" title="Access key: alt-c" accesskey="c" />
             </td>
             <td colspan="3" align="right">
-                <button type="submit" name="tab_edit_import_xml:method" value="tab_edit_import_xml:method" title="Access key: alt-i" accesskey="i"> <u>I</u>mport </button>
+                <input class="button" type="submit" value=" Import " name="tab_edit_import_xml:method" title="Access key: alt-i" accesskey="i" />
             </td>
           </tr>
         </table>
@@ -174,7 +174,7 @@
 
           <tr class="controls">
             <td colspan="4" align="right">
-                <button type="submit" name="tab_edit_import_docma:method" value="tab_edit_import_docma:method" title="Upload a Word document from your local drive - alt u" accesskey="u"> <u>U</u>pload </button>
+                <input class="button" type="submit" value=" Upload " name="tab_edit_import_docma:method" title="Upload a Word document from your local drive - alt u" accesskey="u" />
             </td>
           </tr>
         </table>
