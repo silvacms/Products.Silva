@@ -1,12 +1,30 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.19 $
+$Revision: 1.20 $
 
 Silva changes
 
-  Version under development
+  0.8.6
 
     Features Added
+
+       - Added Indexer object, which can find index entries and present
+         them.
+
+       - Enabled nested markup in text.
+
+       - Added easier way to add references to files, images. Can now
+         also reference assets not in local folder.
+
+       - Ability to open/close branches of the site. Added a new
+         'Viewer' role. Users with this role can see closed branches.
+
+       - Request for approval now implemented; users can leave a message
+         for the editors.
+
+       - Added new definition list element.
+
+       - Images now have various alignment options.
 
        - Moved views, widgets and other support folders to the
          filesystem, now using FileSystemSite.
@@ -20,8 +38,30 @@ Silva changes
          'service_extensions' allows site managers to install new
          extension packages into a Silva install.
 
+       - Beginnings of Silva XML import infrastructure.
+
     Bugs fixed
 
+       - Changed some permissions so it's possible to display some
+         information (publication datetime for instance) to end users.
+
+       - Fixed various unicode errors.
+
+       - Single column tables are now don't break.
+
+       - Better 'no bullets' list style.
+
+       - Fixed bug with extraneous list elements when too much
+         whitespace was entered.
+
+       - Fixed bug with ghosts pointing to nonexisting object.
+
+       - Reenabled caching in editor.
+
+       - Export newest version for XML exports now actually works.
+
+       - Pipe characters are now not swallowed when entered in
+         paragraphs, etc.
 
   0.8.5
 
@@ -37,6 +77,8 @@ Silva changes
 
       - Experimental editor support for nested markup. Replace
       "EditorSupport.py" with "EditorSupportNested.py" to test it.
+
+      - Added file object.
 
     Bugs fixed
 
