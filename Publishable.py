@@ -71,7 +71,7 @@ class Publishable:
             return self.is_version_published()
         else:
             # FIXME: should always be published if no versioning supported?
-            return 1
+            return 0
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'is_approved')

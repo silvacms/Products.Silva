@@ -542,7 +542,16 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             object.to_xml(f)
         #for object in self.get_assets():
         #    pass
-            
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'update')
+    def update(self):
+        for object in self.objectValues():
+            if object.meta_type == 'Silva Ghost':
+                object.update()
+            if Interfaces.Container.isImplementedBy(object):
+                object.update()
+    
 InitializeClass(Folder)
 
 
