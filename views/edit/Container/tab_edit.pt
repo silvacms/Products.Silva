@@ -40,8 +40,7 @@
     </tal:block>
     <tal:block condition="silva_permissions/ChangeSilvaContent">
     &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data - alt-i" accesskey="i" />&nbsp;&nbsp;&nbsp;
-      <input class="button" type="submit" name="add_object:method" value=" New " title="Add a new item - alt-n" accesskey="n" />
-      <span style="color:#a2c9cc;">&#8211;</span>
+      <input class="button" type="submit" name="add_object:method" value=" New:" title="Add a new item - alt-n" accesskey="n" />
       <select name="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();">
       <option value="None" disabled="disabled">Select...</option>
       <tal:block tal:repeat="addable model/get_silva_addables">
