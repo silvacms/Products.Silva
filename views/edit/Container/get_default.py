@@ -14,8 +14,8 @@ if default is None:
 view_registry = context.service_view_registry
 view = view_registry.get_view('public', default.meta_type)
 # if there is *NO* visibility info, the document *IS* visible
-visible = getattr(view, 'visible', lambda: 1)
-if visible():
+visible = getattr(view, 'visible', lambda x: 1)
+if visible(default):
     return default
 return None
 

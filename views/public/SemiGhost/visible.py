@@ -3,7 +3,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=
+##parameters=object=None
 ##title=
 
 # this is not visible as default document
