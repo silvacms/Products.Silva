@@ -53,33 +53,6 @@
             </h2>
          </td>
       </tr>
-      <tal:block replace="nothing">
-         ______________ top controls row ______________
-      </tal:block>
-      <tr class="top-controls">
-         <td colspan="3">
-            <form method="POST" 
-               name="conversion_form" 
-               action=".">
-               <input class="button"
-                  type="submit" 
-                  name="convert_to_folder:method" 
-                  value="convert to folder"
-                  title="access key: alt-f"
-                  accesskey="f"
-                  tal:condition="not:link_status"
-               />
-               <input class="button"
-                  type="submit" 
-                  name="convert_to_publication:method" 
-                  value="convert to publication"
-                  title="access key: alt-p"
-                  accesskey="p"
-                  tal:condition="not:link_status"
-               />
-            </form>
-         </td>
-      </tr>
    </thead>
 
   <form method="POST" 
@@ -113,7 +86,8 @@
               /><span class="warning">*</span>
            </td>
            <td>
-              <input type="text"
+              <input style="width:100%;"
+                 type="text"
                  name="content_url"
                  size="60" 
                  value="" 

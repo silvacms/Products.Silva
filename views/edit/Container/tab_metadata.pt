@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
     global vein string:properties;
-    ">
+">
 
 <!-- settings (aka tab_metadata) for Container objects -->
 <metal:block use-macro="here/macro_index/macros/master">
@@ -33,10 +33,8 @@
         </tal:block>
         
         <td class="main">
-          <form method="POST" name="form" action=".">
             <table class="listing">
               <thead>
-                  
                 <tr tal:replace="nothing">
                   ______________ vein + title row ______________
                 </tr>
@@ -48,45 +46,27 @@
                     </h2>
                   </td>
                 </tr>
-
                 <tr tal:replace="nothing">
                   ______________ top controls row ______________
                 </tr>
-                <tr class="top-controls"
-                  tal:condition="may_change_content">
-                  <td class="align-right">
-                    <div class="controls">
-                      <tal:block condition="python:type == 'Silva Folder'">
-                        <a class="button"
-                          style="float:left;"
-                          href="tab_edit_to_publication"
-                          title="change Folder into Publication: alt-c"
-                          accesskey="c">
-                          convert to publication
-                        </a>
-                      </tal:block>
-                      <tal:block condition="python:type == 'Silva Publication'">
-                        <a class="button"
-                          style="float:left;"
-                          href="tab_edit_to_folder"
-                          title="change Publication into Folder: alt-c"
-                          accesskey="c">
-                          convert to folder
-                        </a>
-                      </tal:block>
-                      <a class="transport"
-                        href="settings_addables"
-                        title="change the addables allowed in this publication: alt-a"
-                        accesskey="c"
-                        tal:condition="python:type == 'Silva Publication' or type == 'Silva Root'">
-                        configure <u>a</u>ddables...
+                <tr class="top-controls">
+                  <td>
+                    <tal:condition condition="may_change_content">
+                      <metal:block define-slot="top_controls" />
+                    </tal:condition>
+                    <tal:block condition="python:type == 'Silva Folder'">
+                      <a class="button"
+                        style="float:left;"
+                        href="tab_edit_to_publication"
+                        title="change Folder into Publication: alt-c"
+                        accesskey="c">
+                        convert to publication
                       </a>
-                    </div>
+                    </tal:block>
                   </td>
                 </tr>
               </thead>
             </table>
-          </form>
 
           <metal:block define-slot="more_control" />
           

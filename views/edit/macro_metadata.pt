@@ -247,12 +247,6 @@
         </thead>
         <tbody>
           <tal:block repeat="set_name binding/setNames">
-            <tr tal:condition="not:repeat/set_name/start">
-              <td class="divider"
-                style="background:#c5d4ca;"
-                colspan="2">
-              </td>
-            </tr>
             <tr tal:replace="nothing">
               ______________ top controls row ______________
             </tr>

@@ -7,13 +7,39 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    global vein string:metadata;
+    global vein string:properties;
 ">
 
 <!-- tab_metadata for GhostFolder objects -->
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
   <metal:block use-macro="view/Container/tab_metadata/macros/master">
+    <metal:block fill-slot="top_controls">
+      <form method="POST" 
+        name="conversion_form" 
+        action="." 
+        tal:define="
+          version     python:model.get_editable();
+          link_status python:here.get_ghost_link_status_text(version);
+        ">
+        <input class="button"
+          type="submit" 
+          name="convert_to_folder:method" 
+          value="convert to folder"
+          title="convert this ghost folder to a normal folder: alt-c"
+          accesskey="c"
+          tal:condition="not:link_status"
+        />
+        <input class="button"
+          type="submit" 
+          name="convert_to_publication:method" 
+          value="convert to publication"
+          title="convert this ghost folder to a normal publication: alt-p"
+          accesskey="p"
+          tal:condition="not:link_status"
+        />
+      </form>
+    </metal:block>
     <metal:fill fill-slot="actual_table">
       <tal:block define="version model">
         <metal:block use-macro="here/macro_metadata/macros/view_table" />
