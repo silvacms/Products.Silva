@@ -5,7 +5,9 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    breadcrumb_vein string:Publish;">
+  breadcrumb_vein string:Publish;
+  "
+  i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block tal:define="
   default_doc model/get_default;

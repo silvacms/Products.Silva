@@ -1,4 +1,12 @@
-<html tal:omit-tag="">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 
 <metal:block define-macro="listings"
   tal:define="finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid), format=format);">

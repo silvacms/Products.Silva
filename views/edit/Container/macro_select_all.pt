@@ -4,7 +4,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
->
+  i18n:domain="silva">
 <body>
 <metal:block define-macro="select_all">
   <tal:block define="sid select_id | python:''">

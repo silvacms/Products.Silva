@@ -14,7 +14,8 @@
     global parent_screen_name string:Contents;
     global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
     global silva_permissions here/get_silva_permissions;
-">
+    "
+  i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">

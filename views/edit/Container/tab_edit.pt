@@ -9,7 +9,8 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global breadcrumb_vein string:Contents;
-">
+    "
+  i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"

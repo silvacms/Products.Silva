@@ -10,7 +10,8 @@
   tal:define="
     global breadcrumb_vein string:Rename;
     global active_tab string:tab_edit;
-  ">
+    "
+  i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="objects view/REQUEST/ids">

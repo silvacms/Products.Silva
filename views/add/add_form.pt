@@ -6,12 +6,14 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global breadcrumb_vein string:Add;
     global active_tab string:tab_edit;
     global mode_asset request/mode_asset | python:0;
     global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]
-  ">
+    "
+  i18n:domain="silva">
 <metal:block metal:use-macro="use_macro/macros/master">
 <metal:block fill-slot="main">
 <script type="text/javascript" 
@@ -36,13 +38,13 @@
 
 <tbody>
   <tr>
-    <th class="align-right">
+    <th class="align-right" i18n:translate="">
       Attributes
     </th>
-    <th style="width:50%;">
+    <th style="width:50%;" i18n:translate="">
       Content
     </th>
-    <th>
+    <th i18n:translate="">
     Notes
     </th>
   </tr>

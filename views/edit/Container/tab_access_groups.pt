@@ -11,7 +11,8 @@
     global breadcrumb_vein string:Groups;
     global active_tab string:tab_access;
     global parent_screen_name string:Access;
-  ">
+    "
+  i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="

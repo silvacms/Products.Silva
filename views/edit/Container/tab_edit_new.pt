@@ -10,7 +10,8 @@
     global breadcrumb_vein string:New;
     global active_tab string:tab_edit;
     global parent_screen_name string:contents"
-  tal:omit-tag="">
+    tal:omit-tag=""
+  i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 
