@@ -216,6 +216,7 @@ td.even table td {
 /* override default indent */
 ul {
   padding-left: 1.4em; 
+  margin : 0.5em 0em;
 }
 
 ul.disc {
@@ -237,6 +238,7 @@ ul.nobullet {
 /* override default indent */
 ol {
   padding-left: 1.9em; 
+  margin : 0.5em 0em;
 }
 
 ol.decimal {
