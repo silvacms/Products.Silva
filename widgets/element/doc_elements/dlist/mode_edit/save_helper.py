@@ -7,7 +7,7 @@
 ##parameters=
 ##title=
 ##
-# $Id: save_helper.py,v 1.4 2003/01/27 15:53:16 zagy Exp $
+# $Id: save_helper.py,v 1.5 2003/02/04 11:17:58 guido Exp $
 request = context.REQUEST
 node = request.node
 model = node.get_content()
@@ -56,7 +56,7 @@ for item in items:
     node.appendChild(dt)
     dd = doc.createElement('dd')
     if len(pair) > 1:
-        editorsupport.replace_text(dd, ' '.join(pair[1:]))
+        editorsupport.replace_text(dd, '\n'.join(pair[1:]))
     else:
         editorsupport.replace_text(dd, '')
     node.appendChild(dd)
