@@ -155,7 +155,7 @@ class Folder(TocSupport, Folder.Folder):
             items.insert(0, first_item)
         # now add them to the main toc list
         for item in items:
-            if item.meta_type == 'Silva Folder':
+            if Interfaces.Container.isImplementedBy(item):
                 l.append((indent, item))
                 item._get_tree_helper(l, indent + 1)
             else:
@@ -220,7 +220,7 @@ class Folder(TocSupport, Folder.Folder):
         # folder we're dedenting to
         to_folder = from_folder.aq_parent
         # can't move to something that is not a normal folder
-        if to_folder.meta_type not in ['Silva Folder', 'Silva Root']:
+        if not Interfaces.Container.isImplementedBy(to_folder):
             return None
         # can't dedent anything not in _toc_ids
         toc_ids = from_folder._toc_ids
