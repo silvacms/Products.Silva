@@ -13,11 +13,6 @@
 
 /* _________________________________________________ element typography _____ */
 
-/* override plone listing heading selector */
-.heading {
-  color : #455885;
-}
-
 .lead {
   font-weight : bold;
 }
@@ -33,7 +28,6 @@ pre {
   border: none;
 }
 
-
 div.citation {
   font-size : 110%;
   color : #426061;
@@ -42,13 +36,11 @@ div.citation {
   padding : 0.4em 2em 1.2em 2em;
   border : 1px solid #426061;
 }  
-
 div.citation p.author {
   font-size : 90%;
   font-weight : bold;
   margin-bottom : 0;
 }
-
 div.citation p.source {
   font-size : 90%;
   margin-top: 0;
@@ -62,12 +54,8 @@ table.listing {
   border: none;
 }
 
-table.listing tbody {
-  border-top: none ! important;
-}
-
-td.invisible {
-  background : transparent;
+table.listing td.invisible {
+  background : transparent ! important;
   border: none ! important;
 }
 
