@@ -91,8 +91,7 @@
                       iterate repeat/obj/odd;
                       is_container obj/implements_container | nothing;
                       indent_depth python: '%spx' % str(obj['indent'] * 10);
-                      obj_url obj/absolute_url;
-                      obj_title python: obj.title() or default;"
+                      obj_url obj/absolute_url;"
                     tal:attributes="
                       class python: iterate and 'odd' or 'even';">
                     <td class="listing-left">
@@ -119,12 +118,13 @@
                             tal:attributes="
                               class obj/status_style | default;
                               href string:${obj_url}/edit/tab_preview;">
-                            <i tal:condition="obj/is_default | nothing">
-                              index of
-                            </i>
-                            <span tal:replace="structure obj/title_html | default">
-                              <i>no title</i>
-                            </span>
+                              <i tal:condition="obj/is_default | nothing">
+                                index of
+                              </i>
+                              <tal:block replace="nothing">
+                                ******* XXX Fixme: display 'no title' if no title *******
+                              </tal:block>
+                              <tal:block replace="structure obj/title_html" />
                           </a>
                         </div>
                       </div>
