@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet
   exclude-result-prefixes="doc silva silva-content silva-extra"
+  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns:doc="http://infrae.com/ns/silva_document"
   xmlns:silva="http://infrae.com/ns/silva"
@@ -62,8 +63,12 @@
     <p class="p"><xsl:apply-templates mode="text-content" /></p>
   </xsl:template>
 
-  <xsl:template match="doc:p">
+  <xsl:template match="doc:p[@type]">
     <p class="{@type}"><xsl:apply-templates mode="text-content" /></p>
+  </xsl:template>
+
+  <xsl:template match="doc:p[not(@type)]">
+    <p class="p"><xsl:apply-templates mode="text-content" /></p>
   </xsl:template>
 
   <xsl:template match="doc:list[@type='disc']">
@@ -237,36 +242,31 @@
   </xsl:template>
 
   <xsl:template match="doc:table">
-    <table>
-      <xsl:attribute name="class">
-        silvatable <xsl:value-of select="@type" />
-      </xsl:attribute>
-      <xsl:if test="./doc:row_heading">
-        <thead>
-          <tr valign="top">
-            <th colspan="*" class="transparent">
-              <xsl:value-of select="./doc:row_heading" />
-            </th>
-          </tr>
-        </thead>
-      </xsl:if>
-      <tbody>
+    <table class="silvatable {@type}" cellspacing="0" cellpadding="3px">
         <xsl:apply-templates mode="table-contents" />
-      </tbody>
     </table>
   </xsl:template>
 
   <xsl:template match="doc:row_heading" mode="table-contents">
+    <tr class="rowheading">
+      <td colspan="{@colspan}">
+        <xsl:apply-templates />
+      </td>
+    </tr>
   </xsl:template>
   
   <xsl:template match="doc:row" mode="table-contents">
-    <tr>
+    <tr class="{@class}">
       <xsl:apply-templates mode="tablerow-contents" />
     </tr>
   </xsl:template>
+  
+  <xsl:template match="doc:col" mode="table-contents">
+    <col width="{@width}" class="{@class}" />
+  </xsl:template>
 
   <xsl:template match="doc:field" mode="tablerow-contents">
-    <td>
+    <td class="{@class}">
       <xsl:apply-templates />
     </td>
   </xsl:template>
