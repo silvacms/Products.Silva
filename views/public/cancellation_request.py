@@ -26,6 +26,6 @@ except (errors.AlreadySubscribedError, errors.NotSubscribedError), e:
 
 mailedmessage = _(
     'Confirmation request for cancellation has been emailed to ${emailaddress}')
-mailedmessage.set_mapping({'emailaddress', request['emailaddress']})
+mailedmessage.set_mapping({'emailaddress': request['emailaddress']})
 
 return context.subscriptions_ui(message=mailedmessage, show_form=False)
