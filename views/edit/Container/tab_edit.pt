@@ -62,7 +62,7 @@
   <td>
     <!-- inner table for sidebar -->
     <table cellspacing="0" cellpadding="1" border="0" width="100%">
-<span tal:replace="nothing"> ______________ publication header ______________ </span>
+     <span tal:replace="nothing"> ______________ publication header ______________ </span>
       <tr>
         <td class="border"
           tal:attributes="class python:test(model == model.get_publication(), 'hilight', 'focus-fixed')">
@@ -75,7 +75,7 @@
         </td>
       </tr>
 
-<span tal:replace="nothing"> ______________ pub folders ______________ </span>
+      <span tal:replace="nothing"> ______________ pub folders ______________ </span>
       <rowset tal:omit-tag=""
         tal:repeat="indent_item python:model.get_publication().get_container_tree()">
         <tr tal:define="item python:indent_item[1]; indent python:indent_item[0];
@@ -83,8 +83,10 @@
           <td class="hilight"
             tal:attributes="class python:test(model == item, 'hilight', 'focus')">
             <div tal:attributes="style python:'margin-left:'+str(indent * 16 + 5)">
-              <a href="folder" title="Manage folder"
-                tal:attributes="href string:${item/absolute_url}/edit/tab_edit"><img src="%s" width="16" height="16" alt="%s"
+              <a href="folder" title="Manage..."
+                tal:attributes="
+                  href string:${item/absolute_url}/edit/tab_edit;
+                  title string:Manage '${item/id}'"><img src="%s" width="16" height="16" alt="%s"
                 tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
               <a class="blacklink" href="title" title="id"
                 tal:attributes="href string:${item/absolute_url}/edit/tab_edit;
