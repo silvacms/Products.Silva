@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-17 17:07+0100\n"
+"PO-Revision-Date: 2004-12-20 10:53+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgstr "Version kann nicht bewilligt werden; nicht gestattet."
 
 #: /Versioning.py:161
 msgid "No approved version to unapprove."
-msgstr ""
+msgstr "Keine Bewilligte Version vorhend, deren Bewilligung aufgehoben werden kann."
 
 #: /Versioning.py:163
 msgid "Should never happen: unapproved version ${unapproved} found while approved version ${approved} exists at the same time."
@@ -4813,7 +4813,7 @@ msgstr ""
 
 #: /views/edit/tab_subscriptions.pt:66
 msgid "Manage subscriptions for &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Abonnements verwalten für &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_subscriptions_form.form:27
 msgid ""
@@ -4821,7 +4821,7 @@ msgid ""
 "              Set the subscribability for this content (Yes or No), or set it\n"
 "              to acquire the subscribability from above (the default).\n"
 "            "
-msgstr ""
+msgstr "Die Abonnierbarkeit dieses Inhaltes einstellen (Ja oder Nein) oder von der übergeordneten Ebene übernehmen."
 
 #: /views/edit/tab_subscriptions_form.form:36
 msgid "subscribable"
@@ -4832,11 +4832,11 @@ msgid ""
 "\n"
 "              List of email addresses (one per line) currently subscribed to this content.\n"
 "            "
-msgstr ""
+msgstr "Liste der Emailadressen (eine pro Zeile), die zur Zeit aif diesen Inhalt abonniert sind."
 
 #: /views/edit/tab_subscriptions_form.form:66
 msgid "subscribed email addresses"
-msgstr ""
+msgstr "Eingetragene Emailadressen"
 
 #: /views/get_tab_info.py:25
 msgid "up a level: alt-${key}"
@@ -4869,7 +4869,7 @@ msgstr "Kurzwahl: alt-l"
 
 #: /views/logout.pt:43
 msgid "When the login dialog appears, choose <strong>\"Cancel\"</strong>"
-msgstr ""
+msgstr "Wenn der Logindialog erscheint, wählen Sie <strong>\"Abbrechen\"</strong>"
 
 #: /views/logout.pt:9
 msgid "logout"
@@ -5012,7 +5012,7 @@ msgstr "eine Ebene nach oben"
 
 #: /views/macro_tabs.pt:21
 msgid "Silva info: alt-|"
-msgstr ""
+msgstr "Silvainfo: alt-|"
 
 #: /views/macro_tabs.pt:30
 msgid "Silva top: alt-/"
@@ -5070,7 +5070,7 @@ msgstr "Der Pfad führt nicht zu einem Inhaltsobjekt"
 #: /views/public/cancellation_request.py:16
 #: /views/public/subscription_request.py:16
 msgid "content is not subscribable"
-msgstr ""
+msgstr "Dieser Inhalt kann nicht abonniert werden."
 
 #: /views/public/cancellation_request.py:20
 #: /views/public/subscription_request.py:20
@@ -5079,11 +5079,11 @@ msgstr "Emailadresse nicht gültig"
 
 #: /views/public/cancellation_request.py:27
 msgid "Confirmation request for cancellation has been emailed to ${emailaddress}"
-msgstr ""
+msgstr "Eine Anfrage zur Bestätigung des Abbruchs wurde an ${emailaddress} gesandt."
 
 #: /views/public/confirm_cancellation.py:12
 msgid "Something went wrong in unsubscribing from this page. It might be that the link you followed expired."
-msgstr ""
+msgstr "Während der Austragung ist etwas schiefgelaufen. Es kann sein, dass der Link dem Sie folgten bereits ungültig ist."
 
 #: /views/public/confirm_cancellation.py:18
 msgid "You have been successfully unsubscribed."
@@ -5138,7 +5138,7 @@ msgstr ""
 
 #: /views/public/request_roles.pt:85
 msgid "This site does not allow requests for roles"
-msgstr ""
+msgstr "Diese Site erlaubt keine Anfragen für Rollen."
 
 #: /views/public/request_roles_submit.py:14
 msgid "You must enter your full name and your e-mail address"
@@ -5249,7 +5249,7 @@ msgstr "Nächste &gt;&gt;"
 
 #: /views/public/subscription_request.py:27
 msgid "Confirmation request for subscription has been emailed to ${emailaddress}"
-msgstr ""
+msgstr "Eine Bestätitung der Abonnementsanfrage wurde an {emailaddress} geschickt."
 
 #: /views/public/subscriptions_ui.pt:28
 msgid "Subscribe to &#xab;${title_or_id}&#xbb;"
@@ -5257,7 +5257,7 @@ msgstr "&#xab;${title_or_id}&#xbb; abonnieren"
 
 #: /views/public/subscriptions_ui.pt:30
 msgid "Fill in your email address if you want to receive email notifications whenever a new version of this page or its subsections becomes available."
-msgstr ""
+msgstr "Geben Sie Ihre Emailadresse ein, wenn Sie Benachrichtigungen über Änderungen dieser Seite bzw. ihrer Bestandteile erhalten wollen."
 
 #: /views/public/subscriptions_ui.pt:40
 msgid "subscribe"
@@ -5269,7 +5269,7 @@ msgstr "Abonnement von #xab;${title_or_id}&#xbb; beenden"
 
 #: /views/public/subscriptions_ui.pt:55
 msgid "Fill in your email address here if you want to unsubscribe from email notifications for this page and its subsections."
-msgstr ""
+msgstr "Geben Sie hier Ihre Emailadresse ein, wenn Sie keine weiteren Benachrichtigungen für diese Seite und ihre Bestandteile erhalten wollen."
 
 #: /views/public/subscriptions_ui.pt:64
 msgid "unsubscribe"
