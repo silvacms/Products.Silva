@@ -525,29 +525,6 @@ def replace_object_title_092(obj):
         object.set_title(title)
         #print type(title)
         #print type(object.title)
-    """
-    if obj is not obj.aq_parent.get_default():
-        title = obj._title
-        del obj._title
-        if type(title) != type(u''):
-            title = unicode(title, 'cp1252', 'replace')
-        if (IVersionedContent.isImplementedBy(obj) or
-                ICatalogedVersionedContent.isImplementedBy(obj)):
-            versions = []
-            for version in ['_unapproved_version', '_approved_version',
-                            '_public_version']:
-                v = getattr(obj, version)
-                if v[0] is not None:
-                    versions.append(v)
-                #print version
-            if obj._previous_versions is not None:
-                versions += obj._previous_versions
-            for version in versions:
-                #print getattr(obj, version[0])
-                getattr(obj, version[0]).set_title(title)
-        else:
-            obj.set_title(title)
-    """
 
 upgrade_registry.register('Silva Root', replace_container_title_092, '0.9.2')
 upgrade_registry.register('Silva Publication', replace_container_title_092, '0.9.2')
