@@ -14,8 +14,8 @@ model = request.model
 if not request.has_key('storageids') or not request['storageids']:
     return view.tab_docma(message_type='error', message='Select one or more jobs to delete')
 
-for sid in request['storageids']:
-    xml = model.service_docma.get_finished_w2s_job(str(request['AUTHENTICATED_USER']), int(sid))
+for item in request['storageids']:
+    sid, doctype = item.split('|')
     model.service_docma.delete_finished_job(str(request['AUTHENTICATED_USER']), int(sid))
 
-return view.tab_docma(message_type='feedback', message='Finished importing deleting')
+return view.tab_docma(message_type='feedback', message='Deletion successful')
