@@ -6,9 +6,11 @@ Silva changes
   Development
 
     Bugs fixed:
+
+      - Fixed bug so it is now possible to run unit tests for Silva extensions.
     
       - Fixed a bug in the xml exporter that tripped on the export of
-        citatation elements
+        citation elements
 
       - Fixed problem with vanishing paragraphs after a save in Kupu.
 

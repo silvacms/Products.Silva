@@ -1,6 +1,6 @@
-# Copyright (c) 2003-2004 Infrae. All rights reserved.
+# Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.13.26.1 $
 
 # Zope
 from OFS import SimpleItem
@@ -42,36 +42,40 @@ class LayoutService(SimpleItem.SimpleItem):
     # MANIPULATORS
 
     security.declareProtected('View management screens', 'install')
-    def install(self, name):
+    def install(self, name, REQUEST=None):
         """Install layout
         """
         layoutRegistry.install(self.get_root(), name)
-        return self.manage_main(manage_tabs_message='%s installed' % name)
+        if REQUEST is not None:
+            return self.manage_main(manage_tabs_message='%s installed' % name)
 
     security.declareProtected('View management screens', 'uninstall')
-    def uninstall(self, name):
+    def uninstall(self, name, REQUEST=None):
         """Uninstall extension
         """
         layoutRegistry.uninstall(self.get_root(), name)
-        return self.manage_main(manage_tabs_message='%s uninstalled' % name)
+        if REQUEST is not None:
+            return self.manage_main(manage_tabs_message='%s uninstalled' % name)
 
     security.declareProtected('View management screens', 'refresh')
 
-    def refresh(self, name):
+    def refresh(self, name, REQUEST=None):
         """Refresh (uninstall/install) extension.
         """
         self.uninstall(name)
         self.install(name)
         self._refresh_datetime = DateTime()
-        return self.manage_main(manage_tabs_message='%s refreshed' % name)
+        if REQUEST is not None:
+            return self.manage_main(manage_tabs_message='%s refreshed' % name)
 
     security.declareProtected('View management screens', 'refresh_all')
-    def refresh_all(self):
+    def refresh_all(self, REQUEST=None):
         """Refreshes all extensions
         """
         for name in self.get_installed_names():
             self.refresh(name)
-        return self.manage_main(manage_tabs_message='All layouts have been refreshed')
+        if REQUEST is not None:
+            return self.manage_main(manage_tabs_message='All layouts have been refreshed')
 
     # ACCESSORS
 
