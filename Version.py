@@ -76,14 +76,16 @@ class Version(SimpleItem):
             elif self.id in previous_versions:
                 status = "closed"
             else:
-                status = 'unapproved' # this is a completely new version not even registered with the machinery yet
-                # raise ValueError, "Version %s not found in object %s" % (self.id, self.object().id)
+                # this is a completely new version not even registered
+                # with the machinery yet
+                status = 'unapproved' 
         return status
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'object_path')
     def object_path(self):
-        """Returns the physical path of the object (for identification-purposes)
+        """Returns the physical path of the object
+        (for identification-purposes)
         """
         return self.aq_inner.aq_parent.getPhysicalPath()
 
@@ -92,7 +94,9 @@ class Version(SimpleItem):
     def version(self):
         """Returns the version
         """
-        return (self.id, self.publication_datetime(), self.expiration_datetime())
+        return (self.id,
+                self.publication_datetime(),
+                self.expiration_datetime())
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'object')
@@ -120,7 +124,8 @@ class Version(SimpleItem):
         if status == 'closed' or status == 'last_closed':
             return None
         else:
-            return getattr(self, 'get_%s_version_publication_datetime' % status)(0)
+            return getattr(self,
+                           'get_%s_version_publication_datetime' % status)(0)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'expiration_datetime')
@@ -131,7 +136,8 @@ class Version(SimpleItem):
         if status == 'closed' or status == 'last_closed':
             return None
         else:
-            return getattr(self, 'get_%s_version_expiration_datetime' % status)(0)
+            return getattr(self,
+                           'get_%s_version_expiration_datetime' % status)(0)
 
 InitializeClass(Version)
 
