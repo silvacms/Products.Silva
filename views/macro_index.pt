@@ -124,13 +124,13 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 </td>
 <td class="footer" width="30%">
 <a class="footer" title="Change your settings: alt-~" accesskey="~" href="#"
-  tal:attributes="onclick string: userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450,height=350,resizable=no');; userWindow.focus();;">
+  tal:attributes="onclick string: userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450,height=350,resizable=no');; userWindow.focus();; return false;;">
   <img tal:attributes="src string:${silva_root}/globals/user.gif" width="8" height="9" border="0"/>
   User settings
 </a>
 </td>
 <td class="footer" align="center" width="36%">
-<a class="footer" href="request_roles"
+<a class="footer" href="public/request_roles"
   tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()">
     Request additional role
   </a>
