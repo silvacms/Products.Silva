@@ -1,9 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 import unittest
 import Zope
-from Products.Silva import Document, Folder
+from Products.Silva import Document, Folder, Ghost
 from Testing import makerequest
 from DateTime import DateTime
 from Products.ParsedXML.ParsedXML import ParsedXML
@@ -38,6 +38,19 @@ def _getCopyFolder(self, container):
     result.manage_pasteObjects(cb)
     return result
 
+def _getGhostCopy(self, container):
+    # ghost need their own monkeypath, too
+    result = Ghost.Ghost(self.id)
+    result.set_title(self.get_title())
+    result = result.__of__(container)
+    cb = self.manage_copyObjects(self.objectIds())
+    result.manage_pasteObjects(cb)
+    result._unapproved_version = self._unapproved_version
+    result._approved_version = self._approved_version
+    result._public_version = self._public_version
+    result._previous_versions = self._previous_versions 
+    return result
+
 def _verifyObjectPaste(self, ob):
     return
 
@@ -50,6 +63,7 @@ class CopyTestCase(unittest.TestCase):
         Folder.Folder._getCopy = _getCopyFolder
         Folder.Folder._verifyObjectPaste = _verifyObjectPaste
         Document.Document._verifyObjectPaste = _verifyObjectPaste
+        Ghost.Ghost._getCopy = _getGhostCopy
         get_transaction().begin()
         self.connection = Zope.DB.open()
         self.root = makerequest.makerequest(self.connection.root()['Application'])
@@ -144,6 +158,23 @@ class CopyTestCase(unittest.TestCase):
         self.assert_(not self.sroot.folder5.folder4.subdoc.is_version_published())
         # original *should* be published
         self.assert_(self.subdoc.is_version_published())
+
+
+    def test_copy7(self):
+        """ test for issue 92: pasted ghosts have unknown author """
+        add_helper(self.sroot.folder4, 'Ghost', 'ghost6', 'Test Ghost')
+        self.sroot.folder4.ghost6.sec_update_last_author_info()
+        self.assertEquals('TestUser', self.sroot.folder4.ghost6.sec_get_last_author_info()['cn'])
+        # copy ghost to folder 4 and check author
+        # XXX maybe we should rename the user inbetween ?
+        self.sroot.folder4.action_copy(['ghost6'], self.REQUEST)
+        self.sroot.folder5.action_paste(self.REQUEST)
+        self.assertEquals('TestUser', self.sroot.folder5.ghost6.sec_get_last_author_info()['cn'])
+        # move ghost to root and check author        
+        self.sroot.folder4.action_cut(['ghost6'], self.REQUEST)
+        self.sroot.action_paste(self.REQUEST)
+        self.assertEquals('TestUser', self.sroot.ghost6.sec_get_last_author_info()['cn'])
+        
 
     def test_cut1(self):
         # try to cut object to paste it to the same folder
@@ -269,7 +300,7 @@ class CopyTestCase(unittest.TestCase):
         self.sroot.action_rename('doc1', 'docrenamed')
         self.assert_(hasattr(self.sroot, 'doc1'))
         self.assert_(not hasattr(self.sroot, 'docrenamed'))
-        
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(CopyTestCase, 'test'))
