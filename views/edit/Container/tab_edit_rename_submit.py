@@ -34,7 +34,7 @@ to_rename = []
 for item in items:
     if item[0] == item[1]:
             obj = getattr(model, item[0])
-            obj.set_title(model.input_convert(item[2]))
+            obj.set_title(item[2])
             message_type = 'feedback'
             messages.append('&#xab;%s&#xbb; renamed successfully' % item[0])
     else:
@@ -55,7 +55,7 @@ while 1:
             # The item can be renamed without any problems, so do that
             if item[0] != 'index':
                 obj = getattr(model, item[0])
-                obj.set_title(model.input_convert(item[2]))
+                obj.set_title(item[2])
                 if not model.action_rename(item[0], item[1]):
                     message_type = 'error'
                     messages.append('&#xab;%s&#xbb; could not be renamed' % item[0])
@@ -74,7 +74,7 @@ while 1:
                         message_type = 'feedback'
                     messages.append('&#xab;%s&#xbb; renamed successfully' % item[0])
                     obj = getattr(model, item[1])
-                    obj.set_title(model.input_convert(item[2]))
+                    obj.set_title(item[2])
             objects_changed = 1
         else:
             not_renamed.append(item)
@@ -118,7 +118,7 @@ for item in renamed_now:
         newid = "renamed_" + newid
     obj = getattr(model, tmpid)
     if oldid != 'index':
-        obj.set_title(model.input_convert(item[0][2]))
+        obj.set_title(item[0][2])
     if not model.action_rename(tmpid, newid):
         message_type = 'error'
         messages.append('&#xab;%s&#xab; could not be renamed' % oldid)

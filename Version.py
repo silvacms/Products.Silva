@@ -20,19 +20,35 @@ class Version(SimpleItem):
         self.id = id
         self._title = title
         
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_title')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_title')
     def set_title(self, title):
         """Set title of version.
         """
-        self._title = title
+        binding = self.service_metadata.getMetadata(self)
+        binding.setValues(
+            'silva-content', {'maintitle': title})
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title')
     def get_title(self):
         """get title of version.
         """
-        return self._title
+        binding = self.service_metadata.getMetadata(self)
+        return binding.get(
+            'silva-content', element_id='maintitle')
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    def get_short_title(self):
+        """Get the title of the version.
+        """
+        binding = self.service_metadata.getMetadata(self)
+        short_title = binding.get(
+            'silva-content', element_id='shorttitle')
+        if not short_title:
+            return self.get_title()
+        return short_title
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'version_status')

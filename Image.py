@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.28 2003/05/15 16:25:12 jw Exp $
+# $Id: Image.py,v 1.29 2003/05/20 17:31:08 jw Exp $
 
 # Python
 import re
@@ -282,7 +282,9 @@ def manage_addImage(self, id, title, file=None, REQUEST=None):
     object = Image(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
-
+    # FIXME: Ugh. I get unicode from formulator but this will not validate
+    # when using the metadata system. So first make it into utf-8 again..
+    object.set_title(title.encode('utf-8'))
     if file:
         object.set_image(file)
 

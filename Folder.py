@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.105 $
+# $Revision: 1.106 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -130,6 +130,32 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         if default is None:
             return "[No title available as no index object]"
         return default.get_title_editable()
+    
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    def get_short_title(self):
+        """Get short title.
+        """
+        default = self.get_default()
+        if default is None:
+            return "[No (short) title available as no index object]"
+        short_title = default.get_short_title()
+        if not short_title:
+            return self.get_title()
+        return short_title
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title_editable')
+    def get_short_title_editable(self):
+        """Get short title of editable.
+        """
+        default = self.get_default()
+        if default is None:
+            return "[No (short) title available as no index object]"
+        short_title_editable = default.get_short_title_editable()
+        if not short_title_editable:
+            return self.get_title_editable()
+        return short_title_editable
     
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,

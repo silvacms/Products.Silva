@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 
 # Python
 import os
@@ -217,8 +217,10 @@ def manage_addFile(self, id='', title='', file=''):
         object = ZODBFile(id, title, file)
     self._setObject(id, object)
     object = getattr(self, id)
+    # FIXME: Ugh. I get unicode from formulator but this will not validate
+    # when using the metadata system. So first make it into utf-8 again..
+    object.set_title(title.encode('utf-8'))
     return object
-
 
 class FilesService(SimpleItem.SimpleItem):
     meta_type = 'Silva Files Service'

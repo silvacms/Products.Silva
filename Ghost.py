@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.55 $
+# $Revision: 1.56 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -111,6 +111,20 @@ class GhostVersion(Version):
             return "Ghost target is broken"
         else:
             return content.get_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    def get_short_title(self):
+        """Get short title.
+        """        
+        content = self._get_content()
+        if content is None:
+            return "Ghost target is broken"
+        else:
+            short_title = content.get_short_title()
+        if not short_title:
+            return self.get_title()
+        return short_title
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_content_url')

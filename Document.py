@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.73 $
+# $Revision: 1.74 $
 # Zope
 
 from StringIO import StringIO
@@ -210,8 +210,14 @@ manage_addDocumentVersionForm = PageTemplateFile(
 
 def manage_addDocumentVersion(self, id, title, REQUEST=None):
     """Add a Document version to the Silva-instance."""
-    object = DocumentVersion(id, title)
-    self._setObject(id, object)
+    version = DocumentVersion(id, title)
+    self._setObject(id, version)
+    
+    version = self._getOb(id)
+    # FIXME: Ugh. I get unicode from formulator but this will not validate
+    # when using the metadata system. So first make it into utf-8 again..
+    version.set_title(title.encode('utf-8'))
+
     add_and_edit(self, id, REQUEST)
     return ''
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.78 2003/05/16 16:43:40 jw Exp $
+# $Id: SilvaObject.py,v 1.79 2003/05/20 17:31:08 jw Exp $
 
 # python
 from types import StringType
@@ -76,23 +76,42 @@ class SilvaObject(Security, ViewCode):
             container = self.get_container()
             container._invalidate_sidebar(container)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_title')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_title')
     def set_title(self, title):
         """Set the title of the silva object.
         """
+        # legacy
         self._title = title
+        # new
+        binding = self.service_metadata.getMetadata(self)
+        binding.setValues(
+            'silva-content', {'maintitle': title})
         if self.id == 'index':
             self.get_container()._invalidate_sidebar(container)
         
     # ACCESSORS
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title')
     def get_title(self):
         """Get the title of the silva object.
         """
-        return self._title
+        binding = self.service_metadata.getMetadata(self)
+        return binding.get(
+            'silva-content', element_id='maintitle')
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    def get_short_title(self):
+        """Get the title of the silva object.
+        """
+        binding = self.service_metadata.getMetadata(self)
+        short_title = binding.get(
+            'silva-content', element_id='shorttitle')
+        if not short_title:
+            return self.get_title()
+        return short_title
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title_or_id')
@@ -104,12 +123,19 @@ class SilvaObject(Security, ViewCode):
             title = self.id
         return title
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title_editable')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
     def get_title_editable(self):
         """Get the title of the editable version if possible.
         """
         return self.get_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
+    def get_short_title_editable(self):
+        """Get the short title of the editable version if possible.
+        """
+        return self.get_short_title()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title_or_id_editable')

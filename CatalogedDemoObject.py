@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -101,7 +101,7 @@ def manage_addCatalogedDemoObject(self, id, title, REQUEST=None):
     self._setObject(id, object)
     object = getattr(self, id)
     # add first version
-    object._setObject('0', CatalogedDemoObjectVersion('0', 'demo-object dummy title'))
+    object._setObject('0', CatalogedDemoObjectVersion('0', title))
     object.create_version('0', None, None)
     add_and_edit(self, id, REQUEST)
     return ''
@@ -111,7 +111,13 @@ manage_addCatalogedDemoObjectVersionForm = PageTemplateFile("www/catalogedDemoOb
 
 def manage_addCatalogedDemoObjectVersion(self, id, title, REQUEST=None):
     """Add a CatalogedDemoObject version to the Silva-instance."""
-    object = CatalogedDemoObjectVersion(id, title)
-    self._setObject(id, object)
+    version = CatalogedDemoObjectVersion(id, title)
+    self._setObject(id, version)
+
+    version = self._getOb(id)
+    # FIXME: Ugh. I get unicode from formulator but this will not validate
+    # when using the metadata system. So first make it into utf-8 again..
+    version.set_title(title.encode('utf-8'))
+
     add_and_edit(self, id, REQUEST)
     return ''

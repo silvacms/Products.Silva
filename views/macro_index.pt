@@ -8,6 +8,7 @@
   tal:define="
     view here;
     model request/model;
+    
     trigger model/security_trigger;
 
     type model/meta_type;

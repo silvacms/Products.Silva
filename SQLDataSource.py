@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -125,6 +125,9 @@ def manage_addSQLDataSource(context, id, title, REQUEST=None):
     sql_datasource = SQLDataSource(id, title)
     context._setObject(id, sql_datasource)
     sql_datasource = context._getOb(id)
+    # FIXME: Ugh. I get unicode from formulator but this will not validate
+    # when using the metadata system. So first make it into utf-8 again..
+    sql_datasource.set_title(title.encode('utf-8'))
 
     add_and_edit(context, id, REQUEST)
     return sql_datasource

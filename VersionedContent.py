@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.29 $
+# $Revision: 1.30 $
 
 # Python
 from StringIO import StringIO
@@ -63,12 +63,39 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title_editable')
     def get_title_editable(self):
-        """Get title for editable use
+        """Get title for editable or previewable use
         """
+        # Ask for 'previewable', which will return either the 'next version'
+        # (which may be under edit, or is approved), or the public version, 
+        # or, as a last resort, the closed version.
+        # This to be able to show at least some title in the Silva edit
+        # screens.
         previewable = self.get_previewable()
         if previewable is None:
             return "[No title available]"
         return previewable.get_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    def get_short_title(self):
+        """Get short_title for public use, from published version.
+        """
+        # Analogous to get_title
+        viewable = self.get_viewable()
+        if viewable is None:
+            return "[No (short) title available]"
+        return viewable.get_short_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title_editable')
+    def get_short_title_editable(self):
+        """Get short_title for editable or previewable use
+        """
+        # Analogous to get_title_editable
+        previewable = self.get_previewable()
+        if previewable is None:
+            return "[No (short) title available]"
+        return previewable.get_short_title()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_get_last_author_userid')

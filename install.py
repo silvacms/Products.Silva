@@ -164,8 +164,8 @@ def configureMetadata(root):
 
     collection = root.service_metadata.getCollection()
 
-    if not 'silva-core' in collection.objectIds():
-        xml_file = path.join(silva_docs, 'silva-core.xml')
+    if not 'silva-content' in collection.objectIds():
+        xml_file = path.join(silva_docs, 'silva-content.xml')
         fh = open(xml_file, 'r')        
         collection.importSet(fh)
 
@@ -178,16 +178,16 @@ def configureMetadata(root):
     mapping = root.service_metadata.getTypeMapping()
     default = ''
     tm = (
-        {'type':'Silva Document Version',   'chain':'silva-core, silva-extra'},
-        {'type':'Silva DemoObject Version', 'chain':'silva-core, silva-extra'},
-        {'type':'Silva Ghost Version',      'chain':'silva-extra'},
+        {'type':'Silva Document Version',   'chain':'silva-content, silva-extra'},
+        {'type':'Silva DemoObject Version', 'chain':'silva-content, silva-extra'},
+        {'type':'Silva Ghost Version',      'chain':''},
         {'type':'Silva Folder',             'chain':'silva-extra'},
-        {'type':'Silva File',               'chain':''},
-        {'type':'Silva Image',              'chain':''},
-        {'type':'Silva Indexer',            'chain':''},
+        {'type':'Silva File',               'chain':'silva-content'},
+        {'type':'Silva Image',              'chain':'silva-content'},
+        {'type':'Silva Indexer',            'chain':'silva-content'},
         {'type':'Silva Publication',        'chain':'silva-extra'},
         {'type':'Silva Root',               'chain':'silva-extra'},
-        {'type':'Silva SQL Data Source',    'chain':''},
+        {'type':'Silva SQL Data Source',    'chain':'silva-content'},
         )
 
     mapping.editMappings(default, tm)
