@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
@@ -174,6 +174,18 @@ class FileSystemFile(File):
 
     def _index_html_helper(self, REQUEST):
         return self._file.index_html(REQUEST=REQUEST)
+
+    def manage_beforeDelete(self, item, container):
+        FileSystemFile.inheritedAttribute('manage_beforeDelete')(self, item, container)
+        self._file.manage_beforeDelete(item, container)
+
+    def manage_afterClone(self, item):
+        FileSystemFile.inheritedAttribute('manage_afterClone')(self, item)
+        self._file.manage_afterClone(item)
+
+    def manage_afterAdd(self, item, container):
+        FileSystemFile.inheritedAttribute('manage_afterAdd')(self, item, container)
+        self._file.manage_afterAdd(item, container)
 
 InitializeClass(FileSystemFile)
 
