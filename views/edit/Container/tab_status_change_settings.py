@@ -25,10 +25,12 @@ except FormValidationError, e:
         message=view.render_form_errors(e))
 
 publish_datetime = result['publish_datetime']
+publish_now_flag = result['publish_now_flag']
 expiration_datetime = result['expiration_datetime']
-expires_flag = 1 #result['expires_flag']
+clear_expiration_flag = result['clear_expiration']
 
-if not publish_datetime and not expiration_datetime:
+if not publish_datetime and not expiration_datetime \
+        and not clear_expiration_flag and not publish_now_flag:
     return view.tab_status(
         message_type='error', 
         message='No publication nor expiration time set.')
@@ -56,17 +58,29 @@ for ref in refs:
             continue
         if publish_datetime:
             obj.set_next_version_publication_datetime(publish_datetime)
-        if expiration_datetime and expires_flag:
+        # publish
+        if publish_now_flag:
+            obj.set_next_version_publication_datetime(now)
+        # expire
+        if expiration_datetime:
             obj.set_next_version_expiration_datetime(expiration_datetime)
+        if clear_expiration_flag:
+            obj.set_next_version_expiration_datetime(None)
         changed_ids.append(get_name(obj))
     else:
         if not obj.get_unapproved_version():
             not_changed.append((get_name(obj), 'no unapproved version'))
             continue
+        # publish
         if publish_datetime:
             obj.set_unapproved_version_publication_datetime(publish_datetime)
-        if expiration_datetime and expires_flag:
+        if publish_now_flag:
+            obj.set_unapproved_version_publication_datetime(now)
+        # expire
+        if expiration_datetime:
             obj.set_unapproved_version_expiration_datetime(expiration_datetime)
+        if clear_expiration_flag:
+            obj.set_unapproved_version_expiration_datetime(None)
         changed_ids.append(get_name(obj))
 
 if changed_ids:

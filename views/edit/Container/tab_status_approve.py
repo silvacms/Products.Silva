@@ -21,13 +21,15 @@ try:
 except FormValidationError, e:
     return view.tab_status(message_type='error', message=view.render_form_errors(e))
 
-publish_now_flag = result['publish_now_flag']
 publish_datetime = result['publish_datetime']
-expires_flag = 1 #result['expires_flag']
+publish_now_flag = result['publish_now_flag']
 expiration_datetime = result['expiration_datetime']
+clear_expiration_flag = result['clear_expiration']
 
 if not publish_now_flag and not publish_datetime:
-    return view.tab_status(message_type='error', message='No publication datetime set.')
+    return view.tab_status(
+        message_type='error', 
+        message='No publication datetime set.')
  
 now = DateTime()
 
@@ -67,8 +69,12 @@ for ref in refs:
         obj.set_unapproved_version_publication_datetime(now)
     else:
         obj.set_unapproved_version_publication_datetime(publish_datetime)
-    if expires_flag:
+
+    if expiration_datetime:
         obj.set_unapproved_version_expiration_datetime(expiration_datetime)
+    if clear_expiration:
+        obj.set_unapproved_version_expiration_datetime(None)
+
     obj.approve_version()
     approved_ids.append(get_name(obj))
 

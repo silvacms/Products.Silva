@@ -214,7 +214,7 @@
         ______________ publication time controls ______________
       </tal:block>
       <td class="align-right"
-        colspan="5">                    
+        colspan="5">
         <label title="access key: alt-m" 
           accesskey="m">
           publish time:
@@ -222,8 +222,7 @@
         <tal:block tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
       </td>
       <td class="align-right"
-        style="vertical-align:bottom; line-height:160%; padding-bottom:0.3em;"
-        rowspan="2">
+        style="vertical-align:bottom; line-height:160%; padding-bottom:0.3em;">
         <tal:block condition="may_approve_content">
           <label 
             for="publish_now_flag" 
@@ -245,12 +244,17 @@
           accesskey="x">
           expiration time:
         </label>
-        <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
+        <tal:block replace="structure view/tab_status_form/expiration_datetime/render" />      
       </td>
-      <td class="align-right"       tal:replace="nothing"
-        style="vertical-align:middle;">
+      <td class="align-right"
+        style="vertical-align:bottom; line-height:160%; padding-bottom:0.3em;">
         <tal:block condition="may_approve_content">
-          <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+          <label for="clear_expiration"
+            title="access key: alt-p"
+            accesskey="p">
+            Clear&nbsp;ex<u>p</u>iration
+          </label>
+          <field tal:replace="structure view/tab_status_form/clear_expiration/render" />        
         </tal:block>
       </td>
     </tr>
@@ -259,21 +263,21 @@
     </tal:block>
     <tr class="controls"
       tal:condition="may_approve_content">
-      <td colspan="4">
+      <td colspan="3">
         <input class="button"
           style="background:#8f7f01;"
           type="submit"
           name="tab_status_reject:method"
           value="Reject" 
           accesskey="j"
-          title="reject pending request for approval: alt-j"
+          title="reject pending request for approval of selected objects: alt-j"
         />
         <input class="button"
           style="background:#008c55;"
           type="submit"
           name="tab_status_revoke:method"
           value="Revoke"
-          title="withdraw approval of approved versions: alt-v"
+          title="withdraw approval of approved versions of selected objects: alt-v"
           accesskey="v"
         />
         <input class="button"
@@ -288,25 +292,24 @@
           type="submit" 
           name="tab_status_new_version:method" 
           value="New version" 
-          title="create new versions of published docs: alt-n" 
+          title="create new versions of published docs of selected objects: alt-n" 
           accesskey="n"
         />
       </td>
-      <td class="align-right">
+      <td class="align-right"
+        colspan="3">
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
-          value="Set timings"
-          title="change publish and expiration times: alt-s"
+          value="Change timings"
+          title="change publish and expiration times for selected objects: alt-s"
           accesskey="s"
         />
-      </td>
-      <td class="align-right">
         <input class="button"
           name="tab_status_approve:method"
           type="submit"
           value="Approve"
-          title="approve or publish new versions: alt-o"
+          title="approve or publish new versions of selected objects: alt-o"
           accesskey="o"
         />
       </td>
