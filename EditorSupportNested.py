@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -30,14 +30,27 @@ class EditorSupport(SimpleItem):
     security = ClassSecurityInfo()
     meta_type = 'Silva Editor Support Service'
 
-
-
     _silva_markup = {
         '__': 'underline', 
         '**': 'strong', 
         '++': 'em', 
         '^^': 'super',
         '~~': 'sub',
+    }
+
+    _silva_entities = {
+        'ast': '*',
+        'plus': '+',
+        'under': '_',
+        'lowbar': '_',
+        'caret': '^',
+        'tilde': '~',
+        'lparen': '(',
+        'rparen': ')',
+        'lbrack': '[',
+        'rbrack': ']',
+        'pipe': '|',
+        'verbar': '|',
     }
     
     p_MARKUP = re.compile(r"(?P<markup>%s)(?P<text>.*?)(?P=markup)" % (
@@ -50,8 +63,6 @@ class EditorSupport(SimpleItem):
     
     def __init__(self, id):
         self.id = id
-
-        
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_text_as_html')
@@ -107,7 +118,7 @@ class EditorSupport(SimpleItem):
                 result.append('<br />')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-        return ''.join(result)
+        return self._replace_silva_entities(''.join(result))
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_heading_as_html')
@@ -129,7 +140,7 @@ class EditorSupport(SimpleItem):
                 result.append('</a>')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-        return ''.join(result)
+        return self._replace_silva_entities(''.join(result))
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_text_as_editable')
@@ -343,6 +354,12 @@ class EditorSupport(SimpleItem):
         text = text.replace('>', '&gt;')
         text = text.replace('"', '&quot;')
 
+        return text
+
+    def _replace_silva_entities(self, text):
+        for name, rep in self._silva_entities.items():
+            # mind that we've already replaced the XML entities, so we should be looking at '&amp;<name>;' instead of '&<name>;'
+            text = text.replace('&amp;%s;' % name, rep)
         return text
 
     security.declarePrivate('create_dom_forgiving')
