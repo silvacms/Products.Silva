@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
 "POT-Creation-Date: Fri Nov 19 18:31:18 2004\n"
-"PO-Revision-Date: 2004-11-19 19:13+0100\n"
+"PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -231,7 +231,7 @@ msgstr "sneltoets: alt-c"
 #: /views/edit/hyperlink_lookup.pt:359 /views/edit/promptWindow.pt:35
 #: /views/edit/Container/tab_edit_rename.pt:127
 msgid "cancel"
-msgstr "cancel"
+msgstr "afbreken"
 
 #: /views/add/add_form.pt:89 /views/add/Ghost/add_form.pt:96
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/lookup_ui.pt:107
@@ -249,7 +249,7 @@ msgstr "sneltoets: alt-s"
 #: /views/edit/Container/tab_access_groups.pt:130
 #: /views/edit/Member/SimpleMember/tab_edit.pt:122
 msgid "save"
-msgstr "save"
+msgstr "opslaan"
 
 #: /views/add/add_form.pt:98 /views/add/Ghost/add_form.pt:106
 #: /views/add/GhostFolder/add_form.pt:114
@@ -267,50 +267,50 @@ msgid ""
 "        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, \n"
 "        and the id should start with a letter or digit."
 msgstr ""
-"Sorry, strange characters are in the id. It should only\n"
-"        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or \n"
-"        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, \n"
-"        and the id should start with a letter or digit."
+"Sorry, er zitten vreemde karakters in de id. Het mag alleen\n"
+"        letters, cijfers en &#8216;_&#8217; of &#8216;-&#8217; of \n"
+"        &#8216;.&#8217; bevatten.<br />Spaties zijn niet toegestaan in \n"
+"        Internet adressen, en de id moet beginnen met een letter of een cijfer."
 
 #: /views/add/get_id_status_text.py:24
 msgid ""
 "Sorry, ids starting with ${prefix} are reserved for\n"
 "        internal use.<br />Please use another id."
 msgstr ""
-"Sorry, ids starting with ${prefix} are reserved for\n"
-"        internal use.<br />Please use another id."
+"Sorry, ids die beginnen met ${prefix} zijn gereserveerd voor intern gebruik.\n"
+"        <br />Gebruik alsjeblieft een andere id."
 
 #: /views/add/get_id_status_text.py:29
 msgid ""
 "Sorry, the id ${id} is reserved for internal use.<br />\n"
 "        Please use another id."
 msgstr ""
-"Sorry, the id ${id} is reserved for internal use.<br />\n"
-"        Please use another id."
+"Sorry, het id is gereserveerd voor intern gebruik.\n"
+"        <br />Gebruik alsjeblieft een andere id."
 
 #: /views/add/get_id_status_text.py:34
 msgid ""
 "There is already an object with the id ${id} in this \n"
 "        folder.<br />Please use a different one."
 msgstr ""
-"There is already an object with the id ${id} in this \n"
-"        folder.<br />Please use a different one."
+"Er is al een object genaamd ${id} in deze folder.<br />\n"
+"        Gebruik alsjeblieft een andere id."
 
 #: /views/add/get_id_status_text.py:39
 msgid ""
 "There is already an asset with the id ${id} in this \n"
 "        folder.<br />Please use another id."
 msgstr ""
-"There is already an asset with the id ${id} in this \n"
-"        folder.<br />Please use another id."
+"Er is al een asset genaamd ${id} in deze folder.<br />\n"
+"        Gebruik alsjeblieft een andere id."
 
 #: /views/add/get_id_status_text.py:44
 msgid ""
 "Sorry, the id ${id} ends with invalid characters.<br />\n"
 "        Please use another id."
 msgstr ""
-"Sorry, the id ${id} ends with invalid characters.<br />\n"
-"        Please use another id."
+"Sorry, de id ${id} eindigt op niet toegestane karakters.<br />\n"
+"        Gebruik alsjeblieft een andere id."
 
 #: /views/add/get_id_status_text.py:50
 msgid ""
@@ -909,15 +909,15 @@ msgstr "sneltoets: alt-l"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:27
 msgid "change Publication into Folder: alt-c"
-msgstr "change Publication into Folder: alt-c"
+msgstr "verander Publication in Folder: alt-c"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:27
 msgid "convert to folder"
-msgstr "convert to folder"
+msgstr "converteer naar folder"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:40
 msgid "configure <u>a</u>ddables..."
-msgstr "configure <u>a</u>ddables..."
+msgstr "<u>a</u>ddables configureren..."
 
 #: /views/edit/Container/Publication/tab_metadata.pt:40
 msgid "change the addables allowed in this publication: alt-a"
@@ -937,15 +937,15 @@ msgstr "Layout has been copied for customization."
 
 #: /views/edit/Container/docma_queue.pt:100
 msgid "${estimated_time} &nbsp;seconds"
-msgstr "${estimated_time} &nbsp;seconds"
+msgstr "${estimated_time} &nbsp;seconden"
 
 #: /views/edit/Container/docma_queue.pt:113
 msgid "There are no jobs in the queue."
-msgstr "There are no jobs in the queue."
+msgstr "Er staan geen taken in de wachtrij."
 
 #: /views/edit/Container/docma_queue.pt:145
 msgid "list of processed items ${format}"
-msgstr "list of processed items ${format}"
+msgstr "lijst van verwerkte items ${format}"
 
 #: /views/edit/Container/docma_queue.pt:160
 #: /views/edit/Container/tab_access_groups.pt:103
@@ -956,37 +956,37 @@ msgstr "type"
 #: /views/edit/Container/docma_queue.pt:167
 #: /views/edit/Container/docma_queue.pt:191
 msgid "download"
-msgstr "download"
+msgstr "downloaden"
 
 #: /views/edit/Container/docma_queue.pt:20
 msgid "current job"
-msgstr "current job"
+msgstr "huidige taak"
 
 #: /views/edit/Container/docma_queue.pt:202
 msgid "There are no processed jobs."
-msgstr "There are no processed jobs."
+msgstr "Er zijn geen verwerkte taken."
 
 #: /views/edit/Container/docma_queue.pt:22
 msgid "owner"
-msgstr "owner"
+msgstr "eigenaar"
 
 #: /views/edit/Container/docma_queue.pt:230
 #: /views/edit/Container/tab_status_export.pt:476
 msgid "there's no undo: alt-x"
-msgstr "there's no undo: alt-x"
+msgstr "kan niet worden ongedaan gemaakt: alt-x"
 
 #: /views/edit/Container/docma_queue.pt:230
 #: /views/edit/Container/tab_status_export.pt:476
 msgid "remove"
-msgstr "remove"
+msgstr "verwijder"
 
 #: /views/edit/Container/docma_queue.pt:238
 msgid "import and remove"
-msgstr "import and remove"
+msgstr "importeer en verwijder"
 
 #: /views/edit/Container/docma_queue.pt:238
 msgid "import to the current location and remove from the list: alt-m"
-msgstr "import to the current location and remove from the list: alt-m"
+msgstr "importeer naar de huidige locatie en verwijder uit de lijst: alt-m"
 
 #: /views/edit/Container/docma_queue.pt:24
 #: /views/edit/Container/docma_queue.pt:71
@@ -994,65 +994,65 @@ msgstr "import to the current location and remove from the list: alt-m"
 #: /views/edit/Container/tab_edit_import.pt:342
 #: /views/edit/Container/tab_status_export.pt:431
 msgid "description"
-msgstr "description"
+msgstr "omschrijving"
 
 #: /views/edit/Container/docma_queue.pt:245
 msgid "import to the current location: alt-p"
-msgstr "import to the current location: alt-p"
+msgstr "importeer naar de huidige locatie: alt-p"
 
 #: /views/edit/Container/docma_queue.pt:245
 #: /views/edit/Container/tab_edit_import.pt:125
 msgid "import"
-msgstr "import"
+msgstr "importeer"
 
 #: /views/edit/Container/docma_queue.pt:40
 msgid "reload to update the queue lists: alt-r"
-msgstr "reload to update the queue lists: alt-r"
+msgstr "herlaad om de wachtrij te verversen: alt-r"
 
 #: /views/edit/Container/docma_queue.pt:40
 msgid "<u>r</u>efresh queue lists"
-msgstr "<u>r</u>efresh queue lists"
+msgstr "ve<u>r</u>vers wachtrij"
 
 #: /views/edit/Container/docma_queue.pt:50
 msgid "queue of items to process"
-msgstr "queue of items to process"
+msgstr "wachtrij te verwerken items"
 
 #: /views/edit/Container/docma_queue.pt:62
 #: /views/edit/Container/docma_queue.pt:155
 msgid "job id"
-msgstr "job id"
+msgstr "taak id"
 
 #: /views/edit/Container/docma_queue.pt:67
 msgid "job owner"
-msgstr "job owner"
+msgstr "taak eigenaar"
 
 #: /views/edit/Container/docma_queue.pt:75
 msgid "estimated time"
-msgstr "estimated time"
+msgstr "geschatte tijd"
 
 #: /views/edit/Container/download_fullmedia_selected.py:19
 #: /views/edit/Container/download_pdf_selected.py:21
 #: /views/edit/Container/download_xml_selected.py:20
 msgid "No items were selected, so no content will be exported"
-msgstr "No items were selected, so no content will be exported"
+msgstr "Geen items geselecteerd, dus er kan geen inhoud geëxporteerd worden."
 
 #: /views/edit/Container/download_fullmedia_selected.py:24
 msgid "Currently, fullmedia export only supports one item at a time."
-msgstr "Currently, fullmedia export only supports one item at a time."
+msgstr "Op dit moment kan 'fullmedia export' maar 1 item tegelijk verwerken."
 
 #: /views/edit/Container/export_delete.py:20
 #: /views/edit/Container/tab_edit_import_delete.py:19
 msgid "Select one or more jobs to delete"
-msgstr "Select one or more jobs to delete"
+msgstr "Selecteer één of meer taken om te verwijderen"
 
 #: /views/edit/Container/export_delete.py:26
 #: /views/edit/Container/tab_edit_import_delete.py:25
 msgid "Job deleted"
-msgstr "Job deleted"
+msgstr "Taak verwijderd"
 
 #: /views/edit/Container/getDocmaFormatName.py:10
 msgid "unknown format"
-msgstr "unknown format"
+msgstr "onbekend formaat"
 
 #: /views/edit/Container/getDocmaFormatName.py:6
 msgid "Silva XML"
@@ -1097,7 +1097,7 @@ msgstr "IP Group: a group based on ip addresses"
 
 #: /views/edit/Container/tab_access_groups.pt:138
 msgid "save + edit"
-msgstr "save + edit"
+msgstr "opslaan + bewerken"
 
 #: /views/edit/Container/tab_access_groups.pt:161
 msgid "groups located in this folder"
@@ -1105,7 +1105,7 @@ msgstr "groups located in this folder"
 
 #: /views/edit/Container/tab_access_groups.pt:172
 msgid "name"
-msgstr "name"
+msgstr "naam"
 
 #: /views/edit/Container/tab_access_groups.pt:184
 msgid "modifier"
@@ -1113,7 +1113,7 @@ msgstr "modifier"
 
 #: /views/edit/Container/tab_access_groups.pt:207
 msgid "edit this group"
-msgstr "edit this group"
+msgstr "wijzig deze groep"
 
 #: /views/edit/Container/tab_access_groups.pt:243
 msgid "No groups have been defined in this location."
@@ -1401,7 +1401,7 @@ msgstr "sneltoets: alt-i"
 
 #: /views/edit/Container/tab_edit_import.pt:151
 msgid "import and extract zip archive (.zip)"
-msgstr "import and extract zip archive (.zip)"
+msgstr "importeren en uitpakken zip archive (.zip)"
 
 #: /views/edit/Container/tab_edit_import.pt:186
 msgid ""
@@ -1441,7 +1441,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:234
 msgid "import zip"
-msgstr "import zip"
+msgstr "importeer zip"
 
 #: /views/edit/Container/tab_edit_import.pt:234
 #: /views/edit/Container/tab_status_export.pt:261
@@ -1451,140 +1451,141 @@ msgstr "sneltoets: alt-z"
 #: /views/edit/Container/tab_edit_import.pt:271
 #: /views/edit/Container/tab_status_export.pt:300
 msgid "docma icon"
-msgstr "docma icon"
+msgstr "docma icoon"
 
 #: /views/edit/Container/tab_edit_import.pt:279
 #: /views/edit/Container/tab_status_export.pt:308
 msgid "docma facilities"
-msgstr "docma facilities"
+msgstr "docma faciliteiten"
 
 #: /views/edit/Container/tab_edit_import.pt:291
 msgid "upload a document in word format (.doc) for conversion"
-msgstr "upload a document in word format (.doc) for conversion"
+msgstr "document in word formaat (.doc) uploaden voor conversie"
 
 #: /views/edit/Container/tab_edit_import.pt:319
 msgid ""
 "Locate a Word file to upload. It'll be converted and appear in the list of "
 "processed items below. It can be imported anywhere in Silva."
 msgstr ""
-"Locate a Word file to upload. It'll be converted and appear in the list of "
-"processed items below. It can be imported anywhere in Silva."
+"Zoek een Word file om te uploaden. Hij zal worden geconverteerd en in de "
+" lijst met verwerkte items terecht komen die hier onder staat. Hij kan overal "
+"in Silva worden geïmporteerd."
 
 #: /views/edit/Container/tab_edit_import.pt:326
 #: /views/edit/Container/tab_status_export.pt:392
 msgid "email address"
-msgstr "email address"
+msgstr "e-mail addres"
 
 #: /views/edit/Container/tab_edit_import.pt:336
 #: /views/edit/Container/tab_status_export.pt:402
 msgid "An e-mail will be sent to you when the item is processed."
-msgstr "An e-mail will be sent to you when the item is processed."
+msgstr "Er wordt een email naar je gestuurd wanneer het item is verwerkt."
 
 #: /views/edit/Container/tab_edit_import.pt:350
 #: /views/edit/Container/tab_status_export.pt:440
 msgid ""
 "This description will be shown in the queue and the list of processed items."
 msgstr ""
-"This description will be shown in the queue and the list of processed items."
+"Deze omschrijving wordt in de wachtrij en de lijst van verwerkte items getoond."
 
 #: /views/edit/Container/tab_edit_import.pt:358
 msgid "upload"
-msgstr "upload"
+msgstr "uploaden"
 
 #: /views/edit/Container/tab_edit_import.pt:358
 msgid "upload a word document from your local drive: alt-u"
-msgstr "upload a word document from your local drive: alt-u"
+msgstr "een word document uploaden van uw lokale schijf: alt-u"
 
 #: /views/edit/Container/tab_edit_import.pt:67
 msgid "import in &#xab;${title}&#xbb;"
-msgstr "import in &#xab;${title}&#xbb;"
+msgstr "importeer in &#xab;${title}&#xbb;"
 
 #: /views/edit/Container/tab_edit_import.pt:73
 msgid "over to the export screen: alt-e"
-msgstr "over to the export screen: alt-e"
+msgstr "naar het export scherm: alt-e"
 
 #: /views/edit/Container/tab_edit_import.pt:73
 #: /views/edit/VersionedContent/tab_status.pt:237
 msgid "export..."
-msgstr "export..."
+msgstr "exporteer..."
 
 #: /views/edit/Container/tab_edit_import.pt:82
 msgid "import silva xml (.xml)"
-msgstr "import silva xml (.xml)"
+msgstr "importeer silva xml (.xml)"
 
 #: /views/edit/Container/tab_edit_import_docma.py:19
 msgid "Select a file for upload"
-msgstr "Select a file for upload"
+msgstr "Selecteer een bestand om te uploaden."
 
 #: /views/edit/Container/tab_edit_import_docma.py:22
 msgid "You must enter your e-mail address"
-msgstr "You must enter your e-mail address"
+msgstr "Je moet een e-mail adres opgeven."
 
 #: /views/edit/Container/tab_edit_import_docma.py:32
 msgid "Your job is ${status}. The id of your job is ${id}."
-msgstr "Your job is ${status}. The id of your job is ${id}."
+msgstr "Jouw taak is ${status}. Het id van je taak is ${id}."
 
 #: /views/edit/Container/tab_edit_import_download.py:18
 msgid "Select one or more items to download"
-msgstr "Select one or more items to download"
+msgstr "Selecteer één of meer items om te downloaden"
 
 #: /views/edit/Container/tab_edit_import_import_and_delete.py:19
 #: /views/edit/Container/tab_edit_import_w2s.py:17
 msgid "Select one or more jobs to import"
-msgstr "Select one or more jobs to import"
+msgstr "Selecteer één of meer taken om te importeren"
 
 #: /views/edit/Container/tab_edit_import_import_and_delete.py:39
 msgid "Could not import ${newid}"
-msgstr "Could not import ${newid}"
+msgstr "Kon ${newid} niet importeren"
 
 #: /views/edit/Container/tab_edit_import_import_and_delete.py:50
 #: /views/edit/Container/tab_edit_import_w2s.py:40
 msgid "Finished importing"
-msgstr "Finished importing"
+msgstr "Klaar met importeren"
 
 #: /views/edit/Container/tab_edit_import_xml.py:26
 msgid "Data is not valid Silva XML"
-msgstr "Data is not valid Silva XML"
+msgstr "Data is geen geldige Silva XML"
 
 #: /views/edit/Container/tab_edit_import_xml.py:30
 msgid "Finished importing."
-msgstr "Finished importing."
+msgstr "Klaar met importeren."
 
 #: /views/edit/Container/tab_edit_move_down.py:16
 msgid "Moved ${id} down."
-msgstr "Moved ${id} down."
+msgstr "${id} naar beneden verplaatst."
 
 #: /views/edit/Container/tab_edit_move_down.py:20
 msgid "Could not move ${id} down."
-msgstr "Could not move ${id} down."
+msgstr "Kon ${id} niet naar beneden plaatsen."
 
 #: /views/edit/Container/tab_edit_move_to.py:18
 msgid "Nothing was selected, so nothing was moved."
-msgstr "Nothing was selected, so nothing was moved."
+msgstr "Niets geselecteerd, dus niets verplaatst."
 
 #: /views/edit/Container/tab_edit_move_to.py:24
 msgid "First choose a position number."
-msgstr "First choose a position number."
+msgstr "Kies eerst een positie."
 
 #: /views/edit/Container/tab_edit_move_to.py:40
 msgid "Object(s) ${ids} moved"
-msgstr "Object(s) ${ids} moved"
+msgstr "Object(en) ${ids} verplaatst"
 
 #: /views/edit/Container/tab_edit_move_to.py:44
 msgid ", <span class=\"error\">but could not move ${ids}</span>"
-msgstr ", <span class=\"error\">but could not move ${ids}</span>"
+msgstr ", <span class=\"error\">maar kon ${ids} niet verplaatsen</span>"
 
 #: /views/edit/Container/tab_edit_move_to.py:49
 msgid "Could not move ${ids}."
-msgstr "Could not move ${ids}."
+msgstr "Kon ${ids} niet verplaatsen."
 
 #: /views/edit/Container/tab_edit_move_up.py:16
 msgid "Moved ${id} up."
-msgstr "Moved ${id} up."
+msgstr "${id} naar boven verplaatst."
 
 #: /views/edit/Container/tab_edit_move_up.py:20
 msgid "Could not move ${id} up."
-msgstr "Could not move ${id} up."
+msgstr "Kon ${id} niet naar boven plaatsen."
 
 #: /views/edit/Container/tab_edit_new.pt:123
 msgid "Sorry, you're not authorized to add anything in this location."
@@ -3415,7 +3416,7 @@ msgstr "see the content in the public layout: alt-;"
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
 msgid "public&nbsp;preview..."
-msgstr "public&nbsp;preview..."
+msgstr "publieke&nbsp;preview..."
 
 #: /views/edit/tab_preview.pt:37
 msgid "This is a closed version. You see it, but the public won't!"
@@ -3521,7 +3522,7 @@ msgstr "Silva uitloggen: alt-q"
 
 #: /views/macro_index.pt:271
 msgid "logout ${role} ${userid}"
-msgstr "uitloggen ${role} ${userid}"
+msgstr "${role} ${userid} uitloggen"
 
 #: /views/macro_index.pt:277
 msgid "request access"
