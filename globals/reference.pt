@@ -1,85 +1,104 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- ______________ Silva 0.9.1 ______________ -->
-<html metal:use-macro="here/index_macro/macros/master">
-<title metal:fill-slot="title">Reference</title>
-<div metal:fill-slot="main" tal:omit-tag="">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- _______ Silva version 0.9.3.0 _______ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal">
 
-<h3><img src="silva_icon_32.gif" width="32" height="32" alt="Silva" />&nbsp;&nbsp;Silva - an extensible XML Publication System</h3>
+<head>
+  <title>Silva - Reference</title>
+  <!-- Links to favicon and stylesheet -->
+  <link rel="shortcut icon"
+    tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
+  <link rel="stylesheet" href="frontend.css" type="text/css" />
+</head>
 
-<div class="message">
-<pre>  From WordNet (r) 1.6 [wn]:
+<body>
+<a style="float:right;margin:0.7em 1em;"
+  href="javascript:history.back();" 
+  title="access key: alt-b"
+  accesskey="b"
+  i18n:attributes="title"
+  i18n:translate="back">
+  back
+</a>
+<div class="public">
+<h2 style="margin-top:2em;">
+  <a href="http://www.infrae.com/products/silva" 
+    title="Silva info: alt-s"
+    accesskey="s">
+    <img src="silva_icon_32.gif" width="32" height="32" border="0" alt="Silva" />
+  </a>
+  &nbsp;Silva &#8211; a cross medium publication system<br />
+</h2>
 
-    silva
-         n : the forest trees growing in a country or region [syn: {sylva}]
-
-
-  From Webster's Revised Unabridged Dictionary (1913) [web1913]:
-
-    Silva \Sil"va\, n.; pl. E. {Silvas}, L. {Silvae}. [L., properly,
-       a wood, forest.] [Written also {sylva}.] (Bot.)
-       (a) The forest trees of a region or country, considered
-           collectively.
-       (b) A description or history of the forest trees of a
-           country.
-</pre>
+<div style="float:left; color:#274b4c; background:#eceeee; margin:2em 0; padding:0 1em 0.3em 1em; border:1px solid #666677;">
+  <dl>
+    <dt>
+      From WordNet (r) 1.6 [wn]:
+    </dt>
+    <dd>
+      silva<br />
+      n : the forest trees growing in a country or region [syn: {sylva}]<br /><br />
+    </dd>
+    <dt>
+      From Webster's Revised Unabridged Dictionary (1913) [web1913]:
+    </dt>
+    <dd>
+      Silva \Sil"va\, n.; pl. E. {Silvas}, L. {Silvae}. [L., properly, a wood, forest.] [Written also {sylva}.] (Bot.)<br />
+      (a) The forest trees of a region or country, considered collectively.<br />
+      (b) A description or history of the forest trees of a country.
+    </dd>
+  </dl>
 </div>
-
-<p class="halfline">&nbsp;</p>
 
 <h3>Credits</h3>
 
 <p>
-Silva is developed by <a href="http://www.infrae.com/">Infrae</a>. <br />
-Initial (and continued) development was for the <a href="http://www.eur.nl/">Erasmus University Rotterdam</a>.
+  Silva is developed by <a href="http://www.infrae.com/">Infrae</a>. <br />
+  Initial (and continued) development was for <a href="http://www.eur.nl/">Erasmus University Rotterdam</a>.
 </p>
 
 <h4>Infrae Silva team</h4>
 
 <p>
-<a href="mailto:kitblake@infrae.com">Kit Blake</a><br />
-<a href="mailto:faassen@infrae.com">Martijn Faassen</a><br />
-<a href="mailto:jw@infrae.com">Jan-Wijbrand Kolman</a><br />
-<a href="mailto:guido@infrae.com">Guido Wesdorp</a><br />
-<a href="mailto:zagy@infrae.com">Christian Zagrodnick</a><br />
-<a href="mailto:info@infrae.com">Torvald de Boskat</a><br />
+  <a href="mailto:kitblake@infrae.com">Kit Blake</a><br />
+  <a href="mailto:faassen@infrae.com">Martijn Faassen</a><br />
+  <a href="mailto:jw@infrae.com">Jan-Wijbrand Kolman</a><br />
+  <a href="mailto:guido@infrae.com">Guido Wesdorp</a><br />
+  <a href="mailto:info@infrae.com">Torvald de Boskat</a><br />
 </p>
 
 <h4>External developers</h4>
 
 <p>
-<a href="mailto:hpk@devel.trillke.net">Holger Krekel</a><br />
-<a href="mailto:robbenhaar@espresto.com">Clemens Klein-Robbenhaar</a><br />
-<a href="mailto:itamar@zoteca.com">Itamar Shtull-Trauring</a><br />
-<a href="mailto:alexander@limi.net">Alexander Limi</a>
+  <a href="mailto:hpk@devel.trillke.net">Holger Krekel</a><br />
+  <a href="mailto:robbenhaar@espresto.com">Clemens Klein-Robbenhaar</a><br />
+  <a href="mailto:alexander@limi.net">Alexander Limi</a><br />
+  <a href="mailto:js@aixtraware.de">Joachim Schmitz</a><br />
+  <a href="mailto:itamar@zoteca.com">Itamar Shtull-Trauring</a><br />
+  <a href="mailto:hazmat@infrae.com">Kapil Thangavelu</a><br />
+  <a href="mailto:cz@gocept.de">Christian Zagrodnick</a><br />
 </p>
   
-<h4>Thanks to:</h4>
+<h4>Thanks to....</h4>
 
 <p>
-The people at <a href="http://www.id.ethz.ch/">ETH in Zürich</a> for their feedback, examples and support.
+  The people at <a href="http://www.id.ethz.ch/">ETH in Zürich</a> for their feedback, examples and support.
 </p>
-
 <p>
-Jim Washington for fixing &lt;script /&gt; and &lt;meta /&gt; in
-layout_macro.html.
+  <a href="mailto:jan@curpheymedia.com">Jan Smith</a> at <a href="http://ozzope.org">ozzope.org</a> for advice, hosting the docs wiki, and her tutorials.
 </p>
-
 <p>
-Jan Smith at <a href="http://ozzope.org">ozzope.org</a> for advice, hosting the docs development wiki, and her tutorials.
+  Many thanks go to <a href="mailto:verster@daz.eur.nl">Hans Verster</a> at the Erasmus University Rotterdam for his vision and support.
 </p>
-
 <p>
-Many thanks go to <a href="mailto:verster@daz.eur.nl">Hans Verster</a> at the Erasmus University Rotterdam for his vision and support.
-<br />
-<br />
-</p>
-
-<p>
-<span class="subhead">
-Silva v0.9.1</span><br />
-Copyright &#xa9; 2002, 2003 Infrae. All rights reserved.
+  <br />
+  <br />
+  <span class="subhead">Silva v0.9.3</span><br />
+  Copyright &#xa9; 2002, 2003 Infrae. All rights reserved.
 </p>
 
 </div>
 
+</body>
 </html>
