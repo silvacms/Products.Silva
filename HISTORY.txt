@@ -3,6 +3,14 @@ See also LICENSE.txt
 
 Silva changes
 
+  Current development version
+  
+    Bugs fixed
+
+      - Made the 0.9.3-1.0 Image upgrade even more forgiving, basically it
+        will now not break on anything anymore, it will print a warning to
+        the zLOG on every exception.
+
   1.0 (release candidate 4)
 
     Bugs fixed

@@ -10,7 +10,8 @@ from Globals import package_home
 from AccessControl import Owned
 
 # silva imports
-from Products.Silva.interfaces import IUpgrader, IContainer, IContent, IVersion, IVersionedContent
+from Products.Silva.interfaces import IUpgrader, IContainer, IContent, \
+        IVersion, IVersionedContent
 from Products.Silva import upgrade
 from Products.Silva.adapters import security
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -18,6 +19,7 @@ from Products.Silva.VersionedContent import VersionedContent
 from Products.SilvaMetadata.Exceptions import BindingError
 
 import zLOG
+import sys
 
 #-----------------------------------------------------------------------------
 # 0.9.3 to 1.0.0
@@ -33,10 +35,12 @@ class ImageUpgrade:
             image.hires_image = image.image
         try:
             image._createDerivedImages()
-        except IOError, e:
+        except:
+            exc, e, tb = sys.exc_info()
+            del tb
             zLOG.LOG('Silva', zLOG.WARNING,
-                    ('Error upgrading image %s: %s, the image is probably '
-                    'unusable from now on.') % (image.absolute_url(), e))
+                    ('Error upgrading image %s: %s - %s; the image object is '
+                    'probably broken.') % (image.absolute_url(), exc, e))
         return image
             
     
