@@ -291,7 +291,7 @@
                       accesskey="v"
                     />
                     <input class="button"
-                      style="background:#000070;"
+                      style="background:#202080;"
                       type="submit"
                       name="tab_status_close:method"
                       value="Close"
