@@ -9,7 +9,7 @@
   >
 <!-- start of 3 Funky macro definitions to reuse the listing -->
 <metal:block define-macro="normal_groups_listing">
-  <tal:block define="groups view/service_groups/listNormalGroups">
+  <tal:block define="groups view/service_groups/listNormalGroups | nothing">
     <metal:block use-macro="here/macro_groups_listing/macros/listing">
       <metal:block fill-slot="actions" >
         <metal:block define-slot="listing_actions" />
@@ -19,7 +19,7 @@
 </metal:block>
 
 <metal:block define-macro="virtual_groups_listing">
-  <tal:block define="groups view/service_groups/listVirtualGroups">
+  <tal:block define="groups view/service_groups/listVirtualGroups | nothing">
     <metal:block use-macro="here/macro_groups_listing/macros/listing">
       <metal:block fill-slot="actions" >
         <metal:block define-slot="listing_actions" />
@@ -29,7 +29,7 @@
 </metal:block>
 
 <metal:block define-macro="all_groups_listing">
-  <tal:block define="groups view/service_groups/listAllGroups">
+  <tal:block define="groups view/service_groups/listAllGroups | nothing">
     <metal:block use-macro="here/macro_groups_listing/macros/listing">
       <metal:block fill-slot="actions" >
         <metal:block define-slot="listing_actions" />
