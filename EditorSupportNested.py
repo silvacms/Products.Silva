@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -48,8 +48,12 @@ class EditorSupport:
                 result.append(self.render_text_as_html(child))
                 result.append('</sub>')
             elif child.nodeName == 'link':
-                result.append('<a href="%s">' %
+                result.append('<a href="%s"' %
                               output_convert(child.getAttribute('url')))
+                if child.getAttribute('target'):
+                    result.append(' target="%s"' %
+                                  output_convert(child.getAttribute('target')))
+                result.append('>')
                 result.append(self.render_text_as_html(child))
                 result.append('</a>')
             elif child.nodeName == 'underline':
@@ -123,6 +127,9 @@ class EditorSupport:
                 result.append(self.render_text_as_editable(child))
                 result.append('|')
                 result.append(self.output_convert_editable(child.getAttribute('url')))
+                if child.getAttribute('target'):
+                    result.append('|')
+                    result.append(self.output_convert_editable(child.getAttribute('target')))
                 result.append('))')
             elif child.nodeName == 'underline':
                 result.append('__')
@@ -183,7 +190,7 @@ class EditorSupport:
         #st = st.replace('\n\n', ' ')
         tags = {'__': 'underline', '**': 'strong', '++': 'em', '^^': 'super', '~~': 'sub'}
         reg = re.compile(r"(_{2}|\*{2}|\+{2}|\^{2}|~{2})(.*?)\1", re.S)
-        reg_a = re.compile(r"\({2}(.*?)\|(.*?)\){2}", re.S)
+        reg_a = re.compile(r"\({2}(.*?)\|([^|]*)(\|?)(.*?)\){2}", re.S)
         reg_i = re.compile(r"\[{2}(.*?)\|(.*?)\]{2}", re.S)
         while 1:
             match = reg.search(st)
@@ -194,7 +201,13 @@ class EditorSupport:
             match = reg_a.search(st)
             if not match:
                 break
-            st = st.replace(match.group(0), '<link url="%s">%s</link>' % (match.group(2), match.group(1)))
+            if match.group(3):
+                target = match.group(4)
+                if not target:
+                    target = '_blank'
+                st = st.replace(match.group(0), '<link url="%s" target="%s">%s</link>' % (match.group(2), target, match.group(1)))
+            else:
+                st = st.replace(match.group(0), '<link url="%s">%s</link>' % (match.group(2), match.group(1)))
         while 1:
             match = reg_i.search(st)
             if not match:
