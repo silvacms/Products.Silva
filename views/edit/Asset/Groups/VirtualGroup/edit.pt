@@ -77,7 +77,7 @@
           tal:define="iterate repeat/groupid/odd;"
           tal:attributes="class python: iterate and 'odd' or 'even'">
           <td>
-            <input class="warningbox"
+            <input class="warning-checkbox"
               name="groupids:list"
               type="checkbox"
               value="groupid"

@@ -79,7 +79,7 @@
             member python:model.sec_get_member(userid)"
           tal:attributes="class python: iterate and 'odd' or 'even'">
           <td>
-            <input class="warningbox"
+            <input class="warning-checkbox"
               name="userids:list"
               type="checkbox"
               value="userid"
