@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53 $
+# $Revision: 1.54 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -57,12 +57,27 @@ class Publication(Folder.Folder):
         if layout_name:
             layout = service_layouts.setup_layout(layout_name, self)
     
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'copy_layout')
+    def copy_layout(self):
+        """Copy layout to publication
+        to be able to customize it.
+        """
+        service_layouts = self.get_root().service_layouts
+        layout = service_layouts.copy_layout(self)
+    
     def get_layout_key(self):
         return self.layout_key
 
     def set_layout_key(self, value):
         self.layout_key = value 
-    
+
+    def layout_copied(self):
+        return self.service_layouts.layout_copied(self)
+
+    def get_layout_folder(self):
+        return self.service_layouts.get_layout_folder(self)
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_silva_addables_allowed_in_publication')
     def set_silva_addables_allowed_in_publication(self, addables):

@@ -46,23 +46,29 @@
           note
         </th>
       </tr>
-      <tal:repeat repeat="field here/layout_form/get_fields">
-      <tal:define define="oddrow repeat/field/odd">
-      <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
+      <tal:define define="field python:here.layout_form.get_field('layout')">
+      <tr class="odd">
         <td class="align-right">
           <span tal:replace="python:field['title'].lower()">
             title
           </span><span class="warning" tal:condition="python:field.is_required()">*</span>
         </td>
-        <td tal:content="structure python:field.render(getattr(model, field.id), request)">
-          <input />
+        <td><p tal:condition="model/layout_copied">Layout has been copied in order to customize it !</p>
+            <input tal:replace="structure python:field.render(model.get_layout(), request)" />
         </td>
-        <td tal:content="structure string:${field/description}&nbsp;">
-          note
+        <td><span tal:replace="structure string:${field/description}&nbsp;" />
         </td>
       </tr>
+      <tr class="even" tal:condition="python:model.get_layout() and not model.layout_copied()">
+        <td class="align-right">&nbsp;
+        </td>
+        <td><a class="button" href="copy_layout_submit">Copy layout</a>
+        </td>
+        <td><span>You need to copy the layout if you want to customize it</span>
+        </td>
+      </tr>
+    
       </tal:define>
-      </tal:repeat>
       <tr class="controls">
         <td class="align-right"
           colspan="4">
@@ -72,6 +78,8 @@
             value="save layout"
             title="access key: alt-l"
             accesskey="l"
+            tal:define="js string:return confirm('Really remove copied layout?')"
+            tal:attributes="onclick python:(model.layout_copied() and js) or ''"
           />
         </td>
       </tr>

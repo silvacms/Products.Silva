@@ -1,11 +1,13 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 
 from Products.Silva import icon
 from Products.Silva.install import add_fss_directory_view
 from Products.Silva.fssite import registerDirectory
 import os
+import md5
+import cPickle
 
 class LayoutRegistry:
 
@@ -15,10 +17,12 @@ class LayoutRegistry:
 
     # MANIPULATORS
 
-    def register(self, name, description, module, template_directory):
+    def register(self, name, description, module, directory, folder_id=None):
+        if not folder_id:
+            folder_id = directory
         self._layouts[name] = Layout(
-            name, description, module, template_directory)
-        registerDirectory(os.path.join(os.path.dirname(module), template_directory), globals())
+            name, description, module, directory, folder_id)
+        registerDirectory(os.path.join(os.path.dirname(module), directory), globals())
         
 
     def install(self, root, name):
@@ -39,38 +43,55 @@ class LayoutRegistry:
         return  self._layouts[name].is_installed(root.service_resources.Layouts)
 
     def get_layout(self, name):
-        return self._layouts[name]
+        return self._layouts.get(name, None)
     
-    def setup_layout(self, root, name, folder):
-        directory = self.get_layout(name).directory
-        template = getattr(root.service_resources.Layouts, directory)
-        items = template.objectValues()
-        folder_path = '/'.join(
-            folder.getPhysicalPath()[len(root.getPhysicalPath()):])
-        for item in items:
-            item.manage_doCustomize(folder_path, root=root)
+    def setup_layout(self, root, name, publication):
+        newUsedLayout = usedLayout(name)
+        return newUsedLayout
 
-    def layout_items(self, root, name):
-        directory = self.get_layout(name).directory
-        template = getattr(root.service_resources.Layouts, directory)
-        return template.objectIds()
+    def copy_layout(self, root, name, publication):
+        publication_path = '/'.join(
+            publication.getPhysicalPath()[len(root.getPhysicalPath()):])
+        folder = self.get_layout_folder(root, name)
+        for item in folder.objectValues():
+            item.manage_doCustomize(publication_path, root=root)
+
+    def get_layout_folder(self, root, name):
+        layout = self.get_layout(name)
+        if layout:
+            folder_id = layout.folder_id
+            return getattr(root.service_resources.Layouts, folder_id)
+        else:
+            return None
+
+    def layout_ids(self, root, name):
+        folder = self.get_layout_folder(root, name)
+        return folder.objectIds()
+
+layoutRegistry = LayoutRegistry()
 
 class Layout:
-    def __init__(self, name, description, module, template_directory):
+    def __init__(self, name, description, module, directory, folder_id):
         self.name = name
         self.description = description
         self.module = module
-        self.directory = template_directory
+        self.directory = directory
+        self.folder_id = folder_id
 
     def is_installed(self, root):
-        return hasattr(root, self.directory)
+        return hasattr(root, self.folder_id)
 
     def install(self, root):
         add_fss_directory_view(
-            root, self.directory, self.module, self.directory)
+            root, self.directory, self.module, self.folder_id)
 
     def uninstall(self, root):
-        root.manage_delObjects([self.directory])
+        root.manage_delObjects([self.folder_id])
+
+class usedLayout:
+    
+    def __init__(self, name):
+        self.name = name
+        self.copied = 0
 
 
-layoutRegistry = LayoutRegistry()

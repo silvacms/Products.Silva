@@ -1,7 +1,7 @@
 
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -12,6 +12,7 @@ from DateTime import DateTime
 from helpers import add_and_edit
 import SilvaPermissions
 from LayoutRegistry import layoutRegistry
+import LayoutRegistry
 import install
 import whrandom
 import copy
@@ -118,31 +119,31 @@ class LayoutService(SimpleItem.SimpleItem):
 
     # USED LAYOUTS
 
-    def setup_layout(self, layout, target):
-        layoutRegistry.setup_layout(self.get_root(), layout, target)
-        if not target.get_layout_key():
-            target.set_layout_key(self._get_unique_layout_key())
-        newUsedLayout = usedLayout(layout)
-        newUsedLayout.set_items(layoutRegistry.layout_items(self.get_root(), layout))
-        self._used_layouts[target.get_layout_key()] = newUsedLayout
+    def setup_layout(self, layout, publication):
+        newUsedLayout = layoutRegistry.setup_layout(self.get_root(), layout, publication)
+        if not publication.get_layout_key():
+            publication.set_layout_key(self._get_unique_layout_key())
+        self._used_layouts[publication.get_layout_key()] = newUsedLayout
         self._p_changed = 1
 
-    def clone_layout(self, target):
-        old_key = target.get_layout_key()
+    def clone_layout(self, publication):
+        old_key = publication.get_layout_key()
         if old_key:
-            target.set_layout_key(self._get_unique_layout_key())
+            publication.set_layout_key(self._get_unique_layout_key())
             newUsedLayout = copy.copy(self._used_layouts[old_key])
-            self._used_layouts[target.get_layout_key()] = newUsedLayout
+            self._used_layouts[publication.get_layout_key()] = newUsedLayout
         self._p_changed = 1
 
-    def remove_layout(self, target):
-        layout_items = [id for id in self.layout_items(target) if hasattr(target.aq_base, id)]
-        target.manage_delObjects(layout_items)
+    def remove_layout(self, publication):
+        used_layout = self.get_used_layout(publication)
+        if used_layout:
+            if used_layout.copied:
+                layout_ids = [id for id in self.layout_ids(publication) if hasattr(publication.aq_base, id)]
+                publication.manage_delObjects(layout_ids)
 
-        del self._used_layouts[target.get_layout_key()]
-        self._p_changed = 1
-
-        target.set_layout_key(None)
+            del self._used_layouts[publication.get_layout_key()]
+            self._p_changed = 1
+            publication.set_layout_key(None)
         
     def _get_unique_layout_key(self):
         unique = str(whrandom.random())
@@ -153,23 +154,52 @@ class LayoutService(SimpleItem.SimpleItem):
     def has_layout(self, publication):
         return self._used_layouts.has_key(publication.get_layout_key())
 
+    def get_layout_name(self, publication):
+        used_layout = self.get_used_layout(publication)
+        if used_layout: 
+            return used_layout.name
+        else:
+            return ''
+
+    def get_used_layout(self, publication):
+        if self.has_layout(publication):
+            return self._used_layouts[publication.get_layout_key()]
+        else:
+            return None
+
+    def get_layout_folder(self, publication):
+        if self.has_layout(publication):
+            if not self.layout_copied(publication):
+                layout_name = self.get_layout_name(publication)
+                return layoutRegistry.get_layout_folder(self.get_root(), layout_name)
+            else:
+                return publication
+        else:
+            return None
+
+    def layout_copied(self, publication):
+        used_layout = self.get_used_layout(publication)
+        if used_layout: 
+            return used_layout.copied
+        else:
+            return 0
+
     def layout_items(self, publication):
-        usedLayout = self._used_layouts.get(publication.get_layout_key(), None)
-        if usedLayout is None:
+        used_layout = self.get_used_layout(publication)
+        if used_layout is None:
             return []
         else:
-            return usedLayout.get_items()
+            return layoutRegistry.layout_ids(self.get_root(), used_layout.name)
 
-class usedLayout:
-    def __init__(self, name):
-        self.name = name
-        self.items = []
+    def copy_layout(self, publication):
+        layout_name = self.get_layout_name(publication)
+        layoutRegistry.copy_layout(self.get_root(), layout_name, publication)        
+        used_layout = self.get_used_layout(publication)
+        used_layout.copied = 1
+        self._p_changed = 1
 
-    def set_items(self, items):
-        self.items = items
-
-    def get_items(self):
-        return self.items
+    def layout_ids(self, publication):
+        return self.layout_items(publication)
     
 InitializeClass(LayoutService)
 

@@ -12,9 +12,14 @@ except FormValidationError, e:
     return view.tab_metadata(message_type="error",
         message=view.render_form_errors(e))
 
-model.set_layout(result['layout'])
+layout_name = result['layout']
+model.set_layout(layout_name)
+if layout_name:
+    message='Layout saved'
+else:
+    message='no more layout'
 
 return view.tab_metadata(
     form_errors={},
     message_type='feedback',
-    message='Layout saved')
+    message=message)
