@@ -1,15 +1,7 @@
-<html tal:omit-tag=""
-  tal:define="
-    global view here;
-    global lastclass string:whatever;
-    global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
-    global root_url here/get_root;
-    global format options/format | python: None;
-    global userid view/REQUEST/AUTHENTICATED_USER;
-    global queue view/service_docma/get_queue;
-    global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid), format=format);
-    global processingident view/service_docma/get_processing_ident;
-">
+<html tal:omit-tag="">
+
+<metal:block define-macro="listings"
+  tal:define="finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid), format=format);">
 
 <span tal:replace="nothing">
   _____________________ running job feedback _____________________
@@ -35,7 +27,7 @@
     <thead>
       <tr class="top-controls">
         <td colspan="5">
-          <a class="button"
+          <a class="navigation"
             style="float: right;"
             href="#"
             title="reload to update the queue lists: alt-r"
@@ -57,7 +49,7 @@
       <tal:block condition="nothing">
         ______________ docma queue ______________
       </tal:block>
-      <tr tal:condition="python: len(queue) != 0">
+      <tr tal:condition="qls">
         <th class="align-right"
           width="4%"
           i18n:translate="job_id">
@@ -108,7 +100,7 @@
       </tal:repeat>
 
       <tr class="even"
-        tal:condition="python: len(queue) == 0">
+        tal:condition="not: qls">
         <td colspan="5"
           i18n:translate="no_jobs_in_queue">
           There are no jobs in the queue
@@ -174,8 +166,9 @@
 
       <tal:repeat repeat="job finished_jobs">
         <tr tal:define="iterate repeat/job/odd;"
+          tal:condition="python: format == job.format"
           tal:attributes="class python: iterate and 'odd' or 'even'">
-          <td style="white-space:nowrap;">
+          <td class="listing-left">
             <input name="storageids:list"
               type="checkbox"
               tal:attributes="value python: '%s|%s' % (job.id, job.format)" />
@@ -208,19 +201,25 @@
     </tbody>
 
     <tfoot>
+      <tal:block replace="nothing">
+        ______________ select all row ______________
+      </tal:block>
+      <tr tal:condition="ls">
+        <th class="controls listing-left"
+          colspan="6">
+          <metal:block use-macro="view/macro_select_all/macros/select_all"/>
+        </th>
+      </tr>
+
       <tr class="controls">
         <td class="align-right"
           colspan="4">
           <tal:condition condition="ls">
-            <script type="text/javascript">
-            <!-- if (document.forms[0])
-            {
-              document.write('<input class="button" style="float:left" type="submit" value="select all" name="selectButton" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false" i18n:attributes="value title">');
-            }
-          // -->
-
-            </script>
-            <div notal:condition="may_change_content">
+            <span replace="nothing">
+              <!-- controls are for the import screen, slot is only used in export -->
+            </span>
+            <div notal:condition="may_change_content"
+              metal:define-slot="manipulators">
               <input class="warning"
                 accesskey="x"
                 name="tab_edit_import_delete:method"
@@ -228,7 +227,7 @@
                 title="there's no undo: alt-x"
                 type="submit"
                 value="remove" 
-                i18n:attributes="onClick value title"/>
+                i18n:attributes="onClick value title" />
               <input class="button"
                 accesskey="m"
                 name="tab_edit_import_import_and_delete:method"
@@ -251,27 +250,6 @@
   </table>
 </form>
 
-<script type="text/javascript">
-<!-- isSelected = false;
-
-  function toggleSelect() {
-    if (isSelected == false) {
-      for (i = 0; i < document.finishedJobQueue.length; i++)
-        document.finishedJobQueue.elements[i].checked = true ;
-      isSelected = true;
-      document.finishedJobQueue.selectButton.value = "Deselect all";
-      return isSelected;
-    }
-    else {
-      for (i = 0; i < document.finishedJobQueue.length; i++)
-        document.finishedJobQueue.elements[i].checked = false ;
-      isSelected = false;
-      document.finishedJobQueue.selectButton.value = "Select all";
-      return isSelected;
-    }
-  }
-  // -->
-
-</script>
+</metal:block>
 
 </html>

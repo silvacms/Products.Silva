@@ -13,9 +13,7 @@
     global active_tab string:tab_edit;
     global parent_screen_name string:Contents;
     global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
-    global lastclass string:even;
     global silva_permissions here/get_silva_permissions;
-    global userid view/REQUEST/AUTHENTICATED_USER;
 ">
 
 <metal:block use-macro="here/macro_index/macros/master">
@@ -140,18 +138,17 @@
   </form>
 
 
+<span tal:replace="nothing">
+  ____________________________ docma facilities ____________________________
+</span>
+
 <tal:condition condition="docma_running">
 
-<div class="feedback"
- tal:define="
-   global queue view/service_docma/get_queue;
-   global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid));
-   global processingident view/service_docma/get_processing_ident;"
- tal:condition="python: processingident != 0">
- <span i18n:translate="current_job">Current&nbsp;job</span>: <span tal:replace="processingident" /><br />
- <span i18n:translate="owner">Owner</span>: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /><br />
- <span i18n:translate="description">Description</span>: <span tal:replace="python: view.service_docma.get_ident_description(processingident)" />
-</div>
+<tal:define define="
+  global userid view/REQUEST/AUTHENTICATED_USER;
+  global queue view/service_docma/get_queue;
+  global qls python:len(queue) != 0;
+  global processingident view/service_docma/get_processing_ident;" />
 
 <form action="." enctype="multipart/form-data" method="POST">
   <table class="listing sublisting">
@@ -265,9 +262,16 @@
 </form>
 
 <span tal:replace="nothing">
-  _____________________ docma queue + processing table + finished jobs _____________________
+  _____________________ docma queue: processing list + finished jobs _____________________
 </span>
-<tal:replace replace="structure python:here.docma_queue(format='silva', refresh_page='tab_edit_import')" />
+<tal:define define="
+    global format string:silva;
+    global refresh_page string:tab_edit_import;
+">
+<metal:use-macro use-macro="here/docma_queue/macros/listings">
+
+</metal:use-macro>
+</tal:define>
 
 </tal:condition>
 
