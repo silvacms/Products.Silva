@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.1.3
+  Valid for:  Silva 0.9.1.4
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26.2.5 $
+  CVS:        $Revision: 1.26.2.6 $
 
 Installing Silva
 
@@ -46,7 +46,7 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.9.1.3)
+    Silva (0.9.1.4)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some basic
@@ -60,7 +60,7 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.9.1.3.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.3.tgz
+        "Silva-0.9.1.4.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.4.tgz
   
     XMLWidgets (0.8.4)
 
