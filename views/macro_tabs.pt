@@ -114,7 +114,12 @@
           title string:up to top of publication: alt-${top_key};
           accesskey top_key;
           ">
-        <img tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url" />
+        <img border="0"
+           height="9"
+           width="9"
+           alt="/\"
+           tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url"
+        />
       </a>
       <a class=""
         href=""
@@ -133,7 +138,12 @@
           title string:up a level: alt-${up_key};
           accesskey up_key;
           ">
-        <img tal:replace="structure here/globals/up_level.gif" />
+        <img border="0"
+           height="9"
+           width="9"
+           alt="^"
+           tal:attributes="src python: '%s/globals/up_level.gif' % root_url"
+        />
       </a>
       <div class="air"> </div>
     </tal:define>
