@@ -169,7 +169,15 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'allow_authentication_requests')
     def allow_authentication_requests(self):
-        return self._allow_authentication_requests 
+        """Returns whether authentication requests are allowed"""
+        if hasattr(self, '_allow_subscription'):
+            self._allow_authentication_requests = self._allow_subscription
+            del self._allow_subscription
+        return self._allow_authentication_requests
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'allow_subscription')
+    allow_subscription = allow_authentication_requests
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_allow_authentication_requests')
@@ -191,6 +199,10 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         directory (so including the escaped productname!!)
         """
         return None
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_subscription_url')
+    get_subscription_url = get_authentication_requests_url
 
 Globals.InitializeClass(SimpleMemberService)
 
