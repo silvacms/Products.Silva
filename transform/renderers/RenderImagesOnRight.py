@@ -5,9 +5,9 @@ import os
 from Globals import InitializeClass
 
 # Silva
-from Products.Silva.transform.renderers.GenericXSLTRenderer import GenericXSLTRenderer
+from Products.Silva.transform.renderers.XSLTRendererBase import XSLTRendererBase
 
-class RenderImagesOnRight(GenericXSLTRenderer):
+class RenderImagesOnRight(XSLTRendererBase):
     def __init__(self):
         self._name = 'Images on Right'
         self._stylesheet = os.path.join(

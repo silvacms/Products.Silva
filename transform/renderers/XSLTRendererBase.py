@@ -12,7 +12,7 @@ import Acquisition
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.adapters import xmlsource
 
-class GenericXSLTRenderer(Acquisition.Implicit):
+class XSLTRendererBase(Acquisition.Implicit):
 
     __implements__ = IRenderer
 
@@ -48,4 +48,4 @@ class GenericXSLTRenderer(Acquisition.Implicit):
     def getName(self):
         return self._name
 
-InitializeClass(GenericXSLTRenderer)
+InitializeClass(XSLTRendererBase)
