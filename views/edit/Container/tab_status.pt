@@ -147,7 +147,7 @@
                   </i>
                   <tal:block replace="title"  />
                   <tal:block condition="python:title == ''">
-                    <i>no title</i>
+                    <i tal:content="obj/id">id</i>
                   </tal:block>
               </a>
             </div>
