@@ -12,22 +12,27 @@ User perspective
 This section will describe how to use the functionality.
 
 Layouts are packaged as Zope products. They are made of Page templates, CSS
-images on the file system. By installing a product containing
-layout packages, those packages get registered in Silva. They are then available to be installed. Before being installed, a layout package cannot be used inside Silva.
+images on the file system. By installing a product containing layout packages,
+those packages get registered in Silva. They are then available to be
+installed. Before being installed, a layout package cannot be used inside
+Silva.
 
 To install one of those packages in a Silva root, you need to use the ZMI for
-the root, access the ``Services`` tab, and access the ``service_layouts``. Over there, registered layouts are listed and you can install (or uninstall) each of them for the root you are in.
+the root, access the ``Services`` tab, and access the ``service_layouts``.
+Over there, registered layouts are listed and you can install (or uninstall)
+each of them for the root you are in.
 
 When at least one layout package has been installed, a layout section appears
 in the properties tab of the SMI of publications. Over there, you can select
-one of the packages as the layout of the public view for the content of the publication. 
+one of the packages as the layout of the public view for the content of the
+publication.
 
 When one of those package is selected for a publication, you get a
-supplementary button in the layout section of the SMI. This button
-allows you to customize the layout. What it actually does is to copy the
-elements of the layout package (HTML through ZPT, CSS, images...) inside the
-publication itself. This way, you can modify those elements by accessing them
-through the ZMI. 
+supplementary button in the layout section of the SMI. This button allows you
+to customize the layout. What it actually does is to copy the elements of the
+layout package (HTML through ZPT, CSS, images...) inside the publication
+itself. This way, you can modify those elements by accessing them through the
+ZMI.
 
 Developer perspective
 +++++++++++++++++++++
@@ -68,7 +73,7 @@ directory of the package (ie ``content.html.pt``).
 
 The Silva contents are passed to the template through the ``options/model``
 variable. What this implies for the template developer is that the title of
-the data will be accessible through ``options/model/title`` and not through 
+the data will be accessible through ``options/model/title`` and not through
 ``here/title`` as usual in standard Zope. A recommended practice is thus to
 define a top variable : ``tal:define="model options/model"``. This allows the
 use of the shorter ``model/title`` in place of ``options/model/title``.
