@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.116 $
+# $Revision: 1.117 $
 
 import ContainerPolicy
 
@@ -29,6 +29,7 @@ def initialize(context):
     import install
     import helpers # to execute the module_permission statements
     import mangle, batch
+    from Products.Silva.ImporterRegistry import importer_registry
     from Products.Silva.ExtensionRegistry import extensionRegistry
     import ExtensionService
     from LayoutRegistry import layoutRegistry
@@ -120,7 +121,22 @@ def initialize(context):
         constructors = (ContainerPolicy.manage_addContainerPolicyRegistry, ),
         icon = "www/containerpolicy_service.png"
         )
-        
+
+    
+    # register xml import functions (old style XML importer)	 
+    # we let the xml import functionality of Publication handle any 	 
+    # root elements, since a Silva instance can not import another root
+    importer_registry.register_tag('silva_root', 	 
+                                   Publication.xml_import_handler)
+    importer_registry.register_tag('silva_publication', 	 
+                                   Publication.xml_import_handler) 	 
+    importer_registry.register_tag('silva_folder', 	 
+                                   Folder.xml_import_handler) 	 
+    importer_registry.register_tag('silva_ghostfolder', 	 
+                                   GhostFolder.xml_import_handler) 	 
+    importer_registry.register_tag('silva_link', 	 
+                                   Link.xml_import_handler)
+    
     # register the FileSystemSite directories
     registerDirectory('views', globals())
     registerDirectory('resources', globals())

@@ -343,19 +343,22 @@ class ContainerTestCase(ContainerBaseTestCase):
         xml1 = """<?xml version="1.0" ?><silva><silva_publication id="test"><title>TestPub</title><silva_document id="index"><title>TestPub</title><doc><p>Content</p></doc></silva_document></silva_publication></silva>"""
         xml2 = '<silva><silva_folder id="test2"><title>TestFolder</title></silva_folder></silva>' % DateTime('2002/10/16')
 
-        self.root.xml_import(xml1)
-        self.assert_(hasattr(self.root, 'test'))
-        self.assertEquals(self.root.test.get_title_editable(), 'TestPub')
-        self.assert_(hasattr(self.root.test, 'index'))
-        self.assertEquals(self.root.test.index.get_title_editable(), 'TestPub')
-        self.assert_(str(self.root.test.index.get_editable().content.documentElement) == '<doc><p>Content</p></doc>')
+        self.root.manage_addProduct['Silva'].manage_addFolder('test_folder', 'Test Folder')
+        folder = self.root.test_folder
+        folder.xml_import(xml1)
 
-        self.root.xml_import(xml2)
+        self.assert_(hasattr(folder, 'test'))
+        self.assertEquals(folder.test.get_title_editable(), 'TestPub')
+        self.assert_(hasattr(folder.test, 'index'))
+        self.assertEquals(folder.test.index.get_title_editable(), 'TestPub')
+        self.assert_(str(folder.test.index.get_editable().content.documentElement) == '<doc><p>Content</p></doc>')
 
-        self.assert_(hasattr(self.root, 'test2'))
+        folder.xml_import(xml2)
+
+        self.assert_(hasattr(folder, 'test2'))
 
         # XXX no title available as no index object in this import..
-        #self.assertEquals(self.sroot.test2.get_title_editable(), 'TestFolder')
+        #self.assertEquals(folder.test2.get_title_editable(), 'TestFolder')
 
 # XXX addable system was adjusted in 0.9.3, need to rewrite
 # tests to take the new system (using service_extensions) into account
