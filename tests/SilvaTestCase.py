@@ -92,14 +92,19 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''
         self._clear()
         self.beforeSetUp()
-        self.app = self._app()
-        self.silva = self.root = self.getRoot()
-        self.catalog = self.silva.service_catalog
-        if self._configure_root:
-            self._setupRootUser()
-            self.login()
-            self.app.REQUEST.AUTHENTICATED_USER=self.app.acl_users.getUser(ZopeTestCase._user_name)
-        self.afterSetUp()
+        try:
+            self.app = self._app()
+            self.silva = self.root = self.getRoot()
+            self.catalog = self.silva.service_catalog
+            if self._configure_root:
+                self._setupRootUser()
+                self.login()
+                self.app.REQUEST.AUTHENTICATED_USER=\
+                         self.app.acl_users.getUser(ZopeTestCase._user_name)
+            self.afterSetUp()
+        except:
+            self.beforeClose()
+            raise
 
     def tearDown(self):
         '''Tears down the fixture. Do not override, 
