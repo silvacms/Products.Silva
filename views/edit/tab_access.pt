@@ -127,7 +127,7 @@
                 tal:condition="not:members">
                 <td colspan="3">
                   <i i18n:translate="no_users_with_local_roles">
-                    No users with local roles
+                    No users with local roles are defined here.
                   </i>
                 </td>
               </tr>
