@@ -11,14 +11,20 @@ class SimpleMember(SimpleItem.SimpleItem):
 
     security = ClassSecurityInfo()
 
+    meta_type = 'Silva Simple Member'
+    
     def __init__(self, id):
         self.id = id
         self._fullname = None
         self._email = None
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_fullname')
     def set_fullname(self, fullname):
         self._fullname = fullname
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_email')
     def set_email(self, email):
         self._email = email
         
@@ -61,6 +67,8 @@ class SimpleMemberService(SimpleItem.SimpleItem):
 
     security = ClassSecurityInfo()
 
+    meta_type = 'Silva Simple Member Service'
+    
     def __init__(self, id):
         self.id = id
         

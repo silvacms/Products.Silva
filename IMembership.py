@@ -39,3 +39,7 @@ class IMemberMessageService(Base):
         """
         
     
+# there is also expected to be a 'Members' object that is traversable
+# to a Member object. Users can then modify information in the member
+# object (if they have the permissions to do so, but the user associated
+# with the member should do so)
