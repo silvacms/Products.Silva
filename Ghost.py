@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.84 $
+# $Revision: 1.85 $
 
 # Zope
 from OFS import SimpleItem
@@ -22,8 +22,6 @@ from interfaces import \
     IVersionedContent, IContainer, IVersion, IContent, IGhost, \
     IGhostContent, IIcon
     
-from Products.Silva.i18n import translate as _
-
 icon = "www/silvaghost.gif"
 
 class GhostBase:
@@ -214,7 +212,7 @@ class GhostBase:
             self.REQUEST.set('ghost_model', self.aq_inner)
             return content.view()
         else:
-            raise _("Unauthorized")
+            raise "Unauthorized"
 
 
 class Ghost(CatalogedVersionedContent):

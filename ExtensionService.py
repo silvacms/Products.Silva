@@ -1,7 +1,7 @@
 
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -13,8 +13,6 @@ from helpers import add_and_edit
 import SilvaPermissions
 from ExtensionRegistry import extensionRegistry
 import install
-
-from Products.Silva.i18n import translate as _
 
 class ExtensionService(SimpleItem.SimpleItem):
     meta_type = 'Silva Extension Service'
@@ -79,7 +77,7 @@ class ExtensionService(SimpleItem.SimpleItem):
             self.refresh(name)
         if REQUEST:
             return self.manage_main(manage_tabs_message=
-                _('Silva and all installed extensions have been refreshed'))
+                'Silva and all installed extensions have been refreshed')
                 
     security.declareProtected('View management screens', 'refresh_caches')
     def refresh_caches(self):        
@@ -93,7 +91,7 @@ class ExtensionService(SimpleItem.SimpleItem):
         """
         self.get_root().upgrade_silva()
         return self.manage_main(manage_tabs_message=
-            _("Content upgrade succeeded. See event log for details."))
+            "Content upgrade succeeded. See event log for details.")
     
     security.declareProtected('View management screens', 'install_layout')
     def install_layout(self):
@@ -103,7 +101,7 @@ class ExtensionService(SimpleItem.SimpleItem):
         install.configureLayout(root, 1)
         install.configure_default_layout_package(root)
         return self.manage_main(manage_tabs_message=
-                    _('Default layout code installed'))
+                    'Default layout code installed')
             
     # ACCESSORS
 

@@ -4,8 +4,6 @@ import SilvaPermissions
 
 from interfaces import IAccessManager
 
-from Products.Silva.i18n import translate as _
-
 class AccessManager:
     """Mixin class for objects to request local roles on the object"""
 
@@ -26,26 +24,9 @@ class AccessManager:
         # search for the username of the first chief-editor for this object
         ces = self.sec_get_nearest_of_role('ChiefEditor')
         if not ces:
-            raise Exception, _('Sorry, no ChiefEditors are available to receive the request.')
+            raise Exception, 'Sorry, no ChiefEditors are available to receive the request.'
         for role in roles:
             for ce in ces:
-                # XXX i18n - I'm really not sure if we want to translate this, 
-                # since it would mean the ChiefEditor would get emails in the 
-                # language the *client* is using...
-                """
-                message = _(('\'${userid}\' has requested the ${role} role at '
-                                'this location:\n${absolute_url}.\n\n'
-                                'Go to ${absolute_url}/edit/tab_access\n'
-                                'to process the request.'))
-                message.set_mapping({'userid': userid,
-                                        'role': role,
-                                        'absolute_url': 
-                                            self.aq_inner.absolute_url()
-                                    })
-                self.service_messages.send_message(userid, ce, _('Access request'), message)
-                """
-                # XXX i18n - this is the original code, remove the quotes above and remove the
-                # two lines below
                 message = '\'%s\' has requested the %s role at this location:\n%s.\n\nGo to %s/edit/tab_access\nto process the request.' % (userid, role, self.aq_inner.absolute_url(), self.aq_inner.absolute_url())
                 self.service_messages.send_message(userid, ce, 'Access request', message)
                 
@@ -57,7 +38,7 @@ class AccessManager:
         """Allows the role and send an e-mail to the user"""
         member = self.service_members.get_member(userid)
         if not member.is_approved():
-            raise Exception, _('Member is not approved')
+            raise Exception, 'Member is not approved'
         self._allow_role_helper(userid, role)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
@@ -73,20 +54,8 @@ class AccessManager:
         self._requested_roles.remove((userid, role))
         ces = self.sec_get_nearest_of_role('ChiefEditor')
         if not ces:
-            raise Exception, _('No ChiefEditors are available to receive the request.')
+            raise Exception, 'No ChiefEditors are available to receive the request.'
         for ce in ces:
-            # XXX i18n - this has the same problems as the part above, not
-            # sure if we should translate this...
-            """
-            message = _(('The ${role} has been assigned to you at this '
-                            'location:\n${location}\nGet to work.'))
-            message.set_mapping({'role': role,
-                                    'location': self.aq_inner.absolute_url()})
-            self.service_messages.send_message(ce, userid, _('Access granted'), message)
-            """
-                                    
-            # XXX i18n - uncomment the part above and remove the line below to
-            # have i18n'ed emails sent out
             self.service_messages.send_message(ce, userid, 'Access granted', 'The %s role has been assigned to you at this location:\n%s\nGet to work.' % (role, self.aq_inner.absolute_url()))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
@@ -95,10 +64,8 @@ class AccessManager:
         """Denies the role and send an e-mail to the user"""
         ces = self.sec_get_nearest_of_role('ChiefEditor')
         if not ces:
-            raise Exception, _('No ChiefEditors are available to receive the request.')
+            raise Exception, 'No ChiefEditors are available to receive the request.'
         for ce in ces:
-            # XXX i18n - see above, perhaps we want to translate this too,
-            # but I'm far from sure...
             self.service_messages.send_message(ce, userid, 'Access denied', 'The %s role has been denied for this location:\n %s\nYou can appeal.' % (role, self.aq_inner.absolute_url()))
         self._requested_roles.remove((userid, role))
 
@@ -138,7 +105,7 @@ class AccessManager:
     def add_user(self, userid, password):
         """Adds the user to the userfolder. Note that the user will not get a memberobject using this method"""
         if not hasattr(self, 'service_members') or not self.service_members.allow_authentication_requests():
-            raise Exception, _('Requests for authentication to this site are not allowed.')
+            raise Exception, 'Requests for authentication to this site are not allowed.'
 
         userfolder = self.acl_users.aq_inner
         userfolder.userFolderAddUser(userid, password, [], [])

@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: IPGroup.py,v 1.4 2004/11/25 15:33:26 guido Exp $
+# $Id: IPGroup.py,v 1.5 2004/11/29 12:50:52 guido Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -15,8 +15,6 @@ from helpers import add_and_edit
 from interfaces import ISilvaObject
 
 icon = "www/ip_group.png"
-
-from Products.Silva.i18n import translate as _
 
 class IPGroup(SilvaObject, SimpleItem):
     """Silva IP Group"""
@@ -59,7 +57,7 @@ class IPGroup(SilvaObject, SimpleItem):
     def addIPRange(self, iprange):
         """add a group to the ip group"""
         if not self.isValid():
-            raise Unauthorized, _("Zombie group asset")
+            raise Unauthorized, "Zombie group asset"
         gs = self.service_groups
         iprange = gs.createIPRange(iprange)
         gs.addIPRangeToIPGroup(iprange, self._group_name)
@@ -87,7 +85,7 @@ class IPGroup(SilvaObject, SimpleItem):
     def removeIPRange(self, iprange):
         """removes a group from the vgroup"""
         if not self.isValid():
-            raise Unauthorized, _("Zombie group asset")
+            raise Unauthorized, "Zombie group asset"
         gs = self.service_groups
         iprange = gs.createIPRange(iprange)
         gs.removeIPRangeFromIPGroup(iprange, self._group_name)
@@ -98,7 +96,7 @@ class IPGroup(SilvaObject, SimpleItem):
     def listIPRanges(self):
         """list ip ranges in ipgroups """
         if not self.isValid():
-            raise Unauthorized, _("Zombie group asset")
+            raise Unauthorized, "Zombie group asset"
         result = self.service_groups.listIPRangesInIPGroup(self._group_name)
         result.sort()
         return result
@@ -116,9 +114,9 @@ def manage_addIPGroup(self, id, title, group_name, asset_only=0,
         if not mangle.Id(self, id).isValid():
             return
         if not hasattr(self, 'service_groups'):
-            raise AttributeError, _("There is no service_groups")
+            raise AttributeError, "There is no service_groups"
         if self.service_groups.isGroup(group_name):
-            raise ValueError, _("There is already a group of that name.")
+            raise ValueError, "There is already a group of that name."
     object = IPGroup(id, title, group_name)
     self._setObject(id, object)
     object = getattr(self, id)

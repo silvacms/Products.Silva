@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.32 2004/11/19 18:19:49 guido Exp $
+# $Id: GhostFolder.py,v 1.33 2004/11/29 12:50:52 guido Exp $
 
 from __future__ import nested_scopes
 
@@ -25,8 +25,6 @@ from Products.Silva.interfaces import \
     IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
     IPublication, ISilvaObject, IGhostFolder, IIcon, IGhostContent
     
-from Products.Silva.i18n import translate as _
-
 icon = 'www/silvaghostfolder.gif'
 
 class Sync:
@@ -53,10 +51,10 @@ class Sync:
         pass
 
     def _do_update(self):
-        raise NotImplementedError, _("implemented in subclasses")
+        raise NotImplementedError, "implemented in subclasses"
 
     def _do_create(self):
-        raise NotImplementedError, _("implemented in subclasses")
+        raise NotImplementedError, "implemented in subclasses"
 
     def __repr__(self):
         return "<%s %s.%s -> %s.%s>" % (
@@ -212,9 +210,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                 g_ob_new = uc.update()
                 break
             
-            msg = _("no updater was called for ${info_tuple}") 
-            msg.set_mapping({'info_tuple': 
-                repr(((self, h_container, h_ob, g_container, g_ob), ))})
+            msg = "no updater was called for %r" % ((self, h_container, h_ob, g_container, g_ob), )
             assert g_ob_new is not None, msg
             if IContainer.isImplementedBy(h_ob):
                 object_list.extend(self._haunt_diff(h_ob, g_ob_new))
@@ -410,8 +406,7 @@ def xml_import_handler(object, node):
 
     def _get_content_url(node):
         content_url = node.attributes.getNamedItem('content_url').nodeValue
-        msg = _("got ${url}, expected a unicode")
-        msg.set_mapping({'url': content_url})
+        msg = "got %s, expected a unicode" % content_url
         assert type(content_url) == type(u''), msg
         return content_url.encode('us-ascii', 'ignore')
     

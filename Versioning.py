@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.48 $
+# $Revision: 1.49 $
 
 # Zope
 from DateTime import DateTime
@@ -91,17 +91,17 @@ class Versioning:
         self._update_publication_status()
         if self._unapproved_version == empty_version:
             raise VersioningError,\
-                  _('There is no unapproved version to approve.')
+                  'There is no unapproved version to approve.'
         if self._approved_version != empty_version:
             raise VersioningError,\
-                  _('There already is an approved version.')
+                  'There already is an approved version.'
         if self._unapproved_version[1] is None:
             raise VersioningError,\
-                  _('Cannot approve version without publication datetime.')
+                  'Cannot approve version without publication datetime.'
         if IPublishable.isImplementedBy(self):
             if not self.can_approve():
                 raise VersioningError,\
-                      _('Cannot approve version; not allowed.')
+                      'Cannot approve version; not allowed.'
         # turn any publication dates in the past into now
         # this is to avoid odd caching behavior
         if not self._unapproved_version[1].isFuture():
@@ -160,10 +160,11 @@ class Versioning:
             raise VersioningError,\
                   _('No approved version to unapprove.')
         if self._unapproved_version != empty_version:
-            raise VersioningError,\
-                  ('Should never happen: unapproved version %s found while '
-                   'approved version %s exists at the same time.') % \
-                   (self._unapproved_version[0], self._approved_version[0])
+            msg = _(('Should never happen: unapproved version ${unapproved} found while '
+                   'approved version ${approved} exists at the same time.'))
+            msg.set_mapping({'unapproved': self._unapproved_version[0], 
+                                'approved': self._approved_version[0]})
+            raise VersioningError, msg
         self._unapproved_version = self._approved_version
         self._approved_version = empty_version
         self._reindex_version(self._unapproved_version[0])
@@ -213,7 +214,7 @@ class Versioning:
             # there is no old version left!
             if version_id_to_copy is None:
                 # FIXME: could create new empty version..
-                raise  VersioningError, _("Should never happen!")
+                raise  VersioningError, "Should never happen!"
         # copy published version
         new_version_id = str(self._version_count)
         self._version_count = self._version_count + 1
@@ -234,7 +235,7 @@ class Versioning:
         version_id_to_copy = (self.get_public_version() or
                               self.get_last_closed_version())
         if version_id_to_copy is None:
-            raise VersioningError, _("Should never happen!")
+            raise VersioningError, "Should never happen!"
         # get the id of the current version
         current_version_id = self.get_unapproved_version()
         if current_version_id is None:

@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 
 # Python
 from bisect import insort_right
@@ -15,8 +15,6 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.interfaces import IContainerPolicy, IContainer
-
-from Products.Silva.i18n import translate as _
 
 # XXX: can these "helper" classes for ordering be refactored in something
 # more generic? See also ExtensionRegistry.Addable.
@@ -64,9 +62,9 @@ class ContainerPolicyRegistry(SimpleItem):
         """register policy
 
         Policy should be the container policy class."""
-        msg = _(('The object ${policy} does not implement IContainerPolicy, '
-                    'try restarting Zope.'))
-        msg.set_mapping({'policy': repr(policy)})
+        msg = ('The object %(policy) does not implement IContainerPolicy, '
+                    'try restarting Zope.')
+        msg = msg % {'policy': repr(policy)}
         assert IContainerPolicy.isImplementedByInstancesOf(policy), msg
         self._policies[name] = (policy(), priority)
         self._p_changed = 1

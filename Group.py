@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -18,8 +18,6 @@ except ImportError, ie:
     pass
 
 from interfaces import ISilvaObject
-
-from Products.Silva.i18n import translate as _
 
 icon = "www/group.png"
 
@@ -77,7 +75,7 @@ class Group(SilvaObject, SimpleItem):
     def addUser(self, userid):
         """adds user with given userid to group"""
         if not self.isValid():
-            raise Unauthorized, _("Zombie group asset")
+            raise Unauthorized, "Zombie group asset"
         self.service_groups.addUserToZODBGroup(userid, self._group_name)
 
     security.declareProtected(
@@ -85,7 +83,7 @@ class Group(SilvaObject, SimpleItem):
     def copyUsersFromGroups(self, groups):
         """copy users from other groups to this group"""
         if not self.isValid():
-            raise Unauthorized, _("Zombie group asset")
+            raise Unauthorized, "Zombie group asset"
         return self._copyUsersFromGroupsHelper(groups)
 
     def _copyUsersFromGroupsHelper(self, groups):
@@ -108,7 +106,7 @@ class Group(SilvaObject, SimpleItem):
     def removeUser(self, userid):
         """removes user with given userid from group"""
         if not self.isValid():
-            raise Unauthorized, _("Zombie group asset")
+            raise Unauthorized, "Zombie group asset"
         self.service_groups.removeUserFromZODBGroup(userid, self._group_name)
 
     # ACCESSORS    
@@ -117,7 +115,7 @@ class Group(SilvaObject, SimpleItem):
     def listUsers(self):
         """ returns a (sorted) list of users in this group""" 
         if not self.isValid():
-            raise Unauthorized, _("Zombie group asset")
+            raise Unauthorized, "Zombie group asset"
         result = self.service_groups.listUsersInZODBGroup(self._group_name)
         result.sort()
         return result
@@ -133,9 +131,9 @@ def manage_addGroup(self, id, title, group_name, asset_only=0, REQUEST=None):
             return
         # these checks should also be repeated in the UI
         if not hasattr(self, 'service_groups'):
-            raise AttributeError, _("There is no service_groups")
+            raise AttributeError, "There is no service_groups"
         if self.service_groups.isGroup(group_name):
-            raise ValueError, _("There is already a group of that name.")
+            raise ValueError, "There is already a group of that name."
     object = Group(id, title, group_name)
     self._setObject(id, object)
     object = getattr(self, id)

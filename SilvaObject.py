@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.107 2004/11/25 16:55:02 guido Exp $
+# $Id: SilvaObject.py,v 1.108 2004/11/29 12:50:52 guido Exp $
 
 # python
 from types import StringType
@@ -326,8 +326,7 @@ class SilvaObject(Security, ViewCode):
         try:
             view = self.service_view_registry.get_view(view_type, version.meta_type)
         except KeyError:
-            msg = _('no ${view_type} view defined')
-            msg.set_mapping({'view_type': view_type})
+            msg = 'no %s view defined' % view_type
             raise NoViewError, msg
         else:
             return view.render()

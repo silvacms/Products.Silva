@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.161 $
+# $Revision: 1.162 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -939,7 +939,7 @@ def xml_import_handler(object, node, factory=None):
     id = str(mangle.Id(object, id).unique())
     if factory is None:
         factory = default_factory
-    assert callable(factory), _("Factory is not callable")
+    assert callable(factory), "Factory is not callable"
     factory(object, id, title)
     newfolder = getattr(object, id)
     for child in node.childNodes:

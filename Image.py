@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.57 2004/11/25 15:33:26 guido Exp $
+# $Id: Image.py,v 1.58 2004/11/29 12:50:52 guido Exp $
 
 # Python
 import re, string
@@ -341,8 +341,8 @@ class Image(Asset):
             image = OFS.Image.Image(
                 'custom_image', self.get_title(), image_data)
         elif not hires and not webformat:
-            raise ValueError, _(("Low resolution image in original format is "
-                                    "not supported"))
+            raise ValueError, ("Low resolution image in original format is "
+                                    "not supported")
         if REQUEST is not None:
             return self._image_index_html(image, REQUEST, REQUEST.RESPONSE)
         else:
@@ -419,6 +419,8 @@ class Image(Asset):
     def getOrientation(self):
         """ returns Image orientation (string) """
         width, height = self.getDimensions()
+        # XXX i18n - are we sure this is only displayed, and not used as a
+        # classname or anything?
         if width == height:
             return _("square")
         elif width > height:
@@ -466,7 +468,7 @@ class Image(Asset):
             raise ValueError if image could not be identified
         """
         if not havePIL:
-            raise ValueError, _("No PIL installed.")
+            raise ValueError, "No PIL installed."
         if img is None:
             img = self.image
         image_reference = self._get_image_data(img)
@@ -576,7 +578,7 @@ class Image(Asset):
     def _useFSStorage(self):
         """return true if we should store images on the filesystem"""
         service_files = getattr(self, 'service_files', None)
-        msg = _('There is no service_files. Refresh your Silva root.')
+        msg = 'There is no service_files. Refresh your Silva root.'
         assert service_files is not None, msg
         if service_files.useFSStorage():
             return service_files.cookPath(service_files.filesystem_path())
@@ -633,7 +635,7 @@ class Image(Asset):
             data_handle.close()
             ct, w, h = OFS.Image.getImageInfo(data)
             if w <= 0 or h <= 0:
-                raise ValueError, _("Could not identify image type.")
+                raise ValueError, "Could not identify image type."
         return w, h
 
     def _get_image_data(self, img):
@@ -705,9 +707,7 @@ class ImageStorageConverter:
         elif image.meta_type == 'ExtImage':
             data = open(image.get_fsname(), 'rb')
         else:
-            msg = _('Invalid asset at ${url}')
-            msg.set_mapping({'url': asset.absolute_url()})
-            raise RuntimeError, msg
+            raise RuntimeError, 'Invalid asset at %s' % asset.absolute_url()
             ct = image.getContentType()
         asset._image_factory(id, data, ct)
 

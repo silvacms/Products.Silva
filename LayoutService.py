@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 
 # Zope
 from OFS import SimpleItem
@@ -16,8 +16,6 @@ import LayoutRegistry
 import install
 import whrandom
 import copy
-
-from Products.Silva.i18n import translate as _
 
 class LayoutService(SimpleItem.SimpleItem):
     meta_type = 'Silva Layout Service'
@@ -48,8 +46,7 @@ class LayoutService(SimpleItem.SimpleItem):
         """Install layout
         """
         layoutRegistry.install(self.get_root(), name)
-        msg = _("${name} installed")
-        msg.set_mapping({'name': name})
+        msg = "%s installed" % name
         return self.manage_main(manage_tabs_message=msg)
 
     security.declareProtected('View management screens', 'uninstall')
@@ -57,8 +54,7 @@ class LayoutService(SimpleItem.SimpleItem):
         """Uninstall extension
         """
         layoutRegistry.uninstall(self.get_root(), name)
-        msg = _("${name} uninstalled")
-        msg.set_mapping({'name': name})
+        msg = "%s uninstalled" % name
         return self.manage_main(manage_tabs_message=msg)
 
     security.declareProtected('View management screens', 'refresh')
@@ -69,8 +65,7 @@ class LayoutService(SimpleItem.SimpleItem):
         self.uninstall(name)
         self.install(name)
         self._refresh_datetime = DateTime()
-        msg = _("${name} refreshed")
-        msg.set_mapping({'name': name})
+        msg = "%s refreshed" % name
         return self.manage_main(manage_tabs_message=msg)
 
     security.declareProtected('View management screens', 'refresh_all')
@@ -79,7 +74,7 @@ class LayoutService(SimpleItem.SimpleItem):
         """
         for name in self.get_installed_names():
             self.refresh(name)
-        msg = _('All layouts have been refreshed')
+        msg = 'All layouts have been refreshed'
         return self.manage_main(manage_tabs_message=msg)
 
     # ACCESSORS
