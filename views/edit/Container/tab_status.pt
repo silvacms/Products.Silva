@@ -77,14 +77,14 @@
                   <th class="align-right">
                     Revision
                   </th>
-                  <th>
-                    Public version
-                  </th>
                   <th class="align-right">
                     Publication due
                   </th>
                   <th class="align-right">
                     Expiration due
+                  </th>
+                  <th>
+                    Public version
                   </th>
                 </tr>
                 <tal:block repeat="obj objects">
@@ -150,22 +150,6 @@
                       </a>
                     </td>
                     <tal:block replace="nothing">
-                      _______ public version cell _______
-                    </tal:block>
-                    <td style="white-space: nowrap;"
-                      tal:define="public_status obj/public_status | nothing">
-                      <a href="tab_status"
-                        title="public version"
-                        tal:attributes="href obj_url;"
-                        tal:omit-tag="python: public_status == 'closed'">
-                        <tal:block replace="public_status" />                                                
-                      </a>                                            
-                      <i
-                        tal:define="time obj/public_version_publication_datetime | nothing"
-                        tal:condition="time"
-                        tal:content="string:(${time})" />
-                    </td>
-                    <tal:block replace="nothing">
                       _______ publication datetime cell _______
                     </tal:block>
                     <td class="align-right"
@@ -176,8 +160,26 @@
                       _______ closing datetime cell _______
                     </tal:block>
                     <td class="align-right"
-                      tal:content="structure obj/public_version_expiration_datetime | nothing">
+                      tal:content="structure obj/next_version_expiration_datetime | nothing">
                       21 oct 2001 18:18
+                    </td>
+                    <tal:block replace="nothing">
+                      _______ public version cell _______
+                    </tal:block>
+                    <td style="white-space: nowrap;"
+                      tal:define="
+                        public_status obj/public_status | nothing;
+                        start_time obj/public_version_publication_datetime | nothing;
+                        end_time obj/public_version_expiration_datetime | nothing">
+                      <a href="tab_status"
+                        title="public version"
+                        tal:attributes="href obj_url;"
+                        tal:omit-tag="python: public_status == 'closed'">
+                        <tal:block replace="public_status" />                                                
+                      </a>                                            
+                      <i tal:condition="start_time" 
+                        tal:content="python: '(%s%s)' % (start_time, test(end_time, ' - %s' % end_time, ''))"
+                      />
                     </td>
                   </tr>
                 </tal:block>
@@ -186,8 +188,8 @@
                 <tr tal:condition="objects">
                   <th class="controls listing-left"
                     colspan="99">
-                    <span style="float:right;">
-                      Date format: day/month/year
+                    <span class="widebody" style="float: right;">
+                    date format: day / month / year hour : minute
                     </span>
                     <metal:block use-macro="view/macro_select_all/macros/select_all" />
                   </th>
@@ -197,28 +199,27 @@
                     ______________ expiration time controls ______________
                   </tal:block>
                   <td class="align-right"
-                    colspan="99">
-                    <label class="widebody"
-                      title="access key: alt-i" 
-                      accesskey="i">
-                      expiration time:
-                    </label>
-                    <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render(REQUEST=request)" />
-                    &nbsp;
+                    colspan="4">
+                    <!-- span class="widebody" style="float: left;">
+                      format: day / month / year hour : minute <br />
+                      if content should expire, set expiration time
+                    </span -->
+                    
                     <label class="widebody"
                       title="access key: alt-m" 
                       accesskey="m">
                       publish time:
                     </label>
-                    <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
+                    <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" /><br />
+                    <label class="widebody"
+                      title="access key: alt-i" 
+                      accesskey="i">
+                      expiration time:
+                    </label>
+                    <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
                   </td>
-                </tr>
-                <tal:block replace="nothing">
-                  ______________ editor controls ______________
-                </tal:block>
-                <tr class="controls controls-1">
                   <td class="align-right"
-                    colspan="99">
+                    colspan="2">
                     <label 
                       for="publish_now_flag" 
                       title="access key: alt-u" 
@@ -230,9 +231,12 @@
                     <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
                   </td>
                 </tr>
+                <tal:block replace="nothing">
+                  ______________ editor controls ______________
+                </tal:block>
                 <tr class="controls"
                   tal:condition="may_approve_content">
-                  <td colspan="4">
+                  <td colspan="3">
                     <input class="button"
                       accesskey="j"
                       name="tab_status_reject:method"
@@ -251,6 +255,8 @@
                       title="close published items: alt-c"
                       type="submit"
                       value="Close public" />
+                  </td>
+                  <td class="align-right">
                     <input class="button"
                       accesskey="s"
                       name="tab_status_change_settings:method"

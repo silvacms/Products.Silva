@@ -123,10 +123,15 @@ class ViewCode:
                 if datetime:
                     str_datetime = self.service_utils.datetime_to_date_space(datetime)
                     infodict['public_version_publication_datetime'] = str_datetime
+
+                datetime = obj.get_next_version_expiration_datetime()
+                if datetime:
+                    str_datetime = self.service_utils.backend_short_datetime_to_str(datetime)
+                    infodict['next_version_expiration_datetime'] = str_datetime
                     
                 datetime = obj.get_public_version_expiration_datetime()
                 if datetime:
-                    str_datetime = self.service_utils.backend_short_datetime_to_str(datetime)
+                    str_datetime = self.service_utils.datetime_to_date_space(datetime)
                     infodict['public_version_expiration_datetime'] = str_datetime
         return ret
 

@@ -23,7 +23,7 @@ except FormValidationError, e:
 
 publish_now_flag = result['publish_now_flag']
 publish_datetime = result['publish_datetime']
-expires_flag = result['expires_flag']
+expires_flag = 1 #result['expires_flag']
 expiration_datetime = result['expiration_datetime']
 
 if not publish_now_flag and not publish_datetime:

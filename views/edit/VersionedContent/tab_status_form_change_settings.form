@@ -16,7 +16,7 @@
         <values>
           <date_only type="int">0</date_only>
           <alternate_name></alternate_name>
-          <input_style>list</input_style>
+          <input_style>text</input_style>
           <css_class></css_class>
           <input_order>dmy</input_order>
           <hidden type="int">0</hidden>
@@ -37,7 +37,7 @@
         <values>
           <date_only type="int">0</date_only>
           <alternate_name></alternate_name>
-          <input_style>list</input_style>
+          <input_style>text</input_style>
           <css_class></css_class>
           <hidden type="int">0</hidden>
           <input_order>dmy</input_order>

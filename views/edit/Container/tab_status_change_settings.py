@@ -26,7 +26,7 @@ except FormValidationError, e:
 
 publish_datetime = result['publish_datetime']
 expiration_datetime = result['expiration_datetime']
-expires_flag = result['expires_flag']
+expires_flag = 1 #result['expires_flag']
 
 if not publish_datetime and not expiration_datetime:
     return view.tab_status(

@@ -48,19 +48,6 @@ The last message related to this is:
 </td>
 </tr>
 
-<tr class="focus" valign="top">
-<td align="right">
-<label title="Access key: alt-i (some platforms)" accesskey="i">Expiration time:</label>&nbsp;
-<field tal:replace="structure 
-     python:view.tab_status_form_author.expiration_datetime.
-          render(value=model.get_unapproved_version_expiration_datetime(), REQUEST=request)" 
-/>
-</td>
-<td>
-If this content should expire, set the time.&nbsp;
-</td>
-</tr>
-
 <tr class="focus-cycle" valign="top">
 <td align="right">
 <label title="Access key: alt-m (some platforms)" accesskey="m">Content publish time:</label>&nbsp;
@@ -75,12 +62,25 @@ If this content should expire, set the time.&nbsp;
 </tr>
 
 <tr class="focus" valign="top">
+  <td align="right">
+    <label title="Access key: alt-i (some platforms)" accesskey="i">Expiration time:</label>&nbsp;
+    <field tal:replace="structure 
+      python:view.tab_status_form_author.expiration_datetime.
+      render(value=model.get_unapproved_version_expiration_datetime(), REQUEST=request)" 
+    />
+  </td>
+  <td>
+    If this content should expire, set the time.&nbsp;
+  </td>
+</tr>
+
+<tr class="focus" valign="top">
 <td align="right">
 &nbsp;
 </td>
 <td align="right">
-<label for="expires_flag" title="Access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label><field
-    tal:replace="structure python:view.tab_status_form_author.expires_flag.render(REQUEST=request)" />
+<!-- label for="expires_flag" title="Access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label><field
+    tal:replace="structure python:view.tab_status_form_author.expires_flag.render(REQUEST=request)" / -->
 </td>
 </tr>
 
@@ -238,18 +238,8 @@ If this content should expire, set the time.&nbsp;
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">
 <tr>
-<th align="left">Current settings</th>
+<th align="left">Current timings</th>
 <th align="left">Notes</th>
-</tr>
-
-<tr class="focus" valign="top">
-<td align="right">
-<label title="Access key: alt-i (some platforms)" accesskey="i">Expiration time:</label>&nbsp;
-<field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
-</td>
-<td>
-If this content should expire, set the time.&nbsp;
-</td>
 </tr>
 
 <tr class="focus-cycle" valign="top">
@@ -262,14 +252,24 @@ If this content should expire, set the time.&nbsp;
 </td>
 </tr>
 
+<tr class="focus" valign="top">
+  <td align="right">
+    <label title="Access key: alt-i (some platforms)" accesskey="i">Expiration time:</label>&nbsp;
+    <field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
+  </td>
+  <td>
+    If this content should expire, set the time.&nbsp;
+  </td>
+</tr>
+
 <td align="right">
 <tr class="focus" valign="top">
 <td align="right">
 &nbsp;
 </td>
 <td align="right">
-<label for="expires_flag" title="Access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label>
-<field tal:replace="structure python:view.tab_status_form_change_settings.expires_flag.render(model.get_next_version_expiration_datetime() is not None)" />
+<!-- label for="expires_flag" title="Access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label>
+<field tal:replace="structure python:view.tab_status_form_change_settings.expires_flag.render(model.get_next_version_expiration_datetime() is not None)" / -->
 </td>
 </tr>
 
@@ -284,7 +284,7 @@ If this content should expire, set the time.&nbsp;
 
 <tr class="controls">
 <td colspan="3" align="right">
-<input type="submit" value=" Change settings " class="button"  title="Access key: alt-c" accesskey="c" />
+<input type="submit" value=" Change timings " class="button"  title="Access key: alt-c" accesskey="c" />
 </td>
 </tr>
 </table>
