@@ -8,7 +8,8 @@ class SilvaObject:
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()
-
+    _title = "No title yet"
+    
     # allow edit view on this object
     edit = ViewAttribute('edit')
     
@@ -24,8 +25,16 @@ class SilvaObject:
         #self.inheritedAttribute('manage_beforeDelete')(self, item, container)
         container._remove_ordered_id(item)
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
+    def set_title(self, title):
+        """Set the title of the silva object.
+        """
+        self._title = title
+        
     # ACCESSORS
 
+    
     # create 'title' attribute for some Zope compatibility (still shouldn't set
     # titles in properties tab though)
     #security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -34,12 +43,13 @@ class SilvaObject:
     #    return self.get_title() # get_title() can be defined on subclass
     #title = ComputedAttribute(_zget_title_helper)
 
-    #def get_model(self):
-    #    """Get the model. Can be used with acquisition to get
-    #    the 'nearest' model from the view."""
-    #    print self.aq_chain
-    #    return self #.aq_parent # inner
-    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title')
+    def get_title(self):
+        """Get the title of the silva object.
+        """
+        return self._title
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):

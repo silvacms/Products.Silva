@@ -1,4 +1,4 @@
-import Document, Folder, Root, ViewRegistry, Publication, Ghost
+import Document, Folder, Root, ViewRegistry, Publication, Ghost, ContactInfo
 
 def initialize(context):
      context.registerClass(
@@ -38,5 +38,11 @@ def initialize(context):
           constructors = (ViewRegistry.manage_addViewRegistryForm,
                           ViewRegistry.manage_addViewRegistry),
           icon="www/silva_view_registry.gif"
+          )
+     
+     context.registerClass(
+          ContactInfo.ContactInfo,
+          constructors = (ContactInfo.manage_addContactInfoForm,
+                          ContactInfo.manage_addContactInfo)
           )
      

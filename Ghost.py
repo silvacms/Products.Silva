@@ -1,4 +1,4 @@
-id# Zope
+# Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass

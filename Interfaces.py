@@ -430,3 +430,13 @@ class VersionedContent(Versioning, Content):
         operation will fail.
         """
         pass
+
+class VersionedAsset(Versioning, Asset):
+    """Asset that is versioned.
+    """
+
+    def create_copy(self):
+        """Create new version of asset.
+        """
+        pass
+        

@@ -30,13 +30,6 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_title')
-    def set_title(self, title):
-        """Set the title of this folder.
-        """
-        self._title = title 
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'move_object_up')
     def move_object_up(self, id):
         """Move object up. Returns true if move succeeded.
@@ -165,13 +158,6 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """Get url for container.
         """
         return self.absolute_url()
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'title')
-    def get_title(self):
-        """Get the title.
-        """
-        return self._title
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'is_transparent')

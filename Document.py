@@ -106,7 +106,7 @@ class Document(VersionedContent):
         return self.absolute_url() + '/' + self.get_unapproved_version()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'title')
+                              'get_title')
     def get_title(self):
         """Get title. If we're the default document,
         we get title from our containing folder (or publication, etc).
