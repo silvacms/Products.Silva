@@ -19,7 +19,7 @@ class ContactInfo(Asset):
 
     def __init__(self, id, title):
         ContactInfo.inheritedAttribute('__init__')(self, id, 'No title for ContactInfo')
-        self._data = { 'name': title }
+        self._data = { 'contact_name': title }
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_data')
@@ -41,7 +41,7 @@ class ContactInfo(Asset):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_title')
     def get_title(self):
-        return self._data['name']
+        return self._data['contact_name']
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_data')
