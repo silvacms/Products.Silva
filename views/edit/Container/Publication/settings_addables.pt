@@ -61,7 +61,7 @@
                     colspan="3">
                     <h2>
                       <img tal:replace="structure python:view.render_icon(model)" />
-                      <span i18n:translate="addable_settings_for">addable settings for</span>: 
+                      <span i18n:translate="addable_settings_for">addable settings for</span>
                       &#xab;<tal:block content="title" />&#xbb;
                     </h2>
                   </td>
@@ -70,13 +70,15 @@
 
               <tbody>
                 <tr>
-                  <th i18n:translate="element" class="align-right" width="12%">
+                  <th class="align-right"
+                    width="12%"
+                    i18n:translate="element">
                     element
                   </th>
                   <th i18n:translate="content">
                     content
                   </th>
-                  <th i18n:translate="note" width="30%">
+                  <th i18n:translate="note" width="60%">
                     note
                   </th>
                 </tr>
