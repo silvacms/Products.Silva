@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.30 2003/11/23 11:18:00 kitblake Exp $
+# $Id: GhostFolder.py,v 1.30.26.1 2004/04/01 12:42:25 faassen Exp $
 
 from __future__ import nested_scopes
 
@@ -20,7 +20,6 @@ from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.Publishable import Publishable
 from Products.Silva.Versioning import VersioningError
-from Products.Silva.icon import Adapter
 
 from Products.Silva.interfaces import \
     IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
@@ -421,20 +420,3 @@ def xml_import_handler(object, node):
         factory(object, id, title, content_url)
     ghostfolder = Folder.xml_import_handler(object, node, factory=f)
     return ghostfolder
-      
-
-class GhostFolderIconAdapter(Adapter):
-   
-    __implements__ = IIcon
-    __adapts__ = IGhostFolder
-
-    def getIconIdentifier(self):
-        gf = self.adapted
-        if gf.get_link_status() == gf.LINK_OK:
-            kind = 'folder'
-            if gf.implements_publication():
-                kind = 'publication'
-        else:
-            kind = 'link_broken'
-        return ('ghostfolder', kind)
-    

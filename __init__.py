@@ -1,9 +1,8 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.112.6.6.6.1 $
+# $Revision: 1.112.6.6.6.2 $
 
 import ContainerPolicy
-
 
 def initialize(context):
     from Products.Silva import icon
@@ -191,11 +190,6 @@ allow_module('Products.Silva.adapters.security')
 allow_module('Products.Silva.roleinfo')
 
 def initialize_icons():
-    icon.registry.registerAdapter(icon.MetaTypeClassAdapter, 0)
-    icon.registry.registerAdapter(icon.MetaTypeAdapter, 5)
-    icon.registry.registerAdapter(icon.SilvaFileAdapter, 10)
-    icon.registry.registerAdapter(GhostFolder.GhostFolderIconAdapter, 11)
-    icon.registry.registerAdapter(Ghost.GhostIconAdapter, 12)
     mimeicons = [
         ('audio/aiff', 'file_aiff.png'),
         ('audio/x-aiff', 'file_aiff.png'),
