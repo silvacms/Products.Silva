@@ -35,6 +35,11 @@ div.tabs a.recede {
   border-bottom: #8b939b 1px solid;
 }
 
+div.tabs a.recede:hover {
+  background: &dtml-contentTabBackgroundSelected;;
+  border-bottom: #8b939b 1px solid;
+}
+
 div.tabs a:hover {
   color: &dtml-contentTabFontColorSelected;;
   background: &dtml-contentTabBackgroundSelected;;
