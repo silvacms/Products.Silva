@@ -171,16 +171,22 @@
                 <tr class="focus-cycle"
                   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
                   <td nowrap="1">
-                    <input name="groupids:list"
+                    <input class="warningbox"
+                      name="groupids:list"
                       type="checkbox"
                       value=""
-                      tal:attributes="value group/id" />
-                    <img tal:replace="structure python:view.render_icon(group.meta_type)" />
+                      tal:attributes="value group/id;" />
+                    <a class="blacklink"
+                      href="asset"
+                      title="Edit this group"
+                      tal:attributes="href string:${group/absolute_url}/edit">
+                      <img tal:replace="structure python:view.render_icon(group.meta_type)" />
+                    </a>
                   </td>
                   <td>
                     <a class="blacklink"
                       href="asset"
-                      title="Edit this asset"
+                      title="Edit this group"
                       tal:attributes="href string:${group/absolute_url}/edit">
                       <tal:block replace="group/id">
                         id
@@ -216,17 +222,17 @@
             <tr class="controls">
               <td align="left"
                 colspan="4">
-                &nbsp;
-              </td>
-              <td align="right"
-                colspan="5">
                 <input class="warningbutton"
                   accesskey="d"
-                  title="Delete selected groups - alt-d"
+                  title="Delete selected groups: alt-d"
                   type="submit"
                   value="Delete"
                   onClick="return confirm('Really delete?')"
                   tal:condition="groups" />
+              </td>
+              <td align="right"
+                colspan="2">
+                &nbsp;
               </td>
             </tr>
           </table>
