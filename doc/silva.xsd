@@ -3,16 +3,16 @@
 
 
 <xsd:schema 
-  xmlns="http://www.infrae.com/xml/silva-0.9.1.xsd"
+  xmlns="http://www.infrae.com/xml"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://www.infrae.com/xml/silva-0.9.1.xsd"
+  targetNamespace="http://www.infrae.com/xml"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
   >
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      $Id: silva.xsd,v 1.14 2003/01/22 09:26:35 zagy Exp $
+      $Id: silva.xsd,v 1.15 2003/01/22 14:10:55 zagy Exp $
     
       Silva XML schema
       Copyright 2002 Infrae
@@ -20,12 +20,17 @@
     </xsd:documentation>
   </xsd:annotation>
 
+  
+  <xsd:element name="silva" type="Silva" />
 
-  <xsd:element name="silva_root" type="Folder" />
-  <xsd:element name="silva_publication" type="Folder" />
-  <xsd:element name="silva_folder" type="Folder" />
-  <xsd:element name="silva_newsitem" type="SilvaNewsitem" /> 
-
+  <xsd:complexType name="Silva">
+    <xsd:choice>
+      <xsd:element name="silva_root" type="Folder" />
+      <xsd:element name="silva_publication" type="Folder" />
+      <xsd:element name="silva_folder" type="Folder" />
+      <xsd:element name="silva_newsitem" type="SilvaNewsitem" /> 
+    </xsd:choice>
+  </xsd:complexType>
 
   <xsd:simpleType name="ID">
     <xsd:restriction base="xsd:string" />
@@ -60,7 +65,7 @@
 
   <xsd:complexType name="DocumentContent">
     <xsd:sequence>
-      <xsd:choice maxOccurs="unbounded">
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
         <xsd:element name="heading" type="Heading" />
         <xsd:element name="p" type="Paragraph" />
         <xsd:element name="list" type="List" />
@@ -213,14 +218,7 @@
   </xsd:complexType>
 
   <xsd:complexType name="Image">
-    <xsd:attribute name="image_id" type="xsd:string">
-      <xsd:annotation>
-        <xsd:documentation xml:lang="en">
-          This attribute is deprecated and will be removed in the future.
-        </xsd:documentation>
-      </xsd:annotation>
-    </xsd:attribute>
-    <xsd:attribute name="path" type="xsd:string" />
+    <xsd:attribute name="image_path" type="xsd:string" />
     <xsd:attribute name="alignment">
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">            
@@ -232,19 +230,18 @@
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:attribute>
-    <xsd:attribute name="link" type="xsd:anyURI" />
+    <xsd:attribute name="link" type="xsd:string" />
     <!-- there should be som uri -->
   </xsd:complexType>
 
   <!-- List Types -->
   <xsd:complexType name="NestedList">
     <xsd:sequence>
-      <xsd:element name="title" type="xsd:string" />
       <xsd:element name="li" maxOccurs="unbounded">
         <xsd:complexType>
           <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-              <xsd:element name="p" type="Markup" />
+              <xsd:element name="p" type="Paragraph" />
               <xsd:element name="heading" type="Heading" />
               <xsd:element name="nlist" type="NestedList" />
               <xsd:element name="list" type="List" />
@@ -261,7 +258,6 @@
   
   <xsd:complexType name="List">
     <xsd:sequence>
-      <xsd:element name="title" type="xsd:string" />
       <xsd:choice minOccurs="0" maxOccurs="unbounded">
         <xsd:sequence>
           <xsd:element name="li" type="Markup" />
@@ -282,6 +278,7 @@
       <xsd:enumeration value="A" />
       <xsd:enumeration value="I" />
       <xsd:enumeration value="i" />
+      <xsd:enumeration value="none" />
     </xsd:restriction>
   </xsd:simpleType>
 
