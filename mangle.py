@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.18 2003/11/17 14:46:45 zagy Exp $
+# $Id: mangle.py,v 1.19 2003/11/18 15:07:36 zagy Exp $
 
 # Python
 import string
@@ -123,9 +123,12 @@ class Id:
                 will be processed
         """
         orig_id = maybe_id
-        if type(maybe_id) == UnicodeType:
-            maybe_id = maybe_id.encode('latin1', 'replace')
-        if type(maybe_id) != StringType:
+        if type(maybe_id) == StringType:
+            try:
+                maybe_id = unicode(maybe_id, 'utf-8')
+            except UnicodeError:
+                maybe_id = unicode(maybe_id, 'latin-1', 'replace')
+        if type(maybe_id) != UnicodeType:
             raise ValueError, "id must be str or unicode (%r)" % orig_id
         if interface not in self._reserved_ids_for_interface.keys():
             interface = None
@@ -146,6 +149,13 @@ class Id:
         """
         from OFS import Image
         id, unused_title = Image.cookId(self._maybe_id, "", self._file)
+        if type(id) == StringType:
+            try:
+                id = unicode(id, 'utf-8')
+            except UnicodeError:
+                pass
+        if type(id) == UnicodeType:
+            id = id.encode('latin1', 'replace')
         id = string.translate(id, self._char_transmap)
         self._maybe_id = id
         self._validation_result = None

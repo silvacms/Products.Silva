@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.10 2003/11/18 11:47:32 gotcha Exp $
+# $Id: test_mangle.py,v 1.11 2003/11/18 15:07:37 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -8,6 +8,8 @@ if __name__ == '__main__':
 
 from Testing import ZopeTestCase
 import SilvaTestCase
+
+from ZPublisher.HTTPRequest import FileUpload, record
 
 from Products.Silva import mangle
 from Products.Silva.interfaces import IAsset
@@ -75,11 +77,12 @@ class MangleIdTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(id.validate(), id.RESERVED)
 
 
-    def test_cook(self):
+    def test_cook_id(self):
         id = mangle.Id(self.folder, u'Gro\N{LATIN SMALL LETTER SHARP S}e Datei').cook()
         self.assert_(id.isValid())
         self.assertEquals(str(id), 'Grose_Datei')
         #self.assertEquals(str(id), 'Grosse_Datei') # this would be german replacement 
+        
         
 
 class MangleTest(SilvaTestCase.SilvaTestCase):
