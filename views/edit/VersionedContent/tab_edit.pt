@@ -167,7 +167,12 @@
         </metal:slot>
         <metal:slot fill-slot="buttongroup_color" />
         <metal:slot fill-slot="buttongroup_justify" />
-        <metal:slot fill-slot="buttongroup_indent" />
+        <metal:slot fill-slot="buttongroup_indent">
+          <span class="kupu-tb-buttongroup">
+            <button type="button" class="kupu-definitionlist" id="kupu-definitionlist-button" title="Definition List"
+                    i18n:attributes="title" accesskey="d">&nbsp;</button>
+          </span>
+        </metal:slot>
         <metal:slot fill-slot="buttongroup_source" />
       </div>
     </td>
@@ -323,6 +328,12 @@
               <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
                 <option value="_self">same window</option>
                 <option value="_blank">new window</option>
+              </select><br />
+              &nbsp;image alignment
+              <select id="kupu-toolbox-image-align" style="margin-left:0.2em">
+                <option value="left">left</option>
+                <option value="middle">center</option>
+                <option value="right">right</option>
               </select>
             </div>
           </form>
