@@ -1,8 +1,8 @@
 Known issues
 ============
 
-Known issues with Silva 1.1b2
+Known issues with Silva 1.2b1
 -----------------------------
 
-The full-media (.zip) import export system has some known bugs in the
-handling of workflow, and does not support SilvaExternalSources yet.
+The image cropping picture does not work correctly.
+
