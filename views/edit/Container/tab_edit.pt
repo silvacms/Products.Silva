@@ -34,7 +34,7 @@
             <tal:block replace="nothing">
               _____________________ inner table with folder view _____________________
             </tal:block>
-            <table class="listing" border="0"
+            <table class="listing"
               id="sortable">
               <thead>
                 <tal:block replace="nothing">
@@ -119,7 +119,7 @@
                 <tal:block replace="nothing">
                   ______________ if no publishables in this folder ______________
                 </tal:block>
-                <tr class="focus"
+                <tr class="odd"
                   tal:condition="python: not(default_document or publishables or assets)">
                   <td colspan="6">
                     There are no content objects in this folder.
@@ -356,10 +356,10 @@
                     <metal:block use-macro="view/macro_select_all/macros/select_all"/>
                   </th>
                 </tr>
+                <tal:block replace="nothing">
+                  ______________ controls ______________
+                </tal:block>
                 <tr class="controls">
-                  <tal:block replace="nothing">
-                    ______________ controls ______________
-                  </tal:block>
                   <td colspan="6">
                     <tal:block condition="may_change_content">
                       <tal:block tal:condition="python:(default_document or publishables or assets)">

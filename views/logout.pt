@@ -16,13 +16,13 @@
   <link href="globals/favicon.ico"
     rel="shortcut icon"
   />
-  <link href="globals/base.css"
+  <link href="globals/plone.css"
+    rel="stylesheet"
+  />
+  <link href="globals/ploneCustom.css"
     rel="stylesheet"
   />
   <link href="globals/silva.css"
-    rel="stylesheet"
-  />
-  <link href="frontend.css"
     rel="stylesheet"
   />
 </head>
@@ -34,25 +34,16 @@
 >
 <!--__________________________ feedback start _________________________-->
 
-  <div class="margins">
+  <div style="margin: 8px;">
     <div class="feedback"
       style="width:55%"
     >
-      To
-      <b>
-        actually
-      </b>
-      logout, wait 5 seconds or hit this
-      <a href="/manage_zmi_logout">
-        logout link
-      </a>
-      .
+      To <b>actually</b> logout, wait 5 seconds or hit this
+      <a href="/manage_zmi_logout"
+        title="accesskey: alt-l"
+        accesskey="l">logout link</a>.
       <br />
-      When the login dialog appears, choose
-      <b>
-        "Cancel"
-      </b>
-      !
+      When the login dialog appears, choose <b>"Cancel"</b>.
     </div>
   </div>
 <!--            __________________________ feedback ends __________________________            -->

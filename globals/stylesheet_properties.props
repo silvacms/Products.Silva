@@ -97,12 +97,12 @@ inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 inputBorder:string=1px solid #99cfcf
 
 contextButtonBackground:string=#4c685b
-contextButtonPadding:string=0em 0.1em 0.1em 0
+contextButtonPadding:string=0
 contextButtonFontColor:string=#c3f3db
 contextButtonBorder:string=1px solid #99cfb5
 
 standaloneButtonBackground:string=#4b5766
-standaloneButtonPadding:string=0em 2em 0.1em 2em
+standaloneButtonPadding:string=0
 standaloneButtonFontColor:string=#c2d6f3
 standaloneButtonBorder:string=1px solid #99afcf
 

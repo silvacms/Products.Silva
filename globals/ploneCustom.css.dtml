@@ -408,18 +408,19 @@ table.listing td.top h2 img {
     vertical-align: top;
 }
 
-table.listing tr.top-controls h3 {
-  color: #c9dfe2;
-  margin: 0em 0.2em 0.1em 0.2em;
-  display: inline;
-  border: none;
-  float: left;
-  text-transform: &dtml-textTransform;;
+table.listing tr.top-controls td {
+  padding: 0em 0.4em;
 }
 
-table.listing tr.top-controls td {
-  padding-left: 0.4em;
-  padding-right: 0.4em;
+table.listing tr.top-controls h3 {
+  color: #c9dfe2;
+  margin: 1px 0.2em 1px 0.2em;
+  padding: 0em;
+  border: none;
+  display: inline;
+  float: left;
+  text-transform: &dtml-textTransform;;
+  line-height : 100%;
 }
 
 table.listing tr.top-controls div.buttons {
@@ -523,99 +524,6 @@ table.listing a.up:hover {
   text-decoration: none;
 }
 
-/* _______ subscreen parent links _______ */
-
-table.listing td.parent {
-  background: &dtml-standaloneButtonBackground;;
-  padding : 0 ! important;
-  border: &dtml-listingBorder;;
-  text-align : center;
-  vertical-align : bottom;
-}
-
-table.listing td.parent a {
-  color: &dtml-standaloneButtonFontColor;;
-  text-decoration: none;
-  text-transform: &dtml-textTransform;;
-}
-
-table.listing td.parent a:hover {
-  color : #bfffd3; 
-  background : #53538b;
-}
-
-table.listing div.navigation-border {
-  padding-bottom : 1px;
-  border: &dtml-standaloneButtonBorder;;
-}
-
-table.listing div.navigation-border:hover {
-  color : #bfffd3; 
-  background : #53538b;
-}
-
-
-
-/* _______ pseudo form button selectors, matches button style _______ */
-
-table.listing a.button:link {
-  font-size: 100%;
-  font-weight: &dtml-buttonWeight;;
-  color: &dtml-contextButtonFontColor;;
-  background: &dtml-contextButtonBackground;;
-  border: &dtml-contextButtonBorder;;
-  margin: 0.1em 0.2em;
-  padding: 0em 2em 0.1em 2em;
-  text-decoration : none;
-  text-transform: &dtml-textTransform;;
-}
-table.listing a.button:visited {
-  font-size: 100%;
-  font-weight: &dtml-buttonWeight;;
-  color: &dtml-contextButtonFontColor;;
-  background: &dtml-contextButtonBackground;;
-  border: &dtml-contextButtonBorder;;
-  margin: 0.1em 0.2em;
-  padding: 0em 2em 0.1em 2em;
-  text-decoration : none;
-  text-transform: &dtml-textTransform;;
-}
-table.listing a.button:hover {
-  color : #bfffd3; 
-  background : #668b69; 
-  cursor : pointer;
-}
-
-/* _______ navigation between screens _______ */
-
-table.listing a.navigation:link {
-  font-size: 100%;
-  font-weight: &dtml-buttonWeight;;
-  color: &dtml-standaloneButtonFontColor;;
-  background: &dtml-standaloneButtonBackground;;
-  border: &dtml-standaloneButtonBorder;;
-  margin: 0.1em 0.2em;
-  padding: 0em 1em 0.1em 1em;
-  text-decoration : none;
-  text-transform: &dtml-textTransform;;
-}
-table.listing a.navigation:visited {
-  font-size: 100%;
-  font-weight: &dtml-buttonWeight;;
-  color: &dtml-standaloneButtonFontColor;;
-  background: &dtml-standaloneButtonBackground;;
-  border: &dtml-standaloneButtonBorder;;
-  margin: 0.1em 0.2em;
-  padding: 0em 1em 0.1em 1em;
-  text-decoration : none;
-  text-transform: &dtml-textTransform;;
-}
-table.listing a.navigation:hover {
-  color : #bff1ff; 
-  background : #74748b; 
-  cursor : pointer;
-}
-
 
 /* _____________________________________________________ focus shapes _____ */
 
@@ -692,9 +600,10 @@ input.navigation {
     font-weight: &dtml-buttonWeight;;
   color: &dtml-standaloneButtonFontColor;;
   background: &dtml-standaloneButtonBackground;;
-  border: &dtml-standaloneButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
+  border: &dtml-standaloneButtonBorder;;
+  line-height : 90%;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
 }
@@ -703,9 +612,10 @@ input.button {
     font-weight: &dtml-buttonWeight;;
     color: &dtml-contextButtonFontColor;;
   background : &dtml-contextButtonBackground;;
-  border: &dtml-contextButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
+  border: &dtml-contextButtonBorder;;
+  line-height : 90%;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
 }
@@ -714,9 +624,10 @@ input.warning {
     font-weight: &dtml-buttonWeight;;
   color : &dtml-destructiveButtonFontColor;; 
   background : &dtml-destructiveButtonBackground;;
-  border: &dtml-destructiveButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
+  border: &dtml-destructiveButtonBorder;;
+  line-height : 90%;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
 }
@@ -730,6 +641,100 @@ input.cancel {
     padding: &dtml-contextButtonPadding;;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
+}
+
+
+/* _______ pseudo form button selectors, matches button style _______ */
+
+table.listing a.button:link {
+  font-size: 90%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-contextButtonFontColor;;
+  background: &dtml-contextButtonBackground;;
+  border: &dtml-contextButtonBorder;;
+  margin: 0.1em 0.2em;
+  padding: 0em 2em 1px 2em;
+  line-height : 90%;
+  text-decoration : none;
+  text-transform: &dtml-textTransform;;
+}
+table.listing a.button:visited {
+  font-size: 90%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-contextButtonFontColor;;
+  background: &dtml-contextButtonBackground;;
+  border: &dtml-contextButtonBorder;;
+  margin: 0.1em 0.2em;
+  padding: 0em 2em 1px 2em;
+  line-height : 90%;
+  text-decoration : none;
+  text-transform: &dtml-textTransform;;
+}
+table.listing a.button:hover {
+  color : #bfffd3; 
+  background : #668b69; 
+  cursor : pointer;
+}
+
+/* _______ navigation between screens _______ */
+
+table.listing a.navigation:link {
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-standaloneButtonFontColor;;
+  background: &dtml-standaloneButtonBackground;;
+  border: &dtml-standaloneButtonBorder;;
+  margin: 0.1em 0.2em;
+  padding: 0em 1em 0.1em 1em;
+  text-decoration : none;
+  text-transform: &dtml-textTransform;;
+}
+table.listing a.navigation:visited {
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-standaloneButtonFontColor;;
+  background: &dtml-standaloneButtonBackground;;
+  border: &dtml-standaloneButtonBorder;;
+  margin: 0.1em 0.2em;
+  padding: 0em 1em 0.1em 1em;
+  text-decoration : none;
+  text-transform: &dtml-textTransform;;
+}
+table.listing a.navigation:hover {
+  color : #bff1ff; 
+  background : #74748b; 
+  cursor : pointer;
+}
+
+/* _______ subscreen parent links _______ */
+
+table.listing td.parent {
+  background: &dtml-standaloneButtonBackground;;
+  padding : 0 ! important;
+  border: &dtml-listingBorder;;
+  text-align : center;
+  vertical-align : bottom;
+}
+
+table.listing td.parent a {
+  color: &dtml-standaloneButtonFontColor;;
+  text-decoration: none;
+  text-transform: &dtml-textTransform;;
+}
+
+table.listing td.parent a:hover {
+  color : #bfffd3; 
+  background : #53538b;
+}
+
+table.listing div.navigation-border {
+  padding-bottom : 1px;
+  border: &dtml-standaloneButtonBorder;;
+}
+
+table.listing div.navigation-border:hover {
+  color : #bfffd3; 
+  background : #53538b;
 }
 
 
