@@ -1,4 +1,4 @@
-Version of this document: $Revision: 1.3 $
+Version of this document: $Revision: 1.4 $
 
 Upgrading Silva 0.8 to 0.8.3
 
@@ -8,13 +8,13 @@ Upgrading Silva 0.8 to 0.8.3
   NOTE: It makes of course sense to make a backup of Silva before
   trying to upgrade!
 
-  WARNING: Before upgrading Silva at all, please remove all Course
-  objects. Course objects are not supported by the core Silva release
-  0.8.3 and if you don't remove them, Silva will not work
-  properly. After installing there is no good way to remove the broken
-  course objects. Instead of a course object there is now a demo
-  object which demonstrates how to mix structured content and data
-  fields.
+  WARNING: Before upgrading Silva at all, **please remove** all Course
+  objects. Course objects are **not supported by** the core Silva release
+  0.8.3 and if you don't remove them, Silva will **not** work properly.
+
+  After installing there is no good way to remove the broken course
+  objects. Instead of a course object there is now a demo object which
+  demonstrates how to mix structured content and data fields.
 
   Silva Filesystem Products
 
@@ -99,9 +99,9 @@ Upgrading Silva 0.8 to 0.8.3
     templates used for presentation of the public website (see
     previous version).
   
-    Next, the upgrade script will hunt down all your images and
-    execute a fix to make their title display under some
-    circumstances.
+    Next, the upgrade script will hunt down all your Silva Images and
+    execute a fix to make their title display properly where it didn't
+    under some circumstances.
 
     Finally, the upgrade will tweak the security settings of the Silva
     Root folder to set the permissions right (see the security tab in
