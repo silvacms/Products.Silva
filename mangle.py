@@ -1,7 +1,7 @@
+# -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.19.8.2 2004/01/30 08:19:43 jw Exp $
-
+# $Id: mangle.py,v 1.19.8.3 2004/03/04 17:44:43 faassen Exp $
 # Python
 import string
 import re
