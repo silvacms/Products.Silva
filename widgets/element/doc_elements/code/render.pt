@@ -1,6 +1,0 @@
-<metal:block use-macro="container/macro_normal_view/macros/normal_view">
-  <metal:block fill-slot="node_content">
-  <tal:block replace="structure here/get_code_data" />
-  </metal:block>
-</metal:block>
-
