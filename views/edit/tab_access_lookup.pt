@@ -68,19 +68,11 @@
                   </td>
                 </tr>
                 <tr class="controls">
-                  <td>
-                    <input class="cancelbutton"
-                      accesskey="c"
-                      name="tab_access:method"
-                      title="Cancel - ctrl-c"
-                      type="submit"
-                      value="Cancel" />
-                  </td>
-                  <td align="right">
+                  <td colspan="2" align="right">
                     <input class="button"
                       accesskey="s"
                       name="lookup_search:method"
-                      title="Search - ctrl-s"
+                      title="Search - alt-s"
                       type="submit"
                       value="Search" />
                   </td>
