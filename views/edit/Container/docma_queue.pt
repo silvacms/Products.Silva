@@ -74,14 +74,22 @@
                 </h3>
               </td>
             </tr>
-            <tr class="topcontrols">
+            <tr class="topcontrols"
+              tal:condition="options/refresh_page | nothing">
               <td align="right"
                 colspan="5">
                 <a class="buttonlink"
                   accesskey="r"
                   href="#"
-                  onClick="document.location = 'tab_edit_import?focus=queue'; return false;"
-                  title="Reload to update the queue lists: alt-r">&nbsp;<u>R</u>efresh queue lists&nbsp;</a>
+                  title="Reload to update the queue lists: alt-r"
+                  tal:attributes="onclick string:document.location = '${options/refresh_page}?focus=queue';; return false;;;"
+                  >&nbsp;<u>R</u>efresh queue lists&nbsp;</a>
+                  
+                  <tal:block condition="view/REQUEST/focus | nothing">
+                  <script language="JavaScript" tal:content="string:document.location = '${options/refresh_page}#${view/REQUEST/focus}';">
+                  </script>
+                  </tal:block>
+
               </td>
             </tr>
             <tr>

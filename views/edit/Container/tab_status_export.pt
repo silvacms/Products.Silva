@@ -203,7 +203,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
 
 <div
   tal:condition="docma_running"
-  tal:replace="structure python:here.docma_queue(format='word')" />
+  tal:replace="structure python:here.docma_queue(format='word', refresh_page='tab_status_export')" />
 
 
 <h3 class="worksheet">
