@@ -9,7 +9,7 @@ import zLOG
 from Globals import package_home
 
 # silva imports
-from Products.Silva.interfaces import IUpgrader, IContainer
+from Products.Silva.interfaces import IUpgrader, IContainer, IContent
 from Products.Silva import upgrade
 
 from Products.SilvaMetadata.Exceptions import BindingError
@@ -293,6 +293,15 @@ class SimpleMetadataUpgrade:
         collection.importSet(fh)
         return service_metadata
 
+class Reindex:
+
+    __implements__ = IUpgrader
+
+    def upgrade(self, obj):
+        if hasattr(obj.aq_base, 'reindex_object'):
+            obj.reindex_object()
+        return obj
+
 def initialize():
     home = package_home(globals())
     xml_home = os.path.join(home, 'doc')
@@ -309,5 +318,5 @@ def initialize():
         'Silva Root')
     upgrade.registry.registerUpgrader(UpgradeAccessRestriction(), '0.9.3',
         upgrade.AnyMetaType)
-
+    upgrade.registry.registerUpgrader(Reindex(), '0.9.3', upgrade.AnyMetaType)
 
