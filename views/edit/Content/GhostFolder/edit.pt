@@ -41,7 +41,7 @@
           colspan="3">
           <h2>
             <img tal:replace="structure python:view.render_icon(model)" />
-            ghost of &#xab;<tal:block content="title" />&#xbb;
+            ghost folder of &#xab;<tal:block content="title" />&#xbb;
           </h2>
         </td>
       </tr>

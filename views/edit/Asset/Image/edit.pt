@@ -62,7 +62,7 @@
         size model/get_file_size;
         scaled_size model/get_scaled_file_size;
       ">
-      <span class="subhead"><b>File size</b><br /></span>
+      <span class="subhead"><b>file size</b><br /></span>
       <span 
         tal:attributes="title string: ${size} Bytes"
         tal:content="python:view.convertBytesToHumanReadable(size)" /> Bytes
@@ -90,7 +90,10 @@
 
 <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
 <metal:fill-slot fill-slot="additional_tools">
-  <form method="POST" name="form" action="." enctype="multipart/form-data"
+  <form method="POST"
+    name="form"
+    action="."
+    enctype="multipart/form-data"
     tal:condition="model/canScale">
     <table class="listing">
       <thead>

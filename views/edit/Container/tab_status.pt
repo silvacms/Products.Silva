@@ -251,6 +251,7 @@
         ______________ publication time controls ______________
       </tal:block>
       <td class="align-right"
+        style="padding-right:0.5em;"
         colspan="5">
         <label title="access key: alt-m" 
           accesskey="m">
@@ -277,6 +278,7 @@
         ______________ expiration time controls ______________
       </tal:block>
       <td class="align-right"
+         style="padding-right:0.5em;"
         colspan="5">
         <label title="access key: alt-x" 
           accesskey="x">
@@ -338,7 +340,7 @@
         />
       </td>
       <td class="align-right"
-        colspan="3">
+        colspan="2">
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
@@ -347,6 +349,8 @@
           accesskey="s"
           tal:condition="python:approveables or revokeables or closeables"
         />
+      </td>
+      <td class="align-right">
         <input class="button"
           name="tab_status_approve:method"
           type="submit"
