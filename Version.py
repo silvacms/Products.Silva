@@ -27,6 +27,7 @@ class Version(SimpleItem):
         """
         # FIXME: Ugh. I get unicode from formulator but this will not validate
         # when using the metadata system. So first make it into utf-8 again..
+        # XXX Could set it directly with _setData instead?
         title = title.encode('utf-8')
         binding = self.service_metadata.getMetadata(self)
         binding.setValues(
