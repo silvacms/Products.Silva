@@ -176,6 +176,7 @@ def configureSecurity(root):
     # not have these permissions. That's why we don't have to assign them
     # to viewer.
     root.manage_permission('Add Silva Publications', all_editor)
+    root.manage_permission('Add Silva Indexers', all_editor)
     root.manage_permission('Approve Silva content', all_editor)
     root.manage_permission('Change Silva access', all_chief)
     root.manage_permission('Change Silva content', all_author)
