@@ -144,60 +144,6 @@ _______ manual close section here _______
 
 <br /><br />
 
-
-<form action="." method="POST"  tal:replace="nothing">
-
-
-  <table width="96%" cellspacing="0" cellpadding="3" border="0">
-
-    <tr>
-      <td colspan="3">
-        <h3>Export to Silva XML (.slv)</h3>
-      </td>
-    </tr>
-
-    <tr>
-      <th align="right">
-        Options
-      </th>
-      <th align="left">
-        &nbsp;
-      </th>
-      <th align="right" colspan="2">
-        Notes
-      </th>
-    </tr>
-
-    <tr class="focus-cycle" valign="top" tal:condition="python: next">
-      <td align="right">
-        Export newest version?
-      </td>
-      <td>
-        <input type="checkbox" name="export_last_version" />
-      </td>
-      <td align="right">
-         If not checked the published version is exported
-      </td>
-    </tr>
-
-    <tr class="focus-cycle" valign="top" tal:condition="python: not next">
-      <td colspan="3" align="left">
-        There is no next version, so published version will be exported
-      </td>
-    </tr>
-
-    <tr class="controls">
-      <td>
-          <input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
-      </td>
-      <td colspan="2" align="right">
-          <input class="button" type="submit" name="download_xml:method" value=" Export " title="Access key: alt-e" accesskey="e" />
-      </td>
-    </tr>
-  </table>
-
-</form>
-
 <div tal:replace="nothing"
   tal:condition="docma_running">
 
