@@ -3,56 +3,119 @@ See also LICENSE.txt
 
 Silva changes
 
-  Under development
+  0.9.3
 
     Features Added
 
-        - Container objects (e.g. Folder, Publications and the Silva
-          Root) now have a title independent of the index document inside
-          the container. The title is set during the creation of the
-          container and can be changed using the rename button in the
-          folder edit- or properties tab.
+      Author visible changes
 
-        - "Container policies" - When creating a new container object the
-          author can choose the tpye of the index object being created. Or
-          not to create an index object at all. The options present can be
-          extended.
+        - Container objects (e.g. Folder, Publications and the Silva
+          Root) now have a title independent of the index document
+          inside the container. The title is set during the creation
+          of the container and can be changed using the rename button
+          in the folder edit- or properties tab.
+
+        - "Container policies" - When creating a new container object
+           the author can choose the tpye of the index object being
+           created, or not to create an index object at all. The
+           options presented can be extended.
+   
+        - Import assets from a zipfile now creates Silva Folder for
+          the zipfiles's directory structure.
+
+        - Ghosts have a 'get reference' button now.
+  
+        - Silva Files now have their icon dependent on the
+          content. I.e. you get a pdf icon if you uploaded a pf
+          file. Currently there are icons for PDF, Word, Excel and
+          PowerPoint.
+      
+        - Added GhostFolder: While a ghost haunts a content objects a
+          GhostFolder haunts a container.
+ 
+        - There is a new Link object for creating references to
+          external sites that can become part of navigation and TOC.
+          This link object redirects to the external site when
+          accessed.
+
+        - The Document text markup parser has been rewritten and is
+          able to deal with more forms of input properly. There are a
+          number of improvements to the way hyperlinks and indexables
+          work.
+
+        - New 'annotation' paragraph type.
+
+        - Headings in Silva Documents now allow superscript, subscript
+          and emphasis markup.
+
+        - Numerous UI tweaks.
+   
+      Chief editor visible changes
+
+        - Added IP Groups. This replaces the 'restriction by IP
+          address' text area in tab_access.
+  
+        - Added Viewer + and Viewer ++ roles for higher view
+          restrictions. Redid the user interface and underlying code
+          for setting this.
+          
+      Site developer visible changes
 
         - Deprecated SQL Data Source assets in favor of the
-          SilvaExternalSources extension. Exsiting SQL Data Source assets
-          continue to work, but no new SQL Data Sources can be added to the
-          Silva tree. In future Silva versions SQL Data Source assets may
-          stop working.
+          SilvaExternalSources extension. Existing SQL Data Source
+          assets continue to work, but no new SQL Data Sources can be
+          added to the Silva tree. In future Silva versions SQL Data
+          Source assets may stop working.
+
+        - Improved virtual hosting support. Both the public screens as
+          well as the Silva edit screens should behave better in the
+          presence of virtual hosting. Public view caching such as for
+          Silva Document has also been made virtual host aware.
+       
+        - Documents now index title along with document XML contents
+          in fulltext indexing.
+
+        - Error messages in public sites should now be shown within
+          the context of the public template (if
+          standard_error_message is replaced in the Silva root or if
+          a new Silva root is created).
+
+        - Some infrastructure is now in place to drive workflow
+          from an outside process like a cron job. This is needed to
+          keep the catalog and thus search functionality up to date if
+          publication dates are set in the future or expiration dates
+          are used.
+
+        - DemoObject is removed from the core in favor of a (to be
+          developed/updated) demo extension.
+
+      Technical changes
+
+        - Added API to membership system so that extra columns can be
+          defined for lookup results by plugin membership components.
 
         - Merged silva.css and ploneCustom.css (removed ploneCustom)
           to reduce hits and processing.
         
-        - Import assets from a zipfile now creates Silva Folder for the
-          zipfiles's directory structure.
-
-        - Numerous small UI tweaks.
-
-        - Added IP Groups. This replaces the `restriction by IP
-          address' text area in tab_access.
-          
-        - Ghosts have a 'get reference' button now.
-    
-        - Siva Files now have their icon dependent on the
-          content. I.e. you get a pdf icon if you uploaded a pf
-          file. Currently there are icons for PDF, Word, Excel and
-          PowerPoint.
-        
-        - Added GhostFolder: While a ghost haunts a content objects a
-          GhostFolder haunts a container.
-
         - service_utils went away. All functionality moved to
           mangle.py
     
         - Checks for valid IDs are all moved to a separate module.
 
-        - Removed Silva Document and editor functionality from the
-          core into its own product, SilvaDocument.
+        - Silva Document and editor functionality is split from the
+          Silva core into a separate SilvaDocument product. This is
+          still very much tied to the core in this release however, so
+          changes are noted in this HISTORY file for the time being.
 
+        - Silva Views machinery is split out from the Silva core into
+          SilvaViews product.
+
+        - New SilvaExternalSources product replacing both code element
+          and SQLSource assets. This makes it possible to pass
+          parameters to external sources (a feature missing in code
+          element). They also plug into the document caching
+          framework.
+   
         - Added functionality to use CMFCore DirectoryView
           infrastructure instead of FileSystemSite, through the
           fssite.py module. Importing from the CMFCore is turned off
@@ -61,15 +124,18 @@ Silva changes
           All uses of FileSystemSite functionality in Silva should now
           import through this module.
 
-        - DemoObject is removed from the core in favor of a (to be
-          developed/updated) demo extension.
+        - Errors that are displayed in the Silva user interface now
+          don't result in ZODB database commits.
 
-        - Added Viewer + and Viewer ++ roles for higher view
-          restrictions.  Redid the user interface and underlying code
-          for setting this.
-
-        - Added API to membership system so that extra columns can be
-          defined for lookup results by plugin membership components.
+        - A new Silva unit testing framework that is based on the
+          ZopeTestCase system
+          (http://www.zope.org/Members/shh/ZopeTestCase) allows much
+          higher performance and less hackery for running unit tests.
+          See the README.txt in the tests directory for more information.
+        
+        - publication and modification datetime support is now not
+          dependent on ZODB bobobase_modification_datetime anymore but
+          is hooked into the metadata system.
 
     Bugs fixed
 
@@ -86,6 +152,11 @@ Silva changes
 
         - XML export permissions rationalized: it is now accessible to
           people having ReadSilvaContent permission.
+
+        - Access restriction by IP used to rely on Zope Properties;
+          this doesn't happen anymore since we migrated to IP groups.
+
+        - Some cleanups in what is indexed in the catalog.
 
   0.9.2.5
 
@@ -113,6 +184,11 @@ Silva changes
           field to '' anymore when it's something else than None
           (previously it checked whether it resolved to true instead
           of checking for None).
+
+        - View caching should now be more efficient as cachability
+          check is now only made once for each new publish event. The
+          view caching framework now also has some unit tests.
+          
 
   0.9.2.4
 
