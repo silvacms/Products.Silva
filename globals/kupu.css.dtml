@@ -449,6 +449,10 @@ div.public a:hover {
 a img {
   border: 0;
 }
+
+a:link, a:hover, a:active, a:visited {
+  color: #0000aa ! important;
+}
   
 </dtml-let>
 
