@@ -1,6 +1,6 @@
 <html>
   <head>
-    <link rel="stylesheet" href="globals/base.css" />
+    <link rel="stylesheet" href="globals/base.css"  tal:attributes="href here/globals/base.css/absolute_url | nothing " />
     <title>Who are you?</title>
   </head>
 
