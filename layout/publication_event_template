@@ -1,7 +1,7 @@
 To: <%(toaddress)s>
 From: Silva Subscription Service <subscription-service@do.not.reply>
 Subject: Silva Subscription Service - change notification for %(contenturl)s
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 
 
 The following page has changes:
@@ -13,7 +13,7 @@ URL:
 
 %(contenturl)s
   
-You're receiving this notification message because you're subscribed to 
+You're receiving this notification message because you're subscribed to
 changes for this URL:
 
 %(subscribedcontenturl)s

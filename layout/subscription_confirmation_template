@@ -1,10 +1,10 @@
 To: <%(toaddress)s>
 From: Silva Subscription Service <subscription-service@do.not.reply>
 Subject: Silva Subscription Service - subscription confirmation for %(contenturl)s
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 
 
-You (or someone using your email address) requested a subscription for 
+You (or someone using your email address) requested a subscription for
 receiving change notifications for the page:
 
 title: %(contenttitle)s
@@ -12,10 +12,10 @@ URL:
 
 %(contenturl)s
 
-This request needs to be confirmed. You can confirm this request by 
+This request needs to be confirmed. You can confirm this request by
 going to this URL (usually this URL is clickable):
 
 %(confirmationurl)s
 
-This URL will be valid for 3 days. If you do not want to subscribe, you 
+This URL will be valid for 3 days. If you do not want to subscribe, you
 can safely ignore this message.
