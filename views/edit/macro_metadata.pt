@@ -84,10 +84,14 @@
               colspan="4">
               <h2>
                 <img tal:replace="structure python:view.render_icon(model)" />
+                <tal:block i18n:translate="">
                 metadata
-                <span tal:condition="not: model/implements_container">
-                  for &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
-                </span>
+                <tal:block condition="not: model/implements_container">
+                  for &#xab;<tal:block content="string:${title}"
+                  i18n:name="metadata_title">
+                  title</tal:block>&#xbb;
+                  </tal:block>
+                </tal:block>
               </h2>
             </td>
           </tr>

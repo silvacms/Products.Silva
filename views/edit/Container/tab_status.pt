@@ -171,7 +171,8 @@
             tal:condition="obj/status | nothing"
             tal:attributes="
               class obj/status_style | default;
-              href string:${obj_url}/edit/tab_status;">
+              href string:${obj_url}/edit/tab_status;"
+              i18n:attributes="title">
               <tal:block content="obj/status" i18n:translate="">
               </tal:block>
           </a>
@@ -179,7 +180,8 @@
             title="publish"
             tal:condition="is_container"
             tal:attributes="
-              href string:${obj_url}/edit/tab_status;">
+            href string:${obj_url}/edit/tab_status;"
+            i18n:attributes="publish">
             <i>n/a</i>
           </a>
         </td>
@@ -215,7 +217,8 @@
           <a href="tab_status"
             title="public version"
             tal:attributes="href obj_url;"
-            tal:condition="python: public_status == 'published'">
+            tal:condition="python: public_status == 'published'"
+            i18n:attributes="title">
             <tal:block
               define="
                 global closeables python: 1;

@@ -183,7 +183,11 @@ _______ manual close section here _______
          <td class="top">
            <h2 tal:attributes="title string:id: ${model/id}">
              <img tal:replace="structure python:view.render_icon(model)" />
-             export &#xab;<span tal:replace="string:${model/get_title_editable}">id</span>&#xbb;
+             <tal:block i18n:translate="export_document">
+             export &#xab;
+             <tal:block content="string:${model/get_title_editable}"
+              i18n:name="export_id">id</tal:block>&#xbb;
+             </tal:block>
            </h2>
          </td>
        </tr>
@@ -210,9 +214,10 @@ _______ manual close section here _______
            <input class="transport"
              type="submit"
              tal:attributes="name python: '%s/edit/tab_status_export:method' % '/'.join(request['model'].get_container().getPhysicalPath())"
-             value=" export..."
+             value="export..."
              title="access key: alt-e"
              accesskey="e"
+             i18n:attributes="value title"
            />
          </td>
        </tr>

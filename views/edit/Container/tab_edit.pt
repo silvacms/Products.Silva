@@ -83,7 +83,7 @@
                   </label>
                   <select class="transport"
                     name="meta_type"
-                    title="select a new item - alt-s"
+                    title="select a new item: alt-s"
                     tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
                     i18n:attributes="title"
                   >
@@ -192,6 +192,7 @@
                         tal:attributes="
                           href item_info/editor_link;
                           class item_info/status_style;"
+                          i18n:attributes="title"
                       >
                         id
                       </a>
@@ -213,6 +214,7 @@
                         tal:attributes="
                           href string:${item_info/item_url}/edit/tab_preview;
                           class item_info/status_style;"
+                        i18n:attributes="title"
                         tal:content="python:(item_info['title_editable'] or default)">
                         <i i18n:translate="no_title">no title</i>
                       </a>
@@ -248,6 +250,7 @@
                         tal:condition="item_info/is_versioned_content"
                         tal:attributes="href string:${item_info/item_url}/edit/tab_status"
                         tal:content="structure item_info/last_author"
+                        i18n:attributes="title"
                       >
                         authorname
                       </a>

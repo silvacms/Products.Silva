@@ -267,7 +267,7 @@
               value="crop image"
               title="access key: alt-r"
               accesskey="r"
-              i18n:attributes="value"
+              i18n:attributes="value title"
             />
           </td>
         </tr>

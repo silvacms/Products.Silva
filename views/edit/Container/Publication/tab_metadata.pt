@@ -126,7 +126,7 @@
             accesskey="l"
             tal:define="js string:return confirm('Really remove copied layout?')"
             tal:attributes="onclick python:(model.layout_copied() and js) or ''"
-            i18n:attributes="value"
+            i18n:attributes="value title"
           />
         </td>
       </tr>
