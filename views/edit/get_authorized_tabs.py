@@ -8,8 +8,12 @@
 ##title=
 ##
 if not context.get_silva_permissions()['ChangeSilvaContent']:
-    return [('Edit', 'tab_edit', 'tab_edit', '!', '1', '6'), 
-            ('Preview', 'tab_preview', 'tab_preview', '@', '2', '7'),
-           ]
+    if container.REQUEST.other['model'].implements_container():
+        return [('Edit', 'tab_edit', 'tab_edit', '!', '1', '6'), 
+                ('Preview', 'tab_preview', 'tab_preview', '@', '2', '7'),
+               ]
+    else:
+        # readers cannot change content object, just preview it
+        return [ ('Preview', 'tab_preview', 'tab_preview', '@', '2', '7') ]
 else:
     return context.get_tabs()
