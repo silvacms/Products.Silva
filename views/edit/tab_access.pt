@@ -30,7 +30,7 @@
 <table width="100%" cellspacing="0" cellpadding="3" border="0">
 <tr>
   <td colspan="3">
-    <h3>UserRoles from a higher level down
+    <h3>UserRoles acquired from above 
     <img src="pixel.gif" width="1px" height="14px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     </h3>
@@ -38,15 +38,13 @@
 </tr>
 <tr class="topcontrols">
   <td style="background:#c0dbe0;" align="left" colspan="2">
-    <img src="pixel.gif" width="1px" height="14px"
-      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-    &nbsp;
+    Select checkboxes of users, select role, then assign a local role.
   </td>
 </tr>
 <tr class="focus"
   tal:condition="not:upward_userinfos">
   <td>
-    <i>no users defined</i>
+    <i>No users defined on higher levels</i>
   </td>
   <td>
     &nbsp;
@@ -98,13 +96,15 @@
   <td colspan="2" align="right">
     <input type="hidden" name="referer" value="tab_access"/>
     <input type="submit" class="button" name="lookup:method" value="Users lookup..."
-      title="Go to: Lookup and select users to add to groups..." />
+      title="Lookup and select users to add to groups... - alt-u" accesskey="u" />
   </td>
 </tr>
 <tr class="topcontrols">
-  <td style="background:#b0cbd0;" align="right" colspan="3">
-    <img src="pixel.gif" width="1px" height="14px"
-      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+  <td style="background:#b0cbd0;">
+    Assign and remove local users.
+  </td>
+  <td style="background:#b0cbd0;" align="right" colspan="2">
+    Revoke user's roles.
   </td>
 </tr>
 <tal:block repeat="userinfo local_userinfos">
@@ -130,8 +130,8 @@
   </td>
 </tr>
 <tr class="focus-cycle"
-  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')"
-  tal:repeat="role upward_roles">
+  tal:repeat="role upward_roles"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
   <td>
     &nbsp;
   </td>
@@ -143,8 +143,8 @@
   </td>
 </tr>
 <tr class="focus-cycle"
-  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')"
-  tal:repeat="role local_roles">
+  tal:repeat="role local_roles"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
   <td>
     &nbsp;
   </td>
@@ -163,7 +163,7 @@
     <i tal:condition="not:local_userinfos">(no local user access defined)</i>&nbsp;
   </td>
   <td align="right" colspan="2">
-    <input type="submit" class="warningbutton" name="access_revoke_from_user:method" value="revoke"
+    <input type="submit" class="warningbutton" name="access_revoke_from_user:method" value="Revoke"
       title="Revoke selected role(s) from selected user(s)."
       tal:condition="local_userinfos" />
   </td>
@@ -191,7 +191,7 @@
 </table>
 <!-- _____________________ GROUPS AND ROLES ____________________________ -->
 <br />
-<hr />
+<div class="rule">&nbsp;</div>
 <tal:block condition="python:model.sec_groups_enabled()">
 <tal:block condition="python:not getattr(here, 'service_groups', None)">
 <table width="100%" cellspacing="0" cellpadding="3" border="0">
@@ -389,17 +389,19 @@
 </tal:block>
 </tal:block>
 <br />
-<hr />
+<div class="rule">&nbsp;</div>
 <table width="100%" cellspacing="0" cellpadding="3" border="0">
 <tr>
   <td>
-    <a href="tab_access_authorized_below">Authorized users below this level</a>
+    <h4>Mail users below this level</h4>
+    <a class="buttonlink" href="tab_access_authorized_below" style="float:right;">&nbsp;&nbsp;&nbsp;&nbsp;Authorized users below this level...&nbsp;&nbsp;&nbsp;</a>
+    Extract a list of email addressses of all users working in this area. 
   </td>
 </tr>
 </table>
 <!-- __________________________ END WORKSHEET __________________________ -->
 </div>
-
+<span class="halfline"><br /></span>
 <h2><img src="%s" width="16" height="16" alt="%s"
     tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
     Access Restrictions for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
@@ -422,9 +424,7 @@
   <tr>
     <td colspan="3" style="background:#c0dbe0;"
       tal:attributes="style python:test(is_closed > 1, 'background:#b0cbd0;;', 'background:#c0dbe0;;')">
-      <img src="pixel.gif" width="1px" height="14px"
-        tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-      &nbsp;
+      Setting an access restriction here affects all objects on this and lower levels.
     </td>
   </tr>
   <tr class="focus">
@@ -470,9 +470,7 @@
 <tr>
   <td colspan="3" style="background:#c0dbe0;"
     tal:attributes="style python:test(definition_aquired, 'background:#b0cbd0;;', 'background:#c0dbe0;;')">
-    <img src="pixel.gif" width="1px" height="14px"
-      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-    &nbsp;
+    All objects on this and lower levels can be restricted for access from specific IP ranges.
   </td>
 </tr>
 <tr class="focus">

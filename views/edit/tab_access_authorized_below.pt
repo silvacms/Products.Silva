@@ -1,24 +1,46 @@
-<tal:block define="global breadcrumb_vein string:Access;" />
+<tal:block define="
+  global active_tab string:tab_access;
+  global breadcrumb_vein string:Users;
+  " />
 <html metal:use-macro="here/macro_index/macros/master">
 <div class="margins" metal:fill-slot="main">
 <p class="halfline">&nbsp;</p>
 
+<h3><a href="tab_access" title="Up to top of Access tab">Access</a></h3>
+<h2 class="worksheet">
+  Authorized users below this level
+</h2>
+<div class="worksheet">
 <check tal:omit-tag=""
   tal:condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
-  <dummy tal:omit-tag="" tal:define="dummy python:model.security_trigger()" />
+<dummy tal:omit-tag="" tal:define="dummy python:model.security_trigger()" />
+<form action="." method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+  <tr>
+    <th colspan="2" align="left">
+      <span class="tablehead4">Email addresses</span>
+    </th>
+  </tr>
+  <tr>
+    <td class="focus">
+      Addresses are formatted for copying and pasting in the &#8216;To:&#8217; field of a message.<br />
+      <span class="textarea">
+        <textarea name="data" cols="65" rows="5" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="userinfo python:model.sec_get_user_info(userid)"
+          tal:condition="userinfo/mail | nothing" tal:replace="userinfo/mail">
+          userid</span>
+        <span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></repeat></textarea>
+      </span>
+    </td>
+  </tr>
+  <tr class="controls">
+    <td>
+      <input class="cancelbutton" type="submit" name="tab_access:method" value="Cancel" title="Cancel - ctrl-c" accesskey="c" />
+    </td>
+  </tr>
+</table>
+</form>
 
-  <h3>Authorized users below this level</h3>
-
-  <form>
-    <span class="textarea">
-      <textarea name="data" cols="65" rows="5" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="userinfo python:model.sec_get_user_info(userid)"
-        tal:condition="userinfo/mail | nothing" tal:replace="userinfo/mail">
-        userid
-      </span><span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></repeat></textarea>
-    </span>
-  </form>
 </check>
-
-<p><a href="tab_access">Back to the access tab</a></p>
+</div>
 </div>
 </html>
