@@ -189,9 +189,19 @@ function Cropper(layer, dragbar, resizehandle, minwidth, minheight) {
         field_x = opener.document.getElementById("x");
         field_y = opener.document.getElementById("y");
         field_size = opener.document.getElementById("size");
+        var x = this.left();
+        var y = this.top();
         
-        field_x.value = this.left();
-        field_y.value = this.top();
+        // test if the cropper don't add negative values
+        if (x < 0) {
+          x = 0;
+        };
+        if (y < 0) {
+          y = 0;
+        };
+          
+        field_x.value = x;
+        field_y.value = y;
         field_size.value = this.width() + 'x' + this.height();
         
         // Close LookupWindow
@@ -212,16 +222,3 @@ function openlookupWindow(url_to_open, url_to_image) {
   lookupWindow.focus();
 }
 
-function insertCropCoords(width, height, x, y, wndw) {
-  // Append to previously focused text area
-  field_x = document.getElementById("x");
-  field_y = document.getElementById("y");
-  field_size = document.getElementById("size");
-  
-  field_x.value = x;
-  field_y.value = y;
-  field_size.value = width + 'x' + height;
-  
-  // Close LookupWindow
-  wndw.close();
-}
