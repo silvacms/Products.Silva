@@ -181,7 +181,16 @@ class AssetCatalogTestCase(SilvaTestCase):
         self.silva.manage_renameObject('test', 'test2')
         self.assertNoPath('/silva_test/test')
         self.assertPath('/silva_test/test2')
-        
+
+class MetadataCatalogTestCase(SilvaTestCase):
+    def test_add(self):
+        md = self.silva.service_metadata
+        self.assertEquals(
+            'Silva Test',
+            md.getMetadataValue(
+            self.silva.index.get_viewable(),
+            'silva-content', 'maintitle'))
+    
 # XXX
 # test asset cataloging
 # test root cataloging
@@ -191,6 +200,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(VersionCatalogTestCase, 'test'))
     suite.addTest(unittest.makeSuite(ContainerCatalogTestCase, 'test'))
     suite.addTest(unittest.makeSuite(AssetCatalogTestCase, 'test'))
+    suite.addTest(unittest.makeSuite(MetadataCatalogTestCase, 'test'))
     return suite
 
 def main():
