@@ -7,18 +7,18 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
 # Silva
 from ViewRegistry import ViewAttribute
-from TocSupport import TocSupport
+from Publishable import Publishable
 import Copying
 import Interfaces
 # misc
 from helpers import add_and_edit
 
-class Folder(TocSupport, Folder.Folder):
+class Folder(Publishable, Folder.Folder):
     """Silva Folder.
     """
     meta_type = "Silva Folder"
 
-    __implements__ = Interfaces.TransparentContainer
+    __implements__ = Interfaces.Container
     
     security = ClassSecurityInfo()
 
@@ -28,7 +28,7 @@ class Folder(TocSupport, Folder.Folder):
     def __init__(self, id, title):
         self.id = id
         self._title = title
-        self._toc_ids = []
+        self._ordered_ids = []
         
     def __repr__(self):
         return "<Silva Folder instance at %s>" % self.id
@@ -38,6 +38,59 @@ class Folder(TocSupport, Folder.Folder):
         """Set the title of this folder.
         """
         self._title = title 
+
+    def move_object_up(self, id):
+        """Move object up. Returns true if move succeeded.
+        """
+        ids = self._ordered_ids
+        i = ids.index(id)
+        if i == 0:
+            return 0
+        ids[i], ids[i - 1] = ids[i - 1], ids[i]
+        self._ordered_ids = ids
+        return 1
+    
+    def move_object_down(self, id):
+        """move object down.
+        """
+        ids = self._ordered_ids
+        i = ids.index(id)
+        if i == len(ids) - 1:
+            return 0
+        ids[i], ids[i + 1] = ids[i + 1], ids[i]
+        self._ordered_ids = ids
+        return 1
+
+    def move_to(self, move_ids, index):
+        ids = self._ordered_ids
+        ids_without_moving_ids = []
+        move_ids_in_order = []
+        for id in ids:
+            if id in move_ids:
+                move_ids_in_order.append(id)
+            else:
+                ids_without_moving_ids.append(id)
+        ids = ids_without_moving_ids
+        move_ids = move_ids_in_order
+        move_ids.reverse()
+        for move_id in move_ids:
+            ids.insert(index, move_id)
+        self._ordered_ids = ids
+        return 1
+    
+    def _add_ordered_publishable(self, item):
+        if not item.is_active():
+            return
+        if Interfaces.Content.isImplementedBy(item) and item.is_default():
+            return
+        self._ordered_ids.append(item.id)
+
+    def _remove_ordered_publishable(self, item):
+        if not item.is_active():
+            return
+        if Interfaces.Content.isImplementedBy(item) and item.is_default():
+            return
+        self._ordered_ids.remove(item.id)
     
     # ACCESSORS
 
@@ -63,61 +116,34 @@ class Folder(TocSupport, Folder.Folder):
         #    if item.is_published():
         #        return 1            
         return 1
-        
-    def move_object_up(self, ref):
-        """Move object up.
-        """
-        object = Copying.resolve_ref(self.getPhysicalRoot(), ref)
-        folder = object.aq_parent.aq_inner
-        # we can't move up anything not in _toc_ids
-        toc_ids = folder._toc_ids
-        if object.id not in toc_ids:
-            return None
-        # can't move up 'default'
-        if object.id == 'default':
-            return None
-        # find position of object in toc_ids
-        i = toc_ids.index(object.id)
-        # can't move up something already on top
-        if i == 0:
-            return None
-        # can't move above 'default'
-        if i == 1 and toc_ids[0] == 'default':
-            return None
-        # now move up id
-        toc_ids[i] = toc_ids[i - 1]
-        toc_ids[i - 1] = object.id
-        folder._toc_ids = toc_ids
-        return 1
-    
-    def move_object_down(self, ref):
-        """move object down.
-        """
-        object = Copying.resolve_ref(self.getPhysicalRoot(), ref)
-        folder = object.aq_parent.aq_inner
-        toc_ids = folder._toc_ids
-        # can't move anything not in toc_ids
-        if object.id not in toc_ids:
-            return None
-        # can't move down 'default'
-        if object.id == 'default':
-            return None
-        # find position of object in folder
-        i = toc_ids.index(object.id)
-        # can't move down something already at bottom
-        if i == len(toc_ids) - 1:
-            return None
-        # now move down id
-        toc_ids[i] = toc_ids[i + 1]
-        toc_ids[i + 1] = object.id
-        folder._toc_ids = toc_ids
+            
+    def is_transparent(self):
         return 1
 
-    def get_contents(self):
-        """Get list of contents of this folder.
+    def get_default(self):
+        """Get the default content object of the folder.
         """
-        return map(self._getOb, self._toc_ids)
-        
+        # NOTE: another dependency on hardcoded name 'default'
+        return getattr(self, 'default', None)
+    
+    def get_ordered_publishables(self):
+        return map(self._getOb, self._ordered_ids)
+    
+    def get_nonactive_publishables(self):
+        result = []
+        for object in self.objectValues():
+            if (Interfaces.Publishable.implementedBy(object) and
+                not object.is_active()):
+                result.append(object)
+        return result
+    
+    def get_assets(self):
+        result = []
+        for object in self.objectValues():
+            if Interfaces.Asset.implementedBy(object):
+                result.append(object)
+        return result
+    
     def get_tree(self):
         """Get flattened tree of contents.
         """
@@ -125,42 +151,30 @@ class Folder(TocSupport, Folder.Folder):
         self._get_tree_helper(l, 0)
         return l
 
+    def get_container_tree(self):
+        l = []
+        self.get_container_tree_helper(l, 0)
+        return l
+    
     def _get_tree_helper(self, l, indent):
-        # make _toc_ids if we haven't got any
-        toc_ids = getattr(self, '_toc_ids', None)
-        # uncomment next lines to flush toc_ids attributes completely
-        # (you'll lose order info too, though)
-        #toc_ids = None
-        # FIXME
-        #if toc_ids is None:
-        #    toc_ids = []
-        #    for item in self.objectValues(['Silva Folder', 'Silva Document']):
-        #        toc_ids.append(item.id)
-        #    self._toc_ids = toc_ids
-            
-        # first sort items so that default is always the first item
-        items = []
-        first_item = None
-        for id in toc_ids:
-            # try to get item in toc_ids, skip anything that could not
-            # be found (should really remove this from _toc_ids)
-            item = getattr(self, id, None)
-            if item is None:
-                continue
-            if id == 'default' and item.meta_type == 'Silva Document':
-                first_item = item
-            else:
-                items.append(item)
-        if first_item is not None:
-            items.insert(0, first_item)
-        # now add them to the main toc list
-        for item in items:
-            if Interfaces.TransparentContainer.isImplementedBy(item):
+        for item in self.get_ordered_publishables():
+            if (Interfaces.Container.isImplementedBy(item) and
+                item.is_transparent()):
                 l.append((indent, item))
                 item._get_tree_helper(l, indent + 1)
             else:
                 l.append((indent, item))
 
+    def _get_container_tree_helper(self, l, indent):
+        for item in self.get_ordered_publishables():
+            if not Interfaces.Container.isImplementedBy(item):
+                continue
+            if item.is_transparent():
+                l.append((indent, item))
+                item._get_container_tree_helper(l, indent + 1)
+            else:
+                l.append((indent, item))
+                
     def create_ref(self, obj):
         """Create a moniker for the object.
         """

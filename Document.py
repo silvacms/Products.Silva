@@ -6,7 +6,7 @@ import Globals
 import DateTime
 # Silva
 from ViewRegistry import ViewAttribute
-from TocSupport import TocSupport
+from Content import Content
 from Versioning import Versioning
 import ForgivingParser
 import Interfaces
@@ -14,7 +14,7 @@ import Interfaces
 from helpers import add_and_edit
 from cgi import escape
 
-class Document(TocSupport, Folder.Folder, Versioning):
+class Document(Content, Folder.Folder, Versioning):
     """Silva Document.
     """
     meta_type = "Silva Document"
@@ -93,7 +93,12 @@ class Document(TocSupport, Folder.Folder, Versioning):
     def set_title(self, title):
         """Set the title.
         """
-        self._title = title
+        if self.is_default():
+            # set the nearest container's title
+            self.get_folder().set_title(title)
+        else:
+            # set title of this document
+            self._title = title
 
     def create_copy(self):
         """Create new version of public version.
@@ -131,7 +136,7 @@ class Document(TocSupport, Folder.Folder, Versioning):
         """Get title. If we're the default document,
         we get title from our containing folder (or publication, etc).
         """
-        if self.id == 'default':
+        if self.is_default():
             # get the nearest container's title
             return self.get_folder().title()
         else:

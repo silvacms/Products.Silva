@@ -13,7 +13,7 @@ class Publication(Folder):
     """
     meta_type = "Silva Publication"
 
-    __implements__ = Interfaces.OpaqueContainer
+    __implements__ = Interfaces.Container
     
     security = ClassSecurityInfo()
 
@@ -28,6 +28,9 @@ class Publication(Folder):
         'nearest' Silva publication.
         """
         return self.aq_inner
+
+    def is_transparent(self):
+        return 0
     
 Globals.InitializeClass(Publication)
 

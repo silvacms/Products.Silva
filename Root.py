@@ -13,7 +13,7 @@ class Root(Folder):
     """
     meta_type = "Silva Root"
 
-    __implements__ = Interfaces.OpaqueContainer
+    __implements__ = Interfaces.Container
     
     security = ClassSecurityInfo()
 
