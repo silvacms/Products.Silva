@@ -32,7 +32,7 @@ class FolderHandler(BaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
             self._result.set_title(
-                self._metadata['silva']['maintitle']
+                self._metadata['silva-content']['maintitle']
                 )
             self.storeMetadata()
                 
@@ -159,7 +159,7 @@ class LinkContentHandler(BaseHandler):
         if name == (NS_URI, 'content'):
             self._result.set_url(self.getData('url'))
             self._result.set_title(
-                self._metadata['silva']['maintitle'])
+                self._metadata['silva-content']['maintitle'])
 
 class StatusHandler(BaseHandler):
     def characters(self, chrs):
