@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.110 $
+# $Revision: 1.111 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -212,6 +212,10 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         for move_id in move_ids:
             if move_id not in ids:
                 return 0
+        for id in move_ids:
+            if ids.index(id) < index:
+                index += 1
+                break
         ids_without_moving_ids = []
         move_ids_in_order = []
         for id in ids:
