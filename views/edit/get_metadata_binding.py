@@ -1,13 +1,10 @@
-ms = context.service_metadata
-request = context.REQUEST
-model = request.model
-                             
-editable = model.get_editable()
-if editable is None:
-    # No editable version
+##parameters=content=None
+
+if content is None:
     return None
 
-binding = ms.getMetadata(editable)
+ms = context.service_metadata
+binding = ms.getMetadata(content)
 
 renderEdit = binding.renderElementEdit
 renderView = binding.renderElementView
