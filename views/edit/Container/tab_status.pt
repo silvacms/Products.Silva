@@ -233,7 +233,7 @@
     </tr>
   </tbody>
   <tfoot tal:condition="may_change_content">
-    <tr tal:condition="approveables">
+    <tr tal:condition="objects">
       <th class="listing-left"
         colspan="2">
         <tal:define define="select_id string:refs">
