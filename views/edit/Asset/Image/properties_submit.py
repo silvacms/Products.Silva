@@ -17,5 +17,7 @@ except FormValidationError, e:
     return view.tab_edit(message_type="error", message=context.render_form_errors(e))
 model.sec_update_last_author_info()
 model.set_title(model.input_convert(result['image_title']))
+model.set_web_presentation_properties(result['web_format'], 
+    result['web_scaling'])
 # FIXME: should put in message
 return view.tab_edit(message_type="feedback", message="Properties changed.")

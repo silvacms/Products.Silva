@@ -1,6 +1,6 @@
 ##bind context=context
 ##parameters=asset_context, asset
-# $Id: asset_lookup_path_mangler.py,v 1.1 2003/03/14 17:28:34 zagy Exp $
+# $Id: asset_lookup_path_mangler.py,v 1.1.4.1 2003/03/17 15:13:54 zagy Exp $
 
 asset_path = asset.getPhysicalPath()
 asset_context = asset_context.split('/')

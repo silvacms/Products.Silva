@@ -20,7 +20,7 @@
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
           <display_width type="int">20</display_width>
-          <required type="int">1</required>
+          <required type="int">0</required>
           <css_class></css_class>
           <default></default>
           <title>Id</title>
@@ -60,7 +60,7 @@
           <css_class></css_class>
           <default></default>
           <title>Image</title>
-          <description></description>
+          <description>&lt;b&gt;Tip:&lt;/b&gt; You don't have to fill in the id and title fields.</description>
           <external_validator></external_validator>
           <required type="int">1</required>
           <extra></extra>
