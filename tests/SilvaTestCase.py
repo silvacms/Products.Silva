@@ -164,21 +164,21 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
             id, title, **kw)
         return getattr(object, id)
 
-    def add_folder(self, object, id, title):
-        return self._add_helper(object, 'Folder', id, title)
+    def add_folder(self, object, id, title, **kw):
+        return self._add_helper(object, 'Folder', id, title, **kw)
+
+    def add_publication(self, object, id, title, **kw):
+        return self._add_helper(object, 'Publication', id, title, **kw)
+
+    def add_document(self, object, id, title):
+        object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
+        return getattr(object, id)
 
     def add_ghost(self, object, id, title):
         return self._add_helper(object, 'Ghost', id, title)
 
     def add_image(self, object, id, title, **kw):
         return self._add_helper(object, 'Image', id, title, **kw)
-
-    def add_publication(self, object, id, title):
-        return self._add_helper(object, 'Publication', id, title)
-
-    def add_document(self, object, id, title):
-        object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
-        return getattr(object, id)
 
 
 def setupSilvaRoot(app, id='root', quiet=0):
@@ -193,13 +193,7 @@ def setupSilvaRoot(app, id='root', quiet=0):
         newSecurityManager(None, user)
         factory = app.manage_addProduct['Silva']
         factory.manage_addRoot(id, '')
-        # XXX make document be the default index
-        # this should go away after indexgeddon
         root = app.root
-        binding = root.service_metadata.getMetadata(root)
-        binding.setValues('silva-publication', {
-            'defaultdocument_policy': 'Silva Document',
-            })
         factory = app.manage_addProduct['TemporaryFolder']
         factory.constructTemporaryFolder('temp_folder', '')
         noSecurityManager()
