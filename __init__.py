@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.112.6.6.6.3 $
+# $Revision: 1.112.6.6.6.4 $
 
 import ContainerPolicy
 
@@ -150,7 +150,7 @@ def initialize(context):
         pass
     else:
         print 'kupu imported'
-        registerDirectory('%s/common' % os.path.dirname(kupu.__file__), globals())
+        registerDirectory('%s/default' % os.path.dirname(kupu.__file__), globals())
         registerDirectory('%s/silva' % os.path.dirname(kupu.__file__), globals())
 
     # initialize the metadata system
