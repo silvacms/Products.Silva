@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.1 2003/08/21 10:45:37 zagy Exp $
+# $Id: icon.py,v 1.2 2003/08/21 11:01:17 zagy Exp $
 
 """Sivla icon registry"""
 
@@ -49,7 +49,7 @@ class SilvaFileAdapter(Adapter):
     def getIconIdentifier(self):
         i = ('mime_type', self.adapted.get_mime_type())
         try:
-            IconRegistry.getIconByIdentifier(i)
+            registry.getIconByIdentifier(i)
         except KeyError:
             return MetaTypeAdapter(self.adapted).getIconIdentifier()
         else:
@@ -130,6 +130,5 @@ class _IconRegistry:
         self._icon_mapping[identifier] = 'misc_/%s/%s' % (product, name)
             
 
-
-IconRegistry = _IconRegistry()
+registry = _IconRegistry()
 

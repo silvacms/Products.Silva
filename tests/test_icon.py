@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_icon.py,v 1.1 2003/08/21 10:45:38 zagy Exp $
+# $Id: test_icon.py,v 1.2 2003/08/21 11:01:17 zagy Exp $
 
 import Zope
 Zope.startup()
@@ -50,7 +50,7 @@ class RegistryTest(SilvaTestCase):
     def test_registry(self):
         self.assertEquals(self.silva.fileasset.get_mime_type(),
             'application/pdf')
-        r = IconRegistry
+        r = registry
         r.registerAdapter(MetaTypeAdapter, 0)
         r.registerAdapter(SilvaFileAdapter, 10)
         self.assertEquals(len(r._adapters), 2)
