@@ -36,6 +36,9 @@ Silva changes
 
     Bugs Fixed
 
+        - get_public_tree() would not do the right thing with the depth-
+          level control argument.
+
         - Images nested in tables now keep their <a href="..."> tag (if set
           on the image element).
 
