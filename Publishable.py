@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -87,6 +87,18 @@ class Publishable:
         else:
             # never be approved if there is no versioning
             return 0
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+        'is_deletable')
+    def is_deletable(self):
+        """is object deletable?
+        
+            a publishable object is only deletable if
+                it's not published
+                it's not approved
+        
+        """
+        return not self.is_published() and not self.is_approved()
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'can_approve')
