@@ -21,6 +21,7 @@
 <span tal:replace="nothing">
   _____________________ processing table  _____________________
 </span>
+<a href="queue" />
 <form action="." enctype="multipart/form-data" method="POST"
   tal:condition="docma_running">
   <table class="listing">
@@ -31,10 +32,9 @@
             style="float: right;"
             title="reload to update the queue lists: alt-r"
             accesskey="r"
-            onClick=""
             i18n:attributes="title"
             i18n:translate="refresh_queue_lists"
-            tal:attributes="href string:${model/absolute_url}/edit/${template/id}"
+            tal:attributes="href string:${model/absolute_url}/edit/${template/id}#queue"
           >
             <u>R</u>efresh queue lists
           </a>
