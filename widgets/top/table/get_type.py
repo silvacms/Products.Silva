@@ -12,4 +12,4 @@
 if not node.hasAttribute('type'):
     return 'plain'
 else:
-    return node.node.getAttribute('type')
+    return node.getAttribute('type')
