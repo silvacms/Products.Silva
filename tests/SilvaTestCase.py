@@ -39,39 +39,39 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''
         return self.app.root
         
-    def afterSetUp(self):                                                                                       
+    def afterSetUp(self):
         '''Called after setUp() has completed. This is
            far and away the most useful hook.
         '''
-        pass                                                                                                    
-                                                                                                                
-    def beforeTearDown(self):                                                                                   
-        '''Called before tearDown() is executed.                                                                
-           Note that tearDown() is not called if                                                                
-           setUp() fails.                                                                                       
-        '''                                                                                                     
-        pass                                                                                                    
-                                                                                                                
-    def afterClear(self):                                                                                       
-        '''Called after the fixture has been cleared.                                                           
-           Note that this is done during setUp() *and*                                                          
-           tearDown().                                                                                          
-        '''                                                                                                     
-        pass                                                                                                    
-                                                                                                                
-    def beforeSetUp(self):                                                                                      
-        '''Called before the ZODB connection is opened,                                                         
-           at the start of setUp(). By default begins                                                           
-           a new transaction.                                                                                   
-        '''                                                                                                     
-        get_transaction().begin()                                                                               
-                                                                                                                
-    def beforeClose(self):                                                                                      
-        '''Called before the ZODB connection is closed,                                                         
-           at the end of tearDown(). By default aborts                                                          
-           the transaction.                                                                                     
-        '''                                                                                                     
-        get_transaction().abort()                                                                               
+        pass
+    
+    def beforeTearDown(self):
+        '''Called before tearDown() is executed.
+           Note that tearDown() is not called if
+           setUp() fails.
+        '''
+        pass
+    
+    def afterClear(self):
+        '''Called after the fixture has been cleared.
+           Note that this is done during setUp() *and*
+           tearDown().
+        '''
+        pass
+
+    def beforeSetUp(self):
+        '''Called before the ZODB connection is opened,
+           at the start of setUp(). By default begins
+           a new transaction.
+        '''
+        get_transaction().begin()
+
+    def beforeClose(self):
+        '''Called before the ZODB connection is closed,
+           at the end of tearDown(). By default aborts
+           the transaction.
+        '''
+        get_transaction().abort()
 
     def setUp(self):     
         '''Sets up the fixture. Do not override, 
@@ -94,9 +94,9 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         self.beforeTearDown()
         self._clear(1)
 
-    def _app(self):                                                                                             
-        '''Returns the app object for a test.'''                                                                
-        return ZopeTestCase.app()                                                                                            
+    def _app(self):
+        '''Returns the app object for a test.'''
+        return ZopeTestCase.app()
 
     def _setupRootUser(self):
         '''Creates the root user.'''
@@ -113,14 +113,15 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
             except: pass
             try: self.root.Members._delObject(_user_name)
             except: pass
-        if call_close_hook:                                                                                     
-            self.beforeClose()                                                                                 
-        self._close()                                                                                           
-        self.logout()                                                                                          
-        self.afterClear()                                                                                      
-    def _close(self):                                                                                           
-        '''Closes the ZODB connection.'''                                                                       
-        ZopeTestCase.closeConnections()                                                                                      
+        if call_close_hook:
+            self.beforeClose()
+        self._close()
+        self.logout()
+        self.afterClear()
+        
+    def _close(self):
+        '''Closes the ZODB connection.'''
+        ZopeTestCase.closeConnections()
 
     def addObject(self, container, type_name, id, product='Silva',
             **kw):
