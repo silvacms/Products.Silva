@@ -218,6 +218,13 @@ class CopyTestCase(unittest.TestCase):
         # should still be there, as it contains a published subdoc
         self.assert_(hasattr(self.sroot, 'folder4'))
 
+    def test_delete7(self):
+        # delete folder without default doc
+        self.folder4.action_delete(['default'])
+        self.assert_(not hasattr(self.folder4, 'default'))
+        self.sroot.action_delete(['folder4'])
+        self.assert_(not hasattr(self.sroot, 'folder4'))
+
     def test_rename1(self):
         self.sroot.action_rename('doc1', 'docrenamed')
         self.assert_(not hasattr(self.sroot, 'doc1'))
