@@ -11,8 +11,8 @@ def from09to091(self, root):
     # upgrade xml in the site
     upgrade_xml_09to091(root)
 
-    if hasattr(root.service_members, _allow_subscription):
-        root.service_members._allow_authentication_requests
+    if hasattr(root.service_members, '_allow_subscription'):
+        root.service_members._allow_authentication_requests = root.service_members._allow_subscription
     
 def from086to09(self, root):
     """Upgrade Silva from 0.8.6(.1) to 0.9.
