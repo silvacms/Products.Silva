@@ -53,9 +53,6 @@ Silva changes
         - A number of things fixed in 0.9.1.x have also been fixed
           for 0.9.2.
 
-          XXX edit index element in heading needs to be tested
-          XXX upgrade script from 0.9.1 needs to be re-tested
-
   0.9.2.2
 
     Bugs Fixed
