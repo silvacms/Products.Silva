@@ -102,7 +102,7 @@ class LinkVersion(CatalogedVersion):
                     '</body></html>') % self._url
         else:
             response.redirect(self._url)
-            return None
+            return ""
         
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_url')
