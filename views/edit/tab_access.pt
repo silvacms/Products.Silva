@@ -487,8 +487,9 @@
                   <option value="role"
                     tal:repeat="role model/sec_get_roles"
                     tal:content="role"
-                    tal:attributes="value role; 
-                                    selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
+                    tal:attributes="
+                      value role; 
+                      selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
                     Role
                   </option>
                 </select>
@@ -514,14 +515,18 @@
       </tal:block>
       <td class="main">
         <form action="."
-          method="POST">
+          method="POST"
+          tal:define="
+            info view/get_viewer_role_info; acquired info/acquired;
+            selected_role info/selected_role">
           <table class="listing sublisting">
             <thead>
               <tal:block replace="nothing"> 
                 _____________ vein + title row ______________
               </tal:block>
               <tr>
-                <td class="top">
+                <td class="top"
+                  colspan="2">
                   <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
                     <span i18n:translate="public_view_access_restrictions" tal:omit-tag="">public view access restrictions for</span> &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
@@ -532,7 +537,7 @@
                 ______________ top controls row _____________
               </tal:block>
               <tr class="top-controls">
-                <td>
+                <td colspan="2">
                   <h3 i18n:translate="access_restrictions_by_role">
                     access restriction by role
                   </h3>
@@ -540,8 +545,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="odd">
-                <td i18n:translate="setting_an_access_restriction">
+              <tr>
+                <th i18n:translate="current_restriction">
+                  current restriction
+                </th>
+                <th i18n:translate="note">
+                  note
+                </th>
+              </tr>
+              <tr class="even">
+                <td>
+                  <tal:block condition="info/is_public">Open to the public</tal:block>
+                  <tal:block condition="not: info/is_public"
+                    tal:content="selected_role">role</tal:block>
+                  <tal:block condition="info/acquired">(acquired).</tal:block>
+                </td>
+                <td i18n:translate="setting_an_access_restriction"> 
                   Setting an access restriction here affects objects on this and lower levels.
                 </td>
               </tr>
@@ -551,12 +570,12 @@
             </tal:block>
             <tfoot>
               <tr class="controls">
-                <td tal:define="info view/get_viewer_role_info; acquired info/acquired">
+                <td class="align-right"
+                  colspan="2">
                   <select 
                     class="manipulator"
                     name="role"
-                    title="select a role to assign" i18n:attributes="title"
-                    tal:define="selected_role info/selected_role">
+                    title="select a role to assign" i18n:attributes="title">
                     <option
                       tal:repeat="role info/viewer_roles"
                       tal:attributes="value role; selected python:test(role == selected_role, 'SELECTED', nothing)"
@@ -580,8 +599,6 @@
                     i18n:attributes="title value"
                     tal:condition="not:acquired"
                     />
-                   <tal:block condition="info/is_public">Open to the public</tal:block>
-                   <tal:block condition="info/acquired">(acquired)</tal:block>
                 </td>
               </tr>
             </tfoot>
