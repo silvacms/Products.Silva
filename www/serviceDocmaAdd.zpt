@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.4 $
+Version of this file: $Revision: 1.5 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -31,7 +31,7 @@ Add Service for Docma
     </div>
     </td>
     <td align="left" valign="top">
-    <input type="text" name="title" size="40" />
+    <input type="text" name="title" size="40" value="Docma Conversion Service" />
     </td>
   </tr>
   <tr>

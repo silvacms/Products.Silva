@@ -232,7 +232,7 @@ def configureViews(root):
     root.manage_addProduct['SilvaViews'].manage_addMultiViewRegistry(
         'service_view_registry')
     root.manage_addProduct['Silva'].manage_addExtensionService(
-        'service_extensions', 'Silva Product Extension Configuration')
+        'service_extensions', 'Silva Product and Extension Configuration')
     # folder contains the various view trees
     root.manage_addFolder('service_views', 'Silva View Machinery')
     # and set Silva tree
