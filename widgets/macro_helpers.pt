@@ -28,15 +28,15 @@
 </div>
 
 <div metal:define-macro="edit_bottom_controls" tal:omit-tag="">
-  <td class="align-right">
-    <input class="button" type="submit" value=" Save " title="access key: alt-s" accesskey="s"
+  <td class="align-right" nowrap="nowrap">
+    <input class="button" type="submit" value="Save" title="access key: alt-s" accesskey="s"
       tal:attributes="name string:${rel_url_start}/save:method" id="default_submit" /> 
-    <input class="button" type="submit" value=" Save and exit " title="access key: alt-e" accesskey="e"
+    <input class="button" type="submit" value="Save + exit" title="access key: alt-e" accesskey="e"
       tal:attributes="name string:${rel_url_start}/save_and_exit:method" />
     <tal:block
-      condition="python:0"><!-- uncomment this for a "save and insert next" button (layout is ugly ...) -->
+      condition="python:1"><!-- uncomment this for a "save and insert next" button (layout is ugly ...) -->
       <input 
-         class="button" type="submit" value=" Save and insert next " 
+         class="button" type="submit" value="Save + insert" title="access key: alt-i" accesskey="i"
          tal:condition="python:not disable_insert" 
          tal:attributes="name string:${rel_url_start}/save_and_insert:method" />
     </tal:block>
@@ -81,7 +81,6 @@
     add element&nbsp;
     <select class="manipulator"
       name="what">
-      <option tal:replace="nothing" value="" disabled="disabled">Select item....</option>
       <option tal:repeat="item python:here.get_allowed_info(wr_name, node)" 
         tal:attributes="value python:item[1]" tal:content="python:item[0]"></option>
     </select>

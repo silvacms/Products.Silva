@@ -23,7 +23,8 @@
 <div metal:use-macro="container/macro_helpers/macros/edit_top" />
 <tr class="even" valign="top">
   <td class="invisible"></td>
-  <td style="border-left:1px solid #617681" colspan="2"
+  <td style="border-left:1px solid #617681;text-transform:lowercase;"
+    colspan="2"
     tal:attributes="colspan python:test(disable_notes, 2, nothing);
       class content_cell_class">
     <div metal:define-slot="edit_input">_______ local input/textarea gets slotted in _______</div>
