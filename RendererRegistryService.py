@@ -109,6 +109,9 @@ class RendererRegistryService(SimpleItem.SimpleItem):
         """
         return self._default_renderers.get(meta_type)
 
+    def doesRendererExistForMetaType(self, meta_type, renderer_name):
+        return self._getRendererDict(meta_type, {}).has_key(renderer_name)
+    
     # PRIVATE
     def _getRendererDict(self, meta_type, default=None):
         result = getRendererRegistry().getRenderersForMetaType(meta_type)
