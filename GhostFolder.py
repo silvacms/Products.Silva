@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.11 2003/08/08 09:13:14 zagy Exp $
+# $Id: GhostFolder.py,v 1.12 2003/08/15 07:14:49 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -37,6 +37,10 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
 
     _active_flag = 1
 
+    def __init__(self, id):
+        GhostFolder.inheritedAttribute('__init__')(self, id)
+        self._content_path = None
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'haunt')
     def haunt(self):
@@ -66,7 +70,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                         old_ghost = None
                 if old_ghost is None:
                     ghost.manage_addProduct['Silva'].manage_addFolder(
-                        haunted.id, '[no title]')
+                        haunted.id, '[no title]', 0)
                     new_ghost = getattr(ghost, haunted.id)
                 object_list += [(h, new_ghost)
                     for h in haunted.objectValues()]
