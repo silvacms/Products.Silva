@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.29 $
+# $Revision: 1.30 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -660,9 +660,11 @@ class Versioning:
         
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_last_closed_version')
-    def get_last_closed_version(self):
+    def get_last_closed_version(self, update_status=1):
         """Get the last closed version or None if no such thing.
         """
+        if update_status:
+            self._update_publication_status()
         versions = self.get_previous_versions()
         if len(versions) < 1:
             return None
