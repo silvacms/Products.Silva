@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.41 $
+# $Revision: 1.42 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -19,19 +19,27 @@ registerFileExtension('ico', FSImage)
 
 # -- monkey patch FileSystemSite's minimalpath until new release --
 def minimalpath(p):
+    print 'P', p
     import os
     check = [SOFTWARE_HOME+os.sep, INSTANCE_HOME+os.sep]
+    print 'CHECK', check
+
     if INSTANCE_HOME.startswith(SOFTWARE_HOME):
         check.reverse()
+        print 'REVERSE CHECK', check
     newpath = os.path.normpath(os.path.abspath(p))
+    print 'NEWPATH 1', newpath
     for part in check:
+        print 'PART', part
         if newpath.startswith(part):
+            print 'RETURN PART', newpath[len(part):]
             return newpath[len(part):]
+    print 'NEWPATH 2', newpath
     return newpath
 
-from Products import FileSystemSite
-FileSystemSite.DirectoryView.minimalpath = minimalpath
-FileSystemSite.utils.minimalpath = minimalpath
+#from Products import FileSystemSite
+#FileSystemSite.DirectoryView.minimalpath = minimalpath
+#FileSystemSite.utils.minimalpath = minimalpath
 # -- monkey patch end ---
 
 
