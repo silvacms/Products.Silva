@@ -119,7 +119,7 @@
               </tal:block>
               <tr tal:condition="python:(default_document or publishables or assets)">
                 <th class="listing-left">
-                 &nbsp; ✓&nbsp;&nbsp;#
+                 &nbsp;
                 </th>
                 <th i18n:translate="modify">
                   modify

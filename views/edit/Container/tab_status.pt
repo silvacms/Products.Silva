@@ -83,7 +83,7 @@
   <tbody>
     <tr tal:condition="objects">
       <th class="listing-left">
-        &nbsp; ✓
+        &nbsp;
       </th>
       <th>
         modify / preview
