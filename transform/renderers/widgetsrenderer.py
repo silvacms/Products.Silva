@@ -8,7 +8,7 @@ import Acquisition
 # Silva
 from Products.Silva.transform.interfaces import IRenderer
 
-class BasicHTMLRenderer(Acquisition.Implicit):
+class WidgetsRenderer(Acquisition.Implicit):
 
     __implements__ = IRenderer
 
@@ -25,4 +25,4 @@ class BasicHTMLRenderer(Acquisition.Implicit):
     def getName(self):
         return "Basic HTML"
 
-InitializeClass(BasicHTMLRenderer)
+InitializeClass(WidgetsRenderer)
