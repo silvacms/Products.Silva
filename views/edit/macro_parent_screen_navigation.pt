@@ -22,7 +22,7 @@
                   accesskey="u"
                   tal:attributes="href active_tab">
                   <div class="navigation-border"
-                    tal:content="structure string:&nbsp;up to ${parent_screen_name}...">
+                    tal:content="structure string:&nbsp;<u>u</u>p to ${parent_screen_name}...">
                     parent screen
                   </div>
                 </a>

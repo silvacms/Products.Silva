@@ -1,4 +1,4 @@
-## Script (Python) "tab_metadata_extra_submit"
+## Script (Python) "settings_addables_submit"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -10,13 +10,13 @@
 from Products.Formulator.Errors import ValidationError, FormValidationError
 
 model = context.REQUEST.model
-form = context.tab_metadata_extra_form
+form = context.settings_addables_form
 changed_metadata = []
 
 try:
     result = form.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return context.tab_metadata_addables(message_type="error", message='%s' % context.render_form_errors(e))
+    return context.settings_addables(message_type="error", message='%s' % context.render_form_errors(e))
 
 currently_acquired = model.is_silva_addables_acquired()
 
@@ -25,7 +25,7 @@ addables = result['addables']
 
 # if nothing changes, we're done
 if will_be_acquired and currently_acquired:
-    return context.tab_metadata_addables(message_type="alert", message="Addable settings remain acquired.")
+    return context.settings_addables(message_type="alert", message="Addable settings remain acquired.")
 
 # now update the settings (if we have to)
 if will_be_acquired:
@@ -35,4 +35,4 @@ else:
     changed_metadata.append(('addables list'))
     model.set_silva_addables_allowed_in_publication(addables)
 
-return context.tab_metadata_addables(message_type="feedback", message="Addable settings changed for: %s"%(context.quotify_list(changed_metadata)))
+return context.settings_addables(message_type="feedback", message="Addable settings changed for: %s"%(context.quotify_list(changed_metadata)))

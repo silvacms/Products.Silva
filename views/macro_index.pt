@@ -208,7 +208,7 @@ _______ editor hooks _______
 </span>
 <div class="footer">
   <div style="float: left;">
-    Contact person:
+    contact person:
     <a shape="rect"
       tal:attributes="href python:'mailto:%s' % getattr(model, 'contact_email', None)"
     >
@@ -217,15 +217,17 @@ _______ editor hooks _______
   </div>
   <div style="float: right;">
     <a shape="rect"
+      title="Leave Silva and view the public page: alt-:"
+      accesskey=":"
       tal:attributes="href url"
     >
-      See public version
+      see public version
     </a>
   </div>
   <span tal:condition="python: getattr(model, 'contact_email', '') != ''"
     tal:omit-tag=""
   >
-    Email:
+    email:
     <a tal:attributes="href python:'mailto:%s'% getattr(model, 'contact_email', nothing)">
       <span class="index-link"
         tal:content="model/contact_email | nothing"
@@ -242,9 +244,8 @@ _______ editor hooks _______
   tal:define="userid request/AUTHENTICATED_USER/getUserName"
 >
   <div style="float: left;">
-    <a accesskey="~"
-      href="#"
-      title="Change your settings: alt-~"
+    <a title="Change your settings: alt-~"
+       accesskey="~"
       tal:attributes="
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=350, resizable=no');;
         userWindow.focus();;
@@ -255,7 +256,7 @@ _______ editor hooks _______
         width="8"
         tal:attributes="src string:${root_url}/globals/user.gif"
       />
-      User settings
+      user settings
     </a>
   </div>
   <div style="float: right;">
@@ -263,7 +264,7 @@ _______ editor hooks _______
       href="logout"
       title="Logout of Silva: alt-q"
     >
-      Logout
+      logout
       <span tal:condition="here/get_user_role"
         tal:replace="
           structure string:${here/get_user_role}&nbsp;"
@@ -277,7 +278,7 @@ _______ editor hooks _______
     tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()"
     tal:attributes="href string:public/request_roles?last_url=${url}"
   >
-    Request access
+    request access
   </a>
   <a name="bottom">
     &nbsp;

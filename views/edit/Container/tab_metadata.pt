@@ -166,43 +166,68 @@
   </table>
 </form>
 
-<br />
+<span tal:replace="nothing"> ______________ metadata from system ______________ </span>
 
-<table>
+<table class="listing">
+  <thead>
+    <tr tal:replace="nothing">
+      ______________ top controls row ______________
+    </tr>
+    <tr class="top-controls">
+      <td colspan="3">
+        <h3>
+          automatically stored metadata
+        </h3>
+      </td>
+    </tr>
+  </thead>
+
   <tbody>
     <tr>
+      <th class="align-right"
+        width="12%">
+        Role
+      </th>
+      <th>
+        User name
+      </th>
+    </tr>
+
+    <tr class="unselected">
+      <td class="align-right">
+        Editors
+      </td>
       <td>
+      <!-- XXX Fixme: need get_nearest_editors() method -->
+        <span tal:replace="python:', '.join([e.fullname() for e in here.get_nearest_chiefeditors()])" />
+      </td>
+    </tr>
 
-<span tal:replace="nothing"> ______________ metadata from system ______________ </span>
-<h3>
-  Automatically stored metadata
-</h3>
+    <tr class="unselected">
+      <td class="align-right">
+        Chief&nbsp;Editors
+      </td>
+      <td>
+        <span tal:replace="python:', '.join([ch.fullname() for ch in here.get_nearest_chiefeditors()])" />
+      </td>
+    </tr>
 
-<table>
-  <tr valign="top">
-    <td align="right" width="15%">
-      Chief&nbsp;Editor(s):
-    </td>
-    <td>&nbsp;</td>
-    <td align="left">
-      <span tal:replace="python:', '.join([ch.fullname() for ch in here.get_nearest_chiefeditors()])" />
-    </td>
-  </tr>
-
-  <tr valign="top">
-    <td align="right">
-      Manager(s):
-    </td>
-    <td>&nbsp;</td>
-    <td align="left">
-      <span tal:replace="python:', '.join([m.fullname() for m in here.get_nearest_managers()])" /> <br />
-    </td>
-  </tr>
-</table>
-
+    <tr class="unselected">
+      <td class="align-right">
+        Managers
+      </td>
+      <td>
+        <span tal:replace="python:', '.join([m.fullname() for m in here.get_nearest_managers()])" /> <br />
       </td>
     </tr>
   </tbody>
+
+  <tfoot>
+    <tr class="divider">
+      <td colspan="2">
+      </td>
+    </tr>
+  </tfoot>
 </table>
 
       </td>

@@ -46,42 +46,6 @@
             <table class="listing">
               <thead>
                 <tr tal:replace="nothing">
-                  ______________ vein + title row ______________
-                </tr>
-                <tr>
-                  <td class="top"
-                    colspan="3">
-                    <h2>
-                      <img tal:replace="structure python:view.render_icon(model)" />
-                      settings for: <span tal:replace="structure string:&#xab;${model/get_title_html}&#xbb;">id</span>
-                    </h2>
-                  </td>
-                </tr>
-
-                <tr tal:replace="nothing">
-                  ______________ top controls row ______________
-                </tr>
-                <tr class="top-controls">
-                  <td class="align-right"
-                    colspan="3">
-                    <div class="buttons">
-                      <a class="navigation"
-                        href="tab_metadata"
-                        title="edit this publication's metadata: alt-c"
-                        accesskey="c"
-                      >
-                        Configure metadata...
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              </thead>
-            </table>
-
-
-            <table class="listing">
-              <thead>
-                <tr tal:replace="nothing">
                   ______________ icon + vein + title row ______________
                 </tr>
                 <tr>
@@ -89,7 +53,7 @@
                     colspan="3">
                     <h2>
                       <img tal:replace="structure python:view.render_icon(model)" />
-                      addable settings
+                      addable settings for: <span tal:replace="structure string:&#xab;${model/get_title_html}&#xbb;">id</span>
                     </h2>
                   </td>
                 </tr>
