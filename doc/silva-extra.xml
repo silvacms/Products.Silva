@@ -295,22 +295,22 @@
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
      <value key="input_style"></value>
      <value key="hidden"></value>
-     <value key="input_order"></value>
-     <value key="time_separator">string::</value>
      <value key="date_separator">string::</value>
      <value key="end_datetime"></value>
      <value key="external_validator"></value>
-     <value key="date_only"></value>
-     <value key="default_now"></value>
-     <value key="ampm_time_style"></value>
      <value key="required"></value>
-     <value key="allow_empty_time"></value>
      <value key="css_class"></value>
-     <value key="default">content/get_public_version_publication_datetime | content/get_next_version_publication_datetime | nothing</value>
+     <value key="default">content/publication_datetime | nothing</value>
      <value key="title"></value>
+     <value key="alternate_name"></value>
+     <value key="input_order"></value>
+     <value key="time_separator">string::</value>
+     <value key="date_only"></value>
+     <value key="ampm_time_style"></value>
+     <value key="allow_empty_time"></value>
+     <value key="default_now"></value>
      <value key="description"></value>
      <value key="start_datetime"></value>
    </field_tales>
@@ -358,22 +358,22 @@
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
      <value key="input_style"></value>
      <value key="hidden"></value>
-     <value key="input_order"></value>
-     <value key="time_separator">string::</value>
      <value key="date_separator">string::</value>
      <value key="end_datetime"></value>
      <value key="external_validator"></value>
-     <value key="date_only"></value>
-     <value key="default_now"></value>
-     <value key="ampm_time_style"></value>
      <value key="required"></value>
-     <value key="allow_empty_time"></value>
      <value key="css_class"></value>
-     <value key="default">content/get_public_version_expiration_datetime | content/get_next_version_expiration_datetime | nothing</value>
+     <value key="default">content/expiration_datetime | nothing</value>
      <value key="title"></value>
+     <value key="alternate_name"></value>
+     <value key="input_order"></value>
+     <value key="time_separator">string::</value>
+     <value key="date_only"></value>
+     <value key="ampm_time_style"></value>
+     <value key="allow_empty_time"></value>
+     <value key="default_now"></value>
      <value key="description"></value>
      <value key="start_datetime"></value>
    </field_tales>
