@@ -12,7 +12,17 @@ Silva changes
       - Added a new xslt renderer that renders Silva Documents without a
         title at the top.
 
+      - Made kupu the default editor if available.
+
     Bugs Fixed
+
+      - TOC rendered with the XSLT renderer now use the correct context.
+
+      - Fixed a nasty unicode error in the XSLT renderer, that somehow
+        slips through in Zope 2.7.2 and only breaks Silva in 2.7.3
+
+      - Fixed issue where is_published return true in situations where
+        there isn't any viewable content.
 
       - URLs are now rendered correctly in the context of a Ghost object.
 
