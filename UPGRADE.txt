@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3.x
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36.8.9 $
+  CVS:        $Revision: 1.36.8.10 $
 
 Upgrading from 0.9.1 and below
 
@@ -40,7 +40,7 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
       "Silva-0.9.3.3.tgz":http://www.zope.org/Members/infrae/Silva
 
-      "SilvaDocument-0.9.3.2.tgz":http://www.zope.org/Members/infrae/Silva
+      "SilvaDocument-0.9.3.3.tgz":http://www.zope.org/Members/infrae/Silva
 
       "Formulator-1.6.2.tgz":http://www.zope.org/Members/infrae/Formulator
 

@@ -7,6 +7,8 @@ Silva changes
 
     Bugs fixed
 
+      - Smaller bugfixes in the silvaparser.
+
       - created a new method addAddable on ExtensionRegistry. This makes 
         it possible (again) to add classes to Silva without being required
         to name your class the same as the module name (which the 
