@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.31 2003/05/27 17:27:02 jw Exp $
+# $Id: Image.py,v 1.32 2003/05/28 10:44:13 guido Exp $
 
 # Python
 import re
@@ -278,7 +278,7 @@ manage_addImageForm = PageTemplateFile(
 
 def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image."""
-    if not self.is_id_valid(id):
+    if not context.is_id_valid(id):
         return
     object = Image(id, title)
     context._setObject(id, object)
