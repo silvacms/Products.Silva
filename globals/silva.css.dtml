@@ -45,6 +45,7 @@ p.nobullet {
 }
 
 /* _________________________________________________________ table definitions _____ */
+
 table.silvatable {
   empty-cells: show;
   border-collapse: collapse;
@@ -321,35 +322,56 @@ ol.frontend {
 .front1 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 17pt; 
-  font-weight: 800; 
+  font-weight: bold; 
   color: #455885;
 }
 
 .front2 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 15pt;
-  font-weight: 800; 
+  font-weight: bold; 
   color: #455885;
 }
 
 .front3 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 13pt;  
-  font-weight: 800; 
+  font-weight: bold; 
   color: #455885;
 }
 
 .front4 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11pt;  
-  font-weight: 800; 
+  font-weight: bold; 
   color: #455885;
+}
+
+.front5 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11pt;  
+  font-weight: bold; 
+  color: #455885;
+}
+
+.front6 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11pt;  
+  font-weight: bold; 
+  color: #676767;
+}
+
+.front7 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 8pt;  
+  font-weight: normal; 
+  color: #454545;
 }
 
 .frontend-cell {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 21pt;  
-  font-weight: 800; 
+  font-weight: bold; 
   color: #455885;
 }
 
@@ -357,14 +379,14 @@ ol.frontend {
 .front5 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 10pt; 
-  font-weight: 800;
+  font-weight: bold;
 }
 
 /* niu */
 .front6 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 9pt; 
-  font-weight: 800;
+  font-weight: bold;
 }
 
 

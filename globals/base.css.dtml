@@ -6,9 +6,8 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
-/* -- for debugging -- */
-
-/* {border: 1px dotted Red; } */
+/* ----- for debugging ------ */
+/* {border: 1px dotted red; } */
 
 /* _____________________ style sheet voor Silva backend ______________________ */
 
@@ -87,6 +86,22 @@ h4 {
 h5 {
   font-size: 11px;  
   font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color: #343434;
+  background : transparent;
+}
+
+h6 {
+  font-size: 11px;
+  font-weight : bold;
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color: #343434;
+  background : transparent;
+}
+
+h7 {
+  font-size: 11px;  
+  font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif; 
   color: #343434;
   background : transparent;
