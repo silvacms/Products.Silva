@@ -277,6 +277,49 @@ upgrade_registry.register('Silva DemoObject', upgrade_demoobject_091, '0.9.1')
 # 0.9.1 to 0.9.2
 #-----------------------------------------------------------------------------
 
+# This is a complicated set of upgrades!! The order of the upgrades is important
+# (they are called in the order in which they are registered), because most
+# methods expect objects to be a certain type and the type can change somewhere
+# in the chain of methods (old-style ParsedXML versions are converted to Version
+# objects, which means that the way to perform certain actions on them changes)
+
+# some helper function
+def get_versions_or_self(obj):
+    print 'Getting versions of', obj.id
+    ret = []
+    if (IVersionedContent.isImplementedBy(obj) or
+            ICatalogedVersionedContent.isImplementedBy(obj)):
+        for version in ['_unapproved_version', '_approved_version',
+                        '_public_version']:
+            v = getattr(obj, version)
+            if v[0] is not None:
+                versions.append(v)
+            print version, ':', v
+        if obj._previous_versions is not None:
+            versions += obj._previous_versions
+            print 'Previous versions:', obj._previous_versions
+        for version in versions:
+            print 'Going to get version', version
+            print getattr(obj, version[0])
+            ret.append(getattr(obj, version[0]))
+    else:
+        ret = [obj]
+    return ret
+            
+# converting the data of the object to unicode will mostly (if not only)
+# consist of converting metadata fields, so it is probably nice to do
+# both in one go
+
+# mapping from metadata set name to a mapping of old metadata field names to 
+# new (the second mapping can not be the other way round since there can be several 
+# old names for one new metadata field)
+# note that this mapping is used to find out the fields that should be
+# converted, so all to-be-converted fields should be mentioned
+set_el_name_mapping = {'silva-extra': {'document_comment': 'comment', 
+                                    'container_comment': 'comment',
+                                    }
+                    }
+
 # convert old style documents (with ParsedXML as version) to new style ones (where
 # ParsedXML is an attribute of Version)
 def convert_document_092(obj):
@@ -380,6 +423,44 @@ def convert_document_092(obj):
 
 upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
 
+def unicode_and_metadata_092(obj):
+    # get the metadata sets for the object
+    ms = obj.service_metadata
+
+    values = {}
+    for set_name, el_name_mapping in set_el_name_mapping.items():
+        for old_name, new_name in el_name_mapping.items():
+            old_value = obj.getProperty(old_name)
+            if old_value is None or old_value == '':
+                continue
+            # if somehow the string is already unicode (who knows, right :)
+            # skip conversion
+            new_value = old_value
+            if type(old_value) != unicode:
+                # we are assuming all data is cp1252 here, since that's what we've
+                # been using all along, but maybe some funky custom setups may want
+                # to interfere here...
+                # XXX do we really want to continue on errors here instead of an exception?
+                new_value = unicode(old_value, 'cp1252', 'replace')
+            values[new_name] = new_value
+        # now set it
+        # if an object is a VersionedContent, walk through all versions, else just
+        # set it to the current version
+        objects = get_versions_or_self(obj)
+        for object in objects:
+            binding = ms.getMetadata(object)
+            binding.setValues(set_name, values, 0)
+
+upgrade_registry.register('Silva Root', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva Folder', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva Publication', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva Document', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva DemoObject', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva Ghost', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva Image', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva File', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva SQL Data Source', unicode_and_metadata_092, '0.9.2')
+            
 def catalog_092(obj):
     """Do initial catalogin of objects"""
     print 'Catalog'
@@ -413,6 +494,7 @@ def replace_container_title_092(obj):
         title = unicode(title, 'cp1252', 'replace')
     default = obj.get_default()
     if default is not None:
+        # because this code is called *before* the folder is traversed,
         # the versionedcontent objects are still old style here, so we don't
         # have to go through all kinds of trouble to get all the versions
         # for those kind of objects
@@ -427,6 +509,10 @@ def replace_object_title_092(obj):
     print 'Replace object title for', obj.id
     if not hasattr(obj, '_title'):
         return
+    objects = get_versions_or_self(obj)
+    for object in objects:
+        object.set_title(title)
+    """
     if obj is not obj.aq_parent.get_default():
         title = obj._title
         del obj._title
@@ -448,6 +534,7 @@ def replace_object_title_092(obj):
                 getattr(obj, version[0]).set_title(title)
         else:
             obj.set_title(title)
+    """
 
 upgrade_registry.register('Silva Root', replace_container_title_092, '0.9.2')
 upgrade_registry.register('Silva Publication', replace_container_title_092, '0.9.2')
