@@ -361,8 +361,8 @@
                     ______________ controls ______________
                   </tal:block>
                   <td colspan="99">
-                    <tal:block tal:condition="python:(default_document or publishables or assets)">
-                      <tal:block condition="may_change_content">
+                    <tal:block condition="may_change_content">
+                      <tal:block tal:condition="python:(default_document or publishables or assets)">
                         <div style="float: left; margin-left:0.2em;">
                           <select name="new_position"
                             title="move selected items to">
@@ -398,24 +398,28 @@
                           title="rename and retitle items: alt-r"
                           accesskey="r" 
                         />
-                       <input class="button"
+                        <input class="button"
                           name="tab_edit_cut:method"
                           type="submit"
                           value="Cut"
                           title="cut items: alt-x"
                           accesskey="x" 
+                        />                        
+                        <input class="button"
+                          name="tab_edit_copy:method"
+                          type="submit"
+                          value="Copy"
+                          title="copy items: alt-c"
+                          accesskey="c" 
                         />
                       </tal:block>
-                      <input class="button"
-                        name="tab_edit_copy:method"
-                        type="submit"
-                        value="Copy"
-                        title="copy items: alt-c"
-                        accesskey="c" 
-                      />
-                      <tal:block condition="may_change_content">
+                      <tal:block replace="nothing">
+                        ______________ past (to ghost) controls exist even
+                        if there's no content (there should be something on 
+                        the clipboard though). ______________
+                      </tal:block>
+                      <tal:block condition="python:request.has_key('__cp')">
                         <input class="button"
-                          tal:condition="python:request.has_key('__cp')"
                           name="tab_edit_paste:method"
                           type="submit"
                           value="Paste"
@@ -423,16 +427,15 @@
                           accesskey="v" 
                         />
                         <input class="button"
-                          tal:condition="python:request.has_key('__cp')"
                           name="tab_edit_paste_to_ghost:method"
                           type="submit"
                           value="Paste as ghost"
                           title="paste (items on clipboard) as ghost objects: alt-g"
                           accesskey="g" 
                         />
-
+                      </tal:block>
+                      <tal:block tal:condition="python:(default_document or publishables or assets)">
                         <input class="warning"
-                          tal:condition="may_change_content"
                           name="tab_edit_delete:method"
                           type="submit"
                           value="Delete"
