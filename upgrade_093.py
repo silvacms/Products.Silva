@@ -293,6 +293,10 @@ class UpgradeLastAuthor:
         
         try:
             binding = obj.service_metadata.getMetadata(obj)
+        except AttributeError:
+            zLOG.LOG('Silva', zLOG.WARNING, "UpgradeTime failed on %r. "
+                "Maybe a broken product?" % (obj, ))
+            return obj
         except BindingError:
             return obj
         if binding is None:
