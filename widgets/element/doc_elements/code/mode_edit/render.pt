@@ -11,7 +11,7 @@
 
 <tal:block tal:condition="code_objects">
   &nbsp;Available code objects:<br />
-  &nbsp;<select name="path">
+  &nbsp;<select class="manipulator" name="path">
     <tal:block 
       define="selected_path python:node.getAttribute('path')"
       repeat="obj code_objects">

@@ -6,14 +6,15 @@
 <input type="button" class="button" name="" value="Add hyperlink" style="float:right;" title="Access key: alt-a" accesskey="a"
   tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup\', \'((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % node.get_container().absolute_url()" />
 &nbsp;List items: <br style="clear:both;" /> 
-<textarea id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
+<textarea style="width:100%" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
   tal:content="here/editable_content">Dummy</textarea><br />
 </div>
 
 <div metal:fill-slot="element_controls" tal:omit-tag="">
 <script type="text/javascript" tal:content="structure here/elements.js" />
 Element: 
-<select name="what" onChange="updateSelectionOptions()">
+<select class="manipulator"
+   name="what" onChange="updateSelectionOptions()">
   <option value="p">paragraph</option>
   <option value="heading">heading</option>
   <option value="list" selected="selected">list</option>
@@ -29,7 +30,9 @@ Element:
 <init tal:define="global type nothing" tal:omit-tag="" />
 </check>
 Type: 
-<select name="element_type">
+<select class="manipulator"
+  style="text-transform:none;"
+  name="element_type">
 <option value="disc"
   tal:attributes="selected python:test(type == 'disc', 'selected', nothing)">disc bullets</option>
 <option value="square"

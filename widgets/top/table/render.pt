@@ -5,7 +5,7 @@
     global columns_info here/get_columns_info" />
 
 <div metal:use-macro="container/macro_embed_view/macros/embed_view">
-<div metal:fill-slot="embed_controls">
+<div metal:fill-slot="embed_controls" tal:omit-tag="">
 <table border="0" width="100%" cellspacing="0">
 <tr class="inter-controls">
   <td>

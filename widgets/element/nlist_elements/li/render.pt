@@ -16,7 +16,7 @@
 </enable>
 
 <td width="100%">
-  <textarea name="nodepath" cols="70" rows="2" style="width:100%;"
+  <textarea style="width:100%" name="nodepath" cols="70" rows="2"
     tal:condition="simple"
     tal:attributes="name node_path"
     tal:content="structure python:here.simple_content(node)" />

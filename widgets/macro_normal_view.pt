@@ -42,7 +42,7 @@
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
   </td>
   <td tal:attributes="class content_cell_class" colspan="2">
-    <div metal:define-slot="node_content">_______ local node content gets slotted in _______</div>    
+    <div metal:define-slot="node_content" tal:omit-tag="">_______ local node content gets slotted in _______</div>    
   </td>
   <div metal:use-macro="container/macro_helpers/macros/element_buttons" />
 </tr>

@@ -2,13 +2,13 @@
 <metal:block fill-slot="edit_input">
 <span class="textarea">
   <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
-  <textarea id="data" name="data" cols="65" rows="10" wrap="soft" tal:attributes="rows here/get_lines" tal:content="here/editable_content">Content</textarea>
+  <textarea style="width:100%" id="data" name="data" cols="65" rows="10" wrap="soft" tal:attributes="rows here/get_lines" tal:content="here/editable_content">Content</textarea>
 </span>
 </metal:block>
 <metal:block fill-slot="element_controls">
 <script type="text/javascript" tal:content="structure here/elements.js" />
 Element: 
-<select name="what" onChange="updateSelectionOptions()">
+<select class="manipulator" name="what" onChange="updateSelectionOptions()">
   <option value="p">paragraph</option>
   <option value="pre" selected="selected">preformatted</option>
   <option value="heading">heading</option>
@@ -16,7 +16,8 @@ Element:
   <option value="dlist">definition list</option>
 </select>
 Type: 
-<select name="element_type" tal:define="type here/get_type">
+<select class="manipulator"
+   name="element_type" tal:define="type here/get_type">
   <option value="none" disabled="1">none</option>
 </select>
 </metal:block>

@@ -11,7 +11,8 @@
 </div>
 <div metal:fill-slot="element_controls" tal:omit-tag="">
 Table of contents depth: 
-<select name="toc_depth">
+<select class="manipulator"
+  name="toc_depth">
   <option value="1" 
     tal:attributes="selected python:test(toc_depth == 1, 'selected', nothing)">
     1 level

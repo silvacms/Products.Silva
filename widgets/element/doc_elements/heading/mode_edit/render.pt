@@ -1,7 +1,7 @@
 <div metal:use-macro="container/macro_edit_view/macros/edit_view">
 <metal:block fill-slot="edit_input">
   <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
-  <textarea tal:content="here/editable_content" id="data" name="data" cols="65" rows="2">Dummy text</textarea>
+  <textarea style="width:100%" tal:content="here/editable_content" id="data" name="data" cols="65" rows="2">Dummy text</textarea>
 </metal:block>
 <metal:block fill-slot="edit_notes">
 <ul class="tips">
@@ -11,7 +11,8 @@
 <metal:block fill-slot="element_controls">
 <script type="text/javascript" tal:content="structure here/elements.js" />
 Element: 
-<select name="what" onChange="updateSelectionOptions()">
+<select class="manipulator"
+   name="what" onChange="updateSelectionOptions()">
   <option value="p">paragraph</option>
   <option value="heading" selected="selected">heading</option>
   <option value="list">list</option>
@@ -20,7 +21,7 @@ Element:
   <option value="dlist">definition list</option>
 </select>
 Type: 
-<select name="element_type" tal:define="type here/get_type">
+<select class="manipulator" name="element_type" tal:define="type here/get_type">
   <option value="normal" tal:attributes="selected python:test(type == 'normal', 'selected', nothing)">Normal heading</option>
   <option value="sub" tal:attributes="selected python:test(type == 'sub', 'selected', nothing)">Sub heading</option>
   <option value="subsub" tal:attributes="selected python:test(type == 'subsub', 'selected', nothing)">Sub sub heading</option>

@@ -15,7 +15,7 @@
 <td>
 <enable tal:omit-tag="" tal:replace="nothing">
   &nbsp;Move item(s) to position: 
-  <select name="move_to">
+  <select class="manipulator" name="move_to">
     <option>(not yet)</option>
   </select>
   &nbsp;
@@ -26,7 +26,9 @@
 </td>
 <td class="align-right">
 Type: 
-<select name="element_type">
+<select class="manipulator"
+  style="text-transform:none;"
+  name="element_type">
 <option value="disc"
   tal:attributes="selected python:test(type == 'disc', 'selected', nothing)">disc bullets</option>
 <option value="square"

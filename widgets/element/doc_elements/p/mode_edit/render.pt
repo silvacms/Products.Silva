@@ -15,7 +15,7 @@
 <metal:block fill-slot="element_controls">
 <script type="text/javascript" tal:content="structure here/elements.js" />
 Element: 
-<select name="what" onChange="updateSelectionOptions()">
+<select class="manipulator" name="what" onChange="updateSelectionOptions()">
   <option value="p" selected="selected">paragraph</option>
   <option value="heading">heading</option>
   <option value="list">list</option>
@@ -23,7 +23,7 @@ Element:
   <option value="dlist">definition list</option>
 </select>
 Type: 
-<select name="element_type" tal:define="type here/get_type">
+<select class="manipulator" name="element_type" tal:define="type here/get_type">
   <option value="normal" tal:attributes="selected python:test(type == 'normal', 'selected', nothing)">normal</option>
   <option value="lead" tal:attributes="selected python:test(type == 'lead', 'selected', nothing)">lead</option>
 </select>

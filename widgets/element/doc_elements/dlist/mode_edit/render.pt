@@ -6,14 +6,15 @@
 &nbsp;List items: <br style="clear:both;" /> 
 <script type="text/javascript" tal:content="structure here/asset_reference.js" />
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
-<textarea id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
+<textarea style="width:100%" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
   tal:content="here/editable_content">Dummy</textarea><br />
 </div>
 
 <div metal:fill-slot="element_controls" tal:omit-tag="">
 <script type="text/javascript" tal:content="structure here/elements.js" />
 Element: 
-<select name="what" onChange="updateSelectionOptions()">
+<select class="manipulator"
+   name="what" onChange="updateSelectionOptions()">
   <option value="p">paragraph</option>
   <option value="pre">preformatted</option>
   <option value="heading">heading</option>
@@ -29,7 +30,7 @@ Element:
 <init tal:define="global type nothing" tal:omit-tag="" />
 </check>
 Type: 
-<select name="element_type">
+<select class="manipulator" name="element_type">
 <option value="normal"
   tal:attributes="selected python:test(type == 'normal', 'selected', nothing)">normal</option>
 <option value="compact"
