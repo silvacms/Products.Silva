@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-
 <metadata_set id="silva-content" ns_uri="http://infrae.com/namespaces/metadata/silva" ns_prefix="silva">
 <title></title>
 <description></description>
@@ -32,7 +31,7 @@
         <value key="description" type="str" value="Title of content." />
         <value key="css_class" type="str" value="" />
         <value key="default" type="str" value="" />
-        <value key="title" type="str" value="Title" />
+        <value key="title" type="str" value="title" />
         <value key="truncate" type="int" value="0" />
         <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
@@ -93,7 +92,7 @@
         <value key="description" type="str" value="Also known as &amp;#8216;navigation title&amp;#8217;." />
         <value key="css_class" type="str" value="" />
         <value key="default" type="str" value="" />
-        <value key="title" type="str" value="Short title" />
+        <value key="title" type="str" value="short title" />
         <value key="truncate" type="int" value="0" />
         <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
