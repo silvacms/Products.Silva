@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.2 $
+Version of this file: $Revision: 1.3 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -12,7 +12,7 @@ Version of this file: $Revision: 1.2 $
 Add Simple Member Service
 </p>
 
-<form action="manage_addSimpleMemberService" method="post">
+<form action="manage_addSimpleMemberService" method="post" onSubmit="this.id.disabled = false;">
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">
@@ -21,7 +21,7 @@ Add Simple Member Service
     </div>
     </td>
     <td align="left" valign="top">
-    <input type="text" name="id" size="40" />
+    <input type="text" name="id" size="40" value="service_members" disabled="disabled" />
     </td>
   </tr>
   <tr>
