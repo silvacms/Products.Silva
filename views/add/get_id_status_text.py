@@ -14,10 +14,10 @@ view = context
 status_code = id.validate()
 
 if status_code == id.CONTAINS_BAD_CHARS:
-    return unicode_("""Sorry, strange characters are in the id. It should only
+    return unicode(_("""Sorry, strange characters are in the id. It should only
         contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or 
         &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, 
-        and the id should start with a letter or digit.""")
+        and the id should start with a letter or digit."""))
 elif status_code == id.RESERVED_PREFIX:
     # FIXME: needs to know about the prefix
     prefix = str(id).split('_')[0]+'_'

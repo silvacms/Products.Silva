@@ -713,6 +713,19 @@ msgstr ""
 "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de link "
 "in indexen."
 
+#: /views/add/get_id_status_text.py:17
+msgid ""
+"Sorry, strange characters are in the id. It should only\n"
+"        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or \n"
+"        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, \n"
+"        and the id should start with a letter or digit."
+msgstr ""
+"Sorry, er zitten vreemde karakters in de id. Het mag alleen\n"
+"        letters, cijfers en &#8216;_&#8217; of &#8216;-&#8217; of \n"
+"        &#8216;.&#8217; bevatten.<br />Spaties zijn niet toegestaan in \n"
+"        Internet adressen, en de id moet beginnen met een letter of een "
+"cijfer."
+
 #: /views/add/get_id_status_text.py:24
 msgid ""
 "Sorry, ids starting with ${prefix} are reserved for\n"
@@ -2221,6 +2234,32 @@ msgstr "geen titel"
 #: /views/edit/Container/tab_edit_rename_start.py:13
 msgid "Nothing was selected, so nothing can be renamed."
 msgstr "Er is niets geselecteerd, dus er kan niets hernoemd worden."
+
+#: /views/edit/Container/tab_edit_rename_submit.py:29
+msgid "&#xab;${item}&#xbb; could not be renamed to ${new} (invalid id)"
+msgstr ""
+"&#xab;${item}&#xbb; kon niet hernoemd worden naar ${new} (niet toegestane id)"
+
+#: /views/edit/Container/tab_edit_rename_submit.py:46
+#: /views/edit/Container/tab_edit_rename_submit.py:85
+#: /views/edit/Container/tab_edit_rename_submit.py:100
+#: /views/edit/Container/tab_edit_rename_submit.py:167
+msgid "&#xab;${item}&#xbb; renamed successfully"
+msgstr "&#xab;${item}&#xbb; is hernoemd"
+
+#: /views/edit/Container/tab_edit_rename_submit.py:65
+msgid ""
+"&#xab;${item}&#xbb; could not be renamed to &#xab;${new}&#xbb; (${status})"
+msgstr ""
+"&#xab;${item}&#xbb; kon niet hernoemd worden naar &#xab;${new}&#xbb; "
+"(${status})"
+
+#: /views/edit/Container/tab_edit_rename_submit.py:79
+#: /views/edit/Container/tab_edit_rename_submit.py:94
+#: /views/edit/Container/tab_edit_rename_submit.py:140
+#: /views/edit/Container/tab_edit_rename_submit.py:161
+msgid "&#xab;${item}&#xbb; could not be renamed"
+msgstr "&#xab;${item}&#xbb; kon niet hernoemd worden"
 
 #: /views/edit/Container/tab_edit_to_folder.py:17
 msgid "Can only change Publications into Folders"
@@ -4664,20 +4703,6 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 
 #~ msgid "&nbsp; create ${meta_type}"
 #~ msgstr "&nbsp; creëer ${meta_type}"
-
-#~ msgid ""
-#~ "Sorry, strange characters are in the id. It should only\n"
-#~ "        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; "
-#~ "or \n"
-#~ "        &#8216;.&#8217;<br />Spaces are not allowed in Internet "
-#~ "addresses, \n"
-#~ "        and the id should start with a letter or digit."
-#~ msgstr ""
-#~ "Sorry, er zitten vreemde karakters in de id. Het mag alleen\n"
-#~ "        letters, cijfers en &#8216;_&#8217; of &#8216;-&#8217; of \n"
-#~ "        &#8216;.&#8217; bevatten.<br />Spaties zijn niet toegestaan in \n"
-#~ "        Internet adressen, en de id moet beginnen met een letter of een "
-#~ "cijfer."
 
 #~ msgid "Minimum role to access is now set to $(role)"
 #~ msgstr "Minimum role to access is now set to $(role)"

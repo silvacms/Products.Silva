@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 29 17:31:33 2004\n"
+"POT-Creation-Date: Mon Nov 29 17:33:58 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -684,6 +684,14 @@ msgstr ""
 
 #: /views/add/form.form:51
 msgid "default_form_add_object_title_description"
+msgstr ""
+
+#: /views/add/get_id_status_text.py:17
+msgid ""
+"Sorry, strange characters are in the id. It should only\n"
+"        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or \n"
+"        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, \n"
+"        and the id should start with a letter or digit."
 msgstr ""
 
 #: /views/add/get_id_status_text.py:24
@@ -2089,6 +2097,28 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_rename_start.py:13
 msgid "Nothing was selected, so nothing can be renamed."
+msgstr ""
+
+#: /views/edit/Container/tab_edit_rename_submit.py:29
+msgid "&#xab;${item}&#xbb; could not be renamed to ${new} (invalid id)"
+msgstr ""
+
+#: /views/edit/Container/tab_edit_rename_submit.py:46
+#: /views/edit/Container/tab_edit_rename_submit.py:85
+#: /views/edit/Container/tab_edit_rename_submit.py:100
+#: /views/edit/Container/tab_edit_rename_submit.py:167
+msgid "&#xab;${item}&#xbb; renamed successfully"
+msgstr ""
+
+#: /views/edit/Container/tab_edit_rename_submit.py:65
+msgid "&#xab;${item}&#xbb; could not be renamed to &#xab;${new}&#xbb; (${status})"
+msgstr ""
+
+#: /views/edit/Container/tab_edit_rename_submit.py:79
+#: /views/edit/Container/tab_edit_rename_submit.py:94
+#: /views/edit/Container/tab_edit_rename_submit.py:140
+#: /views/edit/Container/tab_edit_rename_submit.py:161
+msgid "&#xab;${item}&#xbb; could not be renamed"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_to_folder.py:17
