@@ -247,14 +247,13 @@ function handle_default_action(element, event, action)
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
         userWindow.focus();;
         return false;;"
-        i18n:translate=""
         i18n:attributes="title">
       <img border="0"
         height="9"
         width="9"
         tal:attributes="src string:${root_url}/globals/user.png"
       />
-      user settings
+      <span i18n:translate="">user settings</span>
     </a>
   </div>
   <div style="float: right;">
