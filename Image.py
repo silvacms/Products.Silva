@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.49 2003/11/02 09:56:28 kitblake Exp $
+# $Id: Image.py,v 1.50 2003/11/28 13:39:05 jw Exp $
 
 # Python
 import re, string 
@@ -199,6 +199,11 @@ class Image(Asset):
             return image.index_html(REQUEST, REQUEST.RESPONSE)                
         else:
             return str(image.data)
+        
+    security.declareProtected(SilvaPermissions.View, 'tag')
+    def tag(self, *args, **kw):
+        """ return tag for image """
+        return self.image.tag(*args, **kw)
         
     security.declareProtected(SilvaPermissions.View, 'getWebFormat')
     def getWebFormat(self):
