@@ -238,12 +238,6 @@ def configureMembership(root):
     if 'service_members' not in ids:
         root.manage_addProduct['Silva'].manage_addExtendedMemberService(
             'service_members')
-    else:
-        # implicitely upgrade in case there is an older membership installed
-        if root.service_members.meta_type != ExtendedMemberService.meta_type:
-            root.manage_delObjects(['service_members'])
-            root.manage_addProduct['Silva'].manage_addExtendedMemberService(
-                'service_members')
         
     if 'Members' not in ids:
         root.manage_addFolder('Members')
@@ -312,6 +306,7 @@ def registerViews(reg):
     reg.register('edit', 'Silva SQL Data Source', ['edit', 'Asset', 'SQLDataSource'])
     reg.register('edit', 'Silva Group', ['edit', 'Asset', 'Group'])
     reg.register('edit', 'Silva Virtual Group', ['edit', 'Asset', 'VirtualGroup'])
+    reg.register('edit', 'Silva Extended Member', ['edit', 'Member', 'ExtendedMember'])
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
@@ -324,7 +319,6 @@ def registerViews(reg):
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
     reg.register('public', 'Silva SQL Data Source', ['public', 'SQLDataSource'])
-    reg.register('public', 'Silva Extended Member', ['public', 'ExtendedMember'])
 
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
@@ -349,6 +343,9 @@ def unregisterViews(reg):
         reg.unregister('add', meta_type)
     reg.unregister('edit', 'Silva Root')
     reg.unregister('public', 'Silva Root')
+    reg.unregister('edit', 'Silva Extended Member')
+    # next line for hysterical reasons, should go away 
+    reg.unregister('public', 'Silva Extended Member')
 
 def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'
