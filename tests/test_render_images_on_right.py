@@ -11,7 +11,7 @@ import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.transform.renderers.RenderImagesOnRight import RenderImagesOnRight
-from Products.Silva.transform.renderers.XSLTRendererBase import RenderError
+from Products.Silva.transform.renderers.xsltrendererbase import RenderError
 
 class RenderImagesOnRightTest(SilvaTestCase.SilvaTestCase):
 

@@ -5,7 +5,7 @@ import os
 from Globals import InitializeClass
 
 # Silva
-from Products.Silva.transform.renderers.XSLTRendererBase import XSLTRendererBase
+from Products.Silva.transform.renderers.xsltrendererbase import XSLTRendererBase
 
 class RenderImagesOnRight(XSLTRendererBase):
     def __init__(self):
