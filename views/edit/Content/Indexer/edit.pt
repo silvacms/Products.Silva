@@ -8,6 +8,6 @@
     <br /><br />
   </ol>
   <form action="tab_edit_update_index" method="POST">
-    <input class="button" type="submit" value="Update index" />
+    <input class="button" type="submit" value="Update index" title="Access key: alt-u" accesskey="u" />
   </form>
 </div>
