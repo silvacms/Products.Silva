@@ -238,4 +238,20 @@ class ViewCode:
                     infodict['public_version_expiration_datetime'] = str_datetime
         return ret
 
+    # this is a Python script that used to be located in the widgets dir of 
+    # SilvaDocument but had to be moved because of a change in Zope's 
+    # traversal machinery which made us have to switch from using 
+    # 'restrictedTraverse' to 'unrestrictedTraverse'
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                                'get_image')
+    def get_image(self, image_context, image_path):
+        """return an image object from a path"""
+        image = image_context.unrestrictedTraverse(image_path, None)
+        if image is None:
+            return None
+        # XXX checking for interface would be way nicer here...
+        if getattr(image, 'meta_type', None) != 'Silva Image':
+            image = None
+        return image
+
 InitializeClass(ViewCode)
