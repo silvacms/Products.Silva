@@ -88,8 +88,8 @@
                   <th class="align-right">
                     Expiration due
                   </th>
-                  <th>
-                    Public version
+                  <th class="align-right">
+                    Published
                   </th>
                 </tr>
                 <tal:block repeat="obj objects">
@@ -172,7 +172,25 @@
                     <tal:block replace="nothing">
                       _______ public version cell _______
                     </tal:block>
-                    <td style="white-space: nowrap;"
+                    <td class="align-right"
+                      tal:define="
+                        public_status obj/public_status | nothing;
+                        start_time obj/public_version_publication_datetime | nothing;
+                        end_time obj/public_version_expiration_datetime | nothing">
+                      <a href="tab_status"
+                        title="public version"
+                        tal:attributes="href obj_url;"
+                        tal:condition="python: public_status == 'published'">
+                      <span tal:condition="start_time" 
+                        tal:replace="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
+                      </span>
+                      </a>
+                      <span tal:condition="python: public_status == 'closed'"
+                        tal:omit-tag=""> 
+                        closed
+                      </span>
+                    </td>
+                    <td style="white-space: nowrap;"           tal:replace="nothing"
                       tal:define="
                         public_status obj/public_status | nothing;
                         start_time obj/public_version_publication_datetime | nothing;
@@ -181,7 +199,7 @@
                         title="public version"
                         tal:attributes="href obj_url;"
                         tal:omit-tag="python: public_status == 'closed'">
-                        <tal:block replace="public_status" />                                                
+                        <tal:block replace="public_status" />
                       </a>
                       <span tal:condition="start_time" 
                         tal:content="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))"
