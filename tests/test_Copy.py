@@ -28,6 +28,8 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
             self.root, 'folder4', 'Folder4', policy_name='Auto TOC')
         self.folder5 = folder5 = self.add_folder(
             self.root, 'folder5', 'Folder5', policy_name='Auto TOC')
+        self.folder6 = folder6 = self.add_folder(
+            self.root, 'folder6', 'Folder6', policy_name='Silva Document')
         self.subdoc = subdoc = self.add_document(
             folder4, 'subdoc', 'Subdoc')
         self.subfolder = subfolder = self.add_folder(
@@ -252,6 +254,16 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(not hasattr(self.folder4.aq_explicit, 'index'))
         self.root.action_delete(['folder4'])
         self.assert_(not hasattr(self.root, 'folder4'))
+
+    def test_delete8(self):
+        # delete folder with default doc
+        self.folder6.index.set_unapproved_version_publication_datetime(DateTime())
+        self.folder6.index.approve_version()
+        self.root.action_delete(['folder6'])
+        self.assert_(hasattr(self.root.aq_explicit, 'folder6'))
+        self.folder6.index.close_version()
+        self.root.action_delete(['folder6'])
+        self.assert_(not hasattr(self.root.aq_explicit, 'folder6'))
 
     def test_rename1(self):
         self.root.action_rename('doc1', 'docrenamed')
