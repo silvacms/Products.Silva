@@ -1,4 +1,4 @@
-# Version: $Revision: 1.26 $
+# Version: $Revision: 1.27 $
 import Document, Folder, Root, ViewRegistry,\
        Publication, Ghost, Image, DemoObject
 
@@ -68,6 +68,5 @@ def initialize(context):
         DemoObject.DemoObjectVersion,
         constructors = (DemoObject.manage_addDemoObjectVersionForm,
                         DemoObject.manage_addDemoObjectVersion),
-        icon="www/silvageneric.gif"
-        )       # generic icon for PluggableObjects
+        )
 
