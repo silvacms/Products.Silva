@@ -326,7 +326,6 @@ class GroupsService:
     __implements__ = IUpgrader
 
     def upgrade(self, obj):
-        assert obj.meta_type == 'Groups Service'
         if not hasattr(obj, '_ip_groups'):
             obj._ip_groups = {}
         if not hasattr(obj, '_iprange_to_group'):
