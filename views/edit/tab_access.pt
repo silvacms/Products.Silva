@@ -483,7 +483,6 @@
             <form action="minimal_access_role_submit"
               method="POST"
               tal:define="
-                is_closed model/sec_is_closed_to_public;
                 minimal_role model/sec_minimal_view_role;">
             <table class="listing">
               <thead>
@@ -524,8 +523,7 @@
                   <td class="align-right">
                     <select class="manipulator"
                       name="role"
-                      title="select a role to assign"
-                      tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', nothing)">
+                      title="select a role to assign">
                       <option value="Anonymous"
                         tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
                         Anonymous
@@ -542,8 +540,7 @@
                     <input class="button"
                       type="submit"
                       value="Set restriction"
-                      title="restrict access to users with a specific role"
-                      tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')"
+                      title="restrict access to users with a specific role"                      
                      />
                   </td>
                 </tr>
