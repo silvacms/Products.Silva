@@ -8,8 +8,7 @@ if __name__ == '__main__':
 import SilvaTestCase
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
-from Products.Silva.silvaxml import silva_import
-from Products.Silva.silvaxml.xmlimport import SaxImportHandler
+from Products.Silva.silvaxml import xmlimport 
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_folder_import(self):
@@ -18,42 +17,21 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        silva_import.initializeElementRegistry()
+        importer = xmlimport.theXMLImporter
         source_file = open('data/test_folder.xml', 'r')
-        handler = SaxImportHandler(importfolder)
-        parser = xml.sax.make_parser()
-        parser.setFeature(feature_namespaces, 1)
-        parser.setContentHandler(handler)
-        parser.parse(source_file)
+        test_settings = xmlimport.ImportSettings()
+        test_info = xmlimport.ImportInfo()
+        importer.importFromFile(
+            source_file,
+            result=importfolder,
+            settings=test_settings,
+            info=test_info)
         source_file.close()
-        
-    def test_document_import(self):
-        importfolder = self.add_folder(
-            self.root,
-            'importfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
-        silva_import.initializeElementRegistry()
-        source_file = open('data/test_document.xml', 'r')
-        handler = SaxImportHandler(importfolder)
-        parser = xml.sax.make_parser()
-        parser.setFeature(feature_namespaces, 1)
-        parser.setContentHandler(handler)
-        parser.parse(source_file)
-        source_file.close()
-        document_version = importfolder.testfolder.test_document.get_editable()
+        folder = importfolder.testfolder.testfolder2
         self.assertEquals(
-            document_version.get_title(),
-            'This is (surprise!) a document'
+            folder.get_title(),
+            u'another; testfolder'
             )
-        metadata_service = self.root.service_metadata
-        binding = metadata_service.getMetadata(document_version)
-        self.assertEquals(
-            binding._getData('silva-extra').data['location'],
-            'http://nohost/root/testfolder/test_document')
-        doc = document_version.content.documentElement.__str__()
-        self.assertEquals(doc,
-        u'<doc>\n            <p>\n            <em>\u627f\u8afe\u5e83\u544a\uff0a\u65e2\u306b\u3001\uff12\u5104\u3001\uff13\u5104\u3001\uff15\u5104\uff19\u5343\u4e07\u5186\u53ce\u5165\u8005\u304c\u7d9a\u51fa<strong>boo</strong>\n              baz</em>\n            </p>\n          </doc>')
         
     def test_link_import(self):
         importfolder = self.add_folder(
@@ -61,13 +39,15 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        silva_import.initializeElementRegistry()
+        importer = xmlimport.theXMLImporter
         source_file = open('data/test_link.xml', 'r')
-        handler = SaxImportHandler(importfolder)
-        parser = xml.sax.make_parser()
-        parser.setFeature(feature_namespaces, 1)
-        parser.setContentHandler(handler)
-        parser.parse(source_file)
+        test_settings = xmlimport.ImportSettings()
+        test_info = xmlimport.ImportInfo()
+        importer.importFromFile(
+            source_file,
+            result=importfolder,
+            settings=test_settings,
+            info=test_info)
         source_file.close()
         linkversion = importfolder.testfolder.testfolder2.test_link.get_editable()
         linkversion2 = importfolder.testfolder.testfolder2.test_link.get_previewable()
@@ -75,16 +55,48 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             linkversion.get_title(),
             'approved title'
             )
-        self.assertEquals(
-            linkversion2.get_title(),
-            'unapproved title'
-            )
-        metadata_service = self.root.service_metadata
+        metadata_service = linkversion.service_metadata
         binding = metadata_service.getMetadata(linkversion)
         self.assertEquals(
-            binding._getData('silva-extra').data['creator'],
-            'test_user_1_')
+            binding._getData(
+                'silva-extra').data['creator'],
+                'test_user_1_')
 
+    def test_zip_import(self):
+        from StringIO import StringIO
+        from zipfile import ZipFile
+        importfolder = self.add_folder(
+            self.root,
+            'importfolder',
+            'This is <boo>a</boo> testfolder',
+            policy_name='Auto TOC')
+        importer = xmlimport.theXMLImporter
+        zip_file = ZipFile('data/test_export.zip', 'r')
+        test_settings = xmlimport.ImportSettings()
+        test_info = xmlimport.ImportInfo()
+        test_info.setZipFile(zip_file)
+        bytes = zip_file.read('silva.xml')
+        source_file = StringIO(bytes)
+        importer.importFromFile(
+            source_file,
+            result=importfolder,
+            settings=test_settings,
+            info=test_info)
+        source_file.close()
+        zip_file.close()
+        # normal xml import works
+        self.assertEquals(
+            importfolder.testfolder.testfolder2.test_link.id,
+            'test_link')
+        # asset file import works
+        self.assertEquals(
+            importfolder.testfolder.testfolder2['testzip']['sound1.mp3'].id(),
+            'sound1.mp3')
+        # .zexp import works:
+        self.assertEquals(
+            importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].id,
+            'image5.jpg')
+            
 if __name__ == '__main__':
     framework()
 else:

@@ -1,409 +1,375 @@
-"""
-An alternative XML export for Silva content. This will eventually replace
+""" 
+The new and improved XML export for Silva content. This will replace
 the existing export machinery.
 """
 from StringIO import StringIO
+from sprout.saxext import xmlexport
+from sprout.saxext.generator import XMLGenerator
 from xml.sax import saxutils
-from Products.Silva.File import File
-from Products.Silva.Folder import Folder
-from Products.Silva.Publication import Publication
-from Products.Silva.Ghost import Ghost, GhostVersion
-from Products.Silva.GhostFolder import GhostFolder
-from Products.Silva.Link import Link, LinkVersion
 from Products.Silva.interfaces import IPublication
-from Products.SilvaMetadata.Compatibility import getToolByName
-from Products.SilvaDocument.Document import Document, DocumentVersion
 from Products.ParsedXML.DOM.Core import Node
 from DateTime import DateTime
 
-class XMLSourceRegistry:
-    """Registers Content Types to XML Sources that generate Sax-events.
-    """
-    def __init__(self):
-        self._mapping = {}
-        self._fallback = None
+theXMLExporter = xmlexport.Exporter('http://infrae.com/ns/silva')
 
-    def registerFallbackXMLSource(self, fallback):
-        self._fallback = fallback
-
-    def registerXMLSource(self, klass, xml_source):
-        self._mapping[klass] = xml_source
-
-    def getXMLSource(self, context):
-        xmlsource = self._mapping.get(context.__class__, None)
-        if xmlsource is None:
-            if self._fallback is not None:
-                return self._fallback(context)
-            else:
-                return None
-        return xmlsource(context)
-
-theXMLSourceRegistry = XMLSourceRegistry()
-
-getXMLSource = theXMLSourceRegistry.getXMLSource
-
-SilvaDocumentNS = "http://infrae.com/ns/silva_document"
-
-def initializeXMLSourceRegistry():
+def initializeXMLExportRegistry():
     """Here the actual content types are registered. Non-Silva-Core content
-    types probably need to register themselves in in their product
+    types need to register themselves in in their product
     __init__.pies
     """
-    reg = theXMLSourceRegistry
-    reg.registerXMLSource(Folder, FolderXMLSource)
-    reg.registerXMLSource(Link, LinkXMLSource)
-    reg.registerXMLSource(LinkVersion, LinkVersionXMLSource)
-    reg.registerXMLSource(Ghost, GhostXMLSource)
-    reg.registerXMLSource(GhostVersion, GhostVersionXMLSource)
-    reg.registerXMLSource(GhostFolder, GhostFolderXMLSource)
-    reg.registerXMLSource(Publication, PublicationXMLSource)
-    # XXX move to SilvaDocument
-    reg.registerXMLSource(Document, DocumentXMLSource)
-    reg.registerXMLSource(DocumentVersion, DocumentVersionXMLSource)
+    from Products.Silva.File import ZODBFile, FileSystemFile
+    from Products.Silva.Folder import Folder
+    from Products.Silva.Publication import Publication
+    from Products.Silva.Ghost import Ghost, GhostVersion
+    from Products.Silva.GhostFolder import GhostFolder
+    from Products.Silva.Link import Link, LinkVersion
+    from Products.Silva.Image import Image
+    from Products.Silva.AutoTOC import AutoTOC
+    exporter = theXMLExporter
+    exporter.registerNamespace('silva-content', 'http://infrae.com/namespaces/metadata/silva')
+    exporter.registerNamespace('silva-extra', 'http://infrae.com/namespaces/metadata/silva-extra')
+    exporter.registerProducer(SilvaExportRoot, SilvaExportRootProducer)
+    exporter.registerProducer(Folder, FolderProducer)
+    exporter.registerProducer(Link, LinkProducer)
+    exporter.registerProducer(LinkVersion, LinkVersionProducer)
+    exporter.registerProducer(Ghost, GhostProducer)
+    exporter.registerProducer(GhostVersion, GhostVersionProducer)
+    exporter.registerProducer(GhostFolder, GhostFolderProducer)
+    exporter.registerProducer(Publication, PublicationProducer)
+    exporter.registerProducer(ZODBFile, FileProducer)
+    exporter.registerProducer(FileSystemFile, FileProducer)
+    exporter.registerProducer(Image, ImageProducer)
+    exporter.registerProducer(AutoTOC, AutoTOCProducer)
+    exporter.registerFallbackProducer(ZexpProducer)
 
-class BaseXMLSource:
-    def __init__(self, context):
-        self.context = context
-
-    def xmlToString(self, settings):
-        """Output the XML as a string
+class SilvaBaseProducer(xmlexport.BaseProducer):
+    def metadata(self):
+        """Export the metadata
         """
-        f = StringIO()
-        self.xmlToFile(f, settings)
-        result = f.getvalue()
-        f.close()
-        return result
-
-    def xmlToFile(self, file, settings):
-        """Output the XML to a file
-        """
-        reader = saxutils.XMLGenerator(file, 'utf-8')
-        self.xmlToSax(reader, settings)
-
-    def xmlToSax(self, reader, settings):
-        """Export self.context to XML Sax-events
-        """
-        reader.startPrefixMapping(None, self.ns_default)
-        reader.startPrefixMapping('doc', SilvaDocumentNS)
-        mappings = settings.getMappings()
-        for prefix in mappings.keys():
-            reader.startPrefixMapping(prefix, mappings[prefix])
-        for set in self.context.service_metadata.collection.getMetadataSets():
-            reader.startPrefixMapping(set.id, set.metadata_uri)
-        # XXX start all registered prefixmappings here
-        if settings.prolog():
-            reader.startDocument()
-        self._startElement(
-            reader,
-            'silva',
-            {'url':self.context.absolute_url(),
-            'path':'/'.join(self.context.getPhysicalPath()),
-            'datetime':DateTime().HTML4()})
-        self._sax(reader, settings)
-        self._endElement(reader, 'silva')
-
-    def _sax(self, reader, settings):
-        """To be overridden in subclasses
-        """
-        raise NotImplemented
-
-    def _metadata(self, reader, settings):
-        """Export the metadata to XML Sax-events
-        """
-        metadata_service = getToolByName(self.context, 'portal_metadata')
+        metadata_service = self.context.service_metadata
         binding = metadata_service.getMetadata(self.context)
-        self._startElement(reader, 'metadata', {})
-        for set_id in binding.collection.keys():
+        self.startElement('metadata')
+        set_ids = binding.collection.keys()
+        set_ids.sort()
+        for set_id in set_ids:
             prefix, namespace = binding.collection[set_id].getNamespace()
-            self._startElement(reader, 'set', {'id': set_id})
-            for key, value in binding._getData(set_id).items():
-                self._startElementNS(reader, namespace, key, {})
+            self.startElement('set', {'id': set_id})
+            keys = binding._getData(set_id).keys()
+            keys.sort()
+            for key in keys:
+                value_type = None
+                value = binding._getData(set_id)[key]
                 if value:
                     if type(value) == type(DateTime()):
                         value = value.HTML4()
+                        value_type = 'datetime'
                     elif type(value) == type(''):
                         value = unicode(value, 'utf-8')
-                    reader.characters(value)
-                self._endElementNS(reader, namespace, key)
-            self._endElement(reader, 'set')
-        self._endElement(reader, 'metadata')
+                if value_type:
+                    self.startElementNS(namespace, key, {'type': value_type})
+                else:
+                    self.startElementNS(namespace, key)
+                if value:
+                    self.handler.characters(value)
+                self.endElementNS(namespace, key)
+            self.endElement('set')
+        self.endElement('metadata')
 
-    def _startElementNS(self, reader, ns, name, attrs=None):
-        """Starts a named XML element in the provided namespace with
-        optional attributes
-        """
-        d = {}
-
-        if attrs is not None:
-            for key, value in attrs.items():
-                d[(None, key)] = value
-        reader.startElementNS(
-            (ns, name),
-            None,
-            d)
-
-    def _endElementNS(self, reader, ns, name):
-        """Ends a named element in the provided namespace
-        """
-        reader.endElementNS(
-            (ns, name),
-            None)
-
-    def _startElement(self, reader, name, attrs=None):
-        """Starts a named XML element in the default namespace with optional
-        attributes
-        """
-        self._startElementNS(reader, self.ns_default, name, attrs)
-
-    def _endElement(self, reader, name):
-        """Ends a named element in the default namespace
-        """
-        self._endElementNS(reader, self.ns_default, name)
-
-class SilvaBaseXMLSource(BaseXMLSource):
-    """Base class to declare the Silva namespace.
-    """
-    ns_default = 'http://infrae.com/ns/silva'
-
-class VersionXMLSource(SilvaBaseXMLSource):
-    """Base class for Versions. May have its own methods in the future.
-    """
-
-class VersionedContentXMLSource(SilvaBaseXMLSource):
+class VersionedContentProducer(SilvaBaseProducer):
     """Base Class for all versioned content
     """
-    def _workflow(self, reader, settings):
+    def workflow(self):
         """Export the XML for the versioning workflow
         """
-        if not settings.workflow():
+        if not self.getSettings().workflow():
             return
-        self._startElement(reader, 'workflow', {})
+        self.startElement('workflow')
         version = self.context.get_unapproved_version_data()
-        if version[0] and settings.allVersions():
-            self._workflow_version(version, 'unapproved', reader, settings)
+        if version[0]:
+            self.workflow_version(version, 'unapproved')
         version = self.context.get_approved_version_data()
-        if version[0] and settings.allVersions():
-            self._workflow_version(version, 'approved', reader, settings)
+        if version[0]:
+            self.workflow_version(version, 'approved')
         version = self.context.get_public_version_data()
         if version[0]:
-            self._workflow_version(version, 'public', reader, settings)
-        if settings.allVersions():
-            for version in self.context.get_previous_versions_data():
-                self._workflow_version(version, 'closed', reader, settings)
-        self._endElement(reader, 'workflow')
+            self.workflow_version(version, 'public')
+        for version in self.context.get_previous_versions_data():
+            self.workflow_version(version, 'closed')
+        self.endElement('workflow')
 
-    def _workflow_version(self, version, status, reader, settings):
+    def workflow_version(self, version, status):
         """Export the XML for the different workflow versions. (Right now:
         Published, Approved, Unapproved, and Closed, but to the XML these
         are arbitrary)
         """
         id, publication_datetime, expiration_datetime = version
-        self._startElement(reader, 'version', {'id':id})
-        self._startElement(reader, 'status', {})
-        reader.characters(status)
-        self._endElement(reader, 'status')
-        self._startElement(reader, 'publication_datetime', {})
+        self.startElement('version', {'id':id})
+        self.startElement('status')
+        self.handler.characters(status)
+        self.endElement('status')
+        self.startElement('publication_datetime')
         if publication_datetime:
             if type(publication_datetime) == type(DateTime()):
-                reader.characters(str(publication_datetime.HTML4()))
+                self.handler.characters(str(publication_datetime.HTML4()))
             else:
-                reader.characters(unicode(str(publication_datetime)))
-        self._endElement(reader, 'publication_datetime')
-        self._startElement(reader, 'expiration_datetime', {})
+                self.handler.characters(unicode(str(publication_datetime)))
+        self.endElement('publication_datetime')
+        self.startElement('expiration_datetime')
         if expiration_datetime:
             if type(expiration_datetime) == type(DateTime()):
-                reader.characters(str(expiration_datetime.HTML4()))
+                self.handler.characters(str(expiration_datetime.HTML4()))
             else:
-                reader.characters(unicode(str(expiration_datetime)))
-        self._endElement(reader, 'expiration_datetime')
-        self._endElement(reader, 'version')
+                self.handler.characters(unicode(str(expiration_datetime)))
+        self.endElement('expiration_datetime')
+        self.endElement('version')
 
-    def _versions(self, reader, settings):
+    def versions(self):
         """Export the XML of the versions themselves.
         """
-        if settings.allVersions():
+        if self.getSettings().allVersions():
             for version in self.context.objectValues():
-                getXMLSource(version)._sax(reader, settings)
+                self.subsax(version)
         else:
             # XXX handle single version export. Is previewable right? Is
             # there a better method that is guaranteed to return a best
             # guess version?
-            viewable = self.context.get_viewable()
-            if viewable is not None:
-                getXMLSource(viewable)._sax(reader, settings)
+            self.subsax(self.context.get_previewable())
 
-    def _metadata(self, reader, settings):
+    def metadata(self):
         """Versioned Content has no metadata, the metadata is all on the
         versions themselves.
         """
         return
 
-class FolderXMLSource(SilvaBaseXMLSource):
+class FolderProducer(SilvaBaseProducer):
     """Export a Silva Folder object to XML.
     """
-    def _sax(self, reader, settings):
-        self._startElement(reader, 'folder', {'id':self.context.id})
-        self._metadata(reader, settings)
-        self._startElement(reader, 'content', {})
+    def sax(self):
+        self.startElement('folder', {'id': self.context.id})
+        self.metadata()
+        self.startElement('content')
+        default = self.context.get_default()
+        if default is not None:
+            self.startElement('default')
+            self.subsax(default)
+            self.endElement('default')
         for object in self.context.get_ordered_publishables():
             if (IPublication.isImplementedBy(object) and
-                    not self.context.with_sub_publications):
+                    not self.getSettings().withSubPublications()):
                 continue
-            getXMLSource(object)._sax(reader, settings)
+            self.subsax(object)
         for object in self.context.get_assets():
-            getXMLSource(object)._sax(reader, settings)
-        self._endElement(reader, 'content')
-        self._endElement(reader, 'folder')
+            self.subsax(object)
+        if self.getSettings().otherContent():
+            for object in self.context.get_other_content():
+                self.subsax(object)
+        self.endElement('content')
+        self.endElement('folder')
 
-class PublicationXMLSource(SilvaBaseXMLSource):
+class PublicationProducer(SilvaBaseProducer):
     """Export a Silva Publication object to XML.
     """
-    def _sax(self, reader, settings):
-        self._startElement(reader, 'publication', {'id':self.context.id})
-        self._metadata(reader, settings)
-        self._startElement(reader, 'content', {})
+    def sax(self):
+        self.startElement('publication', {'id': self.context.id})
+        self.metadata()
+        self.startElement('content')
+        default = self.context.get_default()
+        if default is not None:
+            self.startElement('default')
+            self.subsax(default)
+            self.endElement('default')
         for object in self.context.get_ordered_publishables():
             if (IPublication.isImplementedBy(object) and
-                    not self.context.with_sub_publications):
+                    not self.getSettings().withSubPublications()):
                 continue
-            getXMLSource(object)._sax(reader, settings)
+            self.subsax(object)
         for object in self.context.get_assets():
-            getXMLSource(object)._sax(reader, settings)
-        self._endElement(reader, 'content')
-        self._endElement(reader, 'publication')
+            self.subsax(object)
+        if self.getSettings().otherContent():
+            for object in self.context.get_other_content():
+                self.subsax(object)
+        self.endElement('content')
+        self.endElement('publication')
 
-class LinkXMLSource(VersionedContentXMLSource):
+class LinkProducer(VersionedContentProducer):
     """Export a Silva Link object to XML.
     """
-    def _sax(self, reader, settings):
-        self._startElement(reader, 'link', {'id': self.context.id})
-        self._workflow(reader, settings)
-        self._versions(reader, settings)
-        self._endElement(reader, 'link')
+    def sax(self):
+        self.startElement('link', {'id': self.context.id})
+        self.workflow()
+        self.versions()
+        self.endElement('link')
 
-class LinkVersionXMLSource(VersionXMLSource):
+class LinkVersionProducer(SilvaBaseProducer):
     """Export a version of a Silva Link object to XML.
     """
-    def _sax(self, reader, settings):
-        self._startElement(
-            reader, 'content', {'version_id': self.context.id})
-        self._metadata(reader, settings)
-        self._startElement(reader, 'url', {})
-        reader.characters(self.context.get_url())
-        self._endElement(reader, 'url')
-        self._endElement(reader, 'content')
+    def sax(self):
+        self.startElement('content', {'version_id': self.context.id})
+        self.metadata()
+        self.startElement('url')
+        self.handler.characters(self.context.get_url())
+        self.endElement('url')
+        self.endElement('content')
 
-class GhostXMLSource(VersionedContentXMLSource):
+class GhostProducer(VersionedContentProducer):
     """Export a Silva Ghost object to XML.
     """
-    def _sax(self, reader, settings):
-        self._startElement(reader, 'ghost', {'id': self.context.id})
-        self._workflow(reader, settings)
-        self._versions(reader, settings)
-        self._endElement(reader, 'ghost')
+    def sax(self):
+        self.startElement('ghost', {'id': self.context.id})
+        self.workflow()
+        self.versions()
+        self.endElement('ghost')
 
-class GhostVersionXMLSource(VersionXMLSource):
+class GhostVersionProducer(SilvaBaseProducer):
     """Export a verson of a Silva Ghost object to XML.
     """
-    def _sax(self, reader, settings):
-        self._startElement(
-            reader, 'content', {'version_id': self.context.id})
+    def sax(self):
+        self.startElement('content', {'version_id': self.context.id})
         content = self.context.get_haunted_unrestricted().get_viewable()
         contenttype = self.context.get_haunted_unrestricted().meta_type
-        self._startElement(reader, 'metatype', {})
-        reader.characters(contenttype)
-        self._endElement(reader, 'metatype')
+        self.startElement('metatype')
+        self.handler.characters(contenttype)
+        self.endElement('metatype')
         if content is None:
-            self._startElement(reader, 'broken', {})
-            self._endElement(reader, 'broken')
+            self.startElement('broken')
+            self.endElement('broken')
         else:
-            self._startElement(reader, 'haunted_url', {})
-            reader.characters(self.context.get_haunted_url())
-            self._endElement(reader, 'haunted_url')
-            getXMLSource(content)._sax(reader, settings)
-        self._endElement(reader, 'content')
+            self.startElement('haunted_url')
+            self.handler.characters(self.context.get_haunted_url())
+            self.endElement('haunted_url')
+            self.subsax(content)
+        self.endElement('content')
 
-class GhostFolderXMLSource(SilvaBaseXMLSource):
+class GhostFolderProducer(SilvaBaseProducer):
     """Export a Silva Ghost Folder object to XML.
     """
-    def _sax(self, reader, settings):
-        self._startElement(reader, 'ghost_folder', {'id': self.context.id})
-        self._metadata(reader, settings)
-        self._startElement(reader, 'content', {})
+    def sax(self):
+        self.startElement('ghost_folder', {'id': self.context.id})
+        self.metadata()
+        self.startElement('content')
         content = self.context.get_haunted_unrestricted()
         contenttype = self.context.get_haunted_unrestricted().meta_type
-        self._startElement(reader, 'metatype', {})
-        reader.characters(contenttype)
-        self._endElement(reader, 'metatype')
-        self._startElement(reader, 'haunted_url', {})
-        reader.characters(self.context.get_haunted_url())
-        self._endElement(reader, 'haunted_url')
+        self.startElement('metatype')
+        self.handler.characters(contenttype)
+        self.endElement('metatype')
+        self.startElement('haunted_url')
+        self.handler.characters(self.context.get_haunted_url())
+        self.endElement('haunted_url')
         if content is None:
             return
-        self._startElement(reader, 'content', {})
+        self.startElement('content')
+        default = content.get_default()
+        if default is not None:
+            self.startElement('default')
+            self.subsax(default)
+            self.endElement('default')
         for object in content.get_ordered_publishables():
             if (IPublication.isImplementedBy(object) and
-                    not self.context.with_sub_publications):
+                    not self.getSettings().withSubPublications()):
                 continue
-            getXMLSource(object)._sax(reader, settings)
-        self._endElement(reader, 'content')
-        self._endElement(reader, 'content')
-        self._endElement(reader, 'ghost_folder')
+            self.subsax(object)
+        for object in content.get_assets():
+            self.subsax(object)
+        if self.getSettings().otherContent():
+            for object in content.get_other_content():
+                self.subsax(object)
+        self.endElement('content')
+        self.endElement('content')
+        self.endElement('ghost_folder')
 
-# XXX Move to SilvaDocument
-
-class DocumentXMLSource(VersionedContentXMLSource):
-    """Export a Silva Document object to XML.
+class AutoTOCProducer(SilvaBaseProducer):
+    """Export an AutoTOC object to XML.
     """
-    def _sax(self, reader, settings):
-        self._startElement(reader, 'document', {'id': self.context.id})
-        self._workflow(reader, settings)
-        self._versions(reader, settings)
-        self._endElement(reader, 'document')
-
-class DocumentVersionXMLSource(VersionXMLSource):
-    """Export a version of a Silva Document object to XML.
+    def sax(self):
+        self.startElement('auto_toc', {'id': self.context.id})
+        self.metadata()
+        self.endElement('auto_toc')
+    
+class FileProducer(SilvaBaseProducer):
+    """Export a File object to XML.
     """
-    def _sax(self, reader, settings):
-        self._startElement(
-            reader, 'content', {'version_id': self.context.id})
-        self._metadata(reader, settings)
-        node = self.context.content.documentElement
-        self._sax_node(node, reader, settings)
-        self._endElement(reader, 'content')
+    def sax(self):
+        path = self.context.getPhysicalPath()
+        self.startElement('file_asset', {'id': self.context.id})
+        self.metadata()
+        # self.startElement('mime_type')
+        # self.handler.characters(self.context.get_mime_type())
+        # self.endElement('mime_type')
+        self.getInfo().addAssetPath(path)
+        self.startElement('asset_id')
+        self.handler.characters(self.getInfo().getAssetPathId(path))
+        self.endElement('asset_id')
+        self.endElement('file_asset')
 
-    def _sax_node(self, node, reader, settings):
-        """Export child nodes of a (version of a) Silva Document to XML
-        """
-        attributes = {}
-        if node.attributes:
-            for key in node.attributes.keys():
-                attributes[key] = node.attributes[key].value
-        self._startElementNS(reader, SilvaDocumentNS, node.nodeName, attributes)
-        text = ''
-        if node.hasChildNodes():
-            for child in node.childNodes:
-                if child.nodeType == Node.TEXT_NODE:
-                    if child.nodeValue:
-                        reader.characters(child.nodeValue)
-                elif child.nodeType == Node.ELEMENT_NODE:
-                    self._sax_node(child, reader, settings)
-        else:
-            if node.nodeValue:
-                reader.characters(node.nodeValue)
-        self._endElementNS(reader, SilvaDocumentNS, node.nodeName)
+class ImageProducer(SilvaBaseProducer):
+    """Export an Image object to XML.
+    """
+    def sax(self):
+        # XXX Find out what else to export. Thumbnail? Size? Resized size,
+        # cropping, etc.?
+        path = self.context.getPhysicalPath()
+        self.startElement('image_asset', {'id': self.context.id})
+        self.metadata()
+        # self.startElement('format')
+        # self.handler.characters(self.context.getFormat())
+        # self.endElement('format')
+        self.getInfo().addAssetPath(path)
+        self.startElement('asset_id')
+        self.handler.characters(self.getInfo().getAssetPathId(path))
+        self.endElement('asset_id')
+        self.endElement('image_asset')
 
-class ExportSettings:
-    def __init__(self):
-        self._workflow = 1
-        self._all_versions = 1
-        self._mappings = {}
-        self._prolog = 1
-        #         self._fullmedia = 0
+class ZexpProducer(SilvaBaseProducer):
+    """Export any unknown content type to a zexp in the zip-file.
+    """
+    def sax(self):
+        info = self.getInfo()
+        if info is not None:
+            path = self.context.getPhysicalPath()
+            id = self.context.id
+            if callable(id):
+                id = id()
+            self.startElement('unknown_content', {'id': id})
+            info.addZexpPath(path)
+            path_id = self.getInfo().getZexpPathId(path)
+            self.startElement('zexp_id')
+            self.handler.characters(path_id)
+            self.endElement('zexp_id')
+            self.endElement('unknown_content')
+    
+class SilvaExportRoot:
+    def __init__(self, exportable):
+        self._exportable = exportable
+        self._exportDateTime = DateTime()
+
+    def getSilvaProductVersion(self):
+        return self._exportable.get_root().get_silva_product_version()
+    
+    def getExportable(self):
+        return self._exportable
+    
+    def getDateTime(self):
+        return self._exportDateTime
         
-    def setOnlyPublishedNoWorkflow(self):
-        self._workflow = 0
-        self._all_versions = 0
+class SilvaExportRootProducer(xmlexport.BaseProducer):
+    def sax(self):
+        self.startElement('silva', {'datetime': self.context.getDateTime().HTML4(), 'path': '/'.join(self.context.getExportable().getPhysicalPath()), 'url': self.context.getExportable().absolute_url(), 'silva_version': self.context.getSilvaProductVersion()})
+        self.subsax(self.context.getExportable())
+        self.endElement('silva')
+        
+class ExportSettings(xmlexport.BaseSettings):
+    def __init__(self, asDocument=True, outputEncoding='utf-8', workflow=True, allVersions=True, withSubPublications=True, otherContent=True):
+        xmlexport.BaseSettings.__init__(self, asDocument, outputEncoding)
+        self._workflow = workflow
+        self._all_versions = allVersions
+        self._with_sub_publications = withSubPublications
+        self._other_content = otherContent
+        
+    def setWithSubPublications(self, with_sub_publications):
+        self._with_sub_publications = with_sub_publications
+        
+    def setLastVersion(self, last_version):
+        self._all_versions = not last_version
 
         #     def setFullMedia():
         #         self._fullmedia = 1
@@ -417,20 +383,41 @@ class ExportSettings:
     def allVersions(self):
         return self._all_versions
 
-    def setOnlyPublished(self):
-        self._all_versions = 0
+    def withSubPublications(self):
+        return self._with_sub_publications
+
+    def otherContent(self):
+        return self._other_content
         
-    def setMappings(self, mappings):
-        self._mappings = mappings
-
-    def getMappings(self):
-        return self._mappings
-
-    def setNoProlog(self):
-        self._prolog = 0
-
-    def setProlog(self):
-        self._prolog = 1
+class ExportInfo:
+    def __init__(self):
+        self._asset_paths = {}
+        self._zexp_paths = {}
+        self._last_asset_id = 0
+        self._last_zexp_id = 0
         
-    def prolog(self):
-        return self._prolog
+    def addAssetPath(self, path):
+        self._asset_paths[path] = self._makeUniqueAssetId(path)
+    
+    def getAssetPathId(self, path):
+        return self._asset_paths[path]
+
+    def getAssetPaths(self):
+        return self._asset_paths.items()
+    
+    def _makeUniqueAssetId(self, path):
+        self._last_asset_id += 1
+        return str(self._last_asset_id)
+    
+    def addZexpPath(self, path):
+        self._zexp_paths[path] = self._makeUniqueZexpId(path)
+    
+    def getZexpPathId(self, path):
+        return self._zexp_paths[path]
+
+    def getZexpPaths(self):
+        return self._zexp_paths.items()
+    
+    def _makeUniqueZexpId(self, path):
+        self._last_zexp_id += 1
+        return str(self._last_zexp_id) + '.zexp'

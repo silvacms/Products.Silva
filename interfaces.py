@@ -16,13 +16,13 @@ class IAccessManager(Interface):
 
     def deny_role(self, userid, role):
         """Denies the role and send an e-mail to the user"""
-    
+
 class ISecurity(Interface):
     """Can be mixed in with an object to support Silva security.
     (built on top of Zope security)
     Methods prefixed with sec_ so as not to disrupt similarly named
     Zope's security methods. (ugly..)
-    """ 
+    """
     # MANIPULATORS
     def sec_assign(userid, role):
         """Assign role to userid for this object.
@@ -42,13 +42,13 @@ class ISecurity(Interface):
     def sec_create_lock():
         """Create lock for this object. Return true if successful.
         """
-    
+
     # ACCESSORS
-        
+
     def sec_is_locked():
         """Check whether this object is locked by a user currently
         editing.
-        """    
+        """
 
     def sec_have_management_rights():
         """Check whether we have management rights here.
@@ -58,7 +58,7 @@ class ISecurity(Interface):
         """Get the userids that have local roles here.
         """
         pass
-        
+
     def sec_get_roles_for_userid(userid):
         """Get the local roles that a userid has here.
         """
@@ -70,12 +70,12 @@ class ISecurity(Interface):
         pass
 
     def sec_find_users(search_string):
-        """Look up users in user database. Return a dictionary of  
+        """Look up users in user database. Return a dictionary of
         users with userid as key, and dictionaries with user info
         as value.
         """
         pass
-    
+
     def sec_get_member(userid):
         """Get member object for user id.
         """
@@ -166,7 +166,7 @@ class ISilvaObject(ISecurity):
         container. Removes item id to from ordered list (item is
         a publishable object).
         """
-        pass        
+        pass
 
     # ACCESSORS
     def get_title():
@@ -200,7 +200,7 @@ class ISilvaObject(ISecurity):
         PUBLIC
         """
         pass
-        
+
     def get_editable():
         """Get the editable version (may be object itself if no versioning).
         Returns None if there is no such version.
@@ -213,7 +213,7 @@ class ISilvaObject(ISecurity):
         Returns None if there is no such version.
         """
         pass
-   
+
     def get_viewable():
         """Get the publically viewable version (may be the object itself if
         no versioning).
@@ -227,7 +227,7 @@ class ISilvaObject(ISecurity):
         obtained by get_previewable() to render the object to HTML.
         """
         pass
-    
+
     def view():
         """Render this object using the public view defined in the view registry.
         This should use methods on the object itself and the version object
@@ -241,12 +241,12 @@ class ISilvaObject(ISecurity):
         This means the public view should not contain any dynamically
         generated content.
         """
-        
+
     def get_xml():
         """Render this object as XML, return as string in UTF-8 encoding.
         """
         pass
-    
+
     def to_xml(f):
         """Render this object as XML, write unicode to fileobject f.
         """
@@ -276,7 +276,7 @@ class ISilvaObject(ISecurity):
     def is_deletable():
         """Returns True if object is deletable right now
         """
-        
+
 class IPublishable(Interface):
     # MANIPULATORS
     def activate():
@@ -288,7 +288,7 @@ class IPublishable(Interface):
         """Deactivate publishable item.
         """
         pass
-    
+
     # ACCESSORS
     def is_published():
         """Return true if this object is visible to the public.
@@ -301,7 +301,7 @@ class IPublishable(Interface):
         versioned content that is approved.
         """
         pass
-    
+
     def is_active():
         """Returns true if this object is actually active and
         in the table of contents.
@@ -317,7 +317,7 @@ class IPublishable(Interface):
 
 
 class IContainer(ISilvaObject, IPublishable):
-    
+
     # MANIPULATORS
     def move_object_up(id):
         """Move object with id up in the list of ordered publishables.
@@ -342,7 +342,7 @@ class IContainer(ISilvaObject, IPublishable):
         Cannot rename approved or published content.
         """
         pass
-    
+
     def action_delete(ids):
         """Delete ids in this container.
         Cannot delete approved or published content.
@@ -366,7 +366,7 @@ class IContainer(ISilvaObject, IPublishable):
         unapproved and/or closed.
         """
         pass
-        
+
     # ACCESSORS
     def get_silva_addables():
         """Get a list of meta_type_dicts (from filtered_meta_types()) that
@@ -378,11 +378,11 @@ class IContainer(ISilvaObject, IPublishable):
         """Get a list of meta_types of all addables that exist in
         Silva.
         """
-        
+
     def get_silva_addables_allowed():
         """Gives a list of all meta_types that are explicitly allowed here.
         """
-        
+
     def get_container():
         """Get the nearest container in the acquisition hierarchy.
         (this one)
@@ -395,7 +395,7 @@ class IContainer(ISilvaObject, IPublishable):
         PUBLIC
         """
         pass
-    
+
     def is_transparent():
         """Show this subtree in get_tree().
         PUBLIC
@@ -408,7 +408,7 @@ class IContainer(ISilvaObject, IPublishable):
         approved.
         """
         pass
-    
+
     def get_default():
         """Get the default content object of the folder. If
         no default is available, return None.
@@ -421,13 +421,13 @@ class IContainer(ISilvaObject, IPublishable):
         order.
         """
         pass
-    
+
     def get_nonactive_publishables():
         """Get a list of nonactive publishables. This is not in
         any fixed order.
         """
         pass
-    
+
     def get_assets():
         """Get a list of non-publishable objects in this folder.
         (not in any order).
@@ -440,7 +440,7 @@ class IContainer(ISilvaObject, IPublishable):
         PUBLIC
         """
         pass
-    
+
     def get_tree():
         """Get flattened tree of all active publishables.
         This is a list of indent, object tuples.
@@ -473,14 +473,14 @@ class IPublication(IContainer):
     def set_layout(layout):
         """Set template layout
         """
-        
+
     def set_silva_addables_allowed_in_publication(addables):
         """Set the list of addables explicitly allowed in this publication.
         If 'addables' is set to None the list is acquired from the
         publication higher in the hierarchy. If this is the root,
         return the complete list.
         """
-    
+
     def get_silva_addables_allowed_in_publication():
         """Get a list of all addables explicitly allowed in this
         publication (and its subcontainers).
@@ -505,7 +505,7 @@ class IRoot(IPublication):
         'nearest' Silva root.
         """
         pass
-    
+
     def add_silva_addable_forbidden(meta_type):
         """Forbid use of meta_type in SMI. The meta_type won't show
         up anymore, including in the publication metadata tab where
@@ -516,12 +516,12 @@ class IRoot(IPublication):
         """Clear any forbidden addables. All addables show up in the
         SMI again.
         """
-        
+
     def is_silva_addable_forbidden(meta_type):
         """Returns true if meta_type should not show up in the SMI.
         """
 
-class IContent(ISilvaObject, IPublishable):    
+class IContent(ISilvaObject, IPublishable):
     """An object that can be published directly and would appear
     in the table of contents. Can be ordered.
     """
@@ -537,7 +537,7 @@ class IContent(ISilvaObject, IPublishable):
         PUBLIC
         """
         pass
-    
+
     def is_default():
         """True if this content object is the default content object of
         the folder.
@@ -546,10 +546,10 @@ class IContent(ISilvaObject, IPublishable):
         pass
 
     def get_indexables():
-        """ Return a list of versions (that can be indexed in various ways). 
-        May return the empty list if there is nothing to index.  
+        """ Return a list of versions (that can be indexed in various ways).
+        May return the empty list if there is nothing to index.
 
-        NOTE: This is "indexables" in the book index sense, not in catalog 
+        NOTE: This is "indexables" in the book index sense, not in catalog
         sense.
         """
         pass
@@ -611,19 +611,19 @@ class IVersioning(Interface):
         """
         pass
 
-    
+
     def set_unapproved_version_publication_datetime(dt):
         """Set the publicationd datetime for the unapproved version,
         or None if this is not yet known.
         """
         pass
-    
+
     def set_unapproved_version_expiration_datetime(dt):
         """Set the expiration datetime of the unapproved version,
         or None if it never expires.
         """
         pass
-    
+
     def set_approved_version_publication_datetime(dt):
         """Change the publication datetime for the approved version.
         """
@@ -635,8 +635,8 @@ class IVersioning(Interface):
         """
         pass
 
-    
-    
+
+
     # ACCESSORS
 
     def is_version_approved():
@@ -655,8 +655,8 @@ class IVersioning(Interface):
         which has a request for approval.
         """
         pass
-    
-    
+
+
     def get_unapproved_version():
         """Get the id of the unapproved version.
         """
@@ -667,7 +667,7 @@ class IVersioning(Interface):
         or None if no publication datetime yet.
         """
         pass
-    
+
     def get_unapproved_version_expiration_datetime():
         """Get the expiration datetime for the unapproved version,
         or None if no publication datetime yet.
@@ -708,7 +708,7 @@ class IVersioning(Interface):
         if there is no expiration datetime.
         """
         pass
-    
+
     def get_next_version_status():
         """Get the status of the next version.
         Result can be 'not_approved', 'approved', or 'no_next_version'.
@@ -762,7 +762,7 @@ class IVersioning(Interface):
         (Maybe write another method for this?)
         """
         pass
-    
+
     def get_approval_request_message():
         """Get the current message associated with
         request for approval; i.e. argument passed the
@@ -778,19 +778,19 @@ class IVersioning(Interface):
         or None if there is no such version or request.
         """
         pass
-    
+
     def can_approve():
         """Returns true if approval is allowed.
         """
         pass
-    
+
 class IVersionedContent(IVersioning, IContent):
     """This is a content object that is versioned. Presumed is that
     upon creation of the content object it is assigned a version id
     that is registered with the Versioning interface as the unapproved
     version.
     """
-    
+
     # MANIPULATORS
     def create_copy():
         """Create a new copy of the public version. Automatically
@@ -804,7 +804,7 @@ class IVersionedContent(IVersioning, IContent):
         """The editable version will be replaced by a copy of the
         public version.
         """
-        
+
 class IVersion(Interface):
     """Version of a versioned object
     """
@@ -838,7 +838,7 @@ class IVersion(Interface):
         """Returns itself. Used by acquisition to get the
            neared version.
         """
-        
+
 class RequiredParameterNotSetError(Exception):
     pass
 
@@ -853,8 +853,8 @@ class IDataSource(IAsset):
     # ACCESSORS
 
     def parameters(self):
-        """Return dictionary of the form 
-        {name: (type, default_value, description)} and description of 
+        """Return dictionary of the form
+        {name: (type, default_value, description)} and description of
         Author settable parameters. Maybe None
         """
         pass
@@ -867,13 +867,13 @@ class IDataSource(IAsset):
         pass
 
     def get_data(self, **kw):
-        """Get data from source with parameter values applied. This most 
-        probably only called from the DataElement widget. The result 
-        will be a ZSQLMethod-like result. 
+        """Get data from source with parameter values applied. This most
+        probably only called from the DataElement widget. The result
+        will be a ZSQLMethod-like result.
 
-        Raises RequiredParameterNotSetError is Auhtor didn't specify 
+        Raises RequiredParameterNotSetError is Auhtor didn't specify
         values for all parameters.
-        
+
         FIXME: Define "ZSQLMEthod like result"?
         PUBLIC
         """
@@ -907,32 +907,32 @@ class ISQLDataSource(IDataSource):
         """List ids of available database connections
         """
         pass
-        
+
     # MODIFIERS
 
     def set_statement(self, statement):
-        """SQLDataSources make use of ZSQL Methods. 
+        """SQLDataSources make use of ZSQL Methods.
         They're supposed to do all the hard work.
         """
         pass
 
     def set_connection_id(self, id):
-        """SQLDataSources make use of ZSQL Methods. 
+        """SQLDataSources make use of ZSQL Methods.
         They're supposed to do all the hard work.
         """
         pass
-    
+
 class IFile(IAsset):
     """A File object to encapsulate "downloadable" data
     """
     # MANIPULATORS
 
     def set_file_data(self, file):
-        """Re-upload data for this file object. It will change the 
+        """Re-upload data for this file object. It will change the
         content_type, however id, _title, etc. will not change.
         """
         pass
- 
+
     # ACCESSORS
 
     def get_filename(self):
@@ -976,7 +976,7 @@ class IMember(Interface):
     def fullname():
         """Return full name
         """
-        
+
     def email():
         """Return users's email address if known, None otherwise.
         """
@@ -988,7 +988,7 @@ class IMember(Interface):
     def extra(name):
         """Return bit of extra information, keyed by name.
         """
-        
+
     def is_approved():
         """Return true if this member is approved. Unapproved members
         may face restrictions on the Silva site.
@@ -998,7 +998,7 @@ class IMemberService(Interface):
     def extra():
         """Return list of names of extra information.
         """
-        
+
     def find_members(search_string):
         """Return all users with a full name containing search string.
         """
@@ -1006,7 +1006,7 @@ class IMemberService(Interface):
     def is_user(userid):
         """Return true if userid is indeed a known user.
         """
-        
+
     def get_member(userid):
         """Get member object for userid, or None if no such member object.
         """
@@ -1026,14 +1026,14 @@ class IMemberService(Interface):
     def get_extra_names():
         """Return list of names of extra information.
         """
-        
+
 # there is also expected to be a 'Members' object that is traversable
 # to a Member object. Users can then modify information in the member
 # object (if they have the permissions to do so, but the user associated
 # with the member should do so)
 
 class IMessageService(Interface):
-    
+
     def send_message(from_memberid, to_memberid, subject, message):
         """Send a message from one member to another.
         """
@@ -1044,7 +1044,7 @@ class IMessageService(Interface):
         This needs to be called at the end of a request otherwise any
         messages pending may be lost.
         """
-    
+
 class ISidebarService(Interface):
     def render(obj, tab_name):
         """Returns the rendered PT
@@ -1064,7 +1064,7 @@ class IContainerPolicy(Interface):
 
     def createDefaultDocument(container, title):
         """create default document in given container"""
-    
+
 
 class IGhost(Interface):
     """Interface for ghosts (and ghost folders)"""
@@ -1083,14 +1083,14 @@ class IGhostContent(IGhost):
 
 class IGhostFolder(IGhost):
     """Marker interface for ghost folders"""
-    
+
 
 class IIcon(Interface):
     # XXX I don't like the name
-    
+
     def getIconIdentifier():
         """returns icon identifier
-        
+
             the icon registry should be able to return an icon from an icon
             identifier
         """
@@ -1100,8 +1100,8 @@ class IUpgrader(Interface):
 
     def upgrade(anObject):
         """upgrades object
-        
-            during upgrade the object identity of the upgraded object may 
+
+            during upgrade the object identity of the upgraded object may
             change
 
             returns object

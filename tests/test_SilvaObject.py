@@ -1,11 +1,10 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
-from Testing import ZopeTestCase
 import SilvaTestCase
 
 from DateTime import DateTime
@@ -21,7 +20,7 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
                                                 'publication','Publication')
         self.document = self.add_document(self.root, 'document','Document')
         self.document2 = self.add_document(self.root, 'document2','')
-        
+
         # add some stuff to test breadcrumbs
         self.subfolder = self.add_folder(self.folder, 'subfolder', 'Subfolder')
         self.subsubdoc = self.add_document(self.subfolder,
@@ -43,7 +42,6 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
         # Test get_title_or_id
         self.assertEquals(self.document.get_title_or_id_editable(), 'Document')
         self.assertEquals(self.document2.get_title_or_id_editable(), 'document2')
-
 
     def test_title_on_version(self):
         self.add_document(self.folder, 'adoc', 'document')

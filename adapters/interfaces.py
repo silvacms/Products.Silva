@@ -54,3 +54,18 @@ class IArchiveFileImporter(Interface):
         providing feedback on what archive contents have succesfully been 
         imported into Silva Assets and what contents have not.
         """
+
+class IZipfileExporter(Interface):
+    def exportToZip(context, zipname, settings):
+        """Export Silva content to a zip file.
+        
+        context -- The content object to be exported
+        zipname -- The filename of the zip archive
+        settings -- The export settings
+        """
+
+class IAssetData(Interface):
+    def getData():
+        """ Get actual data stored for this asset as calling index_html()
+        for assets can have all kinds of unwanted side effects.
+        """        

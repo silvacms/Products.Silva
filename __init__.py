@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.115 $
+# $Revision: 1.116 $
 
 import ContainerPolicy
 
@@ -10,11 +10,12 @@ def initialize(context):
 # enable Formulator support for FileSystemSite/CMFCore
 # XXX shouldn't be necessary anymore with CVS Formulator
     from Products.Formulator import FSForm
-
+    from Products.Silva.silvaxml import xmlexport, xmlimport
 # import FileSystemSite functionality
 # (use CMFCore if FileSystemSite is not installed)
     from Products.Silva.fssite import registerDirectory, registerFileExtension
     from Products.Silva.fssite import FSImage
+    from Products.Silva.silvaxml import xmlexport, xmlimport
     from Products.FileSystemSite.FSDTMLMethod import FSDTMLMethod
     from Products.FileSystemSite.FSPageTemplate import FSPageTemplate
 # enable .ico support for FileSystemSite
@@ -28,7 +29,6 @@ def initialize(context):
     import install
     import helpers # to execute the module_permission statements
     import mangle, batch
-    from Products.Silva.ImporterRegistry import importer_registry
     from Products.Silva.ExtensionRegistry import extensionRegistry
     import ExtensionService
     from LayoutRegistry import layoutRegistry
@@ -121,20 +121,6 @@ def initialize(context):
         icon = "www/containerpolicy_service.png"
         )
         
-    # register xml import functions
-    # we let the xml import functionality of Publication handle any
-    # root elements, since a Silva instance can not import another root
-    importer_registry.register_tag('silva_root',
-                                   Publication.xml_import_handler)
-    importer_registry.register_tag('silva_publication',
-                                   Publication.xml_import_handler)
-    importer_registry.register_tag('silva_folder',
-                                   Folder.xml_import_handler)
-    importer_registry.register_tag('silva_ghostfolder',
-                                   GhostFolder.xml_import_handler)
-    importer_registry.register_tag('silva_link',
-                                   Link.xml_import_handler)
-
     # register the FileSystemSite directories
     registerDirectory('views', globals())
     registerDirectory('resources', globals())
@@ -156,6 +142,13 @@ def initialize(context):
     initialize_icons()
     initialize_upgrade()
 
+    #------------------------------
+    # Initialize the XML registries
+    #------------------------------
+    
+    xmlexport.initializeXMLExportRegistry()
+    xmlimport.initializeXMLImportRegistry()
+    
 #------------------------------------------------------------------------------
 # External Editor support
 #------------------------------------------------------------------------------

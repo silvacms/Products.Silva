@@ -335,13 +335,15 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assert_(self.root.folder6.get_default())
         self.assertRaises(AttributeError, self.root.folder6.is_published)
 
+# XXX Test broke on sprout branch. Unable to find out why, but since sprout
+#     will obviate the need for this method of importing anyway, I didn't
+#     want to spend too much time on investigating.
+
     def test_import_xml(self):
         xml1 = """<?xml version="1.0" ?><silva><silva_publication id="test"><title>TestPub</title><silva_document id="index"><title>TestPub</title><doc><p>Content</p></doc></silva_document></silva_publication></silva>"""
-
         xml2 = '<silva><silva_folder id="test2"><title>TestFolder</title></silva_folder></silva>' % DateTime('2002/10/16')
 
         self.root.xml_import(xml1)
-
         self.assert_(hasattr(self.root, 'test'))
         self.assertEquals(self.root.test.get_title_editable(), 'TestPub')
         self.assert_(hasattr(self.root.test, 'index'))
@@ -351,6 +353,7 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.root.xml_import(xml2)
 
         self.assert_(hasattr(self.root, 'test2'))
+
         # XXX no title available as no index object in this import..
         #self.assertEquals(self.sroot.test2.get_title_editable(), 'TestFolder')
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.100 2004/07/21 11:40:40 jw Exp $
+# $Id: SilvaObject.py,v 1.101 2004/07/22 15:44:44 eric Exp $
 
 # python
 from types import StringType
@@ -19,6 +19,7 @@ from interfaces import ISilvaObject, IContent, IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent
 # Silva adapters
+from Products.Silva.adapters import zipfileExport
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 
 from Products.SilvaMetadata.Exceptions import BindingError
@@ -334,6 +335,26 @@ class SilvaObject(Security, ViewCode):
         #    self.get_root().service_members.get_member(
         #        self.REQUEST.AUTHENTICATED_USER.getUserName())
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_xml')
+    def get_zip(self, with_sub_publications=0, last_version=0):
+        """Get Zipfile with XML-Document for object, and binary files
+        in a subdirectory 'assets'.
+        """
+        from Products.Silva.silvaxml import xmlexport
+        settings = xmlexport.ExportSettings()
+        settings.setWithSubPublications(with_sub_publications)
+        settings.setLastVersion(last_version)
+        adapter = zipfileExport.getZipfileExportAdapter(self)
+        result = adapter.exportToZip(self, settings)
+        return result
+    
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+        'is_deletable')
+    def is_deletable(self):
+        """always deletable"""
+        return 1
+        
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_xml')
     def get_xml(self, with_sub_publications=0, last_version=0):

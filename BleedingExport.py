@@ -1,10 +1,11 @@
 from Products.Silva.silvaxml import xmlexport
 
 def bleeding_export(self):
-    xmlexport.initializeXMLSourceRegistry()
+    xmlexport.initializeXMLExportRegistry()
     settings = xmlexport.ExportSettings()
-    xml_source = xmlexport.getXMLSource(self.Test_OOo_Publication)
-    export_soup = xml_source.xmlToString(settings)
+    exporter = xmlexport.theXMLExporter
+    xml_source = xmlexport.SilvaExportRoot(self.Test_OOo_Publication)
+    export_soup = exporter.exportToString(xml_source, settings)
     export_bowl = open("/Users/bradb/Desktop/Test_OOo_Publication.slv", "w")
     export_bowl.write(export_soup)
 

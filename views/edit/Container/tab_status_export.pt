@@ -177,14 +177,6 @@
               <tr class="controls">
                 <td class="align-right"
                   colspan="3">
-                  <input class="button"
-                    type="submit"
-                    name="download_xml_selected:method"
-                    value="export xml"
-                    title="access key: alt-e"
-                    accesskey="e"
-                    i18n:attributes="value title"
-                  />
                 </td>
               </tr>
             </tfoot>

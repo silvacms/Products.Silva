@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.153 $
+# $Revision: 1.154 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -724,6 +724,24 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         result.sort(lambda x,y: cmp(x.getId(), y.getId()))
         return result
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_other_content')
+    def get_other_content(self):
+        result = []
+        assets = self.get_assets()
+        publishables = self.get_ordered_publishables()
+        default = self.get_default()
+        for object in self.objectValues():
+            if object in publishables:
+                continue
+            if object in assets:
+                continue
+            if object == default:
+                continue
+            result.append(object)
+        result.sort(lambda x,y: cmp(x.getId(), y.getId()))
+        return result
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_assets_of_type')
     def get_assets_of_type(self, meta_type):
