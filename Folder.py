@@ -12,7 +12,7 @@ import Copying
 import Interfaces
 import SilvaPermissions
 # misc
-from helpers import add_and_edit
+import helpers
 
 class Folder(SilvaObject, Publishable, Folder.Folder):
     """Silva Folder.
@@ -141,6 +141,80 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 object.refresh_active_publishables()
         self._ordered_ids = ids
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_rename')
+    def action_rename(self, ref, id, title):
+        """Rename object moniker refers to.
+        """
+        object = Copying.resolve_ref(self.getPhysicalRoot(), ref)
+        # first change id if necessary
+        if object.id != id:
+            parent = object.aq_inner.aq_parent
+            parent.manage_renameObject(object.id, id)
+        # now change title
+        object.set_title(title)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_delete')
+    def action_delete(self, ids):
+        """Delete objects.
+        """
+        # check whether deletion is allowed
+        for id in ids:
+            object = getattr(self, id)
+            if Interfaces.Publishable.isImplementedBy(object):
+                if object.is_published():
+                    return
+                if object.is_approved():
+                    return
+        self.manage_delObjects(ids)
+    
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_cut')      
+    def action_cut(self, ids, REQUEST):
+        """Cut objects.
+        """
+        # check whether deletion is allowed
+        for id in ids:
+            object = getattr(self, id)
+            if Interfaces.Publishable.isImplementedBy(object):
+                if object.is_published():
+                    return
+                if object.is_approved():
+                    return
+        # FIXME: need to do unit tests for this
+        # FIXME: would this lead to a sensible user interface?
+        self.manage_cutObjects(ids, REQUEST)
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_copy')
+    def action_copy(self, ids, REQUEST):
+        """Copy objects.
+        """
+        self.manage_copyObjects(ids, REQUEST)
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_paste')
+    def action_paste(self, REQUEST):
+        """Paste objects on clipboard.
+        """
+        # items on clipboard should be unapproved & closed, but
+        # only the *copies*
+        copy_ids = [item.id for item in self.cb_dataItems()]
+        # modify ids to copy_to if necessary
+        paste_ids = []
+        ids = self.objectIds()
+        for copy_id in copy_ids:
+            if copy_id in ids:
+                paste_ids.append('copy_of_%s' % copy_id)
+            else:
+                paste_ids.append(copy_id)
+        # now we do the paste
+        self.manage_pasteObjects(REQUEST=REQUEST)
+        # now unapprove & close everything just pasted
+        for paste_id in paste_ids:
+            helpers.unapprove_close_helper(getattr(self, paste_id))
+            
     # ACCESSORS
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -175,6 +249,17 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 return 1
         return 0
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'is_approved')
+    def is_approved(self):
+        # Folder is approved if anything inside is published
+        if self.get_default().is_approved():
+            return 1
+        for object in self.get_ordered_publishables():        
+            if object.is_approved():
+                return 1
+        return 0
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_default')
     def get_default(self):
@@ -278,51 +363,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """Resolve reference to object.
         """
         return Copying.resolve_ref(self.getPhysicalRoot(), ref)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_rename')
-    def action_rename(self, ref, id, title):
-        """Rename object moniker refers to.
-        """
-        object = Copying.resolve_ref(self.getPhysicalRoot(), ref)
-        # first change id if necessary
-        if object.id != id:
-            parent = object.aq_inner.aq_parent
-            parent.manage_renameObject(object.id, id)
-        # now change title
-        object.set_title(title)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_delete')
-    def action_delete(self, ids):
-        """Delete objects monikers refer to.
-        """
-        # FIXME: do checks at deleting for publication
-        self.manage_delObjects(ids)
-    
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_cut')      
-    def action_cut(self, ids, REQUEST):
-        """Cut objects.
-        """
-        self.manage_cutObjects(ids, REQUEST)
-        
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_copy')
-    def action_copy(self, ids, REQUEST):
-        """Copy objects.
-        """
-        self.manage_copyObjects(ids, REQUEST)
-        
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_paste')
-    def action_paste(self, REQUEST):
-        """Paste objects on clipboard.
-        """
-        # FIXME: do checks at pasting
-        self.manage_pasteObjects(REQUEST=REQUEST)
     
 InitializeClass(Folder)
+
 
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
                                         __name__='manage_addFolderForm')
@@ -335,7 +378,7 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     # add doc
     if create_default:
         object.manage_addProduct['Silva'].manage_addDocument('default', '')
-    add_and_edit(self, id, REQUEST)
+    helpers.add_and_edit(self, id, REQUEST)
     return ''
 
 

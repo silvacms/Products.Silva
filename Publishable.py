@@ -2,6 +2,7 @@ import Interfaces
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
+import helpers
 
 class Publishable:
     """Mixin class that can be provided to implement the Publishable
@@ -30,7 +31,7 @@ class Publishable:
             return
         # we can deactivate, but we should unapprove everything that
         # is approved
-        _unapprove_helper(self)
+        helpers.unapprove_helper(self)
         # now set the flag
         self._active_flag = 0
         # refresh container of parent (may be parent itself)
@@ -72,6 +73,15 @@ class Publishable:
             # FIXME: should always be published if no versioning supported?
             return 1
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'is_approved')
+    def is_approved(self):
+        if Interfaces.Versioning.isImplementedBy(self):
+            return self.is_version_approved()
+        else:
+            # never be approved if there is no versioning
+            return 0
+        
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'can_approve')
     def can_approve(self):
@@ -91,16 +101,4 @@ class Publishable:
         # all containers were active, so we can indeed approve
         return 1
 
-def _unapprove_helper(object):
-    """Unapprove object and anything unapprovable contained by it.
-    """
-    if Interfaces.Versioning.isImplementedBy(object):
-        # if we want to deactivate an approved version, revoke
-        # approval first
-        if object.is_version_approved():
-            object.unapprove_version()
-    if Interfaces.Container.isImplementedBy(object):
-        for item in object.get_ordered_publishables():
-            _unapprove_helper(item)
-    
 InitializeClass(Publishable)

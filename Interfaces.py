@@ -93,6 +93,12 @@ class Publishable(Interface.Base):
         """
         pass
 
+    def is_approved(self):
+        """Return true if this object is versioned or contains
+        versioned content that is approved.
+        """
+        pass
+    
     def is_active(self):
         """Returns true if this object is actually active and
         in the table of contents.

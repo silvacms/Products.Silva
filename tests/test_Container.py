@@ -1,9 +1,9 @@
 import unittest
 import Zope
-#import ZODB
-#import OFS.Application
-#from Products.Silva import Document, Folder, Root #, Ghost, Publication
-from Products.Silva import Interfaces
+from Products.Silva import Interfaces, Document, Folder
+from Testing import makerequest
+from Products.ParsedXML import ParsedXML
+from DateTime import DateTime
 
 def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
@@ -31,7 +31,7 @@ class ContainerTestCase(unittest.TestCase):
     def tearDown(self):
         get_transaction().abort()
         self.connection.close()
-
+    
     def test_get_default(self):
         doc = self.folder4.get_default()
         self.assertEquals(doc.get_title(), 'Folder4')
