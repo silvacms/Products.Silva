@@ -100,6 +100,26 @@ Installation problems
     separately after installation of an upgrades Silva version.
 
 
+    Another possible source of problems arises if one installs
+    a newer version of Silva in place over an existing one (i.e.
+    by unpacking a *.tgz into a directory where an older version
+    of Silva is installed, overwriting the older version.
+
+    This will not remove files present in the older version.
+    As it often happens that some files are move around 
+    (or removed at all)  between releases, one would have some old 
+    files still around after the upgrade, which may lead to malfunction 
+    of the product.
+
+    Especuially there have been reports of an "AttributeError" with an 
+    error value of "__hash__" after upgrading which seemed to be caused 
+    by this upgrade strategy.
+
+    Please remove (or move away) any old installation of Silva
+    (and its companion products) before unpacking the new version 
+    in your Products directory to avoid any problems.
+
+
   Silva only displays '?' for non-ascii characters in the public view
   after upgrading
  
