@@ -13,6 +13,14 @@
 </head>
 
 <body>
+<a style="float:right;margin:0.7em 1em;"
+  href="javascript:history.back();" 
+  title="access key: alt-b"
+  accesskey="b"
+  i18n:attributes="title"
+  i18n:translate="back">
+  back
+</a>
 <div class="header">
   <a class="icon"
     href="http://www.infrae.com/products/silva" 
@@ -24,31 +32,6 @@
 </div>
 
 <div class="public" style="padding-top:0.5em;">
-<h2 style="margin-top:1.4em;">Silva documentation</h2>
-
-<p>
-  The most up to date documentation can be found at:<br />
-  <a href="http://www.infrae.com/products/silva/docs">http://www.infrae.com/products/silva/docs</a>
-</p>
-<p>
-  The same documentation is included in the Silva product in &#8216;plain&#8217; structured text, gracefully degraded for text mode (no links, unicode entities, etc.).
-</p>
-
-<h4>
-  Tip: one click editing
-</h4>
-
-<p> When viewing a public Silva page, switching to the SMI is is easiest if
-  there's a bookmark on your toolbar. Add a bookmark with the following
-  javascript: </p>
-<pre> javascript:window.location.pathname=(window.location.pathname
-  +'/edit').replace(/\/\//,'/') </pre>
-<p> Or, save this link &#8211; <a
-  href="javascript:window.location.pathname=(window.location.pathname
-  +'/edit').replace(/\/\//,'/')">Silva edit</a> &#8211; as a bookmark.
-Thanks to ETH Z&uuml;rich for this winner.  <br /><br />
-</p>
-
 <h2>
   Silva access keys
 </h2>
@@ -71,17 +54,17 @@ Thanks to ETH Z&uuml;rich for this winner.  <br /><br />
   t &nbsp; Jump to top of page<br />
   b &nbsp; Jump to bottom of page<br />
   / &nbsp; Jump to top of Silva (Silva icon)<br />
-  h &nbsp; Help
+  ? &nbsp; Access keys and shortcuts
 </p>
 <p> <span class="subhead"><a name="nav">Changing screens with the
     tabs</a></span><br /> The tabs have numbered access keys, starting from
 one going up to five. You can navigate horizontally accross an item&#8217;s
 screens by using alt-1, alt-2, and so forth.  </p>
 <p>
-  Each tab has a toplink, the tall tree on the left side. It takes you to the top of the current publication, within the same tab, or &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
+  Each tab has a toplink <img src="up_tree.gif" height="9" width="9" />, the tall tree on the left side. It takes you to the top of the current publication, within the same tab, or &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
 </p>
 <p>
-  On the right of each tab is an uplink, a small tree that takes you up one level in the same vein. The access keys for the uplinks are the remaining numbers (add five to the access key for the tab). If you are  in a screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less than five tabs, you still add five to get the uplink key.
+  On the right of each tab is an uplink <img src="up_level.gif" height="9" width="9" />, a small tree that takes you up one level in the same vein. The access keys for the uplinks are the remaining numbers (add five to the access key for the tab). If you are  in a screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less than five tabs, you still add five to get the uplink key.
 </p>
 <p>
   <span class="subhead">Footer page info row</span><br />
@@ -121,7 +104,7 @@ screens by using alt-1, alt-2, and so forth.  </p>
 <h3>Preview screen</h3>
 
 <p>
-  ; &nbsp; See presentation preview<br />
+  ; &nbsp; See public preview<br />
 </p>
 
 <h3>Publish screen (folder)</h3>
@@ -149,7 +132,7 @@ screens by using alt-1, alt-2, and so forth.  </p>
   e &nbsp; Add and edit/enter
 </p>
 
-<h3>Silva editor</h3>
+<h3>Silva forms editor</h3>
 
 <p>
   s &nbsp; Save<br />
@@ -187,11 +170,40 @@ If there are two buttons with the same name, the access key for the second is us
 <p>
   If you wish to create additional docs, the hyperlink of the Silva help link can be changed by altering the the 'help_url' property in the Silva root. See the properties tab in the Zope Management Interface.
 </p>
+
+<h4>
+  Tip: one click editing
+</h4>
+
+<p>
+  When viewing a public Silva page, switching to the SMI is is easiest if
+  there's a bookmark on your toolbar. Add a bookmark with the following
+  javascript: 
+</p>
+<pre>javascript:window.location.pathname=(window.location.pathname +'/edit').replace(/\/\//,'/')</pre>
+<p>
+  Or, save this link &#8211; <a
+  href="javascript:window.location.pathname=(window.location.pathname +'/edit').replace(/\/\//,'/')">Silva edit</a> 
+  &#8211; as a bookmark.
+Thanks to <a href="http://www.ethz.ch/">ETH Z&uuml;rich</a> for this trick.  <br /><br />
+</p>
+
 <p>
   <span class="subhead">Tip for Mozilla/Netscape users</span><br />
-  Using the &#8220;Find As You Type&#8221; feature will make keyboard navigation to hyperlinks &#8211; such as object names &#8211; remarkably easy. See:<br />
+  Using the &#8220;Find As You Type&#8221; feature will make keyboard navigation to hyperlinks &#8211; such as item names &#8211; remarkably easy. See:<br />
   <a href="http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html">http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html</a>
 </p>
+
+<h2 style="margin-top:1.4em;">Silva documentation</h2>
+
+<p>
+  The most up to date documentation can be found at:<br />
+  <a href="http://www.infrae.com/products/silva/docs">http://www.infrae.com/products/silva/docs</a>
+</p>
+<p>
+  The technical documentation is included in the Silva product in &#8216;plain&#8217; structured text, gracefully degraded for text mode (no links, unicode entities, etc.).
+</p>
+
 <p>
   <br />
   <span class="subhead">Contact</span><br />
