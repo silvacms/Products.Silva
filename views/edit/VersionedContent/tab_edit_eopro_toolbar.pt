@@ -10,6 +10,8 @@
 	<icon paramname="INSERTTEXT">
 	</icon>
 	<separator />
+    <choice paramname="PARAGRAPHSTYLE" />
+	<separator />
 	<icon paramname="BOLD">
 		<iconfile>icons/bold.gif</iconfile>
 	</icon>
