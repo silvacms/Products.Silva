@@ -227,6 +227,6 @@ def getSubscribable(context):
         return SubscribableRoot(context).__of__(context)
     if interfaces.IContainer.isImplementedBy(context):
         return Subscribable(context).__of__(context)
-    if interfaces.IContent.isImplementedBy(context):
+    if interfaces.IVersionedContent.isImplementedBy(context):
         return Subscribable(context).__of__(context)
     return None

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -8,6 +8,7 @@ if __name__ == '__main__':
 import SilvaTestCase
 
 from Products.Silva.adapters import subscribable
+from Products.Silva import Indexer
 
 from BTrees.OOBTree import OOBTree
 
@@ -29,20 +30,27 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         self.doc = self.add_document(self.folder, 'doc', u'Test Document')
         self.ghost = self.add_ghost(self.root, 'ghost', 'contenturl')
         self.link = self.add_link(self.root, 'link', u'Test Link', 'url')
-
+        self.image = self.add_image(self.root, 'image', u'Test Image')
+        Indexer.manage_addIndexer(self.root, 'indexer', 'Test Indexer')
+        self.indexer = self.root.indexer
+        
     def test_getSubscribable(self):
-        subscr = subscribable.getSubscribable(self.doc)
-        self.assert_(isinstance(subscr, subscribable.Subscribable))
-        subscr = subscribable.getSubscribable(self.link)
-        self.assert_(isinstance(subscr, subscribable.Subscribable))
-        subscr = subscribable.getSubscribable(self.ghost)
+        subscr = subscribable.getSubscribable(self.root)
+        self.assert_(isinstance(subscr, subscribable.SubscribableRoot))
+        subscr = subscribable.getSubscribable(self.publication)
         self.assert_(isinstance(subscr, subscribable.Subscribable))
         subscr = subscribable.getSubscribable(self.folder)
         self.assert_(isinstance(subscr, subscribable.Subscribable))
-        subscr = subscribable.getSubscribable(self.publication)
+        subscr = subscribable.getSubscribable(self.doc)
         self.assert_(isinstance(subscr, subscribable.Subscribable))
-        subscr = subscribable.getSubscribable(self.root)
-        self.assert_(isinstance(subscr, subscribable.SubscribableRoot))
+        subscr = subscribable.getSubscribable(self.ghost)
+        self.assert_(isinstance(subscr, subscribable.Subscribable))
+        subscr = subscribable.getSubscribable(self.link)
+        self.assert_(isinstance(subscr, subscribable.Subscribable))
+        subscr = subscribable.getSubscribable(self.image)
+        self.assertEquals(None, subscr)
+        subscr = subscribable.getSubscribable(self.indexer)
+        self.assertEquals(None, subscr)
         
     def test_subscribability(self):
         subscr = subscribable.getSubscribable(self.doc)
