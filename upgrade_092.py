@@ -7,15 +7,10 @@ import zLOG
 from Products.Silva.interfaces import IVersionedContent, IUpgrader
 from Products.Silva import upgrade
 
-upgrade_registry = upgrade.registry
-
 
 #-----------------------------------------------------------------------------
 # 0.9.1 to 0.9.2
 #-----------------------------------------------------------------------------
-
-upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.2',
-    upgrade.AnyMetaType)
 
 # This is a complicated set of upgrades!! The order of the upgrades is important
 # (they are called in the order in which they are registered), because most
@@ -39,13 +34,11 @@ def silvaDocumentBeforeDeleteDisable(root):
         Document.inheritedAttribute('manage_beforeDelete')(self, item,
             container)
     Document.manage_beforeDelete = manage_beforeDelete_old_style_docs
-upgrade_registry.registerSetUp(silvaDocumentBeforeDeleteDisable, '0.9.2')
 
 def silvaDocumentBeforeDeleteEnable(root):
     from Products.SilvaDocument.Document import Document
     Document.manage_beforeDelete = upgrade_registry.old_manage_beforeDelete
     delattr(upgrade_registry, 'old_manage_beforeDelete')
-upgrade_registry.registerTearDown(silvaDocumentBeforeDeleteEnable, '0.9.2')
 
 def root_092(root):
     # set the '_allow_authentication_requests' attribute on servce_members if
@@ -57,8 +50,6 @@ def root_092(root):
             del sm._allow_subscription
         elif not hasattr(sm, '_allow_authentication_requests'):
             sm._allow_authentication_requests = 0
-upgrade_registry.registerFunction(root_092, '0.9.2', 'Silva Root')
-
 
 def upgrade_list_titles_in_parsed_xml(top):
     for child in top.childNodes:
@@ -179,8 +170,6 @@ def convert_document_092(obj):
             new_previous_versions.append((versionid, pdt, edt))
         obj._previous_versions = new_previous_versions
             
-upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
-
 # converting the data of the object to unicode will mostly (if not only)
 # consist of converting metadata fields, so it is probably nice to do
 # both in one go
@@ -278,26 +267,12 @@ def unicode_and_metadata_092(obj):
                 binding._setData(values, set_id=set_name, reindex=0)
                 #print 'Values', str(values).encode('ascii', 'replace'), 'set on', obj.absolute_url()
 
-upgrade_registry.register('Silva Root', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva Folder', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva Publication', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva Document', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva DemoObject', unicode_and_metadata_092, '0.9.2')
-# FIXME: upgrade metadata for Ghosts and Assets? The title?
-#upgrade_registry.register('Silva Ghost', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva Image', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva File', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva SQL Data Source', unicode_and_metadata_092, '0.9.2')
-
             
 def set_cache_data_092(obj):
     """ add the new cache data variable """
     # XXX does not check if content is already upgraded
     obj.cleanPublicRenderingCache()
 
-upgrade_registry.register('Silva Document', set_cache_data_092, '0.9.2')
-upgrade_registry.register('Silva Ghost', set_cache_data_092, '0.9.2')
-upgrade_registry.register('Silva DemoObject', set_cache_data_092, '0.9.2')
 
 def add_default_doc_092(obj):
     if not hasattr(obj, '_title'):
@@ -306,9 +281,6 @@ def add_default_doc_092(obj):
     if obj.get_default() is None:
         obj.manage_addProduct['Silva'].manage_addDocument('index', obj._title)
         
-upgrade_registry.register('Silva Folder', add_default_doc_092, '0.9.2')
-upgrade_registry.register('Silva Publication', add_default_doc_092, '0.9.2')
-upgrade_registry.register('Silva Root', add_default_doc_092, '0.9.2')
 
 def replace_container_title_092(obj):
     """Move the title to the metadata
@@ -385,15 +357,6 @@ def replace_object_title_092(obj):
             if set_name in binding.getSetNames():
                 binding._setData(values, set_id=set_name, reindex=0)
 
-upgrade_registry.register('Silva Root', replace_container_title_092, '0.9.2')
-upgrade_registry.register('Silva Publication', replace_container_title_092, '0.9.2')
-upgrade_registry.register('Silva Folder', replace_container_title_092, '0.9.2')
-upgrade_registry.register('Silva Document', replace_object_title_092, '0.9.2')
-upgrade_registry.register('Silva DemoObject', replace_object_title_092, '0.9.2')
-upgrade_registry.register('Silva File', replace_object_title_092, '0.9.2')
-upgrade_registry.register('Silva Image', replace_object_title_092, '0.9.2')
-upgrade_registry.register('Silva SQL Data Source', replace_object_title_092, '0.9.2')
-upgrade_registry.register('Silva Indexer', replace_object_title_092, '0.9.2')
 
 def catalog_092(obj):
     obj.index_object()
@@ -406,18 +369,6 @@ def catalog_version_092(obj):
         return
     obj.index_object()
     
-upgrade_registry.register('Silva Root',
-                          catalog_092, '0.9.2')
-upgrade_registry.register('Silva Folder',
-                          catalog_092, '0.9.2')
-upgrade_registry.register('Silva Publication',
-                          catalog_092, '0.9.2')
-upgrade_registry.register('Silva Document Version',
-                          catalog_version_092, '0.9.2')
-upgrade_registry.register('Silva DemoObject Version',
-                          catalog_version_092, '0.9.2')
-upgrade_registry.register('Silva Ghost Version',
-                          catalog_version_092, '0.9.2')
 
 # helper methods for no-bullet list conversion
 def get_text_from_node(node):
@@ -447,11 +398,65 @@ def convert_no_bullet_lists_092(obj):
     topnode = obj.content.documentElement
     replace_list(topnode)
 
-upgrade_registry.register('Silva Document Version', convert_no_bullet_lists_092, '0.9.2')
-upgrade_registry.register('Silva DemoObject Version', convert_no_bullet_lists_092, '0.9.2')
 
 def update_indexers_092(obj):
     obj.update_index()
 
-upgrade_registry.register('Silva Indexer', update_indexers_092, '0.9.2')
+
+def initialize():
+
+    upgrade_registry = upgrade.registry
+
+    upgrade_registry.registerSetUp(silvaDocumentBeforeDeleteDisable, '0.9.2')
+    upgrade_registry.registerTearDown(silvaDocumentBeforeDeleteEnable, '0.9.2')
+
+    upgrade_registry.registerFunction(root_092, '0.9.2', 'Silva Root')
+    upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
+
+    upgrade_registry.register('Silva Root', unicode_and_metadata_092, '0.9.2')
+    upgrade_registry.register('Silva Folder', unicode_and_metadata_092, '0.9.2')
+    upgrade_registry.register('Silva Publication', unicode_and_metadata_092, '0.9.2')
+    upgrade_registry.register('Silva Document', unicode_and_metadata_092, '0.9.2')
+    upgrade_registry.register('Silva DemoObject', unicode_and_metadata_092, '0.9.2')
+    # FIXME: upgrade metadata for Ghosts and Assets? The title?
+    #upgrade_registry.register('Silva Ghost', unicode_and_metadata_092, '0.9.2')
+    upgrade_registry.register('Silva Image', unicode_and_metadata_092, '0.9.2')
+    upgrade_registry.register('Silva File', unicode_and_metadata_092, '0.9.2')
+    upgrade_registry.register('Silva SQL Data Source', unicode_and_metadata_092, '0.9.2')
+
+    upgrade_registry.register('Silva Document', set_cache_data_092, '0.9.2')
+    upgrade_registry.register('Silva Ghost', set_cache_data_092, '0.9.2')
+    upgrade_registry.register('Silva DemoObject', set_cache_data_092, '0.9.2')
+
+    upgrade_registry.register('Silva Folder', add_default_doc_092, '0.9.2')
+    upgrade_registry.register('Silva Publication', add_default_doc_092, '0.9.2')
+    upgrade_registry.register('Silva Root', add_default_doc_092, '0.9.2')
+
+    upgrade_registry.register('Silva Root', replace_container_title_092, '0.9.2')
+    upgrade_registry.register('Silva Publication', replace_container_title_092, '0.9.2')
+    upgrade_registry.register('Silva Folder', replace_container_title_092, '0.9.2')
+    upgrade_registry.register('Silva Document', replace_object_title_092, '0.9.2')
+    upgrade_registry.register('Silva DemoObject', replace_object_title_092, '0.9.2')
+    upgrade_registry.register('Silva File', replace_object_title_092, '0.9.2')
+    upgrade_registry.register('Silva Image', replace_object_title_092, '0.9.2')
+    upgrade_registry.register('Silva SQL Data Source', replace_object_title_092, '0.9.2')
+    upgrade_registry.register('Silva Indexer', replace_object_title_092, '0.9.2')
+
+    upgrade_registry.register('Silva Root',
+                              catalog_092, '0.9.2')
+    upgrade_registry.register('Silva Folder',
+                              catalog_092, '0.9.2')
+    upgrade_registry.register('Silva Publication',
+                              catalog_092, '0.9.2')
+    upgrade_registry.register('Silva Document Version',
+                              catalog_version_092, '0.9.2')
+    upgrade_registry.register('Silva DemoObject Version',
+                              catalog_version_092, '0.9.2')
+    upgrade_registry.register('Silva Ghost Version',
+                              catalog_version_092, '0.9.2')
+    upgrade_registry.register('Silva Document Version', convert_no_bullet_lists_092, '0.9.2')
+    upgrade_registry.register('Silva DemoObject Version', convert_no_bullet_lists_092, '0.9.2')
+
+    upgrade_registry.register('Silva Indexer', update_indexers_092, '0.9.2')
+
 

@@ -14,10 +14,6 @@ from Products.Silva import upgrade
 # 0.9.2 to 0.9.3
 #-----------------------------------------------------------------------------
 
-upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.3',
-    upgrade.AnyMetaType)
-
-
 class MovedViewRegistry:
     """handle view registry beeing moved out of the core"""
 
@@ -33,8 +29,6 @@ class MovedViewRegistry:
             "Be sure to 'refresh all' your extensions")
         return root
             
-upgrade.registry.registerUpgrader(MovedViewRegistry(), '0.9.3', 'Silva Root')
-
 
 class MovedDocument:
     """handle moved silva document
@@ -153,6 +147,8 @@ class UpgradeAccessRestriction:
                     'Automatically created IP Group', id)
             except ValueError:
                 counter += 1
+            except AttributeError:
+                self._createGroupsService(context)
             else:
                 break
         return context._getOb(id)
@@ -160,6 +156,18 @@ class UpgradeAccessRestriction:
     def _assignRoleToGroup(self, obj, role, group_name):
         mapping = obj.sec_get_or_create_groupsmapping()
         mapping.assignRolesToGroup(group_name, [role])
+
+    def _createGroupsService(self, context):
+        try:
+            groups = context.get_root().manage_addProduct['Groups']
+        except AttributeError:
+            raise AttributeError, "The Groups product is not installed. "\
+                "Upgrading  your ip based access restrictions requires "\
+                "IP Groups and a service_groups in your Silva root."
+        zLOG.LOG('Silva', zLOG.INFO, 'Upgrade added service_groups',
+            'service_groups added to Silva root located at %s\n' % (
+                context.get_root().absolute_url(), ))
+        groups.manage_addGroupsService('service_groups', '')
 
     ### ACCCESS RESTRICTION PARSER
     ### formerly found in helpers.py
@@ -232,6 +240,13 @@ class UpgradeAccessRestriction:
         something = self.re_drop_escape.sub(lambda match: match.group(1), something )
         state.plist.append(something)
 
-upgrade.registry.registerUpgrader(UpgradeAccessRestriction(), '0.9.3',
-    upgrade.AnyMetaType)
+
+def initialize():
+    upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.3',
+        upgrade.AnyMetaType)
+    upgrade.registry.registerUpgrader(MovedViewRegistry(), '0.9.3',
+        'Silva Root')
+    upgrade.registry.registerUpgrader(UpgradeAccessRestriction(), '0.9.3',
+        upgrade.AnyMetaType)
+
 

@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.101 $
+# $Revision: 1.102 $
 
 import Metadata
 import Folder, Root
@@ -30,7 +30,6 @@ import UnicodeSplitter # To make the splitter register itself
 import ContainerPolicy
 
 from Products.Silva import icon
-from Products.Silva import upgrade_imports
 
 # enable Formulator support for FileSystemSite/CMFCore
 # XXX shouldn't be necessary anymore with CVS Formulator
@@ -138,6 +137,7 @@ def initialize(context):
     #  register a special accessor for ghosts
     Metadata.initialize_metadata()
     initialize_icons()
+    initialize_upgrade()
 
 #------------------------------------------------------------------------------
 # External Editor support
@@ -148,6 +148,7 @@ import os
 from Globals import DTMLFile
 
 try:
+    #   import Product.ExternalEditor as ee
     import Product.ExternalEditor as ee
 except ImportError:
     pass
@@ -224,5 +225,14 @@ def initialize_icons():
     ]
     for klass, kind, icon_name in misc_icons:
         ri((klass, kind), 'www/%s' % icon_name, GhostFolder.__dict__)
+
+
+def initialize_upgrade():
+    from Products.Silva import upgrade_092
+    from Products.Silva import upgrade_093
+
+    for upgrade_module in [upgrade_092, upgrade_093]:
+        upgrade_module.initialize()
+
 
 
