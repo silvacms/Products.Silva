@@ -155,8 +155,8 @@
           function openObjectLookupWindow(url_to_open) {
             // open the lookup window, will be called by getObjectReference
 
-            width = 585;
-            height = 300;
+            width = 760;
+            height = 500;
             leftPos = (screen.width - width) / 2;
             topPos = (screen.height - height) / 2;
             aspects = 'toolbar=yes,status=yes,scrollbars=yes,resizable=yes,width=' + width + ',height=' + height + ',left=' + leftPos + ',top=' + topPos;
@@ -192,11 +192,10 @@
         <div class="epoz-tooltray">
 
           <form name="epoz_link_form" onsubmit="return false;">
-          <input type="button" class="transport" onclick="getLink(); return false;" value="get link reference..." />
-          <input type="text" id="epoz-link-input" name="epoz_link_href" style="width: 97%" />
-          <input type="button" class="button" style="float:right;" value="insert link" id="epoz-link-button" />
+            <input type="button" class="transport" style="margin-bottom:0.2em;" onclick="getLink(); return false;" value="get link reference..." />
+            <input type="text" id="epoz-link-input" name="epoz_link_href" style="margin-left:0.1em; width:96%" />
+            <input type="button" class="button" value="insert link" id="epoz-link-button" />
           </form>
-          <br style="clear:all;" />
 
         </div>
 
@@ -206,10 +205,9 @@
         <div class="epoz-tooltray">
 
           <form name="epoz_index_form" onsubmit="return false;">
-          <input type="text" id="epoz-index-input" name="epoz_index_href" style="width: 96%" />
-          <input type="button" class="button" style="float:right;" value="insert index" id="epoz-index-button" />
+            <input type="text" id="epoz-index-input" name="epoz_index_href" style="margin:0.1em; width:96%" />
+            <input type="button" class="button" value="insert index" id="epoz-index-button" />
           </form>
-          <br style="clear:all;" />
 
         </div>
 
@@ -354,6 +352,11 @@
           </tbody>
         </table>
         
+        </div>
+
+        <h1 i18n:translate="table-inspector">typographical characters</h1>
+        <div class="epoz-tooltray">
+          &euro; &#145; &#146; &#147; &#148; &#171; &#187; &#8211; &#8212;
         </div>
 
         <!-- end epoz toolbox tables -->

@@ -136,7 +136,7 @@ div.epoz-toolbox td.align-right {
 div.epoz-tooltray {
   background: #cedae8;
   margin: 0;
-  padding: 0.6em 0.3em 1.2em 0.3em; 
+  padding: 0.6em 0.3em 0.8em 0.3em; 
 }
 
 div.epoz-toolbox-label, span.epoz-toolbox-searchterm, 
