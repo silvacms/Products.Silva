@@ -3,6 +3,18 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.3.6
+
+    Features added
+
+      - Small changes to the stylesheets support the CSVSource 
+        external source.
+    
+    Bugs fixed
+
+      - Fixed a small bug in the add_and_edit helper, which was
+        only triggerd in combination with SilvaExternalSources.
+
   0.9.3.5
 
     Bugs fixed
