@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.33.2.5 $
+$Revision: 1.33.2.6 $
 
 Silva changes
 
@@ -12,6 +12,9 @@ Silva changes
         didn't regard the local roles on the current object.
 
       - Unicode fix for table rendering. Merge from HEAD branch.
+
+      - Fix for asset reference to make it works in virtual host
+        setups.
 
   0.9.0.2
 
