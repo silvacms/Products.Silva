@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
   
-  Valid for:  Silva 1.0.x
+  Valid for:  Silva 1.1.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.13 $
+  CVS:        $Revision: 1.14 $
 
 Silva
 
@@ -67,8 +67,8 @@ Using Silva
 
     http://mysite.org/silva/edit
 
-  If you encounter problems, please consult the "Problems when using Silva" section of
-  TROUBLESHOOTING.txt.
+  If you encounter problems, please consult the "Problems when using
+  Silva" section of TROUBLESHOOTING.txt.
  
 License
   

@@ -8,10 +8,10 @@ Meta
 Copyright (c) 2002, 2003, 2004 Infrae. All rights reserved.
 See also LICENSE.txt
 
-Valid for:  Silva 1.0.x
+Valid for:  Silva 1.1.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.42 $
+CVS:        $Revision: 1.43 $
 
 Introduction
 ------------
@@ -29,14 +29,13 @@ Checklist for Zope administrators
 
 Here is a quick checklist what to do to install Silva:
 
-* You need Zope 2.6.4 with Python 2.1. Zope 2.7 with Python 2.3 will
-  likely work but is not yet officially supported by Infrae.
+* You need Zope 2.7.x with Python 2.3.
 
 * Download and install PyXML_ for the Python that Zope uses. PyXML
   0.8.3 works.
 
 * Download an appropriate Silva ``-all.tgz`` for the version you want
-  from ``the Silva download area on zope.org``_ and unpack it into your
+  from ``the Silva download area``_ and unpack it into your
   Zope's ``Products`` directory. Be aware the the ordering of the
   releases gets messed up by zope.org, so be sure you get the latest
   one. For a list of what is contained in the Silva distribution and
@@ -57,7 +56,8 @@ into everything in much more detail.
 
 .. _PyXML: http://pyxml.sourceforge.net
 
-.. _``the Silva download area on zope.org``:http://www.zope.org/Members/infrae/Silva
+.. _``the Silva download area``:http://www.infrae.com/download/Silva"
+
 
 The easy way on Windows
 -----------------------
@@ -75,7 +75,7 @@ releases.
 
 The Silva Windows installer can be found here:
 
-http://www.zope.org/Members/infrae/SilvaWindowsInstaller
+http://www.infrae.com/download/SilvaWindowsInstaller
 
 Optional extensions
 ===================
@@ -89,7 +89,7 @@ service can be added to the Silva Root via the ZMI. This service
 should have 'service_groups' for its id. After this you should be able
 to use Groups.
 
-http://www.zope.org/Members/infrae/Groups
+http://www.infrae.com/download/Groups
 
 ExtFile
 -------
