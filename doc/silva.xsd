@@ -12,7 +12,7 @@
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      $Id: silva.xsd,v 1.10 2003/01/10 09:20:35 zagy Exp $
+      $Id: silva.xsd,v 1.11 2003/01/10 09:22:17 zagy Exp $
     
       Silva XML schema
       Copyright 2002 Infrae
@@ -41,6 +41,7 @@
       <xsd:element name="title" type="xsd:string" minOccurs="1" />
       <xsd:choice maxOccurs="unbounded">
         <xsd:element name="silva_folder" type="Folder" />
+        <xsd:element name="silva_publication" type="Folder" />
         <xsd:element name="silva_document" type="Document" />
         <xsd:element name="silva_demoobject" type="DemoObject" />
       </xsd:choice>
