@@ -1,7 +1,11 @@
 ##parameters=set_name,element_name
-# This is acopy of views/get_metadata_element used in the SMI.
-# FIXME: do we need a better location for this functionality?
 from Products.SilvaMetadata.Exceptions import BindingError
+
+# This is a copy of views/get_metadata_element used in the SMI.
+# FIXME: do we need a better location for this functionality?
+#
+# Get the data for a particular element of a particular set for
+# the viewable version of this object.
 
 request = context.REQUEST
 content = context.get_viewable()
