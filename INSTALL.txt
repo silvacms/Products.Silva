@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.40.8.2 $
+  CVS:        $Revision: 1.40.8.3 $
 
 Installing Silva
 
@@ -136,7 +136,7 @@ Installing Silva
 
       XMLWidgets can be found here:
 
-        "XMLWidgets":http://www.zope.org/Members/faassen/XMLWidgets
+        "XMLWidgets":http://www.zope.org/Members/infrae/XMLWidgets
 
     ParsedXML (1.3.1)
 
@@ -159,7 +159,7 @@ Installing Silva
       If you want to take advantage of Groups support, please
       download and install the Groups product, here:
   
-       "Groups":http://www.zope.org/Members/faassen/Groups
+       "Groups":http://www.zope.org/Members/infrae/Groups
 
       Groups support is optional; Silva should run without the Groups
       product installed. Groups use a rather hackish technique called
