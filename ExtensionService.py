@@ -1,7 +1,7 @@
 
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -38,39 +38,45 @@ class ExtensionService(SimpleItem.SimpleItem):
     # MANIPULATORS
 
     security.declareProtected('View management screens', 'install')
-    def install(self, name):
+    def install(self, name, REQUEST=None):
         """Install extension
         """
         root = self.aq_inner.aq_parent
         extensionRegistry.install(name, root)
         root.service_view_registry.set_trees(self.get_installed_names())
-        return self.manage_main(manage_tabs_message='%s installed' % name)
+        if REQUEST:
+            return self.manage_main(manage_tabs_message='%s installed' % name)
 
     security.declareProtected('View management screens', 'uninstall')
-    def uninstall(self, name):
+    def uninstall(self, name, REQUEST=None):
         """Uninstall extension
         """
         root = self.aq_inner.aq_parent
         extensionRegistry.uninstall(name, root)
         root.service_view_registry.set_trees(self.get_installed_names())
-        return self.manage_main(manage_tabs_message='%s uninstalled' % name)
+        if REQUEST:
+            return self.manage_main(manage_tabs_message='%s uninstalled' %
+               name)
 
     security.declareProtected('View management screens', 'refresh')
-    def refresh(self, name):
+    def refresh(self, name, REQUEST=None):
         """Refresh (uninstall/install) extension.
         """
         self.uninstall(name)
         self.install(name)
         self._refresh_datetime = DateTime()
-        return self.manage_main(manage_tabs_message='%s refreshed' % name)
+        if REQUEST:
+            return self.manage_main(manage_tabs_message='%s refreshed' % name)
 
     security.declareProtected('View management screens', 'refresh_all')
-    def refresh_all(self):
+    def refresh_all(self, REQUEST=None):
         """Refreshes all extensions
         """
         for name in self.get_installed_names():
             self.refresh(name)
-        return self.manage_main(manage_tabs_message='Silva and all installed extensions have been refreshed')
+        if REQUEST:
+            return self.manage_main(manage_tabs_message=
+                'Silva and all installed extensions have been refreshed')
 
     security.declareProtected('View management screens', 'upgrade_all')
     def upgrade_all(self):
