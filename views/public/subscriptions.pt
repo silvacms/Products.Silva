@@ -1,0 +1,98 @@
+<tal:block define="
+    model request/model;
+    title model/get_title;
+    path python: '/'.join(model.getPhysicalPath());"
+  >
+<form method="POST" name="form" action="subscription_request" enctype="multipart/form-data">
+  <table class="listing">
+    <thead>
+      <tr class="top-controls">
+        <td colspan="3">
+          <h3 i18n:translate="subscription_settings">
+            Subscribe for 
+            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+          </h3>
+          <p>
+            you'll get an confirmation message...
+          </p>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="odd">
+        <td class="field-title">
+          <span>emailaddress</span><span class="warning">*</span>
+        </td>
+        <td>
+          <input type="text" name="emailaddress" size="40" />
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="controls">
+        <td></td>
+        <td align="right" colspan="2">
+          <input type="hidden" name="path" tal:attributes="value path"
+          />
+          <input class="button"
+            type="submit"
+            value="subscribe"
+            title="access key: alt-s"
+            accesskey="c"
+            i18n:attributes="title value"
+          />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+<form method="POST" name="form" action="cancellation_request" enctype="multipart/form-data">
+  <table class="listing">
+    <thead>
+      <tr class="top-controls">
+        <td colspan="3">
+          <h3 i18n:translate="subscription_settings">
+            Unsubscribe for 
+            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+          </h3>
+          <p>
+            you'll get an confirmation message...
+          </p>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="odd">
+        <td class="field-title">
+          <span>emailaddress</span><span class="warning">*</span>
+        </td>
+        <td>
+          <input type="text" name="emailaddress" size="40" />
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="controls">
+        <td></td>
+        <td align="right" colspan="2">
+          <input type="hidden" name="path" tal:attributes="value path"
+          />
+          <input class="button"
+            type="submit"
+            value="unsubscribe"
+            title="access key: alt-u"
+            accesskey="c"
+            i18n:attributes="title value"
+          />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+</tal:block>

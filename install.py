@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.105 2004/12/01 16:07:14 guido Exp $
+# $Id: install.py,v 1.106 2004/12/07 11:13:45 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -11,7 +11,7 @@ from Globals import package_home
 import zLOG
 from OFS.Uninstalled import BrokenClass
 from DateTime import DateTime
-
+from OFS import Image
 from Products.ProxyIndex.ProxyIndex import RecordStyle
 
 # sibling
@@ -23,7 +23,8 @@ from Products.Silva import roleinfo
 from Products.Silva.SimpleMembership import SimpleMemberService
 from Products.Silva import File
 from Products.Silva import assetregistry
-
+from Products.Silva import subscriptionservice
+from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.
@@ -94,6 +95,7 @@ def installFromScratch(root):
     # now do the uinstallable stuff (views)
     install(root)
     installSilvaDocument(root)
+    installSubscriptions(root)
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
@@ -381,7 +383,7 @@ def configureLayout(root, default_if_existent=0):
     add_helper(root, 'frontend.css', globals(), dtml_add_helper, default_if_existent)
 
     add_helper(root, 'print.css', globals(), dtml_add_helper, default_if_existent)
-
+    
 def configureMembership(root):
     """Install membership code into root.
     """
@@ -437,6 +439,12 @@ def py_add_helper(root, id, text):
         root.manage_addProduct['PythonScripts'].manage_addPythonScript(id)
         getattr(root, id).write(text)
 
+def fileobject_add_helper(context, id, text):
+    if hasattr(context.aq_base, id):
+        getattr(context, id).update_data(text)
+    else:
+        Image.manage_addFile(context, id, text, content_type='text/plain')
+        
 def read_file(id, info, folder):
     filename = os.path.join(package_home(info), folder, id)
     f = open(filename, 'rb')
@@ -649,6 +657,22 @@ def installSilvaDocument(root):
     version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p><toc toc_depth="1" /></doc>')
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
+    
+def installSubscriptions(root):
+    # Setup infrastructure for subscriptions feature.
+    if not 'service_subscriptions' in root.objectIds():
+        subscriptionservice.manage_addSubscriptionService(root)
+    
+    if not MAILHOST_ID in root.objectIds() and MAILDROPHOST_AVAILABLE:
+        from Products.MaildropHost import manage_addMaildropHost 
+        manage_addMaildropHost(root, MAILHOST_ID, 'Spool based mail delivery') 
+    
+    for id in (
+        'subscription_confirmation_template',
+        'cancellation_confirmation_template',
+        'publication_event_template'):
+        add_helper(
+            root.service_subscriptions, id, globals(), fileobject_add_helper, True)
 
 def installKupu(root):
     try:

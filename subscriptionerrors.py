@@ -1,0 +1,22 @@
+from AccessControl import ModuleSecurityInfo, allow_module, allow_class
+
+# Jumping through security hoops to get the adapter
+# somewhat accessible to Python scripts
+
+allow_module('Products.Silva.subscriptionerrors')
+
+__allow_access_to_unprotected_subobjects__ = True
+    
+module_security = ModuleSecurityInfo('Products.Silva.subscriptionerrors')
+
+class SubscriptionError(Exception):
+    pass
+
+allow_class(SubscriptionError)
+
+class EmailaddressError(SubscriptionError):
+    # NOTE: Please make sure in the UI code not to expose any information
+    # about the validity of the email address!
+    pass
+
+allow_class(EmailaddressError)

@@ -48,8 +48,8 @@
         <a class="transport"
           title="manage subscriptions: alt-m"
           accesskey="m"
-          tal:attributes="href string:${url}/service_subscriptions/edit/"
-          tal:condition="here/service_subscriptions | nothing"
+          tal:attributes="href string:${url}/edit/tab_subscriptions"
+          tal:condition="here/service_subscriptions/subscriptionsEnabled | nothing"
           i18n:attributes="title;accesskey manage_subscriptions_accesskey"
           i18n:translate=""
           >

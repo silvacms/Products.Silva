@@ -1,0 +1,20 @@
+To: %(toaddress)s
+From: Silva Subscription Service <subscription-service@do.not.reply>
+Subject: Silva Subscription Service - change notification for %(contenturl)s
+Content-Type: text/plain; charset=utf-8; format=flowed
+
+
+The document "%(contenttitle)s" has changed.
+
+The new version of this document can be found here:
+
+  %(contenturl)s
+
+You're receiving this notification message because you're subscribed to 
+changes for this URL:
+
+  %(subscribedcontenturl)s
+
+If you want to cancel your subscription, please follow this link:
+
+  %(serviceurlforsubscribedcontent)s

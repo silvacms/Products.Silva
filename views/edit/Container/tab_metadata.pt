@@ -63,12 +63,13 @@
                           least disruptive for the layout, esp. related to 
                           tab_metadata for publcations... _______ 
                         </tal:block>
-                        <tal:block condition="here/service_subscriptions | nothing">
+                        <tal:block 
+                          condition="here/service_subscriptions/subscriptionsEnabled | nothing">
                           <a class="transport"
                             style="float:right;"
                             title="manage subscriptions: alt-m"
                             accesskey="m"
-                            tal:attributes="href string:${url}/service_subscriptions/edit/"
+                            tal:attributes="href string:${url}/edit/tab_subscriptions"
                             i18n:attributes="title;accesskey manage_subscriptions_accesskey"
                             i18n:translate=""
                             >

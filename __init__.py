@@ -1,7 +1,9 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.128 $
-
+# $Revision: 1.129 $
+# Zope
+import zLOG
+# Silva
 import ContainerPolicy
 
 try:
@@ -12,22 +14,33 @@ try:
 except ImportError:
     pass
 
+#----------------------------------------
+# Initialize subscription feature, part 1
+#----------------------------------------
+try:
+    from Products.MaildropHost import MaildropHost
+    MAILDROPHOST_AVAILABLE = True
+except ImportError:
+    MAILDROPHOST_AVAILABLE = False
+    
+MAILHOST_ID = 'service_subscriptions_mailhost'
+
 def initialize(context):
     from Products.Silva import icon
 
-# enable Formulator support for FileSystemSite/CMFCore
-# XXX shouldn't be necessary anymore with CVS Formulator
+    # enable Formulator support for FileSystemSite/CMFCore
+    # XXX shouldn't be necessary anymore with CVS Formulator
     from Products.Formulator import FSForm
     from Products.Silva.silvaxml import xmlexport, xmlimport
-# import FileSystemSite functionality
-# (use CMFCore if FileSystemSite is not installed)
+    # import FileSystemSite functionality
+    # (use CMFCore if FileSystemSite is not installed)
     from Products.Silva.fssite import registerDirectory, registerFileExtension
     from Products.Silva.fssite import FSImage
     from Products.Silva.silvaxml import xmlexport, xmlimport
     from Products.FileSystemSite.FSDTMLMethod import FSDTMLMethod
     from Products.FileSystemSite.FSPageTemplate import FSPageTemplate
     from Products.Silva.transform.renderer import defaultregistration     
-# enable .ico support for FileSystemSite
+    # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
     import Folder, Root
     import Publication, Ghost, Image, File, SimpleContent, Link
@@ -185,6 +198,29 @@ def initialize(context):
     #-------------------------------------
 
     defaultregistration.registerDefaultRenderers()
+    
+    #----------------------------------------
+    # Initialize subscription feature, part 2
+    #----------------------------------------
+    from Products.Silva import subscriptionservice
+    from Products.Silva import emaillinesfield # registers field
+
+    #extensionRegistry.register(
+    #    'SilvaSubscriptions', 'Silva Subscriptions', context, [],
+    #    install, depends_on='Silva')
+
+    context.registerClass(
+        subscriptionservice.SubscriptionService,
+        constructors = (
+            subscriptionservice.manage_addSubscriptionServiceForm,
+            subscriptionservice.manage_addSubscriptionService),
+        )
+
+    #if MAILDROPHOST_AVAILABLE:
+    #    zLOG.LOG('Silva Subscriptions', zLOG.INFO, (
+    #        'The MaildropHost is available and could be used for mail delivery. '
+    #        'If the MaildropHost is indeed in use, please be sure to start '
+    #        'the seperate mail delivery process.'))
     
 #------------------------------------------------------------------------------
 # External Editor support

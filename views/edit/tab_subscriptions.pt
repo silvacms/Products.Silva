@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="vein string:Subscriptions;"
+  i18n:domain="silva">
+
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
+  <table class="columns columns3">
+    <tbody>
+      <tr>
+        <tal:block replace="nothing">
+          _____________________ sidebar _____________________
+        </tal:block>
+        <td class="left"
+          tal:define="template_id string:tab_edit">
+          <metal:block use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar" />
+          </metal:block>
+        </td>
+
+        <tal:block replace="nothing">
+          _____________________ main _____________________
+        </tal:block>
+        <td class="main">
+      
+          <tal:block
+            define="
+              model request/model;
+              dummy context/get_subscribable;
+              type model/meta_type;
+              path model/getPhysicalPath;
+              url model/absolute_url;
+          
+              title python: model.get_title_editable() or model.id;
+        
+              subscribable request/subscribable;
+              ">
+            <tal:block condition="subscribable">
+              <form method="POST" name="form" action="." enctype="multipart/form-data"
+                tal:define="form context/tab_subscriptions_form"
+                >
+                <table class="listing">
+                  <thead>
+                    <tr class="top-controls">
+                      <td colspan="3">
+                        <h3 i18n:translate="subscription_settings">
+                          Subscriptions edit for <tal:block replace="title" />
+                        </h3>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody tal:define="fields form/get_fields">
+                    <tr>
+                      <th class="align-right"
+                        width="12%"
+                        i18n:translate="element">
+                        element
+                      </th>
+                      <th i18n:translate="content">
+                        content
+                      </th>
+                      <th width="40%" i18n:translate="note">
+                        note
+                      </th>
+                    </tr>
+                    <tal:repeat repeat="field fields">
+                      <tal:define define="iterate repeat/field/odd">
+                        <tr tal:attributes="class python:iterate and 'odd' or 'even'">
+                          <td class="field-title">
+                            <span tal:content="python:field['title']" >
+                              title</span><span class="warning"
+                              tal:condition="python:field.is_required()">*</span>
+                          </td>
+                          <td>
+                            <input tal:replace="structure python:field.render()" />
+                          </td>
+                          <td>
+                            <span tal:replace="structure python:field.get_value('description')">
+                              comments here (field description)
+                            </span>
+                          </td>
+                        </tr>
+                      </tal:define>
+                    </tal:repeat>
+                  </tbody>
+                  <tfoot>
+                    <tr class="controls">
+                      <td></td>
+                      <td></td>
+                      <td class="align-right">
+                        <input class="button"
+                          type="submit"
+                          name="tab_subscriptions_submit:method"
+                          value="Save"
+                          title="access key: alt-c"
+                          accesskey="c"
+                          i18n:attributes="title value"
+                        />
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </form>
+          
+            </tal:block>
+
+            <tal:block 
+              condition="not:subscribable"
+              i18n:translate="not_subscribable"
+              >
+              This object is not subscribable content.
+            </tal:block>
+        
+          </tal:block>
+
+        </td>
+        <tal:block replace="nothing">
+          _____________________ right column _____________________ 
+        </tal:block>
+        <td class="right">        
+        </td>
+      </tr>
+    </tbody>
+  </table>
+      
+</metal:block>
+</metal:block>
+
+</html>
