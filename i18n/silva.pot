@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 18 16:07:32 2004\n"
+"POT-Creation-Date: Thu Nov 18 16:16:52 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -2832,19 +2832,13 @@ msgid "No users on clipboard"
 msgstr ""
 
 #: /views/edit/macro_vein_navigation.pt:62
+#: /views/edit/macro_vein_navigation.pt:69
 msgid "up one level: alt-]"
 msgstr ""
 
-#: /views/edit/macro_vein_navigation.pt:69
-msgid "up one level"
-msgstr ""
-
 #: /views/edit/macro_vein_navigation.pt:76
-msgid "up to containing publication: alt-["
-msgstr ""
-
 #: /views/edit/macro_vein_navigation.pt:82
-msgid "up to containing publication"
+msgid "up to containing publication: alt-["
 msgstr ""
 
 #: /views/edit/macro_vein_navigation.pt:89
