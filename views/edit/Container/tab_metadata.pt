@@ -53,7 +53,7 @@
                 <tr class="top-controls"
                   tal:condition="may_change_content">
                   <td class="align-right">
-                    <div class="buttons">
+                    <div class="controls">
                       <tal:block condition="python:type == 'Silva Folder'">
                         <a class="button"
                           style="float:left;"

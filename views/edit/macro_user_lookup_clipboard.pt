@@ -21,77 +21,66 @@
         </h2>
         <table class="listing"
           style="margin-bottom:0.5em;">
-          <!-- thead>
-            <tr>
-              <td class="top"
-                style="white-space: nowrap;">                
+          <tbody>
+            <tr class="top-controls">
+              <td>
+                <metal:block define-slot="clipboard_lookup_action">
+                  <a class="navigation" 
+                    style="float:right;"
+                    href="lookup"
+                    title="lookup users: alt-l"
+                    accesskey="l">
+                    <u>L</u>ookup users...
+                  </a>
+                </metal:block>
               </td>
             </tr>
-          </thead -->
-          <tr class="top-controls">
-            <td>
-              <metal:block define-slot="clipboard_lookup_action">
-                <a class="navigation" 
-                  style="float:right;"
-                  href="lookup"
-                  title="lookup users: alt-l"
-                  accesskey="l">
-                  <u>L</u>ookup users...
-                </a>
-              </metal:block>
-            </td>
-          </tr>
-          <tr>
-            <th style="font-size:90%"
-              tal:condition="clipboard_members">
-              Ctrl-click to multi-select
-            </th>
-          </tr>
-          <tr valign="top">
-            <td style="padding: 0;">
-              <select class="clipboard"
-                multiple="multiple"
-                name="userids:list"
-                size="10">
-                <tal:block condition="clipboard_members">
+            <tr class="inter-controls">
+              <td style="font-size:90%"
+                tal:condition="clipboard_members">
+                Ctrl-click to multi-select
+              </td>
+            </tr>
+            <tr valign="top">
+              <td style="padding: 0;">
+                <select class="clipboard"
+                  multiple="multiple"
+                  name="userids:list"
+                  size="10">
+                  <tal:block condition="clipboard_members">
+                    <option class="disabled"
+                      disabled="disabled"
+                      value="None">
+                      select users:
+                    </option>
+                    <tal:block repeat="userid clipboard_members">
+                      <option value="userid"
+                        tal:define="member python: model.sec_get_member(userid);"
+                        tal:content="member/fullname"
+                        tal:attributes="value member/userid;">
+                        User
+                      </option>
+                    </tal:block>
+                  </tal:block>
                   <option class="disabled"
                     disabled="disabled"
-                    value="None">
-                    select users:
+                    value="None"
+                    tal:condition="not:clipboard_members">
+                    No users on clipboard
                   </option>
-                  <tal:block repeat="userid clipboard_members">
-                    <option value="userid"
-                      tal:define="member python: model.sec_get_member(userid);"
-                      tal:content="member/fullname"
-                      tal:attributes="value member/userid;">
-                      User
-                    </option>
-                  </tal:block>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="controls">
+              <td>
+                <tal:block condition="clipboard_members">
+                  <metal:block define-slot="clipboard_actions" />
                 </tal:block>
-                <option class="disabled"
-                  disabled="disabled"
-                  value="None"
-                  tal:condition="not:clipboard_members">
-                  No users on clipboard
-                </option>
-              </select>
-            </td>
-          </tr>
-          <!-- tr class="controls inter-controls align-left">
-            <td>
-              <span class="widebody"
-                tal:condition="clipboard_members">
-                (Ctrl-mouseclick for a multi-select)
-              </span>
-            </td>
-          </tr -->
-          <tr class="controls">
-            <td>
-              <tal:block condition="clipboard_members">
-                <metal:block define-slot="clipboard_actions" />
-              </tal:block>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </form>
     </metal:block>

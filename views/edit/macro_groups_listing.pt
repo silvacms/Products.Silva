@@ -52,59 +52,63 @@
         </h2>
         <table class="listing"
           style="margin-bottom:0.5em;">
-          <tr class="top-controls"
-            tal:condition="python: model_is_container and group_service">
-            <td>
-              <metal:block define-slot="groups_admin_action">
-                <a class="navigation" 
-                  style="float: right;"
-                  href="tab_access_groups"
-                  title="groups administration: alt-g"
-                  accesskey="g"
-                >
-                  <u>G</u>roups admin...
-                </a>
-              </metal:block>
-            </td>
-          </tr>
-          <tr>
-            <th style="font-size:90%"
-              tal:condition="groups">
-              Ctrl-click to multi-select
-            </th>
-          </tr>
-          <tr valign="top">
-            <td style="padding:0;">
-              <select class="clipboard"
-                multiple="multiple"
-                name="groups:list"
-                size="10">
-                <tal:block condition="groups">
+          <tbody>
+            <tr class="top-controls"
+              tal:condition="python: model_is_container and group_service">
+              <td>
+                <metal:block define-slot="groups_admin_action">
+                  <a class="navigation" 
+                    style="float: right;"
+                    href="tab_access_groups"
+                    title="groups administration: alt-g"
+                    accesskey="g"
+                  >
+                    <u>G</u>roups admin...
+                  </a>
+                </metal:block>
+              </td>
+            </tr>
+            <tr class="inter-controls">
+              <td style="font-size:90%"
+                tal:condition="groups">
+                Ctrl-click to multi-select
+              </td>
+            </tr>
+            <tr valign="top">
+              <td style="padding:0;">
+                <select class="clipboard"
+                  multiple="multiple"
+                  name="groups:list"
+                  size="10">
+                  <tal:block condition="groups">
+                    <option class="disabled"
+                      disabled="disabled"
+                      value="None">
+                      select groups:
+                    </option>
+                    <option value="group"
+                      tal:repeat="group groups"
+                      tal:content="group"
+                      tal:attributes="value group">
+                      Group
+                    </option>
+                  </tal:block>
                   <option class="disabled"
-                    disabled="disabled"
-                    value="None">
-                    select groups:
+                    tal:condition="not:groups">
+                    No groups available
                   </option>
-                  <option value="group"
-                    tal:repeat="group groups"
-                    tal:content="group"
-                    tal:attributes="value group">
-                    Group
-                  </option>
-                </tal:block>
-                <option class="disabled"
-                  tal:condition="not:groups">
-                  No groups available
-                </option>
-              </select>
-            </td>
-          </tr>
-          <tr class="controls"
-            tal:condition="groups">
-            <td>
-              <metal:block define-slot="actions" />
-            </td>
-          </tr>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="controls"
+              tal:condition="groups">
+              <td>
+                <metal:block define-slot="actions" />
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </form>
     </metal:block>
