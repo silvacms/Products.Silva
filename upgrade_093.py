@@ -333,7 +333,6 @@ class GroupsService:
             obj._iprange_to_group = {}
         return obj
 
-
 class BuryDemoObjectCorpses:
     """
     This upgrades deletes all broken object which have been DemoObject
@@ -430,6 +429,29 @@ class SetAuthorInfoOnVersion:
                     version._last_author_info = getattr(obj, '_last_author_info', None)
                     version._last_author_userid = getattr(obj, '_last_author_userid', None)
         return obj
+
+class RemoveOldMetadataIndexes:
+    """Remove all unused indexes placed there by installing some older
+        metadata sets, in those way too much fields got indexed.
+    """
+    
+    __implements__ = IUpgrader
+
+    def upgrade(self, service_catalog):
+        if service_catalog.id != 'service_catalog':
+            return service_catalog
+        zLOG.LOG('Silva', zLOG.INFO, 'Service Catalog cleanup')
+        remove = ['silva-extrasubject', 'silva-extracomment', 
+                    'silva-extracreationtime', 'silva-extramodificationtime', 
+                    'silva-extracreator', 'silva-extralastauthor',
+                    'silva-extralocation', 'silva-extracontactname',
+                    'silva-extracontactemail']
+        existing = service_catalog.indexes()
+        for index in remove:
+            if index in existing:
+                service_catalog.delIndex(index)
+                
+        return service_catalog
     
 def initialize():
     home = package_home(globals())
@@ -439,6 +461,8 @@ def initialize():
         up = SimpleMetadataUpgrade(set, os.path.join(xml_home, '%s.xml' % set))
         upgrade.registry.registerUpgrader(up, '0.9.3',
             'Advanced Metadata Tool')
+    upgrade.registry.registerUpgrader(RemoveOldMetadataIndexes(), '0.9.3',
+                                        'ZCatalog')
     upgrade.registry.registerUpgrader(
         SetAuthorInfoOnVersion(), '0.9.3', upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(UpgradeTime(), '0.9.3',
