@@ -14,23 +14,48 @@
   <xsl:preserve-space elements="heading p pre li em strong super sub underline link" />
   
   <xsl:template match="doc:heading[@type='normal']">
-    <h3 class="heading"><xsl:apply-templates mode="text-content" /></h3>
+    <xsl:choose>
+    <xsl:when test="not(child::*)" />
+    <xsl:otherwise>
+      <h3 class="heading"><xsl:apply-templates /></h3>
+    </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="doc:heading[@type='sub']">
-    <h4 class="heading"><xsl:apply-templates mode="text-content" /></h4>
+    <xsl:choose>
+    <xsl:when test="not(child::*)" />
+    <xsl:otherwise>
+      <h4 class="heading"><xsl:apply-templates mode="text-content" /></h4>
+    </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="doc:heading[@type='subsub']">
-    <h5 class="heading"><xsl:apply-templates mode="text-content" /></h5>
+    <xsl:choose>
+      <xsl:when test="not(child::*)" />
+      <xsl:otherwise>
+        <h5 class="heading"><xsl:apply-templates mode="text-content" /></h5>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="doc:heading[@type='paragraph']">
-    <h6 class="heading"><xsl:apply-templates mode="text-content" /></h6>
+    <xsl:choose>
+      <xsl:when test="not(child::*)" />
+      <xsl:otherwise>
+        <h6 class="heading"><xsl:apply-templates mode="text-content" /></h6>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="doc:heading[@type='subparagraph']">
-    <h6 class="minor"><xsl:apply-templates mode="text-content" /></h6>
+    <xsl:choose>
+      <xsl:when test="not(child::*)" />
+      <xsl:otherwise>
+        <h6 class="minor"><xsl:apply-templates mode="text-content" /></h6>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="doc:p[@type='normal']">
@@ -188,7 +213,7 @@
   </xsl:template>
 
   <xsl:template match="doc:index">
-    <a name="{@name}" />
+    <a id="{@name}" />
   </xsl:template>
 
   <xsl:template match="doc:toc">
