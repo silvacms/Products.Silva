@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 25 17:35:58 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:44:17 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -2980,7 +2980,7 @@ msgstr ""
 msgid "The ghost is in an undefined state."
 msgstr "De 'ghost' is in een onbepaalde staat."
 
-#: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:108
+#: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:106
 #: /views/edit/Container/GhostFolder/tab_edit.pt:443
 msgid "metadata"
 msgstr "metadata"
@@ -3509,45 +3509,43 @@ msgid ""
 "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; "
 "field of an email message."
 msgstr ""
+"Addressen zijn geformatteerd om gekopieerd en in het &#8216;To:&#8217;-veld "
+"van een e-mailbericht geplakt te kunnen worden."
 
 #: /views/edit/tab_access_deny_access.py:22
 msgid "&#xab;${user_id}&#xbb; has been denied the ${role} role"
-msgstr "&#xab;${user_id}&#xbb; has been denied the ${role} role"
+msgstr "&#xab;${user_id}&#xbb; is de ${role}-rol geweigerd"
 
 #: /views/edit/tab_access_minimum_role_submit.py:17
 msgid "Minimum role to access has not changed"
-msgstr "Minimum role to access has not changed"
+msgstr "Minimale rol voor toegang is niet gewijzigd"
 
 #: /views/edit/tab_access_minimum_role_submit.py:21
 msgid "Minimum role to access is now set to ${role}"
-msgstr ""
+msgstr "Minimale rol voor toegang is nu ingesteld op ${role}"
 
-#: /views/edit/tab_metadata.pt:111
+#: /views/edit/tab_metadata.pt:109
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
 msgid "for public version of &#xab;${title}&#xbb;"
-msgstr "for public version of &#xab;${title}&#xbb;"
+msgstr "voor publieke versie van &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_metadata.pt:42
 msgid "properties of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "eigenschappen van &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_metadata.pt:54
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions..."
-msgstr ""
+msgstr "abonnementen beheren..."
 
 #: /views/edit/tab_metadata.pt:54
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions: alt-m"
+msgstr "abonnementen beheren: alt-m"
+
+#: /views/edit/tab_metadata.pt:88
+msgid "metadata ${for_approved_version_of_title}"
 msgstr ""
-
-#: /views/edit/tab_metadata.pt:92
-msgid "metadata <span>x</span>"
-msgstr "metadata <span>x</span>"
-
-#: /views/edit/tab_metadata.pt:92
-msgid "for approved version of &#xab;${title}&#xbb;"
-msgstr "for approved version of &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
@@ -3732,6 +3730,12 @@ msgstr "No roles were selected."
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
+
+#~ msgid "metadata <span>x</span>"
+#~ msgstr "metadata <span>x</span>"
+
+#~ msgid "for approved version of &#xab;${title}&#xbb;"
+#~ msgstr "for approved version of &#xab;${title}&#xbb;"
 
 #~ msgid "${action} request"
 #~ msgstr "${action} aanvraag"

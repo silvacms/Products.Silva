@@ -82,15 +82,13 @@
               >
               <metal:block use-macro="here/macro_metadata/macros/view_table">
                 <!-- approved version metadata table, so only viewable -->
-                <h2 i18n:translate="" 
-                  metal:fill-slot="table_title"
-                  >
+                <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
-                  metadata
-                  <span tal:condition="not: model/implements_container" i18n:translate="">
-                    for approved version of
-                    &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
-                  </span>
+                  <tal:block i18n:translate="">metadata
+                  <tal:block condition="not: model/implements_container" i18n:name="for_approved_version_of_title">
+                    <tal:block i18n:translate="">for approved version of
+                      &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;</tal:block>
+                  </tal:block></tal:block>
                 </h2>
               </metal:block>
             </tal:block>

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 25 17:35:58 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:44:17 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -2808,7 +2808,7 @@ msgid "The ghost is in an undefined state."
 msgstr ""
 
 #: /views/edit/hyperlink_lookup.pt:215
-#: /views/edit/tab_metadata.pt:108
+#: /views/edit/tab_metadata.pt:106
 #: /views/edit/Container/GhostFolder/tab_edit.pt:443
 msgid "metadata"
 msgstr ""
@@ -3343,7 +3343,7 @@ msgstr ""
 msgid "Minimum role to access is now set to ${role}"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:111
+#: /views/edit/tab_metadata.pt:109
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr ""
@@ -3362,12 +3362,8 @@ msgstr ""
 msgid "manage subscriptions: alt-m"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:92
-msgid "metadata <span>x</span>"
-msgstr ""
-
-#: /views/edit/tab_metadata.pt:92
-msgid "for approved version of &#xab;${title}&#xbb;"
+#: /views/edit/tab_metadata.pt:88
+msgid "metadata ${for_approved_version_of_title}"
 msgstr ""
 
 #: /views/edit/tab_preview.pt:19
