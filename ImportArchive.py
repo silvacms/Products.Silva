@@ -1,5 +1,7 @@
 # Python
 from zipfile import ZipFile, BadZipfile
+try: from cStringIO import StringIO
+except: from StringIO import StringIO
 # Zope imports
 from OFS.content_types import guess_content_type
 
@@ -11,13 +13,13 @@ def import_archive_helper(context, file, title):
         return bzf
 
     # Lists the names of the files in the archive which were succesfully 
-    # added (or not, if something went wrong).
+    # added (or, if not, if something went wrong, list it in failed_list).
     succeeded_list = []
     failed_list = []
 
     name_list = zip.namelist()
     for name in name_list:
-        extracted_file = zip.read(name)
+        extracted_file = StringIO(zip.read(name))
 
         guessed_type, enc = guess_content_type(name)
         if guessed_type.startswith('image'):
