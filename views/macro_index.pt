@@ -69,6 +69,7 @@
 </div>
 <!-- ____________________________ main ends ____________________________ -->
 <!-- ___________________________ footer start __________________________ -->
+<div style="clear: both;">
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
 <td width="2%">
@@ -118,6 +119,7 @@ Contact person: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contac
 <td colspan="5"  class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="2" /></td>
 </tr>
 </table>
+</div>
 <!-- ___________________________ footer ends ___________________________ -->
 </body>
 </html>
