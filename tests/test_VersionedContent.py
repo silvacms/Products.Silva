@@ -1,25 +1,17 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
-import unittest
-import Zope
+# $Revision: 1.16 $
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
+
+import SilvaTestCase
+
 import time
-Zope.startup()
-
 from DateTime import DateTime
-from Testing import makerequest
-from Products.Silva.Document import Document, DocumentVersion
+from Products.SilvaDocument.Document import Document, DocumentVersion
 from Products.Silva.SilvaObject import SilvaObject
-from test_SilvaObject import hack_create_user
 
-# awful HACK
-def _getCopy(self, container):
-    """A hack to make copy & paste work (used by create_copy())
-    """
-    return DocumentVersion(self.id, self.get_title())
-    
-def _verifyObjectPaste(self, ob):
-    return
 
 # monkey patch for the SilvaObject.view
 not_viewable='not viewable'
@@ -34,40 +26,16 @@ def base_view(self, view_type):
 orig_view = SilvaObject.view
 orig_is_cacheable = Document.is_cacheable
 
-class VersionedContentTestCase(unittest.TestCase):
-    def setUp(self):
-        
-        # awful HACK to support manage_clone
-        DocumentVersion._getCopy = _getCopy
-        Document._verifyObjectPaste = _verifyObjectPaste
-        
-        get_transaction().begin()
-        self.connection = Zope.DB.open()
-        try:
-            self.root = makerequest.makerequest(self.connection.root()
-                                                ['Application'])
-            self.root.REQUEST['URL1'] = ''
-            self.REQUEST = self.root.REQUEST
-            # awful hack: add a user who may own the 'index'
-            # of the test containers
-            hack_create_user(self.root)
-            self.root.manage_addProduct['Silva'].manage_addRoot(
-                'root', 'Root')
-            self.sroot = self.root.root
-            add = self.sroot.manage_addProduct['Silva']
-            add.manage_addDocument('document', 'Document')
-            self.document = self.sroot.document
-
-            # monkey patches for the test_cache
-            SilvaObject.view = base_view
-            Document.is_cacheable = lambda x: 1
-        except:
-            self.tearDown()
-            raise
-
-    def tearDown(self):
-        get_transaction().abort()
-        self.connection.close()
+class VersionedContentTestCase(SilvaTestCase.SilvaTestCase):
+    def afterSetUp(self):
+        self.root.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'document', 'Document')
+        self.document = self.root.document
+        # monkey patches for the test_cache
+        SilvaObject.view = base_view
+        Document.is_cacheable = lambda x: 1
+    
+    def beforeTearDown(self):
         SilvaObject.view = orig_view
         Document.is_cacheable = orig_is_cacheable
     
@@ -90,8 +58,6 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(document.get_previewable().id, '0')
         self.assertEquals(document.get_viewable().id, '0')
         # now create a copy of the public version
-        # fake present of REQUEST
-        #document.REQUEST = {}
         document.create_copy()
         self.assertEquals(document.get_editable().id, '1')
         self.assertEquals(document.get_previewable().id, '1')
@@ -113,8 +79,6 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(document.get_previewable().id, '0')
         self.assertEquals(document.get_viewable(), None)
         # now create a copy of the last closed version
-        # fake present of REQUEST
-        #document.REQUEST = None
         document.create_copy()
         self.assertEquals(document.get_editable().id, '1')
         self.assertEquals(document.get_previewable().id, '1')
@@ -136,13 +100,10 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(document.get_previewable().id, '0')
         self.assertEquals(document.get_viewable(), None)
         # now create a copy of the last closed version
-        # fake present of REQUEST
-        #document.REQUEST = None
         document.create_copy()
         self.assertEquals(document.get_editable().id, '1')
         self.assertEquals(document.get_previewable().id, '1')
         self.assertEquals(document.get_viewable(), None)
-
 
     def test_cache(self):
         # XXX for some reason this test fails, which is scary
@@ -185,15 +146,11 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(not_viewable, self.document.view())
         self.assertEquals(not_viewable, self.document.view())
         
-        
-        
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(VersionedContentTestCase, 'test'))
-    return suite
-    
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
 if __name__ == '__main__':
-    main()
+    framework()
+else:
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(VersionedContentTestCase))
+        return suite
