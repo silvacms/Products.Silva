@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Wed Dec  8 18:26:36 2004\n"
-"PO-Revision-Date: 2004-12-14 15:17+0100\n"
+"PO-Revision-Date: 2004-12-14 16:16+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -3091,7 +3091,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:410
 msgid "choose a template"
-msgstr ""
+msgstr "Vorlage auswählen"
 
 #: /views/edit/Container/tab_status_export.pt:417
 msgid "none"
@@ -3099,11 +3099,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:453
 msgid "export to Docma"
-msgstr ""
+msgstr "Zu Docma exportieren"
 
 #: /views/edit/Container/tab_status_export.pt:453
 msgid "export the selection to word: alt-d"
-msgstr ""
+msgstr "Ausgewähltes zu Word exportieren: alt-d"
 
 # Default: "d"
 #: /views/edit/Container/tab_status_export.pt:453
@@ -3112,7 +3112,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:54
 msgid "items to export:"
-msgstr ""
+msgstr "Zu exportierende Einträge:"
 
 #: /views/edit/Container/tab_status_export.pt:89
 msgid "export from &#xab;${title}&#xbb;"
@@ -3132,7 +3132,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_get_preview_title.py:12
 msgid "preview ${id}"
-msgstr ""
+msgstr "Vorschau ${id}"
 
 #: /views/edit/Container/tab_status_new_version.py:15
 msgid "Nothing was selected, so no new version was created."
@@ -3144,11 +3144,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_new_version.py:46
 msgid "Created a new version for: ${ids}"
-msgstr ""
+msgstr "Neu Version erzeugen für: ${ids}"
 
 #: /views/edit/Container/tab_status_new_version.py:51
 msgid "could not create a new version for: ${ids}"
-msgstr ""
+msgstr "Neu Version konnte nicht erzeugt werden für: ${ids}"
 
 #: /views/edit/Container/tab_status_reject.py:15
 msgid "Nothing was selected, so no approval was rejected."
@@ -3165,7 +3165,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_reject.py:57
 msgid "Not rejected: ${ids}"
-msgstr ""
+msgstr "Nicht abgelehnt: ${ids}"
 
 #: /views/edit/Container/tab_status_request_approval.py:15
 msgid "Nothing was selected, so no approval was requested."
@@ -3177,7 +3177,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_request_approval.py:68
 msgid "no publication time set"
-msgstr ""
+msgstr "Keine Veröffentlichungszeit gesetzt"
 
 #: /views/edit/Container/tab_status_revoke.py:15
 msgid "Nothing was selected, so no approval was revoked."
@@ -3202,12 +3202,12 @@ msgstr ""
 #: /views/edit/Container/tab_status_silva2word.py:35
 #: /views/edit/VersionedContent/tab_status_silva2word.py:25
 msgid "No description"
-msgstr ""
+msgstr "Keine Beschreibung"
 
 #: /views/edit/Container/tab_status_silva2word.py:42
 #: /views/edit/VersionedContent/tab_status_silva2word.py:32
 msgid "You have not entered your e-mail address"
-msgstr ""
+msgstr "Sie haben keine EMail Adresse eingegeben"
 
 #: /views/edit/Container/tab_status_silva2word.py:46
 #: /views/edit/VersionedContent/tab_status_silva2word.py:36
@@ -3281,7 +3281,7 @@ msgstr ""
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:19
 msgid "Sorry, content is missing:"
-msgstr ""
+msgstr "Fehlender Inhalt:"
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:26
 msgid "Member is approved"
@@ -3289,7 +3289,7 @@ msgstr ""
 
 #: /views/edit/Member/SimpleMember/memberform.form:69
 msgid "preferred editor"
-msgstr ""
+msgstr "Bevorzugter Editor"
 
 #: /views/edit/Member/SimpleMember/memberform.form:71
 msgid "Choose 'forms editor' for the forms-based editor, or 'kupu' for the Kupu WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1+)"
@@ -3309,15 +3309,15 @@ msgstr ""
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:39
 msgid "Nothing changed."
-msgstr ""
+msgstr "Nichts geändert."
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:112
 msgid "close window: alt-c"
-msgstr ""
+msgstr "Fenster schliessen: alt-c"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:122
 msgid "save member data: alt-s"
-msgstr ""
+msgstr "Mitgliederdaten speichern: alt-s"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:139
 msgid "Dear ${user_id}<br /> You are not allowed to edit membership data of member ${member_id}"
@@ -3436,7 +3436,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:80
 msgid "Somebody else just edited this item, unlock it: alt-u"
-msgstr ""
+msgstr "Jemand hat diesen Eintrag gerade geändert, zum Entsperren: alt-u"
 
 # Default: "u"
 #: /views/edit/VersionedContent/macro_tab_edit.pt:80
@@ -3454,7 +3454,7 @@ msgstr ""
 #: /views/edit/VersionedContent/properties_make_copy.py:16
 #: /views/edit/VersionedContent/tab_edit_make_copy.py:16
 msgid "New version created."
-msgstr ""
+msgstr "Neue Version erzeugt."
 
 #: /views/edit/VersionedContent/properties_revoke_approval.py:15
 #: /views/edit/VersionedContent/tab_edit_revoke_approval.py:14
@@ -3464,11 +3464,11 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_edit_break_lock.py:14
 msgid "Lock broken"
-msgstr ""
+msgstr "Entsperrt"
 
 #: /views/edit/VersionedContent/tab_edit_publish.py:24
 msgid "Version approved."
-msgstr ""
+msgstr "Version bewilligt"
 
 #: /views/edit/VersionedContent/tab_status.pt:227
 msgid "manage versions of &#xab;${export_id}&#xbb;"
@@ -3500,11 +3500,11 @@ msgstr "Versionsstatus"
 
 #: /views/edit/VersionedContent/tab_status.pt:326
 msgid "compare"
-msgstr ""
+msgstr "Vergleichen"
 
 #: /views/edit/VersionedContent/tab_status.pt:326
 msgid "view the selected versions next to each other"
-msgstr ""
+msgstr "Die ausgewählten Versionen nebeneinander anzeigen"
 
 # Default: "c"
 #: /views/edit/VersionedContent/tab_status.pt:326
@@ -3530,7 +3530,7 @@ msgstr "kopieren zum bearbeiten"
 
 #: /views/edit/VersionedContent/tab_status.pt:49
 msgid "status of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Status von &#xab;${title}&#xbb;"
 
 #: /views/edit/VersionedContent/tab_status.pt:59
 msgid "Content is approved, not published"
@@ -3542,7 +3542,7 @@ msgstr "Publikationseinstellungen können geändert werden."
 
 #: /views/edit/VersionedContent/tab_status.pt:69
 msgid "Content is published"
-msgstr ""
+msgstr "Inhalt ist veröffentlicht"
 
 #: /views/edit/VersionedContent/tab_status.pt:72
 msgid "This content is published (online for the public).<br /> If you wish you can make an editable copy by going to the ${editor}."
@@ -3550,7 +3550,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status.pt:82
 msgid "Published version exists"
-msgstr ""
+msgstr "Veröffentlichte Version existiert"
 
 #: /views/edit/VersionedContent/tab_status.pt:83
 msgid "Note: an older version of this content is online.<br /> Publishing this version will replace the public version."
@@ -3570,7 +3570,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:32
 msgid "Changed publication settings."
-msgstr ""
+msgstr "Veröffentlichungseinstellungen geändert."
 
 #: /views/edit/VersionedContent/tab_status_close.py:16
 msgid "There is no public version to close"
@@ -3578,32 +3578,32 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_close.py:21
 msgid "Closed public version."
-msgstr ""
+msgstr "Öffentlich Version geschlossen."
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:19
 msgid "No versions selected"
-msgstr ""
+msgstr "Keine Versionen ausgewählt"
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:28
 msgid "Can't delete all versions"
-msgstr ""
+msgstr "Es können nicht alle Versionen gelöscht werden"
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:35
 msgid "could not delete ${id}: ${error}"
-msgstr ""
+msgstr "Konnte nicht gelöscht werden ${id}: ${error}"
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:39
 msgid "deleted ${id}"
-msgstr ""
+msgstr "gelöscht ${id}"
 
 #: /views/edit/VersionedContent/tab_status_form_author.form:28
 #: /views/edit/VersionedContent/tab_status_form_editor.form:88
 msgid "message"
-msgstr ""
+msgstr "Nachricht"
 
 #: /views/edit/VersionedContent/tab_status_get_status_link_title.py:37
 msgid "view «${version_title}»"
-msgstr ""
+msgstr "Ansicht «${version_title}»"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:107
 msgid "request approval ${for_new_version}"
@@ -3611,7 +3611,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:107
 msgid "for new version"
-msgstr ""
+msgstr "für neue Version"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:112
 msgid "message to editor"
@@ -3635,7 +3635,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:150
 #: /views/edit/VersionedContent/tab_status_macros.pt:346
 msgid "day / month / year &nbsp;23:59"
-msgstr ""
+msgstr "Tag / Monat / Jahr &nbsp; 23:59"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:158
 #: /views/edit/VersionedContent/tab_status_macros.pt:234
@@ -3655,7 +3655,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:196
 msgid "change settings"
-msgstr ""
+msgstr "Einstellungen ändern"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:203
 msgid "current timings"
@@ -3708,11 +3708,11 @@ msgstr "Zeiten ändern"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:312
 msgid "publish new version"
-msgstr ""
+msgstr "Neue Version publizieren"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:316
 msgid "publish closed version"
-msgstr ""
+msgstr "Geschlossene Version publizieren"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:366
 msgid "Empty indicates no expiration."
@@ -3795,7 +3795,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:576
 msgid "manual close"
-msgstr ""
+msgstr "Manuelles schliessen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:583
 msgid "If necessary, the published version of this content can be manually closed (taken offline). It will also be removed from the public index."
@@ -3845,23 +3845,23 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_revoke.py:16
 msgid "This content is not approved."
-msgstr ""
+msgstr "Dieser Inhalt ist nicht bewilligt."
 
 #: /views/edit/VersionedContent/tab_status_view_versions.pt:55
 msgid "Older version (${version_id})"
-msgstr ""
+msgstr "Alte Version (${version_id})"
 
 #: /views/edit/VersionedContent/tab_status_view_versions.pt:59
 msgid "Newer version (${version_id})"
-msgstr ""
+msgstr "neue Version (${version_id})"
 
 #: /views/edit/VersionedContent/tab_status_view_versions_start.py:18
 msgid "You didn't select any versions."
-msgstr ""
+msgstr "Sie haben keine Versionen ausgewählt."
 
 #: /views/edit/VersionedContent/tab_status_view_versions_start.py:23
 msgid "Please select exactly two versions."
-msgstr ""
+msgstr "Bitte genau zwei Versionen auswählen."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:42
 msgid "This content is already public. You can close the current public version."
