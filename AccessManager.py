@@ -71,14 +71,19 @@ class AccessManager:
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'send_messages')
     def send_messages(self):
-        """Should be called after approval or denial actions are finished. Will send pending e-mails"""
+        """Should be called after approval or denial actions are finished.
+
+        Will send pending e-mails
+        """
         self.service_messages.send_pending_messages()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_available_roles')
     def get_available_roles(self):
+        # XXX this list of roles should really be in roleinfo, but what is it?
         ars = ['Viewer', 'Reader', 'Author', 'Editor']
-        userrs = self.sec_get_local_roles_for_userid(self.REQUEST.AUTHENTICATED_USER.getId())
+        userrs = self.sec_get_local_roles_for_userid(
+            self.REQUEST.AUTHENTICATED_USER.getId())
         for role in userrs:
             if role in ars:
                 ars.remove(role)

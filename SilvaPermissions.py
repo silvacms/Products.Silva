@@ -1,8 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 import Globals, AccessControl, Products
 from AccessControl import Permissions
+from Products.Silva import roleinfo
 
 # General Zope permissions
 View = Permissions.view
@@ -27,22 +28,20 @@ def setDefaultRoles(permission, roles):
         setattr(Globals.ApplicationDefaultPermissions, mangled, roles)
 
 # Silva permissions
+# XXX is ViewAuthenticated in use?
 ViewAuthenticated = 'View Authenticated'
-setDefaultRoles(ViewAuthenticated, ('Manager', 'ChiefEditor',
-                                    'Editor', 'Author', 'Reader',
-                                    'Viewer', 'Authenticated'))
+setDefaultRoles(ViewAuthenticated,
+                ('Authenticated',) + roleinfo.ASSIGNABLE_ROLES)
 
 ReadSilvaContent = 'Read Silva content'
-setDefaultRoles(ReadSilvaContent, ('Manager', 'ChiefEditor',
-                                   'Editor', 'Author', 'Reader'))
+setDefaultRoles(ReadSilvaContent, roleinfo.READER_ROLES)
 
 ChangeSilvaContent = 'Change Silva content'
-setDefaultRoles(ChangeSilvaContent, ('Manager', 'ChiefEditor',
-                                     'Editor', 'Author'))
+setDefaultRoles(ChangeSilvaContent, roleinfo.AUTHOR_ROLES)
 
 ApproveSilvaContent = 'Approve Silva content'
-setDefaultRoles(ApproveSilvaContent, ('Manager', 'ChiefEditor', 'Editor'))
+setDefaultRoles(ApproveSilvaContent, roleinfo.EDITOR_ROLES)
 
 ChangeSilvaAccess = 'Change Silva access'
-setDefaultRoles(ChangeSilvaAccess, ('Manager', 'ChiefEditor'))
+setDefaultRoles(ChangeSilvaAccess, roleinfo.CHIEF_ROLES)
 

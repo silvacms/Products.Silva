@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -9,6 +9,7 @@ from Testing import ZopeTestCase
 from Products.Silva.tests import SilvaTestCase
 
 from Products.Silva import Folder
+from Products.Silva import roleinfo
 from Products.SilvaDocument import Document
 
 class SecurityTestCase(SilvaTestCase.SilvaTestCase):
@@ -109,8 +110,9 @@ class SecurityTestCase(SilvaTestCase.SilvaTestCase):
 
 
     def test_sec_get_roles(self):
-        self.assertSameEntries(['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager'],
-                               self.root.sec_get_roles())
+        self.assertSameEntries(
+            roleinfo.ASSIGNABLE_ROLES,
+            self.root.sec_get_roles())
         
 if __name__ == '__main__':
     framework()

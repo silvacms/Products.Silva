@@ -14,6 +14,7 @@ from Products.ProxyIndex.ProxyIndex import RecordStyle
     
 from Products.Silva.ContainerPolicy import NothingPolicy 
 from Products.Silva.AutoTOC import AutoTOCPolicy
+from Products.Silva import roleinfo
 
 from SimpleMembership import SimpleMemberService
 
@@ -264,21 +265,15 @@ def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.
     """
     # add the appropriate roles if necessary
-    roles = ['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor']
     userdefined_roles = root.userdefined_roles()
     request = root.REQUEST
     request.set('URL1', '')
-    for role in roles:
+    for role in roleinfo.ASSIGNABLE_ROLES:
         if role not in userdefined_roles:
             request.set('role', role)
             root.manage_defined_roles(submit='Add Role', REQUEST=request)
 
     # now configure permissions
-    all_reader = ['Reader', 'Author', 'Editor',
-                  'ChiefEditor', 'Manager']
-    all_author = ['Author', 'Editor', 'ChiefEditor', 'Manager']
-    all_editor = ['Editor', 'ChiefEditor', 'Manager']
-    all_chief = ['ChiefEditor', 'Manager']
     
     add_permissions = [
         'Add Documents, Images, and Files',
@@ -291,39 +286,38 @@ def configureSecurity(root):
         ]
     
     for add_permission in add_permissions:
-        root.manage_permission(add_permission, all_author)
+        root.manage_permission(add_permission, roleinfo.AUTHOR_ROLES)
 
     # chief editors and up may also place groups and Datasources.
-    root.manage_permission('Add Silva Groups', all_chief)
-    root.manage_permission('Add Silva Virtual Groups', all_chief)
-    root.manage_permission('Add Silva IP Groups', all_chief)
-    root.manage_permission('Add Silva SQL Data Sources', all_chief)
+    root.manage_permission('Add Silva Groups', roleinfo.CHIEF_ROLES)
+    root.manage_permission('Add Silva Virtual Groups', roleinfo.CHIEF_ROLES)
+    root.manage_permission('Add Silva IP Groups', roleinfo.CHIEF_ROLES)
+    root.manage_permission('Add Silva SQL Data Sources', roleinfo.CHIEF_ROLES)
     
     # everybody may view root by default XXX
     # (is this bad in case of upgrade/refresh)
-    root.manage_permission('View',
-                           all_reader +
-                           ['Anonymous', 'Authenticated', 'Viewer'])
+    root.manage_permission('View', roleinfo.ALL_ROLES)
+  
     # person with viewer role can do anything that anonymous does + has
     # additional right to view when anonymous can't. This means zope
     # should fall back on permissions for anonymous in case viewer does
     # not have these permissions. That's why we don't have to assign them
     # to viewer.
-    root.manage_permission('Add Silva Publications', all_editor)
-    root.manage_permission('Add Silva Indexers', all_editor)
-    root.manage_permission('Approve Silva content', all_editor)
-    root.manage_permission('Change Silva access', all_chief)
-    root.manage_permission('Change Silva content', all_author)
-    root.manage_permission('Manage properties', all_author)
-    root.manage_permission('Read Silva content', all_reader)
+    root.manage_permission('Add Silva Publications', roleinfo.EDITOR_ROLES)
+    root.manage_permission('Add Silva Indexers', roleinfo.EDITOR_ROLES)
+    root.manage_permission('Approve Silva content', roleinfo.EDITOR_ROLES)
+    root.manage_permission('Change Silva access', roleinfo.CHIEF_ROLES)
+    root.manage_permission('Change Silva content', roleinfo.AUTHOR_ROLES)
+    root.manage_permission('Manage properties', roleinfo.AUTHOR_ROLES)
+    root.manage_permission('Read Silva content', roleinfo.READER_ROLES)
     # authenticated needs this permission as we are not
     # allowed to use service_editor otherwise
     root.manage_permission('Use XMLWidgets Editor Service',
-                           all_reader + ['Authenticated'])
+                           roleinfo.READER_ROLES + ('Authenticated',))
 
     # this is necessary to let authors use external editor
     try:
-        root.manage_permission('Use external editor', all_author)
+        root.manage_permission('Use external editor', roleinfo.AUTHOR_ROLES)
     # hail to Zope and its string exceptions!!
     except:
         pass
@@ -333,10 +327,12 @@ def configureSecurity(root):
     # catch exceptions. A 'refresh' after Groups is installed should
     # set the permissions right
     try:
-        root.manage_permission('Access Groups information', all_reader)
-        root.manage_permission('Access Group mappings', all_reader)
-        root.manage_permission('Change Groups', all_chief)
-        root.manage_permission('Change Group mappings', all_chief)
+        root.manage_permission('Access Groups information',
+                               roleinfo.READER_ROLES)
+        root.manage_permission('Access Group mappings',
+                               roleinfo.READER_ROLES)
+        root.manage_permission('Change Groups', roleinfo.CHIEF_ROLES)
+        root.manage_permission('Change Group mappings', roleinfo.CHIEF_ROLES)
     except:
         pass
 

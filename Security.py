@@ -1,14 +1,15 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.70 $
+# $Revision: 1.71 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from DateTime import DateTime
 # Silva
-import SilvaPermissions
-from Membership import noneMember
-from AccessManager import AccessManager
+from Products.Silva import roleinfo
+from Products.Silva import SilvaPermissions
+from Products.Silva.Membership import noneMember
+from Products.Silva.AccessManager import AccessManager
 
 # Groups
 try:
@@ -24,11 +25,6 @@ from interfaces import IContainer, IRoot
 from Products.SilvaMetadata.Exceptions import BindingError
 
 LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
-
-# the order of this list should remain the same, since the list of roles
-# a user has (sec_get_all_roles_for_userid) is shown in this order.
-interesting_roles = ['Viewer', 'Reader', 'Author', 'Editor', \
-                     'ChiefEditor', 'Manager']
 
 class Security(AccessManager):
     """Can be mixed in with an object to support Silva security.
@@ -50,7 +46,7 @@ class Security(AccessManager):
     def sec_assign(self, userid, role):
         """Assign role to userid for this object.
         """
-        if role not in interesting_roles:
+        if role not in roleinfo.ASSIGNABLE_ROLES:
             return
         # check whether we have permission to add Manager
         if (role == 'Manager' and
@@ -77,7 +73,7 @@ class Security(AccessManager):
         """Remove roles from user in this object.
         """
         for role in revoke_roles:
-            if role not in interesting_roles:
+            if role not in roleinfo.ASSIGNABLE_ROLES:
                 return
             # can't revoke manager roles if we're not manager
             if (role == 'Manager' and
@@ -212,7 +208,7 @@ class Security(AccessManager):
         result = []
         for userid, roles in self.get_local_roles():
             for role in roles:
-                if role in interesting_roles:
+                if role in roleinfo.ASSIGNABLE_ROLES:
                     result.append(userid)
                     break
         return result
@@ -271,7 +267,7 @@ class Security(AccessManager):
         """Get the local roles that a userid has here.
         """
         return [role for role in self.get_local_roles_for_userid(userid)
-                if role in interesting_roles]
+                if role in roleinfo.ASSIGNABLE_ROLES]
     
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'sec_get_roles')
@@ -279,7 +275,7 @@ class Security(AccessManager):
         """Get all roles defined here that we can manage, given the
         roles of this user.
         """
-        return interesting_roles
+        return roleinfo.ASSIGNABLE_ROLES
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_find_users')
@@ -359,7 +355,7 @@ class Security(AccessManager):
         result = []
         for userid, roles in self.get_local_roles():
             for role in roles:
-                if role in interesting_roles:
+                if role in roleinfo.ASSIGNABLE_ROLES:
                     result.append(userid)
                     break
         return result
@@ -370,14 +366,14 @@ class Security(AccessManager):
         """Get a list of local roles that a userid has here
         """
         return [role for role in self.get_local_roles_for_userid(userid)
-                if role in interesting_roles]
+                if role in roleinfo.ASSIGNABLE_ROLES]
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_get_all_roles_for_userid')
     def sec_get_all_roles_for_userid(self, userid):
         """Returns all roles a user has in this context"""
         roles = []
-        for role in interesting_roles[:]:
+        for role in roleinfo.ASSIGNABLE_ROLES[:]:
             if self.REQUEST.AUTHENTICATED_USER.has_role(role, self):
                 roles.append(role)
         return roles
