@@ -66,7 +66,7 @@
               </tal:block>
               <tr class="top-controls">
                 <td colspan="6">
-                  <div style="float: left;">
+                  <div style="float: left;" tal:condition="may_change_content">
                   <input class="navigation"
                     name="add_object:method"
                     type="submit"
@@ -104,9 +104,12 @@
                     title="import XML data - alt-i"
                     accesskey="i"
                     i18n:attributes="title"
+                    tal:condition="may_change_content"
                   >
                     <span i18n:translate="import">Import</span>...
                   </a>
+                  <span
+                     tal:condition="not:may_change_content">&nbsp;</span>
                 </td>
               </tr>
             </thead>
@@ -355,7 +358,7 @@
                       <a class="blacklink"
                         href="asset"
                         title="edit"
-                        tal:attributes="href string:${asset_url}/edit/tab_edit"
+                        tal:attributes="href python:here.get_editor_link(asset)"
                         tal:content="structure asset/id"
                         i18n:attributes="title"
                       >
