@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<tal:block tal:condition="python: options['error_type'] != 'NotFound'">
+<tal:block condition="python: options['error_type'] != 'NotFound'">
 <html tal:define="mangle python:modules['Products'].Silva.mangle;">
   <head>
     <link rel="stylesheet"
@@ -19,15 +19,15 @@
       </div>
     </tal:block>
 
-    <div class="info"
-      tal:condition="python: (options['error_type'] == 'Unauthorized' and here.service_members.allow_authentication_requests())">
-     <div class="public">
+    <tal:block condition="python: options['error_type'] == 'Unauthorized'">
+
+     <!-- unauthorized, allow registration -->
+     <div class="public" tal:condition="here/service_members/allow_authentication_requests">
       <br />
       <h2>Membership system</h2>
       <p class="readable">
-        Sorry, this page is only available to visitors with proper credentials.
-      </p>
-      <div class="readable" 
+        Sorry, this page is only available to visitors with proper credentials.      </p>
+      <div class="readable"
         tal:condition="here/service_members/get_authentication_requests_url">
         <p>
           You're welcome to apply for membership (it's a three field form). Your request will be sent to the responsible person who will grant (or possibly deny) access. Then you'll be informed via email.
@@ -49,19 +49,21 @@
         <a tal:attributes="href request/URL0">Try logging in again....</a><br /><br />
       </span>
      </div>
-    </div>
 
-    <div class="info"
-      tal:condition="python: (options['error_type'] == 'Unauthorized' and not here.service_members.allow_authentication_requests())">
-     <div class="public">
-      <h2>Login required</h2>
-      <p>
-      Sorry, this page is only available to visitors with proper credentials.  
-      <br /><br />
-      <span class="subhead">
-        <a tal:attributes="href request/URL0">Try logging in again....</a><br /><br />
+     <!-- unauthorized, don't allow registration -->
+     <div class="info" tal:condition="not:here/service_members/allow_authentication_requests">
+      <div class="public">
+       <h2>Login required</h2>
+       <p>
+        Sorry, this page is only available to visitors with proper credentials.
+        <br /><br />
+        <span class="subhead">
+          <a tal:attributes="href request/URL0">Try logging in again....</a><br /><br />
+        </span>
+       </p>
+      </div>
      </div>
-    </div>
+    </tal:block>
 
   <tal:condition condition="python: options['error_type'] != 'Unauthorized'">
     <div class="public">
