@@ -355,6 +355,11 @@
                       >
                         id
                       </a>
+
+                    <tal:block condition="python: hasattr(view, 'externalEditLink_')">
+                      <span tal:replace="structure python: view.externalEditLink_(asset)" />
+                    </tal:block>
+
                     </td>
                     <tal:block replace="nothing">
                       _______ title cell _______

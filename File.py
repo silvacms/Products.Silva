@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 
 # Python
 import os
@@ -12,6 +12,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from mimetypes import guess_extension
 from helpers import add_and_edit
+from webdav.WriteLockInterface import WriteLockInterface
 # Silva
 from Asset import Asset
 import SilvaPermissions
@@ -38,7 +39,7 @@ class File(Asset):
     
     meta_type = "Silva File"    
 
-    __implements__ = IFile
+    __implements__ = (WriteLockInterface, IFile)
     
     def __init__(self, id, title):
         File.inheritedAttribute('__init__')(self, id, title)
@@ -134,6 +135,16 @@ class File(Asset):
         """
         self._set_file_data_helper(file)
         self._p_changed = 1
+
+    def manage_FTPget(self, *args, **kwargs):
+        return self._file.manage_FTPget(*args, **kwargs)
+
+    def content_type(self):
+        return self._file.content_type
+
+    def PUT(self, REQUEST, RESPONSE):
+        """Handle HTTP PUT requests"""
+        return self._file.PUT(REQUEST, RESPONSE)
 
 InitializeClass(File)
 

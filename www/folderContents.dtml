@@ -142,6 +142,10 @@ function toggleSelect() {
        (<em>&dtml-locked_in_version;</em>)
     </dtml-if>
   </dtml-if>
+  <dtml-try>
+    <dtml-var expr="externalEditLink_(this())">
+  <dtml-except>
+  </dtml-try>
   </div>
   </td>
 

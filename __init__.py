@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74 $
+# $Revision: 1.75 $
 import Metadata
 import Folder, Root
 import Publication, Ghost, Image, File
@@ -103,5 +103,22 @@ def initialize(context):
     #  register the metadata xml import initializers
     #  register a special accessor for ghosts
     Metadata.initialize_metadata()
+
+#------------------------------------------------------------------------------
+# External Editor support
+#------------------------------------------------------------------------------
+
+# check if ExternalEditor is available
+import os
+from Globals import DTMLFile
+
+try:
+    import Product.ExternalEditor as ee
+except ImportError:
+    pass
+else:
+    dirpath = os.path.dirname(ee.__file__)
+    dtmlpath = '%s/manage_main' % dirpath
+    Folder.manage_main = DTMLFile(dtmlpath, globals())
 
 
