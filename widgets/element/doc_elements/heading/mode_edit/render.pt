@@ -5,7 +5,7 @@
 </metal:block>
 <metal:block fill-slot="edit_notes">
 <ul class="tips">
-  <li><b>Tip:</b> Tab to the save button (shift-tab to go backwards).</li>
+  <li><b>Tip:</b> Tab to the exit button or alt-e.</li>
 </ul>
 </metal:block>
 <metal:block fill-slot="element_controls">

@@ -23,7 +23,7 @@ Type:
 <metal:block fill-slot="edit_notes">
 <ul class="tips">
   <li>Preformatted text will be shown exactly as entered, with all characters displayed literally. White space is preserved (unless the textarea is empty).</li>
-  <li><b>Tip:</b> Tab to the save button.</li>
+  <li><b>Tip:</b> Tab to the exit button or alt-e.</li>
 </ul>
 </metal:block>
 </div>
