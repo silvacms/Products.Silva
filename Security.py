@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.65 $
+# $Revision: 1.66 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -68,7 +68,7 @@ class Security(AccessManager):
             not self.sec_have_management_rights()):
             return
         self.manage_delLocalRoles([userid])
-
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_revoke')
     def sec_revoke(self, userid, revoke_roles):
@@ -286,7 +286,7 @@ class Security(AccessManager):
         """Find users in user database. This method delegates to
         service_members for security reasons.
         """
-        # XXX this loop seems useless, why is it here?
+        # XXX this loop seems useless, why is it here? (maybe we need a copy?)
         members = []
         for member in self.service_members.find_members(search_string):
             members.append(member)
@@ -417,6 +417,18 @@ class Security(AccessManager):
                 item._sec_get_downward_defined_userids_helper(d)
             for item in self.get_assets():
                 item._sec_get_downward_defined_userids_helper(d)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'sec_clean_roles')
+    def sec_clean_roles(self):
+        """Clean all roles where the corresponding user is no longer available
+        """
+        # this is possibly horribly inefficient, but the simplest way
+        # to implement this.
+        valid_user_ids = self.get_valid_userids()
+        invalid_user_ids = [ user_id for user_id in self.sec_get_local_defined_userids()
+                             if user_id not in valid_user_ids ]
+        self.manage_delLocalRoles(invalid_user_ids)
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_members_for_userids')
