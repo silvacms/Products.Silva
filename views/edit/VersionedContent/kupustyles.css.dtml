@@ -140,10 +140,11 @@ div.kupu-editorframe {
 
 #kupu-editor {
   height: 580px;
-  width: 99%;
+  width: 100%;
   margin-left: 0em;
   margin-bottom: 0em;
   border: solid 1px #6c797f;
+  border-style: solid none solid solid;
 }
 
 #kupu-editor-textarea {
@@ -185,14 +186,14 @@ div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   margin-bottom: 0em;
   padding-left: 0.6em;
   border: solid 1px #6c797f;
-  border-style: none solid none solid;
+  border-style: solid none none none;
   text-align: left;
 }
 
 div.kupu-tooltray {
   /* background: #cedae8; */
   margin: 0;
-  padding: 0.6em 0.3em 0.8em 0.5em; 
+  padding: 0.4em 0.3em 0.4em 0.4em; 
   color: #333;
 }
 
