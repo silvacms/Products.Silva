@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 import Globals, AccessControl, Products
 from AccessControl import Permissions
 
@@ -42,4 +42,4 @@ ChangeSilvaAccess = 'Change Silva access'
 setDefaultRoles(ChangeSilvaAccess, ('Manager', 'ChiefEditor'))
 
 ChangeSilvaViewRegistry = 'Change Silva View Registry'
-setDefaultRoles(ChangeSilvaViewRegistry, ('Manager'))
+setDefaultRoles(ChangeSilvaViewRegistry, ('Manager',))
