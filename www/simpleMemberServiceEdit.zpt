@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.2.36.1 $
+Version of this file: $Revision: 1.2.36.2 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -29,7 +29,7 @@ Version of this file: $Revision: 1.2.36.1 $
   </tr>
   <tr>
     <td colspan="2" valign="top">
-      <input type="submit" name="manage_allowSubscription:method" value="Change Settings" class="form-element" />
+      <input type="submit" name="manage_allowAuthenticationRequests:method" value="Change Settings" class="form-element" />
     </td>
   </tr>
 </table>

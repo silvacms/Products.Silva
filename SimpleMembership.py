@@ -177,7 +177,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         self._allow_authentication_requests = value
 
     security.declareProtected('View management screens',
-                              'manage_allowSubscription')
+                              'manage_allowAuthenticationRequests')
     def manage_allowAuthenticationRequests(self, REQUEST):
         """manage method to set allow_authentication_requests"""
         self.set_allow_authentication_requests(int(REQUEST['allow_authentication_requests']))
