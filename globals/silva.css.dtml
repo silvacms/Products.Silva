@@ -425,7 +425,7 @@ table.listing tr.odd {
 /* applies only to mozilla comp. browsers */
 td.main>table.listing tr.odd:hover td,
 td.main>table.listing tr.even:hover td {
-    background-color: #eef7ff;
+    background-color: #e5f2ff;
   }
 
 table.listing tr.inter-controls {
