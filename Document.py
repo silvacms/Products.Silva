@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.79 $
+# $Revision: 1.79.2.1 $
 # Zope
 
 from StringIO import StringIO
@@ -220,7 +220,6 @@ def manage_addDocument(self, id, title, REQUEST=None):
     object = getattr(self, id)
     object.manage_addProduct['Silva'].manage_addDocumentVersion('0', title)
     object.create_version('0', None, None)
-    getattr(object, '0').index_object()
     add_and_edit(self, id, REQUEST)
     return ''
 
