@@ -144,6 +144,16 @@ input.warning[type="submit"]:focus {
   background : #53538b;
 }
 
+input[type="submit"]:hover, input[type="button"]:hover {
+  color : #bfffd3;
+  background : #69878c;
+}
+
+input[type="submit"]:focus, input[type="button"]:focus {
+   color : #bfffd3;
+   background : #008a8a;
+}
+
 /* publish screen state coded buttons */
 input.reject[type="submit"]:hover { 
   color : #e5ffec; 
