@@ -36,6 +36,8 @@ Silva changes
 
       - Ghosts and ghost folders should import properly with zip file import.
 
+      - Fixed incorrect recursive call for get_public_tree_helper
+
     Removals
 
       - Remnant of SQLDataSource removed. Use SilvaExternalSources instead.
