@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 import unittest
 import Zope
 #import ZODB
@@ -11,13 +11,14 @@ from AccessControl.User import SimpleUser
 #from Products.Silva import Document, Folder, Root #, Ghost, Publication
 
 # Awful hack: add an authenticated user into the request.
-def hack_create_user(silva_root):
-    silva_root.manage_addUserFolder()
+def hack_create_user(root):
+    if not hasattr(root, 'acl_users'):
+        root.manage_addUserFolder()
     # maybe add some testing roles here ?
-    silva_root.acl_users.userFolderAddUser(name='TestUser', password='TestUserPasswd', roles=(), domains=())
+    root.acl_users.userFolderAddUser(name='TestUser', password='TestUserPasswd', roles=(), domains=())
     
-    REQUEST = silva_root.REQUEST
-    REQUEST.AUTHENTICATED_USER=silva_root.acl_users.getUser('TestUser')
+    REQUEST = root.REQUEST
+    REQUEST.AUTHENTICATED_USER=root.acl_users.getUser('TestUser')
 
     
 
@@ -25,38 +26,40 @@ class SilvaObjectTestCase(unittest.TestCase):
     """Test the SilvaObject interface.
     """
     def setUp(self):
-      try:
         get_transaction().begin()
         self.connection = Zope.DB.open()
-        self.root = makerequest.makerequest(self.connection.root()['Application'])
-        self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
-        self.sroot = self.root.root
-
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_create_user(self.sroot)
-        
-        add = self.sroot.manage_addProduct['Silva']
-        add.manage_addDocument('document',
-                               'Document')
-        add.manage_addFolder('folder',
-                             'Folder')
-        add.manage_addPublication('publication',
-                                  'Publication')
-        add.manage_addDocument('document2',
-                               '')
-        self.document = self.sroot.document
-        self.document2 = self.sroot.document2
-        self.folder = self.sroot.folder
-        self.publication = self.sroot.publication
-        # add some stuff to test breadcrumbs
-        self.folder.manage_addProduct['Silva'].manage_addFolder('subfolder', 'Subfolder')
-        self.subfolder = self.folder.subfolder
-        self.subfolder.manage_addProduct['Silva'].manage_addDocument('subsubdoc', 'Subsubdoc')
-        self.subsubdoc = self.subfolder.subsubdoc
-      except:
-          import traceback
-          traceback.print_exc()
-          raise
+        try:
+            self.root = makerequest.makerequest(
+                self.connection.root()['Application'])
+            # awful hack: add a user who may own the 'index'
+            # of the test containers
+            hack_create_user(self.root)
+            self.root.manage_addProduct['Silva'].manage_addRoot(
+                'root', 'Root')
+            self.sroot = self.root.root            
+            add = self.sroot.manage_addProduct['Silva']
+            add.manage_addDocument('document',
+                                   'Document')
+            add.manage_addFolder('folder',
+                                 'Folder')
+            add.manage_addPublication('publication',
+                                      'Publication')
+            add.manage_addDocument('document2',
+                                   '')
+            self.document = self.sroot.document
+            self.document2 = self.sroot.document2
+            self.folder = self.sroot.folder
+            self.publication = self.sroot.publication
+            # add some stuff to test breadcrumbs
+            self.folder.manage_addProduct['Silva'].manage_addFolder(
+                'subfolder', 'Subfolder')
+            self.subfolder = self.folder.subfolder
+            self.subfolder.manage_addProduct['Silva'].manage_addDocument(
+                'subsubdoc', 'Subsubdoc')
+            self.subsubdoc = self.subfolder.subsubdoc
+        except:
+            self.tearDown()
+            raise
 
         
     def tearDown(self):

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 import unittest
 import Zope
 from Products.Silva import Document, Folder, Ghost
@@ -11,7 +11,8 @@ import ZPublisher
 from test_SilvaObject import hack_create_user
 
 def add_helper(object, typename, id, title):
-    getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
+    getattr(object.manage_addProduct['Silva'],
+            'manage_add%s' % typename)(id, title)
     return getattr(object, id)
 
 # Awful hack
@@ -64,7 +65,6 @@ class CopyTestCase(unittest.TestCase):
     """Test cut/copy/test/delete.
     """
     def setUp(self):
-      try:
         Document.Document._getCopy = _getCopyDocument
         ParsedXML._getCopy = _getCopyParsedXML
         Folder.Folder._getCopy = _getCopyFolder
@@ -76,27 +76,35 @@ class CopyTestCase(unittest.TestCase):
         
         get_transaction().begin()
         self.connection = Zope.DB.open()
-        self.root = makerequest.makerequest(self.connection.root()['Application'])
-        self.REQUEST = self.root.REQUEST
-        self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_create_user(self.sroot)
-        # dummy manage_main so that copy succeeds
-        self.sroot.manage_main = lambda *foo, **bar: None
-        self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
-        self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
-        self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
-        self.folder4 = folder4 = add_helper(sroot, 'Folder', 'folder4', 'Folder4')
-        self.folder4.manage_main = lambda *foo, **bar: None
-        self.folder5 = folder5 = add_helper(sroot, 'Folder', 'folder5', 'Folder5')
-        self.folder5.manage_main = lambda *foo, **bar: None
-        self.subdoc = subdoc = add_helper(folder4, 'Document', 'subdoc', 'Subdoc')
-        self.subfolder = subfolder = add_helper(folder4, 'Folder', 'subfolder', 'Subfolder')
-        self.subsubdoc = subsubdoc = add_helper(subfolder, 'Document', 'subsubdoc', 'Subsubdoc')
-      except:
-          import traceback
-          traceback.print_exc()
-          raise
+        try:
+            self.root = makerequest.makerequest(self.connection.root()
+                                                ['Application'])
+            self.REQUEST = self.root.REQUEST
+            # awful hack: add a user who may own the 'index'
+            # of the test containers
+            hack_create_user(self.root)
+            self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
+
+            # dummy manage_main so that copy succeeds
+            self.sroot.manage_main = lambda *foo, **bar: None
+            self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
+            self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
+            self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
+            self.folder4 = folder4 = add_helper(sroot,
+                              'Folder', 'folder4', 'Folder4')
+            self.folder4.manage_main = lambda *foo, **bar: None
+            self.folder5 = folder5 = add_helper(sroot,
+                              'Folder', 'folder5', 'Folder5')
+            self.folder5.manage_main = lambda *foo, **bar: None
+            self.subdoc = subdoc = add_helper(folder4,
+                              'Document', 'subdoc', 'Subdoc')
+            self.subfolder = subfolder = add_helper(folder4,
+                              'Folder', 'subfolder', 'Subfolder')
+            self.subsubdoc = subsubdoc = add_helper(subfolder,
+                              'Document', 'subsubdoc', 'Subsubdoc')
+        except:
+            self.tearDown()
+            raise
           
     
     def tearDown(self):

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 import unittest
 import Zope
 from DateTime import DateTime
@@ -17,36 +17,42 @@ class SecurityTestCase(unittest.TestCase):
     """Test the Security interface.
     """
     def setUp(self):
-      try:
         get_transaction().begin()
         self.connection = Zope.DB.open()
-        self.root = makerequest.makerequest(self.connection.root()['Application'])
-        self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_create_user(self.sroot)
-        self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
-        self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
-        self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
-        self.folder4 = folder4 = add_helper(sroot, 'Folder', 'folder4', 'Folder4')
-        self.publication5 = publication5 = add_helper(sroot, 'Publication',
-                                                      'publication5', 'Publication5')
-        self.subdoc = subdoc = add_helper(folder4, 'Document', 'subdoc', 'Subdoc')
-        self.subfolder = subfolder = add_helper(folder4, 'Folder', 'subfolder', 'Subfolder')
-        self.subsubdoc = subsubdoc = add_helper(subfolder, 'Document', 'subsubdoc', 'Subsubdoc')
-        # add a user folder
-        # alrady done by hack_create_user, actually
-        # self.sroot.manage_addUserFolder()
-        # add some users
-        self.sroot.acl_users.userFolderAddUser('foo', 'silly', 'Anonymous', [])
-        self.sroot.acl_users.userFolderAddUser('bar', 'sillytoo', 'Anonymous', [])
-        # we are assuming 'author' and 'editor' are the only two interesting roles
-        # that will be returned by sec_get_roles()
-        self.sroot._addRole('Author')
-        self.sroot._addRole('Editor')
-      except:
-          import traceback
-          traceback.print_exc()
-          raise
+        try:
+            self.root = makerequest.makerequest(self.connection.root()
+                                                ['Application'])
+            # awful hack: add a user who may own the 'index'
+            # of the test containers
+            hack_create_user(self.root)
+            self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
+            self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
+            self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
+            self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
+            self.folder4 = folder4 = add_helper(sroot,
+                             'Folder', 'folder4', 'Folder4')
+            self.publication5 = publication5 = add_helper(sroot,
+                             'Publication','publication5', 'Publication5')
+            self.subdoc = subdoc = add_helper(folder4,
+                             'Document', 'subdoc', 'Subdoc')
+            self.subfolder = subfolder = add_helper(folder4,
+                             'Folder', 'subfolder', 'Subfolder')
+            self.subsubdoc = subsubdoc = add_helper(subfolder,
+                             'Document', 'subsubdoc', 'Subsubdoc')
+            # add a user folder
+            self.sroot.manage_addUserFolder()
+            # add some users
+            self.sroot.acl_users.userFolderAddUser(
+                'foo', 'silly', 'Anonymous', [])
+            self.sroot.acl_users.userFolderAddUser(
+                'bar', 'sillytoo', 'Anonymous', [])
+            # we are assuming 'author' and 'editor' are the only two 
+            # interesting roles that will be returned by sec_get_roles()
+            self.sroot._addRole('Author')
+            self.sroot._addRole('Editor')
+        except:
+            self.tearDown()
+            raise
 
         
     def tearDown(self):

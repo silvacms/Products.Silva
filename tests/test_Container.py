@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27 $
+# $Revision: 1.28 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -28,32 +28,36 @@ class ContainerBaseTestCase(unittest.TestCase):
 
 
     def setUp(self):
-      try:
         get_transaction().begin()
         self.connection = Zope.DB.open()
-        self.root = makerequest.makerequest(self.connection.root()['Application'])
-        self.REQUEST = self.root.REQUEST
-        # make it work with SimpleMembership by creating a user. This way,
-        # member object will be automatically created, so that the last
-        # author username is indeed 'TestUser'
-        #self.root.acl_users.userFolderAddUser('TestUser', 'TestUser', [], [])
-        # awful hack: add a user who may own the 'index' of the test containers
-        self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
-        hack_create_user(self.sroot)
-        self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
-        self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
-        self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
-        self.folder4 = folder4 = add_helper(sroot, 'Folder', 'folder4', 'Folder4')
-        self.publication5 = publication5 = add_helper(sroot, 'Publication',
-                                                      'publication5', 'Publication5')
-        self.subdoc = subdoc = add_helper(folder4, 'Document', 'subdoc', 'Subdoc')
-        self.subfolder = subfolder = add_helper(folder4, 'Folder', 'subfolder', 'Subfolder')
-        self.subsubdoc = subsubdoc = add_helper(subfolder, 'Document', 'subsubdoc', 'Subsubdoc')
-        self.subdoc2 = subdoc2 = add_helper(publication5, 'Document', 'subdoc2', 'Subdoc2')
-      except:
-          import traceback
-          traceback.print_exc()
-          raise          
+        try:
+            self.root = makerequest.makerequest(self.connection.root()
+                                                ['Application'])
+            self.REQUEST = self.root.REQUEST
+            # make it work with SimpleMembership by creating a user. This way,
+            # member object will be automatically created, so that the last
+            # author username is indeed 'TestUser'
+            hack_create_user(self.root)
+            
+            self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
+            self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
+            self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
+            self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
+            self.folder4 = folder4 = add_helper(sroot,
+                     'Folder', 'folder4', 'Folder4')
+            self.publication5 = publication5 = add_helper(sroot,
+                     'Publication', 'publication5', 'Publication5')
+            self.subdoc = subdoc = add_helper(folder4,
+                     'Document', 'subdoc', 'Subdoc')
+            self.subfolder = subfolder = add_helper(folder4,
+                      'Folder', 'subfolder', 'Subfolder')
+            self.subsubdoc = subsubdoc = add_helper(subfolder,
+                      'Document', 'subsubdoc', 'Subsubdoc')
+            self.subdoc2 = subdoc2 = add_helper(publication5,
+                      'Document', 'subdoc2', 'Subdoc2')
+        except:
+            self.tearDown()
+            raise          
 
         
     def tearDown(self):

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 import unittest
 import Zope
 #import ZODB
@@ -31,20 +31,21 @@ def manage_addZODBVersioning(self, id):
 
 class VersioningTestCase(unittest.TestCase):
     def setUp(self):
-      try:
-        get_transaction().begin()
-        self.connection = Zope.DB.open()
-        self.root = makerequest.makerequest(self.connection.root()['Application'])
-        self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
-        self.sroot = self.root.root
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_create_user(self.sroot)
-        manage_addZODBVersioning(self.sroot, 'versioning')
+       get_transaction().begin()
+       self.connection = Zope.DB.open()
+       try:
+           self.root = makerequest.makerequest(self.connection.root()
+                                               ['Application'])
+           # awful hack: add a user who may own the 'index'
+           # of the test containers
+           hack_create_user(self.root)
+           self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
+           self.sroot = self.root.root
+           manage_addZODBVersioning(self.sroot, 'versioning')
         
-      except:
-          import traceback
-          traceback.print_exc()
-          raise
+       except:
+           self.tearDown()
+           raise
 
     def tearDown(self):
         get_transaction().abort()

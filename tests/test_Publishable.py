@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 import unittest
 import Zope
 from DateTime import DateTime
@@ -10,25 +10,28 @@ from test_SilvaObject import hack_create_user
 
 class PublishableTestCase(unittest.TestCase):
     def setUp(self):
-      try:
         get_transaction().begin()
         self.connection = Zope.DB.open()
-        self.root = makerequest.makerequest(self.connection.root()['Application'])
-        self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
-        self.sroot = self.root.root
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_create_user(self.sroot)
-        add = self.sroot.manage_addProduct['Silva']
-        add.manage_addDocument('document', 'Document')
-        add.manage_addFolder('folder', 'Folder')
-        self.document = self.sroot.document
-        self.folder = self.sroot.folder
-        self.folder.manage_addProduct['Silva'].manage_addDocument('subdoc', 'Document')
-        self.subdoc = self.folder.subdoc
-      except:
-          import traceback
-          traceback.print_exc()
-          raise
+        try:
+            self.root = makerequest.makerequest(self.connection.root()
+                                                ['Application'])
+            # awful hack: add a user who may own the 'index'
+            # of the test containers
+            hack_create_user(self.root)
+            self.root.manage_addProduct['Silva'].manage_addRoot(
+                'root', 'Root')
+            self.sroot = self.root.root
+            add = self.sroot.manage_addProduct['Silva']
+            add.manage_addDocument('document', 'Document')
+            add.manage_addFolder('folder', 'Folder')
+            self.document = self.sroot.document
+            self.folder = self.sroot.folder
+            self.folder.manage_addProduct['Silva'].manage_addDocument(
+                'subdoc', 'Document')
+            self.subdoc = self.folder.subdoc
+        except:
+            self.tearDown()
+            raise
 
     def tearDown(self):
         get_transaction().abort()
