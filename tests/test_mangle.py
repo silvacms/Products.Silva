@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.5 2003/10/16 16:08:41 jw Exp $
+# $Id: test_mangle.py,v 1.6 2003/10/18 14:48:00 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -42,12 +42,28 @@ class MangleIdTest(SilvaTestCase.SilvaTestCase):
         
         id = mangle.Id(self.folder, 'service_foobar')
         self.assertEqual(id.validate(), id.RESERVED_PREFIX)
-   
+
+        # no explicitely forbidden, but would shadow method:
+        id = mangle.Id(self.folder, 'implements_asset')
+        self.assertEqual(id.validate(), id.RESERVED)
+        
         id = mangle.Id(self.folder, '&*$()')
         self.assertEqual(id.validate(), id.CONTAINS_BAD_CHARS)
         
         id = mangle.Id(self.folder, 'index_html')
         self.assertEqual(id.validate(), id.RESERVED)
+
+        id = mangle.Id(self.folder, 'index.html')
+        self.assertEqual(id.validate(), id.OK)
+
+        id = mangle.Id(self.folder, 'index-html')
+        self.assertEqual(id.validate(), id.OK)
+
+        # Zope does not allow any id ending with '__' in a hard boiled manner,
+        # (see OFS.ObjectManager.checkValidId)
+        # thus the following _should_ be forbidden:
+        #id = mangle.Id(self.folder, 'index__', allow_dup=1)
+        #self.assertEqual(id.validate(), id.CONTAINS_BAD_CHARS)
    
         id = mangle.Id(self.folder, 'index')
         self.assertEqual(id.validate(), id.OK)
