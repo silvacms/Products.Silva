@@ -406,8 +406,8 @@ The current editable version can be replaced with the previous (published) versi
 <input class="button"
   type="submit"
   value="revert to previous"
-  title="access key: alt-r"
-  accesskey="r"
+  title="access key: alt-p"
+  accesskey="p"
 />
 </td>
 </tr>
