@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.150.6.1 $
+# $Revision: 1.150.6.2 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -689,25 +689,32 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         result.sort(lambda x, y: cmp(x.getId(), y.getId()))
         return result
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_silva_asset_types')
+    def get_silva_asset_types(self):
+        result = [addable_dict['name']
+                  for addable_dict in extensionRegistry.get_addables()
+                    if IAsset.isImplementedByInstancesOf(addable_dict['instance'])]
+        return result
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_assets')
     def get_assets(self):
         result = []
-        for object in self.objectValues():
+        for object in self.objectValues(self.get_silva_asset_types()):
             if IAsset.isImplementedBy(object):
                 result.append(object)
-        result.sort(lambda x, y: cmp(x.getId(), y.getId()) )
+        result.sort(lambda x,y: cmp(x.getId(), y.getId()))
         return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_assets_of_type')
     def get_assets_of_type(self, meta_type):
         result = []
-        for object in self.objectValues():
-            if (IAsset.isImplementedBy(object) and
-                object.meta_type == meta_type):
+        assets = self.get_assets()
+        for object in assets:
+            if object.meta_type == meta_type:
                 result.append(object)
-        result.sort(lambda x, y: cmp(x.getId(), y.getId()) )
         return result
 
     # FIXME: what if the objects returned are not accessible with my
