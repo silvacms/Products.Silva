@@ -112,17 +112,17 @@ controlBackground:string=#afcccf
 
 standaloneButtonBackground:string=#556474
 standaloneButtonPadding:string=0em
-standaloneButtonBorder:string=1px solid #96b1cd
+standaloneButtonBorder:string=1px solid #8faecf
 standaloneButtonFontColor:string=#d9f3f1
 
 contextButtonBackground:string=#46755e
 contextButtonPadding:string=0em
-contextButtonBorder:string=1px solid #83b39c
-contextButtonFontColor:string=#d9f3e2
+contextButtonBorder:string=1px solid #6bb591
+contextButtonFontColor:string=#d9f3da
 
 destructiveButtonBackground:string=#755c5c
 destructiveButtonPadding:string=0em
-destructiveButtonBorder:string=1px solid #a78585
+destructiveButtonBorder:string=1px solid #b48f8f
 destructiveButtonFontColor:string=#f3c2c2
 
 cancelButtonBackground:string=#666668
@@ -158,7 +158,7 @@ listingEvenBackground:string=#cfdbe7
 listingOddBackground:string=#d7e4f0
 
 listingTopBackgroundContent:string=#c5d4ca
-listingTopHeadingColorContent:string=
+listingTopHeadingColorContent:string=#51545c
 listingTopControlsHeadingColorContent:string=#ddeee3
 
 topBackground:string=#6c7f7f

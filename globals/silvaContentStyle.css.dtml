@@ -50,7 +50,7 @@ table.listing td.top {
 }
 
 table.listing td.top h2 {
-  color: &dtml-shade36;;
+  color: &dtml-listingTopHeadingColorContent;;
 }
 
 table.listing tr.top-controls h3 {
