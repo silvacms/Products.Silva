@@ -40,7 +40,7 @@
 <style media="all"
   type="text/css"
   xml:space="preserve"
-  tal:define="imports python: ['plone.css', 'silva.css',]"
+  tal:define="imports python: ['silva.css',]"
   tal:content="structure python: view.css_imports(imports)"
 >
 @imports

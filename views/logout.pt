@@ -17,17 +17,17 @@
   <link href="globals/favicon.ico"
     rel="shortcut icon"
   />
-  <link href="globals/plone.css"
+  <link href="globals/silva.css"
     rel="stylesheet"
   />
-  <link href="globals/silva.css"
+  <link href="globals/frontend.css"
     rel="stylesheet"
   />
 </head>
 <body>
 <!--__________________________ feedback start _________________________-->
 
-  <div style="margin: 8px;">
+  <div style="margin:2em;">
     <div class="feedback"
       style="width:55%">
       <span i18n:translate="to_logout_wait">To <b>actually</b> logout, wait 5 seconds or hit this</span>

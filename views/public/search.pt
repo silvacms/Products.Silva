@@ -4,7 +4,6 @@
     <style media="all"
       type="text/css"
       metal:fill-slot="style">
-      @import url(globals/plone.css);
       @import url(globals/silva.css);
     </style>
     <title>Search</title>
