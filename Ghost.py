@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.77 $
+# $Revision: 1.78 $
 
 # Zope
 from OFS import SimpleItem
@@ -57,12 +57,22 @@ class GhostBase:
                               'get_title')
     def get_title(self):
         """Get title.
-        """        
+        """
         content = self.get_haunted_unrestricted()
         if content is None:
             return "Ghost target is broken"
         else:
             return content.get_title()
+
+    def get_title_editable(self):
+        """Get title.
+        """
+        content = self.get_haunted_unrestricted()
+        if content is None:
+            return "Ghost target is broken"
+        else:
+            return content.get_title_editable()
+
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
@@ -164,7 +174,7 @@ class GhostBase:
         if path is None:
             return None
         try:
-            content = self.unrestrictedTraverse(path)
+            content = self.aq_parent.unrestrictedTraverse(path)
         except:
             # catch all traversal failures
             return None
@@ -257,6 +267,19 @@ class Ghost(CatalogedVersionedContent):
         if content is None:
             return
         content.to_xml(context)
+
+    def get_title_editable(self):
+        """Get title for editable or previewable use
+        """
+        # Ask for 'previewable', which will return either the 'next version'
+        # (which may be under edit, or is approved), or the public version, 
+        # or, as a last resort, the closed version.
+        # This to be able to show at least some title in the Silva edit
+        # screens.
+        previewable = self.get_previewable()
+        if previewable is None:
+            return "[No title available]"
+        return previewable.get_title_editable()
 
     security.declarePrivate('get_indexables')
     def get_indexables(self):
