@@ -36,5 +36,5 @@ class IRendererRegistry(Interface):
         """Return a list of objects, each representing a factory
         that can create an object to render the give meta_type."""
 
-    def getRendererById(renderer_id, meta_type):
-        """Return a renderer factory by its string ID."""
+    def getRendererByName(name, meta_type):
+        """Return a renderer factory by its name."""
