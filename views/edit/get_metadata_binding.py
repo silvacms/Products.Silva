@@ -11,6 +11,8 @@ try:
 except BindingError, be:
     # No binding found..
     return None
+if binding is None:
+    return None
 
 renderEdit = binding.renderElementEdit
 renderView = binding.renderElementView
