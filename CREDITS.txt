@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.16 $
+  CVS:        $Revision: 1.17 $
 
 Silva is developed by Infrae (http://www.infrae.com). Initial (and
 continued) development was for the Erasmus University Rotterdam
@@ -36,3 +36,4 @@ Thanks to:
 
 Many thanks go to Hans Verster <verster@daz.eur.nl> at the Erasmus
 University Rotterdam for his vision and support.
+
