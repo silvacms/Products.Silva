@@ -45,6 +45,16 @@
           i18n:translate="">
           configure <u>a</u>ddables...
         </a>
+        <a class="transport"
+          title="manage subscriptions: alt-m"
+          accesskey="m"
+          i18n:attributes="title"
+          i18n:translate=""
+          tal:attributes="href string:${url}/service_subscriptions/edit/"
+          tal:condition="here/service_subscriptions | nothing"
+          >
+          manage subscriptions...
+        </a>
       </td>
     </tr>
   </table>

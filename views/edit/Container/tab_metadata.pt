@@ -55,7 +55,26 @@
                 <tr class="top-controls">
                   <td>
                     <tal:condition condition="may_change_content">
-                      <metal:block define-slot="top_controls" />
+                      <metal:block define-slot="top_controls">
+                        <tal:block replace="nothing">
+                          _______ NOTE: this is not the right place for the 
+                          subscriptions link, but for now seems to be the 
+                          least disruptive for the layout, esp. related to 
+                          tab_metadata for publcations... _______ 
+                        </tal:block>
+                        <tal:block condition="here/service_subscriptions | nothing">
+                          <a class="transport"
+                            style="float:right;"
+                            title="manage subscriptions: alt-m"
+                            accesskey="m"
+                            i18n:attributes="title"
+                            i18n:translate=""
+                            tal:attributes="href string:${url}/service_subscriptions/edit/"
+                            >
+                            manage subscriptions...
+                          </a>
+                        </tal:block>
+                      </metal:block>
                     </tal:condition>
                     <tal:block condition="python:type == 'Silva Folder'">
                       <a class="button"
@@ -70,7 +89,6 @@
                       </a>
                     </tal:block>
                   </td>
-                </tr>
               </thead>
             </table>
 
