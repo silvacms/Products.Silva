@@ -3,7 +3,7 @@
 <html tal:define="mangle python:modules['Products'].Silva.mangle;">
   <head>
     <link rel="stylesheet"
-      tal:attributes="href here/globals/ploneCustom.css/absolute_url | nothing" />
+      tal:attributes="href here/globals/silva.css/absolute_url | nothing" />
     <link rel="stylesheet"
       tal:attributes="href here/globals/frontend.css/absolute_url | nothing" />
     <title>Message from server</title>

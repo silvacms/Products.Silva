@@ -40,11 +40,10 @@
 <style media="all"
   type="text/css"
   xml:space="preserve"
-  tal:define="imports python: ['plone.css', 'ploneCustom.css',]"
+  tal:define="imports python: ['plone.css', 'silva.css',]"
   tal:content="structure python: view.css_imports(imports)"
 >
-@import url(globals/plone.css);
-@import url(globals/ploneCustom.css);
+@imports
 </style>
 <link href="globals/silva.css"
   rel="stylesheet"

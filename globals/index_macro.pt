@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html metal:define-macro="master"
   tal:define="
     silva_root here/silva_root;
@@ -8,7 +9,6 @@
 <head>
 <title metal:define-slot="title">Reference</title>
 <link rel="shortcut icon" href="favicon.ico" />
-<link rel="stylesheet" href="ploneCustom.css" />
 <link rel="stylesheet" href="silva.css" />
 </head>
 

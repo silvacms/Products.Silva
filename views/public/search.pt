@@ -1,10 +1,11 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html metal:use-macro="here/layout_macro.html/macros/layout">
   <head>
     <style media="all"
       type="text/css"
       metal:fill-slot="style">
       @import url(globals/plone.css);
-      @import url(globals/ploneCustom.css);
+      @import url(globals/silva.css);
     </style>
     <title>Search</title>
   </head>

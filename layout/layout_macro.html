@@ -8,6 +8,7 @@
 <head metal:define-slot="head">
   <title metal:define-slot="title"
     tal:content="here/get_title">doc title</title>
+  <!-- Metatags -->
   <meta name="keywords"
     tal:define="keywords python: here.get_metadata_element('silva-extra', 'keywords') or nothing"
     tal:condition="keywords"
@@ -25,6 +26,7 @@
     tal:condition="email"
     tal:attributes="content email" />
   <meta metal:define-slot="meta" tal:omit-tag="" />
+  <!-- Links to favicon and stylesheet -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <link metal:define-slot="style" rel="stylesheet" href="frontend.css"

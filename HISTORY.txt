@@ -7,6 +7,9 @@ Silva changes
 
     Features Added
 
+        - Merged silva.css and ploneCustom.css (removed ploneCustom)
+          to reduce hits and processing.
+        
         - Import assets from a zipfile now creates Silva Folder for the
           zipfiles's directory structure.
 

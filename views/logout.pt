@@ -20,9 +20,6 @@
   <link href="globals/plone.css"
     rel="stylesheet"
   />
-  <link href="globals/ploneCustom.css"
-    rel="stylesheet"
-  />
   <link href="globals/silva.css"
     rel="stylesheet"
   />
