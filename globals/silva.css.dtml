@@ -980,18 +980,18 @@ div.info p span.orientation {
 }
 
 div.info p span.Portrait {
-  width: 50px;
-  height: 60px;
+  width: 4.5em;
+  height: 6em;
 }
 
 div.info p span.Landscape {
-  width: 70px;
-  height: 40px;
+  width: 7em;
+  height: 3.5em;
 }
 
 div.info p span.Square {
-  width: 40px;
-  height: 40px;
+  width: 4em;
+  height: 4em;
 }
 
 select.clipboard, select.clipboard:focus, select.clipboard:hover {
