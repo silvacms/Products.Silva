@@ -218,7 +218,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def get_assets(self):
         result = []
         for object in self.objectValues():
-            if Interfaces.Asset.implementedBy(object):
+            if Interfaces.Asset.isImplementedBy(object):
                 result.append(object)
         return result
 
