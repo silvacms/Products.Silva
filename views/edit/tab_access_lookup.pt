@@ -188,15 +188,15 @@
                     style="float: right;"
                     href="lookup_back_link"
                     tal:attributes="href here/lookup_back_link">
-                    Use selection...
+                    Use clipboard...
                   </a>
                   <input class="warningbutton"
                     accesskey="d"
                     name="lookup_remove_from_selection:method"
                     style="float: left;"
-                    title="Remove users from your selection: alt-d"
+                    title="Remove users from your clipboard: alt-d"
                     type="submit"
-                    value="Deselect" />
+                    value="Remove from clipboard" />
                 </metal:block>
               </metal:block>
           </td>
