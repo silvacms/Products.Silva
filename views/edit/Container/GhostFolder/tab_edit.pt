@@ -123,7 +123,7 @@
           />
         </td>
         <td>
-          Path to original (starts with a slash).
+          Path to original (begins with &#8216;/&#8217;).
         </td>
       </tr>
 
@@ -140,7 +140,7 @@
           </a>
         </td>
         <td>
-          Link to editor screen of original.
+          Link to contents screen of original.
         </td>
       </tr>
 
