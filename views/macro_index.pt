@@ -9,6 +9,7 @@
     view here;
     model request/model;
     trigger model/security_trigger;
+    mangle modules/Products/Silva/mangle;
 
     type model/meta_type;
     url model/absolute_url;
@@ -23,8 +24,7 @@
 
     silva_permissions view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
-    may_change_content silva_permissions/ChangeSilvaContent | nothing;
-    mangle python:modules['Products'].Silva.mangle;
+    may_change_content silva_permissions/ChangeSilvaContent | nothing;    
 ">
 
 <head>
