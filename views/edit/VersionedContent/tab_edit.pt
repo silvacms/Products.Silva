@@ -6,13 +6,15 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:editor;
     refresh_time python:19 * 60;
     member python:here.service_members.get_member(here.REQUEST.AUTHENTICATED_USER.getUserName());
     editor python: member and member.editor() or 'forms_editor';
     active_editor string:kupu;
-  ">
+    "
+  i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="metatype_css">
 <link href="globals/widgetEditor.css"
@@ -99,7 +101,8 @@
     </tal:condition>
     <a title="see the content in the public layout: alt-;"
       accesskey=";"
-      tal:attributes="href string:${model/absolute_url}/preview_html">
+      tal:attributes="href string:${model/absolute_url}/preview_html"
+      i18n:translate="public_preview">
       public&nbsp;preview...
     </a>
   </div>

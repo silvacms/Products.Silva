@@ -18,7 +18,8 @@
     <a class="wide"
       title="see the content in the public layout: alt-;"
       accesskey=";"
-      tal:attributes="href string:${model/absolute_url}/preview_html">
+      tal:attributes="href string:${model/absolute_url}/preview_html"
+      i18n:translate="public_preview">
       public&nbsp;preview...
     </a>
   </div>
