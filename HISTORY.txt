@@ -18,6 +18,13 @@ Silva changes
         If a visitor is subscribed, he will receive notifications by email
         whenever a publication event for this object is triggered.
 
+      - Version management feature:
+
+          * reviewing older versions of content objects
+          * comparing different versions side-by-side
+          * reverting to older versions of content
+          * removal of selected old versions
+
       - When ExtFile is installed, a site manager can switch between ZODB
         storage and file system storage of assets with one click of a 
         button.
