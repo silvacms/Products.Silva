@@ -1,6 +1,6 @@
 <html metal:use-macro="here/layout_macro.html/macros/layout">
 <head>
-  <title>Membership</title>
+  <title i18n:translate="membership">membership</title>
 </head>
 <body>
 
@@ -8,7 +8,7 @@
 <tal:block define="dummy python:here.REQUEST.model.security_trigger()"
   condition="python: hasattr(here, 'service_members') and here.service_members.allow_authentication_requests()">
 
-<h2>Membership</h2>
+<h2 i18n:translate="membership">membership</h2>
 
 <form action="request_roles_submit"
   method="POST"
@@ -19,7 +19,7 @@
 />
 <div style="width:24em;"
    tal:define="notice options/message | nothing">
-  <h4>
+  <h4 i18n:translate="request_roles">
     Request roles at this location
   </h4>
   <!-- __________________________ feedback _________________________ -->
@@ -31,22 +31,22 @@
     <br /><br />
   </p>
   <tal:condition condition="python: not member.email() or not member.fullname()">
-    <p tal:condition="not: notice">
+    <p tal:condition="not: notice" i18n:translate="please_fill_following_fields">
         Please fill in the following fields.
         <br /><br />
     </p>
     <p>
-      Full name:<br />
+      <span i18n:translate="full_name">full name</span>:<br />
       <input type="text" name="fullname" style="width: 100%;"
         tal:attributes="value member/fullname" /><br /><br />
-      E-mail address:<br />
+      <span i18n:translate="email_address>e-mail address</span>:<br />
       <input type="text" name="email" style="width: 100%;"
         tal:attributes="value member/email" /><br /><br />
     </p>
   </tal:condition>
 
   <p>
-    Choose role(s) to request:<br />
+    <span i18n:translate="choose_roles">Choose role(s) to request</span>:<br />
     <tal:repeat repeat="role view/get_available_roles">
     <input type="checkbox" name="roles:list" 
      tal:attributes="
@@ -65,13 +65,14 @@
     value=" Send request " 
     title="Send request for role: alt-s"
     accesskey="s"
+    i18n:attributes="value title accesskey"
   />
 </div>
 </form>
 
 </tal:block>
 <tal:block condition="python: not hasattr(here, 'service_members') or not here.service_members.allow_authentication_requests()">
-  This site does not allow requests for roles.
+  <span i18n:translate="requests_for_roles_not_allowed">This site does not allow requests for roles</span>.
 </tal:block>
 
 </metal:block>
