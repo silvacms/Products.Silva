@@ -1,13 +1,4 @@
-## Script (Python) "add_submite
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
-from Products.Silva.helpers import check_valid_id, IdCheckValues
+from Products.Silva.helpers import check_valid_id, check_valid_id_file, IdCheckValues
 
 model = context.REQUEST.model
 view = context
@@ -30,20 +21,18 @@ except FormValidationError, e:
     return view.add_form(message_type="error", 
         message=view.render_form_errors(e))
 
-id = result['object_id'].encode('ascii')
+id = result['object_id'].encode('ascii', 'replace')
 file = result['file']
 
 # do some additional validation
 if not file or not getattr(file, 'filename', None):
     return view.add_form(message_type="error", message="Empty or invalid file.")
 
-if not id:
-    id = file.filename
-
 # if we don't have the right id, reject adding
-id_check = check_valid_id(model, id)
-if not id_check == IdCheckValues.ID_OK:
-    return view.add_form(message_type="error", message=view.get_id_status_text(id, id_check))
+id, id_check = check_valid_id_file(model, id, file)
+if id_check != IdCheckValues.ID_OK:
+    return view.add_form(
+        message_type="error", message=view.get_id_status_text(id, id_check))
 
 # try to cope with absence of title in form
 if result.has_key('object_title'):

@@ -25,7 +25,6 @@ elif status_code == IdCheckValues.ID_IN_USE_ASSET:
     return """There is already an asset with the id %s in this folder.<br />
 Please use another id.""" % view.quotify(id)
 
-
 # this should not happen
 return """(Internal Error): An invalid status %s occured while checking the id %s.<br />
 Please contact the person responsible for this Silva installation or file a bug report.""" % (view.quotify(status_code), view.quotify(id))

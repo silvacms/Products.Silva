@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.34 2003/06/11 14:39:34 jw Exp $
+# $Id: Image.py,v 1.35 2003/06/19 10:24:05 jw Exp $
 
 # Python
 import re, string 
@@ -70,9 +70,7 @@ class Image(Asset):
         self._title = title # legacy I guess
         Image.inheritedAttribute('set_title')(self, title)
         if self.image:
-            # have to encode as otherwise unicode will blow up 
-            # image rendering code
-            self.image.title = self.get_title().encode('utf-8')
+            self.image.title = self.get_title()
 
     def set_web_presentation_properties(self, web_format, web_scale):
         """sets format and scaling for web presentation
@@ -296,9 +294,9 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     img = Image(id, title)
     context._setObject(id, img)
     img = getattr(context, id)
-    img.set_title(title)
     if file:
         img.set_image(file)
+    img.set_title(title)
 
     add_and_edit(context, id, REQUEST)
     return img
