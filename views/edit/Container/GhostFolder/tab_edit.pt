@@ -21,6 +21,7 @@
     version     python:model.get_editable();
     link_status python:here.get_ghost_link_status_text(version);
     content_url python:version.get_haunted_url();
+    ct python: mangle.String.centeredTruncate;
 ">
   <tbody>
     <tr>
@@ -282,7 +283,8 @@
             </a>
             <a class="blacklink"
               title="edit"
-              tal:content="item/id"
+              tal:define="id item/id"
+              tal:content="python: ct(id, 30)"
               tal:attributes="
                 href python:here.get_editor_link(item);
                 class status_style;"
@@ -290,19 +292,6 @@
               >
               id
             </a>
-            <img alt="content approved or published"
-              border="0"
-              height="10"
-              title="content is approved or published"
-              width="10"
-              tal:define="
-                is_published item/is_version_published | nothing;
-                is_approved item/is_version_approved | nothing"
-              tal:condition="python:is_published or is_approved"
-              tal:attributes="src string:${root_url}/globals/checkmark.gif" 
-              i18n:attributes="title"
-            />
-
           </td>
           <tal:block replace="nothing">
             _______ title cell _______
@@ -342,6 +331,24 @@
             _______ author/tab_status downlink cell _______
           </tal:block>
           <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
+            <a style="float:right"
+              title="content approved, or published..."
+              tal:define="
+                is_published item/is_version_published | nothing;
+                is_approved item/is_version_approved | nothing"
+              tal:condition="
+                python: is_published or is_approved"
+              tal:attributes="
+                href item_url;"
+              i18n:attributes="title">
+              <img alt="content approved or published"
+                border="0"
+                width="10"
+                height="10"
+                tal:attributes="src string:${root_url}/globals/checkmark.gif"
+                i18n:attributes="alt"
+              />
+            </a>
             <a class="blacklink" title="status"
               tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
               tal:attributes="href string:${item_url}/edit/tab_status"
@@ -400,6 +407,10 @@
             _______ icon + id cell _______
           </tal:block>
           <td>
+            <tal:block condition="python: hasattr(view, 'externalEditLink_')">
+              <span style="float: right;"
+                tal:content="structure python: view.externalEditLink_(asset)" />
+            </tal:block>
             <a class="icon"
               tal:attributes="
                 href string:${asset_url}/edit/tab_edit;
@@ -409,17 +420,13 @@
             <a class="blacklink"
               href="asset"
               title="edit"
+              tal:define="id asset/id"
               tal:attributes="href string:${asset_url}/edit/tab_edit"
-              tal:content="structure asset/id"
+              tal:content="python: ct(id, 30)"
               i18n:attributes="title"
               >
               id
             </a>
-
-            <tal:block condition="python: hasattr(view, 'externalEditLink_')">
-              <span tal:replace="structure python: view.externalEditLink_(asset)" />
-            </tal:block>
-
           </td>
           <tal:block replace="nothing">
             _______ title cell _______

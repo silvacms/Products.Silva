@@ -23,6 +23,7 @@
     ids options/ids | python: [];
     position request/position | options/position | nothing;
     iterate string:odd;
+    ct python: mangle.String.centeredTruncate;
 ">
   <table class="columns columns2">
     <tbody>
@@ -191,7 +192,8 @@
                       </a>
                       <a class="blacklink"
                         title="modify"
-                        tal:content="item_info/item_id"
+                        tal:define="id item_info/item_id"
+                        tal:content="python: ct(id, 30)"
                         tal:attributes="
                           href item_info/editor_link;
                           class item_info/status_style;"
@@ -364,8 +366,9 @@
                       <a class="blacklink"
                         href="asset"
                         title="editor"
+                        tal:define="id asset_info/asset_id"
+                        tal:content="python: ct(id, 30)"
                         tal:attributes="href asset_info/editor_link"
-                        tal:content="structure asset_info/asset_id"
                         i18n:attributes="title content-editor;"
                       >
                         id
