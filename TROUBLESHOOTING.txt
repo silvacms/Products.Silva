@@ -258,13 +258,6 @@ Problems when using Silva
     types of the extension product. Hopefully this will be changed in a later
     version of Silva.
 
-  Indexer object doesn't work properly
-
-    If you update the indexer object and get an 'Index updated'
-    message, but the indexer doesn't change anyway, you'll likely have
-    a missing 'xml.xpath' library. This is due to a missing or
-    incomplete installation of PyXML.
-
   The SMI (or even the Zope server) seems to hang when copying a folder
   with a lot of contents.
 
