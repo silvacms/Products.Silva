@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.8 $'
+__version__='$Revision: 1.9 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -30,6 +30,8 @@ except ImportError:
     from Products.Silva.transform.base import Element, Text, Frag
 
 import silva
+
+
 
 class html(Element):
     def convert(self, context, *args, **kwargs):
@@ -204,6 +206,19 @@ class u(Element):
         return silva.underline(
             self.content.convert(*args, **kwargs),
             )
+
+class font(Element):
+    def convert(self, *args, **kwargs):
+        color = self.attrs.get('color')
+        tag = {'aqua': silva.super, 
+               'blue': silva.sub,
+               }.get(color)
+        if tag:
+            return tag(
+                self.content.convert(*args, **kwargs)
+            )
+        else:
+            return self.content.convert(*args, **kwargs)
 
 class sub(Element):
     def convert(self, *args, **kwargs):

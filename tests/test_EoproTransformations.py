@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 import unittest
 
 # 
@@ -345,11 +345,6 @@ class RoundtripWithTidy(unittest.TestCase):
     def test_modifier_underline(self):
         self._check_modifier('u','underline')
 
-    def test_modifier_superscript(self):
-        self._check_modifier('sup','super')
-
-    def test_modifier_subscript(self):
-        self._check_modifier('sub','sub')
 
     def test_link_with_absolute_url(self):
         """ check that a link works """
@@ -416,6 +411,36 @@ class RoundtripWithTidy(unittest.TestCase):
             if line.startswith('line') and line.find('Error')!=-1:
                 raise AssertionError, "to_xhtml produced html errors, this is what i got\n" + html
 
+class RoundtripSpecials(unittest.TestCase):
+    def setUp(self):
+        self.transformer = Transformer(source='eopro2_11.silva', target='eopro2_11.html')
+
+    def _test_font_mapped_modifier(self, tag, tagcolor):
+        # superscript is not supported by EoPro, we have to trick
+        doc = '<p type="normal">text<%(tag)s>2</%(tag)s> yes</p>' % locals()
+        silva_p = self.transformer.source_parser.parse(doc)
+        html_p = silva_p.conv()[0]
+        html_font = html_p.find('font')
+        self.assert_(len(html_font)==1)
+        html_font = html_font[0]
+        self.assert_(html_font.attrs.get('color')==tagcolor)
+
+        silva_back = html_p.conv()
+        self.assert_(len(silva_back)==1)
+        silva_back = silva_back[0]
+        silva_super = silva_back.find(tag)
+        self.assert_(len(silva_super)==1)
+        silva_super = silva_super[0]
+        self.assert_(silva_super.content.asBytes()=='2')
+
+    def test_modifier_superscript(self):
+        self._test_font_mapped_modifier('super','aqua')
+
+    def test_modifier_subscript(self):
+        self._test_font_mapped_modifier('sub','blue')
+
+    #def test_modifier_subscript(self):
+    #    self._check_modifier('sub','sub')
 
 def equiv_node(node1, node2):
     assert(node1.nodeName==node2.nodeName)
@@ -453,6 +478,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Fixup,'test'))
     suite.addTest(unittest.makeSuite(HTML2XML, 'test'))
     suite.addTest(unittest.makeSuite(RoundtripWithTidy, 'test'))
+    suite.addTest(unittest.makeSuite(RoundtripSpecials, 'test'))
     return suite
     
 def main():
