@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.2
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.32 $
+  CVS:        $Revision: 1.33 $
 
 Installing Silva
 
@@ -155,8 +155,8 @@ Installing Silva
       should not be stored in the ZODB but the plain file system, you
       may consider installing the ExtFile product from here:
 
-       "ExtFile":http://www.zope.org/Members/MacGregor/ExtFile/ExtFile-1.1.3.tgz
-
+      "ExtFile":http://www.zope.org/Members/shh/ExtFile/ExtFile-1.2.0b2.tar.gz
+       
       This product is optional; see "Installing Silva with ExtFile" below.
       You may want to look into the README.txt of ExtFile at
       installation time, and possibly adapt the undo handling. (This
