@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.4 2003/08/21 12:08:00 zagy Exp $
+# $Id: icon.py,v 1.5 2003/08/22 07:14:23 zagy Exp $
 
 """Sivla icon registry"""
 
@@ -20,6 +20,9 @@ from Products.Silva.interfaces import \
 
 class AdaptationError(Exception):
     """thrown if an object cannot be adapted by an adapter"""
+
+class RegistryError(Exception):
+    """thrown on any error in registry"""
 
 class Adapter:
     
@@ -45,7 +48,7 @@ class MetaTypeAdapter(Adapter):
 class MetaTypeClassAdapter(MetaTypeAdapter):
 
     def __init__(self, adapt):
-        if type(adapt) == InstanceType:
+        if hasattr(adapt, '__class__'):
             raise AdaptationError, "This adapter can only handle classes"
         if not self.__adapts__.isImplementedByInstancesOf(adapt):
             raise AdaptationError, "%r doesn't implement %r" % (
@@ -94,7 +97,7 @@ class _IconRegistry:
     def getIconByIdentifier(self, identifier):
         icon = self._icon_mapping.get(identifier, None)
         if icon is None:
-            raise KeyError, "No icon for %r" % (identifier, )
+            raise RegistryError, "No icon for %r" % (identifier, )
         return icon
 
     def getAdapter(self, object):
@@ -110,7 +113,7 @@ class _IconRegistry:
             else:
                 break
         if adapter is None:
-            raise ValueError, "No adapter for %r" % object
+            raise RegistryError, "No adapter for %r" % object
         return adapter
         
     def registerAdapter(self, adapter, priority):
@@ -129,7 +132,7 @@ class _IconRegistry:
             icon: path to icon (i.e. 'www/root.png')
             context: module context of icon (i.e. globals())
 
-            raises ValueError if product doesn't exist
+            raises  RegistryError if product doesn't exist
             NOTE: this will overwrite previous icon declarations
         """
         # NOTE: code copied from App.ProductContext, modified though
@@ -138,7 +141,7 @@ class _IconRegistry:
         icon = Globals.ImageFile(icon, context)
         icon.__roles__ = None
         if not hasattr(OFS.misc_.misc_, product):
-            raise ValueError, "The product %r doesn't exist" % product
+            raise RegistryError, "The product %r doesn't exist" % product
         getattr(OFS.misc_.misc_, product)[name] = icon
         self._icon_mapping[identifier] = 'misc_/%s/%s' % (product, name)
             
