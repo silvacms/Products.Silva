@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.73 $
+# $Revision: 1.74 $
 
 # Zope
 from OFS import SimpleItem
@@ -199,20 +199,7 @@ class GhostBase:
     def render_preview(self):
         """Render preview of this version (which is what we point at)
         """
-        # FIXME what if content is None?
-        # what if we get circular ghosts?
-        content = self._get_content()
-        if content is None:
-            # public render code of ghost should give broken message
-            return None 
-        user = self.REQUEST.AUTHENTICATED_USER
-        permission = 'View'
-        if user.has_permission(permission, content):
-            self.REQUEST.set('ghost_model', self.aq_inner)
-            # XXX shouldn't this be content.preview()?
-            return content.view()
-        else:
-            raise "Unauthorized"
+        return self.render_view()
 
     def render_view(self):
         """Render view of this version (which is what we point at)
@@ -222,6 +209,8 @@ class GhostBase:
         content = self._get_content()
         if content is None:
             # public render code of ghost should give broken message
+            return None
+        if not content.get_viewable():
             return None
         user = self.REQUEST.AUTHENTICATED_USER
         permission = 'View'
