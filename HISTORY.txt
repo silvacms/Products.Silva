@@ -17,9 +17,16 @@ Silva changes
         If a visitor is subscribed, he will receive notifications by email
         whenever a publication event for this object is triggered.
 
+    Bugs fixed
+
       - Fixed color of error display when something could not be pasted.
         Note: see doc/developer_changes.txt for information about the impact
         this change had on the API.
+
+      - Removed namespace declaration from XML produced by Kupu.
+
+      - Fixed standard_error_message, it's now displayed properly when a user
+        chooses 'cancel' when the browser asks for login credentials.
 
   1.1.2
 
