@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.11 $
+  CVS:        $Revision: 1.12 $
 
 Silva
 
@@ -50,7 +50,8 @@ Silva
 
 Installing Silva
 
-  See INSTALL.txt
+  See INSTALL.txt. For problems please consult the 'Installation
+  problems' section of TROUBLESHOOTING.txt.
 
 Using Silva
 
@@ -66,6 +67,9 @@ Using Silva
 
     http://mysite.org/silva/edit
 
+  If you encounter problems, please consult the "Problems when using Silva" section of
+  TROUBLESHOOTING.txt.
+ 
 License
   
   Silva is released under the BSD license. See 'LICENSE.txt'.
