@@ -63,7 +63,7 @@
     </td>
     <td align="right">
       <input class="button" type="submit" 
-             name="edit/save_memberdata:method" value="   Edit   "
+             name="save_memberdata:method" value="   Edit   "
              title="Edit operation - alt-e" accesskey="e"
       />
     </td>
