@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -17,6 +17,8 @@ try:
     from Products.Groups.GroupsErrors import GroupsError, BeforeDeleteException
 except ImportError, ie:
     pass
+
+icon = "www/group.png"
 
 class Group(SilvaObject, SimpleItem):
     security = ClassSecurityInfo()
