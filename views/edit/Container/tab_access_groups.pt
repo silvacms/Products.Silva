@@ -1,5 +1,5 @@
 <tal:block define="
-    global breadcrumb_vein string:Access;
+    global breadcrumb_vein string:Groups;
     global active_tab string:tab_access;" />
 <html metal:use-macro="here/macro_index/macros/master">
   <div class="margins"
