@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.72 $
+# $Revision: 1.72.2.1 $
 import Metadata
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
@@ -128,4 +128,15 @@ def initialize(context):
     #  register a special accessor for ghosts
     Metadata.initialize_metadata()
 
+#------------------------------------------------------------------------------
+# External Editor support
+#------------------------------------------------------------------------------
+
+# check if ExternalEditor is available
+import os
+from Globals import DTMLFile
+
+# XXX this check is a little crude...
+if os.path.isfile('../ExternalEditor/manage_main.dtml'):
+   Folder.manage_main = DTMLFile('../ExternalEditor/manage_main', globals())
 
