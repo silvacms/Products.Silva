@@ -110,7 +110,7 @@ function handle_default_action(element, event, action)
 <div class="workspace">
   <metal:block define-slot="middleground" />
 
-<tal:condition condition="python: not (template.id == 'tab_edit' and editor == 'kupu' and model.meta_type == 'Silva Document')">
+<tal:condition condition="python: not (template.id == 'tab_edit' and editor == 'kupu')">
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
