@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.6 2004/02/26 17:17:31 guido Exp $
+# $Id: install.py,v 1.97.4.7 2004/02/27 12:25:03 guido Exp $
 """Install for Silva Core
 """
 # Python
@@ -637,7 +637,9 @@ def installEpoz(root):
     except:
         pass
     else:
-        add_fss_directory_view(root, 'epoz', epoz.__file__, 'common')
+        if not hasattr(root, 'epoz'):
+            add_fss_directory_view(root, 'epoz', epoz.__file__, 'common')
+        if not hasattr(root, 'epoz_silva'):
         add_fss_directory_view(root, 'epoz_silva', epoz.__file__, 'silva')
 
 if __name__ == '__main__':
