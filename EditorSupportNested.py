@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -114,7 +114,8 @@ class EditorSupport(SimpleItem):
             elif child.nodeName == 'br':
                 result.append('<br />')
             else:
-                raise EditorSupportError, "Unknown element: %s" % child.nodeName
+                result.append('<span class="error">%s</span> ' % self.render_text_as_html(child))
+                #raise EditorSupportError, "Unknown element: %s" % child.nodeName
         return ''.join(result)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -194,7 +195,8 @@ class EditorSupport(SimpleItem):
             elif child.nodeName == 'br':
                 result.append('\n')
             else:
-                raise EditorSupportError, "Unknown element: %s" % child.nodeName
+                result.append('ERROR %s ERROR ' % self.render_text_as_editable(child))
+                #raise EditorSupportError, "Unknown element: %s" % child.nodeName
         return ''.join(result)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

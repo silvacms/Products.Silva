@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.72 $
+# $Revision: 1.73 $
 # Zope
 
 from StringIO import StringIO
@@ -128,6 +128,12 @@ class Document(CatalogedVersionedContent):
             content = docnode.asBytes(encoding="UTF8")
             version.content.manage_edit(content)  # needs utf8-encoded string
             self.set_title(title)         # needs unicode
+
+            # brute force: invalidate all widget caches for this session
+            try:
+                del self.REQUEST.SESSION['xmlwidgets_service_editor']
+            except AttributeError: pass
+            except KeyError: pass
 
     security.declarePrivate('get_indexables')
     def get_indexables(self):
