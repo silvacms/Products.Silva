@@ -306,9 +306,7 @@
             cellpadding="5"
             cellspacing="0"
             style="empty-cells:show;"
-            tal:define="
-              groups view/get_groups;
-              clipboard_members view/lookup_get_selection;">
+            tal:define="groups view/get_groups;">
             <tr align="left"
               valign="top">
               <th>
