@@ -11,7 +11,7 @@ See also LICENSE.txt
 Valid for:  Silva 1.1.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.45 $
+CVS:        $Revision: 1.46 $
 
 Introduction
 ------------
@@ -96,6 +96,11 @@ libxml2 and libxslt, including their Python bindings can be found
 here:
 
 http://www.xmlsoft.org/downloads.html
+
+For windows, installers for libxml2 and libxslt can be downloaded
+here:
+
+http://users.skynet.be/sbi/libxml-python/
 
 Groups
 ------
