@@ -10,7 +10,7 @@
 <!-- Read only table -->
 <metal:block define-macro="view_table">
   <tal:block define="
-    content python: model.get_viewable();">
+    content version">
     <tal:block 
       condition="content"
       define="
@@ -20,6 +20,23 @@
         ">
       <table class="listing"
         tal:condition="binding">
+        <thead>
+          <tr tal:replace="nothing">
+            ______________ vein + title row ______________
+          </tr>
+          <tr>
+            <td class="top"
+              colspan="4">
+              <h2 metal:define-slot="table_title">
+                <img tal:replace="structure python:view.render_icon(model)" />
+                metadata
+                <span tal:condition="not: model/implements_container">
+                  for &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                </span>
+              </h2>
+            </td>
+          </tr>
+        </thead>
         <tbody>
           <tal:block repeat="set_name binding/setNames">
             <tr tal:condition="not:repeat/set_name/start">
@@ -77,7 +94,7 @@
 <!-- Edit table -->
 <metal:block define-macro="edit_table">
   <tal:block define="
-    content python: model.get_editable();">
+    content version;">
     <form method="POST" name="form" action="."
       tal:condition="content"
       tal:define="
