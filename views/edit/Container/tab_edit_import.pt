@@ -82,18 +82,21 @@
 
     <tbody>
       <tr>
-        <th width="15%" i18n:translate="element">
+        <th class="align-right"
+          width="15%"
+          i18n:translate="element">
           Element
         </th>
         <th i18n:translate="content">
           Content
         </th>
-        <th width="40%" i18n:translate="note">
+        <th width="40%"
+          i18n:translate="note">
           Note
         </th>
       </tr>
 
-      <tr class="odd" valign="top">
+      <tr class="odd">
         <td class="align-right">
           <span i18n:translate="file_to_upload">file to upload</span><span class="warning">*</span>
         </td>
@@ -187,20 +190,23 @@
       </tr>
 
       <tr>
-        <th width="15%" i18n:translate="element">
+        <th class="align-right"
+          width="15%"
+          i18n:translate="element">
           Element
         </th>
         <th i18n:translate="content">
           Content
         </th>
-        <th width="40%" i18n:translate="note">
+        <th width="40%"
+          i18n:translate="note">
           Note
         </th>
       </tr>
 
-      <tr class="odd" valign="top">
+      <tr class="odd">
         <td class="align-right">
-            <span i18n:translate="file_to_upload">file to upload</span><span class="warning">*</span>
+          <span i18n:translate="file_to_upload">file to upload</span><span class="warning">*</span>
         </td>
         <td>
             <input type="file" size="40" name="importfile" />
