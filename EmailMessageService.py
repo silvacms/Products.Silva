@@ -217,11 +217,14 @@ class EmailMessageService(SimpleItem.SimpleItem):
             header['From'] = self._fromaddr
         if not header.has_key('Sender'):
             header['Sender'] = self._fromaddr
+        header['Content-Type'] = 'text/plain, charset=UTF-8'
 
         msg_lines = [ '%s: %s' % (k, v) for k, v in header.items() ]
         msg_lines.append('')
         msg_lines.append(msg)
         msg = '\r\n'.join(msg_lines)
+        if type(msg) == type(u''):
+            msg = msg.encode('UTF-8')
         self._debug_log(msg)
         if self._send_email_enabled:
             try:
