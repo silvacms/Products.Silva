@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.5 2004/04/07 12:45:04 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.6 2004/04/07 17:40:34 zagy Exp $
 
 # Python
 import re, string 
@@ -224,7 +224,7 @@ class Image(Asset):
             return str(image.data)
         
     security.declareProtected(SilvaPermissions.View, 'tag')
-    def tag(self, hires=0):
+    def tag(self, hires=0, **kw):
         "return xhtml tag"
         hires_str = ''
         if hires:
@@ -234,8 +234,13 @@ class Image(Asset):
             width, height = self.getDimensions()
         else:
             width, height = self.getCanonicalWebScale()
-        return '<img src="%s%s" width="%s" height="%s" alt="%s" />' % (
-            self.absolute_url(), hires_str, width, height, escape(title))
+        named = []
+        for name, value in kw.items():
+            named.append('%s="%s"' % (name, escape(value)))
+        named = ' '.join(named)
+        return '<img src="%s%s" width="%s" height="%s" alt="%s" %s />' % (
+            self.absolute_url(), hires_str, width, height, escape(title),
+            named)
             
     security.declareProtected(SilvaPermissions.View, 'getWebFormat')
     def getWebFormat(self):
