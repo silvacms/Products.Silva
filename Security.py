@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.52 $
+# $Revision: 1.53 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -186,9 +186,12 @@ class Security(AccessManager):
     def sec_minimal_view_role(self):
         """Returns the minimal role required for viewing"""
         rop = self.rolesOfPermission('View')
-        if {'selected': 'SELECTED', 'name': 'Anonymous'} in rop:
+        if ((not {'selected': 'SELECTED', 'name': 'Viewer'} in rop and 
+                not {'selected': 'SELECTED', 'name': 'Authenticated'} in rop) or 
+                {'selected': 'SELECTED', 'name': 'Anonymous'} in rop):
             return 'Anonymous'
-        elif {'selected': 'SELECTED', 'name': 'Authenticated'} in rop:
+        elif (not {'selected': 'SELECTED', 'name': 'Viewer'} in rop or 
+            {'selected': 'SELECTED', 'name': 'Authenticated'} in rop):
             return 'Authenticated'
         else:
             return 'Viewer'
