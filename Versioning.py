@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26.2.2 $
+# $Revision: 1.26.2.3 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -703,7 +703,7 @@ class Versioning:
                 'total': 0,
                 'total_versions': 0,
                 'total_cleaned': 0,
-                'subtotal': 0,
+                'threshold': 0,
                 'max_versions': 0,
                 'starttime': DateTime(),
                 'endtime': None,

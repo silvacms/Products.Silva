@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.87.2.9 $
+# $Revision: 1.87.2.10 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -774,7 +774,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 'total': 0,
                 'total_versions': 0,
                 'total_cleaned': 0,
-                'subtotal': 0,
+                'threshold': 0,
                 'max_versions': 0,
                 'starttime': DateTime(),
                 'endtime': None,
@@ -786,11 +786,11 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             if IContainer.isImplementedBy(obj):
                 obj.delete_old_versions(statistics)
                 
-            if statistics['subtotal'] > threshold:
+            if statistics['threshold'] > threshold:
                 print 'commit sub transaction'
                 get_transaction().commit(1)
                 self._p_jar.cacheGC()
-                statistics['subtotal'] = 0                
+                statistics['threshold'] = 0                
                 
         statistics['endtime'] = DateTime()
         return statistics
