@@ -10,7 +10,6 @@
 request = context.REQUEST
 node = request.node
 
-context.util.save_title(node, request['list_title'])
 node.setAttribute('type', request['element_type'])
 
 # process all elements (note that we make a tuple of childNodes so it won't change anymore,
