@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36 $
+  CVS:        $Revision: 1.36.8.1 $
 
 Upgrading from 0.9.1 and below
 
@@ -35,7 +35,7 @@ Upgrading Silva 0.9.2.x to 0.9.3
     ProxyIndex, Annotations and SilvaMetadata too. The Groups product
     has also been updated.
 
-    Silva Documents are now in a seperate package called
+    Silva Documents are now in a separate package called
     SilvaDocument. This you need to have this Product too.
 
     Silva:
@@ -77,6 +77,12 @@ Upgrading Silva 0.9.2.x to 0.9.3
     upgrade the Silva content that needs upgrading. Note that this
     will take a while if your site is large.
 
+    As this process recreates a few internal services, namely the
+    one registering the views for the Silva content objects, you
+    need to refresh all products via the 'refresh all' button in the
+    'service_extensions' in the next step. Additionally you should
+    install the 'SilvaDocument' extension.
+
     In Silva 0.9.3, several reserved ids are added. When the upgrade
     script encounters an object with a reserved id, the object is
     renamed. The renaming is logged to Zope's event log on the file system.
@@ -95,11 +101,32 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
         If specific IP addresses are given in the AR an IP Group is created.
         All IPs given are added to the newly created IP Group and the 
-        ``Viewer''  role is assinged to that group.
+        ``Viewer''  role is assigned to that group.
     
     Please note that this conversion *is* a change in semantics, so double
     check your security declarations.
   
+    As some API changes are introduced you maybe need to fix your
+    layout templates and scripts in the Silva root. In case You are
+    using the default layout, you should delete the following files
+    in the Silva root:
+
+       frontend.css
+       get_metadata_element
+       index_html
+       layout_macro.html
+       standard_error_message
+       standard_unauthorized_message
+
+    and then install updated versions via the 'install default layout'
+    button for the 'Silva' product in the 'service_extensions'
+
+    In case You have custom versions of theses object installed,
+    please compare the versions delivered with the old and new
+    Silva version (you can find both in the 'layout' directory
+    of the product on the file system), and update your custom
+    versions accordingly.
+
     You should be done upgrading now.
  
   Page templates for presentation of public views
