@@ -7,6 +7,7 @@
   xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
   version="1.0">
   <xsl:import href="%(url)s/doc_elements.xslt"/>
+  <xsl:output method="html" indent="yes"/>
 
   <xsl:template match="/">
     <xsl:apply-templates />

@@ -26,6 +26,8 @@
 
   <xsl:import href="%(url)s/doc_elements.xslt"/>
 
+  <xsl:output method="html" indent="yes"/>
+  
 <!-- 
   In this example we want to render all content in in two table cells.
   The right one containing all images in order, and the left one containing
