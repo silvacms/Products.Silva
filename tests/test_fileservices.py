@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_fileservices.py,v 1.3 2005/01/19 14:26:09 faassen Exp $
+# $Id: test_fileservices.py,v 1.4 2005/01/19 17:12:12 jw Exp $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -168,12 +168,14 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
     #def test_manage_filesServiceEdit(self):
     #    pass
     
-    def test_manage_convertImageStorage(self):
+    def test_manage_convertStorage(self):
         # by default we use ZODB storage
         self._test_image('testimage', self.root)
         self._test_image('testimage', self.root.folder1)
         self._test_image('testimage', self.root.folder1.folder1in1)       
         self._test_image('testimage', self.root.folder2)
+        self._test_file('testfile', self.root)
+        self._test_file('testfile', self.root.folder1.folder1in1)
         self.assertEqual(self.root.testimage.image.meta_type, 'Image')
         self.assertEqual(
             self.root.folder1.testimage.image.meta_type, 'Image')
@@ -181,9 +183,15 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
             self.root.folder1.folder1in1.testimage.image.meta_type, 'Image')
         self.assertEqual(
             self.root.folder2.testimage.image.meta_type, 'Image')
+        self.assertEqual(
+            self.root.folder2.testimage.image.meta_type, 'Image')
+        self.assertEqual(
+            self.root.testfile._file.meta_type, 'File')
+        self.assertEqual(
+            self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
         if WITH_EXTFILE:
             self.root.service_files.manage_filesServiceEdit('', 1, '')
-            self.root.service_files.manage_convertImageStorage()
+            self.root.service_files.manage_convertStorage()
             self.assertEqual(self.root.testimage.image.meta_type, 'ExtImage')
             self.assertEqual(
                 self.root.folder1.testimage.image.meta_type, 'ExtImage')
@@ -191,8 +199,12 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
                 self.root.folder1.folder1in1.testimage.image.meta_type, 'Image')
             self.assertEqual(
                 self.root.folder2.testimage.image.meta_type, 'ExtImage')
+            self.assertEqual(
+                self.root.testfile._file.meta_type, 'ExtFile')
+            self.assertEqual(
+                self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
             self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1, '')
-            self.root.folder1.folder1in1.service_files.manage_convertImageStorage()
+            self.root.folder1.folder1in1.service_files.manage_convertStorage()
             self.assertEqual(self.root.testimage.image.meta_type, 'ExtImage')
             self.assertEqual(
                 self.root.folder1.testimage.image.meta_type, 'ExtImage')
@@ -200,8 +212,12 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
                 self.root.folder1.folder1in1.testimage.image.meta_type, 'ExtImage')
             self.assertEqual(
                 self.root.folder2.testimage.image.meta_type, 'ExtImage')
+            self.assertEqual(
+                self.root.testfile._file.meta_type, 'ExtFile')
+            self.assertEqual(
+                self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
             self.root.service_files.manage_filesServiceEdit('', 0, '')
-            self.root.service_files.manage_convertImageStorage()
+            self.root.service_files.manage_convertStorage()
             self.assertEqual(self.root.testimage.image.meta_type, 'Image')
             self.assertEqual(
                 self.root.folder1.testimage.image.meta_type, 'Image')
@@ -209,6 +225,10 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
                 self.root.folder1.folder1in1.testimage.image.meta_type, 'ExtImage')
             self.assertEqual(
                 self.root.folder2.testimage.image.meta_type, 'Image')
+            self.assertEqual(
+                self.root.testfile._file.meta_type, 'File')
+            self.assertEqual(
+                self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
         
 if __name__ == '__main__':
     framework()
