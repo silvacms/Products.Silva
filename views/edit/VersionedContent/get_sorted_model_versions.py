@@ -23,7 +23,11 @@ def sort_versions(a, b):
     order = ['unapproved', 'approved', 'public', 'last_closed', 'closed']
     ret = cmp(order.index(ast), order.index(bst))
     if ret == 0:
-        ret = cmp(b.id, a.id)
+        try:
+            ret = cmp(int(b.id), int(a.id))
+        except ValueError:
+            # non-int id(s)
+            ret = cmp(b.id, a.id)
     return ret
 
 versions.sort(sort_versions)
