@@ -48,7 +48,7 @@ messages
 <td class="feedback"
   colspan="2">
 <span tal:replace="python:model.get_approval_requester()">author id</span>
-responded on 
+sent a message on 
 <span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()">some date</span>
 <tal:if condition="python:model.get_approval_request_message()">
 with the following comments:
