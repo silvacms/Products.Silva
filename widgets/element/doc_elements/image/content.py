@@ -11,7 +11,12 @@ node = context.REQUEST.node
 image_path = node.output_convert_html(node.getAttribute('image_path'))
 
 if image_path:
-    image = node.restrictedTraverse(image_path)
+    try:
+        image = node.restrictedTraverse(image_path)
+        # check meta_type here ?
+    except KeyError:
+        # image reference is broken (i.e. renamed)
+        image = None
 else:
     # Backwards compatibility for image_id attribute...
     image_id = node.output_convert_html(node.getAttribute('image_id'))
