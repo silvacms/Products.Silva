@@ -9,6 +9,8 @@ import SilvaTestCase
 from DateTime import DateTime
 from Products.Silva.adapters.version_management import getVersionManagementAdapter
 from StringIO import StringIO
+from Products.Silva.Versioning import VersioningError
+from OFS.ObjectManager import BadRequest
 
 now = DateTime()
 
@@ -21,15 +23,20 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         doc = self.doc = root.testdoc
         # create a nice list of versions
         for i in range(10):
-            id = str(i+1)
+            self.create_version()
+        self.adapter = getVersionManagementAdapter(doc)
+
+    def create_version(self):
+        doc = self.doc
+        if doc._unapproved_version[0] is not None:
             doc.set_unapproved_version_publication_datetime(now)
             doc.approve_version()
             doc.close_version()
-            doc.manage_addProduct['SilvaDocument'].\
-                manage_addDocumentVersion(id, 'Version %s' % id)
-            doc.create_version(id, None, None)
-
-        self.adapter = getVersionManagementAdapter(doc)
+        id = str(doc._version_count)
+        doc._version_count += 1
+        doc.manage_addProduct['SilvaDocument'].\
+            manage_addDocumentVersion(id, 'Version %s' % id)
+        doc.create_version(id, None, None)
 
     def beforeTearDown(self):
         pass
@@ -57,9 +64,8 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         # publish the current editable
         self.doc.set_unapproved_version_publication_datetime(now)
         self.doc.approve_version()
-        # create a new document
-        self.doc.manage_addProduct['SilvaDocument'].manage_addDocumentVersion('11', 'someTitle')
-        self.doc.create_version('11', None, None)
+        # create a new version
+        self.create_version()
         # add some content to the old doc so we can compare that to the new
         # one after reverting
         old_doc = getattr(self.doc, '9')
@@ -80,12 +86,6 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         getattr(self.doc, '9').content.writeStream(new_content_buffer)
         new_content = new_content_buffer.getvalue()
         self.assertEquals(org_content, new_content)
-        # this was a bit scary, check the integrity of all the _*_version 
-        # attributes on the VersionedContent object
-        self.assert_(self.doc._unapproved_version[0] is not None)
-        self.assert_(self.doc._approved_version[0] is None)
-        self.assert_(self.doc._public_version[0] is not None)
-        self.assert_(len(self.doc._previous_versions) == 11)
 
     def test_getVersionIds(self):
         ids = self.adapter.getVersionIds()
@@ -105,9 +105,20 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
     def test_deleteVersion(self):
         self.adapter.deleteVersion('9')
         self.assert_('9' not in self.doc.objectIds('Silva Document Version'))
-        # some integrity checks
-        self.assertEquals(self.doc.get_last_closed_version(), '8')
-        self.assertEquals(len(self.doc._previous_versions), 9)
+        # try to delete a non-existent version
+        self.assertRaises(BadRequest, self.adapter.deleteVersion, '14')
+        # try to delete an approved version
+        self.doc.set_unapproved_version_publication_datetime(DateTime() + 1)
+        self.doc.approve_version()
+        id = self.adapter.getApprovedVersion().id
+        self.assertEquals(id, '10')
+        self.assertRaises(VersioningError, self.adapter.deleteVersion, '10')
+        self.doc.unapprove_version()
+        self.doc.set_unapproved_version_publication_datetime(DateTime())
+        self.doc.approve_version()
+        id = self.adapter.getPublishedVersion().id
+        self.assertEquals(id, '10')
+        self.assertRaises(VersioningError, self.adapter.deleteVersion, '10')
 
     def test_deleteOldVersions(self):
         # there should be 10 versions that *can* be deleted
@@ -125,6 +136,82 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         objids = self.doc.objectIds('Silva Document Version')
         self.assertEquals(len(objids), 1)
         self.assertEquals(objids, ['10'])
+
+    # catalog tests, see if the adapter methods that change
+    # workflow in some way result in correct catalog changes
+    def test_revertEditableToOld_catalog(self):
+        # queries for the interesting versions
+        query_editable = {'meta_type': 'Silva Document Version',
+                            'version_status': 'unapproved'}
+        query_public = {'meta_type': 'Silva Document Version',
+                            'version_status': 'public'}
+
+        # little sanity check
+        current_editables = self.doc.service_catalog(query_editable)
+        self.assertEquals(len(current_editables), 1)
+        self.assertEquals(current_editables[0].id, '10')
+
+        current_public = [b for b in 
+                            self.doc.service_catalog(query_public) if
+                            b.getObject().object().id == 'testdoc']
+        self.assertEquals(len(current_public), 0)
+
+        # make sure there's a published version and an editable one
+        self.doc.set_unapproved_version_publication_datetime(DateTime())
+        self.doc.approve_version()
+        self.create_version()
+
+        # now get the ids of the current editable and public
+        current_editable = self.doc.service_catalog(query_editable)
+        self.assertEquals(len(current_editable), 1)
+        self.assertEquals(current_editable[0].id, '11')
+
+        current_public = [b for b in 
+                            self.doc.service_catalog(query_public) if
+                            b.getObject().object().id == 'testdoc']
+        self.assertEquals(len(current_public), 1)
+        self.assertEquals(current_public[0].id, '10')
+
+        # revert editable to some old version
+        self.adapter.revertEditableToOld('4')
+
+        # get the ids of the current editable and public again
+        current_editable = self.doc.service_catalog(query_editable)
+        self.assertEquals(len(current_editable), 1)
+        self.assertEquals(current_editable[0].id, '12')
+
+        current_public = [b for b in 
+                            self.doc.service_catalog(query_public) if
+                            b.getObject().object().id == 'testdoc']
+        self.assertEquals(len(current_public), 1)
+        self.assertEquals(current_public[0].id, '10')
+
+
+    # XXX Integrity checks, these will fail as soon as something
+    # in the underlying implementation changes
+    def test_deleteVersion_integrity(self):
+        self.adapter.deleteVersion('9')
+        self.assertEquals(self.doc.get_last_closed_version(), '8')
+        self.assertEquals(len(self.doc._previous_versions), 9)
+
+    def test_revertEditableToOld_integrity(self):
+        # publish the current editable
+        self.doc.set_unapproved_version_publication_datetime(now)
+        self.doc.approve_version()
+        # create a new version
+        self.create_version()
+        # add some content to the old doc so we can compare that to the new
+        # one after reverting
+        old_doc = getattr(self.doc, '9')
+        old_doc.content.manage_edit('<doc>foobar</doc>')
+        # revert to some old version
+        self.adapter.revertEditableToOld('9')
+
+        # test the VersionedContent object's attributes
+        self.assert_(self.doc._unapproved_version[0] is not None)
+        self.assert_(self.doc._approved_version[0] is None)
+        self.assert_(self.doc._public_version[0] is not None)
+        self.assert_(len(self.doc._previous_versions) == 11)
 
 if __name__ == '__main__':
     framework()
