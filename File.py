@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.29 $
+# $Revision: 1.30 $
 
 # Python
 import os
@@ -28,7 +28,7 @@ try:                                             #
 except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
-from interfaces import IFile, IAsset
+from interfaces import IFile, IAsset, IUpgrader
 
 icon="www/silvafile.png"
 addable_priority = -0.3
@@ -247,7 +247,7 @@ def manage_addFile(self, id, title, file):
     id = str(id)
 
     # Switch storage type:
-    service_files = getattr(self.get_root(), 'service_files', None)
+    service_files = getattr(self, 'service_files', None)
     assert service_files is not None, "There is no service_files. " \
         "Refresh your silva root."
     if service_files.useFSStorage():        
@@ -287,7 +287,7 @@ class FilesService(SimpleItem.SimpleItem):
         self._filesystem_path = filesystem_path
 
     # ACCESSORS
-
+    
     def is_filesystem_storage_available(self):
         """is_filesystem_storage_available
         """
@@ -332,9 +332,12 @@ class FilesService(SimpleItem.SimpleItem):
         """converts images to be stored like set in files service"""
         from Products.Silva.Image import ImageStorageConverter
         upg = upgrade.UpgradeRegistry()
+        upg.registerUpgrader(
+            StorageConverterHelper(self.aq_parent), '0.1', upgrade.AnyMetaType)
         upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
-        root = self.get_root()
-        upg.upgrade(root, '0.0', '0.1')
+        #upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
+        parent = self.aq_parent
+        upg.upgrade(parent, '0.0', '0.1')
         if REQUEST is not None:
             return self.manage_filesServiceEditForm(
                 manage_tabs_message='Silva Images converted. See Zope '
@@ -342,10 +345,42 @@ class FilesService(SimpleItem.SimpleItem):
 
 InitializeClass(FilesService)
 
-
 manage_addFilesServiceForm = PageTemplateFile(
     "www/filesServiceAdd", globals(), __name__='manage_addFilesServiceForm')
 
+class FilesStorageConverter:
+    
+    __implements__ = IUpgrader
+    
+    def upgrade(self, context):
+        # XXX The actual conversion should take place now...
+        return context
+    
+class StorageConverterHelper:
+    
+    __implements__ = IUpgrader
+    
+    def __init__(self, initialcontext):
+        self.initialcontext = initialcontext
+
+    def upgrade(self, context):
+        if context is self.initialcontext:
+            return context
+        # Check if context is a container-like object.
+        # If the context contains a 'service_files' object
+        # return a Dummy which will stop the conversion for
+        # this subtree.
+        # If not, just return the context to let conversion continue
+        if hasattr(context.aq_base, 'objectIds'):
+            if 'service_files' in context.objectIds():
+                dummy = _dummy()
+                dummy.aq_base = _dummy()
+                return dummy
+        return context
+    
+class _dummy:
+    pass
+    
 def manage_addFilesService(self, id, title='', filesystem_storage_enabled=0,
         filesystem_path='', REQUEST=None):    
     """Add files service."""

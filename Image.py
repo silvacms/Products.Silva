@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.53 2004/08/18 13:03:19 guido Exp $
+# $Id: Image.py,v 1.54 2004/08/24 14:50:40 jw Exp $
 
 # Python
 import re, string
@@ -561,7 +561,7 @@ class Image(Asset):
     
     def _useFSStorage(self):
         """return true if we should store images on the filesystem"""
-        service_files = getattr(self.get_root(), 'service_files', None)
+        service_files = getattr(self, 'service_files', None)
         assert service_files is not None, "There is no service_files. " \
             "Refresh your silva root."
         if service_files.useFSStorage():
@@ -672,8 +672,6 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     add_and_edit(context, id, REQUEST)
     return img
 
-
-
 class ImageStorageConverter:
 
     __implements__ = IUpgrader
@@ -696,7 +694,6 @@ class ImageStorageConverter:
             raise RuntimeError, "Invalid asset at %s" % asset.absolute_url()
         ct = image.getContentType()
         asset._image_factory(id, data, ct)
-
 
 # Register Image factory for image mimetypes
 import mimetypes
