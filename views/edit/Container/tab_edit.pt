@@ -69,7 +69,7 @@
               </tal:block>
               <tr class="top-controls">
                 <td colspan="6">
-                  <div style="float: left;">
+                  <div style="float: left;" tal:condition="may_change_content">
                   <input class="navigation"
                     name="add_object:method"
                     type="submit"
@@ -107,9 +107,12 @@
                     title="import XML data - alt-i"
                     accesskey="i"
                     i18n:attributes="title"
+                    tal:condition="may_change_content"
                   >
                     <span i18n:translate="import">import</span>...
                   </a>
+                  <span
+                     tal:condition="not:may_change_content">&nbsp;</span>
                 </td>
               </tr>
             </thead>
@@ -194,7 +197,7 @@
                     <td>
                       <a class="icon"
                         tal:attributes="
-                          href python:here.get_editor_link(item);
+                          href python:model.get_editor_link(item);
                           title item/meta_type;">
                         <img tal:replace="structure python:view.render_icon(item)" />
                       </a>
@@ -202,7 +205,7 @@
                         title="modify"
                         tal:content="item/id"
                         tal:attributes="
-                          href python:here.get_editor_link(item);
+                          href python:model.get_editor_link(item);
                           class status_style;"
                       >
                         id
@@ -361,14 +364,14 @@
                     <td>
                       <a class="icon"
                         tal:attributes="
-                          href string:${asset_url}/edit/tab_edit;
+                          href  python:model.get_editor_link(asset);
                           title asset/meta_type;">
                         <img tal:replace="structure python:view.render_icon(asset)" />
                       </a>
                       <a class="blacklink"
                         href="asset"
                         title="editor"
-                        tal:attributes="href string:${asset_url}/edit/tab_edit"
+                        tal:attributes="href python:model.get_editor_link(asset)"
                         tal:content="structure asset/id"
                         i18n:attributes="title"
                       >
