@@ -70,6 +70,7 @@
             value="convert to folder"
             title="access key: alt-f"
             accesskey="f"
+            tal:condition="not:link_status"
           />
           <input class="button"
             type="submit" 
@@ -77,6 +78,7 @@
             value="convert to publication"
             title="access key: alt-p"
             accesskey="p"
+            tal:condition="not:link_status"
           />
         </td>
       </tr>
@@ -206,17 +208,9 @@
             value="resync ghost folder"
             title="re-synchronize with content from the source folder: alt-r"
             accesskey="r"
+            tal:condition="not:link_status"
           />
         </div>
-        <a class="navigation"
-          style="float: right;"
-          href="tab_edit_import"
-          title="import XML data - alt-i"
-          accesskey="i"
-          i18n:attributes="title"
-          >
-          <span i18n:translate="import">import</span>...
-        </a>
       </td>
     </tr>
   </thead>
