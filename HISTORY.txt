@@ -4,7 +4,7 @@ See also LICENSE.txt
 Silva changes
 
 
-  1.0 (beta 1)
+  1.0 (release candidate 1)
 
     Features added
 
