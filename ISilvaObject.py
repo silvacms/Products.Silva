@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 from ISecurity import ISecurity
 
 class ISilvaObject(ISecurity):
@@ -30,6 +30,11 @@ class ISilvaObject(ISecurity):
     # ACCESSORS
     def get_title():
         """The title of the content object.
+        """
+        pass
+
+    def get_title_or_id():
+        """The title or id of the content object.
         """
         pass
 

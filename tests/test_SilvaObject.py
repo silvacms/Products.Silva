@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 import unittest
 import Zope
 #import ZODB
@@ -27,14 +27,16 @@ class SilvaObjectTestCase(unittest.TestCase):
         self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
         self.sroot = self.root.root
         add = self.sroot.manage_addProduct['Silva']
-        
         add.manage_addDocument('document',
                                'Document')
         add.manage_addFolder('folder',
                              'Folder')
         add.manage_addPublication('publication',
                                   'Publication')
+        add.manage_addDocument('document2',
+                               '')
         self.document = self.sroot.document
+        self.document2 = self.sroot.document2
         self.folder = self.sroot.folder
         self.publication = self.sroot.publication
         # add some stuff to test breadcrumbs
@@ -79,6 +81,11 @@ class SilvaObjectTestCase(unittest.TestCase):
         self.assertEquals('Foo', self.document.get_metadata('document_title'))
         self.assertEquals('Foo', self.document.get_title())
         
+    def test_title3(self):
+        # Test get_title_or_id_html
+        self.assertEquals(self.document.get_title_or_id(), 'Document')
+        self.assertEquals(self.document2.get_title_or_id(), 'document2')
+
     #def test_get_creation_datetime(self):
     #    pass
 
