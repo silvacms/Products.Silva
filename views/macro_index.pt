@@ -4,7 +4,7 @@
     view here;
     model request/model;
     security model/security_trigger;"
-  ">
+  >
 <head>
 <title tal:content="structure python:model.get_title_html()">Title</title>
 <link rel="shortcut icon" href="globals/favicon.ico" tal:attributes="href here/globals/favicon.ico/absolute_url" />
