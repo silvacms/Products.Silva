@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_fileservices.py,v 1.4 2005/01/19 17:12:12 jw Exp $
+# $Id: test_fileservices.py,v 1.5 2005/03/16 18:39:04 faassen Exp $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -20,6 +20,10 @@ except ImportError, e:
     WITH_EXTFILE = False
     
 # NOTE: these tests should all pass regardless of the availability of ExtFile
+
+def testopen(path, rw):
+    directory = os.path.dirname(__file__)
+    return open(os.path.join(directory, path), rw)
 
 class FileServicesTest(SilvaTestCase.SilvaTestCase):
     
@@ -49,13 +53,13 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
         return utils.makerequest(app, request_out)
 
     def _test_file(self, id, context):
-        file_handle = open('test_image_data/photo.tif', 'rb')
+        file_handle = testopen('test_image_data/photo.tif', 'rb')
         context.manage_addProduct['Silva'].manage_addFile(
             id, 'Test File', file_handle)
         file_handle.close()
 
     def _test_image(self, id, context):
-        file_handle = open('test_image_data/photo.tif', 'rb')
+        file_handle = testopen('test_image_data/photo.tif', 'rb')
         context.manage_addProduct['Silva'].manage_addImage(
             id, 'Test Image', file_handle)
         file_handle.close()

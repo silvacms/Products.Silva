@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_file.py,v 1.5 2005/03/16 18:11:51 faassen Exp $
+# $Id: test_file.py,v 1.6 2005/03/16 18:39:04 faassen Exp $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -36,7 +36,7 @@ class FileTest(SilvaTestCase.SilvaTestCase):
     def _test_file(self):
         directory = os.path.dirname(__file__)
         file_handle = open(os.path.join(directory,
-                                        'test_image_data/photo.tif', 'rb'))
+                                        'test_image_data/photo.tif'), 'rb')
         file_data = file_handle.read()
         file_handle.seek(0)
         self.root.manage_addProduct['Silva'].manage_addFile('testfile',
