@@ -10,172 +10,172 @@
 
 /* standard bg color, change in overide stylesheet */ 
 body {
-    font-family : verdana, arial, helvetica, sans-serif; 
-    font-size : 11px;
-    color : #003333;
-    background : #e2e9eb;
+  font-family : verdana, arial, helvetica, sans-serif; 
+  font-size : 11px;
+  color : #003333;
+  background : #e2e9eb;
 }
 
 /* set margins on body content and focus tables with a div */
 /* (classing the table does nix in Nav4) */
 .margins {
-    margin-left: 2%;
-    margin-right: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 
 
 /* _________________________________________________________ element typography _____ */
 
 p {
-    font-size : 11px;
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #003333;
+  font-size : 11px;
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #003333;
 }
 
 p.lead {
-    font-size : 11px;
-    font-weight : bold; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #003333;
+  font-size : 11px;
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #003333;
 }
 
 h1 {
-    font-size : 19px; 
-    font-weight : bold; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #777777; 
-    background : transparent;
+  font-size : 19px; 
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #777777; 
+  background : transparent;
 }
 
 h2 {
-    font-size : 16px; 
-    font-weight : bold; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #555555; 
-    background : transparent;
+  font-size : 16px; 
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #555555; 
+  background : transparent;
 }
 
 h2.right {
-    font-size : 16px; 
-    font-weight : bold; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #555555; 
-    background : transparent;
-    text-align : right; 
+  font-size : 16px; 
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #555555; 
+  background : transparent;
+  text-align : right; 
 }
 
 h3 {
-    font-size : 14px; 
-    font-weight : bold; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #444444; 
-    background : transparent;
+  font-size : 14px; 
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #444444; 
+  background : transparent;
 }
 
 h4 {
-    font-size: 12px;  
-    font-weight : bold; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color: #343434;
-    background : transparent;
+  font-size: 12px;  
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color: #343434;
+  background : transparent;
 }
 
 h5 {
-    font-size: 11px;  
-    font-weight : bold; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color: #343434;
-    background : transparent;
+  font-size: 11px;  
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color: #343434;
+  background : transparent;
 }
 
 .subhead {
-    font-size : 11px; 
-    font-weight : bold; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    text-align : left; 
-    color : #444444; 
-    line-height : 16px;
+  font-size : 11px; 
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  text-align : left; 
+  color : #444444; 
+  line-height : 16px;
 }
 
 .column-heading, .column-spanheading {
-    font-weight : bold; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #444444; 
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #444444; 
 }
 
 
 /* __________________________________________________ table style definitions _____ */
 
 tr.focus, th.focus, td.focus {
-    background : #c0c0c0;
+  background : #c0c0c0;
 }
 
 tr.focus-cycle, th.focus-cycle, td.focus-cycle {
-    background : #cccccc;
+  background : #cccccc;
 }
 
 tr.focus-light, th.focus-light, td.focus-light {
-    background : #d0d0d0;
+  background : #d0d0d0;
 }
 
 tr.focus-light-cycle, td.focus-light-cycle {
-    background : #dedede;
+  background : #dedede;
 }
 
 tr.controls, td.controls {
-    color : #e2e9eb;
-    background : #999999;
+  color : #e2e9eb;
+  background : #999999;
 }
 
 tr.controls-cycle, th.controls-cycle, td.controls-cycle {
-    color : #e2e9eb;
-    background : #a0a0a0;
+  color : #e2e9eb;
+  background : #a0a0a0;
 }
 
 tr.topcontrols, td.topcontrols {
-    color : #e2e9eb;
-    background : #666666;
+  color : #e2e9eb;
+  background : #666666;
 }
 
 tr.border, td.border {
-    background : #a0a0a0;
+  background : #a0a0a0;
 }
 
 tr.divider, th.divider, td.divider {
-    font-size : 4px; 
-    background : #666666;
+  font-size : 4px; 
+  background : #666666;
 }
 
 th {
-    font-size : 12px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #e2e9eb;
-    background : #808080;
+  font-size : 12px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #e2e9eb;
+  background : #808080;
 }
 
 /* for N4 compatibility, make this match the page bgcolor (don't use 'transparent') */ 
 th.transparent, td.transparent {
-    background : #e2e9eb;
+  background : #e2e9eb;
 }
 
 td {
-    font-size : 12px; 
-    font-family : arial, helvetica, sans-serif; 
-    color : #444444; 
+  font-size : 12px; 
+  font-family : arial, helvetica, sans-serif; 
+  color : #444444; 
 }
 
 td.rowhead {
-    font-weight : bold; 
-    color : #555555; 
+  font-weight : bold; 
+  color : #555555; 
 }
 
 .tablehead3 {
-    font-size : 14px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #e2e9eb; 
-    background : transparent;
+  font-size : 14px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #e2e9eb; 
+  background : transparent;
 }
 
 
@@ -183,366 +183,342 @@ td.rowhead {
 
 
 ul {
-    font-size : 11px; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #444444; 
-    background : transparent;
+  font-size : 11px; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #444444; 
+  background : transparent;
 }
 
 ul.tips {
-    list-style-type : square;
-    margin-left : 2px;
-    margin-top : 2px;
-    padding-left : 16px;
-    line-height : 15px;
+  list-style-type : square;
+  margin-left : 2px;
+  margin-top : 2px;
+  padding-left : 16px;
+  line-height : 15px;
 }
 
 ul.tips-nested {
-    list-style-type : circle;
-    margin-left : 2px;
-    margin-top : 2px;
-    padding-left : 16px;
-    line-height : 15px;
+  list-style-type : circle;
+  margin-left : 2px;
+  margin-top : 2px;
+  padding-left : 16px;
+  line-height : 15px;
 }
 
 dt {
-    font-size : 11px; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #444444; 
-    background : transparent;
+  font-size : 11px; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #444444; 
+  background : transparent;
 }
 
 dd {
-    margin-left : 2.5em;
+  margin-left : 2.5em;
 }
 
 
 /* ___________________________________________________ form style definitions _____ */
 
 form {
-    margin : 0px;
-    padding : 0px;
-    border : 0px;
+  margin : 0px;
+  padding : 0px;
+  border : 0px;
 }
 
 input {
-    font-family : clean, fixed, courier, monospace; 
-    font-size : 12px; 
-    color : #333333;
-    background : #d7e9ee;
-    border-left : 1px solid #333333;
-    border-top : 1px solid #333333;
-    border-right : 1px solid #333333;
-    border-bottom : 1px solid #333333;
+  font-family : clean, fixed, courier, monospace; 
+  font-size : 12px; 
+  color : #333333;
+  background : #d7e9ee;
+  border-left : 1px solid #333333;
+  border-top : 1px solid #333333;
+  border-right : 1px solid #333333;
+  border-bottom : 1px solid #333333;
 }
 
 select {
-    color : #333333;
-    background : #d7e9ee;
-    border-left : 1px solid #333333;
-    border-top : 1px solid #333333;
-    border-right : 1px solid #333333;
-    border-bottom : 1px solid #333333;
+  color : #333333;
+  background : #d7e9ee;
+  border-left : 1px solid #333333;
+  border-top : 1px solid #333333;
+  border-right : 1px solid #333333;
+  border-bottom : 1px solid #333333;
 }
 
 textarea {
-    font-family : clean, fixed, courier, monospace; 
-    font-size : 12px; 
-    color : #333333;    
-    background : #d7e9ee;
-    border-left : 1px solid #333333;
-    border-top : 1px solid #333333;
-    border-right : 1px solid #333333;
-    border-bottom : 1px solid #333333;
-    width : 100%;
+  font-family : clean, fixed, courier, monospace; 
+  font-size : 12px; 
+  color : #333333;  
+  background : #d7e9ee;
+  border-left : 1px solid #333333;
+  border-top : 1px solid #333333;
+  border-right : 1px solid #333333;
+  border-bottom : 1px solid #333333;
+  width : 100%;
 }
 
 .wide { 
-    width : 100%;
+  width : 100%;
 }
 
 input:focus, textarea:focus, select:focus { 
-    color : #333355; 
-    background : #e3f0e4 none; 
+  color : #333355; 
+  background : #e3f0e4 none; 
 }
 
 input:hover, textarea:hover, select:hover { 
-    color : #333355; 
-    background : #e3f0e4 none; 
+  color : #333355; 
+  background : #e3f0e4 none; 
 }
 
 /* was ffe6cc cbe4eb */
 input:focus:hover, textarea:focus:hover { 
-    color : #333355; 
-    background : #e3f0e4;
+  color : #333355; 
+  background : #e3f0e4;
 }
 
 /* kludge for flaky old Netscape */
 .textarea {
-    font-family : clean, fixed, courier, monospace; 
-    font-size : 12px; 
-    color : #333333;
-    background : #d7e9ee;
+  font-family : clean, fixed, courier, monospace; 
+  font-size : 12px; 
+  color : #333333;
+  background : #d7e9ee;
 }
 
 select {
-    font-family : arial, helvetica, sans-serif; 
-    font-size : 11px; 
-    color : #333333;
-    background : #d7e9ee;
-    border-left : 1px solid #333333;
-    border-top : 1px solid #333333;
-    border-right : 1px solid #333333;
-    border-bottom : 1px solid #333333;
+  font-family : arial, helvetica, sans-serif; 
+  font-size : 11px; 
+  color : #333333;
+  background : #d7e9ee;
+  border-left : 1px solid #333333;
+  border-top : 1px solid #333333;
+  border-right : 1px solid #333333;
+  border-bottom : 1px solid #333333;
 }
 
 /* submit buttons */
 .button {
-    font-size : 11px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #bce4ee; 
-    background : #666666;
-    border-left : 1px solid #a2c9cc;
-    border-top : 1px solid #a2c9cc;
-    border-right : 1px solid #a2c9cc;
-    border-bottom : 1px solid #a2c9cc;
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #bce4ee; 
+  background : #666666;
+  border-left : 1px solid #a2c9cc;
+  border-top : 1px solid #a2c9cc;
+  border-right : 1px solid #a2c9cc;
+  border-bottom : 1px solid #a2c9cc;
 }
 
 .warningbutton {
-    font-size : 11px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #f0c0c0; 
-    background : #666666;
-    border-left : 1px solid #d7acac;
-    border-top : 1px solid #d7acac;
-    border-right : 1px solid #d7acac;
-    border-bottom : 1px solid #d7acac;
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #f0c0c0; 
+  background : #666666;
+  border-left : 1px solid #d7acac;
+  border-top : 1px solid #d7acac;
+  border-right : 1px solid #d7acac;
+  border-bottom : 1px solid #d7acac;
 }
 
 .warningbox {
-    font-size : 11px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #3f4570;
-    background : #ead5d3;
-    border-left : 1px solid #333333;
-    border-top : 1px solid #333333;
-    border-right : 1px solid #333333;
-    border-bottom : 1px solid #333333;
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #3f4570;
+  background : #ead5d3;
+  border-left : 1px solid #333333;
+  border-top : 1px solid #333333;
+  border-right : 1px solid #333333;
+  border-bottom : 1px solid #333333;
 }
 
 .cancelbutton {
-    font-size : 11px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #dddddd; 
-    background : #676767;
-    border-left : 1px solid #cccccc;
-    border-top : 1px solid #cccccc;
-    border-right : 1px solid #cccccc;
-    border-bottom : 1px solid #cccccc;
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #dddddd; 
+  background : #676767;
+  border-left : 1px solid #cccccc;
+  border-top : 1px solid #cccccc;
+  border-right : 1px solid #cccccc;
+  border-bottom : 1px solid #cccccc;
 }
 
 input[type="submit"]:hover, input[type="button"]:hover { 
-    color : #bff1ff; 
-    background : #74748b; 
+  color : #bff1ff; 
+  background : #74748b; 
 }
 
 input[type="submit"]:focus, input[type="button"]:focus { 
-    color : #bff1ff; 
-    background : #008a8a;
+  color : #bff1ff; 
+  background : #008a8a;
 }
 
 /* image button */
 .imagebutton {
-    background : transparent;
-    border : 0;
+  background : transparent;
+  border : 0;
 }
 
 input[type="checkbox"]:focus, input[type="radio"]:focus { 
-    color : #777; 
-    background : #b9e3e8 none; 
+  color : #777; 
+  background : #b9e3e8 none; 
 }
 
 input[type="checkbox"]:hover, input[type="radio"]:hover { 
-    color : #777; 
-    background : #b9e3e8 none; 
+  color : #777; 
+  background : #b9e3e8 none; 
 }
 
 
 /* ______________________________________________________ tab bar definition _____ */  
 
 td.tab-bg {
-    font-size : 1px;
-    background : #36445b;
+  font-size : 1px;
+  background : #36445b;
 }
 
 td.tab {
-    font-size : 1px;
-    color : #ffffff;
-    background : #39988f;
+  font-size : 1px;
+  color : #ffffff;
+  background : #39988f;
 }
 
 td.tab-up {
-    font-size : 1px;
-    color : #330033;
-    background : #b8cdd0;
+  font-size : 1px;
+  color : #330033;
+  background : #b8cdd0;
 }
 
 td.tab-edge {
-    background : #402c68;
+  background : #402c68;
 }
 
 /* CSS2 selector, not for IE5 */
 td.tab:hover { 
-    color : #bff1ff; 
-    background : #b8cdd0;
+  color : #bff1ff; 
+  background : #b8cdd0;
 }
 
 a.tab:link {
-    font-size : 11px;
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #eeffee;
-    text-decoration : none;
+  font-size : 11px;
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #eeffee;
+  text-decoration : none;
 }
 a.tab:visited {
-    font-size : 11px;
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #eeffee;
-    text-decoration : none;
+  font-size : 11px;
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #eeffee;
+  text-decoration : none;
 }
 a.tab:hover {
-    font-size : 11px;
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #330033;
-    text-decoration : none;
+  font-size : 11px;
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #330033;
+  text-decoration : none;
 }
 
 a.tab-up:link {
-    font-size : 11px;
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #444477;
-    text-decoration : none;
+  font-size : 11px;
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #444477;
+  text-decoration : none;
 }
 a.tab-up:visited {
-    font-size : 11px;
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #444477;
-    text-decoration : none;
+  font-size : 11px;
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #444477;
+  text-decoration : none;
 }
 a.tab-up:hover {
-    font-size : 11px;
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #529590;
-    text-decoration : none;
+  font-size : 11px;
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #529590;
+  text-decoration : none;
 }
 
 td.tab a:hover img {
-    background : #b0cbd0;
-    text-decoration : none;
+  background : #b0cbd0;
+  text-decoration : none;
 }
 
 /* sigh, IE5 doesn't highlight images */
 td.tab a.tree:hover {
-    background : #b0cbd0;
-    text-decoration : none;
+  background : #b0cbd0;
+  text-decoration : none;
 }
 
 .breadcrumb {
-    font-size : 10px;
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #330033;
+  font-size : 10px;
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #330033;
 }
 
 
 /* _________________________________________________________ link definitions _____ */
 
 a:link {
-    color : #000080;
-    text-decoration : none;
+  color : #000080;
+  text-decoration : none;
 }
 a:visited {
-    color : #000080;
-    text-decoration : none;
+  color : #000080;
+  text-decoration : none;
 }
 a:active {
-    color : #3399cc;
+  color : #3399cc;
 }
 a:hover {
-    color : #005050;
-    text-decoration : underline;
+  color : #005050;
+  text-decoration : underline;
 }
 
 a.tree:hover img {
-    background : #666666;
+  background : #666666;
 }
 
 /* pseudo form button selectors, matches button style */
 a.buttonlink {
-    font-size : 10px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #bce4ee; 
-    background : #666666;
-    border : 1px solid #a2c9cc;
-    text-decoration : none;
-    padding : 0.2em 0.5em 0.1em 0.5em;
+  font-size : 10px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #bce4ee; 
+  background : #666666;
+  border : 1px solid #a2c9cc;
+  text-decoration : none;
+  padding : 0.2em 0.5em 0.1em 0.5em;
 }
 a.buttonlink:hover {
-    color : #bff1ff; 
-    background : #74748b; 
+  color : #bff1ff; 
+  background : #74748b; 
 }
 a.cancellink {
-    font-size : 10px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #dddddd; 
-    background : #676767;
-    border : 1px solid #cccccc;
-    text-decoration : none;
-    padding : 0.2em 0.5em 0.1em 0.5em;
+  font-size : 10px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #dddddd; 
+  background : #676767;
+  border : 1px solid #cccccc;
+  text-decoration : none;
+  padding : 0.2em 0.5em 0.1em 0.5em;
 }
 a.cancellink:hover {
-    color : #bff1ff; 
-    background : #74748b; 
+  color : #bff1ff; 
+  background : #74748b; 
 }
 /* highlighting index links */
 a.index-element {
-    background-color : #aa0000;
-    text-decoration : none;
-}
-
-
-/* __________________________________________________ align/float definitions _____ */
-
-.image-left {
-    text-align: left;
-}
-
-.image-center {
-    text-align: center;
-}
-
-.image-right {
-    text-align: right;
-}
-
-.float-left {
-    float: left;
-    clear: none;
-}
-.float-right {
-    float: right;
-    clear: none;
+  background-color : #aa0000;
+  text-decoration : none;
 }
 
 
@@ -551,7 +527,7 @@ a.index-element {
 /* as 'blacklink'. When a variation is created, the variation name is separated by  */
 /* a dash, such as 'blacklink-underline'. Do NOT use underscores, for some reason   */
 /* they destroy the stylesheet. Also - don't be lazy - spell things out. This code  */
-/* will be taken over by other people, who speak other languages, and they don't    */
+/* will be taken over by other people, who speak other languages, and they don't  */
 /* want to puzzle over what something like 'undln' means (don't use UNIX mumble :)  */
 
 
@@ -559,80 +535,80 @@ a.index-element {
 
 /* a little white space */
 .halfline {
-    font-size : 2px; 
-    margin-top : 2px;
-    margin-bottom : 2px;
+  font-size : 2px; 
+  margin-top : 2px;
+  margin-bottom : 2px;
 }
 
 /* form datetime field punctuation */
 .punctuation {
-    font-family : impact, verdana, arial, helvetica, sans-serif;
-    font-size : 15px; 
+  font-family : impact, verdana, arial, helvetica, sans-serif;
+  font-size : 15px; 
 }
 
 .required {
-    font-family : impact, verdana, arial, helvetica, sans-serif;
-    font-size : 18px;
-    color: #cc0000;
+  font-family : impact, verdana, arial, helvetica, sans-serif;
+  font-size : 18px;
+  color: #cc0000;
 }
 
 .warning {
-    color : #aa0000;
+  color : #aa0000;
 }
 
 .error {
-    color : #cc0000;
+  color : #cc0000;
 }
 
 .fault {
-    color : #ff1111;
+  color : #ff1111;
 }
 
 /* extra leading in body text */
 .leadedbody {
-    font-size : 11px; 
-    font-weight : normal; 
-    font-family : verdana, arial, helvetica, sans-serif; 
-    color : #003333;
-    line-height : 15px;
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #003333;
+  line-height : 15px;
 }
 
 /* wide font to match header text */
 .widebody {
-    font-size : 11px; 
-    font-family : verdana, arial, helvetica, sans-serif; 
+  font-size : 11px; 
+  font-family : verdana, arial, helvetica, sans-serif; 
 }
 
 /* feedback from system */
 .feedback {
-    font-size : 12px; 
-    font-family : verdana, arial, helvetica, sans-serif;
-    color : #555555; 
-    background : #feffcf;
-    border:  1px solid #646464;
-    margin-top : 10px;
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-bottom : 6px;
-    padding : 4px;
-    width : 96%;
+  font-size : 12px; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #555555; 
+  background : #feffcf;
+  border:  1px solid #646464;
+  margin-top : 10px;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom : 6px;
+  padding : 4px;
+  width : 96%;
 }
 
 .worksheet {
-    margin-left: 3%;
-    margin-right: 5%;
-    margin-top: 3%;
-    margin-bottom: 2%;
+  margin-left: 3%;
+  margin-right: 5%;
+  margin-top: 3%;
+  margin-bottom: 2%;
 }
 
 /* development note */
 .dev {
-    color : #660099; 
+  color : #660099; 
 }
 
 .idea {
-    font-size : 10px;
-    color : #634d82;
+  font-size : 10px;
+  color : #634d82;
 }
 
 
