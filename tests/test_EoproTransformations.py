@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 import unittest
 
 # 
@@ -349,14 +349,14 @@ class RoundtripWithTidy(unittest.TestCase):
         try:
             import popen2
             stdout, stdin, stderr = popen2.popen3(cmd)
-        except:
-            print "tidy doesn't seem to be available, skipping html-check"
+	    stdin.write(html)
+	    stdin.close()
+	    output = stderr.read()
+	    stderr.close()
+	    stdout.close()
+        except IOError:
+            # print "tidy doesn't seem to be available, skipping html-check"
             return
-        stdin.write(html)
-        stdin.close()
-        output = stderr.read()
-        stderr.close()
-        stdout.close()
 
         for line in output.split('\n'):
             if line.startswith('line') and line.find('Error')!=-1:
