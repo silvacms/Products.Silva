@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.49 $
+# $Revision: 1.50 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -43,6 +43,7 @@ class Publication(Folder.Folder):
         Publication.inheritedAttribute('__init__')(
             self, id)
         self.layout = None
+        self.layout_key = None
     
     # MANIPULATORS
     
@@ -51,10 +52,17 @@ class Publication(Folder.Folder):
     def set_layout(self, layout_name):
         """Set template layout
         """
+        service_layouts = self.get_root().service_layouts
+        if service_layouts.has_layout(self):
+            service_layouts.remove_layout(self)
         self.layout = layout_name
-        from LayoutRegistry import layoutRegistry
-        layout = layoutRegistry.get_layout(self.layout)
-        layout.setup(self.get_root(), self)
+        layout = service_layouts.setup_layout(self.layout, self)
+    
+    def get_layout_key(self):
+        return self.layout_key
+
+    def set_layout_key(self, value):
+        self.layout_key = value 
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_silva_addables_allowed_in_publication')

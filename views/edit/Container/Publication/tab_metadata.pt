@@ -15,7 +15,7 @@
 <metal:block fill-slot="main">
 <metal:use use-macro="view/Container/tab_metadata/macros/master">
 <metal:fill fill-slot="more_control">
-<form method="POST" action=".">
+<form tal:condition="here/service_layouts/get_installed_names" method="POST" action=".">
   <table class="listing">
     <thead>
       <tr tal:replace="nothing">

@@ -1,7 +1,7 @@
 
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -13,6 +13,7 @@ from helpers import add_and_edit
 import SilvaPermissions
 from LayoutRegistry import layoutRegistry
 import install
+import whrandom
 
 class LayoutService(SimpleItem.SimpleItem):
     meta_type = 'Silva Layout Service'
@@ -34,6 +35,7 @@ class LayoutService(SimpleItem.SimpleItem):
         self.id = id
         self.title = title
         self._refresh_datetime = DateTime()
+        self._used_layouts = {}
         
     # MANIPULATORS
 
@@ -41,21 +43,18 @@ class LayoutService(SimpleItem.SimpleItem):
     def install(self, name):
         """Install layout
         """
-        layoutRegistry.install(name,  self._getLayouts())
+        layoutRegistry.install(self.get_root(), name)
         return self.manage_main(manage_tabs_message='%s installed' % name)
 
     security.declareProtected('View management screens', 'uninstall')
     def uninstall(self, name):
         """Uninstall extension
         """
-        layoutRegistry.uninstall(name, self._getLayouts())
+        layoutRegistry.uninstall(self.get_root(), name)
         return self.manage_main(manage_tabs_message='%s uninstalled' % name)
 
     security.declareProtected('View management screens', 'refresh')
 
-    def _getLayouts(self):
-        return self.get_root().service_resources.Layouts
-    
     def refresh(self, name):
         """Refresh (uninstall/install) extension.
         """
@@ -72,7 +71,35 @@ class LayoutService(SimpleItem.SimpleItem):
             self.refresh(name)
         return self.manage_main(manage_tabs_message='All layouts have been refreshed')
 
-            
+    def setup_layout(self, layout, target):
+        layoutRegistry.setup_layout(self.get_root(), layout, target)
+        if not target.get_layout_key():
+            target.set_layout_key(self._get_unique_layout_key())
+        self._used_layouts[target.get_layout_key()] = layoutRegistry.layout_items(self.get_root(), layout)     
+        self._p_changed = 1
+
+    def remove_layout(self, target):
+        list = self.layout_items(target)
+        layout_items = []
+        for id in list:
+            if hasattr(target.aq_base, id):
+                layout_items.append(id)
+        target.manage_delObjects(layout_items)
+        del self._used_layouts[target.get_layout_key()]
+        self._p_changed = 1
+        target.set_layout_key(None)
+        
+    def _get_unique_layout_key(self):
+        unique = str(whrandom.random())
+        while self._used_layouts.has_key(unique):
+            unique = str(whrandom.random())
+        return unique
+
+    def has_layout(self, publication):
+        return self._used_layouts.has_key(publication.get_layout_key())
+
+    def layout_items(self, publication):
+        return self._used_layouts.get(publication.get_layout_key(), [])
     # ACCESSORS
 
     security.declareProtected('View management screens', 'get_names')
@@ -99,7 +126,7 @@ class LayoutService(SimpleItem.SimpleItem):
     def is_installed(self, name):
         """Is extension installed?
         """
-        return layoutRegistry.is_installed(name,  self._getLayouts())
+        return layoutRegistry.is_installed(self.get_root(), name)
 
     security.declareProtected('View management screens',
                               'get_refresh_datetime')
