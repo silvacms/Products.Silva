@@ -540,6 +540,13 @@ a.index-element {
 
 /* _____________________________________________________________ local styles _____ */
 
+.worksheet {
+  margin-left: 3%;
+  margin-right: 5%;
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
 /* a little white space */
 .halfline {
   font-size : 2px; 
@@ -602,11 +609,15 @@ a.index-element {
   width : 96%;
 }
 
-.worksheet {
-  margin-left: 3%;
-  margin-right: 5%;
-  margin-top: 3%;
-  margin-bottom: 2%;
+/* author/editor messages */
+.message {
+  font-family : clean, fixed, courier, monospace;
+  background:#dddddd;
+  border-left : 1px solid #333333;
+  border-top : 1px solid #333333;
+  border-right : 1px solid #333333;
+  border-bottom : 1px solid #333333;
+  padding : 2px;
 }
 
 /* development note */
