@@ -776,6 +776,21 @@ h2.worksheet {
   width : 96%;
 }
 
+/* warning feedback from system */
+.alert {
+  font-size : 12px; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #aa0000; 
+  background : #ffbaba;
+  border:  1px solid #646464;
+  margin-top : 10px;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom : 6px;
+  padding : 4px;
+  width : 96%;
+}
+
 /* author/editor messages */
 .message {
   font-family : clean, fixed, courier, monospace;
