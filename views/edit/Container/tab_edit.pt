@@ -440,7 +440,7 @@
                         <input class="button"
                           name="tab_edit_paste_to_ghost:method"
                           type="submit"
-                          value="Paste as ghost"
+                          value="Paste ghost"
                           title="paste (items on clipboard) as ghost objects: alt-g"
                           accesskey="g" 
                         />
