@@ -9,13 +9,13 @@
 <tal:block define="
   global objects python:model.get_tree();
   global silva_permissions here/get_silva_permissions;
-  dummy model/security_trigger;
-  " />
+  dummy model/security_trigger;" />
 
 <div class="margins">
 
-<h2><img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+<h2>
+<img src="%s" width="16" height="16" alt="%s"
+ tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
   Silva objects available at <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
 </h2>
 </div>
@@ -51,16 +51,15 @@
 
 <tr class="focus" valign="top">
   <td>
-    <!-- inner table for sidebar -->
     <table cellspacing="0" cellpadding="1" border="0" width="100%">
-<span tal:replace="nothing"> ______________ publication header ______________ </span>
+      <span tal:replace="nothing"> ______________ publication header ______________ </span>
       <tr>
         <td class="border"
           tal:attributes="class python:test(model == model.get_publication(), 'hilight', 'focus-fixed')">
           <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" />
           <a href="top" title="Up to publication top"
             tal:define="url python:model.get_publication().absolute_url()"
-            tal:attributes="href string:${url}/edit/tab_edit_new"><img tal:replace="structure python:view.render_icon(model.meta_type)" /></a>
+            tal:attributes="href string:${url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(model.get_publication().meta_type)" /></a>
           <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
             tal:attributes="href string:${url}/edit/tab_edit_new"><span tal:replace="structure python:model.get_publication().get_title_or_id_html()">Publication top</span></a>
         </td>
@@ -74,17 +73,16 @@
           <td class="hilight"
             tal:attributes="class python:test(model == item, 'hilight', 'focus')">
             <div tal:attributes="style python:'margin-left:'+str(indent * 16 + 5)">
-              <span no-class="position-relative"
-               no-tal:attributes="style python:'left:%s%%' % str(indent*3)">
-                <a href="folder" title="Manage folder"
-                 tal:attributes="href string:${item/absolute_url}/edit/tab_edit_new"><img src="%s" width="16" height="16" alt="%s"
-                 tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
-                <a class="blacklink" href="title" title="id"
-                 tal:attributes="href string:${item/absolute_url}/edit/tab_edit_new;
-                                  title string:id: ${item/id}">
-                  <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_or_id_html()">no title</span>
-                </a>
-              </span>
+              <a href="folder" title="Manage..."
+                tal:attributes="
+                  href string:${item/absolute_url}/edit/tab_edit_new;
+                  title string:Manage '${item/id}'"><img src="%s" width="16" height="16" alt="%s"
+                tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
+              <a class="blacklink" href="title" title="id"
+                tal:attributes="href string:${item/absolute_url}/edit/tab_edit_new;
+                                 title string:id: ${item/id}">
+                <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_or_id_html()">no title</span>
+              </a>
             </div>
           </td>
         </tr>
@@ -94,17 +92,15 @@
   <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
 
   <td class="transparent">
-    <!-- inner table -->
+  <span tal:replace="nothing"> _____________________ objects subtable _____________________ </span>
 
-<span tal:replace="nothing"> _____________________ objects subtable _____________________ </span>
-
-<table cellspacing="0" cellpadding="5" border="0" width="96%" style="margin-left:20px;margin-right:20px;"
+<table cellspacing="0" cellpadding="4" border="0" width="96%" style="margin-left:20px;margin-right:20px;"
   tal:condition="silva_permissions/ChangeSilvaContent">
 <tr valign="top">
   <td colspan="2">
-    <p class="readable">
+    <p class="readable" style="margin-top:0.5em;">
       Following are descriptions of Silva objects that can be added at this location. Click a name to add it. For additional information about the item see the Silva documentation.
-      <br /><br />
+      <br />
     </p>
   </td>
 </tr>
@@ -114,14 +110,14 @@
 
 <tr valign="bottom">
   <td width="16"><img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(addable['name'])" /></td>
+    tal:replace="structure python:view.render_icon(addable['name'])" /></td>
   <td>
-    <span class="back4">
+    <div class="back4" style="margin-top:0.5em;">
       <a href="#"
-          tal:content="addable/name" 
-          tal:attributes="href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+')">Addable
-         </a>
-    </span>
+        tal:content="addable/name" 
+        tal:attributes="href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+')">Addable
+      </a>
+    </div>
   </td>
 </tr>
 
@@ -141,7 +137,9 @@
 </table>
 
     <tal:block condition="not:silva_permissions/ChangeSilvaContent">
-    Soryy, you're not authorized to add anything here.
+      <p>
+        Sorry, you're not authorized to add anything in this location.
+      </p>
     </tal:block>
 
   </td>
