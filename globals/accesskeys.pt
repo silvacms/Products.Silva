@@ -15,11 +15,11 @@
 <body>
 <a style="float:right;margin:0.7em 1em;"
   href="javascript:history.back();" 
-  title="access key: alt-b"
-  accesskey="b"
+  title="access key: alt-r"
+  accesskey="r"
   i18n:attributes="title"
-  i18n:translate="back">
-  back
+  i18n:translate="return">
+  return
 </a>
 <div class="header">
   <a class="icon"
@@ -211,6 +211,15 @@ Thanks to <a href="http://www.ethz.ch/">ETH Z&uuml;rich</a> for this trick.  <br
 </p>
 
 </div>
+
+<a style="float:right;margin:0.7em 1em;"
+  href="javascript:history.back();" 
+  title="access key: alt-r"
+  accesskey="r"
+  i18n:attributes="title"
+  i18n:translate="return">
+  return
+  </a>
 
 </body>
 </html>
