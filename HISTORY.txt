@@ -3,6 +3,8 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.3.7
+
   0.9.3.6
 
     Features added
