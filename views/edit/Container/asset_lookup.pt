@@ -93,10 +93,12 @@ function setReference() {
     // So element itself and not a NodeList returned *sigh*.
     reference = doc.mumble_form.mumble;
   }
-  retreived = reference.value;
-  splitpos = retreived.indexOf('||');
-  id = retreived.substring(0, splitpos)
-  value = retreived.substring(splitpos + 2, retreived.length);
+  // Split from value attribute, since NS4 does not know of a id attribute
+  retrieved = reference.value;
+  splitpos = retrieved.indexOf('||');
+  id = retrieved.substring(0, splitpos)
+  value = retrieved.substring(splitpos + 2, retrieved.length);
+  // Send back id and reference to calling window
   opener.insertAssetReference(id, value);
 }
 //-->
