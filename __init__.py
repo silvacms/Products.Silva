@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.91 $
+# $Revision: 1.92 $
 
 import Metadata
 import Folder, Root
@@ -12,7 +12,7 @@ import SemiGhost
 import AutoTOC
 import install
 import helpers # to execute the module_permission statements
-import mangle
+import mangle, batch
 from Products.Silva.ImporterRegistry import importer_registry
 from ExtensionRegistry import extensionRegistry
 import ExtensionService
@@ -140,7 +140,7 @@ else:
 
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
-    if name in ('mangle', ):
+    if name in ('mangle', 'batch', ):
         return 1
     return 0
 
