@@ -23,7 +23,7 @@ context.insert_strategy(node, new)
 # find widget for new node
 widget = context.service_editor.getWidget(new)
 
-node.sec_update_last_author_info()
+node.get_content().sec_update_last_author_info()
 
 # widget specific init
 widget.insert_init()
