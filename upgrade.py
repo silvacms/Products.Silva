@@ -294,7 +294,7 @@ def upgrade_using_registry(obj, version, stats={}):
         if stats['threshold'] > threshold:
             print '#### Commit sub transaction ####'
             get_transaction().commit(1)
-            o._p_jar.cacheGC()
+            obj._p_jar.cacheGC()
             stats['threshold'] = 0
                     
         if hasattr(o, 'objectValues'):
