@@ -46,7 +46,7 @@
 <metal:fill fill-slot="more_control">
 <form method="POST"
   action="."
-  tal:condition="here/service_layouts/get_installed_names">
+  tal:condition="here/service_layouts/show_layout_section">
   <table class="listing">
     <thead>
       <tr tal:replace="nothing">
