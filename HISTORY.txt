@@ -3,7 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
-  To be released
+  to be released
+
+    Bugs fixed
+
+      - Saving metadata uses Formulator forms for improved validation.
+
+  1.2
 
     Bugs fixed
 
