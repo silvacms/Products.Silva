@@ -356,7 +356,7 @@ table.green td {
 
 table.green tr.odd td {
   background-color: #b3c99c;
-
+}
 </dtml-let>
 
 /* end cascade */
