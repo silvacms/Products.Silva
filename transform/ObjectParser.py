@@ -13,10 +13,27 @@ Currently only minidom is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.4 $'
+__version__='$Revision: 1.5 $'
 
 from base import Element, Frag, Text
 import inspect
+
+#
+# convert - method wrapper
+#           maintains a conversion-stack in the context
+# 
+class convert_wrapper:
+    def __init__(self, forward):
+        self.forward = forward
+
+    def __call__(self, node, context):
+        print "called"
+        if not hasattr(context, 'stack'):
+            context.stack = []
+        context.stack.append(node)
+        res = self.forward(node, context)
+        context.stack.pop(node)
+        return res
 
 #
 # Transformation from Dom to our Nodes
@@ -31,10 +48,11 @@ class ObjectParser:
         self.typemap = {}
         for x,y in vars(spec).items():
             try:
-                if issubclass(y, Element):
+                if issubclass(y, Element) or issubclass(y, Text):
                     if hasattr(y, 'xmlname'):
                         x = y.xmlname
                     self.typemap[x]=y
+
             except TypeError:
                 pass
 
@@ -77,7 +95,7 @@ class ObjectParser:
                     res.append(cls(attrs, *childs))
 
             elif node.nodeType == node.TEXT_NODE:
-                res.append(Text(node.nodeValue))
+                res.append(self.typemap.get('Text', Text)(node.nodeValue))
             else:
                 self.unknown_types.append(node.nodeType)
         return res

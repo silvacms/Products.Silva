@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.15 $'
+__version__='$Revision: 1.16 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -33,6 +33,7 @@ class Context:
     def __init__(self, **kw):
         self.__dict__.update(kw)
         self.resultstack = []
+        self.stack = []
 
 class Node:
     def _matches(self, tag):
@@ -240,6 +241,12 @@ class Element(Node):
 
     def convert(self, context):
         return self
+
+    def convert_inner(self, context):
+        context.stack.append(self)
+        res = self.content.convert(context)
+        context.stack.pop()
+        return res
 
     def asBytes(self, encoding='UTF-8'):
         """ return canonical xml-conform representation  """

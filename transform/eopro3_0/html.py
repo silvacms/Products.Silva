@@ -22,12 +22,14 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.7 $'
+__version__='$Revision: 1.8 $'
 
 try:
     from transform.base import Element, Text, Frag
+    import transform.base as base
 except ImportError:
     from Products.Silva.transform.base import Element, Text, Frag
+    import Products.Silva.transform.base as base 
 
 import silva
 
@@ -51,7 +53,7 @@ class html(Element):
 class head(Element):
     def convert(self, context):
         """ ignore """
-        self.content.convert(context)
+        self.convert_inner(context)
 
 class meta(Element):
     def convert(self, context):
@@ -70,7 +72,7 @@ class body(Element):
     "html-body element"
     def convert(self, context):
         return silva.doc(
-            self.content.convert(context)
+            self.convert_inner(context)
         )
 
 class doctitle(Element):
@@ -79,29 +81,29 @@ class doctitle(Element):
 
 class term(Element):
     def convert(self, context):
-        return silva.dt(self.content.convert(context))
+        return silva.dt(self.convert_inner(context))
 
 class desc(Element):
     def convert(self, context):
-        return silva.dd(self.content.convert(context))
+        return silva.dd(self.convert_inner(context))
 
 class h1(Element):
     def convert(self, context):
         return silva.heading(
-            self.content.convert(context), 
+            self.convert_inner(context), 
             type="normal")
 
 class h2(Element):
     def convert(self, context):
         return silva.heading(
-            self.content.convert(context), 
+            self.convert_inner(context), 
             type="normal")
 
 class h3(Element):
     ""
     def convert(self, context):
         result = silva.heading(
-            self.content.convert(context),
+            self.convert_inner(context),
             type="normal"
             )
         return self.process_result(result, context)
@@ -116,7 +118,7 @@ class h4(h3):
     ""
     def convert(self, context):
         result = silva.heading(
-            self.content.convert(context),
+            self.convert_inner(context),
             type="sub"
             )
         return self.process_result(result, context)
@@ -130,7 +132,7 @@ class h5(h3):
             list context and therefore converted to a subheading.
         """
         result = silva.heading(
-            self.content.convert(context),
+            self.convert_inner(context),
             type="subsub",
             )
         return self.process_result(result, context)
@@ -141,7 +143,7 @@ class h6(h3):
             used h6 somewhere 
         """
         result = silva.heading(
-            self.content.convert(context),
+            self.convert_inner(context),
             type="paragraph",
             )
         return self.process_result(result, context)
@@ -152,7 +154,7 @@ class h7(h3):
             used h6 somewhere 
         """
         result = silva.p(
-            self.content.convert(context),
+            self.convert_inner(context),
             type="normal",
             )
         return self.process_result(result, context)
@@ -162,6 +164,8 @@ class p(Element):
         in silva-xml. 
     """
     def convert(self, context):
+        context.stack.append(self)
+
         pre,img,post = self.find_and_partition('img')
         type = self.attrs.get('silva_type', None)
         if pre:
@@ -174,6 +178,7 @@ class p(Element):
         if not (pre or img or post):
             pre = silva.p(type=type)
 
+        context.stack.pop()
         return Frag(
             pre, 
             img,
@@ -225,7 +230,7 @@ class ul(Element):
         type = self.get_type()
 
         return silva.list(
-            self.content.convert(context),
+            self.convert_inner(context),
             type=type
         )
 
@@ -236,7 +241,7 @@ class ul(Element):
 
         lastli = None
         content = Frag()
-        for tag in self.content.convert(context):
+        for tag in self.convert_inner(context):
             name = tag.name()
             if name == 'li':
                 lastli = tag
@@ -308,13 +313,13 @@ class ol(ul):
 class li(Element):
     def convert(self, context):
         return silva.li(
-            self.content.convert(context),
+            self.convert_inner(context),
             )
 
 class strong(Element):
     def convert(self, context):
         return silva.strong(
-            self.content.convert(context),
+            self.convert_inner(context),
             )
 
 class b(strong):
@@ -323,7 +328,7 @@ class b(strong):
 class em(Element):
     def convert(self, context):
         return silva.em(
-            self.content.convert(context),
+            self.convert_inner(context),
             )
 
 class i(em): 
@@ -332,27 +337,27 @@ class i(em):
 class u(Element):
     def convert(self, context):
         return silva.underline(
-            self.content.convert(context),
+            self.convert_inner(context),
             )
 
 class sub(Element):
     def convert(self, context):
         return silva.sub(
-            self.content.convert(context),
+            self.convert_inner(context),
             )
 
 class sup(Element):
     def convert(self, context):
         return silva.super(
-            self.content.convert(context),
+            self.convert_inner(context),
             )
 
 class span(Element):
     def convert(self, context):
         style = self.attrs.get('style','')
         if style.startswith('text-decoration:underline'):
-            return silva.underline(self.content.convert(context))
-        return self.content.convert(context)
+            return silva.underline(self.convert_inner(context))
+        return self.convert_inner(context)
 
 class font(Element):
     def convert(self, context):
@@ -363,16 +368,16 @@ class font(Element):
                }.get(color)
         if tag:
             return tag(
-                self.content.convert(context)
+                self.convert_inner(context)
             )
         else:
-            return self.content.convert(context)
+            return self.convert_inner(context)
 
 class a(Element):
     def convert(self, context):
         url = self.attrs['href']
         context.link = url
-        content = self.content.convert(context)
+        content = self.convert_inner(context)
         del context.link
 
         if len(content)==1 and content.find('image'):
@@ -396,7 +401,7 @@ class img(Element):
 
         alignment=self.attrs.get('align')
         return silva.image(
-            self.content.convert(context),
+            self.convert_inner(context),
             path=src,
             link=link,
             alt=self.attrs.get('alt',''),
@@ -413,7 +418,7 @@ class pre(Element):
 
     def convert(self, context):
         return silva.pre(
-            self.content.convert(context)
+            self.convert_inner(context)
         )
 
 class table(Element):
@@ -422,7 +427,7 @@ class table(Element):
         if len(rows)>0:
             cols = len(rows[0].find('td'))
         return silva.table(
-                self.content.convert(context),
+                self.convert_inner(context),
                 columns=self.attrs.get('cols', cols),
                 column_info = self.attrs.get('silva_column_info'),
                 type=self.attrs.get('silva_type')
@@ -431,14 +436,18 @@ class table(Element):
 class tr(Element):
     def convert(self, context):
         return silva.row(
-            self.content.convert(context)
+            self.convert_inner(context)
         )
 
 class td(Element):
     def convert(self, context):
-        return silva.field(
-            self.content.convert(context)
-        )
+        return silva.field(self.convert_inner(context))
+
+class Text(base.Text):
+    def convert(self, context):
+        if context.stack and context.stack[-1].name() == 'td':
+            return silva.p(base.Text.convert(self, context))
+        return base.Text.convert(self, context)
 
 """
 current mapping of tags with silva
@@ -466,3 +475,4 @@ def fix_document(html):
         return html
     except ValueError:
         pass
+

@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 import unittest
 
 # 
@@ -226,6 +226,23 @@ class SilvaXMLObjectParser(unittest.TestCase):
         self.assertEquals(len(two[0]), 2)
         self.assert_(two[1])
         self.assertEquals(len(two[2]), 1)
+
+
+    def test_convert_method_context_stack(self):
+        class my:
+            class a(base.Element):
+                def convert(self, context):
+                    self.gotten = context.stack[:]
+                    self.convert_inner(context)
+
+            class b(a):
+                pass
+
+        parser = ObjectParser(my)
+        node = parser.parse('<a><b></b></a>')
+        cnode = node.conv()
+        b = node.find_one('a').find_one('b')
+        self.assertEquals(b.gotten.pop(), node.find_one('a'))
 
     def test_method_compact(self):
         node= self.parser.parse(self.basicdoc)

@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 import unittest
 
 # 
@@ -534,6 +534,17 @@ class RoundtripWithTidy(Base):
                           </row>
                       </table>''' 
         tablenode = self._check_string(tabledoc)
+
+    def test_table_p_coercion(self):
+        frag = '<table cols="1"><tr><td>1<p>2</p></td></tr></table>'
+        htmlnode = self.parse_htmlfrag(frag)
+        silvanode = htmlnode.conv()
+
+        table = silvanode.find_one('table')
+        row = table.find_one('row')
+        field = row.find_one('field')
+        p = field.find('p')
+        self.assertEquals(p.extract_text(), '12')
 
     def _check_table(self, **kwargs):
         attrs = []
