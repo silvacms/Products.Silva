@@ -8,14 +8,12 @@
   global objects python:model.get_tree();
   global silva_permissions here/get_silva_permissions;
   " />
-
 <div class="margins">
   <h2><img src="%s" width="16" height="16" alt="%s"
         tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
     Contents of <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
   </h2>
 </div>
-
 <form action="." name="silvaObjects" method="POST">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
 <span tal:replace="nothing"> ______________ framing table header ______________ </span>
@@ -37,6 +35,10 @@
     <span class="tablehead3"><span tal:replace="model/id">id</span>
   </td>
   <td align="right">
+    <tal:block condition="not:silva_permissions/ChangeSilvaContent">
+    &nbsp;
+    </tal:block>
+    <tal:block condition="silva_permissions/ChangeSilvaContent">
     <select name="meta_type"
       tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value">
       <option value="" disabled>Select...</option>
@@ -47,6 +49,7 @@
     </select>
     &nbsp;
     <input class="button" type="submit" name="add_object:method" value=" Add " title="Add an object to this folder" />&nbsp;&nbsp;
+    </tal:block>
   </td>
 </tr>
 <tr>
@@ -141,12 +144,12 @@
     <input type="checkbox" name="ids:list" value="value"
       tal:attributes="value default/id" />
     <a href="index" title="Edit this item"
-      tal:attributes="href python:default.absolute_url()+ '/edit/tab_edit'"><img tal:replace="structure python:view.render_icon(default.meta_type)" /></a>
+      tal:attributes="href python:here.get_editor_link(default)"><img tal:replace="structure python:view.render_icon(default.meta_type)" /></a>
   </td>
   <span tal:replace="nothing"> _______ id cell _______ </span>
   <td>
     <a class="blacklink" href="default" title="Edit"
-      tal:attributes="href python:default.absolute_url() + '/edit/tab_edit';
+      tal:attributes="href python:here.get_editor_link(default);
                       class python:view.get_status_style(default)"
       tal:content="string: ${default/id} of...">
       index
@@ -197,12 +200,12 @@
     <input type="checkbox" name="ids:list" value="value"
       tal:attributes="value item/id" />
     <a href="object" title="Edit"
-      tal:attributes="href string:${item/absolute_url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
+      tal:attributes="href python:here.get_editor_link(item)"><img tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
   </td>
   <span tal:replace="nothing"> _______ id cell _______ </span>
   <td>
     <a title="Edit"
-      tal:attributes="href string:${item/absolute_url}/edit/tab_edit;
+      tal:attributes="href python:here.get_editor_link(item);
       class python:view.get_status_style(item)">
       <span tal:replace="item/id">id</span>
     </a>
@@ -307,11 +310,11 @@ There are no active content objects in this folder.
     <input type="checkbox" name="ids:list" value="value"
       tal:attributes="value item/id" />
     <a href="object" title="Edit this (nonactive) item"
-      tal:attributes="href string:${item/absolute_url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
+      tal:attributes="href python:here.get_editor_link(item)"><img tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
   </td>
    <td>
     <a title="Edit"
-      tal:attributes="href string:${item/absolute_url}/edit/tab_edit;
+      tal:attributes="href python:here.get_editor_link(item);
       class python:view.get_status_style(item)">
       <span tal:replace="item/id">id</span>
     </a>
@@ -382,12 +385,12 @@ There are no active content objects in this folder.
     <input type="checkbox" name="ids:list" value="value"
       tal:attributes="value asset/id" />
     <a href="asset" title="Edit this asset"
-      tal:attributes="href string:${asset/absolute_url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(asset.meta_type)" /></a>
+      tal:attributes="href python:here.get_editor_link(asset)"><img tal:replace="structure python:view.render_icon(asset.meta_type)" /></a>
   </td>
   <span tal:replace="nothing"> _______ id + title cell _______ </span>
   <td>
     <a class="blacklink" href="asset" title="Edit this asset"
-      tal:attributes="href string:${asset/absolute_url}/edit/tab_edit">
+      tal:attributes="href python:here.get_editor_link(asset)">
       <span tal:replace="asset/id">id</span>
     </a>
   </td>
