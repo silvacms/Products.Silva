@@ -357,7 +357,6 @@ table.listing th.empty {
     border-bottom: &dtml-listingBorder;;
 }
 
-/* these alignment selectors are used in frontent.css too */
 table.listing th.align-left, table.listing td.align-left {
   text-align: left;
 }

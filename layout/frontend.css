@@ -76,6 +76,15 @@ table.silvatable tr.rowheading {
 table.silvatable td {
   border-right: none ! important;
 } 
+table.silvatable th.align-left, table.silvatable td.align-left {
+  text-align: left;
+}
+table.silvatable th.align-center, table.silvatable td.align-center {
+  text-align: center;
+}
+table.silvatable th.align-right, table.silvatable td.align-right {
+  text-align: right;
+}
 
 table.plain {
   border-style: none;
