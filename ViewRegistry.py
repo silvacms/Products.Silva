@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner
@@ -32,6 +32,10 @@ class ViewRegistry(Folder.Folder):
         'www/viewRegistryAssociations',
         globals(),  __name__='manage_assocationsForm')
     
+    # needed, as this uses here/manage_page_header
+    # which need the "manager" role
+    security.declareProtected('View management screens', 'manage_associationsForm')
+
     def __init__(self, id):
         self.id = id
         self.view_types = {}
