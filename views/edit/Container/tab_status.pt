@@ -269,7 +269,7 @@
           title="reject pending request for approval: alt-j"
         />
         <input class="button"
-          style="background:#007746;"
+          style="background:#008c55;"
           type="submit"
           name="tab_status_revoke:method"
           value="Revoke"
@@ -326,7 +326,7 @@
           accesskey="w"
         />
         <input class="button"
-          style="background:#007746;"
+          style="background:#008c55;"
           accesskey="v"
           name="tab_status_revoke:method"
           title="revoke approval of approved versions: alt-v"
