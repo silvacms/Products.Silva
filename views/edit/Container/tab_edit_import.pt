@@ -62,7 +62,7 @@
 
           <tr class="focus-cycle" valign="top">
             <td align="left">
-                File to upload:
+                File to import:
             </td>
             <td align="right">
             <span class="warning">
@@ -105,7 +105,7 @@
 
           <tr>
             <td colspan="4">
-              <h3>Upload Word document (.doc)
+              <h3>Import Word document (.doc)
               </h3>
             </td>
           </tr>
@@ -127,7 +127,7 @@
 
           <tr class="focus-cycle" valign="top">
             <td align="left">
-                File to upload:
+                File to import:
             </td>
             <td align="right">
             <span class="warning">
@@ -138,13 +138,13 @@
                 <input type="file" size="40" name="importfile" />
             </td>
             <td align="right">
-                Choose a Word file to upload. Note that this file will be processed and then placed on the list of finished items, so you can import it anywhere in Silva.
+                Choose a Word file to import. Note that this file will be processed and then placed on the list of finished items, so you can import it anywhere in Silva.
             </td>
           </tr>
 
           <tr class="focus-cycle" valign="top">
             <td align="left">
-                E-mail address:
+                Email address:
             </td>
             <td align="right">
             <span class="warning">
@@ -155,7 +155,7 @@
                 <input type="text" name="email" style="width: 100%" />
             </td>
             <td align="right">
-                An e-mail will be sent to you when the item is processed.
+                An email will be sent to you when the item is processed.
             </td>
           </tr>
 
@@ -178,7 +178,7 @@
 
           <tr class="controls">
             <td colspan="4" align="right">
-                <input class="button" type="submit" value=" Upload " name="tab_edit_import_docma:method" title="Upload a Word document from your local drive: alt-u" accesskey="u" />
+                <input class="button" type="submit" value=" Import " name="tab_edit_import_docma:method" title="Import a Word document from your local drive: alt-u" accesskey="u" />
             </td>
           </tr>
         </table>
