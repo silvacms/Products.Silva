@@ -98,7 +98,7 @@
                     ___ element name column ___
                   </tal:block>
                   <td class="align-right">
-                    <tal:block content="element/title">
+                    <tal:block content="element/title" i18n:translate="">
                     Element name
                     </tal:block>
                     <span class="warning"
@@ -140,7 +140,7 @@
                     ___ element desc. column ___
                   </tal:block>
                   <td>
-                    <tal:block content="structure element/description">
+                    <tal:block content="structure element/description" i18n:translate="">
                       Element description
                     </tal:block>
                     <span class="error"
