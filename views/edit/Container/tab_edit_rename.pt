@@ -12,112 +12,110 @@
     global active_tab string:tab_edit;
   ">
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
+<metal:block fill-slot="main"
+  tal:define="objects view/REQUEST/ids">
 
 <tal:condition condition="python:view.REQUEST.has_key('ids')">
-<tal:define define="global objects view/REQUEST/ids" />
 
 <div class="focus-rectangle">
-<form action="tab_edit_rename_submit" method="POST">
-<table class="listing">
-<thead>
-  <tr>
-    <td class="top location" colspan="4">
-    <h2>
-      <img tal:replace="structure python:view.render_icon(model)" />t
-      <span i18n:translate="rename_objects_in">rename objects in</span>       
-      &#xab;<tal:block content="model/get_title_editable" />&#xbb;
-    </h2>
-    </td>
-  </tr>
-</thead>
+  <form action="tab_edit_rename_submit" method="POST">
+    <table class="listing">
+      <thead>
+        <tr>
+          <td class="top location" colspan="4">
+          <h2>
+            <img tal:replace="structure python:view.render_icon(model)" />
+            <span i18n:translate="rename_objects_in">rename objects in</span>       
+            &#xab;<tal:block content="title" />&#xbb;
+          </h2>
+          </td>
+        </tr>
+      </thead>
 
-<tbody>
-  <tr>
-    <th class="align-right" i18n:translate="aspect">
-      aspect
-    </th>
-    <th i18n:translate="old">
-      old
-    </th>
-    <th i18n:translate="new">
-      new
-    </th>
-    <th i18n:translate="notes">
-    notes
-    </th>
-  </tr>
+      <tbody>
+        <tr>
+          <th class="align-right" i18n:translate="aspect">
+            aspect
+          </th>
+          <th i18n:translate="old">
+            old
+          </th>
+          <th i18n:translate="new">
+            new
+          </th>
+          <th i18n:translate="notes">
+          notes
+          </th>
+        </tr>
 
-  <tal:repeat repeat="objectid objects">
-  <tal:define define="object python:getattr(model, objectid)">
-  <tal:cycle define="oddrow repeat/objectid/odd">
-  <tr class="odd" valign="top">
-  <td class="align-right" i18n:translate="id">
-    id
-  </td>
-  <td>
-    <span tal:replace="object/getId" />&nbsp;
-  </td>
-  <td>
-    <input type="text" name="name" style="width: 100%" value="value"
-      tal:attributes="name string:id_${object/getId}; value object/getId" />
-  </td>
-  <td>
-  </td>
-  </tr>
+        <tal:repeat repeat="objectid objects">
+        <tal:define define="object python:getattr(model, objectid)">
+        <tr class="odd" valign="top">
+          <td class="align-right" i18n:translate="id">
+            id
+          </td>
+          <td>
+            <span tal:replace="object/getId" />&nbsp;
+          </td>
+          <td>
+            <input type="text" name="name" style="width: 100%" value="value"
+              tal:attributes="name string:id_${object/getId}; value object/getId" />
+          </td>
+          <td>
+          </td>
+          </tr>
 
-  <tr class="even" valign="top">
-  <td class="align-right" i18n:translate="title">
-    title
-  </td>
-  <td>
-    <span tal:condition="python: object.getId() != 'index'"
-      tal:replace="python:object.get_title_or_id_editable()" />
-    <span tal:condition="python: object.getId() == 'index'"
-      tal:replace="object/aq_inner/aq_parent/get_title" />
-  </td>
-  <td width="45%">
-    <input
-      type="text"
-      name="name"
-      style="width: 100%"
-      value="value"
-      tal:condition="python: object.getId() != 'index'"
-      tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
-    <input
-      type="text"
-      name="name"
-      style="width: 100%"
-      tal:condition="python: object.getId() == 'index'"
-      tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
-  </td>
-  <td>
-    <span class="error" tal:condition="python: object.getId() == 'index'"
-      i18n:translate="changes_the_title_of_the_folder">
-      Changes the title of the folder!
-    </span>
-  </td>
-  </tr>
-  <tr class="divider"
-    tal:condition="not: repeat/objectid/end">
-    <td colspan="5">
-   </td>
-  </tr>
-  </tal:cycle>
-  </tal:define>
-  </tal:repeat>
-</tbody>
+          <tr class="even" valign="top">
+          <td class="align-right" i18n:translate="title">
+            title
+          </td>
+          <td>
+            <span tal:condition="python: object.getId() != 'index'"
+              tal:replace="python:object.get_title_or_id_editable()" />
+            <span tal:condition="python: object.getId() == 'index'"
+              tal:replace="object/aq_inner/aq_parent/get_title" />
+          </td>
+          <td width="45%">
+            <input
+              type="text"
+              name="name"
+              style="width: 100%"
+              value="value"
+              tal:condition="python: object.getId() != 'index'"
+              tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
+            <input
+              type="text"
+              name="name"
+              style="width: 100%"
+              tal:condition="python: object.getId() == 'index'"
+              tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
+          </td>
+          <td>
+            <span class="error" tal:condition="python: object.getId() == 'index'"
+              i18n:translate="changes_the_title_of_the_folder">
+              Changes the title of the folder!
+            </span>
+          </td>
+        </tr>
+        <tr class="divider"
+          tal:condition="not: repeat/objectid/end">
+          <td colspan="5">
+          </td>
+        </tr>
+        </tal:define>
+        </tal:repeat>
+      </tbody>
 
-<tfoot>
-  <tr class="controls">
-    <td colspan="4">
-      <input class="button" style="float:right;" type="submit" value=" Rename " title="access key: alt-r" accesskey="r" />
-      <input class="cancel" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="access key: alt-c" accesskey="c" />
-    </td>
-  </tr>
-</tfoot>
-</table>
-</form>
+      <tfoot>
+        <tr class="controls">
+          <td colspan="4">
+            <input class="button" style="float:right;" type="submit" value=" Rename " title="access key: alt-r" accesskey="r" />
+            <input class="cancel" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="access key: alt-c" accesskey="c" />
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
 </div>
 
 </tal:condition>

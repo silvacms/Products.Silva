@@ -27,53 +27,47 @@
          tal:replace="structure view/edit">Content</model>
 
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
-<tal:block tal:condition="python:unapproved_version and is_locked">
-<div class="feedback"><span class="warning">
-<b>Note: </b>This object is already being edited by another user, and is temporarily locked.
-</span>
-</div>
-<div class="margins">
-<form action="tab_edit_break_lock" method="POST"><input class="warningbutton" type="submit" value="Break lock" title="Somebody else just edited this item, unlock it: alt-u" accesskey="u" /></form>
-</div>
-</tal:block>
+<tal:condition condition="python:unapproved_version and is_locked">
+<form action="tab_edit_break_lock" method="POST">
+  <div class="feedback"><span class="warning">
+    <b>Note: </b>This object is already being edited by another user, and is temporarily locked.
+    </span><br />
+    <input class="warning" style="margin-left:0;" type="submit" value="Break lock" title="Somebody else just edited this item, unlock it: alt-u" accesskey="u" />
+  </div>
+</form>
+</tal:condition>
 
 <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
-<div tal:condition="python: not model.get_next_version()">
+<tal:condition condition="python: not model.get_next_version()">
 <form action="tab_edit_make_copy" method="POST">
-<div class="feedback">
-<b>Note: </b>There is already a published (or closed) version of this content. Changes can only be made in a new version.
-</div>
-<div class="margins">
-<input class="button" type="submit" value="Create new version" title="Work on a new version while the previous one stays online: alt-c" accesskey="c" />
-</div>
+  <div class="feedback">
+    <b>Note: </b>There is already a published (or closed) version of this content. Changes can only be made in a new version.<br />
+    <input class="button" style="margin-left:0;" type="submit" value="Create new version" title="Work on a new version while the previous one stays online: alt-c" accesskey="c" />
+    </div>
 </form>
-</div>
+</tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
-<div tal:condition="python: model.get_approved_version()">
+<tal:condition condition="python: model.get_approved_version()">
 <form action="tab_edit_revoke_approval" method="POST">
-<div class="feedback">
-<b>Note: </b>This version is approved but not yet public. In order to make changes you need to first revoke the approval.
-</div>
-<div class="margins">
-<input class="button" type="submit" value="Revoke approval" title="'Un-approve' this item in order to edit: alt-r" accesskey="r" />
-</div>
+  <div class="feedback">
+    <b>Note: </b>This version is approved but not yet public. In order to make changes you need to first revoke the approval.<br />
+    <input class="button" style="margin-left:0;" type="submit" value="Revoke approval" title="'Un-approve' this item in order to edit: alt-r" accesskey="r" />
+  </div>
 </form>
-</div>
+</tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
-<div tal:condition="python:model.is_version_approval_requested()">
+<tal:condition condition="python:model.is_version_approval_requested()">
 <form action="tab_status_withdraw" method="POST">
-<div class="feedback">
-<b>Note: </b>This version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
-</div>
-<div class="margins">
-<input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
-<input type="hidden" name="tab_name" value="edit" />
-<input class="button" type="submit" value="Withdraw request" title="Withdraw a request for approval in order to edit: alt-w" accesskey="w" />
-</div>
+  <div class="feedback">
+    <b>Note: </b>This version has an request for approval pending. In order to make changes you need to first withdraw the pending request.<br />
+    <input class="button" style="margin-left:0;" type="submit" value="Withdraw request" title="Withdraw a request for approval in order to edit: alt-w" accesskey="w" />
+    <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
+    <input type="hidden" name="tab_name" value="edit" />
+  </div>
 </form>
-</div>
+</tal:condition>
 
 </metal:block>
 </metal:block>

@@ -28,7 +28,7 @@
 ">
 
 <head>
-<title tal:content="model/get_title_or_id">
+<title tal:content="title">
   Title
 </title>
 <tal:block define="rft refresh_time | python: 0">

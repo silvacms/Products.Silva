@@ -39,8 +39,8 @@
 
 <tal:block replace="nothing">
   _______ macro vein _______
-  _______ renders the sidebar vein navigation for containers and content objects _______
-  _______ containers have a slot for the vein links of the content tree_______
+  _______ renders the vein stack in the sidebar for containers and content objects _______
+  _______ container templates have a slot for the vein stack of the content tree_______
 </tal:block>
 <metal:define-macro define-macro="vein">
           <table class="listing">
@@ -80,6 +80,7 @@
                   </a>
                   <a class="normal"
                     style="padding: 0 1em;"
+                    title="reload screen"
                     tal:content="breadcrumb_vein"
                     tal:attributes="href vein_id">
                     vein
@@ -94,51 +95,5 @@
             </tbody>
           </table>
 </metal:define-macro>
-
-
-<tal:block replace="nothing">
-  _______ macro content_sidebar _______
-  _______ renders the header of the sidebar navigation _______
-  _______ only for content _______
-  _______ DEPRECATED, delete in next checkin _______
-</tal:block>
-<metal:block define-macro="content_sidebar">
-  <table class="listing">
-    <thead>
-      <tr>
-        <th class="top">
-          <a class="up"
-            href="../../edit/tab_edit"
-            title="up one level: alt-]"
-            accesskey="]"
-            tal:attributes="href string:../../edit/${vein_id}">
-            <img width="9"
-              height="9"
-              border="0"
-              alt="Up one level"
-              tal:attributes="src string:${root_url}/globals/up_level.gif" />
-          </a>
-          <a class="top"
-            title="up to containing publication: alt-["
-            accesskey="["
-            tal:attributes="href string:${containing_publication/absolute_url}/edit/${vein_id}">
-            <img width="9"
-            height="9"
-            border="0"
-            alt="Up to containing Publication"
-            tal:attributes="src string:${root_url}/globals/up_tree.gif" />
-          </a>
-          <a class="normal"
-            style="padding: 0 1em;"
-            title="reload screen"
-            tal:attributes="href vein_id"
-            tal:content="string:${breadcrumb_vein}">
-            vein
-          </a>
-        </th>
-      </tr>
-    </thead>
-  </table>
-</metal:block>
 
 </html>

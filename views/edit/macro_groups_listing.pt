@@ -74,7 +74,7 @@
             </th>
           </tr>
           <tr valign="top">
-            <td style="padding: 0;">
+            <td style="padding:0;">
               <select class="clipboard"
                 multiple="multiple"
                 name="groups:list"

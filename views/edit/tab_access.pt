@@ -28,10 +28,10 @@
             </metal:fill-slot>
           </metal:use-macro>
         </td>
+        <tal:block replace="nothing">
+          __________________ main __________________
+        </tal:block>
         <td class="main">
-          <tal:block replace="nothing">
-            __________________ main __________________
-          </tal:block>
           <tal:block replace="nothing"> 
             ________________ user roles management ________________ 
           </tal:block>
@@ -49,9 +49,7 @@
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />
                       user roles for
-                      &#xab;<span tal:replace="string:${model/get_title_editable}">
-                        title
-                      </span>&#xbb;
+                      &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
                     </h2>
                   </td>
                 </tr>
@@ -279,7 +277,8 @@
         _______________ group roles management ________________
       </tal:block>
       <tr>
-        <td class="main">
+        <td class="main"
+          style="padding-top:2em;">
           <tal:block condition="python:model.sec_groups_enabled()">
             <div class="alert"
               tal:condition="not:group_service">
@@ -308,9 +307,7 @@
                         <h2 tal:attributes="title string:id: ${model/id}">
                           <img tal:replace="structure python:view.render_icon(model)" />
                           group roles for
-                          &#xab;<span tal:replace="string:${model/get_title_editable}">
-                            title
-                          </span>&#xbb;
+                          &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
                         </h2>
                       </td>
                     </tr>
@@ -426,7 +423,8 @@
             </tal:block>
           </tal:block>
         </td>
-        <td class="right">
+        <td class="right"
+          style="padding-top:2em ! important;">
           <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
             <div style="text-align:right;"
               metal:fill-slot="listing_actions">
@@ -437,19 +435,18 @@
                 <option value="None">
                   select role:
                 </option>
-                <option define="lastclass string:focus-cycle"
-                  value="role"
+                <option value="role"
                   tal:repeat="role model/sec_get_roles"
                   tal:content="role"
                   tal:attributes="value role">
-                  Role name
+                  Role
                 </option>
               </select>
               <input class="button"
-                name="access_assign_to_group:method"
-                title="assign selected role to selected group(s)"
                 type="submit"
+                name="access_assign_to_group:method"
                 value="Assign"
+                title="assign selected role to selected group(s)"
               />
           </div>
         </metal:block>        
@@ -459,15 +456,15 @@
         _____________________ misc tools ______________________
       </tal:block>
       <tr>
+        <tal:block replace="nothing"> 
+          ___________ access restriction by role __________
+        </tal:block>
         <td class="main">
-            <tal:block replace="nothing"> 
-              ___________ access restriction by role __________
-            </tal:block>
-            <form action="minimal_access_role_submit"
-              method="POST"
-              tal:define="
-                minimal_role model/sec_minimal_view_role;">
-            <table class="listing">
+          <form action="minimal_access_role_submit"
+            method="POST"
+            tal:define="
+              minimal_role model/sec_minimal_view_role;">
+            <table class="listing sublisting">
               <thead>
                 <tal:block replace="nothing"> 
                   _____________ vein + title row ______________
@@ -524,7 +521,7 @@
                       type="submit"
                       value="Set restriction"
                       title="restrict access to users with a specific role"                      
-                     />
+                    />
                   </td>
                 </tr>
               </tfoot>
@@ -635,8 +632,10 @@
                 <td class="align-right">
                   <a class="navigation"
                     href="tab_access_authorized_below"
-                    title="retrieve a comma separated list of user email addresses">
-                    &nbsp;List email addresses...
+                    title="retrieve a comma separated list of user email addresses"
+                    accesskey="e"
+                  >
+                    &nbsp;List <u>e</u>mail addresses...
                   </a>
                 </td>
               </tr>

@@ -35,7 +35,8 @@
             </td>
           </tr>
           <tr>
-            <th width="30%">
+            <th class="align-right"
+              width="30%">
               Element
             </th>
             <th>
@@ -47,12 +48,12 @@
               tal:define="
                 element binding/?set_name/?element_name;                  
                 iterate repeat/element_name/odd;"
-              tal:attributes="
-                class python: iterate and 'odd' or 'even';">
+              tal:attributes="class python: iterate and 'odd' or 'even';">
               <tal:block replace="nothing">
                 ___ element name column ___
               </tal:block>
-              <td tal:content="element/title">
+              <td class="field-title"
+                tal:content="element/title">
                 Element name
               </td>
               <tal:block replace="nothing">
@@ -113,7 +114,7 @@
             </td>
           </tr>
           <tr>
-            <th>
+            <th class="align-right">
               Element
             </th>
             <th>
@@ -137,7 +138,8 @@
               <tal:block replace="nothing">
                 ___ element name column ___
               </tal:block>
-              <td tal:content="element/title">
+              <td class="field-title"
+                tal:content="element/title">
                 Element name
                 <span class="warning"
                   tal:condition="element/isRequired">

@@ -59,7 +59,7 @@
                         href="settings_addables"
                         title="change the addables allowed in this publication: alt-a"
                         accesskey="c"
-                        tal:condition="python:type == 'Silva Publication' or 'Silva Root'">
+                        tal:condition="python:type == 'Silva Publication' or type == 'Silva Root'">
                         Configure <u>a</u>ddables...
                       </a>
                     </div>
