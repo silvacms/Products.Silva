@@ -1,4 +1,4 @@
-# Version: $Revision: 1.4 $
+# Version: $Revision: 1.5 $
 import Globals, AccessControl, Products
 from AccessControl import Permissions
 
@@ -39,3 +39,5 @@ setDefaultRoles(ApproveSilvaContent, ('Manager', 'ChiefEditor', 'Editor'))
 ChangeSilvaAccess = 'Change Silva access'
 setDefaultRoles(ChangeSilvaAccess, ('Manager', 'ChiefEditor'))
 
+ChangeSilvaViewRegistry = 'Change Silva View Registry'
+setDefaultRoles(ChangeSilvaViewRegistry, ('Manager'))

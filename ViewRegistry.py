@@ -1,4 +1,4 @@
-# Version: $Revision: 1.11 $
+# Version: $Revision: 1.12 $
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner
@@ -6,6 +6,7 @@ from OFS import Folder, SimpleItem, ObjectManager, PropertyManager, FindSupport
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
+import SilvaPermissions
 # misc
 from helpers import add_and_edit
 
@@ -34,6 +35,9 @@ class ViewRegistry(Folder.Folder):
         self.view_types = {}
 
     # MANIPULATORS
+    
+    security.declareProtected(SilvaPermissions.ChangeSilvaViewRegistry,
+                              'register')
     def register(self, view_type, meta_type, view_path):
         """Register a view path with the registry. Can also be used
         to change what view path is registered.
@@ -41,13 +45,23 @@ class ViewRegistry(Folder.Folder):
         self.view_types.setdefault(view_type, {})[meta_type] = view_path
         self.view_types = self.view_types
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaViewRegistry,
+                              'unregister')
     def unregister(self, view_type, meta_type):
         """Unregister view_type, meta_type
         """
         del self.view_types[view_type][meta_type]
         self.view_types = self.view_types
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaViewRegistry,
+                              'clear')
+    def clear(self):
+        """Clear all view_types associations.
+        """
+        self.view_types = {}
+    
     # ACCESSORS
+    
     def get_view_types(self):
         """Get all view types, sorted.
         """
