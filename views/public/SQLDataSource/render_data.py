@@ -25,6 +25,18 @@ except:
 # than is used to be
 caption = mangle.entities(datasource.get_title())
 data_encoding = datasource.get_data_encoding()
+def ustr(data, enc):
+    if data is None:
+        return u''
+    elif not enc:
+        return data
+    elif same_type(data, ''):
+        return unicode(data, enc, 'replace')
+    elif same_type(data, u''):
+        return data
+    else:
+        return unicode(str(data), enc, 'replace')
+
 type = u'listing'
 show_headings = u'true'
 show_caption = u'true'
@@ -33,7 +45,7 @@ table_data = []
 if show_headings == 'true':
     table_data.append(u"""<tr class="rowheading">""")
     for name in data.names():
-        table_data.append(u"""<td align="%s">\n  %s\n</td>""" % (u'left', unicode(name, data_encoding, 'replace') ))
+        table_data.append(u"""<td align="%s">\n  %s\n</td>""" % (u'left', ustr(name, data_encoding) ))
     table_data.append(u"""</tr>""")
 
 rownr = 0
@@ -47,7 +59,7 @@ for row in data:
         elif not same_type(field, '') and not same_type(field, u''):
             field = str(field)
         elif same_type(field, ''):
-            field = unicode(field, data_encoding, 'replace')
+            field = ustr(field, data_encoding)
         col += 1        
         row_data.append(
             u"""<td align="%s">\n  %s\n</td>""" % (u'left', field))
