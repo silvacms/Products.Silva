@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.27 2003/05/15 14:07:53 jw Exp $
+# $Id: Image.py,v 1.28 2003/05/15 16:25:12 jw Exp $
 
 # Python
 import re
@@ -186,8 +186,8 @@ class Image(Asset):
             image_data = StringIO()
             pil_image.save(image_data, self.web_format)
             del(pil_image)
-            image = OFS.Image.Image('custom_image', self.get_title().encode('utf-8')), 
-                image_data)
+            image = OFS.Image.Image(
+                'custom_image', self.get_title().encode('utf-8'), image_data)
         elif not hires and not webformat:
             raise ValueError, "Low resolution image in original format is " \
                 "not supported"
@@ -237,8 +237,8 @@ class Image(Asset):
         web_image = image.resize((width, height), PIL.Image.BICUBIC)
         web_image = self._prepareWebFormat(web_image)
         web_image.save(web_image_data, self.web_format)
-        self.image = OFS.Image.Image('image', self.get_title().encode('utf-8')), 
-            web_image_data)
+        self.image = OFS.Image.Image(
+            'image', self.get_title().encode('utf-8'), web_image_data)
 
     def _prepareWebFormat(self, pil_image):
         """converts image's mode if necessary"""
