@@ -94,7 +94,19 @@ class ViewCode:
             
             infodict['indent'] = indent = item[0]
             infodict['id'] = self.truncate(obj.id, 22)
-            infodict['title_html'] = obj.get_title_html()
+
+            # do not smash the smi because one object is broken
+            if obj.meta_type[:6] == 'Broken':
+                infodict['meta_type'] = obj.meta_type
+                infodict['title_html'] = 'Broken content object'
+                for key in ('absolute_url', 'icon', \
+                            'implements_content', 'implements_container',
+                            'implements_versioning'):
+                    infodict[key]=''
+                continue
+            
+
+            infodict['title_html'] = obj.get_title_or_id_html()
             infodict['meta_type'] = obj.meta_type
             infodict['absolute_url'] = obj.absolute_url()
             infodict['icon'] = self.render_icon(obj)            
