@@ -9,19 +9,12 @@
 ##
 model = context.REQUEST.model
 view = context
-from DateTime import DateTime
-from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
     return view.tab_status(
         message_type='error',
         message='Nothing was selected, so no approval withdrawn')
-
-try:
-    result = view.tab_status_form.validate_all(context.REQUEST)
-except FormValidationError, e:
-    return view.tab_status(message_type="error", message=view.render_form_errors(e))
 
 
 msg = []

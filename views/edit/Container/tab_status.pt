@@ -276,15 +276,18 @@ if (document.forms[0]) {
 //-->
 </script>
 </td>
+<tal:editors-tab condition="silva_permissions/ApproveSilvaContent">
 <td class="widebody" align="right" colspan="2">
 Expiration time:&nbsp;
-<field tal:replace="structure python:view.tab_status_form.expiration_datetime.render()" />
+<field tal:replace="structure python:view.tab_status_form.expiration_datetime.render(REQUEST=request)" />
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
 </td>
 <td class="widebody" align="right" colspan="2">
 Set&nbsp;expiration&nbsp;time?&nbsp;
-<field tal:replace="structure python:view.tab_status_form.expires_flag.render()" />
+<field tal:replace="structure python:view.tab_status_form.expires_flag.render(REQUEST=request)" />
 </td>
+</tal:editors-tab>
+<td class="widebody" colspan="4" tal:condition="not:silva_permissions/ApproveSilvaContent">&nbsp;</td>
 </tr>
 
 <span tal:replace="nothing"> ______________ new versions / publish time setting______________ </span>
@@ -293,6 +296,7 @@ Set&nbsp;expiration&nbsp;time?&nbsp;
 <td colspan="2">
 <input class="button" type="submit" name="tab_status_new_version:method" value="create New versions" title="Create new versions of published docs - alt-n" accesskey="n" />
 </td>
+<tal:editors-tab condition="silva_permissions/ApproveSilvaContent">
 <td class="widebody" align="right" colspan="2">
 Publish time:&nbsp;
 <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
@@ -303,14 +307,14 @@ Publish time:&nbsp;
 Publish&nbsp;right&nbsp;now?&nbsp;
 <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
 </td>
-<td align="right" colspan="2"
-  tal:condition="python:not silva_permissions['ApproveSilvaContent']
-                        and silva_permissions['ChangeSilvaContent']">
+</tal:editors-tab>
+<td align="right" colspan="4"
+  tal:condition="python:not silva_permissions['ApproveSilvaContent']">
 &nbsp;
 </td>
 </tr>
 
-<check tal:condition="python:len(objects) != 0 or model.get_default()">
+<check tal:condition="python:len(objects) != 0 or model.get_default()" tal:omit-tag="">
 <script type="text/javascript">
 <!--
 isSelected = false;
@@ -361,7 +365,7 @@ function toggleSelect() {
 <input class="button" type="submit" name="tab_status_revoke:method" value="reVoke approval" title="Revoke approval of new versions - alt-v" accesskey="v" />
 </td>
 <td align="right" colspan="3" nowrap="1">
-<input class="button" type="submit" name="tab_status_change_settings:method" value="change Settings" title="Change publish and expiration times - alt-s" accesskey="s" />
+<!-- input class="button" type="submit" name="tab_status_change_settings:method" value="change Settings" title="Change publish and expiration times - alt-s" accesskey="s" / -->
 &nbsp;
 <input class="button" type="submit" name="tab_status_request_approval:method" value="Request approval" title="Request approval for new versions - alt-r" accesskey="r" />
 </td>
