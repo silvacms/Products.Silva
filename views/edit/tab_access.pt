@@ -16,7 +16,7 @@
       &nbsp;Access Settings for
       <span class="folder-title"
         tal:content="
-          structure string:&#xab;${model/get_title_or_id_html}&#xbb;">
+          structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">
         title
       </span>
     </h2>
