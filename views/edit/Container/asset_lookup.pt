@@ -93,7 +93,11 @@ function setReference() {
     // So element itself and not a NodeList returned *sigh*.
     reference = doc.mumble_form.mumble;
   }
-  opener.insertAssetReference(reference.id, reference.value);
+  retreived = reference.value;
+  splitpos = retreived.indexOf('||');
+  id = retreived.substring(0, splitpos)
+  value = retreived.substring(splitpos + 2, retreived.length);
+  opener.insertAssetReference(id, value);
 }
 //-->
 </script>
@@ -103,7 +107,7 @@ function setReference() {
  tal:define="global assets python:test((filter == 'Asset'), model.get_assets(), model.get_assets_of_type('Silva %s'%filter))">
 <tr>
   <th align="left" colspan="10">
-    <tal:block condition="python:not len(assets)">No</tal:block> 
+    <tal:block condition="python:not len(assets)">No</tal:block>
     <tal:block content="string:${filter}s" />
     <tal:block condition="python:not len(assets)">in this folder</tal:block>
   </th>
@@ -115,9 +119,9 @@ function setReference() {
     &nbsp;
   </td>
 <span tal:replace="nothing"> _______ icon cell _______ </span>
-  <td nowrap="1">    
+  <td nowrap="1">
     <input type="radio" name="mumble" value=""
-      tal:attributes="value python:'/%s' % asset.absolute_url(1); id python:asset.id;" />
+      tal:attributes="value python:'%s||/%s' % (asset.id, asset.absolute_url(1))" />
     <a href="asset" title="View this asset"
       tal:attributes="href string:${asset/absolute_url}"><img tal:replace="structure python:view.render_icon(asset.meta_type)" /></a>
   </td>
