@@ -157,7 +157,13 @@
                   is_default python: item is default_document;
                   item_url item/absolute_url;
                   status_style python:item.get_object_status()[1];
-                  iterate repeat/item/odd">
+                  iterate repeat/item/odd;
+                  editable python: item.get_editable() or item.get_previewable();
+                  binding python:editable and view.service_metadata.getMetadata(editable) or None;
+                  title_editable python: binding and binding.get('silva-content', 'maintitle') or default;
+                  author_info python: binding and binding.get('silva-extra', 'lastauthor') or default;
+                  modification_time python: binding and binding.get('silva-extra', 'modificationtime') or default;
+                  ">
                   <tr tal:attributes="class python: iterate and 'odd' or 'even'">
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
@@ -227,19 +233,19 @@
                         tal:attributes="
                           href string:${item_url}/edit/tab_preview;
                           class status_style;"
-                        tal:content="python:(item.get_title_editable() or default)">
+                        tal:content="title_editable">
                         <i i18n:translate="no_title">no title</i>
                       </a>
                     </td>
                     <tal:block replace="nothing">
                       _______ modified date / properties downlink cell _______
                     </tal:block>
-                    <td tal:define="modification_time item/get_modification_datetime | nothing">
+                    <td>
                       <a class="blacklink"
                         title="properties"
                         tal:condition="modification_time"
                         tal:attributes="href string:${item_url}/edit/tab_metadata"
-                        tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
+                        tal:content="structure python:binding and mangle.DateTime(modification_time).toShortStr() or default"
                       >
                         date
                       </a>
@@ -255,7 +261,7 @@
                     <tal:block replace="nothing">
                       _______ author / publish downlink cell _______
                     </tal:block>
-                    <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
+                    <td tal:define="last_author author_info | default">
                       <a class="blacklink"
                         title="publish"
                         tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
@@ -329,6 +335,10 @@
                   asset_url asset/absolute_url;
                   odd_even python: iterate == 'odd' and 'odd' or 'even';
                   iterate repeat/asset/?odd_even;
+                  binding python: view.service_metadata.getMetadata(asset) or None;
+                  title python: binding and binding.get('silva-content', 'maintitle') or default;
+                  author_info python: binding and binding.get('silva-extra', 'lastauthor') or default;
+                  modification_time python: binding and binding.get('silva-extra', 'modificationtime') or default;
                   ">
                   <tr 
                     tal:define="
@@ -384,7 +394,7 @@
                     <td>
                       <a class="blacklink"
                         title="preview"
-                        tal:content="python: asset.get_title() == '' and default or asset.get_title()"
+                        tal:content="python: title == '' and title or default"
                         tal:attributes="
                           href string:${asset_url}/edit/tab_preview;
                           class python: asset.get_title() == '' and 'closed' or 'blacklink'"
@@ -396,12 +406,12 @@
                     <tal:block replace="nothing">
                       _______ modified date cell _______
                     </tal:block>
-                    <td tal:define="modification_time asset/get_modification_datetime | nothing">
+                    <td>
                       <a class="blacklink"
                         title="properties"
                         tal:condition="modification_time"
                         tal:attributes="href string:${asset_url}/edit/tab_metadata"
-                        tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
+                        tal:content="structure python:modification_time and mangle.DateTime(modification_time).toShortStr() or default"
                         >
                          date
                       </a>
@@ -417,8 +427,7 @@
                     <tal:block replace="nothing">
                       _______ author cell _______
                     </tal:block>
-                    <td tal:content="structure last_author"
-                      tal:define="last_author python:(asset.sec_get_last_author_info().fullname() or default)">
+                    <td tal:content="structure last_author" tal:define="last_author author_info | default">
                       unknown
                     </td>
                     <tal:block replace="nothing">
