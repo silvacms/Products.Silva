@@ -393,10 +393,10 @@ Empty indicates no expiration.
 <table class="listing">
 <tr class="top-controls">
 <td colspan="2">
-<h3 i18n:translate="">
-<span tal:omit-tag=""
-  tal:replace="python: test(may_approve_content, 'reject', 'withdraw')" i18n:name="action">action</span>
-request
+<h3>
+<tal:block condition="may_approve_content" i18n:translate="">reject</tal:block>
+<tal:block condition="not: may_approve_content" i18n:translate="">withdraw</tal:block>
+<tal:block i18n:translate="">request</tal:block>
 </h3>
 </td>
 </tr>
@@ -404,9 +404,16 @@ request
 <tr>
 <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
 <input type="hidden" name="tab_name" value="publish" />
-<th i18n:translate="">
+<th>
+<tal:block i18n:translate="">
 add message on 
-<span tal:replace="python:test(may_approve_content,'rejection',default)" i18n:name="rejection_withdrawal">withdrawal</span>
+</tal:block>
+<tal:block condition="may_approve_content" i18n:translate="">
+rejection
+</tal:block>
+<tal:block condition="not: may_approve_content" i18n:translate="">
+withdrawal
+</tal:block>
 </th>
 <th style="width:40%" i18n:translate="">
 notes
@@ -433,8 +440,10 @@ The message may be viewed by local users.
 </td>
 <td class="align-right"
   width="40%">
-<input type="submit" value="withdraw approval" class="button"  title="access key: alt-r" accesskey="r"
-  tal:attributes="value python:test(may_approve_content,' Reject approval request ',' Withdraw approval request ')" i18n:attributes="title" />
+<input type="submit" class="button"  title="access key: alt-r" accesskey="r"
+    tal:condition="may_approve_content" value=" Reject approval request " i18n:attributes="title;value" />
+<input type="submit" class="button"  title="access key: alt-r" accesskey="r"
+    tal:condition="not: may_approve_content" value=" Withdraw approval request " i18n:attributes="title;value" />
 </td>
 </tr>
 </table>
