@@ -18,7 +18,7 @@ if old_role == role and not viewer_security.isAcquired():
 
 viewer_security.setMinimumRole(role)
 
-msg = _("Minimum role to access is now set to $(role)")
+msg = _("Minimum role to access is now set to ${role}")
 msg.set_mapping({'role': role})
 return model.edit['tab_access'](
     message_type='feedback',
