@@ -218,23 +218,23 @@ ul.circle {
   list-style-type : circle;
 }
 
-ol.1 {
+ol.decimal {
   list-style-type : decimal;
 }
 
-ol.I {
+ol.upper-roman {
   list-style-type : upper-roman;
 }
 
-ol.i {
+ol.lower-roman {
   list-style-type : lower-roman;
 }
 
-ol.A {
+ol.upper-alpha {
   list-style-type : upper-alpha;
 }
 
-ol.a {
+ol.lower-alpha {
   list-style-type : lower-alpha;
 }
 

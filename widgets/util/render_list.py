@@ -17,10 +17,19 @@ elif type in ['1', 'I', 'i', 'A', 'a']:
 elif type == 'none':
     tag = None
 
+# mapping for XHTML compatibility
+# disc, square, circle are ok 
+# 1 = decimal
+# I = upper-roman
+# i = lower-roman
+# A = upper-alpha
+# a = lower-alpha
+# the class attribute should get the new mapping 
+
 if tag:
     content = ''.join(['<li>%s</li>\n' % text for text in texts])
-    return '<%s class="frontend" type="%s">\n%s</%s>' % (
-        tag, type, content, tag)
+    return '<%s class="%s">\n%s</%s>' % (
+        tag, type, type, content, tag)
 else:
     if texts:
         content = '<br />\n'.join(texts)
