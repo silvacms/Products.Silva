@@ -1121,6 +1121,6 @@ class IHaunted(Interface):
     """
     
     def getHaunting():
-        """Return list of objects (ghosts) haunting the adapted object.
+        """Return iterator of objects (ghosts) haunting the adapted object.
         """
         pass
