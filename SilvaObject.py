@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.98.4.2 2004/01/12 10:50:56 jw Exp $
+# $Id: SilvaObject.py,v 1.98.4.2.14.1 2004/04/01 12:34:50 faassen Exp $
 
 # python
 from types import StringType
@@ -144,21 +144,19 @@ class SilvaObject(Security, ViewCode):
     def get_title(self):
         """Get the title of the silva object.
         """
-        binding = self.service_metadata.getMetadata(self)
-        return binding.get(
-            'silva-content', element_id='maintitle')
+        return self.service_metadata.getMetadataValue(
+            self, 'silva-content', 'maintitle')
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
     def get_short_title(self):
         """Get the title of the silva object.
         """
-        binding = self.service_metadata.getMetadata(self)
-        short_title = binding.get(
-            'silva-content', element_id='shorttitle')
-        if not short_title:
-            return self.get_title()
-        return short_title
+        title = self.service_metadata.getMetadataValue(
+            self, 'silva-content', 'shorttitle')
+        if not title:
+            return self.service_metadata.getMetadataValue(
+                self, 'silva-content', 'maintitle')
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title_or_id')
@@ -210,13 +208,8 @@ class SilvaObject(Security, ViewCode):
     def get_modification_datetime(self, update_status=1):
         """Return modification datetime."""
         version = self.get_previewable()
-        assert version is not None
-        binding = self.service_metadata.getMetadata(version)
-        if binding is None:
-            return None
-        last_modification = binding.get('silva-extra',
-            element_id='modificationtime', no_defaults=1)
-        return last_modification
+        return self.service_metadata.getMetadataValue(
+            version, 'silva-extra', 'modificationtime')
        
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_breadcrumbs')
