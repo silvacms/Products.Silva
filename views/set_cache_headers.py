@@ -3,7 +3,7 @@ response = context.REQUEST.RESPONSE
 headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
             ('Last-Modified', 
                 DateTime("GMT").strftime("%a %d %b %Y %H:%M:%S GMT")),
-            ('Cache-Control', 'no-store, no-cache, must-revalidate'),
+            ('Cache-Control', 'no-cache, must-revalidate'),
             ('Cache-Control', 'post-check=0, pre-check=0'),
             ('Pragma', 'no-cache'),
             ]
