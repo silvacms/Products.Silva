@@ -3,8 +3,8 @@ import time
 from DateTime import DateTime
 import Zope
 Zope.startup()
-from Products.Silva.IVersion import IVersion
-from Products.Silva.Document import Document
+from Products.Silva.interfaces import IVersion
+from Products.SilvaDocument.Document import Document
 from Products.Silva.Folder import Folder
 from Products.Silva.Image import Image
 
@@ -15,7 +15,7 @@ from AccessControl.SecurityManager import setSecurityPolicy
 from security import PermissiveSecurityPolicy, AnonymousUser
 
 # this needs to be imported after startup?
-from Testing.makerequest import makerequest 
+from Testing.makerequest import makerequest
 
 class SilvaTestCase(unittest.TestCase):
     def setUp(self):
@@ -81,7 +81,7 @@ class SilvaTestCase(unittest.TestCase):
 class VersionCatalogTestCase(SilvaTestCase):
     def setUp(self):
         SilvaTestCase.setUp(self)
-        self.silva.manage_addProduct['Silva'].manage_addDocument(
+        self.silva.manage_addProduct['SilvaDocument'].manage_addDocument(
             'alpha', 'Alpha')
         self.alpha = self.silva.alpha
   
@@ -205,8 +205,9 @@ def main():
     root.REQUEST.AUTHENTICATED_USER = OmnipotentUser()
     root.manage_addProduct['Silva'].manage_addRoot(
         'silva_test', 'Silva Test')
+    root.silva_test.service_extensions.install('SilvaDocument')
     global silva_ids
-    silva_ids = root.silva.objectIds()
+    silva_ids = root.silva_test.objectIds()
     
     try:
         unittest.TextTestRunner().run(test_suite())        
