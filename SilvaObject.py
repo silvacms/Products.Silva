@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.91 2003/08/11 00:41:59 clemens Exp $
+# $Id: SilvaObject.py,v 1.92 2003/08/29 12:41:05 zagy Exp $
 
 # python
 from types import StringType
@@ -357,5 +357,12 @@ class SilvaObject(Security, ViewCode):
         """Handle unknown objects. (override in subclasses)
         """
         context.f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))      
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+        'is_deletable')
+    def is_deletable(self):
+        """always deletable"""
+        return 1
+        
         
 InitializeClass(SilvaObject)
