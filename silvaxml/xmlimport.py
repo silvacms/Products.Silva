@@ -117,7 +117,9 @@ class BaseHandler:
         self._data[key] = value
 
     def getData(self, key):
-        return self._data[key]
+        if self._data.has_key(key):
+            return self._data[key]
+        return None
 
     def setMetaData(self, set, key, value):
         self._metadata[set][key] = value
