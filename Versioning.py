@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26.2.1 $
+# $Revision: 1.26.2.2 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -695,7 +695,7 @@ class Versioning:
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'cleanup_versions')
-    def cleanup_versions(self, statistics):
+    def cleanup_versions(self, statistics=None):
         """ Remove unreachable version objects
         """
         if statistics is None:
@@ -730,8 +730,12 @@ class Versioning:
                 '/'.join(self.getPhysicalPath()), removable_version_ids)
             statistics['total_cleaned'] += 1
             statistics['total_versions'] += len(removable_version_ids)
-            statistics['max_versions'] = max(statistics['max_versions'], len(removable_version_ids))
+            statistics['max_versions'] = max(
+                statistics['max_versions'], len(removable_version_ids))
             self.manage_delObjects(removable_version_ids)                        
+            
+        statistics['endtime'] = DateTime()            
+        return statistics
 
 def _format_date_helper(date):
     # XXX cut & paste from service_utils/backend_datetime_to_str
