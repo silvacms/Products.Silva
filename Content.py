@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -16,6 +16,8 @@ class Content(SilvaObject, Publishable):
     security = ClassSecurityInfo()
     
     __implements__ = IContent
+
+    object_type = 'content'
 
     # use __init__ of SilvaObject
     

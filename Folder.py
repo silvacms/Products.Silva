@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.96 $
+# $Revision: 1.97 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -9,6 +9,7 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode # HACK
+from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 # Silva interfaces
 from IContainer import IContainer
 from IPublishable import IPublishable
@@ -36,7 +37,7 @@ from Products.ParsedXML.ExtraDOM import writeStream
 
 icon="www/silvafolder.gif"
 
-class Folder(SilvaObject, Publishable, Folder.Folder):
+class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
     """The presentation of the information within a
        publication is structured with folders. They determine the visual
        hierarchy that a Visitor sees as well. Folders on the top level
@@ -45,6 +46,10 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Folder"
+
+    default_catalog = 'service_catalog'
+
+    object_type = 'container'
 
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = Folder.Folder.manage_options
@@ -63,14 +68,17 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def manage_afterAdd(self, item, container):
         Folder.inheritedAttribute('manage_afterAdd')(self, item, container)
         self._invalidate_sidebar(item)
+        self.index_object()
 
     def manage_beforeDelete(self, item, container):
         Folder.inheritedAttribute('manage_beforeDelete')(self, item, container)
         self._invalidate_sidebar(item)
+        self.unindex_object()
 
     def manage_afterClone(self, item):
         Folder.inheritedAttribute('manage_afterClone')(self, item)
         self._invalidate_sidebar(item)
+        self.index_object()
 
     def _invalidate_sidebar(self, item):
         if not IContainer.isImplementedBy(item):

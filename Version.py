@@ -15,6 +15,8 @@ class Version(SimpleItem):
 
     security = ClassSecurityInfo()
 
+    object_type = 'versioned_content'
+
     def __init__(self, id, title=None):
         self.id = id
         self.content = ParsedXML('content', '<doc></doc>')
