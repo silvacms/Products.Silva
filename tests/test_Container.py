@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.37 $
+# $Revision: 1.38 $
 import unittest
 from os.path import dirname, join
 import Zope
@@ -202,7 +202,7 @@ class ContainerTestCase(ContainerBaseTestCase):
         # move of a single item down
         r = self.sroot.move_to(['doc2'], 4)
         self.assert_(r)
-        l = [self.doc1, self.doc3, self.folder4, self.doc2, self.publication5]
+        l = [self.doc1, self.doc3, self.folder4, self.publication5, self.doc2]
         self.assertEquals(self.sroot.get_ordered_publishables(),
                           l)
     def test_move_to_single_item_up(self):

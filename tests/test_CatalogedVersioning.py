@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -11,13 +11,13 @@ from Testing import makerequest
 from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
 
-from Products.Silva.CatalogedDemoObject import CatalogedDemoObject, CatalogedDemoObjectVersion
+from Products.Silva.DemoObject import DemoObject, DemoObjectVersion
 from Products.Silva.Root import Root
 
 def _getCopy(self, container):
     """A hack to make copy & paste work (used by create_copy())
     """
-    version = CatalogedDemoObjectVersion('test', 'test')
+    version = DemoObjectVersion('test', 'test')
     version.set_demo_data(self.info(), self.number(), self.date())
     return version
 
@@ -27,8 +27,8 @@ def _verifyObjectPaste(self, ob):
 class CatalogedVersioningTestCase(unittest.TestCase):
     def setUp(self):
         # awful HACK to support manage_clone
-        CatalogedDemoObjectVersion._getCopy = _getCopy
-        CatalogedDemoObject._verifyObjectPaste = _verifyObjectPaste
+        DemoObjectVersion._getCopy = _getCopy
+        DemoObject._verifyObjectPaste = _verifyObjectPaste
         Root._verifyObjectPaste = _verifyObjectPaste
         
         get_transaction().begin()
@@ -58,7 +58,7 @@ class CatalogedVersioningTestCase(unittest.TestCase):
             ('subjects', 'KeywordIndex'),
             ('target_audiences', 'KeywordIndex'),
 
-            # special stuff only for CatalogedDemoObject
+            # special stuff only for DemoObject
             ('info', 'FieldIndex'),
             ('number', 'FieldIndex'),
             ('date', 'FieldIndex'),
@@ -94,7 +94,7 @@ class CatalogedVersioningTestCase(unittest.TestCase):
                 continue
             catalog.addIndex(field_name, field_type)
 
-        self.sroot.manage_addProduct['Silva'].manage_addCatalogedDemoObject(
+        self.sroot.manage_addProduct['Silva'].manage_addDemoObject(
             'test', 'Test')
         self.test = getattr(self.sroot, 'test')
     
@@ -194,7 +194,7 @@ class CatalogedVersioningTestCase(unittest.TestCase):
         
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(CatalogedVersioningTestCase, 'test'))
+    suite.addTest(unittest.makeSuite(VersioningTestCase, 'test'))
     return suite
     
 def main():
