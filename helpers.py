@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -28,7 +28,7 @@ _reserved_prefixes = ('service', 'manage', 'aq');
 _reserved_ids = ( 'index_html', 'preview_html', 'REQUEST',
                  'standard_error_message', 'standard_unauthorized_message',
                  'content.html', 'override.html', 'layout_macro.html',
-                 'acl_users', 'code_source', 'Members', 'globals' );
+                 'acl_users', 'code_source', 'Members', 'globals', 'fulltext');
 
 module_security.declarePublic('escape_entities')
 def escape_entities(text):
