@@ -72,11 +72,11 @@ id: no spaces or special characters besides an underscore (_).
 
 <tr class="controls">
 <td colspan="2">
-<input class="cancelbutton" type="submit" name="add_cancel" value=" Cancel " />
+<input class="cancelbutton" type="submit" name="add_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c" />
 </td>
 <td colspan="2" align="right">
-<input class="button" type="submit" name="add_submit" value=" Add " />
-&nbsp;&nbsp;<input class="button" type="submit" name="add_edit_submit" value=" Add and edit "
+<input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
+&nbsp;&nbsp;<input class="button" type="submit" name="add_edit_submit" value="Add and edit" title="Access key: Alt-e" accesskey="e"
   tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Add and enter ', ' Add and edit ')" />
 </td>
 </tr>
