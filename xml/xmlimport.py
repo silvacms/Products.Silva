@@ -95,6 +95,8 @@ class BaseHandler:
         self._parent_handler = parent_handler
         self._result = None
         self._data = {}
+        self._metadata_set = None
+        self._metadata_key = None
         self._metadata = {}
         
     def getOverrides(self):
@@ -114,11 +116,11 @@ class BaseHandler:
     def getData(self, key):
         return self._data[key]
 
-    def setMetaData(self, key, value):
-        self._metadata[key] = value
+    def setMetaData(self, set, key, value):
+        self._metadata[set][key] = value
 
-    def getMetaData(self, key):
-        return self._metadata[key]
+    def getMetaData(self, set, key):
+        return self._metadata[set][key]
     
     def getResult(self):
         if self._result is not None:
