@@ -12,11 +12,16 @@ from Products.Silva.interfaces import IContent
 from Products.Silva.interfaces import IVersionedContent
 from Products.Silva.interfaces import ISilvaObject
 from Products.Silva.Folder import Folder
+from Products.Silva.Image import Image
 import Products.Silva.Folder
 from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva.mangle import Id
 from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
+
+# XXX don't want to do this, but it's to convince the Zope security
+# mechanism that we *can* rename
+Image.cb_isMoveable = lambda self: 1
 
 def _rotten_index_helper(folder):
     """ helper for test_rotten_index """

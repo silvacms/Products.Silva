@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.141 $
+# $Revision: 1.142 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -319,9 +319,17 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         if orig_id == new_id:
             return
         oids = self._ordered_ids
-        publishable_id = oids.index(orig_id)
+        try:
+            publishable_id = oids.index(orig_id)
+        except ValueError:
+            # this is not a clean fix but it should work; items like
+            # assets can be renamed but are not in the ordered_ids.
+            # therefore trying to move them doesn't work, and just ignore
+            # that.
+            publishable_id = None
         self.manage_renameObject(orig_id, new_id)
-        self.move_to([new_id], publishable_id)
+        if publishable_id is not None:
+            self.move_to([new_id], publishable_id)
         return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
