@@ -506,9 +506,7 @@ def initialize():
                                       upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
         'Groups Service')
-    # On the root, do an "all product refresh"
-    upgrade.registry.registerUpgrader(
-        RefreshAll(), '0.9.3', 'Silva Root')
+
     # On the root, clear caches
     upgrade.registry.registerUpgrader(
         ClearEditorCache(), '0.9.3', 'Silva Root')
@@ -518,3 +516,6 @@ def initialize():
     for metatype in ['Silva Root', 'Silva Publication', 'Silva Folder']:
         upgrade.registry.registerUpgrader(
             SetTitleFromIndexOnContainer(), '0.9.3', metatype)
+
+    # as last action on the root, do an "all product refresh"
+    upgrade.registry.registerTearDown(RefreshAll().upgrade, '0.9.3')
