@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.5.30.2 2004/04/29 16:50:04 roman Exp $
+# $Id: AutoTOC.py,v 1.5.30.3 2004/06/24 12:15:42 faassen Exp $
 
 # Zope
 from Globals import InitializeClass
@@ -68,7 +68,7 @@ def manage_addAutoTOC(self, id, title, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
-class _AutoTOCPolicy(Persistent):
+class AutoTOCPolicy(Persistent):
 
     __implements__ = IContainerPolicy
 
@@ -76,5 +76,3 @@ class _AutoTOCPolicy(Persistent):
         container.manage_addProduct['Silva'].manage_addAutoTOC(
             'index', title)
         container.index.sec_update_last_author_info()
-
-AutoTOCPolicy = _AutoTOCPolicy()
