@@ -92,7 +92,6 @@
   <!-- Help link -->
   <div class="tabs">
       <a class="normal"
-        style="float:right;"
         title="Silva help: alt-h"
         i18n:attributes="title"
         accesskey="h"

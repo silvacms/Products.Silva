@@ -135,7 +135,7 @@ day/month/year &nbsp;23:59
 
 <tr class="inter-controls">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time:</label>&nbsp;
+<label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
 </td>
 <td style="vertical-align:middle;">
@@ -185,7 +185,7 @@ notes
 
 <tr class="even">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time:</label>&nbsp;
+<label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
 </td>
 <td style="vertical-align:middle;">
@@ -246,7 +246,7 @@ notes
 <tr class="even">
 <td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-m"
-  accesskey="m">content publish ti<u>m</u>e:</label>&nbsp;
+  accesskey="m">content publish ti<u>m</u>e</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_editor.publish_datetime.render(REQUEST=request)" />
 </td>
 <td>
@@ -256,7 +256,7 @@ day/month/year &nbsp;23:59
 
 <tr class="odd">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-i" accesskey="i">expiratio<u>n</u> time:</label>&nbsp;
+<label title="access key: alt-i" accesskey="i">expiratio<u>n</u> time</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_editor.expiration_datetime.render(REQUEST=request)" />
 </td>
 <td style="vertical-align:middle;">
