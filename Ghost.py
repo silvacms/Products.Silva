@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.88 $
+# $Revision: 1.89 $
 
 # Zope
 from OFS import SimpleItem
@@ -295,6 +295,16 @@ class Ghost(CatalogedVersionedContent):
         """return content url of `last' version"""
         version = self.getLastVersion()
         return version.get_haunted_url()
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                                'is_published')
+    def is_version_published(self):
+        public_id = self.get_public_version()
+        if not public_id:
+            return False
+        public = getattr(self, public_id)
+        haunted = public.get_haunted_unrestricted()
+        return haunted.is_published()
 
     def _factory(self, container, id, content_url):
         return container.manage_addProduct['Silva'].manage_addGhost(id,
