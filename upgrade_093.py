@@ -363,10 +363,10 @@ class RefreshAll:
     __implements__ = IUpgrader
 
     def upgrade(self, root):
-        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
-        root.service_extensions.refresh_all()
         zLOG.LOG('Silva', zLOG.INFO, 'install SilvaDocument')
         root.service_extensions.install('SilvaDocument')
+        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
+        root.service_extensions.refresh_all()
         return root
     
 class ClearEditorCache:
