@@ -52,7 +52,7 @@ def from091to092(self, root):
     if illegal_urls:
         urllist = []
         for url in illegal_urls:
-            urllist.append('<a href="%(url)s">%(url)s</a><br />' % {'url': url})
+            urllist.append('<a href="%(url)s/../manage_main">%(url)s</a><br />' % {'url': url})
         return illegal_url_template % '\n'.join(urllist)
 
     print 'Going to upgrade'
