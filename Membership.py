@@ -11,7 +11,6 @@ class Member(Persistent, Acquisition.Implicit):
     security = ClassSecurityInfo()
     
     def __init__(self, userid, fullname, email, is_approved):
-        print "Copying member"
         self.id = userid
         self._fullname = fullname
         self._email = email
