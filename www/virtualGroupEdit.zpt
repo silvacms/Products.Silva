@@ -1,17 +1,17 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-$Id: virtualGroupEdit.zpt,v 1.4 2004/07/21 11:40:58 jw Exp $
+$Id: virtualGroupEdit.zpt,v 1.5 2004/11/15 14:55:40 eric Exp $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
-<h3 i18n:translate="manage_silva_virtual_group">Manage Silva Virtual Group</h3>
+<h3 i18n:translate="">Manage Silva Virtual Group</h3>
 
 <div>
-  <span i18n:translate="virtual_group_asset_managed">This virtual group asset can only be managed from </span>
+  <span i18n:translate="">This virtual group asset can only be managed from </span>
   <span tal:replace="python: '/'.join(here.valid_path)" />
 </div>
 

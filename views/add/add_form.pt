@@ -43,14 +43,14 @@
 <tbody>
   <tr>
     <th class="align-right"
-      i18n:translate="aspect">
+      i18n:translate="">
       aspect
     </th>
     <th style="width:50%;"
-      i18n:translate="content">
+      i18n:translate="">
       content
     </th>
-    <th i18n:translate="notes">
+    <th i18n:translate="">
     notes
     </th>
   </tr>

@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.13 $
+Version of this file: $Revision: 1.14 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -10,11 +10,11 @@ Version of this file: $Revision: 1.13 $
 
 <h4><a href="../manage_services">Silva Services</a></h4>
 
-<h2 i18n:translate="config_silva_extension_products">
+<h2 i18n:translate="">
   Configure Silva Extension Products
 </h2>
 
-<h3 i18n:translate="general_actions">General actions</h3>
+<h3 i18n:translate="">General actions</h3>
 <form action="." method="POST">
   <input type="submit" name="refresh_all:method" value="refresh all" i18n:attributes="value"/>
   <tal:block condition="python: hasattr(modules['Products'], 'SilvaDocument') and 'SilvaDocument' in here.get_names() and here.is_installed('SilvaDocument') and not hasattr(here, 'silva_docs')">

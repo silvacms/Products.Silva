@@ -136,7 +136,7 @@ This message will remain visible in the status screen for other authors and edit
 <td class="align-right"
  style="vertical-align:bottom; white-space: nowrap;'">
  <label title="access key: alt-m" accesskey="m"
-   i18n:translate="access_publish_time"
+   i18n:translate=""
    tal:attributes="for field/id"
    i18n:attributes="title"
    >
@@ -146,7 +146,7 @@ This message will remain visible in the status screen for other authors and edit
   replace="structure python: field.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)"
 />
 </td>
-<td style="vertical-align:middle;" i18n:translate="publish_dateformat">
+<td style="vertical-align:middle;" i18n:translate="">
 day / month / year &nbsp;23:59
 </td>
 </tr>
@@ -240,7 +240,7 @@ If this content should expire, set the time.
   <span class="widebody">
     <label title="access key: alt-u" accesskey="u"
       i18n:attributes="title"
-      i18n:translate="publish_now"
+      i18n:translate=""
       tal:attributes="for field/id">
       p<u>u</u>blish right now?
   </label>
@@ -260,7 +260,7 @@ If this content should expire, set the time.
         accesskey="u"
         tal:attributes="for field/id"
         i18n:attributes="title"
-        i18n:translate="publish_clear_exp"
+        i18n:translate=""
         >clear ex<u>p</u>iration?
     </label>
   </span>
@@ -295,10 +295,10 @@ If this content should expire, set the time.
 <td colspan="2">
   <h3>
     <span tal:condition="python:not closed or (unapproved and (closed or published))"
-      i18n:translate="publish_new_version">
+      i18n:translate="">
       publish new version
     </span>
-    <span tal:condition="python: closed and not unapproved" i18n:translate="publish_closed_version">
+    <span tal:condition="python: closed and not unapproved" i18n:translate="">
       publish closed version
     </span>
   </h3>
@@ -306,10 +306,10 @@ If this content should expire, set the time.
 </tr>
 
 <tr>
-  <th class="align-right" i18n:translate="settings">
+  <th class="align-right" i18n:translate="">
 settings
 </th>
-<th style="width:40%" i18n:translate="notes">
+<th style="width:40%" i18n:translate="">
 notes
 </th>
 </tr>
@@ -328,7 +328,7 @@ notes
   replace="structure python: field.render(REQUEST=request)"
 />
 </td>
-<td i18n:translate="publish_dateformat">
+<td i18n:translate="">
 day / month / year &nbsp;23:59
 </td>
 </tr>
@@ -345,7 +345,7 @@ day / month / year &nbsp;23:59
   replace="structure python: field.render(REQUEST=request)"
 />
 </td>
-<td style="vertical-align:middle;" i18n:translate="publish_empty">
+<td style="vertical-align:middle;" i18n:translate="">
 Empty indicates no expiration.
 </td>
 </tr>
@@ -486,13 +486,13 @@ If further editing is required, first revoke the approval.
 <table class="listing">
 <tr class="top-controls">
 <td>
-  <h3 i18n:translate="revert_previous">
+  <h3 i18n:translate="">
   revert to previous version
 </h3>
 </td>
 </tr>
 <tr class="even">
-  <td i18n:translate="revert_previous_description">
+  <td i18n:translate="">
 The current editable version can be replaced with the previous (published)
 version. This can not be undone afterwards and will discard all changes
 made to the current version.
@@ -524,14 +524,14 @@ made to the current version.
 <thead>
 <tr class="top-controls">
 <td>
-  <h3 i18n:translate="publish_manual_close">manual close</h3> 
+  <h3 i18n:translate="">manual close</h3> 
 </td>
 </tr>
 </thead>
 
 <tbody>
 <tr class="even">
-  <td i18n:translate="publish_manual_close_description">
+  <td i18n:translate="">
 If necessary, the published version of this content can be manually closed (taken offline). It will also be removed from the public index.
 </td>
 </tr>

@@ -17,7 +17,7 @@
   title="access key: alt-r"
   accesskey="r"
   i18n:attributes="title"
-  i18n:translate="return">
+  i18n:translate="">
   return
 </a>
 <div class="header">
@@ -229,7 +229,7 @@ Thanks to <a href="http://www.ethz.ch/" name="eth_zuerich">ETH Z&uuml;rich</a> f
   title="access key: alt-r"
   accesskey="r"
   i18n:attributes="title"
-  i18n:translate="return">
+  i18n:translate="">
   return
   </a>
 

@@ -21,7 +21,7 @@
   title="access key: alt-b"
   accesskey="b"
   i18n:attributes="title"
-  i18n:translate="back">
+  i18n:translate="">
   back
 </a>
 <div class="public">

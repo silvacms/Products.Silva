@@ -44,7 +44,7 @@
       <td class="top" colspan="3">
       <h2>
         <img tal:replace="structure python:view.render_icon(model)" />
-			  <span i18n:translate="email_addresses_for">email addresses for</span> <span tal:content="structure string:&#xab;${title}&#xbb;">title</span>
+			  <span i18n:translate="">email addresses for</span> <span tal:content="structure string:&#xab;${title}&#xbb;">title</span>
       </h2>
       </td>
     </tr>
@@ -56,14 +56,14 @@
   <tbody>
     <tr class="top-controls">
       <td>
-        <h3 i18n:translate="listing_of_all_users_below">
+        <h3 i18n:translate="">
           listing of all authorized users below this level 
         </h3>
       </td>
     </tr>
 
     <tr class="even">
-      <td i18n:translate="addresses_are_formatted_for_copying">
+      <td i18n:translate="">
         Addresses are formatted for copying and pasting 
         in the &#8216;To:&#8217; field of an email message.
         <br />

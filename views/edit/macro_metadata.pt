@@ -40,7 +40,7 @@
                 <tal:block i18n:translate="">
                 metadata
                 <tal:block condition="not: model/implements_container" i18n:name="for_title">
-                  <span i18n:translate="for_metadata_title">
+                  <span i18n:translate="">
                   for &#xab;<tal:block content="string:${title}"
                   i18n:name="metadata_title">
                   title</tal:block>&#xbb;</span>
@@ -65,24 +65,24 @@
               <tr class="top-controls">
                 <td colspan="4">
                   <h3>
-                    <span i18n:translate="metadata_set">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
+                    <span i18n:translate="">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
                   </h3>
                 </td>
               </tr>
               <tr>
                 <th class="align-right"
                   width="12%"
-                  i18n:translate="element">
+                  i18n:translate="">
                   element
                 </th>
-                <th i18n:translate="content">
+                <th i18n:translate="">
                   content
                 </th>
-                <th i18n:translate="acquired_content">
+                <th i18n:translate="">
                   acquired content
                 </th>
                 <th width="25%"
-                  i18n:translate="note">
+                  i18n:translate="">
                   note
                 </th>
               </tr>
@@ -154,10 +154,10 @@
             <tr tal:condition="python: set_name != 'silva-content'">
               <th class="align-right">
               </th>
-              <th i18n:translate="metadata_dateformat">
+              <th i18n:translate="">
                 date format: day / month / year &nbsp;23:59 
               </th>
-              <th i18n:translate="metadata_acquireable">
+              <th i18n:translate="">
                 &#134; acquireable
               </th>
               <th>
@@ -172,7 +172,7 @@
                   value="save"
                   title="access key: alt-s"
                   accesskey="s"
-                  i18n:attributes="value title"
+                  i18n:attributes="value;title"
                 />
               </td>
             </tr>
@@ -192,7 +192,7 @@
             <tr class="top-controls">
               <td colspan="4">
                 <h3>
-                  <span i18n:translate="content_renderer">content renderer</span>
+                  <span i18n:translate="">content renderer</span>
                 </h3>
               </td>
             </tr>
@@ -201,7 +201,7 @@
                 ___ element name column ___
               </tal:block>
               <td class="align-right">
-                <tal:block i18n:translate="renderer">
+                <tal:block i18n:translate="">
                   renderer
                 </tal:block>
               </td>
@@ -299,16 +299,16 @@
             <tr class="top-controls">
               <td colspan="2">
                 <h3>
-                  <span i18n:translate="metadata_set">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
+                  <span i18n:translate="">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
                 </h3>
               </td>
             </tr>
             <tr>
               <th class="align-right"
-                width="12%" i18n:translate="element">
+                width="12%" i18n:translate="">
                 element
               </th>
-              <th i18n:translate="content">
+              <th i18n:translate="">
                 content
               </th>
             </tr>
@@ -351,7 +351,7 @@
               <tr class="top-controls">
                 <td colspan="4">
                   <h3>
-                    <span i18n:translate="content_renderer">content renderer</span>
+                    <span i18n:translate="">content renderer</span>
                   </h3>
                 </td>
               </tr>
@@ -360,7 +360,7 @@
                   ___ element name column ___
                 </tal:block>
                 <td class="align-right">
-                  <tal:block i18n:translate="renderer">
+                  <tal:block i18n:translate="">
                     renderer
                   </tal:block>
                 </td>

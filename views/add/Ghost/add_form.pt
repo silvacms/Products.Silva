@@ -37,13 +37,13 @@
 
 <tbody>
   <tr>
-    <th class="align-right" i18n:translate="attributes">
+    <th class="align-right" i18n:translate="">
       attributes
     </th>
-    <th style="width:50%;" i18n:translate="content">
+    <th style="width:50%;" i18n:translate="">
       content
     </th>
-    <th i18n:translate="notes">
+    <th i18n:translate="">
       notes
     </th>
   </tr>

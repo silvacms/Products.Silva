@@ -19,7 +19,7 @@
   </tal:block>
   <label for="all"
     accesskey="a">
-    <span i18n:translate="select_all">select <u>a</u>ll</span>
+    <span i18n:translate="">select <u>a</u>ll</span>
   </label>
   <script type="text/javascript"
     xml:space="preserve">

@@ -230,7 +230,7 @@
           </a>
           <tal:block 
             condition="python: public_status == 'closed'"> 
-            <span i18n:translate="closed"
+            <span i18n:translate=""
               define="
                 global new_versionables python: closed and (state != 'pending' and state != 'approved') or new_versionables;">
               closed
@@ -261,7 +261,7 @@
       <th class="align-right"
         colspan="3">
         <span tal:condition="
-          python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)" i18n:translate="publish_dateformat">
+          python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)" i18n:translate="">
           day / month / year &nbsp;23:59
         </span>
       </th>
@@ -278,7 +278,7 @@
         style="padding-right:0.5em;"
         colspan="5">
         <label title="access key: alt-m" 
-          accesskey="m" i18n:translate="publish_time">
+          accesskey="m" i18n:translate="">
           publish time
         </label>
         <tal:block

@@ -52,10 +52,10 @@
       <tr>
         <th class="align-right"
           width="12%"
-          i18n:translate="attributes">
+          i18n:translate="">
           attributes
         </th>
-        <th i18n:translate="content">
+        <th i18n:translate="">
           content
         </th>
       </tr>

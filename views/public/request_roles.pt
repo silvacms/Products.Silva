@@ -1,6 +1,6 @@
 <html metal:use-macro="here/layout_macro.html/macros/layout">
 <head>
-  <title i18n:translate="membership">membership</title>
+  <title i18n:translate="">membership</title>
 </head>
 <body>
 
@@ -8,7 +8,7 @@
 <tal:block define="dummy python:here.REQUEST.model.security_trigger()"
   condition="python: hasattr(here, 'service_members') and here.service_members.allow_authentication_requests()">
 
-<h2 i18n:translate="membership">membership</h2>
+<h2 i18n:translate="">membership</h2>
 
 <form action="request_roles_submit"
   method="POST"
@@ -19,7 +19,7 @@
 />
 <div style="width:24em;"
    tal:define="notice options/message | nothing">
-  <h3 i18n:translate="request_roles">
+  <h3 i18n:translate="">
     Request roles at this location
   </h3>
   <!-- __________________________ feedback _________________________ -->
@@ -31,22 +31,22 @@
     <br /><br />
   </p>
   <tal:condition condition="python: not member.email() or not member.fullname()">
-    <p tal:condition="not: notice" i18n:translate="please_fill_following_fields">
+    <p tal:condition="not: notice" i18n:translate="">
         Please fill in the following fields.
         <br /><br />
     </p>
     <p>
-      <span i18n:translate="full_name">full name</span>:<br />
+      <span i18n:translate="">full name</span>:<br />
       <input type="text" name="fullname" style="width: 100%;"
         tal:attributes="value member/fullname" /><br /><br />
-      <span i18n:translate="email_address">e-mail address</span>:<br />
+      <span i18n:translate="">e-mail address</span>:<br />
       <input type="text" name="email" style="width: 100%;"
         tal:attributes="value member/email" /><br /><br />
     </p>
   </tal:condition>
 
   <p>
-    <span i18n:translate="choose_roles">Choose role(s) to request</span>:<br />
+    <span i18n:translate="">Choose role(s) to request</span>:<br />
     <tal:repeat repeat="role view/get_available_roles">
     <input type="checkbox" name="roles:list" 
      tal:attributes="
@@ -73,7 +73,7 @@
 </tal:block>
 
 <tal:block condition="python: not hasattr(here, 'service_members') or not here.service_members.allow_authentication_requests()">
-  <span i18n:translate="requests_for_roles_not_allowed">This site does not allow requests for roles</span>.
+  <span i18n:translate="">This site does not allow requests for roles</span>.
 </tal:block>
 
 </metal:block>

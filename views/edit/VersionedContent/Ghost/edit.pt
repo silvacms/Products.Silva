@@ -44,7 +44,7 @@
       <tr>
         <td class="top"
           colspan="3">
-          <h2 i18n:translate="ghost_title">
+          <h2 i18n:translate="">
             <img tal:replace="structure python:view.render_icon(model)" />
             ghost of &#xab;<tal:block i18n:name="name" content="title" />&#xbb;
           </h2>
@@ -56,13 +56,13 @@
       <tr>
         <th class="align-right"
           width="15%"
-          i18n:translate="attributes">
+          i18n:translate="">
           attributes
         </th>
-        <th i18n:translate="content">
+        <th i18n:translate="">
           content
         </th>
-        <th width="30%" i18n:translate="note">
+        <th width="30%" i18n:translate="">
           note
         </th>
       </tr>
@@ -90,7 +90,7 @@
             tal:attributes="value content_url"
           />
         </td>
-        <td i18n:translate="ghost_path_to_original">
+        <td i18n:translate="">
           Path to original (begins with &#8216;/&#8217;).
         </td>
       </tr>
@@ -107,7 +107,7 @@
             Link
           </a>
         </td>
-        <td i18n:translate="ghost_link_editor">
+        <td i18n:translate="">
           Link to editor screen of original.
         </td>
       </tr>

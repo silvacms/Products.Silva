@@ -6,7 +6,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
 <head>
-  <title i18n:translate="logout">
+  <title i18n:translate="">
     logout
   </title>
   <meta 
@@ -33,14 +33,14 @@
   <div style="margin:2em;">
     <div class="feedback"
       style="width:55%">
-      <span i18n:translate="to_logout_wait">To <b>actually</b> logout, wait 5 seconds or hit this</span>
+      <span i18n:translate="">To <b>actually</b> logout, wait 5 seconds or hit this</span>
       <a href="/manage_zmi_logout"
         title="accesskey: alt-l"
         accesskey="l"
         i18n:attributes="title"
         i18n:translate="logout_link">logout link</a>.
       <br />
-        <span i18n:translate="when_login_dialog_appears">When the login dialog appears, choose <b>"Cancel"</b></span>.
+        <span i18n:translate="">When the login dialog appears, choose <b>"Cancel"</b></span>.
     </div>
   </div>
 <!--            __________________________ feedback ends __________________________            -->

@@ -43,13 +43,13 @@
               >
               <metal:block use-macro="here/macro_metadata/macros/view_table">
                 <!-- approved version metadata table, so only viewable -->
-                <h2 i18n:translate="metadata_label" 
+                <h2 i18n:translate="" 
                   metal:fill-slot="table_title"
                   >
                   <img tal:replace="structure python:view.render_icon(model)" />
                   metadata
-                  <span tal:condition="not: model/implements_container" >
-                    <span i18n:name="for_approved_version_of"><span i18n:translate="for_approved_version_of">for approved version of</span></span>
+                  <span tal:condition="not: model/implements_container" i18n:translate="">
+                    for approved version of
                     &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
                   </span>
                 </h2>
@@ -64,13 +64,11 @@
               >
               <metal:block use-macro="here/macro_metadata/macros/view_table">
                 <!-- published version metadata table, so only viewable -->
-                <h2 i18n:translate="metadata_label" 
-                  metal:fill-slot="table_title"
-                  >
+                <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
-                  metadata
-                  <span tal:condition="not: model/implements_container">
-                    <span i18n:translate="for_public_version_of">for public version of</span>
+                  <tal:block i18n:translate="">metadata</tal:block>
+                  <span tal:condition="not: model/implements_container" i18n:translate="">
+                    for public version of
                     &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
                   </span>
                 </h2>

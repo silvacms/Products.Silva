@@ -20,7 +20,7 @@
       title="see the content in the public layout: alt-;"
       accesskey=";"
       tal:attributes="href string:${model/absolute_url}/preview_html"
-      i18n:translate="public_preview"
+      i18n:translate=""
       i18n:attributes="title">
       public&nbsp;preview...
     </a>
@@ -34,7 +34,7 @@
 
   <span tal:replace="nothing"> _______ closed message _______ </span>
   <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
-    <strong class="warning" i18n:translate="closed_message">This is a closed version. You see it, but the public won't!</strong>
+    <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
   </div>
 
   <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>

@@ -14,7 +14,7 @@
 
 <metal:block fill-slot="main">
 
-<h2 i18n:translate="request_processed">Request processed</h2>
+<h2 i18n:translate="">Request processed</h2>
 
 <!-- __________________________ start feedback _________________________ -->
 <p tal:replace="structure options/message">

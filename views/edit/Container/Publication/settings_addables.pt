@@ -78,7 +78,7 @@
                   <th i18n:translate="">
                     content
                   </th>
-                  <th i18n:translate="" width="60%">
+                  <th width="60%" i18n:translate="">
                     note
                   </th>
                 </tr>

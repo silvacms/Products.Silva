@@ -106,16 +106,16 @@
                 <th class="listing-right">
                   #&nbsp;
                 </th>
-                <th i18n:translate="select">
+                <th i18n:translate="">
                   select
                 </th>
-                <th i18n:translate="view">
+                <th i18n:translate="">
                   view
                 </th>
-                <th i18n:translate="modified">
+                <th i18n:translate="">
                   modified
                 </th>
-                <th i18n:translate="author">
+                <th i18n:translate="">
                   author
                 </th>
               </tr>
@@ -125,7 +125,7 @@
               </tal:block>
               <tr class="odd"
                 tal:condition="python: not(default_document or publishables or assets)">
-                <td colspan="5" i18n:translate="no_content_objects_in_folder">
+                <td colspan="5" i18n:translate="">
                   There is no content here.
                 </td>
               </tr>
@@ -205,7 +205,7 @@
                                                     or default"
                         tal:content="title"
                         i18n:attributes="title">
-                        <i i18n:translate="no_title">no title</i>
+                        <i i18n:translate="">no title</i>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -225,7 +225,7 @@
                         tal:attributes="href string:${item_url}/edit/tab_metadata"
                         i18n:attributes="title"
                         >
-                        <i i18n:translate="n/a">n/a</i>
+                        <i i18n:translate="">n/a</i>
                       </span>
                     </td>
                     <tal:block replace="nothing">
@@ -245,7 +245,7 @@
                         tal:attributes="href string:${item_url}/edit/tab_status"
                         i18n:attributes="title"
                         >
-                        <i i18n:translate="n/a">n/a</i>
+                        <i i18n:translate="">n/a</i>
                       </span>
                       <span 
                         tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
@@ -319,7 +319,7 @@
                           class python: asset.get_title() == '' and 'closed' or 'blacklink'"
                         i18n:attributes="title"
                         >
-                        <i i18n:translate="view">view</i>
+                        <i i18n:translate="">view</i>
                       </a>
                     </td>
                     <tal:block replace="nothing">

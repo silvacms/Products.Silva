@@ -18,7 +18,7 @@
       <tr class="top-controls">
         <td class="align-left"
           colspan="2">
-          <h3 i18n:translate="session_timeout">
+          <h3 i18n:translate="">
             session timeout
           </h3>
         </td>
@@ -26,7 +26,7 @@
       <tr class="even">
         <td class="feedback"
           colspan="2"
-          i18n:translate="working_session_is_going_to_expire">
+          i18n:translate="">
           In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;cancel&#8217; (alt-c) to do nothing, or save manually.
         </td>
       </tr>

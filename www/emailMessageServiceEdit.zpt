@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.6 $
+Version of this file: $Revision: 1.7 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -10,7 +10,7 @@ Version of this file: $Revision: 1.6 $
 
 <h4><a href="../manage_services">Silva Services</a></h4>
                                                                                                                                                                               
-<h2 i18n:translate="Silva_email_message_service">Silva Email Message Service</h2>
+<h2 i18n:translate="">Silva Email Message Service</h2>
 
 <form action="manage_edit" method="post">
 <table cellspacing="0" cellpadding="2" border="0">

@@ -47,7 +47,7 @@
                   accesskey="k"
                   i18n:attributes="title"
                   tal:attributes="href here/lookup_back_link">
-                  <div class="transport-border" i18n:translate="back">
+                  <div class="transport-border" i18n:translate="">
                     bac<u>k</u>...
                   </div>
                 </a>
@@ -79,7 +79,7 @@
               </tr>
               <tr class="top-controls">
                 <td colspan="2">
-                  <h3 i18n:translate="user_search">
+                  <h3 i18n:translate="">
                     user search
                   </h3>
                 </td>
@@ -89,7 +89,7 @@
             <tbody>
               <tr class="odd">
                 <td class="align-right"
-                  i18n:translate="name_or_part_of">
+                  i18n:translate="">
                   name (or part of name)
                 </td>
                 <td class="align-right"
@@ -132,7 +132,7 @@
                     accesskey="a"                      
                     i18n:attributes="value title"
                     tal:condition="python:lookup_result and len(lookup_result) > 3" />
-                  <h3 i18n:translate="search_results">
+                  <h3 i18n:translate="">
                     search results
                   </h3>
                 </td>
@@ -141,11 +141,11 @@
 
             <tbody>
               <tr tal:condition="python: lookup_result">
-                <th i18n:translate="user">
+                <th i18n:translate="">
                   user
                 </th>
                 <th
-                  style="width:60%;" i18n:translate="email">
+                  style="width:60%;" i18n:translate="">
                   email
                 </th>
                 <th tal:repeat="extra_name extra_names">
@@ -182,7 +182,7 @@
                 tal:condition="python:not lookup_result">
                 <td align="left"
                   tal:attributes="colspan lookup_colspan">
-                  <i i18n:translate="no_search_results">
+                  <i i18n:translate="">
                     No search results.
                   </i>
                 </td>
@@ -219,7 +219,7 @@
               href="lookup_back_link"
               tal:attributes="href here/lookup_back_link"
               i18n:attributes="title"
-              i18n:translate="use_clipboard">
+              i18n:translate="">
               <u>u</u>se clipboard...
             </a>
           </metal:block>

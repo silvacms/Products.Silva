@@ -21,7 +21,7 @@
         >
         <h3 style="margin-top:0">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Simple Member')" />
-          <span i18n:translate="user_clipboard" tal:omit-tag="">user clipboard</span>
+          <span i18n:translate="" tal:omit-tag="">user clipboard</span>
         </h3>
         <table class="listing"
           style="margin-bottom:0.5em;">
@@ -34,7 +34,7 @@
                     title="lookup users: alt-l" 
                     accesskey="l"
                     tal:attributes="href string:${model/absolute_url}/edit/lookup"
-                    i18n:translate="lookup_users"
+                    i18n:translate=""
                     i18n:attributes="title">
                     lookup users...
                   </a>
@@ -44,7 +44,7 @@
             <tr class="inter-controls">
               <th style="font-size:90%"
                 tal:condition="clipboard_members"
-                i18n:translate="ctrl_click_multi-select">
+                i18n:translate="">
                 ctrl-click to multi-select
               </th>
             </tr>
@@ -60,7 +60,7 @@
                     <option class="disabled"
                       disabled="disabled"
                       value="None"
-                      i18n:translate="select_users">
+                      i18n:translate="">
                       select users:
                     </option>
                     <tal:block repeat="userid clipboard_members">
@@ -76,7 +76,7 @@
                     disabled="disabled"
                     value="None"
                     tal:condition="not:clipboard_members"
-                    i18n:translate="no_users_on_clipboard">
+                    i18n:translate="">
                     No users on clipboard
                   </option>
                 </select>

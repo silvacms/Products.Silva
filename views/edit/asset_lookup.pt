@@ -144,16 +144,16 @@ function setReference() {
               <th class="listing-right">
                 &nbsp;
               </th>
-              <th i18n:translate="select">
+              <th i18n:translate="">
                 select
               </th>
-              <th i18n:translate="view">
+              <th i18n:translate="">
                 view
               </th>
-              <th i18n:translate="modified">
+              <th i18n:translate="">
                 modified
               </th>
-              <th i18n:translate="author">
+              <th i18n:translate="">
                 author
               </th>
               </tr>

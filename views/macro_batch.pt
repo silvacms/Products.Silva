@@ -1,11 +1,13 @@
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal">
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva-document">
   <body>
     <!--
-    Credit, where crediti is due: Code originally written for Plone 
+    Credit, where credit is due: Code originally written for Plone 
     by Helge Tesdal / Plone Solutions.
 
-    i18n and omit-tag attributes removed.
+    omit-tag attributes removed.
     -->
     <!-- Navigation -->
     <div class="listingBar" 

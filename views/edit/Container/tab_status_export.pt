@@ -52,7 +52,7 @@
         <div class="feedback"
           style="margin-bottom:1em;">
           <span class="subhead"
-            i18n:translate="items_selected_for_export">items to export:</span><br />
+            i18n:translate="">items to export:</span><br />
           <table width="100%" border="0">
             <tr tal:repeat="ref refs">
               <tal:block define="obj python: request['model'].resolve_ref(ref); path python: '/'.join(obj.getPhysicalPath())">

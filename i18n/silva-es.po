@@ -199,7 +199,7 @@ msgstr "Tecla de acceso: alt-z"
 msgid "access key: alt-z"
 msgstr "Tecla de acceso: alt-z"
 
-#.   <a accesskey="l" href="/manage_zmi_logout" title="accesskey: alt-l" i18n:attributes="title accesskey" i18n:translate="logout_link">logout link</a>
+#.   <a accesskey="l" href="/manage_zmi_logout" title="accesskey: alt-l" i18n:attributes="title accesskey" i18n:translate="">logout link</a>
 #: from views/logout.pt
 #, fuzzy
 msgid "accesskey: alt-l"

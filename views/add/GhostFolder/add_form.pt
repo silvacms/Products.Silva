@@ -39,13 +39,13 @@
   <tr>
     <th class="align-right"
       style="width:12%;"
-      i18n:translate="attributes">
+      i18n:translate="">
       attributes
     </th>
-    <th style="width:50%;" i18n:translate="content">
+    <th style="width:50%;" i18n:translate="">
       content
     </th>
-    <th i18n:translate="notes">
+    <th i18n:translate="">
       notes
     </th>
   </tr>
@@ -80,7 +80,7 @@
         note
       </span>
       <tal:block tal:condition="python:field.getId() == 'content_url'"
-      i18n:translate="ghost_originate_folder">
+      i18n:translate="">
         Location of originating folder. Depending on how much content there is, <span class="warning">creation may take a while</span>.
       </tal:block>
     </td>

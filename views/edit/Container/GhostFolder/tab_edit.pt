@@ -433,7 +433,7 @@
                 class python: asset.get_title() == '' and 'closed' or 'blacklink'"
               i18n:attributes="title"
               >
-              <em i18n:translate="view">view</em>
+              <em i18n:translate="">view</em>
             </a>
           </td>
           <tal:block replace="nothing">

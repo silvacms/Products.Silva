@@ -80,7 +80,7 @@
                     accesskey="g"
                     tal:attributes="href string:${model/absolute_url}/edit/tab_access_groups"
                     i18n:attributes="title"
-                    i18n:translate="groups_admin">
+                    i18n:translate="">
                     <u>g</u>roups admin...
                   </a>
                 </metal:block>
@@ -89,7 +89,7 @@
             <tr class="inter-controls">
               <th style="font-size:90%"
                 tal:condition="groups"
-                i18n:translate="ctrl_click_multi-select">
+                i18n:translate="">
                 ctrl-click to multi-select
               </th>
             </tr>

@@ -1,14 +1,14 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.4 $
+Version of this file: $Revision: 1.5 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
 <h2 tal:define="form_title string:Add Silva ContactInfo"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
-<p i18n:translate="add_silva_contactinfo" class="form-help">
+<p i18n:translate="" class="form-help">
 Add Silva ContactInfo
 </p>
 
@@ -16,7 +16,7 @@ Add Silva ContactInfo
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">
-    <div i18n:translate="id" class="form-label">
+    <div i18n:translate="" class="form-label">
     id
     </div>
     </td>
@@ -26,7 +26,7 @@ Add Silva ContactInfo
   </tr>
   <tr>
     <td align="left" valign="top">
-    <div i18n:translate="title" class="form-label">
+    <div i18n:translate="" class="form-label">
     title
     </div>
     </td>

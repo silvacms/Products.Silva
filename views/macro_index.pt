@@ -5,6 +5,8 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva-document"
   tal:define="
     view here;
     model request/model;
@@ -91,11 +93,11 @@ function handle_default_action(element, event, action)
 <tal:block tal:replace="nothing"> _______ moz site navigation_______ </tal:block>
 <link rel="top" title="Up to Silva top" 
   tal:condition="python:model.meta_type != 'Silva Root'"
-  tal:attributes="href string:${root_url}/edit" />
+  tal:attributes="href string:${root_url}/edit" i18n:attributes="title" />
 <link rel="up" href="../../edit" title="Up one level" 
-  tal:condition="python:model.meta_type != 'Silva Root'" />
-<link rel="help" href="globals/accesskeys" title="Help with access keys" />
-<link rel="copyright" href="globals/copyright" title="Silva copyright info" />
+  tal:condition="python:model.meta_type != 'Silva Root'" i18n:attributes="title" />
+<link rel="help" href="globals/accesskeys" title="Help with access keys" i18n:attributes="title" />
+<link rel="copyright" href="globals/copyright" title="Silva copyright info" i18n:attributes="title"/>
 </head>
 
 <body tal:attributes="onload python: test(vein == 'editor' and editor == 'kupu', 
@@ -211,7 +213,7 @@ function handle_default_action(element, event, action)
     email python: view.get_metadata_element('silva-extra', 'contactemail');
     ">
     <div style="float: left;"> 
-      <tal:block i18n:translate="index_contact">contact:</tal:block>
+      <tal:block i18n:translate="">contact:</tal:block>
     <a shape="rect"
       tal:attributes="href string:mailto:${email}"
       tal:content="python: name or email or 'no name'"
@@ -224,7 +226,7 @@ function handle_default_action(element, event, action)
       accesskey=":"
       tal:attributes="href url"
       i18n:attributes="title"
-      i18n:translate="index_preview_public">
+      i18n:translate="">
       see public version
     </a>
   </div>
@@ -245,7 +247,7 @@ function handle_default_action(element, event, action)
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
         userWindow.focus();;
         return false;;"
-        i18n:translate="index_user_setting"
+        i18n:translate=""
         i18n:attributes="title">
       <img border="0"
         height="9"
@@ -259,7 +261,7 @@ function handle_default_action(element, event, action)
     <a href="logout"
       accesskey="q"
       title="Logout of Silva: alt-q"
-      i18n:translate="index_logout"
+      i18n:translate=""
       i18n:attributes="title">
       logout
       <tal:block tal:condition="here/get_user_role"

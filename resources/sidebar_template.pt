@@ -94,7 +94,7 @@
             title string:id: ${item/id};"
           tal:condition="python:title == ''"
           tal:content="item/id"
-          i18n:translate="no_title">
+          i18n:translate="">
             no title
         </a>
       </div>

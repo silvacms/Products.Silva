@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.3 $
+Version of this file: $Revision: 1.4 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -10,11 +10,11 @@ Version of this file: $Revision: 1.3 $
 
 <h4><a href="../manage_services">Silva Services</a></h4>
 
-<h3 i18n:translate="config_silva_layout_products">
+<h3 i18n:translate="">
   Configure Silva Layout Products:
 </h3>
 
-<h3 i18n:translate="general_actions">general actions</h3>
+<h3 i18n:translate="">general actions</h3>
 <form action="." method="POST">
   <input type="submit" name="refresh_all:method" value="refresh all" i18n:attributes="value"/>
 </form>
