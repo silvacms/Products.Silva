@@ -114,7 +114,7 @@ function handle_default_action(element, event, action)
 </span>
 <tal:block define="
   type options/message_type | request/message_type | nothing;
-  notice options/message | request/message | string:&nbsp;;;
+  notice options/message | request/message | nothing;
   dummy python:here.recordError(type, notice);
 ">
   <div class="feedback"
@@ -123,7 +123,17 @@ function handle_default_action(element, event, action)
     <span tal:replace="structure notice">
       message
     </span>
-    <tal:block tal:condition="python:type == 'feedback'">
+    <tal:block condition="python:user.has_role(['Manager'], object=model) and not notice">
+      <a class="reveal"
+        href="/manage_main"
+        title="jump to zope top: alt-`"
+        accesskey="`"
+        i18n:attributes="title"
+        i18n:translate="">
+        zroot...
+      </a>
+    </tal:block>
+    <tal:block tal:condition="python:type == 'feedback' and notice">
       &nbsp;&nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
     </tal:block>
   </div>
