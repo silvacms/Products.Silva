@@ -1,6 +1,5 @@
 <init tal:omit-tag=""
-  tal:define="global active_tab string:tab_status;
-              global breadcrumb_vein string:Export;" />
+  tal:define="global view here; global active_tab string:tab_status; global docma_running view/service_docma/try_connection_and_pw;" />
 
 <!-- ____________________________ start index_html ____________________________ -->
 <html metal:use-macro="here/macro_index/macros/master">
@@ -11,7 +10,7 @@
 <div class="margins">
 <h2>Export options for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
 
-<form action="download_xml">
+<form action=".">
 <table width="43%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="cellspacing container/table_cellspacing;
     cellpadding container/table_cellpadding; border container/table_border">
@@ -43,9 +42,41 @@ Export newest version?<br />
 </td>
 </tr>
 
+<tr class="focus" valign="top" tal:condition="docma_running">
+<td align="right">
+Enter e-mail address (for Docma export only):
+</td>
+<td align="right">
+<input type="text" name="email_address" />
+</td>
+</tr>
+
+<tr class="focus-cycle" valign="top" tal:condition="docma_running">
+<td align="right">
+Choose template (for Docma export only):
+</td>
+<td align="right">
+<select name="template">
+<tal:block repeat="template view/service_docma/get_templates">
+<option tal:attributes="value template" tal:content="template"></option>
+</tal:block>
+</select>
+</td>
+</tr>
+
+<tr class="focus" valign="top" tal:condition="docma_running">
+<td align="right">
+Choose filename (for Docma export only):
+</td>
+<td align="right">
+<input type="text" name="outfilename" />
+</td>
+</tr>
+
 <tr class="controls">
 <td colspan="2" align="right">
-<input class="button" type="submit" value=" Export " />
+<input class="button" type="submit" value=" Export to Docma " name="tab_status_silva2word:method" />
+<input class="button" type="submit" value=" Export to XML" name="download_xml:method" />
 </td>
 </tr>
 </table>
