@@ -33,6 +33,7 @@ pt_binding['setNames'] = set_names = binding.getSetNames()
 # {
 #  'setNames': [name1, name2,..],
 #   set1: {'elementNames': [name1, name2,...],
+#          'setTitle':...,
 #           element1: {'view':...,
 #                      'isAcquired':...},
 #                      'isEditable':...,
@@ -47,6 +48,7 @@ pt_binding['setNames'] = set_names = binding.getSetNames()
 # }
 for set_name in set_names:
     pt_binding[set_name] = set = {}
+    set['setTitle'] = binding.getSet(set_name).getTitle() or set_name
     # Filter for viewable items
     set['elementNames'] = element_names = binding.getElementNames(
         set_name, mode='view')
