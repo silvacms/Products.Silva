@@ -13,11 +13,6 @@
 <div tal:omit-tag="" metal:fill-slot="main">
 <!-- ____________________________ start index_html/slot main ___________________________ -->
 
-<tal:block condition="view/REQUEST/focus | nothing">
-<script language="JavaScript" tal:content="string:document.location = 'tab_edit_import#${view/REQUEST/focus}';">
-</script>
-</tal:block>
-
 <div class="margins">
 <h3><a href="tab_edit" title="Up to Contents">
     <img tal:attributes="src string:${silva_root}/globals/up_gray.gif" width="9" height="9" border="0" alt="Up to top of Edit tab" />
@@ -197,7 +192,7 @@
 
 <div
   tal:condition="docma_running" 
-  tal:replace="structure python:here.docma_queue(format='silva')" />
+  tal:replace="structure python:here.docma_queue(format='silva', refresh_page='tab_edit_import')" />
 
 <h3 class="worksheet" style="text-align:right;">
   <a href="tab_status_export"
