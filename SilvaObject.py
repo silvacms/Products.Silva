@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.42 $
+# $Revision: 1.43 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -195,16 +195,6 @@ class SilvaObject(Security):
                               'implements_versioned_content')
     def implements_versioned_content(self):
         return IVersionedContent.isImplementedBy(self)
-
-    # HACK, DEPRECATED
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'activate_security_hack')
-    def activate_security_hack(self):
-        """This does nothing at all, except that calling this apparently
-        as a side effect activates security on this object enough so you
-        can check what roles a user has.
-        """
-        pass
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'security_trigger')
