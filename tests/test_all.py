@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 import unittest
 import Zope
 
@@ -13,6 +13,8 @@ from Products.Silva.tests import test_Ghost
 from Products.Silva.tests import test_Copy
 from Products.Silva.tests import test_Security
 from Products.Silva.tests import test_CatalogedVersioning
+from Products.Silva.tests import test_BasicTransformations
+from Products.Silva.tests import test_EoproTransformations
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -24,6 +26,8 @@ def test_suite():
     suite.addTest(test_Ghost.test_suite())
     suite.addTest(test_Copy.test_suite())
     suite.addTest(test_Security.test_suite()) 
+    suite.addTest(test_BasicTransformations.test_suite()) 
+    suite.addTest(test_EoproTransformations.test_suite()) 
     #suite.addTest(test_CatalogedVersioning.test_suite()) 
     return suite
 
