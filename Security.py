@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.60 $
+# $Revision: 1.61 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -307,6 +307,8 @@ class Security(AccessManager):
         if IContainer.isImplementedBy(self):
             return noneMember.__of__(self)
         binding = self.service_metadata.getMetadata(self.get_editable())
+        if binding is None:
+            return noneMember.__of__(self)
         userid = binding.get('silva-extra', element_id='lastauthor',
             no_defaults=1)
         # get cached author info (may be None)
@@ -324,6 +326,8 @@ class Security(AccessManager):
         userid = self._last_author_userid = (self.REQUEST.
                                              AUTHENTICATED_USER.getUserName())
         binding = self.service_metadata.getMetadata(self.get_editable())
+        if binding is None:
+            return
         binding.setValues(
             'silva-extra', {
                 'lastauthor': userid,
