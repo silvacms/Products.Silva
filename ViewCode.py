@@ -239,9 +239,7 @@ class ViewCode:
                                 'get_image')
     def get_image(self, image_context, image_path):
         """return an image object from a path"""
-        raise 'foo'
         image = image_context.unrestrictedTraverse(image_path, None)
-        print 'image:', image
         if image is None:
             return None
         # XXX checking for interface would be way nicer here...
