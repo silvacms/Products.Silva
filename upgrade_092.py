@@ -129,13 +129,13 @@ def get_version_xml(obj, version):
     v.documentElement.writeStream(s)
     return s.getvalue().encode('UTF8')
 
-from Products.SilvaDocument.Document import DocumentVersion
-
 def convert_document_092(obj):
     #print 'Converting document',  obj.id
     from random import randrange
     from string import lowercase
     from DateTime import DateTime
+    
+    from Products.SilvaDocument.Document import DocumentVersion
 
     for version in ['unapproved', 'approved', 'public', 'last_closed']:
         v = getattr(obj, 'get_%s_version' % version)()

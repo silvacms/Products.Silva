@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.2 2003/12/19 15:23:37 jw Exp $
+# $Id: install.py,v 1.97.4.3 2004/01/09 12:56:41 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -299,7 +299,6 @@ def configureSecurity(root):
     
     add_permissions = [
         'Add Documents, Images, and Files',
-        'Add Silva Documents',
         'Add Silva Folders',
         'Add Silva Ghost Versions',
         'Add Silva Ghosts',
