@@ -26,6 +26,10 @@ class RenderImagesOnRightTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals(images_on_right.getName(), "Images on Right")
 
     def test_renders_images_on_right(self):
+        try:
+            import libxslt
+        except ImportError:
+            return
         importfolder = self.add_folder(
             self.root,
             'silva_xslt',
