@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3b1
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.40 $
+  CVS:        $Revision: 1.40.8.1 $
 
 Installing Silva
 
@@ -64,7 +64,7 @@ Installing Silva
 
       The infrastructure used by Silva to attach views to content objects.
 
-        "SilvaViews":http://www.zope.org/Members/faassen/SilvaViews
+        "SilvaViews":http://www.zope.org/Members/infrae/SilvaViews
 
     Formulator (1.5.0)
 
