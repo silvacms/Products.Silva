@@ -6,13 +6,15 @@
   >
 <body>
 <metal:block define-macro="select_all">
+  <tal:block define="sid select_id | python:''">
   <input name="all"
     type="checkbox"
     value="whatever"
     id="all"
     title="select all: alt-a"
-    onChange="toggleSelect();"
+    tal:attributes="onChange string:toggleSelect('${sid}');;"
   />
+  </tal:block>
   <label for="all"
     accesskey="a">
     Select <u>a</u>ll
@@ -22,17 +24,29 @@
     <!--
     isSelected = false;
 
-    function toggleSelect() {
+    function toggleSelect(id) {
       if (isSelected == false) {
         for (i = 0; i < document.silvaObjects.length; i++)
-          document.silvaObjects.elements[i].checked = true ;
+        {
+          obj = document.silvaObjects.elements[i];
+          if (!id || obj.name.indexOf(id) > -1)
+          {
+            obj.checked = true;
+          }
+        }
         isSelected = true;
         //document.silvaObjects.selectButton.value = "Deselect all";
         return isSelected;
       }
       else {
         for (i = 0; i < document.silvaObjects.length; i++)
-          document.silvaObjects.elements[i].checked = false ;
+        {
+          obj = document.silvaObjects.elements[i];
+          if (!id || obj.name.indexOf(id) > -1)
+          {
+            obj.checked = false;
+          }
+        }
         isSelected = false;
         //document.silvaObjects.selectButton.value = "Select all";
         return isSelected;

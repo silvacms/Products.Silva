@@ -197,7 +197,9 @@
                     <!-- span class="widebody" style="float: right;">
                     date format: day/month/year hours:minutes
                     </span -->
-                    <metal:block use-macro="view/macro_select_all/macros/select_all" />
+                    <tal:define define="select_id string:refs">
+                      <metal:block use-macro="view/macro_select_all/macros/select_all" />
+                    </tal:define>
                   </th>
                   <th class="controls listing-left">
                   </th>
