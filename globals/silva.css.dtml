@@ -234,7 +234,6 @@ div.flowBar {
   background: &dtml-mainTabBackgroundSelected;;
   margin: 0;
   padding: 0;
-  /* was #636da6 */
   border-top: 3px solid &dtml-mainTabBackgroundSelected;;
   border-bottom: 1px solid &dtml-shade60;;
   clear:both;

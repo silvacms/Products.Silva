@@ -59,7 +59,7 @@ div.tabs a.normal:visited {
 }
 
 div.flowBar {
-  background: &dtml-contentTabBackgroundSelected;;
+  border-top: 3px solid &dtml-contentTabBackgroundSelected;;
 }
 
 table.listing td.top {
