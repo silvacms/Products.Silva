@@ -11,7 +11,7 @@ request = context.REQUEST
 row = request.node
 editorsupport = context.service_editorsupport
 node = row.firstChild
-while node:
+while node is not None:
     field = node
     node = node.nextSibling
     if field.nodeName != 'field':
