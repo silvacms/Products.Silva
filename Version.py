@@ -25,7 +25,7 @@ class Version(SimpleItem):
                               'version_status')
     def version_status(self):
         """Returns the status of the current version
-        Can be 'unapproved', 'approved', 'published', 'last_closed' or 'closed'
+        Can be 'unapproved', 'approved', 'public', 'last_closed' or 'closed'
         """
         status = None
         unapproved_version = self.get_unapproved_version(0)
