@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    global vein string:settings;
+    global vein string:properties;
     ">
 
 <!-- properties (aka tab_metadata) for Publications: XXX Fixme:
