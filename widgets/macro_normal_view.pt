@@ -8,7 +8,7 @@
     global mode here/get_mode;
     global is_embedded is_embedded | nothing;
     global edit_or_nest python:test(wr_name == 'service_nlist_editor', 'nest_element.gif', 'edit_element.gif');
-    global color python:test(is_embedded, 'focus', 'frontend');
+    global color python:test(is_embedded, 'focus', None);
     global content_cell_class python:test(mode == 'done', 'post-focus', color);
     global insert_cell_class python:test(is_embedded, 'focus-cycle', color);
     global disable_edit disable_edit | nothing;
@@ -32,7 +32,7 @@
   <td tal:condition="disable_edit" class="transparent" width="16">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
   </td>
-  <td tal:attributes="class content_cell_class" class="frontend" colspan="2">
+  <td tal:attributes="class content_cell_class" colspan="2">
     <div metal:define-slot="node_content">_______ local node content gets slotted in _______</div>    
   </td>
   <div metal:use-macro="container/macro_helpers/macros/element_buttons" />

@@ -21,7 +21,7 @@
     tal:attributes="name node_path"
     tal:content="structure python:here.simple_content(node)" />
 
-  <ul class="frontend" tal:condition="not:simple">
+  <ul tal:condition="not:simple">
     <li tal:replace="structure here/content" />
   </ul>
 </td>
