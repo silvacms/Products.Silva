@@ -236,7 +236,7 @@ div.flowBar {
   margin: 0;
   padding: 0;
   border-top: 3px solid &dtml-mainTabBackgroundSelected;;
-  border-bottom: 1px solid &dtml-shade60;;
+  border-bottom: 1px solid #84a7a5;
   clear:both;
 }
 
@@ -256,11 +256,13 @@ div.footer {
 
 div.footer a {
   color: &dtml-mainLinkColor;;
-    font-weight: &dtml-mainTabFontWeight;;
-    padding: 0;
-    margin: 0;
-    text-transform: none;
+  font-weight: &dtml-mainTabFontWeight;;
+  padding: 0;
+  margin: 0;
+  text-transform: none;
 }
+div.footer a:visited {
+  color: &dtml-mainLinkColor;;
 
 
 /* _____________________________________________________ personal bar _____ */
@@ -279,6 +281,9 @@ div.personalBar a {
     margin: 0;
     text-transform: none;
     cursor: pointer;
+}
+div.personalBar a:visited {
+  color: #b7cee6;
 }
 
 div.personalBar img {
