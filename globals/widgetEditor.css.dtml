@@ -49,7 +49,6 @@ div.citation p.source {
 
 
 /* ______________________________________________ custom table styles _____ */
-
 table.listing {
   border: none;
 }
@@ -116,7 +115,14 @@ td.even table td {
   border-right: none ! important;
 }
 
+table.csvtable {
+  border: 1px solid #77858c;
+  border-right: 0;
+}
 
+table.csvtable td {
+  border-right: 1px solid #77858c;
+}
 
 /* ________________________________________________________ list styles _____ */
 /* _______ these are duplicated in frontend.css for overriding ______ */
