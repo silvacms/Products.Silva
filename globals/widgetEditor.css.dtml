@@ -61,6 +61,7 @@ table.silvatable {
   empty-cells: show;
   border-collapse: collapse;
   margin-bottom: 1em;
+  line-height: 1.5em;
 }
 table.silvatable tr {
   vertical-align: top;
