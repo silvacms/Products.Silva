@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.29 $
+# $Revision: 1.30 $
 # Python
 from StringIO import StringIO
 # Zope
@@ -157,6 +157,8 @@ class DemoObjectVersion(CatalogedVersion):
         f.write('<date>%s</date>' % self.date())
         export_metadata(self, context)
 
+    # XXX if this is really necessary in the demo object version object,
+    # there seems to be some incompleteness in the base class.
     def manage_afterClone(self, item):
         # XXX cut & paste from the DocumentVersion.manage_afterClone
         self.service_editor.clearCache(self.content)
