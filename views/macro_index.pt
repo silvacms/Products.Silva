@@ -136,7 +136,7 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
   </a>
 </td>
 <td class="footer" align="right" width="30%">
-<a class="footer" href="logout" title="Logout of Silva: alt-q" accesskey="q">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="userid" /></a>
+<a class="footer" href="logout" title="Logout of Silva: alt-q" accesskey="q">Logout&nbsp;<span tal:condition="here/get_user_role" tal:replace="structure string:${here/get_user_role}&nbsp;" /><span tal:replace="userid" /></a>
 </td>
 <td class="footer" width="2%">
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
