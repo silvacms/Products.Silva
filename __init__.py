@@ -52,3 +52,9 @@ def initialize(context):
           constructors = (Image.manage_addImageForm,
                           Image.manage_addImage)
           )
+
+     context.registerClass(
+          Ghost.GhostVersion,
+          constructors = (Ghost.manage_addGhostVersionForm,
+                          Ghost.manage_addGhostVersion)
+          )
