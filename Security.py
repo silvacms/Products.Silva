@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53.2.1 $
+# $Revision: 1.53.2.2 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -322,7 +322,7 @@ class Security(AccessManager):
     def sec_get_last_author_info(self):
         """Get the info of the last author (this is a IMember object)
         """
-        # containers have no author
+        # containers have nohttp://localhost:8080/silva/edit/tab_access author
         if IContainer.isImplementedBy(self):
             return noneMember.__of__(self)
         

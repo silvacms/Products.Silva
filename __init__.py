@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.67.2.3 $
+# $Revision: 1.67.2.4 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -125,3 +125,7 @@ else:
     dtmlpath = os.path.join(dirpath, 'manage_main')
     Folder.manage_main = DTMLFile(dtmlpath, globals())
     Root.manage_main = DTMLFile(dtmlpath, globals())
+
+from Products.PythonScripts.Utility import allow_module
+allow_module('Products.Silva.adapters.security')
+allow_module('Products.Silva.roleinfo')

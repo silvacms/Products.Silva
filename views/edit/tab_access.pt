@@ -453,14 +453,10 @@
     </h2>
     <div class="hilight borders top right bottom left"
       style="padding: 0.5em; margin: 0em 0em 2em 0em;">
-      <form action="minimal_access_role_submit"
-        method="POST">
+      <form action="."  method="POST">
         <table border="0"
           cellpadding="3"
-          cellspacing="0"
-          tal:define="
-            is_closed model/sec_is_closed_to_public;
-            minimal_role model/sec_minimal_view_role;">
+          cellspacing="0">
           <tr align="left">
             <td>
               <b>
@@ -473,26 +469,37 @@
             </td>
           </tr>
           <tr valign="top">
-            <td>
-              <select name="role">
-                <option value="Anonymous"
-                  tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
-                  Anonymous
-                </option>
-                <option value="Authenticated"
-                  tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">
-                  Authenticated
-                </option>
-                <option value="Viewer"
-                  tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">
-                  Viewer
-                </option>
-              </select>
-              &nbsp;
-              <input class="button"
-                type="submit"
-                value="Set restriction"
-                title="Restrict access to users with a specific role" />
+            <td tal:define="info view/get_viewer_role_info; acquired info/acquired">
+              <select 
+                  class="manipulator"
+                  name="role"
+                  title="select a role to assign" i18n:attributes="title"
+                  tal:define="selected_role info/selected_role">
+                  <option
+                    tal:repeat="role info/viewer_roles"
+                    tal:attributes="value role; selected python:test(role == selected_role, 'SELECTED', nothing)"
+                    tal:content="role">
+                  </option>
+                </select>
+                <input 
+                  class="button"
+                  type="submit"
+                  name="tab_access_minimum_role_submit:method"
+                  value="set restriction"
+                  title="restrict access to users with a specific role"
+                  i18n:attributes="title value"
+                  />
+                <input
+                  class="button"
+                  type="submit"
+                  name="tab_access_acquire_minimum_role_submit:method"
+                  value="acquire restriction"
+                  title="make access restriction be inherited from above"
+                  i18n:attributes="title value"
+                  tal:condition="not:acquired"
+                  />
+                 <tal:block condition="info/is_public">Open to the public</tal:block>
+                 <tal:block condition="info/acquired">(acquired)</tal:block>
             </td>
           </tr>
         </table>

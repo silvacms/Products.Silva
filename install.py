@@ -106,7 +106,7 @@ def install(root):
 
     # configure membership; this checks whether this is necessary
     configureMembership(root)
-    # also re-configure security (XXX should this happen?)
+    # also re-configure security
     configureSecurity(root)
     # and reconfigure xml widget registries
     # FIXME: should we check if the registries exist?
@@ -180,7 +180,8 @@ def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.
     """
     # add the appropriate roles if necessary
-    roles = ['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor']
+    roles = ['Viewer', 'Viewer +', 'Viewer ++', 'Reader',
+             'Author', 'Editor', 'ChiefEditor']
     userdefined_roles = root.userdefined_roles()
     request = root.REQUEST
     for role in roles:
@@ -219,7 +220,7 @@ def configureSecurity(root):
     # (is this bad in case of upgrade/refresh)
     root.manage_permission('View',
                            all_reader +
-                           ['Anonymous', 'Authenticated', 'Viewer'])
+                           ['Anonymous', 'Authenticated', 'Viewer', 'Viewer +', 'Viewer ++'])
     # person with viewer role can do anything that anonymous does + has
     # additional right to view when anonymous can't. This means zope
     # should fall back on permissions for anonymous in case viewer does

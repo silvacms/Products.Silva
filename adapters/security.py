@@ -6,7 +6,7 @@ from AccessControl.PermissionRole import rolesForPermissionOn
 from AccessControl.Permission import Permission
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
-from Products.Silva import interfaces as silva_interfaces
+from Products.Silva.IRoot import IRoot
 from Products.Silva.adapters import adapter
 from Products.Silva.adapters import interfaces
 
@@ -25,7 +25,7 @@ class ViewerSecurityAdapter(adapter.Adapter):
     def setAcquired(self):
         # if we're root, we can't set it to acquire, just give
         # everybody permission again
-        if silva_interfaces.IRoot.isImplementedBy(self.context):
+        if IRoot.isImplementedBy(self.context):
             self.context.manage_permission(
                 SilvaPermissions.View,
                 roles=roleinfo.ALL_ROLES,
@@ -50,7 +50,7 @@ class ViewerSecurityAdapter(adapter.Adapter):
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'isAcquired')
     def isAcquired(self):
-        if (silva_interfaces.IRoot.isImplementedBy(self.context) and
+        if (IRoot.isImplementedBy(self.context) and
             self.getMinimumRole() == 'Anonymous'):
             return 1
         # it's unbelievable, but that's the Zope API..
@@ -67,7 +67,7 @@ class ViewerSecurityAdapter(adapter.Adapter):
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'getMinimumRoleAbove')
     def getMinimumRoleAbove(self):
-        if silva_interfaces.IRoot.isImplementedBy(self.context):
+        if IRoot.isImplementedBy(self.context):
             return 'Anonymous'
         else:
             parent = aq_parent(aq_inner(self.context))
