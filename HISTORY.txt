@@ -13,6 +13,9 @@ Silva changes
       - Fixed bug in Kupu transformations that broke tables with incomplete
         alignment information.
 
+      - Made the 0.9.3-1.0 Image upgrade a bit more forgiving, which may result
+        in broken images but at least lets the upgrade continue.
+
   1.0 (release candidate 3)
 
     Bugs fixed
