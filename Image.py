@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.58 2004/11/29 12:50:52 guido Exp $
+# $Id: Image.py,v 1.59 2004/11/29 15:30:23 guido Exp $
 
 # Python
 import re, string
@@ -426,6 +426,21 @@ class Image(Asset):
         elif width > height:
             return _("landscape")
         return _("portrait")
+
+    security.declareProtected(SilvaPermissions.View, 'getOrientationClass')
+    def getOrientationClass(self):
+        """ returns Image orientation 
+          
+            untranslated string that can be used as class name
+        """
+        width, height = self.getDimensions()
+        # XXX i18n - are we sure this is only displayed, and not used as a
+        # classname or anything?
+        if width == height:
+            return "square"
+        elif width > height:
+            return "landscape"
+        return "portrait"
 
     def manage_FTPget(self, *args, **kwargs):
         return self.image.manage_FTPget(*args, **kwargs)
