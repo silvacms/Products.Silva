@@ -1,7 +1,7 @@
 
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -33,6 +33,7 @@ class ExtensionService(SimpleItem.SimpleItem):
     def __init__(self, id, title):
         self.id = id
         self.title = title
+        # Actually is the cache refresh datetime
         self._refresh_datetime = DateTime()
         
     # MANIPULATORS
@@ -64,7 +65,7 @@ class ExtensionService(SimpleItem.SimpleItem):
         """
         self.uninstall(name)
         self.install(name)
-        self._refresh_datetime = DateTime()
+        self.refresh_caches()
         if REQUEST:
             return self.manage_main(manage_tabs_message='%s refreshed' % name)
 
@@ -77,6 +78,12 @@ class ExtensionService(SimpleItem.SimpleItem):
         if REQUEST:
             return self.manage_main(manage_tabs_message=
                 'Silva and all installed extensions have been refreshed')
+                
+    security.declareProtected('View management screens', 'refresh_caches')
+    def refresh_caches(self):        
+        """Refresh caches
+        """
+        self._refresh_datetime = DateTime()
 
     security.declareProtected('View management screens', 'upgrade_all')
     def upgrade_all(self):

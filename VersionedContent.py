@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.48 $
+# $Revision: 1.49 $
 
 # Python
 from StringIO import StringIO
@@ -191,28 +191,16 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             return VersionedContent.inheritedAttribute('view')(
                 self, view_type)
 
-        data, cached_datetime = self._cached_data.get(
-            view_type, (None, None))
-
-        publicationtime = refreshtime = None
-        if not cached_datetime is None:
-            # If cache is still valid, serve it.
-            # XXX: get_public_version_publication_datetime  *and*
-            # is_version_published trigger workflow updates; necessary?
-            publicationtime = self.get_public_version_publication_datetime()
-            if cached_datetime >= publicationtime:
-                refreshtime = self.service_extensions.get_refresh_datetime()
-                if (cached_datetime >= refreshtime and 
-                       self.is_version_published()):
-                    # Yes! We have valid cached data! Return it.
-                    return data
-
+        data = self.get_cached_data(view_type)
+        if data is not None:
+            return data
+                
         # No cache or not valid anymore, so render.
         data = VersionedContent.inheritedAttribute('view')(self, view_type)
         # See if the previous cacheability check is still valid,
         # if not, see if we can cache at all.
-        publicationtime = publicationtime or self.get_public_version_publication_datetime()
-        refreshtime = refreshtime or self.service_extensions.get_refresh_datetime()
+        publicationtime = self.get_public_version_publication_datetime()
+        refreshtime = self.service_extensions.get_refresh_datetime()
         if (self._cacheable_checked is None or
                self._cacheable_checked <= publicationtime or
                self._cacheable_checked <= refreshtime):
@@ -232,14 +220,34 @@ class VersionedContent(Content, Versioning, Folder.Folder):
                     self._p_changed = 1
 
         return data
-        
+          
+    def get_cached_data(self, view_type='public'):        
+        data, cached_datetime = self._cached_data.get(
+            view_type, (None, None))
+
+        if cached_datetime is not None:
+            # If cache is still valid, serve it.
+            # XXX: get_public_version_publication_datetime *and*
+            # is_version_published trigger workflow updates; necessary?
+            publicationtime = self.get_public_version_publication_datetime()
+            if cached_datetime > publicationtime:
+                refreshtime = self.service_extensions.get_refresh_datetime()
+                if (cached_datetime > refreshtime and 
+                       self.is_version_published()):
+                    # Yes! We have valid cached data! Return data
+                    return data
+        return None
+    
+    def is_cached(self, view_type='public'):
+        return self.get_cached_data(view_type) is not None
+    
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
     def is_cacheable(self):
         """Return true if the result of the view method can be safely
         cached.
         """
         # by default nothing is safely cacheable
-        return 0
+        return 0    
 
 InitializeClass(VersionedContent)
 
