@@ -759,11 +759,11 @@ div.spacer {
     color: Red;
 }
 
-.even, .unselected {
+.even {
     background-color: &dtml-evenRowBackground;;
 }
 
-.odd, .selected {
+.odd {
     background-color: &dtml-oddRowBackground;;
 }
 
