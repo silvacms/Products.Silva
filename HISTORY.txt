@@ -28,6 +28,9 @@ Silva changes
 
     Bugs Fixed
 
+        - The "use selection" button would not return to tab_access just
+          after assigning a role to a user.
+
 	- Changed from absolute_url(1) to getPhysicalPath() for	  
           code elements - this should make code elements work in a	  
           virtual host setup.

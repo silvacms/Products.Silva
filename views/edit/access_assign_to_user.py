@@ -20,6 +20,9 @@ for userid in userids:
     model.sec_assign(userid, assign_role)
     #assigned.append((userid, assign_role))
 
-return view.tab_access(
-    message_type="feedback", 
-    message="Role(s) assigned") # for %s" % view.quotify_list_ext(assigned))
+#return view.tab_access(
+#    message_type="feedback", 
+#    message="Role(s) assigned") # for %s" % view.quotify_list_ext(assigned))
+
+# FIXME: do we need feedback?
+request.RESPONSE.redirect(view.tab_access.absolute_url())
