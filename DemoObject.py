@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -164,6 +164,7 @@ def xml_import_handler(object, node):
     title = get_xml_title(node)
     object.manage_addProduct['Silva'].manage_addDemoObject(id, title)
     newdo = getattr(object, id)
+    newdo.sec_update_last_author_info()
     version = getattr(newdo, '0')
     for child in node.childNodes:
         if child.nodeName == u'doc':
