@@ -16,19 +16,19 @@
     </tal:block>
 
     <div class="info"
-      tal:condition="python: (options['error_type'] == 'Unauthorized' and here.service_members.allow_subscription())">
+      tal:condition="python: (options['error_type'] == 'Unauthorized' and here.service_members.allow_authentication_requests())">
       <h2>Membership system</h2>
       <p class="readable">
         Sorry, this page is only available to visitors with proper credentials.
       </p>
       <div class="readable" 
-        tal:condition="here/service_members/get_subscription_url">
+        tal:condition="here/service_members/get_authentication_requests_url">
         <p>
           You're welcome to apply for membership (it's a three field form). Your request will be sent to the responsible person who will grant (or possibly deny) access. Then you'll be informed via email.
         </p>
         <span class="subhead">
           <a href="become_visitor"
-            tal:attributes="href string:service_resources/${here/service_members/get_subscription_url}?last_url=${here/absolute_url}">
+            tal:attributes="href string:service_resources/${here/service_members/get_authentication_requests_url}?last_url=${here/absolute_url}">
           Become a visitor to the site
           </a><br /></span>
           As a visitor, you can view certain items that anonymous users are not allowed to see.<br /><br />
@@ -44,7 +44,7 @@
     </div>
 
     <div class="info"
-      tal:condition="python: (options['error_type'] == 'Unauthorized' and not here.service_members.allow_subscription())">
+      tal:condition="python: (options['error_type'] == 'Unauthorized' and not here.service_members.allow_authentication_requests())">
       <h2>Login required</h2>
       <p>
       Sorry, this page is only available to visitors with proper credentials.  

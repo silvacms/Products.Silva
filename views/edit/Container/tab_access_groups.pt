@@ -15,7 +15,7 @@
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="
-    allow_subscription model/service_members/allow_subscription | nothing;
+    allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;"
   tal:condition="has_access">
 

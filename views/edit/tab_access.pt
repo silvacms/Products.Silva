@@ -12,7 +12,7 @@
   tal:define="
     model_is_container model/implements_container | nothing;
     group_service view/service_groups | nothing;
-    allow_subscription model/service_members/allow_subscription | nothing;
+    allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;
   ">
   <table class="columns columns3"
@@ -167,7 +167,7 @@
           ____________ pending roles management ____________
         </tal:block>
           <!-- Pending role requests -->
-          <tal:block condition="allow_subscription">
+          <tal:block condition="allow_authentication_requests">
             <form action="."
               method="POST"
               tal:define="requested_roles model/requested_roles"
