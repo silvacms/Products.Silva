@@ -10,27 +10,25 @@
     <group>
       <title>Default</title>
       <fields multiple="true">
-        <field><id>object_title</id> <type>TextAreaField</type>
-          <values>
-            <alternate_name></alternate_name>
-            <hidden type="int">0</hidden>
-            <max_linelength></max_linelength>
-            <max_length></max_length>
-            <max_lines></max_lines>
-            <width type="int">40</width>
-            <external_validator></external_validator>
-            <height type="int">2</height>
-            <required type="int">1</required>
-            <css_class></css_class>
-            <default></default>
-            <title>Title</title>
-            <description>The title will be publicly visible, and is used as the default link in indexes.</description>
-            <extra></extra>
-          </values>
-          <tales>
-            <default>python:form.get_title()</default>
-          </tales>
-        </field>
+      <field><id>object_title</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Title</title>
+          <truncate type="int">0</truncate>
+          <description></description>
+          <extra>style="width:100%;"</extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
       <field><id>connection_id</id> <type>ListField</type>
         <values>
           <size type="int">5</size>
@@ -43,7 +41,7 @@
           <default></default>
           <title>connection_id</title>
           <first_item type="int">0</first_item>
-          <description>Select the id of the database connection to use</description>
+          <description>Select the id of the database connection to use.</description>
           <extra></extra>
         </values>
         <tales>
@@ -90,7 +88,7 @@
           <default></default>
           <title>SQL Query</title>
           <description>
-            SQL Query. See "Z SQL Methods" for syntax. &lt;br /&gt;
+            See "ZSQL Methods" for syntax. &lt;br /&gt;
             Pay special attention to &lt;code&gt; &amp;lt;dtml-var&amp;gt; 
             &lt;/code&gt; vs. &lt;code&gt; &amp;lt;dtml-sqlvar&amp;gt; 
             &lt;/code&gt; usage.

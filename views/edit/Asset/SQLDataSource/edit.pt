@@ -4,7 +4,7 @@
 
 <tal:block define="global fields python:view.form.get_fields()" />
 
-<h3>Property</h3>
+<h3>Properties</h3>
 
 <form method="POST" name="form" action="submit">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
@@ -33,7 +33,7 @@ Note
 <tr class="focus" valign="top"
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
 <td align="right">
-<span tal:replace="python:field['title'].capitalize() + ':'">Title</span>
+<span tal:replace="python:field['title'] + ':'">Title</span>
 </td>
 <td align="right">
 <span class="warning"
