@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27.8.1.6.3 $
+# $Revision: 1.27.8.1.6.4 $
 
 # Python
 import os
@@ -109,15 +109,16 @@ class File(Asset):
             self.id, self.get_download_url(), self._title))
 
     security.declareProtected(SilvaPermissions.View, 'index_html')
-    def index_html(self, view_method=None, REQUEST=None):
+    def index_html(self, view_method=None):
         """ view (download) file data
         
         view_method: parameter is set by preview_html (for instance) but
         ignored here.
         """
-        REQUEST.RESPONSE.setHeader(
+        request = self.REQUEST
+        request.RESPONSE.setHeader(
             'Content-Disposition', 'inline;filename=%s' % (self.get_filename()))
-        return self._index_html_helper(REQUEST)
+        return self._index_html_helper(request)
     
     security.declareProtected(SilvaPermissions.View, 'download')
     # for backwards compatibility - do we need that here?
