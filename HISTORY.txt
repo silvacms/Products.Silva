@@ -8,8 +8,6 @@ Silva changes
 
     Features added
 
-      - Silva handles now GET and HEAD request responses correctly
-
       - Kupu, a WYSIWYG editor for Silva Document. This editor offers
         a load of new features:
 
@@ -55,6 +53,8 @@ Silva changes
       - Revision of the archive file import (i.e. zipfile import)
         functionality. Mimetypes can be registered for specific Asset
         types. The importer will create Assets depending on the mimetype.
+
+      - Silva now should deliver the right mime type for HEAD requests.
 
     Bugs fixed
 
