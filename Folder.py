@@ -265,7 +265,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def is_published(self):
         # NOTE: this is inefficient if there's a big unpublished hierarchy..
         # Folder is published if anything inside is published
-        if self.get_default().is_published():
+        default = self.get_default()
+        if default and default.is_published():
             return 1
         for object in self.get_ordered_publishables():        
             if object.is_published():

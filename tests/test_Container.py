@@ -226,7 +226,7 @@ class ContainerTestCase(unittest.TestCase):
         self.assertEquals(getattr(self.sroot, 'default'), self.sroot.get_default())
         # delete default object
         self.folder4.action_delete(['default'])
-        self.assertEquals(None, self.folder4.get_default())
+        self.assertEquals(None, self.folder4.get_default())        
         
 def test_suite():
     suite = unittest.TestSuite()

@@ -136,6 +136,18 @@ class PublishableTestCase(unittest.TestCase):
         self.subdoc.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.subdoc.approve_version()
         self.assert_(self.folder.is_published())
+
+    def test_is_published3(self):
+        # first publish default
+        self.folder.default.set_unapproved_version_publication_datetime(DateTime() - 1)
+        self.folder.default.approve_version()
+        self.assert_(self.folder.is_published())
+        # now close default
+        self.folder.default.close_version()
+        self.assert_(not self.folder.is_published())
+        # now remove default
+        self.folder.action_delete(['default'])
+        self.assert_(not self.folder.is_published())
         
     def approve_document(self):
         self.document.set_unapproved_version_publication_datetime(
