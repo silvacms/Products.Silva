@@ -47,7 +47,7 @@
         <option tal:attributes="value addable/name" tal:content="addable/name"></option>
         </tal:block>
       </select>
-      &nbsp;&nbsp;
+      &nbsp;
       <input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data: alt-i" accesskey="i" />&nbsp;
     </tal:block>
   </td>
