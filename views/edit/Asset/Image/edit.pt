@@ -15,6 +15,8 @@
   <script type="text/javascript"
           tal:attributes="src view/cropping.js/absolute_url">
   </script>
+  <img style="margin-bottom:1em;"
+    tal:attributes="src string:${model/absolute_url}?thumbnail" />
   <div class="info">
     <h3>
       <img tal:replace="structure icon" /> image info
@@ -51,23 +53,22 @@
         <span class="subhead">dimensions</span><br />
         <span tal:on-error="string: unknown"
           tal:replace="string:${image_width}x${image_height} pixels"
-          />
-          <tal:condition condition="python:
-            image_width != scale_width and
-            image_height != scale_height or
-            image_width != cropped_width and
-            image_height != cropped_height"><br />
-            <span tal:content="transf">scaled</span> to 
+        />
+        <tal:condition condition="python:
+          image_width != scale_width and
+          image_height != scale_height or
+          image_width != cropped_width and
+          image_height != cropped_height"><br />
+          <span tal:content="transf">scaled</span> to 
             
-            <span tal:condition="is_cropped" 
+          <span tal:condition="is_cropped" 
             tal:replace="string:${cropped_width}x${cropped_height} pixels"
-            />
-          
-            <span tal:condition="not:is_cropped"
-              tal:on-error="string: unknown"
-              tal:replace="string:${scale_width}x${scale_height} pixels"
-              />
-          </tal:condition>
+          />
+          <span tal:condition="not:is_cropped"
+            tal:on-error="string: unknown"
+            tal:replace="string:${scale_width}x${scale_height} pixels"
+          />
+        </tal:condition>
       </p>
       <p tal:condition="model/hires_image" 
         tal:define="orientation model/getOrientation">
