@@ -43,7 +43,7 @@
     <tal:block tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
 
       <a href="url"
-        tal:content="item/get_short_title_editable"
+        tal:content="python: item.get_short_title_editable() or item.id"
         tal:attributes="href string:${item/absolute_url}/edit/${template/id}"
         >
         Name
