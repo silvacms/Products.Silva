@@ -13,12 +13,12 @@
       <a href="lookup_back_link"
         title="Up to top of Access tab"
         tal:attributes="href here/lookup_back_link">
-        Back
         <img alt="Up to top of Access tab"
           border="0"
-          height="11"
+          height="16"
           width="16"
-          tal:attributes="src string:${silva_root}/globals/up_gray.gif" />
+          tal:attributes="src string:${silva_root}/globals/left.gif" />
+        Back
       </a>
     </h3>
     <h2 class="worksheet">
