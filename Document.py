@@ -1,7 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.70 $
+# $Revision: 1.71 $
 # Zope
+from StringIO import StringIO
+
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
@@ -51,84 +53,7 @@ class Document(CatalogedVersionedContent):
         inherited_manage_options[1:]
         )
 
-    def __init__(self, id, title):
-        Document.inheritedAttribute('__init__')(self, id, title)
-
-        self._metadata = {
-            'subject' : '',
-            'description' : ''
-            }
-
-        self._automatic_metadata = {
-            'creator' : '',
-            'creation_date' : None,
-            'modification_data' : None,
-            'author' : '',
-            'chief_author' : '',
-            'manager' : '',
-            'location' : '',
-            'publisher' : ''
-            }
-
-#    def manage_afterClone(self, obj):
-#        """We were copied, make sure we're not public.
-#        """
-#        # if we don't have any public version we're fine
-#        if not self.get_public_version():
-#            return
-#        # close any public version
-#        self.close_version()
-
-    # MANIPULATORS
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_title')
-    def set_title(self, title):
-        """Set the title.
-        """
-        if self.is_default():
-            # set the nearest container's title
-            self.get_container().set_title(title)
-        else:
-            # set title of this document
-            self._title = title
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_metadata')
-    def set_metadata(self, name, value):
-        """Set meta data.
-        """
-        if name == 'document_title':
-            self.set_title(value)
-            return
-        # FIXME perhaps should put this in again for security, but
-        # leaving it out makes it nice for extensibility
-        #if not self._metadata.has_key(name):
-        #    return
-        self._metadata[name] = value
-        self._metadata = self._metadata
-
     # ACCESSORS
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title')
-    def get_title(self):
-        """Get title. If we're the default document,
-        we get title from our containing folder (or publication, etc).
-        """
-        if self.is_default():
-            # get the nearest container's title
-            return self.get_container().get_title()
-        else:
-            return self._title
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'get_metadata')
-    def get_metadata(self, name):
-        """Get meta data.
-        """
-        if name == 'document_title':
-            return self.get_title()
-        return self._metadata.get(name, None)
-
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
     def is_cacheable(self):
         """Return true if this document is cacheable.
@@ -168,15 +93,9 @@ class Document(CatalogedVersionedContent):
 
         if version_id is None:
             return
+        f.write('<silva_document>') 
         version = getattr(self, version_id)
-        f.write('<silva_document id="%s">' % self.id)
-        f.write('<title>%s</title>' % translateCdata(self.get_title()))
-        #for key, value in self._metadata.items():
-        #    f.write('<%s>%s</%s>' % (key, translateCdata(value), key))
-        
-        version.content.documentElement.writeStream(f)
-        export_metadata(version, context)
-        
+        version.to_xml(context)        
         f.write('</silva_document>')
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -212,7 +131,7 @@ class Document(CatalogedVersionedContent):
             raise "Hey, title or content was empty! %s %s" % (repr(title), repr(content))
 
         version.content.manage_edit(content)  # needs utf8-encoded string
-        self.set_title(title)         # needs unicode
+        self.set_title(title) 
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
                               'editor_storage')
@@ -256,6 +175,41 @@ class DocumentVersion(CatalogedVersion):
     meta_type = "Silva Document Version"
     __implements__ = IVersion, ICatalogedVersion
 
+    security = ClassSecurityInfo()
+    
+    def __init__(self, id, title):
+        DocumentVersion.inheritedAttribute('__init__')(self, id, title)
+        self.content = ParsedXML('content', '<doc></doc>')
+
+    def to_xml(self, context):
+        f = context.f
+        f.write('<title>%s</title>' % translateCdata(self.get_title()))
+        self.content.documentElement.writeStream(f)
+        export_metadata(self, context)
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'fulltext')
+    def fulltext(self):
+        """Return the content of this object without any xml"""
+        return self._flattenxml(self.content_xml())
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'content_xml')
+    def content_xml(self):
+        """Returns the documentElement of the content's XML
+        """
+        s = StringIO()
+        self.content.documentElement.writeStream(s)
+        value = s.getvalue()
+        s.close()
+        return value
+
+    def _flattenxml(self, xmlinput):
+        """Cuts out all the XML-tags, helper for fulltext (for content-objects)
+        """
+        # XXX this need to be fixed by using ZCTextIndex or the like
+        return xmlinput
+        
 InitializeClass(DocumentVersion)
 
 manage_addDocumentForm = PageTemplateFile("www/documentAdd", globals(),
@@ -265,10 +219,10 @@ def manage_addDocument(self, id, title, REQUEST=None):
     """Add a Document."""
     if not self.is_id_valid(id):
         return
-    object = Document(id, title)
+    object = Document(id)
     self._setObject(id, object)
     object = getattr(self, id)
-    object.manage_addProduct['Silva'].manage_addDocumentVersion('0')
+    object.manage_addProduct['Silva'].manage_addDocumentVersion('0', title)
     object.create_version('0', None, None)
     getattr(object, '0').index_object()
     add_and_edit(self, id, REQUEST)
@@ -279,7 +233,7 @@ manage_addDocumentVersionForm = PageTemplateFile(
     globals(),
     __name__='manage_addDocumentVersionForm')
 
-def manage_addDocumentVersion(self, id, title=None, REQUEST=None):
+def manage_addDocumentVersion(self, id, title, REQUEST=None):
     """Add a Document version to the Silva-instance."""
     object = DocumentVersion(id, title)
     self._setObject(id, object)

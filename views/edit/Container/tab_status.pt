@@ -131,7 +131,7 @@
                               <tal:block replace="nothing">
                                 ******* XXX Fixme: display 'no title' if no title *******
                               </tal:block>
-                              <tal:block replace="obj/title_html" />
+                              <tal:block replace="obj/title" />
                           </a>
                         </div>
                       </div>

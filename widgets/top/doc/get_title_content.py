@@ -7,5 +7,6 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.helpers import escape_entities
 content = context.REQUEST.node.get_content()
-return content.output_convert_html(content.get_title())
+return escape_entities(content.get_title_editable())

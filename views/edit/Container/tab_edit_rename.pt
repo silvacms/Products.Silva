@@ -24,10 +24,9 @@
   <tr>
     <td class="top location" colspan="4">
     <h2>
-      <img tal:replace="structure python:view.render_icon(model)" />
-      <span i18n:translate="rename_objects_in">
-      rename objects in </span>       
-      &#xab;<tal:block content="model/get_title" />&#xbb;
+      <img tal:replace="structure python:view.render_icon(model)" />t
+      <span i18n:translate="rename_objects_in">rename objects in</span>       
+      &#xab;<tal:block content="model/get_title_editable" />&#xbb;
     </h2>
     </td>
   </tr>
@@ -73,7 +72,7 @@
   </td>
   <td>
     <span tal:condition="python: object.getId() != 'index'"
-      tal:replace="object/get_title_or_id" />
+      tal:replace="python:object.get_title_or_id_editable()" />
     <span tal:condition="python: object.getId() == 'index'"
       tal:replace="object/aq_inner/aq_parent/get_title" />
   </td>

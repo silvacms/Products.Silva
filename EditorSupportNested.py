@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -12,6 +12,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.ParsedXML.ParsedXML import ParsedXML
 
 import SilvaPermissions
+from helpers import escape_entities
 
 def _regular_expression_escape(st):
     result = ""
@@ -72,7 +73,7 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(self.output_convert_html(child.data))
+                result.append(escape_entities(child.data))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -94,10 +95,10 @@ class EditorSupport(SimpleItem):
                 result.append('</sub>')
             elif child.nodeName == 'link':
                 result.append('<a href="%s"' %
-                              self.output_convert_html(child.getAttribute('url')))
+                              escape_entities(child.getAttribute('url')))
                 if child.getAttribute('target'):
                     result.append(' target="%s"' %
-                                  self.output_convert_html(child.getAttribute('target')))
+                                  escape_entities(child.getAttribute('target')))
                 result.append('>')
                 result.append(self.render_text_as_html(child))
                 result.append('</a>')
@@ -107,12 +108,9 @@ class EditorSupport(SimpleItem):
                 result.append('</u>')
             elif child.nodeName == 'index':
                 result.append('<a class="index-element" name="%s">' %
-                              self.output_convert_html(child.getAttribute('name')))
+                              escape_entities(child.getAttribute('name')))
                 result.append(self.render_text_as_html(child))
                 result.append('</a>')
-            #elif child.nodeName == 'person':
-            #    for subchild in child.childNodes:
-            #        result.append(output_convert(subchild.data))
             elif child.nodeName == 'br':
                 result.append('<br />')
             else:
@@ -127,13 +125,13 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(self.output_convert_html(child.data))
+                result.append(escape_entities(child.data))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
             if child.nodeName == 'index':
                 result.append('<a class="index-element" name="%s">' %
-                              self.output_convert_html(child.getAttribute('name')))
+                              escape_entities(child.getAttribute('name')))
                 result.append(self.render_heading_as_html(child))
                 result.append('</a>')
             else:

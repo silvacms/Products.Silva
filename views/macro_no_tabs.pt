@@ -12,7 +12,7 @@
 
     type model/meta_type;
     url model/absolute_url;
-    title model/get_title;
+    title model/get_title_editable;
     
     root_url model/get_root_url;
 

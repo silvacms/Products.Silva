@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 import unittest
 import Zope
 Zope.startup()
@@ -238,15 +238,19 @@ class GhostTestCase(unittest.TestCase):
     def test_ghost_title(self):
         self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
                                                               '/root/doc1')
+        # need to publish doc1 first
+        self.sroot.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
+        self.sroot.doc1.approve_version()
         ghost = getattr(self.sroot, 'ghost1')
         # FIXME: should we be able to get title of unpublished document?
-        self.assertEquals('Doc1', ghost.get_title())
+        self.assertEquals('Doc1', ghost.get_title_editable())
         # now publish ghost
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
         # should have title of whatever we're pointing at now
         self.assertEquals('Doc1', ghost.get_title())
         # now break link
+        self.sroot.doc1.close_version()
         self.sroot.action_delete(['doc1'])
         self.assertEquals('Ghost target is broken', ghost.get_title())
 

@@ -7,9 +7,11 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.helpers import escape_entities
+
 request = context.REQUEST
 datasource = request.model
-title = datasource.get_title_or_id()
+title = datasource.get_title_or_id_editable()
 parameters = {}
 
 p = datasource.parameters()
@@ -23,7 +25,7 @@ data = datasource.get_data(parameters)
 
 # FIXME: Using CSS this hairball is slightly less hairy
 # than is used to be
-caption = datasource.output_convert_html(datasource.get_title())
+caption = escape_entities(datasource.get_title())
 type = 'listing'
 show_headings = 'true'
 show_caption = 'true'

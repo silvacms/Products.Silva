@@ -15,7 +15,7 @@
         tal:replace="structure python:view.render_icon(model)" />&nbsp;
     Contents of 
     <span class="folder-title">
-      &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+      &#xab;<tal:block content="model/get_title_or_id_editable" />&#xbb;
     </span>
   </h2>
 </div>

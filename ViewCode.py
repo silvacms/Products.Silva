@@ -1,6 +1,5 @@
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from cgi import escape
 
 import SilvaPermissions
 
@@ -107,7 +106,7 @@ class ViewCode:
                 continue
             
 
-            infodict['title_html'] = obj.get_title_or_id()
+            infodict['title'] = obj.get_title_editable()
             infodict['meta_type'] = obj.meta_type
             infodict['absolute_url'] = obj.absolute_url()
             infodict['icon'] = self.render_icon(obj)            
@@ -147,13 +146,6 @@ class ViewCode:
                     str_datetime = self.service_utils.datetime_to_date_space(datetime)
                     infodict['public_version_expiration_datetime'] = str_datetime
         return ret
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'output_convert_html')
-    def output_convert_html(self, s):
-        """Escape entities
-        """
-        return escape(s, 1)
     
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'input_convert')

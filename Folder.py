@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.101 $
+# $Revision: 1.102 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -62,8 +62,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
 
     __implements__ = IContainer
         
-    def __init__(self, id, title):
-        Folder.inheritedAttribute('__init__')(self, id, title)
+    def __init__(self, id):
+        Folder.inheritedAttribute('__init__')(self, id,
+                                              "[Containers have no titles, this is a bug]")
         self._ordered_ids = []
 
     def manage_afterAdd(self, item, container):
@@ -82,6 +83,10 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         self.index_object()
 
     def _invalidate_sidebar(self, item):
+        # invalidating sidebar also takes place for folder when index gets
+        # changed
+        if item.id == 'index':
+            item = item.get_container()
         if not IContainer.isImplementedBy(item):
             return
         service_sidebar = self.aq_inner.service_sidebar
@@ -89,7 +94,38 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         if IPublication.isImplementedBy(item) and not IRoot.isImplementedBy(item):
             service_sidebar.invalidate(item.aq_inner.aq_parent)
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title')
+    def get_title(self):
+        """Get title.
+        """
+        default = self.get_default()
+        if default is None:
+            return "[No title available as no index object]"
+        return default.get_title()
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title_editable')
+    def get_title_editable(self):
+        """Get title of editable.
+        """
+        default = self.get_default()
+        if default is None:
+            return "[No title available as no index object]"
+        return default.get_title_editable()
+    
     # MANIPULATORS
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
+    def set_title(self, title):
+        """Change title of editable version of index.
+        """
+        default = self.get_default()
+        if default is None:
+            return
+        default.set_title(title)
+        self._invalidate_sidebar(self)
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'move_object_up')
     def move_object_up(self, id):
@@ -225,12 +261,6 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
             return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_title')
-    def set_title(self, title):
-        Folder.inheritedAttribute('set_title')(self, title)
-        self._invalidate_sidebar(self)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_delete')
     def action_delete(self, ids):
         """Delete objects.
@@ -278,7 +308,6 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         messages = []
         ids = []
         for item in self.cb_dataItems():
-            #item.set_title(item.get_title())
             if ((op == 0 or item.get_container().is_delete_allowed(item.id)) and 
                     item.meta_type in [addable['name'] for addable in self.get_silva_addables()]):
                 ids.append(item.id)
@@ -802,12 +831,12 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     """Add a Folder."""
     if not self.is_id_valid(id):
         return
-    object = Folder(id, title)
+    object = Folder(id)
     self._setObject(id, object)
     object = getattr(self, id)
     # add doc
     if create_default:
-        object.manage_addProduct['Silva'].manage_addDocument('index', '')
+        object.manage_addProduct['Silva'].manage_addDocument('index', title)
     if hasattr(object,'index'):
         object.index.sec_update_last_author_info()
     helpers.add_and_edit(self, id, REQUEST)

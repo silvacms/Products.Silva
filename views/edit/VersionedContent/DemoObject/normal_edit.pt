@@ -2,7 +2,7 @@
   global model request/model; 
   global editable model/get_editable;
   global view here;
-  global title python:editable.get_title_editable()" />
+  global title model/get_title_editable" />
  
 <br />
 <table width="100%" cellspacing="0" cellpadding="1" border="0">
@@ -11,7 +11,7 @@
 <td colspan="3" width="98%">
 <div class="front3">
   &nbsp;Demo-details for: 
-  &#xab;<tal:block content="model/get_title" />&#xbb;
+  &#xab;<tal:block content="title" />&#xbb;
 </div>
 </td>
 <td width="60" align="right" valign="top">&nbsp;</td>
@@ -44,7 +44,7 @@ Note
 *
 </td>
 <td align="left">
-<input tal:replace="python:view.form.object_title.render(model.get_title())" />
+<input tal:replace="python:view.form.object_title.render(title)" />
 </td>
 <td>
 The title

@@ -1,23 +1,22 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 import unittest
 import Zope
 Zope.startup()
 
 from DateTime import DateTime
 from Testing import makerequest
-from Products.Silva.Document import Document
+from Products.Silva.Document import Document, DocumentVersion
 from Products.Silva.SilvaObject import SilvaObject
-from Products.ParsedXML.ParsedXML import ParsedXML
 from test_SilvaObject import hack_create_user
 
 # awful HACK
 def _getCopy(self, container):
     """A hack to make copy & paste work (used by create_copy())
     """
-    return ParsedXML(self.id, self.index_html())
-
+    return DocumentVersion(self.id, self.get_title())
+    
 def _verifyObjectPaste(self, ob):
     return
 
@@ -38,7 +37,7 @@ class VersionedContentTestCase(unittest.TestCase):
     def setUp(self):
         
         # awful HACK to support manage_clone
-        ParsedXML._getCopy = _getCopy
+        DocumentVersion._getCopy = _getCopy
         Document._verifyObjectPaste = _verifyObjectPaste
         
         get_transaction().begin()

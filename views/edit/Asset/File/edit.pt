@@ -4,7 +4,7 @@
       tal:replace="structure python:view.render_icon(model)" />&nbsp;
       <span tal:replace="model/meta_type">Meta type</span> 
       <span class="document-title">
-        &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+        &#xab;<tal:block content="model/get_title_or_id_editable" />&#xbb;
       </span>
 </h2>
 

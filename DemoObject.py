@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -14,6 +14,7 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import VersionedContent
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.helpers import add_and_edit, translateCdata
+from Products.Silva.Version import Version
 # misc
 from cgi import escape
 
@@ -40,11 +41,11 @@ class DemoObject(VersionedContent):
 
     __implements__ = IVersionedContent
        
-    def __init__(self, id, title):
+    def __init__(self, id):
         """The constructor, does not do much in this case (just maps to
         the constructor of the parent).
         """
-        DemoObject.inheritedAttribute('__init__')(self, id, title)
+        DemoObject.inheritedAttribute('__init__')(self, id)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'to_xml')
@@ -75,7 +76,7 @@ class DemoObject(VersionedContent):
 
 InitializeClass(DemoObject)
 
-class DemoObjectVersion(SimpleItem.SimpleItem):
+class DemoObjectVersion(Version):
     """Silva DemoObject version.
     """
     security = ClassSecurityInfo()
@@ -152,11 +153,11 @@ def manage_addDemoObject(self, id, title, REQUEST=None):
     """Add a DemoObject to the Silva-instance."""
     if not self.is_id_valid(id):
         return
-    object = DemoObject(id, title)
+    object = DemoObject(id)
     self._setObject(id, object)
     object = getattr(self, id)
     # add first version
-    object._setObject('0', DemoObjectVersion('0', 'demo-object dummy title'))
+    object._setObject('0', DemoObjectVersion('0', title))
     object.create_version('0', None, None)
     add_and_edit(self, id, REQUEST)
     return ''

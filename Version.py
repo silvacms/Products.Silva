@@ -1,11 +1,8 @@
-from StringIO import StringIO
-
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 
-from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.IVersion import IVersion
 from Products.Silva import SilvaPermissions
 
@@ -17,11 +14,26 @@ class Version(SimpleItem):
     security = ClassSecurityInfo()
 
     object_type = 'versioned_content'
-
-    def __init__(self, id, title=None):
+    _title = '[No title yet]'
+    
+    def __init__(self, id, title):
         self.id = id
-        self.content = ParsedXML('content', '<doc></doc>')
+        self._title = title
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
+    def set_title(self, title):
+        """Set title of version.
+        """
+        self._title = title
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title')
+    def get_title(self):
+        """get title of version.
+        """
+        return self._title
+        
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'version_status')
     def version_status(self):
@@ -91,24 +103,6 @@ class Version(SimpleItem):
             return None
         else:
             return getattr(self, 'get_%s_version_expiration_datetime' % status)(0)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'fulltext')
-    def fulltext(self):
-        """Return the content of this object without any xml"""
-        return self.content_xml()
-        
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'content_xml')
-    def content_xml(self):
-        """Returns the documentElement of the content's XML
-        """
-        s = StringIO()
-        self.content.documentElement.writeStream(s)
-        value = s.getvalue()
-        s.close()
-        return value
-
 
 InitializeClass(Version)
 

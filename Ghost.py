@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53 $
+# $Revision: 1.54 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -12,6 +12,7 @@ from IVersionedContent import IVersionedContent
 from IContainer import IContainer
 # Silva
 from VersionedContent import VersionedContent
+from Version import Version
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
@@ -20,7 +21,7 @@ import urlparse
 icon = "www/silvaghost.gif"
 
 class Ghost(VersionedContent):
-    """Ghosts are special documents which function as a
+    """Ghosts are special documents wich function as a
        placeholder for an object in another location (like an alias,
        symbolic link, shortcut). Unlike a hyperlink, which takes the
        Visitor to another location, a ghost object keeps the Visitor in the
@@ -36,27 +37,8 @@ class Ghost(VersionedContent):
     __implements__ = IVersionedContent
     
     def __init__(self, id):
-        Ghost.inheritedAttribute('__init__')(self, id, 'No title for ghost')
-        
-    def set_title(self, title):
-        # FIXME: what to do here?
-        pass
+        Ghost.inheritedAttribute('__init__')(self, id)
     
-    def get_title(self):
-        """Get title.
-        """
-        #return "Dummy ghost title" 
-        ghost_version = self.get_viewable()
-        if ghost_version is None:
-            ghost_version = self.get_previewable()
-            if ghost_version is None:
-                return 'ghost target title not available'
-        content = ghost_version._get_content()
-        if content is None:
-            return "Ghost target is broken"
-        else:
-            return content.get_title()
-
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
     def to_xml(self, context):
@@ -93,7 +75,7 @@ class Ghost(VersionedContent):
 
 InitializeClass(Ghost)
 
-class GhostVersion(SimpleItem.SimpleItem):
+class GhostVersion(Version):
     """Ghost version.
     """
     meta_type = 'Silva Ghost Version'
@@ -110,7 +92,26 @@ class GhostVersion(SimpleItem.SimpleItem):
     
 
     def __init__(self, id):
-        self.id = id
+        GhostVersion.inheritedAttribute('__init__')(
+            self, id, '[Ghost title bug]')
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
+    def set_title(self):
+        """Don't do a thing.
+        """
+        pass
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title')
+    def get_title(self):
+        """Get title.
+        """        
+        content = self._get_content()
+        if content is None:
+            return "Ghost target is broken"
+        else:
+            return content.get_title()
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_content_url')
@@ -271,7 +272,7 @@ def manage_addGhost(self, id, content_url, REQUEST=None):
 manage_addGhostVersionForm = PageTemplateFile("www/ghostversionAdd", globals(),
                                               __name__='manage_addGhostVersionForm')
 
-def manage_addGhostVersion(self, id, REQUEST=None):
+def manage_addGhostVersion(self, id,REQUEST=None):
     """Add a Ghost version."""
     object = GhostVersion(id)
     self._setObject(id, object)

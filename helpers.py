@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -12,6 +12,8 @@ from IAsset import IAsset
 import SilvaPermissions
 # python
 import string, re, urllib
+from cgi import escape
+
 
 
 module_security =  ModuleSecurityInfo('Products.Silva.helpers')
@@ -29,6 +31,11 @@ _reserved_ids = ('edit', 'public', 'index_html', 'preview_html',
                  'content.html', 'override.html', 'layout_macro.html',
                  'code_source', 'Members', 'globals' );
 
+module_security.declarePublic('escape_entities')
+def escape_entities(text):
+    """Escape entities.
+    """
+    return escape(text, 1)
 
 module_security.declarePublic('IdCheckValues')
 class IdCheckValues:

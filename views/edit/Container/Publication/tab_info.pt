@@ -7,7 +7,7 @@
 
 <h2>Info for 
   <span class="folder-title">
-    &#xab;<tal:block content="model/get_title" />&#xbb;
+    &#xab;<tal:block content="model/get_title_editable" />&#xbb;
   </span>
 </h2>
 

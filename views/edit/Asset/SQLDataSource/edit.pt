@@ -2,7 +2,7 @@
 
 <h2><span tal:replace="model/meta_type">Meta type</span> for 
   <span class="document-title">
-    &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+    &#xab;<tal:block content="model/get_title_or_id_editable" />&#xbb;
   </span>
 </h2>
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.75 2003/05/15 14:07:53 jw Exp $
+# $Id: SilvaObject.py,v 1.76 2003/05/16 11:52:38 faassen Exp $
 
 # python
 from types import StringType
@@ -93,17 +93,11 @@ class SilvaObject(Security, ViewCode):
         """Set the title of the silva object.
         """
         self._title = title
+        if self.id == 'index':
+            container = self.get_container()
+            container._invalidate_sidebar(container)
         
     # ACCESSORS
-
-    
-    # create 'title' attribute for some Zope compatibility (still shouldn't set
-    # titles in properties tab though)
-    #security.declareProtected(SilvaPermissions.AccessContentsInformation,
-    #                          'title')
-    #def _get_title_helper(self):
-    #    return self.get_title() # get_title() can be defined on subclass
-    #title = ComputedAttribute(_zget_title_helper)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title')
@@ -115,15 +109,34 @@ class SilvaObject(Security, ViewCode):
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title_or_id')
     def get_title_or_id(self):
+        """Get title or id if not available.
+        """
         title = self.get_title()
-        if not title: title = self.id
+        if not title.strip():
+            title = self.id
         return title
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title_editable')
     def get_title_editable(self):
-        return self.get_title()
-        
+        """Get the title of the editable version if possible.
+        """
+        editable = self.get_editable()
+        if editable is None:
+            return self.get_title()
+        return editable.get_title()
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title_or_id_editable')
+    def get_title_or_id_editable(self):
+        """Get the title of the editable version if possible, or id if
+        not available.
+        """
+        editable = self.get_editable()
+        if editable is None:
+            return self.get_title_or_id()
+        return editable.get_title_or_id()
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):

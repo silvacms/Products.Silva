@@ -199,7 +199,7 @@
                           tal:attributes="
                             href string:${item_url}/edit/tab_preview;
                             class python:item.get_object_status()[1];"
-                          tal:define="title python:(item.get_title() or default)"
+                          tal:define="title python:(item.get_title_editable() or default)"
                           tal:content="title">
                           <i>no title</i>
                         </a>

@@ -53,7 +53,7 @@
                     <h2>
                       <img tal:replace="structure python:view.render_icon(model)" />
                       addable settings for: 
-                      &#xab;<tal:block content="model/get_title" />&#xbb;
+                      &#xab;<tal:block content="model/get_title_editable" />&#xbb;
                     </h2>
                   </td>
                 </tr>

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 import unittest
 import Zope
 Zope.startup()
@@ -326,21 +326,22 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.sroot.xml_import(xml1)
 
         self.assert_(hasattr(self.sroot, 'test'))
-        self.assert_(self.sroot.test.get_title() == 'TestPub')
+        self.assertEquals(self.sroot.test.get_title_editable(), 'TestPub')
         self.assert_(hasattr(self.sroot.test, 'index'))
-        self.assert_(self.sroot.test.index.get_title() == 'TestPub')
+        self.assertEquals(self.sroot.test.index.get_title_editable(), 'TestPub')
         self.assert_(str(self.sroot.test.index.get_editable().content.documentElement) == '<doc><p>Content</p></doc>')
 
         self.sroot.xml_import(xml2)
 
         self.assert_(hasattr(self.sroot, 'test2'))
-        self.assert_(self.sroot.test2.get_title() == 'TestFolder')
+        # XXX no title available as no index object in this import..
+        #self.assertEquals(self.sroot.test2.get_title_editable(), 'TestFolder')
         self.assert_(hasattr(self.sroot.test2, 'do'))
-        self.assert_(self.sroot.test2.do.get_title() == 'DemoObject')
-        self.assert_(str(self.sroot.test2.do.get_editable().number()) == '10')
-        self.assert_(self.sroot.test2.do.get_editable().date() == DateTime('2002/10/16'))
-        self.assert_(self.sroot.test2.do.get_editable().info() == 'Info')
-        self.assert_(str(self.sroot.test2.do.get_editable().content.documentElement) == '<doc><p>Content</p></doc>')
+        self.assertEquals(self.sroot.test2.do.get_title_editable(), 'DemoObject')
+        self.assertEquals(str(self.sroot.test2.do.get_editable().number()), '10')
+        self.assertEquals(self.sroot.test2.do.get_editable().date(), DateTime('2002/10/16'))
+        self.assertEquals(self.sroot.test2.do.get_editable().info(), 'Info')
+        self.assertEquals(str(self.sroot.test2.do.get_editable().content.documentElement), '<doc><p>Content</p></doc>')
 
 class AddableTestCase(ContainerBaseTestCase):
 

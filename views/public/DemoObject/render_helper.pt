@@ -1,12 +1,12 @@
 <tal:init define="global model request/model; global view here;
-                  global title options/version/get_title_editable;
+                  global title options/version/get_title;
                   global info options/version/info;
                   global number options/version/number;
                   global date options/version/date" />
 
 <!-- Course Title and Code -->
 <div tal:omit-tag="" tal:condition="title | nothing">
-<h2 tal:content="python:model.get_title()">title</h2>
+<h2 tal:content="python:model.get_title_editable()">title</h2>
 </div>
 
 <h3>Content</h3>

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.60 $
+# $Revision: 1.61 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -36,8 +36,8 @@ class Root(Publication):
         inherited_manage_options[1:]
         )
 
-    def __init__(self, id, title):
-        Root.inheritedAttribute('__init__')(self, id, title)
+    def __init__(self, id):
+        Root.inheritedAttribute('__init__')(self, id)
         # if we add a new root, version starts out as the software version
         self._content_version = self.get_silva_software_version()
     
@@ -245,7 +245,7 @@ def manage_addRoot(self, id, title, REQUEST=None):
     """Add a Silva root."""
     # no id check possible or necessary, as this only happens rarely and the
     # Zope id check is fine
-    object = Root(id, title)
+    object = Root(id)
     self._setObject(id, object)
     object = getattr(self, id)
 
