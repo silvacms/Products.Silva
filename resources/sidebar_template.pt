@@ -17,7 +17,7 @@
 </tr>
 <tr>
   <td class="{__class__}"
-    style="padding-left: 0;"
+    style="padding-left:0; border-top:none;"
     tal:attributes="onclick string:javascript:window.location='${publication/absolute_url}/edit/{__vein_id__}'">
     <a class="icon"
       title="up to top contents of publication"

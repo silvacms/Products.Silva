@@ -474,7 +474,8 @@ table.listing div.controls {
 table.listing th.top {
   color: #e3eef0;
   background: &dtml-listingHeaderBackground;; 
-  padding: 0 ! important;
+  padding: 0;
+  border-top: &dtml-listingBorder;;
   vertical-align: bottom;
   text-align: center;
 }
