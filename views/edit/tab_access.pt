@@ -142,15 +142,7 @@
                       <option value="None" i18n:translate="select_role">
                         select role:
                       </option>
-                      <tal:block repeat="role model/sec_get_roles">
-                        <option value="role"
-                          tal:content="role"
-                          tal:attributes="value role"
-                          tal:condition="python: role not in ['ChiefEditor', 'Manager'] or silva_permissions['ChangeSilvaViewRegistry']">
-                          Role name
-                        </option>
-                      </tal:block>
-                    </select>
+                      <metal:block use-macro="here/macro_role_options/macros/options" />                    </select>
                     <input class="button"
                       name="access_assign_to_user:method"
                       title="assign a local role to selected user(s)"
@@ -289,14 +281,12 @@
                 i18n:translate="select_role">
                 select role:
               </option>
-              <tal:block repeat="role model/sec_get_roles">
-                <option value="role"
-                  tal:content="role"
-                  tal:condition="python:role not in ['Manager', 'ChiefEditor'] or silva_permissions['ChangeSilvaViewRegistry']"
-                  tal:attributes="value role; 
-                                  selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
-                  role name
-                </option>
+              <tal:block 
+                define="
+                  preselected python: request.form.get('assign_role')">
+                <metal:block 
+                  use-macro="
+                    here/macro_role_options/macros/options" />
               </tal:block>
             </select>
             <input class="button"
@@ -439,12 +429,7 @@
                           i18n:translate="select_role">
                           select role:
                         </option>
-                        <option value="role"
-                          tal:repeat="role model/sec_get_roles"
-                          tal:content="role"
-                          tal:attributes="value role">
-                          role name
-                        </option>
+                        <metal:block use-macro="here/macro_role_options/macros/options" />
                       </select>
                       <input class="button"
                         name="access_assign_to_group:method"
@@ -487,14 +472,13 @@
                     i18n:translate="select_role">
                     select role:
                   </option>
-                  <option value="role"
-                    tal:repeat="role model/sec_get_roles"
-                    tal:content="role"
-                    tal:attributes="
-                      value role; 
-                      selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
-                    Role
-                  </option>
+                  <tal:block 
+                    define="
+                      preselected python: request.form.get('assign_role')">
+                    <metal:block 
+                      use-macro="
+                        here/macro_role_options/macros/options" />
+                  </tal:block>
                 </select>
                 <input class="button"
                   type="submit"
@@ -520,8 +504,11 @@
         <form action="."
           method="POST"
           tal:define="
-            info view/get_viewer_role_info; acquired info/acquired;
-            selected_role info/selected_role">
+            info view/get_viewer_role_info; 
+            acquired info/acquired;
+            selected_role info/selected_role;
+            "
+          >
           <table class="listing sublisting">
             <thead>
               <tal:block replace="nothing"> 
@@ -590,12 +577,13 @@
                   <select 
                     class="manipulator"
                     name="role"
-                    title="select a role to assign" i18n:attributes="title">
-                    <option
-                      tal:repeat="role info/viewer_roles"
-                      tal:attributes="value role; selected python:test(role == selected_role, 'SELECTED', nothing)"
-                      tal:content="role">
-                    </option>
+                    title="select a role to assign" 
+                    i18n:attributes="title">
+                    <tal:block define="preselected selected_role">
+                      <metal:block 
+                        use-macro="
+                          here/macro_role_options/macros/access_restriction_options" />
+                    </tal:block>                    
                   </select>
                   <input 
                     class="button"
