@@ -13,18 +13,36 @@ def add_helper(object, typename, id, title):
 
 # need to monkey patch preview and view
 def preview(self):
-    return render(self, self.get_previewable())
+    return render_preview(self)
 
 def view(self):
-    return render(self, self.get_viewable())
+    return render_view(self)
 
-def render(object, version):
+def render_preview(self):
+    version = self.get_previewable()
     if version is None:
-        return '%s no view' % object.id
-    if object.meta_type == 'Silva Ghost':
-        return version.render()
+        return '%s no view' % self.id
+    if self.meta_type == 'Silva Ghost':
+        result = version.render()
+        if result is None:
+            return 'This ghost is broken'
+        else:
+            return result
     else:
-        return "%s %s" % (object.id, version.id)
+        return "%s %s" % (self.id, version.id)
+    
+def render_view(self):
+    version = self.get_viewable()
+    if version is None:
+        return '%s no view' % self.id
+    if self.meta_type == 'Silva Ghost':
+        result = version.render()
+        if result is None:
+            return 'This ghost is broken'
+        else:
+            return result
+    else:
+        return "%s %s" % (self.id, version.id)
 
 # awful HACK
 def _getCopyParsedXML(self, container):
@@ -153,7 +171,27 @@ class GhostTestCase(unittest.TestCase):
         self.assertEquals('doc3 no view', ghost.preview())
         self.assertEquals('doc3 no view', ghost.view())
         
-    # FIXME test broken links
+    def test_broken_link1(self):
+        # add a ghost
+        self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
+                                                              '/root/doc1')
+        ghost = getattr(self.sroot, 'ghost1')
+        # now delete doc1
+        self.sroot.action_delete(['doc1'])
+        # ghost should say 'This ghost is broken'
+        self.assertEquals('This ghost is broken', ghost.preview())
+
+        # now make ghost point to doc2, and publish ghost and doc2
+        self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
+        self.doc2.approve_version()
+        ghost.create_copy()
+        ghost.get_editable().set_content_url('/root/doc2')
+        ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
+        ghost.approve_version()
+        # now close & delete doc2
+        self.doc2.close_version()
+        self.sroot.action_delete(['doc2'])
+        self.assertEquals('This ghost is broken', ghost.view())
         
 def test_suite():
     suite = unittest.TestSuite()

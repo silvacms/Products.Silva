@@ -62,15 +62,23 @@ class GhostVersion(SimpleItem.SimpleItem):
         # FIXME: what if we're pointing to something that cannot be viewed publically?
         if self._content_url is None:
             return None
-        return self.getPhysicalRoot().unrestrictedTraverse(self._content_url)
-
+        try:
+            return self.getPhysicalRoot().unrestrictedTraverse(self._content_url)
+        # FIXME: should this be a bare exception? should catch all traversal failures..
+        except:
+            return None
+        
     def render(self):
         """Render this version (which is what we point at)
         """
         # FIXME: should only call view if we are allowed to by content
         # FIXME what if content is None?
         # what if we get circular ghosts?
-        return self._get_content().view()
+        content = self._get_content()
+        if content is None:
+            return None # public render code of ghost should give broken message
+        else:
+            return content.view()
     
 manage_addGhostForm = PageTemplateFile("www/ghostAdd", globals(),
                                        __name__='manage_addGhostForm')
