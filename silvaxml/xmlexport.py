@@ -208,8 +208,8 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
             for version in self.context.objectValues():
                 getXMLSource(version)._sax(reader, settings)
         else:
-            pass
             #XXX handle single version export
+            getXMLSource(self.context.get_previewable())._sax(reader, settings)
             
     def _metadata(self, reader, settings):
         """Versioned Content has no metadata, the metadata is all on the
