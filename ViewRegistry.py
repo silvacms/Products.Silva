@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner
@@ -173,6 +173,6 @@ class ViewAttribute(Acquisition.Implicit):
             # A return is needed, although the client actually *will*
             # redirect (If the client does not redirect, it should still
             # show the default method on view).
-            return self.index_html
+            return self.aq_parent.index_html
 
         return method_on_view
