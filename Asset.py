@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12.32.1.16.2 $
+# $Revision: 1.12.32.1.16.3 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -39,4 +39,14 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
         """
         return 1
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_navigation_links')
+    def get_navigation_links(self):
+        """
+        Create a dictionary with top, up, first, previous, next, last links.
+        
+        This can be used by Mozilla in the accessibility toolbar.
+        """
+        return {}
+    
 InitializeClass(Asset)

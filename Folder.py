@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.150.6.6.16.1 $
+# $Revision: 1.150.6.6.16.2 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -588,6 +588,20 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         return self.aq_inner
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_real_container')
+    def get_real_container(self):
+        """Get the container, even if we're a container.
+
+        If we're the root object, returns None.
+        
+        Can be used with acquisition to get the 'nearest' container.
+        """
+        container = self.get_container()
+        if container is self:
+            return container.aq_parent.get_container()
+        return container
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'container_url')
     def container_url(self):
         """Get url for container.
@@ -885,7 +899,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         to be used in Python scripts and PT's
         """
         return urllib.quote(string)
-
+                
 InitializeClass(Folder)
 
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),

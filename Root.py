@@ -1,8 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78.4.1.24.5 $
-
-import os
+# $Revision: 1.78.4.1.24.6 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -245,34 +243,16 @@ class Root(Publication):
         if message_type == 'error':
             get_transaction().abort()
 
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'manage_installDocumentation')
-    def manage_installDocumentation(self):
-        """Install user docs into the root, called from service_extensions"""
-        message = 'Documentation installed'
-        try:
-            self._installDocumentation()
-        except DocumentationInstallationException, e:
-            message = e
-        return self.service_extensions.manage_main(manage_tabs_message=message)
-    
-    def _installDocumentation(self):
-        """Install user documentation into the root"""
-        try:
-            import Products.SilvaDocument
-        except ImportError:
-            raise DocumentationInstallationException, 'Documentation can not be installed since SilvaDocument is not available'
-        self.aq_inner._importObjectFromFile('%s/doc/silva_docs.zexp' % os.path.dirname(__file__))
-        self._recursivePublish(self.silva_docs)
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_real_container')
+    def get_real_container(self):
+        """Get the container, even if we're a container.
 
-    def _recursivePublish(self, obj):
-        """recursively publish all Silva VersionedContent objects"""
-        for child in obj.objectValues():
-            if IVersionedContent.isImplementedBy(child):
-                child.set_unapproved_version_publication_datetime(DateTime())
-                child.approve_version()
-            elif IContainer.isImplementedBy(child):
-                self._recursivePublish(child)
+        If we're the root object, returns None.
+        
+        Can be used with acquisition to get the 'nearest' container.
+        """
+        return None
 
 InitializeClass(Root)
 

@@ -230,5 +230,5 @@ class ViewCode:
                     str_datetime = mangle.DateTime(datetime).toDateStr()
                     infodict['public_version_expiration_datetime'] = str_datetime
         return ret
-    
+            
 InitializeClass(ViewCode)
