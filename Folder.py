@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.84 $
+# $Revision: 1.85 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -419,8 +419,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 continue
             if (self._is_silva_addable(addable_dict) and
                 addable_dict['instance']._is_allowed_in_publication):
+                # add the docstring to the dict so it is available in pythonscripts
+                addable_dict['doc'] = addable_dict['instance'].__doc__
                 result.append(addable_dict)
-        result.sort(lambda x, y: cmp(x['name'], y['name']))
         return result
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,

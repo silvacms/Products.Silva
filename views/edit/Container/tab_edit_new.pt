@@ -120,10 +120,10 @@
 <tr class="focus-cycle" valign="top" tal:attributes="class python:test(oddrow, None, None)">
   <td width="16">
     <img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model.meta_type)" />
+      tal:replace="structure python:view.render_icon(addable['name'])" />
   </td>
   <td>
-    <h4><a href="#" tal:content="addable/name">Addable</a></h4>
+    <h4><a href="#" tal:content="addable/name" tal:attributes="href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+')">Addable</a></h4>
   </td>
   <td tal:replace="nothing">
   </td>
@@ -134,7 +134,7 @@
   <td>
   </td>
   <td>
-    <p class="readable">
+    <p class="readable" tal:replace="addable/doc" tal:condition="python: addable.has_key('instance')">
     Description lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
     <br />
     <br />
