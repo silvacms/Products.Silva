@@ -225,9 +225,9 @@ _______ manual close section here _______
                  <h2 tal:attributes="title string:id: ${model/id}">
                    <img tal:replace="structure python:view.render_icon(model)" />
                    <tal:block i18n:translate="manage_document_versions">
-                   manage versions of &#xab;
-                   <tal:block content="string:${model/get_title_editable}"
-                    i18n:name="export_id">id</tal:block>&#xbb;
+                   manage versions of &#xab;<tal:block 
+                      content="string:${model/get_title_editable}"
+                      i18n:name="export_id">id</tal:block>&#xbb;
                    </tal:block>
                  </h2>
               </td>
@@ -279,7 +279,8 @@ _______ manual close section here _______
                 <td style="white-space: nowrap">
                   <a tal:content="python: mangle.DateTime(modificationtime).toStr()" 
                       tal:attributes="href python:('%s/edit/tab_status_view_version?version=%s' % 
-                                                    (model.absolute_url(), version.id))">
+                                                    (model.absolute_url(), version.id));
+                                      title python:u'view \xab%s\xbb' % version.get_title()">
                     modificationtime
                   </a>
                 </td>
