@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 18 18:56:34 2004\n"
+"POT-Creation-Date: Fri Nov 19 18:58:18 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -9,31 +9,109 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/translation_files/extract.py\n"
 
-#: /ViewCode.py:101
-#: /views/edit/Container/tab_status_export.pt:415
-msgid "none"
+#: /AccessManager.py:141
+msgid "Requests for authentication to this site are not allowed."
 msgstr ""
 
-#: /ViewCode.py:82
-msgid "draft"
+#: /AccessManager.py:29
+msgid "Sorry, no ChiefEditors are available to receive the request."
 msgstr ""
 
-#: /ViewCode.py:85
-msgid "pending"
+#: /AccessManager.py:60
+msgid "Member is not approved"
 msgstr ""
 
-#: /ViewCode.py:88
-msgid "approved"
+#: /AccessManager.py:76
+#: /AccessManager.py:98
+msgid "No ChiefEditors are available to receive the request."
 msgstr ""
 
-#: /ViewCode.py:92
-#: /views/edit/Container/tab_status.pt:101
-msgid "published"
+#: /ContainerPolicy.py:67
+msgid "The object ${policy} does not implement IContainerPolicy, try restarting Zope."
 msgstr ""
 
-#: /ViewCode.py:96
-#: /views/edit/Container/tab_status.pt:238
-msgid "closed"
+#: /DocmaService.py:117
+msgid "Not connected"
+msgstr ""
+
+#: /EmailMessageService.py:111
+msgid "Changed settings."
+msgstr ""
+
+#: /EmailMessageService.py:98
+msgid "Validation error(s)"
+msgstr ""
+
+#: /ExtensionService.py:106
+msgid "Default layout code installed"
+msgstr ""
+
+#: /ExtensionService.py:82
+msgid "Silva and all installed extensions have been refreshed"
+msgstr ""
+
+#: /ExtensionService.py:96
+msgid "Content upgrade succeeded. See event log for details."
+msgstr ""
+
+#: /File.py:258
+msgid "There is no service_files. Refresh your silva root."
+msgstr ""
+
+#: /File.py:359
+msgid "Silva Images converted. See Zope log for details."
+msgstr ""
+
+#: /Folder.py:329
+#: /Folder.py:423
+msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
+msgstr ""
+
+#: /Folder.py:387
+#: /Folder.py:419
+msgid "pasted &#xab;${id}&#xbb;"
+msgstr ""
+
+#: /Folder.py:942
+msgid "Factory is not callable"
+msgstr ""
+
+#: /Ghost.py:217
+msgid "Unauthorized"
+msgstr ""
+
+#: /Ghost.py:63
+#: /Ghost.py:72
+#: /Ghost.py:84
+msgid "Ghost target is broken"
+msgstr ""
+
+#: /GhostFolder.py:215
+msgid "no updater was called for ${info_tuple}"
+msgstr ""
+
+#: /GhostFolder.py:413
+msgid "got ${url}, expected a unicode"
+msgstr ""
+
+#: /GhostFolder.py:56
+#: /GhostFolder.py:59
+msgid "implemented in subclasses"
+msgstr ""
+
+#: /Group.py:136
+msgid "There is no service_groups"
+msgstr ""
+
+#: /Group.py:138
+msgid "There is already a group of that name."
+msgstr ""
+
+#: /Group.py:80
+#: /Group.py:88
+#: /Group.py:111
+#: /Group.py:120
+msgid "Zombie group asset"
 msgstr ""
 
 #: /resources/sidebar_template.pt:25
@@ -575,11 +653,11 @@ msgid "50x50 pixel"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
-msgid "75x75 pixel"
+msgid "75x75 pixels"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
-msgid "75x75 pixels"
+msgid "75x75 pixel"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:154
@@ -1518,6 +1596,10 @@ msgstr ""
 msgid "Changed into publication"
 msgstr ""
 
+#: /views/edit/Container/tab_status.pt:101
+msgid "published"
+msgstr ""
+
 #: /views/edit/Container/tab_status.pt:157
 msgid "index of"
 msgstr ""
@@ -1528,6 +1610,10 @@ msgstr ""
 
 #: /views/edit/Container/tab_status.pt:222
 msgid "public version"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:238
+msgid "closed"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:252
@@ -1800,6 +1886,10 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:408
 msgid "choose a template"
+msgstr ""
+
+#: /views/edit/Container/tab_status_export.pt:415
+msgid "none"
 msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:451
@@ -2689,11 +2779,11 @@ msgid "<u>u</u>se clipboard..."
 msgstr ""
 
 #: /views/edit/lookup_ui.pt:227
-msgid "remove user"
+msgid "remove users from the clipboard: alt-r"
 msgstr ""
 
 #: /views/edit/lookup_ui.pt:227
-msgid "remove users from the clipboard: alt-r"
+msgid "remove user"
 msgstr ""
 
 #: /views/edit/lookup_ui.pt:45

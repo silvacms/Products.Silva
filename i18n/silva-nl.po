@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 18 18:56:34 2004\n"
-"PO-Revision-Date: 2004-11-17 18:17+0100\n"
+"POT-Creation-Date: Fri Nov 19 18:31:18 2004\n"
+"PO-Revision-Date: 2004-11-19 19:13+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -15,29 +15,103 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "Domain: silva\n"
 
-#: /ViewCode.py:101 /views/edit/Container/tab_status_export.pt:415
-msgid "none"
-msgstr "none"
+#: /AccessManager.py:141
+msgid "Requests for authentication to this site are not allowed."
+msgstr "Aanmeldingsaanvragen zijn voor deze website niet toegestaan."
 
-#: /ViewCode.py:82
-msgid "draft"
-msgstr "draft"
+#: /AccessManager.py:29
+msgid "Sorry, no ChiefEditors are available to receive the request."
+msgstr "Sorry, er zijn geen ChiefEditors beschikbaar om je aanvraag te ontvangen."
 
-#: /ViewCode.py:85
-msgid "pending"
-msgstr "pending"
+#: /AccessManager.py:60
+msgid "Member is not approved"
+msgstr "Lid is niet goedgekeurd"
 
-#: /ViewCode.py:88
-msgid "approved"
-msgstr "approved"
+#: /AccessManager.py:76 /AccessManager.py:98
+msgid "No ChiefEditors are available to receive the request."
+msgstr "Geen ChiefEditors aanwezig om je aanvraag te ontvangen."
 
-#: /ViewCode.py:92 /views/edit/Container/tab_status.pt:101
-msgid "published"
-msgstr "publiek"
+#: /ContainerPolicy.py:67
+msgid ""
+"The object ${policy} does not implement IContainerPolicy, try restarting "
+"Zope."
+msgstr "Het object ${policy} ondersteunt IContainerPolicy niet, probeer te herstarten."
 
-#: /ViewCode.py:96 /views/edit/Container/tab_status.pt:238
-msgid "closed"
-msgstr "closed"
+#: /DocmaService.py:117
+msgid "Not connected"
+msgstr "Niet verbonden"
+
+#: /EmailMessageService.py:111
+msgid "Changed settings."
+msgstr "Instellingen gewijzigd."
+
+#: /EmailMessageService.py:98
+msgid "Validation error(s)"
+msgstr "Validatie fout(en)"
+
+#: /ExtensionService.py:106
+msgid "Default layout code installed"
+msgstr ""
+
+#: /ExtensionService.py:82
+msgid "Silva and all installed extensions have been refreshed"
+msgstr "Silva and alle geinstalleerde uitbreidingen zijn gewijzigd"
+
+#: /ExtensionService.py:96
+msgid "Content upgrade succeeded. See event log for details."
+msgstr "Content upgrade succesvol. Zie de 'event log' voor details."
+
+#: /File.py:258
+msgid "There is no service_files. Refresh your silva root."
+msgstr "Er is geen service_files gevonden. Ververs de Silva root."
+
+#: /File.py:359
+msgid "Silva Images converted. See Zope log for details."
+msgstr "Silva Images zijn omgezet. Zie de Zope log voor details."
+
+#: /Folder.py:329 /Folder.py:423
+msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
+msgstr "het plakken van &#xab;${id}&#xbb; is niet toegestaan in dit type container"
+
+#: /Folder.py:387 /Folder.py:419
+msgid "pasted &#xab;${id}&#xbb;"
+msgstr "&#xab;${id}&#xbb; geplakt"
+
+#: /Folder.py:942
+msgid "Factory is not callable"
+msgstr "Factory is niet aanroepbaar"
+
+#: /Ghost.py:217
+msgid "Unauthorized"
+msgstr ""
+
+#: /Ghost.py:63 /Ghost.py:72 /Ghost.py:84
+msgid "Ghost target is broken"
+msgstr ""
+
+#: /GhostFolder.py:215
+msgid "no updater was called for ${info_tuple}"
+msgstr "er is geen updater aangeroepen voor ${info_tuple}"
+
+#: /GhostFolder.py:413
+msgid "got ${url}, expected a unicode"
+msgstr "url ${url} ontvangen terwijl we unicode verwachtten"
+
+#: /GhostFolder.py:56 /GhostFolder.py:59
+msgid "implemented in subclasses"
+msgstr "geimplementeerd in subclasses"
+
+#: /Group.py:136
+msgid "There is no service_groups"
+msgstr "Er is geen service_groups gevonden"
+
+#: /Group.py:138
+msgid "There is already a group of that name."
+msgstr "Er bestaat al een groep met deze naam."
+
+#: /Group.py:80 /Group.py:88 /Group.py:111 /Group.py:120
+msgid "Zombie group asset"
+msgstr "Zombie groep asset"
 
 #: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:62
 msgid "slide to the publish screen"
@@ -62,39 +136,39 @@ msgstr "container"
 #: /views/add/File/add_submit.py:68 /views/add/Groups/add_submit.py:60
 #: /views/add/Image/add_submit.py:68 /views/add/add_submit.py:51
 msgid "Added ${meta_type} ${id}."
-msgstr "Added ${meta_type} ${id}."
+msgstr "${meta_type} ${id} toegevoegd."
 
 #: /views/add/Ghost/add_form.pt:32 /views/add/GhostFolder/add_form.pt:32
 msgid "&nbsp; create ${meta_type}"
-msgstr "&nbsp; create ${meta_type}"
+msgstr "&nbsp; creëer ${meta_type}"
 
 #: /views/add/Ghost/add_form.pt:40 /views/add/GhostFolder/add_form.pt:40
 #: /views/edit/Container/GhostFolder/tab_edit.pt:67
 #: /views/edit/VersionedContent/Ghost/edit.pt:57
 msgid "attributes"
-msgstr "attributes"
+msgstr "attributen"
 
 #: /views/add/Ghost/add_form.pt:60
 msgid "find the content this ghost should refer to: alt-r"
-msgstr "find the content this ghost should refer to: alt-r"
+msgstr "zoek het object waar deze ghost naar moet wijzen: alt-r"
 
 #: /views/add/Ghost/add_form.pt:60 /views/add/GhostFolder/add_form.pt:63
 #: /views/edit/Container/GhostFolder/tab_edit.pt:83
 #: /views/edit/VersionedContent/Ghost/edit.pt:74
 msgid "reference..."
-msgstr "reference..."
+msgstr "referentie..."
 
 #: /views/add/GhostFolder/add_form.pt:63
 msgid "find the folder this ghost should refer to: alt-r"
-msgstr "find the folder this ghost should refer to: alt-r"
+msgstr "zoek de folder waar deze ghost naar moet wijzen: alt-r"
 
 #: /views/add/GhostFolder/add_form.pt:82
 msgid ""
 "Location of originating folder. Depending on how much content there is, "
 "<span class=\"warning\">creation may take a while</span>."
 msgstr ""
-"Location of originating folder. Depending on how much content there is, "
-"<span class=\"warning\">creation may take a while</span>."
+"Locatie van de originele folder. Afhankelijk van de hoeveelheid inhoud, "
+"<span class=\"warning\">kan dit enige tijd duren</span>."
 
 #: /views/add/Groups/add_submit.py:39
 msgid ""
@@ -102,19 +176,19 @@ msgid ""
 "        site.<br />In contrast to other Silva objects, Group IDs must be\n"
 "        unique within a Silva instance."
 msgstr ""
-"There's already a Group with the name ${id} in this Silva\n"
-"        site.<br />In contrast to other Silva objects, Group IDs must be\n"
-"        unique within a Silva instance."
+"Er is al een Group met de naam ${id} in deze Silva\n"
+"        site.<br />In tegenstelling tot andere Silva objecten moet een\n"
+"        Group ID uniek zijn binnen een Silva site."
 
 #: /views/add/Image/add_submit.py:33
 #: /views/edit/Asset/File/upload_submit.py:26
 #: /views/edit/Container/tab_edit_import_xml.py:20
 msgid "Empty or invalid file."
-msgstr "Empty or invalid file."
+msgstr "Leeg of incorrect bestand."
 
 #: /views/add/add_form.pt:37
 msgid "create ${TOC_or_meta_type}"
-msgstr "create ${TOC_or_meta_type}"
+msgstr "creëer ${TOC_or_meta_type}"
 
 #: /views/add/add_form.pt:45
 msgid "aspect"
@@ -133,7 +207,7 @@ msgstr "aspect"
 #: /views/edit/Member/SimpleMember/tab_edit.pt:68
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
 msgid "content"
-msgstr "content"
+msgstr "inhoud"
 
 #: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:46
 #: /views/add/GhostFolder/add_form.pt:48
@@ -142,7 +216,7 @@ msgstr "content"
 #: /views/edit/VersionedContent/tab_status_macros.pt:312
 #: /views/edit/VersionedContent/tab_status_macros.pt:411
 msgid "notes"
-msgstr "notes"
+msgstr "notities"
 
 #: /views/add/add_form.pt:80 /views/add/Ghost/add_form.pt:87
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/Asset/Image/edit.pt:187
@@ -598,12 +672,12 @@ msgid "50x50 pixel"
 msgstr "50x50 pixel"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
-msgid "75x75 pixel"
-msgstr "75x75 pixel"
-
-#: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
 msgid "75x75 pixels"
 msgstr "75x75 pixels"
+
+#: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
+msgid "75x75 pixel"
+msgstr "75x75 pixel"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:154
 msgid "100x100 pixels"
@@ -1593,6 +1667,10 @@ msgstr "Can only change Folders into Publications"
 msgid "Changed into publication"
 msgstr "Changed into publication"
 
+#: /views/edit/Container/tab_status.pt:101
+msgid "published"
+msgstr "publiek"
+
 #: /views/edit/Container/tab_status.pt:157
 msgid "index of"
 msgstr "index van"
@@ -1604,6 +1682,10 @@ msgstr ""
 #: /views/edit/Container/tab_status.pt:222
 msgid "public version"
 msgstr "publieke versie"
+
+#: /views/edit/Container/tab_status.pt:238
+msgid "closed"
+msgstr "closed"
 
 #: /views/edit/Container/tab_status.pt:252
 msgid "There are no publishable items here."
@@ -1876,6 +1958,10 @@ msgstr "Check to include closed content in the export."
 #: /views/edit/Container/tab_status_export.pt:408
 msgid "choose a template"
 msgstr "choose a template"
+
+#: /views/edit/Container/tab_status_export.pt:415
+msgid "none"
+msgstr "none"
 
 #: /views/edit/Container/tab_status_export.pt:451
 msgid "export to Docma"
@@ -2855,12 +2941,12 @@ msgid "<u>u</u>se clipboard..."
 msgstr "<u>u</u>se clipboard..."
 
 #: /views/edit/lookup_ui.pt:227
-msgid "remove user"
-msgstr "remove user"
-
-#: /views/edit/lookup_ui.pt:227
 msgid "remove users from the clipboard: alt-r"
 msgstr "remove users from the clipboard: alt-r"
+
+#: /views/edit/lookup_ui.pt:227
+msgid "remove user"
+msgstr "remove user"
 
 #: /views/edit/lookup_ui.pt:45
 msgid "return to previous screen: alt-k"
@@ -3522,3 +3608,12 @@ msgstr ""
 "</ul>\n"
 "</dd>\n"
 "</dl>\n"
+
+#~ msgid "draft"
+#~ msgstr "draft"
+
+#~ msgid "pending"
+#~ msgstr "pending"
+
+#~ msgid "approved"
+#~ msgstr "approved"
