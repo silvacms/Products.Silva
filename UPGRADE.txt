@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.36.8.12.8.11 $
+CVS:        $Revision: 1.36.8.12.8.12 $
 
 Introduction
 ------------
@@ -22,7 +22,7 @@ upgrade issues please read the ``Upgrade issues``_ section of this
 document. Reading this is strongly recommended! If you still run into
 trouble, please consult TROUBLESHOOTING.txt.
 
-The Silva 1.0rc1 release should support upgrades from Silva
+The Silva 1.0rc4 release should support upgrades from Silva
 0.9.3. Please test this and tell us how it works.
 
 Upgrades
@@ -64,6 +64,12 @@ Steps to take during a major Silva upgrade:
   list) from your Zope's Products directory.
 
 - Unpack the Silva-all distribution in your Zope's Products directory.
+
+- If You have optional products installed which are either Silva
+  extension or may interfere with Silva in some way, You may want to
+  check if they have a compatible version and upgrade, if required.
+  Again see PRODUCTS.txt for a list of dependencies and recommended
+  version numbers.
 
 - Restart Zope.
 
@@ -129,7 +135,7 @@ the SMI or preview this is a signal that your ``frontend.css`` should be
 updated, since you're missing key selectors for content display.
 
 If you are using the default layout (most likely not), or for some
-other reason can safely through away your old layout, you can have the
+other reason can safely throw away your old layout, you can have the
 new layout installed directly. First, delete or rename the following
 objects in the Silva root (from the Zope Management Interface):
 
@@ -205,7 +211,7 @@ this failure to remove previous versions.
 
 Please remove (or move away) any old installation of Silva (and its
 companion products, see PRODUCTS.txt for a list) before unpacking the
-new version n your Products directory to avoid any problems.
+new version in your Products directory to avoid any problems.
 
 
 
