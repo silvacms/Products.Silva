@@ -132,7 +132,7 @@ This message will remain visible in the status screen for other authors and edit
 <field tal:replace="structure python:view.tab_status_form_author.publish_datetime.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)" />
 </td>
 <td style="vertical-align:middle;">
-day/month/year &nbsp;23:59
+day / month / year &nbsp;23:59
 </td>
 </tr>
 
@@ -253,7 +253,7 @@ notes
 <field tal:replace="structure python:view.tab_status_form_editor.publish_datetime.render(REQUEST=request)" />
 </td>
 <td>
-day/month/year &nbsp;23:59
+day / month / year &nbsp;23:59
 </td>
 </tr>
 
