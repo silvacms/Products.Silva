@@ -28,6 +28,9 @@ Silva changes
 
     Bugs fixed
 
+      - Fixed a bug in the xml exporter that tripped on the export of
+        citatation elements
+
       - Link objects now accept other protocols in the URL too (https,
         news, ftp, mailto).
 
