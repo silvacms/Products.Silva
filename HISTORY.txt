@@ -14,6 +14,11 @@ Silva changes
  
     Bugs Fixed
                                                                                                     
+        - Changed check_reserved_ids() function in the content upgrade
+          script from breadth-first to depth-first. This work better for
+          content hierarchies where folders with an invalid id containing
+          content also with invalid ids, are being renamed.
+
         - The metadata tab wouldn't show the metadata set's title when it
           was available.
  
