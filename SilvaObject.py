@@ -175,7 +175,7 @@ class SilvaObject(Security):
         """Get XML for object and everything under it.
         """
         f = StringIO()
-        to_xml(f)
+        self.to_xml(f)
         return f.getvalue()
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
