@@ -16,6 +16,7 @@ is_rejection = request['rejection_status'] == 'true'
 # also use dummy message, if author leaves input box empty
 message = request.get('message','')
 if message:
+  message = unicode(message, 'UTF-8')
   view  = context.tab_status
 else:
   tab_name = request['tab_name']
