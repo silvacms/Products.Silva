@@ -6,9 +6,7 @@
 </h2>
 <div class="worksheet borders top bottom left right"  
   tal:condition="python:view.has_access()"
-  tal:define="
-    dummy python:model.security_trigger();
-    global no_entry string:-">
+  tal:define="global no_entry string:-">
 <table width="100%" cellspacing="0" cellpadding="5" border="0">
 <tr>
   <td><h3>Search</h3></td>

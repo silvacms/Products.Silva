@@ -3,13 +3,10 @@
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<dummy tal:omit-tag="" tal:define="dummy python:model.security_trigger()" />
-
 <model tal:replace="structure view/edit">Content</model>
 
 <!-- ___________________________ end index_html/slot main ___________________________ -->
 </div>
-
 </html>
 <!-- ___________________________ end index_html ___________________________ -->
 

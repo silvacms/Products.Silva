@@ -5,8 +5,6 @@
   metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<dummy tal:omit-tag="" tal:define="dummy python:model.security_trigger()" />
-
 <h2>Info for <span class="folder-title" tal:content="structure string:&raquo;${model/get_title_html}&laquo;">title here</span></h2>
 
 <h3>Authorized users below this level</h3>

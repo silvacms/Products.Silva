@@ -5,8 +5,7 @@
   Groups administration
 </h2>
 <div class="worksheet borders top bottom left right"  
-    tal:condition="python:view.has_access()"
-    tal:define="dummy python:model.security_trigger();">
+    tal:condition="python:view.has_access()">
 <form action="." method="POST">
 <!-- _______________________ USERS TO GROUPS ___________________________ -->
 <table width="100%" cellspacing="0" cellpadding="5" border="0">

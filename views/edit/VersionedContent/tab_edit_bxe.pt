@@ -3,11 +3,12 @@
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<tal:block tal:define="dummy python:model.security_trigger();
-                       global could_lock model/sec_create_lock;
-                       global unapproved_version model/get_unapproved_version;" />
+<tal:block tal:define="
+  global could_lock model/sec_create_lock;
+  global unapproved_version model/get_unapproved_version;
+  "/>
 
-      	<div id="bxe_area">
+  <div id="bxe_area">
 		<noscript>
     
 	  <h2><span tal:replace="here/title_or_id">content title or id</span>

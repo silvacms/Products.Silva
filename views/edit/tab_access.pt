@@ -1,9 +1,7 @@
 <!-- _______________________ start index_html __________________________ -->
 <html metal:use-macro="here/macro_index/macros/master">
 <div class="margins" metal:fill-slot="main">
-<tal:block  
-  condition="python:view.has_access()"
-  define="dummy python:model.security_trigger();">
+<tal:block condition="python:view.has_access()">
 
 <h2><img src="%s" width="16" height="16" alt="%s" 
   tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
