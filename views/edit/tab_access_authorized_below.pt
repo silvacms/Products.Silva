@@ -56,7 +56,7 @@
     <tr class="top-controls">
       <td>
         <h3 i18n:translate="listing_of_all_users_below">
-          Listing of all authorized users below this level 
+          listing of all authorized users below this level 
         </h3>
       </td>
     </tr>
