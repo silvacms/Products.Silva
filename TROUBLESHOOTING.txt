@@ -1,44 +1,45 @@
 
 Installation problems
 
-  The Silva (and XMLWidgets and ParsedXML) Product is broken after installation.
+  The Silva (and XMLWidgets and ParsedXML) Product is broken after
+  installation.
 
-    Most of the installation problems do have their source in an improper
-    installation of the PyXML python module.
+    Most of the installation problems do have their source in an
+    improper installation of the PyXML python module.
 
     Usually this can be diagnosed by the following lines in the error
-    message one gets after a Zope start::  
+    message one gets after a Zope start::
 
       ImportError: cannot import name expat
 
- 
-    Another symptom is that one gets the following error when trying to
-    add a Silva Root::
+    Another symptom is that one gets the following error when trying
+    to add a Silva Root::
  
        Error Type: AttributeError
        Error Value: StartDoctypeDeclHandler
 
-    This is a problem occurring frequently with binary distributions of
-    Zope; as the writing of this the corresponding issue in the
-    collector is still pending, see http://collector.zope.org/Zope/678/view
+    This is a problem occurring frequently with binary distributions
+    of Zope; as the writing of this the corresponding issue in the
+    collector is still pending, see
+    http://collector.zope.org/Zope/678/view
 
     You can test for a proper PyXML installation by typing in the
     following lines into the python interpreter used to run Zope::
 
        from xml.parsers import expat
 
-    (The full path to the python binary can be found in the
-    shell script or batch file used to start Zope.)
+    (The full path to the python binary can be found in the shell
+    script or batch file used to start Zope.)
 
-    If the above statement fails with an ImportError, please try to fix
-    the PyXML installation. Usually getting the version form the
-    PyXML project home page  http://pyxml.sourceforge.net 
-    helps fixing the problem.
+    If the above statement fails with an ImportError, please try to
+    fix the PyXML installation. Usually getting the version from the
+    PyXML project home page http://pyxml.sourceforge.net helps fixing
+    the problem.
 
-    If this does not help, or is not an option for some reason,
-    a possible workaround is to create a file "pyexpat.py"
+    If this does not help, or is not an option for some reason, a
+    possible workaround (read *hack*) is to create a file "pyexpat.py"
     in the directory 'lib/python2.1/xml/parsers' of the Zope
-    installation, containing only the line:: 
+    installation, containing only the line::
 
       from _xmlplus.parsers.pyexpat import *
 
@@ -49,17 +50,16 @@ Installation problems
     (or wherever the "pyexpat" module has been installed).
 
 
-
   After installing the Silva Product and restarting Zope, the server
   does not respond to HTTP request.
 
-    This problem has been reported when using some binary distributions
-    for the Debian Linux distribution. The server seems to start
-    properly according to its own event log, but does not send any
-    response to HTTP requests.
+    This problem has been reported when using some binary
+    distributions for the Debian Linux distribution. The server seems
+    to start properly according to its own event log, but does not
+    send any response to HTTP requests.
 
-    The source of this problem is not known. The recommended work around
-    is to use Python and Zope versions build from source.
+    The source of this problem is not known. The recommended work
+    around is to use Python and Zope versions built from source.
     Especially for the operation systems where this issue has been
     reported this is rather painless; see
     e.g. http://www.infrae.com/products/silva/docs/SysAdmin/LinuxInstallation
@@ -75,9 +75,10 @@ Installation problems
   Brokenness after upgrading Silva to a newer version
 
     Most of the problems after upgrading Silva are caused by missing
-    product refresh via the 'service_extensions' object in the Silva Root.
-    Please check with the instructions in the 'UPGRADE.txt' of the 
-    installed release, if You need to run a refresh after upgrading.
+    product refresh via the 'service_extensions' object in the Silva
+    Root. Please check with the instructions in the 'UPGRADE.txt' of
+    the installed release, if you need to run a refresh after
+    upgrading.
 
     Major releases usually need a content upgrade, too. This is also
     available via the 'service_extensions' by the 'upgrade content'
@@ -87,21 +88,21 @@ Installation problems
     before reporting any problems with upgrading.
 
     Also please note in case of several Silva Roots within one Zope
-    instance You need to run the upgrade for all Silva Roots separately
-    after installation of an upgrades Silva version.
+    instance you need to run the upgrade for all Silva Roots
+    separately after installation of an upgrades Silva version.
 
 
-  Silva only displays '?' for non ascii characters in the public view
+  Silva only displays '?' for non-ascii characters in the public view
   after upgrading
  
     The cause of the problem is most probably a missing http header,
-    which should be set by the 'index_html'. If You do not have a custom
-    'index_html', remove the current 'index_html' and select 'install
-    default layout' in the 'service_extensions'.
+    which should be set by the 'index_html'. If you do not have a
+    custom 'index_html', remove the current 'index_html' and select
+    'install default layout' in the 'service_extensions'.
 
-    If You have a custom 'index_html' and do not want to overwrite this
-    with the default, be sure Your custom 'index_html' sets up the
-    'Content-Type' header in the response properly; it should do
+    If you have a custom 'index_html' and do not want to overwrite
+    this with the default, be sure your custom 'index_html' sets up
+    the 'Content-Type' header in the response properly; it should do
     something like:
 
       context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;charset=utf-8')
@@ -115,26 +116,40 @@ Problems when using Silva
   Errors when editing a Silva Document via the SMI
 
     If the session got lost while editing a Document via the SMI some
-    inconvenient error message may occur. 
-    The session loss may happen for the following reasons:
+    inconvenient error message may occur. The session loss may happen
+    for the following reasons:
 
       - The session timed out due to a longer period of inactivity
-      - The session cookie has not been stored by the browser
-      - The Zope server has been restarted, wiping out all current sessions
+        (aka the "lunchbreak error").
 
-    If this happens to You as an editor, follow these steps to recover:
+      - The session cookie has not been stored by the browser.
 
-      - use the "back button" to get a view of the "Editor" page
-      - click on the "Editor" tab to get a fresh session cookie
-      - proceed with editing; You may need to reopen the section You
+      - The Zope server has been restarted, wiping out all current
+        sessions.
+
+    Note that with Silva 0.9.2 we have added code to the "Editor" page
+    that automatically pops up a window after some idle time, asking
+    you if you want to save (thereby refreshing the session). If more
+    time passes still, the user is automatically redirected to the
+    "Preview" page. From there the user can safely return to the
+    "Edit" page.
+
+    If the session timeout happens to you as an author, follow these
+    steps to recover:
+
+      - use the "back button" to get a view of the "Editor" page.
+
+      - click on the "Editor" tab to get a fresh session cookie.
+
+      - proceed with editing; you may need to reopen the section you
         currently wanted to edit.
 
-    If this does not help getting rid of the error, please check if Your
-    browser accepts cookies from the Zope server, and if You really got
-    a cookie from the server when entering the "Editor" page.
+    If this does not help getting rid of the error, please check if
+    your browser accepts cookies from the Zope server, and if you
+    really got a cookie from the server when entering the "Editor"
+    page.
 
     In any case the latest edits will be lost.
-
 
     Site managers may want to increase the session timeout to avoid
     problems due to the first reason. The session timeout can be configured
@@ -147,145 +162,167 @@ Problems when using Silva
 
   "KeyError" in the user lookup view of the "Access" tab
 
-     This is a session loss error for similar reasons as for errors
-     in the "Editor" tab discussed in the first item of this section.
+     This is a session loss error for similar reasons as for errors in
+     the "Editor" tab discussed in the first item of this
+     section. Going to the page again should normally fix the issue.
 
 
-  When inserting/saving/deleting, etc something in the "Editor" tab, the
-  browser seems to reload the next page infinitely, but displays nothing
+  When inserting/saving/deleting, etc something in the "Editor" tab,
+  the browser seems to reload the next page infinitely, but displays
+  nothing
 
     This is a known issue when using Opera, see
-    http://issues.infrae.com/silva/issue285
-    This should be fixed in Silva-0.9.2; if You still get this problem,
-    please send a bug report. Do not forget to add the Version of the
-    browser You are using, the version of Silva and the last action You
-    did when the problem occurs.
-
+    http://issues.infrae.com/silva/issue285. This should be fixed in
+    Silva 0.9.2; if you still get this problem, please send a bug
+    report. Do not forget to add the version of the browser you are
+    using, the version of Silva and the last action you did when the
+    problem occurs.
 
   When inserting/saving/deleting, etc something in the "Editor" tab,
   nothing has changed in the next page.
 
-    This may be an issue with your browsers cache; e.g. You still have
-    an old copy of the page viewed by Your browser, because the browser
-    did not reflect the change. Try to force a reload of the page.
-    (e.g. With IE press the "Ctrl" key while clicking the reload symbol).
-     If this solves the problem, please check with the caching policy
-    of Your browser; set the caching policy so the browser checks 
-    for a newer version every time it loads the page.
-    (XXX: maybe detailed instructions for IE how to do this? Or are
-    people reading plain text files assumed to be experienced enough to
-    do this anyway?)
+    This may be an issue with your browsers cache; e.g. you still have
+    an old copy of the page viewed by your browser, because the
+    browser did not reflect the change. Try to force a reload of the
+    page.  (e.g. With IE press the "Ctrl" key while clicking the
+    reload symbol).  If this solves the problem, please check with the
+    caching policy of your browser; set the caching policy so the
+    browser checks for a newer version every time it loads the page.
 
 
   "AttributeError: is_id_valid" or other errors when adding a Silva
   object via the ZMI
 
-    Most probably the source of the error is that You have added
-    a Silva object outside of a Silva Root. You cannot add most
-    Silva objects outside a Silva Root object, as they rely on the
-    infrastructure supported by the Silva Root object.
+    Most probably the source of the error is that you have added a
+    Silva object outside of a Silva Root. Most Silva objects cannot be
+    added outside a Silva Root object, as they rely on the
+    infrastructure (services etc) in the Silva Root object.
 
     Some special objects cannot be added via the ZMI even inside a Silva
     Root; they only should be created automatically by an installation
     script.
 
-    Normally one should only create a Silva  Root object via the ZMI and
-    add other objects via the SMI inside this Silva Root object.
+    Normally one should only create a Silva Root object via the ZMI
+    and add other objects via the SMI inside this Silva Root object.
 
 
   "UnicodeError: ordinal not in range(128)"
 
     This may happen due to an undiscovered bug in Silva. Actually all
-    bugs of this type should be fixed since 0.9.2, but if you see the error
-    message it is likely one of them escaped.
+    bugs of this type should be fixed since 0.9.2, but if you see the
+    error message it is likely one of them escaped.
 
-    These bugs are somewhat complicated to track down. Please check the
-    issue tracker at http://issues.infrae.com/silva for open issues
-    with the topic "encoding".
+    These bugs are somewhat complicated to track down. Please check
+    the issue tracker at http://issues.infrae.com/silva for open
+    issues with the topic "encoding".
 
-    If there are no issues related to this, You may want to ask for help
-    on silva-dev@lists.infrae.com. It would help a lot, if You could
-    provide a *.zexp exported file of the content object triggering the
-    error.
+    If there are no issues related to this, you may want to ask for
+    help on silva-dev@lists.infrae.com. It would help a lot, if you
+    could provide a *.zexp exported file of the content object
+    triggering the error.
 
     Additionally please provide information about where the bug
-    appeared. Did this happen inside the SMI, and if it does,
-    in which tab did this happen (e.g. "Editor", "Preview" ...)
-    If it happened in the "Editor" tab, which element did You edit
-    when the problem appeared? E.g. Had this been in the nested
-    subeditor of a table cell of complex list element, or when opening a
-    paragraph for editing or when saving?
+    appeared. Did this happen inside the SMI, and if it does, in which
+    tab did this happen (e.g. "Editor", "Preview" ...)  If it happened
+    in the "Editor" tab, which element did you edit when the problem
+    appeared? E.g. Had this been in the nested subeditor of a table
+    cell of complex list element, or when opening a paragraph for
+    editing or when saving?
 
-    If the problem happens in the public view only, and You did not use
-    the standard layout shipped with Silva but a custom one, please try
-    to reproduce this with the standard layout. Ask your site admin for
-    assistance if necessary.
+    If the problem happens in the public view only, and you did not
+    use the standard layout shipped with Silva but a custom one,
+    please try to reproduce this with the standard layout. Ask your
+    site admin for assistance if necessary.
 
-   
-    As the source of the problem is often quite obscure and these bugs
-    are sometimes scary to the user some short description what is going
-    on:
-
-    When rendering a page (no matter if it is a public view or an edit
-    formular page) Zope basically created an HTML representation of
-    all parts of the present content and design elements, and then
-    joins these HTML-snippets into the complete HTML page. 
-     
-    As Silva content is stored internally as 16-bit Unicode string to support
-    a wide range of character inputs, the HTML representation snippets
-    of all content representations will be unicode strings by default.
-
-    However such a unicode representation cannot be send over the net
-    successfully; instead a special 8-bit encoding is needed. Silva
-    uses the UTF-8 encoding for this.
-    Earlier versions of Silva converted the snippets manually 
-    to an 8-bit encoding, and Zope had to join the 8-bit strings
-    together. Since Zope2.6.1 it is no longer necessary to do the
-    conversion on the snippet level; instead one could Zope let do the
-    conversion on the complete result, which is much less error prone.
-
-    The conversion error may happen, if some of the HTML snippets to be
-    joined does not contain unicode. Actually Zope will implicitely
-    convert these snippets to unicode, assuming some standard encoding
-    for the conversion. Which encoding is chosen depends in the
-    installation; usually it is the least common denominator, i.e. the
-    ASCII character set. The bad thing about this is that the conversion
-    table only contains the 128 ASCII characters; anything outside of
-    this range cannot not be converted. (Thus the somewhat obscure
-    "ordinal not in range(128)" message.)
-
-    The final piece of the puzzle is now the source of the non-unicode
-    snippets. There are two possible sources:
-
-     - some of the old conversion code in Silva did still survive
-       and buggily converted a content HTML snipped from unicode.
-     
-     - a custom layout template contains some hard boiled strings
-       outside the ascii character range in the rendering code.
-
-    Especially in the first case the bug seems to occur quite
-    spontaneous and irreproducible to people in the latin1-world,
-    because they mostly use characters from the ASCII set, and thus
-    the bug does not appear as long as they edit inside this character
-    set, as there are no encoding problems with ASCII characters. Only
-    when inserting "special" characters (with accents, umlauts, etc) the
-    bug appears.
-    People outside the latin1-world will find these bugs much easier to
-    reproduce, if they happen. :-/
-
-    If the content object triggering the problem is no longer accessible
-    for edits via the SMI as the bug appears permanently a temporarly
-    workaround is to edit the XML representation via the ZMI and remove
-    the XML element triggering the bug manually. This will be most
-    probably the element which has been edited when the bug has been
-    triggered. Of course this is a highly unsatisfying solution, so
-    please send us a bug report as described above for we can fix the
-    problem soon.
+    See the section "Unicode Problems In-Depth" below if you would
+    like to read more detailed information about this issue.
 
 
   Exporting Silva objects in XML format via the ZMI fails:
   "TypeError: object has read-only attributes"
 
     This simply does not work. Please use either the "Export"
-    functionality in the *SMI* available from the "Status" tab,
-    or export the object via the usual *.zexp format
+    functionality in the *SMI* available from the "Status" tab, or
+    export the object via the usual *.zexp format
+
+
+Unicode Problems In-Depth
+
+    As the source of UnicodeError problem is often quite obscure and
+    these bugs are sometimes scary to the user here is a description
+    on what is going on.
+
+    When rendering a page (no matter if it is a public view or an edit
+    page) Zope basically creates an HTML representation of all parts
+    of the present content and design elements, and then joins these
+    HTML-snippets into the complete HTML page.
+     
+    Silva content is stored internally as 16-bit Unicode strings to
+    support a wide range of character sets and thus a large amount of
+    natural languages. In Python terms, these strings have a 'u'
+    prefixed and thus look like this when represented by Python::
+
+      u"Hello world"
+    
+    The result is that when Zope joins the snippets into a page, the 
+    whole page will be generated in 16-bit unicode format.
+
+    However such a unicode representation cannot be sent over the net
+    successfully; the net needs an 8-bit datastream instead. Zope can
+    take care of this automatically since version 2.6. The best 8-bit
+    encoding to represent unicode is UTF-8, which Silva uses. This
+    encoding supports all unicode characters (if you have a font to
+    present them in your browser, that is).
+
+    Versions of Zope before 2.6 could not do this automatic
+    conversion, and Silva had to do the work of converting the unicode
+    strings to 8 bit strings itself. This was rather bug-prone, so
+    since 0.9.2 moves to require Zope 2.6 we have moved away from this
+    and let Zope do the automatic conversion on the complete
+    result. The new approach is much less error prone.
+
+    The conversion error may happen, if some of the HTML snippets to
+    be joined do not contain unicode but instead some 8 bit
+    encoding. Actually Zope will try to implicitely convert these
+    snippets to unicode, assuming the ASCII encoding for the 8 bit
+    strings. The bad thing about this is that the conversion table
+    only contains the 128 ASCII characters; anything outside of this
+    range cannot not be converted. This includes characters with
+    accents and umlauts. This explains the somewhat obscure "ordinal
+    not in range(128)" message.
+
+    If there are non-unicode snippets in Silva content, this means
+    there is a bug somehow. There are three possible sources:
+
+     - old text (in particular metadata) was sometimes stored as
+       non-unicode in Silva 0.9.1 and earlier. Due to a bug in the
+       upgrade script some of this code might not have been converted
+       and in the end triggers a unicode error when trying to present
+       this content somewhere.
+     
+     - Silva tries to catch all user input and convert it to unicode
+       upon input. We might have missed a place and non-unicode text
+       might enter the system by this route. This is also a bug that
+       needs to be found and plugged.
+
+     - A custom layout template contains some hard boiled strings
+       outside the ascii character range in the rendering code.
+
+    Especially in the first two cases the bug seems to occur quite
+    spontaneously to people in the latin1-world, because they mostly
+    use characters from the ASCII set, and thus the bug does not
+    appear as long as they edit inside this character set, as there
+    are no encoding problems with ASCII characters. Only when
+    inserting "special" characters (with accents, umlauts, etc) the
+    bug appears.  People using a non-latin1 language will find these
+    bugs much more easy to reproduce, as they should happen right away
+    for any character.
+
+    If the content object triggering the problem is no longer
+    accessible for edits via the SMI as the bug appears permanently a
+    temporarly workaround is to edit the XML representation via the
+    ZMI and remove the XML element triggering the bug manually. This
+    will be most probably the element which has been edited when the
+    bug has been triggered. Of course this is a only a workaround to
+    continue working; the real solution is to solve the bug, so send us
+    a bug report!
