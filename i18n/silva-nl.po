@@ -1148,7 +1148,7 @@ msgstr "Move up"
 
 #: /views/edit/Container/tab_edit.pt:454
 msgid "move selected items to"
-msgstr "move selected items to"
+msgstr "geselecteerde items verplaatsen naar"
 
 #: /views/edit/Container/tab_edit.pt:460
 msgid "position"
@@ -1166,7 +1166,7 @@ msgstr "access key: alt-p"
 
 #: /views/edit/Container/tab_edit.pt:484
 msgid "move selected items into position: alt-m"
-msgstr "verplaats geselecteerde items in positie: alt-m"
+msgstr "verplaats geselecteerde items naar positie: alt-m"
 
 #: /views/edit/Container/tab_edit.pt:484
 msgid "move"
@@ -1210,7 +1210,7 @@ msgstr "plak (items op clipboard) als ghost objecten: alt-g"
 
 #: /views/edit/Container/tab_edit.pt:537
 msgid "paste ghost"
-msgstr "plak ghost"
+msgstr "ghost plakken"
 
 #: /views/edit/Container/tab_edit.pt:547
 #: /views/edit/VersionedContent/tab_status.pt:324
@@ -2987,11 +2987,11 @@ msgstr "select <u>a</u>ll"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:24
 msgid "user clipboard"
-msgstr "user clipboard"
+msgstr "gebruikers clipboard"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup users..."
-msgstr "lookup users..."
+msgstr "gebruikers opzoeken..."
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup users: alt-l"
@@ -3007,7 +3007,7 @@ msgstr "select users:"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:75
 msgid "No users on clipboard"
-msgstr "No users on clipboard"
+msgstr "Geen gebruikers op clipboard"
 
 #: /views/edit/macro_vein_navigation.pt:62
 msgid "up one level: alt-]"
@@ -3075,7 +3075,7 @@ msgstr "in"
 
 #: /views/edit/tab_access.pt:140
 msgid "No users with local roles are defined here."
-msgstr "No users with local roles are defined here."
+msgstr "Er zijn hier geen gebruikers met lokale rollen gedefinieerd."
 
 #: /views/edit/tab_access.pt:152
 msgid "assign_role"
@@ -3211,23 +3211,23 @@ msgstr "assign selected role to selected group(s)"
 
 #: /views/edit/tab_access.pt:549
 msgid "public view access restrictions for"
-msgstr "public view access restrictions for"
+msgstr "Publieke toegangsbeperkingen voor"
 
 #: /views/edit/tab_access.pt:558 /views/edit/tab_access.pt:731
 msgid "access restriction by role"
-msgstr "access restriction by role"
+msgstr "toegangsbeperking voor rol"
 
 #: /views/edit/tab_access.pt:566 /views/edit/tab_access.pt:739
 msgid "current restriction"
-msgstr "current restriction"
+msgstr "huidige beperking"
 
 #: /views/edit/tab_access.pt:574 /views/edit/tab_access.pt:749
 msgid "Open to the public"
-msgstr "Open to the public"
+msgstr "Open voor het publiek"
 
 #: /views/edit/tab_access.pt:579 /views/edit/tab_access.pt:752
 msgid "(acquired)."
-msgstr "(acquired)."
+msgstr "(gebruik rol van niveau hierboven)."
 
 # Default: "Setting an access restriction here affects objects on this and lower levels."
 #: /views/edit/tab_access.pt:583
@@ -3236,29 +3236,29 @@ msgstr "access_setting_restriction"
 
 #: /views/edit/tab_access.pt:594
 msgid "acquire restriction"
-msgstr "acquire restriction"
+msgstr "gebruik beperking van boven"
 
 #: /views/edit/tab_access.pt:594
 msgid ""
 "cancel the access restriction at this level, making it inherit from above"
 msgstr ""
-"cancel the access restriction at this level, making it inherit from above"
+"geen toegangsbeperking op dit niveau, gebruik beperking van boven"
 
 #: /views/edit/tab_access.pt:60
 msgid "user roles for &#xab;${title}&#xbb;"
-msgstr "user roles for &#xab;${title}&#xbb;"
+msgstr "gebruikersrollen voor &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_access.pt:616
 msgid "set restriction"
-msgstr "set restriction"
+msgstr "stel beperking in"
 
 #: /views/edit/tab_access.pt:616
 msgid "restrict access to users with a specific role"
-msgstr "restrict access to users with a specific role"
+msgstr "toegang beperken tot gebruikers met een specifieke rol"
 
 #: /views/edit/tab_access.pt:66
 msgid "grant or revoke local roles for users"
-msgstr "grant or revoke local roles for users"
+msgstr "toekennen of intrekken van lokale rollen voor gebruikers"
 
 #: /views/edit/tab_access.pt:722
 msgid "public view access restrictions for &#xab;${title}&#xbb;"
