@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  Current development
+
+    Bugs fixed
+
+      - Fixed incorrect recursive call for get_public_tree_helper
+
   1.1
 
     Features added
