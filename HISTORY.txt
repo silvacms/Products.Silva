@@ -3,6 +3,15 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.2.7
+
+    Bugs Fixed
+
+        - Small fix in feedback message in tab status macro
+
+        - Disabled sidebar invalidation while performing
+          content upgrades.
+
   0.9.2.6
 
     Bugs fixed
