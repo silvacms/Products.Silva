@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.5
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.16 $
+  CVS:        $Revision: 1.17 $
 
 Upgrading Silva 0.8.4 to 0.8.5
 
@@ -16,7 +16,7 @@ Upgrading Silva 0.8.4 to 0.8.5
   NOTE: It makes of course sense to make a backup of Silva before
   trying to upgrade!
 
-  NOTE: We have not tested an upgrade from version before 0.8.4 to 0.8.5
+  NOTE: We have not tested an upgrade from versions before 0.8.4 to 0.8.5
   directly; things may break if you try. To be safe you could first
   upgrade 0.8 to 0.8.3 to 0.8.4 before upgrading to 0.8.5 (see the
   instructions in Silva 0.8.4 for more information).
