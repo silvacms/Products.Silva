@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.44 $
+# $Revision: 1.45 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -18,22 +18,28 @@ from Products.FileSystemSite.FSImage import FSImage
 registerFileExtension('ico', FSImage)
 
 # -- monkey patch FileSystemSite's minimalpath until new release --
+import os
+from os import path as os_path
+separators = (os.sep, os.altsep)
 def minimalpath(p):
-    import os
-    check = [SOFTWARE_HOME+os.sep, INSTANCE_HOME+os.sep]
-    if INSTANCE_HOME.startswith(SOFTWARE_HOME):
-        check.reverse()
-    newpath = os.path.normpath(os.path.abspath(p))
-    for part in check:
-        if newpath.startswith(part):
-            return newpath[len(part):]
-    return newpath
+    # Trims down to a 'Products' root if it can.
+    # otherwise, it returns what it was given.
+    # In either case, the path is normalized.
+    p = os_path.abspath(os_path.normcase(os_path.normpath(p)))
+    index = p.find('Products')
+    if index == -1:
+        index = p.find('products')
+    if index == -1:
+        return p
+    p = p[index:]
+    while p[:1] in separators:
+        p = p[1:]
+    return p
 
 from Products import FileSystemSite
 FileSystemSite.DirectoryView.minimalpath = minimalpath
 FileSystemSite.utils.minimalpath = minimalpath
 # -- monkey patch end ---
-
 
 def initialize(context):
     extensionRegistry.register(
