@@ -53,7 +53,7 @@
           tal:define="
             global assets python:here.asset_lookup_get_objects(filter);
             empty python:len(assets) == 0;
-            base_type python: filter == 'Silva Image' and 'image' or filter.lower;
+            base_type python: filter == 'Silva Image' and 'image' or filter.lower();
             ">
               <thead>
             <tal:block replace="nothing">
