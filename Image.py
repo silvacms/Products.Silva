@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -41,14 +41,14 @@ class Image(Asset):
         if self.image:
             # have to encode as otherwise unicode will blow up image rendering
             # code
-            self.image.title = title.encode('cp1252')
+            self.image.title = self.get_title_html()
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
     def set_image(self, file):
         """Set the image object.
         """
-        self.image = OFS.Image.Image('image', self._title, file)
+        self.image = OFS.Image.Image('image', self.get_title_html(), file)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_zope_image')
