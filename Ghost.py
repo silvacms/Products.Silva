@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.47 $
+# $Revision: 1.48 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -42,8 +42,8 @@ class Ghost(VersionedContent):
         #return "Dummy ghost title" 
         ghost_version = self.get_viewable()
         if ghost_version is None:
-	    ghost_version = self.get_previewable()
-	    if ghost_version is None:
+            ghost_version = self.get_previewable()
+            if ghost_version is None:
                 return 'ghost target title not available'
         content = ghost_version._get_content()
         if content is None:
@@ -139,12 +139,12 @@ class GhostVersion(SimpleItem.SimpleItem):
         """
         if self._content_path is None:
             return None
-	try: 
+        try: 
             object = self.unrestrictedTraverse(self._content_path)
             return '/' + object.absolute_url(1)
-	except KeyError:
-	    # KeyError is what unrestrictedTraverse raises if it cannot find the object
-	    return '/'.join(self._content_path)
+        except KeyError:
+            # KeyError is what unrestrictedTraverse raises if it cannot find the object
+            return '/'.join(self._content_path)
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
     def get_link_status(self):
@@ -155,7 +155,7 @@ class GhostVersion(SimpleItem.SimpleItem):
             return self.LINK_EMPTY
         try: 
             content = self.unrestrictedTraverse(self._content_path)
-	except KeyError:
+        except KeyError:
             return self.LINK_VOID
             return "The object &laquo;%s&raquo; the ghost points to does no longer exist" % '/'.join(self._content_path)
         if IContainer.isImplementedBy(content):
