@@ -239,11 +239,12 @@ table.columns td.left {
 }
 table.columns td.main {
     width: 60%;
-    padding: 8px 1em 0 0;
+    padding: 8px 0.6em 0 0;
 }
 table.columns td.right {
-    width: 20%;
-    padding: 8px 8px 0 0;
+    /* background: red; fkg IE */
+    width: 10%;
+    padding: 8px 8px 0 0 ! important;
 }
 
 /* 2 column table */
@@ -285,9 +286,7 @@ table.columns1 {
 table.listing {
     color: #444444;
     width: 100%;
-    margin: 0em 0em 1em 0em;
-  border-collapse : collapse;
-  border : 0;
+    margin: 0em 0em 1em 0em;    
 }
 
 table.listing thead {
@@ -304,6 +303,8 @@ table.listing tfoot {
 
 table.listing tr.controls {
   background-color: #567275;
+  /* in case it's empty */
+  height : 0.2em;
 }
 
 table.listing tr.top-controls {
@@ -319,7 +320,7 @@ table.listing tr.fixed, td.fixed {
 }
 
 tr.divider, th.divider, td.divider {
-  font-size : 33%;
+  height : 0.1em;
   background-color: #648589;
 }
 
@@ -373,10 +374,9 @@ table.listing td {
 table.listing td.top {
   color: &dtml-shade40;;
   background: #394b4d;
-    padding-bottom: 0;
-    border-top: &dtml-listingBorder; ! important;
-    border-left: &dtml-listingBorder; ! important;
-    border-right: &dtml-listingBorder; ! important;
+    border: &dtml-listingBorder; ! important;
+    padding-top: 0em ! important;
+    padding-bottom: 0em ! important;
     vertical-align: bottom;
     /* workaround for plone 'insane IE row bug workaround' */
     position: relative;
@@ -411,11 +411,10 @@ table.listing tr.top-controls h3 {
   display: inline;
   border: none;
   float: left;
+  text-transform: &dtml-textTransform;;
 }
 
 table.listing tr.top-controls td {
-  vertical-align: top;
-  border-top: none;
   padding-left: 0.4em;
   padding-right: 0.4em;
 }
@@ -651,20 +650,6 @@ select.navigation {
   line-height : 96%;
 }
 
-select.clipboard, select.clipboard:focus, select.clipboard:hover {
-  color: &dtml-contextButtonFontColor;;
-  background : &dtml-contextButtonBackground;;
-  font-size: 90% ! important;
-  margin-top: 0.1em;
-  margin-bottom: 0.1em;
-  border : 5px solid &dtml-nightShade;;
-  line-height : 96%;
-
-  color : &dtml-nightShade;;;
-  background : &dtml-shade96;;
-  border : 1px solid &dtml-shade60;;
-}
-
 input[type="checkbox"] {
   color : &dtml-mainTabFontColorSelected;;
   background : #afcccf;
@@ -718,6 +703,37 @@ input.cancel {
 }
 
 
+/* ________________________________________________________ clipboard _____ */
+
+div.clipboard {
+  background: #b8ccce;
+  margin: 0;
+  padding: 0 0.5em; 
+  border: &dtml-listingBorder;;
+}
+
+h2.clipboard {
+  color: #394b4d;
+  margin-top : 0.1em;
+  margin-bottom : 0.1em;  
+  text-transform: &dtml-textTransform;;
+}
+
+select.clipboard, select.clipboard:focus, select.clipboard:hover {
+  color : &dtml-shade26;;;
+  background : &dtml-listingOddBackground;;
+  font-size: 90%;
+  margin-top: 0.1em;
+  margin-bottom: 0em;
+  border : 1px solid &dtml-shade60;;
+  line-height : 96%;
+}
+
+div.clipboard option.header {
+  color: #dbf3f6;
+  background: #71969a;
+
+}
 
 /* _________________________________________________________ feedback _____ */
 
@@ -747,6 +763,9 @@ div.feedback a {
     text-decoration: underline;
 }
 
+.highlight {
+  background-color: #b8ccce;
+}
 
 </dtml-with>
 

@@ -290,13 +290,14 @@
             <tr class="odd" tal:condition="python: len(queue) == 0">
               <td align="left" colspan="5">There are no jobs in the queue</td>
             </tr>
+          </tbody>
 
+          <tfoot>
             <tr class="divider">
               <td colspan="5">
-                &nbsp;
              </td>
             </tr>
-          </tbody>
+          </tfoot>
         </table>
       </form>
 
@@ -334,40 +335,38 @@
               <td class="align-right"><a href="#" tal:attributes="href python:'tab_edit_import_download?storageid=%s|%s' % (job.id, job.format)">Download</a></td>
             </tr>
 
-            <tr class="controls"
-              tal:condition="python: len(finished_jobs) != 0">
-              <td colspan="3">
-              <script type="text/javascript">
-                <!--
-                  if (document.forms[0])
-                  {
-                    document.write('<input class="button" type="submit" value="Select all" value="submit" name="selectButton" value="Select all" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false">');
-                  }
-                //-->
-              </script>
-              </td>
-              <td class="align-right"
-                colspan="2">
-                <tal:block condition="silva_permissions/ChangeSilvaContent">
-                  <input class="warning" type="submit" name="tab_edit_import_delete:method" value=" Remove " title="there's no undo: alt-x" accesskey="x" onClick="return confirm('Really remove?')" />
-                  <input class="button" type="submit" name="tab_edit_import_import_and_delete:method" value=" Import and remove " title="import to the current location and remove from the list: alt-m" accesskey="m" />
-                  <input class="button" type="submit" name="tab_edit_import_w2s:method" value=" Import " title="import to the current location: alt-p" accesskey="p" />
-                </tal:block>
-              </td>
+            <tr class="odd"
+               tal:condition="python: len(finished_jobs) == 0">
+              <td colspan="5">There are no processed jobs</td>
             </tr>
           </tbody>
 
-          <tfooter
-            tal:condition="python: len(finished_jobs) == 0">
-            <tr class="odd">
-              <td colspan="5">There are no processed jobs</td>
-            </tr>
-            <tr class="divider">
-              <td align="left" colspan="5">
-                &nbsp;
+          <tfoot>
+            <tr class="controls">
+              <td colspan="3">
+                <tal:condition condition="python: len(finished_jobs) != 0">
+                  <script type="text/javascript">
+                    <!--
+                      if (document.forms[0])
+                      {
+                        document.write('<input class="button" type="submit" value="Select all" value="submit" name="selectButton" value="Select all" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false">');
+                      }
+                    //-->
+                  </script>
+                </tal:condition>
+              </td>
+              <td class="align-right"
+                colspan="2">
+                <tal:condition condition="python: len(finished_jobs) != 0">
+                  <tal:block condition="silva_permissions/ChangeSilvaContent">
+                    <input class="warning" type="submit" name="tab_edit_import_delete:method" value=" Remove " title="there's no undo: alt-x" accesskey="x" onClick="return confirm('Really remove?')" />
+                    <input class="button" type="submit" name="tab_edit_import_import_and_delete:method" value=" Import and remove " title="import to the current location and remove from the list: alt-m" accesskey="m" />
+                    <input class="button" type="submit" name="tab_edit_import_w2s:method" value=" Import " title="import to the current location: alt-p" accesskey="p" />
+                  </tal:block>
+                </tal:condition>
               </td>
             </tr>
-          </tfooter>
+          </tfoot>
         </table>
       </form>
 

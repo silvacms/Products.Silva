@@ -9,7 +9,7 @@
   tal:define="global breadcrumb_vein string:Access;">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
-  <table class="columns columns3"
+  <table class="columns"
     tal:define="
       model_is_container model/implements_container | nothing;
       group_service view/service_groups | nothing;
@@ -36,10 +36,10 @@
               <thead>
                 <tr>
                   <td class="top"
-                    colspan="99">
+                    colspan="3">
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />
-                      &nbsp;User Roles Management for
+                      user roles management for
                       &#xab;<span tal:replace="structure string:${model/get_title_html}">
                         title
                       </span>&#xbb;
@@ -48,15 +48,14 @@
                 </tr>
               </thead>
               <tr class="top-controls">
-                <td colspan="99">
+                <td colspan="3">
                   <h3>
-                    Grant or revoke local roles 
-                    for users
+                    Grant or revoke local roles for users
                   </h3>
                 </td>
               </tr>
               <tr class="align-left"
-                valign="top">
+               >
                 <th>
                   Username
                 </th>
@@ -68,7 +67,7 @@
                 </th>
               </tr>
               <tal:block repeat="member members">
-                <tr valign="top"
+                <tr
                   tal:define="
                     iterate repeat/member/odd;
                     userid member/userid;
@@ -115,7 +114,7 @@
                 tal:condition="not:members">
                 <td colspan="3">
                   <i>
-                    No users with (local) roles.
+                    No users with local roles.
                   </i>
                 </td>
               </tr>
@@ -125,7 +124,7 @@
                   <tal:block tal:condition="members">
                     <select name="assign_role">
                       <option value="None">
-                        Select role...
+                        select role:
                       </option>
                       <option value="role"
                         tal:repeat="role model/sec_get_roles"
@@ -164,7 +163,7 @@
                 style="empty-cells:show;"
                 tal:define="requested_roles model/requested_roles">
                 <tr class="top-controls">
-                  <td colspan="99">
+                  <td colspan="3">
                     <h3>Pending requests for roles</h3>
                   </td>
                 </tr>
@@ -172,12 +171,10 @@
                   <th class="align-left">
                     Username
                   </th>
-                  <th class="align-left"
-                    style="border-left: 1px solid black; border-right: 1px solid black;">
+                  <th class="align-left">
                     Requested role
                   </th>
-                  <th class="align-left"
-                    width="">
+                  <th class="align-left">
                     Is approved
                   </th>
                 </tr>
@@ -187,8 +184,7 @@
                     member python:model.sec_get_member(req[0]);
                     requested_role python:req[1];"
                     tal:attributes="class python: iterate and 'odd' or 'even';">
-                    <td style="border-left: 1px solid black; border-right: 1px solid black;"
-                      valign="top">
+                    <td>
                       <input name="requests:list"
                         type="checkbox"
                         tal:attributes="
@@ -199,8 +195,7 @@
                           name
                         </label>
                     </td>
-                    <td style="border-left: 1px solid black; border-right: 1px solid black;"
-                      tal:content="requested_role">
+                    <td tal:content="requested_role">
                     </td>
                     <td tal:content="python: test(member.is_approved(), 'Yes', 'No')">
                       Yes or No
@@ -253,7 +248,7 @@
                 value="Assign" />
               <select name="assign_role">
                 <option value="None">
-                  Select role...
+                  select role:
                 </option>
                 <option value="role"
                   tal:repeat="role model/sec_get_roles"
@@ -308,10 +303,10 @@
                   <thead>
                     <tr>
                       <td class="top"
-                        colspan="99">
+                        colspan="3">
                         <h2 tal:attributes="title string:id: ${model/id}">
                           <img tal:replace="structure python:view.render_icon(model)" />
-                          &nbsp;Group Roles Management for
+                          group roles management for
                           &#xab;<span tal:replace="structure string:${model/get_title_html}">
                             title
                           </span>&#xbb;
@@ -320,19 +315,18 @@
                     </tr>
                   </thead>
                   <tr class="top-controls">
-                    <td colspan="99">
+                    <td colspan="3">
                       <h3>
                         Grant or revoke local roles for groups of users
                       </h3>
                     </td>
                   </tr>
                   <tr class="align-left"
-                    valign="top">
+                   >
                     <th>
                       Groupname
                     </th>
-                    <th class="align-rigth"
-                      style="border-left: 1px solid black; border-right: 1px solid black;">
+                    <th class="align-right">
                       Upward defined roles
                     </th>
                     <th class="align-right">
@@ -340,7 +334,7 @@
                     </th>
                   </tr>
                   <tal:block repeat="ugroup groups">
-                    <tr valign="top"
+                    <tr
                       tal:define="
                         group python: unicode(ugroup, 'latin1', 'ignore');
                         iterate repeat/ugroup/odd"
@@ -363,8 +357,7 @@
                             -->
                           </tal:block>
                       </td>
-                      <td class="align-right"
-                        style="border-left: 1px solid black; border-right: 1px solid black;">
+                      <td class="align-right">
                         <tal:block repeat="upward python:model.sec_get_upward_roles_for_group(group)">
                           <i tal:content="upward" />
                           &nbsp;
@@ -398,13 +391,13 @@
                     </td>
                   </tr>
                   <tr class="controls"
-                    valign="top">
+                   >
                     <td class="align-left"
                       colspan="2">
                       <tal:block tal:condition="groups">
                         <select name="assign_role">
                           <option value="None">
-                            Select role...
+                            select role:
                           </option>
                           <option value="role"
                             tal:repeat="role model/sec_get_roles"
@@ -446,7 +439,7 @@
               value="Assign" />
             <select name="assign_role">
               <option value="None">
-                Select role...
+                select role:
               </option>
               <option define="lastclass string:focus-cycle"
                 value="role"
@@ -467,11 +460,7 @@
       <tr>
         <td class="main">
           <h2>
-            <img alt="%s"
-              height="16"
-              src="%s"
-              width="16"
-              tal:replace="structure python:view.render_icon(model)" />
+            <img tal:replace="structure python:view.render_icon(model)" />
             &nbsp; Public view access restrictions for
             <span class="folder-title"
               tal:content="
@@ -499,7 +488,7 @@
                     Setting an access restriction here affects all objects on this and lower levels.
                   </td>
                 </tr>
-                <tr valign="top">
+                <tr>
                   <td>
                     <select name="role"
                       tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', nothing)">
@@ -549,7 +538,7 @@
                     </p>
                   </td>
                 </tr>
-                <tr valign="top">
+                <tr>
                   <td class="align-right">
                     <textarea name="access_restriction"
                       tal:condition="python:model.hasProperty('access_restriction')"
@@ -568,11 +557,7 @@
             </form>
           </div>
           <h2>
-            <img alt="%s"
-              height="16"
-              src="%s"
-              width="16"
-              tal:replace="structure python:view.render_icon(model)" />
+            <img tal:replace="structure python:view.render_icon(model)" />
             &nbsp; Utilities
           </h2>
           <div class="hilight borders top right bottom left"
@@ -590,7 +575,7 @@
                   List email addresses of all users from this level down.
                 </td>
               </tr>
-              <tr valign="top">
+              <tr>
                 <td>
                   <a class="buttonlink"
                     href="tab_access_authorized_below"

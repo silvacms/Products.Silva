@@ -9,23 +9,18 @@
   >
 
 <metal:block define-macro="clipboard">
-  <div class="highlight"
-    style="
-      padding: 0.5em; 
-      width: 18em; 
-      margin: 0em 0em 1em 1em;
-      border: 1px solid #567275;">
+  <div class="clipboard">
     <metal:block define-macro="clipboard_no_style">
       <form action="."
         method="POST"
         tal:define="
           clipboard_members python:view.lookup_get_selection().keys();">
-        <h2>
+        <h2 class="clipboard">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Simple Member')" />
-          User lookup clipboard
+          user lookup clipboard
         </h2>
         <table class="listing"
-          width="100%">
+          style="margin-bottom:0.5em;">
           <!-- thead>
             <tr>
               <td class="top"
@@ -41,12 +36,12 @@
                   title="Lookup users... - alt-l"
                   style="float: right;"
                   href="lookup">
-                  Lookup users...
+                  <u>L</u>ookup users...
                 </a>
               </metal:block>
             </td>
           </tr>
-          <tr class="odd">
+          <tr valign="top">
             <td style="padding: 0;">
               <select class="clipboard"
                 style="width: 100%"
@@ -54,9 +49,10 @@
                 name="userids:list"
                 size="10">
                 <tal:block condition="clipboard_members">
-                  <option disabled="disabled"
+                  <option class="header"
+                    disabled="disabled"
                     value="None">
-                    Select user(s)...
+                    Control-click to select users
                   </option>
                   <tal:block repeat="userid clipboard_members">
                     <option value="userid"
@@ -67,10 +63,11 @@
                     </option>
                   </tal:block>
                 </tal:block>
-                <option disabled="disabled"
+                <option class="header"
+                  disabled="disabled"
                   value="None"
                   tal:condition="not:clipboard_members">
-                  No users on lookup clipboard.
+                  No users on lookup clipboard
                 </option>
               </select>
             </td>
