@@ -1,3 +1,28 @@
+Silva020415
+ 
+  Features Added
+
+    - Paragraph and Lists now automatically adjust their size according 
+      to their contents.
+ 
+    - Rename now also allows changing title.
+
+    - There is now a warning when deleting objects.
+
+    - All content objects now have an 'Edit' tab.
+
+    - 'default' is now 'index' and all current 'default' is renamed to
+      'index'.
+
+  Bugs Fixed
+    
+    - bold, italic etc work again.
+   
+    - Bug fixes in add code; can now add objects that have the same 
+      id as objects higher in the hierarchy.
+
+    - Pressing enter in paragraph editor now does not trigger delete.
+
 Silva020403
 
   Features Added
