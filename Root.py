@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78.4.1.24.8 $
+# $Revision: 1.78.4.1.24.9 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -182,6 +182,12 @@ class Root(Publication):
         can be different in case the content was not yet updated.
         """
         return getattr(self, '_content_version', 'before 0.9.2')
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_silva_product_version')
+    def get_silva_product_version(self):
+        """Returns the release version of the Product"""
+        return self.manage_addProduct['Silva'].version
     
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'upgrade_silva')
