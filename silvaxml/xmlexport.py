@@ -113,11 +113,14 @@ class BaseXMLSource:
             self._startElement(reader, 'set', {'id': set_id})
             for key, value in binding._getData(set_id).items():
                 self._startElementNS(reader, namespace, key, {})
+                if key == 'comment' or key == 'description':
+                    print repr(key), repr(value)
                 if value:
                     if type(value) == type(DateTime()):
-                        reader.characters(str(value.HTML4()))
-                    else:
-                        reader.characters(unicode(str(value)))
+                        value = value.HTML4()
+                    elif type(value) == type(''):
+                        value = unicode(value, 'utf-8')
+                    reader.characters(value)
                 self._endElementNS(reader, namespace, key)
             self._endElement(reader, 'set')
         self._endElement(reader, 'metadata')
