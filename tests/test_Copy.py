@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.16.2.1 $
 import unittest
 import Zope
 from Products.Silva import Document, Folder, Ghost
@@ -84,7 +84,6 @@ class CopyTestCase(unittest.TestCase):
             # of the test containers
             hack_create_user(self.root)
             self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
-
             # dummy manage_main so that copy succeeds
             self.sroot.manage_main = lambda *foo, **bar: None
             self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
@@ -102,6 +101,7 @@ class CopyTestCase(unittest.TestCase):
                               'Folder', 'subfolder', 'Subfolder')
             self.subsubdoc = subsubdoc = add_helper(subfolder,
                               'Document', 'subsubdoc', 'Subsubdoc')
+            get_transaction().commit(1)
         except:
             self.tearDown()
             raise
@@ -177,6 +177,7 @@ class CopyTestCase(unittest.TestCase):
         self.sroot.action_copy(['folder4'], self.REQUEST)
         # into folder5
         self.sroot.folder5.action_paste(self.REQUEST)
+        get_transaction().commit(1)
         # the thing inside it should not be published
         self.assert_(not self.sroot.folder5.folder4.subdoc.is_version_published())
         # original *should* be published
@@ -193,7 +194,8 @@ class CopyTestCase(unittest.TestCase):
         self.sroot.folder4.action_copy(['ghost6'], self.REQUEST)
         self.sroot.folder5.action_paste(self.REQUEST)
         self.assertEquals('TestUser', self.sroot.folder5.ghost6.sec_get_last_author_info().fullname())
-        # move ghost to root and check author        
+        get_transaction().commit(1)
+        # move ghost to root and check author
         self.sroot.folder4.action_cut(['ghost6'], self.REQUEST)
         self.sroot.action_paste(self.REQUEST)
         self.assertEquals('TestUser', self.sroot.ghost6.sec_get_last_author_info().fullname())
