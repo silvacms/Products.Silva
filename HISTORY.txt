@@ -1,8 +1,15 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.33.2.2 $
+$Revision: 1.33.2.3 $
 
 Silva changes
+
+  0.9.0.2
+
+    Bugs Fixed
+
+      - When using LDAPUserManagement, a Attribute error on '_getOb'
+        occured when adding Silva Images and -Files.
 
   0.9.0.1
 
