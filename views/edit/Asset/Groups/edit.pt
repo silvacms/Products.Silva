@@ -1,0 +1,119 @@
+<div class="margins"
+  tal:define="
+    view here;
+    model request/model;">
+  <tal:block condition="view/has_access">
+    <tal:block condition="model/isValid | nothing">
+      <h3>
+        <a href="tab_access"
+          title="Up to top of Access tab"
+          tal:attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()">
+          <img alt="Up to top of Access tab"
+            border="0"
+            height="16"
+            width="16"
+            tal:attributes="src string:${view/silva_root}/globals/left.gif" />
+          Back
+        </a>
+      </h3>
+      <h2>
+        <span tal:replace="model/meta_type">
+          Meta type
+        </span>
+        for
+        <span class="document-title"
+          tal:content="
+            structure string:&#xab;${model/get_title_or_id_html}&#xbb;">
+          title
+        </span>
+      </h2>
+
+      <h3>
+        Group members
+      </h3>
+      <!-- Defined groups listing -->
+      <metal:block use-macro="view/macro_groups_listing/macros/listing">
+        <metal:block fill-slot="listing_actions">
+          <input class="button"
+            name="add_users_from_group_to_group:method"
+            title="Copy members as defined on selected group(s)."
+            type="submit"
+            value="Copy users from group(s)" />
+        </metal:block>
+      </metal:block>
+
+      <!-- Clipboard -->        
+      <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
+        <metal:block fill-slot="clipboard_actions">
+          <input class="button"
+            name="add_users_to_group:method"
+            title="Add selected user(s) to this group."
+            type="submit"
+            value="Add to group" />
+        </metal:block>
+      </metal:block>
+
+      <!-- Group listing table -->
+      <form action="."
+        method="POST">
+        <table class="borders top bottom left right"
+          border="0"
+          cellpadding="5"
+          cellspacing="0"
+          style="empty-cells:show;"
+          tal:define="userids model/listUsers">
+          <tr align="left"
+            valign="top">
+            <th>
+              <b>
+                Username
+              </b>
+            </th>
+          </tr>
+          <tal:block repeat="userid userids">
+            <tr valign="top"
+              tal:define="
+                oddrow repeat/userid/odd;
+                member python:model.sec_get_member(userid)"
+              tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+              <td align="left">
+                <input name="userids:list"
+                  type="checkbox"
+                  value="userid"
+                  tal:attributes="value userid" />
+                &nbsp;
+                <b tal:content="member/fullname">
+                  username
+                </b>
+              </td>
+            </tr>
+          </tal:block>
+          <tr class="focus"
+            tal:condition="not:userids">
+            <td>
+              <i>
+                Group does not have any members
+              </i>
+            </td>
+          </tr>
+          <tr class="controls-cycle"
+            valign="top">
+            <td align="left">
+              <input class="warningbutton"
+                name="remove_users_from_group:method"
+                title="Remove selected user(s) from this group."
+                type="submit"
+                value="Remove users"
+                onClick="return confirm('Really remove?')"/>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </tal:block>
+
+    <tal:block condition="not:model/isValid | nothing">
+      "Things to do when groups is not in it original location"
+    </tal:block>
+  </tal:block>
+</div>
+
