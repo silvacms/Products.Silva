@@ -6,13 +6,13 @@ Meta::
   Valid for:  Silva 0.8.3
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.11 $
+  CVS:        $Revision: 1.12 $
 
 Installing Silva
 
   NOTE: If you are upgrading to Silva 0.8.3 from Silva 0.8, please
   consult
-  "UPGRADE.txt":http://www.zope.org/Members/faassen/Silva/UPGRADE
+  "UPGRADE.txt":http://www.zope.org/Members/faassen/Silva/UPGRADE.txt
   instead for instructions.
 
   Silva depends on a set of file-system Python products for Zope for
