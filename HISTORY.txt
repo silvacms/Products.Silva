@@ -1,30 +1,34 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.37 $
+$Revision: 1.38 $
 
 Silva changes
 
-  x.x
+  0.9.1
 
     Features Added
 
         - Soft breaks in paragraphs (single enter).
 
+        - Small API on Silva Root (add_silva_addable_forbidden() and
+          clear_silva_addables_forbidden()) for absolutely forbidding
+          visibility of certain meta_types in SMI. See also IRoot.py.
+ 
     Bugs Fixed
 
         - Fix where the "/manage" display link in the SMI tabs didn't
-        didn't regard the local roles on the current object.
+          didn't regard the local roles on the current object.
 
         - Asset reference fix where it didn;t work in virtual host
-        setups.
+          setups.
 
 	- Fix some unicode issue related to tables (issue184)
 
 	- Silva does no longer display non-installed content types
-	  in list of addables (issue159)
+	  in list of addables (issue159).
 
 	- Modification time of assets should now be updated properly
-	  (issue147)
+	  (issue147).
 	  
   0.9
 
