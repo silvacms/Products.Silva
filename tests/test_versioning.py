@@ -1,5 +1,6 @@
 import unittest
-import Zope
+import ZODB
+import OFS.Application
 from DateTime import DateTime
 from Products.XA import Versioning
 
@@ -95,7 +96,7 @@ class VersioningTestCase(unittest.TestCase):
         # unapprove it
         versioning.unapprove_version()
         # change the time to something in the past, so it'll be published
-        versioning.set_version_publication_datetime(DateTime() - 0.1)
+        versioning.set_unapproved_version_datetime(DateTime() - 0.1)
         # approve it
         versioning.approve_version()
         self.assertEqual(versioning.get_public_version(), 'foo')
@@ -122,7 +123,7 @@ class VersioningTestCase(unittest.TestCase):
         # unapprove it again
         versioning.unapprove_version()
         # change datetime
-        versioning.set_version_publication_datetime(DateTime() - 1)
+        versioning.set_unapproved_version_publication_datetime(DateTime() - 1)
         # now approve it
         versioning.approve_version()
         # it should be public now
