@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.56 $
+# $Revision: 1.57 $
 
 # Python
 from StringIO import StringIO
@@ -227,8 +227,8 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             content, "silva-extra", "renderer_name")
 
         if not renderer_name or renderer_name == "(Default)":
-            renderer_name = self.service_renderer_registry.getDefaultRendererName()
-
+            renderer_name = self.service_renderer_registry.getDefaultRendererNameForMetaType(content.meta_type)
+            
         if renderer_name and renderer_name != "Basic HTML":
             renderer = self.service_renderer_registry.getRendererByName(
                 renderer_name, 'Silva Document Version')
