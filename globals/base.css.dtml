@@ -1,5 +1,5 @@
 <dtml-let last_modified="_.DateTime()-14"
-          expires="_.DateTime()+7" >
+      expires="_.DateTime()+7" >
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
@@ -180,6 +180,14 @@ td.hilight {
   color : #d0d4d8; 
   background : transparent;
 }
+
+.tablehead4 {
+  font-size : 12px;
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #e0e4e8; 
+  background : transparent;
+} 
 
 .column-heading, .column-spanheading {
   font-weight : bold; 
