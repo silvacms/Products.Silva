@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.8 2003/06/10 14:40:34 jw Exp $    
+$Id: Metadata.py,v 1.9 2003/06/11 09:24:50 guido Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
@@ -48,7 +48,10 @@ def import_metadata_handler(container, content, node):
     return None
 
 def ghost_access_handler(tool, content_type, content):
-    target_content = content._get_content().get_viewable()
+    target_content = content._get_content()
+    if target_content is None:
+        return
+    target_content = target_content.get_viewable()
     if target_content is None:
         return None
 
