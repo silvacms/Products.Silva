@@ -28,7 +28,7 @@
               img_height python: model.getDimensions()[1];
               "
             tal:on-error="string: unknown"
-            tal:replace="string:${img_width}x${img_height}"
+            tal:replace="string:${img_width}x${img_height} pixels"
           />
         </p> 
         <p tal:condition="model/hires_image">
@@ -43,12 +43,12 @@
         ">
           <span class="subhead">dimensions</span><br />
           <span tal:on-error="string: unknown"
-            tal:replace="string:${image_width}x${image_height}"
+            tal:replace="string:${image_width}x${image_height} pixels"
             /><tal:condition condition="python:
               image_width != scale_width and
-              image_height != scale_height">, scaled to 
+              image_height != scale_height">,<br />scaled to 
             <span tal:on-error="string: unknown"
-              tal:replace="string:${scale_width}x${scale_height}"
+              tal:replace="string:${scale_width}x${scale_height} pixels"
               /></tal:condition>
         </p>
         <p>

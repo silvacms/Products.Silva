@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.9 2003/08/28 09:45:21 jw Exp $
+# $Id: mangle.py,v 1.10 2003/08/28 10:31:32 jw Exp $
 
 # Python
 import string
@@ -376,10 +376,10 @@ class _Bytes:
 
     __allow_access_to_unprotected_subobjects__ = 1
 
-    _magnitudes = ['', 'K', 'M', 'G', 'T']
+    _magnitudes = ['', 'KB', 'MB', 'GB', 'TB']
     _magnitudes.reverse()
 
-    _threshold = 500
+    _threshold = 512
 
     def __call__(self, nrOfBytes):
         size = float(nrOfBytes)
