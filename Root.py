@@ -1,6 +1,8 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78.4.1.24.1 $
+# $Revision: 1.78.4.1.24.2 $
+
+import os
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -245,6 +247,18 @@ InitializeClass(Root)
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
                                       __name__='manage_addRootForm')
 
+def recursive_publish(obj):
+    for child in obj.objectValues():
+        if IVersionedContent.isImplementedBy(child):
+            child.set_unapproved_version_publication_datetime(DateTime())
+            child.approve_version()
+        elif IContainer.isImplementedBy(child):
+            recursive_publish(child)
+
+def installRootDocumentation(root):
+    root.aq_inner._importObjectFromFile('%s/www/silva_docs.zexp' % os.path.dirname(__file__))
+    recursive_publish(root.silva_docs)
+
 def manage_addRoot(self, id, title, REQUEST=None):
     """Add a Silva root."""
     # no id check possible or necessary, as this only happens rarely and the
@@ -262,6 +276,9 @@ def manage_addRoot(self, id, title, REQUEST=None):
     # now set it all up
     install.installFromScratch(object)
     object.set_title(title)
+
+    if REQUEST.has_key('add_docs') and REQUEST['add_docs']:
+        installRootDocumentation(object)
 
     add_and_edit(self, id, REQUEST)
     return ''

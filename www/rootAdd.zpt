@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.3.112.1 $
+Version of this file: $Revision: 1.3.112.2 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -35,6 +35,18 @@ Add a Silva Root.
     <input type="text" name="title" size="40" />
     </td>
   </tr>
+
+  <tr>
+    <td align="left" valign="top">
+    <div class="form-label">
+    Add Silva documentation as initial content
+    </div>
+    </td>
+    <td align="left" valign="top">
+    <input type="checkbox" name="add_docs" />
+    </td>
+  </tr>
+
   <tr>
     <td align="left" valign="top">
     </td>

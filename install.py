@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.13 2004/05/24 09:57:18 gst Exp $
+# $Id: install.py,v 1.97.4.9.4.14 2004/05/25 17:12:58 guido Exp $
 """Install for Silva Core
 """
 # Python
@@ -622,7 +622,7 @@ def installSilvaDocument(root):
     doc = root.index
     doc.sec_update_last_author_info()
     version = doc.get_editable()
-    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p></doc>')
+    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p><toc depth="1" /></doc>')
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
 
