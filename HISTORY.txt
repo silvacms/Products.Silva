@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.11 $
+$Revision: 1.47.2.12 $
 
 Silva changes
 
@@ -48,6 +48,9 @@ Silva changes
           some cases when using the SMI. Zope 2.6.1 appears to fix this
           memory leak. Note though that while Zope 2.6.1 appears to work 
           with Silva, we haven't done extensive testing...
+
+        - Fixed bug which cause the upgrade of all content to crash on
+          CatalogedVersionedContent objects (e.g. SilvaNews NewsItems)
 
   0.9.1 beta
 
