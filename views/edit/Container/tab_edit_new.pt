@@ -55,7 +55,7 @@
       <td class="top">
         <h2>
           <img tal:replace="structure python:view.render_icon(model)" />
-            &#xab;<tal:block content="model/get_title_editable" />&#xbb;
+            &#xab;<tal:block content="title" />&#xbb;
         </h2>
       </td>
     </tr>
