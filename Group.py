@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -75,22 +75,24 @@ InitializeClass(Group)
 
 manage_addGroupForm = PageTemplateFile("www/groupAdd", globals(),
                                        __name__='manage_addGroupForm')
-def manage_addGroup(self, id, title, group_name, REQUEST=None):
+def manage_addGroup(self, id, title, group_name, asset_only=0, REQUEST=None):
     """Add a Group."""
-    if not self.is_id_valid(id):
-        return
-    # these checks should also be repeated in the UI
-    if not hasattr(self, 'service_groups'):
-        raise AttributeError, "There is no service_groups"
-    if self.service_groups.isGroup(group_name):
-        raise ValueError, "There is already a group of that name."
+    if not asset_only:
+        if not self.is_id_valid(id):
+            return
+        # these checks should also be repeated in the UI
+        if not hasattr(self, 'service_groups'):
+            raise AttributeError, "There is no service_groups"
+        if self.service_groups.isGroup(group_name):
+            raise ValueError, "There is already a group of that name."
     object = Group(id, title, group_name)
     self._setObject(id, object)
     object = getattr(self, id)
     # set the valid_path, this cannot be done in the constructor because the context
     # is not known as the object is not inserted into the container.
     object.valid_path = object.getPhysicalPath()
-    self.service_groups.addNormalGroup(group_name)
+    if not asset_only:
+        self.service_groups.addNormalGroup(group_name)
     add_and_edit(self, id, REQUEST)
     return ''
 

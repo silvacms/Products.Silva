@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1 $
+Version of this file: $Revision: 1.2 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -44,6 +44,19 @@ Add Silva Group.
     <input type="text" name="group_name" size="40" />
     </td>
   </tr>
+  <tr>
+    <td align="left" valign="top">
+    <div class="form-label">
+    Only create asset:<br>(no further action is taken)
+    </div>
+    </td>
+    <td align="left" valign="top">
+    <input type="hidden" name="asset_only:int:default" value="0" />
+    <input type="checkbox" name="asset_only:int" value="1" />
+    </td>
+  </tr>
+
+  
   <tr>
     <td align="left" valign="top">
     </td>
