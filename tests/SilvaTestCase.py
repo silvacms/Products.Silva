@@ -34,11 +34,11 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     _configure_root = 1
 
     def getRoot(self):
-        '''Returns the silva root object, i.e. the "fixture root". 
+        """Returns the silva root object, i.e. the "fixture root". 
            Override if you don't like the default.
-        '''
+        """
         return self.app.root
-        
+
     def afterSetUp(self):
         '''Called after setUp() has completed. This is
            far and away the most useful hook.
@@ -81,6 +81,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         self.beforeSetUp()
         self.app = self._app()
         self.silva = self.root = self.getRoot()
+        self.catalog = self.silva.service_catalog
         if self._configure_root:
             self._setupRootUser()
             self.login()
@@ -183,7 +184,8 @@ def setupSilvaRoot(app, id='root', quiet=0):
     '''Creates a Silva root.'''
     if not hasattr(aq_base(app), id):
         _start = time.time()
-        if not quiet: ZopeTestCase._print('Adding Silva Root... ')
+        if not quiet:
+            ZopeTestCase._print('Adding Silva Root... ')
         uf = app.acl_users
         uf._doAddUser('SilvaTestCase', '', ['Manager'], [])
         user = uf.getUserById('SilvaTestCase').__of__(uf)
@@ -194,7 +196,8 @@ def setupSilvaRoot(app, id='root', quiet=0):
         factory.constructTemporaryFolder('temp_folder', '')
         noSecurityManager()
         get_transaction().commit()
-        if not quiet: ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
+        if not quiet:
+            ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
 
 
 
