@@ -3,7 +3,7 @@
                    global view here;
                    global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
                    global lastclass string:focus-cycle;
-                   global silva_permissions here/get_silva_permissions;
+                   global silva_permissions view/get_silva_permissions;
                    " />
 <html metal:use-macro="here/macro_index/macros/master">
 

@@ -16,7 +16,9 @@ changed_metadata = []
 try:
     result = form.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return context.tab_metadata(message_type="error", message='Input form errors %s' % context.render_form_errors(e))
+    return context.tab_metadata(
+        message_type="error", 
+        message='Input form errors %s' % context.render_form_errors(e))
 
 for id, value in result.items():
     if value:
@@ -41,4 +43,6 @@ for id, value in result.items():
             model.manage_delProperties([id])
             changed_metadata.append((id, 'removed'))    
 
-return context.tab_metadata(message_type="feedback", message="Metadata changed for: %s"%(context.quotify_list_ext(changed_metadata)))
+return context.tab_metadata(
+    message_type="feedback", message="Metadata changed for: %s"%(
+        context.quotify_list_ext(changed_metadata)))
