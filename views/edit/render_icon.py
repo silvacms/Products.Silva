@@ -27,6 +27,8 @@ dict = { 'Silva Root' : 'silva.gif',
          'Silva News Article' : 'silvanewsitem.png',
          'Silva Course' : 'silvacourse.gif',
          'Silva Contact Info' : 'silvacontactinfo.gif',
+         'Silva Group' : 'silvagroup.png',
+         'Silva Virtual Group' :'silvavirtualgroup.png',
          }
 
 icon_name = dict.get(meta_type, 'silvageneric.gif')
