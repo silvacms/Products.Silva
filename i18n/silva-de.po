@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Tue Dec 21 14:47:09 2004\n"
-"PO-Revision-Date: 2004-12-21 15:15+0100\n"
+"PO-Revision-Date: 2004-12-21 16:11+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -5166,7 +5166,7 @@ msgstr "Suche in ${meta_type} &#xAB;${title_or_id}&#xbb;"
 
 #: /views/public/search.pt:52
 msgid "Search interface"
-msgstr ""
+msgstr "Suchschnittstelle"
 
 #: /views/public/search.pt:61
 msgid "Element"
