@@ -162,6 +162,10 @@ table.silvatable th.align-right, table.silvatable td.align-right {
   text-align: right;
 }
 
+table.datagrid, table.plain, table.list, table.grid {
+  width: 100%;
+}
+
 table.plain {
   border-style: none;
 } 

@@ -82,6 +82,10 @@ table.silvatable td {
   border-right: none ! important;
 } 
 
+table.plain, table.datagrid, table.list, table.grid {
+  width: 100%;
+}
+
 table.plain {
   border-style: none;
 } 
