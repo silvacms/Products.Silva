@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.108 2004/11/29 12:50:52 guido Exp $
+# $Id: SilvaObject.py,v 1.109 2004/12/08 18:06:49 jw Exp $
 
 # python
 from types import StringType
@@ -50,7 +50,7 @@ class SilvaObject(Security, ViewCode):
         SilvaPermissions.ReadSilvaContent, 'edit')
 
     # and public as well
-    public = ViewAttribute('public', 'render_view')
+    public = ViewAttribute('public', 'render')
 
     # whether the object should be shown in the addables-pulldown
     _is_allowed_in_publication = 1
