@@ -2,11 +2,14 @@
 from Products.SilvaMetadata.Exceptions import BindingError
 
 # Get the data for a particular element of a particular set for
-# the editable version of this object.
+# the most current version of this object.
+# This is normally the editable one; as Readers cann ot access it,
+# the previewable is used insetad, which usually the editable one
+# (except in cases where there is no editable yet).
 
 request = context.REQUEST
 model = request.model
-content = model.get_editable()
+content = model.get_previewable()
 
 if content is None:
     return None
