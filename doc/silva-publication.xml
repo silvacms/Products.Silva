@@ -5,7 +5,7 @@
    <index_type>KeywordIndex</index_type>
    <index_p>0</index_p>
    <field_type>ListField</field_type>
-   <acquire_p>1</acquire_p>
+   <acquire_p>0</acquire_p>
    <read_only_p>0</read_only_p>
    <read_guard>
      <roles></roles>
@@ -20,6 +20,7 @@
    <field_values>
        <value key="title" type="str" value="Default Document Policy" />
        <value key="size" type="int" value="1" />
+       <value key="required" type="int" value="0" />
    </field_values>
    <field_tales>
         <value key="items">python:form.get_root().service_containerpolicy.listPolicies()</value>
