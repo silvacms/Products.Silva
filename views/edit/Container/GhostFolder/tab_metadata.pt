@@ -17,6 +17,18 @@
 <metal:block fill-slot="main">
   <metal:block use-macro="view/Container/tab_metadata/macros/master">
     <metal:block fill-slot="top_controls">
+      <tal:block 
+        condition="here/service_subscriptions/subscriptionsEnabled | nothing">
+        <a class="transport"
+          style="float:right;"
+          title="manage subscriptions: alt-m"
+          accesskey="m"
+          tal:attributes="href string:${url}/edit/tab_subscriptions"
+          i18n:attributes="title;accesskey manage_subscriptions_accesskey"
+          i18n:translate=""
+          ><u>m</u>anage subscriptions...</a>
+      </tal:block>
+      
       <form method="POST" 
         name="conversion_form" 
         action="." 
