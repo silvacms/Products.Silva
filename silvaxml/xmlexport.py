@@ -358,13 +358,13 @@ class SilvaExportRootProducer(xmlexport.BaseProducer):
         self.endElement('silva')
         
 class ExportSettings(xmlexport.BaseSettings):
-    def __init__(self, asDocument=True, outputEncoding='utf-8', workflow=True, allVersions=True, withSubPublications=True, otherContent=True, renderExternal=False):
+    def __init__(self, asDocument=True, outputEncoding='utf-8', workflow=True, allVersions=True, withSubPublications=True, otherContent=True):
         xmlexport.BaseSettings.__init__(self, asDocument, outputEncoding)
         self._workflow = workflow
         self._all_versions = allVersions
         self._with_sub_publications = withSubPublications
         self._other_content = otherContent
-        self._render_external = renderExternal
+        self._render_external = False
         
     def setWithSubPublications(self, with_sub_publications):
         self._with_sub_publications = with_sub_publications
@@ -372,6 +372,9 @@ class ExportSettings(xmlexport.BaseSettings):
     def setLastVersion(self, last_version):
         self._all_versions = not last_version
 
+    def setExternalRendering(self, external_rendering):
+        self._render_external = external_rendering
+        
         #     def setFullMedia():
         #         self._fullmedia = 1
         

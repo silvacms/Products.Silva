@@ -9,6 +9,7 @@ class XMLSourceAdapter(adapter.Adapter):
 
     def getXML(self):
         settings = xmlexport.ExportSettings()
+        settings.setExternalRendering(True)
         exporter = xmlexport.theXMLExporter
         exportRoot = xmlexport.SilvaExportRoot(self.context)
         return exporter.exportToString(exportRoot, settings)
