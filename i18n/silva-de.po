@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-17 12:51+0100\n"
+"PO-Revision-Date: 2004-12-17 15:30+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -3210,15 +3210,15 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_withdraw.py:12
 msgid "Nothing was selected, so no approval was withdrawn."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde keine Bewilligung zurückgenommen."
 
 #: /views/edit/Container/tab_status_withdraw.py:43
 msgid "Withdrawn request for approval for: ${list}"
-msgstr ""
+msgstr "Bewilligung zurücknehmen für: ${list}"
 
 #: /views/edit/Container/tab_status_withdraw.py:48
 msgid "Not withdrawn: ${list}"
-msgstr ""
+msgstr "Nicht zurückgenommen: ${list}"
 
 #: /views/edit/Container/transform_folder_to_pub.py:12
 msgid "Not yet :)"
@@ -3226,19 +3226,19 @@ msgstr ""
 
 #: /views/edit/Content/AutoTOC/edit.pt:39
 msgid "automatic table of contents &#xab;${title_or_id}&#xbb;"
-msgstr ""
+msgstr "Automatisches Inhaltsverzeichnis &#xab;${title_or_id}&#xbb;"
 
 #: /views/edit/Content/AutoTOC/edit.pt:47
 msgid "An automatic table of contents is generated from the items in its location."
-msgstr ""
+msgstr "Ein Inhaltsverzeichnis wird automatisch aus den Einträgen hier erstellt."
 
 #: /views/edit/Content/Indexer/edit.pt:63
 msgid "preview screen"
-msgstr ""
+msgstr "Vorschau"
 
 #: /views/edit/Content/Indexer/edit.pt:63
 msgid "An index is not editable. To view the index go to the ${preview_screen}."
-msgstr ""
+msgstr "Ein Index kann nicht bearbeitet werden. Um den Index anzusehen, gehen Sie zu ${preview_screen}."
 
 #: /views/edit/Content/Indexer/edit.pt:64
 msgid "Note that <span class=\"warning\">the index only displays links to published content</span>, so the list may be empty if nothing is published."
@@ -3250,7 +3250,7 @@ msgstr ""
 
 #: /views/edit/Content/Indexer/edit.pt:75
 msgid "update index"
-msgstr ""
+msgstr "Index erneuern"
 
 # Default: "u"
 #: /views/edit/Content/Indexer/edit.pt:75
@@ -3259,7 +3259,7 @@ msgstr ""
 
 #: /views/edit/Content/Indexer/tab_edit_update_index.py:15
 msgid "Index updated"
-msgstr ""
+msgstr "Index erneuert"
 
 #: /views/edit/Content/SimpleContent/get_tabs.py:6
 #: /views/edit/hyperlink_lookup.pt:223
@@ -3271,7 +3271,7 @@ msgstr "Einstellungen"
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:19
 msgid "Both a name and e-mail address are required to approve someone."
-msgstr ""
+msgstr "Sowohl Name als auch Emailadresse sind für eine Zulassung notwendig."
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:19
 msgid "Sorry, content is missing:"
@@ -3279,7 +3279,7 @@ msgstr "Fehlender Inhalt:"
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:26
 msgid "Member is approved"
-msgstr ""
+msgstr "Mitglied ist zugelassen"
 
 #: /views/edit/Member/SimpleMember/memberform.form:69
 msgid "preferred editor"
@@ -3291,15 +3291,15 @@ msgstr ""
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:27
 msgid "fullname updated"
-msgstr ""
+msgstr "Vollständiger Name erneuert"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:31
 msgid "e-mail updated"
-msgstr ""
+msgstr "Emailadresse erneuert"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:36
 msgid "editor updated"
-msgstr ""
+msgstr "Editor erneuert"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:39
 msgid "Nothing changed."
@@ -3323,7 +3323,7 @@ msgstr ""
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:57
 msgid "member data of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Mitgliederdaten für &#xab;${title}&#xbb;"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:65
 msgid "characteristic"
@@ -3336,7 +3336,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Ghost/edit.pt:49
 msgid "ghost of &#xab;${name}&#xbb;"
-msgstr ""
+msgstr "Ghost von &#xab;${name}&#xbb;"
 
 # Default: "r"
 #: /views/edit/VersionedContent/Ghost/edit.pt:74
@@ -3349,7 +3349,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:51
 msgid "reference"
-msgstr ""
+msgstr "Verweis"
 
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:57
 msgid "path to original (begins with &#8216;/&#8217;)."
