@@ -63,33 +63,48 @@ def configureViews(root):
     registerViews(root.service_view_registry)
     # and set Silva tree XXX should be more polite to extension packages
     root.service_view_registry.set_trees(['Silva'])
-
-def configureLayout(root):
+    
+def configureLayout(root, default=0):
     """Install layout code into root.
+    If the default argument is true, ids will be prefixed with default_.
     """
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html']:
-        zpt_add_helper(root, id, globals())    
+        add_helper(root, id, globals(), zpt_add_helper, default)    
 
     for id in ['index_html.py', 'index_html_restricted.py', 'preview_html.py']:
-        py_add_helper(root, id, globals())
+        add_helper(root, id, globals(), py_add_helper, default)
+       
+    add_helper(root, 'frontend.css', globals(), dtml_add_helper, default)
 
-    dtml_add_helper(root, 'frontend.css', globals())
-    
 # helpers to add various objects to the root from the layout directory
 # these won't add FS objects but genuine ZMI managed code
-def zpt_add_helper(root, id, info):
-    root.manage_addProduct['PageTemplates'].manage_addPageTemplate(
-        id, text=read_file(id, info))
-
-def dtml_add_helper(root, id, info):
-    root.manage_addDTMLMethod(id, file=read_file(id, info))
-
-def py_add_helper(root, id, info):
+def add_helper(root, id, info, add_func, default=0):
     filename = id
+    if default:
+        id = 'default_' + id
+    text = read_file(filename, info)
+    add_func(root, id, text)
+
+def zpt_add_helper(root, id, text):
+    if hasattr(root.aq_base, id):
+        getattr(root, id).write(text)
+    else:
+        root.manage_addProduct['PageTemplates'].manage_addPageTemplate(
+            id, text=text)
+    
+def dtml_add_helper(root, id, text):
+    if hasattr(root.aq_base, id):
+        getattr(root, id).manage_edit(text, '')
+    else:
+        root.manage_addDTMLMethod(id, file=text)
+
+def py_add_helper(root, id, text):
     id = os.path.splitext(id)[0]
-    root.manage_addProduct['PythonScripts'].manage_addPythonScript(id)
-    obj = getattr(root, id)
-    obj.write(read_file(filename, info))
+    if hasattr(root.aq_base, id):
+        getattr(root, id).write(text)
+    else:
+        root.manage_addProduct['PythonScripts'].manage_addPythonScript(id)
+        getattr(root, id).write(text)
 
 def read_file(id, info):
     filename = os.path.join(package_home(info), 'layout', id)
