@@ -158,7 +158,7 @@
                         data python: element_name in truncatable and ct(data, 50) or data;
                         "
                       tal:condition="
-                        not: element/isAcquired"
+                        python: element['isEditable'] or not element['isAcquired']"
                       tal:content="
                         structure data">
                       Element edit widget
@@ -169,8 +169,11 @@
                   </tal:block>
                   <td>
                     <tal:block 
+                      define="
+                        data element/view;
+                        data python: element_name in truncatable and ct(data, 50) or data;"
                       condition="element/isAcquired"
-                      replace="structure element/view" />
+                      replace="structure data" />
                     <sup tal:condition="element/isAcquireable">
                       &#134;
                     </sup>
@@ -197,7 +200,7 @@
               <th class="align-right">
               </th>
               <th>
-                date format: year / month / day &nbsp;23:59
+                date format: day / month / year &nbsp;23:59 
               </th>
               <th>
                 &#134; acquireable
@@ -303,7 +306,6 @@
                 <td 
                   tal:define="
                     data python: element['view'];
-                    data python: element_name in truncatable and ct(data, 80) or data;
                     "
                   tal:content="
                     structure data">

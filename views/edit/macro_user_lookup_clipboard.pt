@@ -27,10 +27,10 @@
               <td>
                 <metal:block define-slot="clipboard_lookup_action">
                   <a class="transport" 
-                    style="float:right;"
-                    href="lookup"
+                    style="float:right;"                    
                     title="lookup users: alt-l" 
                     accesskey="l"
+                    tal:attributes="href string:${model/absolute_url}/edit/lookup"
                     i18n:translate="lookup_users"
                     i18n:attributes="title">
                     lookup users...

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.52 $
+# $Revision: 1.53 $
 
 # Python
 from StringIO import StringIO
@@ -39,6 +39,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
 
     # for backwards compatibilty - ugh.
     _cached_checked = {}
+    _cached_data = {}
 
     def __init__(self, id):
         """Initialize VersionedContent.
@@ -65,16 +66,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             container = self.get_container()
             container._invalidate_sidebar(container)
     
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'cleanPublicRenderingCache')
-    def cleanPublicRenderingCache(self):
-        """Cleans all current caching data from the cache.
-        Currently this is only necessary for an upgrade of old content object
-        which do not have cache yet.
-        """
-        self._cached_data = {}
-        self._cached_checked = {}
-
     # ACCESSORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'can_set_title')    
@@ -256,12 +247,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     def _get_cached_data(self, cache_key):
         cached_data = self._cached_data.get(cache_key, None)
         if cached_data is not None:
-            # XXX: This can be removed if the caches are cleared after an
-            # upgrade.
-            if not isinstance(cached_data, CachedData):
-                del self._cached_data[cache_key]
-                self._p_changed = 1
-                return None
             # If cache is still valid, serve it.
             # XXX: get_public_version_publication_datetime *and*
             # is_version_published trigger workflow updates; necessary?
@@ -270,9 +255,13 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             if datetime > publicationtime:
                 refreshtime = self.service_extensions.get_refresh_datetime()
                 if (datetime > refreshtime and self.is_version_published()):
-                    # Yes! We have valid cached data! Return data                    
+                    # Yes! We have valid cached data! Return data
                     return data
         return None
+
+    def _clean_cache(self):
+        self._cached_data = {}
+        self._cached_checked = {}
     
     security.declareProtected(SilvaPermissions.View, 'is_cached')
     def is_cached(self, view_type='public'):

@@ -145,8 +145,10 @@
           />
         </td>
         <td>
-          Can be: IP, IP-IP, IP/Netmask (10.1.1.1, 10.1.1.1-10.1.1.255, 
-          10.1.1.0/24, 10.1.1.0/255.255.255.0)
+          <b>Can be:</b><br />
+          IP&nbsp;(like: 10.1.1.1), <br />
+          IP-IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br />
+          IP/Netmask&nbsp;(like:&nbsp;10.1.1.0/255.255.255.0).
         </td>
       </tr>
     </tbody>

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -8,52 +8,24 @@ if __name__ == '__main__':
 from Testing import ZopeTestCase
 import SilvaTestCase
 
-
 from DateTime import DateTime
-from Testing import makerequest
-# access "internal" class to fake request authentification
-from AccessControl.User import SimpleUser
-from Products.SilvaDocument.Document import Document, DocumentVersion
-
-# awful HACK (unused yet)
-def _getCopy(self, container):
-    """A hack to make copy & paste work (used by create_copy())
-    """
-    return DocumentVersion(self.id, self.get_title())
-    
-def _verifyObjectPaste(self, ob):
-    return
 
 class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
     """Test the SilvaObject interface.
     """
     def afterSetUp(self):
 
-
-        #DocumentVersion._getCopy = _getCopy
-        Document._verifyObjectPaste = _verifyObjectPaste
-
-        add = self.root.manage_addProduct['Silva']
-        add.manage_addFolder('folder',
-                             'Folder')
-        add.manage_addPublication('publication',
-                                  'Publication')
-        add = self.root.manage_addProduct['SilvaDocument']
-	add.manage_addDocument('document2',
-                               '')
-        add.manage_addDocument('document',
-                               'Document')
-        self.document = self.root.document
-        self.document2 = self.root.document2
-        self.folder = self.root.folder
-        self.publication = self.root.publication
+        self.folder = self.add_folder(self.root, 'folder','Folder',
+                                      policy_name='Silva Document')
+        self.publication = self.add_publication(self.root,
+                                                'publication','Publication')
+        self.document = self.add_document(self.root, 'document','Document')
+        self.document2 = self.add_document(self.root, 'document2','')
+        
         # add some stuff to test breadcrumbs
-        self.folder.manage_addProduct['Silva'].manage_addFolder(
-            'subfolder', 'Subfolder')
-        self.subfolder = self.folder.subfolder
-        self.subfolder.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'subsubdoc', 'Subsubdoc')
-        self.subsubdoc = self.subfolder.subsubdoc
+        self.subfolder = self.add_folder(self.folder, 'subfolder', 'Subfolder')
+        self.subsubdoc = self.add_document(self.subfolder,
+                                           'subsubdoc', 'Subsubdoc')
 
 
 ##     def test_set_title(self):
@@ -66,7 +38,7 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
 ##         self.assertEquals(self.root.get_title_editable(), 'Root2')
 ##         self.publication.set_title('Publication2')
 ##         self.assertEquals(self.publication.get_title_editable(), 'Publication2')
-
+##         
 ##         self.folder.index.set_title('Set by default')
 ##         self.assertEquals(self.folder.index.get_title(),
 ##                           'Set by default')
@@ -87,8 +59,7 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
 
 
     def test_title_on_version(self):
-        self.folder.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'adoc', 'document')
+        self.add_document(self.folder, 'adoc', 'document')
 	self.folder.adoc.set_unapproved_version_publication_datetime(
             DateTime() - 1)
         self.folder.adoc.approve_version()

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.98 2003/12/15 09:50:39 gotcha Exp $
+# $Id: install.py,v 1.99 2004/01/13 16:05:39 clemens Exp $
 """Install for Silva Core
 """
 # Python
@@ -299,7 +299,6 @@ def configureSecurity(root):
     
     add_permissions = [
         'Add Documents, Images, and Files',
-        'Add Silva Documents',
         'Add Silva Folders',
         'Add Silva Ghost Versions',
         'Add Silva Ghosts',
@@ -369,13 +368,17 @@ def configureLayout(root, default_if_existent=0):
     If the default_if_existent argument is true, ids will be prefixed with 
     default_ if the id already exists in the root.
     """
-    for id in ['rename-to-override.html',
+    for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
                'standard_error_message', 'standard_unauthorized_message',]:
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
     for id in ['index_html.py', 'preview_html.py',
                'get_metadata_element.py', 'get_layout_macro.py', ]:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
+        
+    add_helper(root, 'frontend.css', globals(), dtml_add_helper,
+               default_if_existent)
+
 
 def configureMembership(root):
     """Install membership code into root.

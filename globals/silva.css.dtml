@@ -7,11 +7,11 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )">
 
 /*
-**  Silva style sheet classes
+**  Silva version 0.9.3.0
 **
-**  The view crew at Infrae - all seasons of 2003
-**  Thanks to Alexander Limi (limi@plone.org) - October 2002
-**  In turn, thanks to Geir Bækholt, Stian Søiland for input and guidance.
+**  The view crew at Infrae - all seasons of 2003, 2004
+**    Thanks to Alexander Limi (limi@plone.org) - October 2002
+**      In turn, thanks to Geir Bækholt, Stian Søiland for input and guidance.
 **
 */
 
@@ -244,6 +244,7 @@ div.flowBar {
 /* ___________________________________________________________ footer _____ */
 
 div.footer {
+  clear: both;
   font-size: 94%;
   color: &dtml-shade30;;
   background: &dtml-listingTopBackground;;
@@ -265,6 +266,7 @@ div.footer a {
 /* _____________________________________________________ personal bar _____ */
 
 div.personalBar {
+  clear: both;
   text-align: center;
   background: #505e65;
   margin: 0em 0em 0em 0em;
@@ -637,6 +639,10 @@ textarea {
 
 textarea.readable {
   font: 100% Verdana, Helvetica, Arial, sans-serif;
+}
+
+optgroup {
+  font-size: 100%;
 }
 
 select {

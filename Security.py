@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74 $
+# $Revision: 1.75 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -94,7 +94,7 @@ class Security(AccessManager):
         """
         if self.sec_is_locked():
             return 0
-        username = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        username = getSecurityManager().getUser().getUserName()
         dt = DateTime()
         self._lock_info = username, dt
         return 1
@@ -118,7 +118,7 @@ class Security(AccessManager):
         current_dt = DateTime()
         if current_dt - dt >= LOCK_DURATION:
             return 0
-        current_username = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        current_username = getSecurityManager().getUser().getUserName()
         return username != current_username
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -126,7 +126,7 @@ class Security(AccessManager):
     def sec_have_management_rights(self):
         """Check whether we have management rights here.
         """
-        return self.REQUEST.AUTHENTICATED_USER.has_role(['Manager'], self)
+        return getSecurityManager().getUser().has_role(['Manager'], self)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_get_user_ids')
@@ -234,27 +234,18 @@ class Security(AccessManager):
         # containers have no author
         if IContainer.isImplementedBy(self):
             return noneMember.__of__(self)
+        
+        # get cached author info (may be None)
         version = self.get_previewable()
         if version is None:
-            # version can be None if this method is called from manage_afterAdd
             return noneMember.__of__(self)
-        binding = self.service_metadata.getMetadata(version)
-        if binding is None:
-            return noneMember.__of__(self)
-        userid = binding.get('silva-extra', element_id='lastauthor',
-                             no_defaults=1)
-        # XXX: the userid comes back as unicode which zope doesn't
-        # like as id. Just using str might not be a good idea, but
-        # weird characters are not allowed in userids anyway, so that
-        # would be an error anyway.
-        userid = str(userid)
-        # get cached author info (may be None)
-        info = self.sec_get_member(userid).aq_base
+        
+        info = getattr(version, '_last_author_info', None)
         if info is None:
             return noneMember.__of__(self)
         else:
             return info.__of__(self)
-
+            
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_update_last_author_info')
     def sec_update_last_author_info(self):
@@ -262,21 +253,25 @@ class Security(AccessManager):
         """
         from AccessControl import getSecurityManager
         security = getSecurityManager()
-        username = security.getUser().getUserName()
-        userid = self._last_author_userid = username
-        version = self.get_previewable()
-        assert version is not None
-        try:
-            binding = self.service_metadata.getMetadata(version)
-        except BindingError:
-            binding = None
-        if binding is None:
-            return
-        binding.setValues(
-            'silva-extra', {
-                'lastauthor': userid,
-                'modificationtime': DateTime(),
-            })
+        version = self.get_editable()
+        if version is not None:
+            userid = security.getUser().getUserName()
+            version._last_author_userid = userid
+            version._last_author_info = self.sec_get_member(userid).aq_base
+            # XXX perfomance issue?
+            try:
+                binding = self.service_metadata.getMetadata(version)
+            except BindingError:
+                return
+            if binding is None:
+                return
+            now = DateTime()
+            binding.setValues('silva-extra', {'modificationtime': now})        
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'sec_get_creator_info')
+    def sec_get_creator_info(self):
+        return self.sec_get_member(self.getOwner().getUserName())
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_userids')

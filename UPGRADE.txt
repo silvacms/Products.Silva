@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36 $
+  CVS:        $Revision: 1.37 $
 
 Upgrading from 0.9.1 and below
 
@@ -32,10 +32,10 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
     In order to upgrade to 0.9.3 you need a new versions of Silva,
     Formulator, XMLWidgets. In addition to this you now need
-    ProxyIndex, Annotations and SilvaMetadata too. The Groups product
-    has also been updated.
+    ProxyIndex, Annotations, SilvaViews and SilvaMetadata too. The
+    Groups product has also been updated.
 
-    Silva Documents are now in a seperate package called
+    Silva Documents are now in a separate package called
     SilvaDocument. This you need to have this Product too.
 
     Silva:
@@ -44,28 +44,36 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
     SilvaDocument:
     
-        "SilvaDocument-0.XXX.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.XXX.tgz
+        "SilvaDocument-0.9.3.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3.tgz
 
     Formulator:
 
-        "Formulator-1.XXX.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.XXX.tgz
+        "Formulator-1.6.1.tgz":http://www.zope.org/Members/infrae/Formulator/Formulator-1.6.1.tgz
 
     XMLWidgets:
 
-        "XMLWidgets-0.XXX.tar.gz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.XXX.tgz
+        "XMLWidgets-0.10.3.tar.gz":http://www.zope.org/Members/infrae/XMLWidgets/XMLWidgets-0.10.3.tgz
 
     ProxyIndex:
 
-        "ProxyIndex-1.XXX.tgz":http://www.zope.org/Members/infrae/Silva/ProxyIndex-1.XXX.tgz
+        "ProxyIndex-1.1.2.tgz":http://www.zope.org/Members/infrae/Silva/ProxyIndex-1.1.2.tgz
 
     Annotations:
 
-        "Annotations-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/Annotations-0.XXX.tgz
+        "Annotations-0.4.3.tgz":http://www.zope.org/Members/infrae/Silva/Annotations-0.4.3.tgz
 
     SilvaMetadata:
 
-        "SilvaMetadata-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.XXX.tgz
+        "SilvaMetadata-0.7.5.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.7.5.tgz
+
+    SilvaViews:
+
+        "SilvaViews-0.9.tgz":http://www.zope.org/Members/infrae/Silva/SilvaViews-0.9.tgz
     
+    Alternatively You can get a bundle of all required products at:
+ 
+         "Silva-0.9.3-all.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3-all.tgz
+
 
   Refreshing and upgrading the Silva product
 
@@ -77,11 +85,57 @@ Upgrading Silva 0.9.2.x to 0.9.3
     upgrade the Silva content that needs upgrading. Note that this
     will take a while if your site is large.
 
+    As this process recreates a few internal services, namely the
+    one registering the views for the Silva content objects, you
+    need to refresh all products via the 'refresh all' button in the
+    'service_extensions' in the next step. Additionally you should
+    install the 'SilvaDocument' extension.
+
     In Silva 0.9.3, several reserved ids are added. When the upgrade
     script encounters an object with a reserved id, the object is
     renamed. The renaming is logged to Zope's event log on the file system.
     You need to manually fix all links and references to those object,
-    since the upgrade script doesn't upgrade those!
+    since the upgrade script doesn't upgrade those! The reserved ids are
+    the following:
+
+        Members,
+        REQUEST,
+        acl_users,
+        cached,
+        cancel,
+        code_source,
+        content,
+        content.html,
+        delete,
+        edit,
+        elements,
+        form,
+        fulltext,
+        getBatch,
+        getDocmaFormatName,
+        globals,
+        index_html,
+        insert,
+        layout_macro.html,
+        logout,
+        lookup,
+        memberform,
+        override.html,
+        placeholder,
+        preview_html,
+        promptWindow,
+        quotify,
+        redirect,
+        render,
+        save,
+        search,
+        standard_error_message,
+        standard_unauthorized_message,
+        submit,
+        up
+
+    Also it's not allowed to have an id starting with 'aq', 'get', 'manage',
+    'service' and 'set'.
    
     If you were using the `access restriction by ip address' feature of
     Silva 0.9.2 you need to install Groups before upgrading. During upgrade
@@ -95,11 +149,32 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
         If specific IP addresses are given in the AR an IP Group is created.
         All IPs given are added to the newly created IP Group and the 
-        ``Viewer''  role is assinged to that group.
+        ``Viewer''  role is assigned to that group.
     
     Please note that this conversion *is* a change in semantics, so double
     check your security declarations.
   
+    As some API changes are introduced you maybe need to fix your
+    layout templates and scripts in the Silva root. In case You are
+    using the default layout, you should delete the following files
+    in the Silva root:
+
+       frontend.css
+       get_metadata_element
+       index_html
+       layout_macro.html
+       standard_error_message
+       standard_unauthorized_message
+
+    and then install updated versions via the 'install default layout'
+    button for the 'Silva' product in the 'service_extensions'
+
+    In case You have custom versions of theses object installed,
+    please compare the versions delivered with the old and new
+    Silva version (you can find both in the 'layout' directory
+    of the product on the file system), and update your custom
+    versions accordingly.
+
     You should be done upgrading now.
  
   Page templates for presentation of public views

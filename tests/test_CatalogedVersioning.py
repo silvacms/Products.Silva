@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 import os, sys, time
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -18,13 +18,9 @@ from Products.Silva.Root import Root
 
 from Products.SilvaDocument.Document import Document, DocumentVersion
 
-# XXX ugh would really like to avoid this..
-Document.cb_isMoveable = lambda self: 1
-
 class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
-        self.root.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'test', 'Test')
+        self.add_document(self.root, 'test','Test')
         self.service_catalog = self.root.service_catalog
         self.test = self.root.test
     

@@ -21,11 +21,11 @@
 <tal:condition condition="notice">
   <div class="feedback"
     style="margin-bottom:0;"
-    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'">
+    tal:attributes="class python: message_type == 'feedback' and 'feedback' or 'alert'">
     <span tal:replace="structure notice">
       message
     </span>
-    <tal:block tal:condition="python:type == 'feedback'">
+    <tal:block tal:condition="python: message_type == 'feedback'">
       &nbsp;&nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
     </tal:block>
   </div>
@@ -47,7 +47,7 @@
           colspan="2">
           <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure python:view.render_icon(model)" />
-            <span i18n:translate="member-data-of-$var1">member data of &#xab;<span tal:replace="title">title</span>&#xbb;</span>
+            <span i18n:translate="member-data-of-$var1">member data of &#xab;<span tal:replace="model/fullname">title</span>&#xbb;</span>
           </h2>
         </td>
       </tr>
@@ -106,7 +106,7 @@
             style="float:left;"
             type="button"
             name="edit_cancel"
-            value="cancel"
+            value="close"
             title="close window: alt-c"
             accesskey="c"
             i18n:attributes="title value"

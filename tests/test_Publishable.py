@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -13,15 +13,12 @@ from Products.Silva.Versioning import VersioningError
 
 class PublishableTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
-        self.root.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'document', 'Document')
-        self.root.manage_addProduct['Silva'].manage_addFolder(
-            'folder', 'Folder', policy_name='Silva Document')
-        self.document = self.root.document
-        self.folder = self.root.folder
-        self.folder.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'subdoc', 'Document')
-        self.subdoc = self.folder.subdoc
+        self.document = self.add_document(self.root, 'document', 'Document')
+        self.folder = self.add_folder(self.root, 'folder', 'Folder',
+                                      policy_name='Silva Document')
+        self.subdoc = self.add_document(self.folder, 'subdoc', 'Document')
+
+    # FIXME: the activation/deactivation is deprecated
 
     def test_activation_unpublished(self):
         # we can deactivate/activate something that is unpublished
@@ -74,12 +71,8 @@ class PublishableTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_activation_approved2(self):
         # if we deactivate a folder unapprove everything inside
-        self.folder.manage_addProduct['Silva'].manage_addFolder(
-            'subfolder', 'Subfolder')
-        subfolder = self.folder.subfolder
-        subfolder.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'subsubdoc', 'Subsubdoc')
-        subsubdoc = subfolder.subsubdoc
+        subfolder = self.add_folder(self.folder,'subfolder', 'Subfolder')
+        subsubdoc = self.add_document(subfolder, 'subsubdoc', 'Subsubdoc')
         # we can deactivate it still
         self.assert_(self.folder.can_deactivate())
         # but now we approve something inside

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78 $
+# $Revision: 1.79 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -252,7 +252,13 @@ def manage_addRoot(self, id, title, REQUEST=None):
     object = Root(id)
     self._setObject(id, object)
     object = getattr(self, id)
-
+    # transform title from whatever encoding it is in to unicode
+    # we're assuming latin1 encoding. I guess this is not necessarily
+    # correct in case the ZMI has been set to another encoding, but of course
+    # it being Zope 2 there's no proper method on RESPONSE to get to this
+    # information, and applying a regex to the content-type header seems
+    # excessive
+    title = unicode(title, 'latin1')
     # now set it all up
     install.installFromScratch(object)
     object.set_title(title)

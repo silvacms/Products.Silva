@@ -72,9 +72,9 @@
                 <metal:block define-slot="groups_admin_action">
                   <a class="transport" 
                     style="float: right;"
-                    href="tab_access_groups"
                     title="groups administration: alt-g"
                     accesskey="g"
+                    tal:attributes="href string:${model/absolute_url}/edit/tab_access_groups"
                     i18n:attributes="title"
                     i18n:translate="groups_admin">
                     <u>g</u>roups admin...

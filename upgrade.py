@@ -87,6 +87,8 @@ class UpgradeRegistry:
             # new object should be returned so that can be used for the rest
             # of the upgrade chain instead of the old (probably deleted) one
             obj = upgrader.upgrade(obj)
+            assert obj is not None, "Upgrader %r seems to be broken, "\
+                "this is a bug." % (upgrader, )
         return obj
         
     def upgradeTree(self, root, version):
