@@ -1,9 +1,11 @@
-Version of this document: $Revision: 1.8 $
+Version of this document: $Revision: 1.9 $
 
 Installing Silva
 
   NOTE: If you are upgrading to Silva 0.8.3 from Silva 0.8, please
-  consult "UPGRADE.txt":http://www.zope.org/Members/faassen/Silva/UPGRADE
+  consult
+  "UPGRADE.txt":http://www.zope.org/Members/faassen/Silva/UPGRADE
+  instead for instructions.
 
   Silva depends on a set of file-system Python products for Zope for
   its core functionality, as well as a set of services which are
@@ -28,7 +30,7 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.8.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.3.tgz
+        "Silva-0.8.3.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.3.tgz
   
     XMLWidgets (0.8.1)
 
@@ -42,7 +44,7 @@ Installing Silva
 
       or just download:
 
-        "XMLWidgets-0.8.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.1.tgz
+        "XMLWidgets-0.8.1.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.1.tgz
 
     ParsedXML (1.3.0)
 
@@ -105,7 +107,7 @@ Installing Silva
 
     or just download:
 
-      "silva-0.8.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva-0.8.3.zexp.gz
+      "silva-0.8.3.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva-0.8.3.zexp.gz
 
     First unpack 'silva-0.8.3.zexp.gz' to get a 'silva-0.8.3.zexp'
     file. Then place this in your Zope's 'import' directory, and then
