@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.1.1
+
+    Bugs Fixed
+
+      - Headings are no longer incorrectly discarded by the xslt renderer.
+
   1.1
 
     Features added
