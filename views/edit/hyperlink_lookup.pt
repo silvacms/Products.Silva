@@ -27,7 +27,7 @@
         _____________________ sidebar _____________________
       </tal:block>
       <td class="left"
-        style="padding:0;">
+        style="width:25%; padding:0;">
         <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
             <tal:block replace="structure python: view.service_sidebar.render(model, 'hyperlink_lookup', vein)" />
@@ -39,7 +39,7 @@
         _____________________ main subtable _____________________
       </tal:block>
       <td class="main"
-        style="padding:0;">
+        style="width:75%; padding:0;">
 
         <table class="listing"
           style="margin:0;"
