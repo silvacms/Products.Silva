@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.13 2003/09/02 14:26:52 jw Exp $
+# $Id: mangle.py,v 1.14 2003/09/07 03:10:37 kitblake Exp $
 
 # Python
 import string
@@ -240,7 +240,7 @@ class Id:
         return self
 
     def unique(self):
-        """chagnes id do a unique one in current folder
+        """changes id to a unique one in current folder
 
             returns self
             raises ValueError if id is not valid
@@ -276,7 +276,7 @@ class _Path:
         return item_path
     
     def fromObject(self, obj_context, obj):
-        """return mangled path from objec'ts context and object
+        """return mangled path from object's context and object
         
             obj_context: str (path) or list
             obj: instance
@@ -319,7 +319,7 @@ class DateTime:
             dt.year(), dt.hour(), dt.minute())
     __str__ = toStr
 
-    def toDahsedDateStr(self):
+    def toDashedDateStr(self):
         dt = self._dt
         if dt is None:
             return ''
