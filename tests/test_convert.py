@@ -1,11 +1,12 @@
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
 
-import sys
-sys.path.insert(0, '..')
-import unittest
+import SilvaTestCase
 
-import convert
+from Products.Silva import convert
 
-class ConvertRegistry(unittest.TestCase):
+class ConvertRegistry(SilvaTestCase.SilvaTestCase):
     def setUp(self):
         self.reg = convert.Registry()
 
@@ -102,22 +103,11 @@ class ShortestPath(unittest.TestCase):
             len(convert.find_shortest_path(G, 'a', 'h')),
             0)
 
-class TestRepresentationConversion(unittest.TestCase):
-    def test_representation_conversion(self):
-        pass
-
-#
-# invocation of test suite
-#
-        
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ConvertRegistry))
-    suite.addTest(unittest.makeSuite(ShortestPath))
-    return suite
-    
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
 if __name__ == '__main__':
-    main()
+    framework()
+else:
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(TestSilvaTestCase))
+        return suite
