@@ -65,7 +65,7 @@
       name="form"
       tal:condition="content"
       tal:define="
-        binding python: view.get_metadata_binding(content) or nothing;
+        binding python: view.get_metadata(content) or nothing;
         is_container request/model/implements_container | nothing;
         form_errors options/form_errors | nothing;
         ">
@@ -222,7 +222,7 @@
     <tal:block 
       condition="content"
       define="
-        binding python: view.get_metadata_binding(content) or nothing;
+        binding python: view.get_metadata(content) or nothing;
         is_container request/model/implements_container | nothing;
         form_errors options/form_errors | nothing;
         ">
