@@ -7,11 +7,11 @@ from Globals import InitializeClass
 # Silva
 from Products.Silva.transform.renderers.GenericXSLTRenderer import GenericXSLTRenderer
 
-class RenderImagesOnRight(GenericXSLTRenderer):
+class BasicRenderer(GenericXSLTRenderer):
     def __init__(self):
-        self._name = 'Images on Right'
+        self._name = 'Basic HTML (New Version)'
         self._stylesheet = os.path.join(
             os.path.dirname(os.path.abspath(__file__)),
-            "images_to_the_right.xslt")
+            "normal_view.xslt")
 
-InitializeClass(RenderImagesOnRight)
+InitializeClass(BasicRenderer)
