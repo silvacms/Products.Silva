@@ -1,0 +1,2 @@
+class UpperCaseAllRenderer(object):
+    pass
