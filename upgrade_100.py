@@ -43,7 +43,17 @@ class ImageUpgrade:
                     'probably broken.') % (image.absolute_url(), exc, e))
         return image
             
+class RefreshAll:
+    " refresh all products "
+
+    __implements__ = IUpgrader
+
+    def upgrade(self, root):
+        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
+        root.service_extensions.refresh_all()
+        return root
     
 def initialize():
     upgrade.registry.registerUpgrader(ImageUpgrade(), '1.0', 'Silva Image')
+    upgrade.registry.registerUpgrader(RefreshAll(), '1.0', 'Silva Root')
 

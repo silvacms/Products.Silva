@@ -20,6 +20,8 @@ Silva changes
 
       - Issue 942: quotes in links around images broke the public view.
 
+      - Added RefreshAll to update.
+
   1.0 (release candidate 4)
 
     Bugs fixed
