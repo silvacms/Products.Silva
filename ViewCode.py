@@ -43,7 +43,11 @@ class ViewCode:
     def render_icon_by_meta_type(self, meta_type):
         """Renders an icon by meta type"""
         instance = None
-        for d in self.filtered_meta_types():
+        if callable(self.all_meta_types):
+            all = self.all_meta_types()
+        else:
+            all = self.all_meta_types
+        for d in all:
             if d['name'] == meta_type:
                 if d.has_key('instance'):
                     return self.render_icon(d['instance'])
