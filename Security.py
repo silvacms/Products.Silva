@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.43 $
+# $Revision: 1.44 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -301,9 +301,13 @@ class Security:
             return noneMember.__of__(self)
         
         # get cached author info (may be None)
-        info = self.sec_get_member(self._last_author_userid)
+        info = self._last_author_info
         if info is None:
             return noneMember.__of__(self)
+        elif not hasattr(info, 'fullname') and info.has_key('uid'):
+            # old userinfo object, convert and set the new object as self._last_author_info
+            self._last_author_info = info = self.service_members.get_member(info['uid'])
+            return info
         else:
             return info
         
