@@ -10,4 +10,4 @@
 model = context.REQUEST.model
 view = context
 model.unapprove_version()
-return view.tab_edit(message_type="feedback", message="Revoked approval")
+return view.tab_edit(message_type="feedback", message="Revoked approval.")
