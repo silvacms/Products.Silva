@@ -6,12 +6,12 @@ Meta::
   Valid for:  Silva 0.9.1
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26.2.3 $
+  CVS:        $Revision: 1.26.2.4 $
 
 Upgrading from 0.9.1 beta to 0.9.1
  
-  There shouldn't be any problems, though do a 'refresh all' to make
-  sure. If you are using Groups, please upgrade from Groups 0.3 to
+  There shouldn't be any problems. Just do a 'refresh all' and things
+  should work. If you are using Groups, please upgrade from Groups 0.3 to
   Groups 0.3.1 as it contains a bugfix. Groups can be found here:
 
   "Groups 0.3.1":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz.
