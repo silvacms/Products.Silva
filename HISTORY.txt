@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.34 $
+$Revision: 1.47.2.35 $
 
 Silva changes
 
@@ -26,6 +26,10 @@ Silva changes
           objects to get the Indexers up to date.
 
         - Setting a TOC level would display one level too much.
+
+        - Pressing 'Export' in Document's status tab now takes a user to the
+          export screen of the container so the user can indeed (as the text
+          suggests) export to Docma as well as download the content.
 
   0.9.1.4
 
