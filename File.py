@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.6.2.1 $
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
@@ -25,7 +25,7 @@ except:                                          # available for import
 INDIRECT = 0
 DIRECT = 1
 
-icon="www/silvageneric.gif"
+icon="www/silvafile.png"
 
 class File(Asset):
     """Any digital file can be uploaded as Silva content. 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.14.2.1 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -13,6 +13,8 @@ from Asset import Asset
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
+
+icon = "www/silvaimage.gif"
 
 class Image(Asset):
     """Web graphics (gif, jpg, png) can be uploaded and inserted in Silva
