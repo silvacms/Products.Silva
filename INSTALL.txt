@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3b1
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.39 $
+  CVS:        $Revision: 1.40 $
 
 Installing Silva
 
@@ -173,6 +173,16 @@ Installing Silva
       service can be added to the Silva Root via the ZMI. This
       service should have 'service_groups' for its id.
 
+    SilvaExternalSources (0.2)
+
+      If this is installed, Silva Documents gain functionality to 
+      include data coming from external sources into itself. This
+      replaces the code source and SQL Data Source functionality.
+  
+      SilvaExternalSources can be downloaded from here:
+      
+        http://www.zope.org/Members/infrae/SilvaExternalSources
+        
     ExtFile (1.XXX)
 
       If you plan to manage large upload files with Silva, which
