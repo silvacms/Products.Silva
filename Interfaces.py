@@ -8,15 +8,10 @@ class SilvaObject(Interface.Base):
         """Change the title of the content object.
         """
         pass
-
+          
     # ACCESSORS
     def title(self):
         """The title of the content object.
-        """
-        pass
-
-    def is_published(self):
-        """Return true if this object is visible to the public.
         """
         pass
 
@@ -31,6 +26,34 @@ class SilvaObject(Interface.Base):
         """
         pass
 
+class Publishable(Interface.Base):
+    # MANIPULATORS
+    def manage_afterAdd(self, item, container):
+        """Hook called by Zope just after the item was added to
+        container. Adds item id to an ordered list, if item is
+        a publishable object.
+        """
+        pass
+
+    def manage_beforeDelete(self, item, container):
+        """Hook called by Zope just before the item is deleted from
+        container. Removes item id to from ordered list (item is
+        a publishable object).
+        """
+        pass
+
+    # ACCESSORS
+    def is_published(self):
+        """Return true if this object is visible to the public.
+        """
+        pass
+
+    def is_active(self):
+        """Returns true if this object is actually active and
+        in the table of contents.
+        """
+        pass
+    
 class Information(SilvaObject):
     """Information that does not appear in the official contents of a publication,
     but can be referred to from documents and can be included
@@ -51,27 +74,18 @@ class Information(SilvaObject):
         """Use the information in context.
         """
         pass
-    
-class Content(SilvaObject):
-    # MANIPULATORS
 
-    
-    # ACCESSORS    
-    def editor(self):
-        """Show the editor of the content object to the author.
-         """
-        pass
+class Asset(SilvaObject):
+    """An object that does not appear in the publication's
+    table of content directly.
+    """
+    pass
 
-    def preview(self):
-        """Show the content object to the author as if it's seen
-        by the end user.
-        """
-        pass
-    
-    def view(self):
-        """Show the content object to the end user.
-        """
-        pass
+class Content(SilvaObject, Publishable):
+    """An object that can be published directly and would appear
+    in the table of contents. Can be ordered.
+    """
+    pass
 
 class Security(Interface.Base):
     """Can be mixed in with an object to support Silva security.
@@ -279,7 +293,7 @@ class VersionedContent(Versioning, Content):
         """
         pass
     
-class Container(SilvaObject):
+class Container(SilvaObject, Publishable):
     
     # MANIPULATORS
     def move_object_up(self, id):
@@ -300,14 +314,32 @@ class Container(SilvaObject):
     # cut copy paste?
     
     # ACCESSORS
-    
-    def get_contents(self):
-        """Get list of subobjects (in the right order).
+
+    def get_default(self):
+        """Get the default content object of the folder.
         """
         pass
 
+    def get_contents(self):
+        """Get list of active publishables of this folder, in
+        order.
+        """
+        pass
+    
+    def get_nonactive_contents(self):
+        """Get a list of nonactive publishables. This is not in
+        any fixed order.
+        """
+        pass
+    
+    def get_assets(self):
+        """Get a list of non-publishable objects in this folder.
+        (not in any order).
+        """
+        pass
+    
     def get_tree(self):
-        """Get flattened tree of all subobjects.
+        """Get flattened tree of all active publishables.
         This is a list of indent, object tuples.
         """
         pass
