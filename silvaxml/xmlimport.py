@@ -48,10 +48,6 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         self._metadata = {}
         self._workflow = {}
 
-    def characters(self, chrs):
-        c = collapser.CollapsingHandler(self)
-        c.characters(chrs)
-        
     def setMetadata(self, set, key, value, value_type=None):
         if value_type == 'datetime' and value:
             value = DateTime(value)
