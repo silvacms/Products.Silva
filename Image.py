@@ -42,6 +42,8 @@ manage_addImageForm = PageTemplateFile("www/imageAdd", globals(),
 
 def manage_addImage(self, id, title, REQUEST=None):
     """Add a Image."""
+    if self.is_id_valid(id):
+        return
     object = Image(id, title)
     self._setObject(id, object)
     object = getattr(self, id)

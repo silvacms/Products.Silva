@@ -52,6 +52,8 @@ manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
 
 def manage_addRoot(self, id, title, REQUEST=None):
     """Add a Silva root."""
+    # no id check possible or necessary, as this only happens rarely and the
+    # Zope id check is fine
     object = Root(id, title)
     self._setObject(id, object)
     object = getattr(self, id)

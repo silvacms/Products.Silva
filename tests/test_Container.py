@@ -202,6 +202,14 @@ class ContainerTestCase(unittest.TestCase):
         l = [self.doc1, self.doc2, self.doc3, self.folder4, self.publication5]
         self.assertEquals(self.sroot.get_ordered_publishables(),
                           l)
+
+    def test_is_id_valid(self):
+        r = self.sroot.manage_addProduct['Silva'].manage_addDocument('__this_is_wrong', 'Wrong')
+        self.assert_(not hasattr(self.sroot, '__this_is_wrong'))
+        r = self.sroot.manage_addProduct['Silva'].manage_addDocument('this is wrong too', 'This is wrong')
+        self.assert_(not hasattr(self.sroot, 'this is wrong too'))
+        r = self.sroot.manage_addProduct['Silva'].manage_addFolder('this$iswrong', 'This is wrong too')
+        self.assert_(not hasattr(self.sroot, 'this$iswrong'))
         
 def test_suite():
     suite = unittest.TestSuite()

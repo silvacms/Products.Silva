@@ -78,7 +78,7 @@ class SilvaObjectTestCase(unittest.TestCase):
         self.assertEquals([self.sroot, self.folder,
                            self.subfolder, self.subsubdoc],
                           self.subsubdoc.get_breadcrumbs())
-    
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(SilvaObjectTestCase, 'test'))

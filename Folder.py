@@ -14,6 +14,7 @@ import Interfaces
 import SilvaPermissions
 # misc
 import helpers
+import re
 
 class Folder(SilvaObject, Publishable, Folder.Folder):
     """Silva Folder.
@@ -291,7 +292,14 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             return not object.is_published() and not object.is_approved()
         else:
             return 1
+
+    _id_re = re.compile(r'^[a-zA-Z]\w*$')
     
+    def is_id_valid(self, id):
+        """Check whether id is valid.
+        """
+        return self._id_re.search(id) is not None
+        
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_default')
     def get_default(self):
@@ -432,6 +440,8 @@ manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
 
 def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     """Add a Folder."""
+    if not self.is_id_valid(id):
+        return
     object = Folder(id, title)
     self._setObject(id, object)
     object = getattr(self, id)

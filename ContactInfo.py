@@ -57,6 +57,8 @@ manage_addContactInfoForm = PageTemplateFile("www/contactInfoAdd", globals(),
 
 def manage_addContactInfo(self, id, title, REQUEST=None):
     """Add a ContactInfo."""
+    if not self.is_id_valid(id):
+        return
     object = ContactInfo(id, title)
     self._setObject(id, object)
     object = getattr(self, id)

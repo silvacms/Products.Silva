@@ -312,6 +312,8 @@ manage_addDocumentForm = PageTemplateFile("www/documentAdd", globals(),
 
 def manage_addDocument(self, id, title, REQUEST=None):
     """Add a Document."""
+    if not self.is_id_valid(id):
+        return
     object = Document(id, title)
     self._setObject(id, object)
     object = getattr(self, id)

@@ -39,6 +39,8 @@ manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),
 
 def manage_addPublication(self, id, title, REQUEST=None):
     """Add a Silva publication."""
+    if self.is_id_valid(id):
+        return
     object = Publication(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
