@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.36 $
+# $Revision: 1.37 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -102,10 +102,14 @@ class Versioning:
         # turn any publication dates in the future into now
         # this is to avoid odd caching behavior
         if not self._unapproved_version[1].isFuture():
+            publish_now = 1
             self._unapproved_version = (self._unapproved_version[0],
                                         DateTime(),
                                         self._unapproved_version[2])
-    
+        else:
+            publish_now = 0
+        publication_datetime = self._unapproved_version[1]
+        
         self._approved_version = self._unapproved_version
         self._unapproved_version = empty_version
         if self._request_for_approval_info != empty_request_for_approval_info:
