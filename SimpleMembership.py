@@ -1,4 +1,5 @@
-from IMembership import IMember, IMemberService
+import smtplib
+from IMembership import IMember, IMemberService, IMemberMessageService
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -136,5 +137,86 @@ def manage_addSimpleMemberService(self, id, REQUEST=None):
     """Add a Simple Member Service."""
     object = SimpleMemberService(id)
     self._setObject(id, object)
+    add_and_edit(self, id, REQUEST)
+    return ''
+
+class EmailMessageService(SimpleItem.SimpleItem):
+    """Simple implementation of IMemberMessageService that sends email
+    messages.
+    """
+    
+    meta_type = 'Silva Email Message Service'
+
+    security = ClassSecurityInfo()
+
+    __implements__ = IMemberMessageService
+
+    def __init__(self, id, title):
+        self.id = id
+        self.title = title
+        self._host = None
+        self._port = 25
+        self._fromaddr = None
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'set_server')
+    def set_server(self, host, port=25):
+        self._host = host
+        self._port = port
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'set_from_address')
+    def set_from_address(self, fromaddr):
+        self._fromaddr = fromaddr
+        
+    # XXX these security settings are not the right thing.. perhaps
+    # create a new permission?
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'send_message')
+    def send_message(self, from_memberid, to_memberid, subject, message):
+        if not hasattr(self.aq_base, '_v_messages'):
+            self._v_messages = {}
+        self._v_messages.setdefault(to_memberid, {}).setdefault(from_memberid, []).append((subject, message))
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'send_pending_messages')
+    def send_pending_messages(self):
+        if not hasattr(self.aq_base, '_v_messages'):
+            self._v_messages = {}
+        for to_memberid, message_dict in self._v_messages.items():
+            to_email = self.service_members.get_member(to_memberid).email()
+            if to_email is None:
+                # no email address known, so can't send these messages!
+                continue
+            lines = []
+            for from_memberid, messages in message_dict.items():
+                from_email = self.service_members.get_member(from_memberid).email()
+                lines.append("Message from: %s %s" %
+                             (from_memberid, from_email)) 
+                for subject, message in messages:
+                    lines.append(subject)
+                    lines.append('')
+                    lines.append(message)
+                    lines.append('')
+            text = '\n'.join(lines)
+            self._send_email(to_email, text)
+        self._v_messages = {}
+
+    def _send_email(self, toaddr, msg):
+        msg = 'From: %s\r\nTo: %s\r\n\r\n%s' % (self._fromaddr, toaddr, msg)
+        server = smtplib.SMTP(self._host, self._port)
+        server.sendmail(self._fromaddr, [toaddr], msg)
+        server.quit()
+        
+Globals.InitializeClass(EmailMessageService)
+
+manage_addEmailMessageServiceForm = PageTemplateFile(
+    "www/serviceEmailMessageServiceAdd", globals(), __name__='manage_addEmailMessageServiceForm')
+
+def manage_addEmailMessageService(self, id, title='', REQUEST=None):
+    """Add member message service."""
+    object = EmailMessageService(id, title)    
+    self._setObject(id, object)
+    object = getattr(self, id)
     add_and_edit(self, id, REQUEST)
     return ''
