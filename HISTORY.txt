@@ -7,6 +7,11 @@ Silva changes
 
     Features Added
 
+        - Import assets from a zipfile now creates Silva Folder for the
+          zipfiles's directory structure.
+
+        - Numerous small UI tweaks.
+
         - Added IP Groups. This replaces the `restriction by IP
           address' text area in tab_access.
           
@@ -37,6 +42,9 @@ Silva changes
           import through this module.
 
     Bugs fixed
+
+        - Fixed rare or edge-case situations in the Publish tab. UI
+          improvements, bugfixes and some code optimizations.
 
         - Renaming publishables no longer changes ordering (issue 635)
 
