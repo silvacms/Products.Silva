@@ -13,6 +13,7 @@ from AccessControl import Owned
 from Products.Silva.interfaces import IUpgrader, IContainer, IContent, IVersion
 from Products.Silva import upgrade
 from Products.Silva.adapters import security
+from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.VersionedContent import VersionedContent
 from Products.SilvaMetadata.Exceptions import BindingError
 
@@ -30,9 +31,9 @@ class MovedViewRegistry:
         root._delObject('service_view_registry')
         root.manage_addProduct['SilvaViews'].manage_addMultiViewRegistry(
             'service_view_registry')
-        zLOG.LOG('Silva', zLOG.WARNING,
-            'service_view_registry had to be recreated.\n'
-            "Be sure to 'refresh all' your extensions.\n")
+        #zLOG.LOG('Silva', zLOG.WARNING,
+        #    'service_view_registry had to be recreated.\n'
+        #    "Be sure to 'refresh all' your extensions.\n")
         return root
             
 
@@ -398,7 +399,7 @@ class BuryDemoObjectCorpses:
 
         broken_ids = obj.objectIds('Silva DemoObject')
         if broken_ids:
-            zLOG.LOG('Silva',-200,
+            zLOG.LOG('Silva',zLOG.DEBUG,
                      'found demo object corpses %s in %s' %\
                      (broken_ids, obj.absolute_url()))
             # the next statement assumes all IContainer inherit from Folder ...
@@ -408,7 +409,18 @@ class BuryDemoObjectCorpses:
             # FIXME: how do we unindex broken object form the catalog?
         return obj
                      
+class RefreshAll:
+    " refresh all products and installs SilvaDocument "
 
+    __implements__ = IUpgrader
+
+    def upgrade(self, root):
+        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
+        root.service_extensions.refresh_all()
+        zLOG.LOG('Silva', zLOG.INFO, 'install SilvaDocument')
+        root.service_extensions.install('SilvaDocument')
+        return root
+    
 
 def initialize():
     home = package_home(globals())
@@ -437,4 +449,5 @@ def initialize():
     upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
         'Groups Service')
 
-            
+    # as last action on the root, do an "all product refresh"
+    upgrade.registry.registerUpgrader(RefreshAll(), '0.9.3', 'Silva Root')
