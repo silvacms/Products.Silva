@@ -6,16 +6,11 @@
     root_url model/get_root_url;
     title model/get_title_editable;
     vein string:edit;
-    transf model/getTransformation;
-    is_cropped model/cropped;
     "
   i18n:domain="silva">
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
 
 <metal:fill-slot fill-slot="info">
-  <script type="text/javascript"
-          tal:attributes="src view/cropping.js/absolute_url">
-  </script>
   <div class="info">
     <h3 i18n:translate="image_info">
       <img tal:replace="structure icon" /> image info
@@ -45,24 +40,16 @@
         image_height python: model.getDimensions()[1];
         scale_width python: model.getCanonicalWebScale()[0];
         scale_height python: model.getCanonicalWebScale()[1];
-        cropped_width python: model.getCroppedSize()[0];
-        cropped_height python: model.getCroppedSize()[1];
         ">
         <span class="subhead" i18n:translate="image_dimension">dimensions</span><br />
         <span tal:on-error="string: unknown"
           tal:replace="string:${image_width}x${image_height} pixels"
         />
         <tal:condition condition="python:
-          image_width != scale_width and
-          image_height != scale_height or
-          image_width != cropped_width and
-          image_height != cropped_height"><br />
-          <span tal:condition="not:is_cropped" i18n:translate="">scaled to </span>
-          <span tal:condition="is_cropped" i18n:translate="">cropped to</span>
-          <span tal:condition="is_cropped" 
-            tal:replace="string:${cropped_width}x${cropped_height} pixels"
-          />
-          <span tal:condition="not:is_cropped"
+          image_width != scale_width or
+          image_height != scale_height"><br />
+          <span i18n:translate="">scaled to </span>
+          <span
             tal:on-error="string: unknown"
             tal:replace="string:${scale_width}x${scale_height} pixels"
           />
@@ -79,7 +66,7 @@
           <tal:condition condition="model/thumbnail_image">
             <img tal:replace="structure python:model.tag(thumbnail=1)" /><br />
           </tal:condition>
-          view un<span tal:content="transf">scaled</span> image
+          view unscaled image
         </a>
       </p>
       <p tal:condition="model/hires_image" 
@@ -108,7 +95,7 @@
           <span 
             tal:attributes="title string: ${scaled_size}"
             tal:content="python:mangle.Bytes(scaled_size)" /> 
-            <span tal:condition="not:is_cropped" i18n:translate="">scaled</span>
+            <span i18n:translate="">scaled</span>
           </tal:condition>
       </tal:block>
     </p>
@@ -177,12 +164,11 @@
       </tbody>
       <tfoot>
         <tr class="controls">
-          <td class="align-right"
-            colspan="3">
+          <td colspan="3" class="align-right">
             <input class="button"
               type="submit"
               name="scale_submit:method"
-              value="change format/scale"
+              value="change"
               title="access key: alt-c"
               accesskey="c"
               i18n:attributes="title value"
@@ -193,87 +179,6 @@
     </table>
   </form>
 
-  <form method="POST"
-    name="form"
-    action="."
-    enctype="multipart/form-data"
-    tal:condition="model/canScale">
-  <table class="listing">
-    <thead>
-      <tal:block replace="nothing">
-        ______________ top controls row ______________
-      </tal:block>
-      <tr class="top-controls">
-        <td colspan="3">
-          <h3 i18n:translate="cropping">
-            cropping
-          </h3>
-        </td>
-      </tr>
-    </thead>
-    <tbody tal:define="fields view/crop_form/get_fields">
-      <tr>
-        <th class="align-right"
-          width="12%"
-          i18n:translate="element">
-          element
-        </th>
-        <th i18n:translate="content">
-          content
-        </th>
-        <th width="40%" i18n:translate="note">
-          note
-        </th>
-      </tr>
-      <tal:repeat repeat="field fields">
-        <tal:define define="iterate repeat/field/odd">
-          <tr tal:attributes="class python:iterate and 'odd' or 'even'">
-            <td class="field-title">
-              <span tal:content="python:field['title']">
-                title</span><span class="warning"
-                tal:condition="python:field.is_required()">*</span>
-            </td>
-            <td>
-              <input tal:replace="structure python:field.render_from_request(request)" />
-            </td>
-            <td>
-              <span tal:replace="structure python:field.get_value('description')">
-                comments here (field description)
-              </span>
-            </td>
-          </tr>
-        </tal:define>
-      </tal:repeat>
-    </tbody>
-      <tfoot>
-        <tr class="controls">
-          <td>
-          </td>
-          <td>
-            <input class="transport"
-              type="button"
-              value="set crop coordinates..."
-              title="specify the center of the area to crop by clicking in the image: alt-o"
-              accesskey="o"
-              tal:define="asset_context python:request.model"
-              tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
-              i18n:attributes="title value"
-              />
-          </td>
-          <td class="align-right">
-            <input class="button"
-              type="submit"
-              name="crop_submit:method"
-              value="crop image"
-              title="access key: alt-r"
-              accesskey="r"
-              i18n:attributes="value title"
-            />
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  </form>
   <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
 

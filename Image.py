@@ -1,10 +1,10 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.21 2004/05/11 07:17:52 jw Exp $
+# $Id: Image.py,v 1.50.4.1.6.22 2004/05/12 07:32:01 zagy Exp $
 
 # Python
-import re, string 
+import re, string
 from cStringIO import StringIO
 from types import StringType, IntType
 from zipfile import ZipFile
@@ -62,7 +62,6 @@ class Image(Asset):
     web_scale = '100%'
     web_format = 'JPEG'
     web_formats = ('JPEG', 'GIF', 'PNG')
-    cropped = 0 
 
     _web2ct = {
         'JPEG': 'image/jpeg',
@@ -106,9 +105,8 @@ class Image(Asset):
 
     def manage_beforeDelete(self, item, container):
         """explicitly remove the images"""
-        self._clean_images()
-        if self.hires_image is not None:
-            self.hires_image.manage_beforeDelete(self.hires_image, self)
+        for id in ('hires_image', 'image', 'thumbnail_image'):
+            self._remove_image(id)
         return Image.inheritedAttribute('manage_beforeDelete')(self, item,
             container)
     
@@ -138,9 +136,6 @@ class Image(Asset):
             
         """
         update_cache = 0
-        if self.cropped:
-            update_cache = 1
-            self.cropped = 0
         if self.hires_image is None:
             update_cache = 1
             self.hires_image = self.image
@@ -156,27 +151,6 @@ class Image(Asset):
         if self.hires_image is not None and update_cache:
             self._createDerivedImages()
    
-    def cropImage(self, size, x, y):
-        """crops the image
-
-            size (str): eg. '25x25'
-            x, y (int): coordinates where the image should be cropped 
-        """
-        cropbbox = self.getCropBBox(size, x, y)
-        try:
-            image = self._getPILImage(self.hires_image)
-        except ValueError:
-            # XXX: warn the user, no scaling or converting has happend
-            self.image = self.hires_image
-            return
-        web_image_data = StringIO()
-        web_image = image.crop(cropbbox)
-        web_image = self._prepareWebFormat(web_image)
-        web_image.save(web_image_data, self.web_format)
-        self.cropped = 1 
-        self.image = OFS.Image.Image(
-            'image', self.get_title(), web_image_data)
-  
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
     def set_image(self, file):
@@ -188,10 +162,8 @@ class Image(Asset):
             ct = file.headers.get('Content-Type')
         except AttributeError:
             ct = None
-        self.hires_image = self._image_factory(
-            'hires_image', self.get_title(), file, ct)
-        if self.hires_image.meta_type == 'ExtImage':
-            self.hires_image.redirect_default_view = 1
+        self._image_factory('hires_image', self.get_title(), file, ct)
+        self._set_redirect(self.hires_image)
         format = self.getFormat()
         if format in self.web_formats:
             self.web_format = format
@@ -237,12 +209,7 @@ class Image(Asset):
                 width = int(width)
                 height = int(height)
         return width, height
-   
-    security.declareProtected(SilvaPermissions.View, 'getCroppedSize(self)')
-    def getCroppedSize(self):
-        """returns (width, height) of web image"""
-        return self.image.width, self.image.height
-    
+
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
     def getDimensions(self, img=None):
         """returns width, heigt of (hi res) image
@@ -293,8 +260,8 @@ class Image(Asset):
         elif not hires and not webformat:
             raise ValueError, "Low resolution image in original format is " \
                 "not supported"
-        if REQUEST is not None:                
-            return image.index_html(REQUEST, REQUEST.RESPONSE)                
+        if REQUEST is not None:
+            return image.index_html(REQUEST, REQUEST.RESPONSE)
         else:
             return str(image.data)
         
@@ -344,47 +311,49 @@ class Image(Asset):
         """
         return '%s' % self.web_scale
 
-    def getCropBBox(self, size, x, y):
-        """returns the crop bounding box and sets the croping values"""
-      
-        m = self.re_WidthXHeight.match(size)
-        if m is None:
-            raise ValueError, "'%s' is not a valid crop identifier" % size
-        try:
-            width = int(m.group(1))
-            height = int(m.group(2))
-        except AttributeError:
-            # the bbox should be a square
-            height = width
-        
-        return [x, y, x + width, y + height]
-    
     security.declareProtected(SilvaPermissions.View, 'canScale')
     def canScale(self):
         """returns if scaling/converting is possible"""
         return havePIL
-
-    security.declareProtected(SilvaPermissions.View, 'canCrop')
-    def canCrop(self, size, x, y):
-        """ returns True if cropping is possible """
-       
-        cropbbox = self.getCropBBox(size, x, y)
-        image = self._getPILImage(self.hires_image)
-        bbox = image.getbbox()
-
-        if cropbbox[0] >= bbox[0] and cropbbox[1] >= bbox[1]\
-        and cropbbox[2] <= bbox[2] and cropbbox[3] <= bbox[3]:
-           return 1
-        return 0 
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'getFileSystemPath')
     def getFileSystemPath(self):
         """return path on filesystem for containing image"""
         image = self.hires_image
-        if isinstance(image, OFS.Image.Image):
-            return None
-        return image.get_filename()
+        if image.meta_type == 'ExtImage':
+            return image.get_filename()
+        return None
+
+    security.declareProtected(SilvaPermissions.View, 'getOrientation')
+    def getOrientation(self):
+        """ returns Image orientation (string) """
+        width, height = self.getDimensions()
+        if width == height:
+            return "square"
+        elif width > height:
+            return "landscape"
+        return "portrait"
+
+    def manage_FTPget(self, *args, **kwargs):
+        return self.image.manage_FTPget(*args, **kwargs)
+
+    def content_type(self):
+        return self.image.content_type
+
+    def PUT(self, REQUEST, RESPONSE):
+        """Handle HTTP PUT requests"""
+        return self.image.PUT(REQUEST, RESPONSE)
+
+    def get_file_size(self):
+        return self.hires_image.get_size()
+    
+    security.declareProtected(SilvaPermissions.View, 'get_scaled_file_size')
+    def get_scaled_file_size(self):
+        return self.image.get_size()
+
+    ##########
+    ## private
 
     def _getPILImage(self, img):
         """return PIL of an image
@@ -395,9 +364,9 @@ class Image(Asset):
             raise ValueError, "No PIL installed."""
         if img is None:
             img = self.image
-        if isinstance(img, OFS.Image.Image):
+        if img.meta_type == 'Image': #OFS.Image.Image
             image_reference = StringIO(str(img.data))
-        else:            
+        else:
             image_reference = img._get_fsname(img.get_filename())
         try:
             image = PIL.Image.open(image_reference)
@@ -407,7 +376,6 @@ class Image(Asset):
         return image
 
     def _createDerivedImages(self):
-        self._clean_images()
         self._createWebPresentation()
         self._createThumbnail()
 
@@ -420,16 +388,24 @@ class Image(Asset):
             self.image = self.hires_image
             return
         if self.web_scale == '100%' and image.format == self.web_format:
+            # there image is neither scaled nor changed in format, just use
+            # the same one
+            if (self.image is not None and
+                    self.image.aq_base is not self.hires_image.aq_base):
+                self._remove_image('image')
             self.image = self.hires_image
             return
-        self.cropped = 0 
+        else:
+            if (self.image is not None and 
+                    self.image.aq_base is self.hires_image.aq_base):
+                self.image = None
         web_image_data = StringIO()
-        web_image = image.resize((width, height), PIL.Image.ANTIALIAS)
-        web_image = self._prepareWebFormat(web_image)
-        web_image.save(web_image_data, self.web_format)
+        image = image.resize((width, height), PIL.Image.ANTIALIAS)
+        image = self._prepareWebFormat(image)
+        image.save(web_image_data, self.web_format)
         ct = self._web2ct[self.web_format]
-        self.image = self._image_factory('image', self.get_title(),
-            web_image_data, ct)
+        self._image_factory('image', self.get_title(), web_image_data, ct)
+        self._set_redirect(self.image)
 
     def _createThumbnail(self):
         try:
@@ -441,20 +417,12 @@ class Image(Asset):
         thumb = image.copy()
         ts = self.thumbnail_size
         thumb.thumbnail((ts, ts), PIL.Image.ANTIALIAS)
+        thumb = self._prepareWebFormat(thumb)
         thumb_data = StringIO()
         thumb.save(thumb_data, self.web_format)
         ct = self._web2ct[self.web_format]
-        self.thumbnail_image = self._image_factory('thumbnail_image',
-            self.get_title(), thumb_data, ct)
-        
-    def _clean_images(self):
-        if self.image is not None and self.image is not self.hires_image:
-            self.image.manage_beforeDelete(self.image, self)
-            self.image = None
-        if self.thumbnail_image is not None:
-            self.thumbnail_image.manage_beforeDelete(self.thumbnail_image,
-                self)
-            self.thumbnail_image = None
+        self._image_factory('thumbnail_image', self.get_title(), thumb_data,
+            ct)
 
     def _prepareWebFormat(self, pil_image):
         """converts image's mode if necessary"""
@@ -465,18 +433,27 @@ class Image(Asset):
 
     def _image_factory(self, id, title, file, content_type):
         repository = self._useFSStorage()
+        image = getattr(self, id, None)
         if repository is None:
-            image = OFS.Image.Image(id, title, file, content_type=content_type)
+            image = OFS.Image.Image(id, title, file,
+                content_type=content_type)
         else:
-            # self.getId() is used to get a `normal' file name
-            image = ExtImage(self.getId(), title)
-            image._repository = repository
-            image = image.__of__(self)
+            if image is not None and image.meta_type != 'ExtImage':
+                self._remove_image(id)
+                image = None
+            if image is None:
+                image = ExtImage(self.getId(), title)
+                image._repository = repository
+                image = image.__of__(self)
+            # self.getId() is used to get a `normal' file name. We restore
+            # it later to get the a working absolute_url()
+            image.id = self.getId()
             file.seek(0)
             image.manage_file_upload(file, content_type=content_type)
             image = image.aq_base
             # set the actual id (so that absolute_url works)
             image.id = id
+        setattr(self, id, image)
         return image
     
     def _useFSStorage(self):
@@ -503,43 +480,22 @@ class Image(Asset):
             img_src = image.static_url()
         return image, img_src
 
-    def manage_FTPget(self, *args, **kwargs):
-        return self.image.manage_FTPget(*args, **kwargs)
-
-    def content_type(self):
-        return self.image.content_type
-
-    def PUT(self, REQUEST, RESPONSE):
-        """Handle HTTP PUT requests"""
-        return self.image.PUT(REQUEST, RESPONSE)
-
-    def get_file_size(self):
-        return self.hires_image.get_size()
-    
-    def get_scaled_file_size(self):
-        return self.image.get_size()
-
-    def getOrientation(self):
-        """ returns Image orientation (string) """
-        width, height = self.getDimensions()
-        if width == height:
-            return "square"
-        elif width > height:
-            return "landscape"
-        return "portrait"
-        
-    def getTransformation(self):
-        """image cropped or scaled"""
-        # maybe this isn't as good as I thought XXX
-        if self.cropped:
-            return "cropped"
-        return "scaled"
-
     def _is_static_mode(self, image):
         if image.meta_type == 'Image':
             return 0
         assert image.meta_type == 'ExtImage'
         return image.static_mode()
+
+    def _set_redirect(self, image, to=1):
+        if image.meta_type == 'ExtImage':
+            image.redirect_default_view = to
+
+    def _remove_image(self, id):
+        image = getattr(self, id, None)
+        if image is None:
+            return
+        image.manage_beforeDelete(self.image, self)
+        setattr(self, id, None)
 
 
 InitializeClass(Image)
