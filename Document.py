@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.79.2.2 $
+# $Revision: 1.79.2.3 $
 # Zope
 
 from StringIO import StringIO
@@ -146,9 +146,7 @@ class Document(CatalogedVersionedContent):
         Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
         # Does the widget cache needs be cleared for all versions - I think so...
         for version in self._get_indexable_versions():
-            version_object = getattr(self, version, None)
-            if version_object:
-                self.service_editor.clearCache(version_object.content)
+            self.service_editor.clearCache(version.content)
 
 InitializeClass(Document)
 
