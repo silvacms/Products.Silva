@@ -321,7 +321,7 @@ _______ editor hooks _______
       logout
       <span tal:condition="here/get_user_role"
         tal:replace="
-          structure string:${here/get_user_role}&nbsp;"
+          structure string:${here/get_user_role}"
       />
       <span tal:replace="userid" />
     </a>
