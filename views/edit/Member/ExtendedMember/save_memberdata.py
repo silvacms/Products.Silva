@@ -24,8 +24,9 @@ except FormValidationError, e:
     # in case of errors go back to add page and re-render form
     request.SESSION['message_type'] = 'error'
     request.SESSION['message'] = view.render_form_errors(e)
-    request.RESPONSE.redirect(next_view)
-    return
+    
+    # request.RESPONSE.redirect(next_view)
+    return context.redirect()
 
 messages = []
 if model.fullname() != result['fullname']:
@@ -65,4 +66,5 @@ if len(messages)==0:
 
 request.SESSION['message_type'] = 'feedback'
 request.SESSION['message'] = ', '.join(messages)
-request.RESPONSE.redirect(next_view)
+# request.RESPONSE.redirect(next_view)
+return context.redirect()
