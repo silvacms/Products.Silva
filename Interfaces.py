@@ -214,6 +214,12 @@ class Container(SilvaObject, Publishable):
         Return true in case success.
         """
         pass
+
+    def action_rename(self, orig_id, new_id):
+        """Rename subobject with orig_id into new_id.
+        Cannot rename approved or published content.
+        """
+        pass
     
     def action_delete(self, ids):
         """Delete ids in this container.
@@ -255,6 +261,13 @@ class Container(SilvaObject, Publishable):
     
     def is_transparent(self):
         """Show this subtree in get_tree().
+        """
+        pass
+
+    def is_delete_allowed(self, id):
+        """Return true if subobject with name 'id' can be deleted.
+        This is only allowed if the subobject is not published or
+        approved.
         """
         pass
     
