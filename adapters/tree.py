@@ -14,7 +14,8 @@ class TreeNode(adapter.Adapter):
         return self.context
 
     def getChildNodes(self):
-        raise StopIteration()
+        for i in []:
+            yield i
 
 class ContainerTreeNode(TreeNode):
     def getChildNodes(self):
