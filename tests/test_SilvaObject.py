@@ -11,46 +11,47 @@ class SilvaObjectTestCase(unittest.TestCase):
         get_transaction().begin()
         self.connection = Zope.DB.open()
         self.root = self.connection.root()['Application']
-        add = self.root.manage_addProduct['Silva']
-        add.manage_addDocument('document', 'Document')
-        add.manage_addFolder('folder', 'Folder')
-        add.manage_addRoot('root', 'Root')
-        add.manage_addPublication('publication', 'Publication')
+        self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
+        self.sroot = self.root.root
+        add = self.sroot.manage_addProduct['Silva']
         
-        #self.document = Document.Document('document', 'Document')
-        #self.default = Fol
-        #self.folder = Folder.Folder('folder', 'Folder')
-        #self.root = Root.Root('root', 'Root')
-        #self.ghost = Ghost.Ghost('ghost', 'Ghost')
-        #self.publication = Publication.Publication('publication', 'Publication')
+        add.manage_addDocument('document',
+                               'Document')
+        add.manage_addFolder('folder',
+                             'Folder')
+        add.manage_addPublication('publication',
+                                  'Publication')
+        self.document = self.sroot.document
+        self.folder = self.sroot.folder
+        self.publication = self.sroot.publication
         
     def tearDown(self):
         get_transaction().abort()
         self.connection.close()
 
     def test_set_title(self):
-        self.root.document.set_title('Document2')
-        self.assertEquals(self.root.document.title(), 'Document2')
-        self.root.folder.set_title('Folder2')
-        self.assertEquals(self.root.folder.title(), 'Folder2')
-        self.assertEquals(self.root.folder.default.title(), 'Folder2')
-        self.root.root.set_title('Root2')
-        self.assertEquals(self.root.root.title(), 'Root2')
-        self.root.publication.set_title('Publication2')
-        self.assertEquals(self.root.publication.title(), 'Publication2')
+        self.document.set_title('Document2')
+        self.assertEquals(self.document.title(), 'Document2')
+        self.folder.set_title('Folder2')
+        self.assertEquals(self.folder.title(), 'Folder2')
+        self.assertEquals(self.folder.default.title(), 'Folder2')
+        self.sroot.set_title('Root2')
+        self.assertEquals(self.sroot.title(), 'Root2')
+        self.publication.set_title('Publication2')
+        self.assertEquals(self.publication.title(), 'Publication2')
 
-        self.root.folder.default.set_title('Set by default')
-        self.assertEquals(self.root.folder.default.title(),
+        self.folder.default.set_title('Set by default')
+        self.assertEquals(self.folder.default.title(),
                           'Set by default')
-        self.assertEquals(self.root.folder.title(),
+        self.assertEquals(self.folder.title(),
                           'Set by default')
         
     def test_title(self):
-        self.assertEquals(self.root.document.title(), 'Document')
-        self.assertEquals(self.root.folder.title(), 'Folder')
-        self.assertEquals(self.root.root.title(), 'Root')
-        self.assertEquals(self.root.publication.title(), 'Publication')
-        self.assertEquals(self.root.folder.default.title(), 'Folder')
+        self.assertEquals(self.document.title(), 'Document')
+        self.assertEquals(self.folder.title(), 'Folder')
+        self.assertEquals(self.sroot.title(), 'Root')
+        self.assertEquals(self.publication.title(), 'Publication')
+        self.assertEquals(self.folder.default.title(), 'Folder')
         
     def test_get_creation_datetime(self):
         pass

@@ -171,10 +171,7 @@ class Document(Content, Folder.Folder, Versioning):
         # now show unapproved version in editor
         version_id = self.get_unapproved_version()
         if version_id is None:
-            if self.get_next_version():
-                return "Unapprove version first to edit."
-            else:
-                return "There is no unpublished version [make copy]"
+            return None # there is no editable version
         doc = getattr(self, version_id)
         wm = self.wm
         node = wm.get_widget_node(doc.documentElement)

@@ -7,13 +7,14 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
 # Silva
 from ViewRegistry import ViewAttribute
+from SilvaObject import SilvaObject
 from Publishable import Publishable
 import Copying
 import Interfaces
 # misc
 from helpers import add_and_edit
 
-class Folder(Publishable, Folder.Folder):
+class Folder(SilvaObject, Publishable, Folder.Folder):
     """Silva Folder.
     """
     meta_type = "Silva Folder"
@@ -29,9 +30,6 @@ class Folder(Publishable, Folder.Folder):
         self.id = id
         self._title = title
         self._ordered_ids = []
-        
-    def __repr__(self):
-        return "<Silva Folder instance at %s>" % self.id
 
     # MANIPULATORS
     def set_title(self, title):
@@ -43,7 +41,10 @@ class Folder(Publishable, Folder.Folder):
         """Move object up. Returns true if move succeeded.
         """
         ids = self._ordered_ids
-        i = ids.index(id)
+        try:
+            i = ids.index(id)
+        except ValueError:
+            return 0
         if i == 0:
             return 0
         ids[i], ids[i - 1] = ids[i - 1], ids[i]
@@ -54,7 +55,10 @@ class Folder(Publishable, Folder.Folder):
         """move object down.
         """
         ids = self._ordered_ids
-        i = ids.index(id)
+        try:
+            i = ids.index(id)
+        except ValueError:
+            return 0
         if i == len(ids) - 1:
             return 0
         ids[i], ids[i + 1] = ids[i + 1], ids[i]
@@ -63,11 +67,16 @@ class Folder(Publishable, Folder.Folder):
 
     def move_to(self, move_ids, index):
         ids = self._ordered_ids
+        # check whether all move_ids are known
+        for move_id in move_ids:
+            if move_id not in ids:
+                return 0
         ids_without_moving_ids = []
         move_ids_in_order = []
         for id in ids:
             if id in move_ids:
                 move_ids_in_order.append(id)
+                ids_without_moving_ids.append(None)
             else:
                 ids_without_moving_ids.append(id)
         ids = ids_without_moving_ids
@@ -75,18 +84,23 @@ class Folder(Publishable, Folder.Folder):
         move_ids.reverse()
         for move_id in move_ids:
             ids.insert(index, move_id)
+        ids = [id for id in ids if id is not None]
         self._ordered_ids = ids
         return 1
     
-    def _add_ordered_publishable(self, item):
+    def _add_silva_object(self, item):
         if not item.is_active():
+            return
+        if Interfaces.Asset.isImplementedBy(item):
             return
         if Interfaces.Content.isImplementedBy(item) and item.is_default():
             return
         self._ordered_ids.append(item.id)
-
-    def _remove_ordered_publishable(self, item):
+            
+    def _remove_silva_object(self, item):
         if not item.is_active():
+            return
+        if Interfaces.Asset.isImplementedBy(item):
             return
         if Interfaces.Content.isImplementedBy(item) and item.is_default():
             return
@@ -132,7 +146,7 @@ class Folder(Publishable, Folder.Folder):
     def get_nonactive_publishables(self):
         result = []
         for object in self.objectValues():
-            if (Interfaces.Publishable.implementedBy(object) and
+            if (Interfaces.Publishable.isImplementedBy(object) and
                 not object.is_active()):
                 result.append(object)
         return result
@@ -153,7 +167,7 @@ class Folder(Publishable, Folder.Folder):
 
     def get_container_tree(self):
         l = []
-        self.get_container_tree_helper(l, 0)
+        self._get_container_tree_helper(l, 0)
         return l
     
     def _get_tree_helper(self, l, indent):

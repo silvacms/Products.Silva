@@ -64,7 +64,7 @@ class Publishable(Interface.Base):
         in the table of contents.
         """
         pass
-    
+
 class Asset(SilvaObject):
     """An object that does not appear in the publication's
     table of content directly.
@@ -82,13 +82,16 @@ class Content(SilvaObject, Publishable):
         """
         pass
 
-class Information(SilvaObject):
+class Information(Content):
     """Information that does not appear in the official contents of a publication,
     but can be referred to from documents and can be included
     (images, contactinfo, etc)'
     """
+    def get_editing_state(self):
+        pass
+    
     def editor(self):
-        """
+        """Show content in editor mode.
         """
         pass
 

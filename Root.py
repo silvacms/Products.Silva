@@ -18,11 +18,19 @@ class Root(Folder):
     security = ClassSecurityInfo()
 
     def __init__(self, id, title):
-        self.id = id
-        self._title = title
+        Root.inheritedAttribute('__init__')(self, id, title)
 
-    def __repr__(self):
-        return "<Silva Root instance at %s>" % self.id
+    # MANIPULATORS
+
+    def manage_afterAdd(self, item, container):
+        #self.inheritedAttribute('manage_afterAdd')(self, item, container)
+        pass
+        
+    def manage_beforeDelete(self, item, container):
+        #self.inheritedAttribute('manage_beforeDelete')(self, item, container)
+        pass
+    
+    # ACCESSORS
 
     def get_root(self):
         """Get root of site. Can be used with acquisition get the

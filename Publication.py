@@ -17,12 +17,6 @@ class Publication(Folder):
     
     security = ClassSecurityInfo()
 
-    def __init__(self, id, title):
-        Publication.inheritedAttribute('__init__')(self, id, title)
-
-    def __repr__(self):
-        return "<Silva Publication instance at %s>" % self.id
-
     def get_publication(self):
         """Get publication. Can be used with acquisition get the
         'nearest' Silva publication.
