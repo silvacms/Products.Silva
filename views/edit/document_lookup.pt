@@ -109,7 +109,7 @@
                     title="add a new item - alt-n"
                     accesskey="n"
                     tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
-                    i18n:attributes="value title"
+                    i18n:attributes="value;title"
                   />
                   <label for="meta_type" 
                     title="access key: alt-s" 
@@ -219,7 +219,7 @@
                           is_approved item/is_version_approved | nothing"
                         tal:condition="python:is_published or is_approved"
                         tal:attributes="src string:${root_url}/globals/checkmark.gif"
-                        i18n:attributes="alt title"
+                        i18n:attributes="alt;title"
                       />
                     </td>
                     <tal:block replace="nothing">
@@ -374,7 +374,7 @@
                         value="place reference..."
                         title="insert the reference: alt-p"
                         accesskey="p"
-                        i18n:attributes="value title"
+                        i18n:attributes="value;title"
                         onclick="setReference()"
                       />
                     </tal:block>

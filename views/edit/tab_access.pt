@@ -151,7 +151,7 @@
                     <select class="manipulator"
                       name="assign_role"
                       title="select a role to assign"
-                      i18n:attributes="name title">
+                      i18n:attributes="name;title">
                       <option value="None" i18n:translate="">
                         select role:
                       </option>
@@ -162,7 +162,7 @@
                       title="assign a local role to selected user(s)"
                       type="submit"
                       value="assign role"
-                      i18n:attributes="title value"
+                      i18n:attributes="title;value"
                     />
                   </tal:block>
                 </td>
@@ -173,7 +173,7 @@
                     type="submit"
                     value="revoke role"
                     tal:condition="revokeable_roles"
-                    i18n:attributes="title value"
+                    i18n:attributes="title;value"
                   />
                 </td>
               </tr>
@@ -255,7 +255,7 @@
                     value="deny role"
                     title="access key: alt-d"
                     accesskey="d"
-                    i18n:attributes="title value"
+                    i18n:attributes="title;value"
                   />
                 </td>
                 <td class="align-right"
@@ -266,7 +266,7 @@
                       type="submit"
                       value="grant role"
                       title="access key: alt-g"
-                      i18n:attributes="title value"
+                      i18n:attributes="title;value"
                       accesskey="g"
                     />
                     <input class="button"
@@ -274,7 +274,7 @@
                       type="submit"
                       value="Grant and approve"
                       title="access key: alt-a"
-                      i18n:attributes="title value"
+                      i18n:attributes="title;value"
                       accesskey="a"
                     />
                   </tal:block>
@@ -310,7 +310,7 @@
               title="assign a local role to selected user(s)"
               type="submit"
               value="assign" 
-              i18n:attributes="title value"
+              i18n:attributes="title;value"
             />
           </metal:block>
         </metal:block>          
@@ -462,7 +462,7 @@
                         title="assign a local role to selected user(s)"
                         type="submit"
                         value="assign role to group"
-                        i18n:attributes="title value"
+                        i18n:attributes="title;value"
                       />
                     </tal:block>
                   </td>
@@ -473,7 +473,7 @@
                       type="submit"
                       value="revoke role from group" 
                       tal:condition="revokeable_groups"
-                      i18n:attributes="title value"
+                      i18n:attributes="title;value"
                     />
                   </td>
                 </tr>
@@ -511,7 +511,7 @@
                   name="access_assign_to_group:method"
                   value="assign"
                   title="assign selected role to selected group(s)"
-                  i18n:attributes="title value"
+                  i18n:attributes="title;value"
                 />
               </metal:block>
             </metal:block>
@@ -596,7 +596,7 @@
                     name="tab_access_acquire_minimum_role_submit:method"
                     value="acquire restriction"
                     title="cancel the access restriction at this level, making it inherit from above"
-                    i18n:attributes="title value"
+                    i18n:attributes="title;value"
                     tal:condition="not:acquired"
                   />
                 </td>
@@ -618,7 +618,7 @@
                     name="tab_access_minimum_role_submit:method"
                     value="set restriction"
                     title="restrict access to users with a specific role"
-                    i18n:attributes="title value"
+                    i18n:attributes="title;value"
                   />
                 </td>
               </tr>

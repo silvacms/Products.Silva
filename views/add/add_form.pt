@@ -84,14 +84,14 @@
         value="cancel"
         title="access key: alt-c"
         accesskey="c"
-        i18n:attributes="value title"
+        i18n:attributes="value;title"
       />
       <input class="button"
         type="submit"
         name="add_submit"
         value="save"
         title="access key: alt-s"
-        i18n:attributes="value title"
+        i18n:attributes="value;title"
         accesskey="s"
       />
       <tal:condition condition="python: not mode_asset" >
@@ -102,7 +102,7 @@
         title="access key: alt-e"
         accesskey="e"
         tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
-        i18n:attributes="value title"
+        i18n:attributes="value;title"
       />
       </tal:condition>
     </td>

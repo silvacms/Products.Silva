@@ -109,7 +109,7 @@
                     value="search"
                     accesskey="s"                      
                     title="access key: alt-s"
-                    i18n:attributes="value title"
+                    i18n:attributes="value;title"
                   />
                 </td>
               </tr>
@@ -130,7 +130,7 @@
                     value="add to clipboard"
                     title="add checked users to clipboard: alt-a"
                     accesskey="a"                      
-                    i18n:attributes="value title"
+                    i18n:attributes="value;title"
                     tal:condition="python:lookup_result and len(lookup_result) > 3" />
                   <h3 i18n:translate="">
                     search results
@@ -198,7 +198,7 @@
                     value="add to clipboard"
                     title="add checked users to clipboard: alt-a"
                     accesskey="a"
-                    i18n:attributes="value title"
+                    i18n:attributes="value;title"
                     tal:condition="lookup_result"
                   />
                 </td>
@@ -230,7 +230,7 @@
               value="remove user"
               title="remove users from the clipboard: alt-r"
               accesskey="r"
-              i18n:attributes="value title"
+              i18n:attributes="value;title"
            />
           </metal:block>
         </metal:block>

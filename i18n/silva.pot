@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Fri Nov 19 18:58:18 2004\n"
+"POT-Creation-Date: Wed Nov 24 15:06:58 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -273,14 +273,6 @@ msgstr ""
 #: /views/edit/Container/tab_status_export.pt:178
 #: /views/edit/VersionedContent/tab_status.pt:237
 msgid "access key: alt-e"
-msgstr ""
-
-#: /views/add/get_id_status_text.py:17
-msgid ""
-"Sorry, strange characters are in the id. It should only\n"
-"        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or \n"
-"        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, \n"
-"        and the id should start with a letter or digit."
 msgstr ""
 
 #: /views/add/get_id_status_text.py:24
@@ -1065,7 +1057,7 @@ msgstr ""
 msgid "<span class=\"warning\">could not add: ${failed}</span>"
 msgstr ""
 
-#: /views/edit/Container/import_archive_file.py:45
+#: /views/edit/Container/import_archive_file.py:44
 msgid "Finished importing: ${msg}"
 msgstr ""
 
@@ -1142,6 +1134,7 @@ msgid "Deleted ${deleted_ids}, <span class=\"error\">but could not delete ${not_
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups_delete.py:28
+#: /views/edit/Container/tab_edit_delete.py:37
 msgid "Deleted ${deleted_ids}."
 msgstr ""
 
@@ -3224,7 +3217,7 @@ msgid "Minimum role to access has not changed"
 msgstr ""
 
 #: /views/edit/tab_access_minimum_role_submit.py:21
-msgid "Minimum role to access is now set to $(role)"
+msgid "Minimum role to access is now set to ${role}"
 msgstr ""
 
 #: /views/edit/tab_metadata.pt:53
@@ -3418,16 +3411,7 @@ msgstr ""
 msgid "No roles were selected."
 msgstr ""
 
-#: /views/render_form_errors.py:15
-msgid ""
-"\n"
-"<dl style=\"margin:0; padding:0.3em 0 0.2em 0;\">\n"
-"<dt>Sorry, there are problems with these form fields:</dt>\n"
-"<dd>\n"
-"<ul class=\"tips\">\n"
-"${tips}\n"
-"</ul>\n"
-"</dd>\n"
-"</dl>\n"
+#: /views/render_form_errors.py:16
+msgid "Sorry, there are problems with these form fields:"
 msgstr ""
 

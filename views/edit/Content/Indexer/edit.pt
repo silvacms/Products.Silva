@@ -70,7 +70,7 @@
             value="update index"
             title="access key: alt-u"
             accesskey="u"
-            i18n:attributes="value title"
+            i18n:attributes="value;title"
            />
         </td>
       </tr>

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Fri Nov 19 18:31:18 2004\n"
+"POT-Creation-Date: Wed Nov 24 15:06:58 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -21,7 +21,8 @@ msgstr "Aanmeldingsaanvragen zijn voor deze website niet toegestaan."
 
 #: /AccessManager.py:29
 msgid "Sorry, no ChiefEditors are available to receive the request."
-msgstr "Sorry, er zijn geen ChiefEditors beschikbaar om je aanvraag te ontvangen."
+msgstr ""
+"Sorry, er zijn geen ChiefEditors beschikbaar om je aanvraag te ontvangen."
 
 #: /AccessManager.py:60
 msgid "Member is not approved"
@@ -35,7 +36,9 @@ msgstr "Geen ChiefEditors aanwezig om je aanvraag te ontvangen."
 msgid ""
 "The object ${policy} does not implement IContainerPolicy, try restarting "
 "Zope."
-msgstr "Het object ${policy} ondersteunt IContainerPolicy niet, probeer te herstarten."
+msgstr ""
+"Het object ${policy} ondersteunt IContainerPolicy niet, probeer te "
+"herstarten."
 
 #: /DocmaService.py:117
 msgid "Not connected"
@@ -71,7 +74,8 @@ msgstr "Silva Images zijn omgezet. Zie de Zope log voor details."
 
 #: /Folder.py:329 /Folder.py:423
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
-msgstr "het plakken van &#xab;${id}&#xbb; is niet toegestaan in dit type container"
+msgstr ""
+"het plakken van &#xab;${id}&#xbb; is niet toegestaan in dit type container"
 
 #: /Folder.py:387 /Folder.py:419
 msgid "pasted &#xab;${id}&#xbb;"
@@ -260,24 +264,13 @@ msgstr "opslaan"
 msgid "access key: alt-e"
 msgstr "sneltoets: alt-e"
 
-#: /views/add/get_id_status_text.py:17
-msgid ""
-"Sorry, strange characters are in the id. It should only\n"
-"        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or \n"
-"        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, \n"
-"        and the id should start with a letter or digit."
-msgstr ""
-"Sorry, er zitten vreemde karakters in de id. Het mag alleen\n"
-"        letters, cijfers en &#8216;_&#8217; of &#8216;-&#8217; of \n"
-"        &#8216;.&#8217; bevatten.<br />Spaties zijn niet toegestaan in \n"
-"        Internet adressen, en de id moet beginnen met een letter of een cijfer."
-
 #: /views/add/get_id_status_text.py:24
 msgid ""
 "Sorry, ids starting with ${prefix} are reserved for\n"
 "        internal use.<br />Please use another id."
 msgstr ""
-"Sorry, ids die beginnen met ${prefix} zijn gereserveerd voor intern gebruik.\n"
+"Sorry, ids die beginnen met ${prefix} zijn gereserveerd voor intern "
+"gebruik.\n"
 "        <br />Gebruik alsjeblieft een andere id."
 
 #: /views/add/get_id_status_text.py:29
@@ -1079,7 +1072,7 @@ msgstr "added ${succeeded}"
 msgid "<span class=\"warning\">could not add: ${failed}</span>"
 msgstr "<span class=\"warning\">could not add: ${failed}</span>"
 
-#: /views/edit/Container/import_archive_file.py:45
+#: /views/edit/Container/import_archive_file.py:44
 msgid "Finished importing: ${msg}"
 msgstr "Finished importing: ${msg}"
 
@@ -1164,6 +1157,7 @@ msgstr ""
 "${not_deleted_ids}.</span>"
 
 #: /views/edit/Container/tab_access_groups_delete.py:28
+#: /views/edit/Container/tab_edit_delete.py:37
 msgid "Deleted ${deleted_ids}."
 msgstr "Deleted ${deleted_ids}."
 
@@ -1467,8 +1461,8 @@ msgid ""
 "Locate a Word file to upload. It'll be converted and appear in the list of "
 "processed items below. It can be imported anywhere in Silva."
 msgstr ""
-"Zoek een Word file om te uploaden. Hij zal worden geconverteerd en in de "
-" lijst met verwerkte items terecht komen die hier onder staat. Hij kan overal "
+"Zoek een Word file om te uploaden. Hij zal worden geconverteerd en in de  "
+"lijst met verwerkte items terecht komen die hier onder staat. Hij kan overal "
 "in Silva worden geïmporteerd."
 
 #: /views/edit/Container/tab_edit_import.pt:326
@@ -1486,7 +1480,8 @@ msgstr "Er wordt een email naar je gestuurd wanneer het item is verwerkt."
 msgid ""
 "This description will be shown in the queue and the list of processed items."
 msgstr ""
-"Deze omschrijving wordt in de wachtrij en de lijst van verwerkte items getoond."
+"Deze omschrijving wordt in de wachtrij en de lijst van verwerkte items "
+"getoond."
 
 #: /views/edit/Container/tab_edit_import.pt:358
 msgid "upload"
@@ -3392,8 +3387,8 @@ msgid "Minimum role to access has not changed"
 msgstr "Minimum role to access has not changed"
 
 #: /views/edit/tab_access_minimum_role_submit.py:21
-msgid "Minimum role to access is now set to $(role)"
-msgstr "Minimum role to access is now set to $(role)"
+msgid "Minimum role to access is now set to ${role}"
+msgstr ""
 
 #: /views/edit/tab_metadata.pt:53
 msgid "metadata <span>x</span>"
@@ -3588,27 +3583,47 @@ msgstr ""
 msgid "No roles were selected."
 msgstr "No roles were selected."
 
-#: /views/render_form_errors.py:15
-msgid ""
-"\n"
-"<dl style=\"margin:0; padding:0.3em 0 0.2em 0;\">\n"
-"<dt>Sorry, there are problems with these form fields:</dt>\n"
-"<dd>\n"
-"<ul class=\"tips\">\n"
-"${tips}\n"
-"</ul>\n"
-"</dd>\n"
-"</dl>\n"
+#: /views/render_form_errors.py:16
+msgid "Sorry, there are problems with these form fields:"
 msgstr ""
-"\n"
-"<dl style=\"margin:0; padding:0.3em 0 0.2em 0;\">\n"
-"<dt>Sorry, there are problems with these form fields:</dt>\n"
-"<dd>\n"
-"<ul class=\"tips\">\n"
-"${tips}\n"
-"</ul>\n"
-"</dd>\n"
-"</dl>\n"
+
+#~ msgid ""
+#~ "Sorry, strange characters are in the id. It should only\n"
+#~ "        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; "
+#~ "or \n"
+#~ "        &#8216;.&#8217;<br />Spaces are not allowed in Internet "
+#~ "addresses, \n"
+#~ "        and the id should start with a letter or digit."
+#~ msgstr ""
+#~ "Sorry, er zitten vreemde karakters in de id. Het mag alleen\n"
+#~ "        letters, cijfers en &#8216;_&#8217; of &#8216;-&#8217; of \n"
+#~ "        &#8216;.&#8217; bevatten.<br />Spaties zijn niet toegestaan in \n"
+#~ "        Internet adressen, en de id moet beginnen met een letter of een "
+#~ "cijfer."
+
+#~ msgid "Minimum role to access is now set to $(role)"
+#~ msgstr "Minimum role to access is now set to $(role)"
+
+#~ msgid ""
+#~ "\n"
+#~ "<dl style=\"margin:0; padding:0.3em 0 0.2em 0;\">\n"
+#~ "<dt>Sorry, there are problems with these form fields:</dt>\n"
+#~ "<dd>\n"
+#~ "<ul class=\"tips\">\n"
+#~ "${tips}\n"
+#~ "</ul>\n"
+#~ "</dd>\n"
+#~ "</dl>\n"
+#~ msgstr ""
+#~ "\n"
+#~ "<dl style=\"margin:0; padding:0.3em 0 0.2em 0;\">\n"
+#~ "<dt>Sorry, there are problems with these form fields:</dt>\n"
+#~ "<dd>\n"
+#~ "<ul class=\"tips\">\n"
+#~ "${tips}\n"
+#~ "</ul>\n"
+#~ "</dd>\n"
+#~ "</dl>\n"
 
 #~ msgid "draft"
 #~ msgstr "draft"
