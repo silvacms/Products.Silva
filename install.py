@@ -594,7 +594,7 @@ def installSilvaDocument(root):
     # see issue #536 and #611
     from Products.Silva.ExtensionRegistry import extensionRegistry
     if 'SilvaDocument' in extensionRegistry.get_names():
-        extensionRegistry.install('SilvaDocument', root)
+        root.service_extensions.install('SilvaDocument')
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
