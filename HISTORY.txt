@@ -1,12 +1,30 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.7 $
+$Revision: 1.47.2.8 $
 
 Silva changes
 
   0.9.1
 
     Bugs Fixed
+
+        - Corrected access key in Indexer tabs.
+
+        - Fixed tab_edit where Authors can't move anything and see
+          an empty controls row.
+        
+        - Adjusted tab_edit and tab_status access key links so they
+          work with Mozilla (select lists and checkbox labels).
+
+        - Removed Mozilla incompatibility notes from help (since the
+          problems are fixed).
+        
+        - Updated layout_macro to match presentation preview link in
+          tab_preview.
+
+        - Fixed location of closed message in tab_preview so it shows
+          up regardless of which layout (public or default) get used.
+          Aligned presentation preview link better in default layout.
 
         - Fix where the Groups administration button was shown, even
           if no service_groups was available.      
