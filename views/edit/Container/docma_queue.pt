@@ -249,7 +249,7 @@
                 <script type="text/javascript">
                 <!-- if (document.forms[0])
                 {
-                  document.write('<input class="button" type="submit" value="Select all" value="submit" name="selectButton" value="Select all" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false" i18n:attributes="value title">');
+                  document.write('<input class="button" type="submit" value="select all" value="submit" name="selectButton" value="select all" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false" i18n:attributes="value title">');
                 }
               // -->
 
@@ -266,7 +266,7 @@
                     onClick="return confirm('Really remove?')"
                     title="there's no undo: alt-x"
                     type="submit"
-                    value="Remove" 
+                    value="remove" 
 		    i18n:attributes="onClick value title"/>
                   &nbsp;&nbsp;
                   <input class="button"
@@ -274,7 +274,7 @@
                     name="tab_edit_import_import_and_delete:method"
                     title="import to the current location and remove from the list: alt-m"
                     type="submit"
-                    value="Import and remove" 
+                    value="import and remove" 
 		    i18n:attributes="value title" />
                   &nbsp;&nbsp;
                   <input class="button"
