@@ -138,7 +138,7 @@ class Folder(TocSupport, Folder.Folder):
         #        toc_ids.append(item.id)
         #    self._toc_ids = toc_ids
             
-        # first sort items so that doc is always the first item
+        # first sort items so that default is always the first item
         items = []
         first_item = None
         for id in toc_ids:
@@ -147,7 +147,7 @@ class Folder(TocSupport, Folder.Folder):
             item = getattr(self, id, None)
             if item is None:
                 continue
-            if id == 'doc' and item.meta_type == 'Silva Document':
+            if id == 'default' and item.meta_type == 'Silva Document':
                 first_item = item
             else:
                 items.append(item)
@@ -226,8 +226,8 @@ class Folder(TocSupport, Folder.Folder):
         toc_ids = from_folder._toc_ids
         if object.id not in toc_ids:
             return None
-        # can't dedent 'doc'
-        if object.id == 'doc':
+        # can't dedent 'default'
+        if object.id == 'default':
             return None
         # now cut & paste object
         cb = Copying.cut(root, [ref])
