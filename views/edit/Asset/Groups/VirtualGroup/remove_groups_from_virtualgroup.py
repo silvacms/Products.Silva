@@ -7,7 +7,7 @@ view = context
 if not groupids:
     return view.tab_edit(
         message_type="error", 
-        message="No users selected, so none removed.")
+        message="No groups selected, so none removed.")
 
 removed = []
 for groupid in groupids:

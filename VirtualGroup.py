@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.5 2003/02/10 15:35:47 faassen Exp $
+# $Id: VirtualGroup.py,v 1.6 2003/02/10 17:50:49 jw Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -61,7 +61,9 @@ class VirtualGroup(SilvaObject, SimpleItem):
             if sg.isVirtualGroup(virtual_group):
                 for group in sg.listGroupsInVirtualGroup(virtual_group):
                     groups[group] = 1
-        groupids = groups.keys()
+        current_groups = self.listGroups()
+        groupids = [groupid for groupid in groups.keys() 
+                    if groupid not in current_groups]
         for groupid in groupids:
             self.addGroup(groupid)
         # For UI feedback
