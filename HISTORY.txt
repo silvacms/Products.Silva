@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.31 $
+$Revision: 1.32 $
 
 Silva changes
 
@@ -23,6 +23,10 @@ Silva changes
         - Integration of RealObjects editor (beta).
 
         - XML can be exported and imported.
+
+        - '"Docma" support for importing/exporting to other 
+          document formats (like MS Word). This feature needs
+          the seperate Docma server.
 
     Bugs Fixed
 
