@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -30,7 +30,8 @@ class Indexer(Content, SimpleItem):
        back of a book. References must first be marked by placing index 
        codes in text (these codes will also export to print formats). 
        Indexers cascade downwards, indexing all index items in the current 
-       and underlying publications (indexes only published documents).
+       and underlying folders and publications (note that it only indexes 
+       documents that are published).
     """
     security = ClassSecurityInfo()
 
