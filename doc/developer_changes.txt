@@ -42,8 +42,7 @@ From 1.1 to 1.2:
   Changes:
 
     * instead of registering a 'public' view for VersionedContent
-      objects, they are now registered for Version objects, the view
-      assumes
+      objects, they are now registered for Version objects.
 
     * instead of 2 scripts 'render_view' and 'render_preview' only
       'render' is called for both view and preview, if you want to
