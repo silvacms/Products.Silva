@@ -130,7 +130,7 @@
         </tr>
         <tal:repeat repeat="field fields">
           <tal:define define="iterate repeat/field/odd">
-            <tr tal:attributes="class python:iterate and 'even' or 'odd'">
+            <tr tal:attributes="class python:iterate and 'odd' or 'even'">
               <td class="field-title">
                 <span tal:replace="python:field['title']">
                   title</span><span class="warning"
