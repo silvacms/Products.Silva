@@ -9,6 +9,7 @@
   global asset_context request/asset_context | request/SESSION/asset_context | string:/;
   dummy python: request.SESSION.set('filter', filter);
   dummy python: request.SESSION.set('asset_context', asset_context);
+  dummy model/security_trigger;
   " />
 <div class="margins">
   <h2><img src="%s" width="16" height="16" alt="%s" 
