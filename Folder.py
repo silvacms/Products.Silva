@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.114.2.3 $
+# $Revision: 1.114.2.4 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -671,7 +671,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             # XXX non-versioned content should always be deletable.
             return 1
 
-
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_id_valid')
     def is_id_valid(self, id, allow_dup=0):
@@ -929,11 +928,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
 
 InitializeClass(Folder)
 
-
-
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
                                         __name__='manage_addFolderForm')
-
 
 def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     """Add a Folder."""
