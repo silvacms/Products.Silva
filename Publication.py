@@ -32,6 +32,15 @@ class Publication(Folder):
     def is_transparent(self):
         return 0
 
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_xml')
+    def to_xml(self, f):
+        """Render object to XML.
+        """
+        f.write('<silva_publication>')
+        self._to_xml_helper(f)
+        f.write('</silva_publication>')
+
 InitializeClass(Publication)
 
 manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),

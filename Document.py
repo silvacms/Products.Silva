@@ -89,6 +89,19 @@ class Document(VersionedContent, EditorSupport):
             # set title of this document
             self._title = title
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_metadata')
+    def set_metadata(self, name, value):
+        """Set meta data.
+        """
+        if name == 'document_title':
+            self.set_title(value)
+            return
+        if not self._metadata.has_key(name):
+            return
+        self._metadata[name] = value
+        self._metadata = self._metadata
+
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title')
@@ -111,19 +124,22 @@ class Document(VersionedContent, EditorSupport):
             return self.get_title()
         return self._metadata.get(name, None)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_metadata')
-    def set_metadata(self, name, value):
-        """Set meta data.
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_xml')
+    def to_xml(self, f):
+        """Render object to XML.
         """
-        if name == 'document_title':
-            self.set_title(value)
+        version_id = self.get_public_version()
+        if version_id is None:
             return
-        if not self._metadata.has_key(name):
-            return
-        self._metadata[name] = value
-        self._metadata = self._metadata
-
+        version = getattr(self, version_id)
+        f.write('<silva_document>')
+        f.write('<title>%s</title>' % self.get_title())
+        for key, value in self._metadata.items():
+            f.write('<%s>%s</%s>' % (key, value, key))            
+        version.writeStream(f)
+        f.write('</silva_document>')
+        
 #    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
 #                              'to_folder')
 #    def to_folder(self):

@@ -39,6 +39,18 @@ class Ghost(VersionedContent):
             return "Ghost target is broken"
         else:
             return content.get_title()
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_xml')
+    def to_xml(self, f):
+        version_id = self.get_public_version()
+        if version_id is None:
+            return
+        version = getattr(self, version_id)
+        content = version._get_content()
+        if content is None:
+            return
+        content.to_xml(f)
         
 InitializeClass(Ghost)
 

@@ -5,6 +5,7 @@ import SilvaPermissions
 from ViewRegistry import ViewAttribute
 from DateTime import DateTime
 from Security import Security
+from StringIO import StringIO
 
 class SilvaObject(Security):
     """Inherited by all Silva objects.
@@ -167,5 +168,22 @@ class SilvaObject(Security):
         can check what roles a user has.
         """
         pass
-   
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'get_xml')
+    def get_xml(self):
+        """Get XML for object and everything under it.
+        """
+        f = StringIO()
+        to_xml(f)
+        return f.getvalue()
+    
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_xml') 
+    def to_xml(self, f):
+        """Handle unknown objects. (override in subclasses)
+        """
+        f.write('<unknown>%s</unknown>' % self.meta_type)
+        
+        
 InitializeClass(SilvaObject)

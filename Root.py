@@ -38,6 +38,16 @@ class Root(Publication):
         """
         return self.aq_inner
 
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_xml')
+    def to_xml(self, f):
+        """Render object to XML.
+        """
+        f.write('<silva_root>')
+        self._to_xml_helper(f)
+        f.write('</silva_root>')
+
+
     #security.declareProtected(SilvaPermissions.ChangeSilvaContent,
     #                          'get_view')
     #def get_view(self, view_type, obj):

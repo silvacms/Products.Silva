@@ -132,6 +132,16 @@ class SilvaObject(Security):
         """
         pass
 
+    def get_xml(self):
+        """Render this object as XML, return as string.
+        """
+        pass
+    
+    def to_xml(self, f):
+        """Render this object as XML, write to fileobject f.
+        """
+        pass
+    
 class Publishable(Interface.Base):
     # MANIPULATORS
     def activate(self):
