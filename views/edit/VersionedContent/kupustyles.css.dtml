@@ -163,7 +163,7 @@ div.kupu-toolbox-active {
 div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   font-size: 1.1em;
   font-weight: normal;
-  color: #ddeee3;
+  color: #ecfff3;
   background-color: #829199;
   width: 100%;
   max-width: 22em;
