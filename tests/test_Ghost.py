@@ -25,7 +25,7 @@ def render_preview(self):
     if self.meta_type == 'Silva Ghost':
         result = version.render()
         if result is None:
-            return 'This ghost is broken'
+            return 'Ghost is broken'
         else:
             return result
     else:
@@ -38,7 +38,7 @@ def render_view(self):
     if self.meta_type == 'Silva Ghost':
         result = version.render()
         if result is None:
-            return 'This ghost is broken'
+            return 'Ghost is broken'
         else:
             return result
     else:
@@ -179,7 +179,7 @@ class GhostTestCase(unittest.TestCase):
         # now delete doc1
         self.sroot.action_delete(['doc1'])
         # ghost should say 'This ghost is broken'
-        self.assertEquals('This ghost is broken', ghost.preview())
+        self.assertEquals('Ghost is broken', ghost.preview())
 
         # now make ghost point to doc2, and publish ghost and doc2
         self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
@@ -191,7 +191,21 @@ class GhostTestCase(unittest.TestCase):
         # now close & delete doc2
         self.doc2.close_version()
         self.sroot.action_delete(['doc2'])
-        self.assertEquals('This ghost is broken', ghost.view())
+        self.assertEquals('Ghost is broken', ghost.view())
+
+    def test_ghost_title(self):
+        self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
+                                                              '/root/doc1')
+        ghost = getattr(self.sroot, 'ghost1')
+        self.assertEquals('Ghost is unpublished', ghost.get_title())
+        # now publish ghost
+        ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
+        ghost.approve_version()
+        # should have title of whatever we're pointing at now
+        self.assertEquals('Doc1', ghost.get_title())
+        # now break link
+        self.sroot.action_delete(['doc1'])
+        self.assertEquals('Ghost target is broken', ghost.get_title())
         
 def test_suite():
     suite = unittest.TestSuite()

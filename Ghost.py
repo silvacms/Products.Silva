@@ -30,12 +30,15 @@ class Ghost(VersionedContent):
     def get_title(self):
         """Get title.
         """
-        return 'no titles for ghosts until bug is fixed!'
         ghost_version = self.get_viewable()
         if ghost_version is None:
-            return 'ghosted object unpublished'
-        return ghost_version._get_content().get_title()
-
+            return 'Ghost is unpublished'
+        content = ghost_version._get_content()
+        if content is None:
+            return "Ghost target is broken"
+        else:
+            return content.get_title()
+        
 InitializeClass(Ghost)
 
 class GhostVersion(SimpleItem.SimpleItem):
