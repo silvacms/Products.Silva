@@ -333,7 +333,7 @@ def registerDocEditor(root):
     
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_normal'))
 
-    for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table', 'nlist', 'dlist']:
+    for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table', 'nlist', 'dlist', 'code']:
         wr.addWidget(nodeName, 
                      ('service_widgets', 'element', 'doc_elements', nodeName, 'mode_normal'))
 
@@ -347,8 +347,9 @@ def registerDocEditor(root):
     wr.setDisplayName('table', 'Table')
     wr.setDisplayName('nlist', 'Complex list')
     wr.setDisplayName('dlist', 'Definition list')
+    wr.setDisplayName('code', 'Code Element')
     
-    wr.setAllowed('doc', ['p', 'heading', 'list', 'pre', 'nlist', 'table', 'image', 'toc', 'dlist'])
+    wr.setAllowed('doc', ['p', 'heading', 'list', 'pre', 'nlist', 'table', 'image', 'toc', 'dlist', 'code'])
 
 def registerDocViewer(root):
     wr = root.service_doc_viewer
@@ -356,7 +357,7 @@ def registerDocViewer(root):
     
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
-    for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist', 'table', 'dlist']:
+    for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist', 'table', 'dlist', 'code']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
 
 def registerDocPreviewer(root):
@@ -370,6 +371,7 @@ def registerDocPreviewer(root):
 
     wr.addWidget('toc', ('service_widgets', 'element', 'doc_elements', 'toc', 'mode_preview'))
     wr.addWidget('image', ('service_widgets', 'element', 'doc_elements', 'image', 'mode_preview'))
+    wr.addWidget('code', ('service_widgets', 'element', 'doc_elements', 'code', 'mode_preview'))
 
 def registerFieldEditor(root):
     wr = root.service_field_editor
