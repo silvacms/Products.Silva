@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.50 $
+# $Revision: 1.51 $
 
 # Python
 from StringIO import StringIO
@@ -106,7 +106,18 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         if previewable is None:
             return "[No title available]"
         return previewable.get_title()
-
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title_or_id_editable')
+    def get_title_or_id_editable(self):
+        """Get title or id editable or previewable use.
+        """
+        title = self.get_title_editable()
+        if title.strip() == '':
+            return self.id
+        else:
+            return title
+    
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
     def get_short_title(self):
