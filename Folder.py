@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.130 $
+# $Revision: 1.131 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -31,7 +31,7 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.ExtraDOM import writeStream
 
-from interfaces import IPublishable, IContent
+from interfaces import IPublishable, IContent, IGhost
 from interfaces import IVersionedContent, ISilvaObject, IAsset
 from interfaces import IContainer, IPublication, IRoot
 
@@ -429,11 +429,11 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """Paste what is on clipboard to ghost.
         """
         # create ghosts for each item on clipboard
-        ids = self.objectIds()
         allowed_meta_types = [addable['name'] for addable in self.get_silva_addables()]
         messages = []
         for item in self.cb_dataItems():
             if item.meta_type in allowed_meta_types:
+                ids = self.objectIds()
                 paste_id = item.id
                 # keep renaming them until they have a unique id, the Zope way
                 i = 0
@@ -459,23 +459,9 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             #if IContainer.isImplementedBy(item):
             #for object in item.get_assets():
             #    ghost._ghost_paste(object.id, object, REQUEST)
-        elif IVersionedContent.isImplementedBy(item):
-            if item.meta_type == 'Silva Ghost':
-                # copy ghost
-                version_id = item.get_public_version()
-                if version_id is None:
-                    version_id = item.get_next_version()
-                if version_id is None:
-                    version_id = item.get_last_closed_version()
-                version = getattr(item, version_id)
-                self.manage_addProduct['Silva'].manage_addGhost(
-                    paste_id, version.get_content_url())
-            else:
-                # create ghost of item
-                self.manage_addProduct['Silva'].manage_addGhost(
-                    paste_id, item.absolute_url())
-            new_object = getattr(self, paste_id)
-            new_object.sec_update_last_author_info()
+        elif IGhost.isImplementedBy(item):
+            content_url = item.get_content_url()
+            item._factory(self, paste_id, content_url)
         else:
             # this is an object that just needs to be copied
             item = item._getCopy(self)

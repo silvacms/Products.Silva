@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.12 2003/08/15 07:14:49 zagy Exp $
+# $Id: GhostFolder.py,v 1.13 2003/08/15 08:59:49 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -15,7 +15,7 @@ from DateTime import DateTime
 # silva
 from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
-from Products.Silva.Ghost import GhostBase, getLastVersionFromGhost
+from Products.Silva.Ghost import GhostBase
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.Metadata import export_metadata
@@ -76,15 +76,13 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                     for h in haunted.objectValues()]
             elif IContent.isImplementedBy(haunted):
                 if haunted.meta_type == 'Silva Ghost':
-                    version = getLastVersionFromGhost(haunted)
-                    content_url = '/'.join(
-                        version._get_content().getPhysicalPath())
+                    content_url = haunted.get_content_url()
                 else:
                     content_url = '/'.join(haunted.getPhysicalPath())
                 if old_ghost is not None:
                     if old_ghost.meta_type == 'Silva Ghost':
                         old_ghost.create_copy()
-                        version = getLastVersionFromGhost(old_ghost)
+                        version = old_ghost.getLastVersion()
                         version.set_content_url(content_url)
                     else:
                         ghost.manage_delObjects([haunted.id])
@@ -216,7 +214,9 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                 else:
                     object.close_version()
                     
-
+    def _factory(self, container, id, content_url):
+        return container.manage_addProduct['Silva'].manage_addGhostFolder(id,
+            content_url)
        
 InitializeClass(GhostFolder)
 

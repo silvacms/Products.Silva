@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.68 $
+# $Revision: 1.69 $
 
 # Zope
 from OFS import SimpleItem
@@ -129,7 +129,8 @@ class GhostBase:
             # KeyError is what unrestrictedTraverse raises
             # if it cannot find the object.
             self._content_path = path_elements
-        
+       
+    security.declareProtected(SilvaPermissions.View, 'get_content_url')
     def get_content_url(self):
         """Get content url.
         """
@@ -266,6 +267,32 @@ class Ghost(CatalogedVersionedContent):
             return []
         return content.get_indexables()
 
+    security.declarePrivate('getLastVersion')
+    def getLastVersion(self):
+        """returns `latest' version of ghost
+
+            ghost: Silva Ghost intance
+            returns GhostVersion
+        """
+        version_id = self.get_public_version()
+        if version_id is None:
+            version_id = self.get_next_version()
+        if version_id is None:
+            version_id = self.get_last_closed_version()
+        version = getattr(self, version_id)
+        return version
+
+    security.declareProtected(SilvaPermissions.View, 'get_content_url')
+    def get_content_url(self):
+        """return content url of `last' version"""
+        version = self.getLastVersion()
+        return version.get_content_url()
+
+    def _factory(self, container, id, content_url):
+        return container.manage_addProduct['Silva'].manage_addGhost(id,
+            content_url)
+
+
 InitializeClass(Ghost)
 
 class GhostVersion(GhostBase, CatalogedVersion):
@@ -370,24 +397,12 @@ def ghostFactory(container, id, haunted_object):
 
 
 def canBeHaunted(to_be_haunted):
+    if IGhost.isImplementedBy(to_be_haunted):
+        return 0
     if (IContainer.isImplementedBy(to_be_haunted) or
             IContent.isImplementedBy(to_be_haunted)):
         return 1
     return 0
 
 
-def getLastVersionFromGhost(ghost):
-    """returns `latest' version of ghost
-
-        ghost: Silva Ghost intance
-        returns GhostVersion
-    """
-    assert ghost.meta_type == 'Silva Ghost'
-    version_id = ghost.get_public_version()
-    if version_id is None:
-        version_id = ghost.get_next_version()
-    if version_id is None:
-        version_id = ghost.get_last_closed_version()
-    version = getattr(ghost, version_id)
-    return version
 

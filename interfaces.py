@@ -1066,3 +1066,8 @@ class IContainerPolicy(Interface):
 class IGhost(Interface):
     """Marker interface for ghosts"""
 
+    def get_content_url():
+        """return haunted object's url"""
+
+    def _factory(container, id, content_url):
+        """call factory method in container context"""
