@@ -10,7 +10,7 @@ mode_asset = REQUEST.get('mode_asset', 0)
 if REQUEST.has_key('add_cancel'):
     if mode_asset:
         return view.asset_lookup()
-    return view.tab_edit()
+    return model.edit['tab_edit']()
 
 # validate form
 from Products.Formulator.Errors import ValidationError, FormValidationError
@@ -60,5 +60,5 @@ if mode_asset:
 if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
-    return view.tab_edit(message_type="feedback", 
+    return model.edit['tab_edit'](message_type="feedback", 
                          message="Added %s %s." % (object.meta_type, view.quotify(id)))
