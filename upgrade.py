@@ -60,8 +60,11 @@ def from091to092(self, root):
     finally:
         Document.manage_beforeDelete = old_manage_beforeDelete
 
-    return ('Upgrade succeeded, but the following objects have been renamed to '
-                'be able to continue:<br /><br />') + '<br />\n'.join(illegal_urls)
+    if illegal_urls:
+        return ('Upgrade succeeded, but the following objects have been renamed to '
+                    'be able to continue:<br /><br />') + '<br />\n'.join(illegal_urls)
+    else:
+        return
 
 def from09to091(self, root):
     """Upgrade Silva from 0.9 to 0.9.1
