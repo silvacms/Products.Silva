@@ -18,6 +18,12 @@ js.append("""
     """)
 
 js.append("""
+    function handleError(msg) {
+      alert(msg);
+    }
+    """)
+
+js.append("""
     function functSave() {
       mydoc = document.editor.getHTMLData('http://');
       document.myForm.HTMLDATA.value = mydoc;
@@ -57,12 +63,6 @@ js.append("""
       //mydoc = document.myForm.HTMLDATA.value;
     }
     """ )
-
-js.append("""
-    function handleError(msg) {
-	document.write(msg);
-    }
-""")
 
 #from Products.PythonScripts.standard import html_quote
 

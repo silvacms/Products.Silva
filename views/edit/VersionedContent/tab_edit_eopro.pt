@@ -74,7 +74,7 @@
 <form name="myForm" target="RSIFrame" method="POST" tal:attributes="action python: 'tab_edit_eopro_submit'">
     <input type="button" name="save" value="Save Document" onClick="functSave();">
 			<br/><br/>
-    <input type="button" name="reload" value="Reload Document" onClick="functReload();">
+    <input type="button" name="reload" value="Reload" onClick="functReset();">
     <input type="hidden" name="HTMLDATA"
             tal:attributes="value python: model.editor_storage()"
 	   >
