@@ -24,6 +24,7 @@
                   border container/table_border">
 <tr class="topcontrols">
 <td align="left" colspan="6">
+<input class="button" type="submit" name="tab_status_export:method" value="Export all..." title="Export all items in this overview" style="float:right;"/>
 <a href="treelink" title="Up to containing publication"
   tal:condition="python:model != model.get_root()"
   tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/tab_status'">
@@ -269,7 +270,7 @@ There are no publishable objects in this folder.
 <script type="text/javascript">
 <!--
 if (document.forms[0]) {
-  document.write('<input class="button" type="submit" name="selectButton" value="Select all" title="Select all items on and below this level" onClick="toggleSelect(); return false">')
+  document.write('<input class="button" type="submit" name="selectButton" value=" Select all " title="Select all items on and below this level" onClick="toggleSelect(); return false">')
   }
 //-->
 </script>
@@ -280,16 +281,16 @@ Expiration time:&nbsp;
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
 </td>
 <td class="widebody" align="right" colspan="2">
-Set expiration time?&nbsp;
+Set&nbsp;expiration&nbsp;time?&nbsp;
 <field tal:replace="structure python:view.tab_status_form.expires_flag.render()" />
 </td>
 </tr>
 
-<span tal:replace="nothing"> ______________ export all / publish time setting______________ </span>
+<span tal:replace="nothing"> ______________ new versions / publish time setting______________ </span>
 <tr class="controls" valign="top"
   tal:condition="python:len(objects) != 0 or model.get_default()">
 <td colspan="2">
-<input class="button" type="submit" name="tab_status_export:method" value="Export all..." title="Export all items in this overview" />
+<input class="button" type="submit" name="tab_status_new_version:method" value="Create new versions" title="Create new versions of published docs" />
 </td>
 <td class="widebody" align="right" colspan="2">
 Publish time:&nbsp;
@@ -298,7 +299,7 @@ Publish time:&nbsp;
 </td>
 <td class="widebody" align="right" colspan="2"
   tal:condition="silva_permissions/ApproveSilvaContent">
-Publish right now?&nbsp;
+Publish&nbsp;right&nbsp;now?&nbsp;
 <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
 </td>
 <td align="right" colspan="2"
@@ -336,13 +337,11 @@ function toggleSelect() {
 <tr class="divider"
   tal:condition="silva_permissions/ApproveSilvaContent">
 <td colspan="3">
-<input class="button" type="submit" name="tab_status_withdraw:method" value="Reject approval request" title="Reject request for approval of new versions" />
+<input class="button" type="submit" name="tab_status_withdraw:method" value="Reject request for approval" title="Reject request for approval of new versions" />
 &nbsp;
 <input class="button" type="submit" name="tab_status_revoke:method" value="Revoke approval" title="Withdraw approval of new versions" />
 &nbsp;
 <input class="warningbutton" type="submit" name="tab_status_close:method" value="Close" title="Close published items" />
-&nbsp;
-<input class="button" type="submit" name="tab_status_new_version:method" value="New versions" title="Create new versions of published docs" />
 </td>
 
 <td align="right" colspan="3" nowrap="1">
@@ -359,8 +358,6 @@ function toggleSelect() {
 <input class="button" type="submit" name="tab_status_withdraw:method" value="Withdraw approval request" title="Withdraw request for approval of new versions" />
 &nbsp;
 <input class="button" type="submit" name="tab_status_revoke:method" value="Revoke approval" title="Revoke approval of new versions" />
-&nbsp;
-<input class="button" type="submit" name="tab_status_new_version:method" value="New versions" title="Create new versions of published docs" />
 </td>
 <td align="right" colspan="3" nowrap="1">
 <input tal:replace="nothing" class="button" type="submit" name="tab_status_edit_metadata:method" value="Edit metadata..." title="Change metadata in a bulk operation" />
