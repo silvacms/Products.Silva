@@ -84,6 +84,25 @@ function focus_editor() {
       </tr>
       </tal:define>
       </tal:repeat>
+      <tr tal:define="provider here/getLanguageProvider;
+                      languages provider/getAvailableLanguages"
+          tal:condition="python: len(languages) > 1">
+        <td 
+          class="field-title" 
+          i18n:translate="">
+          preferred language
+        </td>
+        <td><select size="1" name="language">
+            <tal:block tal:repeat="lang languages">
+            <option 
+              tal:attributes="
+                value lang;
+                selected python: lang == provider.getPreferredLanguage() and 'selected' or None" 
+              tal:content="lang">language</option>
+            </tal:block>
+          </select>
+        </td>
+      </tr>
     </tbody>
 
     <tfoot>
@@ -117,7 +136,7 @@ function focus_editor() {
             title="close window: alt-c"
             accesskey="c"
             i18n:attributes="title;value;accesskey close_accesskey"
-            onclick="window.close();return false;" 
+            onclick="window.close(); window.opener.location.reload(); return false;" 
           />
           <input class="button"
             type="submit"

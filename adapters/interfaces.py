@@ -151,4 +151,13 @@ class IIndexable(Interface):
 
     def getIndexes():
         """returns the indexes for a certain object, or an empty list."""
-        
+
+class ILanguageProvider(Interface):
+    def getAvailableLanguages():
+        """return the available languages"""
+
+    def setPreferredLanguage(language):
+        """sets the preferred language"""
+
+    def getPreferredLanguage():
+        """gets the preferred language"""
