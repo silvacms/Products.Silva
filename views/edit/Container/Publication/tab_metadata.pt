@@ -129,16 +129,27 @@
               customize layout
             </a>
           </tal:block>
-          <input class="button"
-            type="submit"
-            name="layout_submit:method"
-            value="save layout"
-            title="access key: alt-l"
-            accesskey="l"
-            tal:define="js string:return confirm('Really remove copied layout?')"
-            tal:attributes="onclick python:(model.layout_copied() and js) or ''"
-            i18n:attributes="value;title"
-          />
+          <tal:block condition="model/layout_copied">
+            <input class="button"
+              type="submit"
+              name="layout_submit:method"
+              value="save layout"
+              title="access key: alt-l"
+              accesskey="l"
+              onclick="return confirm('Really remove copied layout?')"
+              i18n:attributes="value;title;onclick"
+            />
+          </tal:block>
+          <tal:block condition="not:model/layout_copied">
+            <input class="button"
+              type="submit"
+              name="layout_submit:method"
+              value="save layout"
+              title="access key: alt-l"
+              accesskey="l"
+              i18n:attributes="value;title"
+            />
+          </tal:block>
         </td>
       </tr>
     </tbody>    

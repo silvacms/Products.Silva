@@ -128,7 +128,7 @@
               type="button"
               name="edit_cancel"
               value="cancel"
-              onClick="history.back()" title="access key: alt-c" accesskey="c"
+              onclick="history.back()" title="access key: alt-c" accesskey="c"
               i18n:attributes="value;title"
             />
           </td>

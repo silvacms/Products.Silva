@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 29 15:08:35 2004\n"
+"POT-Creation-Date: Mon Nov 29 15:40:07 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -590,9 +590,9 @@ msgstr ""
 #: /views/edit/macro_metadata.pt:78
 #: /views/edit/macro_metadata.pt:311
 #: /views/edit/Asset/Image/edit.pt:145
-#: /views/edit/Container/tab_edit_import.pt:96
-#: /views/edit/Container/tab_edit_import.pt:165
-#: /views/edit/Container/tab_edit_import.pt:303
+#: /views/edit/Container/tab_edit_import.pt:95
+#: /views/edit/Container/tab_edit_import.pt:164
+#: /views/edit/Container/tab_edit_import.pt:302
 #: /views/edit/Container/tab_status_export.pt:330
 #: /views/edit/Container/GhostFolder/tab_edit.pt:71
 #: /views/edit/Container/Publication/settings_addables.pt:78
@@ -784,6 +784,14 @@ msgstr ""
 
 #: /views/edit/Asset/Groups/Group/edit.pt:110
 msgid "remove users"
+msgstr ""
+
+#: /views/edit/Asset/Groups/Group/edit.pt:110
+#: /views/edit/Asset/Groups/IPGroup/edit.pt:105
+#: /views/edit/Asset/Groups/VirtualGroup/edit.pt:108
+#: /views/edit/Container/docma_queue.pt:230
+#: /views/edit/Container/tab_status_export.pt:478
+msgid "return confirm('Really remove?')"
 msgstr ""
 
 #: /views/edit/Asset/Groups/Group/edit.pt:126
@@ -1312,11 +1320,11 @@ msgid "Layout has been removed."
 msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables.pt:111
-msgid "save addable settings for this publication: alt-a"
+msgid "save addables settings"
 msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables.pt:111
-msgid "save addables settings"
+msgid "save addable settings for this publication: alt-a"
 msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables.pt:65
@@ -1359,11 +1367,17 @@ msgstr ""
 msgid "customize layout"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:132
+#: /views/edit/Container/Publication/tab_metadata.pt:133
+msgid "return confirm('Really remove copied layout?')"
+msgstr ""
+
+#: /views/edit/Container/Publication/tab_metadata.pt:133
+#: /views/edit/Container/Publication/tab_metadata.pt:144
 msgid "save layout"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:132
+#: /views/edit/Container/Publication/tab_metadata.pt:133
+#: /views/edit/Container/Publication/tab_metadata.pt:144
 msgid "access key: alt-l"
 msgstr ""
 
@@ -1447,7 +1461,7 @@ msgstr ""
 #: /views/edit/Container/docma_queue.pt:24
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:164
-#: /views/edit/Container/tab_edit_import.pt:342
+#: /views/edit/Container/tab_edit_import.pt:341
 #: /views/edit/Container/tab_status_export.pt:433
 #: /doc/silva-extra.xml:164
 msgid "description"
@@ -1458,7 +1472,7 @@ msgid "import to the current location: alt-p"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:245
-#: /views/edit/Container/tab_edit_import.pt:125
+#: /views/edit/Container/tab_edit_import.pt:124
 msgid "import"
 msgstr ""
 
@@ -1578,6 +1592,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:252
 msgid "delete selected groups: alt-d"
+msgstr ""
+
+#: /views/edit/Container/tab_access_groups.pt:252
+#: /views/edit/Container/tab_edit.pt:548
+msgid "return confirm('Really delete?')"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:252
@@ -1804,118 +1823,118 @@ msgstr ""
 msgid "Could not delete ${not_deleted_ids}. Possibly there is a published version, which must be closed before it can be deleted. Or, the document is approved (the link will be green), and approval needs to be revoked. Change the status in the Publish screen (alt-5)."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:107
-#: /views/edit/Container/tab_edit_import.pt:176
-#: /views/edit/Container/tab_edit_import.pt:314
+#: /views/edit/Container/tab_edit_import.pt:106
+#: /views/edit/Container/tab_edit_import.pt:175
+#: /views/edit/Container/tab_edit_import.pt:313
 msgid "file to upload"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:110
-#: /views/edit/Container/tab_edit_import.pt:179
+#: /views/edit/Container/tab_edit_import.pt:109
+#: /views/edit/Container/tab_edit_import.pt:178
 msgid "browse for a file on your disk"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:117
+#: /views/edit/Container/tab_edit_import.pt:116
 msgid "Locate an XML file to import (must be valid Silva XML)."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:125
+#: /views/edit/Container/tab_edit_import.pt:124
 #: /views/edit/VersionedContent/tab_status_macros.pt:338
 msgid "access key: alt-i"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:151
+#: /views/edit/Container/tab_edit_import.pt:150
 msgid "import and extract zip archive (.zip)"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:186
+#: /views/edit/Container/tab_edit_import.pt:185
 msgid "Locate a zip file containing Assets to import or a zip file created by a full media export."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:194
+#: /views/edit/Container/tab_edit_import.pt:193
 msgid "title for assets"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:199
+#: /views/edit/Container/tab_edit_import.pt:198
 msgid "Optional title for all assets"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:207
+#: /views/edit/Container/tab_edit_import.pt:206
 msgid "Provide an optional title for all Assets created from the contents of a zip file with Assets."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:215
+#: /views/edit/Container/tab_edit_import.pt:214
 msgid "subdirectories"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:225
+#: /views/edit/Container/tab_edit_import.pt:224
 msgid "Recreate the subdirectory structure of a zip file with Assets by adding Silva Folders."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:234
+#: /views/edit/Container/tab_edit_import.pt:233
 msgid "import zip"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:234
+#: /views/edit/Container/tab_edit_import.pt:233
 #: /views/edit/Container/tab_status_export.pt:263
 msgid "access key: alt-z"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:271
+#: /views/edit/Container/tab_edit_import.pt:270
 #: /views/edit/Container/tab_status_export.pt:302
 msgid "docma icon"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:279
+#: /views/edit/Container/tab_edit_import.pt:278
 #: /views/edit/Container/tab_status_export.pt:310
 msgid "docma facilities"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:291
+#: /views/edit/Container/tab_edit_import.pt:290
 msgid "upload a document in word format (.doc) for conversion"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:319
+#: /views/edit/Container/tab_edit_import.pt:318
 msgid "Locate a Word file to upload. It'll be converted and appear in the list of processed items below. It can be imported anywhere in Silva."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:326
+#: /views/edit/Container/tab_edit_import.pt:325
 #: /views/edit/Container/tab_status_export.pt:394
 msgid "email address"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:336
+#: /views/edit/Container/tab_edit_import.pt:335
 #: /views/edit/Container/tab_status_export.pt:404
 msgid "An e-mail will be sent to you when the item is processed."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:350
+#: /views/edit/Container/tab_edit_import.pt:349
 #: /views/edit/Container/tab_status_export.pt:442
 msgid "This description will be shown in the queue and the list of processed items."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:358
+#: /views/edit/Container/tab_edit_import.pt:357
 msgid "upload"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:358
+#: /views/edit/Container/tab_edit_import.pt:357
 msgid "upload a word document from your local drive: alt-u"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:67
+#: /views/edit/Container/tab_edit_import.pt:66
 msgid "import in &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:73
+#: /views/edit/Container/tab_edit_import.pt:72
 msgid "over to the export screen: alt-e"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:73
+#: /views/edit/Container/tab_edit_import.pt:72
 #: /views/edit/VersionedContent/tab_status.pt:237
 msgid "export..."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:82
+#: /views/edit/Container/tab_edit_import.pt:81
 msgid "import silva xml (.xml)"
 msgstr ""
 
@@ -2712,6 +2731,10 @@ msgstr ""
 msgid "version status"
 msgstr ""
 
+#: /views/edit/VersionedContent/tab_status.pt:324
+msgid "if (!confirm('Are you sure?')) return false"
+msgstr ""
+
 #: /views/edit/VersionedContent/tab_status.pt:333
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr ""
@@ -3025,6 +3048,10 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:511
 msgid "revert to previous"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:511
+msgid "return confirm('Really revert ?')"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:535
@@ -3476,9 +3503,9 @@ msgstr ""
 #: /views/edit/macro_metadata.pt:73
 #: /views/edit/macro_metadata.pt:307
 #: /views/edit/Asset/Image/edit.pt:140
-#: /views/edit/Container/tab_edit_import.pt:91
-#: /views/edit/Container/tab_edit_import.pt:160
-#: /views/edit/Container/tab_edit_import.pt:298
+#: /views/edit/Container/tab_edit_import.pt:90
+#: /views/edit/Container/tab_edit_import.pt:159
+#: /views/edit/Container/tab_edit_import.pt:297
 #: /views/edit/Container/Publication/settings_addables.pt:73
 #: /views/edit/Container/Publication/tab_metadata.pt:83
 msgid "element"
@@ -3492,9 +3519,9 @@ msgstr ""
 #: /views/edit/tab_access.pt:568
 #: /views/edit/tab_access.pt:741
 #: /views/edit/Asset/Image/edit.pt:148
-#: /views/edit/Container/tab_edit_import.pt:99
-#: /views/edit/Container/tab_edit_import.pt:168
-#: /views/edit/Container/tab_edit_import.pt:306
+#: /views/edit/Container/tab_edit_import.pt:98
+#: /views/edit/Container/tab_edit_import.pt:167
+#: /views/edit/Container/tab_edit_import.pt:305
 #: /views/edit/Container/tab_status_export.pt:124
 #: /views/edit/Container/tab_status_export.pt:218
 #: /views/edit/Container/tab_status_export.pt:333
@@ -3638,11 +3665,11 @@ msgid "No roles have been requested."
 msgstr ""
 
 #: /views/edit/tab_access.pt:252
-msgid "access key: alt-d"
+msgid "deny role"
 msgstr ""
 
 #: /views/edit/tab_access.pt:252
-msgid "deny role"
+msgid "access key: alt-d"
 msgstr ""
 
 #: /views/edit/tab_access.pt:264
@@ -3842,12 +3869,12 @@ msgstr ""
 
 #: /views/edit/tab_metadata.pt:54
 #: /views/edit/Container/Publication/tab_metadata.pt:48
-msgid "manage subscriptions..."
+msgid "manage subscriptions: alt-m"
 msgstr ""
 
 #: /views/edit/tab_metadata.pt:54
 #: /views/edit/Container/Publication/tab_metadata.pt:48
-msgid "manage subscriptions: alt-m"
+msgid "manage subscriptions..."
 msgstr ""
 
 #: /views/edit/tab_metadata.pt:88

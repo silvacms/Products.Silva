@@ -113,8 +113,8 @@
             name="remove_users_from_group:method"
             title="remove selected user(s) from this group: alt-r"
             accesskey="r"
-            i18n:attributes="title;value"
-            onClick="return confirm('Really remove?')"
+            i18n:attributes="title;value;onclick"
+            onclick="return confirm('Really remove?')"
             tal:condition="userids"
           />
         </td> 

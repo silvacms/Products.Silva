@@ -513,8 +513,8 @@ made to the current version.
   value="revert to previous"
   title="access key: alt-p"
   accesskey="p"
-  onClick="return confirm('Really revert ?')"
-  i18n:attributes="value;title"
+  onclick="return confirm('Really revert ?')"
+  i18n:attributes="value;title;onclick"
 />
 </td>
 </tr>

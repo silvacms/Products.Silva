@@ -478,11 +478,11 @@
   <input class="warning"
     accesskey="x"
     name="export_delete:method"
-    onClick="return confirm('Really remove?')"
+    onclick="return confirm('Really remove?')"
     title="there's no undo: alt-x"
     type="submit"
     value="remove" 
-    i18n:attributes="value;title"
+    i18n:attributes="value;title;onclick"
   />
 </metal:fill-slot>
 </metal:use-macro>

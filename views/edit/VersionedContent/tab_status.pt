@@ -328,7 +328,7 @@ _______ manual close section here _______
                   title="there's no undo: alt-d"
                   accesskey="d"
                   onclick="if (!confirm('Are you sure?')) return false"
-                  i18n:attributes="value;title"
+                  i18n:attributes="value;title;onclick"
                 />
                 <input class="button"
                   type="submit"

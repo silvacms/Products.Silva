@@ -234,7 +234,7 @@
                 title="there's no undo: alt-x"
                 type="submit"
                 value="remove" 
-                i18n:attributes="value;title" />
+                i18n:attributes="value;title;onclick" />
               <input class="button"
                 accesskey="m"
                 name="tab_edit_import_import_and_delete:method"

@@ -255,7 +255,7 @@
             title="delete selected groups: alt-d"
             accesskey="d"
             onclick="return confirm('Really delete?')"
-            i18n:attributes="title;value"
+            i18n:attributes="title;value;onclick"
             tal:condition="groups"
           />
         </td>
