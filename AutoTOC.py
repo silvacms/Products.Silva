@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.5 2003/11/04 06:19:45 kitblake Exp $
+# $Id: AutoTOC.py,v 1.5.30.1 2004/04/25 05:29:33 kitblake Exp $
 
 # Zope
 from Globals import InitializeClass
@@ -23,7 +23,7 @@ icon = "www/autotoc.png"
 addable_priority = 2
 
 class AutoTOC(Content, SimpleItem):
-    """Automatically displays a table of contents when the folder is requested (e.g. http://www.x.yz/silva/myFolder/)."""
+    """Automatically displays a table of contents. If it's named 'index', the parent folder will show a table of contents when requested (e.g. http://www.x.yz/silva/myFolder/)."""
     security = ClassSecurityInfo()
 
     meta_type = "Silva AutoTOC"

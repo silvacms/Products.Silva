@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.15 2004/04/22 18:21:00 roman Exp $
+# $Id: Image.py,v 1.50.4.1.6.16 2004/04/25 05:31:05 kitblake Exp $
 
 # Python
 import re, string 
@@ -43,8 +43,8 @@ icon = "www/silvaimage.gif"
 addable_priority = -0.4
 
 class Image(Asset):
-    """Web graphics (gif, jpg, png) can be uploaded and inserted in Silva
-       documents.
+    """Web graphics (gif, jpg, png) can be uploaded and inserted in 
+       documents, or used as viewable assets.
     """    
     security = ClassSecurityInfo()
 
