@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -10,6 +10,7 @@ from IPublication import IPublication
 # Silva
 from Publication import Publication
 import SilvaPermissions
+import configure
 # misc
 from helpers import add_and_edit
 
@@ -98,9 +99,9 @@ def manage_addRoot(self, id, title, REQUEST=None):
     object = Root(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
-    # add all services
-    #silva = object.manage_addProduct['Silva']
-    #silva.manage_addViewRegistry('service_view_registry')
+
+    # now set it all up
+    configure.configure(object)
 
     add_and_edit(self, id, REQUEST)
     return ''

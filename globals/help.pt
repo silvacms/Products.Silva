@@ -1,0 +1,16 @@
+<pre>
+Documentation can be installed here.
+
+Here is in the 'globals' folder, and if you wish to install docs, 
+(your own or Silva documentation) you should put them elsewhere, 
+since globals will be overwritten in an upgrade.
+
+If you have a 'locals' folder, add a folder called 'help' there, 
+put the documentation in it, and then change a property in the 
+Silva root. Go to the top of Silva in the ZMI and click the 
+properties tab and change the help_url property to: 
+/silva/locals/help
+
+Documentation (in structured text format) can be found at:
+<a href="http://www.infrae.com/products/silva/docs">http://www.infrae.com/products/silva/docs</a>
+</pre>

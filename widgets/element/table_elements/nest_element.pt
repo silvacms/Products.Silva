@@ -1,0 +1,1 @@
+<a href="edit_mode" title="nest element" tal:attributes="href string:${url_start}/edit_mode"><img tal:attributes="src string:${silva_root}/globals/nest_element.gif" width="16" height="16" border="0" alt="edit element" /></a>

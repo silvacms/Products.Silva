@@ -1,0 +1,72 @@
+<div metal:use-macro="container/macro_edit_view/macros/edit_view">
+
+<div metal:fill-slot="edit_input" tal:omit-tag="">
+&nbsp;List title:<br />
+<textarea name="list_title" cols="65" rows="2" style="font-weight:bold;" size="65" value=""
+  tal:content="python:here.util.get_title_text(node)">Title</textarea><br />
+
+&nbsp;List items:<br />
+<textarea name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
+  tal:content="here/editable_content">Dummy</textarea><br />
+</div>
+
+<div metal:fill-slot="element_controls" tal:omit-tag="">
+<script type="text/javascript" tal:content="structure here/elements.js" />
+Element: 
+<select name="what" onChange="updateSelectionOptions()">
+  <option value="p">paragraph</option>
+  <option value="heading">heading</option>
+  <option value="list" selected="selected">list</option>
+  <option value="pre">preformatted</option>
+  <option value="nlist" tal:replace="nothing">complex list</option>
+  <option value="dlist">definition list</option>
+</select>
+&nbsp;&nbsp;
+<check tal:condition="python:node.hasAttribute('type')" tal:omit-tag="">
+<init tal:define="global type python:node.getAttribute('type')" tal:omit-tag="" />
+</check>
+<check tal:condition="python:not node.hasAttribute('type')" tal:omit-tag="">
+<init tal:define="global type nothing" tal:omit-tag="" />
+</check>
+Type: 
+<select name="element_type">
+<option value="disc"
+  tal:attributes="selected python:test(type == 'disc', 'selected', nothing)">disc bullets</option>
+<option value="square"
+  tal:attributes="selected python:test(type == 'square', 'selected', nothing)">square bullets</option>
+<option value="circle"
+  tal:attributes="selected python:test(type == 'circle', 'selected', nothing)">circle bullets</option>
+<option value="1"
+  tal:attributes="selected python:test(type == '1', 'selected', nothing)">1, 2, 3,..</option>
+<option value="I"
+  tal:attributes="selected python:test(type == 'I', 'selected', nothing)">I, II, III,..</option>
+<option value="i"
+  tal:attributes="selected python:test(type == 'i', 'selected', nothing)">i, ii, iii,..</option>
+<option value="A"
+  tal:attributes="selected python:test(type == 'A', 'selected', nothing)">A, B, C,..</option>
+<option value="a"
+  tal:attributes="selected python:test(type == 'a', 'selected', nothing)">a, b, c,..</option>
+<option value="none"
+  tal:attributes="selected python:test(type == 'none', 'selected', nothing)">no bullet</option>
+</select>
+
+</div>
+
+<div metal:fill-slot="edit_notes" tal:omit-tag="">
+<ul class="tips">
+  <li>Add list items separated by an empty line space (2 returns).</li>
+  <li><b>Tip:</b> Tab to the save button.</li>
+  <li>Text can be formatted (in <i>italic</i>, <b>bold</b>, etc) with markup,&nbsp;e.g.:
+    <ul class="tips-nested">
+      <li>**this will be bold**</li>
+      <li>++this will be italic++</li>
+      <li>__this will be underlined__</li>
+      <li>((link text|http://www.x.yz))</li>
+      <li>[[index item|item as shown in index]]</li>
+      <li tal:replace="nothing">{{name of person|name in index}}</li>
+    </ul>
+  </li>
+</ul>
+</div>
+
+</div>

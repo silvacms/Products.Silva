@@ -1,0 +1,37 @@
+<!-- ___________________________ start index_html ___________________________ -->
+<html metal:use-macro="here/macro_index/macros/master">
+
+<div class="margins"
+  metal:fill-slot="main">
+<!-- ___________________________ start index_html/slot main ___________________________ -->
+
+<dummy tal:omit-tag="" tal:define="dummy python:model.security_trigger()" />
+
+<h2>Info for <span class="folder-title" tal:content="structure string:&raquo;${model/get_title_html}&laquo;">title here</span></h2>
+
+<h3>Authorized users below this level</h3>
+
+<form>
+<span class="textarea">
+<textarea name="data" cols="65" rows="12" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="userinfo python:model.sec_get_user_info(userid)"
+    tal:condition="userinfo/mail | nothing" tal:replace="userinfo/mail">
+userid
+</span><span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></repeat></textarea>
+</span>
+</form>
+
+<ul tal:replace="nothing">
+<repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep">
+<li tal:define="userinfo python:model.sec_get_user_info(userid)"
+    tal:condition="userinfo/mail | nothing" tal:content="userinfo/mail">
+userid
+</li>
+</repeat>
+</ul>
+<!-- ___________________________ end index_html/slot main ___________________________ -->
+</div>
+
+
+</html>
+<!-- ___________________________ end index_html ___________________________ -->
+

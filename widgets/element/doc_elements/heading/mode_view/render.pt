@@ -1,0 +1,5 @@
+<div tal:omit-tag="" tal:define="type here/get_type">
+  <h3 tal:condition="python:type == 'normal'" tal:content="structure here/content">heading</h3>
+  <h4 tal:condition="python:type == 'sub'" tal:content="structure here/content">heading</h4>
+</div>
+

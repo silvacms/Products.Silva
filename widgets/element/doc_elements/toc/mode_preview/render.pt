@@ -1,0 +1,22 @@
+<init tal:omit-tag=""
+      tal:define="global node request/node;
+                  global toc_depth python:int(test(node.hasAttribute('toc_depth'),node.getAttribute('toc_depth'),-1))" />
+
+<p class="frontend" tal:define="node request/node">
+  <toc tal:omit-tag=""
+    tal:repeat="obj python:node.get_content().get_container().get_tree()">
+  <loop tal:omit-tag=""
+    tal:define="indent python:obj[0]; 
+      item python:obj[1];
+      title python:obj[1].get_title_html()"
+    tal:condition="python:toc_depth == -1 or indent &lt; toc_depth">
+  <img width="12" height="14"
+    tal:condition="python:indent > 0"
+    tal:attributes="width python:indent * 32;
+      src string:${here/silva_root}/globals/pixel.gif" />
+  <a href="edit"
+    tal:attributes="href string:${item/absolute_url}/edit/tab_preview"><span
+    class="index-link" tal:content="structure title">title</span></a><br />
+  </loop>
+  </toc>
+</p>

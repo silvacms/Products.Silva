@@ -1,0 +1,121 @@
+<init tal:define="global silva_root here/silva_root;
+  global model request/model; 
+  global editable model/get_editable;
+  global view here;
+  global title python:editable.get_title_editable()" />
+ 
+<br />
+<table width="100%" cellspacing="0" cellpadding="1" border="0">
+<tr valign="top">
+<td width="16"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" alt="not editable" /></td>
+<td class="frontend" colspan="3" width="98%">
+<div class="front3">&nbsp;Demo-details for: <span tal:replace="structure python:model.get_title_html()" /></div>
+</td>
+<td width="60" align="right" valign="top">&nbsp;</td>
+</tr>
+</table>
+
+<form method="POST" name="form" action="demoObject_submit">
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<tr>
+<td class="transparent" width="16">&nbsp;</td>
+<th align="left">
+Element
+</th>
+<th align="right">
+&nbsp;
+</th>
+<th align="left">
+Content
+</th>
+<th align="left" width="20%">
+Note
+</th>
+<td class="transparent" width="60" align="right" valign="top">&nbsp;</td>
+</tr>
+
+<tr class="focus" valign="top">
+<td class="transparent" width="16">&nbsp;</td>
+<td align="right">Title</td>
+<td align="right" class="warning">
+*
+</td>
+<td align="left">
+<input tal:replace="structure python:view.form.object_title.render(model.get_title_html())" />
+</td>
+<td>
+The title
+</td>
+<td class="transparent" width="60" align="right" valign="top">&nbsp;</td>
+</tr>
+
+
+<tr class="focus-cycle" valign="top">
+<td class="transparent" width="16">&nbsp;</td>
+<td align="right">Information</td>
+<td align="right" class="warning">
+*
+</td>
+<td align="left">
+<input tal:replace="structure python:view.form.info.render(editable.info())" />
+</td>
+<td>
+Some information
+</td>
+<td class="transparent" width="60" align="right" valign="top">&nbsp;</td>
+</tr>
+
+<content-editor tal:omit-tag="">
+<tr comment="DemoAddable Content" class="focus" valign="top">
+  <td width="16" class="transparent" ><a href="content_mode"><img tal:attributes="src string:${silva_root}/globals/edit_element.gif" width="16" height="16" border="0" alt="edit element" /></a></td>
+  <td class="rowhead" align="right"><a href="content_mode">Content</a></td>
+  <td align="right">&nbsp;</td>
+  <td colspan="2"><p tal:replace="structure here/get_content" /><p tal:condition="not: here/get_content" tal:replace="structure string:(nothing filled in)" /></td>
+  <td class="transparent" width="60" align="right" valign="top">&nbsp;</td>
+</tr>
+</content-editor>
+
+<tr class="focus-cycle" valign="top">
+<td class="transparent" width="16">&nbsp;</td>
+<td align="right">Number</td>
+<td align="right" class="warning">
+&nbsp;
+</td>
+<td align="left">
+<input tal:replace="structure python:view.form.number.render(editable.number())" />
+</td>
+<td>
+A number
+</td>
+<td class="transparent" width="60" align="right" valign="top">&nbsp;</td>
+</tr>
+
+<tr class="focus" valign="top">
+<td class="transparent" width="16">&nbsp;</td>
+<td align="right">Date</td>
+<td align="right" class="warning">
+&nbsp;
+</td>
+<td align="left">
+<input tal:replace="structure python:view.form.date.render(editable.date())" />
+</td>
+<td>
+Some date
+</td>
+<td class="transparent" width="60" align="right" valign="top">&nbsp;</td>
+</tr>
+
+<tr class="controls">
+<td class="transparent" width="16">&nbsp;</td>
+<td colspan="4" align="right">
+<input class="button" type="submit"
+       name="form_submitted" value=" change item "
+       tal:attributes="value string: Save DemoObject " />
+</td>
+<td class="transparent" width="60" align="right" valign="top">&nbsp;</td>
+</tr>
+</table>
+
+</form>
+
+<p class="halfline">&nbsp;</p>

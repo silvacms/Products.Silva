@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="latin-1"?>
+
+<form>
+  <title></title>
+  <name>form</name>
+  <action></action>
+  <enctype></enctype>
+  <method>POST</method>
+
+  <groups multiple="true">
+    <group>
+      <title>Default</title>
+      <fields multiple="true">
+
+      <field><id>file</id> <type>FileField</type>
+        <values>
+          <display_maxwidth></display_maxwidth>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <display_width type="int">30</display_width>
+          <css_class></css_class>
+          <default></default>
+          <title>File</title>
+          <description></description>
+          <external_validator></external_validator>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>

@@ -1,0 +1,84 @@
+<!-- ___________________________ start index_html ___________________________ -->
+<html metal:use-macro="here/macro_index/macros/master">
+
+<div class="margins" metal:fill-slot="main">
+<!-- ___________________________ start index_html/slot main ___________________________ -->
+
+<tal:condition condition="python:view.REQUEST.has_key('ids')">
+<tal:init define="global objects view/REQUEST/ids" />
+
+<h3>Rename objects</h3>
+
+<form action="tab_edit_rename_submit" method="post">
+
+<table width="96%" cellspacing="0" cellpadding="5" border="0"
+  tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
+                  cellpadding container/table_cellpadding; border container/table_border">
+<tr>
+<th align="left">
+Current id
+</th>
+<th align="left">
+New id
+</th>
+<th align="left">
+Current title
+</th>
+<th align="left">
+New title
+</th>
+<th align="left" width="12%">
+Notes
+</th>
+</tr>
+
+<tal:repeat repeat="objectid objects">
+<tal:define define="object python:getattr(model, objectid)">
+<tal:cycle define="oddrow repeat/objectid/odd">
+<tr class="focus" valign="top"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+<td align="left">
+<span tal:replace="object/getId" />
+</td>
+<td>
+<input type="text" name="name" style="width: 100%" value="value" tal:attributes="name string:id_${object/getId}; value object/getId" />
+</td>
+<td align="left">
+<span tal:condition="python: object.getId() != 'index'" tal:replace="structure object/get_title_html" />
+<span tal:condition="python: object.getId() == 'index'" tal:replace="structure object/aq_inner/aq_parent/get_title_html" />
+</td>
+<td>
+<input type="text" name="name" style="width: 100%" value="value" tal:condition="python: object.getId() != 'index'" tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
+<input tal:condition="python: object.getId() == 'index'" type="text" name="name" style="width: 100%" tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
+</td>
+<td>
+<span tal:condition="python: object.getId() == 'index'" style="color:red;">
+Changes the title of the folder!
+</span>
+</td>
+</tr>
+</tal:cycle>
+</tal:define>
+</tal:repeat>
+
+<tr class="controls">
+<td colspan="1">
+<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" />
+</td>
+<td colspan="4" align="right">
+<input class="button" type="submit" value=" Rename " />
+</td>
+</tr>
+</table>
+
+</form>
+
+</tal:condition>
+<tal:condition condition="python: not here.REQUEST.has_key('ids')">
+No items to rename!<br />
+<a href="#" tal:attributes="href python:'/'.join(model.getPhysicalPath()) + '/edit'">Edit</a>
+</tal:condition>
+
+</div>
+
+</html>

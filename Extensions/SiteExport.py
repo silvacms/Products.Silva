@@ -115,7 +115,7 @@ class ImageExporter:
     
     fh = open(path.join(directory,id), 'w')
     
-    data = obj.data
+    data = object.data
     
     if type( data) == type (''):
       fh.write(data)
@@ -187,6 +187,7 @@ meta_type_mapping = {'Z SQL Method':SQLExporter(),
                      'DTML Document':DTMLExporter(),
                      'External Method':ExternalMethodExporter(),
                      'Formulator Form':FormulatorFormExporter(),
+                     'Image':ImageExporter(),
                      }
 
 

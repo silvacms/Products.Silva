@@ -1,0 +1,5 @@
+<div tal:omit-tag="" tal:define="model request/model">
+<div tal:omit-tag="" tal:condition="model/get_default">
+<p tal:replace="structure python:model.get_default().preview()">Preview</p>
+</div>
+</div>

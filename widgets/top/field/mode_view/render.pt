@@ -1,0 +1,1 @@
+<content tal:replace="structure python:here.service_editor.renderElementsView(request.node)" />

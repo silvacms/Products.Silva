@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Reference</title>
+<link rel="shortcut icon" href="globals/favicon.ico" />
+<link rel="stylesheet" href="globals/base.css" />
+<link rel="stylesheet" href="globals/overide.css" />
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<init tal:omit-tag=""
+      tal:define="global silva_root here/silva_root;
+                  global tabs nothing; 
+                  global table_colspan python: 3;
+                  global tabs_colspan python: 1;
+                  selected_tab_id template/id" />
+
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+
+<span tal:replace="nothing"> ______________ background behind tabs ______________ </span>
+<tr>
+<td class="tab-bg" width="2%">
+<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="14" />
+</td>
+<td class="tab-bg" colspan="8"
+    tal:attributes="colspan tabs_colspan"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<td class="tab-bg" width="4%" align="right" valign="bottom"><a href="globals/backgrounder"><span class="silva">Silva&nbsp;</span></a></td>
+</tr>
+
+<span tal:replace="nothing"> ______________ tabs lower edge ______________ </span>
+<tr>
+<td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<cellset tal:omit-tag="" tal:repeat="item tabs">
+<div tal:define="is_selected_tab python:item[1] == template.id"
+     tal:omit-tag="">
+<td class="tab-up" colspan="3"
+    tal:attributes="class python:test(is_selected_tab, 'tab-up', 'tab-edge')"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+</div>
+</cellset>
+<td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="5" height="1" /></td>
+<td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="5" height="1" /></td>
+</tr>
+</table>
+
+
+<span tal:replace="nothing"> ______________ breadcrumb trail ______________ </span>
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+<td class="tab-up" width="2%"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<td class="tab-up">
+<div class="breadcrumb">
+<a href="javascript:history.back();">Back</a>
+</div>
+</td>
+</tr>
+
+<span tal:replace="nothing"> ______________ breadcrumb descender space ______________ </span>
+<tr>
+<td class="tab-up" colspan="2"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+</tr>
+
+<span tal:replace="nothing"> ______________ bottom edge ______________ </span>
+<tr>
+<td class="tab-edge" colspan="2"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+</tr>
+</table>
+<!-- ____________________________ end tabs ____________________________ -->
+
+<span class="halfline"><br /></span>
+
+<div class="margins">
+
+<h3><img src="silva_icon_32.gif" width="32" height="32" alt="Silva" />&nbsp;&nbsp;Silva: an extensible XML Authoring and Publication System</h3>
+
+<pre>
+From WordNet (r) 1.6 [wn]:
+
+  silva
+       n : the forest trees growing in a country or region [syn: {sylva}]
+
+
+From Webster's Revised Unabridged Dictionary (1913) [web1913]:
+
+  Silva \Sil"va\, n.; pl. E. {Silvas}, L. {Silvae}. [L., properly,
+     a wood, forest.] [Written also {sylva}.] (Bot.)
+     (a) The forest trees of a region or country, considered
+         collectively.
+     (b) A description or history of the forest trees of a
+         country.
+
+</pre>
+
+<p class="subhead">
+Silva v0.8.5
+</p>
+
+</div>
+
+</body>
+</html>

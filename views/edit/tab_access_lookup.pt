@@ -1,0 +1,146 @@
+<!-- _________________ START SETTINGS WORKSHEET ________________________ -->
+<metal:block use-macro="here/macro_index/macros/master">
+<div class="margins" metal:fill-slot="main">
+<h2>
+  Users lookup
+</h2>
+<div class="worksheet borders top bottom left right"  
+  tal:condition="python:view.has_access()"
+  tal:define="
+    dummy python:model.security_trigger();
+    global no_entry string:-">
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+<tr>
+  <td><h3>Search</h3></td>
+  <td><h3>Selection</h3></td>
+</tr>
+<tr align="left" valign="top">
+<td width="50%">
+<form action="." method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<tr class="topcontrols">
+  <th colspan="2" align="left">
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    User search
+  </th>
+</tr>
+<tr class="focus">
+  <td class="rowhead" colspan="2" >
+    Name (or part of name):
+    <br />
+    <input type="text" class="textarea" name="name" value="" style="width:100%;" />
+  </td>
+</tr>
+<tr class="controls">
+  <td colspan="2" align="right">
+    <input type="submit" class="button" name="lookup_search:method" value="Search" />
+  </td>
+</tr>
+<tr>
+  <td colspan="2" align="left">
+    &nbsp;
+  </td>
+</tr>
+<tr class="topcontrols">
+  <th colspan="2" align="left">
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    Search results
+  </th>
+</tr>
+<tal:block define="global lookup_result python:view.lookup_get_search_result()" />
+<!-- If many items in result; put a second button on top as well. 
+Is this UI-wise "done" or "not done"? -->
+<tr class="topcontrols"
+  tal:condition="python:len(lookup_result) > 3" >
+  <td colspan="2" align="right">
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    <input type="submit" class="button" name="lookup_add_to_selection:method" value="Add to selection" />
+  </td>
+</tr>
+<!-- Listing loop -->
+<tal:block   
+  repeat="userinfo lookup_result">
+<tr class="focus"
+  tal:define="oddrow repeat/userinfo/odd"
+  tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
+  <td align="left" valign="top" width="1%">
+    <input type="checkbox" name="userids:list" value=""
+      tal:attributes="value userinfo/uid" />
+  </td>
+  <td>
+    <span class="subhead" tal:content="userinfo/cn" />&nbsp;
+    <tal:block condition="selected_user/userclass | nothing">
+      (<span tal:content="selected_user/userclass" />)
+    </tal:block>
+    <br />
+    <span class="subhead">email:</span>
+    <span tal:replace="userinfo/mail | no_entry" /><br />
+    <span class="subhead">Department(s):</span>
+    <span tal:replace="python:view.lookup_render_departments(userinfo)" /><br />
+  </td>            
+</tr>
+</tal:block>
+<tr class="focus"
+  tal:condition="python:not lookup_result" >
+  <td colspan="2" align="left" valign="top">
+    <i>(no search results)</i>
+  </td>
+</tr>
+<tr class="controls">
+  <td colspan="2" align="right">
+    <input type="submit" class="button" name="lookup_add_to_selection:method" value="Add to selection" />
+  </td>
+</tr>
+</table>
+</form>
+</td>
+<!-- __________________________ selection ______________________________ -->
+<td width="50%">
+<form action="." method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0"
+  tal:define="selected_users python:here.lookup_get_selection().values()" >
+<tr class="topcontrols">
+  <th align="left">
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    Current selection
+  </th>
+  <th align="right">
+    <input type="submit" name="lookup_use_selection:method" class="button" value="Use selection...">
+  </th>
+</tr>
+<tal:block define="selected_users python:here.lookup_get_selection().values()">
+  <tal:block
+    tal:condition="selected_users"
+    tal:repeat="selected_user selected_users">
+<tr class="focus">
+  <td colspan="2" align="left">
+    <input type="checkbox" class="warningbox" name="ruserids:list" value="" 
+      tal:attributes="value string:${selected_user/uid}"/>&nbsp;
+      <span class="subhead" tal:content="selected_user/cn" />&nbsp;
+      <tal:block condition="selected_user/userclass | nothing">
+        (<span tal:content="selected_user/userclass" />)
+      </tal:block>
+      <br />
+  </td>
+</tr>
+</tal:block>
+</tal:block>
+<tr class="controls">
+  <td colspan="2" align="left">
+    <input type="submit" name="lookup_remove_from_selection:method" class="warningbutton" value="Deselect">
+  </td>
+</tr>
+</table>
+</form>
+</td>
+<!-- ________________________ end selection ____________________________ -->
+</tr>
+</table>
+</div>
+</div>
+</metal:block>
+<!-- _____________________ END SETTINGS WORKSHEET ______________________ -->

@@ -1,0 +1,54 @@
+<init tal:omit-tag=""
+  tal:define="global active_tab string:tab_status" />
+
+<!-- ____________________________ start index_html ____________________________ -->
+<html metal:use-macro="here/macro_index/macros/master">
+
+<div tal:omit-tag="" metal:fill-slot="main">
+<!-- ____________________________ start index_html/slot main ___________________________ -->
+
+<div class="margins">
+<h2>Export options for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
+
+<form action="download_xml">
+<table width="43%" cellspacing="0" cellpadding="3" border="0"
+  tal:attributes="cellspacing container/table_cellspacing;
+    cellpadding container/table_cellpadding; border container/table_border">
+<tr>
+<th align="left">
+XML export
+</th>
+<th align="right" width="20">
+Set
+</th>
+</tr>
+
+<tr class="focus" valign="top">
+<td align="right">
+Include sub publications?  
+</td>
+<td align="right">
+<input type="checkbox" name="with_sub_publications" />
+</td>
+</tr>
+
+<tr class="focus-cycle" valign="top">
+<td align="right">
+Export newest version?<br /> 
+(if not checked the published version is exported)
+</td>
+<td align="right">
+<input type="checkbox" name="export_last_version" />
+</td>
+</tr>
+
+<tr class="controls">
+<td colspan="2" align="right">
+<input class="button" type="submit" value=" Export " />
+</td>
+</tr>
+</table>
+
+</div>
+</div>
+</html>

@@ -1,0 +1,108 @@
+<html metal:use-macro="here/macro_index/macros/master">
+
+<div class="margins" metal:fill-slot="main">
+<!-- ___________________________ start index_html/slot main ___________________________ -->
+
+<h2><img src="%s" width="16" height="16" alt="%s" 
+      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+  Status of <span class="document-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
+</h2>
+
+<tal:block define="
+  global unapproved   python:model.get_unapproved_version() is not None;
+  global request_pending python:unapproved and model.is_version_approval_requested();
+  global approved     python:model.get_approved_version() is not None;
+  global published    python:model.get_public_version() is not None;
+  global closed       python:model.get_public_version_status() == 'closed';
+  global next         python:model.get_next_version() is not None;
+  global silva_permissions view/get_silva_permissions" />
+
+<span tal:replace="nothing"> _______ status: content is approved, not published _______ </span>
+<p tal:condition="python:silva_permissions['ChangeSilvaContent'] and approved">
+<span class="subhead">Content is approved, not published</span><br />
+<span tal:condition="not:silva_permissions/ApproveSilvaContent"
+  tal:omit-tag="">Publication settings can be changed.<br /></span>
+</p>
+
+<span tal:replace="nothing"> _______ status: content is published _______ </span>
+<p tal:condition="python:silva_permissions['ChangeSilvaContent'] and not next and published">
+<span class="subhead">Content is published</span><br />
+This content is published (online for the public).<br />
+If you wish you can make an editable copy by going to the <a href="tab_edit"><span class="index-link">Edit tab</span></a>.
+<br />
+</p>
+
+<span tal:replace="nothing"> _______ status: warning of new version of published content _______ </span>
+<p tal:condition="python:silva_permissions['ChangeSilvaContent'] and unapproved and published">
+<span class="subhead">Published version exists</span><br />
+Note: <span class="warning">an older version of this content is online.</span><br />
+Publishing this version will replace the public version.
+<br />
+</p>
+
+<span tal:replace="nothing"> _______ status: content is closed _______ </span>
+<p tal:condition="python:silva_permissions['ChangeSilvaContent'] and not next and closed">
+<span class="subhead">Content is closed</span><br />
+This content was once published but is now closed.<br />
+If you wish you can make an editable copy by going to the <a href="tab_edit"><span class="index-link">Edit tab</span></a>.
+<br />
+</p>
+
+
+<span tal:replace="nothing"> _______ Author requests approval _______ </span>
+<check tal:condition="python:not silva_permissions['ApproveSilvaContent'] and unapproved and not request_pending"
+  tal:omit-tag="">
+<div metal:use-macro="view/tab_status_macros/macros/request_approval">
+request approval section here
+</div>
+</check>
+
+
+<span tal:replace="nothing"> _______ Editor considers approval _______ </span>
+<check tal:condition="python:silva_permissions['ApproveSilvaContent'] and unapproved"
+  tal:omit-tag="">
+<div metal:use-macro="view/tab_status_macros/macros/approve_new">
+approval section here
+</div>
+</check>
+
+<span tal:replace="nothing"> _______ Author/Editor withdraws/rejecs request forapproval _______ </span>
+<check tal:condition="python:silva_permissions['ChangeSilvaContent'] and unapproved and request_pending"
+  tal:omit-tag="">
+<div metal:use-macro="view/tab_status_macros/macros/withdraw_request_approval">
+request approval section here
+</div>
+</check>
+
+
+<span tal:replace="nothing"> _______ approved, Editor can change settings _______ </span>
+<check tal:condition="python:silva_permissions['ApproveSilvaContent'] and approved"
+  tal:omit-tag="">
+<div metal:use-macro="view/tab_status_macros/macros/approved_editor">
+change settings section here
+</div>
+</check>
+
+
+<span tal:replace="nothing"> _______ revoke approval _______ </span>
+<check tal:condition="python:silva_permissions['ChangeSilvaContent'] and approved"
+  tal:omit-tag="">
+<div metal:use-macro="view/tab_status_macros/macros/revoke_approval">
+revoke approval section here
+</div>
+</check>
+
+
+<span tal:replace="nothing"> _______ manual close _______ </span>
+<check tal:condition="python:silva_permissions['ApproveSilvaContent'] and published"
+  tal:omit-tag="">
+<div metal:use-macro="view/tab_status_macros/macros/manual_close">
+_______ manual close section here _______
+</div>
+</check>
+
+<!-- ___________________________ end index_html/slot main ___________________________ -->
+</div>
+
+
+</html>

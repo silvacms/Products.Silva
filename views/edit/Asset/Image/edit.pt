@@ -1,0 +1,147 @@
+<div class="margins" tal:define="view here; model request/model">
+
+<h2><span tal:replace="model/meta_type">Meta type</span> for <span class="document-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
+
+<init tal:omit-tag=""
+  tal:define="global fields python:view.properties_form.get_fields()" />
+
+<h3>Property</h3>
+
+<form method="POST" name="form" action="properties_submit">
+<table width="96%" cellspacing="0" cellpadding="3" border="0"
+  tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
+                  cellpadding container/table_cellpadding; border container/table_border">
+<tr>
+<th align="left">
+Element
+</th>
+<th align="right">
+&nbsp;
+</th>
+<th align="left">
+Content
+</th>
+<th align="left" width="40%">
+Note
+</th>
+</tr>
+
+<fieldset tal:omit-tag=""
+  tal:repeat="field fields">
+<rowset tal:omit-tag=""
+  tal:define="oddrow repeat/field/odd">
+
+<tr class="focus" valign="top"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+<td align="right">
+<span tal:replace="python:field['title'].capitalize() + ':'">Title</span>
+</td>
+<td align="right">
+<span class="warning"
+  tal:condition="python:field.is_required()">
+*
+</span>
+<span class="logic"
+  tal:condition="not:python:field.is_required()"
+  tal:omit-tag="">
+&nbsp;
+</span>
+</td>
+<td align="left">
+<span tal:replace="nothing">This will go utterly wrong as soon as image grows more than one property</span>
+<input tal:replace="structure python:field.render(model.get_title_editable())" />
+</td>
+<td>
+<span tal:replace="python:field.get_value('description')">
+comments here (field description)
+</span>&nbsp;
+</td>
+</tr>
+
+</rowset>
+</fieldset>
+
+<tr class="controls">
+<td colspan="2">
+<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" />
+</td>
+<td colspan="2" align="right">
+<input class="button" type="submit"
+       name="properties_submit:method" value=" Save image properties " />
+</td>
+</tr>
+</table>
+</form>
+
+
+<h3>Upload</h3>
+
+<init tal:omit-tag=""
+  tal:define="global fields python:view.upload_form.get_fields()" />
+
+<form method="POST" name="form" action="upload_submit" enctype="multipart/form-data">
+<table width="96%" cellspacing="0" cellpadding="3" border="0"
+  tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
+                  cellpadding container/table_cellpadding; border container/table_border">
+<tr>
+<th align="left">
+Element
+</th>
+<th align="right">
+&nbsp;
+</th>
+<th align="left">
+Content
+</th>
+<th align="left" width="40%">
+<!-- Note -->
+</th>
+</tr>
+
+<fieldset tal:omit-tag=""
+  tal:repeat="field fields">
+<rowset tal:omit-tag=""
+  tal:define="oddrow repeat/field/odd">
+
+<tr class="focus" valign="top"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+<td align="right">
+<span tal:replace="python:field['title'].capitalize() + ':'">Title</span>
+</td>
+<td align="right">
+<span class="warning"
+  tal:condition="python:field.is_required()">
+*
+</span>
+<span class="logic"
+  tal:condition="not:python:field.is_required()"
+  tal:omit-tag="">
+&nbsp;
+</span>
+</td>
+<td align="left">
+<input tal:replace="structure python:field.render()" />
+</td>
+<td>
+<span tal:replace="python:field.get_value('description')">
+comments here (field description)
+</span>&nbsp;
+</td>
+</tr>
+
+</rowset>
+</fieldset>
+
+<tr class="controls">
+<td colspan="2">
+<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" />
+</td>
+<td colspan="2" align="right">
+<input class="button" type="submit"
+       name="upload_submit:method" value=" Upload image " />
+</td>
+</tr>
+</table>
+</form>
+
+</div>

@@ -1,11 +1,17 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 import Document, Folder, Root, ViewRegistry, MultiViewRegistry
 import Publication, Ghost, Image, File
 import DemoObject, CatalogedDemoObject
-#from Products.FileSystemSite.DirectoryView import registerDirectory
-    
+# enable Formulator support for FileSystemSite
+from Products.Formulator import FSForm
+# so we can register directories for FileSystemSite 
+from Products.FileSystemSite.DirectoryView import registerDirectory, registerFileExtension
+from Products.FileSystemSite.FSImage import FSImage
+# enable .ico support for FileSystemSite
+registerFileExtension('ico', FSImage)
+
 def initialize(context):
     context.registerClass(
         File.FilesService,
@@ -111,6 +117,7 @@ def initialize(context):
 
 
     # register views & widgets
-    #registerDirectory('views', globals())
-    #registerDirectory('widgets', globals())
-    
+    registerDirectory('views', globals())
+    registerDirectory('widgets', globals())
+    registerDirectory('globals', globals())
+    registerDirectory('service_utils', globals())

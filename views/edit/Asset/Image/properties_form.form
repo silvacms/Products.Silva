@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="latin-1"?>
+
+<form>
+  <title></title>
+  <name>form</name>
+  <action></action>
+  <enctype></enctype>
+  <method>POST</method>
+
+  <groups multiple="true">
+    <group>
+      <title>Default</title>
+      <fields multiple="true">
+
+      <field><id>image_title</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">41</display_width>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Title</title>
+          <truncate type="int">0</truncate>
+          <description>A descriptive title pays off in the future.</description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>

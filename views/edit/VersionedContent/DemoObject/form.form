@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="latin-1"?>
+
+<form>
+  <title>DemoObject form</title>
+  <name>form</name>
+  <action></action>
+  <enctype></enctype>
+  <method>POST</method>
+
+  <groups multiple="true">
+    <group>
+      <title>Default</title>
+      <fields multiple="true">
+
+      <field><id>object_title</id> <type>TextAreaField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_linelength></max_linelength>
+          <max_length></max_length>
+          <max_lines></max_lines>
+          <width type="int">40</width>
+          <external_validator></external_validator>
+          <height type="int">2</height>
+          <required type="int">1</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Title</title>
+          <description></description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>info</id> <type>TextAreaField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_linelength></max_linelength>
+          <max_length></max_length>
+          <max_lines></max_lines>
+          <width type="int">40</width>
+          <external_validator></external_validator>
+          <height type="int">5</height>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Information</title>
+          <description>Some information</description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>number</id> <type>IntegerField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <start></start>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Number</title>
+          <description></description>
+          <end></end>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>date</id> <type>DateTimeField</type>
+        <values>
+          <date_only type="int">0</date_only>
+          <alternate_name></alternate_name>
+          <input_style>text</input_style>
+          <css_class></css_class>
+          <hidden type="int">0</hidden>
+          <input_order>ymd</input_order>
+          <time_separator>:</time_separator>
+          <date_separator>/</date_separator>
+          <external_validator></external_validator>
+          <required type="int">0</required>
+          <default_now type="int">0</default_now>
+          <title>Date and time</title>
+          <description>Some date and time</description>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>

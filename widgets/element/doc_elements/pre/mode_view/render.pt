@@ -1,0 +1,4 @@
+<div tal:omit-tag="">
+<pre tal:content="structure here/content">preformatted</pre>
+</div>
+                                         

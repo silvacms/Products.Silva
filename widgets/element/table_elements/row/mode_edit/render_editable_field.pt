@@ -1,0 +1,11 @@
+<init tal:omit-tag="" 
+  tal:define="global node options/node;
+              global node_path python:node.getNodePath('widget');
+              global simple python:here.is_field_simple(node)" />
+
+<td>
+<a title="nest elements" tal:attributes="href string:${request/xml_url}/${node_path}/edit/edit_mode">
+<img tal:attributes="src string:${here/silva_root}/globals/nest_element.gif" width="16" height="16" border="0" alt="nest element" /></a><br />
+<div tal:condition="simple" tal:replace="structure python:here.render_simple(node)" />
+<div tal:condition="not:simple" tal:replace="structure python:here.render_sub(node)" />
+</td>

@@ -1,0 +1,431 @@
+<!-- _______________________ start index_html __________________________ -->
+<html metal:use-macro="here/macro_index/macros/master">
+<div class="margins" metal:fill-slot="main">
+<tal:block  
+  condition="python:view.has_access()"
+  define="
+   dummy python:model.security_trigger();">
+
+<h2><img src="%s" width="16" height="16" alt="%s" 
+    tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    Access Settings for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
+</h2>
+
+<!-- div align="right">
+<a href="tab_access?worksheet=overview">Access Overview</a>
+</div -->
+<div class="worksheet borders top bottom left right">
+<!-- _________________________ START WORKSHEET _________________________ -->
+<tal:block
+  define="
+    all_userinfos view/access_get_all_userinfos;
+    global local_userinfos all_userinfos/local;
+    global upward_userinfos all_userinfos/upward;" />
+<!-- ______________________ USERS AND ROLES ____________________________ -->
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+<tr align="left" valign="top">
+<!-- ___________________ Higher level UserRoles ________________________ -->
+<td width="50%">
+<form action="." method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<tr>
+  <td colspan="3">
+    <h3>UserRoles from a higher level down
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    </h3>
+  </td>
+</tr>
+<tr class="topcontrols">
+  <td style="background:#c0dbe0;" align="left" colspan="2">
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    &nbsp;
+  </td>
+</tr>
+<tr class="focus"
+  tal:condition="not:upward_userinfos">
+  <td>
+    <i>no users defined</i>
+  </td>
+  <td>
+    &nbsp;
+  </td>
+</tr>
+<tal:block repeat="userinfo upward_userinfos">
+<tr class="focus"
+  tal:define="oddrow repeat/userinfo/odd"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+  <td align="left" width="50%">
+    <input type="checkbox" name="userids:list" value="userid"
+      tal:attributes="value userinfo/uid" />
+    <b tal:content="userinfo/cn" />
+  </td>
+  <td align="right" width="50%">
+    <i>has role(s): </i>
+    <b tal:repeat="role python:model.sec_get_upward_roles_for_userid(userinfo['uid'])"
+      tal:content="role" />&nbsp;
+  </td>
+</tr>
+</tal:block>
+<tr class="controls-cycle">
+  <td align="left" colspan="2">
+    <select name="assign_role">
+      <option value="None">Select...</option>
+      <option value="role" 
+        tal:repeat="role model/sec_get_roles" 
+        tal:attributes="value role" 
+        tal:content="role">Role name</option>
+    </select>&nbsp;
+    <input type="submit" class="button" name="access_assign_to_user:method" value="Assign local role" 
+      title="Assign a local role to selected user(s)." />
+  </td>
+</tr>
+</table>
+</form>
+</td>
+<!-- ____________________ Local level UserRoles ________________________ -->
+<td>
+<form action="." method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<tr>
+  <td>
+    <h3>Local UserRoles
+      <img src="pixel.gif" width="1px" height="18px"
+        tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    </h3>
+  </td>
+  <td colspan="2" align="right">
+    <input type="hidden" name="referer" value="tab_access"/>
+    <input type="submit" class="button" name="lookup:method" value="Users lookup..." 
+      title="Go to: Lookup and select users to add to groups..." />
+  </td>
+</tr>
+<tr class="topcontrols">
+  <td style="background:#b0cbd0;" align="right" colspan="3">
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+  </td>
+</tr>
+<tal:block repeat="userinfo local_userinfos">
+<tal:block 
+  condition="userinfo"
+  define="
+    local_roles python:model.sec_get_local_roles_for_userid(userinfo['uid']);
+    upward_roles python:model.sec_get_upward_roles_for_userid(userinfo['uid']);
+    oddrow repeat/userinfo/odd">
+<tr class="focus"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+  <td align="left">
+    <input type="checkbox" name="userids:list" value="userid"
+      tal:attributes="value python:userinfo['uid']" />
+    <b tal:content="python:userinfo['cn']" />
+  </td>
+  <td align="right">
+    <i tal:condition="python:local_roles or upward_roles">has role(s):</i>
+    <i tal:condition="python:not local_roles and not upward_roles">no&nbsp;roles&nbsp;defined</i>
+  </td>
+  <td align="right">
+    &nbsp;
+  </td>
+</tr>
+<tr class="focus-cycle" 
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')"
+  tal:repeat="role upward_roles">
+  <td>
+    &nbsp;
+  </td>
+  <td align="right">
+    <b><i tal:content="role" /></b>
+  </td>
+  <td align="right">
+    &nbsp;
+  </td>
+</tr>
+<tr class="focus-cycle" 
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')"
+  tal:repeat="role local_roles">
+  <td>
+    &nbsp;
+  </td>
+  <td align="right">
+    <b tal:content="role" />
+  </td>
+  <td align="right" width="1%">
+    <input type="checkbox" class="warningbox" name="revoke_roles:list" value=""
+      tal:attributes="value python:'%s||%s' % (userinfo['uid'], role);" />
+  </td>
+</tr>
+</tal:block>
+</tal:block>
+<tr class="controls-cycle">
+  <td>
+    <i tal:condition="not:local_userinfos">(no local user access defined)</i>&nbsp;
+  </td>
+  <td align="right" colspan="2">
+    <input type="submit" class="warningbutton" name="access_revoke_from_user:method" value="revoke"
+      title="Revoke selected role(s) from selected user(s)."
+      tal:condition="local_userinfos" />
+  </td>
+</tr>
+<tr class="controls">
+  <td align="left" colspan="3">
+    <select name="assign_role">
+      <option value="None">Select...</option>
+      <option value="role" 
+        tal:repeat="role model/sec_get_roles" 
+        tal:attributes="value role" 
+        tal:content="role">Role name</option>
+    </select>&nbsp;
+    <input type="submit" class="button" name="access_assign_to_user:method" value="Assign"
+      title="Assign a role to selected user(s)." />&nbsp; &nbsp;
+    <input type="submit" class="button" name="access_remove_user:method" value="Remove" 
+      title="Remove this user from local access definitions."
+      onClick="return confirm('Really remove user(s)?')" />
+  </td>
+</tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
+<!-- _____________________ GROUPS AND ROLES ____________________________ -->
+<tal:block condition="python:model.sec_groups_enabled()">
+<tal:block condition="python:not getattr(here, 'service_groups', None)">
+  <h3>To actually use Group access definitions, a Groups Service is needed.</h3>
+  <p>This service should have an id 'service_groups' and be placed in the Silva Root.</p>
+</tal:block>
+<tal:block condition="python:getattr(here, 'service_groups', None)">
+  <br />
+  <hr />
+<tal:block
+    define="
+      all_groups view/access_get_all_groups;
+      global local_groups all_groups/local;
+      global upward_groups all_groups/upward;" />
+
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+<tr align="left" valign="top">
+<!-- ___________________ Higher level GroupRoles _______________________ -->
+<td width="50%">
+<form action="." method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<tr>
+  <td colspan="2">
+    <h3>GroupRoles from a higher level down
+      <img src="pixel.gif" width="1px" height="18px"
+        tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    </h3>
+  </td>
+</tr>
+<tr class="topcontrols">
+  <td style="background:#c0dbe0;" align="left" colspan="2">
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+  </td>
+</tr>
+<tr class="focus"
+  tal:condition="not:upward_groups">
+  <td>
+    <i>no groups defined</i>
+  </td>
+  <td>
+    &nbsp;
+  </td>
+</tr>
+<tal:block repeat="group upward_groups">
+<tr class="focus"
+  tal:define="oddrow repeat/group/odd"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+  <td align="left" width="50%">
+    <input type="checkbox" name="groups:list" value="group"
+      tal:attributes="value group" />
+    <b tal:content="group" />
+  </td>
+  <td align="right" width="50%">
+    <i>has role(s): </i>
+    <b tal:content="structure python:view.service_utils.frontend_render_list(model.sec_get_upward_roles_for_group(group))" />&nbsp;
+  </td>
+</tr>
+</tal:block>
+<tr class="controls-cycle">
+  <td align="left" colspan="2">
+    <select name="assign_role">
+      <option value="None">Select...</option>
+      <option value="role" 
+        tal:repeat="role model/sec_get_roles" 
+        tal:attributes="value role" 
+        tal:content="role">Role name</option>
+    </select>&nbsp;
+    <input type="submit" class="button" name="access_assign_to_group:method" value="Assign local role"
+      title="Assign selected role to selected group(s)." />
+  </td>
+</tr>
+</table>
+</form>
+</td>
+<!-- ___________________ Local level GroupRoles ________________________ -->
+<td>
+<form action="." method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<tr>
+  <td>
+    <h3>Local GroupRoles
+      <img src="pixel.gif" width="1px" height="18px"
+        tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    </h3>
+  </td>
+  <td colspan="2" align="right">
+    <input type="submit" class="button" name="tab_access_groups:method" value="Groups Admin..."
+    title="Go to: Groups administration..." />
+  </td>
+</tr>
+<tr class="topcontrols">
+  <td style="background:#b0cbd0;" align="right" colspan="3">
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    <select name="add_group">
+      <option value="None">Select...</option>
+      <option value="group" 
+        tal:repeat="group view/list_all_groups" 
+        tal:attributes="value group" 
+        tal:content="group">Group</option>
+    </select>&nbsp;
+    <input type="submit" class="button" name="group_add_to_selection:method" value="Use group"
+    title="Add selected group to local access definitions." />
+  </td>
+</tr>
+<tal:block repeat="group local_groups">
+<tal:block 
+  condition="group"
+  define="
+    local_roles python:model.sec_get_local_roles_for_group(group);
+    upward_roles python:model.sec_get_upward_roles_for_group(group);
+    oddrow repeat/group/odd">
+<tr class="focus"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+  <td align="left">
+    <input type="checkbox" name="groups:list" value="group"
+      tal:attributes="value group" />
+    <b tal:content="group" />
+  </td>
+  <td align="right">
+    <i tal:condition="python:local_roles or upward_roles">has role(s):</i>
+    <i tal:condition="python:not local_roles and not upward_roles">no&nbsp;roles&nbsp;defined</i>
+  </td>
+  <td align="right">
+    &nbsp;
+  </td>
+</tr>
+<tr class="focus-cycle" 
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')"
+  tal:repeat="role upward_roles">
+  <td>
+    &nbsp;
+  </td>
+  <td align="right">
+    <b tal:content="role" />
+  </td>
+  <td align="right">
+    &nbsp;
+  </td>
+</tr>
+<tr class="focus-cycle" 
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')"
+  tal:repeat="role local_roles">
+  <td>
+    &nbsp;
+  </td>
+  <td align="right">
+    <b tal:content="role" />
+  </td>
+  <td align="right" width="1%">
+    <input type="checkbox" class="warningbox" name="revoke_roles:list" value=""
+      tal:attributes="value python:'%s||%s' % (group, role);" />
+  </td>
+</tr>
+</tal:block>
+</tal:block>
+<tr class="controls-cycle">
+  <td>
+    <i tal:condition="not:local_groups">(no local group access defined)</i>&nbsp;
+  </td>
+  <td align="right" colspan="2">
+    <input type="submit" class="warningbutton" name="access_revoke_from_group:method" value="revoke"
+      title="Revoke selected role(s) from selected group(s)."
+      tal:condition="local_groups" />
+  </td>
+</tr>
+<tr class="controls">
+  <td align="left" colspan="3">
+    <select name="assign_role">
+      <option value="None">Select...</option>
+      <option value="role" 
+        tal:repeat="role model/sec_get_roles" 
+        tal:attributes="value role" 
+        tal:content="role">Role name</option>
+    </select>&nbsp;
+    <input type="submit" class="button" name="access_assign_to_group:method" value="Assign"
+      title="Assign selected role to selected group(s)." />&nbsp; &nbsp;
+    <input type="submit" class="button" name="access_remove_group:method" value="Remove" 
+      title="Remove selected group(s) from local access definitions."
+      onClick="return confirm('Really remove group(s)?')" />
+  </td>
+</tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
+</tal:block>
+</tal:block>
+<!-- __________________________ END WORKSHEET __________________________ -->
+</div>
+
+<h2><img src="%s" width="16" height="16" alt="%s" 
+    tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    Experimental: Access Restriction for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
+</h2>
+<div class="worksheet borders top bottom left right">
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+<tr align="left" valign="top">
+<td>
+<form action="access_restriction_submit" method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<tr>
+  <td colspan="3">
+    <h3>Define restriction
+    <img src="pixel.gif" width="1px" height="18px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    </h3>
+  </td>
+</tr>
+<tr class="focus">
+  <td>
+    <tal:block condition="python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
+      This restriction is acquired from above: <code tal:content="python:getattr(model, 'access_restriction')" />    
+    <br />
+    <br />
+    </tal:block>
+    <textarea name="access_restriction" 
+      tal:condition="python:model.hasProperty('access_restriction')"
+      tal:content="python:model.getProperty('access_restriction')" />
+    <textarea name="access_restriction" 
+      tal:condition="python:not model.hasProperty('access_restriction')"
+    ></textarea>
+  </td>
+</tr>
+<tr class="controls" align="right">
+  <td>
+    <input class="button" type="submit" value="Set restriction">
+  </td>
+</tr>
+</table>
+</form>
+</tr>
+</table>
+</div>
+</tal:block>
+</div>
+</html>
+<!-- __________________________ end index_html _________________________ -->

@@ -1,0 +1,51 @@
+<!-- ___________________________ start index_html ___________________________ -->
+<html  metal:use-macro="here/macro_index/macros/master">
+
+<div class="margins"
+  metal:fill-slot="main">
+<!-- ___________________________ start index_html/slot main ___________________________ -->
+
+<h2>Besluiten overzicht</h2>
+
+<init tal:omit-tag=""
+  tal:define="global objects python:0" />
+
+<table width="96%" cellspacing="0" cellpadding="3" border="0"
+  tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
+                  cellpadding container/table_cellpadding; border container/table_border">
+<tr>
+<th align="left" width="20">
+Besluitnummer
+</th>
+<th align="left">
+Datum
+</th>
+</tr>
+
+<fieldset tal:omit-tag=""
+  tal:repeat="field python:[{'besluitnummer': '31', 'besluitdatum': '01-01-2002'}]">
+
+<rowset tal:omit-tag=""
+  tal:define="oddrow python:[]">
+
+<tr class="focus" valign="top"
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+<td>
+<span tal:replace="structure string:${field/besluitnummer}">##</span>
+</td>
+<td>
+<a href="#" tal:content="structure string:${field/besluitdatum}"
+  tal:attributes="href string:#">
+08 augustus 2002
+</a>
+</td>
+</tr>
+
+</rowset>
+</fieldset>
+
+</table>
+<!-- ___________________________ end index_html/slot main ___________________________ -->
+</div>
+</html>
+<!-- ___________________________ end index_html ___________________________ -->

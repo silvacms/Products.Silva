@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="latin-1"?>
+
+<form>
+  <title></title>
+  <name>tab_metadata_form</name>
+  <action></action>
+  <enctype></enctype>
+  <method></method>
+
+  <groups multiple="true">
+    <group>
+      <title>Default</title>
+      <fields multiple="true">
+
+      <field><id>document_title</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">60</display_width>
+          <required type="int">1</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Title</title>
+          <truncate type="int">0</truncate>
+          <description></description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>vergadering_datum</id> <type>DateTimeField</type>
+        <values>
+          <date_only type="int">1</date_only>
+          <alternate_name></alternate_name>
+          <input_style>text</input_style>
+          <hidden type="int">0</hidden>
+          <input_order>dmy</input_order>
+          <time_separator>:</time_separator>
+          <date_separator>/</date_separator>
+          <external_validator></external_validator>
+          <required type="int">1</required>
+          <default_now type="int">0</default_now>
+          <css_class></css_class>
+          <title>Datum</title>
+          <description>Datum van de vergadering</description>
+        </values>
+        <tales>
+          <time_separator>python:form.get_time_punctuation()</time_separator>
+          <date_separator>python:form.get_date_punctuation()</date_separator>
+        </tales>
+      </field>
+      <field><id>besluit_nummer</id> <type>IntegerField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <start></start>
+          <external_validator></external_validator>
+          <display_maxwidth type="int">2</display_maxwidth>
+          <display_width type="int">2</display_width>
+          <required type="int">1</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Besluitnummer</title>
+          <description>Gebruik het weeknummer</description>
+          <end></end>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>subject</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">60</display_width>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Subject</title>
+          <truncate type="int">0</truncate>
+          <description>Important for archiving purposes</description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>description</id> <type>TextAreaField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_linelength></max_linelength>
+          <max_length></max_length>
+          <max_lines></max_lines>
+          <width type="int">58</width>
+          <external_validator></external_validator>
+          <height type="int">4</height>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Description</title>
+          <description>Add a description for all top level pages (used by Internet serach engines)</description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>contact_name</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">60</display_width>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Contact&amp;nbsp;name</title>
+          <truncate type="int">0</truncate>
+          <description>If blank, contact info will be inherited</description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>contact_email</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">60</display_width>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Contact&amp;nbsp;email</title>
+          <truncate type="int">0</truncate>
+          <description>If blank, contact info will be inherited</description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>document_comment</id> <type>TextAreaField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_linelength></max_linelength>
+          <max_length></max_length>
+          <max_lines></max_lines>
+          <width type="int">58</width>
+          <external_validator></external_validator>
+          <height type="int">4</height>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Comment</title>
+          <description>For internal use</description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>

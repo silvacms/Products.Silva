@@ -1,0 +1,297 @@
+<dtml-let last_modified="_.DateTime()-14"
+          expires="_.DateTime()+7" >
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
+</dtml-let>
+
+/* This style sheet contains Silva specific styles, and may override */
+/* certain selectors in the base.  Frontend style can be adjusted if */
+/* required, but you _MUST_ backup before upgrading to new version.  */
+
+/* _________________________________________________________ element typography _____ */
+
+/* header-like elements for table cells, prevents extra line space */
+
+.back2 {
+  font-size : 16px; 
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #555555; 
+}
+
+.back3 {
+  font-size : 14px; 
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #444444; 
+}
+
+/* not in use */
+.back4 {
+  font-size : 12px; 
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #444444; 
+}
+
+pre {
+  color : #473f69; 
+}
+
+
+/* _________________________________________________________ table definitions _____ */
+
+/* light gray bg on just-edited elements */
+td.post-focus {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #003333;
+  background-color : #dddddd; 
+}
+
+/* creates bg which becomes border around table cells */
+.table-bg {
+  background-color : #555555; 
+}
+
+/* light gray bg for just-edited lists (prevents line space before, use with div) */
+.post-focus {
+  background-color : #dddddd;
+}
+
+/* hilite row for selected item */
+tr.hilite {
+  background-color : #8cb0b0; 
+}
+
+
+
+/* _________________________________________________________ link definitions _____ */
+
+/* redlink selectors */
+a.redlink:link {
+  color : #cc0000;
+  text-decoration : none;
+}
+a.redlink:visited {
+  color : #cc0000;
+  text-decoration : none;
+}
+a.redlink:hover {
+  color : #cc0000;
+  text-decoration : underline;
+}
+
+/* yellow selectors */
+.yellowish { color: #eeee88; }
+a.yellowlink:link {
+  color : #eeee88;
+  text-decoration : none;
+}
+a.yellowlink:visited {
+  color : #eeee88;
+  text-decoration : none;
+}
+a.yellowlink:hover {
+  color : #eeee88;
+  text-decoration : underline;
+}
+
+/* greenlink selectors */
+.greenish { color : #007746; }
+a.greenlink:link {
+  color : #007746;
+  text-decoration : none;
+}
+a.greenlink:visited {
+  color : #007746;
+  text-decoration : none;
+}
+a.greenlink:hover {
+  color : #007746;
+  text-decoration : underline;
+}
+
+/* bluelink selectors */
+.blueish { color : #000080; }
+a.bluelink:link {
+  color : #000080;
+  text-decoration : none;
+}
+a.bluelink:visited {
+  color : #000080;
+  text-decoration : none;
+}
+a.bluelink:hover {
+  color : #000080;
+  text-decoration : underline;
+}
+
+/* blacklink selectors */
+a.blacklink:link {
+  color : #444444;
+  text-decoration : none;
+}
+a.blacklink:visited {
+  color : #444444;
+  text-decoration : none;
+}
+a.blacklink:hover {
+  color : #444444;
+  text-decoration : underline;
+}
+
+/* graylink selectors */
+a.graylink:link {
+  color : #777777;
+  text-decoration : none;
+}
+a.graylink:visited {
+  color : #777777;
+  text-decoration : none;
+}
+a.graylink:hover {
+  color : #777777;
+  text-decoration : underline;
+}
+
+/* blacklink-underline selectors */
+a.blacklink-underline:link {
+  color : #444444;
+  text-decoration : underline;
+}
+a.blacklink-underline:visited {
+  color : #444444;
+  text-decoration : underline;
+}
+a.blacklink-underline:hover {
+  color : #444444;
+  text-decoration : none;
+}
+
+/* underlinelink (blue) selectors */
+a.underlinelink:link {
+  color : #000080;
+  text-decoration : underline;
+}
+a.underlinelink:visited {
+  color : #000080;
+  text-decoration : underline;
+}
+a.underlinelink:hover {
+  color : #005050;
+  text-decoration : none;
+}
+
+
+
+/* _________________________________________________________ local styles _____ */
+
+.folder-title {
+  color : #007152;
+}
+
+.document-title {
+  color : #4d857f;
+}
+
+/* highlighting index links */
+a.index-element {
+  background-color : #e9ff97;
+  text-decoration : none;
+}
+
+.position-relative {
+    position:relative;
+}
+
+
+/* _____ frontend style sheet for forms editor display ______________________ */
+/* _____ adjust these selectors to match style in your frontend.css _________ */
+
+p.frontend {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #003333;
+}
+
+td.frontend {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #003333;
+}
+
+ul.frontend {
+  font-size: 11px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  color: #003333;
+}
+
+ol.frontend {
+  font-size: 11px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  color: #003333;
+}
+
+.frontend-link {
+  color: #000080;
+  text-decoration : underline;
+}
+
+
+/* header-like elements for table cells in tab_edit, prevents extra line space */
+/* _____ adjust these selectors to match styles in frontend.css ______________ */
+
+.front1 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 17pt; 
+  font-weight: 800; 
+  color: #455885;
+}
+
+.front2 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 15pt;
+  font-weight: 800; 
+  color: #455885;
+}
+
+.front3 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 13pt;  
+  font-weight: 800; 
+  color: #455885;
+}
+
+.front4 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11pt;  
+  font-weight: 800; 
+  color: #455885;
+}
+
+.frontend-cell {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 21pt;  
+  font-weight: 800; 
+  color: #455885;
+}
+
+/* niu */
+.front5 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt; 
+  font-weight: 800;
+}
+
+/* niu */
+.front6 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 9pt; 
+  font-weight: 800;
+}
+
+
+/* style is a filter */

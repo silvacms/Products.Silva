@@ -1,0 +1,131 @@
+<html metal:define-macro="master"
+  tal:define="
+    global silva_root here/silva_root;
+    view here;
+    model request/model">
+<head>
+<title tal:content="structure python:model.get_title_html()">Title</title>
+<link rel="shortcut icon" href="globals/favicon.ico" tal:attributes="href here/globals/favicon.ico/absolute_url" />
+<link rel="stylesheet" href="globals/base.css" tal:attributes="href here/globals/base.css/absolute_url" />
+<link rel="stylesheet" href="globals/silva.css" tal:attributes="href here/globals/silva.css/absolute_url" />
+<link rel="stylesheet" href="frontend.css" tal:attributes="href here/frontend.css/absolute_url"
+  tal:condition="python:template.id == 'tab_preview'" />
+<script tal:replace="nothing"> _______ application specific stylesheet extension _______ </script>
+<link rel="stylesheet" href="ext_stylesheet"
+  tal:condition="python:hasattr(here, 'extension_style_url')" 
+    tal:attributes="href python:here.extension_style_url()" />
+
+<script type="text/javascript"
+  tal:condition="not:exists:template/focus_field">
+<!--
+function focusCursor() {
+  if (document && document.focusbox && document.focusbox.data) {
+    document.focusbox.data.focus();
+  }
+}
+// -->
+</script> 
+<script type="text/javascript"
+  tal:condition="exists:template/focus_field">
+<!--
+function focusCursor() {
+  if (document && document.focusbox && document.focusbox.field_object_id) {
+    document.focusbox.field_object_id.focus();
+  }
+}
+// -->
+</script> 
+<style tal:replace="structure view/local_style">if</style>
+<script type="text/javascript" language="JavaScript"
+  tal:condition="python: template.id == 'tab_edit_bxe'"
+  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url">
+</script>
+<script type="text/javascript" language="JavaScript"
+  tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
+  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url">
+</script>
+</head>
+<body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
+  tal:attributes="onload python: test(template.id == 'tab_edit_bxe',
+                                 'BX_load(\'%s/bxe/bxe_config.xml\')' % (model.absolute_url()),
+                                 test(view.has_focus_box(template.id), 
+                                 'focusCursor()', 
+                                 nothing))">
+    <tal:block replace="nothing">Previous onload tests facilitate Bitflux editor support</tal:block>
+<!-- ____________________________ start tabs ___________________________ -->
+<tabs metal:use-macro="here/macro_tabs/macros/tabs" tal:omit-tag="">
+Tab bar plugs in here....
+</tabs>
+<!-- ____________________________ end tabs _____________________________ -->
+<span class="halfline"
+  tal:condition="python:template.id != 'tab_preview'"><br /></span>
+<!-- __________________________ start feedback _________________________ -->
+<tal:block
+  define="type options/message_type | request/message_type | nothing;
+          msg options/message | request/message | nothing"
+  condition="type">
+<div class="feedback" tal:condition="python:type == 'feedback'">
+<span tal:replace="structure msg">message</span>&nbsp;&nbsp;<span tal:replace="string:(${here/service_utils/backend_now_to_str})">datetime</span>
+</div>
+<div class="feedback" tal:condition="python:type == 'error'">
+<span class="error" tal:content="structure msg">message</span>
+</div>
+</tal:block>
+<!-- __________________________ end feedback __________________________ -->
+<!-- ____________________________ main start ___________________________ -->
+<div metal:define-slot="main">
+Here the local content (a.k.a. "model") is inserted (this text will be replaced).
+</div>
+<!-- ____________________________ main ends ____________________________ -->
+<!-- ___________________________ footer start __________________________ -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td width="2%">
+<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
+</td>
+<td colspan="3">
+</td>
+<td width="2%">
+<br /><a href="#top" title="jump to top"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
+</td>
+</tr>
+<tr>
+<td colspan="5" class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
+</tr>
+<tr>
+<td colspan="5" class="tab-up"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
+</tr>
+<tr valign="top">
+<td class="tab-up" width="2%">
+<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
+</td>
+<td class="tab-up" width="30%">
+<span class="breadcrumb">
+Contact person: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email',None)"><span class="index-link" tal:content="model/contact_name|string:no name"></span></a>
+</span>
+</td>
+<td class="tab-up" align="center" width="36%">
+<span class="breadcrumb">
+<a href="logout">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="request/AUTHENTICATED_USER/getUserName" /></a>
+<!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
+</span>
+</td>
+<td class="tab-up" align="right" width="30%">
+<span class="breadcrumb">
+<a tal:attributes="href model/absolute_url">See public version</a>
+</span>
+</td>
+<td class="tab-up" width="2%">
+<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
+</td>
+</tr>
+<tr>
+<td colspan="5" class="tab-up"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
+</tr>
+<tr>
+<td colspan="5"  class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="2" /></td>
+</tr>
+</table>
+<!-- ___________________________ footer ends ___________________________ -->
+</body>
+</html>

@@ -1,0 +1,90 @@
+<div tal:replace="nothing"> ======= FIXME: is this macro_index here just because the focus
+  javascript is different? -kit ======= </div>
+
+<html metal:define-macro="master"
+  tal:define="
+    global silva_root here/silva_root;
+    view here;
+    model request/model">
+<head>
+<title tal:content="structure python:model.get_title_html()">Title</title>
+<link rel="shortcut icon" href="globals/favicon.ico" />
+<link rel="stylesheet" href="globals/base.css" />
+<link rel="stylesheet" href="globals/silva.css" />
+
+<script type="text/javascript">
+<!--
+function focusCursor() {
+  if (document && document.focusbox && document.focusbox.field_object_id) {
+    document.focusbox.field_object_id.focus();
+  }
+}
+// -->
+</script> 
+
+</head>
+<body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
+  onload="focusCursor()">
+<!-- ____________________________ start tabs ___________________________ -->
+<tabs metal:use-macro="here/macro_tabs/macros/tabs" tal:omit-tag="">
+Tab bar plugs in here....
+</tabs>
+<!-- ____________________________ tabs ends ____________________________ -->
+<span class="halfline"><br /></span>
+<!-- __________________________ start feedback _________________________ -->
+<div tal:condition="python:options.has_key('message_type')" tal:omit-tag="">
+<div class="feedback" tal:condition="python:options['message_type'] == 'feedback'">
+<span tal:replace="structure python:options['message']">message</span>&nbsp;&nbsp;<span tal:replace="string:(${here/service_utils/backend_now_to_str})">datetime</span>
+</div>
+<div class="feedback" tal:condition="python:options['message_type'] == 'error'">
+<span class="error" tal:content="structure python:options['message']">message</span>
+</div>
+</div>
+<!-- __________________________ end feedback __________________________ -->
+<!-- ____________________________ main start ___________________________ -->
+<div metal:define-slot="main">
+Here the local content (a.k.a. "model") is inserted (this text will be replaced).
+</div>
+<!-- ____________________________ main ends ____________________________ -->
+<p>&nbsp;</p>
+<!-- ___________________________ footer start __________________________ -->
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+  <tr>
+    <td colspan="5" class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
+  </tr>
+  <tr>
+    <td colspan="5" class="tab-up"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
+  </tr>
+  <tr>
+    <td class="tab-up" valign="top" width="2%">
+      <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
+    </td>
+    <td class="tab-up" valign="top" width="30%">
+      <div class="breadcrumb">
+        Contact person: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email',None)"><span class="index-link" tal:content="model/contact_name|string:no name"></span></a>
+      </div>
+    </td>
+    <td class="tab-up" align="center" valign="top" width="36%">
+      <div class="breadcrumb">
+        <a href="/manage_zmi_logout">Logout</a>&nbsp;<span tal:content="string:(page served by ${request/HTTP_HOST})" />
+      </div>
+    </td>
+    <td class="tab-up" align="right" valign="top" width="30%">
+      <div class="breadcrumb">
+        <a tal:attributes="href model/absolute_url">See public version</a>
+      </div>
+    </td>
+    <td class="tab-up" width="2%">
+      <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" class="tab-up"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
+  </tr>
+  <tr>
+    <td colspan="5"  class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="2" /></td>
+  </tr>
+</table>
+<!-- ___________________________ footer ends ___________________________ -->
+</body>
+</html>

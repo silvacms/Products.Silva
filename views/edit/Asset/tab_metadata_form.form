@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="latin-1"?>
+
+<form>
+  <title></title>
+  <name>tab_metadata_form</name>
+  <action></action>
+  <enctype></enctype>
+  <method></method>
+
+  <groups multiple="true">
+    <group>
+      <title>Default</title>
+      <fields multiple="true">
+
+      <field><id>asset_description</id> <type>TextAreaField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_linelength></max_linelength>
+          <max_length></max_length>
+          <max_lines></max_lines>
+          <width type="int">58</width>
+          <external_validator></external_validator>
+          <height type="int">4</height>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Description</title>
+          <description></description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>contact_name</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">60</display_width>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Contact&amp;nbsp;name</title>
+          <truncate type="int">0</truncate>
+          <description>If blank, contact info will be inherited</description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>contact_email</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">60</display_width>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Contact&amp;nbsp;email</title>
+          <truncate type="int">0</truncate>
+          <description>If blank, contact info will be inherited</description>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>

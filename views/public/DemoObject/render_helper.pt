@@ -1,0 +1,55 @@
+<tal:init define="global model request/model; global view here;
+                  global title options/version/get_title_editable;
+                  global info options/version/info;
+                  global number options/version/number;
+                  global date options/version/date" />
+
+<!-- Course Title and Code -->
+<div tal:omit-tag="" tal:condition="title | nothing">
+<h2 tal:content="structure python:model.get_title_html()">title</h2>
+</div>
+
+<h3>Content</h3>
+<p tal:replace="structure python:view.get_content(options['version'])" />
+
+<!-- hr class="fsw" / -->
+<h4>Details</h4>
+<table cellspacing="0">
+
+<tr valign="top">
+<td class="rowhead">
+Information
+</td>
+<td>
+&nbsp;
+</td>
+<td>
+<span tal:replace="structure info"></span>
+</td>
+</tr>
+
+<tr valign="top">
+<td class="rowhead">
+Number
+</td>
+<td>
+&nbsp;
+</td>
+<td>
+<span tal:replace="number"></span>
+</td>
+</tr>
+
+<tr valign="top">
+<td class="rowhead">
+Date
+</td>
+<td>
+&nbsp;
+</td>
+<td>
+<span tal:replace="structure python:view.service_utils.frontend_datetime_to_str(date)"></span>
+</td>
+</tr>
+
+</table>

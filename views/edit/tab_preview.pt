@@ -1,0 +1,63 @@
+<!-- ___________________________ start index_html ___________________________ -->
+<html metal:use-macro="here/macro_index/macros/master">
+<div metal:fill-slot="main" tal:omit-tag="">
+<!-- ___________________________ start index_html/slot main ___________________________ -->
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<tr valign="top">
+  <td width="16" bgcolor="#d1d4d8">
+    <img tal:attributes="src here/globals/silva_icon_32.gif/absolute_url" height="32" width="32" />
+  </td>
+  <td width="16" bgcolor="#dde1e4">
+    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
+  </td>
+  <td width="12">
+    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
+  </td>
+  <td width="500" valign="top">
+  <span tal:replace="nothing"> _______ turn this on to have links to top level publications in preview _______ </span>
+  <table tal:replace="nothing" border="0" width="100%" cellpadding="2">
+  <tr>
+    <tal:block tal:repeat="pub python:model.get_root().get_ordered_publishables()">
+    <td tal:condition="python:pub.meta_type == 'Silva Publication'">
+      <a class="tab-up" href="pub" 
+        tal:attributes="href string:${pub/absolute_url}/edit/tab_preview"
+        tal:content="python:pub.id.upper()">id
+      </a>
+    </td>
+    </tal:block>
+  </tr>
+  </table>
+  <span tal:replace="nothing"> _______ leave this alone _______ </span>
+  <div class="feedback" tal:condition="here/tab_preview_needs_feedback">
+    <b class="warning">This is a closed version. You see it, but the public won't!</b>
+  </div>
+  </td>
+  <td>
+    <span tal:replace="nothing"> _______ make this conditional on object meta type _______ </span>
+    <span tal:replace="nothing"> _______ link to see page in public/local style, if in use _______ </span>
+    <a tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank">&nbsp;&nbsp;presentation preview&nbsp;&nbsp;</a>
+  </td>
+</tr>
+<tr valign="top">
+  <td width="16" bgcolor="#d1d4d8">
+    &nbsp;
+  </td>
+  <td width="16" bgcolor="#dde1e4">
+    &nbsp;
+  </td>
+  <td width="12">
+    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
+  </td>
+  <span tal:replace="nothing"> _______ content cell, here the XML is rendered in HTML _______ </span>
+  <td width="500" valign="top">
+    <div tal:omit-tag="" tal:replace="structure model/preview" />
+  </td>
+  <td>
+    &nbsp;
+  </td>
+</tr>
+</table>
+<!-- ___________________________ end index_html/slot main ___________________________ -->
+</div>
+</html>
+<!-- ___________________________ end index_html ___________________________ -->

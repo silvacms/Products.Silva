@@ -1,0 +1,32 @@
+<init tal:omit-tag="" 
+      tal:define="global is_embedded python:1;
+                  global insert_now python:1" />
+<div metal:use-macro="container/macro_normal_view/macros/normal_view">
+<div metal:fill-slot="node_content" tal:omit-tag="">
+<init tal:omit-tag=""
+      tal:define="global simple python:here.is_simple(node)" />
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<enable tal:omit-tag="" tal:replace="nothing">
+  <td valign="top">
+    <input type="checkbox" name="prefixed nodepath?" /><br />
+    <img tal:attributes="src string:${here/silva_root}/globals/pixel.gif" width="25" height="1" />
+  </td>
+</enable>
+
+<td width="100%">
+  <textarea name="nodepath" cols="70" rows="2" style="width:100%;"
+    tal:condition="simple"
+    tal:attributes="name node_path"
+    tal:content="structure python:here.simple_content(node)" />
+
+  <ul class="frontend" tal:condition="not:simple">
+    <li tal:replace="structure here/content" />
+  </ul>
+</td>
+</tr>
+</table>
+</div>
+</div>
+

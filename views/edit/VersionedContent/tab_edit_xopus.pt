@@ -1,0 +1,69 @@
+<!-- ___________________________ start index_html ___________________________ -->
+<html metal:use-macro="here/macro_index/macros/master">
+<div metal:fill-slot="main" tal:omit-tag="">
+<!-- ___________________________ start index_html/slot main ___________________________ -->
+
+<tal:block tal:define="dummy python:model.security_trigger();
+                       global could_lock model/sec_create_lock;
+                       global unapproved_version model/get_unapproved_version;" />
+
+<div xopus="true" autostart="true">
+  <xml>
+    <pipeline xml="silva.xml" xsd="silva.xsd"
+       tal:attributes="xml python: model.absolute_url()+'/xopus/xopus_get_xml';
+                       xsd view/xopus/silva.xsd/absolute_url">
+      <view id="defaultView" default="true">
+        <transform xsl="silva.xsl"
+          tal:attributes="xsl view/xopus/silva.xsl/absolute_url">
+        </transform>
+      </view>
+      <view id="treeView">
+        <transform xsl="../../../xopus/treeview/tree.xsl"
+         tal:attributes="xsl view/xopus/xopus/treeview/tree.xsl/absolute_url">
+        </transform>
+      </view>
+    </pipeline>
+  </xml>
+</div>
+
+<span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
+<tal:block tal:condition="python:unapproved_version and not could_lock">
+<div class="feedback"><span class="warning">
+<b>Note: </b>This object is already being edited by another user, and is temporarily locked.
+</span>
+</div>
+<div class="margins">
+<form action="tab_edit_break_lock" action="POST"><input class="warningbutton" type="submit" value="Break lock" /></form>
+</div>
+</tal:block>
+
+<span tal:replace="nothing"> _______ make changes in a new version _______ </span>
+<div tal:condition="python: not model.get_next_version()">
+<form action="tab_edit_make_copy" method="POST">
+<div class="feedback">
+<b>Note: </b>There is already a published (or closed) version of this content. Changes can only be made in a new version.
+</div>
+<div class="margins">
+<input class="button" type="submit" value="Create new version" />
+</div>
+</form>
+</div>
+
+<span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
+<div tal:condition="python: model.get_approved_version()">
+<form action="tab_edit_revoke_approval" method="POST">
+<div class="feedback">
+<b>Note: </b>This version is approved but not yet public. In order to make changes you need to first revoke the approval.
+</div>
+<div class="margins">
+<input class="button" type="submit" value="Revoke approval" />
+</div>
+</form> 
+</div>
+
+<!-- ___________________________ end index_html/slot main ___________________________ -->
+</div>
+
+</html>
+<!-- ___________________________ end index_html ___________________________ -->
+

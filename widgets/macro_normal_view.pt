@@ -1,0 +1,43 @@
+<div metal:define-macro="normal_view" tal:omit-tag="">
+<init tal:omit-tag=""
+  tal:define="
+    global silva_root here/silva_root;
+    global node request/node;
+    global node_path python:node.getNodePath('widget');
+    global wr_name request/wr_name;
+    global mode here/get_mode;
+    global is_embedded is_embedded | nothing;
+    global insert_now insert_now | nothing;
+    global edit_or_nest python:test(wr_name == 'service_nlist_editor', 'nest_element.gif', 'edit_element.gif');
+    global color python:test(is_embedded, 'focus', 'frontend');
+    global content_cell_class python:test(mode == 'done', 'post-focus', color);
+    global insert_cell_class python:test(is_embedded, 'focus-cycle', color);
+    global disable_edit disable_edit | nothing;
+    global disable_insert disable_insert | nothing;
+    global disable_delete disable_delete | nothing;
+    global disable_move_up disable_move_up | nothing;
+    global disable_move_down disable_move_down | nothing; 
+    global url_start string:${request/xml_url}/${node_path}/edit;
+    global rel_url_start string:${request/xml_rel_url}/${node_path}/edit" />  
+<!--(m-n-v)-->
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr tal:condition="python:mode == 'done' and not is_embedded" class="transparent">
+  <td class="halfline" colspan="4">
+    <a name="focus"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="4"></a>
+  </td>
+</tr>
+<tr valign="top">
+  <td tal:condition="not:disable_edit" class="transparent" width="16">
+    <a href="edit_mode" title="edit element" tal:attributes="href string:${url_start}/edit_mode"><img tal:attributes="src string:${silva_root}/globals/${edit_or_nest}" width="16" height="16" border="0" alt="edit element" /></a>
+  </td>
+  <td tal:condition="disable_edit" class="transparent" width="16">
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
+  </td>
+  <td tal:attributes="class content_cell_class" class="frontend" colspan="2">
+    <div metal:define-slot="node_content">_______ local node content gets slotted in _______</div>    
+  </td>
+  <div metal:use-macro="container/macro_helpers/macros/element_buttons" />
+</tr>
+<div metal:use-macro="container/macro_helpers/macros/normal_insert" />
+</table>
+</div>

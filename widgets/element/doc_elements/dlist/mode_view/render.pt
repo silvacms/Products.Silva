@@ -1,0 +1,2 @@
+<h5 tal:define="title python:here.util.get_title_text(request.node,html_encoded=1)" tal:condition="title" tal:content="structure title">title</h5>
+<content tal:replace="structure here/content" />

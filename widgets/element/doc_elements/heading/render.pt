@@ -1,0 +1,10 @@
+<div metal:use-macro="container/macro_normal_view/macros/normal_view">
+<div metal:fill-slot="node_content" tal:omit-tag="" tal:define="type here/get_type">
+  <span class="front3" tal:condition="python:type == 'normal'">
+    <content tal:replace="structure here/content" />
+  </span>
+  <span class="front4" tal:condition="python:type == 'sub'">
+    <content tal:replace="structure here/content" />
+  </span>
+</div>
+</div>

@@ -1,0 +1,51 @@
+## Script (Python) "tab_status_revoke"
+##bind container=container
+##bind context=context
+##bind namespace=
+##bind script=script
+##bind subpath=traverse_subpath
+##parameters=refs=None
+##title=
+##
+model = context.REQUEST.model
+view = context
+from DateTime import DateTime
+from Products.Formulator.Errors import FormValidationError
+
+# Check whether there's any checkboxes checked at all...
+if not refs:
+    return view.tab_status(message_type='error', message='Nothing selected, so no approval revoked')
+
+try:
+    result = view.tab_status_form.validate_all(context.REQUEST)
+except FormValidationError, e:
+    return view.tab_status(message_type='error', message=view.render_form_errors(e))
+
+revoked_ids = []
+not_revoked = []
+msg = []
+
+get_name = context.tab_status_get_name
+
+for ref in refs:
+    obj = model.resolve_ref(ref)
+    if obj is None:
+        continue
+    if not obj.implements_versioning():
+        not_revoked.append((get_name(obj), 'not a versionable object'))
+        continue
+    if not obj.is_version_approved():
+        not_revoked.append((get_name(obj), 'is not approved, or is already published'))
+        continue
+    obj.unapprove_version()
+    revoked_ids.append(get_name(obj))
+
+if revoked_ids:
+    msg.append( 'Revoked: %s' % view.quotify_list(revoked_ids) )
+
+if not_revoked:
+    msg.append( '<span class="error">could not revoke: %s</span>' % view.quotify_list_ext(not_revoked) )
+
+context.REQUEST.set('refs', [])
+
+return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

@@ -1,0 +1,129 @@
+<div metal:define-macro="tabs" tal:omit-tag="">
+<tal:block
+ tal:define="global tabs view/get_authorized_tabs; 
+             global active_tab active_tab | nothing;
+             selected_tab_id template/id">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="tab-bg" valign="top"><a href="" title="Silva top"
+  tal:attributes="href string:${silva_root}/edit"><img tal:attributes="src string:${silva_root}/globals/silva.gif" width="16" height="16" border="0" /></a></td>
+
+<td class="tab-bg" valign="bottom">
+
+<span tal:replace="nothing"> _______ tabs table _______ </span>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr valign="bottom">
+
+<tal:block tal:repeat="item tabs">
+<tal:block tal:define="tab_info python:view.get_tab_info(item);
+                       is_selected_tab python:tab_info['tab_id'] == template.id or item[1] == active_tab">
+
+<td><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="20" height="1" /></td>
+
+<td class="tab"><a href="" class="tree" title="Up to top of Publication"
+  tal:condition="tab_info/toplink_url"
+  tal:attributes="href tab_info/toplink_url;"
+><img tal:attributes="src python: test(model.meta_type == 'Silva Publication', silva_root+'/globals/up_publication.gif', silva_root+'/globals/up_tree.gif')" width="19" height="14" border="0" /></a></td>
+<td align="center" width="75"
+  tal:attributes="class python:test(is_selected_tab, 'tab-up', 'tab');">
+<a class="" href=""
+  tal:attributes="href tab_info/tab_url;
+                class python:test(is_selected_tab, 'tab-up', 'tab');"
+  tal:content="structure string:&nbsp;&nbsp;${tab_info/tab_name}&nbsp;&nbsp;"> 
+Tab Name
+</a>
+</td>
+<td class="tab"><a href="" class="tree" title="Up a level"
+  tal:condition="tab_info/uplink_url"
+  tal:attributes="href tab_info/uplink_url;"
+><img tal:attributes="src string:${silva_root}/globals/up_level.gif" width="19" height="14"  border="0" /></a></td>
+
+</tal:block>
+</tal:block>            
+</tr>
+
+<span tal:replace="nothing"> _______ tabs lower edge _______ </span>
+<tr>
+<tal:block tal:omit-tag="" tal:repeat="item tabs">
+<tal:block tal:define="is_selected_tab python:item[1] == template.id or item[1] == active_tab">
+<td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<td class="tab-up"
+    tal:attributes="class python:test(is_selected_tab, 'tab-up', 'tab-edge')"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+</tal:block>
+</tal:block>
+</tr>
+</table>
+
+</td>
+<td class="tab-bg" align="right">
+<a href="globals/reference"
+  tal:attributes="href string:${silva_root}/globals/reference">
+<span class="idea">Silva&nbsp;&nbsp;</span>
+</a>
+</td>
+</tr>
+</table>
+</tal:block>
+
+<span tal:replace="nothing"> ______________ breadcrumb trail table ______________ </span>
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr valign="top">
+<td class="tab-up" width="2%"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" /></td>
+<td class="tab-up">
+<div class="breadcrumb">
+<span tal:replace="template/title">Edit</span>:&nbsp;&nbsp;
+</div>
+</td>
+
+<td class="tab-up" width="95%">
+<div class="breadcrumb">
+<repeat tal:omit-tag="" tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)"> 
+<a href="url"
+  tal:attributes="href string:${item/absolute_url}/edit/${template/id}"
+  tal:content="structure python: item.getProperty('short_title') or item.get_title_html()">Name</a>
+<span tal:condition="not:repeat/item/end" tal:omit-tag="">/</span>
+</repeat>
+<tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'])">
+  &nbsp;
+  <a href="" tal:attributes="href python:'%s/manage_main' % model.absolute_url()"><span class="idea">/manage...</span></a>
+<tal:block replace="nothing"> ___________ Start hook for the experimental Bitflux WYSIWYG editor integration ___________ </tal:block>
+<tal:block condition="
+    python:model.meta_type == 'Silva Document'
+           and hasattr(here, 'bxe')">  
+  &nbsp;experimental:&nbsp;
+  <a href="" tal:attributes="href python:'%s/edit/tab_edit_bxe' % model.absolute_url()"><span class="idea">/bxe edit...</span></a>
+</tal:block>
+
+<tal:block condition="
+    python:model.meta_type == 'Silva Document'
+           and hasattr(here, 'xopus')">  
+  &nbsp;experimental:&nbsp;
+  <a href="" tal:attributes="href python:'%s/edit/tab_edit_xopus' % model.absolute_url()"><span class="idea">/xopus edit</span></a>
+</tal:block>
+
+<tal:block replace="nothing"> ____________ End hook for the experimental Bitflux WYSIWYG editor integration ____________ </tal:block>
+</tal:block>
+</div>
+</td>
+
+<td class="tab-up" align="right">
+<div class="breadcrumb" tal:condition="exists:here/help_url">
+<a href="/silva/help/" target="_blank"
+  tal:attributes="href string:${here/help_url}">Help</a>
+</div>
+</td>
+<td class="tab-up" width="2%"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+</tr>
+<span tal:replace="nothing"> ______________ breadcrumb root space ______________ </span>
+<tr>
+<td class="tab-up" colspan="5"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+</tr>
+<span tal:replace="nothing"> ______________ breadcrumb bottom edge ______________ </span>
+<tr>
+<td class="tab-edge" colspan="5"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+</tr>
+</table>
+</div>
