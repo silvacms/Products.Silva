@@ -2,7 +2,7 @@
 <metal:block fill-slot="edit_input">
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
   <div class="fixIE6widget">      
-      <textarea style="width:100%" tal:content="here/editable_content" id="data" name="data" cols="65" rows="2">Dummy text</textarea>
+      <textarea class="fixIE6widget" tal:content="here/editable_content" id="data" name="data" cols="65" rows="2">Dummy text</textarea>
   </div>
 </metal:block>
 <metal:block fill-slot="edit_notes">

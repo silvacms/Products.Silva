@@ -88,7 +88,7 @@ ul.tips-nested {
 
 /* ____________________________________________________________ forms _____ */
 
-div.fixIE6widget {
+.fixIE6widget {
     width : 96%;
 }
 

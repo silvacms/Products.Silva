@@ -320,7 +320,7 @@ Notes
 <td>
    <div class="fixIE6widget">  
 <textarea
-  style="width:100%"
+  class="fixIE6widget"
   name="message"
   cols="65"
   rows="7"

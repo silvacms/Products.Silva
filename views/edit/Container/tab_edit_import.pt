@@ -365,7 +365,7 @@
         <td>
             <div class="fixIE6widget">  
             <textarea name="description"
-                      style="width: 100%;"
+                      class="fixIE6widget"
             ></textarea>
             </div>
         </td>

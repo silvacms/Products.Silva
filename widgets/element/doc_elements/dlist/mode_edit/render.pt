@@ -9,7 +9,7 @@
 <script type="text/javascript" tal:content="structure here/asset_reference.js" />
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
 <div class="fixIE6widget">  
-<textarea style="width:100%" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
+<textarea class="fixIE6widget" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
     tal:content="here/editable_content">Dummy</textarea>
 </div>
 <br />
