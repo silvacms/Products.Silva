@@ -295,7 +295,9 @@ table.listing tfoot {
 /* _____________________ rows ______________________ */
 
 table.listing tr.controls {
+  color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
+  text-transform: &dtml-textTransform;;
   /* in case it's empty */
   height : 0.2em;
 }
@@ -305,7 +307,9 @@ table.listing tr.top-controls {
 }
 
 table.listing tr.inter-controls {
-    background: &dtml-listingInter-ControlsBackground;;
+  color: #c9dfe2;
+  background: &dtml-listingInter-ControlsBackground;;
+  text-transform: &dtml-textTransform;;
 }
 
 tr.divider, th.divider, td.divider {

@@ -62,7 +62,6 @@ mainTabFontColorSelected:string=#424244
 mainTabBackgroundNotSelected:string=#000000
 
 workspace:string=#a7b0b5
-contentWorkspace:string=#e5eeea
 
 headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
 headingFontColor:string=#444446
@@ -86,6 +85,7 @@ contentTabBackdrop:string=#000000
 contentTabFontWeight:string=normal
 contentTabFontColorSelected:string=#000000
 
+contentWorkspace:string=#e5eeea
 contentTabBackground:string=#729b87
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
@@ -103,7 +103,7 @@ requiredField:string=url(required.gif) right no-repeat
 textTransform:string=lowercase
 noBorder:string=none
 evenRowBackground:string=#bdc9ce
-oddRowBackground:string=#000000
+oddRowBackground:string=#dbe6e5
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 inputBackground:string=#d5e7e6
