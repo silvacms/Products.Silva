@@ -35,7 +35,7 @@
           <items>[]</items>
           <default>[]</default>
           <title>Addables</title>
-          <description>Override the items allowed in this container. Will only be used if 'acquire addables' is not checked</description>
+          <description>If 'acquire addables' (above) is not checked, these settings will determine the items allowed in this publication. Otherwise the addables are acquired from settings on a higher level.</description>
           <external_validator></external_validator>
           <css_class></css_class>
           <orientation>vertical</orientation>

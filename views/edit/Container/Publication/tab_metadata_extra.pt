@@ -64,7 +64,7 @@
 </fieldset>
 <tr class="controls">
   <td colspan="4" align="right">
-    <input class="button" type="submit"
+    <input class="button" type="submit" title="Save addable settings for this publication: alt-a" accesskey="a" 
       name="form_submitted" value=" change item "
       tal:attributes="value string: Save addables data " />
   </td>
