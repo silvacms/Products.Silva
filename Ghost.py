@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.79 $
+# $Revision: 1.80 $
 
 # Zope
 from OFS import SimpleItem
@@ -130,17 +130,11 @@ class GhostBase:
             traversal_root = self.get_container()
 
         # Now resolve it...
-        try:
-            target = traversal_root.unrestrictedTraverse(content_url)
+        target = traversal_root.unrestrictedTraverse(content_url, None)
+        if target is not None:
             # ...and get physical path for it
             self._content_path = target.getPhysicalPath()
-        except (AttributeError, KeyError):
-            # ...or, in case of errors, set it to the raw input
-            #
-            # AttributeError is what unrestrictedTraverse raises
-            # if it can find an object, but not its attribute.
-            # KeyError is what unrestrictedTraverse raises
-            # if it cannot find the object.
+        else:
             self._content_path = path_elements
        
     security.declareProtected(SilvaPermissions.View, 'get_haunted_url')
@@ -149,14 +143,11 @@ class GhostBase:
         """
         if self._content_path is None:
             return None
-        try:
-            object = self.get_root().unrestrictedTraverse(self._content_path)
+
+        object = self.get_root().unrestrictedTraverse(self._content_path, None)
+        if object is not None:    
             return '/' + object.absolute_url(1)
-        except (AttributeError, KeyError):
-            # AttributeError is what unrestrictedTraverse raises
-            # if it can find an object, but not its attribute.
-            # KeyError is what unrestrictedTraverse raises
-            # if it cannot find the object.
+        else:
             return '/'.join(self._content_path)
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
@@ -173,10 +164,9 @@ class GhostBase:
         # publically?
         if path is None:
             return None
-        try:
-            content = self.aq_parent.unrestrictedTraverse(path)
-        except:
-            # catch all traversal failures
+
+        content = self.aq_parent.unrestrictedTraverse(path, None)
+        if content is None:
             return None
         # check if it's valid
         valid = None 
@@ -200,12 +190,7 @@ class GhostBase:
             returns content object, or None on traversal failure.
         """
         path = self._content_path
-        try:
-            content = self.restrictedTraverse(path)
-        except:
-            # catch all traversal failures
-            return None
-        return content
+        return self.restrictedTraverse(path, None)
         
     def render_preview(self):
         """Render preview of this version (which is what we point at)

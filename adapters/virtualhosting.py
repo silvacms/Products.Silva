@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: virtualhosting.py,v 1.3 2003/11/04 20:13:01 faassen Exp $
+# $Id: virtualhosting.py,v 1.4 2003/11/06 14:40:47 jw Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
@@ -47,15 +47,10 @@ class VirtualHostingAdapter(adapter.Adapter):
         if root_path is None:
             return None
     
-        try:
-            root = self.context.restrictedTraverse(root_path)
-        except (AttributeError, KeyError), err:
-            root =  None
-        
-        return root
+        return self.context.restrictedTraverse(root_path, None)
 
     def containsVirtualRoot(self):
-        """Return true if object contains the current virtual host root.
+        """ Return true if object contains the current virtual host root.
         """
         root_path = self.getVirtualRootPhysicalPath()
         if root_path is None:
