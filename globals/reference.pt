@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- _______ Silva version 0.9.3.0 _______ -->
+<!-- _______ Silva version 0.9.3.0a _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal">
@@ -71,14 +71,15 @@
 <h4>External developers</h4>
 
 <p>
+  <a href="mailto:gotcha@swing.be">Godefroid Chapelle</a> from <a href="http://www.bubblenet.be/">BubbleNet.be</a><br />
   <!--<a href="mailto:jose.chaso@zeux.info">Jos Chaso</a><br />-->
-  <a href="mailto:hpk@devel.trillke.net">Holger Krekel</a><br />
   <a href="mailto:robbenhaar@espresto.com">Clemens Klein-Robbenhaar</a><br />
-  <a href="mailto:alexander@limi.net">Alexander Limi</a><br />
-  <a href="mailto:js@aixtraware.de">Joachim Schmitz</a><br />
-  <a href="mailto:itamar@zoteca.com">Itamar Shtull-Trauring</a><br />
+  <a href="mailto:hpk@devel.trillke.net">Holger Krekel</a> from many things, including <a href="http://codespeak.net/pypy/">pypy.org</a><br />
+  <a href="mailto:alexander@limi.net">Alexander Limi</a> from <a href="http://www.plonesolutions.com/">Plone Solutions</a><br />
+  <a href="mailto:js@aixtraware.de">Joachim Schmitz</a> from <a href="http://www.aixtraware.de/">Aixtraware.de</a><br />
+  <a href="mailto:itamar@zoteca.com">Itamar Shtull-Trauring</a> from <a href="http://www.zoteca.com/">Zoteca</a><br />
   <a href="mailto:hazmat@infrae.com">Kapil Thangavelu</a><br />
-  <a href="mailto:cz@gocept.de">Christian Zagrodnick</a><br />
+  <a href="mailto:cz@gocept.de">Christian Zagrodnick</a> (and others) from <a href="http://www.gocept.de/">Gocept.de</a><br />
 </p>
   
 <h4>Thanks to....</h4>
@@ -96,11 +97,17 @@
   <br />
   <br />
   <span class="subhead">Silva v0.9.3</span><br />
-  <a style="float:right; margin-bottom:2em;" 
+  <a style="float:right; margin-bottom:1em;" 
     href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-s"
     accesskey="s">
-    <img src="powered_by.png" width="64" height="16" border="0" alt="Silva site" />
+    <img style="vertical-align:top;"
+      src="powered_by.png" 
+      width="64"
+      height="16"
+      border="0"
+      alt="Silva site"
+    />
   </a>
   Copyright &#xa9; 2002, 2003 Infrae. All rights reserved.
 </p>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- _______ Silva version 0.9.3.0 _______ -->
+<!-- _______ Silva version 0.9.3.0a _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal">
@@ -54,7 +54,7 @@
   The tabs have numbered access keys, starting from one (the first tab) going up to five. You can navigate horizontally accross an item&#8217;s screens by using alt-1, alt-2, and so forth. 
 </p>
 <p>
-  Each tab has a toplink, the tall tree on the left side. It takes you to the top of the current publication, within the same &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
+  Each tab has a toplink, the tall tree on the left side. It takes you to the top of the current publication, within the same tab, or &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
 </p>
 <p>
   On the right of each tab is an uplink, a small tree that takes you up one level in the same vein. The access keys for the uplinks are the remaining numbers (add five to the access key for the tab). If you are  in a screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less than five tabs, you still add five to get the uplink key.
@@ -70,7 +70,7 @@
   q &nbsp; Logout
 </p>
 
-<h3>Contents screen (folder or publication)</h3>
+<h3>Contents screen (folder)</h3>
 
 <p>
   <span class="subhead">Listing header</span><br />
@@ -100,7 +100,7 @@
   ; &nbsp; See presentation preview<br />
 </p>
 
-<h3>Publish screen (folder or publication)</h3>
+<h3>Publish screen (folder)</h3>
 
 <p>
   <span class="subhead">Listing header</span><br />
@@ -137,7 +137,7 @@
 <h3>Other screens</h3>
 
 <p>
-The Metadata, Access, and Status screens as well as their subscreens (such as Lookup, Import, and Export) have access keys for most buttons. Usually the first letter of the button is the access key. You can always hover over the button to see the tooltip. Sometimes there are multiples of the same button, in which case only the first has an access key. 
+The Properties, Access, and Status screens as well as their subscreens (such as Lookup, Import, and Export) have access keys for most buttons. Usually the first letter of the button is the access key. You can always hover over the button to see the tooltip. Sometimes there are multiples of the same button, in which case only the first has an access key. 
 </p>
 
 <h4>Notes</h4>
@@ -151,16 +151,16 @@ The Metadata, Access, and Status screens as well as their subscreens (such as Lo
     Mozilla and Internet Explorer handle access keys for hyperlinks differently. Mozilla initiates the action (same as clicking the link), whereas Explorer just highlights the link, and then you have to hit return to activate it. Both browsers treat form buttons the same, initiating the action immediately.
   </li>
   <li>
-    Don&#8217;t forget that most browsers use alt-left arrow to go back, and alt-right arrow to go forward.
+    Don&#8217;t forget that most browsers use alt-left arrow to go back, and alt-right arrow to go forward. On the Mac, command-left arrow and command-right arrow do this.
   </li>
 </ul>
+<p>
+  Someday browsers will automatically underline the access key of a link or button. In the meantime, send a mail and complain.
+</p>
 <p>
   <span class="subhead">Tip for Mozilla/Netscape users</span><br />
   Using the &#8220;Find As You Type&#8221; feature will make keyboard navigation to hyperlinks &#8211; such as object names &#8211; remarkably easy. See:<br />
   <a href="http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html">http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html</a>
-</p>
-<p>
-  Someday browsers will automatically underline the access key of a link or button. Send a mail and complain.
 </p>
 
 <h2 style="margin-top:1.4em;">Silva documentation</h2>
