@@ -125,7 +125,7 @@
 
 <td class="tab-up" align="right">
 <div class="breadcrumb" tal:condition="exists:here/help_url">
-<a href="/silva/help/" title="Silva help: alt-h" accesskey="h"
+<a href="/silva/help/" title="Silva help: alt-h" accesskey="h" target="_blank"
   tal:attributes="href string:${here/help_url}">Help</a>
 </div>
 </td>

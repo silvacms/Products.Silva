@@ -1,12 +1,14 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.32 $
+$Revision: 1.47.2.33 $
 
 Silva changes
 
   0.9.1.5
                                                                                                 
     Bugs Fixed
+
+        - Help text opens in new browser window.
                                                                
         - Indexer -all non-versioned content actually- can now be deleted.
 
