@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 
 # Zope
 from OFS import SimpleItem
@@ -93,7 +93,7 @@ class LayoutService(SimpleItem.SimpleItem):
 
     def get_installed_for_select(self):
         result = [(self.NOLAYOUT, '')]
-        for name in self.get_names():
+        for name in self.get_installed_names():
             layout = layoutRegistry.get_layout(name)
             result.append((layout.description, name))
         return result
@@ -129,9 +129,12 @@ class LayoutService(SimpleItem.SimpleItem):
     def clone_layout(self, publication):
         old_key = publication.get_own_layout_key()
         if old_key:
-            publication.set_layout_key(self._get_unique_layout_key())
-            newUsedLayout = copy.copy(self._used_layouts[old_key])
-            self._used_layouts[publication.get_layout_key()] = newUsedLayout
+            self.copy_used_layout(publication, old_key)
+
+    def copy_used_layout(self, publication, key):
+        publication.set_layout_key(self._get_unique_layout_key())
+        newUsedLayout = copy.copy(self._used_layouts[key])
+        self._used_layouts[publication.get_layout_key()] = newUsedLayout
         self._p_changed = 1
 
     def remove_layout(self, publication):
@@ -216,10 +219,14 @@ class LayoutService(SimpleItem.SimpleItem):
 
     def copy_layout(self, publication):
         layout_name = self.get_layout_name(publication)
-        layoutRegistry.copy_layout(self.get_root(), layout_name, publication)        
-        used_layout = self.get_used_layout(publication)
+        layoutRegistry.copy_layout(self.get_root(), layout_name, publication)       
+        if not self.has_own_layout(publication):
+            old_key = publication.get_layout_key()
+            self.copy_used_layout(publication, old_key)
+        used_layout = self.get_own_used_layout(publication)
         used_layout.copied = 1
         self._p_changed = 1
+            
 
     def layout_ids(self, publication):
         return self.layout_items(publication)

@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 
 from Products.Silva import icon
 from Products.Silva.install import add_fss_directory_view
@@ -50,8 +50,11 @@ class LayoutRegistry:
         return newUsedLayout
 
     def copy_layout(self, root, name, publication):
-        publication_path = '/'.join(
-            publication.getPhysicalPath()[len(root.getPhysicalPath()):])
+        if publication is root:
+            publication_path = '.'
+        else:    
+            publication_path = '/'.join(
+                publication.getPhysicalPath()[len(root.getPhysicalPath()):])
         folder = self.get_layout_folder(root, name)
         for item in folder.objectValues():
             item.manage_doCustomize(publication_path, root=root)

@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_ServiceLayouts.py,v 1.9 2003/10/30 22:11:11 gotcha Exp $
+# $Id: test_ServiceLayouts.py,v 1.10 2003/11/03 08:19:39 gotcha Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -21,8 +21,14 @@ from Products.Silva.LayoutService import LayoutService
 layoutTest1 = {'name':'test1', 'directory':'layout_test1', 'description':'test 1 Layout'}
 layoutTest2 = {'name':'test2', 'directory':'layout_test2', 'description':'test 2 Layout'}
 
-layoutTest1Items = ['template', 'test1.html']
-layoutTest2Items = ['template', 'test2.html']
+layoutTest1Items = [('template', 'Filesystem Directory View', 'Folder'),
+    ('test1.html', 'Filesystem Page Template', 'Page Template'),
+    ('test1.css', 'Filesystem DTML Method', 'DTML Method'),
+    ('image.gif', 'Filesystem Image', 'Image')]
+layoutTest2Items = [('template', 'Filesystem Directory View', 'Folder'),
+    ('test2.html', 'Filesystem Page Template', 'Page Template'),
+    ('test2.css', 'Filesystem DTML Method', 'DTML Method'),
+    ('image.gif', 'Filesystem Image', 'Image')]
 
 layoutRegistry.register(layoutTest1['name'], layoutTest1['description'],
     moduleFilename, layoutTest1['directory'])
@@ -36,7 +42,6 @@ Publication.Publication.cb_isMoveable = lambda self: 1
 Root.Root.manage_main = lambda *foo, **bar: None
 
 class TestInstallLayouts(SilvaTestCase.SilvaTestCase):
-
 
     def afterSetUp(self):
         self.setRoles(['Manager'])
@@ -55,6 +60,22 @@ class TestInstallLayouts(SilvaTestCase.SilvaTestCase):
         self.failUnless(layoutTest1['name'] in self.service_layouts.get_installed_names())
         self.failUnless(self.service_layouts.is_installed(layoutTest1['name']))
         self.failUnless(hasattr(self.root.service_resources.Layouts, layoutTest1['directory']))
+        # check fs objects
+        directory = getattr(self.root.service_resources.Layouts, layoutTest1['directory'])
+        self.assertEqual(directory.meta_type, 'Filesystem Directory View')
+        for id, fs_meta_type, meta_type in layoutTest1Items:
+            self.failUnless(hasattr(directory, id))
+            item = getattr(directory, id)
+            self.assertEqual(item.meta_type, fs_meta_type)
+        # check list for select HTML UI    
+        # with one layout
+        select = self.service_layouts.get_installed_for_select()
+        self.assertEqual(len(select), 2)
+        awaited = [(LayoutService.NOLAYOUT, ''), (layoutTest1['description'], layoutTest1['name'])]
+        for item in awaited:
+            self.failUnless(item in select)
+        # with two layouts
+        self.service_layouts.install(layoutTest2['name'])
         select = self.service_layouts.get_installed_for_select()
         self.assertEqual(len(select), 3)
         awaited = [(LayoutService.NOLAYOUT, ''), (layoutTest1['description'], layoutTest1['name']), (layoutTest2['description'], layoutTest2['name'])]
@@ -98,16 +119,17 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.assertEqual(pub.get_own_layout(), layoutTest['name']) 
 
     def checkCopiedLayoutTest1Removed(self, pub):
-        self.failIf(self.service_layouts.has_layout(pub))
-        self.failIf(self.service_layouts.layout_ids(pub))     
-        for id in layoutTest1Items:
+        self.failIf(self.service_layouts.has_own_layout(pub))
+        for id, fs_meta_type, meta_type in layoutTest1Items:
             self.failIf(id in pub.objectIds())
 
     def checkCopiedLayoutTest1(self, pub):
         self.checkLayout(pub, layoutTest1)
-        for id in layoutTest1Items:
+        for id, fs_meta_type, meta_type in layoutTest1Items:
             self.failUnless(id in pub.objectIds())
-        for id in layoutTest1Items:
+            item = getattr(pub, id)
+            self.assertEqual(item.meta_type, meta_type, '%s metatype : %s != %s' % (id, item.meta_type, meta_type))
+        for id, fs_meta_type, meta_type in layoutTest1Items:
             self.failUnless(id in self.service_layouts.layout_ids(pub))
     def testWithoutLayouts(self):
         self.checkNoLayout(self.root)
@@ -160,14 +182,26 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
     def testLayoutCopied(self):
         #before customize
         self.pub.set_layout(layoutTest1['name'])
-        self.failIf(self.service_layouts.layout_copied(self.pub), 'Layout has not been copied !')
-        self.failIf(self.pub.layout_copied(), 'Layout has not been copied !')
+        self.failIf(self.service_layouts.layout_copied(self.pub), 'Layout should not have been copied !')
+        self.failIf(self.pub.layout_copied(), 'Layout should not have been copied !')
         self.service_layouts.copy_layout(self.pub)
         self.checkCopiedLayoutTest1(self.pub)
-        self.failUnless(self.service_layouts.layout_copied(self.pub), 'layout not copied')
-        self.failUnless(self.pub.layout_copied(), 'layout not copied')
+        self.failUnless(self.service_layouts.layout_copied(self.pub), 'Layout should have been copied !')
+        self.failUnless(self.pub.layout_copied(), 'Layout should have been copied !')
         self.service_layouts.remove_layout(self.pub)
         self.checkCopiedLayoutTest1Removed(self.pub)
+
+    def testLayoutCopiedInSilvaRoot(self):
+        #before customize
+        self.silva.set_layout(layoutTest1['name'])
+        self.failIf(self.service_layouts.layout_copied(self.silva), 'Layout should not have been copied !')
+        self.failIf(self.silva.layout_copied(), 'Layout should not have been copied !')
+        self.service_layouts.copy_layout(self.silva)
+        self.checkCopiedLayoutTest1(self.silva)
+        self.failUnless(self.service_layouts.layout_copied(self.silva), 'Layout should have been copied !')
+        self.failUnless(self.silva.layout_copied(), 'Layout should have been copied !')
+        self.service_layouts.remove_layout(self.silva)
+        self.checkCopiedLayoutTest1Removed(self.silva)
 
     def testCopyPaste(self):        
         self.pub.set_layout(layoutTest1['name'])
@@ -212,6 +246,20 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.checkNoLayout(self.subpub)
         self.checkNoOwnLayout(self.subpub)
         
+    def testLayoutCopiedInSubPublication(self):
+        self.pub.set_layout(layoutTest1['name'])
+        self.checkLayout(self.pub, layoutTest1) 
+        self.add_publication(self.pub, 'subpub', 'subpublication')
+        self.failUnless(self.pub.subpub)
+        self.subpub = self.pub.subpub
+        self.checkLayout(self.subpub, layoutTest1) 
+        self.checkNoOwnLayout(self.subpub)
+        self.service_layouts.copy_layout(self.subpub)
+        self.failIf(self.service_layouts.layout_copied(self.pub), 'Layout should not have been copied !')
+        self.failUnless(self.service_layouts.layout_copied(self.subpub), 'Layout should have been copied !')
+        self.checkOwnLayout(self.subpub, layoutTest1)
+        self.service_layouts.remove_layout(self.subpub)
+        self.checkCopiedLayoutTest1Removed(self.subpub)
 
 if __name__ == '__main__':
     framework()

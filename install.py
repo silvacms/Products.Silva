@@ -291,6 +291,13 @@ def configureSecurity(root):
     for add_permission in add_permissions:
         root.manage_permission(add_permission, roleinfo.AUTHOR_ROLES)
 
+    # chief editor can customize a layout
+    root.manage_permission('Add Page Templates', roleinfo.CHIEF_ROLES)
+    root.manage_permission('Add Folders', roleinfo.CHIEF_ROLES)
+#    root.manage_permission('Add Images', roleinfo.CHIEF_ROLES)
+#    root.manage_permission('Add DTML Methods', roleinfo.CHIEF_ROLES)
+
+
     # chief editors and up may also place groups and Datasources.
     root.manage_permission('Add Silva Groups', roleinfo.CHIEF_ROLES)
     root.manage_permission('Add Silva Virtual Groups', roleinfo.CHIEF_ROLES)
