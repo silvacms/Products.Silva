@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.52 $
 
 # Python
 from StringIO import StringIO
@@ -73,6 +73,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         which do not have cache yet.
         """
         self._cached_data = {}
+        self._cached_checked = {}
 
     # ACCESSORS
     security.declareProtected(
@@ -212,7 +213,14 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         if view_type in ('edit','add'):
             return VersionedContent.inheritedAttribute('view')(
                 self, view_type)
-
+        
+        # XXX the "suppress_title" hack in the
+        # SilvaDocument widget/top/doc/mode_view
+        # makes it necessary to bypass the cache here
+        if self.REQUEST.other.get('suppress_title'):
+            return VersionedContent.inheritedAttribute('view')(
+                self, view_type)
+        
         adapter = getVirtualHostingAdapter(self)
         cache_key = (view_type, adapter.getVirtualHostKey())
         
