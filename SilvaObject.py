@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.80 2003/05/23 14:15:17 jw Exp $
+# $Id: SilvaObject.py,v 1.81 2003/06/03 14:31:59 jw Exp $
 
 # python
 from types import StringType
@@ -102,6 +102,21 @@ class SilvaObject(Security, ViewCode):
             container._invalidate_sidebar(container)
 
     # ACCESSORS
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_silva_object')
+    def get_silva_object(self):
+        """Get the object. Can be used with acquisition to get the Silva
+        Document for a Version object.
+        """
+        return self.aq_inner
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'silva_object_url')
+    def silva_object_url(self):
+        """Get url for silva object.
+        """
+        return self.get_silva_object().absolute_url()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title')
