@@ -67,7 +67,7 @@ Installation problems
    
  "AttributeError: _add_ordered_id"
 
-    This happens if one imports the "demo.zexp" ouside a Silva Root.
+    This happens if one imports the "demo.zexp" outside a Silva Root.
     Please first create a Silva Root via the ZMI and import the
     demo.zexp inside the Silva Root.
 
@@ -135,12 +135,29 @@ Problems when using Silva
 
 
   When inserting/saving/deleting, etc something in the "Editor" tab, the
-  browser seems to reload the next page infinitely
+  browser seems to reload the next page infinitely, but displays nothing
 
     This is a known issue when using Opera, see
     http://issues.infrae.com/silva/issue285
-    Currently there is no known fix or workaround, sorry.
-    Please use another web browser for editing contents.
+    This should be fixed in Silva-0.9.2; if You still get this problem,
+    please send a bug report. Do not forget to add the Version of the
+    browser You are using, the version of Silva and the last action You
+    did when the problem occurs.
+
+
+  When inserting/saving/deleting, etc something in the "Editor" tab,
+  nothing has changed in the next page.
+
+    This may be an issue with your browsers cache; e.g. You still have
+    an old copy of the page viewed by Your browser, because the browser
+    did not reflect the change. Try to force a reload of the page.
+    (e.g. With IE press the "Ctrl" key while clicking the reload symbol).
+     If this solves the problem, please check with the caching policy
+    of Your browser; set the caching policy so the browser checks 
+    for a newer version every time it loads the page.
+    (XXX: maybe detailed instructions for IE how to do this? Or are
+    people reading plain text files assumed to be experienced enough to
+    do this anyway?)
 
 
   "AttributeError: is_id_valid" or other errors when adding a Silva
@@ -173,6 +190,19 @@ Problems when using Silva
     on silva-dev@lists.infrae.com. It would help a lot, if You could
     provide a *.zexp exported file of the content object triggering the
     error.
+
+    Additionally please provide information about where the bug
+    appeared. Did this happen inside the SMI, and if it does,
+    in which tab did this happen (e.g. "Editor", "Preview" ...)
+    If it happened in the "Editor" tab, which element did You edit
+    when the problem appeared? E.g. Had this been in the nested
+    subeditor of a table cell of complex list element, or when opening a
+    paragraph for editing or when saving?
+
+    If the problem happens in the public view only, and You did not use
+    the standard layout shipped with Silva but a custom one, please try
+    to reproduce this with the standard layout. Ask your site admin for
+    assistance if necessary.
 
 
   Exporting Silva objects in XML format via the ZMI fails:
