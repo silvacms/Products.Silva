@@ -852,6 +852,12 @@ h3.info {
   text-transform: &dtml-textTransform;;
 }
 
+div.info p {
+  text-align : left;
+  margin-top : 0.3em;
+  margin-bottom : 0em;
+}
+
 select.clipboard, select.clipboard:focus, select.clipboard:hover {
   color : &dtml-shade26;;;
   background : &dtml-listingEvenBackground;;
