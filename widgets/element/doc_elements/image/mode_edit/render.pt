@@ -7,52 +7,49 @@
   <input style="width:50%;" type="text" name="image_path" value=""
     tal:attributes="value python:node.getAttribute('image_path');"  />
 
-  <h4>Image aligment:</h4>
+  <span class="subhead"><br />Image alignment:<br /></span>
   <tal:block define="global alignment python:node.getAttribute('alignment')" />
   <tal:block replace="nothing">THIS SHOULD PROBABLY BE SIMPLER?</tal:block>
-  <input type="radio" name="alignment" value="none" checked="checked"
+  <input type="radio" name="alignment" value="none" id="none" checked="checked"
     tal:condition="python:alignment != 'none'" /> 
-  <input type="radio" name="alignment" value="none" checked=""
+  <input type="radio" name="alignment" value="none" id="none" checked=""
     tal:condition="python:alignment == 'none'" /> 
-  No specification<br />
-  <input type="radio" name="alignment" value="image-left"
+  <label for="none">Default</label><br />
+  <input type="radio" name="alignment" value="image-left" id="image-left"
     tal:condition="python:alignment != 'image-left'" /> 
-  <input type="radio" name="alignment" value="none" checked=""
+  <input type="radio" name="alignment" value="none" id="image-left" checked=""
     tal:condition="python:alignment == 'image-left'" /> 
-  Align left<br />
-  <input type="radio" name="alignment" value="image-center"
+  <label for="image-left">Align left</label><br />
+  <input type="radio" name="alignment" value="image-center" id="image-center"
     tal:condition="python:alignment != 'image-center'" /> 
-  <input type="radio" name="alignment" value="image-center" checked=""
+  <input type="radio" name="alignment" value="image-center" id="image-center" checked=""
     tal:condition="python:alignment == 'image-center'" /> 
-  Align center<br />
-  <input type="radio" name="alignment" value="image-right"
+  <label for="image-center">Align center</label><br />
+  <input type="radio" name="alignment" value="image-right" id="image-right"
     tal:condition="python:alignment != 'image-right'" /> 
-  <input type="radio" name="alignment" value="image-right" checked=""
+  <input type="radio" name="alignment" value="image-right" id="image-right" checked=""
     tal:condition="python:alignment == 'image-right'" /> 
-  Align right<br />
-  <input type="radio" name="alignment" value="float-left"
+  <label for="image-right">Align right</label><br />
+  <input type="radio" name="alignment" value="float-left" id="float-left"
     tal:condition="python:alignment != 'float-left'" /> 
-  <input type="radio" name="alignment" value="float-left" checked=""
+  <input type="radio" name="alignment" value="float-left" id="float-left" checked=""
     tal:condition="python:alignment == 'float-left'" /> 
-  Float left<br />
-  <input type="radio" name="alignment" value="float-right" 
+  <label for="float-left">Float left</label><br />
+  <input type="radio" name="alignment" value="float-right" id="float-right" 
     tal:condition="python:alignment != 'float-right'" /> 
-  <input type="radio" name="alignment" value="float-right" checked=""
+  <input type="radio" name="alignment" value="float-right" id="float-right" checked=""
     tal:condition="python:alignment == 'float-right'" /> 
-  Float right<br />
+  <label for="float-right">Float right</label><br />
 
 </div>
 </metal:block>
 <metal:block fill-slot="edit_notes">
   <ul class="tips">
-    <li><b>Tip:</b> 
-      Use the "Get image reference" button to locate an 
-      image and place its reference. If you know the reference, you 
-      can type it directly.
+    <li>Use the "Get image reference" button to locate an image.
+      If you know the location, you can type in the path directly.
     </li>
-    <li><b>Tip:</b> 
-      Alignments using "float" make the image go next to following document
-      element - if there's room for it.
+    <li>Alignments using "float" make the next document element 
+      wrap around the image - if there's room.
     </li>
   </ul>
 </metal:block>
