@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.138 $
+# $Revision: 1.139 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -242,7 +242,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         self._ordered_ids = ids
         return 1
 
-    def _refresh_ordered_ids(self, item):
+    def _refresh_ordered_ids(self, item, insert_at=None):
         """Make sure item is in ordered_ids when it should be after
         active status changed.
         """
@@ -253,11 +253,14 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         ids = self._ordered_ids
         id = item.id
         if item.is_active() and id not in ids:
-            ids.append(id)
-            self._ordered_ids = ids
-        if not item.is_active() and id in ids:
+            if insert_at:
+                ids.insert(insert_at, id)
+            else:
+                ids.append(id)
+            self._p_changed = 1
+        elif not item.is_active() and id in ids:
             ids.remove(id)
-            self._ordered_ids = ids
+            self._p_changed = 1
 
     def _add_ordered_id(self, item):
         """Add item to the end of the list of ordered ids.
@@ -312,10 +315,14 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         # is allowed
         if not self.is_delete_allowed(orig_id):
             return
-        # first change id if necessary
-        if orig_id != new_id:
-            self.manage_renameObject(orig_id, new_id)
-            return 1
+        # only change id if necessary
+        if orig_id == new_id:
+            return
+        oids = self._ordered_ids
+        publishable_id = oids.index(orig_id)
+        self.manage_renameObject(orig_id, new_id)
+        self.move_to([new_id], publishable_id)
+        return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_delete')
