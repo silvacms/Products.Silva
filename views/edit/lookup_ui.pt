@@ -119,7 +119,7 @@
                     value="Add to clipboard"
                     title="add checked users to clipboard: alt-a"
                     accesskey="a"                      
-                    tal:condition="python:lookup_result and len(lookup_result) > 3">
+                    tal:condition="python:lookup_result and len(lookup_result) > 3" />
                   <h3>
                     Search results
                   </h3>
