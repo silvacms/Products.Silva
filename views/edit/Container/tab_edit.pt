@@ -21,12 +21,12 @@
 <tr class="topcontrols" valign="bottom">
   <!-- top row of complete table with sidebar -->
   <td width="22%" nowrap="1">
-    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication - alt-[" accesskey="["
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication: alt-[" accesskey="["
       tal:condition="python:model != model.get_root()"
       tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/tab_edit'"><img width="16" height="16" border="0" alt="Up to containing Publication" hspace="3"
       tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%silva_root, '%s/globals/up_tree_gray.gif'%silva_root)" /></a>
     <span class="tablehead3">Publication</span>
-    <a href="../../edit/tab_edit" title="Up one level - alt-]" accesskey="]"
+    <a href="../../edit/tab_edit" title="Up one level: alt-]" accesskey="]"
       tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
   </td>
   <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
@@ -40,8 +40,8 @@
     &nbsp;
     </tal:block>
     <tal:block condition="silva_permissions/ChangeSilvaContent">
-      <input class="button" type="submit" name="add_object:method" value=" New:" title="Add a new item - alt-n" accesskey="n" />
-      <select name="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();"  title="Select a new item - alt-s" accesskey="s">
+      <input class="button" type="submit" name="add_object:method" value=" New:" title="Add a new item: alt-n" accesskey="n" />
+      <select name="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();"  title="Select a new item: alt-s" accesskey="s">
         <option value="None" disabled="disabled">Select...</option>
         <tal:block tal:repeat="addable model/get_silva_addables">
         <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
@@ -49,7 +49,7 @@
         </tal:block>
       </select>
       &nbsp;&nbsp;
-      <input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data - alt-i" accesskey="i" />&nbsp;
+      <input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data: alt-i" accesskey="i" />&nbsp;
     </tal:block>
   </td>
 </tr>
@@ -286,7 +286,7 @@ There are no active content objects in this folder.
         tal:attributes="value python:len(publishables) + 1">end</option>
     </select>&nbsp;&nbsp;&nbsp;
     <input tal:condition="silva_permissions/ApproveSilvaContent" class="button" type="submit" 
-      name="tab_edit_move_to:method" value=" Move " title="Move items into selected position - alt-m" accesskey="m" />&nbsp;
+      name="tab_edit_move_to:method" value=" Move " title="Move items into selected position: alt-m" accesskey="m" />&nbsp;
     </tal:block>
     <span tal:condition="python:len(publishables) <= 1">&nbsp;</span>
   </td>
@@ -435,20 +435,20 @@ There are no active content objects in this folder.
   <script type="text/javascript">
   <!--
   if (document.forms[0]) {
-    document.write('<input class="button" type="button" name="selectButton" value="select All" title="Select all items in this folder - alt-a" accesskey="a" onClick="toggleSelect(); return false">')
+    document.write('<input class="button" type="button" name="selectButton" value="Select all" title="Select all items in this folder: alt-a" accesskey="a" onClick="toggleSelect(); return false">')
   }
   //-->
   </script>
   <tal:block condition="silva_permissions/ChangeSilvaContent">
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_rename:method" value="Rename..." title="Rename and retitle an item - alt-r" accesskey="r" />
-  &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_edit_delete:method" value=" Delete " title="There's no undo - alt-d" accesskey="d" onClick="return confirm('Really delete?')" />
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_cut:method" value=" cut " title="Cut items - alt-x" accesskey="x" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_rename:method" value="Rename..." title="Rename and retitle an item: alt-r" accesskey="r" />
+  &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_edit_delete:method" value=" Delete " title="There's no undo: alt-d" accesskey="d" onClick="return confirm('Really delete?')" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_cut:method" value=" Cut " title="Cut items: alt-x" accesskey="x" />
   </tal:block>
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_copy:method" value=" Copy " title="Copy items - alt-c" accesskey="c" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_copy:method" value=" Copy " title="Copy items: alt-c" accesskey="c" />
   </tal:block>
   <tal:block condition="python:request.has_key('__cp') and silva_permissions['ChangeSilvaContent']">
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste:method" value=" paste " title="Paste items - alt-v" accesskey="v" />
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste_to_ghost:method" value="paste Ghost" title="Paste (items on clipboard) as ghost objects - alt-g" accesskey="g" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste:method" value=" Paste " title="Paste items: alt-v" accesskey="v" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste_to_ghost:method" value="Paste ghost" title="Paste (items on clipboard) as ghost objects: alt-g" accesskey="g" />
   </tal:block>
   </td>
 </tr>
@@ -471,14 +471,14 @@ There are no active content objects in this folder.
         for (i = 0; i < document.silvaObjects.length; i++)
           document.silvaObjects.elements[i].checked = true ;
         isSelected = true;
-        document.silvaObjects.selectButton.value = "deselect All";
+        document.silvaObjects.selectButton.value = "Deselect all";
         return isSelected;
       }
       else {
         for (i = 0; i < document.silvaObjects.length; i++)
           document.silvaObjects.elements[i].checked = false ;
         isSelected = false;
-        document.silvaObjects.selectButton.value = "select All";
+        document.silvaObjects.selectButton.value = "Select all";
         return isSelected;
       }
     }

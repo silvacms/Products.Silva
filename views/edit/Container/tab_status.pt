@@ -24,8 +24,8 @@
                   border container/table_border">
 <tr class="topcontrols">
 <td align="left" colspan="6">
-<input class="button" style="float:right;" type="submit" name="tab_status_export:method" value=" Export all..." title="Export all items in this overview - alt-e" accesskey="e" />
-<a href="treelink" title="Up to containing publication - alt-[" accesskey="["
+<input class="button" style="float:right;" type="submit" name="tab_status_export:method" value=" Export all..." title="Export all items in this overview: alt-e" accesskey="e" />
+<a href="treelink" title="Up to containing publication: alt-[" accesskey="["
   tal:condition="python:model != model.get_root()"
   tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/tab_status'">
 <img width="16" height="16" border="0" alt="Up to containing Publication" hspace="2"
@@ -34,7 +34,7 @@
 <span class="tablehead3">Publication
 <span tal:condition="python:model != model.get_publication()"
   tal:omit-tag="">branch</span></span>
-<a href="../../edit/tab_status" title="Up one level - alt-]" accesskey="]"
+<a href="../../edit/tab_status" title="Up one level: alt-]" accesskey="]"
   tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="3" /></a>
 </td>
 </tr>
@@ -271,7 +271,7 @@ There are no publishable objects in this folder.
 <script type="text/javascript">
 <!--
 if (document.forms[0]) {
-  document.write('<input class="button" type="submit" name="selectButton" value=" select All " title="Select all items in this overview - alt-a" accesskey="a" onClick="toggleSelect(); return false">')
+  document.write('<input class="button" type="submit" name="selectButton" value=" Select all " title="Select all items in this overview: alt-a" accesskey="a" onClick="toggleSelect(); return false">')
   }
 //-->
 </script>
@@ -294,7 +294,7 @@ Set&nbsp;expiration&nbsp;time?&nbsp;
 <tr class="controls" valign="top"
   tal:condition="python:len(objects) != 0 or model.get_default()">
 <td colspan="2">
-<input class="button" type="submit" name="tab_status_new_version:method" value="create New versions" title="Create new versions of published docs - alt-n" accesskey="n" />
+<input class="button" type="submit" name="tab_status_new_version:method" value="Create new versions" title="Create new versions of published docs: alt-n" accesskey="n" />
 </td>
 <tal:editors-tab condition="silva_permissions/ApproveSilvaContent">
 <td class="widebody" align="right" colspan="2">
@@ -342,17 +342,17 @@ function toggleSelect() {
 <tr class="divider"
   tal:condition="silva_permissions/ApproveSilvaContent">
 <td colspan="3">
-<input class="button" type="submit" name="tab_status_reject:method" value="reJect request for approval" title="Reject request for approval of new versions - alt-j" accesskey="j" />
+<input class="button" type="submit" name="tab_status_reject:method" value="Reject request for approval" title="Reject request for approval of new versions: alt-j" accesskey="j" />
 &nbsp;
-<input class="button" type="submit" name="tab_status_revoke:method" value="reVoke approval" title="Withdraw approval of new versions - alt-v" accesskey="v" />
+<input class="button" type="submit" name="tab_status_revoke:method" value="Revoke approval" title="Withdraw approval of new versions: alt-v" accesskey="v" />
 &nbsp;
-<input class="warningbutton" type="submit" name="tab_status_close:method" value="Close public" title="Close published items - alt-c" accesskey="c" />
+<input class="warningbutton" type="submit" name="tab_status_close:method" value="Close public" title="Close published items: alt-c" accesskey="c" />
 </td>
 
 <td align="right" colspan="3" nowrap="1">
-<input class="button" type="submit" name="tab_status_change_settings:method" value="change Settings" title="Change publish and expiration times - alt-s" accesskey="s" />
+<input class="button" type="submit" name="tab_status_change_settings:method" value="Change settings" title="Change publish and expiration times: alt-s" accesskey="s" />
 &nbsp;
-<input class="button" type="submit" name="tab_status_approve:method" value="apprOve" title="Approve or publish new versions - alt-o" accesskey="o" />
+<input class="button" type="submit" name="tab_status_approve:method" value="Approve" title="Approve or publish new versions: alt-o" accesskey="o" />
 </td>
 </tr>
 
@@ -360,14 +360,14 @@ function toggleSelect() {
 <tr class="divider"
   tal:condition="python:silva_permissions['ChangeSilvaContent'] and not silva_permissions['ApproveSilvaContent']">
 <td colspan="3">
-<input class="button" type="submit" name="tab_status_withdraw:method" value="Withdraw approval request" title="Withdraw request for approval of new versions - alt-w" accesskey="w" />
+<input class="button" type="submit" name="tab_status_withdraw:method" value="Withdraw approval request" title="Withdraw request for approval of new versions: alt-w" accesskey="w" />
 &nbsp;
-<input class="button" type="submit" name="tab_status_revoke:method" value="reVoke approval" title="Revoke approval of new versions - alt-v" accesskey="v" />
+<input class="button" type="submit" name="tab_status_revoke:method" value="Revoke approval" title="Revoke approval of new versions: alt-v" accesskey="v" />
 </td>
 <td align="right" colspan="3" nowrap="1">
-<!-- input class="button" type="submit" name="tab_status_change_settings:method" value="change Settings" title="Change publish and expiration times - alt-s" accesskey="s" / -->
+<!-- input class="button" type="submit" name="tab_status_change_settings:method" value="Change settings" title="Change publish and expiration times: alt-s" accesskey="s" / -->
 &nbsp;
-<input class="button" type="submit" name="tab_status_request_approval:method" value="Request approval" title="Request approval for new versions - alt-r" accesskey="r" />
+<input class="button" type="submit" name="tab_status_request_approval:method" value="Request approval" title="Request approval for new versions: alt-r" accesskey="r" />
 </td>
 </tr>
 
