@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.9 $'
+__version__='$Revision: 1.10 $'
 
 # look ma, i only have these dependencies 
 # and with python2.2 even they would vanish
@@ -58,7 +58,7 @@ class Frag(Node, List):
     """ Fragment of Nodes (basically list of Nodes)"""
     def __init__(self, *content):
         List.__init__(self)
-        map(self.append, content)
+        self.append(*content)
 
     def __eq__(self, other):
         try:

@@ -5,14 +5,13 @@ currently only transformation to and from
 
     eopro2_11 (aka RealObjects EditOnPro) 
 
-are supported.
+is supported.
 
 all APIs are work in progress so use with a grain of salt.
-
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
 
 
 class Transformer:
