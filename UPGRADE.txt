@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36.8.6 $
+  CVS:        $Revision: 1.36.8.7 $
 
 Upgrading from 0.9.1 and below
 
@@ -84,12 +84,6 @@ Upgrading Silva 0.9.2.x to 0.9.3
     automatically refresh all installed Silva extensions as well as
     upgrade the Silva content that needs upgrading. Note that this
     will take a while if your site is large.
-
-    As this process recreates a few internal services, namely the
-    one registering the views for the Silva content objects, you
-    need to refresh all products via the 'refresh all' button in the
-    'service_extensions' in the next step. Additionally you should
-    install the 'SilvaDocument' extension.
 
     In Silva 0.9.3, several reserved ids are added. When the upgrade
     script encounters an object with a reserved id, the object is
@@ -199,28 +193,38 @@ Upgrading Silva 0.9.2.x to 0.9.3
     should include the objects of your content types in the upgrade
     process.
 
-    For this you need to register an upgrade function associated with
+    For this you need to register an Upgrader associated with
     the meta type of your content type class at the
-    'upgrade_registry', before you upgrade. to achieve this place
-    something along the lines of the following code in the
-    '__init__.py' of your product::
+    'upgrade.registry', before you upgrade. To achieve this, create
+    an 'upgrade_0.9.3.py' in your product containing 
+    something along the lines of the following code:: 
 
-       from Products.Silva.upgrade import upgrade_registry, upgrade_list_titles_in_parsed_xml
+			 from Products.Silva.upgrade import registry, IUpgrader
 
-       def upgrade_sampledoc(obj):
-		       for o in obj.objectValues():				
-			         upgrade_list_titles_in_parsed_xml(o.documentElement)
+       class SampleUpgrader:
+           """ does some upgrade of my sample document for 0.9.3 """
 
-      upgrade_registry.register('Silva Sample Document', upgrade_sampledoc)
+           __implements__ = IUpgrader
 
-    The helper function 'upgrade_list_titles_in_parsed_xml' actually
-    does all the XML upgrades mentioned in the section above.
+           def upgrade_sampledoc(self, obj):
+               # obj is the object to be upgraded
+               ... do some upgrade here ...
 
-    If you only need to update the "last author" information, you do
-    not need to take any action; the upgrade process will do this
-    automatically for you.
+               # finally return the upgraded object
+               return obj
 
-    You also may want to take a look at the most current version of
-    the "SilvaDemoExtension
-    Product":http://cvs.infrae.com/SilvaDemoExtension/ for an example
-    of upgrading a custom content type.
+       registry.registerUpgrader(SampleUpgrader(), '0.9.3', 
+                                 'My Silva Sample Document')
+
+    Import 'upgrade_093' in the '__init__.py' of your product to make
+    sure the registration happens at Zope startup time.
+
+    Note that upgraders registered in the 'upgrade_093.py' of the Silva
+    product may also be run on your custom objects, if they are
+    registered for any meta type.
+
+    On the other hand if you have a custom Silva root object, you should 
+    check the 'upgrade_093.py' for upgraders registered for 'Silva Root'
+    and register them for your custom root, too, as otherwise they will
+    not be run on your root, leaving some important configuration
+    objects in their old state.
