@@ -9,7 +9,10 @@
 <div class="margins" metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<h2>Add new <span tal:replace="request/meta_type" /></h2>
+<h2><img src="%s" width="16" height="16" alt="%s"
+     tal:replace="structure python:view.render_icon(request.meta_type)" />&nbsp;
+  Add new <span tal:replace="request/meta_type" />
+</h2>
 <script type="text/javascript" 
   tal:content="structure python:here.focus_editor('field_object_id')" />
 <form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
