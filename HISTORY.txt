@@ -12,6 +12,9 @@ Silva changes
 
     Bugs Fixed
 
+      - Added 'Delete objects' permission to authors and up, this was not
+        used in previous Zope versions but is in 2.7.3.
+
       - Fixed bug that made Internet Explorer generate paths to images in
         Kupu that couldn't be reached by unauthorized users (issues 1165 
         and 1168).
