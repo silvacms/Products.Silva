@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.26 2003/11/08 14:17:35 zagy Exp $
+# $Id: GhostFolder.py,v 1.27 2003/11/10 16:51:15 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -49,6 +49,9 @@ class Sync:
         self._do_create()
         return self.g_container._getOb(self.h_id)
 
+    def finish(self):
+        pass
+
     def _do_update(self):
         raise NotImplementedError, "implemented in subclasses"
 
@@ -61,9 +64,16 @@ class Sync:
             self.h_container.getId(), self.h_id,
             self.g_container.getId(), self.g_id)
 
+
 class SyncFolder(Sync):
 
     factory = 'manage_addFolder'
+
+    def finish(self):
+        ordered_ids = [ ob.getId()
+            for ob in self.h_ob.get_ordered_publishables() ]
+        for index, id in zip(range(len(ordered_ids)), ordered_ids):
+            self.g_ob.move_to([id], index)
 
     def _do_update(self):
         self._update_annotations()
@@ -72,6 +82,7 @@ class SyncFolder(Sync):
         getattr(self.g_container.manage_addProduct['Silva'], self.factory)(
             self.h_id, '[no title]', 0)
         self.g_ob = self.g_container._getOb(self.h_id)
+        self._do_update()
 
     def _update_annotations(self):
         marker = []
@@ -80,6 +91,7 @@ class SyncFolder(Sync):
         if annotations is marker:
             return
         setattr(self.g_ob, a_attr, annotations)
+
 
 class SyncPublication(SyncFolder):
 
@@ -169,6 +181,9 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         ghost = self
         assert IContainer.isImplementedBy(haunted)
         object_list = self._haunt_diff(haunted, ghost)
+        upd = SyncFolder(self, None, haunted, None, self)
+        updaters = [upd]
+        
        
         while object_list:
             # breadth first search
@@ -194,22 +209,28 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                     continue
                 if g_ob is None:
                     # matching haunted interface, no ghost -> create
-                    g_ob_new = update_class(self, h_container, h_ob,
-                        g_container, g_ob).create()
+                    uc = update_class(self, h_container, h_ob,
+                        g_container, g_ob)
+                    updaters.append(uc)
+                    g_ob_new = uc.create()
                     break
                 if g_if and not g_if.isImplementedBy(g_ob):
                     # haunted interface machces but ghost interface doesn't
                     continue
                 # haunted interface and ghost interface match -> update
-                g_ob_new = update_class(self, h_container, h_ob, g_container,
-                    g_ob).update()
+                uc = update_class(self, h_container, h_ob, g_container,
+                    g_ob)
+                updaters.append(uc)
+                g_ob_new = uc.update()
                 break
             
             assert g_ob_new is not None, "no updater was called for %r" % (
                 (self, h_container, h_ob, g_container, g_ob), )
             if IContainer.isImplementedBy(h_ob):
                 object_list.extend(self._haunt_diff(h_ob, g_ob_new))
-
+        for updater in updaters:
+            updater.finish()
+        
         self._publish_ghosts()
         self._invalidate_sidebar(self)
 
