@@ -9,20 +9,57 @@
 ##
 request = context.REQUEST
 node = request.node
-image_path = request['image_path']
+current_path = node.getAttribute('path')
+new_path = ''
+if request.has_key('path'):
+    new_path = request['path']
 
-if request.has_key('alignment'):
-    align_attribute = request['alignment']
-    if align_attribute != 'none':
-        node.setAttribute('alignment', node.input_convert(align_attribute))
-    else:
-        node.removeAttribute('alignment')
+def removeParameterElements(node):
+    for child in node.childNodes:
+        if child.nodeType == child.ELEMENT_NODE:
+            if child.nodeName == 'parameter':
+                try:
+                    node.removeChild(child)
+                except ValueError:
+                    pass
 
-if request.has_key('image_link'):
-    link = request['image_link']
-    node.setAttribute('link', node.input_convert(link))
+if not new_path:
+    # no path set.
+    # get rid of parameters(?)
+    # return.
+    node.removeAttribute('path')
+    removeParameterElements(node)
+    return
+
+node.setAttribute('path', new_path)
+datasource = context.get_datasource()
+datasource_parameters = datasource.parameters()
+
+if current_path == new_path:
+    # same datasource path:
+    # set parameter data from form.
+    form = datasource.parameter_values_as_form({})
+    # validate form
+    from Products.Formulator.Errors import FormValidationError
+    try:
+        result = form.validate_all(request)
+    except FormValidationError, e:
+        err = e.errors[0]
+        raise str(err.error_text)
+    removeParameterElements(node)
+    for name in datasource_parameters.keys():
+        child = node.createElement('parameter')
+        child.setAttribute('key', name)
+        child.setAttribute('value', result[name])
+        node.appendChild(child)
 else:
-    node.removeAttribute('link')
-
-node.setAttribute('image_path', node.input_convert(image_path))
-
+    # different datasource path:
+    # get parameter defs.
+    # throw away old param elements.
+    # set new defaults.
+    removeParameterElements(node)
+    for name, (type, default_value, description) in datasource_parameters.items():
+        child = node.createElement('parameter')
+        child.setAttribute('key', name)
+        child.setAttribute('value', default_value)
+        node.appendChild(child)

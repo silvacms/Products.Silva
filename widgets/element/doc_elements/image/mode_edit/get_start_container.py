@@ -7,9 +7,9 @@
 ##parameters=
 ##title=Lookup the container to start listing assets
 ##
-image = context.content()
-if image is None:
-    # no image selected, or image is broken: start in the current container
+
+ds = context.get_datasource()
+if ds is None:
     return context.REQUEST.node.get_container()
 else:
-    return image.get_container()
+    return ds.get_container()
