@@ -289,7 +289,7 @@ Problems when using Silva
     characters used in languages such as Dutch, German and
     French. Some other character sets, in particular those for Asian
     languages like Japanese, are not supersets of ASCII at all but
-    define their own meaning to each of 256 characters.
+    assign their own meaning to each of 256 characters.
   
     The different encodings mean that these sets are not
     interchangeable. In fact, a computer can not even determine from a
