@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="
+    global vein string:settings;
+    global active_tab string:tab_metadata;
+    global parent_screen_name string:tab_properties;"
+  i18n:domain="silva">
+
+<metal:block use-macro="here/macro_index/macros/master">
+  
+<metal:block metal:fill-slot="middleground">
+  <div class="middleground"
+    tal:define="
+      isfolder python: type == 'Silva Folder';
+      ispublication python: type == 'Silva Publication';
+      isghostfolder python: type == 'Silva Ghost Folder';">
+    <tal:block condition="python: isfolder and may_approve_content">
+      <a class="button"
+        href="tab_edit_to_publication"
+        title="change Folder into Publication: alt-c"
+        accesskey="c"
+        i18n:attributes="title;accesskey covert_to_publication_accesskey"
+        i18n:translate=""
+        ><u>c</u>onvert to publication</a>
+    </tal:block>
+    <tal:block condition="python: ispublication and may_approve_content">
+      <a class="button"
+        href="tab_edit_to_folder"
+        title="change Publication into Folder: alt-c"
+        accesskey="c"
+        tal:condition="python:type != 'Silva Root'"
+        i18n:attributes="title;accesskey convert_to_folder_accesskey"
+        i18n:translate=""
+        ><u>c</u>onvert to folder</a>
+    </tal:block>
+    <tal:block condition="python: isghostfolder and may_approve_content">
+      <tal:block
+        tal:define="
+          editable model/get_editable;
+          link_status python: here.get_ghost_link_status_text(editable);">
+        <a class="button"
+          type="submit" 
+          href="convert_to_folder" 
+          title="convert this ghost folder to a normal folder: alt-c"
+          accesskey="c"
+          tal:condition="not: link_status"
+          i18n:attributes="title;accesskey convert_to_folder_accesskey"
+          ><u>c</u>onvert to folder</a>
+        <a class="button"
+          type="submit" 
+          href="convert_to_publication" 
+          title="convert this ghost folder to a normal publication: alt-p"
+          accesskey="p"
+          tal:condition="not:link_status"
+          i18n:attributes="title;accesskey convert_to_publication_accesskey"
+          >convert to <u>p</u>ublication</a>
+      </tal:block>
+    </tal:block>
+  </div>
+</metal:block>
+  
+<metal:block fill-slot="main">
+  <table class="columns columns3"
+    tal:define="icon python:view.render_icon(model)">
+    <tbody>
+      <tr>
+        <tal:block replace="nothing">_____________________ sidebar _____________________</tal:block>
+        <td class="left" rowspan="99">
+          <metal:block use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_settings', vein)" />
+            </metal:fill-slot>
+          </metal:block>
+        </td>
+        <tal:block replace="nothing">_____________________ main _____________________</tal:block>
+        <td class="main">
+          <table class="listing"
+            tal:define="
+              editable model/get_editable;
+              rendererservice context/service_renderer_registry;
+              renderers python: rendererservice.getFormRenderersList(type);"
+            tal:condition="
+              python: editable"
+            >
+            <thead>
+              <tr>
+                <td class="top" colspan="3">
+                  <h2 tal:attributes="title string:id: ${model/id}">
+                    <img tal:replace="structure icon" />
+                    <span i18n:translate=""> settings and properties for &#xab;<tal:block 
+                      content="title"
+                      i18n:name="title" />&#xbb;</span>
+                  </h2>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="top-controls">
+                <td colspan="3">
+                  <h3>
+                    <span i18n:translate="">content renderer</span>
+                  </h3>
+                </td>
+              </tr>
+              <tr>
+                <th class="align-right"
+                  width="12%"
+                  i18n:translate="">
+                  element
+                </th>
+                <th i18n:translate="">
+                  content
+                </th>
+                <th width="25%"
+                  i18n:translate="">
+                  note
+                </th>
+              </tr>
+              <tr>
+                <td class="align-right">
+                  <tal:block i18n:translate="">
+                    renderer
+                  </tal:block>
+                </td>
+                <td>
+                  <select name="renderer_name_select">
+                    <tal:block 
+                      define="selected_renderer_name python: editable.get_renderer_name()" 
+                      repeat="renderer_name renderers">
+                      <option
+                        tal:content="renderer_name" 
+                        tal:attributes="
+                          value python:renderer_name;
+                          selected python: selected_renderer_name == renderer_name and 'selected' or None;">
+                      </option>
+                    </tal:block>
+                  </select>
+                </td>
+                <td>
+                  <tal:block i18n:translate="">
+                    Select a renderer that will be used to render 
+                    this object.
+                  </tal:block>
+                </td>
+              </tr>
+              <tr class="controls">
+                <td class="align-right" colspan="3">
+                  <input class="button" 
+                    type="submit"
+                    name="save_metadata:method"
+                    value="save"
+                    title="access key: alt-s"
+                    accesskey="s"
+                    i18n:attributes="value;title;accesskey save_accesskey"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+              
+        </td>            
+        <td class="right">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</metal:block>
+</metal:block>
+</html>

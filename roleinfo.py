@@ -44,3 +44,14 @@ def compareRoles(role1, role2):
 def getRolesAbove(role):
     all_roles = list(ALL_ROLES)
     return tuple(all_roles[all_roles.index(role):])
+
+def isEqualToOrGreaterThan(role1, role2):
+    if role1 in CHIEF_ROLES:
+        return True
+    roles = list(READER_ROLES)
+    try:
+        return roles.index(role1) >= roles.index(role2)
+    except ValueError:
+        if role2 not in roles:
+            return True
+        return False

@@ -9,11 +9,31 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
-    global vein string:properties;
+    global vein string:metadata;
 ">
 
 <!-- tab_metadata for Ghost objects -->
 <metal:block use-macro="here/macro_index/macros/master">
+  
+<metal:block metal:fill-slot="middleground">
+  <div class="middleground">
+    <a title="miscellaneous settings: alt-s"
+      accesskey="p"
+      tal:attributes="href string:${url}/edit/tab_settings"
+      i18n:attributes="title;accesskey tab_settings_accesskey"
+      i18n:translate=""
+      ><u>s</u>ettings...</a>
+    <tal:block condition="context/is_subscribable_content">
+      <a title="manage subscriptions: alt-u"
+        accesskey="p"
+        tal:attributes="href string:${url}/edit/tab_subscriptions"
+        i18n:attributes="title;accesskey manage_subscriptions_accesskey"
+        i18n:translate=""
+        >s<u>u</u>bscriptions...</a>
+    </tal:block>
+  </div>
+</metal:block>
+  
 <metal:block fill-slot="main">
 
   <table class="columns columns2">
@@ -31,9 +51,9 @@
         </tal:block>
         <td class="main">
           <tal:block 
-            define="version python: model.get_viewable() or model.get_previewable()"
-            condition="version">
-            <metal:block use-macro="here/macro_metadata/macros/view_table">
+            define="content python: model.get_viewable() or model.get_previewable()"
+            condition="content">
+            <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title" i18n:translate="">
                 <img tal:replace="structure python:view.render_icon(model)" />
                 metadata

@@ -8,11 +8,43 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global vein string:properties;"
+    global vein string:metadata;"
   i18n:domain="silva">
 
 <!-- tab_metadata for content (non-Container) objects -->
 <metal:block use-macro="here/macro_index/macros/master">
+  
+<metal:block metal:fill-slot="middleground">
+  <div class="middleground"
+    tal:define="
+      isfolder python: type == 'Silva Folder';
+      ispublication python: type == 'Silva Publication';
+      isghostfolder python: type == 'Silva Ghost Folder';">
+    <a title="miscellaneous settings: alt-s"
+      accesskey="p"
+      tal:attributes="href string:${url}/edit/tab_settings"
+      i18n:attributes="title;accesskey tab_settings_accesskey"
+      i18n:translate=""
+      ><u>s</u>ettings...</a>
+    <tal:block condition="context/is_subscribable_content">
+      <a title="manage subscriptions: alt-u"
+        accesskey="p"
+        tal:attributes="href string:${url}/edit/tab_subscriptions"
+        i18n:attributes="title;accesskey manage_subscriptions_accesskey"
+        i18n:translate=""
+        >s<u>u</u>bscriptions...</a>
+    </tal:block>
+    <tal:block condition="python: ispublication and may_approve_content">
+      <a title="change the addables allowed in this publication: alt-a"
+        href="settings_addables"
+        accesskey="a"
+        i18n:attributes="title;accesskey configure_addables_accesskey"
+        i18n:translate=""
+        ><u>a</u>ddables...</a>
+    </tal:block>
+  </div>
+</metal:block>
+
 <metal:block fill-slot="main">
   <table class="columns columns2">
     <tbody>
@@ -21,7 +53,11 @@
           _____________________ sidebar _____________________
         </tal:block>
         <td class="left">
-          <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+          <metal:block use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_metadata', vein)" />
+            </metal:fill-slot>
+          </metal:block>
         </td>
         <tal:block replace="nothing">
           _____________________ main _____________________
@@ -29,55 +65,21 @@
         
         <td class="main"
           tal:define="display_flag python:1;">
-          <table class="listing"
-            tal:condition="may_approve_content"
-            >
-            <thead>
-              <tr tal:replace="nothing">
-                ______________ vein + title row ______________
-              </tr>
-              <tr>
-                <td class="top">
-                  <h2 tal:attributes="title string:id: ${model/id}">
-                    <img tal:replace="structure python:view.render_icon(model)" />
-                    <span i18n:translate=""> properties of &#xab;<tal:block content="title"
-                    i18n:name="title" />&#xbb;</span>
-                  </h2>
-                </td>
-              </tr>
-              <tr tal:replace="nothing">
-                ______________ top controls row ______________
-              </tr>
-              <tr class="top-controls">
-                <td>
-                  <tal:block 
-                    condition="here/is_subscribable_content">
-                    <a class="transport"
-                      style="float:right;"
-                      title="manage subscriptions: alt-m"
-                      accesskey="m"
-                      tal:attributes="href string:${url}/edit/tab_subscriptions"
-                      i18n:attributes="title;accesskey manage_subscriptions_accesskey"
-                      i18n:translate=""><u>m</u>anage subscriptions...</a>
-                  </tal:block>
-                </td>
-            </thead>
-          </table>
           
           <tal:block condition="model/implements_versioning">
             <tal:block 
-              define="version model/get_editable | nothing;"
+              define="content model/get_editable | nothing;"
               condition="model/get_unapproved_version"
               >
               <!-- editable version metadata table, thus editable -->
-              <metal:block use-macro="here/macro_metadata/macros/edit_table" />
+              <metal:block use-macro="here/macro_edit_metadata/macros/metadata" />
             </tal:block>
             
             <tal:block 
-              define="version model/get_previewable | nothing;"
+              define="content model/get_previewable | nothing;"
               condition="model/get_approved_version"
               >
-              <metal:block use-macro="here/macro_metadata/macros/view_table">
+              <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <!-- approved version metadata table, so only viewable -->
                 <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
@@ -92,11 +94,11 @@
             
             <tal:block 
               define="
-                version model/get_viewable | nothing;
+                content model/get_viewable | nothing;
                 display_flag python:0"
               condition="model/get_public_version"
               >
-              <metal:block use-macro="here/macro_metadata/macros/view_table">
+              <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <!-- published version metadata table, so only viewable -->
                 <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
@@ -111,9 +113,9 @@
           </tal:block>
           
           <tal:block condition="not: model/implements_versioning">
-            <tal:block define="version model">
+            <tal:block define="content model">
               <!-- non-versioned content, thus editable -->
-              <metal:block use-macro="here/macro_metadata/macros/edit_table" />
+              <metal:block use-macro="here/macro_edit_metadata/macros/metadata" />
             </tal:block>
           </tal:block>
         </td>

@@ -1,6 +1,7 @@
-##parameters=content
+##parameters=content, category=''
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.Silva.roleinfo import CHIEF_ROLES, READER_ROLES
+from Products.Silva.roleinfo import isEqualToOrGreaterThan
 
 # Build a dict for use in the edit pagetemplate,
 # format:
@@ -23,8 +24,6 @@ from Products.Silva.roleinfo import CHIEF_ROLES, READER_ROLES
 
 request = context.REQUEST
 model = request.model
-user_id = request.AUTHENTICATED_USER.getId()
-user_roles = model.sec_get_all_roles_for_userid(user_id)
 
 if content is None:
     return None
@@ -39,36 +38,21 @@ except BindingError, be:
 if binding is None:
     return None
 
-renderEdit = binding.renderElementEdit
-renderView = binding.renderElementView
+user_id = request.AUTHENTICATED_USER.getId()
+user_roles = model.sec_get_all_roles_for_userid(user_id)
+def isAllowed(set_name):
+    minimal_role = binding.getSet(set_name).getMinimalRole()
+    if not minimal_role:
+        return True
+    for role in user_roles:
+        if isEqualToOrGreaterThan(role, minimal_role):
+            return True
 
 aquired_items = binding.listAcquired()
 def isAcquired(set_name, element_name):
     if (set_name, element_name) in aquired_items:
         return 1
     return 0
-
-def isEqualToOrGreaterThan(role1, role2):
-    if role1 in CHIEF_ROLES:
-        return True
-    roles = list(READER_ROLES)
-    try:
-        return roles.index(role1) >= roles.index(role2)
-    except ValueError:
-        if role2 not in roles:
-            return True
-        return False
-
-def isAllowed(set_name):
-    minimal_role = binding.getSet(set_name).getMinimalRole()
-    if minimal_role:
-        for role in user_roles:
-            if isEqualToOrGreaterThan(role, minimal_role):
-                return True
-        return False
-    return True
-
-isViewable = binding.isViewable
 
 def isEditable(set_name, element_name):
     at_least_author = [
@@ -80,13 +64,18 @@ def isEditable(set_name, element_name):
         return content.can_set_title()
     return binding.isEditable(set_name, element_name)
 
+renderEdit = binding.renderElementEdit
+renderView = binding.renderElementView
+isViewable = binding.isViewable
+
 pt_binding = {}
-set_names = binding.getSetNames()
+set_names = binding.getSetNames(category=category)
 pt_binding['setNames'] = []
 
 for set_name in set_names:
     if not isAllowed(set_name):
-        continue
+        continue # skip this set - it's not allowed
+    
     pt_binding['setNames'].append(set_name)
     pt_binding[set_name] = set = {}
     set['setTitle'] = binding.getSet(set_name).getTitle() or set_name

@@ -22,8 +22,9 @@
  <metal:block define-slot="editor_refresher" />
 </metal:block>
 
-<metal:block metal:fill-slot="middleground"
-              tal:define="unapproved_version model/get_unapproved_version">
+<metal:block 
+  metal:fill-slot="middleground"
+  tal:define="unapproved_version model/get_unapproved_version">
   <div class="middleground">
 
     <metal:block define-slot="editor_selection" />

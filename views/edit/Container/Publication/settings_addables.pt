@@ -17,12 +17,12 @@
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 
-<tal:block define="
-  global view here;
-  global model request/model;
-  global fields python:view.settings_addables_form.get_fields();
-  "
-  tal:condition="python:request['AUTHENTICATED_USER'].has_permission('Approve silva content', request.model)"
+<tal:block 
+  define="
+    global view here;
+    global model request/model;
+    global fields python:view.settings_addables_form.get_fields();"
+  condition="may_approve_content"
 >
 
 <form method="POST" name="form" action="settings_addables_submit">

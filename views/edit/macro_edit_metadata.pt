@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
+
+<metal:block define-macro="metadata">
+<tal:block define="
+  ct python: mangle.String.centeredTruncate;
+  truncatable python:['location'];
+  ">
+  <form method="POST"
+    action="."
+    name="form"
+    tal:condition="content"
+    tal:define="
+      metadata_category category | string:;
+      binding python: view.get_metadata(content, category=metadata_category) or nothing;
+      is_container request/model/implements_container | nothing;
+      form_errors options/form_errors | nothing;
+      ">
+    <table class="listing"
+      tal:condition="binding">
+      <thead>
+        <tr tal:replace="nothing">
+          ______________ vein + title row ______________
+        </tr>
+        <tr>
+          <td class="top"
+            colspan="4">
+            <h2>
+              <img tal:replace="structure python:view.render_icon(model)" />
+              <tal:block i18n:translate="">
+                metadata
+                <tal:block condition="not: model/implements_container" i18n:name="for_title">
+                  <span i18n:translate="">
+                    for &#xab;<tal:block content="string:${title}"
+                    i18n:name="metadata_title">
+                    title</tal:block>&#xbb;</span>
+                </tal:block>
+              </tal:block>
+            </h2>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tal:block repeat="set_name binding/setNames">
+          <tal:block define="set_errors form_errors/?set_name | nothing">
+            <tr tal:condition="not:repeat/set_name/start">
+              <td class="divider"
+                colspan="4"
+                tal:attributes="style python:model.implements_container() and 'background:#c4d6e7' or 'background:#c5d4ca'">
+              </td>
+            </tr> 
+            <tr tal:replace="nothing">
+              ______________ top controls row ______________
+            </tr>
+            <tr class="top-controls">
+              <td colspan="4">
+                <h3>
+                  <span i18n:translate="">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
+                </h3>
+              </td>
+            </tr>
+            <tr>
+              <th class="align-right"
+                width="12%"
+                i18n:translate="">
+                element
+              </th>
+              <th i18n:translate="">
+                content
+              </th>
+              <th i18n:translate="">
+                acquired content
+              </th>
+              <th width="25%"
+                i18n:translate="">
+                note
+              </th>
+            </tr>
+            <tal:block repeat="element_name binding/?set_name/elementNames">
+              <tr 
+                tal:define="
+                  element binding/?set_name/?element_name;
+                  element_error form_errors/?set_name/?element_name | nothing;
+                  iterate repeat/element_name/odd;"
+                tal:attributes="
+                  class python:element_error and 'alert' or iterate and 'odd' or 'even';">
+                <tal:block replace="nothing">
+                  ___ element name column ___
+                </tal:block>
+                <td class="align-right">
+                  <tal:block content="element/title" i18n:translate="">
+                    Element name
+                  </tal:block>
+                  <span class="warning"
+                    tal:condition="element/isRequired">
+                    *
+                  </span>
+                </td>
+                <tal:block replace="nothing">
+                  ___ element widget column ___
+                </tal:block>
+                <td tal:define="                        
+                  data python: element['render'] or element['view'];
+                  data python: element_name in truncatable and ct(data, 50) or data;
+                  "
+                  tal:condition="
+                    python: element['isEditable'] or not element['isAcquired']"
+                  tal:content="
+                    structure data">
+                  element edit widget
+                </td>
+                <tal:block replace="nothing">
+                  ___ element acquired value column ___
+                </tal:block>
+                <td>
+                  <tal:block 
+                    define="
+                      data element/view;
+                      data python: element_name in truncatable and ct(data, 50) or data;"
+                    condition="element/isAcquired"
+                    replace="structure data" />
+                  <sup tal:condition="element/isAcquireable" i18n:translate="">
+                    &#134;
+                  </sup>
+                  <tal:block condition="not: element/isAcquired">
+                    &nbsp;
+                  </tal:block>
+                </td>
+                <tal:block replace="nothing">
+                  ___ element desc. column ___
+                </tal:block>
+                <td>
+                  <tal:block content="structure element/description" i18n:translate="">
+                    Element description
+                  </tal:block>
+                  <span class="error"
+                    tal:condition="element_error"
+                    i18n:translate=""
+                    tal:content="element_error">
+                  </span>
+                </td>
+              </tr>
+            </tal:block>
+          </tal:block>
+          <tr tal:condition="python: set_name == 'silva-extra'">
+            <th class="align-right">
+            </th>
+            <th i18n:translate="">
+              date format: day / month / year &nbsp;23:59 
+            </th>
+            <th i18n:translate="">
+              &#134; acquireable
+            </th>
+            <th>
+            </th>
+          </tr>
+          <tr class="controls">
+            <td class="align-right"
+              colspan="4">
+              <input class="button" 
+                type="submit"
+                name="save_metadata:method"
+                value="save"
+                title="access key: alt-s"
+                accesskey="s"
+                i18n:attributes="value;title;accesskey save_accesskey"
+              />
+            </td>
+          </tr>
+        </tal:block>
+      </tbody>
+    </table>
+  </form>
+</tal:block>
+</metal:block>
+</html>

@@ -9,64 +9,72 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
-    global vein string:properties;
+    global vein string:metadata;
 ">
 
-<!-- tab_metadata for GhostFolder objects -->
+<!-- tab_metadata for Ghost objects -->
 <metal:block use-macro="here/macro_index/macros/master">
+  
+<metal:block metal:fill-slot="middleground">
+  <div class="middleground">
+    <a title="miscellaneous settings: alt-s"
+      accesskey="p"
+      tal:attributes="href string:${url}/edit/tab_settings"
+      i18n:attributes="title;accesskey tab_settings_accesskey"
+      i18n:translate=""
+      ><u>s</u>ettings...</a>
+    <tal:block condition="context/is_subscribable_content">
+      <a title="manage subscriptions: alt-u"
+        accesskey="p"
+        tal:attributes="href string:${url}/edit/tab_subscriptions"
+        i18n:attributes="title;accesskey manage_subscriptions_accesskey"
+        i18n:translate=""
+        >s<u>u</u>bscriptions...</a>
+    </tal:block>
+  </div>
+</metal:block>
+  
 <metal:block fill-slot="main">
-  <metal:block use-macro="view/Container/tab_metadata/macros/master">
-    <metal:block fill-slot="top_controls">
-      <tal:block 
-        condition="here/is_subscribable_content">
-        <a class="transport"
-          style="float:right;"
-          title="manage subscriptions: alt-m"
-          accesskey="m"
-          tal:attributes="href string:${url}/edit/tab_subscriptions"
-          i18n:attributes="title;accesskey manage_subscriptions_accesskey"
-          i18n:translate=""
-          ><u>m</u>anage subscriptions...</a>
-      </tal:block>
-      
-      <form method="POST" 
-        name="conversion_form" 
-        action="." 
-        tal:define="
-          version     python:model.get_editable();
-          link_status python:here.get_ghost_link_status_text(version);
-        ">
-        <input class="button"
-          type="submit" 
-          name="convert_to_folder:method" 
-          value="convert to folder"
-          title="convert this ghost folder to a normal folder: alt-c"
-          accesskey="c"
-          tal:condition="not:link_status"
-          i18n:attributes="value;title;accesskey convert_to_folder_accesskey"
-        />
-        <input class="button"
-          type="submit" 
-          name="convert_to_publication:method" 
-          value="convert to publication"
-          title="convert this ghost folder to a normal publication: alt-p"
-          accesskey="p"
-          tal:condition="not:link_status"
-          i18n:attributes="value;title;accesskey convert_to_publication_accesskey"
-        />
-      </form>
-    </metal:block>
-    <metal:fill fill-slot="actual_table">
-      <tal:block define="version model">
-        <metal:block use-macro="here/macro_metadata/macros/view_table">
-          <h2 metal:fill-slot="table_title" i18n:translate="">
-            <img tal:replace="structure python:view.render_icon(model)" />
-            metadata of &#8216;original&#8217;
-          </h2>
-        </metal:block>
-      </tal:block>
-    </metal:fill>
-  </metal:block>
+
+  <table class="columns columns2">
+    <tbody>
+      <tr>
+        <tal:block replace="nothing">
+          _____________________ sidebar _____________________
+        </tal:block>
+        <td class="left">
+          <metal:block use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_metadata', vein)" />
+            </metal:fill-slot>
+          </metal:block>
+        </td>
+
+        <tal:block replace="nothing">
+          _____________________ main _____________________
+        </tal:block>
+        <td class="main">
+          <tal:block 
+            define="content model" 
+            condition="content">
+            <metal:block use-macro="here/macro_view_metadata/macros/metadata">
+              <h2 metal:fill-slot="table_title" i18n:translate="">
+                <img tal:replace="structure python:view.render_icon(model)" />
+                metadata
+                <span tal:condition="not: model/implements_container" i18n:name="for_public_version_of">
+                  <tal:block i18n:translate="">
+                  for public version of
+                  &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;</tal:block>
+                </span>
+              </h2>
+            </metal:block>
+          </tal:block>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
 </metal:block>
 </metal:block>
 </html>

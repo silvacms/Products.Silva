@@ -1,4 +1,4 @@
-##parameters=content=None
+##parameters=content=None, category=''
 from Products.SilvaMetadata.Exceptions import BindingError
 
 # Build a dict for use in the public pagetemplate,
@@ -33,7 +33,7 @@ isViewable = binding.isViewable
 value = binding.get
 
 pt_binding = {}
-pt_binding['setNames'] = set_names = binding.getSetNames()
+pt_binding['setNames'] = set_names = binding.getSetNames(category=category)
 
 for set_name in set_names:
     pt_binding[set_name] = set = {}
