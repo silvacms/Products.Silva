@@ -36,6 +36,10 @@ Silva changes
         particular (not just in renderer registry).
 
     Bugs fixed
+    
+      - Fixed bug with metadata sets with restricted access, they were not
+        accessible with people who did have the required role(s) but didn't
+        have them defined on the root.
 
       - Replaced print statement in Indexer for a LOG entry.
 
