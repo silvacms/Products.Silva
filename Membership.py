@@ -11,6 +11,7 @@ class Member(Persistent, Acquisition.Implicit):
     security = ClassSecurityInfo()
     
     def __init__(self, userid, fullname, email, is_approved):
+        print "Copying member"
         self.id = userid
         self._fullname = fullname
         self._email = email
@@ -47,6 +48,47 @@ class Member(Persistent, Acquisition.Implicit):
         return self._approved
 
 Globals.InitializeClass(Member)
+
+class CachedMember(Persistent, Acquisition.Implicit):
+    """A memberobject returned by cloneMember
+    """
+
+    __implements__ = IMember
+
+    security = ClassSecurityInfo()
+
+    def __init__(self, userid, fullname, email):
+        self.id = userid
+        self._fullname = fullname
+        self._email = email
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation, 
+                              'userid')
+    def userid(self):
+        """Returns the userid
+        """
+        return self.id
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'fullname')
+    def fullname(self):
+        """Returns the full name
+        """
+        return self._fullname
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'email')
+    def email(self):
+        """Returns the e-mail address
+        """
+        return self._email
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'is_approved')
+    def is_approved(self):
+        """Returns 0
+        """
+        return 0
 
 class NoneMember(Persistent, Acquisition.Implicit):
     __implements__ = IMember
@@ -88,7 +130,6 @@ noneMember = NoneMember()
 def cloneMember(member):
     if member is None:
         return NoneMember()
-    return Member(userid=member.userid(),
+    return CachedMember(userid=member.userid(),
                   fullname=member.fullname(),
-                  email=member.email(),
-                  is_approved=member.is_approved())
+                  email=member.email())
