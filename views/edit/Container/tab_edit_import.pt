@@ -290,9 +290,11 @@
 
 </div>
 
-<div
-  tal:condition="docma_running" 
-  tal:replace="structure python:here.docma_queue(format='silva', refresh_page='tab_edit_import')" />
+<tal:block 
+  condition="docma_running"
+  define="format string:silva">
+  <metal:block use-macro="here/docma_queue/macros/listings" />
+</tal:block>
 
 <h3 class="worksheet" style="text-align:right;">
   <a href="tab_status_export"
