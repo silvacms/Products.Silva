@@ -81,7 +81,8 @@ class BaseXMLSource:
         """Export self.context to XML Sax-events 
         """
         reader.startPrefixMapping(None, self.ns_default)
-        for set in self.context.service_metadata.collection.getMetadataSets():
+        for set in self.context.service_metadata.collection.getMetadataSets(
+            ):
             reader.startPrefixMapping(set.id, set.metadata_uri)
         # XXX start all registered prefixmappings here
         self._startElement(
@@ -119,8 +120,8 @@ class BaseXMLSource:
         self._endElement(reader, 'metadata')
 
     def _startElementNS(self, reader, ns, name, attrs=None):
-        """Starts a named XML element in the provided namespace with optional
-        attributes
+        """Starts a named XML element in the provided namespace with
+        optional attributes
         """
         d = {}
         
@@ -208,8 +209,11 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
             for version in self.context.objectValues():
                 getXMLSource(version)._sax(reader, settings)
         else:
-            #XXX handle single version export
-            getXMLSource(self.context.get_previewable())._sax(reader, settings)
+            # XXX handle single version export. Is previewable right? Is
+            # there a better method that is guaranteed to return a best
+            # guess version?
+            getXMLSource(
+                self.context.get_previewable())._sax(reader, settings)
             
     def _metadata(self, reader, settings):
         """Versioned Content has no metadata, the metadata is all on the
@@ -324,10 +328,7 @@ class GhostVersionXMLSource(VersionXMLSource):
         content = self.context.get_haunted_unrestricted()
         if content is None:
             return
-        if settings is None:
-            new_settings = ExportSettings()
-        else:
-            new_settings = settings
+        new_settings = ExportSettings()
         new_settings.setOnlyPublishedNoWorkflow()
         getXMLSource(content)._sax(reader, new_settings)
         self._endElement(reader, 'content')
