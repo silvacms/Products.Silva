@@ -18,6 +18,7 @@ def initializeXMLExportRegistry():
     __init__.pies
     """
     from Products.Silva.File import ZODBFile, FileSystemFile
+    from Products.Silva.Root import Root
     from Products.Silva.Folder import Folder
     from Products.Silva.Publication import Publication
     from Products.Silva.Ghost import Ghost, GhostVersion
@@ -36,6 +37,7 @@ def initializeXMLExportRegistry():
     exporter.registerProducer(Ghost, GhostProducer)
     exporter.registerProducer(GhostVersion, GhostVersionProducer)
     exporter.registerProducer(GhostFolder, GhostFolderProducer)
+    exporter.registerProducer(Root, PublicationProducer)
     exporter.registerProducer(Publication, PublicationProducer)
     exporter.registerProducer(ZODBFile, FileProducer)
     exporter.registerProducer(FileSystemFile, FileProducer)

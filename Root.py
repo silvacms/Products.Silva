@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.80 $
+# $Revision: 1.81 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -127,6 +127,14 @@ class Root(Publication):
         """Get url of root of site.
         """
         return self.aq_inner.absolute_url()
+
+    def get_other_content(self):
+        """Gets non-asset, non-publishable content.
+
+        Overrides the implementation in Folder to not return Silva internal
+        files.
+        """
+        return ()
 
     # FIXME: Being deprecated, will be deleted in the near future
     silva_root = get_root_url
