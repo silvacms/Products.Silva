@@ -28,7 +28,7 @@
     accesskey="s">
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
       tal:attributes="href here/globals/silva_32.png/absolute_url | nothing" /></a>
-  &nbsp;Silva &#8211; a cross medium publication system<br />
+  &nbsp;Silva &#8211; medium independent publishing<br />
 </h2>
 
 <div style="float:left; color:#274b4c; background:#eceeee; margin:2em 0; padding:0 1em 0.3em 1em; border:1px solid #666677;">
