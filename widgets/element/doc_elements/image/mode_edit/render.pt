@@ -1,166 +1,18 @@
-<div metal:use-macro="container/macro_edit_view/macros/edit_view">
-<div metal:fill-slot="edit_input" tal:omit-tag="">
-
-<init tal:define="global assets python:node.get_content().get_container().get_assets_of_type('Silva Image')" />
-
-<table cellspacing="0" cellpadding="3" border="0" width="100%">
-<span tal:replace="nothing"> ______________ listing header ______________ </span>
-<tr class="controls-cycle"
-  tal:condition="python:assets">
-  <td class="rowhead" align="left" width="3%">
-    Type
-  </td>
-  <td class="rowhead">
-    Name
-  </td>
-  <td class="rowhead" width="10%">
-    Size
-  </td>
-  <td class="rowhead" width="15%">
-    Modified&nbsp;date
-  </td>
-</tr>
-
-<span tal:replace="nothing"> _____________________ images _____________________ </span>
-
-<rowset tal:omit-tag="" tal:repeat="asset assets">
-<cycle tal:omit-tag=""
-  tal:define="oddrow repeat/asset/odd;
-              active python: asset.id == node.getAttribute('image_id')">
-<tr class="focus-cycle"
-  tal:attributes="class python:active and 'hilite' or oddrow and 'focus' or 'focus-cycle'">
-
-  <span tal:replace="nothing"> _______ radio + icon cell _______ </span>
-  <td nowrap="1">
-<input type="radio" name="image_id" value="id"
-  tal:attributes="value python:asset.id; 
-                  checked python:test(active, 'checked', None)" />
-    <a href="asset"
-      tal:attributes="href string:${asset/absolute_url}/edit/tab_edit"><img tal:attributes="src string:${silva_root}/globals/silvaimage.gif" width="16" height="16" border="0" alt="Silva image" /></a>
-  </td>
-  <span tal:replace="nothing"> _______ id + title cell _______ </span>
-  <td> 
-    <b tal:omit-tag="not: active">
-    <a class="bluelink" href="asset"
-      tal:attributes="href string:${asset/absolute_url}/edit/tab_edit">
-      <span tal:replace="asset/id">id</span>&nbsp;
-      <span tal:condition="python: asset.get_title_html() != ''"
-        tal:replace="string:(${asset/get_title_html})">title</span>
-    </a>
-    </b>
-  </td>
-  <span tal:replace="nothing"> _______ size cell _______ </span>
-  <td>
-    <span tal:replace="asset/get_size | default">? kb</span>
-    <span notal:condition="python:asset.get_size() == None" tal:omit-tag="">&nbsp;</span>
-  </td>
-  <span tal:replace="nothing"> _______ modification date cell _______ </span>
-  <td>
-    <span tal:condition="python:asset.get_modification_datetime() != None"
-      tal:replace="structure python:here.service_utils.backend_short_datetime_to_str(asset.get_modification_datetime())">21 oct 2001 18:18</span>
-    <span tal:condition="python:asset.get_modification_datetime() == None" tal:omit-tag="">&nbsp;</span>
-  </td>
-</tr>
-</cycle>
-</rowset>
-
-<span tal:replace="nothing"> ______________ if empty ______________ </span>
-<rowset tal:omit-tag=""
-  tal:condition="python:not assets">
-<tr tal:replace="nothing">
-<th class="controls-cycle" align="left" colspan="4">
-Empty
-</th>
-</tr>
-
-<tr class="focus">
-<td colspan="4">
-There are no images in this folder. 
-</td>
-</tr>
-</rowset>
-</table>
-
+<metal:block use-macro="container/macro_edit_view/macros/edit_view">
+<metal:block fill-slot="edit_input">
+<div class="margins">
+<script type="text/javascript" tal:content="structure here/asset_reference.js" />
+  <input type="button" class="button" name="" value="Get image reference"
+    tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Image\', \'_reference_\', \'focusbox\', \'image_path\');;return false;;' % node.get_container().absolute_url();" />
+  <input style="width:50%;" type="text" name="image_path" value=""
+    tal:attributes="value python:node.getAttribute('image_path');"  />
 </div>
-
-
-<div metal:fill-slot="edit_notes" tal:omit-tag="">
-<ul class="tips">
-<li>
-Select an existng image or <a href="" tal:attributes="href python:node.get_content().get_container().absolute_url() + '/edit/add/Image/add'">upload a new one</a>.
-</li>
-<li>
-Images in other locations than the current folder cannot be inserted. You can copy an image and paste it into this folder to make it available.
-</li>
-</ul>
-</div>
-
-</div>
-
-
-
-
-<div tal:replace="nothing"> _____________________ old select list interface 
-<currentimglink tal:omit-tag=""
-  tal:condition="python:node.getAttribute('image_id')">
-  <a tal:attributes="href python:node.get_content().get_container().absolute_url() + '/' + node.getAttribute('image_id') + '/edit/tab_edit'">Edit this image object</a>
-  <br /><br />
-</currentimglink>
-
-<bla tal:omit-tag="" 
-  tal:define="global assets python:node.get_content().get_container().get_assets_of_type('Silva Image')" />
-<select tal:condition="python:assets" name="image_id" size="5">
-<options tal:omit-tag="" tal:repeat="image assets">
-  <option value="id" 
-    tal:content="string:${image/id} (${image/get_title_html})"
-    tal:attributes="value python:image.id; 
-      selected python:test(image.id == node.getAttribute('image_id'), 'selected', None)">title</option>
-</options>
-</select>
-<span class="error" tal:condition="python:not assets">(No image objects available)</span>
-&nbsp;&nbsp;&nbsp;&nbsp;
-_____________________ </div>
-
-<div tal:replace="nothing"> _____________________ old notes 
-To add an image to this document you must first put it in the folder. Follow these 12 simple steps:
-<ol>
-<li>
-Go to the <a href="../../edit/tab_edit">folder</a>. 
-</li>
-<li>
-Select 'Add image' from the Add list. 
-</li>
-<li>
-Click the Add button.
-</li>
-<li>
-Enter an id and title. 
-</li>
-<li>
-Click 'Add and edit' (not 'Add'). 
-</li>
-<li>
-A new screen will appear, in which you can upload an image. Click 'Browse' to locate the image object on your computer.
-</li>
-<li>
-Click 'Upload'.
-</li>
-<li>
-When the upload is finished return to the folder. 
-</li>
-<li>
-Click on the link to this document to return to edit mode.
-</li>
-<li>
-Click on the edit symbol of "No image selected". 
-</li>
-<li>
-Mark the image you just uploaded. 
-</li>
-<li>
-Click 'Save element'.
-</li>
-</ol>
-Done! You have now added an image object to the folder, which means it is also available for other documents (as long as they are in this folder). Fun, huh? I'll bet ya can't wait to do that again!<br />
-<span class="dev">Dev note: this has gotta get easier....</span>
-_____________________ </div>
+</metal:block>
+<metal:block fill-slot="edit_notes">
+  <ul class="tips">
+    <li><b>Tip:</b> Use the "Get image reference" button to locate an 
+      image and place its reference. If you know the reference, you 
+      can type it directly.</li>
+  </ul>
+</metal:block>
+</metal:block>

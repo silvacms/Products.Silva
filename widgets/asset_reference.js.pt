@@ -1,7 +1,8 @@
 <!-- Asset Reference Lookup Window Opener
 lookupWindow = null;
-focusedTextArea = null;
-currentSelection = null;
+textArea = null;
+referenceFormat = null;
+appendValue = false;
 // Called from getAssetReference
 function openAssetLookupWindow(url_to_open) {
   // Do the opening
@@ -13,20 +14,26 @@ function openAssetLookupWindow(url_to_open) {
   lookupWindow.focus();
 }
 // Called from "pagetemplate"
-function getAssetReference(url_to_open) {
+function getAssetReference(url, format, form, element, append) {
   // Store reference to focused text area
+  referenceFormat = format;
   doc = document.all ? document.all : document;
-  focusedTextArea = doc.focusbox.data;
+  textArea = eval('doc.'+form+'.'+element);
+  if (append) 
+    appendValue = true;
   // Open LookupWindow
-  openAssetLookupWindow(url_to_open);
+  openAssetLookupWindow(url);
 }
 // Called from "asset lookup window"
-function insertAssetReference(append_text) {
-  // Append [append_text] to previously focused text area
+function insertAssetReference(id, reference) {
+  // Append to previously focused text area
   // FIXME: We'd like to make it work with selections in
   // the textarea.
-  focusedTextArea.value = focusedTextArea.value + ' ' + append_text;
-  // Close LookupWindow (?)
+  append_text = referenceFormat.replace('_id_', id).replace('_reference_', reference);
+  if (appendValue) 
+    append_text = textArea.value + append_text;
+  textArea.value = append_text;
+  // Close LookupWindow
   lookupWindow.close();
 }
 //-->

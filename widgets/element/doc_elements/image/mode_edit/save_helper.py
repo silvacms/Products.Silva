@@ -9,5 +9,5 @@
 ##
 node = context.REQUEST.node
 
-image_id = context.REQUEST['image_id']
-node.setAttribute('image_id', image_id)
+image_path = context.REQUEST['image_path']
+node.setAttribute('image_path', image_path)

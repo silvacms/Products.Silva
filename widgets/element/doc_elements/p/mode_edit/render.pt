@@ -1,16 +1,14 @@
 <div metal:use-macro="container/macro_edit_view/macros/edit_view">
 <metal:block fill-slot="edit_input">
-<span class="textarea">
-  <div class="blabuttons" align="right">
-    <script type="text/javascript" tal:content="structure here/asset_reference.js" />
-    <a class="buttonlink" href=""
-      tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup\');;return false;;' % node.get_container().absolute_url()" >
-      Append asset reference
-    </a>
-  </div>
+<script type="text/javascript" tal:content="structure here/asset_reference.js" />
+<div align="right">
+<input type="button" class="button" name="" value="Append asset reference"
+  tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup\', \' ((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % node.get_container().absolute_url()" />
+</div>
+<div class="textarea">
   <textarea name="data" cols="65" rows="10" wrap="soft" 
     tal:attributes="rows here/get_lines" tal:content="here/editable_content">Content</textarea>
-</span>
+</div>
 </metal:block>
 <metal:block fill-slot="element_controls">
 <script type="text/javascript" tal:content="structure here/elements.js" />

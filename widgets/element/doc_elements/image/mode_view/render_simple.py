@@ -8,10 +8,16 @@
 ##title=
 ##
 node = context.REQUEST.node
-image_id = str(node.getAttribute('image_id'))
-if not image_id:
-  return '<p class="error">[No image selected]</p>'
-image = getattr(node.get_content().get_container(), image_id, None)
+image_path = node.output_convert_html(node.getAttribute('image_path'))
+if not image_path:
+    # Backwards compatibility for image_id attribute...
+    image_id = node.output_convert_html(node.getAttribute('image_id'))
+    if not image_id:
+        return '<div class="error">[No image selected]</div>'
+    image = getattr(node.get_content().get_container(), image_id, None)
+else:
+    image = node.restrictedTraverse(image_path)
+
 if not image:
-  return '<p class="error">[Image broken]</p>'
-return image.view()
+    return '<div class="error">[Image element broken]</div>'
+return '%s' % image.view()
