@@ -15,7 +15,7 @@
 
 body {
   font: 70% Verdana, Helvetica, Arial, sans-serif;
-  background-image: url(/sylph/globals/skyfade.gif); 
+  background-image: url(globals/skyfade.gif); 
   background-repeat: repeat-x;
   background-color: #dde5ee;
   color: #2d374c;
