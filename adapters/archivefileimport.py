@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: archivefileimport.py,v 1.1.4.1 2004/04/02 12:46:30 jw Exp $
+# $Id: archivefileimport.py,v 1.1.4.2 2004/04/29 16:50:04 roman Exp $
 #
 # Python
 import zipfile

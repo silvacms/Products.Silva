@@ -1,6 +1,6 @@
-# Copyright (c) 2003 Infrae. All rights reserved.
+# Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11.8.1 $
+# $Revision: 1.11.8.1.24.1 $
 
 # Zope
 from OFS import SimpleItem

@@ -1,4 +1,4 @@
-Copyright (c) 2002, 2003 Infrae. All rights reserved.
+Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Meta::
@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.12 $
+  CVS:        $Revision: 1.12.68.1 $
 
 Silva
 

@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.13.32.1 $
 import Globals, AccessControl, Products
 from AccessControl import Permissions
 from Products.Silva import roleinfo

@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SidebarService.py,v 1.17.28.1 2004/04/25 17:18:56 kitblake Exp $
+# $Id: SidebarService.py,v 1.17.28.2 2004/04/29 16:50:04 roman Exp $
 # Zope
 from OFS.SimpleItem import SimpleItem
 from AccessControl import ClassSecurityInfo

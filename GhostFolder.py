@@ -1,6 +1,6 @@
-# Copyright (c) 2003 Infrae. All rights reserved.
+# Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.30.26.1 2004/04/01 12:42:25 faassen Exp $
+# $Id: GhostFolder.py,v 1.30.26.2 2004/04/29 16:50:04 roman Exp $
 
 from __future__ import nested_scopes
 

@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12.4.1 $
+# $Revision: 1.12.4.1.16.1 $
 import os, sys, time
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))

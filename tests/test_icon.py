@@ -1,6 +1,6 @@
-# Copyright (c) 2002, 2003 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_icon.py,v 1.4.34.1 2004/04/01 12:42:25 faassen Exp $
+# $Id: test_icon.py,v 1.4.34.2 2004/04/29 16:50:04 roman Exp $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))

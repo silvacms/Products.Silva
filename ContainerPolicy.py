@@ -1,6 +1,6 @@
-# Copyright (c) 2003 Infrae. All rights reserved.
+# Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8.6.1.16.1 $
+# $Revision: 1.8.6.1.16.2 $
 # Python
 from bisect import insort_right
 

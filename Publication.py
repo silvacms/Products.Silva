@@ -1,6 +1,6 @@
-# Copyright (c) 2003 Infrae. All rights reserved.
+# Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.59.6.2 $
+# $Revision: 1.59.6.2.14.1 $
 
 # Zope
 from AccessControl import ClassSecurityInfo

@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.12.24.1 2004/01/29 18:26:23 guido Exp $
+# $Id: DocmaService.py,v 1.12.24.1.14.1 2004/04/29 16:50:04 roman Exp $
 
 from __future__ import nested_scopes
 

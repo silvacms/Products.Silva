@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2003 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9.46.1 $
+# $Revision: 1.9.46.2 $
 """
 This module defines a class and an instance of the importer_registry,
 a place to register xml_import_handlers. The handlers should be

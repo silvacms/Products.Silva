@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: security.py,v 1.5 2003/11/27 14:18:46 guido Exp $
+# $Id: security.py,v 1.5.26.1 2004/04/29 16:50:04 roman Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
