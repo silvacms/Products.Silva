@@ -306,17 +306,41 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     # ACCESSORS
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'get_addables')
+                              'get_silva_addables')
     def get_silva_addables(self):
         """Get a list of addable Silva objects.
         """
         result = []
-        for meta_type in self.filtered_meta_types():
-            if (meta_type.has_key('instance') and
-                Interfaces.SilvaObject.isImplementedByInstancesOf(meta_type['instance'])):
-                result.append(meta_type)
+        allowed = self.get_silva_addables_allowed()
+        for addable_dict in self.filtered_meta_types():
+            meta_type = addable_dict['name']
+            if allowed and meta_type not in allowed:
+                continue
+            if self._is_silva_addable(addable_dict):
+                result.append(addable_dict)
         return result
-            
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_silva_addables_all')
+    def get_silva_addables_all(self):
+        return [addable_dict['name']
+                for addable_dict in self.filtered_meta_types()
+                if self._is_silva_addable(addable_dict)]
+    
+    def _is_silva_addable(self, addable_dict):
+        """Given a dictionary from filtered_meta_types, check whether this
+        specifies a silva addable.
+        """
+        return (
+            addable_dict.has_key('instance') and
+            Interfaces.SilvaObject.isImplementedByInstancesOf(
+            addable_dict['instance']))
+    
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_silva_addables_allowed')
+    def get_silva_addables_allowed(self):
+        return self.get_silva_addables_allowed_in_publication()
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_container')
     def get_container(self):

@@ -259,7 +259,21 @@ class Container(SilvaObject, Publishable):
     
     
     # ACCESSORS
+    def get_silva_addables(self):
+        """Get a list of meta_type_dicts (from filtered_meta_types()) that
+        are addable to this container.
+        """
+        pass
 
+    def get_silva_addables_all(self):
+        """Get a list of meta_types of all addables that exist in
+        Silva.
+        """
+        
+    def get_silva_addables_allowed(self):
+        """Gives a list of all meta_types that are explicitly allowed here.
+        """
+        
     def get_container(self):
         """Get the nearest container in the acquisition hierarchy.
         (this one)
@@ -338,7 +352,19 @@ class Container(SilvaObject, Publishable):
 class Publication(Container):
     """An interface supported by publication objects.
     """
-    pass
+    def set_silva_addables_allowed_in_publication(self, addables):
+        """Set the list of addables explicitly allowed in this publication.
+        If 'addables' is set to None the list is acquired from the
+        publication higher in the hierarchy. If this is the root,
+        return the complete list.
+        """
+    
+    def get_silva_addables_allowed_in_publication(self):
+        """Get a list of all addables explicitly allowed in this
+        publication (and its subcontainers). If this returns None,
+        the list is cquired from the publication higher in the hierarchy,
+        or is the complete list of addables in case this is the root.
+        """
 
 class Versioning(Interface.Base):
     """Can be mixed in with an object to support simple versioning.

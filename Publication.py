@@ -18,7 +18,16 @@ class Publication(Folder):
 
     __implements__ = Interfaces.Publication
 
+    _addables_allowed_in_publication = None
+    
     # MANIPULATORS
+    
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_silva_addables_allowed_in_publication')
+    def set_silva_addables_allowed_in_publication(self, addables):
+        self._addables_allowed_in_publication = addables
+
+    
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_folder')
     def to_folder(self):
@@ -71,7 +80,16 @@ class Publication(Folder):
         self._to_xml_helper(f)
         f.write('</silva_publication>')
 
-
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_silva_addables_allowed_in_publication')
+    def get_silva_addables_allowed_in_publication(self):
+        addables = self._addables_allowed_in_publication
+        if addables is None:
+            # get addables of parent
+            return self.aq_parent.get_silva_addables_allowed_in_publication()
+        else:
+            return addables
+          
 InitializeClass(Publication)
 
 manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),

@@ -1,6 +1,8 @@
 import unittest
 import Zope
-from Products.Silva import Interfaces, Document, Folder
+from Products.Silva import Interfaces
+from Products.Silva.Folder import Folder
+from Products.Silva.SilvaObject import SilvaObject
 from Testing import makerequest
 from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
@@ -9,9 +11,7 @@ def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
     return getattr(object, id)
 
-class ContainerTestCase(unittest.TestCase):
-    """Test the Container interface.
-    """
+class ContainerBaseTestCase(unittest.TestCase):
     def setUp(self):
         get_transaction().begin()
         self.connection = Zope.DB.open()
@@ -31,6 +31,10 @@ class ContainerTestCase(unittest.TestCase):
     def tearDown(self):
         get_transaction().abort()
         self.connection.close()
+        
+class ContainerTestCase(ContainerBaseTestCase):
+    """Test the Container interface.
+    """
     
     def test_get_default(self):
         doc = self.folder4.get_default()
@@ -228,10 +232,91 @@ class ContainerTestCase(unittest.TestCase):
         # delete default object
         self.folder4.action_delete(['index'])
         self.assertEquals(None, self.folder4.get_default())        
+
+class AddableTestCase(ContainerBaseTestCase):
+
+    def setUp(self):
+        ContainerBaseTestCase.setUp(self)
+        self.original_get_silva_addables_allowed = Folder.get_silva_addables_allowed
+        self.original_filtered_meta_types = Folder.filtered_meta_types
+        Folder.filtered_meta_types = filtered_meta_types_hack
         
+    def tearDown(self):
+        ContainerBaseTestCase.tearDown(self)
+        Folder.get_silva_addables_allowed = self.original_get_silva_addables_allowed
+        Folder.filtered_meta_types = self.original_filtered_meta_types
+
+    def get_meta_types(self, addables):
+        return [addable['name'] for addable in addables]
+    
+    def test_get_silva_addables(self):
+        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
+                          self.folder4.get_silva_addables_allowed())
+        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
+                          self.get_meta_types(self.folder4.get_silva_addables()))
+        # modify so we explicitly allow only a few objects
+        Folder.get_silva_addables_allowed = get_silva_addables_allowed_hack
+        self.assertEquals(['Foo', 'Bar'], self.get_meta_types(self.folder4.get_silva_addables()))
+  
+    def test_silva_addables_all(self):
+        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
+                          self.sroot.get_silva_addables_all())
+        
+    def test_silva_addables_in_publication_allowed(self):
+        self.sroot.set_silva_addables_allowed_in_publication(['Foo', 'Bar'])
+        self.assertEquals(['Foo', 'Bar'],
+                          self.sroot.get_silva_addables_allowed())
+        self.assertEquals(['Foo', 'Bar'],
+                          self.folder4.get_silva_addables_allowed())
+        self.assertEquals(['Foo', 'Bar'],
+                          self.get_meta_types(self.folder4.get_silva_addables()))
+        self.sroot.set_silva_addables_allowed_in_publication(None)
+        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
+                          self.folder4.get_silva_addables_allowed())
+        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
+                          self.get_meta_types(self.folder4.get_silva_addables()))
+
+    def test_silva_addables_in_publication_acquire(self):
+        self.sroot.set_silva_addables_allowed_in_publication(['Foo', 'Bar'])
+        self.assertEquals(['Foo', 'Bar'],
+                          self.get_meta_types(
+            self.publication5.get_silva_addables()))
+        self.publication5.set_silva_addables_allowed_in_publication(['Baz', 'Qux'])
+        self.assertEquals(['Baz', 'Qux'],
+                          self.get_meta_types(self.publication5.get_silva_addables()))
+        self.publication5.set_silva_addables_allowed_in_publication(None)
+        self.assertEquals(['Foo', 'Bar'],
+                          self.get_meta_types(self.publication5.get_silva_addables()))
+        self.sroot.set_silva_addables_allowed_in_publication(None)
+        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
+                          self.get_meta_types(self.publication5.get_silva_addables()))
+        
+def get_silva_addables_hack(self):
+    return ['Foo', 'Bar', 'Baz', 'Qux']
+
+def get_silva_addables_allowed_hack(self):
+    return ['Foo', 'Bar', 'Hoi']
+
+class MySilvaObject(SilvaObject):
+    meta_type = 'Minimal Silva Object'
+    __implements__ = Interfaces.SilvaObject
+    
+def filtered_meta_types_hack(self):
+    return [
+        {'name': 'Foo',
+         'instance': MySilvaObject},
+        {'name': 'Bar',
+         'instance': MySilvaObject},
+        {'name': 'Baz',
+         'instance': MySilvaObject},
+        {'name': 'Qux',
+         'instance': MySilvaObject}
+        ]
+    
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ContainerTestCase, 'test'))
+    suite.addTest(unittest.makeSuite(AddableTestCase, 'test'))
     return suite
     
 def main():

@@ -62,14 +62,17 @@ class Root(Publication):
         self._to_xml_helper(f)
         f.write('</silva_root>')
 
-
-    #security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-    #                          'get_view')
-    #def get_view(self, view_type, obj):
-    #    """Get a view for an object from the view registry.
-    #    """
-    #    return self.service_view_registry.wrap(view_type, obj)
-    
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_silva_addables_allowed_in_publication')
+    def get_silva_addables_allowed_in_publication(self):
+        # allow everything in silva by default, unless things are restricted
+        # explicitly
+        addables = self._addables_allowed_in_publication
+        if addables is None:
+            return self.get_silva_addables_all()
+        else:
+            return addables
+        
 InitializeClass(Root)
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
