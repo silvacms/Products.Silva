@@ -225,6 +225,7 @@ class VersionManagementAdapter(adapter.Adapter):
                 last_closed
                 closed
         """
+        print versionid
         if (self.context._unapproved_version[0] is not None and 
                 self.context._unapproved_version[0] == versionid):
             if self.context.is_version_approval_requested():
@@ -239,11 +240,13 @@ class VersionManagementAdapter(adapter.Adapter):
             return 'published'
         else:
             if self.context._previous_versions:
-                if self.context._previous_versions[-1] == versionid:
+                if self.context._previous_versions[-1][0] == versionid:
                     return 'last_closed'
-                elif versionid in self.context._previous_versions:
-                    return 'closed'
-        raise VersioningError, 'no such version'
+                else:
+                  for (vid, vpt, vet) in self.context._previous_versions:
+                    if vid == versionid:
+                      return 'closed'
+        raise VersioningError, 'no such version %s' % versionid
 
 
     def _createUniqueId(self):

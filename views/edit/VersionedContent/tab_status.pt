@@ -211,10 +211,7 @@ _______ manual close section here _______
 </tal:replace>
 
       <!-- version management -->
-      <tal:block define="versions here/get_sorted_model_versions;
-                          version_status_list python: [v.version_status() for v in versions];
-                          "
-      >
+      <tal:block define="versions here/get_sorted_model_versions">
         <input type="hidden" 
                 name="refs:list"
                 tal:attributes="value python: request['model'].create_ref(request['model'])" />
@@ -259,13 +256,18 @@ _______ manual close section here _______
               <th width="1%">creator</th>
               <th>version status</th>
             </tr>
-            <tr  tal:repeat="version versions">
+            <tr tal:repeat="version versions"
+                tal:attributes="class python: test(repeat['version'].odd(), 'odd', 'even')">
               <tal:block define="versionid version/id;
                                   modificationtime python: vmadapter.getVersionModificationTime(versionid);
                                   publicationtime python: vmadapter.getVersionPublicationTime(versionid);
                                   expirationtime python: vmadapter.getVersionExpirationTime(versionid);
                                   lastauthor python: vmadapter.getVersionLastAuthorInfo(versionid).fullname();
                                   creator python: vmadapter.getVersionCreatorInfo(versionid).fullname();
+                                  version_status python: vmadapter.getVersionStatus(versionid);
+                                  style python: ((version_status == 'unapproved' and 'draft') or 
+                                                  (version_status == 'last_closed' and 'closed') or
+                                                  version_status);
               ">
                 <td class="listing-left">
                   <input type="checkbox" 
@@ -276,13 +278,9 @@ _______ manual close section here _______
                     id
                   </label>
                 </td>
-                <td style="white-space: nowrap">
-                  <a tal:content="python: mangle.DateTime(modificationtime).toStr()" 
-                      tal:attributes="href python:('%s/edit/tab_status_view_version?version=%s' % 
-                                                    (model.absolute_url(), version.id));
-                                      title python:u'view \xab%s\xbb' % version.get_title()">
-                    modificationtime
-                  </a>
+                <td style="white-space: nowrap"
+                    tal:content="python: mangle.DateTime(modificationtime).toStr()">
+                  modificationtime
                 </td>
                 <td style="white-space: nowrap" tal:content="python: mangle.DateTime(publicationtime).toStr()">
                   publicationtime
@@ -296,17 +294,14 @@ _______ manual close section here _______
                 <td style="white-space: nowrap" tal:content="creator">
                   creator
                 </td>
-                <td tal:define="version_status version/version_status;
-                                color python: ((version_status == 'unapproved' and 'red') or 
-                                                (version_status == 'approved' and 'green') or 
-                                                (version_status == 'public' and 'blue') or 
-                                                'grey');
-                
-                    "
-                    tal:attributes="style string:color: ${color}"
-                    tal:content="version_status"
-                >
-                  version_status
+                <td>
+                  <a tal:content="version_status"
+                      tal:attributes="href python:('%s/edit/tab_status_view_version?version=%s' % 
+                                                    (model.absolute_url(), version.id));
+                                      title python:u'view \xab%s\xbb' % version.get_title();
+                                      class style">
+                    version_status
+                  </a>
                 </td>
               </tal:block>
             </tr>
