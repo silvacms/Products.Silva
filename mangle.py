@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.23 2004/09/03 14:39:36 guido Exp $
+# $Id: mangle.py,v 1.24 2004/09/03 15:08:18 guido Exp $
 # Python
 import string
 import re
@@ -403,7 +403,7 @@ class DateTime:
         """
         dt = self._dt
         if int(dt.hour() == 0) and int(dt.minute()) == 0:
-            return '%02d %s %04d' % (dt.day(), dt.aMonth().lower, dt.year())
+            return '%02d %s %04d' % (dt.day(), dt.aMonth().lower(), dt.year())
         return self.toStr()
 
 module_security.declarePublic('Now')
