@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.82 $
+# $Revision: 1.83 $
 
 # Zope
 from OFS import SimpleItem
@@ -22,6 +22,7 @@ from interfaces import \
     IVersionedContent, IContainer, IVersion, IContent, IGhost, \
     IGhostContent, IIcon
     
+from Products.Silva.i18n import translate as _
 
 icon = "www/silvaghost.gif"
 
@@ -59,7 +60,7 @@ class GhostBase:
         """
         content = self.get_haunted_unrestricted()
         if content is None:
-            return "Ghost target is broken"
+            return _("Ghost target is broken")
         else:
             return content.get_title()
 
@@ -68,7 +69,7 @@ class GhostBase:
         """
         content = self.get_haunted_unrestricted()
         if content is None:
-            return "Ghost target is broken"
+            return _("Ghost target is broken")
         else:
             return content.get_title_editable()
 
@@ -80,7 +81,7 @@ class GhostBase:
         """        
         content = self.get_haunted_unrestricted()
         if content is None:
-            return "Ghost target is broken"
+            return _("Ghost target is broken")
         else:
             short_title = content.get_short_title()
         if not short_title:
@@ -213,7 +214,7 @@ class GhostBase:
             self.REQUEST.set('ghost_model', self.aq_inner)
             return content.view()
         else:
-            raise "Unauthorized"
+            raise _("Unauthorized")
 
 
 class Ghost(CatalogedVersionedContent):

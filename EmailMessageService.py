@@ -18,6 +18,8 @@ from Products.Formulator import StandardFields
 
 from interfaces import IMessageService
 
+from Products.Silva.i18n import translate as _
+
 class EmailMessageService(SimpleItem.SimpleItem):
     """Simple implementation of IMemberMessageService that sends email
     messages.
@@ -92,20 +94,21 @@ class EmailMessageService(SimpleItem.SimpleItem):
         try:
             result = self.edit_form.validate_all(REQUEST)
         except FormValidationError, e:
-            messages = ["Validation error(s)"]
+            # XXX i18n - not sure if this isn't used for anything
+            messages = [_("Validation error(s)")]
             # loop through all error texts and generate messages for it
             for error in e.errors:
                 messages.append("%s: %s" % (error.field.get_value('title'),
                                             error.error_text))
             # join them all together in a big message
-            message = string.join(messages, "<br>")
+            message = string.join(messages, "<br />")
             # return to manage_editForm showing this failure message 
             return self.manage_editForm(self, REQUEST,
                                         manage_tabs_message=message)
 
         for key, value in result.items():
             setattr(self, '_' + key, value)
-        return self.manage_main(manage_tabs_message="Changed settings.")
+        return self.manage_main(manage_tabs_message=_("Changed settings."))
 
     # XXX these security settings are not the right thing.. perhaps
     # create a new permission?

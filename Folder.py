@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.160 $
+# $Revision: 1.161 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -35,6 +35,8 @@ from Products.ParsedXML.ExtraDOM import writeStream
 from interfaces import IPublishable, IContent, IGhost
 from interfaces import IVersionedContent, ISilvaObject, IAsset
 from interfaces import IContainer, IPublication, IRoot
+
+from Products.Silva.i18n import translate as _
 
 icon="www/silvafolder.gif"
 addable_priority = -.5
@@ -324,8 +326,10 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 ids.append(item.id)
             elif item.meta_type not in [addable['name'] for 
                     addable in self.get_silva_addables()]:
-                messages.append('pasting &#xab;%s&#xbb; is not allowed in '\
-                                'this type of container' % item.id)
+                msg = _(('pasting &#xab;${id}&#xbb; is not allowed in '
+                                'this type of container'))
+                msg.set_mapping({'id': item.id})
+                messages.append(unicode(msg))
 
         if len(ids) == 0:
             return ', '.join(messages).capitalize()
@@ -380,7 +384,9 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             object = getattr(self, paste_id)
             helpers.unapprove_close_helper(object)
             object.sec_update_last_author_info()
-            messages.append('pasted &#xab;%s&#xbb;' % paste_id)
+            msg = _('pasted &#xab;${id}&#xbb;')
+            msg.set_mapping({'id': paste_id})
+            messages.append(unicode(msg))
         
         return ', '.join(messages).capitalize()
             
@@ -410,10 +416,14 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                     else:
                         paste_id = 'copy%s_of_%s' % (add, org_paste_id)
                 self._ghost_paste(paste_id, item, REQUEST)
-                messages.append('pasted &#xab;%s&#xbb;' % paste_id)
+                msg = _('pasted &#xab;${id}&#xbb;')
+                msg.set_mapping({'id': paste_id})
+                messages.append(unicode(msg))
             else:
-                messages.append('pasting &#xab;%s&#xbb; is not allowed in '\
-                                'this type of container' % item.id)
+                msg = _(('pasting &#xab;${id}&#xbb; is not allowed in '
+                                'this type of container'))
+                msg.set_mapping({'id': item.id})
+                messages.append(unicode(msg))
         return ', '.join(messages).capitalize()
 
     def _ghost_paste(self, paste_id, item, REQUEST):
@@ -929,7 +939,7 @@ def xml_import_handler(object, node, factory=None):
     id = str(mangle.Id(object, id).unique())
     if factory is None:
         factory = default_factory
-    assert callable(factory), "Factory is not callable"
+    assert callable(factory), _("Factory is not callable")
     factory(object, id, title)
     newfolder = getattr(object, id)
     for child in node.childNodes:

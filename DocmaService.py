@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.13 2004/07/21 11:40:40 jw Exp $
+# $Id: DocmaService.py,v 1.14 2004/11/19 17:26:28 guido Exp $
 
 from __future__ import nested_scopes
 
@@ -113,7 +113,8 @@ class DocmaService(SimpleItem):
     def get_templates(self):
         """Returns the list of available templates from the server."""
         if not self.try_connection_and_pw():
-            return ['Not connected']
+            # XXX i18n - are we sure this is not used for functional purposes?
+            return [_('Not connected')]
         server = xmlrpclib.Server("http://%s:%s" % (self._host, self._port))
         retval = server.getTemplates(self._password)
         if len(retval) == 0:

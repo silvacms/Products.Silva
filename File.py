@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.32 $
+# $Revision: 1.33 $
 
 # Python
 import os
@@ -29,6 +29,8 @@ except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
 from interfaces import IFile, IAsset, IUpgrader
+
+from Products.Silva.i18n import translate as _
 
 icon="www/silvafile.png"
 addable_priority = -0.3
@@ -252,8 +254,9 @@ def manage_addFile(self, id, title, file):
 
     # Switch storage type:
     service_files = getattr(self, 'service_files', None)
-    assert service_files is not None, "There is no service_files. " \
-        "Refresh your silva root."
+    assert service_files is not None, \
+                        _(("There is no service_files. "
+                            "Refresh your silva root."))
     if service_files.useFSStorage():        
         object = FileSystemFile(id, title, service_files.filesystem_path())
     else:
@@ -352,8 +355,9 @@ class FilesService(SimpleItem.SimpleItem):
         upg.upgrade(parent, '0.0', '0.1')
         if REQUEST is not None:
             return self.manage_filesServiceEditForm(
-                manage_tabs_message='Silva Images converted. See Zope '
-                    'log for details.')
+                manage_tabs_message= \
+                    _(('Silva Images converted. See Zope '
+                    'log for details.')))
 
 InitializeClass(FilesService)
 
