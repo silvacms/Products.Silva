@@ -174,9 +174,11 @@ class SilvaObject(Security):
     def get_xml(self):
         """Get XML for object and everything under it.
         """
-        f = StringIO()
+        f = StringIO(u'')
         self.to_xml(f)
-        return f.getvalue()
+        # XXX HACK
+        result = ''.join(map(str, f.buflist))
+        return result #return f.getvalue()
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml') 

@@ -91,7 +91,7 @@ class CourseVersion(SimpleItem.SimpleItem):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Course Version"
-    
+
     def __init__(self, id, title):
         self.id = id
         self.title = title 
