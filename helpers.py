@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.25.36.1 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva 
@@ -27,7 +27,8 @@ def add_and_edit(self, id, REQUEST, screen='manage_main'):
     if REQUEST.has_key('submit_edit'):
         u = "%s/%s" % (u, urllib.quote(id))
         REQUEST.RESPONSE.redirect(u+'/'+screen)
-    REQUEST.RESPONSE.redirect(u+'/manage_main')
+    else:
+        REQUEST.RESPONSE.redirect(u+'/manage_main')
 
 def unapprove_helper(object):
     """Unapprove object and anything unapprovable contained by it.
