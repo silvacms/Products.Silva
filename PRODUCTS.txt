@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.4 $
+CVS:        $Revision: 1.5 $
 
 Introduction
 ------------
@@ -82,7 +82,7 @@ them. Used by SilvaMetadata.
 
 http://www.infrae.com/download/Annotations
 
-ProxyIndex 1.1.2 (DCI)
+ProxyIndex 1.2 (DCI)
 ----------------------
 
 ProxyIndex is a plugin catalog index. It uses a TALES expression
