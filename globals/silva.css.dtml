@@ -7,7 +7,7 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )">
 
 /*
-**  Silva version 0.9.3.4e
+**  Silva version v1.0a
 **
 **  The view crew at Infrae - all seasons of 2003, 2004
 **    Thanks to Alexander Limi (limi@plone.org) - October 2002
@@ -693,7 +693,7 @@ textarea {
 * the selector works only for standard compatible browsers like mozilla, so
 * IE ignore this definition below
 */
-td>textarea.expand, td>input.expand[type=text] {
+td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget {
   width: 100%;
 }
 
@@ -701,8 +701,14 @@ textarea.readable {
   font: 100% Verdana, Helvetica, Arial, sans-serif;
 }
 
-optgroup {
-  font-size: 100%;
+input.inputter, select.inputter {
+  color : &dtml-inputFontColor;;
+  background : &dtml-inputBackground;;
+  margin-top: 1px;
+  margin-bottom: 1px; /* IE bug fix */
+  padding: 0.1em;
+  border: &dtml-inputBorder;;
+  font: &dtml-inputFont;;
 }
 
 select {
@@ -714,6 +720,10 @@ select {
     font: &dtml-inputFont;;
   font-size: 90%;
   line-height : 96%;
+}
+
+optgroup {
+  font-size: 100%;
 }
 
 select.transport {
@@ -824,17 +834,6 @@ input.close {
   padding: &dtml-manipulatorPadding;;
   border: &dtml-manipulatorBorder;;
   cursor: pointer;
-}
-
-input.inputter, select.inputter {
-  color : &dtml-inputFontColor;;
-  background : &dtml-inputBackground;;
-  margin-top: 1px;
-  margin-bottom: 1px; /* IE bug fix */
-  padding: 0.1em;
-  border: &dtml-inputBorder;;
-  vertical-align: middle;
-  font: &dtml-inputFont;;
 }
 
 
