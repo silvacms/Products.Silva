@@ -64,6 +64,10 @@ Silva changes
         - DemoObject is removed from the core in favor of a (to be
           developed/updated) demo extension.
 
+        - Added Viewer + and Viewer ++ roles for higher view
+          restrictions.  Redid the user interface and underlying code
+          for setting this.
+
     Bugs fixed
 
         - Fixed rare or edge-case situations in the Publish tab. UI
