@@ -13,7 +13,7 @@
 ">
 
 <tr tal:replace="nothing"> 
-  ______________ sidebar publication row ______________ 
+  ______________ stack publication row ______________ 
 </tr>
 <tr>
   <td class="{__class__}"
@@ -37,7 +37,7 @@
 </tr>
 
 <span tal:replace="nothing">
-  ______________ sidebar iteration ______________
+  ______________ stack iteration ______________
 </span>
 
 <tal:block repeat="indent_item tree">
