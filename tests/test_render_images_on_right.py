@@ -29,6 +29,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
     def test_renders_images_on_right(self):
         try:
             import libxslt
+            import libxml2
         except ImportError:
             return
         importfolder = self.add_folder(
@@ -54,6 +55,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
     def test_error_handling(self):
         try:
             import libxslt
+            import libxml2
         except ImportError:
             return
 

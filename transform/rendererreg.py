@@ -2,6 +2,7 @@ from Products.Silva.transform.interfaces import IRendererRegistry
 
 try:
     import libxslt
+    import libxml2
 except ImportError:
     _REGISTRY = {}
 else:
