@@ -1,0 +1,83 @@
+<metal:block use-macro="here/macro_no_tabs/macros/master">
+<metal:slot fill-slot="main">
+<tal:block define="
+    global view here;
+    global fields view/memberform/get_fields;
+    global silva_permissions here/get_silva_permissions;
+    global message_type request/SESSION/message_type | nothing;
+    global message request/SESSION/message | nothing;
+    dummy view/clear_message;
+" />
+<div class="margins">
+
+<h2>Member data of <span tal:replace="model/id" /></h2>
+
+<tal:block condition="message">
+<div class="feedback" tal:condition="python:message_type == 'feedback'">
+  <span tal:replace="structure string:Status: ${message}">message</span>&nbsp;&nbsp;<span tal:replace="string:(${here/service_utils/backend_now_to_str})">datetime</span>
+</div>
+<div class="feedback" tal:condition="python:message_type == 'error'">
+  <span class="error" tal:content="structure message">message</span>
+</div>
+</tal:block>
+
+<tal:block condition="silva_permissions/ChangeSilvaAccess">
+
+<form action="." method="post" tal:attributes="action python:model.absolute_url()+'/edit'">
+<table border="0" cellspacing="0" cellpading="0" width="100%">
+  <tr>
+    <th colspan="2" align="left">Field name:</th>
+    <th align="left">Field value:</th>
+  </tr>
+
+  <tr tal:repeat="field fields" tal:attributes="class python:test(repeat['field'].odd, 'focus', 'focus-cycle')">
+    <td tal:content="structure python: test(field.is_required(), '*', '&nbsp;')">
+    </td>
+    <td tal:content="field/title">
+    </td>
+    <td>
+      <span tal:replace="structure python: field.render(getattr(model, field.id)())" />
+    </td>
+  </tr>
+
+  <tr class="controls">
+    <td>
+      &nbsp;
+    </td>
+    <th valign="bottom">
+      Approved member:
+    </th>
+    <th valign="bottom" align="left">
+      <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')" />&nbsp;
+      <input  class="button" type="submit" name="approve_visitor:method" tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and (model.id != request.AUTHENTICATED_USER.getId()) or silva_permissions['ChangeSilvaViewRegistry'])) and not model.is_approved()" value="Approve now"/>
+    </th>
+  </tr>
+
+  <tr class="focus"><td colspan="3" class="halfline">&nbsp;</td></tr>
+  <tr class="controls">
+    <td align="left" colspan="2">
+      <input type="button" class="cancelbutton" name="close" value="  Close  " 
+          title="Close window - alt-c" accesskey="c"
+          onclick="window.close();return false;" 
+      />
+    </td>
+    <td align="right">
+      <input class="button" type="submit" 
+             name="save_memberdata:method" value="   Save   "
+             title="Save member data - alt-s" accesskey="s"
+      />
+    </td>
+  </tr>
+</table>
+</form>
+
+</tal:block>
+
+<tal:block condition="not:silva_permissions/ChangeSilvaContent">
+  <h3>Dear <span tal:content="python:request.AUTHENTICATED_USER.getId()" /><br />
+You are not allowed to edit membership data of member <span tal:content="model/id" /></h3>
+  <tal:comment condition="nothing">Add read only view here?</tal:comment>
+</tal:block>
+</div>
+</metal:slot>
+</metal:block>

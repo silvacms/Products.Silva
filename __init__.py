@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.54 $
+# $Revision: 1.55 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -11,7 +11,6 @@ from Products.Silva.ImporterRegistry import importer_registry
 from ExtensionRegistry import extensionRegistry
 import ExtensionService
 import SimpleMembership
-import ExtendedMembership
 import DocmaService
 import Group
 import VirtualGroup
@@ -61,15 +60,15 @@ def initialize(context):
         )
 
     context.registerClass(
-        ExtendedMembership.ExtendedMemberService,
-        constructors = (ExtendedMembership.manage_addExtendedMemberServiceForm,
-                        ExtendedMembership.manage_addExtendedMemberService),
+        SimpleMembership.SimpleMemberService,
+        constructors = (SimpleMembership.manage_addSimpleMemberServiceForm,
+                        SimpleMembership.manage_addSimpleMemberService),
         )
 
     context.registerClass(
-        ExtendedMembership.ExtendedMember,
-        constructors = (ExtendedMembership.manage_addExtendedMemberForm,
-                        ExtendedMembership.manage_addExtendedMember),
+        SimpleMembership.SimpleMember,
+        constructors = (SimpleMembership.manage_addSimpleMemberForm,
+                        SimpleMembership.manage_addSimpleMember),
         )
 
     context.registerClass(
@@ -92,6 +91,7 @@ def initialize(context):
     importer_registry.register_tag('silva_demoobject', DemoObject.xml_import_handler)
 
     registerDirectory('views', globals())
+    registerDirectory('resources', globals())
     registerDirectory('widgets', globals())
     registerDirectory('globals', globals())
     registerDirectory('service_utils', globals())

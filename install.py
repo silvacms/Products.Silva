@@ -9,7 +9,7 @@ from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
 
 
-from ExtendedMembership import ExtendedMemberService
+from SimpleMembership import SimpleMemberService
 
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.
@@ -85,6 +85,7 @@ def installFromScratch(root):
 def install(root):
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
+    add_fss_directory_view(root.service_resources, 'Silva', __file__, 'resources')
     # also register views
     registerViews(root.service_view_registry)
 
@@ -111,6 +112,7 @@ def install(root):
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     root.service_views.manage_delObjects(['Silva'])
+    root.service_resources.manage_delObjects(['Silva'])
     try:
         root.manage_delObjects(['service_editorsupport'])
     except 'BadRequest':
@@ -156,6 +158,9 @@ def configureViews(root):
     root.manage_addFolder('service_views')
     # and set Silva tree XXX should be more polite to extension packages
     root.service_view_registry.set_trees(['Silva'])
+
+    # folder containing some extra views and resources
+    root.manage_addFolder('service_resources')
 
 def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.
@@ -241,16 +246,10 @@ def configureLayout(root, default=0):
 def configureMembership(root):
     """Install membership code into root.
     """
-    for id in ['become_visitor.pt', 'request_processed.pt', 'request_roles.pt']:
-        add_helper(root, id, globals(), pt_add_helper, 0, 'membership')
-
-    for id in ['add_visitor.py', 'request_roles_submit.py']:
-        add_helper(root, id, globals(), py_add_helper, 0, 'membership')
-
     # add member service and message service
     ids = root.objectIds()
     if 'service_members' not in ids:
-        root.manage_addProduct['Silva'].manage_addExtendedMemberService(
+        root.manage_addProduct['Silva'].manage_addSimpleMemberService(
             'service_members')
         
     if 'Members' not in ids:
@@ -329,8 +328,8 @@ def registerViews(reg):
                  ['edit', 'Content', 'Indexer'])
     reg.register('edit', 'Silva SQL Data Source',
                  ['edit', 'Asset', 'SQLDataSource'])
-    reg.register('edit', 'Silva Extended Member',
-                 ['edit', 'Member', 'ExtendedMember'])
+    reg.register('edit', 'Silva Simple Member',
+                 ['edit', 'Member', 'SimpleMember'])
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
@@ -377,9 +376,9 @@ def unregisterViews(reg):
         reg.unregister('add', meta_type)
     reg.unregister('edit', 'Silva Root')
     reg.unregister('public', 'Silva Root')
-    reg.unregister('edit', 'Silva Extended Member')
+    reg.unregister('edit', 'Silva Simple Member')
     # next line for hysterical reasons, should go away 
-    reg.unregister('public', 'Silva Extended Member')
+    reg.unregister('public', 'Silva Simple Member')
 
 def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'

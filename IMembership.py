@@ -35,6 +35,18 @@ class IMemberService(Base):
     def get_member(userid):
         """Get member object for userid, or None if no such member object.
         """
+
+    def get_cached_member(userid):
+        """Get memberobject which can be cached, or None if no such memberobject.
+        """
+
+    def allow_subscription():
+        """Return true if subscription is allowed, false if not
+        """
+
+    def get_subscription_url():
+        """Returns the url of the subscription form
+        """
     
 class IMemberMessageService(Base):
     

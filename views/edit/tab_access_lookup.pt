@@ -141,11 +141,6 @@
                       </span>
                       <span tal:replace="member/email | no_entry" />
                       <br />
-                      <span class="subhead">
-                        Department(s):
-                      </span>
-                      <span tal:replace="python:view.lookup_render_departments(member)" />
-                      <br />
                     </td>
                   </tr>
                 </tal:block>

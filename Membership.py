@@ -10,11 +10,10 @@ class Member(Persistent, Acquisition.Implicit):
     __implements__ = IMember
     security = ClassSecurityInfo()
     
-    def __init__(self, userid, fullname, email, departments, is_approved):
+    def __init__(self, userid, fullname, email, is_approved):
         self.id = userid
         self._fullname = fullname
         self._email = email
-        self._departments = departments
         self._approved = is_approved
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -40,13 +39,6 @@ class Member(Persistent, Acquisition.Implicit):
         """
         return self._email
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'departments')
-    def departments(self):
-        """Departments
-        """
-        return self._departments
-    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_approved')
     def is_approved(self):
@@ -83,13 +75,6 @@ class NoneMember(Persistent, Acquisition.Implicit):
         return None
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'departments')
-    def departments(self):
-        """Departments
-        """
-        return None
-    
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_approved')
     def is_approved(self):
         """Is approved
@@ -104,5 +89,4 @@ def cloneMember(member):
     return Member(userid=member.userid(),
                   fullname=member.fullname(),
                   email=member.email(),
-                  departments=member.departments(),
                   is_approved=member.is_approved())

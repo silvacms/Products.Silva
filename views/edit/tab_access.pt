@@ -205,7 +205,7 @@
                   type="checkbox"
                   tal:attributes="value python: '|'.join(req)" />
               </td>
-              <td tal:content="role">
+              <td tal:content="requested_role">
               </td>
               <td tal:content="python: test(member.is_approved(), 'Yes', 'No')">
                 Yes or No

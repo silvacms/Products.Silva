@@ -1,0 +1,50 @@
+<html metal:use-macro="here/layout_macro.html/macros/layout">
+  <head>
+    <title tal:content="template/title">The title</title>
+  </head>
+  <body>
+
+<div metal:fill-slot="main" tal:define="dummy here/security_trigger">
+
+<tal:block condition="python: hasattr(here, 'service_members') and here.service_members.allow_subscription()">
+<h2>Request roles</h2>
+
+<!-- __________________________ start feedback _________________________ -->
+<tal:block
+  define="msg options/message | nothing"
+  condition="msg">
+<div class="feedback">
+<span class="error" tal:content="structure msg">message</span>
+</div>
+</tal:block>
+
+<tal:define define="global view here; global member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId())" />
+
+<form action="request_roles_submit" method="post">
+
+<div tal:condition="python: not member.email() or not member.fullname()">
+  You have not entered all the necessary data. Please enter the following fields:<br /><br />
+  Full name:<br />
+  <input type="text" name="fullname" tal:attributes="value member/fullname" /><br /><br />
+  E-mail address:<br />
+  <input type="text" name="email" tal:attributes="value member/email" /><br /><br />
+</div>
+
+Choose role(s) to request:<br />
+<tal:repeat repeat="role view/get_available_roles">
+<input type="checkbox" name="roles:list" tal:attributes="value role" /> <span tal:replace="role"/><br />
+</tal:repeat><br />
+<input type="submit">
+</form>
+
+</tal:block>
+<tal:block condition="python: not hasattr(here, 'service_members') or not here.service_members.allow_subscription()">
+
+This site does not allow requests for roles!
+
+</tal:block>
+
+</div>
+
+  </body>
+</html>

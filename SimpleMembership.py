@@ -6,9 +6,11 @@ from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals, zLOG
+from DateTime import DateTime
 
 # silva
 from IMembership import IMember, IMemberService, IMemberMessageService
+from Content import Content
 from Membership import cloneMember
 import SilvaPermissions
 from helpers import add_and_edit
@@ -19,7 +21,9 @@ from Products.Formulator.Errors import FormValidationError
 from Products.Formulator import StandardFields
 
 
-class SimpleMember(SimpleItem.SimpleItem):
+class SimpleMember(Content, SimpleItem.SimpleItem):
+    """Silva Simple Member"""
+
     __implements__ = IMember
 
     security = ClassSecurityInfo()
@@ -28,15 +32,30 @@ class SimpleMember(SimpleItem.SimpleItem):
     
     def __init__(self, id):
         self.id = id
+        self._title = id
         self._fullname = None
         self._email = None
-        self._departments = None
+        self._creation_datetime = self._modification_datetime = DateTime()
+        self._is_approved = 0
+
+    def manage_afterAdd(self, item, container):
+        # make the user chiefeditor of his own object
+        self.sec_assign(self.id, 'ChiefEditor')
+
+    def manage_beforeDelete(self, item, container):
+        pass
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'security_trigger')
+    def security_trigger(self):
+        pass
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_fullname')
     def set_fullname(self, fullname):
         """set the full name"""
         self._fullname = fullname
+        self._p_changed = 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_email')
@@ -45,13 +64,15 @@ class SimpleMember(SimpleItem.SimpleItem):
            (does not test, if email address is valid)
         """
         self._email = email
+        self._p_changed = 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'set_departments')
-    def set_departments(self, departments):
-        """ set departments """
-        self._departments = departments
-
+                              'approve')
+    def approve(self):
+        """Approve the member"""
+        self._is_approved = 1
+        self._p_changed = 1
+    
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'userid')
@@ -77,18 +98,11 @@ class SimpleMember(SimpleItem.SimpleItem):
         return self._email
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'departments')
-    def departments(self):
-        """departments
-        """
-        return self._departments
-    
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_approved')
     def is_approved(self):
         """is_approved
         """
-        return 1
+        return self._is_approved
     
 Globals.InitializeClass(SimpleMember)
 
@@ -109,9 +123,21 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     security = ClassSecurityInfo()
 
     meta_type = 'Silva Simple Member Service'
+    
+    manage_options = (
+        {'label':'Edit', 'action':'manage_editForm'},
+        ) + SimpleItem.SimpleItem.manage_options
+
+    security.declareProtected('View management screens', 'manage_editForm')
+    manage_editForm = PageTemplateFile(
+        'www/extendedMemberServiceEdit', globals(),  __name__='manage_editForm')
+
+    security.declareProtected('View management screens', 'manage_main')
+    manage_main = manage_editForm
 
     def __init__(self, id):
         self.id = id
+        self._allow_subscription = 0
 
     # XXX will be used by access tab and should be opened wider if this
     # is central service..
@@ -122,7 +148,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         result = []
         for userid in userids:
             if userid.find(search_string) != -1:
-                result.append(self.get_member(userid))
+                result.append(self.get_cached_member(userid))
         return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -141,12 +167,38 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         if member is None:
             members.manage_addProduct['Silva'].manage_addSimpleMember(userid)
             member = getattr(members, userid)
-        return cloneMember(member).__of__(self)
+        return member
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_cached_member')
+    def get_cached_member(self, userid):
+        """Returns a cloned member object, which can be stored in the ZODB"""
+        return cloneMember(self.get_member(userid)).__of__(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'allow_subscription')
     def allow_subscription(self):
-        return 0
+        return self._allow_subscription 
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'set_allow_subscription')
+    def set_allow_subscription(self, value):
+        """sets allow_subscription"""
+        self._allow_subscription = value
+
+    security.declareProtected('View management screens',
+                              'manage_allowSubscription')
+    def manage_allowSubscription(self, REQUEST):
+        """manage method to set allow_subscription"""
+        self.set_allow_subscription(int(REQUEST['allow_subscription']))
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_subscription_url')
+    def get_subscription_url(self):
+        """Return the url for the subscription form, relative from resources
+        directory (so including the escaped productname!!)
+        """
+        return 'Silva/become_visitor'
 
 Globals.InitializeClass(SimpleMemberService)
 

@@ -224,9 +224,9 @@ class SilvaObject(Security):
         messages and trace-backs).
         """
         # create a member implicitely, if not already there
-        if hasattr(self.get_root(),'service_members'):
-            self.get_root().service_members.get_member(
-                self.REQUEST.AUTHENTICATED_USER.getUserName())
+        #if hasattr(self.get_root(),'service_members'):
+        #    self.get_root().service_members.get_member(
+        #        self.REQUEST.AUTHENTICATED_USER.getUserName())
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_xml')
