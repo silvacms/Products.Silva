@@ -695,7 +695,7 @@
    <index_args>
    </index_args>
  </metadata_element>
- <metadata_element id="renderer_id">
+ <metadata_element id="renderer_name">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
    <field_type>ListField</field_type>
@@ -746,7 +746,7 @@
      <value key="description"></value>
      <value key="whitespace_preserve"></value>
      <value key="extra"></value>
-     <value key="items">form/getRenderersForMetaType</value>
+     <value key="items">python:[[x.getName(), x.getName()] for x in form.service_renderer_registry.getRenderersForMetaType("Silva Document Version")]</value>
    </field_tales>
    <field_messages>
      <message name="external_validator_failed">The input failed the external validator.</message>
