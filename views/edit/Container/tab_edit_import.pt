@@ -106,8 +106,6 @@
           <tr>
             <td colspan="4">
               <h3>Upload Word document (.doc)
-                <img src="pixel.gif" width="1px" height="14px"
-                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
               </h3>
             </td>
           </tr>
