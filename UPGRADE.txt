@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.6
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.18 $
+  CVS:        $Revision: 1.19 $
 
 Upgrading Silva 0.8.5 to 0.8.6
 
@@ -57,7 +57,7 @@ Upgrading Silva 0.8.5 to 0.8.6
 
   Upgrading Silva
 
-    Since version 0.8.6, Silva does not need a seperate installation
+    Since version 0.8.6, Silva does not need a separate installation
     of a .zexp file. All Silva code is now distributed in the main
     Silva product. Upgrade code is also included. To trigger this
     upgrade, please type a URL like this into the location bar of your
@@ -100,3 +100,14 @@ Upgrading Silva 0.8.5 to 0.8.6
         version.
 
       * Copy over some other configuration details.
+
+
+  Upgrading Custom Content Types.
+
+    If you have custom content types in a separate Zope Product,
+    you will need to export the views in the 'service_view_registry' to
+    the file system and register them with the new views structure.
+    There is detailed information about how to achieve this
+    in the docs/Filesystem.stx
+
+    
