@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.126 $
+# $Revision: 1.127 $
 # Zope
 from OFS import Folder, SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -770,6 +770,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
 
     def _get_tree_helper(self, l, indent, depth):
         for item in self.get_ordered_publishables():
+            if item.getId() == 'index':
+                # default document should not be inserted
+                continue
             if (IContainer.isImplementedBy(item) and
                 item.is_transparent()):
                 l.append((indent, item))
