@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -299,7 +299,7 @@ class Security:
         return result
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_roles_for_userid')
+        SilvaPermissions.AccessContentsInformation, 'sec_get_local_roles_for_userid')
     def sec_get_local_roles_for_userid(self, userid):
         """Get a list of local roles that a userid has here
         """

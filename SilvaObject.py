@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.43 $
+# $Revision: 1.44 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -39,7 +39,10 @@ class SilvaObject(Security):
     _modification_datetime = None
     
     # allow edit view on this object
-    edit = ViewAttribute('edit')
+    edit = ViewAttribute('edit', 'tab_edit')
+
+    # and public as well
+    public = ViewAttribute('public', 'render_view')
 
     def __init__(self, id, title):
         self.id = id

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner
@@ -146,13 +146,14 @@ def manage_addViewRegistry(self, id, REQUEST=None):
     return ''
 
 class ViewAttribute(Acquisition.Implicit):
-    def __init__(self, view_type):
+    def __init__(self, view_type, default_method):
         self._view_type = view_type
+        self._default_method = default_method
 
     def index_html(self):
         """
         """
-        return self['tab_edit']()
+        return self[self._default_method]()
     
     def __getitem__(self, name):
         """
