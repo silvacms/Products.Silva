@@ -134,3 +134,11 @@ class IVersionManagement(Interface):
             since it can potentially remove interesting versions
         """
     
+class IAddables(Interface):
+
+    def getAddables():
+        """return a list of Metatypes that are addable to this container."""
+        
+    def setAddables(addables):
+        """set the the Metatypes that are addable to this container."""
+            
