@@ -22,7 +22,7 @@
 
   <tal:block condition="docma_enabled">
 
-    <tal:block define="global userid view/REQUEST/AUTHENTICATED_USER;
+    <tal:block define="global userid python: str(view.REQUEST['AUTHENTICATED_USER']);
                        global queue view/service_docma/get_queue;
                        global processingident view/service_docma/get_processing_ident;
                        global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(userid);
@@ -35,6 +35,9 @@
         </tr>
         <tr>
             <td>Owner: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /></td>
+        </tr>
+        <tr>
+            <td>Description: <span tal:replace="python: view.service_docma.get_ident_description(processingident)" /></td>
         </tr>
       </table>
     </tal:block>
@@ -81,13 +84,15 @@
 
       <tr>
         <th align="left" colspan="2" width="8%">Job Id:</th>
+        <th align="left" width="10%">Type:</th>
         <th align="left">Description:</th>
       </tr>
 
       <tr tal:repeat="job finished_jobs" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
-        <td align="left" width="1%"><input type="checkbox" tal:attributes="name python: 'job_%s' % job"/></td>
-        <td align="left" tal:content="job">JobId</td>
-        <td align="left" tal:content="python: view.service_docma.get_ident_description(job)">Owner</td>
+        <td align="left" width="1%"><input type="checkbox" name="storageids:list" tal:attributes="value python: '%s|%s' % (job[0], job[2])"/></td>
+        <td align="left" tal:content="python: job[0]">JobId</td>
+        <td align="left" tal:content="python: job[2]">Type</td>
+        <td align="left" tal:content="python: job[1]">Owner</td>
       </tr>
 
       <tr class="focus" tal:condition="python: len(finished_jobs) == 0">
@@ -95,7 +100,7 @@
       </tr>
 
       <tr class="controls">
-        <td colspan="2" align="left">
+        <td colspan="3" align="left">
           <script type="text/javascript">
           <!--
             if (document.forms[0])
@@ -108,6 +113,7 @@
         <td align="right">
           <tal:block condition="silva_permissions/ChangeSilvaContent">
             &nbsp;&nbsp;<input class="button" type="submit" name="tab_docma_import:method" value="Import" title="Import to the current location" />
+            &nbsp;&nbsp;<input class="button" type="submit" name="tab_docma_import_and_delete:method" value="Import and delete" title="Import to the current location and delete" />
             &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_docma_delete:method" value="Delete" title="There's no undo" onClick="return confirm('Really delete?')" />
           </tal:block>
         </td>
@@ -146,6 +152,48 @@
       }
     //-->
     </script>
+
+    <h2>Import Word document:</h2>
+
+    <form name="addJobForm" action="." method="POST" enctype="multipart/form-data">
+
+    <table width="100%" cellpadding="3" cellspacing="0">
+
+      <tal:block condition="nothing"> ________ Upload Form ________ </tal:block>
+
+      <tr>
+        <th align="left" colspan="3">Upload a document</th>
+      </tr>
+
+      <tr class="focus">
+        <td align="left" width="20%">Enter your e-mail address:</td>
+        <td align="left" width="1%"><input type="text" name="email" size="30" /></td>
+        <td align="right">An e-mail will be sent to you as soon as the job is finished</td>
+      </tr>
+
+      <tr class="focus-cycle">
+        <td align="left" width="20%">Choose a Word document:</td>
+        <td align="left" width="1%"><input type="file" name="doc" /></td>
+        <td align="right">Note that you can import the result anywhere in Silva</td>
+      </tr>
+
+      <tr class="focus">
+        <td align="left" width="20%">Enter a description of the job:</td>
+        <td align="left" width="1%"><textarea rows="3" cols="30" name="description"></textarea></td>
+        <td align="right">&nbsp;</td>
+      </tr>
+
+      <tr class="controls">
+        <td colspan="3" align="right">
+          <tal:block condition="silva_permissions/ChangeSilvaContent">
+            &nbsp;&nbsp;<input class="button" type="submit" name="tab_docma_export:method" value="Import" title="Import to the current location" />
+          </tal:block>
+        </td>
+      </tr>
+
+    </table>
+
+    </form>
 
   </tal:block>
 

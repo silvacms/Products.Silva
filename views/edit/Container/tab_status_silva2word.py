@@ -26,6 +26,6 @@ data = model.get_xml(with_sub_publications, export_last_version)
 if not request['email_address']:
     return view.tab_status(message_type='error', message='You have not entered your e-mail address')
 
-ident, status = model.service_docma.silva2word('guido@infrae.com', data, request['template'], outfilename, request.AUTHENTICATED_USER.getId())
+ident, status = model.service_docma.silva2word(request['email_address'], data, request['template'], outfilename, str(request.AUTHENTICATED_USER.getId()))
 
 return view.tab_status_export(message_type='feedback', message='Your job is %s. The id of your job is %s.' % (status, ident))
