@@ -59,18 +59,18 @@
           <size type="int">1</size>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <items type="list">['builtin', 'epoz']</items>
+          <items type="list">['builtin']</items>
           <external_validator></external_validator>
-          <required type="int">1</required>
+          <required type="int">0</required>
           <css_class></css_class>
           <default></default>
           <title>Preferred editor</title>
           <first_item type="int">0</first_item>
-          <description>Choose 'builtin' for the plain XMLWidgets based editor, or 'epoz' (if available) for the Epoz WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1+)</description>
+          <description>Choose 'builtin' for the plain XMLWidgets based editor, or 'kupu' (if available) for the Kupu WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1+)</description>
           <unicode>1</unicode>
         </values>
         <tales>
-          <items type="list">python: hasattr(form, 'epoz') and ['builtin', 'epoz'] or ['builtin']</items>
+          <items type="list">python: hasattr(form, 'kupu') and ['builtin', 'kupu'] or ['builtin']</items>
         </tales>
       </field>
 

@@ -65,7 +65,7 @@
 
       <tal:repeat repeat="field fields">
       <tal:define define="iterate repeat/field/odd">
-      <tr tal:attributes="class python:iterate and 'even' or 'odd'">
+      <tr tal:attributes="class python:iterate and 'even' or 'odd'" tal:condition="python:field.id != 'editor' or len(field['items']) > 1">
       <td class="field-title">
         <span tal:replace="python:field['title']">
           Title</span><span class="warning"
