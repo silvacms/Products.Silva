@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.28 $
+$Revision: 1.29 $
 
 Silva changes
 
@@ -65,8 +65,8 @@ Silva changes
         - Tweaked LDAPUserFolder.py so it works with more recent versions
           of LDAPUserFolder.
 
-        - Fixed problem in Groups, where the user lookup sometimes lost
-          the selection.
+        - Fixed problem in the Access tab, where the user lookup sometimes
+          lost the current selection.
 
   0.8.6.1
 
