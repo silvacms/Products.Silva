@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.8 2003/08/07 09:24:10 zagy Exp $
+# $Id: GhostFolder.py,v 1.9 2003/08/07 18:05:50 kitblake Exp $
 
 from __future__ import nested_scopes
 
@@ -25,7 +25,7 @@ from Products.Silva.Versioning import VersioningError
 from Products.Silva.interfaces import \
     IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent
 
-icon = 'www/silvaghost.gif'
+icon = 'www/silvaghostfolder.gif'
 
 class GhostFolder(GhostBase, Publishable, Folder.Folder):
     """GhostFolders are used to haunt folders."""
