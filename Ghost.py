@@ -60,6 +60,7 @@ class GhostVersion(SimpleItem.SimpleItem):
 
     def set_content_url(self, content_url):
         # FIXME: should never ever be allowed to point to a ghost
+        # or a container - do a lot of tests
         self._content_url = content_url
 
     def get_content_url(self):
