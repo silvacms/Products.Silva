@@ -198,10 +198,6 @@ div.kupu-toolbox-results {
   display: none;
 }
 
-div.kupu-toolbox table input {
-  width: 20px;
-}
-
 
 table#kupu-toolbox-addtable {
 }
