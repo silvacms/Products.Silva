@@ -34,6 +34,11 @@ Silva changes
 
         - Markup character escapes (entities)
 
+        - Titles are now associated to document versions, not documents
+          themselves. Different versions can have different titles.
+ 
+        - Some XMLWidgets related cleanups to the editor.
+
     Bugs Fixed
 
         - get_public_tree() would not do the right thing with the depth-
