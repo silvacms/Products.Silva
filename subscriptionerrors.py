@@ -29,14 +29,14 @@ class NotSubscribableError(Exception):
 
 allow_class(NotSubscribableError)
 
-class AlreadySubscribedError(SubscriptionError):
+class AlreadySubscribedError(Exception):
     # NOTE: Please make sure in the UI code not to expose any information
     # about the validity of the email address!
     pass
 
 allow_class(AlreadySubscribedError)
 
-class NotSubscribedError(SubscriptionError):
+class NotSubscribedError(Exception):
     # NOTE: Please make sure in the UI code not to expose any information
     # about the validity of the email address!
     pass
