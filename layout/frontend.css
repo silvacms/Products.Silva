@@ -229,13 +229,14 @@ div.public a:hover {
 
 
 /* defines the width of the text in the preview/public layout */
+/* duplicated from silva.css */
 .public {
-  margin-left : 5em;
-  padding-top : 2em;
+  margin-left : 7em;
+  padding-top : 2.3em;
   max-width : 44em;
   /* for IE5 */
   width : 512px;
-  line-height : 1.5em;
+}
 }
 
 

@@ -1468,7 +1468,7 @@ a.closed:hover {
 /* duplicated in frontend.css */
 .public {
   margin-left : 7em;
-  padding-top : 2em;
+  padding-top : 2.3em;
   max-width : 40em;
   /* for IE5 */
   width : 512px;
