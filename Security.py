@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.39 $
+# $Revision: 1.40 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -267,7 +267,7 @@ class Security:
                 if role in interesting_roles]
     
     security.declareProtected(
-        SilvaPermissions.ReadSilvaAccess, 'sec_get_roles')
+        SilvaPermissions.ReadSilvaContent, 'sec_get_roles')
     def sec_get_roles(self):
         """Get all roles defined here that we can manage, given the
         roles of this user.
