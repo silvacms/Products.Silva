@@ -16,9 +16,7 @@
       allow_subscription model/service_members/allow_subscription | nothing;"
     tal:condition="view/has_access">
     <tbody>
-      <tal:block replace="nothing">
-        ________________ user roles management ________________
-      </tal:block>
+      <tal:block replace="nothing"> ________________ user roles management ________________ </tal:block>
       <tr>
         <td class="left" rowspan="99"
           tal:condition="model_is_container">
@@ -260,9 +258,7 @@
           </metal:block>          
         </td>
       </tr>
-      <tal:block replace="nothing">
-        ________________ group roles management ________________
-      </tal:block>
+      <tal:block replace="nothing"> ________________ group roles management ________________ </tal:block>
       <tr>
         <td class="main"
           tal:attributes="style python: test(model_is_container, None, 'padding-left:8px')">
@@ -450,213 +446,178 @@
         </metal:block>        
         </td>
       </tr>
-
-      <tal:block replace="nothing">
-        ______________________________ misc tools ______________________________
-      </tal:block>
-
+      <tal:block replace="nothing"> _______________________ misc tools _______________________ </tal:block>
       <tr>
-        <td class="main">
-
-          <tal:block replace="nothing">
-            _____________________ access restriction by role _____________________
-          </tal:block>
+        <td class="main"
+          tal:attributes="style python: test(model_is_container, None, 'padding-left:8px')">
+            <tal:block replace="nothing"> _____________________ access restriction by role _____________________  </tal:block>
+            <form action="minimal_access_role_submit"
+              method="POST"
+              tal:define="
+                is_closed model/sec_is_closed_to_public;
+                minimal_role model/sec_minimal_view_role;">
+            <table class="listing">
+              <thead>
+                <tal:block replace="nothing"> ______________ vein + title row ______________ </tal:block>
+                <tr>
+                  <td class="top">
+                    <h2 tal:attributes="title string:id: ${model/id}">
+                      <img tal:replace="structure python:view.render_icon(model)" />
+                      Public view access restrictions for &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                    </h2>
+                  </td>
+                </tr>
+                <tal:block replace="nothing"> ______________ top controls row ______________ </tal:block>
+                <tr class="top-controls">
+                  <td>
+                   <h3>
+                     Access restriction by Role
+                    </h3>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="odd">
+                  <td>
+                    Setting an access restriction here affects all objects on this and lower levels.
+                  </td>
+                </tr>
+              </tbody>
+              <tal:block replace="nothing"> ______________ controls ______________ </tal:block>
+              <tfoot>
+                <tr class="controls">
+                  <td class="align-right">
+                    <select name="role"
+                      tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', nothing)">
+                      <option value="Anonymous"
+                        tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
+                        Anonymous
+                      </option>
+                      <option value="Viewer"
+                        tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">
+                        Viewer
+                      </option>
+                      <option value="Authenticated"
+                        tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">
+                        Authenticated
+                      </option>
+                    </select>
+                    <input class="button"
+                      type="submit"
+                      value="Set restriction"
+                      title="restrict access to users with a specific role"
+                      tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')"
+                     />
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </form>
+          <tal:block replace="nothing"> _____________________ access restriction IP address _____________________ </tal:block>
+          <form action="access_restriction_submit"
+            method="POST"
+            tal:define="definition_aquired python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
+            <table class="listing">
+              <thead>
+                <tr tal:replace="nothing">
+                  ______________ top controls row ______________
+                </tr>
+                <tr class="top-controls">
+                  <td colspan="2">
+                    <h3>
+                      Define restriction by IP address
+                    </h3>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="odd">
+                  <td>
+                      All objects on this and lower levels can be restricted for access from specific IP ranges.
+                      <span tal:omit-tag="" 
+                        tal:condition="definition_aquired">
+                        The current restriction (<code tal:content="python:getattr(model, 'access_restriction')" />) is acquired from above.
+                      </span>
+                  </td>
+                </tr>
+                <tr class="even">
+                  <td>
+                    <textarea name="access_restriction"
+                      style="width:100%;"
+                      tal:condition="python:model.hasProperty('access_restriction')"
+                      tal:content="python:model.getProperty('access_restriction')"></textarea>
+                    <textarea name="access_restriction"
+                      style="width:100%;"
+                      tal:condition="python:not model.hasProperty('access_restriction')"></textarea>
+                  </td>
+                </tr>
+              </tbody>
+              <tal:block replace="nothing"> ______________ controls ______________ </tal:block>
+              <tfoot>
+                <tr class="controls">
+                  <td class="align-right">
+                    <input class="button"
+                      type="submit"
+                      value="Set restriction"
+                      title="restrict access to specified IP addresses" />
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </form>
+          <tal:block replace="nothing"> _____________________ utilities _____________________ </tal:block>
           <form action="minimal_access_role_submit"
             method="POST"
             tal:define="
               is_closed model/sec_is_closed_to_public;
               minimal_role model/sec_minimal_view_role;">
-          <table class="listing">
+          <table class="listing sublisting"
+            style>
             <thead>
-              <tal:block replace="nothing">
-                ______________ vein + title row ______________
-              </tal:block>
+              <tal:block replace="nothing"> ______________ vein + title row ______________ </tal:block>
               <tr>
                 <td class="top">
                   <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
-                    Public view access restrictions for &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                    utilities
                   </h2>
                 </td>
               </tr>
-
-              <tal:block replace="nothing">
-                ______________ top controls row ______________
-              </tal:block>
+              <tal:block replace="nothing"> ______________ top controls row ______________ </tal:block>
               <tr class="top-controls">
                 <td>
                  <h3>
-                   Access restriction by Role
+                   List user email addresses
                   </h3>
                 </td>
               </tr>
             </thead>
-
             <tbody>
               <tr class="odd">
                 <td>
-                  Setting an access restriction here affects all objects on this and lower levels.
+                  List email addresses of all users from this level down.
                 </td>
               </tr>
             </tbody>
 
-            <tal:block replace="nothing">
-              ______________ controls ______________
-            </tal:block>
+            <tal:block replace="nothing"> ______________ controls ______________ </tal:block>
             <tfoot>
               <tr class="controls">
                 <td class="align-right">
-                  <select name="role"
-                    tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', nothing)">
-                    <option value="Anonymous"
-                      tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
-                      Anonymous
-                    </option>
-                    <option value="Viewer"
-                      tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">
-                      Viewer
-                    </option>
-                    <option value="Authenticated"
-                      tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">
-                      Authenticated
-                    </option>
-                  </select>
-                  <input class="button"
-                    type="submit"
-                    value="Set restriction"
-                    title="restrict access to users with a specific role"
-                    tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')"
-                   />
+                  <a class="navigation"
+                    href="tab_access_authorized_below"
+                    title="get a comma separated list of user email addresses">
+                    &nbsp;List email addresses...
+                  </a>
                 </td>
               </tr>
             </tfoot>
           </table>
         </form>
-
-        <tal:block replace="nothing">
-          _____________________ access restriction IP address _____________________
-        </tal:block>
-        <form action="access_restriction_submit"
-          method="POST"
-          tal:define="definition_aquired python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
-          <table class="listing">
-            <thead>
-              <tr tal:replace="nothing">
-                ______________ top controls row ______________
-              </tr>
-              <tr class="top-controls">
-                <td colspan="2">
-                  <h3>
-                    Define restriction by IP address
-                  </h3>
-                </td>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr class="odd">
-                <td>
-                    All objects on this and lower levels can be restricted for access from specific IP ranges.
-                    <span tal:omit-tag="" 
-                      tal:condition="definition_aquired">
-                      The current restriction (<code tal:content="python:getattr(model, 'access_restriction')" />) is acquired from above.
-                    </span>
-                </td>
-              </tr>
-
-              <tr class="even">
-                <td>
-                  <textarea name="access_restriction"
-                    style="width:100%;"
-                    tal:condition="python:model.hasProperty('access_restriction')"
-                    tal:content="python:model.getProperty('access_restriction')"></textarea>
-                  <textarea name="access_restriction"
-                    style="width:100%;"
-                    tal:condition="python:not model.hasProperty('access_restriction')"></textarea>
-                </td>
-              </tr>
-            </tbody>
-            <tal:block replace="nothing">
-              ______________ controls ______________
-            </tal:block>
-            <tfoot>
-              <tr class="controls">
-                <td class="align-right">
-                  <input class="button"
-                    type="submit"
-                    value="Set restriction"
-                    title="restrict access to specified IP addresses" />
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </form>
-
-        <tal:block replace="nothing">
-          _____________________ utilities _____________________
-        </tal:block>
-        <form action="minimal_access_role_submit"
-          method="POST"
-          tal:define="
-            is_closed model/sec_is_closed_to_public;
-            minimal_role model/sec_minimal_view_role;">
-        <table class="listing sublisting"
-          style>
-          <thead>
-            <tal:block replace="nothing">
-              ______________ vein + title row ______________
-            </tal:block>
-            <tr>
-              <td class="top">
-                <h2 tal:attributes="title string:id: ${model/id}">
-                  <img tal:replace="structure python:view.render_icon(model)" />
-                  utilities
-                </h2>
-              </td>
-            </tr>
-
-            <tal:block replace="nothing">
-              ______________ top controls row ______________
-            </tal:block>
-            <tr class="top-controls">
-              <td>
-               <h3>
-                 List user email addresses
-                </h3>
-              </td>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr class="odd">
-              <td>
-                List email addresses of all users from this level down.
-              </td>
-            </tr>
-          </tbody>
-
-          <tal:block replace="nothing">
-            ______________ controls ______________
-          </tal:block>
-          <tfoot>
-            <tr class="controls">
-              <td class="align-right">
-                <a class="navigation"
-                  href="tab_access_authorized_below"
-                  title="get a comma separated list of user email addresses">
-                  &nbsp;List email addresses...
-                </a>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </form>
-
         </td>
         <td class="right">
         </td>
       </tr>
-
     </tbody>
   </table>
 </metal:block>
