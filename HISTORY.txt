@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.39 $
+$Revision: 1.40 $
 
 Silva changes
 
@@ -16,12 +16,27 @@ Silva changes
  
         - Improved tab_access user interface.
 
+        - Group and VirtualGroup assets. This makes group management
+          a lot easier.
+
+        - Optional message service ('service_message') which will send
+          email on some workflow events.
+
+        - Membership system. Different membership policies (working
+          for instance with LDAP) can be plugged into Silva and
+          enabled by placing a different Member Service
+          ('service_members').
+
+        - Access request system. A new UI so that users who do not
+          have permissions to access a place can request roles on
+          objects.
+
     Bugs Fixed
 
         - Fix where the "/manage" display link in the SMI tabs didn't
           didn't regard the local roles on the current object.
 
-        - Asset reference fix where it didn;t work in virtual host
+        - Asset reference fix where it didn't work in virtual host
           setups.
 
 	- Fix some unicode issue related to tables (issue184)
@@ -34,7 +49,43 @@ Silva changes
 
         - Some characters that were removed by the Silva editor
           shouldn't be removed -- made these work (issue 176).
-	  
+	
+        - New ('add') button should work properly again (issue 162).
+
+        - Invalid image references now properly display error message
+          (issue 204).
+
+  0.9.0.3
+
+    Bugs Fixed
+
+      - Merge from HEAD for add new object UI in tab-edit.
+
+      - Fix where the "/manage" display link in the SMI tabs didn't
+        regard the local roles on the current object.
+
+      - Unicode fix for table rendering. Merge from HEAD branch.
+
+      - Fix for asset reference to make it works in virtual host
+        setups.
+
+  0.9.0.2
+
+    Bugs Fixed
+
+      - When using LDAPUserManagement, a Attribute error on '_getOb'
+        occured when adding Silva Images and -Files.
+
+  0.9.0.1
+
+    Bugs Fixed
+
+      - After deleting a finished DocmaServer job, you are redirected
+        to an existing page.
+
+      - The (still disabled) externaldata element was registered wrong
+        when enabled; fixed this (if you uncomment the code to enable it).
+      
   0.9
 
     Features Added
