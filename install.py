@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.106 2004/12/07 11:13:45 jw Exp $
+# $Id: install.py,v 1.107 2004/12/07 11:17:12 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -95,7 +95,6 @@ def installFromScratch(root):
     # now do the uinstallable stuff (views)
     install(root)
     installSilvaDocument(root)
-    installSubscriptions(root)
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
@@ -160,6 +159,8 @@ def install(root):
 
     # try to install Kupu
     installKupu(root)
+    
+    installSubscriptions(root)
 
 def configure_default_layout_package(root):
     from LayoutRegistry import DEFAULT_LAYOUT
