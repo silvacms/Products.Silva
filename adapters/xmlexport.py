@@ -196,10 +196,8 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
     def _versions(self, reader, settings):
         """Export the XML of the versions themselves.
         """
-        self._startElement(reader, 'versions', {})
         for version in self.context.objectValues():
             getXMLSource(version)._sax(reader, settings)
-        self._endElement(reader, 'versions')
 
     def _metadata(self, reader, settings):
         """Versioned Content has no metadata, the metadata is all on the
@@ -225,11 +223,13 @@ class FolderXMLSource(SilvaBaseXMLSource):
     def _sax(self, reader, settings):
         self._startElement(reader, 'folder', {'id':self.context.id})
         title = self.context.get_title()
+        self._startElement(reader, 'content', {})
         for object in self.context.get_ordered_publishables():
             if (IPublication.isImplementedBy(object) and 
                     not self.context.with_sub_publications):
                 continue
             getXMLSource(object)._sax(reader, settings)
+        self._endElement(reader, 'content')
         self._endElement(reader, 'folder')
 
 class DocumentXMLSource(VersionedContentXMLSource):
@@ -246,13 +246,13 @@ class DocumentVersionXMLSource(VersionXMLSource):
     """
     def _sax(self, reader, settings):
         self._startElement(
-            reader, 'document_version', {'id': self.context.id})
+            reader, 'content', {'version_id': self.context.id})
         self._startElement(reader, 'title', {})
         reader.characters(self.context.title)
         self._endElement(reader, 'title')
         node = self.context.content.documentElement
         self._sax_node(node, reader, settings)
-        self._endElement(reader, 'document_version')
+        self._endElement(reader, 'content')
 
     def _sax_node(self, node, reader, settings):
         """Export child nodes of a (version of a) Silva Document to XML
@@ -289,12 +289,12 @@ class LinkVersionXMLSource(VersionXMLSource):
     """
     def _sax(self, reader, settings):
         self._startElement(
-            reader, 'version', {'id': self.context.id})
+            reader, 'content', {'version_id': self.context.id})
         self._metadata(reader, settings)
         self._startElement(reader, 'url', {})
         reader.characters(self.context.get_url())
         self._endElement(reader, 'url')
-        self._endElement(reader, 'version')
+        self._endElement(reader, 'content')
 
 class GhostXMLSource(VersionedContentXMLSource):
     """Export a Silva Ghost object to XML.
@@ -310,7 +310,7 @@ class GhostVersionXMLSource(VersionXMLSource):
     """
     def _sax(self, reader, settings):
         self._startElement(
-            reader, 'version', {'id': self.context.id})
+            reader, 'content', {'version_id': self.context.id})
         # XXX aha! will the versions themselves have metadata or just the
         # haunted objects? Right now, they don't apparently.
         # self._metadata(reader, settings)
@@ -318,15 +318,18 @@ class GhostVersionXMLSource(VersionXMLSource):
         if content is None:
             return
         getXMLSource(content)._sax(reader, settings)
-        self._endElement(reader, 'version')
+        self._endElement(reader, 'content')
         
 class GhostFolderXMLSource(SilvaBaseXMLSource):
     """Export a Silva Ghost Folder object to XML.
     """
     def _sax(self, reader, settings):
         self._startElement(reader, 'ghost_folder', {'id': self.context.id})
+        self._startElement(reader, 'content', {})
         content = self.context.get_haunted_unrestricted()
         if content is None:
             return
         getXMLSource(content)._sax(reader, settings)
+        self._endElement(reader, 'content')      
         self._endElement(reader, 'ghost_folder')      
+        
