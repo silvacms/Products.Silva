@@ -28,7 +28,7 @@
   <td align="right" width="25%">&nbsp;&nbsp;
     <input class="button" type="submit" value=" Save " title="Access key: alt-s" accesskey="s"
       tal:attributes="name string:${rel_url_start}/save:method" />&nbsp; 
-    <input class="button" type="submit" value=" Save and exit "  title="Access key: alt-e" accesskey="e"
+    <input class="button" type="submit" value=" Save and exit " title="Access key: alt-e" accesskey="e"
       tal:attributes="name string:${rel_url_start}/save_and_exit:method" />&nbsp;
   </td>
   <div metal:use-macro="container/macro_helpers/macros/empty_buttons" />
@@ -72,7 +72,7 @@
       <option tal:repeat="item python:here.get_allowed_info(wr_name, node)" 
         tal:attributes="value python:item[1]" tal:content="python:item[0]"></option>
     </select>&nbsp;&nbsp;&nbsp;&nbsp;
-    <input tal:attributes="name string:${rel_url_start}/insert:method"
+    <input tal:attributes="name string:${rel_url_start}/insert:method" title="Access key: alt-i" accesskey="i"
       class="button" type="submit" name="submit_method" value=" Insert " />
   </td>
   <td class="transparent" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
