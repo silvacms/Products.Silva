@@ -13,9 +13,9 @@ def check_reserved_ids(obj):
     illegal_urls = []
     for o in obj.objectValues():
         if not check_valid_id(obj, str(o.id), 1):
-            print 'Illegal url found:', o.absolute_url()
+            print 'Illegal id found:', o.absolute_url()
             illegal_urls.append(o.absolute_url())
-        if hasattr(o, 'objectValues'):
+        if IContainer.isImplementedBy(o):
             illegal_urls += check_reserved_ids(o)
     return illegal_urls
 
