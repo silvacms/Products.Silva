@@ -180,13 +180,14 @@ Problems when using Silva
     In any case the latest edits will be lost.
 
     Site managers may want to increase the session timeout to avoid
-    problems due to the first reason. The session timeout can be configured
+    problems due to the first reason. The session timeout can be found
     in the '/temp_folder/session_data' object in a default Zope
-    installation.
-
-    *XXX* These settings get lost after a Zope restart. Any more
-    persistent way to fix this?
-
+    installation. Changing the settings there will get lost after a Zope 
+    restart.  
+    Alternatively one can set the environment variable 
+    ZSESSION_TIMEOUT_MINS in the script used to start Zope
+    You should be able to find more information about this in the 
+    doc/ENVIRONMENT.txt of the Zope installation.
 
   "KeyError" in the user lookup view of the "Access" tab
 
