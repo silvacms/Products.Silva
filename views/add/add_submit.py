@@ -7,6 +7,8 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.helpers import check_valid_id, IdCheckValues
+
 model = context.REQUEST.model
 view = context
 REQUEST = context.REQUEST
@@ -36,8 +38,9 @@ else:
     title = ""
 
 # if we don't have the right id, reject adding
-if not model.is_id_valid(id):
-  return view.add_form(message_type="error", message="%s is not a valid id." % view.quotify(id))
+id_check = check_valid_id(model, id)
+if not id_check == IdCheckValues.ID_OK:
+    return view.add_form(message_type="error", message=view.get_id_status_text(id, id_check))
 
 # process data in result and add using validation result
 object = context.add_submit_helper(model, id, title, result)
