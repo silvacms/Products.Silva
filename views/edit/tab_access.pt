@@ -404,7 +404,7 @@
   tal:define="is_closed model/sec_is_closed_to_public">
   <tr>
     <td colspan="3">
-      <h3>Access restriction by Role:
+      <h3>Access restriction by Role
         <img src="pixel.gif" width="1px" height="14px"
           tal:attributes="src string:${silva_root}/globals/pixel.gif" />
       </h3>
@@ -452,7 +452,7 @@
   tal:define="definition_aquired python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
 <tr>
   <td colspan="3">
-    <h3>Experimental: Define restriction by IP address:
+    <h3>Experimental: Define restriction by IP address
     <img src="pixel.gif" width="1px" height="14px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     </h3>
