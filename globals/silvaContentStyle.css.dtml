@@ -8,23 +8,26 @@
 
 /* This style sheet contains Silva specific styles for Content views */
 
+<dtml-with stylesheet_properties>
+
 body {
-  background: #aaabaa;
+/*  background: #aaabaa; */
 }
 
 /* e6e6ee blue range e5e9ee; */
 div.workspace {
-  background: #e5eeea;
-}
-
-div.pathBar{
-    background-image: url(/silva/globals/sky.gif);
-    background-repeat: repeat-x;
-    background-color: #39424d;
+  background: &dtml-contentWorkspace;;
 }
 
 div.tabs a {
   background: #729b87;
+  background: &dtml-contentTabBackground;;
+}
+
+/* green b3d4c4; bg e5eeea; */
+div.tabs a.selected {
+  background: &dtml-contentTabBackgroundSelected;;
+  border-bottom: &dtml-contentTabBackgroundSelected; 1px solid;
 }
 
 /* yellowjacket b3d4bf */
@@ -32,27 +35,25 @@ div.tabs a.interim {
   background: #729b7b;
 }
 
-/* green b3d4c4; bg e5eeea; */
-div.tabs a.selected {
-  background: #b3d4c4;
-  border-bottom: #b3d4c4 1px solid;
-}
-
-div.tabs a.selectedNot {
-  background: #b3d4bf;
-  border-bottom: #b3d4bf 1px solid;
-}
-
 div.tabs a:hover {
-  background: #b3d4bf;
+  background: &dtml-contentTabBackgroundSelected;;
 }
 
 div.riverBar {
-  background: #b3d4c4;
+  background: &dtml-contentTabBackgroundSelected;;
+}
+
+table.listing td.top h2 {
+  color: &dtml-listingTopHeadingColorContent;;
+}
+
+table.listing tr.top-controls h3 {
+  color: &dtml-listingTopControlsHeadingColorContent;;
 }
 
 div.footer {
-  background: #b3d4bf;
+  background: &dtml-contentTabBackgroundSelected;;
 }
 
 
+</dtml-with>

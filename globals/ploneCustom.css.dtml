@@ -53,6 +53,7 @@ div.pathBar {
     background-image: url(/silva/globals/sky.gif);
     background-repeat: repeat-x;
     background-color: #39424d;
+    background-color: &dtml-pathBarBackground;;
     padding: 2px 4px 0 22px;
     border: none;
     line-height: 1.3em;
@@ -122,7 +123,7 @@ div.tabs a:hover {
 div.tabs a.selected {
     /* The selected tab. There's only one of these */
     background: &dtml-mainTabBackgroundSelected;;
-    border-style: none solid solid solid;
+    border-style: solid solid solid solid;
     border-bottom: &dtml-mainTabBackgroundSelected; 1px solid;
 }
 
@@ -130,6 +131,7 @@ div.tabs a.recede {
   /* The parent tab of a subscreen. There might be one of these :) */
   color: &dtml-mainTabFontColorSelected;;
   background: #99a9c0;
+  background: &dtml-mainTabBackgroundRecede;;
   border-style: solid solid solid solid;
   border-bottom: &dtml-shade50; 1px solid;
 }
@@ -293,16 +295,19 @@ table.listing tfoot {
 
 table.listing tr.controls {
   background-color: #567275;
+  background-color: &dtml-listingControlsBackground;;
   /* in case it's empty */
   height : 0.2em;
 }
 
 table.listing tr.top-controls {
   background-color: #4b6466;
+  background-color: &dtml-listingTopControlsBackground;;
 }
 
-table.listing tr.controls-1 {
+table.listing tr.inter-controls {
     background-color: #648589;
+    background-color: &dtml-listingInter-ControlsBackground;;
 }
 
 tr.unselected, td.unselected {
@@ -322,6 +327,7 @@ tr.selected, td.selected {
 tr.divider, th.divider, td.divider {
   height : 0.5em;
   background-color: #648589;
+  background: &dtml-listingDividerBackground;;
 }
 
 /* not in use */
@@ -334,8 +340,9 @@ table.listing tr.fixed, td.fixed {
 table.listing th {
     text-align: left;
     color: #dbf3f6;
+    color: &dtml-listingHeaderFontColor;;
     background: #71969a;
-/*    background-color: &dtml-listingHeaderBackground;; */
+    background: &dtml-listingHeaderBackground;; 
     padding-left: 0.6em;
     padding-right: 0.6em;
 }
@@ -379,6 +386,7 @@ table.listing td {
 table.listing td.top {
   color: &dtml-shade40;;
   background: #394b4d;
+  background: &dtml-listingTopBackground;;
     border: &dtml-listingBorder; ! important;
     padding-top: 0em ! important;
     padding-bottom: 0em ! important;
@@ -391,6 +399,7 @@ table.listing td.top {
 
 table.listing td.top h2 {
   color: #b8ccce;
+  color: &dtml-listingTopHeadingColor;;
     text-align: left;
     margin: 0em 0.5em 0.1em 0.4em;
     display: inline;
@@ -416,6 +425,7 @@ table.listing tr.top-controls td {
 
 table.listing tr.top-controls h3 {
   color: #c9dfe2;
+  color: &dtml-listingTopControlsHeadingColor;;
   margin: 1px 0.2em 1px 0.2em;
   padding: 0em;
   border: none;
@@ -441,7 +451,7 @@ table.listing td.listing-right {
   white-space: nowrap;
 }
 
-table.listing tr.controls td, tr.controls-1 td {
+table.listing tr.controls td, tr.inter-controls td {
   padding: 0em 0.4em 0em 0.4em;
 }
 
@@ -456,6 +466,7 @@ table.listing tr.controls td, tr.controls-1 td {
 table.listing th.top {
   color: #e3eef0;
   background: #71969a;
+    background: &dtml-listingHeaderBackground;; 
   padding: 0 0 0 0;
   vertical-align: bottom;
   text-align: center;
@@ -527,7 +538,6 @@ table.listing a.up:hover {
 /* experimental */
 table.sublisting {
   margin-top : 1em;
-  margin-bottom : 0em;
 }
 
 /* used to shape non-nested listing tables */
@@ -557,6 +567,7 @@ form.compact {
 input {
   color : #333333;
   background : #c3e6e6;
+  background : &dtml-inputBackground;;
   border : 1px solid &dtml-shade40;;
   margin-top: 1px;
 }
@@ -564,6 +575,7 @@ input {
 textarea {
   color : #333333;  
   background : #c3e6e6;
+  background : &dtml-inputBackground;;
   border : 1px solid &dtml-shade40;;
 }
 
