@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.19 2003/09/19 08:13:53 zagy Exp $
+# $Id: GhostFolder.py,v 1.20 2003/09/22 08:58:20 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -337,12 +337,12 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         return 1
 
     def _publish_ghosts(self):
-        activate_list = self.get_ordered_publishables()
+        activate_list = self.objectValues()
         # ativate all containing objects, depth first
         while activate_list:
             object = activate_list.pop()
             if IContainer.isImplementedBy(object):
-                activate_list += object.get_ordered_publishables()
+                activate_list += object.objectValues()
             if IVersionedContent.isImplementedBy(object):
                 if object.is_published():
                     continue
