@@ -43,6 +43,7 @@
     </element>
   </define>
 
+  <!-- XXX may need to be moved to SilvaDocument/-->
   <define name="SilvaDocument">
     <!-- A Silva Document element./-->
     <element name="document">

@@ -50,6 +50,7 @@ class SaxImportHandler(ContentHandler):
         # XXX probably some export metadata should be read and handled here.
         # Export will have some configuration options that may impact the
         # import process.
+        # XXX maybe handle encoding?
         pass 
     
     def endDocument(self):
