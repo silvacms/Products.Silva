@@ -352,12 +352,12 @@ def convert_document_092(obj):
         # to delete versions manually from the ZMI, since there's no
         # way to do that from the SMI, which corrupts the previous versions 
         # list
-        new_previous_list = []
+        new_previous_versions = []
         for versionid, pdt, edt in obj._previous_versions[:-1]:
             if not hasattr(obj, versionid):
                 continue
             upgrade_doc_version(obj, versionid)
-            new_previous_list.append((versionid, pdt, edt))
+            new_previous_versions.append((versionid, pdt, edt))
         obj._previous_versions = new_previous_versions
             
     # remove all the unconverted versions
