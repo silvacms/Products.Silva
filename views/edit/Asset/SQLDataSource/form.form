@@ -27,6 +27,7 @@
           <extra>style="width:100%;"</extra>
         </values>
         <tales>
+          <default>python:form.get_title()</default>
         </tales>
       </field>
       <field><id>connection_id</id> <type>ListField</type>

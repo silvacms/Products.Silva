@@ -28,6 +28,9 @@ Silva changes
 
     Bugs Fixed
 
+        - Fixed bug where the title of a SQLDatasource Asset was not set 
+          in the edit tab.
+
         - Fix where the Groups administration button was shown, even
           if no service_groups was available.      
 
