@@ -54,6 +54,7 @@
           style="margin-bottom:0.5em;">
           <thead>
             <tr class="top-controls"
+              tal:define="model_is_container python: model.get_container() is model"
               tal:condition="python: model_is_container and group_service">
               <td>
                 <metal:block define-slot="groups_admin_action">

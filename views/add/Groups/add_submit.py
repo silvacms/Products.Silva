@@ -21,13 +21,13 @@ except FormValidationError, e:
     return view.add_form(message_type="error", message=view.render_form_errors(e))
 
 # get id and title from form, convert title to unicode
-id = result['object_id']
+id = result['object_id'].encode('ascii', 'replace')
 # remove them from result dictionary
 del result['object_id']
 
 # try to cope with absence of title in form (happens for ghost)
 if result.has_key('object_title'):
-    title = model.input_convert(result['object_title'])
+    title = result['object_title']
     del result['object_title']
 else:
     title = ""

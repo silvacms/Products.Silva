@@ -2,6 +2,9 @@
   tal:define="
     view here;
     model request/model;
+    root_url model/get_root_url;
+    title model/get_title_editable;
+    breadcrumb_vein string:Edit;
     has_access here/has_change_access_permission;">
   <tal:block condition="has_access">
     <tal:block condition="model/isValid | nothing">
@@ -13,7 +16,7 @@
             border="0"
             height="16"
             width="16"
-            tal:attributes="src string:${view/root_url}/globals/left.gif" />
+            tal:attributes="src string:${root_url}/globals/left.gif" />
           Back
         </a>
       </h3>
@@ -41,7 +44,7 @@
         </metal:block>
       </metal:block>
       <!-- Defined groups listing -->
-      <metal:block use-macro="view/macro_groups_listing/macros/listing">
+      <metal:block use-macro="view/macro_groups_listing/macros/normal_groups_listing">
         <metal:block fill-slot="listing_actions">
           <input class="button"
             name="add_groups_to_virtualgroup:method"

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.7 2003/02/10 18:49:32 jw Exp $
+# $Id: VirtualGroup.py,v 1.8 2003/06/08 12:37:02 jw Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -44,6 +44,17 @@ class VirtualGroup(SilvaObject, SimpleItem):
         """
         return (self.valid_path == self.getPhysicalPath())
     
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title')
+    def get_title(self):
+        """Get the title of this group.
+        """
+        return self._title
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    get_short_title = get_title
+
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'addGroup')

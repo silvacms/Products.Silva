@@ -27,7 +27,7 @@
           <truncate type="int">0</truncate>
           <description>id: no spaces or special characters besides an underscore ("_") or a period (".")</description>
           <extra>style="width:100%;"</extra>
-          <unicode>1</unicode>
+          <unicode>0</unicode>
         </values>
         <tales>
         </tales>

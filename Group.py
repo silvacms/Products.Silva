@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -56,6 +56,17 @@ class Group(SilvaObject, SimpleItem):
         """
         return (self.valid_path == self.getPhysicalPath())
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title')
+    def get_title(self):
+        """Get the title of this group.
+        """
+        return self._title
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    get_short_title = get_title
+    
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'addUser')
