@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6.2.4 $
+# $Revision: 1.6.2.5 $
 
 # Python
 import os
@@ -36,7 +36,7 @@ class File(Asset):
        methods in the concrete subclasses. (sorry) -->
     """
     security = ClassSecurityInfo()
-    
+
     meta_type = "Silva File"    
 
     __implements__ = (WriteLockInterface, IAsset)
@@ -118,7 +118,7 @@ class File(Asset):
 
     # Overide index_html in public presentation templates.
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'index_html')
+        SilvaPermissions.View, 'index_html')
     def index_html(self, REQUEST=None):
         """Get to file
         """
