@@ -40,6 +40,9 @@ Silva changes
         - Indexer objects now show up in public table of contents always
           if placed (before they never did).
 
+        - File assets could only be added by users with manager role;
+          this now only requires an Author role.
+
   0.9.1 beta
 
     Features Added
