@@ -1,7 +1,14 @@
+from __future__ import nested_scopes
 from ISilvaObject import ISilvaObject
 from IContainer import IContainer
-from IVersionedContent import IVersionedContent
+from IVersionedContent import IVersionedContent, ICatalogedVersionedContent
+from IVersion import IVersion
 from Membership import NoneMember, noneMember 
+
+def from091to092(self, root):
+    """Upgrade Silva content from 0.9.1 to 0.9.2
+    """
+    upgrade_using_registry(root, '0.9.2')
 
 def from09to091(self, root):
     """Upgrade Silva from 0.9 to 0.9.1
@@ -9,7 +16,7 @@ def from09to091(self, root):
     # upgrade member objects in the site if they're still using the old system
     upgrade_memberobjects(root)
     # upgrade xml in the site
-    upgrade_xml_09to091(root)
+    upgrade_using_registry(root, '0.9.1')
     
 def from086to09(self, root):
     """Upgrade Silva from 0.8.6(.1) to 0.9.
@@ -125,13 +132,15 @@ def upgrade_memberobjects(obj):
         if IContainer.isImplementedBy(o):
             upgrade_memberobjects(o)
 
-def upgrade_xml_09to091(obj):
+def upgrade_using_registry(obj, version):
+    """Upgrades obj recursively for a specific Silva version
+    """
     for o in obj.objectValues():
         mt = o.meta_type
-        if upgrade_registry.is_registered(mt):
-            upgrade = upgrade_registry.get_meta_type(mt)(o)
+        if upgrade_registry.is_registered(mt, version):
+            upgrade = upgrade_registry.get_meta_type(mt, version)(o)
         if IContainer.isImplementedBy(o):
-            upgrade_xml_09to091(o)
+            upgrade_using_registry(o, version)
 
 def upgrade_list_titles_in_parsed_xml(top):
     for child in top.childNodes:
@@ -205,38 +214,151 @@ class UpgradeRegistry:
     def __init__(self):
         self.__registry = {}
     
-    def register(self, meta_type, upgrade_handler):
+    def register(self, meta_type, upgrade_handler, version):
         """Register a meta_type for upgrade.
 
         The upgrade handler is called with the object as its only argument
         when the upgrade script encounters an object of the specified
         meta_type.
         """
-        if self.__registry.has_key(meta_type):
-            raise Exception, 'Meta type %s already registered!' % meta_type
-        self.__registry[meta_type] = upgrade_handler
+        if self.__registry.has_key(meta_type) and self.__registry[meta_type].has_key(version):
+            raise Exception, 'Meta type %s already registered for version %s!' % (meta_type, version)
+        if not self.__registry.has_key(meta_type):
+            self.__registry[meta_type] = {}
+        self.__registry[meta_type][version] = upgrade_handler
 
-    def get_meta_type(self, meta_type):
+    def get_meta_type(self, meta_type, version):
         """Return the registered upgrade_handler of meta_type
         """
-        return self.__registry[meta_type]
+        return self.__registry[meta_type][version]
 
-    def is_registered(self, meta_type):
+    def is_registered(self, meta_type, version):
         """Returns whether the meta_type is registered"""
-        return self.__registry.has_key(meta_type)
+        return self.__registry.has_key(meta_type) and self.__registry[meta_type].has_key(version)
 
 upgrade_registry = UpgradeRegistry()
 
+#-----------------------------------------------------------------------------
+# Upgrade functions using the upgrade registry
+#-----------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------
+# 0.9 to 0.9.1
+#-----------------------------------------------------------------------------
+
 # Some upgrade stuff
-def upgrade_document(obj):
+def upgrade_document_091(obj):
     for o in obj.objectValues():
         if o.meta_type == 'Silva Document Version':
             upgrade_list_titles_in_parsed_xml(o.content.documentElement)
 
-def upgrade_demoobject(obj):
+def upgrade_demoobject_091(obj):
     for o in obj.objectValues():
         if o.meta_type == 'Silva DemoObject Version':
             upgrade_list_titles_in_parsed_xml(o.content.documentElement)
 
-upgrade_registry.register('Silva Document', upgrade_document)
-upgrade_registry.register('Silva DemoObject', upgrade_demoobject)
+upgrade_registry.register('Silva Document', upgrade_document_091, '0.9.1')
+upgrade_registry.register('Silva DemoObject', upgrade_demoobject_091, '0.9.1')
+
+#-----------------------------------------------------------------------------
+# 0.9.1 to 0.9.2
+#-----------------------------------------------------------------------------
+
+# convert old style documents (with ParsedXML as version) to new style ones (where
+# ParsedXML is an attribute of Version)
+def convert_document_092(obj):
+    from StringIO import StringIO
+    from random import randrange
+    from string import lowercase
+    from DateTime import DateTime
+
+    for version in ['unapproved', 'approved', 'public', 'last_closed']:
+        v = getattr(obj, 'get_%s_version' % version)()
+        if v is not None and not hasattr(getattr(obj, v), 'documentElement'):
+            return
+
+    parent = obj.aq_parent.aq_inner
+    
+    # first copy self to some other name
+    # create some unique id
+    oldid = obj.id
+    uniqueid = ''
+    while 1:
+        uniqueid += lowercase[randrange(len(lowercase))]
+        if len(uniqueid) > 4 and uniqueid not in parent.objectIds():
+            break
+
+    parent.manage_renameObject(obj.id, uniqueid)
+    parent.manage_addProduct['Silva'].manage_addDocument(oldid, obj.get_title())
+
+    newobj = getattr(parent, oldid)
+    
+    # we're going to have to do this from old to new: first the last
+    # closed, then the public, the approved and last the unapproved 
+    # versions. This way we can use Silva's version machinery without any 
+    # problems.
+
+    # set the id to use for creating new versions, should start at 1 'cause there
+    # already is the one that's created when creating a document
+    current_id = 1
+    
+    # we copy the last closed version because of the newly added revert
+    # machinery, the rest of the closed versions we skip since we don't
+    # have any use for them anyway. The user should be warned about this
+    # though!
+
+    def get_version_xml(obj, version):
+        v = getattr(obj, version, None)
+        if v is None:
+            raise Exception, 'No version %s!' % version
+        s = StringIO()
+        v.documentElement.writeStream(s)
+        return s.getvalue().encode('UTF8')
+    
+    last_closed = obj.get_last_closed_version()
+    if last_closed is not None:
+        xml = get_version_xml(obj, last_closed)
+        newobj.set_unapproved_version_publication_datetime(DateTime() - 1)
+        newobj.set_unapproved_version_expiration_datetime(DateTime() - 1)
+        newobj.approve_version() # should be closed directly because of expiration date
+        getattr(newobj, newobj.get_last_closed_version()).content.manage_edit(xml)
+        newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
+        newobj.create_version(str(current_id), None, None)
+        current_id += 1
+    public = obj.get_public_version()
+    if public is not None:
+        xml = get_version_xml(obj, public)
+        newobj.set_unapproved_version_publication_datetime(
+                obj.get_public_version_publication_datetime())
+        newobj.set_unapproved_version_expiration_datetime(
+                obj.get_public_version_expiration_datetime())
+        newobj.approve_version()
+        getattr(newobj, newobj.get_public_version()).content.manage_edit(xml)
+        newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
+        newobj.create_version(str(current_id), None, None)
+        current_id += 1
+    approved = obj.get_approved_version()
+    if approved is not None:
+        xml = get_version_xml(obj, approved)
+        newobj.set_unapproved_version_publication_datetime(
+                obj.get_approved_version_publication_datetime())
+        newobj.set_unapproved_version_expiration_datetime(
+                obj.get_approved_version_expiration_datetime())
+        newobj.approve_version()
+        getattr(newobj, newobj.get_approved_version()).content.manage_edit(xml)
+        newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
+        newobj.create_version(str(current_id), None, None)
+        current_id += 1
+    unapproved = obj.get_unapproved_version()
+    if unapproved is not None:
+        xml = get_version_xml(obj, unapproved)
+        newobj.set_unapproved_version_publication_datetime(
+                obj.get_unapproved_version_publication_datetime())
+        newobj.set_unapproved_version_expiration_datetime(
+                obj.get_unapproved_version_expiration_datetime())
+        getattr(newobj, str(newobj.get_unapproved_version())).content.manage_edit(xml)
+
+    
+    parent.manage_delObjects([uniqueid])
+    
+upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
