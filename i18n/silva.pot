@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue Dec  7 13:08:53 2004\n"
+"POT-Creation-Date: Wed Dec  8 12:47:40 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -277,15 +277,13 @@ msgid "no such version ${version}"
 msgstr ""
 
 #: /default/layout_macro.html.pt:55
-#: /globals/accesskeys.pt:26
-#: /layout/layout_macro.html:100
-# Default: "i"
-msgid "info_accesskey"
+msgid "Silva info on the Infrae site: alt-i"
 msgstr ""
 
 #: /default/layout_macro.html.pt:55
-#: /layout/layout_macro.html:100
-msgid "Silva info on the Infrae site: alt-i"
+#: /globals/accesskeys.pt:26
+# Default: "i"
+msgid "info_accesskey"
 msgstr ""
 
 #: /doc/silva-content.xml:31
@@ -908,7 +906,7 @@ msgstr ""
 #: /views/add/GhostFolder/add_form.pt:45
 #: /views/edit/macro_metadata.pt:78
 #: /views/edit/macro_metadata.pt:312
-#: /views/edit/tab_subscriptions.pt:66
+#: /views/edit/tab_subscriptions.pt:68
 #: /views/edit/Asset/macro_asset_edit.pt:69
 #: /views/edit/Asset/macro_asset_edit.pt:153
 #: /views/edit/Asset/Image/edit.pt:145
@@ -961,7 +959,7 @@ msgstr ""
 #: /views/add/add_form.pt:84
 #: /views/add/Ghost/add_form.pt:88
 #: /views/add/GhostFolder/add_form.pt:96
-#: /views/edit/tab_subscriptions.pt:98
+#: /views/edit/tab_subscriptions.pt:100
 #: /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:127
 #: /views/edit/VersionedContent/tab_status_macros.pt:292
@@ -981,6 +979,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:78
 #: /views/edit/Container/GhostFolder/tab_edit.pt:143
 #: /views/edit/VersionedContent/Ghost/edit.pt:134
+#: /views/public/subscriptions.pt:46
 msgid "access key: alt-s"
 msgstr ""
 
@@ -1603,6 +1602,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:254
 #: /views/edit/VersionedContent/tab_status_macros.pt:273
 #: /views/edit/VersionedContent/tab_status_macros.pt:375
+#: /views/public/subscriptions.pt:92
 msgid "access key: alt-u"
 msgstr ""
 
@@ -2691,16 +2691,16 @@ msgstr ""
 msgid "Changed into publication"
 msgstr ""
 
-#: /views/edit/Container/tab_metadata.pt:82
+#: /views/edit/Container/tab_metadata.pt:83
 msgid "change Folder into Publication: alt-c"
 msgstr ""
 
-#: /views/edit/Container/tab_metadata.pt:82
+#: /views/edit/Container/tab_metadata.pt:83
 # Default: "c"
 msgid "covert_to_publication_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_metadata.pt:82
+#: /views/edit/Container/tab_metadata.pt:83
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:36
 msgid "convert to publication"
 msgstr ""
@@ -3831,6 +3831,14 @@ msgstr ""
 msgid "This content is not approved."
 msgstr ""
 
+#: /views/edit/VersionedContent/tab_status_view_versions.pt:55
+msgid "Older version (${version_id})"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_view_versions.pt:59
+msgid "Newer version (${version_id})"
+msgstr ""
+
 #: /views/edit/VersionedContent/tab_status_view_versions_start.py:18
 msgid "You didn't select any versions."
 msgstr ""
@@ -4295,7 +4303,7 @@ msgstr ""
 
 #: /views/edit/macro_metadata.pt:73
 #: /views/edit/macro_metadata.pt:308
-#: /views/edit/tab_subscriptions.pt:61
+#: /views/edit/tab_subscriptions.pt:63
 #: /views/edit/Asset/macro_asset_edit.pt:64
 #: /views/edit/Asset/Image/edit.pt:140
 #: /views/edit/Container/tab_edit_import.pt:90
@@ -4313,7 +4321,7 @@ msgstr ""
 #: /views/edit/macro_metadata.pt:84
 #: /views/edit/tab_access.pt:569
 #: /views/edit/tab_access.pt:742
-#: /views/edit/tab_subscriptions.pt:69
+#: /views/edit/tab_subscriptions.pt:71
 #: /views/edit/Asset/Image/edit.pt:148
 #: /views/edit/Container/tab_edit_import.pt:98
 #: /views/edit/Container/tab_edit_import.pt:167
@@ -4686,26 +4694,26 @@ msgstr ""
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:42
-#: /views/edit/Container/tab_metadata.pt:48
+#: /views/edit/tab_metadata.pt:44
+#: /views/edit/Container/tab_metadata.pt:50
 msgid "properties of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:55
-#: /views/edit/Container/tab_metadata.pt:68
+#: /views/edit/tab_metadata.pt:56
+#: /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 # Default: "m"
 msgid "manage_subscriptions_accesskey"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:55
-#: /views/edit/Container/tab_metadata.pt:68
+#: /views/edit/tab_metadata.pt:56
+#: /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions: alt-m"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:55
-#: /views/edit/Container/tab_metadata.pt:68
+#: /views/edit/tab_metadata.pt:56
+#: /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions..."
 msgstr ""
@@ -4731,7 +4739,6 @@ msgid "public&nbsp;preview..."
 msgstr ""
 
 #: /views/edit/tab_preview.pt:45
-#: /views/edit/VersionedContent/tab_status_view_versions.pt:51
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr ""
 
@@ -4753,18 +4760,16 @@ msgstr ""
 msgid "clear expiration"
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:114
-# Default: "This object is not subscribable content."
-msgid "not_subscribable"
-msgstr ""
-
-#: /views/edit/tab_subscriptions.pt:54
-# Default: "Subscriptions edit for"
-msgid "subscription_settings"
-msgstr ""
-
-#: /views/edit/tab_subscriptions.pt:98
+#: /views/edit/tab_subscriptions.pt:100
 msgid "Save"
+msgstr ""
+
+#: /views/edit/tab_subscriptions.pt:116
+msgid "This object is not subscribable content."
+msgstr ""
+
+#: /views/edit/tab_subscriptions.pt:56
+msgid "Subscriptions edit for ${title}"
 msgstr ""
 
 #: /views/edit/tab_subscriptions_form.form:33
@@ -5003,6 +5008,10 @@ msgstr ""
 msgid "Index"
 msgstr ""
 
+#: /views/public/cancellation_request.py:16
+msgid "Confirmation request for cancellation has been emailed"
+msgstr ""
+
 #: /views/public/request_roles.pt:12
 #: /views/public/request_roles.pt:20
 msgid "membership"
@@ -5030,16 +5039,16 @@ msgid "Choose role(s) to request"
 msgstr ""
 
 #: /views/public/request_roles.pt:71
+msgid " Send request "
+msgstr ""
+
+#: /views/public/request_roles.pt:71
 # Default: "s"
 msgid "send_request_accesskey"
 msgstr ""
 
 #: /views/public/request_roles.pt:71
 msgid "Send request for role: alt-s"
-msgstr ""
-
-#: /views/public/request_roles.pt:71
-msgid " Send request "
 msgstr ""
 
 #: /views/public/request_roles.pt:85
@@ -5151,6 +5160,36 @@ msgstr ""
 #: /views/public/search_results.pt:54
 #: /views/public/search_results.pt:97
 msgid "Next &gt;&gt;"
+msgstr ""
+
+#: /views/public/subscription_request.py:15
+msgid "Confirmation request for subscription has been emailed"
+msgstr ""
+
+#: /views/public/subscriptions.pt:20
+msgid "Subscribe for &#xab;${title_or_id}&#xbb;"
+msgstr ""
+
+#: /views/public/subscriptions.pt:22
+#: /views/public/subscriptions.pt:68
+msgid "you'll get an confirmation message..."
+msgstr ""
+
+#: /views/public/subscriptions.pt:31
+#: /views/public/subscriptions.pt:77
+msgid "emailaddress"
+msgstr ""
+
+#: /views/public/subscriptions.pt:46
+msgid "subscribe"
+msgstr ""
+
+#: /views/public/subscriptions.pt:66
+msgid "Unsubscribe for &#xab;${title_or_id}&#xbb;"
+msgstr ""
+
+#: /views/public/subscriptions.pt:92
+msgid "unsubscribe"
 msgstr ""
 
 #: /views/render_form_errors.py:15

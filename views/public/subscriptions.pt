@@ -1,14 +1,21 @@
-<tal:block define="
+<tal:block
+  define="
     model request/model;
     title model/get_title;
+    feedback options/message | request/message|nothing;
     path python: '/'.join(model.getPhysicalPath());"
+  i18n:domain="silva"
   >
+<div tal:condition="feedback" class="feedback" tal:content="feedback">
+  feedback message
+</div>
+
 <form method="POST" name="form" action="subscription_request" enctype="multipart/form-data">
   <table class="listing">
     <thead>
       <tr class="top-controls">
         <td colspan="3">
-          <h3 i18n:translate="subscription_settings">
+          <h3 i18n:translate="">
             Subscribe for 
             &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
           </h3>

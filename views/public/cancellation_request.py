@@ -1,4 +1,5 @@
 from Products.Silva import subscriptionerrors
+from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 service = context.service_subscriptions
@@ -12,4 +13,4 @@ except subscriptionerrors.EmailaddressError, e:
 except subscriptionerrors.SubscriptionError, e:
     return str(e)
 
-return 'Confirmation request for cancellation has been emailed'
+return context.subscriptions(message=_('Confirmation request for cancellation has been emailed'))

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Tue Dec  7 17:26:17 2004\n"
+"POT-Creation-Date: Wed Dec  8 12:47:40 2004\n"
 "PO-Revision-Date: 2004-12-07 13:27+0100\n"
 "Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -1003,7 +1003,7 @@ msgstr "aspect"
 
 #: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:43
 #: /views/add/GhostFolder/add_form.pt:45 /views/edit/macro_metadata.pt:78
-#: /views/edit/macro_metadata.pt:312 /views/edit/tab_subscriptions.pt:66
+#: /views/edit/macro_metadata.pt:312 /views/edit/tab_subscriptions.pt:68
 #: /views/edit/Asset/macro_asset_edit.pt:69
 #: /views/edit/Asset/macro_asset_edit.pt:153
 #: /views/edit/Asset/Image/edit.pt:145
@@ -1048,7 +1048,7 @@ msgid "cancel"
 msgstr "afbreken"
 
 #: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:88
-#: /views/add/GhostFolder/add_form.pt:96 /views/edit/tab_subscriptions.pt:98
+#: /views/add/GhostFolder/add_form.pt:96 /views/edit/tab_subscriptions.pt:100
 #: /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:127
 #: /views/edit/VersionedContent/tab_status_macros.pt:292
@@ -1065,6 +1065,7 @@ msgstr "sneltoets: alt-c"
 #: /views/edit/Container/tab_edit.pt:78
 #: /views/edit/Container/GhostFolder/tab_edit.pt:143
 #: /views/edit/VersionedContent/Ghost/edit.pt:134
+#: /views/public/subscriptions.pt:46
 msgid "access key: alt-s"
 msgstr "sneltoets: alt-s"
 
@@ -1719,6 +1720,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:254
 #: /views/edit/VersionedContent/tab_status_macros.pt:273
 #: /views/edit/VersionedContent/tab_status_macros.pt:375
+#: /views/public/subscriptions.pt:92
 msgid "access key: alt-u"
 msgstr "sneltoets: alt-u"
 
@@ -2869,16 +2871,16 @@ msgstr "Alleen Folders kunnen in Publicaties worden veranderd"
 msgid "Changed into publication"
 msgstr "Veranderd in publicatie"
 
-#: /views/edit/Container/tab_metadata.pt:82
+#: /views/edit/Container/tab_metadata.pt:83
 msgid "change Folder into Publication: alt-c"
 msgstr "verander Folder naar Publicatie: alt-c"
 
 # Default: "c"
-#: /views/edit/Container/tab_metadata.pt:82
+#: /views/edit/Container/tab_metadata.pt:83
 msgid "covert_to_publication_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_metadata.pt:82
+#: /views/edit/Container/tab_metadata.pt:83
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:36
 msgid "convert to publication"
 msgstr "converteer naar publicatie"
@@ -3412,7 +3414,7 @@ msgstr "voorbeeld scherm"
 msgid ""
 "An index is not editable. To view the index go to the ${preview_screen}."
 msgstr ""
-"Een index kun je niet wijzigen. Om de index te bekijken, ga naar "
+"Een index is niet te wijzigen. Om de index te bekijken, ga naar "
 "${preview_screen}"
 
 #: /views/edit/Content/Indexer/edit.pt:64
@@ -4015,7 +4017,7 @@ msgstr ""
 # JS onclick string, not very nice but it works, make sure to copy JS code 1:1
 #: /views/edit/VersionedContent/tab_status_macros.pt:552
 msgid "return confirm('Really revert ?')"
-msgstr "return confirm('Weet je zeker dat je terug wilt vallen?')"
+msgstr "return confirm('Terug naar vorige versie?')"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:56
 msgid "${author_id} sent a message on ${some_date} ${with_comments}"
@@ -4564,7 +4566,7 @@ msgid "metadata set"
 msgstr "metadata-set"
 
 #: /views/edit/macro_metadata.pt:73 /views/edit/macro_metadata.pt:308
-#: /views/edit/tab_subscriptions.pt:61
+#: /views/edit/tab_subscriptions.pt:63
 #: /views/edit/Asset/macro_asset_edit.pt:64
 #: /views/edit/Asset/Image/edit.pt:140
 #: /views/edit/Container/tab_edit_import.pt:90
@@ -4580,7 +4582,7 @@ msgid "acquired content"
 msgstr "overgeërfde inhoud"
 
 #: /views/edit/macro_metadata.pt:84 /views/edit/tab_access.pt:569
-#: /views/edit/tab_access.pt:742 /views/edit/tab_subscriptions.pt:69
+#: /views/edit/tab_access.pt:742 /views/edit/tab_subscriptions.pt:71
 #: /views/edit/Asset/Image/edit.pt:148
 #: /views/edit/Container/tab_edit_import.pt:98
 #: /views/edit/Container/tab_edit_import.pt:167
@@ -4970,22 +4972,22 @@ msgstr "Minimale rol voor toegang is nu ingesteld op ${role}"
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr "voor publieke versie van &#xab;${title}&#xbb;"
 
-#: /views/edit/tab_metadata.pt:42 /views/edit/Container/tab_metadata.pt:48
+#: /views/edit/tab_metadata.pt:44 /views/edit/Container/tab_metadata.pt:50
 msgid "properties of &#xab;${title}&#xbb;"
 msgstr "eigenschappen van &#xab;${title}&#xbb;"
 
 # Default: "m"
-#: /views/edit/tab_metadata.pt:55 /views/edit/Container/tab_metadata.pt:68
+#: /views/edit/tab_metadata.pt:56 /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage_subscriptions_accesskey"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:55 /views/edit/Container/tab_metadata.pt:68
+#: /views/edit/tab_metadata.pt:56 /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions: alt-m"
 msgstr "emailnotificaties beheren: alt-m"
 
-#: /views/edit/tab_metadata.pt:55 /views/edit/Container/tab_metadata.pt:68
+#: /views/edit/tab_metadata.pt:56 /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions..."
 msgstr "emailnotificaties beheren..."
@@ -5034,17 +5036,17 @@ msgstr "nu publiceren"
 msgid "clear expiration"
 msgstr "verloop-tijdstip wissen"
 
-#: /views/edit/tab_subscriptions.pt:114
+#: /views/edit/tab_subscriptions.pt:100
+msgid "Save"
+msgstr "Opslaan"
+
+#: /views/edit/tab_subscriptions.pt:116
 msgid "This object is not subscribable content."
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:54
+#: /views/edit/tab_subscriptions.pt:56
 msgid "Subscriptions edit for ${title}"
 msgstr ""
-
-#: /views/edit/tab_subscriptions.pt:98
-msgid "Save"
-msgstr "Opslaan"
 
 #: /views/edit/tab_subscriptions_form.form:33
 msgid "Subscribable"
@@ -5283,6 +5285,12 @@ msgstr ""
 msgid "Index"
 msgstr "Index"
 
+#: /views/public/cancellation_request.py:16
+msgid "Confirmation request for cancellation has been emailed"
+msgstr ""
+"Een bevestiging voor beëindiging van de emailnotificaties op deze pagina is "
+"verzonden"
+
 #: /views/public/request_roles.pt:12 /views/public/request_roles.pt:20
 msgid "membership"
 msgstr "lidmaatschap"
@@ -5293,7 +5301,7 @@ msgstr "Vraag rollen aan op deze locatie"
 
 #: /views/public/request_roles.pt:43
 msgid "Please fill in the following fields. <br /><br />"
-msgstr "Vul alsjeblieft de volgende velden. <br /><br />"
+msgstr "Vul A.U.B. de volgende velden in. <br /><br />"
 
 #: /views/public/request_roles.pt:48
 #: /views/edit/Member/SimpleMember/memberform.form:28
@@ -5308,6 +5316,10 @@ msgstr "e-mail adres"
 msgid "Choose role(s) to request"
 msgstr "Kies (een) rol(len) om aan te vragen"
 
+#: /views/public/request_roles.pt:71
+msgid " Send request "
+msgstr " Verstuur aanvraag "
+
 # Default: "s"
 #: /views/public/request_roles.pt:71
 msgid "send_request_accesskey"
@@ -5316,10 +5328,6 @@ msgstr ""
 #: /views/public/request_roles.pt:71
 msgid "Send request for role: alt-s"
 msgstr "Verstuur een aanvraag voor een rol: alt-s"
-
-#: /views/public/request_roles.pt:71
-msgid " Send request "
-msgstr " Verstuur aanvraag "
 
 #: /views/public/request_roles.pt:85
 msgid "This site does not allow requests for roles"
@@ -5436,6 +5444,35 @@ msgstr "Resultaten van ${batch_start} tot ${batch_end}."
 #: /views/public/search_results.pt:54 /views/public/search_results.pt:97
 msgid "Next &gt;&gt;"
 msgstr "Volgende &gt;&gt;"
+
+#: /views/public/subscription_request.py:15
+msgid "Confirmation request for subscription has been emailed"
+msgstr "Een bevestigingsemail voor het aanzetten van emailnotificaties is "
+"verzonden"
+
+#: /views/public/subscriptions.pt:20
+msgid "Subscribe for &#xab;${title_or_id}&#xbb;"
+msgstr "Aanzetten van emailnotificaties voor &#xab;${title_or_id}&#xbb;"
+
+#: /views/public/subscriptions.pt:22 /views/public/subscriptions.pt:68
+msgid "you'll get an confirmation message..."
+msgstr ""
+
+#: /views/public/subscriptions.pt:31 /views/public/subscriptions.pt:77
+msgid "emailaddress"
+msgstr ""
+
+#: /views/public/subscriptions.pt:46
+msgid "subscribe"
+msgstr "emailnotificaties aanzetten"
+
+#: /views/public/subscriptions.pt:66
+msgid "Unsubscribe for &#xab;${title_or_id}&#xbb;"
+msgstr "Uitzetten van emailnotificaties voor &#xab;${title_or_id}&#xbb;"
+
+#: /views/public/subscriptions.pt:92
+msgid "unsubscribe"
+msgstr "emailnotificaties uitzetten"
 
 #: /views/render_form_errors.py:15
 msgid "Sorry, there are problems with these form fields:"
