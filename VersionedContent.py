@@ -1,13 +1,20 @@
 from Content import Content
 from Versioning import Versioning, VersioningError
 from OFS import Folder
+from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
+import SilvaPermissions
 
 class VersionedContent(Content, Versioning, Folder.Folder):
+    security = ClassSecurityInfo()
+    
     # there is always at least a single version to start with,
     # created by the object's factory function
     _version_count = 1
     
     # MANIPULATORS
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'create_copy')
     def create_copy(self):
         """Create new version of public version.
         """
@@ -35,6 +42,8 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         self.create_version(new_version_id, None, None)
     
     # ACCESSORS
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_editable')
     def get_editable(self):
         """Get the editable version (may be object itself if no versioning).
         """
@@ -43,7 +52,9 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         if version_id is None:
             return None # there is no editable version
         return getattr(self, version_id)
-        
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_previewable')
     def get_previewable(self):
         """Get the previewable version (may be the object itself if no
         versioning).
@@ -54,7 +65,9 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             if version_id is None:
                 return None
         return getattr(self, version_id)
-    
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_viewable')
     def get_viewable(self):
         """Get the publically viewable version (may be the object itself if
         no versioning).
@@ -64,3 +77,4 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             return None # There is no public document
         return getattr(self, version_id)
         
+InitializeClass(VersionedContent)

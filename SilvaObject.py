@@ -22,13 +22,15 @@ class SilvaObject:
 
     # ACCESSORS
     
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'get_editable')
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_editable')
     def get_editable(self):
         """Get the editable version (may be object itself if no versioning).
         """
         return self
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'get_previewable')
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_previewable')
     def get_previewable(self):
         """Get the previewable version (may be the object itself if no
         versioning).

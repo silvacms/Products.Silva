@@ -1,7 +1,7 @@
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import Globals
+from Globals import InitializeClass
 # Silva
 from Folder import Folder
 import Interfaces
@@ -11,22 +11,27 @@ from helpers import add_and_edit
 class Publication(Folder):
     """Publication.
     """
+    security = ClassSecurityInfo()
+    
     meta_type = "Silva Publication"
 
     __implements__ = Interfaces.Container
-    
-    security = ClassSecurityInfo()
 
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_publication')
     def get_publication(self):
         """Get publication. Can be used with acquisition get the
         'nearest' Silva publication.
         """
         return self.aq_inner
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'is_transparent')
     def is_transparent(self):
         return 0
-    
-Globals.InitializeClass(Publication)
+
+InitializeClass(Publication)
 
 manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),
                                              __name__='manage_addPublicationForm')

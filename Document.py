@@ -1,8 +1,10 @@
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import Globals
 import DateTime
+from Globals import InitializeClass
+import SilvaPermissions
+
 # Silva
 from ViewRegistry import ViewAttribute
 from VersionedContent import VersionedContent
@@ -15,15 +17,15 @@ from cgi import escape
 class Document(VersionedContent):
     """Silva Document.
     """
+    security = ClassSecurityInfo()
+    
     meta_type = "Silva Document"
 
     __implements__ = Interfaces.VersionedContent
-    
-    security = ClassSecurityInfo()
-   
+     
     # allow edit view on this object
     edit = ViewAttribute('edit')
- 
+    
     manage_options = (
         ( {'label':'Edit', 'action':'manage_editForm'},
           {'label':'Preview', 'action':'manage_previewForm'},
@@ -87,6 +89,8 @@ class Document(VersionedContent):
 #        self.close_version()
 
     # MANIPULATORS
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
     def set_title(self, title):
         """Set the title.
         """
@@ -98,11 +102,15 @@ class Document(VersionedContent):
             self._title = title
 
     # ACCESSORS
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'xml_url')
     def xml_url(self):
         """Get URL for xml data.
         """
         return self.absolute_url() + '/' + self.get_unapproved_version()
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'title')
     def title(self):
         """Get title. If we're the default document,
         we get title from our containing folder (or publication, etc).
@@ -112,7 +120,9 @@ class Document(VersionedContent):
             return self.get_container().title()
         else:
             return self._title
-        
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_creation_datetime')
     def get_creation_datetime(self):
         """Get document creation date.
         """
@@ -121,7 +131,9 @@ class Document(VersionedContent):
         else:
             # hack
             return DateTime.DateTime(2002, 1, 1, 12,  0)
-        
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_modification_datetime')
     def get_modification_datetime(self):
         """Get document modification date.
         """
@@ -131,23 +143,15 @@ class Document(VersionedContent):
         else:
             return None
                         
-    #def get_editable(self):
-    #    """Get the editable object.
-    #    """
-    #    # the editable version is the unapproved version
-    #    version_id = self.get_unapproved_version()
-    #    if version_id is None:
-    #        return None # there is no editable version
-    #    doc = getattr(self, version_id)
-    #    wm = self.wm
-    #    node = wm.get_widget_node(doc.documentElement)
-    #    return node.render(node, self.REQUEST)
-        
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_metadata')
     def get_metadata(self, name):
         """Get meta data.
         """
         return self._metadata.get(name, None)
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_metadata')
     def set_metadata(self, name, value):
         """Set meta data.
         """
@@ -155,7 +159,9 @@ class Document(VersionedContent):
             return
         self._metadata[name] = value
         self._metadata = self._metadata
-        
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'to_folder')
     def to_folder(self):
         """Convert this document to folder in same place.
         """
@@ -177,7 +183,7 @@ class Document(VersionedContent):
         # rename doc from temp_id to 'doc'
         folder.manage_renameObject(temp_id, 'doc')
         return folder
-    
+
     def action_paste(self, REQUEST):
         """Convert this to Folder and paste objects on clipboard.
         """
@@ -185,7 +191,9 @@ class Document(VersionedContent):
         folder = self.to_folder()
         # paste stuff into the folder
         folder.action_paste(REQUEST)
-           
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'render_text_as_html')
     def render_text_as_html(self, node):
         """Render textual content as HTML.
         """
@@ -221,7 +229,9 @@ class Document(VersionedContent):
             else:
                 raise "Unknown element: %s" % child.nodeName
         return ''.join(result)
-        
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'render_text_as_editable')
     def render_text_as_editable(self, node):
         """Render textual content as editable text.
         """
@@ -271,7 +281,9 @@ class Document(VersionedContent):
         _emStructure,
         _linkStructure,
         _refStructure])
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'replace_text')
     def replace_text(self, node, text):
         """Replace text in a text containing node.
         """
@@ -320,7 +332,7 @@ class Document(VersionedContent):
             else:
                 raise "Unknown structure: %s" % structure
 
-Globals.InitializeClass(Document)
+InitializeClass(Document)
 
 manage_addDocumentForm = PageTemplateFile("www/documentAdd", globals(),
                                           __name__='manage_addDocumentForm')

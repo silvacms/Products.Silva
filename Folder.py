@@ -4,25 +4,26 @@ from Acquisition import aq_inner
 from OFS import Folder, SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import Globals
+from Globals import InitializeClass
 # Silva
 from ViewRegistry import ViewAttribute
 from SilvaObject import SilvaObject
 from Publishable import Publishable
 import Copying
 import Interfaces
+import SilvaPermissions
 # misc
 from helpers import add_and_edit
 
 class Folder(SilvaObject, Publishable, Folder.Folder):
     """Silva Folder.
     """
+    security = ClassSecurityInfo()
+    
     meta_type = "Silva Folder"
 
     __implements__ = Interfaces.Container
     
-    security = ClassSecurityInfo()
-
     # allow edit view on this object
     edit = ViewAttribute('edit')
     
@@ -32,11 +33,15 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         self._ordered_ids = []
 
     # MANIPULATORS
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
     def set_title(self, title):
         """Set the title of this folder.
         """
         self._title = title 
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'move_object_up')
     def move_object_up(self, id):
         """Move object up. Returns true if move succeeded.
         """
@@ -50,7 +55,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         ids[i], ids[i - 1] = ids[i - 1], ids[i]
         self._ordered_ids = ids
         return 1
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'move_object_down')
     def move_object_down(self, id):
         """move object down.
         """
@@ -65,6 +72,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         self._ordered_ids = ids
         return 1
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'move_to')
     def move_to(self, move_ids, index):
         ids = self._ordered_ids
         # check whether all move_ids are known
@@ -106,25 +115,35 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
               
     # ACCESSORS
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_container')
     def get_container(self):
         """Get the container an object is in. Can be used with
         acquisition to get the 'nearest' container.
         """
         return self.aq_inner
-    
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'container_url')
     def container_url(self):
         """Get url for container.
         """
         return self.absolute_url()
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'title')
     def title(self):
         """Get the title.
         """
         return self._title
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'is_transparent')
     def is_transparent(self):
         return 1
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'is_published')
     def is_published(self):
         # NOTE: this is inefficient if there's a big unpublished hierarchy..
         # Folder is published if anything inside is published
@@ -135,15 +154,21 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 return 1
         return 0
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_default')
     def get_default(self):
         """Get the default content object of the folder.
         """
         # NOTE: another dependency on hardcoded name 'default'
         return getattr(self, 'default', None)
-    
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_ordered_publishables')
     def get_ordered_publishables(self):
         return map(self._getOb, self._ordered_ids)
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_nonactive_publishables')
     def get_nonactive_publishables(self):
         result = []
         for object in self.objectValues():
@@ -151,14 +176,20 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 not object.is_active()):
                 result.append(object)
         return result
-    
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_assets')
     def get_assets(self):
         result = []
         for object in self.objectValues():
             if Interfaces.Asset.implementedBy(object):
                 result.append(object)
         return result
-    
+
+    # FIXME: what if the objects returned are not accessible with my
+    # permissions? unlikely as my role is acquired?
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_tree')
     def get_tree(self):
         """Get flattened tree of contents.
         """
@@ -166,6 +197,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         self._get_tree_helper(l, 0)
         return l
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_container_tree')
     def get_container_tree(self):
         l = []
         self._get_container_tree_helper(l, 0)
@@ -275,7 +308,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """Can we paste what is in clipboard to this object?"""
         return 1
         
-Globals.InitializeClass(Folder)
+InitializeClass(Folder)
 
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
                                         __name__='manage_addFolderForm')

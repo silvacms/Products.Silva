@@ -1,22 +1,23 @@
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import Globals
+from Globals import InitializeClass
 # Silva
 from Publication import Publication
 import Interfaces
+import SilvaPermissions
 #misc
 from helpers import add_and_edit
 
 class Root(Publication):
     """Root of Silva site.
     """
+    security = ClassSecurityInfo()
+    
     meta_type = "Silva Root"
 
     __implements__ = Interfaces.Container
     
-    security = ClassSecurityInfo()
-
     def __init__(self, id, title):
         Root.inheritedAttribute('__init__')(self, id, title)
 
@@ -32,18 +33,22 @@ class Root(Publication):
     
     # ACCESSORS
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_root')
     def get_root(self):
         """Get root of site. Can be used with acquisition get the
         'nearest' Silva root.
         """
         return self.aq_inner
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_view')
     def get_view(self, view_type, obj):
         """Get a view for an object from the view registry.
         """
         return self.service_view_registry.wrap(view_type, obj)
     
-Globals.InitializeClass(Root)
+InitializeClass(Root)
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
                                       __name__='manage_addRootForm')

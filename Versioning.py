@@ -1,5 +1,8 @@
 from DateTime import DateTime
 import Interfaces
+from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
+import SilvaPermissions
 
 class VersioningError(Exception):
     pass
@@ -9,12 +12,18 @@ empty_version = (None, None, None)
 class Versioning:
     """Mixin baseclass to make object contents versioned.
     """
+    security = ClassSecurityInfo()
+
+    __implements__ = Interfaces.Versioning
+    
     _unapproved_version = empty_version
     _approved_version = empty_version
     _public_version = empty_version
     _previous_versions = None
        
     # MANIPULATORS
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'create_version')
     def create_version(self, version_id,
                        publication_datetime,
                        expiration_datetime):
@@ -45,6 +54,9 @@ class Versioning:
         self._unapproved_version = (version_id,
                                     publication_datetime,
                                     expiration_datetime)
+        
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'approve_version')
     def approve_version(self):
         """Aprove the current unapproved version.
         """
@@ -64,7 +76,9 @@ class Versioning:
                       'Cannot approve version; not allowed.'
         self._approved_version = self._unapproved_version
         self._unapproved_version = empty_version
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'unapprove_version')
     def unapprove_version(self):
         """Unapprove an approved but not yet public version.
         """
@@ -79,7 +93,9 @@ class Versioning:
                                                                       self._approved_version[0])        
         self._unapproved_version = self._approved_version
         self._approved_version = empty_version
-        
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'close_version')
     def close_version(self):
         """Close public version.
         """
@@ -92,6 +108,8 @@ class Versioning:
         self._public_version = empty_version
         self._previous_versions = previous_versions
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_unapproved_version_publication_datetime')
     def set_unapproved_version_publication_datetime(self, dt):
         """Set publication datetime for unapproved, or None for no
         publication at all yet.
@@ -101,7 +119,9 @@ class Versioning:
                   'No unapproved version.'
         version_id, publication_datetime, expiration_datetime = self._unapproved_version
         self._unapproved_version = version_id, dt, expiration_datetime
-        
+
+    security.declareProtected(SivlaPermissions.ChangeSilvaContent,
+                              'set_unapproved_version_expiration_datetime')
     def set_unapproved_version_expiration_datetime(self, dt):
         """Set expiration datetime, or None for no expiration.
         """
@@ -111,6 +131,8 @@ class Versioning:
         version_id, publication_datetime, expiration_datetime = self._unapproved_version
         self._unapproved_version = version_id, publication_datetime, dt
 
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_approved_version_publication_datetime')
     def set_approved_version_publication_datetime(self, dt):
         """Set publication datetime for approved.
         """
@@ -122,7 +144,9 @@ class Versioning:
                   'Must specify publication datetime.'
         version_id, publication_datetime, expiration_datetime = self._approved_version
         self._approved_version = version_id, dt, expiration_datetime
-        
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_approved_version_expiration_datetime')
     def set_approved_version_expiration_datetime(self, dt):
         """Set expiration datetime, or None for no expiration.
         """
@@ -151,51 +175,69 @@ class Versioning:
             self._previous_versions = previous_versions
             
     # ACCESSORS
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'is_version_approved')
     def is_version_approved(self):
         """Check whether version is approved.
         """
         self._update_publication_status()
         return self._approved_version != empty_version
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'is_version_published')
     def is_version_published(self):
         """Check whether version is published.
         """
         self._update_publication_status()
         return self._public_version != empty_version
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_unapproved_version')
     def get_unapproved_version(self):
         """Get the unapproved version.
         """
         self._update_publication_status()
         return self._unapproved_version[0]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_unapproved_version_publication_datetime')
     def get_unapproved_version_publication_datetime(self):
         """Get publication datetime."""
         self._update_publication_status()
         return self._unapproved_version[1]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_unapproved_version_expiration_datetime')
     def get_unapproved_version_expiration_datetime(self):
         """Get version datetime."""
         self._update_publication_status()
         return self._unapproved_version[2]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_approved_version')
     def get_approved_version(self):
         """Get the approved version.
         """
         self._update_publication_status()
         return self._approved_version[0]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_approved_version_publication_datetime')
     def get_approved_version_publication_datetime(self):
         """Get publication datetime."""
         self._update_publication_status()
         return self._approved_version[1]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_approved_version_expiration_datetime')
     def get_approved_version_expiration_datetime(self):
         """Get version datetime."""
         self._update_publication_status()
         return self._approved_version[2]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_next_version')
     def get_next_version(self):
         """Get either approved version if available, or unapproved
         version if not, or None if no next version.
@@ -203,17 +245,22 @@ class Versioning:
         self._update_publication_status()
         return self._approved_version[0] or self._unapproved_version[0]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_next_version_publication_datetime')
     def get_next_version_publication_datetime(self):
         """Get publication datetime."""
         self._update_publication_status()
         return self._approved_version[1] or self._unapproved_version[1]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_next_version_expiration_datetime')
     def get_next_version_expiration_datetime(self):
         """Get version datetime."""
         self._update_publication_status()
         return self._approved_version[2] or self._unapproved_version[2]
 
-
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_next_version_status')
     def get_next_version_status(self):
         """Get status of next version.
         """
@@ -223,23 +270,31 @@ class Versioning:
             return "approved"
         else:
             return "no_next_version"
-        
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_public_version')
     def get_public_version(self):
         """Get the public version.
         """
         self._update_publication_status()
         return self._public_version[0]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_public_version_publication_datetime')
     def get_public_version_publication_datetime(self):
         """Get publication datetime."""
         self._update_publication_status()
         return self._public_version[1]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_public_version_expiration_datetime')
     def get_public_version_expiration_datetime(self):
         """Get version datetime."""
         self._update_publication_status()
         return self._public_version[2]
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_public_version_status')
     def get_public_version_status(self):
         if self.get_public_version() is not None:
             return "published"
@@ -247,7 +302,9 @@ class Versioning:
             return "closed"
         else:
             return "no_public_version"
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_previous_versions')
     def get_previous_versions(self):
         """Get list of previous versions, index 0 most recent.
         """
@@ -255,7 +312,9 @@ class Versioning:
             return []
         else:
             return [version[0] for version in self._previous_versions]
-
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_last_closed_version')
     def get_last_closed_version(self):
         """Get the last closed version or None if no such thing.
         """
@@ -264,7 +323,5 @@ class Versioning:
             return None
         else:
             return versions[-1]
-    
-    
-    #def can_approve(self):
-    #    raise NotImplementedError
+        
+InitializeClass(Versioning)
