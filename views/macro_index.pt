@@ -96,7 +96,9 @@ function handle_default_action(element, event, action)
 <!-- ___________________________ End matrix tabs __________________________ -->
 <!-- ___________________________ Start workspace __________________________ -->
 <div class="workspace">
+  <metal:block define-slot="subtabs" />
 
+<metal:block define-slot="feedback">
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
@@ -119,6 +121,7 @@ function handle_default_action(element, event, action)
 <span tal:replace="nothing">
 <!-- ______________ end feedback ______________ -->
 </span>
+</metal:block>
 
 <!-- _____________________ Start main _____________________ -->
 <div metal:define-slot="main">
@@ -191,7 +194,8 @@ function handle_default_action(element, event, action)
   tal:define="userid request/AUTHENTICATED_USER/getUserName"
 >
   <div style="float: left;">
-    <a title="Change your settings: alt-~"
+    <a href=""
+      title="Change your settings: alt-~"
       accesskey="~"
       tal:attributes="
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
@@ -222,7 +226,8 @@ function handle_default_action(element, event, action)
   <a name="bottom">
     &nbsp;
   </a>
-  <a title="Request an additional role in this location: alt-,"
+  <a href=""
+    title="Request an additional role in this location: alt-,"
     accesskey=","
     tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_authentication_requests()"
     tal:attributes="href string:public/request_roles?last_url=${url}/edit/${template/id}">
