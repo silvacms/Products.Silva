@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -68,6 +68,8 @@ class EditorSupport:
             #elif child.nodeName == 'person':
             #    for subchild in child.childNodes:
             #        result.append(output_convert(subchild.data))
+            elif child.nodeName == 'br':
+                result.append('<br />')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
         return ''.join(result)
@@ -126,10 +128,12 @@ class EditorSupport:
                 result.append('((')
                 result.append(self.render_text_as_editable(child))
                 result.append('|')
-                result.append(self.output_convert_editable(child.getAttribute('url')))
+                result.append(self.output_convert_editable(
+                    child.getAttribute('url')))
                 if child.getAttribute('target'):
                     result.append('|')
-                    result.append(self.output_convert_editable(child.getAttribute('target')))
+                    result.append(self.output_convert_editable(
+                        child.getAttribute('target')))
                 result.append('))')
             elif child.nodeName == 'underline':
                 result.append('__')
@@ -139,13 +143,16 @@ class EditorSupport:
                 result.append('[[')
                 result.append(self.render_text_as_editable(child))
                 result.append('|')
-                result.append(self.output_convert_editable(child.getAttribute('name')))
+                result.append(self.output_convert_editable(
+                    child.getAttribute('name')))
                 result.append(']]')
             #elif child.nodeName == 'person':
             #    result.append('{{')
             #    for subchild in child.childNodes:
             #        result.append(subchild.data)
             #    result.append('}}')
+            elif child.nodeName == 'br':
+                result.append('\n')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
         return ''.join(result)
@@ -178,25 +185,30 @@ class EditorSupport:
                               'replace_text')
     def replace_text(self, node, st):
         """'Parse' the markup to XML. Instead of tokenizing this method uses
-        Regular Expressions, which do not make it more neat but do improve simplicity.
+        Regular Expressions, which do not make it more neat but do improve
+        simplicity.
         """
         st = self.replace_xml_entities(st)
-        # Replace those stupid Windows linebreaks, take care of Mac's ones as well...
+        # Replace those stupid Windows linebreaks, take care of Mac's ones
+        # as well...
         if st.find('\n') == -1 and st.find('\r') > -1:
-            # No \n's but we do have \r's, so we're retrieving from a Mac, I presume
+            # No \n's but we do have \r's, so we're retrieving from a Mac, I
+            # presume
             st = st.replace('\r', '\n')
         else:
             st = st.replace('\r', '')
-        #st = st.replace('\n\n', ' ')
-        tags = {'__': 'underline', '**': 'strong', '++': 'em', '^^': 'super', '~~': 'sub'}
+        tags = {'__': 'underline', '**': 'strong', '++': 'em', '^^': 'super',
+            '~~': 'sub'}
         reg = re.compile(r"(_{2}|\*{2}|\+{2}|\^{2}|~{2})(.*?)\1", re.S)
-        reg_a = re.compile(r"^([^<]*|.*>[^\"]*)\({2}(.*?)\|([^|]*?)(\|(.*?))?\){2}", re.S)
+        reg_a = re.compile(
+            r"^([^<]*|.*>[^\"]*)\({2}(.*?)\|([^|]*?)(\|(.*?))?\){2}", re.S)
         reg_i = re.compile(r"^([^<]*|.*>[^\"]*)\[{2}(.*?)\|(.*?)\]{2}", re.S)
         while 1:
             match = reg.search(st)
             if not match:
                 break
-            st = st.replace(match.group(0), '<%s>%s</%s>' % (tags[match.group(1)], match.group(2), tags[match.group(1)]))
+            st = st.replace(match.group(0), '<%s>%s</%s>' % (
+                tags[match.group(1)], match.group(2), tags[match.group(1)]))
         while 1:
             match = reg_a.search(st)
             if not match:
@@ -205,15 +217,26 @@ class EditorSupport:
                 target = match.group(5)
                 if not target:
                     target = '_blank'
-                st = st.replace(match.group(0), '%s<link url="%s" target="%s">%s</link>' % (match.group(1), self.replace_xml_entities(match.group(3)), self.replace_xml_entities(target), match.group(2)))
+                st = st.replace(match.group(0), 
+                    '%s<link url="%s" target="%s">%s</link>' % (
+                        match.group(1), 
+                        self.replace_xml_entities(match.group(3)), 
+                        self.replace_xml_entities(target), match.group(2)))
             else:
-                st = st.replace(match.group(0), '%s<link url="%s">%s</link>' % (match.group(1), self.replace_xml_entities(match.group(3)), match.group(2)))
+                st = st.replace(match.group(0), 
+                    '%s<link url="%s">%s</link>' % (
+                        match.group(1), 
+                        self.replace_xml_entities(match.group(3)), 
+                        match.group(2)))
         while 1:
             match = reg_i.search(st)
             if not match:
                 break
-            st = st.replace(match.group(0), '%s<index name="%s">%s</index>' % (match.group(1), self.replace_xml_entities(match.group(3)), match.group(2)))
-
+            st = st.replace(match.group(0), 
+                '%s<index name="%s">%s</index>' % (match.group(1), 
+                    self.replace_xml_entities(match.group(3)), 
+                    match.group(2)))
+        st = st.replace('\n', '<br/>')                    
         st = self.input_convert(st).encode('UTF8')
         node = node._node
         doc = node.ownerDocument
@@ -237,7 +260,8 @@ class EditorSupport:
         """
         st = self.replace_xml_entities(st)
         if st.find('\n') == -1 and st.find('\r') > -1:
-            # No \n's but we do have \r's, so we're retrieving from a Mac, I presume
+            # No \n's but we do have \r's, so we're retrieving from a Mac, I 
+            # presume
             st = st.replace('\r', '\n')
         else:
             st = st.replace('\r', '')
@@ -246,7 +270,8 @@ class EditorSupport:
             match = reg_i.search(st)
             if not match:
                 break
-            st = st.replace(match.group(0), '<index name="%s">%s</index>' % (match.group(2), match.group(1)))
+            st = st.replace(match.group(0), '<index name="%s">%s</index>' % (
+                match.group(2), match.group(1)))
 
         st = self.input_convert(st).encode('UTF8')
         node = node._node
@@ -265,8 +290,8 @@ class EditorSupport:
             self._replace_helper(doc, node, child)
 
     def _replace_helper(self, doc, node, newdoc):
-        """Method to recursively add all children of newdoc to node. Used by replace_text and
-        replace_heading
+        """Method to recursively add all children of newdoc to node. Used by 
+        replace_text and replace_heading
         """
         for child in newdoc.childNodes:
             if child.nodeType == 3:
@@ -283,8 +308,8 @@ class EditorSupport:
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_pre')
     def replace_pre(self, node, text):
-        """Replace text in a heading containing node. Does not do much since no markup
-        is allowed in preformatted block
+        """Replace text in a heading containing node. Does not do much since 
+            no markup is allowed in preformatted block
         """
         # first preprocess the text, collapsing all whitespace
         # FIXME: does it make sense to expect cp437, which is
@@ -300,7 +325,8 @@ class EditorSupport:
 
         # remove all old subnodes of node
         # FIXME: hack to make copy of all childnodes
-        # XXX This now removes all subnodes, while whis will only be 1 in practice
+        # XXX This now removes all subnodes, while whis will only be 1 in 
+        # practice
         children = [child for child in node.childNodes]
         children.reverse()
         for child in children:
@@ -339,11 +365,13 @@ class EditorSupport:
                 # now find the illegal tag
                 foundlines = 1
                 text = text[char:]
-                # expat seems to sometimes return a number a little lower than the index of the start of the tag,
+                # expat seems to sometimes return a number a little lower 
+                # than the index of the start of the tag,
                 # so walk to the next tag
                 while not text or text[0] != '<':
                     if not text:
-                        # this should not happen, but just in case respond to it by raising the exception again
+                        # this should not happen, but just in case respond 
+                        # to it by raising the exception again
                         raise ExpatError
                     text = text[1:]
                 # check wether it's an opening or closing tag
@@ -362,8 +390,9 @@ class EditorSupport:
                 # this is nessecary so multiple errors can be dealt with
                 if found == 1:
                     continue
-                # we should never get here, but if we would somehow, we'd get into an endless loop,
-                # avoid that by raising the previous error
+                # we should never get here, but if we would somehow, we'd 
+                # get into an endless loop, avoid that by raising the 
+                # previous error
                 raise ExpatError, message
 
 InitializeClass(EditorSupport)
