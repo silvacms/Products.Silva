@@ -9,13 +9,13 @@
   >
 
 <metal:block define-macro="clipboard">
-  <div class="clipboard">
+  <div class="info">
     <metal:block define-macro="clipboard_no_style">
       <form action="."
         method="POST"
         tal:define="
           clipboard_members python:view.lookup_get_selection().keys();">
-        <h2 class="clipboard">
+        <h2 class="info">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Simple Member')" />
           user clipboard
         </h2>
@@ -42,7 +42,8 @@
             </td>
           </tr>
           <tr>
-            <th style="font-size:90%">
+            <th style="font-size:90%"
+              tal:condition="clipboard_members">
               Ctrl-click to multi-select
             </th>
           </tr>

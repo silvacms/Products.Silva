@@ -19,15 +19,22 @@
     <tr>
       <td class="left">
         <tal:block replace="nothing">
-          _____________________ sidebar subtable _____________________
-        </tal:block>
+          ______________ parent screen link ______________
+        </tal:block >
         <metal:block use-macro="view/macro_vein_navigation/macros/parent" />
-        <tal:block tal:replace="structure python: view.service_sidebar.render(model, 'tab_status', breadcrumb_vein)" />
-      </td>
-      <td class="main">
         <tal:block replace="nothing">
-          _____________________ main subtable _____________________
-        </tal:block>
+          ______________ vein navigation ______________
+        </tal:block >
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access_authorized_below', breadcrumb_vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
+
+      <tal:block replace="nothing">
+        _____________________ main _____________________
+      </tal:block>
+      <td class="main">
 
 <table class="listing">
   <thead>
@@ -36,7 +43,7 @@
       <td class="top" colspan="3">
       <h2>
         <img tal:replace="structure python:view.render_icon(model)" />
-        Authorized users below this level <span tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title</span>
+        email addresses for <span tal:content="structure string:&#xab;${model/get_title_or_id}&#xbb;">title</span>
       </h2>
       </td>
     </tr>
@@ -49,7 +56,7 @@
     <tr class="top-controls">
       <td>
         <h3>
-          Email addresses
+          Listing of all authorized users below this level 
         </h3>
       </td>
     </tr>

@@ -42,17 +42,18 @@
 <!-- actual macro where layout is done -->
 <!-- this form deliberately has no submit buttons; filled in in slots -->
 <metal:block define-macro="listing">
-  <div class="clipboard">
+  <div class="info">
     <metal:block define-macro="listing_no_style">      
       <form action="."
         method="POST">
-        <h2 class="clipboard">
+        <h2 class="info">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Group')" />
           Available groups
         </h2>
         <table class="listing"
           style="margin-bottom:0.5em;">
-          <tr class="top-controls">
+          <tr class="top-controls"
+            tal:condition="python: model_is_container and group_service">
             <td>
               <metal:block define-slot="groups_admin_action">
                 <a class="navigation" 
@@ -60,19 +61,19 @@
                   href="tab_access_groups"
                   title="groups administration: alt-g"
                   accesskey="g"
-                  tal:condition="python:model_is_container and group_service">
+                >
                   <u>G</u>roups admin...
                 </a>
               </metal:block>
             </td>
           </tr>
           <tr>
-            <th style="font-size:90%">
+            <th style="font-size:90%"
+              tal:condition="groups">
               Ctrl-click to multi-select
             </th>
           </tr>
-          <tr valign="top"
-            tal:condition="groups">
+          <tr valign="top">
             <td style="padding: 0;">
               <select class="clipboard"
                 multiple="multiple"

@@ -53,7 +53,7 @@
                     publication model/get_publication;
                     containing_publication publication/../get_publication | publication;
                     query_string query_string | nothing;
-                    vein_id template_id | string:${template/id}${query_string};
+                    vein_id template_id | python: template.id + test(query_string, query_string, '');
                   ">
                   <a class="up"
                     href="../../edit/tab_edit"

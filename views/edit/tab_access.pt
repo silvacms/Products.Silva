@@ -64,7 +64,7 @@
                 </td>
               </tr>
               <tr class="align-left"
-               >
+                tal:condition="members">
                 <th>
                   Username
                 </th>
@@ -122,9 +122,7 @@
               <tr class="even"
                 tal:condition="not:members">
                 <td colspan="3">
-                  <i>
-                    No users with local roles
-                  </i>
+                  No users with local roles
                 </td>
               </tr>
               <tr class="controls">
@@ -148,7 +146,8 @@
                       name="access_assign_to_user:method"
                       title="assign a local role to selected user(s)"
                       type="submit"
-                      value="Assign role" />
+                      value="Assign role"
+                    />
                   </tal:block>
                 </td>
                 <td class="align-right">
@@ -157,7 +156,8 @@
                     title="revoke selected role(s) from selected user(s)"
                     type="submit"
                     value="Revoke role" 
-                    tal:condition="members" />
+                    tal:condition="members"
+                  />
                 </td>
               </tr>
             </table>
@@ -281,26 +281,14 @@
       <tr>
         <td class="main">
           <tal:block condition="python:model.sec_groups_enabled()">
-            <div class="hilight borders top right bottom left"
-              style="padding: 0.5em;"
+            <div class="alert"
               tal:condition="not:group_service">
-              <div style="padding: 0em 2em 0em 2em;">
-                <p class="warning"
-                  style="font-size: 105%;">
-                  <b>
-                    Groups Service
-                  </b>
-                </p>
-                <p>
-                  You are seeing this message because the Silva Groups  
-                  extension is installed but there's currently no Groups 
-                  Service available. This service should have
-                  <code>
-                    service_groups
-                  </code>
-                  for its id and be placed in the Silva Root.
-                </p>
-              </div>
+              <p>
+              <span class="subhead">
+                <span class="warning">Groups Service not installed</span>
+              </span><br />
+                You are seeing this message because the Silva Groups extension is installed on the file system, but a Groups Service hasn't been added to this Silva instance. To install one, go to the <a href="" class="underline" tal:attributes="href string:${root_url}/manage_main">Silva Root in the ZMI</a>, choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>. No further configuration is necessary.
+              </p>
             </div>
             <tal:block condition="group_service">
               <!-- Defined groups listing -->
@@ -461,7 +449,8 @@
                 name="access_assign_to_group:method"
                 title="assign selected role to selected group(s)"
                 type="submit"
-                value="Assign" />
+                value="Assign"
+              />
           </div>
         </metal:block>        
         </td>
