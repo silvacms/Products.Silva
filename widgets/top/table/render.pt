@@ -38,7 +38,7 @@
 </div>
 
 <div metal:fill-slot="embedded_elements" tal:omit-tag="">
-<content tal:replace="structure python:here.service_editor.renderElementsCache(node)" />
+<content tal:replace="structure python:here.service_editor.renderElements(node)" />
 </div>
 
 <div metal:fill-slot="element_controls" tal:omit-tag="">

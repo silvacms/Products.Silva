@@ -19,5 +19,5 @@ request.set('xml_rel_url', model.get_unapproved_version() + '/content')
 service_editor = context.service_editor
 service_editor.setDocumentEditor(editable.content.documentElement,
                                  'service_field_editor')
-return service_editor.renderCache(
+return service_editor.render(
     service_editor.getRoot(editable.content.documentElement))

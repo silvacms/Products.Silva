@@ -23,5 +23,5 @@ service_editor.setDocumentEditor(
     editable.content.documentElement,
     'service_doc_editor')
 
-return service_editor.renderCache(
+return service_editor.render(
     service_editor.getRoot(editable.content.documentElement))

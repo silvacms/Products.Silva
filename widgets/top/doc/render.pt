@@ -8,4 +8,4 @@
   <div class="front2" tal:content="python:here.get_title_content()">title</div>
 </div>
 </div>
-<content tal:replace="structure python:here.service_editor.renderElementsCache(request.node)" />
+<content tal:replace="structure python:here.service_editor.renderElements(request.node)" />

@@ -21,4 +21,4 @@
 </table>
 </div>
 </div>
-<content tal:replace="structure python:here.service_editor.renderElementsCache(request.node)" />
+<content tal:replace="structure python:here.service_editor.renderElements(request.node)" />
