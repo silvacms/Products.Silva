@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -259,36 +259,3 @@ def _parse_quote(something, state, props):
     something = drop_escape.sub(lambda match: match.group(1), something )
     state.plist.append(something)
     
-
-def test():
-    """ hacky: test by hand ..."""
-    test1 = r"""
-property: value1, "my quote, comma containing value", 
-"another value with \"quotes\" in it, as well as commas", "something containing \\", even more;
-
-property2: aha, what's that, ";;;" ,,,'ignores commas',"",;
-
-single: only one property  ;
-
-white: "  one property,  whitespace preserving   ";
-
-"""
-
-    props1 = {'property': ['value1','my quote, comma containing value',
-                           'another value with "quotes" in it, as well as commas',
-                           'something containing \\', 'even more'] ,
-              'property2': [ 'aha', "what's that", ';;;', "'ignores commas'",'' ] ,
-              'single' : [ 'only one property' ],
-              'white' : ["  one property,  whitespace preserving   "],
-              }
-                          
-    props = _parse_raw(test1)
-
-    if not props1 == props:
-        print "FAILURE:\n expected %s\n but got %s\n" %  tuple(map(str, (props1, props) ))
-    else:
-        print "simple test ok"
-
-# self testing:
-if __name__ == '__main__':
-    test()
