@@ -205,7 +205,8 @@ class SubscriptionService(Folder.Folder):
 
     def _metadata(self, content, setname, fieldname):
         metadata_service = content.service_metadata
-        value = metadata_service.getMetadataValue(content, setname, fieldname)
+        version = content.get_viewable()
+        value = metadata_service.getMetadataValue(version, setname, fieldname)
         if type(value) == type(u''):
             value = value.encode('utf-8')
         return value
