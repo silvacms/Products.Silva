@@ -164,11 +164,10 @@
     <a href="{@link}">
       <img src="{@path}" />
     </a>
-    <br />
   </xsl:template>
 
   <xsl:template match="doc:image[not(@link)]">
-    <img src="{@path}" /><br />
+    <img src="{@path}" />
   </xsl:template>
   
   <xsl:template match="doc:underline" mode="text-content">
