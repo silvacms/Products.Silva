@@ -47,6 +47,11 @@ class Member(Persistent, Acquisition.Implicit):
         """
         return self._approved
 
+    def extra(self, name):
+        """Extra information.
+        """
+        return None
+    
 Globals.InitializeClass(Member)
 
 class CachedMember(Persistent, Acquisition.Implicit):
@@ -62,7 +67,7 @@ class CachedMember(Persistent, Acquisition.Implicit):
         self._fullname = fullname
         self._email = email
         self._is_approved = is_approved
-
+        
     security.declareProtected(SilvaPermissions.AccessContentsInformation, 
                               'userid')
     def userid(self):
@@ -91,6 +96,14 @@ class CachedMember(Persistent, Acquisition.Implicit):
         """
         return self._is_approved
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'extra')
+    def extra(self, name):
+        """Extra information.
+        """
+        # fall back on actual member object, don't cache
+        return self.service_members.get_member(self.id).extra(name)
+    
 class NoneMember(Persistent, Acquisition.Implicit):
     __implements__ = IMember
 
@@ -124,6 +137,13 @@ class NoneMember(Persistent, Acquisition.Implicit):
         """
         return 0
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'extra')
+    def extra(self, name):
+        """Extra information.
+        """
+        return None
+    
 Globals.InitializeClass(NoneMember)
 
 noneMember = NoneMember()
@@ -132,6 +152,6 @@ def cloneMember(member):
     if member is None:
         return NoneMember()
     return CachedMember(userid=member.userid(),
-                  fullname=member.fullname(),
-                  email=member.email(),
-                  is_approved=member.is_approved())
+                        fullname=member.fullname(),
+                        email=member.email(),
+                        is_approved=member.is_approved())

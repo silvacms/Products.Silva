@@ -91,6 +91,13 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
         """is_approved
         """
         return self._is_approved
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'extra') 
+    def extra(self, name):
+        """Not implemented for simple membership.
+        """
+        pass
     
 Globals.InitializeClass(SimpleMember)
 
@@ -191,6 +198,11 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         directory (so including the escaped productname!!)
         """
         return None
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_extra_names')
+    def get_extra_names(self):
+        return []
     
 Globals.InitializeClass(SimpleMemberService)
 

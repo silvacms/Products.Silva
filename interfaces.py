@@ -984,6 +984,10 @@ class IMember(Interface):
     def departments():
         """Return list of departments user is in, or None if no such information.
         """
+
+    def extra(name):
+        """Return bit of extra information, keyed by name.
+        """
         
     def is_approved():
         """Return true if this member is approved. Unapproved members
@@ -991,6 +995,10 @@ class IMember(Interface):
         """
 
 class IMemberService(Interface):
+    def extra():
+        """Return list of names of extra information.
+        """
+        
     def find_members(search_string):
         """Return all users with a full name containing search string.
         """
@@ -1014,7 +1022,11 @@ class IMemberService(Interface):
     def get_authentication_requests_url():
         """Returns the url of the authentication_requests form
         """
-    
+
+    def get_extra_names():
+        """Return list of names of extra information.
+        """
+        
 # there is also expected to be a 'Members' object that is traversable
 # to a Member object. Users can then modify information in the member
 # object (if they have the permissions to do so, but the user associated

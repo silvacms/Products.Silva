@@ -118,10 +118,10 @@
       <!-- __________________________ search results ______________________________ -->
       <tal:define define="global lookup_result options/results | nothing" />
         <form action="lookup_add_to_selection" method="POST">
-          <table class="listing">
+          <table class="listing" tal:define="extra_names model/service_members/get_extra_names; lookup_colspan python:2 + len(extra_names)">
             <thead>
               <tr class="top-controls">
-                <td colspan="2">
+                <td tal:attributes="colspan lookup_colspan">
                   <input class="button"
                     style="float:right;"
                     type="submit"
@@ -146,6 +146,9 @@
                   style="width:60%;" i18n:translate="email">
                   email
                 </th>
+                <th tal:repeat="extra_name extra_names">
+                  <span tal:replace="extra_name" />
+                </th>
               </tr>
 
               <!-- Listing loop -->
@@ -162,12 +165,15 @@
                   <td>
                     <span tal:replace="member/email | no_entry" />
                   </td>
+                  <td tal:repeat="extra_name extra_names">
+                    <span tal:replace="structure python:member.extra(extra_name)" />
+                  </td>
                 </tr>
               </tal:block>
               <tr class="odd"
                 tal:condition="python:not lookup_result">
                 <td align="left"
-                  colspan="2">
+                  tal:attributes="colspan lookup_colspan">
                   <i i18n:translate="no_search_results">
                     No search results.
                   </i>
@@ -178,7 +184,7 @@
             <tfoot>
               <tr class="controls">
                 <td class="align-right"
-                  colspan="2">
+                  tal:attributes="colspan lookup_colspan">
                   <input class="button"
                     type="submit"
                     value="add to clipboard"
