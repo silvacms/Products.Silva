@@ -577,7 +577,7 @@ table.listing div.controls {
 table.listing th.top {
   color: #e3eef0;
   background: &dtml-listingHeaderBackground;; 
-  padding: 0;
+  padding: 0 ! important;
   vertical-align: bottom;
   text-align: center;
 }
@@ -588,17 +588,21 @@ table.listing th.top img {
 }
 
 table.listing th.top a.normal:link {
+  display : block;
     color: &dtml-mainTabFontColor;;
     background: &dtml-listingHeaderBackground;; 
 }
 
 table.listing th.top a.normal:visited {
+  display : block;
     color: &dtml-mainTabFontColor;;
     background: &dtml-listingHeaderBackground;; 
 }
 
 table.listing th.top a.normal:hover {
+  display : block;
     color: &dtml-mainTabFontColorSelected;;
+  background: #d2e6f8;
     text-decoration: none;
 }
 
@@ -622,38 +626,36 @@ td.unselected:hover {
 
 /* _______ uplinks _______ */
 table.listing a.top {
-    background: transparent;
+  display : block;
+  width : 1.4em;
+  background: &dtml-listingHeaderBackground;; 
     float: left;
     margin: 0em 0em 0em 0em;
     border-right: &dtml-listingBorder;;
-    padding-left: 0.2em;
-    padding-right: 0.3em;
+    padding: 0em 0.2em 0em 0.2em;
 }
 
 table.listing a.up {
-    background: transparent;
+  display : block;
+  width : 1.4em;
+  background: &dtml-listingHeaderBackground;; 
     float: right;
     margin: 0em 0em 0em 0em;
     border-left: &dtml-listingBorder;;
-    padding-left: 0.2em;
-    padding-right: 0.3em;
+    padding: 0em 0.2em 0em 0.2em;
 }
 
 table.listing a.top:hover {
     color: &dtml-mainTabBackgroundSelected;;
     background: &dtml-mainTabBackgroundSelected;;
     border-style: solid solid none none;
-    padding-left: 0.2em;
-    padding-right: 0.3em;
-  text-decoration: none;
+    text-decoration: none;
 }
 
 table.listing a.up:hover {
     color: &dtml-mainTabBackgroundSelected;;
     background: &dtml-mainTabBackgroundSelected;;
     border-style: solid none none solid;
-    padding-left: 0.2em;
-    padding-right: 0.3em;
   text-decoration: none;
 }
 

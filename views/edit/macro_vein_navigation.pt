@@ -14,92 +14,94 @@
   _______ for subscreens that need an obvious link up to parent (import, export, etc.) _______
 </tal:block>
 <metal:block define-macro="parent">
-        <table class="listing"
-          style="margin-bottom:0;">
-          <thead>
-            <tr tal:replace="nothing">
-              ______________ link to parent screen ______________
-            </tr>
-            <tr>
-              <td class="parent">
-                <a href="parent screen"
-                  title="up to parent screen: alt-u"
-                  accesskey="u"
-                  i18n:attributes="title"
-                  tal:attributes="href active_tab">
-                  <div class="navigation-border"
-                    tal:content="structure string:<u>u</u>p to ${parent_screen_name}...">
-                    parent screen
-                  </div>
-                </a>
-              </td>
-            </tr>
-          </thead>
-        </table>
+  <table class="listing"
+    style="margin-bottom:0;">
+    <thead>
+      <tr tal:replace="nothing">
+        ______________ link to parent screen ______________
+      </tr>
+      <tr>
+        <td class="parent">
+          <a href="parent screen"
+            title="up to parent screen: alt-u"
+            accesskey="u"
+            i18n:attributes="title"
+            tal:attributes="href active_tab">
+            <div class="navigation-border"
+              tal:content="structure string:<u>u</u>p to ${parent_screen_name}...">
+              parent screen
+            </div>
+          </a>
+        </td>
+      </tr>
+    </thead>
+  </table>
 </metal:block>
 
 
 <tal:block replace="nothing">
   _______ macro vein _______
-  _______ renders the vein stack in the sidebar for containers and content objects _______
-  _______ container templates have a slot for the vein stack of the content tree_______
+  _______ renders the uplinks cap and vein navigation stack _______
+  _______ only containers have a slot for vein navigation thru the content tree_______
 </tal:block>
+<table class="listing">
+  <thead>
+    <tr>
+      <th class="top"
+        tal:define="
+          model_is_root python: model.implements_root();
+          model_is_publication python: model.implements_publication();
+          publication model/get_publication;
+          containing_publication publication/../get_publication | publication;
+          query_string query_string | nothing;
+          vein_id template_id | python: template.id + test(query_string, query_string, '');
+          ">
+        <a class="up"
+          href="../../edit/tab_edit"
+          title="up one level: alt-]"
+          accesskey="]"
+          i18n:attributes="title"
+          tal:condition="not: model_is_root"
+          tal:attributes="href string:../../edit/${vein_id}">
+          <img width="9"
+            height="9"
+            border="0"
+            alt="Up one level"
+            i18n:attributes="alt"
+            tal:attributes="src string:${root_url}/globals/up_level.gif" />
+        </a>
+        <a class="top"
+          title="up to containing publication: alt-["
+          accesskey="["
+          i18n:attributes="title"
+          tal:condition="not: model_is_root"
+          tal:attributes="href python: model_is_publication and (containing_publication.absolute_url() + '/edit/' + vein_id) or (publication.absolute_url() + '/edit/' + vein_id)">
+          <img width="9"
+            height="9"
+            border="0"
+            alt="Up to containing Publication"
+            i18n:attributes="alt"
+            tal:attributes="src python: model_is_publication and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
+        </a>
+        <a class="normal"
+          title="reload screen"
+          tal:content="vein"
+          tal:attributes="href vein_id">
+          vein
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody tal:condition="python: model.implements_container()">
+    <tal:block replace="nothing">
+      _______ vein navigation stack _______
+    </tal:block>
+    <metal:define-slot define-slot="sidebar">
+      cached sidebar inserted with template variables
+    </metal:define-slot>
+  </tbody>
+</table>
 <metal:define-macro define-macro="vein">
-          <table class="listing">
-            <thead>
-              <tr>
-                <th class="top"
-                  tal:define="
-                    model_is_root python: model.implements_root();
-                    model_is_publication python: model.implements_publication();
-                    publication model/get_publication;
-                    containing_publication publication/../get_publication | publication;
-                    query_string query_string | nothing;
-                    vein_id template_id | python: template.id + test(query_string, query_string, '');
-                  ">
-                  <a class="up"
-                    href="../../edit/tab_edit"
-                    title="up one level: alt-]"
-                    accesskey="]"
-                    i18n:attributes="title"
-                    tal:condition="not: model_is_root"
-                    tal:attributes="href string:../../edit/${vein_id}">
-                    <img width="9"
-                      height="9"
-                      border="0"
-                      alt="Up one level"
-                      i18n:attributes="alt"
-                      tal:attributes="src string:${root_url}/globals/up_level.gif" />
-                  </a>
-                  <a class="top"
-                    title="up to containing publication: alt-["
-                    accesskey="["
-                    i18n:attributes="title"
-                    tal:condition="not: model_is_root"
-                    tal:attributes="href python: model_is_publication and (containing_publication.absolute_url() + '/edit/' + vein_id) or (publication.absolute_url() + '/edit/' + vein_id)">
-                    <img width="9"
-                    height="9"
-                    border="0"
-                    alt="Up to containing Publication"
-                    i18n:attributes="alt"
-                    tal:attributes="src python: model_is_publication and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
-                  </a>
-                  <a class="normal"
-                    style="padding: 0 1em;"
-                    title="reload screen"
-                    tal:content="vein"
-                    tal:attributes="href vein_id">
-                    vein
-                  </a>
-                </th>
-              </tr>
-            </thead>
-            <tbody tal:condition="python: model.implements_container()">
-              <metal:define-slot define-slot="sidebar">
-                cached sidebar inserted with template variables
-              </metal:define-slot>
-            </tbody>
-          </table>
 </metal:define-macro>
 
 </html>

@@ -115,30 +115,30 @@ buttonWeight:string=normal
 controlBackground:string=#b8c9da
 
 standaloneButtonBackground:string=#283365
-standaloneButtonPadding:string=0em
+standaloneButtonPadding:string=0 0.2em
 standaloneButtonBorder:string=1px solid #8faecf
 standaloneButtonFontColor:string=#d9f3f1
 
 contextButtonBackground:string=#064C29
-contextButtonPadding:string=0em
+contextButtonPadding:string=0 0.2em
 contextButtonBorder:string=1px solid #6bb591
 contextButtonFontColor:string=#d9f3da
 
 destructiveButtonBackground:string=#752e2f
-destructiveButtonPadding:string=0em
+destructiveButtonPadding:string=0 0.2em
 destructiveButtonBorder:string=1px solid #b48f8f
 destructiveButtonFontColor:string=#fdeaea
 
 cancelButtonBackground:string=#666668
-cancelButtonPadding:string=0em
+cancelButtonPadding:string=0 0.2em
 cancelButtonBorder:string=1px solid #b9c2c1
 cancelButtonFontColor:string=#ccd7d6
 
 boxBorder:string=1px solid #000
 boxHeaderBackground:string=#000
 boxHeaderFontColor:string=#000
-boxLinkBackground:string=url(linkTransparent.gif) -0.5em 0px no-repeat
-boxLinkColor:string=Black
+boxLinkBackground:string=url(linkTransparent.gif) 0em 0px no-repeat
+boxLinkColor:string=#000
 boxEvenBackground:string=#000
 boxOddBackground:string=000
 boxHighlight:string=2px solid #000
