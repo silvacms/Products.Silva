@@ -91,6 +91,23 @@ Installation problems
     after installation of an upgrades Silva version.
 
 
+  Silva only displays '?' for non ascii characters in the public view
+  after upgrading
+ 
+    The cause of the problem is most probably a missing http header,
+    which should be set by the 'index_html'. If You do not have a custom
+    'index_html', remove the current 'index_html' and select 'install
+    default layout' in the 'service_extensions'.
+
+    If You have a custom 'index_html' and do not want to overwrite this
+    with the default, be sure Your custom 'index_html' sets up the
+    'Content-Type' header in the response properly; it should do
+    something like:
+
+      context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;charset=utf-8')
+
+
+
 
 Problems when using Silva 
 
