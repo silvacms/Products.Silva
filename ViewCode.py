@@ -26,18 +26,23 @@ class ViewCode:
 
         return '%s/edit/%s' % (target.absolute_url(), tab)
    
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'render_icon')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'render_icon')
     def render_icon(self, obj=None, meta_type='Unknown'):
-        """Gets the icon for the object and wraps that in an image tag"""
+        """Gets the icon for the object and wraps that in an image tag
+        """
         tag = ('<img src="%(icon_path)s" width="16" height="16" border="0" '
-                'alt="%(alt)s" />')
-        icon_path = '%s/globals/silvageneric.gif' % self.get_root_url()
-        if obj is not None:
-            try:
-                icon_path = icon.registry.getIcon(obj)
-            except icon.RegistryError:
-                icon_path = getattr(aq_base(obj), 'icon', icon_path)
+               'alt="%(alt)s" />')
+        if obj is None:
+            icon_path = '%s/globals/silvageneric.gif' % self.REQUEST['BASE2']
+            return tag % {'icon_path': icon_path, 'alt': meta_type}
+        try:
+            icon_path = '%s/%s' % (self.REQUEST['BASE1'], 
+                icon.registry.getIcon(obj))
+        except icon.RegistryError:
+            icon_path = getattr(aq_base(obj), 'icon', None)
+            if icon_path is None:
+                icon_path = '%s/globals/silvageneric.gif' % self.REQUEST['BASE2']
             meta_type = getattr(obj, 'meta_type')
         return tag % {'icon_path': icon_path, 'alt': meta_type}
 

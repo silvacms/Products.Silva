@@ -25,6 +25,9 @@
     silva_permissions view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content silva_permissions/ChangeSilvaContent | nothing;    
+    dummy python: here.REQUEST.set('edit_mode', 1);
+    dummy python: getattr(request, 'editor', None) and request.SESSION.set('editor', request.editor) or None;
+    editor python: request.SESSION.get('editor', None) or view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getUserName()).editor();
 ">
 
 <head>
@@ -85,7 +88,9 @@ function handle_default_action(element, event, action)
 <metal:block define-slot="script" />
 </head>
 
-<body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
+<body tal:attributes="onload python: test(vein == 'editor' and editor == 'kupu', 
+                                          'startEpoz()', 
+                                          'if (window.focus_editor) window.focus_editor()')">
 <!-- __________________________ Start matrix tabs _________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   top navigation plugs in here....
@@ -93,7 +98,9 @@ function handle_default_action(element, event, action)
 <!-- ___________________________ End matrix tabs __________________________ -->
 <!-- ___________________________ Start workspace __________________________ -->
 <div class="workspace">
+  <metal:block define-slot="middleground" />
 
+<tal:condition condition="python: not (template.id == 'tab_edit' and editor == 'kupu' and model.meta_type == 'Silva Document')">
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
@@ -116,6 +123,7 @@ function handle_default_action(element, event, action)
 <span tal:replace="nothing">
 <!-- ______________ end feedback ______________ -->
 </span>
+</tal:condition>
 
 <!-- _____________________ Start main _____________________ -->
 <div metal:define-slot="main">
@@ -188,7 +196,8 @@ function handle_default_action(element, event, action)
   tal:define="userid request/AUTHENTICATED_USER/getUserName"
 >
   <div style="float: left;">
-    <a title="Change your settings: alt-~"
+    <a href=""
+      title="Change your settings: alt-~"
       accesskey="~"
       tal:attributes="
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
@@ -219,7 +228,8 @@ function handle_default_action(element, event, action)
   <a name="bottom">
     &nbsp;
   </a>
-  <a title="Request an additional role in this location: alt-,"
+  <a href=""
+    title="Request an additional role in this location: alt-,"
     accesskey=","
     tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_authentication_requests()"
     tal:attributes="href string:public/request_roles?last_url=${url}/edit/${template/id}">

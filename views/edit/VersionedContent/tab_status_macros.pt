@@ -48,7 +48,7 @@ messages
 <td class="feedback"
   colspan="2">
 <span tal:replace="python:model.get_approval_requester()">author id</span>
-has requested approval on 
+responded on 
 <span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()">some date</span>
 <tal:if condition="python:model.get_approval_request_message()">
 with the following comments:
@@ -59,7 +59,8 @@ with the following comments:
 <tr class="controls"
   tal:condition="python:model.get_approval_request_message()">
 <td class="message"
-  colspan="2">
+  colspan="2"
+  style="padding:0">
 <div class="message"
   tal:content="python:model.get_approval_request_message() or 'whatever'">
 message text
@@ -131,7 +132,7 @@ This message will remain visible in the status screen for other authors and edit
 <field tal:replace="structure python:view.tab_status_form_author.publish_datetime.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)" />
 </td>
 <td style="vertical-align:middle;">
-day/month/year &nbsp;23:59
+day / month / year &nbsp;23:59
 </td>
 </tr>
 
@@ -252,7 +253,7 @@ notes
 <field tal:replace="structure python:view.tab_status_form_editor.publish_datetime.render(REQUEST=request)" />
 </td>
 <td>
-day/month/year &nbsp;23:59
+day / month / year &nbsp;23:59
 </td>
 </tr>
 
@@ -410,6 +411,7 @@ The current editable version can be replaced with the previous (published) versi
   value="revert to previous"
   title="access key: alt-p"
   accesskey="p"
+  onClick="return confirm('Really revert ?')"
 />
 </td>
 </tr>

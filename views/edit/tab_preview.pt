@@ -11,10 +11,22 @@
   i18n:domain="silva">
 
 <metal:block metal:use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main" tal:omit-tag="">
 
-  <span tal:replace="nothing"> _______ link to see page in public/local style _______ </span>
-  <span class="widebody"><a style="float:right; margin-right:3em;" title="see the content in the public layout: alt-;" accesskey=";"
+<metal:block metal:fill-slot="middleground">
+  <div class="middleground"
+    tal:define="active python: editor == 'epoz'">
+    <a class="wide"
+      title="see the content in the public layout: alt-;"
+      accesskey=";"
+      tal:attributes="href string:${model/absolute_url}/preview_html">
+      public&nbsp;preview...
+    </a>
+  </div>
+</metal:block>
+
+<metal:block fill-slot="main" tal:omit-tag="">
+  <span tal:replace="nothing"> _______ XXX turned off: link to see page in public/local style _______ </span>
+  <span tal:replace="nothing" class="widebody"><a style="float:right; margin-right:3em;" title="see the content in the public layout: alt-;" accesskey=";"
     tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank">Presentation&nbsp;preview</a></span>
 
   <span tal:replace="nothing"> _______ closed message _______ </span>
@@ -23,6 +35,13 @@
   </div>
 
   <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
+<style type="text/css">
+.public {
+  margin-left : 1.5em;
+  padding-top : 0.3em;
+}
+</style>
+
   <div class="public"
     tal:content="structure model/preview">
     <!-- this text is replaced by Silva content -->

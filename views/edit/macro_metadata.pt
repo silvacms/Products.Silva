@@ -59,7 +59,11 @@
 <!-- Edit table -->
 <metal:block define-macro="edit_table">
   <tal:block define="
-    content version;">
+    content version;
+    ct python: mangle.String.centeredTruncate;
+    truncatable python:['location'];
+    "
+    >
     <form method="POST"
       action="."
       name="form"
@@ -149,7 +153,14 @@
                   </tal:block>
                   <td>
                     <div class="fixIE6widget"
-                      tal:content="structure element/render">
+                      tal:define="                        
+                        data python: element['render'] or element['view'];
+                        data python: element_name in truncatable and ct(data, 50) or data;
+                        "
+                      tal:condition="
+                        python: element['isEditable'] or not element['isAcquired']"
+                      tal:content="
+                        structure data">
                       Element edit widget
                     </div>
                   </td>
@@ -158,8 +169,11 @@
                   </tal:block>
                   <td>
                     <tal:block 
+                      define="
+                        data element/view;
+                        data python: element_name in truncatable and ct(data, 50) or data;"
                       condition="element/isAcquired"
-                      replace="structure element/view" />
+                      replace="structure data" />
                     <sup tal:condition="element/isAcquireable">
                       &#134;
                     </sup>
@@ -186,7 +200,7 @@
               <th class="align-right">
               </th>
               <th>
-                date format: year / month / day &nbsp;23:59
+                date format: day / month / year &nbsp;23:59 
               </th>
               <th>
                 &#134; acquireable
@@ -218,7 +232,11 @@
 <!-- Read only table -->
 <metal:block define-macro="view_table">
   <tal:block define="
-    content version">
+    content version;
+    ct python: mangle.String.centeredTruncate;
+    truncatable python:['location'];
+    "
+    >
     <tal:block 
       condition="content"
       define="
@@ -285,7 +303,12 @@
                 <tal:block replace="nothing">
                   ___ element widget column ___
                 </tal:block>
-                <td tal:content="structure element/view">
+                <td 
+                  tal:define="
+                    data python: element['view'];
+                    "
+                  tal:content="
+                    structure data">
                   Element content view
                 </td>
               </tr>

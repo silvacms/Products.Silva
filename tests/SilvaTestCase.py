@@ -28,7 +28,6 @@ from AccessControl.User import User
 from Acquisition import aq_base
 import time
 
-
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
     _configure_root = 1
@@ -104,7 +103,6 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         uf = self.root.acl_users
         uf._doAddUser(_user_name, 'secret', ['ChiefEditor'], [])
 
-
     def _clear(self, call_close_hook=0):
         '''Clears the fixture.'''
         if self._configure_root:
@@ -128,6 +126,8 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
             **kw):
         getattr(container.manage_addProduct[product],
             'manage_add%s' % type_name)(id, **kw)
+        # gives the new object a _p_jar ...
+        get_transaction().commit(1)
         return getattr(container, id)
 
     # Security interfaces
@@ -148,6 +148,11 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
             context = self.root
         context.manage_role(role, permissions)
 
+    def installExtension(self, extension):
+        """Installs a Silva extension""" 
+        ZopeTestCase.installProduct(extension)
+        self.getRoot().service_extensions.install(extension)
+
     def login(self, name=_user_name):
         '''Logs in as the specified user.'''
         uf = self.root.acl_users
@@ -158,28 +163,21 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''Logs out.'''
         noSecurityManager()
 
-
-    def _add_helper(self, object, typename, id, title, **kw):
-        getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(
-            id, title, **kw)
-        return getattr(object, id)
-
     def add_folder(self, object, id, title, **kw):
-        return self._add_helper(object, 'Folder', id, title, **kw)
+        return self.addObject(object, 'Folder', id, title=title, **kw)
 
     def add_publication(self, object, id, title, **kw):
-        return self._add_helper(object, 'Publication', id, title, **kw)
+        return self.addObject(object, 'Publication', id, title=title, **kw)
 
     def add_document(self, object, id, title):
-        object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
-        return getattr(object, id)
+        return self.addObject(object, 'Document', id, title=title,
+                              product='SilvaDocument')
 
     def add_ghost(self, object, id, content_url):
-        return self._add_helper(object, 'Ghost', id, content_url)
+        return self.addObject(object, 'Ghost', id, content_url=content_url)
 
     def add_image(self, object, id, title, **kw):
-        return self._add_helper(object, 'Image', id, title, **kw)
-
+        return self.addObject(object, 'Image', id, title=title, **kw)
 
 def setupSilvaRoot(app, id='root', quiet=0):
     '''Creates a Silva root.'''
@@ -197,14 +195,9 @@ def setupSilvaRoot(app, id='root', quiet=0):
         factory.manage_addRoot(id, '')
         root = app.root
         noSecurityManager()
-        # work around for issue 611:
-        get_transaction().commit()
-        root.service_extensions.refresh('SilvaDocument')
         get_transaction().commit()
         if not quiet:
             ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
-
-
 
 # Create a Silva site in the test (demo-) storage
 app = ZopeTestCase.app()

@@ -14,7 +14,7 @@ from OFS import SimpleItem
 
 class ZODBVersioning(Versioning.Versioning,  SimpleItem.SimpleItem):
     # awful hack a versioning implementation which also may have a REQUEST associated
-    # interestingly it works w/o having an id, acquisition parent, etc.
+    # interestingly it works w/o having an acquisition parent, etc.
 
     # I hope you will not find this type in the add list of the ZMI ;-)
     meta_type='ZODB Hack Versioning'
@@ -34,9 +34,10 @@ class VersioningTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
        self.REQUEST = self.root.REQUEST
        manage_addZODBVersioning(self.root, 'versioning')
+       self.versioning = self.root.versioning
 
     def test_workflow1(self):
-        versioning = self.root.versioning
+        versioning = self.versioning
         # no public version yet
         self.assertEqual(versioning.get_public_version(),
                          None)
@@ -85,8 +86,8 @@ class VersioningTestCase(SilvaTestCase.SilvaTestCase):
                          None)
 
     def test_workflow2(self):
-        versioning = self.root.versioning
-        # versioning = Versioning.Versioning()
+        versioning = self.versioning
+
         # no public version yet
         self.assertEqual(versioning.get_public_version(),
                          None)
@@ -127,7 +128,7 @@ class VersioningTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEqual(versioning.get_public_version(), 'foo')
         
     def test_workflow3(self):
-        versioning = Versioning.Versioning()
+        versioning = self.versioning
  
         # create new version
         versioning.create_version('first', DateTime() - 1, DateTime() + 2)
@@ -140,8 +141,7 @@ class VersioningTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_workflow4(self):
         versioning = self.root.versioning
-        #versioning = Versioning.Versioning()
- 
+
         # create new version
         versioning.create_version('first', DateTime() + 1, DateTime() + 2)
         # approve it
@@ -164,7 +164,7 @@ class VersioningTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_workflow5(self):
         # test manual close
-        versioning = Versioning.Versioning()
+        versioning = self.versioning
         # create new version, publish before now, expire after now
         versioning.create_version('first', DateTime() - 1, DateTime() + 2)
         # approve it
@@ -203,7 +203,6 @@ class VersioningTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_workflow6(self):
         true=1
-        self.versioning = self.root.versioning        
         # test request for approval
         self._check_version_state()
         self.versioning.create_version('0', DateTime() + 10, None)
@@ -237,8 +236,6 @@ class VersioningTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_illegal_request_approval(self):
         # test if all kind of VersioningError are actually raised
-        self.versioning = self.root.versioning
-
         try:
             self.versioning.request_version_approval('Request message')
             self.fail(msg="cannot request for approval without version")
@@ -301,7 +298,6 @@ class VersioningTestCase(SilvaTestCase.SilvaTestCase):
 
     def _test_workflow7(self):
         # reopen a closed version
-        self.versioning = Versioning.Versioning()
  
         # create new version
         self.versioning.create_version('first', DateTime() - 1, DateTime() + 2)

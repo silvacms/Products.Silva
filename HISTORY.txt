@@ -3,6 +3,69 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.3 epoz 1 beta
+
+    Features added
+
+      - Epoz
+
+    Bugs fixed
+
+      - When run with Python 2.3 (at the point of writing not yet
+        recommended by Infrae), suppress source code encoding warnings when
+        starting up.
+
+      - Another problem with the upgrade code for handling index elements,
+        which causes a few of them to be missed, has been repaired.
+
+      - Ghost Folders now can be added by Editors (required Manager role
+        previously)
+
+  0.9.3.4
+  
+    Bugs fixed
+
+      - A problem in the upgrade code handling index elements in Silva
+        Documents was repaired.
+
+  0.9.3.3
+
+    Bugs fixed
+
+      - Smaller bugfixes in the silvaparser.
+
+      - created a new method addAddable on ExtensionRegistry. This makes 
+        it possible (again) to add classes to Silva without being required
+        to name your class the same as the module name (which the 
+        registerClass method needs). You simply register your class
+        the normal way with Zope, and then invoke addAddable for its
+        meta type.
+    
+      - Fixed acquisition for viewing locally defined roles on Silva
+        objects. (For instance: if user1 has editor role on pub1, and not
+        on pub2, viewing /pub1/pub2/foo/tab_access shouldn't show user1
+        as an editor, and now doesn't).
+
+  0.9.3.2
+
+    Bugs fixed
+
+      - Make render_icon create absolute URLs again for better
+        cacheability.
+
+      - Fixed the silva parser where a specific portnumber in the URL
+        would not get recognized.
+
+      - Improved link parser for anchors and query fragments.
+
+  0.9.3.1
+
+    Bugs fixed
+
+      - Improvements in the upgrade code, esp. for large databases. 
+    
+      - Fixed bug in displaying the "allowed" addables.
+
   0.9.3
 
     Features Added
@@ -160,6 +223,20 @@ Silva changes
 
         - Some cleanups in what is indexed in the catalog.
 
+        - Can add a new Silva root with non-ascii (latin1) characters
+          in the title.
+
+
+  0.9.2.6
+
+    Bugs fixed
+
+        - Fulltext also indexes title, not just XML content
+
+        - Fixed some unicode errors in the EmailMessageService.
+
+        - Cache is now bypassed if 'suppress_title' is in the request.
+
   0.9.2.5
 
     Features Added
@@ -190,7 +267,6 @@ Silva changes
         - View caching should now be more efficient as cachability
           check is now only made once for each new publish event. The
           view caching framework now also has some unit tests.
-          
 
   0.9.2.4
 

@@ -36,7 +36,6 @@
   rel="shortcut icon"
   tal:attributes="href string:${root_url}/globals/favicon.ico"
 />
-<tal:block replace="nothing"> <!-- Plone Stylesheets --> </tal:block>
 <style media="all"
   type="text/css"
   xml:space="preserve"
@@ -45,33 +44,9 @@
 >
 @imports
 </style>
-<link href="globals/silva.css"
-  rel="stylesheet"
-  tal:attributes="href string:${root_url}/globals/silva.css"
-/>
-<link href="globals/silvaContentStyle.css"
-  rel="stylesheet"
-  tal:condition="python: not model.implements_container()"
-  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css"
-/>
-<tal:block replace="nothing"> _______ hook for metatype stylesheet _______ </tal:block>
-<metal:block define-slot="metatype_css" />
-<link href="frontend.css"
-  rel="stylesheet"
-  tal:condition="python:template.id == 'tab_preview'"
-  tal:attributes="href here/frontend.css/absolute_url | nothing"
-/>
-<tal:block replace="nothing"> _______ hook for application specific stylesheet extension _______ </tal:block>
 <metal:block define-slot="extension_css" />
 <tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
 <metal:block define-slot="meta" />
-<metal:block define-slot="refresher" />
-<!-- Plone Javascript -->
-<script type="text/javascript"
-  xml:space="preserve"
-  tal:attributes="src string:${root_url}/globals/plone_javascripts.js"
->
-</script>
 <script language="JavaScript">
 
 // can be attached to formfields so that pressing enter makes the form use
@@ -87,28 +62,8 @@ function handle_default_action(element, event, action)
 }
 
 </script>
-<script tal:replace="nothing"> _______ editor hooks _______ </script>
-<script language="JavaScript"
-  type="text/javascript"
-  xml:space="preserve"
-  tal:condition="python: template.id == 'tab_edit_bxe'"
-  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url | nothing">
-</script>
-<script language="JavaScript"
-  type="text/javascript"
-  xml:space="preserve"
-  tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
-  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url | nothing"
-/>
-<span tal:replace="nothing"> _______ XXX Fixme: this needs to be absoluted _______ </span>
-<script language="JavaScript"
-  type="text/javascript"
-  xml:space="preserve"
-  tal:condition="python: template.id == 'tab_edit_eopro'"
-  tal:content="structure python: template.tab_edit_eopro_js()"
-/>
 </head>
-<body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
+<body tal:attributes="onload string:if (window.focus_editor) window.focus_editor()">
 
 <span tal:replace="nothing">
 <!-- ____________________________ start workspace ____________________________ -->
@@ -123,8 +78,7 @@ function handle_default_action(element, event, action)
   notice options/message | request/message | nothing;"
   condition="type">
   <div class="feedback"
-    style="margin-bottom:0;"
-    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'">
+    tal:attributes="class python:type == 'feedback' and 'fixed-feedback' or (type == 'error' and 'fixed-alert' or 'fixed-clear')">
     <span tal:replace="structure notice">
       message
     </span>

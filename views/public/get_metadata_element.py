@@ -1,3 +1,4 @@
+##parameters=set_name,element_name
 from Products.SilvaMetadata.Exceptions import BindingError
 
 # Get the data for a particular element of a particular set for

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.16.14.1 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -11,7 +11,6 @@ import time
 from DateTime import DateTime
 from Products.SilvaDocument.Document import Document, DocumentVersion
 from Products.Silva.SilvaObject import SilvaObject
-
 
 # monkey patch for the SilvaObject.view
 not_viewable='not viewable'
@@ -28,9 +27,8 @@ orig_is_cacheable = Document.is_cacheable
 
 class VersionedContentTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
-        self.root.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'document', 'Document')
-        self.document = self.root.document
+        self.document = self.add_document(self.root, 'document', 'Document')
+
         # monkey patches for the test_cache
         SilvaObject.view = base_view
         Document.is_cacheable = lambda x: 1

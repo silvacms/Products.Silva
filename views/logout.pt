@@ -9,10 +9,13 @@
   <title i18n:translate="logout">
     logout
   </title>
-  <meta content="
-      5;
-      url=/manage_zmi_logout"
+  <meta 
     http-equiv="refresh"
+    tal:define="
+      model request/model | here;
+      "
+    tal:attributes="
+      content string:5;; url=${model/absolute_url}/manage_zmi_logout"
   />
   <link href="globals/favicon.ico"
     rel="shortcut icon"

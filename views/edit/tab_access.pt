@@ -18,6 +18,8 @@
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;
     silva_permissions here/get_silva_permissions;
+    i_am_manager silva_permissions/ChangeSilvaViewRegistry | nothing;
+    managers_only_options python: ('Manager', 'ChiefEditor');    
 ">
 
 <table class="columns columns3"
@@ -107,19 +109,26 @@
                   </td>
                   <td class="align-right">
                     <tal:block repeat="local python:model.sec_get_local_roles_for_userid(userid)">
-                      <label tal:content="local" 
+                      <label 
+                        tal:content="local" 
                         tal:attributes="for string:revoke_${local}-${userid}">
                         local
                       </label>
-                      <input class="warning-checkbox"
-                        name="revoke_roles:list"
-                        type="checkbox"
-                        value=""
-                        tal:attributes="
-                          value python:'%s||%s' % (userid, local);
-                          id string:revoke_${local}-${userid}" 
-                        tal:define="global revokeable_roles python: 1"
-                        /><br tal:condition="not:repeat/local/end" />
+                        <input class="warning-checkbox"
+                          name="revoke_roles:list"
+                          type="checkbox"
+                          value=""
+                          tal:define="
+                            global revokeable_roles python: 1;
+                            enable python: i_am_manager or local not in managers_only_options;
+                            disable not: enable;
+                            "
+                          tal:attributes="
+                            value python:'%s||%s' % (userid, local);
+                            id string:revoke_${local}-${userid};
+                            disabled disable | nothing;
+                            " 
+                          /><br tal:condition="not:repeat/local/end" />
                     </tal:block>
                   </td>
                 </tr>
@@ -135,22 +144,17 @@
               <tr class="controls">
                 <td class="align-left"
                   colspan="2">
-                  <tal:block tal:condition="members">
+                  <tal:block
+                    condition="members"
+                    define="preselected python: request.form.get('assign_role')"
+                    >
                     <select class="manipulator"
                       name="assign_role"
                       title="select a role to assign">
                       <option value="None" i18n:translate="select_role">
                         select role:
                       </option>
-                      <tal:block repeat="role model/sec_get_roles">
-                        <option value="role"
-                          tal:content="role"
-                          tal:attributes="value role"
-                          tal:condition="python: role not in ['ChiefEditor', 'Manager'] or silva_permissions['ChangeSilvaViewRegistry']">
-                          Role name
-                        </option>
-                      </tal:block>
-                    </select>
+                      <metal:block use-macro="here/macro_role_options/macros/options" />                    </select>
                     <input class="button"
                       name="access_assign_to_user:method"
                       title="assign a local role to selected user(s)"
@@ -223,7 +227,7 @@
                   </td>
                   <td tal:content="requested_role">
                   </td>
-                  <td tal:content="python: test(member.is_approved(), here.gettext('Yes'),here.gettext('No'))">
+                  <td tal:content="python: member.is_approved() and 'Yes' or 'No'" >
                     yes or no
                   </td>
                 </tr>
@@ -289,14 +293,12 @@
                 i18n:translate="select_role">
                 select role:
               </option>
-              <tal:block repeat="role model/sec_get_roles">
-                <option value="role"
-                  tal:content="role"
-                  tal:condition="python:role not in ['Manager', 'ChiefEditor'] or silva_permissions['ChangeSilvaViewRegistry']"
-                  tal:attributes="value role; 
-                                  selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
-                  role name
-                </option>
+              <tal:block 
+                define="
+                  preselected python: request.form.get('assign_role')">
+                <metal:block 
+                  use-macro="
+                    here/macro_role_options/macros/options" />
               </tal:block>
             </select>
             <input class="button"
@@ -407,15 +409,21 @@
                           local
                         </label>
                         &nbsp;
-                        <input class="warning-checkbox"
-                          name="revoke_roles:list"
-                          type="checkbox"
-                          value=""
-                          tal:attributes="
-                            value python:'%s||%s' % (group, local);
-                            id string:revoke_${group};"
-                          tal:define="global revokeable_groups python: 1"
-                          /><br tal:condition="not:repeat/local/end" />
+                          <input class="warning-checkbox"
+                            name="revoke_roles:list"
+                            type="checkbox"
+                            value=""
+                            tal:define="
+                              global revokeable_groups python: 1;
+                              enable python: i_am_manager or local not in managers_only_options;
+                              disable not: enable;
+                              "
+                            tal:attributes="
+                              value python:'%s||%s' % (group, local);
+                              id string:revoke_${group};
+                              disabled disable | nothing;
+                              "
+                            /><br tal:condition="not:repeat/local/end" />
                       </tal:block>
                     </td>
                   </tr>
@@ -431,20 +439,18 @@
                 <tr class="controls">
                   <td class="align-left"
                     colspan="2">
-                    <tal:block tal:condition="groups">
+                    <tal:block 
+                      define="preselected python: request.form.get('assign_group_role')"
+                      condition="groups"                      
+                      >
                       <select class="manipulator"
-                        name="assign_role"
+                        name="assign_group_role"
                         title="select a role to assign">
                         <option value="None"
                           i18n:translate="select_role">
                           select role:
                         </option>
-                        <option value="role"
-                          tal:repeat="role model/sec_get_roles"
-                          tal:content="role"
-                          tal:attributes="value role">
-                          role name
-                        </option>
+                        <metal:block use-macro="here/macro_role_options/macros/options" />
                       </select>
                       <input class="button"
                         name="access_assign_to_group:method"
@@ -481,20 +487,19 @@
             <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
               <metal:block fill-slot="listing_actions">
                 <select class="manipulator"
-                  name="assign_role"
+                  name="assign_group_role"
                   title="select a role to assign">
                   <option value="None"
                     i18n:translate="select_role">
                     select role:
                   </option>
-                  <option value="role"
-                    tal:repeat="role model/sec_get_roles"
-                    tal:content="role"
-                    tal:attributes="
-                      value role; 
-                      selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
-                    Role
-                  </option>
+                  <tal:block 
+                    define="
+                      preselected python: request.form.get('assign_group_role')">
+                    <metal:block 
+                      use-macro="
+                        here/macro_role_options/macros/options" />
+                  </tal:block>
                 </select>
                 <input class="button"
                   type="submit"
@@ -520,8 +525,11 @@
         <form action="."
           method="POST"
           tal:define="
-            info view/get_viewer_role_info; acquired info/acquired;
-            selected_role info/selected_role">
+            info view/get_viewer_role_info; 
+            acquired info/acquired;
+            selected_role info/selected_role;
+            "
+          >
           <table class="listing sublisting">
             <thead>
               <tal:block replace="nothing"> 
@@ -590,12 +598,13 @@
                   <select 
                     class="manipulator"
                     name="role"
-                    title="select a role to assign" i18n:attributes="title">
-                    <option
-                      tal:repeat="role info/viewer_roles"
-                      tal:attributes="value role; selected python:test(role == selected_role, 'SELECTED', nothing)"
-                      tal:content="role">
-                    </option>
+                    title="select a role to assign" 
+                    i18n:attributes="title">
+                    <tal:block define="preselected selected_role">
+                      <metal:block 
+                        use-macro="
+                          here/macro_role_options/macros/access_restriction_options" />
+                    </tal:block>                    
                   </select>
                   <input 
                     class="button"
@@ -612,9 +621,10 @@
         </form>
         <tal:block replace="nothing"> 
           ____________________ utilities ____________________
+          turned off because of ridulously expensive tree walking
         </tal:block>
-        <table class="listing sublisting">
-	  <thead>
+        <table class="listing sublisting" tal:replace="nothing">
+          <thead>
             <tal:block replace="nothing">
               ______________ vein + title row _______________
             </tal:block>
@@ -690,7 +700,7 @@
         __________________ main __________________
       </tal:block>
       <td class="main">
-        <table class="listing sublisting"
+        <table class="listing"
             tal:define="info view/get_viewer_role_info;
                         selected_role info/selected_role">
           <thead>
@@ -741,6 +751,8 @@
             </tr>
           </tbody>
         </table>
+      </td>
+      <td class="right">
       </td>
     </tr>
   </tbody>

@@ -12,8 +12,8 @@ for error in validation_error.errors:
     result.append('<li class="error">%s: %s</li>\n' % (error.field['title'], error.error_text))
 
 return """
-<dl>
-<dt>Sorry, there are errors in the form data:</dt>
+<dl style="margin:0; padding:0.3em 0 0.2em 0;">
+<dt>Sorry, there are problems with these form fields:</dt>
 <dd>
 <ul class="tips">
 %s

@@ -4,13 +4,14 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=groups=None, assign_role=None
+##parameters=groups=None, assign_group_role=None
 ##title=
 ##
 view = context
 model = context.REQUEST.model
+assign_role = assign_group_role
 
-if not assign_role or assign_role == 'None':
+if not assign_group_role or assign_role == 'None':
     return view.tab_access(message_type="error", message="No role selected.")
 if not groups:
     return view.tab_access(message_type="error", message="No groups selected.")

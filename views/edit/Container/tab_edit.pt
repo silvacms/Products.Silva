@@ -65,7 +65,8 @@
               </tal:block>
               <tr class="top-controls">
                 <td colspan="6">
-                  <div style="float: left;" tal:condition="may_change_content">
+                  <div style="float: left;"
+                    tal:condition="may_change_content">
                   <input class="transport"
                     name="add_object:method"
                     type="submit"
@@ -100,7 +101,7 @@
                   <a class="transport"
                     style="float: right;"
                     href="tab_edit_import"
-                    title="import XML data - alt-i"
+                    title="import xml data or a zip file: alt-i"
                     accesskey="i"
                     i18n:attributes="title"
                     tal:condition="may_change_content"
@@ -506,7 +507,10 @@
                         title="cut items: alt-x"
                         accesskey="x" 
                         i18n:attributes="value title"
-                      />                        
+                      />               
+                    </tal:block>
+                  </tal:block>
+                  <tal:block tal:condition="python:(default_document or publishables or assets)">
                       <input class="button"
                         name="tab_edit_copy:method"
                         type="submit"
@@ -515,7 +519,8 @@
                         accesskey="c" 
                         i18n:attributes="value title"
                       />
-                    </tal:block>
+                  </tal:block>
+                  <tal:block condition="may_change_content">                  
                     <tal:block replace="nothing">
                       ______________ paste (to ghost) controls exist even
                       if there's no content (there should be something on 

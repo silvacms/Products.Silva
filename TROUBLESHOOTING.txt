@@ -1,6 +1,22 @@
 
 Installation problems
 
+  Broken public views after upgrading Silva to a newer version
+
+    (for 0.9.3: AttributeError on get_title_html or KeyError on
+    silva_icon_32.gif).
+
+    Because some API changes in Silva might break the layout templates and 
+    scripts in the Silva root, you should either replace those templates 
+    and scripts with the default ones (by removing the old ones and placing
+    the default ones using the 'Install default layout' button in 
+    service_extensions) or, if you have custom versions of these objects 
+    available, modify your custom templates and scripts to work with the 
+    current Silva version.
+
+    For more information see UPGRADE.txt.
+    
+
   The Silva (and XMLWidgets and ParsedXML) Product is broken after
   installation.
 
@@ -65,7 +81,7 @@ Installation problems
     e.g. http://www.infrae.com/products/silva/docs/SysAdmin/LinuxInstallation
 
    
- "AttributeError: _add_ordered_id"
+  "AttributeError: _add_ordered_id"
 
     This happens if one imports the "demo.zexp" outside a Silva Root.
     Please first create a Silva Root via the ZMI and import the
@@ -128,9 +144,33 @@ Installation problems
       context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;charset=utf-8')
 
 
+  Some links, image references, etc. are broken after the upgrade which
+  have been valid before the upgrade
+
+    The cause of the problem is that Silva has added some new methods
+    or other internal structures which impose new restrictions on the
+    set of valid content object ids. To operate properly Silva renames
+    content objects with conflicting ids to new ids in the upgrade 
+    process. However it does not fix links in other content objects
+    which reference theses objects.
+    
+    The upgrade process should leave a warning in the 'event.log' if it
+    needs to rename a content object. As Silva does not have a operable
+    reference management yet, You will have to check an possibly fix
+    references to the renamed objects manually after the upgrade. 
+
 
 
 Problems when using Silva 
+
+  Unicode problems with Silva Images when Localizer is installed.
+
+    There're some reports of unicode problems regarding Silva images when
+    when the Localizer Product is installed. So far the only solution found
+    is to uninstall Localizer, or set the environment variable
+    LOCALIZER_USE_ZOPE_UNICODE in the script starting Zope.
+    This may break other products relying on Localizer do apply its
+    unicode patches, however.
 
   Error when Adding a Silva Document
     
@@ -182,9 +222,13 @@ Problems when using Silva
     installation. Changing the settings there will get lost after a Zope 
     restart.  
     Alternatively one can set the environment variable 
-    ZSESSION_TIMEOUT_MINS in the script used to start Zope
+    ZSESSION_TIMEOUT_MINS in the script used to start Zope (2.6)
     You should be able to find more information about this in the 
     doc/ENVIRONMENT.txt of the Zope installation.
+    Since Zope 2.7 (which is not yet supported by Silva),
+    check with the variable "session-timeout-minutes" in the servers
+    configuration file.
+
 
   "KeyError" in the user lookup view of the "Access" tab
 
@@ -214,7 +258,6 @@ Problems when using Silva
     reload symbol).  If this solves the problem, please check with the
     caching policy of your browser; set the caching policy so the
     browser checks for a newer version every time it loads the page.
-
 
   "AttributeError: is_id_valid" or other errors when adding a Silva
   object via the ZMI
@@ -284,8 +327,29 @@ Problems when using Silva
     types of the extension product. Hopefully this will be changed in a later
     version of Silva.
 
+  Indexer object doesn't work properly
 
-Unicode Problems In-Depth
+    If you update the indexer object and get an 'Index updated'
+    message, but the indexer doesn't change anyway, you'll likely have
+    a missing 'xml.xpath' library. This is due to a missing or
+    incomplete installation of PyXML.
+
+  The SMI (or even the Zope server) seems to hang when copying a folder
+  with a lot of contents.
+
+    A possible cause may be that the data base cache is set to a too
+    small value. The default value of 400 is far too small for most
+    production systems.
+
+    To change the size of the data base cache, visit the "Control_Panel"
+    in the Zope root and choose "Database Management". The cache size
+    can be set in the tab "Cache Parameters" in the input field:
+    "Target number of objects in memory per cache".
+    In the (not yet supported) Zope 2.7 you may set the cache size via
+    the "cache-size" variable in the servers configuration file, section
+    "Database"
+
+  Unicode Problems In-Depth
 
     A computer is only able to work with digits. Therefore a computer
     uses numbers internally to represent characters. In the old days

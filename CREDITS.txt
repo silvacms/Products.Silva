@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.17 $
+  CVS:        $Revision: 1.17.48.1 $
 
 Silva is developed by Infrae (http://www.infrae.com). Initial (and
 continued) development was for the Erasmus University Rotterdam
@@ -18,13 +18,16 @@ Infrae Silva team:
   Kit Blake <kitblake@infrae.com>
   Jan-Wijbrand Kolman <jw@infrae.com>
   Guido Wesdorp <guido@infrae.com>
-  Christian Zagrodnick <zagy@infrae.com>
+  Guido Goldstein <gst@infrae.com>
 
 External developers:
 
-  Holger Krekel <hpk@devel.trillke.net>
+  Christian Zagrodnick <cz@gocept.com>
+  Godefroid Chapelle <gotcha@swing.be>
+  Joachim Schmitz <js@aixtraware.de>
   Clemens Klein-Robbenhaar <robbenhaar@espresto.com>
   Alexander Limi <alexander@limi.net>
+  Holger Krekel <hpk@devel.trillke.net>    
   
 Thanks to:
 
@@ -36,4 +39,3 @@ Thanks to:
 
 Many thanks go to Hans Verster <verster@daz.eur.nl> at the Erasmus
 University Rotterdam for his vision and support.
-

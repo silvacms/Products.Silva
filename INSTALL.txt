@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.3b1
+  Valid for:  Silva 0.9.3.x
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.40 $
+  CVS:        $Revision: 1.40.8.8 $
 
 Installing Silva
 
@@ -40,7 +40,7 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.9.3b1)
+    Silva (0.9.3.5)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some
@@ -52,21 +52,17 @@ Installing Silva
 
         "Silva":http://www.zope.org/Members/infrae/Silva
 
-      or just download:
-
-        "Silva-0.9.3b1.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3b1.tgz
-  
-      or everything together:
-
-        "Silva-0.9.3b1-all.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3b1-all.tgz
+      Also available there is a "all" tarball, which includes all required
+      Products for a Silva setup (but not including Groups, ExtFile, 
+      SilvaExternalSources and LDAP integration code).
 
     SilvaViews (0.9)
 
       The infrastructure used by Silva to attach views to content objects.
 
-        "SilvaViews":http://www.zope.org/Members/faassen/SilvaViews
+        "SilvaViews":http://www.zope.org/Members/infrae/SilvaViews
 
-    Formulator (1.5.0)
+    Formulator (1.6.2)
 
       A system for the construction and validation of web forms, used
       by Silva's views.
@@ -75,7 +71,8 @@ Installing Silva
 
         "Formulator":http://www.zope.org/Members/faassen/Formulator
 
-    FileSystemSite (1.3)
+    FileSystemSite (1.4) - not released yet at the time writing, but
+    included in the "all" tarball.
 
       A system for keeping PageTemplates, PythonScripts and so on on
       the filesystem. This allows us to maintain the view code for
@@ -86,7 +83,7 @@ Installing Silva
 
         "FileSystemSite":http://www.zope.org/Members/philikon/FileSystemSite
 
-    SilvaMetadata (0.7.4)
+    SilvaMetadata (0.7.5)
 
       Silva Metadata can be used to create metadata sets and
       associate these with Zope object types. The metadata can be
@@ -117,7 +114,7 @@ Installing Silva
 
         "Annotations":http://www.zope.org/Members/infrae/Annotations
 
-    SilvaDocument (0.9.3b1)
+    SilvaDocument (0.9.3.5)
 
       Silva Document contains the functionality implementing the Silva
       Document object and editor. It is optional, but in order to do
@@ -128,7 +125,7 @@ Installing Silva
 
         "SilvaDocument":http://www.zope.org/Members/infrae/SilvaDocument
 
-    XMLWidgets (0.10.2)
+    XMLWidgets (0.10.3)
 
       A system that builds on top of ParsedXML to assist in the
       rendering of editor, as well as in the generation of the HTML
@@ -136,7 +133,7 @@ Installing Silva
 
       XMLWidgets can be found here:
 
-        "XMLWidgets":http://www.zope.org/Members/faassen/XMLWidgets
+        "XMLWidgets":http://www.zope.org/Members/infrae/XMLWidgets
 
     ParsedXML (1.3.1)
 
@@ -159,7 +156,7 @@ Installing Silva
       If you want to take advantage of Groups support, please
       download and install the Groups product, here:
   
-       "Groups":http://www.zope.org/Members/faassen/Groups
+       "Groups":http://www.zope.org/Members/infrae/Groups
 
       Groups support is optional; Silva should run without the Groups
       product installed. Groups use a rather hackish technique called
@@ -183,13 +180,13 @@ Installing Silva
       
         http://www.zope.org/Members/infrae/SilvaExternalSources
         
-    ExtFile (1.XXX)
+    ExtFile (1.2.0)
 
       If you plan to manage large upload files with Silva, which
       should not be stored in the ZODB but the plain file system, you
       may consider installing the ExtFile product from here:
 
-        "ExtFile":http://www.zope.org/Members/shh/ExtFile/ExtFile-1.XXX.tar.gz
+        "ExtFile":http://zope.org/Members/shh/ExtFile/1.2.0/ExtFile-1.2.0.tar.gz
        
       This product is optional; see "Installing Silva with ExtFile"
       below. You may want to look into the README.txt of ExtFile at

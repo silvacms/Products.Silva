@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.7.6.1 $
 
 from bisect import insort_right
 
@@ -78,12 +78,18 @@ class ExtensionRegistry:
                 if self._silva_addables[i]._meta_type['name'] == meta_type:
                     del(self._silva_addables[i])
                     break
-            meta_types = Products.meta_types
-            for mt_dict in meta_types:
-                if mt_dict['name'] == meta_type:
-                    insort_right(self._silva_addables, Addable(mt_dict,
-                        priority))
+            self.addAddable(meta_type, priority)
    
+    def addAddable(self, meta_type, priority):
+        """Allow adding an addable to silva without using the
+        registerClass shortcut method.
+        """
+        meta_types = Products.meta_types
+        for mt_dict in meta_types:
+            if mt_dict['name'] == meta_type:
+                insort_right(self._silva_addables, Addable(mt_dict,
+                     priority))
+        
     def _orderExtensions(self):
         """Reorder extensions based on depends_on constraints.
         """

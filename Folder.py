@@ -1,10 +1,10 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.150 $
+# $Revision: 1.150.6.6 $
 
 # Zope
 from OFS import Folder, SimpleItem
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode # HACK
@@ -75,6 +75,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     def manage_afterAdd(self, item, container):
         # call after add code on SilvaObject
         self._afterAdd_helper(item, container)
+        self._set_creation_datetime()
         # call code on CatalogAware
         Folder.inheritedAttribute('manage_afterAdd')(self, item, container)
         # container added, always invalidate sidebar
@@ -519,10 +520,10 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     def can_set_title(self):
         """Check to see if the title can be set by user, meaning:
         * he is Editor/ChiefEditor/Manager, or
-        * he is editor _and_ the Folder does not contain published content
+        * he is Author _and_ the Folder does not contain published content
           or approved content recursively (self.is_published()).
         """
-        user = self.REQUEST.AUTHENTICATED_USER
+        user = getSecurityManager().getUser()
         if user.has_permission(SilvaPermissions.ApproveSilvaContent, self):
             return 1
         
@@ -571,7 +572,10 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed')
     def get_silva_addables_allowed(self):
-        return self.get_silva_addables_allowed_in_publication()
+        secman = getSecurityManager()
+        addables = self.get_silva_addables_allowed_in_publication()
+        allowed = [name for name in addables if secman.checkPermission('Add %ss' % name, self)]
+        return allowed
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_container')
@@ -689,25 +693,31 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         result.sort(lambda x, y: cmp(x.getId(), y.getId()))
         return result
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_silva_asset_types')
+    def get_silva_asset_types(self):
+        result = [addable_dict['name']
+                  for addable_dict in extensionRegistry.get_addables()
+                    if IAsset.isImplementedByInstancesOf(addable_dict['instance'])]
+        return result
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_assets')
     def get_assets(self):
         result = []
-        for object in self.objectValues():
-            if IAsset.isImplementedBy(object):
-                result.append(object)
-        result.sort(lambda x, y: cmp(x.getId(), y.getId()) )
+        for object in self.objectValues(self.get_silva_asset_types()):
+            result.append(object)
+        result.sort(lambda x,y: cmp(x.getId(), y.getId()))
         return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_assets_of_type')
     def get_assets_of_type(self, meta_type):
         result = []
-        for object in self.objectValues():
-            if (IAsset.isImplementedBy(object) and
-                object.meta_type == meta_type):
+        assets = self.get_assets()
+        for object in assets:
+            if object.meta_type == meta_type:
                 result.append(object)
-        result.sort(lambda x, y: cmp(x.getId(), y.getId()) )
         return result
 
     # FIXME: what if the objects returned are not accessible with my

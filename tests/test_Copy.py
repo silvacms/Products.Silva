@@ -8,16 +8,12 @@ if __name__ == '__main__':
 import SilvaTestCase
 from Testing import ZopeTestCase
 
-from Products.Silva import Folder, Ghost, Root
-from Products.SilvaDocument import Document
+from Products.Silva import Folder, Root
 from DateTime import DateTime
-from Products.ParsedXML.ParsedXML import ParsedXML
 
-# XXX ugh, awful monkey patch
-Document.Document.cb_isMoveable = lambda self: 1
-Folder.Folder.cb_isMoveable = lambda self: 1
-Ghost.Ghost.cb_isMoveable = lambda self: 1
 # manage_main hacks to copy succeeds
+# the original manage_main needs a request['URL1']
+# which is not set up in the test request
 Root.Root.manage_main = lambda *foo, **bar: None
 Folder.Folder.manage_main = lambda *foo, **bar: None
 

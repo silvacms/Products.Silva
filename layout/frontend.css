@@ -68,20 +68,23 @@ p {
   text-align: left;
 }
 
-p.lead {
-  font-weight : bold;
-}
-
-p.annotation {
-  font-style : italic;
-}
-
 pre {
   font-size: 120%;
   color: #444466;
   background: transparent;
   padding: 0;
   border: none;
+}
+
+
+/* ____________________________________________ Silva specific styles _____ */
+
+p.lead {
+  font-weight : bold;
+}
+
+p.annotation {
+  font-style : italic;
 }
 
 div.citation {
@@ -103,6 +106,33 @@ div.citation p.source {
   font-size : 90%;
   margin-top: 0;
   margin-bottom : 0;
+}
+
+
+/* ______________________________________________________ align/float _____ */
+
+.image-left {
+  text-align: left;
+}
+
+.image-center {
+  text-align: center;
+}
+
+.image-right {
+  text-align: right;
+}
+
+.float-left {
+  float: left;
+  margin-right: 1em;
+  clear: none;
+}
+
+.float-right {
+  float: right;
+  margin-left: 1em;
+  clear: none;
 }
 
 

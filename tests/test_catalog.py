@@ -6,15 +6,6 @@ import SilvaTestCase
 from DateTime import DateTime 
 
 from Products.Silva.interfaces import IVersion
-# XXX unfortunately have to import these to hack the security machinery
-from Products.SilvaDocument.Document import Document
-from Products.Silva.Folder import Folder
-from Products.Silva.Image import Image
-
-# XXX ugh would really like to avoid this..
-Document.cb_isMoveable = lambda self: 1
-Folder.cb_isMoveable = lambda self: 1
-Image.cb_isMoveable = lambda self: 1
         
 class CatalogTestCase(SilvaTestCase.SilvaTestCase):
 
@@ -56,8 +47,7 @@ class CatalogTestCase(SilvaTestCase.SilvaTestCase):
 class VersionCatalogTestCase(CatalogTestCase):
 
     def afterSetUp(self):
-        self.silva.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'alpha', 'Alpha')
+        self.add_document(self.silva, 'alpha', 'Alpha')
         self.alpha = self.silva.alpha
         
     def test_pristine(self): 
@@ -140,18 +130,18 @@ class ContainerCatalogTestCase(CatalogTestCase):
         
     def test_folder3(self):
         # cut & paste
-        self.silva.manage_addProduct['Silva'].manage_addFolder('sub', 'Sub')
-        self.silva.manage_addProduct['Silva'].manage_addFolder('sub2', 'Sub')
+        self.add_folder(self.silva, 'sub', 'Sub',
+                        policy_name='Silva Document',)
+        self.add_folder(self.silva, 'sub2', 'Sub',
+                        policy_name='Silva Document',)
         cb = self.silva.manage_cutObjects(['sub'])
         self.silva.sub2.manage_pasteObjects(cb)
-        # XXX since index objects are not created at the moment,
-        # this test will fail. Enable when index is created again
-        #self.assertStatus('/root/sub2/sub/index', ['unapproved'])
-        #self.assertStatus('/root/sub/index', [])
+        self.assertStatus('/root/sub2/sub/index', ['unapproved'])
+        self.assertStatus('/root/sub/index', [])
 
 class AssetCatalogTestCase(CatalogTestCase):
     def test_asset1(self):
-        self.silva.manage_addProduct['Silva'].manage_addImage('test', 'Test')
+        self.add_image(self.silva, 'test', 'Test')
         self.assertPath('/root/test')
         self.silva.manage_renameObject('test', 'test2')
         self.assertNoPath('/root/test')

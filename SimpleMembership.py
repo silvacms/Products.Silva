@@ -55,6 +55,12 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
         self._p_changed = 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'set_editor')
+    def set_editor(self, editor):
+        """Set the user's preferred editor"""
+        self._editor = editor
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'approve')
     def approve(self):
         """Approve the member"""
@@ -99,6 +105,18 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
         """
         pass
     
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'editor')
+    def editor(self):
+        """Return the id of the member's favorite editor"""
+        return getattr(self, '_editor', self.default_editor())
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'default_editor')
+    def default_editor(self):
+        """Return the id of the default editor"""
+        return 'field editor'
+
 Globals.InitializeClass(SimpleMember)
 
 manage_addSimpleMemberForm = PageTemplateFile(

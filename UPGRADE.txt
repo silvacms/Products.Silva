@@ -1,12 +1,12 @@
-Copyright (c) 2002, 2003 Infrae. All rights reserved.
+Copyright (c) 2002, 2003, 2004 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.3
+  Valid for:  Silva 0.9.3.x
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36 $
+  CVS:        $Revision: 1.36.8.12 $
 
 Upgrading from 0.9.1 and below
 
@@ -32,40 +32,15 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
     In order to upgrade to 0.9.3 you need a new versions of Silva,
     Formulator, XMLWidgets. In addition to this you now need
-    ProxyIndex, Annotations and SilvaMetadata too. The Groups product
-    has also been updated.
+    ProxyIndex, Annotations, SilvaViews and SilvaMetadata too. The
+    Groups product has also been updated.
 
-    Silva Documents are now in a seperate package called
+    Silva Documents are now in a separate package called
     SilvaDocument. This you need to have this Product too.
 
-    Silva:
-    
-        "Silva-0.9.3.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3.tgz
-
-    SilvaDocument:
-    
-        "SilvaDocument-0.XXX.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.XXX.tgz
-
-    Formulator:
-
-        "Formulator-1.XXX.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.XXX.tgz
-
-    XMLWidgets:
-
-        "XMLWidgets-0.XXX.tar.gz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.XXX.tgz
-
-    ProxyIndex:
-
-        "ProxyIndex-1.XXX.tgz":http://www.zope.org/Members/infrae/Silva/ProxyIndex-1.XXX.tgz
-
-    Annotations:
-
-        "Annotations-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/Annotations-0.XXX.tgz
-
-    SilvaMetadata:
-
-        "SilvaMetadata-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.XXX.tgz
-    
+    You can get a bundle of all required products here:
+ 
+       "Silva-0.9.3.5-all.tgz":http://www.zope.org/Members/infrae/Silva
 
   Refreshing and upgrading the Silva product
 
@@ -81,7 +56,47 @@ Upgrading Silva 0.9.2.x to 0.9.3
     script encounters an object with a reserved id, the object is
     renamed. The renaming is logged to Zope's event log on the file system.
     You need to manually fix all links and references to those object,
-    since the upgrade script doesn't upgrade those!
+    since the upgrade script doesn't upgrade those! The reserved ids are
+    the following:
+
+        Members,
+        REQUEST,
+        acl_users,
+        cached,
+        cancel,
+        code_source,
+        content,
+        content.html,
+        delete,
+        edit,
+        elements,
+        form,
+        fulltext,
+        getBatch,
+        getDocmaFormatName,
+        globals,
+        index_html,
+        insert,
+        layout_macro.html,
+        logout,
+        lookup,
+        memberform,
+        override.html,
+        placeholder,
+        preview_html,
+        promptWindow,
+        quotify,
+        redirect,
+        render,
+        save,
+        search,
+        standard_error_message,
+        standard_unauthorized_message,
+        submit,
+        up
+
+    Also it's not allowed to have an id starting with 'aq', 'get', 'manage',
+    'service' and 'set'.
    
     If you were using the `access restriction by ip address' feature of
     Silva 0.9.2 you need to install Groups before upgrading. During upgrade
@@ -95,11 +110,32 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
         If specific IP addresses are given in the AR an IP Group is created.
         All IPs given are added to the newly created IP Group and the 
-        ``Viewer''  role is assinged to that group.
+        ``Viewer''  role is assigned to that group.
     
     Please note that this conversion *is* a change in semantics, so double
     check your security declarations.
   
+    As some API changes are introduced you maybe need to fix your
+    layout templates and scripts in the Silva root. In case You are
+    using the default layout, you should delete the following files
+    in the Silva root:
+
+       frontend.css
+       get_metadata_element
+       index_html
+       layout_macro.html
+       standard_error_message
+       standard_unauthorized_message
+
+    and then install updated versions via the 'install default layout'
+    button for the 'Silva' product in the 'service_extensions'
+
+    In case You have custom versions of theses object installed,
+    please compare the versions delivered with the old and new
+    Silva version (you can find both in the 'layout' directory
+    of the product on the file system), and update your custom
+    versions accordingly.
+
     You should be done upgrading now.
  
   Page templates for presentation of public views
@@ -124,28 +160,38 @@ Upgrading Silva 0.9.2.x to 0.9.3
     should include the objects of your content types in the upgrade
     process.
 
-    For this you need to register an upgrade function associated with
+    For this you need to register an Upgrader associated with
     the meta type of your content type class at the
-    'upgrade_registry', before you upgrade. to achieve this place
-    something along the lines of the following code in the
-    '__init__.py' of your product::
+    'upgrade.registry', before you upgrade. To achieve this, create
+    an 'upgrade_093.py' in your product containing 
+    something along the lines of the following code:: 
 
-       from Products.Silva.upgrade import upgrade_registry, upgrade_list_titles_in_parsed_xml
+			 from Products.Silva.upgrade import registry, IUpgrader
 
-       def upgrade_sampledoc(obj):
-		       for o in obj.objectValues():				
-			         upgrade_list_titles_in_parsed_xml(o.documentElement)
+       class SampleUpgrader:
+           """ does some upgrade of my sample document for 0.9.3 """
 
-      upgrade_registry.register('Silva Sample Document', upgrade_sampledoc)
+           __implements__ = IUpgrader
 
-    The helper function 'upgrade_list_titles_in_parsed_xml' actually
-    does all the XML upgrades mentioned in the section above.
+           def upgrade_sampledoc(self, obj):
+               # obj is the object to be upgraded
+               ... do some upgrade here ...
 
-    If you only need to update the "last author" information, you do
-    not need to take any action; the upgrade process will do this
-    automatically for you.
+               # finally return the upgraded object
+               return obj
 
-    You also may want to take a look at the most current version of
-    the "SilvaDemoExtension
-    Product":http://cvs.infrae.com/SilvaDemoExtension/ for an example
-    of upgrading a custom content type.
+       registry.registerUpgrader(SampleUpgrader(), '0.9.3', 
+                                 'My Silva Sample Document')
+
+    Import 'upgrade_093' in the '__init__.py' of your product to make
+    sure the registration happens at Zope startup time.
+
+    Note that upgraders registered in the 'upgrade_093.py' of the Silva
+    product may also be run on your custom objects, if they are
+    registered for any meta type.
+
+    On the other hand if you have a custom Silva root object, you should 
+    check the 'upgrade_093.py' for upgraders registered for 'Silva Root'
+    and register them for your custom root, too, as otherwise they will
+    not be run on your root, leaving some important configuration
+    objects in their old state.

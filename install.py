@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97 2003/12/01 12:38:57 zagy Exp $
+# $Id: install.py,v 1.97.4.9 2004/03/10 22:04:55 clemens Exp $
 """Install for Silva Core
 """
 # Python
@@ -101,13 +101,16 @@ def install(root):
     if not hasattr(root, 'service_resources'):
         # folder containing some extra views and resources
         root.manage_addFolder('service_resources')
+    # if necessary, create service_resources/Layouts
+    # XXX this could move to installFromScratch later once all installs
+    # have been upgraded
+    if not hasattr(root.service_resources, 'Layouts'):
+        #folder containing installed Layouts
+        root.service_resources.manage_addFolder('Layouts')
         
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     add_fss_directory_view(root.service_resources, 'Silva', __file__, 'resources')
-    if not hasattr(root.service_resources, 'Layouts'):
-        #folder containing installed Layouts
-        root.service_resources.manage_addFolder('Layouts')
     
     # also register views
     registerViews(root.service_view_registry)
@@ -145,10 +148,25 @@ def install(root):
     
     configureContainerPolicies(root)
     
+    # if necessary, create service_layouts
+    # XXX this could move to installFromScratch later once all installs
+    # have been upgraded
     if not hasattr(root, 'service_layouts'):
         root.manage_addProduct['Silva'].manage_addLayoutService(
         'service_layouts', 'Silva Layouts Configuration')
-        
+        configure_default_layout_package(root)
+    from LayoutRegistry import DEFAULT_LAYOUT
+    root.set_layout(DEFAULT_LAYOUT)
+
+    # try to install Epoz
+    installEpoz(root)
+
+def configure_default_layout_package(root):
+    from LayoutRegistry import DEFAULT_LAYOUT
+    service_layouts = root.service_layouts
+    if DEFAULT_LAYOUT not in service_layouts.get_installed_names():
+        root.service_layouts.install(DEFAULT_LAYOUT)    
+
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     root.service_views.manage_delObjects(['Silva'])
@@ -284,7 +302,6 @@ def configureSecurity(root):
     
     add_permissions = [
         'Add Documents, Images, and Files',
-        'Add Silva Documents',
         'Add Silva Folders',
         'Add Silva Ghost Versions',
         'Add Silva Ghosts',
@@ -317,6 +334,7 @@ def configureSecurity(root):
     # not have these permissions. That's why we don't have to assign them
     # to viewer.
     root.manage_permission('Add Silva Publications', roleinfo.EDITOR_ROLES)
+    root.manage_permission('Add Silva Ghost Folders', roleinfo.EDITOR_ROLES)
     root.manage_permission('Add Silva Indexers', roleinfo.EDITOR_ROLES)
     root.manage_permission('Approve Silva content', roleinfo.EDITOR_ROLES)
     root.manage_permission('Change Silva access', roleinfo.CHIEF_ROLES)
@@ -350,7 +368,7 @@ def configureSecurity(root):
         pass
 
 def configureLayout(root, default_if_existent=0):
-    """Install layout code into root.
+    """Install common layout code into root.
     If the default_if_existent argument is true, ids will be prefixed with 
     default_ if the id already exists in the root.
     """
@@ -361,7 +379,7 @@ def configureLayout(root, default_if_existent=0):
     for id in ['index_html.py', 'preview_html.py',
                'get_metadata_element.py', 'get_layout_macro.py', ]:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
-
+        
     add_helper(root, 'frontend.css', globals(), dtml_add_helper, default_if_existent)
 
 def configureMembership(root):
@@ -614,6 +632,16 @@ def installSilvaDocument(root):
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
 
+def installEpoz(root):
+    try:
+        from Products import epoz
+    except:
+        pass
+    else:
+        if not hasattr(root, 'epoz'):
+            add_fss_directory_view(root, 'epoz', epoz.__file__, 'common')
+        if not hasattr(root, 'epoz_silva'):
+            add_fss_directory_view(root, 'epoz_silva', epoz.__file__, 'silva')
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""

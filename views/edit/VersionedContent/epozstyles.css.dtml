@@ -1,0 +1,251 @@
+/*****************************************************************************
+ *
+ * Epoz common styles
+ *
+ * Copyright (c) 2003 Epoz Contributors. See CREDITS.txt
+ *
+ * Instead of customizing this file, it is recommended to customize
+ * epozcustom.css. Feel free to use whole or parts of this for your
+ * own designs, but give credit where credit is due.
+ *
+ *****************************************************************************/
+
+div.epoz-fulleditor {
+  font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
+  border: solid 3px ButtonHighlight;
+  margin: 0em;
+  height: 100%;
+}
+
+div.epoz-fulleditor .epoz-editorframe {
+  margin-right: 20em;
+}
+
+div.epoz-smalleditor .epoz-editorframe {
+  margin-right: 0em;
+}
+
+div.epoz-smalleditor {
+  font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
+  border: solid 3px ButtonHighlight;
+  margin: 0em;
+  height: 100%;
+}
+
+div.epoz-tb {
+  background: #616d73;
+  padding: 2px 0 2px 11px;
+  margin-bottom: 0em;
+  border: 1px solid #475155;
+  border-top: none; 
+}
+
+#epoz-tb-buttons button {
+  color: red;
+  border: 1px solid #333;
+}
+
+#epoz-tb-buttons button:hover {
+  cursor: default;
+  border: 1px solid #6bb591;
+}
+
+#epoz-tb-buttons button:active {
+  border: 1px solid;
+  border: 1px solid #6bb591;
+}
+
+.epoz-tb-buttongroup {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+#epoz-tb-buttons button {
+  margin-top: 0;
+  margin-left: 0;
+  height: 24px;
+  width: 24px;
+  background-repeat: no-repeat;
+}
+
+#epoz-tb-buttons button:hover {
+  cursor: pointer;
+}
+
+span.epoz-tb-buttongroup button.epoz-save {background-image: url("epoz/epozimages/save.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-save:hover {background-image: url("epoz/epozimages/save.gif"); background-color: #b3d4bf;}
+span.epoz-tb-buttongroup button.epoz-logo {display:none; background-image: url("epoz/epozimages/epoz_icon.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-logo:hover {display:none; background-image: url("epoz/epozimages/epoz_icon.gif"); background-color: #b3d4bf;}
+
+span.epoz-tb-buttongroup button.epoz-bold {background-image: url("epoz/epozimages/bold.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-bold:hover, span.epoz-tb-buttongroup button.epoz-bold-pressed {background-image: url("epoz/epozimages/bold.gif"); background-color: #b3d4bf;}
+span.epoz-tb-buttongroup button.epoz-italic {background-image: url("epoz/epozimages/italic.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-italic:hover, span.epoz-tb-buttongroup button.epoz-italic-pressed {background-image: url("epoz/epozimages/italic.gif"); background-color: #b3d4bf;}
+span.epoz-tb-buttongroup button.epoz-underline {background-image: url("epoz/epozimages/underline.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-underline:hover, span.epoz-tb-buttongroup button.epoz-underline-pressed {background-image: url("epoz/epozimages/underline.gif"); background-color: #b3d4bf;}
+
+span.epoz-tb-buttongroup button.epoz-subscript {background-image: url("epoz/epozimages/subscript.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-subscript:hover, span.epoz-tb-buttongroup button.epoz-hover-pressed {background-image: url("epoz/epozimages/subscript.gif"); background-color: #b3d4bf;}
+span.epoz-tb-buttongroup button.epoz-superscript {background-image: url("epoz/epozimages/superscript.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-superscript:hover, span.epoz-tb-buttongroup button.epoz-superscript-pressed {background-image: url("epoz/epozimages/superscript.gif"); background-color: #b3d4bf;}
+
+span.epoz-tb-buttongroup button.epoz-hilitecolor {display: none;}
+span.epoz-tb-buttongroup button.epoz-forecolor {display: none;}
+
+span.epoz-tb-buttongroup button.epoz-inserthorizontalrule {display: none;}
+
+span.epoz-tb-buttongroup button.epoz-justifycenter {display: none;}
+span.epoz-tb-buttongroup button.epoz-justifyleft {display: none;}
+span.epoz-tb-buttongroup button.epoz-justifyright {display: none;}
+
+span.epoz-tb-buttongroup button.epoz-indent {display: none;}
+span.epoz-tb-buttongroup button.epoz-outdent {display: none;}
+
+span.epoz-tb-buttongroup button.epoz-insertunorderedlist {background-image: url("epoz/epozimages/list.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-insertunorderedlist:hover {background-image: url("epoz/epozimages/list.gif"); background-color: #b3d4bf;}
+span.epoz-tb-buttongroup button.epoz-insertorderedlist {background-image: url("epoz/epozimages/numbered.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-insertorderedlist:hover {background-image: url("epoz/epozimages/numbered.gif"); background-color: #b3d4bf;}
+
+span.epoz-tb-buttongroup button.epoz-undo {background-image: url("epoz/epozimages/undo.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-undo:hover {background-image: url("epoz/epozimages/undo.gif"); background-color: #b3d4bf;}
+span.epoz-tb-buttongroup button.epoz-redo {background-image: url("epoz/epozimages/redo.gif"); background-color: #cedae8;}
+span.epoz-tb-buttongroup button.epoz-redo:hover {background-image: url("epoz/epozimages/redo.gif"); background-color: #b3d4bf;}
+
+span.epoz-tb-buttongroup button.epoz-source {display: none}
+
+div.epoz-tb select {
+  color : #333767;
+  background: #cedae8;
+  border: 1px solid #797f7f;
+  vertical-align: top;
+}
+
+div.epoz-tb select:hover {
+  background: #b3d4bf;
+}
+
+div.epoz-editorframe {
+  margin-left: 0em;
+  margin-bottom: 0em;
+}
+
+#epoz-editor {
+  height: 580px;
+  width: 100%;
+  border: solid 1px #6c797f;
+  border-style: none none solid solid;
+  border-bottom-width: 2px;
+}
+
+div.epoz-toolboxes {
+  font-size: 1em;
+  color: black;
+  background: #cedae8;
+  width: 25em;
+  height: 580px;
+  margin-right: 0em;
+  border: solid 1px #6c797f;
+  border-style: none solid solid solid;
+  border-bottom-width: 2px;
+}
+
+div.epoz-toolbox, div.epoz-toolbox-active {
+  background: #cedae8;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+div.epoz-toolbox-active {
+  background: #d6efff;
+  color: red;
+}
+
+div.epoz-toolbox h1, div.epoz-toolbox-active h1 {
+  font-size: 1.1em;
+  font-weight: normal;
+  color: #ddeee3;
+  background-color: #829199;
+  width: 100%;
+  max-width: 22em;
+  margin-top: 0;
+  margin-bottom: 0em;
+  padding-left: 0.6em;
+  border: solid 1px #6c797f;
+  border-style: none solid none solid;
+  text-align: left;
+}
+
+div.epoz-tooltray {
+  /* background: #cedae8; */
+  margin: 0;
+  padding: 0.6em 0.3em 0.8em 0.5em; 
+}
+
+div.epoz-toolbox-label, span.epoz-toolbox-searchterm, 
+input.epoz-toolbox-st, button.epoz-toolbox-action, 
+div.epoz-toolbox-results {
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+}
+
+div.epoz-toolbox-label {
+  margin-bottom: 0.4em;
+}
+
+div.epoz-toolbox-results {
+  border: solid 2px #6c797f;
+  margin-top: 0.8em;
+  text-decoration: underline;
+  padding: 0.2em;
+  display: none;
+}
+
+div.epoz-toolbox table input {
+  width: 20px;
+}
+
+
+table#epoz-toolbox-addtable {
+}
+
+
+table#epoz-toolbox-edittable {
+  display: none;
+}
+
+
+div#epoz-colorchooser {
+  position: absolute;
+  visibility: hidden;
+  border: solid black 1px;
+  background-color: white;
+  padding: 0.2em;
+  font-size: small;
+}
+
+div#epoz-fgcolorchooser div:hover {
+  /* border: outset 1px; */
+}
+
+#epoz-toolbox-properties {
+    display: none;
+}
+
+#epoz-toolbox-properties input {
+  width: 16em;
+}
+
+#epoz-properties-description {
+  width: 22em;
+}
+
+#epoz-properties input, #epoz-properties-description {
+  font-size: x-small;
+  font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
+
+}
+
+#epoz-toolbox-debug {
+  display: none;
+}
+

@@ -19,17 +19,17 @@
   <tal:block replace="nothing">
     _______ table required for vertical lineup of buttons _______ 
   </tal:block>
-  <table cellspacing="0" cellpadding="0" width="100%" border="0">
+  <table tal:condition="silva_permissions/ApproveSilvaContent" cellspacing="0" cellpadding="0" width="100%" border="0">
     <tr>
       <td style="padding: 0.2em 0 0.2em 0">
-        <a class="button"
-          style="margin-top:0.5em;"
-          href="tab_edit_to_folder"
-          title="change Publication into Folder: alt-c"
-          accesskey="c"
-          tal:condition="python:type != 'Silva Root'">
-          convert to folder
-        </a>
+          <a class="button"
+            style="margin-top:0.5em;"
+            href="tab_edit_to_folder"
+            title="change Publication into Folder: alt-c"
+            accesskey="c"
+            tal:condition="python:type != 'Silva Root'">
+            convert to folder
+          </a>
       </td>
       <td class="align-right"
          style="padding: 0.2em 0 0.2em 0">
@@ -46,7 +46,7 @@
 <metal:fill fill-slot="more_control">
 <form method="POST"
   action="."
-  tal:condition="here/service_layouts/get_installed_names">
+  tal:condition="here/service_layouts/show_layout_section">
   <table class="listing">
     <thead>
       <tr tal:replace="nothing">

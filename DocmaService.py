@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.12 2003/09/24 15:38:49 faassen Exp $
+# $Id: DocmaService.py,v 1.12.24.1 2004/01/29 18:26:23 guido Exp $
 
 from __future__ import nested_scopes
 
@@ -8,10 +8,8 @@ from __future__ import nested_scopes
 import xmlrpclib
 # Zope
 import Globals
-from Acquisition import Implicit
 from AccessControl import Permissions, ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
-from ExtensionClass import Base 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.Silva.helpers import add_and_edit
 
