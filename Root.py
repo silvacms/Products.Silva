@@ -1,10 +1,10 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.57 $
+# $Revision: 1.58 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Globals import InitializeClass
+from Globals import InitializeClass, DTMLFile
 from DateTime import DateTime
 # Silva interfaces
 from IRoot import IRoot
@@ -29,6 +29,13 @@ class Root(Publication):
 
     __implements__ = IRoot
 
+    inherited_manage_options = Publication.manage_options
+    manage_options= (
+        ({'label':'Contents', 'action':'manage_contents'},) +
+        ({'label':'Services', 'action':'manage_services'},) +
+        inherited_manage_options[1:]
+        )
+
     def __init__(self, id, title):
         Root.inheritedAttribute('__init__')(self, id, title)
         # if we add a new root, version starts out as the software version
@@ -45,6 +52,16 @@ class Root(Publication):
         # since we're root, we don't want to notify our container
         # we do, however, have to add ourselves to the catalog then
         self.index_object()
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'manage_contents')
+    manage_contents = DTMLFile(
+        'www/folderContents', globals())
+    
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'manage_services')
+    manage_services = DTMLFile(
+        'www/folderServices', globals())
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_folder')
@@ -70,7 +87,28 @@ class Root(Publication):
         self._addables_forbidden = {}
         
     # ACCESSORS
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'serviceIds')
+    def serviceIds(self):
+        """Show all service ids.
+        """
+        return [id for id in Root.inheritedAttribute('objectIds')(self)
+                if id.startswith('service_')]
+        
+    security.declarePublic('objectItemsContents')
+    def objectItemsContents(self, spec=None):
+        """Don't display services by default in the Silva root.
+        """
+        return [item for item in Root.inheritedAttribute('objectItems')(self)
+                if not item[0].startswith('service_')]
 
+    security.declarePublic('objectItemsServices')
+    def objectItemsServices(self, spec=None):
+        """Display services separately.
+        """
+        return [item for item in Root.inheritedAttribute('objectItems')(self)
+                if item[0].startswith('service_')]
+ 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_root')
     def get_root(self):
