@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.42 $
+# $Revision: 1.43 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -45,14 +45,20 @@ class Root(Publication):
         pass
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'set_silva_addables_forbidden')
-    def set_silva_addables_forbidden(self, addable_names):
-        """Set addables that are forbidden for use in this site.
+                              'add_silva_addable_forbidden')
+    def add_silva_addable_forbidden(self, meta_type):
+        """Add a meta_type that is forbidden from use in this site.
         """
-        addables_forbidden = {}
-        for name in addable_names:
-            addables_forbidden[name] = 0
+        addables_forbidden = getattr(self.aq_base, '_addables_forbidden', {})
+        addables_forbidden[meta_type] = 0
         self._addables_forbidden = addables_forbidden
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'clear_silva_addables_forbidden')
+    def clear_silva_addables_forbidden(self):
+        """Clear out all forbidden addables; everything allowed now.
+        """
+        self._addables_forbidden = {}
         
     # ACCESSORS
 
