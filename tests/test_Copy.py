@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 import unittest
 import Zope
 from Products.Silva import Document, Folder
@@ -168,8 +168,35 @@ class CopyTestCase(unittest.TestCase):
         self.sroot.action_paste(self.REQUEST)
         self.assert_(hasattr(self.sroot, 'folder4'))
 
+    def test_cut5(self):
+        # try to cut an approved content
+        # should lead to an empty clipboard
+        self.sroot.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
+        self.sroot.doc1.approve_version()
+        self.sroot.action_cut(['doc1'], self.REQUEST)
+        self.sroot.folder4.action_paste(self.REQUEST)
+        self.assert_(hasattr(self.sroot.aq_explicit, 'doc1'),
+                     msg='doc1 should be still in root folder')
+        self.assert_(not hasattr(self.sroot.folder4.aq_explicit, 'doc1'),
+                     msg='doc1 should not be pasted in folder4')
+
     # should add unit tests for cut-pasting approved content
     # could occur if content is approved after its put on clipboard..
+
+    def test_cut6(self):
+        # try to cut a content, approve it and paste it later on
+        # (should lead to an error at paste time, for now nothing happens)
+        self.sroot.action_cut(['doc1'], self.REQUEST)
+        self.sroot.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
+        self.sroot.doc1.approve_version()
+        self.assert_(self.sroot.doc1.is_published())
+        self.sroot.folder4.action_paste(self.REQUEST)
+        self.assert_(hasattr(self.sroot.aq_explicit, 'doc1'),
+                     msg='doc1 should be still in root folder')
+        self.assert_(not hasattr(self.sroot.folder4.aq_explicit, 'doc1'),
+                     msg='doc1 should not be pasted in folder4')
+
+
     
     def test_delete1(self):
         # just delete doc1, it should work
