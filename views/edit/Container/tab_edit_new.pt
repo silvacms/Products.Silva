@@ -100,7 +100,7 @@
               tal:attributes="
                 href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+');
                 title string:Create a ${addable/name}">
-              <span tal:replace="addable/name">object</span>
+              <span tal:replace="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']">object</span>
             </a>
           </div>
         </td>
