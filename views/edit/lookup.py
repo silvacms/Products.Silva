@@ -8,4 +8,4 @@ referer = request.get('HTTP_REFERER', default_referer)
 
 session[key] = referer
 
-request.RESPONSE.redirect('%s/edit/tab_access_lookup' % model.absolute_url())
+request.RESPONSE.redirect('%s/edit/lookup_ui' % model.absolute_url())
