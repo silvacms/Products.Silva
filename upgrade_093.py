@@ -376,9 +376,8 @@ class PublicRenderingCacheFlusher:
     __implements__ = IUpgrader
 
     def upgrade(self, obj):
-        if isinstance(obj,VersionedContent):
-            obj._cached_data = {}
-            obj._cached_checked = {}
+        if isinstance(obj, VersionedContent):
+            obj._clean_cache()
         return obj
 
 class GroupsService:
@@ -430,6 +429,22 @@ class RefreshAll:
         root.service_extensions.install('SilvaDocument')
         return root
     
+class ClearEditorCache:
+    " Clear widget cache and other caches "
+
+    __implements__ = IUpgrader
+
+    def upgrade(self, root):
+        if hasattr(root, 'service_editor'):
+            editor_service = getattr(root, 'service_editor')
+            cache = editor_service._get_editor_cache()
+            zLOG.LOG('Silva', zLOG.INFO, 'Clear Editor Service cache')
+            cache.clear()
+        else:
+            zLOG.LOG(
+                'Silva', zLOG.INFO, 
+                'No Editor Service found to clear the cache of')        
+        return root   
 
 def initialize():
     home = package_home(globals())
@@ -457,6 +472,8 @@ def initialize():
                                       upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
         'Groups Service')
-
-    # as last action on the root, do an "all product refresh"
+        
+    # On the root, do an "all product refresh"
     upgrade.registry.registerUpgrader(RefreshAll(), '0.9.3', 'Silva Root')
+    # On the root, clear caches
+    upgrade.registry.registerUpgrader(ClearEditorCache(), '0.9.3', 'Silva Root')

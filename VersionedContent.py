@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.52.8.3 $
+# $Revision: 1.52.8.4 $
 
 # Python
 from StringIO import StringIO
@@ -39,6 +39,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
 
     # for backwards compatibilty - ugh.
     _cached_checked = {}
+    _cached_data = {}
 
     def __init__(self, id):
         """Initialize VersionedContent.
@@ -257,6 +258,10 @@ class VersionedContent(Content, Versioning, Folder.Folder):
                     # Yes! We have valid cached data! Return data
                     return data
         return None
+
+    def _clean_cache(self):
+        self._cached_data = {}
+        self._cached_checked = {}
     
     security.declareProtected(SilvaPermissions.View, 'is_cached')
     def is_cached(self, view_type='public'):
