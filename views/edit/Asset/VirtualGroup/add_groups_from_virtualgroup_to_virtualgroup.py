@@ -11,12 +11,12 @@ if not groups:
         message_type="error", 
         message="No group(s) selected, so nothing to use to add groups.")
 
-def handle_groups(virtualgroups):
-    groups_service = getattr(context, 'service_groups')
-    for virtualgroup in virtualgroups:        
-        if groups_service.isVirtualGroup(virtualgroup):
-            for group in groups_service.listGroupsInVirtualGroup(virtualgroup):
-                groupids[group] = 1
+added = model.copyGroupsFromVirtualGroups(groups)
+if added:
+    message = "Group(s) %s added to group." % view.quotify_list(added)
+else:
+    message = "No other groups added (were they already in this virtual group?)"
 
-handle_groups(groups)
-return view.add_groups_to_virtualgroup(groups=groupids.keys())
+return view.tab_edit(
+    message_type="feedback", 
+    message=message)

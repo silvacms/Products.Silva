@@ -4,6 +4,7 @@
 model = context.REQUEST.model
 view = context
 REQUEST = context.REQUEST
+groups_service = context.service_groups
 
 # if we cancelled, then go back to edit tab
 if REQUEST.has_key('add_cancel'):
@@ -31,7 +32,7 @@ else:
 
 # if we don't have the right id, reject adding
 if model.is_id_valid(id):
-    if context.service_groups.isGroup(id):
+    if groups_service.isGroup(id):
         return view.add_form(
             message_type="error", 
             message=\

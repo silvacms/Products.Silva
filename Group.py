@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -61,6 +61,29 @@ class Group(Asset):
         if not self.isValid():
             raise Unauthorized, "Zombie group asset"
         self.service_groups.addUserToZODBGroup(userid, self._group_name)
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'copyUsersFromGroup')
+    def copyUsersFromGroups(self, groups):
+        """copy users from other groups to this group"""
+        if not self.isValid():
+            raise Unauthorized, "Zombie group asset"
+        return self._copyUsersFromGroupsHelper(groups)
+
+    def _copyUsersFromGroupsHelper(self, groups):
+        sg = self.service_groups
+        users = {}
+        for group in groups:        
+            if sg.isVirtualGroup(group):
+                self._copyUsersFromGroupsHelper(sg.listGroupsInVirtualGroup(group))
+            elif sg.isNormalGroup(group):
+                for user in sg.listUsersInZODBGroup(group):
+                    users[user] = 1
+        userids = users.keys()
+        for userid in userids:
+            self.addUser(userid)
+        # For UI feedback
+        return userids
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'removeUser')

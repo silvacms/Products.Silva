@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.3 2003/01/24 08:45:55 zagy Exp $
+# $Id: VirtualGroup.py,v 1.4 2003/01/30 17:20:32 jw Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -50,7 +50,22 @@ class VirtualGroup(Asset):
             raise Unauthorized, "Zombie group asset"
         
         self.service_groups.addGroupToVirtualGroup(group, self._group_name)
-        
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'copyGroupsFromVirtualGroups')
+    def copyGroupsFromVirtualGroups(self, virtual_groups):
+        sg = self.service_groups
+        groups = {}
+        for virtual_group in virtual_groups:        
+            if sg.isVirtualGroup(virtual_group):
+                for group in sg.listGroupsInVirtualGroup(virtual_group):
+                    groups[group] = 1
+        groupids = groups.keys()
+        for groupid in groupids:
+            self.addGroup(groupid)
+        # For UI feedback
+        return groupids
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'removeGroup')
     def removeGroup(self, group):
