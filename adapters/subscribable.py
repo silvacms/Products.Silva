@@ -44,19 +44,19 @@ class Subscribable(adapter.Adapter):
     
     def __init__(self, context):
         adapter.Adapter.__init__(self, context)
-        if not hasattr(self.context, '__subscribability__'):
-            self.context.__subscribability__ = ACQUIRE_SUBSCRIBABILITY
-        if not hasattr(self.context, '__subscriptions__'):
-            self.context.__subscriptions__ = OOBTree()
-        if not hasattr(self.context, '__pending_subscription_tokens__'):
-            self.context.__pending_subscription_tokens__ = OOBTree()
+        if not hasattr(context, '__subscribability__'):
+            context.__subscribability__ = ACQUIRE_SUBSCRIBABILITY
+        if not hasattr(context, '__subscriptions__'):
+            context.__subscriptions__ = OOBTree()
+        if not hasattr(context, '__pending_subscription_tokens__'):
+            context.__pending_subscription_tokens__ = OOBTree()
     
     # ACCESSORS FOR UI
 
     security.declareProtected(
         SilvaPermissions.ApproveSilvaContent, 'isSubscribable')
     def isSubscribable(self):
-        if self.context.__subscribability__ == NOT_SUBSCRIBABLE:
+        if self.getContext().__subscribability__ == NOT_SUBSCRIBABLE:
             return False
         subscribables = self._buildSubscribablesList()
         return bool(subscribables)
@@ -64,12 +64,12 @@ class Subscribable(adapter.Adapter):
     security.declareProtected(
         SilvaPermissions.ApproveSilvaContent, 'subscribability')
     def subscribability(self):
-        return self.context.__subscribability__
+        return self.getContext().__subscribability__
 
     security.declareProtected(
         SilvaPermissions.ApproveSilvaContent, 'getSubscribedEmailaddresses')
     def getSubscribedEmailaddresses(self):
-        emailaddresses = list(self.context.__subscriptions__.keys())
+        emailaddresses = list(self.getContext().__subscriptions__.keys())
         return emailaddresses
     
     # ACCESSORS
@@ -80,32 +80,32 @@ class Subscribable(adapter.Adapter):
         return self._getSubscriptions().values()
     
     def _getSubscriptions(self):
-        if self.context.__subscribability__ == NOT_SUBSCRIBABLE:
+        context = self.getContext()
+        if context.__subscribability__ == NOT_SUBSCRIBABLE:
             return {}
         subscriptions = {}
         subscribables = self._buildSubscribablesList()
         for subscribable in subscribables:
             for emailaddress in subscribable.getSubscribedEmailaddresses():
                 if not subscriptions.has_key(emailaddress):
-                    # Use aq_inner to unwrap the adapter-containment
-                    contentsubscribedto = subscribable.context.aq_inner
                     subscriptions[emailaddress] = Subscription(
-                        emailaddress, contentsubscribedto)
+                        emailaddress, context)
         return subscriptions
         
     def _buildSubscribablesList(self, subscribables=None, marker=0):
         if subscribables is None:
             subscribables = []
-        if self.context.__subscribability__ == NOT_SUBSCRIBABLE:
+        context = self.getContext()
+        if context.__subscribability__ == NOT_SUBSCRIBABLE:
             # Empty list from the point without explicit subscribability onwards.
             del subscribables[marker:]
             return subscribables
         subscribables.append(self)
-        if self.context.__subscribability__ == SUBSCRIBABLE:
+        if context.__subscribability__ == SUBSCRIBABLE:
             # Keep a marker for the object with explicit subscribability set.
             marker = len(subscribables)
         # Use aq_inner first, to unwrap the adapter-containment.
-        parent = self.context.aq_inner.aq_parent
+        parent = context.aq_parent
         subscr = getSubscribable(parent)
         return subscr._buildSubscribablesList(subscribables, marker)
     
@@ -119,7 +119,7 @@ class Subscribable(adapter.Adapter):
 
     security.declarePrivate('isSubscribed')
     def isSubscribed(self, emailaddress):
-        subscriptions = self.context.__subscriptions__
+        subscriptions = self.getContext().__subscriptions__
         return bool(subscriptions.has_key(emailaddress))
         
     security.declarePrivate('getSubscription')
@@ -132,24 +132,24 @@ class Subscribable(adapter.Adapter):
     security.declareProtected(
         SilvaPermissions.ApproveSilvaContent, 'setSubscribability')
     def setSubscribability(self, flag):
-        self.context.__subscribability__ = flag
+        self.getContext().__subscribability__ = flag
     
     security.declareProtected(
         SilvaPermissions.ApproveSilvaContent, 'subscribe')
     def subscribe(self, emailaddress):
-        subscriptions = self.context.__subscriptions__
+        subscriptions = self.getContext().__subscriptions__
         subscriptions[emailaddress] = None
 
     security.declareProtected(
         SilvaPermissions.ApproveSilvaContent, 'unsubscribe')
     def unsubscribe(self, emailaddress):
-        subscriptions = self.context.__subscriptions__
+        subscriptions = self.getContext().__subscriptions__
         if subscriptions.has_key(emailaddress):
             del subscriptions[emailaddress]
 
     security.declarePrivate('generateConfirmationToken')
     def generateConfirmationToken(self, emailaddress):
-        tokens = self.context.__pending_subscription_tokens__
+        tokens = self.getContext().__pending_subscription_tokens__
         timestamp = time.time()
         token = self._generateToken(emailaddress, '%f' % timestamp)
         tokens[emailaddress] = (timestamp, token)
@@ -166,7 +166,7 @@ class Subscribable(adapter.Adapter):
         # pending list indefinitly if _validate is not called (end user
         # doesn't follow up on confirmantion email), or _validate is called,
         # but the supplied token is not valid.
-        tokens = self.context.__pending_subscription_tokens__
+        tokens = self.getContext().__pending_subscription_tokens__
         timestamp, validation_token = tokens.get(emailaddress,(None, None))
         if timestamp is None or validation_token is None:
             return False
@@ -191,18 +191,18 @@ class SubscribableRoot(Subscribable):
     
     def __init__(self, context):
         adapter.Adapter.__init__(self, context)
-        if not hasattr(self.context, '__subscribability__'):
-            self.context.__subscribability__ = NOT_SUBSCRIBABLE
-        if not hasattr(self.context, '__subscriptions__'):
-            self.context.__subscriptions__ = OOBTree()
-        if not hasattr(self.context, '__pending_subscription_tokens__'):
-            self.context.__pending_subscription_tokens__ = OOBTree()
+        if not hasattr(context, '__subscribability__'):
+            context.__subscribability__ = NOT_SUBSCRIBABLE
+        if not hasattr(context, '__subscriptions__'):
+            context.__subscriptions__ = OOBTree()
+        if not hasattr(context, '__pending_subscription_tokens__'):
+            context.__pending_subscription_tokens__ = OOBTree()
     
     def _buildSubscribablesList(self, subscribables=None, marker=0):
         # Overrides Subscribable._buildSubscribablesList to stop recursion.
         if subscribables is None:
             subscribables = []
-        if self.context.__subscribability__ == NOT_SUBSCRIBABLE:
+        if self.getContext().__subscribability__ == NOT_SUBSCRIBABLE:
             # Empty list from the point without explicit subscribability onwards.
             del subscribables[marker:]
             return subscribables
