@@ -104,18 +104,37 @@ see images_to_the_right.xslt::
  <!--
   In the 'normal' mode i.e. no mode specified, used in the left table
   cell, all images are ignored.
+
+  A special case are images in tables. If we move those out to the
+  right, the table layouts are messed up, so we keep the images there.
   -->
 
-  <xsl:template match="doc:image" />
+  <xsl:template match="doc:image[@link]">
+    <xsl:if test="ancestor::doc:table">
+      <a href="{@link}">
+        <img src="{@path}" />
+      </a>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="doc:image[not(@link)]">
+    <xsl:if test="ancestor::doc:table">
+      <img src="{@path}" />
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="doc:table" mode="images">
+  </xsl:template>
 
   <!--
   In the 'images' mode (mode="images"), used in the right table
   cell, all text() nodes are ignored, and the images are shown, as
   links if they have a link attribute, as plain images, if not.
   -->
-
+  
   <xsl:template match="text()" mode="images">
   </xsl:template>
+    
 
   <xsl:template match="doc:image[@link]" mode="images">
     <a href="{@link}">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet
+  exclude-result-prefixes="doc silva silva-content silva-extra"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns:doc="http://infrae.com/ns/silva_document"
   xmlns:silva="http://infrae.com/ns/silva"
@@ -179,19 +180,19 @@
   </xsl:template>
 
   <xsl:template match="doc:toc">
-    <xsl:copy-of select="./doc:rendered_html" />
+    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
   </xsl:template>
   
   <xsl:template match="doc:external_data">
-    <xsl:copy-of select="./doc:rendered_html" />
+    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
   </xsl:template>
   
   <xsl:template match="doc:code">
-    <xsl:copy-of select="./doc:rendered_html" />
+    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
   </xsl:template>
 
   <xsl:template match="doc:source">
-    <xsl:copy-of select="./doc:rendered_html" />
+    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
   </xsl:template>
   
   <xsl:template match="doc:br" mode="text-content">
@@ -200,14 +201,25 @@
 
   <xsl:template match="doc:table">
     <table>
-      <xsl:apply-templates mode="table-contents" />
+      <xsl:attribute name="class">
+        silvatable <xsl:value-of select="@type" />
+      </xsl:attribute>
+      <xsl:if test="./doc:row_heading">
+        <thead>
+          <tr valign="top">
+            <th colspan="*" class="transparent">
+              <xsl:value-of select="./doc:row_heading" />
+            </th>
+          </tr>
+        </thead>
+      </xsl:if>
+      <tbody>
+        <xsl:apply-templates mode="table-contents" />
+      </tbody>
     </table>
   </xsl:template>
 
   <xsl:template match="doc:row_heading" mode="table-contents">
-    <tr valign="top">
-      <th colspan="*" class="transparent"><xsl:apply-templates /></th>
-    </tr>
   </xsl:template>
   
   <xsl:template match="doc:row" mode="table-contents">
