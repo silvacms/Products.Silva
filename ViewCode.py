@@ -7,6 +7,8 @@ from Products.Silva import mangle, icon
 
 from Products.Silva.interfaces import IVersionedContent, IContent, IContainer
 
+from Products.Silva.i18n import translate as _
+
 class ViewCode:
     """A mixin to expose view specific code to the pagetemplates
 
@@ -76,22 +78,22 @@ class ViewCode:
             if next_status == 'no_next_version':
                 pass
             elif next_status == 'not_approved':
-                status = 'draft'
+                status = _('draft')
             elif next_status == 'request_pending':
-                status = 'pending'
+                status = _('pending')
             elif next_status == 'approved':
-                status = 'approved'
+                status = _('approved')
 
             if public == 'published':
-                public_status = 'published'
+                public_status = _('published')
             elif public == 'closed':
-                public_status = 'closed'
+                public_status = _('closed')
 
             if not status:
-                status_style = public_status.lower()
-                status = 'none'
+                status_style = str(public_status).lower()
+                status = _('none')
             else:
-                status_style = status.lower()
+                status_style = str(status).lower()
 
         return (status, status_style, public_status)
 
