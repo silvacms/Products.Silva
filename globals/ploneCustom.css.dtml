@@ -872,6 +872,29 @@ select.clipboard option.disabled {
 
 /* _________________________________________________________ feedback _____ */
 
+/* feedback under the matrix nav */
+div.fixed-feedback {
+  position:relative; /* for IE6 peakaboo bug */
+  color: #555;
+  background: #f3f3d9;
+  margin: 0;
+  border-bottom: &dtml-inputBorder;;
+  padding: 0em 0.8em 0.1em 0.8em;
+}
+div.fixed-alert {
+  position:relative; /* for IE6 peakaboo bug */
+  color: #3c2d50;
+  background: #f7d1d1;
+  margin: 0;
+  border-bottom: &dtml-inputBorder;;
+  padding: 0em 0.8em 0.1em 0.8em;
+}
+div.fixed-clear {
+  background: transparent;
+  margin: 0;
+  padding: 0em 0.8em 0.1em 0.8em;
+  border-bottom: 1px solid &dtml-workspace;;
+}
 
 div.feedback {
     color: #555;
