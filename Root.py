@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.36 $
+# $Revision: 1.37 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -84,22 +84,16 @@ class Root(Publication):
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'upgrade_silva')
-    def upgrade_silva(self, from_version='0.8.5'):
+    def upgrade_silva(self, from_version='0.8.6'):
         """Upgrade Silva from previous version.
         """
-        if from_version != '0.8.5':
-            raise "Not supported", "Upgrading from another version than 0.8.5 is not supported."
+        if not from_version.startswith('0.8.6'):
+            raise "Not supported", "Upgrading from another version than 0.8.6(.1) is not supported."
         import upgrade
         my_id = self.id
-        missing_ids = upgrade.from085to086(self.aq_inner.aq_parent, self)
-        if missing_ids:
-            missing_ids.sort()
-            msg = 'You may want to copy over the objects with the following ids by hand:<ul>%s</ul>' \
-                  % '\r\n'.join([ '<li>%s</li>' % id for id in missing_ids ])
-        else:
-            msg = ''
-        return "Upgrade of &laquo;%s&raquo; succeeded.<br /> A backup is in &laquo;%s_085&raquo;.<br /> %s" \
-               % (my_id, my_id, msg)
+        upgrade.from086to09(self.aq_inner.aq_parent, self)
+        return "Upgrade of &laquo;%s&raquo; succeeded.<br /> A backup is in &laquo;%s_086&raquo;.<br />" \
+               % (my_id, my_id)
     
 InitializeClass(Root)
 

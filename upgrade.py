@@ -1,5 +1,25 @@
 from ISilvaObject import ISilvaObject
 
+def from086to09(self, root):
+    """Upgrade Silva from 0.8.6(.1) to 0.9 as a simple matter of programming.
+    """
+    id = root.id
+    # Put a copy of the current Silva Root in a backup folder.
+    backup_id = id + '_086'
+    self.manage_addFolder(backup_id)
+    cb = self.manage_copyObjects([id])
+    backup_folder = getattr(self, backup_id)
+    backup_folder.manage_pasteObjects(cb_copy_data=cb)
+    # Delete and re-install the DirectoryViews
+    from install import add_fss_directory_view
+    root.service_views.manage_delObjects(['Silva'])
+    add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
+    root.manage_delObjects([
+        'globals', 'service_utils', 'service_widgets'])       
+    add_fss_directory_view(root, 'globals', __file__, 'globals')
+    add_fss_directory_view(root, 'service_utils', __file__, 'service_utils')
+    add_fss_directory_view(root, 'service_widgets', __file__, 'widgets')
+
 def from085to086(self, root):
     """Upgrade Silva from 0.8.5 to 0.8.6 as a simple matter of programming.
     """
