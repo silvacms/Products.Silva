@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.112 2005/02/21 14:48:44 gst Exp $
+# $Id: install.py,v 1.113 2005/03/03 09:50:04 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -212,31 +212,17 @@ def configureMetadata(root):
     fh = open(xml_file, 'r')
     collection.importSet(fh)    
 
-    # (re) set the default type mapping
-    mapping = root.service_metadata.getTypeMapping()
-    default = ''
-    tm = (
-        {'type':'Silva Ghost Version',      'chain':''},
-        {'type':'Silva Ghost Folder',       'chain':''},
-        {'type':'Silva Link Version',       'chain':'silva-content, silva-extra'},
-        {'type':'Silva Folder',             'chain':'silva-content, silva-extra'},
-        {'type':'Silva File',               'chain':'silva-content, silva-extra'},
-        {'type':'Silva Image',              'chain':'silva-content, silva-extra'},
-        {'type':'Silva Indexer',            'chain':'silva-content, silva-extra'},
-        {'type':'Silva Publication',        'chain':'silva-content, silva-extra'},
-        {'type':'Silva Root',               'chain':'silva-content, silva-extra'},
-        {'type': 'Silva AutoTOC',           'chain':'silva-content, silva-extra'},
-        {'type':'Silva Group',              'chain':'silva-content, silva-extra'},
-        {'type':'Silva Virtual Group',      'chain':'silva-content, silva-extra'},
-        {'type':'Silva IP Group',           'chain':'silva-content, silva-extra'},
-        )
-    mapping.editMappings(default, tm)
-
-    # initialize the default set if not already initialized
-    for set in collection.getMetadataSets():
-        if not set.isInitialized():
-            set.initialize()
-
+    setids = ('silva-content', 'silva-extra')
+    types = (
+        'Silva Root', 'Silva Publication', 'Silva Folder', 'Silva File',
+        'Silva Image', 'Silva Indexer', 'Silva AutoTOC', 'Silva Group',
+        'Silva Virtual Group', 'Silva IP Group', 'Silva Link Version')
+    root.service_metadata.addTypesMapping(types, setids)
+    
+    types = ('Silva Ghost Folder', 'Silva Ghost Version')
+    root.service_metadata.addTypesMapping(types, ('', ))
+    root.service_metadata.initializeMetadata()
+            
 def configureProperties(root):
     """Configure properties on the root folder.
     XXX Probably we'll get rid of most properties in the future.
