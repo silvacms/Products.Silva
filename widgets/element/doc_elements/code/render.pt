@@ -4,6 +4,6 @@
   <content tal:condition="here/content"
            tal:replace="python:string('%s [%s]' %(code_title, here.content()))" />
   <content tal:condition="not:here/content"
-           tal:replace="string:Empty code element" />
+           tal:replace="structure string:<span class=&quot;warning&quot;>Empty code element</span>" />
 </div>
 </div>

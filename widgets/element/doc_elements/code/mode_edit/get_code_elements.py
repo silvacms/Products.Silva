@@ -17,7 +17,7 @@
 # added only if they're not hidden, i.e. if they are not member of a list returned
 # by a script named 'hidden'.
 # This functionality allows the site developer to selectively hide some codecalls
-# from beeing called by lower level documents.
+# from being called by lower level documents.
 
 request = context.REQUEST
 
@@ -43,14 +43,14 @@ for obj in request.PARENTS:
       break
 
 if not items:
-  return '<p>No Code provided which could be selected</p>'
+  return ''
 
 if hidden:
   for hiddenItem in hidden:
     items.remove(hiddenItem)
 
 if not items:
-  return '<p>No Code provided which could be selected</p>'
+  return 'hidden'
 
 silvaRoot = context.silva_root()
 node = request.node
@@ -63,4 +63,4 @@ for item in items:
   else:
     options += '<option value="%s">%s</option>' % (item.absolute_url(silvaRoot), item.title_or_id())
 
-return '<select name="code">' + options + '</select>'
+return '&nbsp;<select name="code">' + options + '</select>'
