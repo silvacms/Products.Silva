@@ -1,3 +1,4 @@
+from Products.Silva.i18n import translate as _
 from Products.Silva.adapters.security import getViewerSecurityAdapter
 
 view = context
@@ -13,10 +14,12 @@ role = request['role']
 if old_role == role and not viewer_security.isAcquired():
     return model.edit['tab_access'](
         message_type='feedback',
-        message="Minimum role to access has not changed")
+        message=_("Minimum role to access has not changed"))
 
 viewer_security.setMinimumRole(role)
 
+msg = _("Minimum role to access is now set to $(role)")
+msg.mapping = {'role': role}
 return model.edit['tab_access'](
     message_type='feedback',
-    message="Minimum role to access is now set to %s" % role)
+    message= msg)

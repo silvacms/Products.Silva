@@ -1,4 +1,5 @@
 ##parameters=refs=None
+from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
@@ -11,7 +12,7 @@ from Products.Formulator.Errors import FormValidationError
 if not refs:
     return view.tab_status(
         message_type='error', 
-        message='Nothing was selected, so nothing was approved.')
+        message=_('Nothing was selected, so nothing was approved.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
@@ -45,13 +46,13 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_approved.append((get_name(obj), 'not a versionable object'))
+        not_approved.append((get_name(obj), _('not a versionable object')))
         continue
     if obj.is_version_approved():
-        not_approved.append((get_name(obj), 'version already approved'))
+        not_approved.append((get_name(obj), _('version already approved')))
         continue
     if not obj.can_approve():
-        not_approved.append((get_name(obj), 'content object or one of its containers is deactivated'))
+        not_approved.append((get_name(obj), _('content object or one of its containers is deactivated')))
         continue
     if not obj.get_unapproved_version():
     # SHORTCUT: To allow approval of closed docs with no new version available,
@@ -59,10 +60,10 @@ for ref in refs:
     # To revert this behaviour, *uncomment* the next two lines, and *comment*
     # the consecutive four lines.
 
-    #    not_approved.append((get_name(obj), 'no unapproved version available'))
+    #    not_approved.append((get_name(obj), _('no unapproved version available')))
     #    continue
         if obj.is_version_published():
-            not_approved.append((get_name(obj), 'version already public'))
+            not_approved.append((get_name(obj), _('version already public')))
             continue
         obj.create_copy()
     # publish
@@ -72,7 +73,7 @@ for ref in refs:
         obj.set_unapproved_version_publication_datetime(publish_datetime)
     elif not obj.get_unapproved_version_publication_datetime():
         # no date set, neither on unapproved version nor in tab_status form
-        not_approved.append((get_name(obj), 'no publication time was set'))
+        not_approved.append((get_name(obj), _('no publication time was set')))
         no_date_refs.append(ref)
         continue
     # expire
@@ -86,10 +87,14 @@ for ref in refs:
 
 if approved_ids:
     request.set('redisplay_timing_form', 0)
-    msg.append( 'Approval on: %s' % view.quotify_list(approved_ids))
+    message = _('Approval on: ${ids}')
+    message.mapping= {'ids': view.quotify_list(approved_ids)}
+    msg.append(str(message))
 
 if not_approved:    
-    msg.append( '<span class="error">could not approve: %s</span>' % view.quotify_list_ext(not_approved) )
+    message = _('<span class="error">could not approve: ${ids}</span>')
+    message.mapping= {'ids': view.quotify_list_ext(not_approved)}
+    msg.append(str(message))
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

@@ -1,4 +1,5 @@
 ##parameters=refs=None
+from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
@@ -11,7 +12,7 @@ from Products.Formulator.Errors import FormValidationError
 if not refs:
     return view.tab_status(
         message_type='error', 
-        message='Nothing was selected, so no approval was requested.')
+        message=_('Nothing was selected, so no approval was requested.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
@@ -29,7 +30,7 @@ clear_expiration_flag = result['clear_expiration']
 #if not publish_now_flag and not publish_datetime:
 #    return view.tab_status(
 #        message_type="error", 
-#        message="First set a publish time")
+#        message=_("First set a publish time"))
  
 now = DateTime()
 
@@ -46,15 +47,15 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_approved.append((get_name(obj), 'not a versionable object'))
+        not_approved.append((get_name(obj), _('not a versionable object')))
         not_approved_refs.append(ref)
         continue
     if not obj.get_unapproved_version():
-        not_approved.append((get_name(obj), 'no unapproved version'))
+        not_approved.append((get_name(obj), _('no unapproved version')))
         not_approved_refs.append(ref)
         continue
     if obj.is_version_approval_requested():
-        not_approved.append((get_name(obj),'approval already requested'))
+        not_approved.append((get_name(obj),_('approval already requested')))
         not_approved_refs.append(ref)
         continue
     # publish
@@ -64,7 +65,7 @@ for ref in refs:
         obj.set_unapproved_version_publication_datetime(publish_datetime)
     elif not obj.get_unapproved_version_publication_datetime():
         # no date set, neither on unapproved version nor in tab_status form
-        not_approved.append((get_name(obj), 'no publication time set'))
+        not_approved.append((get_name(obj), _('no publication time set')))
         no_date_refs.append(ref)
         continue
     # expire
@@ -73,18 +74,24 @@ for ref in refs:
     elif expiration_datetime:
         obj.set_unapproved_version_expiration_datetime(expiration_datetime)
 
-    message = '''\
-Request for approval via a bulk request in the publish screen of /%s
-(automatically generated message)''' % model.absolute_url(1)
+
+    message = _('''\
+Request for approval via a bulk request in the publish screen of /${url}
+(automatically generated message)''') 
+    message.mapping = {'url': model.absolute_url(1)}
     obj.request_version_approval(message)    
     approved_ids.append(get_name(obj))
 
 if approved_ids:
     request.set('redisplay_timing_form', 0)
-    msg.append('Request approval for: %s' % view.quotify_list(approved_ids))
+    message = 'Request approval for: ${ids}'
+    message.mapping = view.quotify_list(approved_ids)
+    msg.append(str(message))
 
 if not_approved:
-    msg.append('<span class="error">No request for approval on: %s</span>' % view.quotify_list_ext(not_approved))
+    message = '<span class="error">No request for approval on: ${ids}</span>'
+    message.mapping = view.quotify_list_ext(not_approved)
+    msg.append(str(message))
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

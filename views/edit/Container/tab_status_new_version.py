@@ -1,4 +1,5 @@
 ##parameters=refs=None
+from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
@@ -11,7 +12,7 @@ from Products.Formulator.Errors import FormValidationError
 if not refs:
     return view.tab_status(
         message_type='error', 
-        message='Nothing was selected, so no new version was created.')
+        message=_('Nothing was selected, so no new version was created.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
@@ -32,19 +33,23 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_copied.append((get_name(obj), 'not a versionable object'))
+        not_copied.append((get_name(obj), _('not a versionable object')))
         continue
     if obj.get_next_version():
-        not_copied.append((get_name(obj), 'already has a next version'))
+        not_copied.append((get_name(obj), _('already has a next version')))
         continue
     obj.create_copy()
     copied_ids.append(get_name(obj))
 
 if copied_ids:
     request.set('redisplay_timing_form', 0)
-    msg.append( 'Created a new version for: %s' % view.quotify_list(copied_ids) )
+    message = _('Created a new version for: ${ids}')
+    message.mapping = {'ids': view.quotify_list(copied_ids)}
+    msg.append(str(message))
 
 if not_copied:
-    msg.append( '<span class="error">could not create a new version for: %s</span>' % view.quotify_list_ext(not_copied) )
+    message = _('<span class="error">could not create a new version for: ${ids}</span>')
+    message.mapping = {'ids': view.quotify_list_ext(not_copied)}
+    msg.append(str(message))
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

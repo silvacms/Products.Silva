@@ -7,6 +7,8 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 model.sec_break_lock()
-return context.tab_edit(message_type="feedback", message="Lock broken")
+return context.tab_edit(message_type="feedback", message=_("Lock broken"))

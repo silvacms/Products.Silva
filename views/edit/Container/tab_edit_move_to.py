@@ -7,19 +7,21 @@
 ##parameters=ids=None,new_position=None
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 
 if ids is None or new_position is None:
     return view.tab_edit(
         message_type="error", 
-        message="Nothing was selected, so nothing was moved.",
+        message=_("Nothing was selected, so nothing was moved."),
         position=new_position)
 
 if new_position.lower() == 'position':
     return view.tab_edit(
         message_type="error", 
-        message="First choose a position number.",
+        message=_("First choose a position number."),
         ids=ids)
 
 actives = []
@@ -35,11 +37,17 @@ for id in ids:
 result = model.move_to(actives, int(new_position)-1)
 
 if result:
-    message = 'Object(s) %s moved' % view.quotify_list(actives)
+    message = _('Object(s) ${ids} moved')
+    message.mapping = {'ids': view.quotify_list(actives)}
+    message = str(message)
     if inactives:
-        message += ', <span class="error">but could not move %s</span>' % view.quotify_list(inactives)
+        message2 = ', <span class="error">but could not move ${ids}</span>'
+        message2.mapping = {'ids': view.quotify_list(inactives)}
+        message += str(message2)
     return view.tab_edit(message_type="feedback", message=message)
 else:
+    message = _("Could not move ${ids}.")
+    message.mapping = {'ids': view.quotify_list(ids)}
     return view.tab_edit(
         message_type="error", 
-        message="Could not move %s." % view.quotify_list(ids))
+        message=message)

@@ -1,3 +1,4 @@
+from Products.Silva.i18n import translate as _
 from Products.Formulator.Errors import ValidationError, FormValidationError
 import DateTime
 
@@ -7,7 +8,7 @@ view = context
 if model.get_approved_version() is None:
     return view.tab_status(
         message_type="error", 
-        message="There is no approved version.")
+        message=_("There is no approved version."))
 
 try:
     result = view.tab_status_form_change_settings.validate_all(context.REQUEST)
@@ -28,4 +29,4 @@ else:
     model.set_approved_version_publication_datetime(result['publish_datetime'])
 
 return view.tab_status(
-    message_type="feedback", message="Changed publication settings.")
+    message_type="feedback", message=_("Changed publication settings."))

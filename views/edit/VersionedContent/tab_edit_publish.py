@@ -1,3 +1,4 @@
+from Products.Silva.i18n import translate as _
 model = context.REQUEST.model
 view = context
 
@@ -8,7 +9,7 @@ if not model.get_unapproved_version():
     if model.is_version_published():
         return view.tab_edit(
             message_type="error", 
-            message="There is no unapproved version to approve.")
+            message=_("There is no unapproved version to approve."))
     model.create_copy()
 
 import DateTime
@@ -20,4 +21,4 @@ model.approve_version()
 if hasattr(model, 'service_messages'):
     model.service_messages.send_pending_messages()
     
-return view.tab_edit(message_type="feedback", message="Version approved.")
+return view.tab_edit(message_type="feedback", message=_("Version approved."))

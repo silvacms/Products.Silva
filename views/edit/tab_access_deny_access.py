@@ -7,17 +7,21 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 view = context
 request = view.REQUEST
 model = request.model
 
 if not request.has_key('requests') or not request['requests']:
-    return view.tab_access(message_type='error', message='No requests selected')
+    return view.tab_access(message_type='error', message=_('No requests selected'))
 
 messages = []
 for userid, role in [r.split('|') for r in request['requests']]:
     model.deny_role(userid, role)
-    messages.append('&#xab;%s&#xbb; has been denied the %s role' % (userid, role))
+    msg = _('&#xab;${user_id}&#xbb; has been denied the ${role} role')
+    msg.mapping = {'user_id': userid, 'role': role}
+    messages.append(str(msg))
 
 model.send_messages()
 

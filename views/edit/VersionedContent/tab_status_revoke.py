@@ -7,15 +7,17 @@
 ##parameters=
 ##title=Revoke approval of approved content
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 
 if not model.is_approved():
-    return view.tab_status(message_type="error", message="This content is not approved.")
+    return view.tab_status(message_type="error", message=_("This content is not approved."))
   
 model.unapprove_version()
 
 if hasattr(model, 'service_messages'):
     model.service_messages.send_pending_messages()
 
-return view.tab_status(message_type="feedback", message="Revoked approval.")
+return view.tab_status(message_type="feedback", message=_("Revoked approval."))

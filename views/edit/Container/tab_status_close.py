@@ -1,4 +1,5 @@
 ##parameters=refs=None
+from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
@@ -11,7 +12,7 @@ from Products.Formulator.Errors import FormValidationError
 if not refs:
     return view.tab_status(
         message_type='error', 
-        message='Nothing was selected, so nothing was closed.')
+        message=_('Nothing was selected, so nothing was closed.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
@@ -32,10 +33,10 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_closed.append((get_name(obj), 'not a versionable object'))
+        not_closed.append((get_name(obj), _('not a versionable object')))
         continue
     if not obj.is_version_published():
-        not_closed.append((get_name(obj), 'is not published'))
+        not_closed.append((get_name(obj), _('is not published')))
         continue
     obj.close_version()
     #obj.deactivate()
@@ -43,9 +44,13 @@ for ref in refs:
 
 if closed_ids:
     request.set('redisplay_timing_form', 0)
-    msg.append( 'Closed: %s' % view.quotify_list(closed_ids) )
+    message = 'Closed: ${ids}'
+    message.mapping = {'ids': view.quotify_list(closed_ids)}
+    msg.append(str(message))
 
 if not_closed:
-    msg.append( '<span class="error">could not close: %s</span>' % view.quotify_list_ext(not_closed) )
+    message = '<span class="error">could not close: ${ids}</span>'
+    message.mapping = {'ids': view.quotify_list_ext(not_closed)}
+    msg.append(str(message))
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

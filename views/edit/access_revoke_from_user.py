@@ -7,6 +7,7 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
 view = context
 request = context.REQUEST
 model = context.REQUEST.model
@@ -15,7 +16,7 @@ revoke_roles = request.form.get('revoke_roles', None)
 if revoke_roles is None:
     return view.tab_access(
         message_type="error", 
-        message="No roles to revoke selected.")
+        message=_("No roles to revoke selected."))
 
 def extract_users_and_roles(in_list):
     out_list = []
@@ -31,4 +32,4 @@ for user, role in extract_users_and_roles(revoke_roles):
 
 return view.tab_access(
     message_type="feedback", 
-    message="Role(s) revoked")
+    message=_("Role(s) revoked"))

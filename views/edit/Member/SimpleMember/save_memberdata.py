@@ -1,3 +1,5 @@
+from Products.Silva.i18n import translate as _
+
 view = context
 request = view.REQUEST
 model = request.model
@@ -22,19 +24,19 @@ except FormValidationError, e:
 messages = []
 if model.fullname() != result['fullname']:
     model.set_fullname(result['fullname'])
-    messages.append('fullname updated')
+    messages.append(str(_('fullname updated')))
 
 if model.email() != result['email']:
     model.set_email(result['email'])
-    messages.append('e-mail updated')
+    messages.append(str(_('e-mail updated')))
 
 if result.has_key('editor'):
     if model.editor() != result['editor']:
         model.set_editor(result['editor'])
-        messages.append('editor updated')
+        messages.append(str(_('editor updated')))
 
 if len(messages)==0:
-    messages.append('Nothing changed.')
+    messages.append(str(_('Nothing changed.')))
 
 request.SESSION['message_type'] = 'feedback'
 request.SESSION['message'] = ', '.join(messages)

@@ -10,13 +10,16 @@
 # Example code:
 
 # Import a standard function, and get the HTML request and response objects.
+from Products.Silva.i18n import translate as _
 from Products.PythonScripts.standard import html_quote
 request = container.REQUEST
 RESPONSE =  request.RESPONSE
 
 # Return a string identifying this script.
-print "This is the", script.meta_type, '"%s"' % script.getId(),
+msg = _('This is the ${meta_type} "${id}"')
+msg.mapping = {'meta_type': script.meta_type, 'id': script.getId()}
+print msg,
 if script.title:
     print "(%s)" % html_quote(script.title),
-print "in", container.absolute_url()
+print _("in"), container.absolute_url()
 return printed

@@ -7,6 +7,8 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 map = model.sec_get_groupsmapping()
 
@@ -15,4 +17,4 @@ if map:
 
 model.sec_cleanup_groupsmapping()
 
-return "map cleared"
+return _("map cleared")

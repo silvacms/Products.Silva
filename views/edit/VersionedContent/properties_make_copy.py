@@ -7,8 +7,10 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 model.sec_update_last_author_info()
 view = context
 model.create_copy()
-return view.tab_metadata(message_type="feedback", message="New version created.")
+return view.tab_metadata(message_type="feedback", message=_("New version created."))

@@ -1,3 +1,4 @@
+from Products.Silva.i18n import translate as _
 from Products.Silva.adapters.security import getViewerSecurityAdapter
 
 view = context
@@ -10,4 +11,4 @@ viewer_security.setAcquired()
 
 return model.edit['tab_access'](
     message_type="feedback",
-    message="Minimum role to access is now acquired")
+    message=_("Minimum role to access is now acquired"))

@@ -7,7 +7,11 @@
 ##parameters=model
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 if not model.is_default():
     return model.id
 else:
-    return '%s of %s' % (model.id, model.get_container().getId())
+    msg = _('${id} of ${parent_id}')
+    msg.mapping = {'id': model.id, 'parent_id ': model.get_container().getId()}
+    return msg

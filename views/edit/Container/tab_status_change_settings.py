@@ -1,4 +1,5 @@
 ##parameters=refs=None
+from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
@@ -11,7 +12,7 @@ from Products.Formulator.Errors import FormValidationError
 if not refs:
     return view.tab_status(
         message_type='error', 
-        message='Nothing was selected, so no settings were changed.')
+        message=_('Nothing was selected, so no settings were changed.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
@@ -30,7 +31,7 @@ if not publish_datetime and not expiration_datetime \
         and not clear_expiration_flag and not publish_now_flag:
     return view.tab_status(
         message_type='error', 
-        message='No publication nor expiration time nor any of the flags were set.',
+        message=_('No publication nor expiration time nor any of the flags were set.'),
         refs=refs)
 
 now = DateTime()
@@ -47,7 +48,7 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_changed.append((get_name(obj), 'not a versionable object'))
+        not_changed.append((get_name(obj), _('not a versionable object')))
         continue
     # HUGE check to see what actually may or can be changed...
     if silva_permissions['ApproveSilvaContent']:        
@@ -56,11 +57,11 @@ for ref in refs:
             # since we can change the expiration time for published content.
             if not obj.get_public_version():
                 not_changed.append(
-                    (get_name(obj), 'no next or public version available'))
+                    (get_name(obj), _('no next or public version available')))
                 continue
             # cannot publish, so report that when publ. times have been set
             if publish_now_flag or publish_datetime:
-                not_changed.append((get_name(obj), 'cannot change publication time of already public versions.'))
+                not_changed.append((get_name(obj), _('cannot change publication time of already public versions.')))
             # expire
             if clear_expiration_flag:
                 obj.set_public_version_expiration_datetime(None)
@@ -83,7 +84,7 @@ for ref in refs:
         changed_ids.append(get_name(obj))
     else:
         if not obj.get_unapproved_version():
-            not_changed.append((get_name(obj), 'no unapproved version'))
+            not_changed.append((get_name(obj), _('no unapproved version')))
             continue
         # publish
         if publish_now_flag:
@@ -99,9 +100,13 @@ for ref in refs:
 
 if changed_ids:
     request.set('redisplay_timing_form', 0)
-    msg.append( 'Changed settings on: %s' % view.quotify_list(changed_ids) )
+    message = _('Changed settings on: ${ids}')
+    message.mapping = {'ids': view.quotify_list(changed_ids)}
+    msg.append(str(message))
 
 if not_changed:
-    msg.append( '<span class="error">could not change settings on: %s</span>' % view.quotify_list_ext(not_changed) )
+    message = _('<span class="error">could not change settings on: ${ids}</span>')
+    message.mapping = {'ids': view.quotify_list_ext(not_changed)}
+    msg.append(str(message))
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

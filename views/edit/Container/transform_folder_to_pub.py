@@ -7,4 +7,6 @@
 ##parameters=
 ##title=
 ##
-return "Not yet :)"
+from Products.Silva.i18n import translate as _
+
+return _("Not yet :)")

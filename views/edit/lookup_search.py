@@ -1,4 +1,6 @@
 ##parameters=name=None
+from Products.Silva.i18n import translate as _
+
 request = context.REQUEST
 session = request.SESSION
 model = request.model
@@ -11,21 +13,27 @@ name = name.strip()
 if name == '':
     return view.lookup_ui(
         message_type="error", 
-        message="No search string supplied.")
+        message=_("No search string supplied."))
 
 if len(name) < 2:
+    msg = _("Search string '${string}' is too short. Please try a longer search string.")
+    msg.mapping = {'string': name}
     return view.lookup_ui(
         message_type="error", 
-        message="Search string '%s' is too short. Please try a longer search string." % name)       
+        message= msg)       
 
 results = model.sec_find_users(name)
 if not results:
+    msg = _("No users found for search string '${string}'.")
+    msg.mapping = {'string': name}
     return view.lookup_ui(
         message_type="feedback", 
-        message="No users found for search string '%s'." % name)
+        message= msg)
 
+msg = _("Searched for '${string}'.")
+msg.mapping = {'string': name}
 return view.lookup_ui(
     message_type="feedback", 
-    message="Searched for '%s'." % name,
+    message=msg,
     results=results)
 

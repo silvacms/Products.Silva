@@ -1,4 +1,5 @@
 ##parameters=tab_item
+from Products.Silva.i18n import translate as _
 model = context.REQUEST.model
 view = context
 tab_name, tab_id, tab_up_id, toplink_accesskey, tab_accesskey, uplink_accesskey = tab_item
@@ -22,7 +23,7 @@ else:
     tab_url = None
 
 return { 
-  'tab_name' : tab_name,
+  'tab_name' : _(tab_name),
   'tab_id' : tab_id,
   'toplink_url' : toplink_url,
   'tab_url' : tab_url,

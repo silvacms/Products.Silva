@@ -7,13 +7,15 @@
 ##parameters=userids=None, assign_role=None
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 request = context.REQUEST
 view = context
 if not assign_role or assign_role == 'None':
-    return view.tab_access(message_type="error", message="No role selected.")
+    return view.tab_access(message_type="error", message=_("No role selected."))
 
 if not userids:
-    return view.tab_access(message_type="error", message="No user(s) selected.")
+    return view.tab_access(message_type="error", message=_("No user(s) selected."))
 
 model = request.model
 #assigned = []

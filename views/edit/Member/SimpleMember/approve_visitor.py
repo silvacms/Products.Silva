@@ -7,6 +7,8 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 view = context
 request = view.REQUEST
 model = request.model
@@ -14,13 +16,13 @@ next_view = '%s/edit' % model.absolute_url()
 
 if not model.email() or not model.fullname():
     request.SESSION['message_type'] = 'error'
-    request.SESSION['message'] = '<dl>\n<dt>Sorry, content is missing:\n<dd><span class="error">Both a name and e-mail address are required to approve someone</span>.</dd>\n</dl>'
+    request.SESSION['message'] = _('<dl>\n<dt>Sorry, content is missing:\n<dd><span class="error">Both a name and e-mail address are required to approve someone</span>.</dd>\n</dl>')
     request.RESPONSE.redirect(next_view)
     return
 
 model.approve()
 
 request.SESSION['message_type'] = 'feedback'
-request.SESSION['message'] = 'Member is approved'
+request.SESSION['message'] = _('Member is approved')
 
 request.RESPONSE.redirect(next_view)

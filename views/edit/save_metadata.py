@@ -1,3 +1,5 @@
+from Products.Silva.i18n import translate as _
+
 request = context.REQUEST
 model = request.model
 view = context
@@ -25,10 +27,10 @@ if request.form.has_key('renderer_name_select'):
 if all_errors:
     # There were errors...
     type = 'error'
-    msg = 'The data that was submitted did not validate properly.'
+    msg = _('The data that was submitted did not validate properly.')
 else:
     type = 'feedback'
-    msg = 'Metadata saved.'
+    msg = _('Metadata saved.')
     model.sec_update_last_author_info()
 
 return view.tab_metadata(

@@ -1,3 +1,4 @@
+from Products.Silva.i18n import translate as _
 from Products.Formulator.Errors import FormValidationError
 
 model = context.REQUEST.model
@@ -12,9 +13,9 @@ except FormValidationError, e:
 # check for status
 message=None
 if model.get_unapproved_version() is None:
-    message='There is no unapproved version.'
+    message=_('There is no unapproved version.')
 elif model.is_version_approval_requested():
-    message='Approval has already been requested.'
+    message=_('Approval has already been requested.')
 # no check for closed ...
 
 if message is not None:
@@ -33,4 +34,4 @@ model.request_version_approval(result['message'])
 if hasattr(model, 'service_messages'):
     model.service_messages.send_pending_messages()
     
-return view.tab_status(message_type="feedback", message="Approval requested.")
+return view.tab_status(message_type="feedback", message=_("Approval requested."))

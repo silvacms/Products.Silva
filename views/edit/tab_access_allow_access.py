@@ -7,12 +7,14 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 view = context
 request = view.REQUEST
 model = request.model
 
 if not request.has_key('requests') or not request['requests']:
-    return view.tab_access(message_type='error', message='No requests selected')
+    return view.tab_access(message_type='error', message=_('No requests selected'))
 
 messages = []
 for userid, role in [r.split('|') for r in request['requests']]:
@@ -20,7 +22,9 @@ for userid, role in [r.split('|') for r in request['requests']]:
         model.allow_role(userid, role)
     except Exception, e:
         return view.tab_access(message_type='error', message=e) 
-    messages.append('&#xab;%s&#xbb; allowed the %s role' % (userid, role))
+    msg = _('&#xab;${user_id}&#xbb; allowed the ${role} role')
+    msg.mapping = {'user_id': userid, 'role': role}
+    messages.append(str(msg))
 
 model.send_messages()
 
