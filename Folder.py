@@ -301,7 +301,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             return 1
 
     _id_re = re.compile(r'^[a-zA-Z]\w*[a-zA-Z0-9]+$')
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'is_id_valid')
     def is_id_valid(self, id):
         """Check whether id is valid.
         """
