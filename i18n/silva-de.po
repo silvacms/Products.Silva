@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Wed Dec  8 18:26:36 2004\n"
-"PO-Revision-Date: 2004-12-14 14:55+0100\n"
+"PO-Revision-Date: 2004-12-14 15:17+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -2925,15 +2925,15 @@ msgstr ""
 
 #: /views/edit/Container/tab_status.pt:93
 msgid "revision"
-msgstr ""
+msgstr "Revision"
 
 #: /views/edit/Container/tab_status.pt:96
 msgid "publication due"
-msgstr ""
+msgstr "Zuletzt publiziert"
 
 #: /views/edit/Container/tab_status.pt:99
 msgid "expiration due"
-msgstr ""
+msgstr "Läuft aus am"
 
 #: /views/edit/Container/tab_status_approve.py:15
 msgid "Nothing was selected, so nothing was approved."
@@ -2948,11 +2948,11 @@ msgstr ""
 #: /views/edit/Container/tab_status_revoke.py:36
 #: /views/edit/Container/tab_status_withdraw.py:26
 msgid "not a versionable object"
-msgstr ""
+msgstr "nicht versionierbares Objekt"
 
 #: /views/edit/Container/tab_status_approve.py:52
 msgid "version already approved"
-msgstr ""
+msgstr "Version bereits genehmigt"
 
 #: /views/edit/Container/tab_status_approve.py:55
 msgid "content object or one of its containers is deactivated"
