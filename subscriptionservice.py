@@ -3,6 +3,8 @@
 # Python
 import re
 import urllib
+from smtplib import SMTPException
+
 # Zope
 from OFS import Folder
 from OFS.CopySupport import _cb_encode, _cb_decode
@@ -278,7 +280,12 @@ class SubscriptionService(Folder.Folder):
     def _sendEmail(self, template, data):
         mailservice = getattr(self.get_root(), MAILHOST_ID)
         message = template % data
-        mailservice.send(message)        
+        try:
+            mailservice.send(message)        
+        except SMTPException:
+            import sys, zLOG
+            zLOG.LOG('Silva service_subscriptions', zLOG.PROBLEM,
+                     'sending mail failed', sys.exc_info())
 
     def _create_ref(self, content):
         """Create encoded reference to object.
