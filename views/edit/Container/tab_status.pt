@@ -166,7 +166,7 @@
           _______ revision cell _______
         </tal:block>
         <td class="align-right">
-          <a title="status"
+          <a title="publish"
             tal:condition="obj/status | nothing"
             tal:attributes="
               class obj/status_style | default;
@@ -351,7 +351,7 @@
           type="submit"
           name="tab_status_reject:method"
           value="reject" 
-          title="reject pending request for approval of selected objects: alt-j"
+          title="reject pending request for approval: alt-j"
           accesskey="j"
           tal:condition="rejectables"
         />
@@ -359,7 +359,7 @@
           type="submit"
           name="tab_status_revoke:method"
           value="revoke"
-          title="withdraw approval of approved versions of selected objects: alt-v"
+          title="withdraw approval of approved versions: alt-v"
           accesskey="v"
           tal:condition="revokeables"
         />
@@ -375,7 +375,7 @@
           type="submit" 
           name="tab_status_new_version:method" 
           value="new version" 
-          title="create new versions of published docs of selected objects: alt-n" 
+          title="create new versions of published docs: alt-n" 
           accesskey="n"
           tal:condition="new_versionables"
         />
@@ -386,7 +386,7 @@
           name="tab_status_change_settings:method"
           type="submit"
           value="change timings"
-          title="change publish and expiration times for selected objects: alt-s"
+          title="change publish and expiration times: alt-s"
           accesskey="s"
           tal:condition="python: approveables or closeables or revokeables or rejectables"
         />
@@ -396,7 +396,7 @@
           name="tab_status_approve:method"
           type="submit"
           value="approve"
-          title="approve or publish new versions of selected objects: alt-o"
+          title="approve or publish new versions: alt-o"
           accesskey="o"
           tal:condition="python: approveables or rejectables"
         />
@@ -440,7 +440,7 @@
           name="tab_status_change_settings:method"
           type="submit"
           value="change timings"
-          title="change publish and expiration times for selected objects: alt-s"
+          title="change publish and expiration times: alt-s"
           accesskey="s"
           tal:condition="python: approveables"
         />

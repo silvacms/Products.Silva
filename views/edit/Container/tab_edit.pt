@@ -199,7 +199,7 @@
                         <img tal:replace="structure python:view.render_icon(item)" />
                       </a>
                       <a class="blacklink"
-                        title="edit"
+                        title="content"
                         tal:content="item/id"
                         tal:attributes="
                           href python:here.get_editor_link(item);
@@ -216,8 +216,8 @@
                           is_published item/is_version_published | nothing;
                           is_approved item/is_version_approved | nothing"
                         tal:condition="python:is_published or is_approved"
-                        tal:attributes="src string:${root_url}/globals/checkmark.gif" />
-
+                        tal:attributes="src string:${root_url}/globals/checkmark.gif"
+                      />
                     </td>
                     <tal:block replace="nothing">
                       _______ title cell _______
@@ -234,17 +234,19 @@
                       </a>
                     </td>
                     <tal:block replace="nothing">
-                      _______ modified date/tab_metadata downlink cell _______
+                      _______ modified date / properties downlink cell _______
                     </tal:block>
                     <td tal:define="modification_time item/get_modification_datetime | nothing">
-                      <a class="blacklink" title="metadata"
+                      <a class="blacklink"
+                        title="properties"
                         tal:condition="modification_time"
                         tal:attributes="href string:${item_url}/edit/tab_metadata"
                         tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
                       >
                         date
                       </a>
-                      <a class="closed" title="settings"
+                      <a class="closed"
+                        title="properties"
                         tal:condition="not:modification_time"
                         tal:attributes="href string:${item_url}/edit/tab_metadata"
                         i18n:translate="n/a"
@@ -253,17 +255,19 @@
                       </a>
                     </td>
                     <tal:block replace="nothing">
-                      _______ author/tab_status downlink cell _______
+                      _______ author / publish downlink cell _______
                     </tal:block>
                     <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
-                      <a class="blacklink" title="status"
+                      <a class="blacklink"
+                        title="publish"
                         tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
                         tal:attributes="href string:${item_url}/edit/tab_status"
                         tal:content="structure last_author"
                       >
                         authorname
                       </a>
-                      <a class="closed" title="publish"
+                      <a class="closed"
+                        title="publish"
                         tal:condition="python:item.implements_container()"
                         tal:attributes="href string:${item_url}/edit/tab_status"
                         i18n:translate="n/a"
@@ -363,7 +367,7 @@
                       </a>
                       <a class="blacklink"
                         href="asset"
-                        title="edit"
+                        title="editor"
                         tal:attributes="href string:${asset_url}/edit/tab_edit"
                         tal:content="structure asset/id"
                         i18n:attributes="title"
@@ -396,7 +400,7 @@
                     </tal:block>
                     <td tal:define="modification_time asset/get_modification_datetime | nothing">
                       <a class="blacklink"
-                        title="metadata"
+                        title="properties"
                         tal:condition="modification_time"
                         tal:attributes="href string:${asset_url}/edit/tab_metadata"
                         tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
@@ -404,7 +408,7 @@
                          date
                       </a>
                       <a class="closed"
-                        title="metadata"
+                        title="properties"
                         tal:condition="not: modification_time"
                         tal:attributes="href string:${asset_url}/edit/tab_metadata">
                         <i i18n:translate="unknown">
