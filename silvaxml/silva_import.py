@@ -2,6 +2,7 @@ from Products.SilvaDocument.Document import Document, DocumentVersion
 from Products.Silva.Ghost import Ghost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.Folder import manage_addFolder
+from Products.Silva.Publication import manage_addPublication
 from Products.Silva.silvaxml.xmlimport import BaseHandler, theElementRegistry
 from Products.Silva.Link import Link, LinkVersion
 from Products.ParsedXML.ParsedXML import ParsedXML
@@ -20,6 +21,7 @@ def initializeElementRegistry():
         ('http://www.infrae.com/xml', 'silva_container'): SilvaHandler,
         ('http://www.infrae.com/xml', 'silva'): SilvaHandler,
         (NS_URI, 'silva'): SilvaHandler,
+        (NS_URI, 'publication'): PublicationHandler,
         (NS_URI, 'folder'): FolderHandler,
         (NS_URI, 'ghost'): GhostHandler,
         (NS_URI, 'version'): VersionHandler,
@@ -46,7 +48,22 @@ class FolderHandler(BaseHandler):
                 self._metadata['silva-content']['maintitle']
                 )
             self.storeMetadata()
+
+class PublicationHandler(BaseHandler):
+    def startElementNS(self, name, qname, attrs):
+        if name == (NS_URI, 'publication'):
+            id = str(attrs[(None, 'id')])
+            self._parent.manage_addProduct['Silva'].manage_addPublication(
+                id, '')
+            self._result = getattr(self._parent, id)
                 
+    def endElementNS(self, name, qname):
+        if name == (NS_URI, 'publication'):
+            self._result.set_title(
+                self._metadata['silva-content']['maintitle']
+                )
+            self.storeMetadata()
+            
 class VersionHandler(BaseHandler):
     def getOverrides(self):
         return {

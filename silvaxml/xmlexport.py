@@ -6,6 +6,7 @@ from StringIO import StringIO
 from xml.sax import saxutils
 from Products.Silva.File import File
 from Products.Silva.Folder import Folder
+from Products.Silva.Publication import Publication
 from Products.Silva.Ghost import Ghost, GhostVersion
 from Products.Silva.GhostFolder import GhostFolder
 from Products.Silva.Link import Link, LinkVersion
@@ -56,6 +57,7 @@ def initializeXMLSourceRegistry():
     reg.registerXMLSource(Ghost, GhostXMLSource)
     reg.registerXMLSource(GhostVersion, GhostVersionXMLSource)
     reg.registerXMLSource(GhostFolder, GhostFolderXMLSource)
+    reg.registerXMLSource(Publication, PublicationXMLSource)
     # XXX move to SilvaDocument
     reg.registerXMLSource(Document, DocumentXMLSource)
     reg.registerXMLSource(DocumentVersion, DocumentVersionXMLSource)
@@ -261,6 +263,21 @@ class FolderXMLSource(SilvaBaseXMLSource):
         self._endElement(reader, 'content')
         self._endElement(reader, 'folder')
 
+class PublicationXMLSource(SilvaBaseXMLSource):
+    """Export a Silva Publication object to XML.
+    """
+    def _sax(self, reader, settings):
+        self._startElement(reader, 'publication', {'id':self.context.id})
+        self._metadata(reader, settings)
+        self._startElement(reader, 'content', {})
+        for object in self.context.get_ordered_publishables():
+            if (IPublication.isImplementedBy(object) and 
+                    not self.context.with_sub_publications):
+                continue
+            getXMLSource(object)._sax(reader, settings)
+        self._endElement(reader, 'content')
+        self._endElement(reader, 'publication')
+    
 class LinkXMLSource(VersionedContentXMLSource):
     """Export a Silva Link object to XML.
     """
