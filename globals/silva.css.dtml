@@ -97,8 +97,7 @@ div.tabs {
     border-bottom-style: solid;
     border-bottom-width: 1px;
   margin : 0;
-    padding: 0 0 0 15px;
-  border-collapse : collapse;
+    padding: 0 0 0 16px;
 }
 
 div.tabs a {
@@ -111,9 +110,8 @@ div.tabs a {
     background: &dtml-mainTabBackground;;
   border : &dtml-mainTabBorderColor; 1px solid;
     border-bottom-color: #8b939b;
-    margin: 0 0 -1px 0;
+    margin: 0;
     padding: 0 ! important;
-  border-collapse : collapse;
 }
 
 div.tabs a:visited {
@@ -212,16 +210,15 @@ div.tabs div.air {
 div.flowBar {
   display : block;
     /* IE workaround */
-    font-size : 30%;
+    font-size : 20%;
     height : 1em;
   width : 100%;
   min-height : 3px;
   max-height : 0.3em;
   background: &dtml-mainTabBackgroundSelected;;
-  margin: 0;
+  margin: 0px 0 0 0;
   padding: 0;
   border-bottom: #636da6 1px solid;
-  border-collapse : collapse;
   clear : all;
 }
 
@@ -261,7 +258,6 @@ div.personalBar {
   background: #505e65;
   margin: 0em 0em 0em 0em;
   padding: 0.1em 16px 0.2em 16px;
-  border-collapse: collapse;
 }
 
 div.personalBar a {
@@ -846,7 +842,6 @@ div.info {
   margin: -1px 0 0 0;
   padding: 0 0.5em 0.5em 0.5em; 
   border: &dtml-listingBorder;;
-  border-collapse: collapse;
 }
 
 h2.info {
