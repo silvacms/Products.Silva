@@ -1,5 +1,6 @@
 import sys, string
 from xml.sax.handler import ContentHandler
+from Products.SilvaMetadata.Compatibility import getToolByName
 
 class XMLOverridableElementRegistry:
     """An element registry which can be overridden while handling events.
@@ -138,3 +139,23 @@ class BaseHandler:
 
     def characters(self, chrs):
         pass
+
+    def storeMetadata(self):
+        content = self._result
+        metadata_tool = getToolByName(content, 'portal_metadata')
+        metadata = {}
+        binding = metadata_tool.getMetadata(content)
+        for set_name in binding.collection.keys():
+            set = binding.collection[set_name]
+            element_names = self._metadata[set.id].keys()
+            # Set data
+            errors = binding._setData(
+                namespace_key=set.metadata_uri,
+                data=self._metadata[set.id],
+                reindex=1
+                )
+
+            if errors:
+                raise ValidationError(
+                    "%s %s" % (str(content.getPhysicalPath()),str(errors)))
+        
