@@ -13,6 +13,7 @@ class SimpleUserManagement:
         return {
             'uid': userid,
             'cn': userid,
+            'mail': 'email_%s' % userid,
             #'mail': None,
             #'userclass': None,
             #'ou': [] 
