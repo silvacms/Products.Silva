@@ -11,7 +11,7 @@ See also LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.40.8.8.8.4 $
+CVS:        $Revision: 1.40.8.8.8.5 $
 
 Introduction
 ------------
@@ -19,7 +19,7 @@ Introduction
 If you're on Linux or Unix, or if you want to install Silva in an
 already existing Zope install on Windows, just read on. If you are
 installing Silva on Windows to just get a quick look however, please
-take a look at the section `The easy way on Windows`_ below for a
+take a look at the section ``The easy way on Windows``_ below for a
 really easy way to get Silva up and running. If you are upgrading an
 existing release of Silva, please consult UPGRADE.txt. If you have any
 problems after an install, consult TROUBLESHOOTING.txt.
@@ -35,9 +35,9 @@ Here is a quick checklist what to do to install Silva:
 * Download and install PyXML_ for the Python that Zope uses. PyXML
   0.8.3 works.
 
-* Download an appropriate Silva `-all.tgz` for the version you want
-  from `the Silva download area on zope.org`_ and unpack it into your
-  Zope's `Products` directory. Be aware the the ordering of the
+* Download an appropriate Silva ``-all.tgz`` for the version you want
+  from ``the Silva download area on zope.org``_ and unpack it into your
+  Zope's ``Products`` directory. Be aware the the ordering of the
   releases gets messed up by zope.org, so be sure you get the latest
   one. For a list of what is contained in the Silva distribution and
   other extension products you can install, see PRODUCTS.txt.
@@ -57,7 +57,7 @@ into everything in much more detail.
 
 .. _PyXML: http://pyxml.sourceforge.net
 
-.. _`the Silva download area on zope.org`:http://www.zope.org/Members/infrae/Silva
+.. _``the Silva download area on zope.org``:http://www.zope.org/Members/infrae/Silva
 
 The easy way on Windows
 -----------------------
@@ -103,7 +103,7 @@ root.
 Note that enabling/disabling ExtFile storage does not change the
 storage of the already present Silva File objects. It has no effect to
 the Silva Image objects either, as they are stored in the ZODB in any
-case. More information is available in `docs/FileObject.stx`.
+case. More information is available in ``docs/FileObject.stx``.
 
 http://www.zope.org/Members/shh/ExtFile
 
