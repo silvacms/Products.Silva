@@ -48,7 +48,7 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
     def test_render_public_view(self):
         obj = self.root.silva_xslt.test_document
         obj.set_renderer_name('Images on Right')
-        self.assertEqual(obj.view()[:5], "Sorry")
+        self.assertEqual(str(obj.view())[:5], "Sorry")
         obj.set_unapproved_version_publication_datetime(DateTime())
         obj.approve_version()
         self.assertEqual(obj.view(), expected_html)

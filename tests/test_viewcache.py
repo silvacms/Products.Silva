@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -24,7 +24,7 @@ class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
     def test_notPublished(self):
         doc = self.document
         # not publisehd
-        self.assertEquals(doc.view()[:5], 'Sorry')
+        self.assertEquals(str(doc.view())[:5], 'Sorry')
         self.assert_(not doc.is_cached())
           
     def test_published(self):
