@@ -7,9 +7,11 @@
       'public silva roles' : ('Viewer', 'Viewer +', 'Viewer ++'),
       'silva roles' : ('Reader', 'Author', 'Editor', 'ChiefEditor'),
       'zope roles' : ('Manager', )};
-    "
+      "
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="silva"
     >
-    <optgroup 
+    <optgroup i18n:attributes="label" 
       tal:repeat="
         optgroup python: ('public silva roles', 'silva roles', 'zope roles')"
       tal:attributes="
@@ -19,7 +21,7 @@
         tal:repeat="
           option optgroups/?optgroup"        
         >
-        <option 
+        <option i18n:translate="" 
           tal:condition="
             python: i_am_manager or option not in managers_only_options"
           tal:content="
@@ -42,7 +44,7 @@
     'public silva roles' : ('Viewer', 'Viewer +', 'Viewer ++')};
     "
     >
-    <optgroup 
+    <optgroup i18n:attributes="label" 
       tal:repeat="
         optgroup python: ('zope roles', 'public silva roles')"
       tal:attributes="
@@ -52,7 +54,7 @@
         tal:repeat="
           option optgroups/?optgroup"        
         >
-        <option 
+        <option i18n:translate="" 
           tal:content="
             option"
           tal:attributes="

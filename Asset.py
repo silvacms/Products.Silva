@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -32,11 +32,21 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
         Asset.inheritedAttribute('manage_beforeDelete')(self, item, container)
 
     def is_deletable(self):
-        """assets are delteable
+        """assets are deletable
 
             NOTE: once there is reference management those should only be
             deletable if not referenced
         """
         return 1
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_navigation_links')
+    def get_navigation_links(self):
+        """
+        Create a dictionary with top, up, first, previous, next, last links.
+        
+        This can be used by Mozilla in the accessibility toolbar.
+        """
+        return {}
+    
 InitializeClass(Asset)

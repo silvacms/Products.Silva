@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.99 2004/01/13 16:05:39 clemens Exp $
+# $Id: SilvaObject.py,v 1.100 2004/07/21 11:40:40 jw Exp $
 
 # python
 from types import StringType
@@ -9,6 +9,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from DateTime import DateTime
 from StringIO import StringIO
+from App.Common import rfc1123_date
 # Silva
 import SilvaPermissions
 from Products.SilvaViews.ViewRegistry import ViewAttribute
@@ -144,21 +145,22 @@ class SilvaObject(Security, ViewCode):
     def get_title(self):
         """Get the title of the silva object.
         """
-        binding = self.service_metadata.getMetadata(self)
-        return binding.get(
-            'silva-content', element_id='maintitle')
+        return self.service_metadata.getMetadataValue(
+            self, 'silva-content', 'maintitle')
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
     def get_short_title(self):
         """Get the title of the silva object.
         """
-        binding = self.service_metadata.getMetadata(self)
-        short_title = binding.get(
-            'silva-content', element_id='shorttitle')
-        if not short_title:
-            return self.get_title()
-        return short_title
+        title = self.service_metadata.getMetadataValue(
+            self, 'silva-content', 'shorttitle')
+        if not title:
+            title = self.service_metadata.getMetadataValue(
+                self, 'silva-content', 'maintitle')
+        if not title:
+            title = self.id
+        return title
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title_or_id')
@@ -203,20 +205,17 @@ class SilvaObject(Security, ViewCode):
                               'get_creation_datetime')
     def get_creation_datetime(self):
         """Return creation datetime."""
-        return self._creation_datetime
+        version = self.get_previewable()
+        return self.service_metadata.getMetadataValue(
+            version, 'silva-extra', 'creationtime')
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
     def get_modification_datetime(self, update_status=1):
         """Return modification datetime."""
         version = self.get_previewable()
-        assert version is not None
-        binding = self.service_metadata.getMetadata(version)
-        if binding is None:
-            return None
-        last_modification = binding.get('silva-extra',
-            element_id='modificationtime', no_defaults=1)
-        return last_modification
+        return self.service_metadata.getMetadataValue(
+            version, 'silva-extra', 'modificationtime')
        
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_breadcrumbs')
@@ -401,5 +400,12 @@ class SilvaObject(Security, ViewCode):
         """always deletable"""
         return 1
         
+    def HEAD(self, REQUEST, RESPONSE):
+        """ assumes the content type is text/html;
+            override HEAD for clases where this is wrong!
+        """
+        mod_time = rfc1123_date ( self.get_modification_datetime() )
+        RESPONSE.setHeader('Content-Type', 'text/html')
+        RESPONSE.setHeader('Last-Modified', mod_time)
         
 InitializeClass(SilvaObject)

@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2003 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.100 2004/03/10 22:06:20 clemens Exp $
+# $Id: install.py,v 1.101 2004/07/21 11:40:40 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -22,6 +22,8 @@ from Products.Silva.AutoTOC import AutoTOCPolicy
 from Products.Silva import roleinfo
 from Products.Silva.SimpleMembership import SimpleMemberService
 from Products.Silva import File
+from Products.Silva import assetregistry
+
 
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.
@@ -118,14 +120,8 @@ def install(root):
     # add and/or update catalog
     setup_catalog(root)
 
-    # Try to see if the Groups Product is installed.
-    # If so, register the views
-    try:
-        from Products import Groups
-    except ImportError, ie:
-        pass
-    else:
-        registerGroupsViews(root.service_view_registry)
+    # always register the groups views
+    registerGroupsViews(root.service_view_registry)
 
     # configure membership; this checks whether this is necessary
     configureMembership(root)
@@ -157,6 +153,9 @@ def install(root):
         configure_default_layout_package(root)
     from LayoutRegistry import DEFAULT_LAYOUT
     root.set_layout(DEFAULT_LAYOUT)
+
+    # try to install Kupu
+    installKupu(root)
 
 def configure_default_layout_package(root):
     from LayoutRegistry import DEFAULT_LAYOUT
@@ -194,16 +193,19 @@ def configureMetadata(root):
     silva_docs = path.join(silva_home, 'doc')
 
     collection = root.service_metadata.getCollection()
+    if 'silva-content' in collection.objectIds():
+        collection.manage_delObjects(['silva-content'])
 
-    if not 'silva-content' in collection.objectIds():
-        xml_file = path.join(silva_docs, 'silva-content.xml')
-        fh = open(xml_file, 'r')        
-        collection.importSet(fh)
+    if 'silva-extra' in collection.objectIds():
+        collection.manage_delObjects(['silva-extra'])
 
-    if not 'silva-extra' in collection.objectIds():
-        xml_file = path.join(silva_docs, 'silva-extra.xml')
-        fh = open(xml_file, 'r')
-        collection.importSet(fh)    
+    xml_file = path.join(silva_docs, 'silva-content.xml')
+    fh = open(xml_file, 'r')        
+    collection.importSet(fh)
+
+    xml_file = path.join(silva_docs, 'silva-extra.xml')
+    fh = open(xml_file, 'r')
+    collection.importSet(fh)    
 
     # (re) set the default type mapping
     mapping = root.service_metadata.getTypeMapping()
@@ -237,11 +239,7 @@ def configureProperties(root):
     """
     root.manage_changeProperties(title='Silva')
     property_info = [
-        ('table_width', '96%', 'string'),
-        ('table_cellspacing', '0', 'string'),
-        ('table_cellpadding', '3', 'string'),
-        ('table_border', '0', 'string'),
-        ('help_url', '/%s/globals/help' % root.absolute_url(1), 'string'),
+        ('help_url', '/%s/globals/accesskeys' % root.absolute_url(1), 'string'),
         ('comment', "This is just a place for local notes.", 'string'),
         ('access_restriction', 'allowed_ip_addresses: ALL', 'string'),
         ]
@@ -305,7 +303,8 @@ def configureSecurity(root):
         'Add Silva Links',
         'Add Silva Link Versions',
         'Add Silva Images',
-        'Add Silva Files',        
+        'Add Silva Files',
+        'Add Silva AutoTOCs',
         ]
     
     for add_permission in add_permissions:
@@ -370,16 +369,17 @@ def configureLayout(root, default_if_existent=0):
     default_ if the id already exists in the root.
     """
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
-               'standard_error_message', 'standard_unauthorized_message',]:
+               'standard_error_message', 'standard_unauthorized_message',
+               'copyright',]:
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
-    for id in ['index_html.py', 'preview_html.py',
+    for id in ['index_html.py', 'preview_html.py', 
                'get_metadata_element.py', 'get_layout_macro.py', ]:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
         
-    add_helper(root, 'frontend.css', globals(), dtml_add_helper,
-               default_if_existent)
+    add_helper(root, 'frontend.css', globals(), dtml_add_helper, default_if_existent)
 
+    add_helper(root, 'print.css', globals(), dtml_add_helper, default_if_existent)
 
 def configureMembership(root):
     """Install membership code into root.
@@ -388,7 +388,7 @@ def configureMembership(root):
     ids = root.objectIds()
     if 'service_members' not in ids:
         root.manage_addProduct['Silva'].manage_addSimpleMemberService(
-            'service_members', 'Silva Membership Service')
+            'service_members')
         
     if 'Members' not in ids:
         root.manage_addFolder('Members')
@@ -406,6 +406,7 @@ def add_helper(root, id, info, add_func, default_if_existent=0, folder='layout')
     if default_if_existent and hasattr(root.aq_base, id):
         id = 'default_' + id
     text = read_file(filename, info, folder)
+    text = text.replace('{__silva_version__}', root.get_silva_product_version())
     add_func(root, id, text)
 
 def pt_add_helper(root, id, text):
@@ -627,10 +628,20 @@ def installSilvaDocument(root):
     doc = root.index
     doc.sec_update_last_author_info()
     version = doc.get_editable()
-    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p></doc>')
+    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p><toc toc_depth="1" /></doc>')
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
 
+def installKupu(root):
+    try:
+        from Products import kupu
+    except:
+        pass
+    else:
+        if not hasattr(root, 'kupu'):
+            add_fss_directory_view(root, 'kupu', kupu.__file__, 'common')
+        if not hasattr(root, 'kupu_silva'):
+            add_fss_directory_view(root, 'kupu_silva', kupu.__file__, 'silva')
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""

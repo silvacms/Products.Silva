@@ -13,7 +13,6 @@
 <!-- tab_metadata for content (non-Container) objects -->
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
-
   <table class="columns columns2">
     <tbody>
       <tr>
@@ -23,40 +22,71 @@
         <td class="left">
           <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
         </td>
-
         <tal:block replace="nothing">
           _____________________ main _____________________
         </tal:block>
-        <td class="main">
-          <tal:block 
-            define="
-              editable python: model.get_editable();
-              version python: editable or model.get_previewable();
-              macro python: editable and 'edit_table' or 'view_table';
-              ">
-            <metal:block use-macro="here/macro_metadata/macros/?macro" />
+        <td class="main"
+          tal:define="display_flag python:1;">
+          <tal:block condition="model/implements_versioning">
+            <tal:block 
+              define="version model/get_editable | nothing;"
+              condition="model/get_unapproved_version"
+              >
+              <!-- editable version metadata table, thus editable -->
+              <metal:block use-macro="here/macro_metadata/macros/edit_table" />
+            </tal:block>
+            
+            <tal:block 
+              define="version model/get_previewable | nothing;"
+              condition="model/get_approved_version"
+              >
+              <metal:block use-macro="here/macro_metadata/macros/view_table">
+                <!-- approved version metadata table, so only viewable -->
+                <h2 i18n:translate="metadata_label" 
+                  metal:fill-slot="table_title"
+                  >
+                  <img tal:replace="structure python:view.render_icon(model)" />
+                  metadata
+                  <span tal:condition="not: model/implements_container">
+                    <span i18n:translate="for_public_version_of">for approved version of</span>
+                    &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                  </span>
+                </h2>
+              </metal:block>
+            </tal:block>
+            
+            <tal:block 
+              define="
+                version model/get_viewable | nothing;
+                display_flag python:0"
+              condition="model/get_public_version"
+              >
+              <metal:block use-macro="here/macro_metadata/macros/view_table">
+                <!-- published version metadata table, so only viewable -->
+                <h2 i18n:translate="metadata_label" 
+                  metal:fill-slot="table_title"
+                  >
+                  <img tal:replace="structure python:view.render_icon(model)" />
+                  metadata
+                  <span tal:condition="not: model/implements_container">
+                    <span i18n:translate="for_public_version_of">for public version of</span>
+                    &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                  </span>
+                </h2>
+              </metal:block>
+            </tal:block>
           </tal:block>
-
-          <tal:block 
-            define="version python: model.implements_versioning() and model.get_viewable()"
-            condition="version">
-            <metal:block use-macro="here/macro_metadata/macros/view_table">
-              <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure python:view.render_icon(model)" />
-                metadata
-                <span tal:condition="not: model/implements_container">
-                  <span i18n:translate="for_public_version_of">for public version of</span>
-                  &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
-                </span>
-              </h2>
-            </metal:block>
+          
+          <tal:block condition="not: model/implements_versioning">
+            <tal:block define="version model">
+              <!-- non-versioned content, thus editable -->
+              <metal:block use-macro="here/macro_metadata/macros/edit_table" />
+            </tal:block>
           </tal:block>
-
         </td>
       </tr>
     </tbody>
   </table>
-
 </metal:block>
 </metal:block>
 </html>

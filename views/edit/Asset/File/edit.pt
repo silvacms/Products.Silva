@@ -5,8 +5,10 @@
     mangle modules/Products/Silva/mangle;
     root_url model/get_root_url;
     title model/get_title_editable;
-    vein string:editor;
-">
+    vein string:edit;"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="silva"
+    >
 
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
 
@@ -16,7 +18,7 @@
       <img tal:replace="structure icon" /> file info
     </h3>
     <p>
-      <span class="subhead"><b>file size</b><br /></span>
+      <span class="subhead"><b i18n:translate="file_size">file size</b><br /></span>
       <span 
         tal:define="size model/get_file_size"
         tal:attributes="title string: ${size}"

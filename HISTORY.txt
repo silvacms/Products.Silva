@@ -1,7 +1,195 @@
-Copyright (c) 2002, 2003 Infrae. All rights reserved.
+Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Silva changes
+
+  1.0 final
+  
+    Bugs fixed
+
+      - Made the 0.9.3-1.0 Image upgrade even more forgiving, basically it
+        will now not break on anything anymore, it will print a warning to
+        the zLOG on every exception.
+
+      - Problem in Kupu transformations that made 'spurious' <p> elements 
+        without content appear on the page.
+
+      - Problem in Kupu transformations that made <div>'s get removed 
+        completely from a document on save: now instead of removing it it's
+        contents get converted and added to the document.
+
+      - Issue 942: quotes in links around images broke the public view.
+
+      - Added refresh all to update.
+
+      - Issues 996 and 998: changed image links that pointed to the hires 
+        version of the image, instead of pointing to <image>/hires_image
+        they now point to <image>?hires.
+
+      - Minor problem where the image edit form in the form editor
+        didn't recognize a link as one to the hires version of the
+        image.
+
+      - Added test cases for get_creation_datetime() and
+        get_modification_datetime() in SilvaObject. Also re-enabled and
+        revised some tests that were commented out in test_SilvaObject.
+
+      - Indexer is now updated when installation documentation.
+
+  1.0 (release candidate 4)
+
+    Bugs fixed
+
+      - Removed problematic code from index_html Python script that
+        accidentally triggered an experimental layout service.
+
+      - Fixed bug in Kupu transformations that broke tables with incomplete
+        alignment information.
+
+      - Made the 0.9.3-1.0 Image upgrade a bit more forgiving, which may result
+        in broken images but at least lets the upgrade continue.
+
+  1.0 (release candidate 3)
+
+    Bugs fixed
+
+      - Fix bug where published document that is viewed anonymously is
+        not accessible.
+  
+  1.0 (release candidate 2)
+
+    Features added
+
+      - Silva picks up version from version.txt in more places so that
+        less code needs to be updated before each release.
+
+    Bugs fixed
+
+      - Empty index elements [[]] are now longer accepted.
+
+      - Fixed bug in default layout template in accessibility
+        (previous/next) links.
+
+      - Closed content is publishable in publish tab.
+
+  1.0 (release candidate 1)
+
+    Features added
+
+      - Kupu, a WYSIWYG editor for Silva Document. This editor offers
+        a load of new features:
+
+          - full Silva integration; Kupu knows about special Silva
+            elements and saves Silva XML
+
+          - Copy and paste HTML from any source into Kupu.
+
+          - works in Internet Explorer (5.5 and higher) and Mozilla
+
+        Kupu was formerly known as Epoz 1.0.
+    
+      - Extensive documentation released along with Silva, and can be
+        automatically installed.
+
+      - All images of a Silva Image asset are stored in the filesystem if
+        ExtFile is available and the corresponding option is set in
+        service_files. Also better support for ExtFile's static serving was
+        introduced. service_files allows to convert the storage method of
+        all Silva Image assets.
+
+      - Image scaling supports "keep aspect ratio" now. You can scale with
+        120x* or *x211 to fix width or height.
+
+      - An Image has a thumbnail now, retrievable via foo.jpg?thumbnail.
+
+      - Cropper tool - Silva now provides facilities for cropping
+        images. This tool combines with the scaling possibilities to
+        give authors the means to both scale and resize a high
+        resolution image to web format.
+  
+      - Images can be viewed without the /image at the end (issue
+        594), the high resolution version can be retrieved via
+        foo.jpg?hires.
+
+      - Supporting a newer, improved version of ExtFile.
+
+      - Performance improvements in contents screen for folders, icon
+        presentation, and metadata system.
+
+      - Numerous tweaks in the UI.
+
+      - Revision of the archive file import (i.e. zipfile import)
+        functionality. Mimetypes can be registered for specific Asset
+        types. The importer will create Assets depending on the mimetype.
+
+      - Silva now should deliver the right mime type for HEAD requests.
+
+    Bugs fixed
+
+      - When run with Python 2.3 in 2.7 (not yet recommended by Infrae
+        for Silva 1.0), suppress source code encoding warnings when
+        starting up.
+
+      - Another problem with the upgrade code for handling index elements,
+        which causes a few of them to be missed, has been repaired.
+
+      - Ghost Folders now can be added by Editors (required Manager role
+        previously)
+
+      - Groups are installable as specified in the UI (no more KeyError).
+
+      - The File asset behaves more like the Image asset, where the URL
+        to the object now will return the actual data. This obsoletes
+        the need for URL's like "path/to/some/file/download'.
+
+      - A long standing problem with occasional InvalidObjectReference
+        errors when installing or refreshing Silva should now be
+        fixed.
+
+  0.9.3.4
+  
+    Bugs fixed
+
+      - A problem in the upgrade code handling index elements in Silva
+        Documents was repaired.
+
+  0.9.3.3
+
+    Bugs fixed
+
+      - Smaller bugfixes in the silvaparser.
+
+      - created a new method addAddable on ExtensionRegistry. This makes 
+        it possible (again) to add classes to Silva without being required
+        to name your class the same as the module name (which the 
+        registerClass method needs). You simply register your class
+        the normal way with Zope, and then invoke addAddable for its
+        meta type.
+    
+      - Fixed acquisition for viewing locally defined roles on Silva
+        objects. (For instance: if user1 has editor role on pub1, and not
+        on pub2, viewing /pub1/pub2/foo/tab_access shouldn't show user1
+        as an editor, and now doesn't).
+
+  0.9.3.2
+
+    Bugs fixed
+
+      - Make render_icon create absolute URLs again for better
+        cacheability.
+
+      - Fixed the silva parser where a specific portnumber in the URL
+        would not get recognized.
+
+      - Improved link parser for anchors and query fragments.
+
+  0.9.3.1
+
+    Bugs fixed
+
+      - Improvements in the upgrade code, esp. for large databases. 
+    
+      - Fixed bug in displaying the "allowed" addables.
 
   0.9.3
 
@@ -162,6 +350,7 @@ Silva changes
 
         - Can add a new Silva root with non-ascii (latin1) characters
           in the title.
+
 
   0.9.2.6
 
@@ -380,36 +569,37 @@ Silva changes
         - A number of minor bugs, mainly in UI.
 
   0.9.1.5
-                                                                                                    
+                                                                      
     Features Added
-                                                                                                    
-        - Added support for ExternalEditor, Silva Files and Images can now
-          be edited using your favorite editor.
+        
+        - Added support for ExternalEditor, Silva Files and Images can
+          now be edited using your favorite editor.
 
         - Bulk import of files (for File Assets) and/or images (for Image
           Assets) using a zipfile. Note though, that the 091 id
           checking is less tolerant compared to the 092 id checking.
-                                                                                                    
+
+                                                               
     Bugs Fixed
-                                                                                                    
+                                                                            
         - Removed "Asset reference" asset-type stickyness.
-                                                                                                    
+                                                                               
         - Fixed button for refresh queue when Docma is enabled.
-                                                                                                    
+                                                                               
         - Added a find_indexers utility (accesible through
           http://server/silva/edit/service_utils/find_indexers) to find all
           Indexer objects in use.
-                                                                                                    
+                                                                            
         - Help text opens in new browser window.
-                                                                                                    
+                                                                            
         - Indexer -all non-versioned content actually- can now be deleted.
-                                                                                                    
+
         - Indexer objects now render the correct URLs in virtual host
           situations. Use the 'update index' in the edit tab of Indexer
           objects to get the Indexers up to date.
-                                                                                                    
+
         - Setting a TOC level would display one level too much.
-                                                                                                    
+
         - Pressing 'Export' in Document's status tab now takes a user to the
           export screen of the container so the user can indeed (as the text
           suggests) export to Docma as well as download the content.
@@ -421,7 +611,7 @@ Silva changes
         - The UI for 'Access Restriction by Role' did not properly expose
           the possibility to set this role more restrictive on a lower
           level. (the pull down menu and button would have been disabled).
-                                                                                            
+
         - get_public_tree() would not do the right thing with the depth-
           level control argument.
 
@@ -495,7 +685,7 @@ Silva changes
           may contain characters illegal in URLs, such as the @ sign.
 
         - Edit on pro transformations up to date.
-	  
+    
   0.9.1
 
     Bugs Fixed
@@ -612,7 +802,7 @@ Silva changes
 
         - Some characters that were removed by the Silva editor
           shouldn't be removed -- made these work (issue 176).
-	
+  
         - New ('add') button should work properly again (issue 162).
 
         - Invalid image references now properly display error message
@@ -865,7 +1055,7 @@ Silva changes
 
      - Some utility code in EditorSupport to support multi-column
      rendering.
-	    
+      
      - Demo Object added to demonstrate how to extend Silva with new
      objects.
      
@@ -891,9 +1081,9 @@ Silva changes
      - SMI (Silva Management Interface)
 
         * Fix and cleanup of tabs_status code (thanks to Clemens Klein-
-	Robbenhaar (a.o.) for reporting).
+  Robbenhaar (a.o.) for reporting).
 
-	* Fix of bug in Publish tab that occurred when no items selected.
+  * Fix of bug in Publish tab that occurred when no items selected.
 
      - Presentation Pagetemplates: 
 

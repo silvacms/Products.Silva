@@ -1,97 +1,58 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2003, 2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.5 2003/08/22 07:14:23 zagy Exp $
+# $Id: icon.py,v 1.6 2004/07/21 11:40:40 jw Exp $
 
 """Sivla icon registry"""
 
 # python
 import os
-from bisect import insort
-from types import InstanceType
 
 # zope
 import Globals
 import OFS.misc_
 
 # Silva
-from Products.Silva.interfaces import \
-    IIcon, IFile, ISilvaObject
-    
-
-class AdaptationError(Exception):
-    """thrown if an object cannot be adapted by an adapter"""
+from Products.Silva.interfaces import IIcon, IFile, ISilvaObject
+from Products.Silva.interfaces import IGhostContent, IGhostFolder
 
 class RegistryError(Exception):
     """thrown on any error in registry"""
 
-class Adapter:
-    
-    __adapts__ = None
-    
-    def __init__(self, adapt):
-        assert self.__adapts__ is not None
-        if not self.__adapts__.isImplementedBy(adapt):
-            raise AdaptationError, "%r doesn't implement %r" % (
-                adapt, self.__adapts__)
-        self.adapted = adapt
-        
-
-class MetaTypeAdapter(Adapter):
-
-    __implements__ = IIcon
-    __adapts__ = ISilvaObject
-    
-    def getIconIdentifier(self):
-        return ('meta_type', self.adapted.meta_type)
-
-
-class MetaTypeClassAdapter(MetaTypeAdapter):
-
-    def __init__(self, adapt):
-        if hasattr(adapt, '__class__'):
-            raise AdaptationError, "This adapter can only handle classes"
-        if not self.__adapts__.isImplementedByInstancesOf(adapt):
-            raise AdaptationError, "%r doesn't implement %r" % (
-                adapt, self.__adapts__)
-        self.adapted = adapt
-
-
-class SilvaFileAdapter(Adapter):
-
-    __implements__ = IIcon
-    __adapts__ = IFile
-
-    def getIconIdentifier(self):
-        i = ('mime_type', self.adapted.get_mime_type())
-        try:
-            registry.getIconByIdentifier(i)
-        except KeyError:
-            return MetaTypeAdapter(self.adapted).getIconIdentifier()
-        else:
-            return i
-
-
-   
-class _RegistredAdapter:
-
-    def __init__(self, adapter, priority):
-        self.adapter = adapter
-        self.priority = priority
-
-    def __cmp__(self, other):
-        assert isinstance(other, _RegistredAdapter)
-        return -cmp(self.priority, other.priority) # reverse order
-
-
 class _IconRegistry:
 
     def __init__(self):
-        self._adapters = []
         self._icon_mapping = {}
     
     def getIcon(self, object):
-        adapter = self.getAdapter(object)
-        identifier = adapter.getIconIdentifier()
+        if IGhostContent.isImplementedBy(object):
+            version = object.getLastVersion()
+            if version.get_link_status() == version.LINK_OK:
+                kind = 'link_ok'
+            else:
+                kind = 'link_broken'
+            identifier = ('ghost', kind)
+        elif IGhostFolder.isImplementedBy(object):
+            if object.get_link_status() == object.LINK_OK:
+                if object.implements_publication():
+                    kind = 'publication'
+                else:
+                    kind = 'folder'
+            else:
+                kind = 'link_broken'
+            identifier = ('ghostfolder', kind)      
+        elif IFile.isImplementedBy(object):
+            identifier = ('mime_type', object.get_mime_type())
+        elif ISilvaObject.isImplementedBy(object):
+            identifier = ('meta_type', object.meta_type)
+        else:
+            try:
+                # if this call gets an object rather then a class as
+                # argument it will raise an AttributeError on __hash__
+                ISilvaObject.isImplementedByInstancesOf(object)
+            except AttributeError:
+                raise RegistryError, "Icon not found"
+            else:
+                identifier = ('meta_type', object.meta_type)
         return self.getIconByIdentifier(identifier)
 
     def getIconByIdentifier(self, identifier):
@@ -99,31 +60,6 @@ class _IconRegistry:
         if icon is None:
             raise RegistryError, "No icon for %r" % (identifier, )
         return icon
-
-    def getAdapter(self, object):
-        if IIcon.isImplementedBy(object):
-            # no need to adapt
-            return object
-        for ra in self._adapters:
-            adapter_class = ra.adapter
-            try:
-                adapter = adapter_class(object)
-            except AdaptationError:
-                adapter = None
-            else:
-                break
-        if adapter is None:
-            raise RegistryError, "No adapter for %r" % object
-        return adapter
-        
-    def registerAdapter(self, adapter, priority):
-        """registeres adapter with priority
-
-            adapter: adapter instance
-            priority: the larger the higher
-        """
-        insort(self._adapters, _RegistredAdapter(adapter, priority))
-        
 
     def registerIcon(self, identifier, icon, context):
         """register icon
@@ -151,7 +87,6 @@ class _IconRegistry:
         if name.startswith('Products.'):
             return name_parts[1]
         return name_parts[0]
-
 
 registry = _IconRegistry()
 

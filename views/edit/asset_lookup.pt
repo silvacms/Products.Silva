@@ -103,8 +103,9 @@
             </tr>
           </thead>
 
-<script language="JavaScript">
-<!--
+<script type="text/javascript">
+//<![CDATA[
+
 function setReference() {
   doc = document.all ? document.all : document;
   l = doc.mumble_form.mumble.length;
@@ -128,7 +129,8 @@ function setReference() {
   // Send back id and reference to calling window
   opener.insertAssetReference(id, value, self);
 }
-//-->
+
+//]]>
 </script>
 
           <form name="mumble_form"
@@ -170,6 +172,7 @@ function setReference() {
                     tal:attributes="
                       value identifier;
                       id identifier;
+                      checked python: repeat['asset'].index == 0 and 'checked' or '';
                       " />
                 </td>
                 <tal:block tal:replace="nothing"> _______ icon + label cell _______ </tal:block>

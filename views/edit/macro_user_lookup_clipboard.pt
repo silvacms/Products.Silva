@@ -15,8 +15,10 @@
       <form action="."
         method="POST"
         tal:define="
-          clipboard_members python:view.lookup_get_selection().keys();">
-        <h3>
+          clipboard_members python: view.lookup_get_selection().keys();
+          dummy python: clipboard_members.sort()"        
+        >
+        <h3 style="margin-top:0">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Simple Member')" />
           <span i18n:translate="user_clipboard" tal:omit-tag="">user clipboard</span>
         </h3>
@@ -82,7 +84,7 @@
           </tbody>
           <tfoot>
             <tr class="controls">
-              <td class="align-right">
+              <td>
                 <tal:block condition="clipboard_members">
                   <metal:block define-slot="clipboard_actions" />
                 </tal:block>

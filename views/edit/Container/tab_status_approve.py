@@ -18,7 +18,8 @@ try:
 except FormValidationError, e:
     return view.tab_status(
         message_type='error', 
-        message=view.render_form_errors(e))
+        message=view.render_form_errors(e),
+        refs=refs)
 
 publish_datetime = result['publish_datetime']
 publish_now_flag = result['publish_now_flag']
@@ -35,6 +36,7 @@ now = DateTime()
 approved_ids = []
 not_approved = []
 msg = []
+no_date_refs = []
 
 get_name = context.tab_status_get_name
 
@@ -71,6 +73,7 @@ for ref in refs:
     elif not obj.get_unapproved_version_publication_datetime():
         # no date set, neither on unapproved version nor in tab_status form
         not_approved.append((get_name(obj), 'no publication time was set'))
+        no_date_refs.append(ref)
         continue
     # expire
     if clear_expiration_flag:
@@ -82,7 +85,6 @@ for ref in refs:
     approved_ids.append(get_name(obj))
 
 if approved_ids:
-    request.set('refs', []) # explicit clear since it has value from the form
     request.set('redisplay_timing_form', 0)
     msg.append( 'Approval on: %s' % view.quotify_list(approved_ids))
 
@@ -91,5 +93,5 @@ if not_approved:
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()
-    
-return view.tab_status(message_type='feedback', message=(', '.join(msg)))
+
+return view.tab_status(message_type='feedback', message=(', '.join(msg)), refs=no_date_refs)

@@ -39,3 +39,18 @@ class ILockable(Interface):
         """Check whether this object is locked by another user.
         """
 
+class IArchiveFileImporter(Interface):
+    def importArchive(archivefile, assettitle=None, recreatedirs=1):
+        """Import archive file
+        
+        Use 'assettitle' for the title to set on all assets created
+        
+        According to the recreatedirs setting, create a substructure of
+        Silva Containers (probably Silva Folders) reflecting the structure
+        of the archive file. This substructure will be created relative to
+        the adapted context.
+        
+        Return a tuple with the list of succeeded items and failed items
+        providing feedback on what archive contents have succesfully been 
+        imported into Silva Assets and what contents have not.
+        """

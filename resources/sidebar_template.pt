@@ -17,8 +17,15 @@
 </tr>
 <tr>
   <td class="{__class__}"
-    style="padding-left:0; border-top:none;"
-    tal:attributes="onclick string:javascript:window.location='${publication/absolute_url}/edit/{__vein_id__}'">
+    style="border-top:none;">
+    <div class="normal"
+      tal:attributes="onclick string:javascript:window.location='${publication/absolute_url}/edit/{__vein_id__}'">
+      <a class="right" 
+        title="slide to the publish screen"
+        tal:attributes="href string:${publication/absolute_url}/edit/tab_status"
+        i18n:attributes="title">
+        &nbsp;
+      </a>
     <a class="icon"
       title="up to top contents of publication"
       tal:attributes="href string:${publication/absolute_url}/edit;"
@@ -33,6 +40,7 @@
        i18n:attributes="title">
       Publication
     </a>
+    </div>
   </td>
 </tr>
 
@@ -49,11 +57,24 @@
       tal:define="
         item_url string:${item/absolute_url};
         title item/get_short_title_editable">
-      <div tal:attributes="
-          style python:'margin-left:'+str(indent * 10)+'px';
+      <a class="right" 
+        title="slide to the publish screen"
+        tal:attributes="href string:${item_url}/edit/tab_status"
+        i18n:attributes="title">
+        &nbsp;
+      </a>
+      <a class="left" 
+        title="slide to the contents screen"
+        tal:attributes="href string:${item_url}/edit"
+        i18n:attributes="title">
+        &nbsp;
+      </a>
+      <div class="normal"
+        tal:attributes="
+          style python:'padding-left:'+str(indent * 10 + 8)+'px';
           onclick string:javascript:window.location='${item_url}/edit/{__vein_id__}'">
         <a class="icon"
-          title="contents"
+          title="container"
           tal:attributes="href string:${item_url}/edit/{__vein_id__}">
           <img tal:replace="structure python:here.render_icon(item)" />
         </a>
@@ -64,7 +85,7 @@
           tal:content="title">
           title
         </a>
-        <a class="blacklink"
+        <a class="normal"
           tal:attributes="
             href string:${item_url}/edit/{__vein_id__};
             title string:id: ${item/id};"
@@ -77,6 +98,7 @@
     </td>
   </tr>
   <tr class="controls"
+    style="height:0.1em"
     tal:condition="repeat/indent_item/end">
     <td>
     </td>

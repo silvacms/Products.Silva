@@ -967,7 +967,7 @@ class IFile(IAsset):
         """
         pass
 
-class IMember(ISilvaObject):
+class IMember(Interface):
     # ACCESSORS
     def userid():
         """Return unique id for member/username
@@ -1072,7 +1072,7 @@ class IGhost(Interface):
     def get_haunted_url():
         """return haunted object's url"""
 
-    def get_hanted():
+    def get_haunted():
         """return the haunted object"""
 
     def _factory(container, id, content_url):

@@ -6,7 +6,8 @@
   <action></action>
   <enctype></enctype>
   <method>POST</method>
-  <i18n>true</i18n>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>scale</i18n>
 
   <groups>
     <group>
@@ -25,7 +26,7 @@
           <first_item type="int">1</first_item>
           <alternate_name></alternate_name>
           <unicode type="int">0</unicode>
-          <description i18n="">Image format for web.</description>
+          <description>Image format for web.</description>
           <orientation>horizontal</orientation>
         </values>
         <tales>
@@ -49,15 +50,44 @@
           <alternate_name></alternate_name>
           <unicode type="int">0</unicode>
           <display_maxwidth></display_maxwidth>
-          <display_width type="int">16</display_width>
+          <display_width type="int">18</display_width>
           <extra></extra>
           <truncate type="int">0</truncate>
           <description i18n="image-scaling-description">
-	  Image scaling for web: use width x height in pixels, or a percentage (100x200, 40%).</description>
+	  Image scaling for web: use width x height in pixels, or one axis length, or a percentage (100x200, 100x*, *x200, 40%).</description>
           <unicode>1</unicode>
         </values>
         <tales>
           <default>python: form.REQUEST.model.getWebScale() or '100%'</default>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">Sorry, the form content failed validation.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="too_long">Too much input was given.</message>
+        </messages>
+      </field>
+      <field><id>web_crop</id> <type>StringField</type>
+        <values>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>cropping</title>
+          <alternate_name></alternate_name>
+          <unicode type="int">0</unicode>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">18</display_width>
+          <extra>id="web_crop"</extra>
+          <truncate type="int">0</truncate>
+          <description i18n="image-cropping-description">
+              Image cropping for web: use the &amp;#8216;set crop coordinates&amp;#8217; button, or enter X1xY1-X2xY2 to define the cropping box.
+          </description>
+          <unicode>1</unicode>
+        </values>
+        <tales>
+          <default>python: form.REQUEST.model.getWebCrop()</default>
         </tales>
         <messages>
           <message name="external_validator_failed">Sorry, the form content failed validation.</message>

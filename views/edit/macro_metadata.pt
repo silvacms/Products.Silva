@@ -8,54 +8,6 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   i18n:domain="silva">
 
-<!-- main template awaiting further refactoring
-  (for "view' and "edit" tables see below...) 
--->
-<!-- metal:block define-macro="main">
-  <table class="columns columns2">
-    <tbody>
-      <tr>
-        <tal:block replace="nothing">
-          _____________________ sidebar _____________________
-        </tal:block>
-        <td class="left" metal>
-          <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
-        </td>
-
-        <tal:block replace="nothing">
-          _____________________ main _____________________
-        </tal:block>
-        <td class="main">
-          <tal:block 
-            define="
-              editable python: model.get_editable();
-              version python: editable or model.get_previewable();
-              macro python: editable and 'edit_table' or 'view_table';
-              ">
-            <metal:block use-macro="here/macro_metadata/macros/?macro" />
-          </tal:block>
-
-          <tal:block 
-            define="version python: model.implements_versioning() and model.get_viewable()"
-            condition="version">
-            <metal:block use-macro="here/macro_metadata/macros/view_table">
-              <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure python:view.render_icon(model)" />
-                metadata
-                <span tal:condition="not: model/implements_container">
-                  <span i18n:translate="for_public_version_of">for public version of</span>
-                  &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
-                </span>
-              </h2>
-            </metal:block>
-          </tal:block>
-
-        </td>
-      </tr>
-    </tbody>
-  </table>  
-</metal:block-->
-
 <!-- Edit table -->
 <metal:block define-macro="edit_table">
   <tal:block define="
@@ -84,10 +36,14 @@
               colspan="4">
               <h2>
                 <img tal:replace="structure python:view.render_icon(model)" />
+                <tal:block i18n:translate="">
                 metadata
-                <span tal:condition="not: model/implements_container">
-                  for &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
-                </span>
+                <tal:block condition="not: model/implements_container">
+                  for &#xab;<tal:block content="string:${title}"
+                  i18n:name="metadata_title">
+                  title</tal:block>&#xbb;
+                  </tal:block>
+                </tal:block>
               </h2>
             </td>
           </tr>
@@ -140,9 +96,10 @@
                     ___ element name column ___
                   </tal:block>
                   <td class="align-right">
-                    <span tal:replace="element/title">
-                      Element name
-                    </span>
+                    <tal:block content="element/title"
+                    i18n:translate="">
+                    Element name
+                    </tal:block>
                     <span class="warning"
                       tal:condition="element/isRequired">
                       *
@@ -151,18 +108,15 @@
                   <tal:block replace="nothing">
                     ___ element widget column ___
                   </tal:block>
-                  <td>
-                    <div class="fixIE6widget"
-                      tal:define="                        
-                        data python: element['render'] or element['view'];
-                        data python: element_name in truncatable and ct(data, 50) or data;
-                        "
-                      tal:condition="
-                        python: element['isEditable'] or not element['isAcquired']"
-                      tal:content="
-                        structure data">
-                      Element edit widget
-                    </div>
+                  <td tal:define="                        
+                    data python: element['render'] or element['view'];
+                    data python: element_name in truncatable and ct(data, 50) or data;
+                    "
+                    tal:condition="
+                      python: element['isEditable'] or not element['isAcquired']"
+                    tal:content="
+                      structure data">
+                    element edit widget
                   </td>
                   <tal:block replace="nothing">
                     ___ element acquired value column ___
@@ -185,7 +139,7 @@
                     ___ element desc. column ___
                   </tal:block>
                   <td>
-                    <tal:block content="structure element/description">
+                    <tal:block i18n:translate="" content="structure element/description">
                       Element description
                     </tal:block>
                     <span class="error"
@@ -199,10 +153,10 @@
             <tr tal:condition="python: set_name != 'silva-content'">
               <th class="align-right">
               </th>
-              <th>
+              <th i18n:translate="metadata_dateformat">
                 date format: day / month / year &nbsp;23:59 
               </th>
-              <th>
+              <th i18n:translate="metadata_acquireable">
                 &#134; acquireable
               </th>
               <th>
@@ -297,7 +251,8 @@
                   ___ element name column ___
                 </tal:block>
                 <td class="align-right"
-                  tal:content="element/title">
+                  tal:content="element/title"
+                  i18n:translate="">
                   Element name
                 </td>
                 <tal:block replace="nothing">
@@ -317,7 +272,35 @@
         </tbody>
         <tfoot>
           <tr class="controls">
-            <td colspan="2">
+            <td class="align-right"
+              colspan="2">
+              <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
+              <tal:block condition="python: model.get_approved_version() and display_flag == 1">
+                <form action="properties_revoke_approval"
+                  method="POST">
+                  <input 
+                    class="button" 
+                    type="submit" 
+                    value="revoke approval" 
+                    title="first 'un-approve' this item in order to edit: alt-r" 
+                    accesskey="r"
+                    i18n:attributes="value title"
+                  />
+                </form>
+              </tal:block>
+              <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
+              <tal:block condition="python: not model.get_next_version()">
+                <form action="properties_make_copy"
+                  method="POST">
+                  <input class="button"
+                    type="submit"
+                    value="new version"
+                    title="create a new version of this content: alt-n"
+                    accesskey="n"
+                    i18n:attributes="value title"
+                  />
+                </form>
+              </tal:block>
             </td>
           </tr>
         </tfoot>

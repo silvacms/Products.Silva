@@ -39,7 +39,6 @@
         width="14"
         border="0"
         tal:attributes="src string:${root_url}/globals/silva_emblem.png"
-        i18n:attributes="alt"
       />
     </a>
     <a name="top"> </a>
@@ -67,17 +66,6 @@
       >
         &middot; manage...
       </a>
-      <span tal:replace="nothing">
-        <!-- ____________ hook for EditOnPro Integration ____________ -->
-      </span>
-      <tal:block condition="python:model.meta_type == 'Silva Document' and hasattr(here, 'eopro')">
-        &nbsp;&nbsp;
-        <a tal:attributes="href python:'%s/edit/tab_edit_eopro' % url"
-           i18n:translate=""
-        >
-          /eopro edit...
-        </a>
-      </tal:block>
     </tal:block>
     <a href="#bottom" accesskey="b">
     </a>
@@ -89,16 +77,13 @@
 </span>
 <div class="tabs">
   <a class="normal"
-    title="Silva help: alt-h"
+    title="Silva access keys: alt-?"
     i18n:attributes="title"
-    accesskey="h"
-    target="_blank"
+    accesskey="?"
     tal:condition="exists:here/help_url"
     tal:attributes="href string:${here/help_url}"
     i18n:translate=""
-    >
-    help
-  </a>
+    ></a>
  
   <tal:repeat tal:repeat="item tabs">
     <tal:define define="
@@ -109,11 +94,14 @@
       up_key tab_info/uplink_accesskey | nothing;
       ">
       <a class="left"
+        title 
         tal:condition="tab_info/toplink_url"
         tal:attributes="href tab_info/toplink_url;
           title string:up to top of publication: alt-${top_key};
           accesskey top_key;
-          ">
+          "
+          i18n:attributes="title"
+          >
         <img border="0"
            height="9"
            width="9"
@@ -127,7 +115,8 @@
           class python:is_selected_tab and (active_tab and 'recede' or 'selected') or '';
           title string:access key: alt-${tab_key};
           accesskey tab_key;"
-        i18n:translate=""
+          i18n:translate=""
+          i18n:attributes="title"
         >
         Tab Name
       </a>
@@ -136,7 +125,9 @@
         tal:attributes="href tab_info/uplink_url;
           title string:up a level: alt-${up_key};
           accesskey up_key;
-          ">
+          "
+        i18n:attributes="title"
+        >
         <img border="0"
            height="9"
            width="9"

@@ -6,6 +6,8 @@
   <action></action>
   <enctype>multipart/form-data</enctype>
   <method>POST</method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>add_form</i18n>
 
   <groups multiple="true">
     <group>
@@ -26,7 +28,7 @@
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra>class="fixIE6widget"</extra>
+          <extra>class="store"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -47,7 +49,7 @@
           <default></default>
           <title>title</title>
           <description></description>
-          <extra>class="fixIE6widget"</extra>
+          <extra>class="store"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -58,7 +60,7 @@
           <display_maxwidth></display_maxwidth>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <display_width type="int">40</display_width>
+          <display_width type="int">54</display_width>
           <css_class></css_class>
           <default></default>
           <title>file</title>

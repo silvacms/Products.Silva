@@ -1,12 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<tal:block condition="python: here.REQUEST.has_key('edit_mode')">
-  <html tal:define="dummy python:here.REQUEST.RESPONSE.setHeader('Refresh', '0,%s/edit/show_error?error_type=%s&error_message=%s' % (here.REQUEST.model.absolute_url(), options.get('error_type'), '%s %s' % (options.get('error_value') or '', options.get('message') or '')))">
-    <head><title>Redirecting to errorpage, please wait</title></head>
-    <body>&nbsp;</body>
-  </html>
-</tal:block>
-            
-<tal:block tal:condition="python: not here.REQUEST.has_key('edit_mode') and options['error_type'] != 'NotFound'">
+<tal:block tal:condition="python: options['error_type'] != 'NotFound'">
 <html tal:define="mangle python:modules['Products'].Silva.mangle;">
   <head>
     <link rel="stylesheet"
@@ -122,7 +115,7 @@
 </html>
 </tal:block>
 
-<tal:block tal:condition="python: not here.REQUEST.has_key('edit_mode') and options['error_type'] == 'NotFound'">
+<tal:block tal:condition="python: options['error_type'] == 'NotFound'">
 <!-- _____________________ 404 error message  _____________________ -->
 <!-- _____________________ Silva version 0.9.3.0 __________________ -->
 <html metal:use-macro="here/get_layout_macro"

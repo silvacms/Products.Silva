@@ -72,7 +72,7 @@
             <tbody>
               <tr class="align-left"
                 tal:condition="members">
-                <th i18n:translate="username">
+                <th i18n:translate="">
                   username
                 </th>
                 <th class="align-right" i18n:translate="roles_defined_above">
@@ -96,7 +96,8 @@
                       tal:attributes="
                         value userid;
                         id fullname;" />
-                      <label tal:content="fullname"
+                      <label style="text-transform:none"
+                        tal:content="fullname"
                         tal:attributes="for fullname">
                         username
                       </label>
@@ -104,14 +105,16 @@
                   <td class="align-right"
                     tal:define="upward_roles python:model.sec_get_upward_roles_for_userid(userid)">
                     <tal:block repeat="upward upward_roles">
-                      <i tal:content="upward" /><br tal:condition="not:repeat/upward/end" />
+                    <i tal:content="upward" 
+                      i18n:translate="" /><br tal:condition="not:repeat/upward/end" />
                     </tal:block>
                   </td>
                   <td class="align-right">
                     <tal:block repeat="local python:model.sec_get_local_roles_for_userid(userid)">
-                      <label 
+                      <label style="text-transform:none"
                         tal:content="local" 
-                        tal:attributes="for string:revoke_${local}-${userid}">
+                        tal:attributes="for string:revoke_${local}-${userid}"
+                        i18n:translate="">
                         local
                       </label>
                         <input class="warning-checkbox"
@@ -150,8 +153,9 @@
                     >
                     <select class="manipulator"
                       name="assign_role"
-                      title="select a role to assign">
-                      <option value="None" i18n:translate="select_role">
+                      title="select a role to assign"
+                      i18n:attributes="name title">
+                      <option value="None" i18n:translate="access_select_role">
                         select role:
                       </option>
                       <metal:block use-macro="here/macro_role_options/macros/options" />                    </select>
@@ -220,7 +224,8 @@
                       tal:attributes="
                         value python: '|'.join(req);
                         id string:pending_${member/userid};" />
-                      <label tal:content="member/userid" 
+                      <label style="text-transform:none"
+                        tal:content="member/userid" 
                         tal:attributes="for string:pending_${member/userid}">
                         name
                       </label>
@@ -385,7 +390,8 @@
                           value group;
                           id group;" />
                         &nbsp;
-                        <label tal:content="group"
+                        <label style="text-transform:none"
+                          tal:content="group"
                           tal:attributes="for group">
                           group
                         </label>
@@ -404,7 +410,8 @@
                     </td>
                     <td class="align-right">
                       <tal:block repeat="local python:model.sec_get_local_roles_for_group(group)">
-                        <label tal:content="local" 
+                        <label style="text-transform:none"
+                          tal:content="local" 
                           tal:attributes="for string:revoke_${group}">
                           local
                         </label>
@@ -557,23 +564,24 @@
             </thead>
             <tbody>
               <tr>
-                <th i18n:translate="current_restriction">
+                <th i18n:translate="access_current_restriction">
                   current restriction
                 </th>
-                <th i18n:translate="note">
-                  note
-                </th>
+                <th>note</th>
               </tr>
               <tr class="even">
                 <td>
                   <i>
-                    <tal:block condition="info/is_public">Open to the public</tal:block>
+                    <tal:block condition="info/is_public"
+                    i18n:translate="access_public_open">Open to the public</tal:block>
                     <tal:block condition="not: info/is_public"
-                      tal:content="selected_role">role</tal:block>
-                    <tal:block condition="info/acquired">(acquired).</tal:block>
+                    i18n:translate=""
+                    tal:content="selected_role">role</tal:block>
+                    <tal:block i18n:translate="access_acquired" 
+                     condition="info/acquired">(acquired).</tal:block>
                   </i>
                 </td>
-                <td i18n:translate="setting_an_access_restriction"> 
+                <td i18n:translate="access_setting_restriction"> 
                   Setting an access restriction here affects objects on this and lower levels.
                 </td>
               </tr>
@@ -621,9 +629,10 @@
         </form>
         <tal:block replace="nothing"> 
           ____________________ utilities ____________________
+          turned off because of ridulously expensive tree walking
         </tal:block>
-        <table class="listing sublisting">
-	  <thead>
+        <table class="listing sublisting" tal:replace="nothing">
+          <thead>
             <tal:block replace="nothing">
               ______________ vein + title row _______________
             </tal:block>

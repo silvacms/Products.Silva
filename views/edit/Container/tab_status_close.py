@@ -18,7 +18,8 @@ try:
 except FormValidationError, e:
     return view.tab_status(
         message_type='error', 
-        message=view.render_form_errors(e))
+        message=view.render_form_errors(e),
+        refs=refs)
 
 closed_ids = []
 not_closed = []
@@ -41,7 +42,6 @@ for ref in refs:
     closed_ids.append(get_name(obj))
 
 if closed_ids:
-    request.set('refs', [])
     request.set('redisplay_timing_form', 0)
     msg.append( 'Closed: %s' % view.quotify_list(closed_ids) )
 

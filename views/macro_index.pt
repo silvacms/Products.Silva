@@ -26,6 +26,8 @@
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content silva_permissions/ChangeSilvaContent | nothing;    
     dummy python: here.REQUEST.set('edit_mode', 1);
+    dummy python: getattr(request, 'editor', None) and request.SESSION.set('editor', request.editor) or None;
+    editor python: request.SESSION.get('editor', None) or view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getUserName()).editor();
 ">
 
 <head>
@@ -41,13 +43,13 @@
 <style media="all"
   type="text/css"
   xml:space="preserve"
-  tal:define="imports python: ['silva.css',]"
-  tal:content="structure python: view.css_imports(imports)"
+  tal:content="structure python: view.css_imports(['silva.css'])"
 >
 @imports
 </style>
 <link href="globals/silvaContentStyle.css"
   rel="stylesheet"
+  type="text/css"
   tal:condition="python: not model.implements_container()"
   tal:attributes="href string:${root_url}/globals/silvaContentStyle.css"
 />
@@ -55,6 +57,7 @@
 <metal:block define-slot="metatype_css" />
 <tal:block replace="nothing"> _______ use frontend.css in preview _______ </tal:block>
 <link rel="stylesheet"
+  type="text/css"
   tal:condition="python:template.id == 'tab_preview'"
   tal:attributes="href here/frontend.css/absolute_url | nothing"
 />
@@ -84,9 +87,20 @@ function handle_default_action(element, event, action)
 </script>
 <tal:block tal:replace="nothing"> _______ script slot _______ </tal:block>
 <metal:block define-slot="script" />
+
+<tal:block tal:replace="nothing"> _______ moz site navigation_______ </tal:block>
+<link rel="top" title="Up to Silva top" 
+  tal:condition="python:model.meta_type != 'Silva Root'"
+  tal:attributes="href string:${root_url}/edit" />
+<link rel="up" href="../../edit" title="Up one level" 
+  tal:condition="python:model.meta_type != 'Silva Root'" />
+<link rel="help" href="globals/accesskeys" title="Help with access keys" />
+<link rel="copyright" href="globals/copyright" title="Silva copyright info" />
 </head>
 
-<body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
+<body tal:attributes="onload python: test(vein == 'editor' and editor == 'kupu', 
+                                          'startKupu()', 
+                                          'if (window.focus_editor) window.focus_editor()')">
 <!-- __________________________ Start matrix tabs _________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   top navigation plugs in here....
@@ -94,13 +108,15 @@ function handle_default_action(element, event, action)
 <!-- ___________________________ End matrix tabs __________________________ -->
 <!-- ___________________________ Start workspace __________________________ -->
 <div class="workspace">
+  <metal:block define-slot="middleground" />
 
+<tal:condition condition="python: not (template.id == 'tab_edit' and editor == 'kupu' and model.meta_type == 'Silva Document')">
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
 <tal:block define="
   type options/message_type | request/message_type | nothing;
-  notice options/message | request/message | string:&nbsp;;;
+  notice options/message | request/message | nothing;
   dummy python:here.recordError(type, notice);
 ">
   <div class="feedback"
@@ -109,14 +125,44 @@ function handle_default_action(element, event, action)
     <span tal:replace="structure notice">
       message
     </span>
-    <tal:block tal:condition="python:type == 'feedback'">
-      &nbsp;&nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
+    &nbsp;
+    <tal:block condition="python:model.sec_in_development_mode() and not notice">
+      <a class="reveal"
+        href="/manage_main"
+        title="jump to zope root: alt-z"
+        accesskey="z"
+        i18n:attributes="title"
+        i18n:translate="">
+        zroot...
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a class="reveal"
+        title="jump to silva root in zodb: alt-'"
+        tal:attributes="href string:${root_url}/manage_main"
+        accesskey="'"
+        i18n:attributes="title"
+        i18n:translate="">
+        sroot...
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a class="reveal"
+        title="jump to silva services: alt-`"
+        tal:attributes="href string:${root_url}/manage_services"
+        accesskey="`"
+        i18n:attributes="title"
+        i18n:translate="">
+        sservices...
+      </a>
+    </tal:block>
+    <tal:block tal:condition="python:type == 'feedback' and notice">
+      &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
     </tal:block>
   </div>
 </tal:block>
 <span tal:replace="nothing">
 <!-- ______________ end feedback ______________ -->
 </span>
+</tal:condition>
 
 <!-- _____________________ Start main _____________________ -->
 <div metal:define-slot="main">
@@ -128,7 +174,7 @@ function handle_default_action(element, event, action)
 <span tal:replace="nothing">
 <!-- _______ white space + jump to top _______ -->
 </span>
-<div>
+<div style="clear: both;">
   <div style="float: left;">
     <a href="#top"
       title="jump to top: alt-t">
@@ -163,11 +209,12 @@ function handle_default_action(element, event, action)
     name python: view.get_metadata_element('silva-extra', 'contactname');
     email python: view.get_metadata_element('silva-extra', 'contactemail');
     ">
-  <div style="float: left;">     
-    contact:
+    <div style="float: left;"> 
+      <tal:block i18n:translate="index_contact">contact:</tal:block>
     <a shape="rect"
-      tal:attributes="href string:mailto:${email}">
-      <span tal:replace="python: name or email or 'no name'" />
+      tal:attributes="href string:mailto:${email}"
+      tal:content="python: name or email or 'no name'"
+      i18n:translate="">
     </a>
   </div>
   <div style="float: right;">
@@ -175,7 +222,8 @@ function handle_default_action(element, event, action)
       title="Leave Silva and view the public page: alt-:"
       accesskey=":"
       tal:attributes="href url"
-    >
+      i18n:attributes="title"
+      i18n:translate="index_preview_public">
       see public version
     </a>
   </div>
@@ -189,13 +237,15 @@ function handle_default_action(element, event, action)
   tal:define="userid request/AUTHENTICATED_USER/getUserName"
 >
   <div style="float: left;">
-    <a title="Change your settings: alt-~"
+    <a href=""
+      title="Change your settings: alt-~"
       accesskey="~"
       tal:attributes="
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
         userWindow.focus();;
         return false;;"
-    >
+        i18n:translate="index_user_setting"
+        i18n:attributes="title">
       <img border="0"
         height="9"
         width="9"
@@ -208,21 +258,22 @@ function handle_default_action(element, event, action)
     <a href="logout"
       accesskey="q"
       title="Logout of Silva: alt-q"
-    >
+      i18n:translate="index_logout"
+      i18n:attributes="title">
       logout
-      <span tal:condition="here/get_user_role"
-        tal:replace="
-          structure string:${here/get_user_role}"
-      />
-      <span tal:replace="userid" />
+      <tal:block tal:condition="here/get_user_role"
+        i18n:name="role"
+        tal:content="structure string:${here/get_user_role}" />
+      <tal:block i18n:name="userid" tal:content="userid" />
     </a>
   </div>
   <a name="bottom">
     &nbsp;
   </a>
-  <a title="Request an additional role in this location: alt-,"
+  <a href=""
+    title="Request an additional role in this location: alt-,"
     accesskey=","
-    tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_authentication_requests()"
+    tal:condition="view/service_members/allow_authentication_requests"
     tal:attributes="href string:public/request_roles?last_url=${url}/edit/${template/id}">
     request access
   </a>

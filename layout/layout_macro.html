@@ -1,8 +1,8 @@
+<!-- _______ {__silva_version__} _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   metal:define-macro="layout">
-<!-- _______ Silva version 0.9.3.0 _______ -->
 
 <head metal:define-slot="head">
   <title metal:define-slot="title"
@@ -30,15 +30,61 @@
     tal:condition="email"
     tal:attributes="content email" />
   <meta metal:define-slot="meta" tal:omit-tag="" />
-  <!-- End metatags -->
+  <!-- /End metatags -->
+  <!-- Start related links -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
+  <!-- Access navigation links - remove if not needed for better performance -->
+  <tal:block define="surround here/get_navigation_links | nothing">
+    <tal:repeat repeat="link surround/keys">
+     <tal:condition condition="python:surround[link] != '..'">
+      <link tal:attributes="rel link; href python:surround[link].absolute_url()"
+          tal:condition="python:surround[link] or None"/>
+        </tal:condition>
+    </tal:repeat>
+    <link rel="up" tal:condition="python:surround.has_key('up')" tal:attributes="href
+    surround/up" />
+  </tal:block>
+  <tal:block define="doclinks here/get_document_index_links | nothing">
+    <link rel="index" tal:attributes="href doclinks/index"
+        tal:condition="doclinks/index | nothing" />
+    <link rel="contents" tal:attributes="href doclinks/contents"
+        tal:condition="doclinks/contents | nothing" />
+  </tal:block>
+  <tal:block define="types here/get_document_chapter_links | nothing">
+      <tal:repeat repeat="item types/chapter"
+        tal:condition="types/chapter | nothing">
+          <link rel="chapter" tal:attributes="title item/title; href
+            item/url;"/>
+      </tal:repeat>
+      <tal:repeat repeat="item types/section"
+        tal:condition="types/section | nothing">
+          <link rel="section" tal:attributes="title item/title; href item/url;" />
+      </tal:repeat>
+      <tal:repeat repeat="item types/subsection"
+        tal:condition="types/subsection | nothing">
+          <link rel="subsection" tal:attributes="title item/title; href
+          item/url;" />
+      </tal:repeat>
+      <tal:repeat repeat="item types/subsubsection"
+        tal:condition="types/subsubsection | nothing">
+          <link rel="subsubsection" tal:attributes="title item/title;
+          href item/url;" />
+      </tal:repeat>
+  </tal:block>
+  <!-- /End access navigation links -->
+  <link rel="copyright" title="Copyright"
+    tal:attributes="href here/copyright/absolute_url | nothing" />
+  <!-- /End related links -->
   <!-- Begin stylesheets -->
-  <link rel="stylesheet" href="frontend.css" type="text/css"
+  <link rel="stylesheet" type="text/css" media="all"
     tal:attributes="href here/frontend.css/absolute_url | nothing" />
+  <link rel="stylesheet" type="text/css" media="print"
+    tal:attributes="href here/print.css/absolute_url | nothing" />
   <link metal:define-slot="style" tal:omit-tag="" />
-  <!-- End stylesheets -->
-  <script metal:define-slot="script" type="text/javascript" tal:omit-tag="">
+  <!-- /End stylesheets -->
+  <script metal:define-slot="script" type="text/javascript"
+    tal:replace="nothing">
     <!-- script slot -->
   </script>
 </head>
@@ -46,27 +92,28 @@
 <body metal:define-slot="body">
 
 <metal:block define-slot="page_header">
-  <!-- Start page_header slot -->
-  <div class="header">
-    <a class="icon"
-      href="http://www.infrae.com/products/silva" 
-      title="Silva info on the Infrae site: alt-i"
-      accesskey="i">
-      <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
-        tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
-    </a>
-    <metal:block define-slot="top_navigation">
-      <!-- Begin top_navigation slot -->
-      <span class="breadcrumb"
-         style="display:block;">
-        <span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
-        <a tal:content="item/get_title_or_id" tal:attributes="href item/absolute_url">Name</a>
-        <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
-      </span>
-      <!-- End top_navigation slot -->
-    </metal:block>
-  </div>
-  <!-- End page_header slot -->
+<!-- Start page_header slot -->
+<div class="header">
+  <a class="icon"
+    href="http://www.infrae.com/products/silva" 
+    title="Silva info on the Infrae site: alt-i"
+    accesskey="i">
+    <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
+      tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
+  </a>
+  <metal:block define-slot="top_navigation">
+  <!-- Begin top_navigation slot -->
+  <span class="breadcrumb"
+     style="display:block;">
+    <span tal:repeat="item python:here.get_breadcrumbs(ignore_index=1)" tal:omit-tag=""> 
+      <a tal:content="python: item.get_short_title() or item.get_title_or_id()"
+        tal:attributes="href item/absolute_url">Name</a>
+    <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
+  </span>
+  <!-- End top_navigation slot -->
+  </metal:block>
+</div>
+<!-- End page_header slot -->
 </metal:block>
 
 <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
@@ -85,3 +132,4 @@
 </metal:block>
 </body>
 </html>
+

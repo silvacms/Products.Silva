@@ -5,8 +5,11 @@
     root_url model/get_root_url;
     global editable model/get_editable;
     title model/get_title_editable;
-    vein string:editor;
-">
+    vein string:edit;
+    "
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="silva"
+    >
 <table class="columns columns3">
   <tbody>
     <tr>
@@ -41,9 +44,9 @@
       <tr>
         <td class="top"
           colspan="3">
-          <h2>
+          <h2 i18n:translate="ghost_title">
             <img tal:replace="structure python:view.render_icon(model)" />
-            ghost of &#xab;<tal:block content="title" />&#xbb;
+            ghost of &#xab;<tal:block i18n:name="name" content="title" />&#xbb;
           </h2>
         </td>
       </tr>
@@ -52,13 +55,14 @@
     <tbody>
       <tr>
         <th class="align-right"
-          width="15%">
+          width="15%"
+          i18n:translate="attributes">
           attributes
         </th>
-        <th>
+        <th i18n:translate="content">
           content
         </th>
-        <th width="30%">
+        <th width="30%" i18n:translate="note">
           note
         </th>
       </tr>
@@ -74,6 +78,7 @@
             accesskey="r"
             tal:define="asset_context python:here.get_start_container();"
             tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Content&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+            i18n:attributes="value title"
             /><span class="warning">*</span>
         </td>
         <td>
@@ -85,7 +90,7 @@
             tal:attributes="value content_url"
           />
         </td>
-        <td>
+        <td i18n:translate="ghost_path_to_original">
           Path to original (begins with &#8216;/&#8217;).
         </td>
       </tr>
@@ -102,7 +107,7 @@
             Link
           </a>
         </td>
-        <td>
+        <td i18n:translate="ghost_link_editor">
           Link to editor screen of original.
         </td>
       </tr>
@@ -132,6 +137,7 @@
             value="save reference"
             title="access key: alt-s"
             accesskey="s"
+            i18n:attributes="value title"
           />
         </td>
       </tr>

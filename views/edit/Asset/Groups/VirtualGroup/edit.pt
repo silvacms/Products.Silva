@@ -5,7 +5,7 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    vein string:editor;
+    vein string:edit;
     active_tab string:../../edit/tab_access_groups;
     parent_screen_name string:groups;
     has_access here/has_change_access_permission;">

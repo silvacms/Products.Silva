@@ -121,11 +121,22 @@ class EmailMessageService(SimpleItem.SimpleItem):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'send_pending_messages')
     def send_pending_messages(self):
+        self._debug_log("Sending pending messages...")
+        
+        get_member = self.service_members.get_member
+        
         if not hasattr(self.aq_base, '_v_messages'):
             self._v_messages = {}
-        get_member = self.service_members.get_member
+        
         for to_memberid, message_dict in self._v_messages.items():
-            to_email = get_member(to_memberid).email()
+            to_member = get_member(to_memberid)
+            if to_member is None:
+                # XXX get_member should return a NoneMember, not just None
+                # in case the member cannot be found. Apparently sometimes
+                # it *does* return.
+                self._debug_log("no member found for: %s" % to_memberid)
+                continue
+            to_email = to_member.email()
             if to_email is None:
                 self._debug_log("no email for: %s" % to_memberid)
                 continue
@@ -135,9 +146,15 @@ class EmailMessageService(SimpleItem.SimpleItem):
             common_subject=None
             reply_to = {}
             for from_memberid, messages in message_dict.items():
-                if self._debug:
-                    self._debug_log("From memberid: %s " % from_memberid)
-                from_email = get_member(from_memberid).email()
+                self._debug_log("From memberid: %s " % from_memberid)
+                from_member = get_member(from_memberid)
+                if from_member is None:
+                    # XXX get_member should return a NoneMember, not just None
+                    # in case the member cannot be found. Apparently sometimes
+                    # it *does* return.
+                    self._debug_log("no member found for: %s" % to_memberid)
+                    continue
+                from_email = from_member.email()
                 if from_email is not None:
                     reply_to[from_email] = 1
                     lines.append("Message from: %s (email: %s)" %
@@ -174,7 +191,7 @@ class EmailMessageService(SimpleItem.SimpleItem):
     def _debug_log(self, message, details=''):
         """ simple helper for logging """
         if self._debug:
-            zLOG.LOG('Silva messages', zLOG.BLATHER, message, details)
+            zLOG.LOG('Silva messages', zLOG.INFO, message, details)
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.ViewManagementScreens,

@@ -18,7 +18,8 @@ try:
 except FormValidationError, e:
     return view.tab_status(
         message_type='error', 
-        message=view.render_form_errors(e))
+        message=view.render_form_errors(e),
+        refs=refs)
 
 publish_datetime = result['publish_datetime']
 publish_now_flag = result['publish_now_flag']
@@ -29,7 +30,8 @@ if not publish_datetime and not expiration_datetime \
         and not clear_expiration_flag and not publish_now_flag:
     return view.tab_status(
         message_type='error', 
-        message='No publication nor expiration time nor any of the flags were set.')
+        message='No publication nor expiration time nor any of the flags were set.',
+        refs=refs)
 
 now = DateTime()
 
@@ -96,7 +98,6 @@ for ref in refs:
         changed_ids.append(get_name(obj))
 
 if changed_ids:
-    request.set('refs', []) # explicit clear since it has value from the form
     request.set('redisplay_timing_form', 0)
     msg.append( 'Changed settings on: %s' % view.quotify_list(changed_ids) )
 

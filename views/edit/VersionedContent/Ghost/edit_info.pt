@@ -4,7 +4,7 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title;
-    vein string:editor;
+    vein string:edit;
 ">
 <table class="columns columns3"
   style="margin-top:1em;">

@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: cleanup.py,v 1.2 2003/11/11 17:14:58 jw Exp $
+# $Id: cleanup.py,v 1.3 2004/07/21 11:40:40 jw Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner

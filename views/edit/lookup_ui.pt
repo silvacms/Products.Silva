@@ -93,11 +93,11 @@
                 </td>
                 <td class="align-right"
                   style="width:70%;">
-                  <input class="inputter"
+                  <input class="store"
                     name="name"
-                    style="width:100%;"
                     type="text"
-                    value="" />
+                    value=""
+                  />
                 </td>
               </tr>
               <tr class="controls">
@@ -163,7 +163,8 @@
                       tal:attributes="
                         value member/userid;
                         id member/userid" />
-                    <label tal:content="member/fullname" 
+                    <label style="text-transform:none"
+                      tal:content="member/fullname" 
                       tal:attributes="for member/userid">
                       username
                     </label>

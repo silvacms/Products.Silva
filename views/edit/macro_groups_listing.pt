@@ -57,10 +57,13 @@
     <metal:block define-macro="listing_no_style">      
       <form action="."
         method="POST">
-        <h3>
+        <h3 style="margin-top:0">
           <img tal:replace="structure python:view.render_icon_by_meta_type(group_meta_type)" />
-          <span i18n:translate="existing" tal:omit-tag="">existing</span>
-          <span tal:replace="structure group_type | nothing">type</span> groups
+          <tal:block i18n:translate="">
+          existing
+          <span tal:content="structure group_type | nothing"
+            i18n:name="type">type</span> groups
+          </tal:block>
         </h3>
         <table class="listing"
           style="margin-bottom:0em;">
@@ -123,7 +126,7 @@
           <tfoot>
             <tr class="controls"
               tal:condition="groups">
-              <td class="align-right">
+              <td>
                 <metal:block define-slot="actions" />
               </td>
             </tr>

@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.79 $
+# $Revision: 1.80 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -13,12 +13,16 @@ import SilvaPermissions
 import install
 # misc
 from helpers import add_and_edit
+import os
 
 from Products.Silva.Metadata import export_metadata
 
 from interfaces import IRoot, IVersionedContent, IContainer
 
 icon="www/silva.png"
+
+class DocumentationInstallationException(Exception):
+    """Raised when a dependency is not installed when trying to install something"""
 
 class Root(Publication):
     """Root of Silva site.
@@ -167,7 +171,7 @@ class Root(Publication):
     def get_silva_software_version(self):
         """The version of the Silva software.
         """
-        return '0.9.3'
+        return '1.0'
     
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_content_version')
@@ -178,6 +182,11 @@ class Root(Publication):
         can be different in case the content was not yet updated.
         """
         return getattr(self, '_content_version', 'before 0.9.2')
+
+    security.declarePublic('get_silva_product_version')
+    def get_silva_product_version(self):
+        """Returns the release version of the Product"""
+        return self.manage_addProduct['Silva'].version
     
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'upgrade_silva')
@@ -226,7 +235,7 @@ class Root(Publication):
 
         return 'Status updated'
 
-    security.declarePublic('rollbackTransaction')
+    security.declarePublic('recordError')
     def recordError(self, message_type, message):
         """record given error/feedback
         
@@ -240,12 +249,57 @@ class Root(Publication):
         if message_type == 'error':
             get_transaction().abort()
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_real_container')
+    def get_real_container(self):
+        """Get the container, even if we're a container.
+
+        If we're the root object, returns None.
+        
+        Can be used with acquisition to get the 'nearest' container.
+        """
+        return None
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'manage_installDocumentation')
+    def manage_installDocumentation(self):
+        """Install user docs into the root, called from service_extensions"""
+        message = 'Documentation installed'
+        try:
+            self._installDocumentation()
+        except DocumentationInstallationException, e:
+            message = e
+        return self.service_extensions.manage_main(manage_tabs_message=message)
+    
+    def _installDocumentation(self):
+        """Install user documentation into the root"""
+        try:
+            import Products.SilvaDocument
+        except ImportError:
+            raise DocumentationInstallationException, 'Documentation can not be installed since SilvaDocument is not available'
+        self.aq_inner._importObjectFromFile('%s/doc/silva_docs.zexp' % os.path.dirname(__file__))
+        self._recursivePublish(self.silva_docs)
+
+        # there's an indexer in the root of the docs folder, trigger a reindex
+        # action because the paths in the zexp may well be different from the 
+        # ones stored in the indexer
+        self.silva_docs.Indexer.update_index()
+
+    def _recursivePublish(self, obj):
+        """recursively publish all Silva VersionedContent objects"""
+        for child in obj.objectValues():
+            if IVersionedContent.isImplementedBy(child):
+                child.set_unapproved_version_publication_datetime(DateTime())
+                child.approve_version()
+            elif IContainer.isImplementedBy(child):
+                self._recursivePublish(child)
+
 InitializeClass(Root)
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
                                       __name__='manage_addRootForm')
 
-def manage_addRoot(self, id, title, REQUEST=None):
+def manage_addRoot(self, id, title, add_docs=0, REQUEST=None):
     """Add a Silva root."""
     # no id check possible or necessary, as this only happens rarely and the
     # Zope id check is fine
@@ -262,6 +316,10 @@ def manage_addRoot(self, id, title, REQUEST=None):
     # now set it all up
     install.installFromScratch(object)
     object.set_title(title)
+
+    if add_docs:
+        # install the user documentation .zexp
+        object._installDocumentation()
 
     add_and_edit(self, id, REQUEST)
     return ''

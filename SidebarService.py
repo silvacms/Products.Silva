@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SidebarService.py,v 1.17 2003/11/05 13:13:05 faassen Exp $
+# $Id: SidebarService.py,v 1.18 2004/07/21 11:40:40 jw Exp $
 # Zope
 from OFS.SimpleItem import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -19,6 +19,7 @@ class SidebarService(SimpleItem):
     """Service for sidebar cache"""
 
     meta_type = 'Silva Sidebar Service'
+    title = 'Silva Sidebar Cache'
     
     security = ClassSecurityInfo()
 

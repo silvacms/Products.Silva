@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- _______ Silva version 0.9.3.0 _______ -->
+<!-- _______ Silva version 0.9.3.4e _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal">
@@ -10,6 +10,8 @@
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <link rel="stylesheet" href="frontend.css" type="text/css" />
+  <link rel="up" href="../../edit" title="Up one level" />
+  <link rel="copyright" href="copyright" title="Silva copyright info" />
 </head>
 
 <body>
@@ -28,11 +30,11 @@
     accesskey="s">
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
       tal:attributes="href here/globals/silva_32.png/absolute_url | nothing" /></a>
-  &nbsp;Silva &#8211; medium independent publishing<br />
+  &nbsp;Silva &#8211; medium independent content management
 </h2>
 
 <div class="citation"
-  style="font-size:90%; margin:2em 0; padding:0 1em 0.3em 1em; border-width:3px; border-style:double; border-color:#6873a5">
+  style="margin:2em 0; padding:0 1em 0.3em 1em; border-width:3px; border-style:double; border-color:#6873a5">
   <dl>
     <dt>
       From WordNet (r) 1.6 [wn]:
@@ -55,53 +57,56 @@
 <h3>Credits</h3>
 
 <p style="line-height:1.5em;">
-  Silva is developed by <a href="http://www.infrae.com/">Infrae</a>. <br />
-  Initial (and continued) development was for <a href="http://www.eur.nl/">Erasmus University Rotterdam</a>.
+  Silva is developed by <a href="http://www.infrae.com/">Infrae</a> and many others. <br />
 </p>
 
-<h4>Infrae Silva team</h4>
+<h4>Infrae Silva crew</h4>
 
 <p style="line-height:1.5em;">
-  <a href="mailto:kitblake@infrae.com">Kit Blake</a><br />
-  <a href="mailto:faassen@infrae.com">Martijn Faassen</a><br />
-  <a href="mailto:jw@infrae.com">Jan-Wijbrand Kolman</a><br />
-  <a href="mailto:guido@infrae.com">Guido Wesdorp</a><br />
-  <a href="mailto:gst@infrae.com">Guido Goldstein</a><br />
-  <a href="mailto:torvald@infrae.com">Torvald de Boskat</a><br />
+  Kit Blake<br />
+  Martijn Faassen<br />
+  Jan-Wijbrand Kolman<br />
+  Guido Wesdorp<br />
+  Guido Goldstein<br />
+  Eric Casteleijn<br />
+  Walco van Loon<br />
+  Roman Joost<br />
+  Torvald de Boskat<br />
 </p>
 
 <h4>External developers</h4>
 
 <p style="line-height:1.5em;">
-  <a href="mailto:gotcha@swing.be">Godefroid Chapelle</a> from <a href="http://www.bubblenet.be/">BubbleNet.be</a><br />
-  <a href="mailto:robbenhaar@espresto.com">Clemens Klein-Robbenhaar</a><br />
-  <a href="mailto:hpk@devel.trillke.net">Holger Krekel</a> from many things, including <a href="http://codespeak.net/pypy/">pypy.org</a><br />
-  <a href="mailto:alexander@limi.net">Alexander Limi</a> from <a href="http://www.plonesolutions.com/">Plone Solutions</a><br />
-  <a href="mailto:js@aixtraware.de">Joachim Schmitz</a> from <a href="http://www.aixtraware.de/">Aixtraware.de</a><br />
-  <a href="mailto:itamar@zoteca.com">Itamar Shtull-Trauring</a> from <a href="http://www.zoteca.com/">Zoteca</a><br />
-  <a href="mailto:hazmat@infrae.com">Kapil Thangavelu</a><br />
-  <a href="mailto:cz@gocept.de">Christian Zagrodnick</a> (and others) from <a href="http://www.gocept.de/">Gocept.de</a><br />
+  Godefroid Chapelle from <a href="http://www.bubblenet.be/">BubbleNet.be</a><br />
+  Clemens Klein-Robbenhaar<br />
+  Holger Krekel from many things, including <a href="http://codespeak.net/pypy/">pypy.org</a><br />
+  Alexander Limi from <a href="http://www.plonesolutions.com/">Plone Solutions</a><br />
+  Joachim Schmitz from <a href="http://www.aixtraware.de/">Aixtraware</a><br />
+  Itamar Shtull-Trauring from <a href="http://www.zoteca.com/">Zoteca</a><br />
+  Kapil Thangavelu<br />
+  Philipp von Weitershausen<br />
+  Christian Zagrodnick (and others) from <a href="http://www.gocept.com/">gocept</a><br />
 </p>
   
 <h4>Thanks to....</h4>
 
 <p>
-  The people at <a href="http://www.ethz.ch/">ETH in Zürich</a> for their feedback, contributions, and innovation.
+  The people at <a href="http://www.ethz.ch/">ETH Zürich</a> for their feedback, contributions, and innovation.
 </p>
 <p>
-  <a href="mailto:jan@curpheymedia.com">Jan Smith</a> at <a href="http://ozzope.org">ozzope.org</a> for advice, hosting the documentation wiki, and her tutorials.
+  Jan Smith at <a href="http://ozzope.org">ozzope.org</a> for advice, hosting the documentation wiki, and her tutorials.
 </p>
 <p>
-  Many thanks go to <a href="mailto:verster@daz.eur.nl">Hans Verster</a> at the Erasmus University Rotterdam for his vision and support.
+  Many thanks go to Hans Verster at the <a href="http://www.eur.nl/">Erasmus University Rotterdam</a> for his vision and support.
 </p>
 <p>
   <br />
   <br />
-  <span class="subhead">Silva v0.9.3</span><br />
+  <span class="subhead" tal:content="here/get_silva_product_version"/><br />
   <a style="float:right; margin-bottom:1em;" 
     href="http://www.infrae.com/products/silva" 
-    title="Silva info: alt-s"
-    accesskey="s">
+    title="Silva info: alt-i"
+    accesskey="i">
     <img style="vertical-align:top;"
       src="powered_by.png" 
       width="64"
@@ -110,7 +115,7 @@
       alt="Silva site"
     />
   </a>
-  Copyright &#xa9; 2002, 2003 Infrae. All rights reserved.
+  &#xa9; Copyright 2001-2004 Infrae. All rights reserved.
 </p>
 
 </div>

@@ -1,6 +1,8 @@
-"""Update the publication status of all objects of which either the 
-    publication_datetime or the expiration_datetime have passed, since
-    the system leaves them in the old state until they're called (viewed)
+"""Call a URL, over HTTP or HTTPS, optionally using login credentials. This 
+    can be used to update the publication status of all objects of which 
+    either the publication_datetime or the expiration_datetime have passed, 
+    since the system leaves them in the old state until they're called 
+    (viewed).
 """
 
 import urllib2, base64, urlparse

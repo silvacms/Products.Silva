@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<silva xmlns="http://infrae.com/ns/silva" xmlns:doc="http://infrae.com/ns/silva_document" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder" url="http://nohost/root/testfolder" datetime="2004-04-23T16:13:39Z">
+  <folder id="testfolder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle>
+        <silva-content:shorttitle></silva-content:shorttitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:subject></silva-extra:subject>
+        <silva-extra:expirationtime></silva-extra:expirationtime>
+        <silva-extra:keywords></silva-extra:keywords>
+        <silva-extra:publicationtime></silva-extra:publicationtime>
+        <silva-extra:location>http://nohost/root/testfolder</silva-extra:location>
+        <silva-extra:contactemail></silva-extra:contactemail>
+        <silva-extra:modificationtime>2004-04-23T16:13:39Z</silva-extra:modificationtime>
+        <silva-extra:creationtime>2004-04-23T16:13:39Z</silva-extra:creationtime>
+        <silva-extra:lastauthor>unknown user</silva-extra:lastauthor>
+        <silva-extra:creator>test_user_1_</silva-extra:creator>
+        <silva-extra:contactname></silva-extra:contactname>
+        <silva-extra:content_description></silva-extra:content_description>
+        <silva-extra:comment></silva-extra:comment>
+      </set>
+    </metadata>
+    <content>
+      <document id="test_document">
+        <workflow>
+          <version id="0">
+            <status>unapproved</status>
+            <publication_datetime></publication_datetime>
+            <expiration_datetime></expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>This is (surprise!) a document</silva-content:maintitle>
+              <silva-content:shorttitle></silva-content:shorttitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:subject></silva-extra:subject>
+              <silva-extra:expirationtime></silva-extra:expirationtime>
+              <silva-extra:keywords></silva-extra:keywords>
+              <silva-extra:publicationtime></silva-extra:publicationtime>
+              <silva-extra:location>http://nohost/root/testfolder/test_document</silva-extra:location>
+              <silva-extra:contactemail></silva-extra:contactemail>
+              <silva-extra:modificationtime>2004-04-23T16:13:39Z</silva-extra:modificationtime>
+              <silva-extra:creationtime>2004-04-23T16:13:39Z</silva-extra:creationtime>
+              <silva-extra:lastauthor>unknown user</silva-extra:lastauthor>
+              <silva-extra:creator>test_user_1_</silva-extra:creator>
+              <silva-extra:contactname></silva-extra:contactname>
+              <silva-extra:content_description></silva-extra:content_description>
+              <silva-extra:comment></silva-extra:comment>
+            </set>
+          </metadata>
+          <doc:doc>
+            <doc:p>
+            <doc:em>承諾広告＊既に、２億、３億、５億９千万円収入者が続出<doc:strong>boo</doc:strong>
+              baz</doc:em>
+            </doc:p>
+          </doc:doc>
+        </content>
+      </document>
+    </content>
+  </folder>
+</silva>

@@ -5,15 +5,17 @@
     mangle modules/Products/Silva/mangle;
     root_url model/get_root_url;
     title model/get_title_editable;
-    vein string:editor;
+    vein string:edit;
     "
   i18n:domain="silva">
-
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
 
-<metal:fill-slot fill-slot="info">
+ <metal:fill-slot fill-slot="info">
+  <script type="text/javascript"
+          tal:attributes="src view/cropping.js/absolute_url">
+  </script>
   <div class="info">
-    <h3>
+    <h3 i18n:translate="image_info">
       <img tal:replace="structure icon" /> image info
     </h3>
     <tal:block tal:condition="model/canScale">
@@ -22,18 +24,19 @@
         <span tal:replace="python: model.web_format.lower()" /> image
         <br />
         <span class="subhead">dimensions</span><br />
-        <span 
-          tal:define="
-            img_width python: model.getDimensions()[0];
-            img_height python: model.getDimensions()[1];
-            "
+        <span tal:define="
+          img_width python: model.getDimensions()[0];
+          img_height python: model.getDimensions()[1];
+          "
           tal:on-error="string: unknown"
           tal:replace="string:${img_width}x${img_height} pixels"
         />
-      </p> 
+      </p>
+
       <p tal:condition="model/hires_image">
-        <span class="subhead">format</span><br />
-        <span tal:replace="python: model.web_format.lower()">format</span> image
+      <span class="subhead" i18n:translate="image_format">format</span><br />
+      <span tal:replace="python: model.web_format.lower()">format</span>
+      <span i18n:translate="">image</span>
       </p>
       <p tal:define="
         image_width python: model.getDimensions()[0];
@@ -41,26 +44,40 @@
         scale_width python: model.getCanonicalWebScale()[0];
         scale_height python: model.getCanonicalWebScale()[1];
         ">
-        <span class="subhead">dimensions</span><br />
+        <span class="subhead" i18n:translate="image_dimension">dimensions</span><br />
         <span tal:on-error="string: unknown"
           tal:replace="string:${image_width}x${image_height} pixels"
-          /><tal:condition condition="python:
-            image_width != scale_width and
-            image_height != scale_height">,<br />scaled to 
-          <span tal:on-error="string: unknown"
+        />
+        <tal:condition condition="python:
+          image_width != scale_width or
+          image_height != scale_height"><br />
+          <span i18n:translate="">scaled to </span>
+          <span
+            tal:on-error="string: unknown"
             tal:replace="string:${scale_width}x${scale_height} pixels"
-            /></tal:condition>
+          />
+        </tal:condition>
       </p>
       <p>
-        <span class="subhead">original</span><br />
+      <span class="subhead">original</span><br />
         <a href="" class="underline"
           title="see the original image"
           accesskey="v"
-          tal:attributes="href string:${model/absolute_url}/hires_image"
+          tal:attributes="href python:model.url(hires=1)"
           i18n:attributes="title"
           i18n:translate="view_unscaled_image">
+          <tal:condition condition="model/thumbnail_image">
+            <img tal:replace="structure python:model.tag(thumbnail=1)" /><br />
+          </tal:condition>
           view unscaled image
         </a>
+      </p>
+      <p tal:condition="model/hires_image" 
+        tal:define="orientation model/getOrientation">
+        <span class="subhead">orientation</span><br />
+        <span tal:content="orientation" 
+          tal:attributes="class string:${orientation} orientation"
+          i18n:translate="">Square</span>
       </p>
     </tal:block>
     <p tal:condition="not: model/canScale" i18n:translate="note_silva_can_provide_image_scaling">
@@ -81,7 +98,7 @@
           <span 
             tal:attributes="title string: ${scaled_size}"
             tal:content="python:mangle.Bytes(scaled_size)" /> 
-            <span i18n:translate="scaled">scaled</span>
+            <span i18n:translate="">scaled</span>
           </tal:condition>
       </tal:block>
     </p>
@@ -91,7 +108,7 @@
         <span class="subhead"><b i18n:translate="file_system_path">file system path</b><br /></span>
         <span tal:replace="structure python:  ' / '.join(path.split('/'))" />
       </p>
-    </tal:block>
+      </tal:block>
   </div>
 </metal:fill-slot>
 
@@ -132,7 +149,7 @@
           <tal:define define="iterate repeat/field/odd">
             <tr tal:attributes="class python:iterate and 'odd' or 'even'">
               <td class="field-title">
-                <span tal:replace="python:field['title']">
+                <span tal:content="python:field['title']" >
                   title</span><span class="warning"
                   tal:condition="python:field.is_required()">*</span>
               </td>
@@ -150,12 +167,23 @@
       </tbody>
       <tfoot>
         <tr class="controls">
-          <td class="align-right"
-            colspan="3">
+          <td></td>
+          <td>
+            <input class="transport"
+              type="button"
+              value="set crop coordinates..."
+              title="specify the center of the area to crop by clicking in the image: alt-o"
+              accesskey="o"
+              tal:define="asset_context python:request.model"
+              tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+              i18n:attributes="title value"
+              />
+          </td>
+          <td class="align-right">
             <input class="button"
               type="submit"
               name="scale_submit:method"
-              value="change format/scale"
+              value="change"
               title="access key: alt-c"
               accesskey="c"
               i18n:attributes="title value"
@@ -165,6 +193,7 @@
       </tfoot>
     </table>
   </form>
+
   <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
 

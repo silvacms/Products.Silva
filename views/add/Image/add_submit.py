@@ -50,7 +50,7 @@ view = context
 
 try:
     model.manage_addProduct['Silva'].manage_addImage(id, title, file=file)
-except IOError, e:
+except ValueError, e:
     return view.add_form(message_type="error", message='Problem: %s' % e)
 object = getattr(model, id)
 

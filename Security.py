@@ -1,9 +1,9 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.75 $
+# $Revision: 1.76 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
-from Globals import InitializeClass
+from Globals import InitializeClass, DevelopmentMode
 from DateTime import DateTime
 # Silva
 from Products.Silva import roleinfo
@@ -315,7 +315,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for userid in parent.sec_get_local_defined_userids():
                 userids[userid] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return userids.keys()
 
     security.declareProtected(
@@ -329,7 +329,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for role in parent.sec_get_local_roles_for_userid(userid):
                 roles[role] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return roles.keys()
         
     security.declareProtected(
@@ -413,7 +413,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for group in parent.sec_get_local_defined_groups():
                 groups[group] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return groups.keys()
 
     security.declareProtected(
@@ -427,7 +427,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for role in parent.sec_get_local_roles_for_group(group):
                 roles[role] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return roles.keys()
 
     security.declareProtected(
@@ -482,4 +482,15 @@ class Security(AccessManager):
             if not self.__ac_local_groups__.getMappings():
                 self.__ac_local_groups__ = None
 
+    # XXX where does this method belong? it needs to be accessible
+    # from page templates easily so i put it here
+    security.declarePublic('sec_in_development_mode')
+    def sec_in_development_mode(self):
+        """Returns true if the site is in development mode and user is
+        Manager.
+        """
+        is_manager = getSecurityManager().getUser().has_role(
+            ['Manager'], object=self)
+        return DevelopmentMode and is_manager
+    
 InitializeClass(Security)

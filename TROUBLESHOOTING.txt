@@ -1,21 +1,4 @@
-
 Installation problems
-
-  Broken public views after upgrading Silva to a newer version
-
-    (for 0.9.3: AttributeError on get_title_html or KeyError on
-    silva_icon_32.gif).
-
-    Because some API changes in Silva might break the layout templates and 
-    scripts in the Silva root, you should either replace those templates 
-    and scripts with the default ones (by removing the old ones and placing
-    the default ones using the 'Install default layout' button in 
-    service_extensions) or, if you have custom versions of these objects 
-    available, modify your custom templates and scripts to work with the 
-    current Silva version.
-
-    For more information see UPGRADE.txt.
-    
 
   The Silva (and XMLWidgets and ParsedXML) Product is broken after
   installation.
@@ -52,19 +35,6 @@ Installation problems
     PyXML project home page http://pyxml.sourceforge.net helps fixing
     the problem.
 
-    If this does not help, or is not an option for some reason, a
-    possible workaround (read *hack*) is to create a file "pyexpat.py"
-    in the directory 'lib/python2.1/xml/parsers' of the Zope
-    installation, containing only the line::
-
-      from _xmlplus.parsers.pyexpat import *
-
-    or
-
-      from Shared.DC.xml.pyexpat import *
-
-    (or wherever the "pyexpat" module has been installed).
-
 
   After installing the Silva Product and restarting Zope, the server
   does not respond to HTTP request.
@@ -88,46 +58,6 @@ Installation problems
     demo.zexp inside the Silva Root.
 
 
-  Brokenness after upgrading Silva to a newer version
-
-    Most of the problems after upgrading Silva are caused by missing
-    product refresh via the 'service_extensions' object in the Silva
-    Root. Please check with the instructions in the 'UPGRADE.txt' of
-    the installed release, if you need to run a refresh after
-    upgrading.
-
-    Major releases usually need a content upgrade, too. This is also
-    available via the 'service_extensions' by the 'upgrade content'
-    button.
-
-    Please try at least a 'refresh all' from the 'service_extensions'
-    before reporting any problems with upgrading.
-
-    Also please note in case of several Silva Roots within one Zope
-    instance you need to run the upgrade for all Silva Roots
-    separately after installation of an upgrades Silva version.
-
-
-    Another possible source of problems arises if one installs
-    a newer version of Silva in place over an existing one (i.e.
-    by unpacking a *.tgz into a directory where an older version
-    of Silva is installed, overwriting the older version.
-
-    This will not remove files present in the older version.
-    As it often happens that some files are move around 
-    (or removed at all)  between releases, one would have some old 
-    files still around after the upgrade, which may lead to malfunction 
-    of the product.
-
-    Especially there have been reports of an "AttributeError" with an 
-    error value of "__hash__" after upgrading which seemed to be caused 
-    by this upgrade strategy.
-
-    Please remove (or move away) any old installation of Silva
-    (and its companion products) before unpacking the new version 
-    in your Products directory to avoid any problems.
-
-
   Silva only displays '?' for non-ascii characters in the public view
   after upgrading
  
@@ -142,23 +72,6 @@ Installation problems
     something like:
 
       context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;charset=utf-8')
-
-
-  Some links, image references, etc. are broken after the upgrade which
-  have been valid before the upgrade
-
-    The cause of the problem is that Silva has added some new methods
-    or other internal structures which impose new restrictions on the
-    set of valid content object ids. To operate properly Silva renames
-    content objects with conflicting ids to new ids in the upgrade 
-    process. However it does not fix links in other content objects
-    which reference theses objects.
-    
-    The upgrade process should leave a warning in the 'event.log' if it
-    needs to rename a content object. As Silva does not have a operable
-    reference management yet, You will have to check an possibly fix
-    references to the renamed objects manually after the upgrade. 
-
 
 
 Problems when using Silva 
@@ -258,6 +171,14 @@ Problems when using Silva
     reload symbol).  If this solves the problem, please check with the
     caching policy of your browser; set the caching policy so the
     browser checks for a newer version every time it loads the page.
+
+  When using Kupu, the basic buttons don't seem to work (bold, italic etc.)
+
+    If you're using some Mozilla based browser (Netscape, Mozilla, Firefox 
+    etc.) you may have set your security settings too high. Go to 'Scripts 
+    and plugins' in the 'Advanced' section of the preferences screen 
+    (edit->preferences) and make sure everything in the 'allow scripts to'
+    window is checked.
 
   "AttributeError: is_id_valid" or other errors when adding a Silva
   object via the ZMI
@@ -368,7 +289,7 @@ Problems when using Silva
     characters used in languages such as Dutch, German and
     French. Some other character sets, in particular those for Asian
     languages like Japanese, are not supersets of ASCII at all but
-    define their own meaning to each of 256 characters.
+    assign their own meaning to each of 256 characters.
   
     The different encodings mean that these sets are not
     interchangeable. In fact, a computer can not even determine from a

@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.152 $
+# $Revision: 1.153 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -478,12 +478,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         for id, value in self.propertyItems():
             type = self.getPropertyType(id)
             if folder.hasProperty(id):
-                try:
-                    folder.manage_delProperties([id])
-                except KeyError:
-                    # this can now have a key error if property cannot
-                    # be deleted (Zope 2.7?)
-                    pass
+                folder.manage_delProperties([id])
             # if we still have property it must be required, change it
             if folder.hasProperty(id):
                 folder.manage_changeProperties(id=value)
@@ -592,6 +587,20 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """
         return self.aq_inner
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_real_container')
+    def get_real_container(self):
+        """Get the container, even if we're a container.
+
+        If we're the root object, returns None.
+        
+        Can be used with acquisition to get the 'nearest' container.
+        """
+        container = self.get_container()
+        if container is self:
+            return container.aq_parent.get_container()
+        return container
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'container_url')
     def container_url(self):
@@ -890,7 +899,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         to be used in Python scripts and PT's
         """
         return urllib.quote(string)
-
+                
 InitializeClass(Folder)
 
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),

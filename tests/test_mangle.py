@@ -1,6 +1,6 @@
-# Copyright (c) 2002, 2003 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.11 2003/11/18 15:07:37 zagy Exp $
+# $Id: test_mangle.py,v 1.12 2004/07/21 11:40:41 jw Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -108,8 +108,29 @@ class MangleTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals(mangle.List(['foo', 'bar']), 'foo and bar')
         self.assertEquals(mangle.List(['foo', 'bar', 'baz']),
             'foo, bar and baz')
-   
-   
+  
+    def test_absolutize(self):
+        test_cases = [
+            ('/silva/a/s', 'foo/bar', '/silva/a/foo/bar'),
+            ('/silva/a/s/', 'foo/bar', '/silva/a/s/foo/bar'),
+            ('/silva/a/s/', './foo/bar', '/silva/a/s/foo/bar'),
+            ('/silva/a/s/', '/silva/bar', '/silva/bar'),
+            ('/silva/a/s/', '../../foo', '/silva/foo'),
+            ('/silva/a/s/', '../../../../../foo', '../../../../../foo')
+           ]
+        for case in test_cases:
+            base_path, item_path, expected_result = case
+            base_path = base_path.split('/')
+            item_path = item_path.split('/')
+            expected_result = expected_result.split('/')
+            actual_result = mangle.Path.toAbsolute(base_path, item_path)
+            __traceback_info__ = case
+            self.assertEquals(expected_result, actual_result)
+  
+    def test_strip(self):
+        s = mangle.Path.strip(['', 'foo', '.', 'bar'])
+        self.assertEquals(s, ['', 'foo', 'bar'])
+  
 if __name__ == '__main__':
     framework()
 else:

@@ -1,8 +1,7 @@
 # -*- coding: iso-8859-1 -*-
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.21 2004/01/14 15:30:45 faassen Exp $
-
+# $Id: mangle.py,v 1.22 2004/07/21 11:40:40 jw Exp $
 # Python
 import string
 import re
@@ -21,7 +20,10 @@ module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
 __allow_access_to_unprotected_subobjects__ = 1
 
-_marker = ()
+class _Marker:
+    """A marker"""
+    
+_marker = _Marker()
 
 module_security.declarePublic('Id')
 class Id:
@@ -75,6 +77,7 @@ class Id:
         'delete',
         'edit',
         'elements',
+        'email',
         'form',
         'fulltext',
         'getBatch',
@@ -82,6 +85,8 @@ class Id:
         'globals',
         'index_html',
         'insert',
+        'kupu',
+        'kupu_silva',
         'layout_macro.html',
         'logout',
         'lookup',
@@ -303,6 +308,38 @@ class _Path:
         assert type(obj_context) == type([]), "obj_context is not list type"
         obj_path = obj.getPhysicalPath()
         return '/'.join(self(obj_context, obj_path))
+
+    def toAbsolute(self, context_path, relative_path):
+        """make a relative path absolute
+
+            context_path: the path in which the relative path should be made
+                absolute
+            relative_path: the relative path to be made absolute
+        """
+        relative_path_in = relative_path
+        context_path = self.strip(context_path)
+        relative_path = self.strip(relative_path)
+        if relative_path[0] == '':
+            # path is absolute, starting with '/'
+            return relative_path
+        # strip "document part":
+        del(context_path[-1])
+        # handle "crawl up"
+        while relative_path[0] == '..':
+            del(relative_path[0])
+            if not context_path:
+                return relative_path_in
+            del(context_path[-1])
+        # concatenate paths
+        abs_path = context_path + relative_path
+        return abs_path
+
+    def strip(self, path):
+        """strip 'foo/./bar' to 'foo/bar'"""
+        path = [ e for e in path if e != '.' ]
+        return path
+        
+        
 
 module_security.declarePublic('Path')
 Path = _Path()

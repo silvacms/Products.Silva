@@ -1,11 +1,12 @@
-# -*- coding: iso-8859-1 -*- 
-# Copyright (c) 2002 Infrae. All rights reserved.
+# -*- coding: iso-8859-1 -*-
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Revision: 1.29 $
 
 # Python
 import os
 import string
+from cgi import escape
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -14,11 +15,11 @@ from Globals import InitializeClass
 from mimetypes import guess_extension
 from helpers import add_and_edit
 from webdav.WriteLockInterface import WriteLockInterface
-
 # Silva
 from Asset import Asset
 from Products.Silva import mangle
-import SilvaPermissions
+from Products.Silva import SilvaPermissions
+from Products.Silva import upgrade
 # Storages
 from OFS import Image                            # For ZODB storage
 try:                                             #
@@ -47,8 +48,6 @@ class File(Asset):
     
     def __init__(self, id, title):
         File.inheritedAttribute('__init__')(self, id, title)
-        # Anticipating hook:
-        self._direct_download = 1
 
     # ACCESSORS
 
@@ -75,35 +74,15 @@ class File(Asset):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_download_url')
+    # XXX deprecated, method left for backwards compatibility
     def get_download_url(self):
         """Obtain the public URL the public could use to download this file
         """
+        # XXX print deprecated warning?
         return self.absolute_url()
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_download_link')
-    def get_download_link(
-        self, title_attr='', name_attr='', class_attr='', style_attr=''):
-        """Obtain a complete HTML hyperlink by which the public can download
-        this file. FIXME: Is this method really needed?
-        """
-        attrs = []
-        if title_attr:
-            attrs.append('title="%s"' % title_attr)
-        if name_attr:
-            attrs.append('name="%s"' % name_attr)
-        if class_attr:
-            attrs.append('class="%s"' % class_attr)
-        if style_attr:
-            attrs.append('style="%"' % style_attr)
-        attrs = ' '.join(attrs)
-        link_text = self.get_title() or self.id
-        return '<a %s href="%s">%s</a>' % (
-            attrs, self.get_download_url(), link_text)
-
     # Overide SilvaObject.to_xml().
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'to_xml')
+    security.declareProtected(SilvaPermissions.ReadSilvaContent, 'to_xml')
     def to_xml(self, context):
         """Overide from SilvaObject
         """
@@ -111,25 +90,56 @@ class File(Asset):
             '<file id="%s" url=%s>%s</file>' % (
             self.id, self.get_download_url(), self._title))
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'download')
-    def download(self, REQUEST):
-        """Wrap around _file object
+    security.declareProtected(SilvaPermissions.View, 'index_html')
+    def index_html(self, view_method=None):
+        """ view (download) file data
+        
+        view_method: parameter is set by preview_html (for instance) but
+        ignored here.
         """
-        REQUEST.RESPONSE.setHeader(
+        request = self.REQUEST
+        request.RESPONSE.setHeader(
             'Content-Disposition', 'inline;filename=%s' % (self.get_filename()))
-        return self._index_html_helper(REQUEST)
-
-    # Overide index_html in public presentation templates.
-    security.declareProtected(
-        SilvaPermissions.View, 'index_html')
-    def index_html(self, REQUEST=None):
-        """Get to file
+        return self._index_html_helper(request)
+    
+    security.declareProtected(SilvaPermissions.View, 'download')
+    # XXX deprecated, method left for backwards compatibility
+    def download(self, *args, **kw):
+        """ view (download) file data.
         """
-        if not self._direct_download:
-            return self.view()
-        return self.download(REQUEST=REQUEST)        
+        # XXX print deprecated warning?
+        return self.index_html(*args, **kw)
 
+    security.declareProtected(SilvaPermissions.View, 'tag')
+    def tag(self, **kw):
+        """ return xhtml tag
+        
+        Since 'class' is a Python reserved word, it cannot be passed in
+        directly in keyword arguments which is a problem if you are
+        trying to use 'tag()' to include a CSS class. The tag() method
+        will accept a 'css_class' argument that will be converted to
+        'class' in the output tag to work around this.
+        """
+        src = self.absolute_url()
+        title = self.get_title_or_id()
+        named = []
+        
+        if kw.has_key('css_class'):
+            kw['class'] = kw['css_class']
+            del kw['css_class']
+        
+        for name, value in kw.items():
+            named.append('%s="%s"' % (escape(name), escape(value)))
+        named = ' '.join(named)
+        return '<a href="%s" alt="%s" %s>%s</a>' % (
+            src, escape(title), named, self.get_title_or_id())
+    
+    security.declareProtected(SilvaPermissions.View, 'get_download_link')
+    # XXX deprecated, method left for backwards compatibility
+    def get_download_link(self, *args, **kw):
+        # XXX print deprecated warning?
+        return self.tag(*args, **kw)
+    
     # MODIFIERS
 
     security.declareProtected(
@@ -137,8 +147,8 @@ class File(Asset):
     def set_file_data(self, file):
         """Set data in _file object
         """
-        self._set_file_data_helper(file)
         self._p_changed = 1
+        self._set_file_data_helper(file)        
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'getFileSystemPath')
@@ -152,7 +162,6 @@ class File(Asset):
         # this would be relative to repository:
         return '/'.join(f.filename)
 
-
     def manage_FTPget(self, *args, **kwargs):
         return self._file.manage_FTPget(*args, **kwargs)
 
@@ -163,17 +172,23 @@ class File(Asset):
         """Handle HTTP PUT requests"""
         return self._file.PUT(REQUEST, RESPONSE)
 
+    def HEAD(self, REQUEST, RESPONSE):
+        """ forward the request to the underlying file object
+        """
+        # should this set the content-disposition header,
+        # like the "index_html" does?
+        return self._file.HEAD(REQUEST, RESPONSE)
+
 InitializeClass(File)
 
 
 class ZODBFile(File):                                   
-    """Silva File object, storage in Filesystem. Contains the OFS.Image.File    
+    """Silva File object, storage in Filesystem. Contains the OFS.Image.File
     """       
-    def __init__(self, id, title, file):
+    def __init__(self, id, title):
         ZODBFile.inheritedAttribute('__init__')(self, id, title)
         # Actual container of file data
         self._file = Image.File(id, title, '')        
-        self._set_file_data_helper(file)
 
     def _set_file_data_helper(self, file):
         self._file.manage_upload(file=file)
@@ -189,11 +204,10 @@ class FileSystemFile(File):
     from the ExtFile Product - if available.
     """    
 
-    def __init__(self, id, title, file, repository):
+    def __init__(self, id, title, repository):
         FileSystemFile.inheritedAttribute('__init__')(self, id, title)        
         self._file = ExtFile(id, title)
         self._file._repository = cookPath(repository)
-        self._set_file_data_helper(file)
 
     def _set_file_data_helper(self, file):
         self._file.manage_file_upload(file=file)
@@ -237,14 +251,15 @@ def manage_addFile(self, id, title, file):
     assert service_files is not None, "There is no service_files. " \
         "Refresh your silva root."
     if service_files.useFSStorage():        
-        object = FileSystemFile(id, title, file, 
-            service_files.filesystem_path())
+        object = FileSystemFile(id, title, service_files.filesystem_path())
     else:
-        object = ZODBFile(id, title, file)
+        object = ZODBFile(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
     object.set_title(title)
+    object._set_file_data_helper(file)
     return object
+
 
 class FilesService(SimpleItem.SimpleItem):
     meta_type = 'Silva Files Service'
@@ -286,11 +301,16 @@ class FilesService(SimpleItem.SimpleItem):
     def useFSStorage(self):
         return (self.is_filesystem_storage_available() and 
             self.filesystem_storage_enabled())
-
+    
     def filesystem_path(self):
         """filesystem_path
         """
         return self._filesystem_path
+
+    security.declarePublic('cookPath')
+    def cookPath(self, path):
+        "call cook path"
+        return cookPath(path)
 
     # MANIPULATORS
     security.declareProtected('View management screens', 
@@ -305,6 +325,20 @@ class FilesService(SimpleItem.SimpleItem):
         if REQUEST is not None:
             return self.manage_filesServiceEditForm(
                 manage_tabs_message='Settings Changed')
+
+    security.declareProtected('View management screens',
+        'manage_convertImageStorage')
+    def manage_convertImageStorage(self, REQUEST=None):
+        """converts images to be stored like set in files service"""
+        from Products.Silva.Image import ImageStorageConverter
+        upg = upgrade.UpgradeRegistry()
+        upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
+        root = self.get_root()
+        upg.upgrade(root, '0.0', '0.1')
+        if REQUEST is not None:
+            return self.manage_filesServiceEditForm(
+                manage_tabs_message='Silva Images converted. See Zope '
+                    'log for details.')
 
 InitializeClass(FilesService)
 
@@ -333,4 +367,6 @@ def cookPath(path):
             break
     path_items.reverse()        
     return tuple(path_items)
+
+
 

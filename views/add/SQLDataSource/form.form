@@ -26,7 +26,7 @@
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra>class="fixIE6widget"</extra>
+          <extra>class="store"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -46,7 +46,7 @@
           <title>title</title>
           <truncate type="int">0</truncate>
           <description></description>
-          <extra>class="fixIE6widget"</extra>
+          <extra>class="store"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -85,7 +85,7 @@
           <title>data encoding</title>
           <truncate type="int">0</truncate>
           <description></description>
-          <extra>class="fixIE6widget"</extra>
+          <extra>class="store"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -109,7 +109,7 @@
             Parameter definitions for query, each on a new line. &lt;br /&gt; 
             Syntax:&lt;code&gt;type : name : default value : description &lt;/code&gt; 
           </description>
-          <extra>class="fixIE6widget"</extra>
+          <extra>class="store"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -134,7 +134,7 @@
             Pay special attention to &lt;code&gt;&amp;lt;dtml-var&amp;gt;&lt;/code&gt; vs. 
             &lt;code&gt;&amp;lt;dtml-sqlvar&amp;gt;&lt;/code&gt; usage.
           </description>
-          <extra>class="fixIE6widget"</extra>
+          <extra>class="store"</extra>
           <unicode>1</unicode>
         </values>
         <tales>

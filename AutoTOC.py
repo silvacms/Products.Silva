@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.5 2003/11/04 06:19:45 kitblake Exp $
+# $Id: AutoTOC.py,v 1.6 2004/07/21 11:40:40 jw Exp $
 
 # Zope
 from Globals import InitializeClass
@@ -23,7 +23,7 @@ icon = "www/autotoc.png"
 addable_priority = 2
 
 class AutoTOC(Content, SimpleItem):
-    """Automatically displays a table of contents when the folder is requested (e.g. http://www.x.yz/silva/myFolder/)."""
+    """Automatically displays a table of contents. If it's named 'index', the parent folder will show a table of contents when requested (e.g. http://www.x.yz/silva/myFolder/)."""
     security = ClassSecurityInfo()
 
     meta_type = "Silva AutoTOC"
@@ -68,7 +68,7 @@ def manage_addAutoTOC(self, id, title, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
-class _AutoTOCPolicy(Persistent):
+class AutoTOCPolicy(Persistent):
 
     __implements__ = IContainerPolicy
 
@@ -76,5 +76,3 @@ class _AutoTOCPolicy(Persistent):
         container.manage_addProduct['Silva'].manage_addAutoTOC(
             'index', title)
         container.index.sec_update_last_author_info()
-
-AutoTOCPolicy = _AutoTOCPolicy()

@@ -1,0 +1,455 @@
+/* _________ Stylesheet for Silva frontend _______________ */
+/* _________ Silva users can insert their own frontend styles _________ */
+/* _________ Styles modified here will affect the Silva preview  ______ */
+/*
+**  Instructions to set caching headers. Inside comments area to play nicer with CSS editors.
+** <dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+7" root="get_root_url()" >
+** <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
+** <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
+** <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
+** <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
+*/
+
+body {
+  font: 70% Verdana, Helvetica, Arial, sans-serif;
+  /* make an absolute path to the image to prevent duplicate caching */
+  background-image: url(<dtml-var root>/globals/skyfade.gif); 
+  background-repeat: repeat-x;
+  background-color: #dde5ee;
+  color: #2d374c;
+  /* kupu specific attribute */
+  margin: 0.5em 1em 1.5em 1em;
+}
+
+
+/* ________________________________________________ kupu customizations _____ */
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl, pre, table {
+  max-width: 44em;
+}
+
+a, a:visited {
+  color: blue;
+}
+
+a.index {
+  color: #444;
+  background-color: PaleGoldenRod;
+}
+
+div.toc {
+  background-color: PaleGoldenRod;
+}
+
+div.externalsource {
+  background-color: PaleGoldenRod;
+}
+
+table {
+  empty-cells: show;
+  margin-bottom: 1em;
+  font-size: 100%;
+}
+
+table th {
+  vertical-align: top;
+  text-align: left;
+} 
+
+table tr {
+  vertical-align: top;
+} 
+
+
+/* _________________________________________________________ typography _____ */
+
+h1, h2, h3, h4, h5, h6 {
+  margin : 1.5em 0 0.5em 0;
+  color : #455885;
+}
+
+
+h2 {
+  font-size : 160%;
+  margin-top : 0.9em;
+  margin-bottom : 0.7em;
+}
+
+h3 {
+  font-size : 145%;
+  margin-bottom : 0.6em;
+}
+
+h4 {
+  font-size : 120%;
+}
+
+h5 {
+  font-size : 105%;
+}
+
+h6 {
+  font-size : 90%;
+  color : #676767;
+}
+
+h6.minor {
+  font-size : 90%;
+  font-weight : normal;
+  color : #454545;
+}
+
+.subhead {
+  font-weight : bold;  
+  font-family : verdana, arial, helvetica, sans-serif;
+  color: #333767;
+  line-height : 1.6em;
+} 
+
+p {
+  margin : 0.5em 0em;
+  text-align: left;
+}
+
+pre {
+  font-size: 120%;
+  color: #444466;
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+
+
+/* ____________________________________________ Silva specific styles _____ */
+
+p.lead {
+  font-weight : bold;
+}
+
+p.annotation {
+  font-style : italic;
+}
+
+div.citation {
+  font-size : 110%;
+  color : #426061;
+  background : #F4F3DB;
+  margin : 1em 3em;
+  padding : 0.4em 2em 1.2em 2em;
+  border : 1px solid #426061;
+}
+
+div.citation p {
+  margin : 0.5em 0em;
+}
+
+div.citation p.author {
+  font-size : 90%;
+  font-weight : bold;
+  margin-bottom : 0;
+}
+
+div.citation p.source {
+  font-size : 90%;
+  margin-top: 0;
+  margin-bottom : 0;
+}
+
+
+/* ______________________________________________________ align/float _____ */
+
+.image-left {
+  text-align: left;
+}
+
+.image-center {
+  text-align: center;
+}
+
+.image-right {
+  text-align: right;
+}
+
+.float-left {
+  float: left;
+  margin-right: 1em;
+  clear: none;
+}
+
+.float-right {
+  float: right;
+  margin-left: 1em;
+  clear: none;
+}
+
+
+/* __________________________________________________ silva list styles _____ */
+
+ul {
+  margin : 0.5em 0em;
+  /* override default indent */
+  padding-left: 1.4em; 
+}
+
+ul.disc {
+  list-style-type : disc;
+}
+  
+ul.square {
+  list-style-type : square ! important;
+} 
+
+ul.circle {
+  list-style-type : circle;
+} 
+
+ul.nobullet {    
+  list-style-type: none;     
+}
+
+ol {
+  margin : 0.5em 0em;
+  /* override default indent */
+  padding-left: 1.9em; 
+}
+
+ol.decimal {
+  list-style-type : decimal;
+} 
+
+ol.upper-roman {
+  list-style-type : upper-roman;
+}
+
+ol.lower-roman {
+  list-style-type : lower-roman;
+}
+
+ol.upper-alpha {
+  list-style-type : upper-alpha;
+}
+
+ol.lower-alpha {
+  list-style-type : lower-alpha;
+}
+
+dt {
+  font-weight: bold;
+  background : transparent;
+}
+
+dd {
+  background : transparent;
+  margin-left : 1.5em;
+}
+
+
+/* _________________________________________________ silva table styles _____ */
+
+td {
+    border-style: solid;
+    border-width: 1px;
+};
+
+table.silvatable {
+  empty-cells: show;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+}
+table.silvatable tr {
+  vertical-align: top;
+} 
+table.silvatable tr.rowheading {
+  font-weight: bold;
+} 
+table.silvatable td {
+  border-right: none ! important;
+} 
+table.silvatable th.align-left, table.silvatable td.align-left {
+  text-align: left;
+}
+table.silvatable th.align-center, table.silvatable td.align-center {
+  text-align: center;
+}
+table.silvatable th.align-right, table.silvatable td.align-right {
+  text-align: right;
+}
+
+table.datagrid, table.plain, table.list, table.grid {
+  width: 100%;
+}
+
+table.plain {
+  border-style: none;
+} 
+table.plain td {
+  border-right: none ! important;
+}
+ 
+table.list td {
+  border-bottom: 1px solid #444444;
+} 
+
+table.list tr.rowheading td, table.list thead th {
+  border-bottom: 2px solid #444444;
+} 
+  
+table.grid td, table.grid thead th {
+  border: 2px solid #444444;
+  border-right: 2px solid #444444 ! important;
+} 
+  
+table.datagrid td {
+  border: 2px solid #444444;
+  border-right: 2px solid #444444 ! important;
+} 
+table.datagrid tr.rowheading td {
+  border-top-style: none;
+  border-left-style: none;
+  border-right-style: none ! important;  
+} 
+
+table.simple {
+  border-style: none;
+}
+
+table.simple thead th {
+  font-weight: normal;
+}
+
+td.even table td {
+  border-right: none ! important;
+}
+
+
+/*___________________________________________ various table layouts _____ */ 
+
+table.black_border td,
+table.black1 td,
+table.red td, 
+table.green td {
+  padding: 0 5px;
+}
+
+table.black_border { 
+  border: 1px solid black;
+}
+
+table.black_border td { 
+  border: 1px solid black;
+}
+
+table.black_border tr.odd td { 
+  background-color: #c1c1c1; 
+}
+
+table.black1 tbody { 
+  border-right: 1px solid black; 
+}
+
+table.black1 td {
+  border: 1px solid black;
+}
+
+table.red { 
+  border: 1px solid darkred;
+}
+
+table.red td {
+  border: 1px solid darkred;
+}
+
+table.red tr.odd td {
+  background-color: #d0bbbb;
+}
+
+table.green {
+  border: 1px solid darkgreen;
+}
+
+table.green td {
+  border: 1px solid darkgreen;
+}
+
+table.green tr.odd td {
+  background-color: #b3c99c;
+}
+
+/* definitions for batching */
+div.listingBar {
+  width: 60em;
+  margin: 2em 0;
+}
+
+div.listingBar .next {
+  margin-left: 5em;
+} 
+
+div.listingBar .previous {
+  margin-right: 5em;
+}
+
+
+/* ______________________________________________ silva frontend layout _____ */
+
+div.header {
+  margin : 2em 2.1em 0 0;  
+}
+
+div.header a.icon {
+  float : left;
+  display : block;
+  width : 7em;
+  text-align : center;
+}
+
+/* defines the width of the text in the preview/public layout */
+/* duplicated from silva.css */
+.public {
+  margin-left : 7em;
+  padding-top : 2.3em;
+  max-width : 44em;
+  /* for IE5 */
+  width : 512px;
+}
+
+
+/* ____________________________________________________________ links _____ */
+
+span.breadcrumb a {
+  text-decoration : none;
+}  
+span.breadcrumb a:hover {
+  text-decoration : underline;
+}  
+
+/* highlighting index links */
+/* keep this if you markup text with index elements, this overrides the highlighting in the editor */
+a.index-element {
+  background-color : transparent;
+  text-decoration : none;
+}
+
+div.public a:link {
+  color : #0000aa;
+  text-decoration : underline;
+}
+div.public a:visited {
+  color : #4a00b2;
+  text-decoration : underline;
+}
+div.public a:active {
+  color : #3399cc;
+}
+div.public a:hover {
+  color : #0000ff;
+  text-decoration : none;
+}
+
+a img {
+  border: 0;
+}
+  
+</dtml-let>
+
+/* end cascade */

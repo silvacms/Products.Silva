@@ -1,6 +1,6 @@
-# Copyright (c) 2003 Infrae. All rights reserved.
+# Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_ServiceLayouts.py,v 1.13 2003/12/15 09:50:39 gotcha Exp $
+# $Id: test_ServiceLayouts.py,v 1.14 2004/07/21 11:40:41 jw Exp $
 
 import os, sys
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
-# Copyright (c) 2003 Infrae. All rights reserved.
+# Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: IPGroup.py,v 1.2 2003/09/21 08:26:56 kitblake Exp $
+# $Id: IPGroup.py,v 1.3 2004/07/21 11:40:40 jw Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile

@@ -1,4 +1,4 @@
-# Copyright (c) 2003 Infrae. All rights reserved.
+# Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
 import os, sys
@@ -125,7 +125,15 @@ class ContainerTestCase(ContainerBaseTestCase):
              (0, self.publication5)]
         self.assertEquals(self.root.get_container_tree(),
                           l)
+    def test_get_public_tree(self):
+        l = [(0, self.folder4), (1, self.subfolder), (0,
+            self.publication5)]
+        self.assertEquals(self.root.get_public_tree(), l)
+        self.assertEquals(self.root.get_public_tree(1), l)
         
+        l = [(0, self.folder4), (0, self.publication5)]
+        self.assertEquals(self.root.get_public_tree(0), l)
+
     def test_get_status_tree(self):
         l = [(0, self.root.index), (0, self.doc1), (0, self.doc2),
             (0, self.doc3), (0, self.folder4), (1, self.folder4.index),

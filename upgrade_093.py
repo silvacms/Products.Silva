@@ -326,7 +326,7 @@ class GroupsService:
     __implements__ = IUpgrader
 
     def upgrade(self, obj):
-        assert obj.meta_type == 'Groups Service'
+        zLOG.LOG('Silva', zLOG.INFO, 'Upgrade Groups Service ' + repr(obj))
         if not hasattr(obj, '_ip_groups'):
             obj._ip_groups = {}
         if not hasattr(obj, '_iprange_to_group'):
@@ -363,10 +363,10 @@ class RefreshAll:
     __implements__ = IUpgrader
 
     def upgrade(self, root):
-        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
-        root.service_extensions.refresh_all()
         zLOG.LOG('Silva', zLOG.INFO, 'install SilvaDocument')
         root.service_extensions.install('SilvaDocument')
+        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
+        root.service_extensions.refresh_all()
         return root
     
 class ClearEditorCache:
@@ -420,9 +420,13 @@ class SetAuthorInfoOnVersion:
             versions.append(obj.get_editable())
             
             if obj._previous_versions:
-                oldversions = [
-                    getattr(obj, str(oldversion[0])) for oldversion in obj._previous_versions]
-                versions += oldversions
+                old_versions = []
+                for version in obj._previous_versions:
+                    id = str(version[0])
+                    v = getattr(obj.aq_base, id, None)
+                    versions.append(v)
+                    #if hasattr(obj.aq_base, id):
+                    #    versions.append(version)
                 
             for version in versions:
                 if version is not None:
@@ -453,6 +457,29 @@ class RemoveOldMetadataIndexes:
                 
         return service_catalog
     
+class SetTitleFromIndexOnContainer:
+    """ Folder titles now are stored on the folder, 
+    not on the index document. To fix this, we set the title of the 
+    container to that of the index document, if it has one.
+    """
+    
+    __implements__ = IUpgrader
+
+    def upgrade(self, container):
+        if not IContainer.isImplementedBy(container):
+            print 'This container object does not implement IContainer! (%s)' % repr(container)
+            return container
+        index = container.get_default() #getattr(container.aq_base, 'index', None)
+        if index is None:
+            return container
+        try:
+            title = index.get_title_editable()
+            print 'Setting title to:', repr(title)
+            container.set_title(title)
+        except Exception, e:
+            print 'Cannot set title on %s due to: %s' % (repr(container), e)
+        return container
+    
 def initialize():
     home = package_home(globals())
     xml_home = os.path.join(home, 'doc')
@@ -468,7 +495,7 @@ def initialize():
     upgrade.registry.registerUpgrader(UpgradeTime(), '0.9.3',
         upgrade.AnyMetaType)
     upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.3',
-        upgrade.AnyMetaType)
+        'Silva Root') #upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(MovedViewRegistry(), '0.9.3',
         'Silva Root')
     upgrade.registry.registerUpgrader(UpgradeAccessRestriction(), '0.9.3',
@@ -481,13 +508,20 @@ def initialize():
                                       upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
         'Groups Service')
-        
+
     # On the root, do an "all product refresh"
-    upgrade.registry.registerUpgrader(
-        RefreshAll(), '0.9.3', 'Silva Root')
+    upgrade.registry.registerUpgrader(RefreshAll(), '0.9.3', 'Silva Root')
+
     # On the root, clear caches
     upgrade.registry.registerUpgrader(
         ClearEditorCache(), '0.9.3', 'Silva Root')
+
     # On the service_members double check the _allow_authentication_requests attrs.
     upgrade.registry.registerUpgrader(
         CheckServiceMembers(), '0.9.3', 'Silva Root')
+
+    for metatype in ['Silva Root', 'Silva Publication', 'Silva Folder']:
+        upgrade.registry.registerUpgrader(
+            SetTitleFromIndexOnContainer(), '0.9.3', metatype)
+
+    # as last action on the root, do an "all product refresh"

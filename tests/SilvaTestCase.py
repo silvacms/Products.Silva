@@ -176,6 +176,9 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def add_ghost(self, object, id, content_url):
         return self.addObject(object, 'Ghost', id, content_url=content_url)
 
+    def add_link(self, object, id, url):
+        return self.addObject(object, 'Link', id, url=url)
+    
     def add_image(self, object, id, title, **kw):
         return self.addObject(object, 'Image', id, title=title, **kw)
 

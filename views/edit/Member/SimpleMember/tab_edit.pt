@@ -14,22 +14,29 @@
     dummy view/security_trigger;
     fields view/memberform/get_fields;
     message_type request/SESSION/message_type | nothing;
-    notice request/SESSION/message | nothing;
+    message request/SESSION/message | nothing;
     dummy view/clear_message;
 ">
 
-<tal:condition condition="notice">
-  <div class="feedback"
-    style="margin-bottom:0;"
-    tal:attributes="class python: message_type == 'feedback' and 'feedback' or 'alert'">
-    <span tal:replace="structure notice">
-      message
-    </span>
-    <tal:block tal:condition="python: message_type == 'feedback'">
-      &nbsp;&nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
-    </tal:block>
-  </div>
-</tal:condition>
+<div class="feedback"
+  tal:attributes="class python:message_type == 'feedback' and 'fixed-feedback' or (message_type == 'error' and 'fixed-alert' or 'fixed-clear');
+      style python:(message_type != 'feedback' and message_type != 'error') and 'background-image: url(%s/globals/skyrise.gif)'%container.get_root_url() or None">
+  <span tal:replace="structure python: (message == '' or message == None) and '&nbsp;' or message">message</span>
+</div>
+
+<script type="text/javascript">
+// Called from body onload() method which is defined in the
+// macro_index. It focusses the appropiate form field.
+function focus_editor() {
+  if (document.getElementsByName) {
+    elements = document.getElementsByName('field_fullname');
+    if (elements.length > 0) {        
+        //alert(elements);
+        elements[0].focus();
+     }
+  }
+}
+</script>
 
 <form action="." 
   method="POST"
@@ -47,7 +54,7 @@
           colspan="2">
           <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure python:view.render_icon(model)" />
-            <span i18n:translate="member-data-of-$var1">member data of &#xab;<span tal:replace="model/fullname">title</span>&#xbb;</span>
+            <span i18n:translate="member-data-of">member data of &#xab;<span tal:replace="model/fullname" i18n:name="name">title</span>&#xbb;</span>
           </h2>
         </td>
       </tr>
@@ -65,9 +72,9 @@
 
       <tal:repeat repeat="field fields">
       <tal:define define="iterate repeat/field/odd">
-      <tr tal:attributes="class python:iterate and 'even' or 'odd'">
+      <tr tal:attributes="class python:iterate and 'even' or 'odd'" tal:condition="python:field.id != 'editor' or len(field['items']) > 1">
       <td class="field-title">
-        <span tal:replace="python:field['title']">
+        <span tal:content="python:field['title']" i18n:translate="">
           Title</span><span class="warning"
           tal:condition="python:field.is_required()">*</span>
       </td>
@@ -80,7 +87,7 @@
     </tbody>
 
     <tfoot>
-      <tr class="inter-controls">
+      <tr class="inter-controls" tal:replace="nothing">
         <td>
           &nbsp;
         </td>

@@ -1,7 +1,7 @@
 <!--
-Copyright (c) 2002 Infrae. All rights reserved.
+Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Id: containerPolicyEdit.zpt,v 1.2 2003/08/01 02:20:45 josechaso Exp $
+Version of this file: $Id: containerPolicyEdit.zpt,v 1.3 2004/07/21 11:40:58 jw Exp $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 

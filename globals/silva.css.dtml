@@ -7,7 +7,7 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )">
 
 /*
-**  Silva version 0.9.3.0
+**  Silva stylesheet
 **
 **  The view crew at Infrae - all seasons of 2003, 2004
 **    Thanks to Alexander Limi (limi@plone.org) - October 2002
@@ -104,7 +104,7 @@ div.pathBar img {
 }
 
 
-/* _____________________________________________________________ tabs _____ */
+/* _______________________________________________________ matrix nav _____ */
 
 div.tabs {
   display : block;
@@ -194,24 +194,11 @@ div.tabs a.right:hover {
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
-/* help */
+/* help (available as accesskey link) */
 div.tabs a.normal {
-  float : right;
-  width : 3em;
-    font-size: 100%;
-    color: &dtml-shade46;;
-    background: transparent;
-  border : none;
-  text-align : right;
-}
-div.tabs a.normal:visited {
-  color: &dtml-shade46;;
-  background : transparent;
-}
-div.tabs a.normal:hover {
-  color: &dtml-shade36;;
-  background: transparent;
-  text-decoration: underline;
+  float: right;
+  width: 0em;
+  display: none;
 }
 
 div.tabs img {
@@ -236,8 +223,48 @@ div.flowBar {
   margin: 0;
   padding: 0;
   border-top: 3px solid &dtml-mainTabBackgroundSelected;;
-  border-bottom: 1px solid &dtml-shade60;;
+  border-bottom: 1px solid #84a7a5;
   clear:both;
+}
+
+
+/* _____________________________________________________ middleground _____ */
+
+div.middleground {
+  display : block;
+  height : 1.7em;
+  background-color: #677a8c;
+  margin : 0;
+  padding: 0 17px 0 17px;
+  border-bottom: 1px solid #456555;
+}
+
+div.middleground a {
+  /* The normal, unselected buttons. They are all links */
+  float : left;
+  display : block;
+  width : 12em;
+  height : 1.3em;
+  color: &dtml-transportFontColor;;
+  background: #4d5680;
+  margin: 1px 1em 1px 1.5em;
+  padding: 0;
+  border-color: #8faecf;
+  border-width: 1px;
+  border-style: solid solid solid solid;
+  text-align : center;
+  font-weight: &dtml-mainTabFontWeight;;
+}
+
+div.middleground a:visited {
+  color: &dtml-transportFontColor;;
+  background: #4d5680;
+}
+
+div.middleground a:hover {
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  text-decoration: none;
 }
 
 
@@ -256,29 +283,33 @@ div.footer {
 
 div.footer a {
   color: &dtml-mainLinkColor;;
-    font-weight: &dtml-mainTabFontWeight;;
-    padding: 0;
-    margin: 0;
-    text-transform: none;
+  font-weight: &dtml-mainTabFontWeight;;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
 }
-
+div.footer a:visited {
+  color: &dtml-mainLinkColor;;
+}
 
 /* _____________________________________________________ personal bar _____ */
 
 div.personalBar {
-  clear: both;
   text-align: center;
   background: #505e65;
   margin: 0em 0em 0em 0em;
   padding: 0.1em 16px 0.2em 16px;
+  border-bottom: &dtml-shade30; 1px solid;
 }
 
 div.personalBar a {
   color: #b7cee6;
     padding: 0;
     margin: 0;
-    text-transform: none;
-    cursor: pointer;
+    text-decoration: none;
+}
+div.personalBar a:visited {
+  color: #b7cee6;
 }
 
 div.personalBar img {
@@ -354,6 +385,7 @@ table.listing img {
 }
 
 /* _____________________ rows ______________________ */
+
 table.listing tr.controls {
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
@@ -368,16 +400,17 @@ table.listing tr.top-controls {
   height : 0.2em;
 }
 
-table.listing tr.even {
-    /* cycling starts darker (count begins at 0) */
-    background: &dtml-listingEvenBackground;;
-}
-
 table.listing tr.odd {
     background: &dtml-listingOddBackground;;
 }
 
-table.listing tr.inter-controls {
+/* applies only to mozilla comp. browsers */
+td.main>table.listing tr.odd:hover td,
+td.main>table.listing tr.even:hover td {
+    background-color: #e5f2ff;
+  }
+
+table.listing tr.inter-controls td {
   color: #c9dfe2;
   background: &dtml-listingInterControlsBackground;;
 }
@@ -456,6 +489,10 @@ table.listing td.top img {
 
 table.listing tr.top-controls td {
   padding: 0em 0.4em;
+}
+
+div.controls {
+  padding: 0.2em 0 0.2em 0
 }
 
 /* _______ subhead cell _______ */
@@ -565,12 +602,16 @@ table.listing a.up:hover {
 
 td.selected {
   background: &dtml-oddRowBackground;;
+  padding-left: 0 ! important;
+  padding-right: 0 ! important;
   border-top: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
 }
 
 td.unselected {
   background: &dtml-evenRowBackground;;
+  padding-left: 0 ! important;
+  padding-right: 0 ! important;
   border-top: 1px solid &dtml-evenRowBackground;;
   border-bottom:  1px solid &dtml-evenRowBackground;;
 }
@@ -583,12 +624,65 @@ td.unselected:hover {
   cursor : pointer;
 } 
 
+table.listing td a.normal:link {
+  display : block;
+    color: &dtml-mainTabFontColor;;
+    background: &dtml-listingHeaderBackground;; 
+}
+
+table.listing th.top a.normal:visited {
+  display : block;
+    color: &dtml-mainTabFontColor;;
+    background: &dtml-listingHeaderBackground;; 
+}
+
+table.listing th.top a.normal:hover {
+  display : block;
+    color: &dtml-mainTabFontColorSelected;;
+  background: #d2e6f8;
+    text-decoration: none;
+}
+
+/* _______ slidelinks _______ */
+table.listing a.left {
+  display : block;
+  width : 8px;
+  height : 16px;
+  float: left;
+}
+
+table.listing a.right {
+  display : block;
+  width : 8px;
+  height : 16px;
+  float: right;
+}
+
+table.listing a.left:hover {
+  background-image: url(<dtml-var root>/globals/slideleft.gif);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+table.listing a.right:hover {
+  background-image: url(<dtml-var root>/globals/slideright.gif);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+div.normal {
+  display: block;
+}
+
 
 /* _____________________________________________________ focus shapes _____ */
 
-/* experimental */
 table.sublisting {
   margin-top : 1em;
+}
+
+table.interlisting {
+  margin : 0;
 }
 
 /* used to shape non-nested listing tables */
@@ -601,7 +695,6 @@ table.sublisting {
 
 .focus-rectangle {
   /* for IE5 */
-  /*XXX is it witdh or the whole class ?*/
   width : 96%; /* for IE6 */
   max-width : 98%;
   margin : 0 7px;
@@ -628,32 +721,55 @@ input {
 }
  
 textarea {
-    width: 93%;
+    font: &dtml-inputFont;;
     color : &dtml-inputFontColor;;
   background : &dtml-inputBackground;;
     padding: 0.1em;
     border: &dtml-inputBorder;;  
-    font: &dtml-inputFont;;
-  text-transform: none;
 }
 
 textarea.readable {
   font: 100% Verdana, Helvetica, Arial, sans-serif;
 }
 
-optgroup {
-  font-size: 100%;
+input.store, select.store {
+  font: &dtml-inputFont;;
+  color : &dtml-inputFontColor;;
+  background : &dtml-inputBackground;;
+  width: 90%;
+  margin-top: 1px;
+  margin-bottom: 1px; /* IE bug fix */
+  padding: 0.1em;
+  border: &dtml-inputBorder;;
+}
+
+/* 
+* this selector works only for standard compatible browsers like mozilla, so
+* IE ignores this definition below
+*/
+td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget, 
+  td>input.store, td>textarea.store, td>select.store {
+  width: 100%;
 }
 
 select {
+    font: &dtml-inputFont;;
+  font-size: 90%;
   color : &dtml-mainTabFontColorSelected;;
   background : &dtml-inputBackground;;
   margin: 0.1em;
   border : 1px solid &dtml-nightShade;;
     vertical-align: top;
-    font: &dtml-inputFont;;
+  line-height : 96%;
+}
+
+select.store {
   font-size: 90%;
   line-height : 96%;
+}
+
+optgroup {
+  font-size: 100%;
 }
 
 select.transport {
@@ -679,6 +795,17 @@ input.warning-checkbox {
 }
 
 input.button {
+  font-size: 95%;
+    font-weight: &dtml-buttonWeight;;
+    color: &dtml-manipulatorFontColor;;
+  background : &dtml-manipulatorBackground;;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: &dtml-manipulatorPadding;;
+  border: &dtml-manipulatorBorder;;
+    cursor: pointer;
+}
+
+button.button {
   font-size: 95%;
     font-weight: &dtml-buttonWeight;;
     color: &dtml-manipulatorFontColor;;
@@ -753,17 +880,6 @@ input.close {
   padding: &dtml-manipulatorPadding;;
   border: &dtml-manipulatorBorder;;
   cursor: pointer;
-}
-
-input.inputter, select.inputter {
-  color : &dtml-inputFontColor;;
-  background : &dtml-inputBackground;;
-  margin-top: 1px;
-  margin-bottom: 1px; /* IE bug fix */
-  padding: 0.1em;
-  border: &dtml-inputBorder;;
-  vertical-align: middle;
-  font: &dtml-inputFont;;
 }
 
 
@@ -888,7 +1004,7 @@ div.info {
 
 div.info h3 {
   color: &dtml-inputFontColor;;
-  margin-top : 0em;
+  margin-top : 0.4em;
   margin-bottom : 0.2em;  
 }
 
@@ -896,6 +1012,28 @@ div.info p {
   text-align : left;
   margin-top : 0.3em;
   margin-bottom : 0em;
+}
+
+div.info p span.orientation {
+  display: block;
+  text-align: center;
+  border: 1px dotted black;
+  margin-top: 0.3em;
+}
+
+div.info p span.portrait {
+  width: 4.5em;
+  height: 6em;
+}
+
+div.info p span.landscape {
+  width: 6.5em;
+  height: 3.5em;
+}
+
+div.info p span.square {
+  width: 4em;
+  height: 4em;
 }
 
 select.clipboard, select.clipboard:focus, select.clipboard:hover {
@@ -906,12 +1044,12 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
   margin-bottom: -0.5em;
   border : 1px solid &dtml-shade60;;
   line-height : 96%;
-  width: 100%
+  width: 100%;
+  max-width: 100%;
 }
 
 select.clipboard option.disabled {
   color: #dbf3f6;
-  background: #71969a;
   background: &dtml-listingHeaderBackground;; 
 
 }
@@ -925,7 +1063,7 @@ div.fixed-feedback {
   background: #f3f3d9;
   margin: 0;
   border-bottom: &dtml-inputBorder;;
-  padding: 0em 0.8em 0.1em 0.8em;
+  padding: 0em 9px 0.1em 9px;
 }
 div.fixed-alert {
   position:relative; /* for IE6 peakaboo bug */
@@ -933,13 +1071,23 @@ div.fixed-alert {
   background: #f7d1d1;
   margin: 0;
   border-bottom: &dtml-inputBorder;;
-  padding: 0em 0.8em 0.1em 0.8em;
+  padding: 0em 9px 0.1em 9px;
 }
 div.fixed-clear {
   background: transparent;
   margin: 0;
-  padding: 0em 0.8em 0.1em 0.8em;
+  padding: 0em 9px 0.1em 9px;
   border-bottom: 1px solid &dtml-workspace;;
+}
+div.fixed-clear a.reveal {
+  color: &dtml-shade96;;
+}
+div.fixed-clear a.reveal:visited {
+  color: &dtml-shade96;;
+} 
+div.fixed-clear a.reveal:hover {
+  color: &dtml-shade58;;
+  text-decoration: none;
 }
 
 /* floating feedback  */
@@ -1108,7 +1256,7 @@ ul.tips-nested {
 
 
 .fixIE6widget {
-  width : 96%;
+  width : 90%;
 }
 
 input:focus, textarea:focus { 
@@ -1421,5 +1569,18 @@ a.closed:hover {
   width : 512px;
 }
 
+/* definitions for batching */
+div.listingBar {
+  width: 60em;
+  margin: 2em 0;
+}
+
+div.listingBar .next {
+  margin-left: 5em;
+} 
+
+div.listingBar .previous {
+  margin-right: 5em;
+}
 
 /* style is a filter */

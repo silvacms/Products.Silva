@@ -11,7 +11,11 @@ msg = ['Scaling and/or format changed']
 msg_type = 'feedback'
 
 if model.canScale():
-    model.set_web_presentation_properties(
-        result['web_format'], result['web_scaling'])
+    try:
+        model.set_web_presentation_properties(
+            result['web_format'], result['web_scaling'], result['web_crop'])
+    except ValueError, e:
+        msg = [str(e)]
+        msg_type = 'error'
     
 return view.tab_edit(message_type=msg_type, message=' '.join(msg))

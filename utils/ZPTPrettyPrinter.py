@@ -1,10 +1,10 @@
 #! /usr/bin/python
 #
 # Prettyprinter for ZopePagetemplates
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
 # Author: Jan-Wijbrand Kolman (jw@infrae.com)
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 #
 # Issues:
 #  * Testing, testing, testing. It would be rather horrible to 

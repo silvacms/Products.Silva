@@ -6,9 +6,11 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
-/* This style sheet contains Silva specific styles for Content views */
+/* This style sheet contains specific styles for Content views */
 
 <dtml-with stylesheet_properties>
+
+/* _______________________________________________________ matrix nav _____ */
 
 div.tabs a {
   background: &dtml-contentTabBackground;;
@@ -59,9 +61,53 @@ div.tabs a.normal:visited {
   background: transparent;
 }
 
+
+/* _________________________________________________________ flow bar _____ */
+
 div.flowBar {
   border-top: 3px solid &dtml-contentTabBackgroundSelected;;
 }
+
+
+/* _____________________________________________________ middleground _____ */
+
+div.middleground {
+  background-color: #628f79;
+}
+
+div.middleground a:hover {
+  background: &dtml-contentTabBackgroundSelected;;
+}
+
+div.middleground a.selected {
+  /* The selected tab. There's only one of these */
+  color: &dtml-mainTabFontColorSelected;;
+  background: #a7d4b6;
+  border-color: &dtml-mainTabBorderColor;;
+}
+
+div.middleground a.selected:visited {
+  color: &dtml-mainTabFontColorSelected;;
+  background: #a7d4b6;
+}
+
+/* niu */
+/* extra button floating right */
+div.middleground a.normal {
+  width : 10em;
+}
+div.middleground a.normal:visited {
+  color: &dtml-transportFontColor;;
+  background: #4d5680;
+}
+div.middleground a.normal:hover {
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-contentTabBackgroundSelected;;
+  text-decoration: none;
+}
+
+
+/* ____________________________________________ content listing table _____ */
 
 table.listing td.top {
   background: &dtml-listingTopBackgroundContent;;
@@ -74,6 +120,9 @@ table.listing td.top h2 {
 table.listing tr.top-controls h3 {
   color: &dtml-listingTopControlsHeadingColorContent;;
 }
+
+
+/* ___________________________________________________________ footer _____ */
 
 div.footer {
   background: &dtml-listingTopBackgroundContent;;

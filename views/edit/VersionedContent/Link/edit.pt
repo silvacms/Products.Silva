@@ -4,7 +4,7 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    vein string:editor;
+    vein string:edit;
 ">
 
 <script type="text/javascript" 
@@ -65,8 +65,7 @@
           link url
         </td>
         <td>
-          <input class="inputter"
-            style="width:100%;"
+          <input class="store"
             type="text"
             name="url"
             tal:attributes="value python:request.model.get_editable().get_url()"

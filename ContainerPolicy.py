@@ -1,6 +1,6 @@
-# Copyright (c) 2003 Infrae. All rights reserved.
+# Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 # Python
 from bisect import insort_right
 
@@ -32,7 +32,6 @@ class ContainerPolicyRegistry(SimpleItem):
 
     security = ClassSecurityInfo()
     id = 'service_containerpolicy'
-    title = 'Silva ContainerPolicy Registry'
     meta_type = 'Silva Container Policy Registry'
 
     manage_options = (
@@ -59,11 +58,13 @@ class ContainerPolicyRegistry(SimpleItem):
         return [p._name for p in sorted_policies]
     
     def register(self, name, policy, priority=0.0):
-        """register policy"""
-        assert IContainerPolicy.isImplementedBy(policy), "The object %r " \
+        """register policy
+
+        Policy should be the container policy class."""
+        assert IContainerPolicy.isImplementedByInstancesOf(policy), "The object %r " \
             "does not implement IContainerPolicy, try restarting Zope." % (
                 policy, )
-        self._policies[name] = (policy, priority)
+        self._policies[name] = (policy(), priority)
         self._p_changed = 1
 
     def unregister(self, name):
@@ -81,12 +82,9 @@ def manage_addContainerPolicyRegistry(dispatcher):
     dispatcher._setObject(cpr.id, cpr)
     return ''
 
-class _NothingPolicy(Persistent):
+class NothingPolicy(Persistent):
 
     __implements__ = IContainerPolicy
 
     def createDefaultDocument(self, container, title):
         pass
-        
-NothingPolicy = _NothingPolicy()
-    

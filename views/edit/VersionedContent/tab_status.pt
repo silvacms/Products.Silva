@@ -6,9 +6,11 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:status;
-">
+    " 
+  i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="
@@ -40,9 +42,9 @@
   <tr tal:replace="nothing"> ______________ vein + title row ______________ </tr>
   <tr>
     <td class="top" colspan="3">
-    <h2>
+    <h2 i18n:translate="access_status">
       <img tal:replace="structure python:view.render_icon(model)" />
-      status of &#xab;<tal:block content="title" />&#xbb;
+      status of &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;
     </h2>
     </td>
   </tr>
@@ -62,9 +64,11 @@
   <span tal:replace="nothing"> _______ status: content is published _______ </span>
   <tr tal:condition="python:may_change_content and not next and published">
     <td class="feedback" colspan="3">
-      <span class="subhead">Content is published</span><br />
+      <span class="subhead" i18n:translate="published_content">Content is published</span><br />
+      <tal:block i18n:translate="published_content_description">
       This content is published (online for the public).<br />
       If you wish you can make an editable copy by going to the <a href="tab_edit">editor</a>.
+      </tal:block>
       <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
   </tr>
@@ -72,8 +76,9 @@
   <span tal:replace="nothing"> _______ status: warning of new version of published content _______ </span>
   <tr tal:condition="python:may_change_content and unapproved and published">
     <td class="feedback" colspan="3">
-      <span class="subhead">Published version exists</span><br />
-      <span class="warning" tal:condition="may_approve_content">Note: an older version of this content is online.<br />
+      <span class="subhead" i18n:translate="existing_pub_version">Published version exists</span><br />
+      <span class="warning" tal:condition="may_approve_content"
+        i18n:translate="existing_pub_version_description">Note: an older version of this content is online.<br />
       Publishing this version will replace the public version.</span>
       <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
@@ -82,10 +87,13 @@
   <span tal:replace="nothing"> _______ status: content is closed _______ </span>
   <tr tal:condition="python:may_change_content and not next and closed">
     <td class="feedback" colspan="3">
-    <span class="subhead">Content is closed</span><br />
-    This content was once published but is now closed.<br />
-    If you wish you can make an editable copy in the <a href="tab_edit">editor</a>.
-    <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
+      <span class="subhead" i18n:translate="closed_content">Content is closed</span><br />
+      <tal:block i18n:translate="closed_content_description">  
+        This content was once published but is now closed.<br /> If you
+        wish you can make an editable copy in the <a
+          href="tab_edit">editor</a>.
+      </tal:block>
+     <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
   </tr>
 </thead>
@@ -161,8 +169,9 @@ _______ manual close section here _______
 </check>
 
 
-<span tal:replace="nothing"> _____________________ export table _____________________ </span>
- <form action="." enctype="multipart/form-data" method="POST">
+<span tal:replace="nothing"> _____________________ export focus box _____________________ </span>
+ <form action="." enctype="multipart/form-data" method="POST" 
+   tal:condition="python: model.meta_type in ['Silva Document', 'Silva Article', 'Silva Agenda Item']">
    <input type="hidden" 
      name="refs:list"
      tal:attributes="value python: request['model'].create_ref(request['model'])" />
@@ -175,7 +184,11 @@ _______ manual close section here _______
          <td class="top">
            <h2 tal:attributes="title string:id: ${model/id}">
              <img tal:replace="structure python:view.render_icon(model)" />
-             export &#xab;<span tal:replace="string:${model/get_title_editable}">id</span>&#xbb;
+             <tal:block i18n:translate="export_document">
+             export &#xab;
+             <tal:block content="string:${model/get_title_editable}"
+              i18n:name="export_id">id</tal:block>&#xbb;
+             </tal:block>
            </h2>
          </td>
        </tr>
@@ -184,11 +197,14 @@ _______ manual close section here _______
      <tbody>
        <tr class="even">
          <td>
-           Export this document via the export screen as Silva XML, or &#8211; if the 
-           <a href="http://www.infrae.com/products/docma">DocmaServer</a> is 
-           installed &#8211; convert it to a another format. 
-           <span tal:condition="python: not next and not closed">There is no 
-           new version, so the published version will be exported.</span>
+           <span i18n:translate="access_export_description">
+           Export this document via the export screen as Silva XML, or
+           &#8211; if the <a
+             href="http://www.infrae.com/products/docma">DocmaServer</a> is
+           installed &#8211; convert it to a another format.</span><span
+           tal:condition="python: not next and not closed"
+           i18n:translate="access_export_noversion">There is no
+             new version, so the published version will be exported.</span>
          </td>
        </tr>
      </tbody>
@@ -199,9 +215,10 @@ _______ manual close section here _______
            <input class="transport"
              type="submit"
              tal:attributes="name python: '%s/edit/tab_status_export:method' % '/'.join(request['model'].get_container().getPhysicalPath())"
-             value=" export..."
+             value="export..."
              title="access key: alt-e"
              accesskey="e"
+             i18n:attributes="value title"
            />
          </td>
        </tr>
@@ -221,25 +238,36 @@ _______ manual close section here _______
 
 <span tal:replace="nothing"> _______ status: content is published _______ </span>
 <div class="feedback" tal:condition="python:may_change_content and not next and published">
-<span class="subhead">Content is published</span><br />
-This content is published (online for the public).<br />
-If you wish you can make an editable copy by going to the <a href="tab_edit">editor</a>.
+  <span class="subhead" 
+    i18n:translate="published_content">Content is published
+  </span>
+  <br />
+  <tal:block i18n:translate="published_content_description">
+  This content is published (online for the public).<br /> If you wish you
+  can make an editable copy by going to the <a href="tab_edit">editor</a>.
+  </tal:block>
 <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>
 
 <span tal:replace="nothing"> _______ status: warning of new version of published content _______ </span>
 <div class="feedback" tal:condition="python:may_change_content and unapproved and published">
-<span class="subhead">Published version exists</span><br />
-Note: <span class="warning">an older version of this content is online.</span><br />
-Publishing this version will replace the public version.
+  <span class="subhead" i18n:translate="existing_pub_version">Published version exists</span><br />
+  <tal:block i18n:translate="existing_pub_version_description">
+    Note: <span class="warning">an older version of this content is
+    online.</span><br /> Publishing this version will replace the public
+    version.
+  </tal:block>
 <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>
 
 <span tal:replace="nothing"> _______ status: content is closed _______ </span>
 <div class="feedback" tal:condition="python:may_change_content and not next and closed">
-<span class="subhead">Content is closed</span><br />
-This content was once published but is now closed.<br />
-If you wish you can make an editable copy by going to the <a href="tab_edit"><span class="index-link">Edit tab</span></a>.
+<span class="subhead" i18n:translate="closed_content">Content is closed</span><br />
+<tal:block i18n:translate="closed_content_description">
+  This content was once published but is now closed.<br /> If you wish you
+  can make an editable copy by going to the <a href="tab_edit"><span
+      class="index-link">Edit tab</span></a>.
+</tal:block>
 <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>
 </tal:replace>

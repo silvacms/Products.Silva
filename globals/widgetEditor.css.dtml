@@ -49,7 +49,6 @@ div.citation p.source {
 
 
 /* ______________________________________________ custom table styles _____ */
-
 table.listing {
   border: none;
 }
@@ -83,6 +82,10 @@ table.silvatable td {
   border-right: none ! important;
 } 
 
+table.plain, table.datagrid, table.list, table.grid {
+  width: 100%;
+}
+
 table.plain {
   border-style: none;
 } 
@@ -115,8 +118,6 @@ table.datagrid tr.rowheading td {
 td.even table td {
   border-right: none ! important;
 }
-
-
 
 /* ________________________________________________________ list styles _____ */
 /* _______ these are duplicated in frontend.css for overriding ______ */
@@ -171,6 +172,9 @@ ol.lower-alpha {
   border-right: none ! important;
 }
 
+.post-focus a:link {
+  text-decoration: underline;
+}
 
 /* header-like elements for table cells in editor, prevents extra line space */
 /* in lousy browsers */
@@ -225,5 +229,25 @@ ol.lower-alpha {
   margin-bottom : 2px;
 }
 
+/* make a yellow background to seperate it from the content */
+.csvsource {
+  background-color: #f3f3d9;
+}
 
+.csvsource table.csvtable {
+  background-color: #f3f3d9;
+  border: 1px solid #f3f3d9;
+}
+
+.csvsource table.csvtable tr.even td, .csvsource table.csvtable tr.odd td {
+  background-color: #f3f3d9;
+  border: none;
+}
+
+.csvsource table.csvtable th {
+  color: black;
+  background-color: #f3f3d9;
+  border: none;
+}
+  
 /* cascading makes you dizzy */

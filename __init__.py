@@ -1,9 +1,8 @@
-# Copyr2ght (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.114 $
+# $Revision: 1.115 $
 
 import ContainerPolicy
-
 
 def initialize(context):
     from Products.Silva import icon
@@ -16,6 +15,8 @@ def initialize(context):
 # (use CMFCore if FileSystemSite is not installed)
     from Products.Silva.fssite import registerDirectory, registerFileExtension
     from Products.Silva.fssite import FSImage
+    from Products.FileSystemSite.FSDTMLMethod import FSDTMLMethod
+    from Products.FileSystemSite.FSPageTemplate import FSPageTemplate
 # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
     import Folder, Root
@@ -43,7 +44,6 @@ def initialize(context):
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
     
-
     from Products.Silva.LayoutRegistry import layoutRegistry
     from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT
     from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT_DESCRIPTION
@@ -140,6 +140,14 @@ def initialize(context):
     registerDirectory('resources', globals())
     registerDirectory('globals', globals())
 
+    try:
+        from Products import kupu
+    except ImportError:
+        pass
+    else:
+        registerDirectory('%s/common' % os.path.dirname(kupu.__file__), globals())
+        registerDirectory('%s/silva' % os.path.dirname(kupu.__file__), globals())
+
     # initialize the metadata system
     #  register silva core types w/ metadata system
     #  register the metadata xml import initializers
@@ -170,17 +178,13 @@ else:
 def __allow_access_to_unprotected_subobjects__(name, value=None):
     return name in ('mangle', 'batch')
 
-from Products.PythonScripts.Utility import allow_module
+from AccessControl import allow_module
 
 allow_module('Products.Silva.adapters.security')
+allow_module('Products.Silva.adapters.archivefileimport')
 allow_module('Products.Silva.roleinfo')
 
 def initialize_icons():
-    icon.registry.registerAdapter(icon.MetaTypeClassAdapter, 0)
-    icon.registry.registerAdapter(icon.MetaTypeAdapter, 5)
-    icon.registry.registerAdapter(icon.SilvaFileAdapter, 10)
-    icon.registry.registerAdapter(GhostFolder.GhostFolderIconAdapter, 11)
-    icon.registry.registerAdapter(Ghost.GhostIconAdapter, 12)
     mimeicons = [
         ('audio/aiff', 'file_aiff.png'),
         ('audio/x-aiff', 'file_aiff.png'),
@@ -241,7 +245,8 @@ def initialize_icons():
 def initialize_upgrade():
     from Products.Silva import upgrade_092
     from Products.Silva import upgrade_093
+    from Products.Silva import upgrade_100
 
-    for upgrade_module in [upgrade_092, upgrade_093]:
+    for upgrade_module in [upgrade_092, upgrade_093, upgrade_100]:
         upgrade_module.initialize()
 

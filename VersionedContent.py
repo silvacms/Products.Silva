@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53 $
+# $Revision: 1.54 $
 
 # Python
 from StringIO import StringIO
@@ -81,7 +81,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         """
         viewable = self.get_viewable()
         if viewable is None:
-            return "[No title is available because the content object is not published]"
+            return self.id
         return viewable.get_title()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -118,7 +118,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         # Analogous to get_title
         viewable = self.get_viewable()
         if viewable is None:
-            return "[No (short) title is available because the content object is not published]"
+            return self.id
         return viewable.get_short_title()
 
     security.declareProtected(

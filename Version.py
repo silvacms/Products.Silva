@@ -60,9 +60,8 @@ class Version(SimpleItem):
     def get_title(self):
         """get title of version.
         """
-        binding = self.service_metadata.getMetadata(self)
-        return binding.get(
-            'silva-content', element_id='maintitle')
+        return self.service_metadata.getMetadataValue(self, 'silva-content',
+                                                     'maintitle')
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
