@@ -3,9 +3,7 @@
     view here;
     model request/model;">
   <tal:block condition="view/has_access">
-    <tal:block 
-      define="isValid model/isValid | nothing;"
-      condition="isValid">
+    <tal:block condition="model/isValid | nothing">
       <h2>
         <span tal:replace="model/meta_type">
           Meta type
@@ -100,7 +98,7 @@
       </form>
     </tal:block>
 
-    <tal:block condition="not:isValid">
+    <tal:block condition="not:model/isValid | nothing">
       "Things to do when groups is not in it original location"
     </tal:block>
   </tal:block>
