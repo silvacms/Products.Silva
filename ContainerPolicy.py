@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 
 # Python
 from bisect import insort_right
@@ -62,7 +62,7 @@ class ContainerPolicyRegistry(SimpleItem):
         """register policy
 
         Policy should be the container policy class."""
-        msg = ('The object %(policy) does not implement IContainerPolicy, '
+        msg = ('The object %(policy)s does not implement IContainerPolicy, '
                     'try restarting Zope.')
         msg = msg % {'policy': repr(policy)}
         assert IContainerPolicy.isImplementedByInstancesOf(policy), msg
