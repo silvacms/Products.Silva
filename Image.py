@@ -1,10 +1,26 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.17 2003/02/12 08:25:11 zagy Exp $
+# $Id: Image.py,v 1.18 2003/02/14 14:49:16 zagy Exp $
 
+# Python
 import re
 from cStringIO import StringIO
-from types import StringType
+from types import StringType, IntType
+# Zope
+import OFS
+from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from DateTime import DateTime
+# Silva interfaces
+from IAsset import IAsset
+# Silva
+import SilvaPermissions
+import config
+from Asset import Asset
+from File import cookPath
+# misc
+from helpers import add_and_edit
 
 try:
     import PIL.Image
@@ -12,19 +28,16 @@ try:
 except ImportError:
     havePIL = 0
 
-from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from DateTime import DateTime
-import OFS
-# Silva interfaces
-from IAsset import IAsset
-# Silva
-from Asset import Asset
-import SilvaPermissions
-# misc
-from helpers import add_and_edit
-
+try:
+    from Products.ExtFile.ExtImage import ExtImage
+    couldUseFSStorage = 1
+except ImportError:  
+    couldUseFSStorage = 0
+if config.FILESYSTEM_STORAGE_ENABLED and couldUseFSStorage:
+    useFSStorage = 1
+else:
+    useFSStorage = 0
+    
 class Image(Asset):
     """Web graphics (gif, jpg, png) can be uploaded and inserted in Silva
        documents.
@@ -41,6 +54,7 @@ class Image(Asset):
     hires_image = None
     web_scale = '100%'
     web_format = 'JPEG'
+    web_formats = ('JPEG', 'GIF', 'PNG')
     
     def __init__(self, id, title):
         Image.inheritedAttribute('__init__')(self, id, title)
@@ -91,8 +105,13 @@ class Image(Asset):
     def set_image(self, file):
         """Set the image object.
         """
-        self.hires_image = OFS.Image.Image('image', self.get_title_html(), 
-            file)
+        if self.hires_image is not None:
+            self.hires_image.manage_beforeDelete(self.hires_image, self)
+        self.hires_image = self._image_factory('hires_image', 
+            self.get_title_html(), file)
+        format = self.getFormat()
+        if format in self.web_formats:
+            self.web_format = format
         self._createWebPresentation()            
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -102,23 +121,6 @@ class Image(Asset):
         """
         self.hires_image = zope_img
         self._createWebPresentation()
-
-    def _createWebPresentation(self):
-        width, height = self.getCanonicalWebScale()
-        try:
-            image = self._getPILImage()
-        except ValueError:
-            # XXX: warn the user, no scaling or converting has happend
-            self.image = self.hires_image
-            return    
-        web_image_data = StringIO()
-        web_image = image.resize((width, height), PIL.Image.BICUBIC)
-        if web_image.mode != 'RGB' and self.web_format == 'JPEG':
-            web_image = web_image.convert("RGB")
-        web_image.save(web_image_data, self.web_format)
-        self.image = OFS.Image.Image('image', self.get_title_html(), 
-            web_image_data)
-
 
     security.declareProtected(SilvaPermissions.View, 'getCanonicalWebScale')
     def getCanonicalWebScale(self, scale=None):
@@ -152,7 +154,11 @@ class Image(Asset):
         if self.hires_image is None:
             return 0, 0
         width, height = self.hires_image.width, self.hires_image.height
-        if width == '' or height == '':
+        if callable(width):
+            width = width()
+        if callable(height):
+            height = height()
+        if not (isinstance(width, IntType) and isinstance(height, IntType)):
             image = self._getPILImage()
             width, height = image.size
         return width, height            
@@ -166,6 +172,29 @@ class Image(Asset):
         except ValueError:
             return 'unknown'
 
+    security.declareProtected(SilvaPermissions.View, 'getImage')
+    def getImage(self, hires=1, webformat=0, REQUEST=None):
+        """return image"""
+        if hires and not webformat:
+            image = self.hires_image
+        elif not hires and webformat:
+            image = self.image
+        elif hires and webformat:
+            pil_image = self._getPILImage()
+            pil_image = self._prepareWebFormat(pil_image)
+            image_data = StringIO()
+            pil_image.save(image_data, self.web_format)
+            del(pil_image)
+            image = OFS.Image.Image('custom_image', self.get_title_html(), 
+                image_data)
+        elif not hires and not webformat:
+            raise ValueError, "Low resolution image in original format is " \
+                "not supported"
+        if REQUEST is not None:                
+            return image.index_html(REQUEST, REQUEST.RESPONSE)                
+        else:
+            return str(image.data)
+        
     security.declareProtected(SilvaPermissions.View, 'canScale')
     def canScale(self):
         """returns if scaling/converting is possible"""
@@ -178,11 +207,65 @@ class Image(Asset):
         """
         if not havePIL:
             raise ValueError, "No PIL installed."""
-        image_file = StringIO(str(self.hires_image.data))
-        image = PIL.Image.open(image_file)
+        if isinstance(self.hires_image, OFS.Image.Image):
+            image_file = StringIO(str(self.hires_image.data))
+            image = PIL.Image.open(image_file)
+        else:            
+            assert isinstance(self.hires_image, ExtImage)
+            image_file_name = self.hires_image._get_filename(
+                self.hires_image.filename)
+            image = PIL.Image.open(image_file_name)
         return image
 
+    def _createWebPresentation(self):
+        width, height = self.getCanonicalWebScale()
+        try:
+            image = self._getPILImage()
+        except ValueError:
+            # XXX: warn the user, no scaling or converting has happend
+            self.image = self.hires_image
+            return    
+        web_image_data = StringIO()
+        web_image = image.resize((width, height), PIL.Image.BICUBIC)
+        web_image = self._prepareWebFormat(web_image)
+        web_image.save(web_image_data, self.web_format)
+        self.image = OFS.Image.Image('image', self.get_title_html(), 
+            web_image_data)
+
+    def _prepareWebFormat(self, pil_image):
+        """converts image's mode if necessary"""
+
+        if pil_image.mode != 'RGB' and self.web_format == 'JPEG':
+            pil_image = pil_image.convert("RGB")
+        return pil_image                    
+
+    def _image_factory(self, id, title, file):
+        repository = self._useFSStorage()
+        if repository is None:
+            image = OFS.Image.Image(id, title, file)
+        else:
+            image = ExtImage(id, title)
+            image._repository = repository
+            image = image.__of__(self)
+            image.manage_file_upload(file)
+            image = image.aq_base
+        return image        
     
+    def _useFSStorage(self):
+        """return true if we should store images on the filesystem"""
+        service_files = getattr(self.get_root(), 'service_files', None)
+        if not couldUseFSStorage:
+            return None
+        if service_files is not None:
+            if service_files.filesystem_storage_enabled():
+                return cookPath(service_files.filesystem_path())
+            return None
+        if useFSStorage:
+            return cookPath(config.FILESYSTEM_PATH)
+        return None
+
+
+
 InitializeClass(Image)
     
 manage_addImageForm = PageTemplateFile("www/imageAdd", globals(),

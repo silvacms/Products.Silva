@@ -1,13 +1,17 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
+
+# Python
+import os
+import string
+# Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from mimetypes import guess_extension
 from helpers import add_and_edit
-import string
 # Silva interfaces
 from IAsset import IAsset
 # Silva
@@ -161,15 +165,13 @@ class FileSystemFile(File):
 
     # Path to file repository according to config.py
     _config_repository = config.FILESYSTEM_PATH
-    _baddirs = ['', '.', '..']
 
     def __init__(self, id, title, file, repository=None):
         FileSystemFile.inheritedAttribute('__init__')(self, id, title)        
         if not repository:
             repository = self._config_repository
         self._file = ExtFile(id, title)
-        self._file._repository = [
-            dir for dir in repository.split('/') if dir not in self._baddirs]
+        self._file._repository = cookPath(repository)
         self._set_file_data_helper(file)
 
     def _set_file_data_helper(self, file):
@@ -307,3 +309,16 @@ def manage_addFilesService(
     object = getattr(self, id)
     add_and_edit(self, id, REQUEST)
     return '' #object.manage_filesServiceEditForm()
+
+def cookPath(path):
+    bad_dirs = ['', '.', '..']
+    path_items = []
+    while 1:
+        path, item = os.path.split(path)
+        if item not in bad_dirs:
+            path_items.append(item)
+        if path in ('', '/'):
+            break
+    path_items.reverse()        
+    return tuple(path_items)
+
