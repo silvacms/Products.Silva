@@ -222,18 +222,18 @@ class GhostProducer(VersionedContentProducer):
 
 class GhostVersionProducer(SilvaBaseProducer):
     """Export a verson of a Silva Ghost object to XML.
+    This actually exports the object the ghost refers to, with the ghost id and
+    reference added as attributes.
     """
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
-        content = self.context.get_haunted_unrestricted().get_viewable()
-        contenttype = self.context.get_haunted_unrestricted().meta_type
-        self.startElement('metatype')
-        self.handler.characters(contenttype)
-        self.endElement('metatype')
-        if content is None:
-            self.startElement('broken')
-            self.endElement('broken')
-        else:
+        content = self.context.get_haunted_unrestricted()
+        if content is not None:
+            meta_type = content.meta_type
+            self.startElement('metatype')
+            self.handler.characters(meta_type)
+            self.endElement('metatype')
+            content = content.get_viewable()
             self.startElement('haunted_url')
             self.handler.characters(self.context.get_haunted_url())
             self.endElement('haunted_url')
@@ -245,12 +245,11 @@ class GhostFolderProducer(SilvaBaseProducer):
     """
     def sax(self):
         self.startElement('ghost_folder', {'id': self.context.id})
-        self.metadata()
         self.startElement('content')
         content = self.context.get_haunted_unrestricted()
-        contenttype = self.context.get_haunted_unrestricted().meta_type
+        meta_type = content is not None and content.meta_type or "" 
         self.startElement('metatype')
-        self.handler.characters(contenttype)
+        self.handler.characters(meta_type)
         self.endElement('metatype')
         self.startElement('haunted_url')
         self.handler.characters(self.context.get_haunted_url())
