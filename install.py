@@ -22,6 +22,10 @@ def install(root):
                             'Products/Silva/views', 'Silva')
     # also register views
     registerViews(root.service_view_registry)
+    # and reconfigure xml widget registries
+    # FIXME: should we check if the registries exist?
+    # (for upgrading, and maybe to hande accidential deletion)
+    registerCoreWidgets(root)
     
 def uninstall(root):
     unregisterViews(root.service_view_registry)
