@@ -57,7 +57,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         except ImportError:
             return
 
-        class BrokenImagesOnRightRenderer(ImagesOnRightRender):
+        class BrokenImagesOnRightRenderer(ImagesOnRightRenderer):
             def __init__(self):
                 ImagesOnRightRenderer.__init__(self)
                 self._stylesheet_path = "data/images_to_the_right_broken.xslt"
