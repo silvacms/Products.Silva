@@ -310,6 +310,8 @@ def registerViews(reg):
     reg.register('edit', 'Silva File', ['edit', 'Asset', 'File'])
     reg.register('edit', 'Silva Indexer', ['edit', 'Content', 'Indexer'])
     reg.register('edit', 'Silva SQL Data Source', ['edit', 'Asset', 'SQLDataSource'])
+    reg.register('edit', 'Silva Group', ['edit', 'Asset', 'Group'])
+    reg.register('edit', 'Silva Virtual Group', ['edit', 'Asset', 'VirtualGroup'])
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
@@ -334,6 +336,8 @@ def registerViews(reg):
     reg.register('add', 'Silva File', ['add', 'File'])
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
     reg.register('add', 'Silva SQL Data Source', ['add', 'SQLDataSource'])
+    reg.register('add', 'Silva Group', ['add', 'Group'])
+    reg.register('add', 'Silva Virtual Group', ['add', 'VirtualGroup'])
 
 def unregisterViews(reg):
     for meta_type in ['Silva Folder', 'Silva Document',

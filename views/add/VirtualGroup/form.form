@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="latin-1"?>
+
+<form>
+  <title></title>
+  <name>add_group_form</name>
+  <action></action>
+  <enctype>None</enctype>
+  <method>POST</method>
+
+  <groups multiple="true">
+    <group>
+      <title>Default</title>
+      <fields multiple="true">
+
+      <field><id>object_id</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
+          <required type="int">1</required>
+          <css_class></css_class>
+          <default></default>
+          <title>id</title>
+          <truncate type="int">0</truncate>
+          <description>id: no spaces or special characters besides an underscore ("_") or a period (".")</description>
+          <extra>style="width:100%;"</extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      <field><id>object_title</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
+          <required type="int">1</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Title</title>
+          <truncate type="int">0</truncate>
+          <description></description>
+          <extra>style="width:100%;"</extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>

@@ -1,0 +1,111 @@
+<div class="margins"
+  tal:define="
+    view here;
+    model request/model;
+    isValid model/isValid | nothing;">
+
+  <tal:block condition="isValid">
+    <h2>
+      <span tal:replace="model/meta_type">
+        Meta type
+      </span>
+      for
+      <span class="document-title"
+        tal:content="
+          structure string:&laquo;
+          ${model/get_title_or_id_html}&raquo;">
+        title
+      </span>
+    </h2>
+
+    <div class="hilight borders top bottom left right"
+      style="padding: 0.5em; width: 30%; float: right; margin: 0em 0em 2em 1em;"
+      tal:define="
+        clipboard_members view/lookup_get_selection;">
+
+      <form action="."
+        method="POST">
+
+        <table border="0"
+          cellpadding="5"
+          cellspacing="0"
+          width="100%">
+          <tr align="left">
+            <td colspan="2">
+              <div style="float: right;">
+                <input name="referer"
+                  type="hidden"
+                  value=""
+                  tal:attributes="value string:${model/absolute_url}/edit" />
+                <input class="button"
+                  accesskey="l"
+                  name="lookup:method"
+                  title="Lookup and select users to add to groups... - alt-l"
+                  type="submit"
+                  value="Lookup..." />
+              </div>
+              <div>
+                <b>
+                  User lookup clipboard:
+                </b>
+              </div>
+            </td>
+          </tr>
+          <tr tal:repeat="member python:clipboard_members.values()">
+            <td width="1%">
+              <input name="userids:list"
+                type="checkbox"
+                value="userid"
+                tal:attributes="value member/userid" />
+            </td>
+            <td tal:content="member/fullname">
+              Name
+            </td>
+          </tr>
+          <tr tal:condition="not:clipboard_members">
+            <td>
+              <i>
+                No users on "Lookup Clipboard"
+              </i>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td align="left"
+              colspan="2">
+
+              <tal:block condition="clipboard_members">
+                <select name="assign_role">
+                  <option value="None">
+                    Select role...
+                  </option>
+                  <option value="role"
+                    tal:repeat="role model/sec_get_roles"
+                    tal:content="role"
+                    tal:attributes="value role">
+                    Role name
+                  </option>
+                </select>
+                &nbsp;
+                <input class="button"
+                  name="access_assign_to_user:method"
+                  title="Assign a local role to selected user(s)."
+                  type="submit"
+                  value="Assign" />
+              </tal:block>
+
+            </td>
+          </tr>
+        </table>
+
+      </form>
+
+    </div>
+
+
+  </tal:block>
+
+  <tal:block condition="not:isValid">
+    "Things to do when groups is not in it original location"
+  </tal:block>
+
+</div>
