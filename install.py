@@ -1,9 +1,67 @@
 """Install for Silva Core
 """
 
-from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Globals import package_home
 import os
+
+from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
+from Products.FileSystemSite.utils import minimalpath, expandpath
+
+def add_fss_directory_view(obj, name, base, *args):
+    """ add a FSS-DirectoryView object with lots of sanity checks.
+    
+    obj         where the new directory-object will be accessible
+    name        name of the new zope object
+    base        dirname(base) is taken as the base for the following relative path
+    *args       directory names which form the relative path to our content directory
+
+    This method tries to provide a sane interface independent of FSS
+    path munging.
+
+    Note that the the resulting path (joined from base and *args) must be
+    below an already registered FSS-path (i.e. you must have issued
+    a 'registerDirectory' on the to-be-registered directory or on one
+    of its parents). 
+
+    """
+    from os.path import isdir, dirname, join, normpath, normcase
+
+    base = dirname(base)
+
+    # --- sanity checks ---
+    if not isdir(base):
+        raise ValueError, "base %s not an existing directory" % base
+    abs_path = join(base, *args)
+    if not isdir(abs_path):
+        raise ValueError, "path %s not a directory" % abs_path
+    # --- end sanity checks ---
+
+    # we probe FSS to get the correct 'short path' to use
+    fss_base = minimalpath(base)
+    path = join(fss_base, *args)
+
+    # -- sanity check --
+    exp_path = expandpath(path)
+        
+    if normcase(normpath(exp_path)) != normcase(normpath(abs_path)):
+        raise ValueError("detected FSS minimalpath/expandpath error, "+
+                         "path: %s, FSS path: %s" % ( abs_path, exp_path ))
+    # -- end sanity check --
+
+    # -- sanity check because of FSS 1.1 createDirectoryView bug --
+    try:
+        from Products.FileSystemSite.DirectoryView import _dirreg
+        info = _dirreg.getDirectoryInfo(path)
+    except:
+        pass
+    else:
+        if info is None:
+            raise ValueError('Not a FSS registered directory: %s' % path)
+    
+    # -- end sanity check because of FSS 1.1 bug --
+    
+    # FSS should eat the path now and work correctly with it
+    manage_addDirectoryView(obj, path, name)
 
 def installFromScratch(root):
     configureProperties(root)
@@ -18,8 +76,7 @@ def installFromScratch(root):
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
     # create the core views from filesystem
-    manage_addDirectoryView(root.service_views,
-                            'Products/Silva/views', 'Silva')
+    add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     # also register views
     registerViews(root.service_view_registry)
     # also re-configure security (XXX should this happen?)
@@ -57,10 +114,9 @@ def configureCoreFolders(root):
     """A bunch of core directory views.
     """
     # images, stylesheets, etc
-    manage_addDirectoryView(root, 'Products/Silva/globals', 'globals')
+    add_fss_directory_view(root, 'globals', __file__, 'globals')
     # commonly used python scripts (XXX probably should go away)
-    manage_addDirectoryView(root,
-                            'Products/Silva/service_utils', 'service_utils')
+    add_fss_directory_view(root, 'service_utils', __file__, 'service_utils')
 
 def configureViews(root):
     """The view infrastructure for Silva.
@@ -237,8 +293,7 @@ def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'
     """
     # create the core widgets from the filesystem
-    manage_addDirectoryView(root,
-                            'Products/Silva/widgets', 'service_widgets')
+    add_fss_directory_view(root, 'service_widgets', __file__, 'widgets')
 
     # create the editor service
     root.manage_addProduct['XMLWidgets'].manage_addEditorService(

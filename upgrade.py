@@ -23,10 +23,10 @@ def from085to086(self, root):
     cb = orig_root.manage_copyObjects(copy_ids)
     dest_root.manage_pasteObjects(cb_copy_data=cb)
 
-    # also copy over layout stuff
+    # also copy over layout stuff and various services
     layout_ids = [obj.getId() for obj in orig_root.objectValues() if
                   obj.meta_type in ['DTML Method', 'Script (Python)', 'Page Template']  or \
-                  obj.getId() in ('service_groups', 'service_files') ]
+                  obj.getId() in ('service_groups', 'service_files', 'service_mailhost', 'service_catalog') ]
 
     other_ids = [obj.getId() for obj in orig_root.objectValues() if
                  obj.meta_type not in ['DTML Method', 'Script (Python)', 'Page Template', \

@@ -1,10 +1,4 @@
-<?xml version="1.0"?>
 <toolbar>
-<!--
-	<icon paramname="GETHTMLDATAURL">
-		<iconfile>icons/save.gif</iconfile>
-	</icon>
--->
 	<separator />
 	<icon paramname="CUT">
 	</icon>
@@ -47,21 +41,12 @@
 	<icon paramname="DECINDENT">
 		<iconfile>icons/decindent.gif</iconfile>
 	</icon>
-	
 	<separator />
 	<icon paramname="LINK">
 		<iconfile>icons/link.gif</iconfile>
 	</icon>
-<!--
-	<icon paramname="BOOKMARK">
-		<iconfile>icons/bookmark.gif</iconfile>
-	</icon>
-
 	<icon paramname="IMAGE">
 	</icon>
-	<icon paramname="HR">
-	</icon>
--->
 	<icon paramname="SPECIALCHARACTER">
 		<iconfile>icons/charmap.gif</iconfile>
 	</icon>
@@ -71,11 +56,10 @@
 	<icon paramname="SHOWNALLCHAR">
 		<iconfile>icons/shownallchar.gif</iconfile>
 	</icon>
-<!--
-	<icon paramname="PROPERTIESDIALOG">
-	</icon>
--->
 	<separator />
+	<icon paramname="ALIGN">
+		<iconfile>icons/left1.gif;icons/center1.gif;icons/right1.gif</iconfile>
+	</icon>
 	<!-- <urlicon paramname="UPLOADIMAGE">
 		<iconfile>icons/java.gif</iconfile>
 		<url>http://isa-dev-ws-02/all/images/imageupload.htm</url>
@@ -87,4 +71,4 @@
 	</dlgicon>
 	<separator /> -->
 	<icon paramname="help" />
-</toolbar>
+ </toolbar>
