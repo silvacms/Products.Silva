@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.3 $
+Version of this file: $Revision: 1.4 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -42,7 +42,7 @@ Add Service for Docma
     <input class="form-element" type="submit" name="submit_add"
      value=" Add " />
     <input class="form-element" type="submit" name="submit_edit"
-     value=" Add and Edit " />
+     value=" Add and Configure " />
     </div>
     </td>
   </tr>

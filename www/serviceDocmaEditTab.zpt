@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1 $
+Version of this file: $Revision: 1.2 $
 -->
 <tal:define define="global view here;
                     global conn_and_pw view/try_connection_and_pw;
@@ -18,16 +18,16 @@ Version of this file: $Revision: 1.1 $
 <span tal:condition="not:conn_and_pw">Status: not connected</span>
 </div>
 
-<div class="form-title">Settings Docma:</div><br />
+<div class="form-title">Docma service settings:</div><br />
 <form method="POST" action="." enctype="multipart/form-data">
-<div class="form-text">Host:</div>
+<div class="form-text">DocmaServer host name or IP address:</div>
 <input type="text" class="form-element" name="host" tal:attributes="value view/host" /><br /><br />
 <div class="form-text">Port:</div>
 <input type="text" class="form-element" name="port" tal:attributes="value view/port" /><br /><br />
 <div class="form-text">Password:</div>
 <input type="text" class="form-element" name="password" tal:attributes="value view/password" /><br /><br />
 <tal:block condition="conn_and_pw">
-<div class="form-text">Templates:</div>
+<div class="form-text">Front page templates:</div>
 <select class="form-element" name="template" tal:define="templates view/get_templates">
 <tal:repeat repeat="template templates">
 <option tal:attributes="value template" tal:content="template"></option>
