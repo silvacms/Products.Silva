@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.36.8.12.8.12 $
+CVS:        $Revision: 1.36.8.12.8.13 $
 
 Introduction
 ------------
@@ -90,8 +90,10 @@ The instructions in the "Major upgrades" section should be followed.
 If you are using ExtFile for image storage, upgrading to version 1.4.2
 of ExtFile is required.
 
-You need to update your layout templates. To see how, please read the
-section ``Layout templates``_ below.
+You need to update your layout templates. Note: this also affects the
+Silva UI rendering; if your sidebar doesn't render properly, you need
+to update ``frontend.css``. To see how, please read the section
+``Layout templates``_ below.
 
 Note: upgrading from Silva 1.0b1 to Silva 1.0 requires a 'refresh all'
 in service extensions.

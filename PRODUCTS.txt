@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.1.2.5 $
+CVS:        $Revision: 1.1.2.6 $
 
 Introduction
 ------------
@@ -147,12 +147,16 @@ for more details).
 
 http://www.zope.org/Members/shh/ExtFile
 
-SilvaExternalSources 0.7 (E)
+SilvaExternalSources 0.8 (E)
 ----------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
 from arbitrary Python sources, SQL databases or CSV (comma separated
 values) can be shown inside SilvaDocuments.
+
+NOTE: At the time of this writing, we haven't yet released a version
+of SilvaExternalSources that has been fully tested with Silva 1.0,
+though we do have a beta.
 
 http://www.zope.org/Members/infrae/SilvaExternalSources
 
@@ -163,6 +167,9 @@ SilvaNews builds on Silva and SilvaDocument to provide News
 Publication, News Filters and News Viewers as well as News Articles
 and Agenda Items to build a distributed news system for your Silva
 site. It also contains RSS export and import facilities.
+
+NOTE: At the time of this writing, we haven't yet released a version of
+SilvaNews that has been fully tested with Silva 1.0.
 
 http://www.zope.org/Members/infrae/SilvaNews
 
