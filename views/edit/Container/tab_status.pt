@@ -189,7 +189,7 @@
                   <th class="controls listing-left"
                     colspan="99">
                     <span class="widebody" style="float: right;">
-                    date format: day / month / year hour : minute
+                    date format: day/month/year hours:minutes
                     </span>
                     <metal:block use-macro="view/macro_select_all/macros/select_all" />
                   </th>
@@ -266,6 +266,13 @@
                   </td>
                   <td class="align-right"
                     colspan="2">
+                    <input class="button" 
+                      style="float: left;"
+                      type="submit" 
+                      name="tab_status_new_version:method" 
+                      value="Create new versions" 
+                      title="Create new versions of published docs: alt-n" 
+                      accesskey="n" />
                     <input class="button"
                       accesskey="o"
                       name="tab_status_approve:method"
