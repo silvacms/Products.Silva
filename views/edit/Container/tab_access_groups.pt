@@ -6,6 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/tal/i18n"
   tal:define="
     global breadcrumb_vein string:Access;
     global active_tab string:tab_access;
@@ -18,12 +19,16 @@
   condition="view/has_access">
   <h3>
     <a href="tab_access"
-      title="Up to top of Access tab" >          
-      <img alt="Up to top of Access tab"
+      title="up to top of Access tab"
+      i18n:attributes="title"
+      i18n:translate="back">          
+      <img alt="up to top of Access tab"
         border="0"
         height="16"
         width="16"
-        tal:attributes="src string:${root_url}/globals/left.gif" />
+        tal:attributes="src string:${root_url}/globals/left.gif"
+	i18n:attributes="alt"
+      />
       Back
     </a>
   </h3>
@@ -36,20 +41,18 @@
        title
      </span>
    </h2>
-   <h3>
+   <h3 i18n:translate="group_definitions">
      Group definitions
    </h3>
-
-
 
     <div style="width: 30%; float: right; margin: 0em 0em 2em 1em;">
       <div class="hilight borders top bottom left right"
         style="padding: 0.5em; margin-bottom: 2em;" >
-        <b>
+        <b i18n:translate="add_normal_group">
           Add a normal group
         </b>
         <br />
-        <i>
+        <i i18n:translate="group_defined_by_list_users">
           (a group defined by a list of users)
         </i>
         <form name="focusbox" 
@@ -61,10 +64,8 @@
               <td>
                 id
               </td>
-              <td>
-                <span class="warning">
-                  *
-                </span>
+              <td class="warning">
+                *
               </td>
               <td style="width: 20em;">
                 <input size="20" 
@@ -75,7 +76,7 @@
               </td>
             </tr>
             <tr>
-              <td>
+              <td i18n:translate="title">
                 title
               </td>
               <td>
@@ -91,8 +92,17 @@
             </tr>
             <tr>
               <td colspan="3" align="right">
-                <input type="hidden" name="meta_type" value="Silva Group" />
-                <input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
+                <input type="hidden" 
+		  name="meta_type" 
+		  value="Silva Group" />
+                <input class="button" 
+		  type="submit" 
+		  name="add_submit" 
+		  value="add" 
+		  title="access key: alt-a" 
+		  accesskey="a" 
+		  i18n:attributes="title value"
+		/>
               </td>
             </tr>
           </table>
@@ -100,11 +110,11 @@
       </div>
       <div class="hilight borders top bottom left right"
         style="padding: 0.5em; margin-bottom: 2em;" >
-        <b>
+        <b i18n:translate="add_virtual_group">
           Add a virtual group
         </b>
         <br />
-        <i>
+        <i i18n:translate="group_defined_by_list_groups">
           (a group defined by a list of normal groups)
         </i>
         <form name="focusbox" 
@@ -116,10 +126,8 @@
               <td>
                 id
               </td>
-              <td>
-                <span class="warning">
-                  *
-                </span>
+              <td class="warning">
+                *
               </td>
               <td  style="width: 20em;">
                 <input size="20" 
@@ -130,7 +138,7 @@
               </td>
             </tr>
             <tr>
-              <td>
+              <td i18n:translate="title">
                 title
               </td>
               <td>
@@ -146,8 +154,18 @@
             </tr>
             <tr>
               <td colspan="3" align="right">
-                <input type="hidden" name="meta_type" value="Silva Virtual Group" />
-                <input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
+                <input type="hidden" 
+		  name="meta_type" 
+		  value="Silva Virtual Group"
+		/>
+                <input class="button" 
+		  type="submit" 
+		  name="add_submit" 
+		  value="add" 
+		  title="access key: alt-a" 
+		  accesskey="a" 
+		  i18n:attributes="value title"
+		/>
               </td>
             </tr>
           </table>
@@ -169,7 +187,7 @@
               <tal:block condition="not:groups">
                 No
               </tal:block>
-              Groups defined in this folder
+              <span i18n:translate="groups_defined_in_folder">Groups defined in this folder</span>
             </th>
           </tr>
           <tal:block repeat="group groups">
@@ -194,8 +212,9 @@
                 <td>
                   <a class="blacklink"
                     href="asset"
-                    title="Edit this group"
-                    tal:attributes="href string:${group/absolute_url}/edit">
+                    title="edit this group"
+                    tal:attributes="href string:${group/absolute_url}/edit"
+		    i18n:attributes="title">
                     <tal:block replace="group/id">
                       id
                     </tal:block>
@@ -205,8 +224,9 @@
                   <a class="blacklink"
                     href="asset"
                     title="Edit this asset"
-                    tal:attributes="href string:${group/absolute_url}/edit">
-                  <tal:block replace="structure group/get_title_or_id_html">
+                    tal:attributes="href string:${group/absolute_url}/edit"
+		    i18n:attributes="title">
+		  <tal:block replace="structure group/get_title_or_id_html">
                     title
                   </tal:block>                    
                   </a>
@@ -232,11 +252,13 @@
               colspan="4">
               <input class="warningbutton"
                 accesskey="d"
-                title="Delete selected groups: alt-d"
+                title="delete selected groups: alt-d"
                 type="submit"
-                value="Delete"
+                value="delete"
                 onClick="return confirm('Really delete?')"
-                tal:condition="groups" />
+                tal:condition="groups"
+		i18n:attributes="title value onClick"
+	      />
             </td>
             <td align="right"
               colspan="2">
