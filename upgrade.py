@@ -321,7 +321,7 @@ def convert_document_092(obj):
         newobj.set_unapproved_version_publication_datetime(DateTime() - 1)
         newobj.set_unapproved_version_expiration_datetime(DateTime() - 1)
         newobj.approve_version() # should be closed directly because of expiration date
-        getattr(newobj, newobj.get_last_closed_version()).content.manage_edit(xml)
+        getattr(newobj, str(newobj.get_last_closed_version())).content.manage_edit(xml)
         newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
         newobj.create_version(str(current_id), None, None)
         current_id += 1
@@ -333,7 +333,7 @@ def convert_document_092(obj):
         newobj.set_unapproved_version_expiration_datetime(
                 obj.get_public_version_expiration_datetime())
         newobj.approve_version()
-        getattr(newobj, newobj.get_public_version()).content.manage_edit(xml)
+        getattr(newobj, str(newobj.get_public_version())).content.manage_edit(xml)
         newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
         newobj.create_version(str(current_id), None, None)
         current_id += 1
@@ -345,7 +345,7 @@ def convert_document_092(obj):
         newobj.set_unapproved_version_expiration_datetime(
                 obj.get_approved_version_expiration_datetime())
         newobj.approve_version()
-        getattr(newobj, newobj.get_approved_version()).content.manage_edit(xml)
+        getattr(newobj, str(newobj.get_approved_version())).content.manage_edit(xml)
         newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
         newobj.create_version(str(current_id), None, None)
         current_id += 1
