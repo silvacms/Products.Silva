@@ -1,3 +1,4 @@
+<!-- Group listing macro -->
 <metal:block define-macro="listing">
   <div class="hilight borders top bottom left right"
     style="padding: 0.5em; width: 30%; float: right; margin: 0em 0em 2em 1em;">
@@ -7,7 +8,7 @@
         <table border="0"
           cellpadding="3"
           cellspacing="0"
-          tal:define="groups view/list_all_groups">
+          tal:define="groups view/service_groups/listNormalGroups">
           <tr align="left">
             <td>
               <b>
@@ -45,6 +46,63 @@
             <td>
               <i>
                 No groups available
+              </i>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </metal:block>
+  </div>
+</metal:block>
+
+<!-- Virtual Group listing macro -->
+<metal:block define-macro="virtual_groups_listing">
+  <div class="hilight borders top bottom left right"
+    style="padding: 0.5em; width: 30%; float: right; margin: 0em 0em 2em 1em;">
+    <metal:block define-macro="virtual_groups_listing_no_style">
+      <form action="."
+        method="POST">
+        <table border="0"
+          cellpadding="3"
+          cellspacing="0"
+          tal:define="groups view/service_groups/listVirtualGroups">
+          <tr align="left">
+            <td>
+              <b>
+                Existing virtual groups:
+              </b>
+              <br />
+              <tal:block condition="groups">
+                (Ctrl-mouseclick for a multi-select)
+              </tal:block>
+            </td>
+          </tr>
+          <tr valign="top"
+            tal:condition="groups">
+            <td>
+              <select multiple="multiple"
+                name="groups:list"
+                size="10">
+                <option disabled="disabled"
+                  value="None">
+                  Select group...
+                </option>
+                <option value="group"
+                  tal:repeat="group groups"
+                  tal:content="group"
+                  tal:attributes="value group">
+                  Group
+                </option>
+              </select>
+              <br />
+              <br />
+              <metal:block define-slot="listing_actions" />
+            </td>
+          </tr>
+          <tr tal:condition="not:groups">
+            <td>
+              <i>
+                No virtual groups available
               </i>
             </td>
           </tr>
