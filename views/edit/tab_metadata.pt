@@ -25,7 +25,8 @@
         <tal:block replace="nothing">
           _____________________ main _____________________
         </tal:block>
-        <td class="main">
+        <td class="main"
+          tal:define="display_flag python:1;">
           <tal:block condition="model/implements_versioning">
             <tal:block 
               define="version model/get_editable | nothing;"
@@ -55,7 +56,9 @@
             </tal:block>
             
             <tal:block 
-              define="version model/get_viewable | nothing;"
+              define="
+                version model/get_viewable | nothing;
+                display_flag python:0"
               condition="model/get_public_version"
               >
               <metal:block use-macro="here/macro_metadata/macros/view_table">
