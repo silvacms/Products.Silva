@@ -260,6 +260,7 @@ div.middleground a:visited {
   color: &dtml-transportFontColor;;
   background: #4d5680;
 }
+
 div.middleground a:hover {
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-mainTabBackgroundSelected;;
@@ -267,8 +268,17 @@ div.middleground a:hover {
 }
 
 div.middleground a.button {
-  color: &dtml-manipulatorFontColor;;
-  background : &dtml-manipulatorBackground;;
+  color: #d9f3f1;
+  background: #065e32;
+}
+
+div.middleground a.button:visited {
+  color: #d9f3f1;
+  background: #065e32;
+}
+
+div.middleground a.button:hover {
+  background: #b3d4bf;
 }
 
 input.warning {
