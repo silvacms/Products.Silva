@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.18 $
+CVS:        $Revision: 1.19 $
 
 Introduction
 ------------
@@ -25,6 +25,7 @@ D - In the Silva-all distribution.
 C - Core, essential for the operation of Silva.
 I - Usable independently of Silva.
 E - Silva extension.
+X - Included in the Silva-extra tarball.
 
 Silva 1.2 (DC)
 --------------
@@ -144,8 +145,8 @@ Translation service which can be used by Silva. It is safe to
 deinstall it, though -- Silva will continue to work with the English
 user interface.
 
-Groups 0.4 (I)
---------------
+Groups 0.4 (IX)
+---------------
 
 Groups support is optional; Silva should run without the Groups
 product installed. Groups use a rather hackish technique called
@@ -163,8 +164,20 @@ should have ``service_groups`` for its id.
 
 http://www.infrae.com/download/Groups
 
-ExtFile 1.4.2 (I)
------------------
+LDAPUserFolder 2.3 (IX)
+-----------------------
+
+The LDAP User Folder is a user folder replacement for Zope that
+authenticates Zope users against LDAP.
+
+Compatibility: LDAPUserFolder versions 2.4.0 beta1 and higher require
+Python 2.2.3 and higher, and in order to use the User ID/Login
+separation you need a Zope version higher than 2.7.0.
+
+http://www.dataflake.org/software/ldapuserfolder/
+
+ExtFile 1.4.2 (IX)
+------------------
 
 If you plan to manage large upload files with Silva, you may want to
 avoid storing them in the ZODB, instead putting them in the filesystem
@@ -173,7 +186,17 @@ for more details).
 
 http://www.zope.org/Members/shh/ExtFile
 
-SilvaExternalSources 0.10 (E)
+MailDropHost 1.9 (IX)
+---------------------
+
+The MaildropHost product provides support for sending email from
+within the Zope environment using MaildropHost objects. Unlike the
+built-in MailHost object, the sending is done asynchronously from a
+separate process.
+
+http://www.dataflake.org/software/maildrophost/
+
+SilvaExternalSources 0.10 (EX)
 ------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
@@ -182,8 +205,8 @@ values) can be shown inside SilvaDocuments.
 
 http://www.infrae.com/download/SilvaExternalSources
 
-SilvaNews 1.0 (E)
------------------
+SilvaNews 1.0 (EX)
+------------------
 
 SilvaNews builds on Silva and SilvaDocument to provide News
 Publication, News Filters and News Viewers as well as News Articles
