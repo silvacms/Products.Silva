@@ -107,16 +107,16 @@
                   #&nbsp;
                 </th>
                 <th i18n:translate="edit">
-                  Edit
+                  edit
                 </th>
                 <th i18n:translate="view">
-                  View
+                  view
                 </th>
                 <th i18n:translate="modified">
-                  Modified
+                  modified
                 </th>
                 <th i18n:translate="author">
-                  Author
+                  author
                 </th>
               </tr>
 
