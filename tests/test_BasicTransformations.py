@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 import unittest
 
 # 
@@ -26,12 +26,12 @@ import sys,os
 try:
     sys.path.insert(0, '..')
     from transform.ObjectParser import ObjectParser
-    from transform.eopro2_11 import silva
+    from transform.eopro2_11 import silva, html
     from transform import base
 except ImportError:
     import Zope
     from Products.Silva.transform.ObjectParser import ObjectParser
-    from Products.Silva.transform.eopro2_11 import silva
+    from Products.Silva.transform.eopro2_11 import silva, html
     from Products.Silva.transform import base
 
 # lazy, but in the end we want to test everything anyway
@@ -258,6 +258,37 @@ class SilvaXMLObjectParser(unittest.TestCase):
         p = doc.find('p')
         self.assert_(len(p)==1)
         self.assert_(p[0].content.asBytes()=='test')
+
+    def test_convert_context(self):
+        """test that pre_nodes and post_nodes"""
+        class my(base.Element):
+            def convert(self, context):
+                assert len(context.resultstack)==1
+                return self
+
+        tag = base.Frag(
+                my("one"),
+                my("two"),
+                )
+        ctx = base.Context()
+        result = tag.convert(ctx)
+
+    def test_convert_context_append(self):
+        class my(base.Element):
+            def convert(self, context):
+                assert len(context.resultstack)==1
+                context.resultstack[-1].append(self)
+                return self
+
+        tag = base.Frag(
+                my("one"),
+                my("two"),
+                )
+        ctx = base.Context()
+        result = tag.convert(ctx)
+        self.assertEquals(len(result), 4)
+        self.assertEquals(result[0], result[1])
+        self.assertEquals(result[2], result[3])
 
 #
 # invocation of test suite

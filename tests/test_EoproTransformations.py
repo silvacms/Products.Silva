@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 import unittest
 
 # 
@@ -61,7 +61,7 @@ class HTML2XML(Base):
     """ conversions from HTML-nodes to XML """
     context = {'id': 'test', 'title':'testtitle'}
 
-    def test_empty_list_title(self):
+    def test_no_list_title(self):
         """test that a list without a title and/or a 
            type attribute produces empty title and a type attr
         """
@@ -74,12 +74,46 @@ class HTML2XML(Base):
         self.assert_(len(nodes)==1)
         node = nodes[0]
         title = node.find('title')
-        self.assert_(title)
-        title = title[0]
-        self.assert_(title.isEmpty())
+        self.assert_(not title)
         self.assert_(node.attrs.has_key('type'))
         self.assert_(len(node.find('li'))==1)
 
+    def test_heading_in_list_moves_out(self):
+        """test that a list with a heading moves outside"""
+        html_frag ="""<body><ul><li><h3>eins</h3></li></ul></body>"""
+        node = self.transformer.target_parser.parse(html_frag)
+        self.assert_(not self.transformer.target_parser.unknown_tags)
+        nodes = node.find('body')[0].find()
+        nodes = nodes.conv()
+
+
+        heading = nodes.find('heading')
+        self.assertEquals(len(heading),1)
+        heading = heading[0]
+        self.assertEquals(heading.attrs.get('type'), 'normal')
+        
+        nodes = nodes.find('list')
+        self.assert_(len(nodes)==1)
+        node = nodes[0]
+        title = node.find('title')
+        self.assert_(not title)
+        self.assert_(node.attrs.has_key('type'))
+        self.assert_(len(node.find('li'))==1)
+
+    def test_heading_in_nested_list_moves_out(self):
+        """test that a list with a heading moves outside"""
+        html_frag ="""<body><ul><li><ul><li><h3>eins</h3></li></ul></li><li>zwei</li></ul></body>"""
+        node = self.transformer.target_parser.parse(html_frag)
+        self.assert_(not self.transformer.target_parser.unknown_tags)
+        nodes = node.find('body')[0].find()
+        nodes = nodes.conv()
+
+
+        heading = nodes.find('heading')
+        self.assertEquals(len(heading),1)
+        heading = heading[0]
+        self.assertEquals(heading.attrs.get('type'), 'normal')
+        
     def test_no_title(self):
         """ check that an (almost) empty html still procudes 
             a sane document. 
@@ -102,162 +136,62 @@ class HTML2XML(Base):
         self.assert_(headings[0].attrs['type']=='normal')
         self.assert_(headings[1].attrs['type']=='sub')
 
-    def test_default_heading_conversion(self):
-        html_frag="""<body><h1>eins</h1><h2>zwei</h2><h3>drei</h3>
-                     <h4>vier</h4><h5>fuenf</h5><h6>sechs</h6></body>"""
+    def _check_heading(self, htag, stype, htag_back=None):
+        if htag_back is None:
+            htag_back = htag
+
+        html_frag = "<body><%(htag)s>eins</%(htag)s></body>" % locals()
+        htmlnode = self.transformer.target_parser.parse(html_frag)
+        node = htmlnode.convert(context={'id':u'id', 'title':u'title'})
+        doc = node.find('silva_document')[0].find('doc')[0]
+
+        heading = doc.find('heading')
+        self.assertEquals(len(heading), 1)
+        heading = heading[0]
+        self.assertEquals(heading.attrs.get('type'), stype)
+
+        s = node.asBytes()
+        silvanode = self.transformer.source_parser.parse(s)
+        node = silvanode.conv()
+        doc = node.find('body')[0]
+        hx = doc.find(htag_back)
+        self.assertEquals(len(hx), 1)
+
+    def test_h3(self):
+        self._check_heading('h3', 'normal')
+
+    def test_h4(self):
+        self._check_heading('h4', 'sub')
+
+    def test_h5(self):
+        self._check_heading('h5', 'subsub')
+
+    def test_h6(self):
+        self._check_heading('h6', 'paragraph')
+
+    def test_default_heading_conversion_h1(self):
+        html_frag="""<body><h1>eins</h1></body>"""
         htmlnode = self.transformer.target_parser.parse(html_frag)
         self.assert_(not self.transformer.target_parser.unknown_tags)
-
         node = htmlnode.convert(context={'id':u'', 'title':u''})
-
         doc = node.find('silva_document')[0].find('doc')[0]
-        self.assert_(len(doc.find('heading'))==5)
-        num_sub = 0
-        num_normal = 0
-        for heading in doc.find('heading'):
-            if heading.attrs._type=='normal':
-                num_normal+=1
-            if heading.attrs._type=='sub':
-                num_sub+=1
-        self.assert_(num_normal==2) # h2 gets document title
-        self.assert_(num_sub==3)
+        heading = doc.find('heading')
+        self.assertEquals(len(heading), 1)
+        self.assertEquals(heading[0].attrs.get('type'), 'normal')
 
     def test_ol_list_conversion(self):
-        html_frag="""<ol><h5>titel</h5><li>eins</li><li>zwei</li></ol>"""
+        html_frag="""<ol><li>eins</li><li>zwei</li></ol>"""
         node = self.transformer.target_parser.parse(html_frag)
         self.assert_(not self.transformer.target_parser.unknown_tags)
         #node = node.find('body')[0]
-        node = node.find('ol')[0]
+        node = node.find('ol')
         list_node = node.conv()
+        self.assertEquals(len(list_node),1)
+        list_node = list_node[0]
         self.assert_(list_node.name()=='list')
         self.assert_(list_node.attrs.has_key('type'))
         self.assert_(list_node.attrs['type']=='1')
-        self.assert_(len(list_node.find('title'))==1)
-        self.assert_(list_node.find('title')[0].extract_text()=='titel')
         self.assert_(len(list_node.find('li'))==2)
-
-    def test_ul_list_conversion_with_inline_title(self):
-        html_frag="""<ul><h5>titel</h5><li>eins</li><li>zwei</li></ul>"""
-        node = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown_tags)
-        #node = node.find('body')[0]
-        node = node.find('ul')[0]
-        list_node = node.conv()
-        self.assert_(list_node.name()=='list')
-        self.assert_(list_node.attrs.has_key('type'))
-        self.assert_(list_node.attrs['type']=='disc')
-        self.assert_(len(list_node.find('li'))==2)
-
-    def test_ul_list_conversion_with_outer_title(self):
-        html_frag="""<body><h5>titel</h5> <ul><li>eins</li><li>zwei</li></ul></body>"""
-        node = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown_tags)
-        body = node.find('body')[0]
-
-        #print 
-        #print "source", node.asBytes()
-        result = node.convert({'title': 'title', 'id':'id'})
-        result = result.find('silva_document')[0].find('doc')[0]
-
-        list_node = result.find('list')
-        #print "result", list_node.asBytes()
-        self.assert_(len(list_node)==1)
-        list_node = list_node[0]
-        self.assert_(list_node.attrs.has_key('type'))
-        self.assert_(list_node.attrs['type']=='disc')
-        self.assert_(len(list_node.find('li'))==2)
-        self.assert_(len(list_node.find('title'))==1)
-        self.assertEquals(list_node.find('title')[0].extract_text(),u'titel')
-
-    def test_ul_nlist_with_two_outer_titles(self):
-        html_frag="""<body>
-                       <h5>titel</h5>
-                       <ul><li>eins</li>
-                           <li><h5>subtitel</h5></li>
-                           <ul><li>subitem</li></ul>
-                        </ul>
-                     </body>"""
-        node = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown_tags)
-
-        result = node.convert({'title': 'title', 'id':'id'})
-        result = result.find('silva_document')[0].find('doc')[0]
-
-        nlist = result.find('nlist')
-        self.assertEquals(len(nlist), 1)
-        nlist = nlist[0]
-
-        title = nlist.find('title')
-        self.assertEquals(len(title), 1)
-        self.assertEquals(title.extract_text(), 'titel')
-
-        #print nlist.asBytes()
-        li = nlist.find('li')
-        self.assertEquals(len(li), 2)
-        li = li[1]
-
-        sublist = li.find('list')
-        self.assertEquals(len(sublist), 1)
-        sublist = sublist[0]
-
-        title = sublist.find('title')
-        self.assertEquals(len(title), 1)
-        self.assertEquals(title.extract_text(), 'subtitel')
-
-    def test_ul_list_title_in_li(self):
-        html_frag='''<body silva_id="nlist" silva_origin="silva_document">
-                      <ul><li><h5>title</h5></li><li>item</li></ul></body>'''
-        node = self.transformer.target_parser.parse(html_frag)
-        body = node.find('body')[0]
-        result = node.convert({'title': 'title', 'id':'id'})
-        result = result.find('silva_document')[0].find('doc')[0]
-
-        list = result.find('list')
-        self.assertEquals(len(list), 1)
-        list = list[0]
-
-        title = list.find('title')
-        self.assertEquals(len(title),1)
-        self.assertEquals(title.extract_text(), 'title')
-
-        li = list.find('li')
-        self.assertEquals(len(li), 1)
-        self.assertEquals(li[0].extract_text(), 'item')
-
-    def test_ul_nlist_conversion_with_outer_title(self):
-
-        html_frag='''<body silva_id="nlist" silva_origin="silva_document">
-                <h2 silva_id="nlist" silva_origin="silva_document">nlist title</h2>
-                \n<h5>nlist title</h5>\n<ul><h5>subtitle</h5><ul>\n<li>1</li>\n<li>2</li>\n<li>3</li>
-                \n</ul>\n</ul>\n</body>'''
-        node = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown_tags)
-        body = node.find('body')[0]
-        result = node.convert({'title': 'title', 'id':'id'})
-        result = result.find('silva_document')[0].find('doc')[0]
-
-        nlist = result.find('nlist')
-        #print "result", nlist.asBytes()
-        self.assertEquals(len(nlist), 1)
-        nlist = nlist[0]
-
-        self.assert_(nlist.attrs.has_key('type'))
-        self.assertEquals(nlist.attrs['type'],'disc')
-
-
-        self.assertEquals(len(nlist.find('title')),1)
-        self.assertEquals(nlist.find('title')[0].extract_text(),u'nlist title')
-
-        li = nlist.find('li')
-        self.assertEquals(len(li),1)
-        li = li[0]
-
-        list = li.find('list')
-        self.assertEquals(len(list),1)
-        list = list[0]
-
-        self.assertEquals(len(list.find('title')),1)
-        self.assertEquals(list.find('title')[0].extract_text(),u'subtitle')
 
     def test_ignore_html(self):
         """ test that a html tag doesn't modify the silva-outcome """
@@ -295,14 +229,21 @@ class HTML2XML(Base):
         self.assert_(not p[1].content.asBytes())
         self.assert_(not p[2].content.asBytes())
 
-    def test_br_turns_into_emtpy_paragraph(self):
-        """ test that the BR tag turns into an empty paragraph """
-        frag="""<br/>"""
-        node = self.transformer.target_parser.parse(frag)
-        node = node.conv()
+    def test_image_simple(self):
+        htmlfrag="""<img src="/silva/path/image" link="http://www.heise.de" align="float-left"/>"""
+        node = self.transformer.target_parser.parse(htmlfrag)
 
-        p = node.find('p')
-        self.assert_(len(p)==1)
+        node = node.conv()
+        self.assertEquals(len(node),1)
+        img = node[0]
+        self.assertEquals(img.name(), 'image')
+        self.assertEquals(img.attrs.get('path'), '/silva/path')
+        self.assertEquals(img.attrs.get('link'), 'http://www.heise.de')
+        node = node.conv()
+        self.assertEquals(len(node),1)
+        img = node[0]
+        self.assertEquals(img.attrs.get('src'), '/silva/path/image')
+        self.assertEquals(img.attrs.get('link'), 'http://www.heise.de')
 
     def test_image_URL_stripping(self):
         frag="""<img src="http://asd:123/silva/path/image"/>"""
@@ -311,10 +252,10 @@ class HTML2XML(Base):
         img = node.conv()
         self.assertEquals(len(img),1)
         img = img[0]
-        self.assertEquals(img.attrs.get('image_path'), '/silva/path')
+        self.assertEquals(img.attrs.get('path'), '/silva/path')
 
     def test_nested_list_conversion_works_with_titles(self):
-        frag="""<ul><li>one</li><li><h5>title of sub list</h5></li>
+        frag="""<ul><li>one</li>
                     <ol><li>nested item</li></ol>
                 </ul>"""
         node = self.transformer.target_parser.parse(frag)
@@ -342,11 +283,6 @@ class HTML2XML(Base):
         sublist = li2.find('list')
         self.assertEquals(len(sublist), 1)
         sublist = sublist[0]
-
-        subtitle = sublist.find('title')
-        self.assertEquals(len(subtitle),1)
-        subtitle = subtitle[0]
-        self.assertEquals(subtitle.extract_text(), u'title of sub list')
 
         li = sublist.find('li')
         self.assertEquals(len(li), 1)
@@ -401,6 +337,7 @@ class RoundtripWithTidy(unittest.TestCase):
            <p type="lead">lead paragraph</p>
            <heading type="sub">sub title</heading>
            <p type="normal">normal paragraph</p>
+           <heading type="subsub">subsub title</heading>
         </doc>
         </silva_document>'''
         self._check_doc(simple)
@@ -419,7 +356,7 @@ class RoundtripWithTidy(unittest.TestCase):
         simple = '''
         <silva_document id="test"><title>doc title</title>
         <doc>
-           <list type="disc"><title></title>
+           <list type="disc">
                <li>eins</li>
            </list>
         </doc>
@@ -428,8 +365,6 @@ class RoundtripWithTidy(unittest.TestCase):
         body = htmlnode.find('body')[0]
         list = body.find('ul')
         self.assert_(len(list)==1)
-        # check no title
-        self.assert_(not list[0].find('h5'))
         # check roundtrip
         self._check_doc(simple)
 
@@ -437,7 +372,7 @@ class RoundtripWithTidy(unittest.TestCase):
         simple = '''
         <silva_document id="test"><title>doc title</title>
         <doc>
-           <dlist type="normal"><title>dlist title</title>
+           <dlist type="normal">
            <dt>term1</dt><dd>description of term1</dd></dlist>
         </doc>
         </silva_document>'''
@@ -448,9 +383,6 @@ class RoundtripWithTidy(unittest.TestCase):
         list = body.find('ul')
         self.assert_(len(list)==1)
         # check no title
-        h5 = list[0].find('h5')
-        self.assert_(len(h5)==1)
-        self.assertEquals(h5[0].content.extract_text(), 'dlist title')
 
         li = list[0].find('li')
         self.assert_(len(li)==1)
@@ -465,31 +397,13 @@ class RoundtripWithTidy(unittest.TestCase):
         # check roundtrip
         self._check_doc(simple)
 
-    def test_existing_list_title_produces_h5(self):
-        simple = '''
-        <silva_document id="test"><title>doc title</title>
-        <doc>
-           <list type="disc"><title>listtitle</title>
-               <li>eins</li>
-           </list>
-        </doc>
-        </silva_document>'''
-        htmlnode = self.transformer.to_target(simple)
-        body = htmlnode.find('body')[0]
-        list = body.find('ul')
-        self.assert_(len(list)==1)
-        # check title
-        self.assert_(len(body.find('h5'))==1)
-        self.assert_(body.find('h5').extract_text()==u'listtitle')
-
     def _test_nlist_simple(self):
         simple = '''
         <silva_document id="test"><title>doc title</title>
         <doc>
            <nlist type="disc">
-               <title>nlist title</title>
                <li><p>one item</p>
-                   <list type="square"><title>list in nlist</title><li>1</li><li>2</li></list>
+                   <list type="square"><li>1</li><li>2</li></list>
                </li>
            </nlist>
         </doc>
@@ -504,9 +418,6 @@ class RoundtripWithTidy(unittest.TestCase):
         self.assert_(pre)
         self.assertEquals(pre[-1].name(),'h5')
 
-        self.assertEquals(pre[-1].content.extract_text(), 'nlist title')
-        self.assertEquals(len(list.find('ul')),1)
-
         self._check_doc(simple)
 
     def _simplelist(self, tagtype):
@@ -515,7 +426,6 @@ class RoundtripWithTidy(unittest.TestCase):
         <silva_document id="test"><title>doc title</title>
         <doc>
            <%(tag)s type="%(type)s">
-              <title>list title</title>
               <li>eins</li>
               <li>zwei</li>
               <li>drei</li>
@@ -544,12 +454,10 @@ class RoundtripWithTidy(unittest.TestCase):
         <silva_document id="test"><title>doc title</title>
         <doc>
            <%(tag)s type="%(type)s">
-              <title>nlist title</title>
               <li><p>eins</p></li>
               <li><p>zwei</p></li>
               <li><p>drei</p>
                  <list type="disc">
-                    <title>subtitle</title>
                     <li>one</li>
                  </list>
               </li>
@@ -571,9 +479,6 @@ class RoundtripWithTidy(unittest.TestCase):
         self._check_doc(self._nlist('nlist:1'))
     def test_nlist_none(self):
         self._check_doc(self._nlist('nlist:none'))
-    
-    
-
 
 
     def _check_modifier(self, htmltag, silvatag):
@@ -658,7 +563,7 @@ class RoundtripWithTidy(unittest.TestCase):
 
     def test_image(self):
         silvadoc = '''<silva_document id="test"><title>title</title>
-                        <doc><image image_path="path/file"/></doc>
+                        <doc><image path="path/file"/></doc>
                       </silva_document>'''
         htmlnode = self._check_doc(silvadoc)
         body = htmlnode.find('body')[0]
@@ -666,6 +571,10 @@ class RoundtripWithTidy(unittest.TestCase):
         self.assertEquals(len(img),1)
         img = img[0]
         self.assertEquals(img.attrs.get('src'), 'path/file/image')
+
+    def test_br(self):
+        """ check that 'br' works """
+        self._check_string('<p>before<br/>after</p>')
 
     def test_preformatted(self):
         """ check that 'pre' (preformatted text) works """
@@ -732,35 +641,6 @@ class RoundtripSpecials(unittest.TestCase):
         #print "mixin", content.asBytes()
         self.assertEquals(len(p), 2)
         self.assertEquals(p[1].extract_text(),'qweq')
-
-    def test_move_h5_into_list(self):
-        doc = '''<body><h5>list title</h5>
-                   <ul>
-                       <li>1</li>
-                       <h5>sublist title</h5>
-                       <ol><li>eins</li></ol>
-                   </ul>
-                 </body>'''
-        content = self.transformer.target_parser.parse(doc)[0]
-        html.move_h5_into_list(content)
-        self.assertEquals(len(content.find('h5')), 0)
-
-        ul = content.find('ul')
-        self.assertEquals(len(ul),1)
-        ul=ul[0]
-
-        html.move_h5_into_list(ul)
-
-        h5 = ul.find('h5')
-        self.assertEquals(len(h5),1)
-        self.assertEquals(h5.extract_text(),'list title')
-
-        ol = ul.find('ol')
-        self.assertEquals(len(ol),1)
-        ol=ol[0]
-        h5 = ol.find('h5')
-        self.assertEquals(len(h5),1)
-        self.assertEquals(h5.extract_text(), 'sublist title')
 
     def test_modifier_superscript(self):
         self._test_font_mapped_modifier('super','aqua')

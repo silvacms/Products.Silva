@@ -3,11 +3,19 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.1 beta
+  Valid for:  Silva 0.9.1
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26 $
+  CVS:        $Revision: 1.27 $
+
+Upgrading from 0.9.1 beta to 0.9.1
  
+  There shouldn't be any problems. Just do a 'refresh all' and things
+  should work. If you are using Groups, please upgrade from Groups 0.3 to
+  Groups 0.3.1 as it contains a bugfix. Groups can be found here:
+
+  "Groups 0.3.1":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz.
+
 Upgrading from 0.8.6 and below
 
   Please upgrade your Silva to 0.9 first. Be careful to read its
@@ -23,7 +31,15 @@ Upgrading Silva 0.9.0.x to 0.9.1
   installing Silva please look at 'INSTALL.txt'.
 
   NOTE: It makes of course sense to make a backup of Silva before
-  trying to upgrade!
+  trying to upgrade! Silva used to make a backup copy automatically
+  but in effect this copying action takes place *after* updating some
+  Silva code. This causes the upgrade to fail in some cases (notably
+  with Silva News which uses the catalog, and backup copying triggers
+  a re-cataloging). In order to evade these problems we have disabled
+  the creation of the backup copy from the upgrade code. Instead you
+  need to do a backup copy *before* you upgrade the product code and
+  restart Zope. The simplest way to make sure you have a functional
+  backup is to backup the whole ZODB; make a copy of 'var/Data.fs'.
 
   NOTE: The Groups functionality is changing. With this release existing
   Group definitions are still working but not directly accessible. To get
@@ -48,9 +64,9 @@ Upgrading Silva 0.9.0.x to 0.9.1
       * "FileSystemSite-1.2.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite
 
     If you are using Groups, you also need to download and install the
-    new Groups 0.3. Find it here:
+    new Groups 0.3.1. Find it here:
 
-      * "Groups-0.3.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.tgz
+      * "Groups-0.3.1.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz
 
     To upgrade, remove the Silva, FileSystemSite and (if you have it)
     Groups directories from your 'Products' directory first. Then
@@ -123,7 +139,32 @@ Upgrading Silva 0.9.0.x to 0.9.1
   Upgrading Custom Content Types.
 
     If you have custom content types in a separate Zope Product,
-    you will need to export the views in the 'service_view_registry' to
-    the file system and register them with the new views structure.
-    There is detailed information about how to achieve this
-    in the docs/Filesystem.stx
+    and these content types use same the XML as the Silva Document,
+    you should include the objects of your content types in the upgrade
+    process.
+
+    For this you need to register an upgrade function associated with
+    the meta type of your content type class at the
+    'upgrade_registry', before you upgrade. to achieve this place
+    something along the lines of the following code in the
+    '__init__.py' of your product::
+
+       from Products.Silva.upgrade import upgrade_registry, upgrade_list_titles_in_parsed_xml
+
+       def upgrade_sampledoc(obj):
+		       for o in obj.objectValues():				
+			         upgrade_list_titles_in_parsed_xml(o.documentElement)
+
+      upgrade_registry.register('Silva Sample Document', upgrade_sampledoc)
+
+    The helper function 'upgrade_list_titles_in_parsed_xml' actually
+    does all the XML upgrades mentioned in the section above.
+
+    If you only need to update the "last author" information, you do
+    not need to take any action; the upgrade process will do this
+    automatically for you.
+
+    You also may want to take a look at the most current version of
+    the "SilvaDemoExtension
+    Product":http://cvs.infrae.com/SilvaDemoExtension/ for an example
+    of upgrading a custom content type.

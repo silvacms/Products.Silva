@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.13 $'
+__version__='$Revision: 1.14 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -75,7 +75,12 @@ class doc(SilvaElement):
 class heading(SilvaElement):
     def convert(self, context):
         level = self.attrs['type'].content
-        h_tag = {u'normal' : html.h3, u'sub': html.h4 }.get(level, html.h3)
+        h_tag = {u'normal' : html.h3, 
+                 u'sub': html.h4, 
+                 u'subsub': html.h5,
+                 u'paragraph': html.h6,
+                 u'subparagraph': html.p,
+                 }.get(level, html.h3)
 
         return h_tag(
             self.content.convert(context),
@@ -88,18 +93,16 @@ class p(SilvaElement):
             silva_type=self.attrs.get('type')
             )
 
+class br(Element):
+    def convert(self, context):
+        return html.br()
+
 class dlist(SilvaElement):
     """ Simple lists """
 
     def convert(self, context):
         #print "checking", self.asBytes()
         listtype = self.attrs.get('type', 'normal')
-
-        list_title = self.find(tag=title)[0]
-        if len(list_title.compact().content)>0:
-            list_title = html.h5(list_title.content.convert(context))
-        else:
-            list_title=Text('')
 
         li_list = []
         for tag,nexttag in zip(self.content, self.content[1:]):
@@ -111,7 +114,7 @@ class dlist(SilvaElement):
                         nexttag.convert(context)
                     )
                 )
-        return html.ul(list_title,
+        return html.ul(
                        *li_list
                        )
 
@@ -140,17 +143,9 @@ class list(SilvaElement):
         else:
             tag = html.ul
 
-        title_tag = self.find(tag=title)[0]
-
-        if len(title_tag.compact().content)>0:
-            title_content = html.h5(title_tag.convert(context))
-        else:
-            title_content=Text('')
-
         return Frag(
-            title_content,
             tag(
-                self.find(ignore=title_tag.__eq__).compact().convert(context),
+                self.find().compact().convert(context),
                 attrs,
                 silva_type=listtype,
                 )
@@ -207,9 +202,18 @@ class link(SilvaElement):
 
 class image(SilvaElement):
     def convert(self, context):
+        src = self.attrs['path']
+        try:
+            src = src.content
+        except AttributeError:
+            pass
+        align = self.attrs.get('alignment')
+     
         return html.img(
             self.content.convert(context),
-            src=self.attrs['image_path'].content+'/image'
+            src=src+'/image',
+            link=self.attrs.get('link'),
+            align=align
             )
 
 class pre(SilvaElement):

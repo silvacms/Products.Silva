@@ -23,20 +23,41 @@ Silva changes
           and also the id of the object to be pasted is now changed until
           it's unique (in the past, a bug in creating a unique id kept the
           status of a document 'public' in some cases).
-	
+
   0.9.1
 
     Bugs Fixed
 
-        - The "use selection" button would not return to tab_access just
-          after assigning a role to a user.
+        - The "use selection" button would not return to tab_access 
+          just after assigning a role to a user.
 
-	- Changed from absolute_url(1) to getPhysicalPath() for	  
-          code elements - this should make code elements work in a	  
+        - Changed from absolute_url(1) to getPhysicalPath() for 
+          code elements - this should make code elements work in a
           virtual host setup.
 
-        - Fixed bug where the title of a SQLDatasource Asset was not set 
-          in the edit tab.
+        - Datasource parameters store empty strings instead of None
+          for default values.
+
+        - Fixed bug where the title of a SQLDatasource Asset was not 
+          set in the edit tab.
+
+        - Corrected access key in Indexer tabs.
+
+        - Fixed tab_edit where Authors can't move anything and see
+          an empty controls row.
+        
+        - Adjusted tab_edit and tab_status access key links so they
+          work with Mozilla (select lists and checkbox labels).
+
+        - Removed Mozilla incompatibility notes from help (since the
+          problems are fixed).
+        
+        - Updated layout_macro to match presentation preview link in
+          tab_preview.
+
+        - Fixed location of closed message in tab_preview so it shows
+          up regardless of which layout (public or default) gets used.
+          Aligned presentation preview link better in default layout.
 
         - Fix where the Groups administration button was shown, even
           if no service_groups was available.      
@@ -52,6 +73,17 @@ Silva changes
 
         - File assets could only be added by users with manager role;
           this now only requires an Author role.
+
+        - A memory leak exists in Zope 2.5.1 that is exposed by Silva in
+          some cases when using the SMI. Zope 2.6.1 appears to fix this
+          memory leak. Note though that while Zope 2.6.1 appears to work 
+          with Silva, we haven't done extensive testing...
+
+        - Fixed bug which cause the upgrade of all content to crash on
+          CatalogedVersionedContent objects (e.g. SilvaNews NewsItems)
+
+        - Chief editors could not add Groups or Virtual groups due to
+          incorrect security settings; fixed.
 
   0.9.1 beta
 

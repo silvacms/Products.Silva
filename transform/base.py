@@ -21,16 +21,18 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.10 $'
+__version__='$Revision: 1.11 $'
 
-# look ma, i only have these dependencies 
-# and with python2.2 even they would vanish
-# that's because we work quite directly 
-# with python's object and namespace model.
+# we only have these dependencies so it runs with python-2.2
 
 import re 
 from UserList import UserList as List
 from UserDict import UserDict as Dict
+
+class Context:
+    def __init__(self, **kw):
+        self.__dict__.update(kw)
+        self.resultstack = []
 
 class Node:
     def _matches(self, tag):
@@ -52,7 +54,7 @@ class Node:
         return getattr(self, 'xmlname', self.__class__.__name__)
 
     def conv(self):
-        return self.convert({})
+        return self.convert(Context())
 
 class Frag(Node, List):
     """ Fragment of Nodes (basically list of Nodes)"""
@@ -86,16 +88,17 @@ class Frag(Node, List):
                 List.append(self, other)
 
     def convert(self, context):
-        frag = self.__class__()
-        pre = Frag()
-        post = Frag(self)
+        try: context = Context(**context)
+        except TypeError: pass
+
+        l = Frag()
+        context.resultstack.append(l)
+        post = self[:]
         while post:
             node = post.pop(0)
-            context['pre_nodes']=pre
-            context['post_nodes']=post
-            frag.append(node.convert(context))
-            pre.append(node)
-        return frag
+            l.append(node.convert(context))
+        #print "res:", context.resultstack[-1]
+        return context.resultstack.pop() 
 
     def extract_text(self):
         l = []
@@ -170,7 +173,7 @@ class Element(Node):
             try:
                 for name, value in child.items():
                     self.attrs[name]=value
-            except:
+            except AttributeError:
                 if type(child) in (type(''),type(u'')):
                     child = Text(child)
                 newcontent.append(child)

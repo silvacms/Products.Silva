@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.23 2003/02/23 18:39:14 kitblake Exp $
+# $Id: Image.py,v 1.24 2003/03/03 17:37:42 jw Exp $
 
 # Python
 import re
@@ -33,7 +33,7 @@ except ImportError:
     pass
 
 icon = "www/silvaimage.gif"
-    
+
 class Image(Asset):
     """Web graphics (gif, jpg, png) can be uploaded and inserted in Silva
        documents.

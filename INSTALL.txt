@@ -3,20 +3,25 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.1 beta
+  Valid for:  Silva 0.9.1
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26 $
+  CVS:        $Revision: 1.27 $
 
 Installing Silva
 
   NOTE: If you are upgrading from a previous version of Silva, please see
   "UPGRADE.txt":http://www.zope.org/Members/faassen/Silva/UPGRADE.txt
 
-  IMPORTANT: If you have problems installing Silva and your zope start
-  fails somewhere due to ParsedXML (PrettyPrint module for instance),
-  check whether you have PyXML installed. ParsedXML depends on PyXML
-  for operations.
+  IMPORTANT: You need PyXML to be installed in order for Silva to
+  work. You can find it here: 
+  
+    http://pyxml.sourceforge.net
+
+  If you have problems installing Silva and your zope start fails
+  somewhere due to ParsedXML (PrettyPrint module for instance), check
+  whether you have PyXML installed. ParsedXML depends on PyXML for
+  operations.
 
   Silva depends on a set of file-system Python products for Zope for
   its core functionality. There will also be a number of services
@@ -41,7 +46,7 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.9.1b)
+    Silva (0.9.1)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some basic
@@ -55,7 +60,7 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.9.1.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1b.tgz
+        "Silva-0.9.1.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.tgz
   
     XMLWidgets (0.8.4)
 
@@ -119,12 +124,12 @@ Installing Silva
   
         "FileSystemSite-1.2.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite/FileSystemSite-1.2.tgz
 
-    Groups (0.3)
+    Groups (0.3.1)
 
       If you want to take advantage of Groups support, please download and
       install the Groups product, here:
   
-       "Groups-0.3.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.tgz
+       "Groups-0.3.1.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz
 
       Groups support is optional; Silva should run without the Groups
       product installed. Groups use a rather hackish technique called

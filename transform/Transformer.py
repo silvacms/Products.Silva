@@ -7,11 +7,10 @@ currently only transformation to and from
 
 is supported.
 
-all APIs are work in progress so use with a grain of salt.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 
 class Transformer:
