@@ -21,30 +21,31 @@
       <tr>
         <th class="top"
           tal:define="model_is_root python:model == root">
-          <a class="up" tal:replace="nothing"
+          <a class="up"
             href="../../edit/tab_edit"
             title="up one level: alt-]"
             accesskey="]"
             condition="not:model_is_root"
-            tal:attributes="href string:../../edit/tab_edit">
-            <img width="10"
-              height="10"
+            tal:attributes="href string:../../edit/{__vein_id__}">
+            <img width="9"
+              height="9"
               border="0"
               alt="Up one level"
               tal:attributes="src string:${root_url}/globals/up_level.gif" />
           </a>
-          <a class="top" tal:replace="nothing"
+          <a class="top"
             title="up to containing publication: alt-["
             accesskey="["
             condition="not:model_is_root"
-            tal:attributes="href string:${containing_publication/absolute_url}/edit/{__vein_id__}"><img width="10"
-            height="10"
+            tal:attributes="href string:${containing_publication/absolute_url}/edit/{__vein_id__}">
+            <img width="9"
+            height="9"
             border="0"
             alt="Up to containing Publication"
-            tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url" />
+            tal:attributes="src python:publication != model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url" />
           </a>
           <a class="normal"
-            style="padding-left: 0.4em;"
+            style="padding: 0 1em;"
             href="{__absolute_url__}"
             title="reload screen">
             {__breadcrumb_vein__}
@@ -62,7 +63,7 @@
           style="padding-left: 0;">
           <a href="top"
             title="up to top contents of publication"
-            tal:attributes="href publication_url">
+            tal:attributes="href string:${publication/absolute_url}/edit/tab_edit">
             <img tal:replace="structure python:here.render_icon(model.get_publication())" />
           </a>
           <a class="blacklink"

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  >
+
+<metal:block define-macro="parent">
+        <table class="listing"
+          style="margin-bottom:0;">
+          <thead>
+            <tr tal:replace="nothing">
+              ______________ top controls row ______________
+            </tr>
+            <tr>
+              <td class="parent">
+                <a href="parent screen"
+                  title="up to parent screen: alt-u"
+                  accesskey="u"
+                  tal:attributes="href active_tab">
+                  <div class="navigation-border"
+                    tal:content="structure string:&nbsp;up to ${parent_screen_name}...">
+                    parent screen
+                  </div>
+                </a>
+              </td>
+            </tr>
+          </thead>
+        </table>
+</metal:block>
+</html>

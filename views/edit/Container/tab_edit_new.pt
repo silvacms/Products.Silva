@@ -7,7 +7,8 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
     global breadcrumb_vein string:New;
-    global active_tab string:tab_edit;"
+    global active_tab string:tab_edit;
+    global parent_screen_name string:contents"
   tal:omit-tag="">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
@@ -16,14 +17,18 @@
   global objects python:model.get_tree();
   dummy model/security_trigger;" />
 
-<table class="columns" border="0">
+<table class="columns columns2">
   <tbody>
     <tr>
       <td class="left">
         <span tal:replace="nothing">
+          ______________ parent screen navigation ______________
+        </span>
+        <metal:block use-macro="view/macro_parent_screen_navigation/macros/parent" />
+        <span tal:replace="nothing">
           _____________________ sidebar subtable _____________________
         </span>
-        <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_edit', breadcrumb_vein)" />
+        <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_edit_new', breadcrumb_vein)" />
       </td>
       <td class="main">
 
@@ -37,11 +42,10 @@
       ______________ vein + title row ______________
     </tr>
     <tr>
-      <td class="top"
-        colspan="2">
+      <td class="top">
         <h2>
           <img tal:replace="structure python:view.render_icon(model)" />
-          Silva objects at: <span tal:replace="structure string:${model/id}&amp;nbsp; &amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
+          <span tal:replace="structure string:&#xab;${model/get_title_html}&#xbb;">id</span>
         </h2>
       </td>
     </tr>
@@ -49,23 +53,21 @@
     <tr tal:replace="nothing">
       ______________ top controls row ______________
     </tr>
-    <tr tal:replace="nothing">
-      <td class="top" 
-        colspan="2">
+    <tr class="top-controls">
+      <td>
         <h3>
-          Descriptions of available objects
+          Descriptions of available objects at this location
         </h3>
       </td>
     </tr>
   </thead>
 
   <tbody>
-    <tr class="odd"
-      valign="top">
-      <td colspan="2" style="padding-top: 1em;">
-        <span class="back3">Descriptions of available objects</span>  
-        <p class="readable" style="margin-top: 0.5em;">
-          Following are descriptions of Silva objects that can be added at this location. Click a name to add it. For additional information about the item see the <a class="published" href="http://www.infrae.com/products/silva/docs">Silva documentation</a>.
+    <tr class="odd">
+      <td style="padding-top: 0.5em;">
+        <span class="back3" tal:replace="nothing">Descriptions of available objects at this location</span>  
+        <p class="readable">
+          Click a name to create an object. For additional information about the item see the <a class="published" href="http://www.infrae.com/products/silva/docs">Silva documentation</a>.
           <br />
         </p>
       </td>
@@ -73,14 +75,16 @@
 
     <tr tal:replace="nothing"> ______________ listing iteration ______________ </tr>
     <tal:repeat repeat="addable model/get_silva_addables">
-      <tr class="odd"
-       valign="bottom">
-        <td colspan="2">
-          <div class="back4" style="margin-top:0.5em;">
+      <tr class="odd">
+        <td>
+          <div class="back4">
             <img tal:replace="structure python:here.render_icon_by_meta_type(addable['name'])" />
             <a class="published"
-              tal:content="addable/name" 
-              tal:attributes="href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+')">Addable
+              style="padding-left:0.2em; padding-bottom: 0em ! important;"
+              tal:attributes="
+                href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+');
+                title string:Create a ${addable/name}">
+              <span tal:replace="addable/name">object</span>
             </a>
           </div>
         </td>
@@ -88,10 +92,7 @@
 
       <tr class="odd"
         valign="top">
-        <td width="10px"
-          style="border: 0;">
-        </td>
-        <td>
+        <td style="padding-left: 2.6em;">
           <p class="readable"
            tal:condition="python: addable.has_key('instance')"
            tal:content="structure addable/doc">

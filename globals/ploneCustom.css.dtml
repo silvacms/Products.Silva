@@ -235,7 +235,7 @@ table.columns {
 /* 3 column table (default) */
 table.columns td.left {
     width: 20%;
-    padding: 8px 1em 0 8px;
+    padding: 8px 0.8em 0 8px;
 }
 table.columns td.main {
     width: 60%;
@@ -253,7 +253,7 @@ table.columns2 td.left {
 }
 table.columns2 td.main {
     width: 80%;
-    padding: 8px 8px 0 1em;
+    padding: 8px 8px 0 0.8em;
 }
 
 /* 1 column table, not in use */
@@ -286,6 +286,14 @@ table.listing {
     color: #444444;
     width: 100%;
     margin: 0em 0em 1em 0em;    
+}
+
+table.listing thead {
+  border-top: &dtml-listingBorder; ! important;
+}
+
+table.listing tbody {
+  border-top: &dtml-listingBorder; ! important;
 }
 
 table.listing tfoot {
@@ -444,12 +452,11 @@ table.sublisting {
 table.listing th.top {
   color: #e3eef0;
   background: #71969a;
-  padding: 0 0 0.1px 0.1em;
+  padding: 0 0 0 0;
   vertical-align: middle;
-  text-align: left;
+  text-align: center;
 }
 
-/* text of link follows the tab style */
 table.listing th.top a.normal:link {
     color: &dtml-mainTabFontColor;;
 }
@@ -463,27 +470,28 @@ table.listing th.top a.normal:hover {
     text-decoration: none;
 }
 
-table.listing div.vein:hover { 
+/*table.listing div.vein:hover { 
     color: &dtml-mainTabFontColorSelected;;
     background: &dtml-mainTabBackgroundSelected;;
-}
+}*/
 
+/* _______ uplinks _______ */
 table.listing a.top {
-    background: &dtml-mainTabBackground;;
+    background: transparent;
     float: left;
-    margin: 0em 0em 0em -0.6em;
+    margin: 0em 0em 0em 0em;
     border-right: &dtml-listingBorder;;
     padding-left: 0.2em;
-    padding-right: 0.4em;
+    padding-right: 0.3em;
 }
 
 table.listing a.up {
-    background: &dtml-mainTabBackground;;
+    background: transparent;
     float: right;
-    margin: 0em -0.6em 0em 0em;
+    margin: 0em 0em 0em 0em;
     border-left: &dtml-listingBorder;;
     padding-left: 0.2em;
-    padding-right: 0.4em;
+    padding-right: 0.3em;
 }
 
 table.listing a.top:hover {
@@ -491,7 +499,7 @@ table.listing a.top:hover {
     background: &dtml-mainTabBackgroundSelected;;
     border-style: solid solid none none;
     padding-left: 0.2em;
-    padding-right: 0.4em;
+    padding-right: 0.3em;
   text-decoration: none;
 }
 
@@ -500,9 +508,39 @@ table.listing a.up:hover {
     background: &dtml-mainTabBackgroundSelected;;
     border-style: solid none none solid;
     padding-left: 0.2em;
-    padding-right: 0.4em;
+    padding-right: 0.3em;
   text-decoration: none;
 }
+
+/* _______ subscreen parent links _______ */
+
+table.listing td.parent {
+  background: &dtml-standaloneButtonBackground;;
+  padding : 0 ! important;
+  border: &dtml-listingBorder;;
+  text-align : center;
+}
+
+table.listing td.parent a {
+  color: &dtml-standaloneButtonFontColor;;
+  text-decoration: none;
+}
+
+table.listing td.parent a:hover {
+  color : #bfffd3; 
+  background : #53538b;
+}
+
+table.listing div.navigation-border {
+  padding-bottom : 1px;
+  border: &dtml-standaloneButtonBorder;;
+}
+
+table.listing div.navigation-border:hover {
+  color : #bfffd3; 
+  background : #53538b;
+}
+
 
 
 /* _______ pseudo form button selectors, matches button style _______ */

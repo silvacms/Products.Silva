@@ -9,6 +9,7 @@
   tal:define="
     global breadcrumb_vein string:Addables;
     global active_tab string:tab_metadata;
+    global parent_screen_name string:settings;
 ">
 
 <metal:block use-macro="here/macro_index/macros/master">
@@ -27,6 +28,10 @@
     <tbody>
       <tr>
         <td class="left">
+        <span tal:replace="nothing">
+          ______________ parent screen navigation ______________
+        </span>
+        <metal:block use-macro="view/macro_parent_screen_navigation/macros/parent" />
           <span tal:replace="nothing">
             _____________________ sidebar subtable _____________________
           </span>

@@ -10,6 +10,7 @@
     global view here;
     global breadcrumb_vein string:Import;
     global active_tab string:tab_edit;
+    global parent_screen_name string:contents;
     global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
     global lastclass string:even;
     global silva_permissions here/get_silva_permissions;
@@ -28,32 +29,16 @@
   <tbody>
     <tr>
       <td class="left">
+        <span tal:replace="nothing">
+          ______________ parent screen navigation ______________
+        </span>
+        <metal:block use-macro="view/macro_parent_screen_navigation/macros/parent" />
 
-      <table class="listing" tal:replace="nothing"
-        style="margin-bottom:0;">
-        <thead>
-          <tr tal:replace="nothing">
-            ______________ parent tab row ______________
-          </tr>
-          <tr>
-            <td class="top align-left">
-              <div style="float:left;">
-                <a href="tab_edit" title="up to contents">
-                  &nbsp;<img tal:attributes="src string:${root_url}/globals/up_gray.gif"
-                  width="9" height="9" border="0" alt="Up to top of Edit tab" />
-                  Contents
-                </a>
-              </div>
-            </td>
-          </tr>
-        </thead>
-      </table>
-
-      <span tal:replace="nothing">
-        _____________________ sidebar subtable _____________________
-      </span>
-      <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_edit_import', breadcrumb_vein)" />
-    </td>
+        <span tal:replace="nothing">
+          _____________________ sidebar subtable _____________________
+        </span>
+        <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_edit_import', breadcrumb_vein)" />
+      </td>
 
     <td class="main">
 

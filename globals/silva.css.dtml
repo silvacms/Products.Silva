@@ -246,15 +246,15 @@ a.published:hover {
 
 /* closed (gray) selectors */
 a.closed:link {
-  color : #777777;
+  color : #666666;
   text-decoration : none;
 }
 a.closed:visited {
-  color : #777777;
+  color : #666666;
   text-decoration : none;
 }
 a.closed:hover {
-  color : #777777;
+  color : #666666;
   text-decoration : underline;
 }
 
