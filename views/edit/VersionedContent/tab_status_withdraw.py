@@ -21,8 +21,8 @@ else:
   tab_name = request['tab_name']
   if is_rejection:
     message = '''\
-Apporval was rejected via the %s screen.
-(automatically generated message)
+Approval was rejected via the %s screen
+(automatically generated message).
 ''' % tab_name
   else:
     message = '''\
