@@ -49,7 +49,7 @@
           <css_class></css_class>
           <external_validator></external_validator>
           <required type="int">1</required>
-          <items type="list">[('jpg', 'JPEG'), ('png', 'PNG')]</items>
+          <items type="list">[('jpg', 'JPEG'), ('png', 'PNG'), ('gif', 'GIF')]</items>
           <default></default>
           <title>Web format</title>
           <first_item type="int">1</first_item>

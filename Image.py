@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.16 2003/02/11 11:35:03 zagy Exp $
+# $Id: Image.py,v 1.17 2003/02/12 08:25:11 zagy Exp $
 
 import re
 from cStringIO import StringIO
@@ -112,8 +112,10 @@ class Image(Asset):
             self.image = self.hires_image
             return    
         web_image_data = StringIO()
-        image.resize((width, height), PIL.Image.BICUBIC).save(web_image_data, 
-            self.web_format)
+        web_image = image.resize((width, height), PIL.Image.BICUBIC)
+        if web_image.mode != 'RGB' and self.web_format == 'JPEG':
+            web_image = web_image.convert("RGB")
+        web_image.save(web_image_data, self.web_format)
         self.image = OFS.Image.Image('image', self.get_title_html(), 
             web_image_data)
 
