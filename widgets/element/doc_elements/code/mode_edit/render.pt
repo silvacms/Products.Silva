@@ -4,18 +4,25 @@
 <tal:block define="global code_objects here/get_code_objects" />
 
 <tal:block condition="not: code_objects">
-  &nbsp;No code objects (Python Scripts, Page Templates, DTML Methods) are available.<br />
-  &nbsp;They should be located in a (non-Silva) folder in the ZMI named <tt>code_source</tt>.
+  &nbsp;No code objects (Python Scripts, Page Templates, DTML Methods) are
+  available.<br /> &nbsp;They should be located in a (non-Silva) folder in
+  the ZMI named <tt>code_source</tt>.
 </tal:block>
 
 <tal:block tal:condition="code_objects">
   &nbsp;Available code objects:<br />
   &nbsp;<select name="path">
-    <tal:block tal:define="selected_path python:node.output_convert_html(node.getAttribute('path'))" 
-               repeat="obj code_objects">
-      <option tal:define="path python:'/'.join(obj.getPhysicalPath())"
-              tal:attributes="value path; selected python:test(path == selected_path, 'selected', None)" 
-              tal:content="python:'%s (%s)' % (obj.title_or_id(), path)" />
+    <tal:block 
+      define="selected_path python:node.output_convert_html(node.getAttribute('path'))"
+      repeat="obj code_objects">
+      <option 
+        tal:define="
+          title obj/title; 
+          path obj/path;"
+        tal:attributes="
+          value path; 
+          selected python:test(path == selected_path, 'selected', None)" 
+        tal:content="string: ${title} (${path})" />
     </tal:block>
   </select>
 </tal:block>

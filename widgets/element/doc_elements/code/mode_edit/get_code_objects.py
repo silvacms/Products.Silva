@@ -7,7 +7,7 @@
 ##parameters=
 ##title=
 ##
-# This script returns a sorted list of available code elements for selection.
+# This script returns a sorted list of code object information elements.
 # Code elements are scripts or ZPTs residing in folders named 'code_source'.
 # The script looks for such folders starting from the place of the document
 # up to the Silva root.
@@ -20,12 +20,13 @@
 # code objects from being called by lower level documents.
 
 request = context.REQUEST
-model = context.REQUEST.model
-obj = model.get_container()
+model = request.model
+
 code_objects = []
 want_hiding = 0
 interesting_metatypes = ['Script (Python)', 'Page Template', 'DTML Method']
 
+obj = model.get_container()
 while 1:
     code_source = getattr(obj.aq_explicit, 'code_source', None)
     if code_source:
@@ -35,16 +36,23 @@ while 1:
         else:
             dont_include_ids = ['hidden']
         code_objects.extend(
-            [value for id, value in code_source.objectItems(interesting_metatypes)
-             if id not in dont_include_ids])
+            [value for id, value in code_source.objectItems(
+                interesting_metatypes) if id not in dont_include_ids])
     if obj.meta_type == 'Silva Root':
         break
     # we want hiding after the first iteration
     want_hiding = 1
     obj = obj.aq_parent
 
-# sort by title/id
-code_objects.sort(lambda x, y: cmp(x.title_or_id(), y.title_or_id()))
+code_object_dicts = []
+base_path = model.get_container().getPhysicalPath()
+mangle = model.edit['path_mangler']
 
-# return list of code objects
-return code_objects
+for obj in code_objects:
+    title = obj.title_or_id()
+    obj_path = obj.getPhysicalPath()
+    path = '/'.join(mangle(base_path, obj_path))
+    code_object_dicts.append({'title': title, 'path': path})
+
+code_object_dicts.sort(lambda x, y: cmp(x['title'], y['title']))
+return code_object_dicts
