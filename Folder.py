@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.113 $
+# $Revision: 1.114 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -527,6 +527,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
             else:
                 # add it
                 folder.manage_addProperty(id, value, type)
+        # copy over annotations
+        # XXX hack as relying on ANNOTATION_MARKER, but okay
+        folder._portal_annotations_ = self._portal_annotations_
         # copy over authorization info
         folder.__ac_local_roles__ = self.__ac_local_roles__
         folder.__ac_local_groups__ = self.__ac_local_groups__
