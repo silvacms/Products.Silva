@@ -96,7 +96,7 @@ inputBackground:string=#d5e7e7
 inputBorder:string=1px solid #797f7f
 
 buttonWeight:string=normal
-controlBackground:string=#000
+controlBackground:string=#d5e7e7
 
 transportBackground:string=#283365
 transportPadding:string=0 0.2em

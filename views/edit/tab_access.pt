@@ -313,8 +313,8 @@
         style="padding-top:2em;">
         <tal:block condition="python:model.sec_groups_enabled()">
           <div class="alert"
+            style="margin-top:1px; padding:0.5em; line-height:1.2em;"
             tal:condition="not:group_service">
-            <p>
               <span class="subhead">
                 <span class="warning" i18n:translate="groups_service_not_defined">A Groups Service is not installed</span>
               </span><br /><span i18n:translate="groups_service_not_defined_explanation">
@@ -323,7 +323,6 @@
               <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services">Silva Root in the ZMI</a>,
               choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>. 
               No further configuration is necessary.</span>
-            </p>
           </div>
           <tal:block condition="group_service">
             <!-- Defined groups listing -->
