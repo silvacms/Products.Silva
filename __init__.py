@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.111 $
+# $Revision: 1.112 $
 
 import ContainerPolicy
 
@@ -103,7 +103,7 @@ def initialize(context):
         SidebarService.SidebarService,
         constructors = (SidebarService.manage_addSidebarServiceForm, 
                         SidebarService.manage_addSidebarService),
-        icon = "www/service_sidebar.gif"
+        icon = "www/sidebar_service.png"
         )
     context.registerClass(
         ContainerPolicy.ContainerPolicyRegistry,
