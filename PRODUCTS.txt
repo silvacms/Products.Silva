@@ -1,0 +1,137 @@
+Silva Products
+==============
+
+Meta
+----
+
+Copyright (c) 2002, 2003, 2004 Infrae. All rights reserved.  See also
+LICENSE.txt
+
+Valid for:  Silva 1.0.x
+Author:     Martijn Faassen, Jan-Wijbrand Kolman
+Email:      faassen@infrae.com, jw@infrae.com
+CVS:        $Revision: 1.1.2.1 $
+
+Introduction
+------------
+
+This is a list of Silva related Zope Products, both those distributed
+with Silva itself as well as extensions.
+
+Legend
+------
+
+D - In the Silva-all distribution.
+C - Core, essential for the operation of Silva.
+I - Usable independently of Silva.
+E - Silva extension.
+
+Silva (DC)
+----------
+
+The Silva core. This contains the core Silva objects (Folders,
+Publications, Ghosts, etc) and the core UI.
+
+http://www.zope.org/Members/infrae/Silva
+
+http://www.zope.org/Members/infrae/SilvaWindowsInstaller
+
+FileSystemSite (DCI)
+--------------------
+
+FileSystemSite is a Zope extension extracted from the CMF Core. It can
+be used to maintain page templates, python scripts and the like on the
+filesystem, which makes for easier distribution and
+installation. Silva and extensions use this for the view
+system. SilvaDocument also uses it for the forms-based editor.
+
+http://www.zope.org/Members/infrae/FileSystemSite
+
+Formulator (DCI)
+----------------
+
+Formulator is a Zope extension for the easy construction, display and
+validation of web forms. Silva and various extension use this for the
+display of forms. Also used by SilvaMetadata.
+
+http://www.zope.org/Members/infrae/Formulator
+
+SilvaMetadata (DCI)
+-------------------
+
+Creation of metadata sets that can be associated with Silva content
+objects. Uses Formulator, Annotation and ProxyIndex.
+
+http://www.zope.org/Members/infrae/SilvaMetadata
+
+Annotations (DCI)
+-----------------
+
+A system for attaching information to objects without changing
+them. Used by SilvaMetadata.
+
+http://www.zope.org/Members/infrae/Annotations
+
+ProxyIndex (DCI)
+----------------
+
+A system for indexing the result of a TALES expression instead of just
+object attributes. Used by SilvaMetadata.
+
+http://www.zope.org/Members/infrae/ProxyIndex
+
+SilvaDocument (DE)
+------------------
+
+Silva extension for XML-based documents. Contains a through the web
+editing system for them. This is shipped along with the core. Uses
+XMLWidgets and ParsedXML. Can optionally be extended with
+SilvaExternalSources.
+
+http://www.zope.org/Members/infrae/SilvaDocument
+
+XMLWidgets (DI)
+---------------
+
+A system used to construct the forms-based editor for XML used by
+SilvaDocument. Integrates with ParsedXML.
+
+http://www.zope.org/Members/infrae/XMLWidgets
+
+ParsedXML (DI)
+--------------
+
+A DOM-compliant storage for XML documents. Used by
+SilvaDocument. XMLWidgets integrates with it.
+
+http://www.zope.org/Members/faassen/ParsedXML
+
+SilvaExternalSources (E)
+------------------------
+
+External Sources can integrate with SilvaDocument so that data coming
+from arbitrary Python sources, SQL databases or CSV (comma separated
+values) can be shown inside SilvaDocuments.
+
+http://www.zope.org/Members/infrae/SilvaExternalSources
+
+SilvaNews (E)
+-------------
+
+SilvaNews builds on Silva and SilvaDocument to provide News
+Publication, News Filters and News Viewers as well as News Articles
+and Agenda Items to build a distributed news system for your Silva
+site. It also contains RSS export and import facilities.
+
+http://www.zope.org/Members/infrae/SilvaNews
+
+Docma Server
+------------
+
+A separate system that can sit on a Windows machine and translate
+Silva XML to MS Word documents, and back. This can be integrated into
+the Silva UI by enabling service_docma.
+
+http://www.zope.org/Members/infrae/DocmaServer
+
+http://www.zope.org/Members/infrae/DocmaWindowsInstaller
