@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import unittest
 
 # 
@@ -191,6 +191,16 @@ class RoundtripWithTidy(unittest.TestCase):
            <p type="lead">lead paragraph</p>
            <heading type="sub">sub title</heading>
            <p type="normal">normal paragraph</p>
+        </doc>
+        </silva_document>'''
+        self._check(simple)
+
+    def test_heading_and_p_special_chars(self):
+        simple = '''
+        <silva_document id="test"><title>doc title</title>
+        <doc>
+           <heading type="normal">top title</heading>
+           <p type="normal">&quot;&amp;&lt;&gt;&apos;</p>
         </doc>
         </silva_document>'''
         self._check(simple)

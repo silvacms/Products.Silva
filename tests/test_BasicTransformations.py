@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import unittest
 
 # 
@@ -27,9 +27,11 @@ try:
     sys.path.insert(0, '..')
     from transform.ObjectParser import ObjectParser
     from transform.eopro2_11 import silva
+    from transform import base
 except ImportError:
     from Products.Silva.transform.ObjectParser import ObjectParser
     from Products.Silva.transform.eopro2_11 import silva
+    from Products.Silva.transform import base
 
 # lazy, but in the end we want to test everything anyway
 
@@ -150,6 +152,11 @@ class SilvaXMLObjectParser(unittest.TestCase):
         self.assert_(node.compact())
         # should traverse the tree
 
+    def test_text_nodes_with_control_characters(self):
+        ustring = u'''\x22\x27&<>'''
+        node = base.Text(ustring)
+        s = node.asBytes(encoding='utf8')
+        self.assertEquals(s, '&quot;&apos;&amp;&lt;&gt;')
 
     def test_ignore_unknown_tags(self):
         """ test that ignore_unknown contains unknown tags """

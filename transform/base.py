@@ -21,13 +21,14 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
 
 # look ma, i only have these dependencies 
 # and with python2.2 even they would vanish
 # that's because we work with python objects trees
 # instead of a proprietary format :-)
 
+import re 
 from UserList import UserList as List
 from UserDict import UserDict as Dict
 
@@ -202,6 +203,37 @@ class Element(Node):
         else:
             return '%(start)s/>' % locals()
 
+# BEGIN special character handling
+class CharRef:
+    pass
+
+class quot(CharRef): "quotation mark = APL quote, U+0022 ISOnum"; codepoint = 34
+class amp(CharRef): "ampersand, U+0026 ISOnum"; codepoint = 38
+class lt(CharRef): "less-than sign, U+003C ISOnum"; codepoint = 60
+class gt(CharRef): "greater-than sign, U+003E ISOnum"; codepoint = 62
+class apos(CharRef): "apostrophe mark, U+0027 ISOnum"; codepoint = 39
+
+class _escape_chars:
+    def __init__(self):
+        self.escape_chars = {}
+        for _name, _obj in globals().items():
+            try:
+                if issubclass(_obj, CharRef) and _obj is not CharRef:
+                    self.escape_chars[unichr(_obj.codepoint)] = u"&%s;" % _name
+            except TypeError:
+                continue
+        self.charef_rex = re.compile(u"|".join(self.escape_chars.keys()))
+            
+    def _replacer(self, match):
+        return self.escape_chars[match.group(0)]
+
+    def __call__(self, ustring):
+        return self.charef_rex.sub(self._replacer, ustring)
+
+escape_chars = _escape_chars()
+
+# END special character handling
+
 class CharacterData(Node):
     def __init__(self, content=u""):
         if type(content)==type(''):
@@ -230,7 +262,9 @@ class CharacterData(Node):
         return len(self.content)
 
     def asBytes(self, encoding):
-        return self.content.encode(encoding)
+        content = escape_chars(self.content)
+        return content.encode(encoding)
+
 
 class Text(CharacterData):
     def compact(self):
