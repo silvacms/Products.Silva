@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.64 2003/02/15 20:34:22 faassen Exp $
+# $Id: SilvaObject.py,v 1.65 2003/02/24 14:21:01 guido Exp $
 
 # python
 from types import StringType
@@ -69,16 +69,19 @@ class SilvaObject(Security):
         # (if published) close versioned content items
         # this is probably only used when importing a zexp
         if IContainer.isImplementedBy(self):
-            self._close_contained_documents()
+            self._update_contained_documents_status()
         
-    def _close_contained_documents(self):
+    def _update_contained_documents_status(self):
         """Closes all objects that implement VersionedContent (if public) and recurses into subcontainers"""
         for obj in self.objectValues():
             if IVersionedContent.isImplementedBy(obj):
                 if obj.is_version_published():
                     obj.close_version()
+                    obj.create_copy()
+                if obj.is_version_approved():
+                    obj.unapprove_version()
             elif IContainer.isImplementedBy(obj):
-                obj._close_contained_documents()
+                obj._update_contained_documents_status()
     
     def manage_beforeDelete(self, item, container):
         container._remove_ordered_id(item)
