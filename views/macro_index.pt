@@ -96,11 +96,15 @@
 Contact person: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email',None)"><span class="index-link" tal:content="model/contact_name|string:no name"></span></a>
 </span>
 </td>
-<td class="tab-up" align="center" width="36%">
+<td class="tab-up" align="center" width="36%" tal:define="userid request/AUTHENTICATED_USER/getUserName">
 <span class="breadcrumb">
-<a href="logout">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="request/AUTHENTICATED_USER/getUserName" /></a>
+<a href="logout">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="userid" /></a>
 <!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
 <span tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()">&nbsp;&nbsp;<a href="request_roles">(request more roles)</a></span>
+</span>
+&nbsp;&nbsp;
+<span class="breadcrumb">
+<a tal:attributes="href string:${silva_root}/Members/${userid}">My member page</a>
 </span>
 </td>
 <td class="tab-up" align="right" width="30%">
