@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.34 $
+# $Revision: 1.35 $
 import Interface
 
 class Security(Interface.Base):
@@ -24,13 +24,41 @@ class Security(Interface.Base):
         """Remove roles from user in this object.
         """
         pass
+
+    def sec_open_to_public(self):
+        """Open this object to the public; accessible to everybody (if
+        at least container is accessible).
+        """
+
+    def sec_close_to_public(self):
+        """Close this object to the public; only accessible to people
+        with Viewer role here.
+        """
+
+    def sec_create_lock(self):
+        """Create lock for this object. Return true if successful.
+        """
     
     # ACCESSORS
+
+    def sec_is_open_to_public(self):
+        """Check whether this is viewable by the public.
+        """
+
+    def sec_is_locked(self):
+        """Check whether this object is locked by a user currently
+        editing.
+        """    
+
+    def sec_have_management_rights(self):
+        """Check whether we have management rights here.
+        """
+
     def sec_get_userids(self):
         """Get the userids that have local roles here.
         """
         pass
-
+        
     def sec_get_roles_for_userid(self, userid):
         """Get the local roles that a userid has here.
         """
