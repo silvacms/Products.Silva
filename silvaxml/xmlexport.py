@@ -70,20 +70,10 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
             keys = binding._getData(set_id).keys()
             keys.sort()
             for key in keys:
-                value_type = None
+                field = binding.getElement(set_id, key).field
                 value = binding._getData(set_id)[key]
-                if value:
-                    if type(value) == type(DateTime()):
-                        value = value.HTML4()
-                        value_type = 'datetime'
-                    elif type(value) == type(''):
-                        value = unicode(value, 'utf-8')
-                if value_type:
-                    self.startElementNS(namespace, key, {'type': value_type})
-                else:
-                    self.startElementNS(namespace, key)
-                if value:
-                    self.handler.characters(value)
+                self.startElementNS(namespace, key)
+                field.validator.serializeValue(field, value, self.handler)
                 self.endElementNS(namespace, key)
             self.endElement('set')
         self.endElement('metadata')

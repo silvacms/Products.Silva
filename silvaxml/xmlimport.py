@@ -45,50 +45,12 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         self._metadata_set = None
         self._info = info
         self._metadata_key = None
-        self._metadata_type = None
         self._metadata = {}
+        self._metadata_multivalue = False
         self._workflow = {}
-
-    def setMetadata(self, set, key, value, value_type=None):
-        if value_type == 'datetime' and value:
-            value = DateTime(value)
-        self._metadata[set][key] = value
-
-    def setWorkflowVersion(
-        self, version_id, publicationtime, expirationtime, status):
-        if publicationtime:
-            publicationtime = DateTime(publicationtime)
-        if expirationtime:
-            expirationtime = DateTime(expirationtime)
-            
-        self._parent_handler._workflow[version_id] = (
-            publicationtime, expirationtime, status)
         
-    def getMetadata(self, set, key):
-        return self._metadata[set][key]
+    # MANIPULATORS
 
-    def getWorkflowVersion(self, version_id):
-        return self._parent_handler._workflow[version_id]
-
-    def setMetadataSet(self, set):
-        self._metadata_set = set
-        self._metadata[set] = {}
-        
-    def metadataSet(self):
-        return self._metadata_set
-
-    def setMetadataType(self, value_type):
-        self._metadata_type = value_type
-        
-    def metadataType(self):
-        return self._metadata_type
-
-    def setMetadataKey(self, key):
-        self._metadata_key = key
-        
-    def metadataKey(self):
-        return self._metadata_key
-    
     def setWorkflowVersion(
         self, version_id, publicationtime, expirationtime, status):
         if publicationtime:
@@ -107,11 +69,17 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         if binding is not None:
             for set_name in binding.collection.keys():
                 set = binding.collection[set_name]
-                element_names = self._metadata[set.id].keys()
+                elements = self._metadata[set.id]
+                element_names = elements.keys()
+                for element_name in element_names:
+                    field = binding.getElement(set.id, element_name).field
+                    elements[element_name] = field.validator.deserializeValue(field, elements[element_name])
+                    
                 # Set data
+                
                 errors = binding._setData(
                     namespace_key=set.metadata_uri,
-                    data=self._metadata[set.id],
+                    data=elements,
                     reindex=1
                     )
 
@@ -155,8 +123,46 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
     def setMaintitle(self):
         main_title = self.getMetadata('silva-content', 'maintitle')
         if main_title is not None:
-            self.result().set_title(main_title)
+            self.result().set_title(main_title)        
 
+    def setMetadataKey(self, key):
+        self._metadata_key = key
+
+    def setMetadata(self, set, key, value):
+        if value is not None:
+            value = value.encode('utf-8')
+            if self.metadataMultiValue():
+                if self._metadata[set].has_key(key):
+                    self._metadata[set][key].append(value)
+                else:
+                    self._metadata[set][key] = [value]
+            else:
+                self._metadata[set][key] = value
+
+    def setMetadataSet(self, set):
+        self._metadata_set = set
+        self._metadata[set] = {}
+
+    def setMetadataMultiValue(self, trueOrFalse):
+        self._metadata_multivalue = trueOrFalse
+
+    # ACCESSORS
+
+    def metadataKey(self):
+        return self._metadata_key
+    
+    def metadataSet(self):
+        return self._metadata_set
+
+    def getMetadata(self, set, key):
+        return self._metadata[set][key]
+
+    def getWorkflowVersion(self, version_id):
+        return self._parent_handler._workflow[version_id]
+
+    def metadataMultiValue(self):
+        return self._metadata_multivalue
+    
 class SilvaExportRootHandler(SilvaBaseHandler):
     pass
 
@@ -241,29 +247,28 @@ class SetHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'set'):
             self.parentHandler().setMetadataSet(attrs[(None, 'id')])
-        else:
+        elif name != (NS_URI, 'value'):
             self.parentHandler().setMetadataKey(name[1])
-            if attrs.has_key((None, 'type')):
-                self.parentHandler().setMetadataType(attrs[(None, 'type')])
-            else:
-                self.parentHandler().setMetadataType(None)
+        else:
+            self.parentHandler().setMetadataMultiValue(True)
         self.setResult(None)
             
     def characters(self, chrs):
-        self._chars = chrs
+        if self.parentHandler().metadataKey() is not None:
+            self._chars = chrs
        
     def endElementNS(self, name, qname):
-        value = getattr(self, '_chars', None)
-
-        if self.parentHandler().metadataKey() is not None:
-             self.parentHandler().setMetadata(
-             self.parentHandler().metadataSet(),
-             self.parentHandler().metadataKey(),
-             value,
-             self.parentHandler().metadataType())
-
-        self.parentHandler().setMetadataKey(None)
-        self.parentHandler().setMetadataType(None)
+        if name != (NS_URI, 'set'):
+            value = getattr(self, '_chars', None)
+            
+            if self.parentHandler().metadataKey() is not None:
+                self.parentHandler().setMetadata(
+                    self.parentHandler().metadataSet(),
+                    self.parentHandler().metadataKey(),
+                    value)
+        if name != (NS_URI, 'value'):
+            self.parentHandler().setMetadataKey(None)
+            self.parentHandler().setMetadataMultiValue(False)
         self._chars = None
         
 class GhostHandler(SilvaBaseHandler):

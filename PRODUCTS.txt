@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.19 $
+CVS:        $Revision: 1.20 $
 
 Introduction
 ------------
@@ -55,7 +55,7 @@ system. SilvaDocument also uses it for the forms-based editor.
 
 http://www.infrae.com/download/FileSystemSite
 
-Formulator 1.8.0 (DCI)
+Formulator 1.8.1 (DCI)
 ----------------------
 
 Formulator is a Zope extension for the easy construction, display and

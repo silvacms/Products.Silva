@@ -13,8 +13,8 @@
         <silva-extra:publicationtime></silva-extra:publicationtime>
         <silva-extra:location>http://nohost/root/testfolder</silva-extra:location>
         <silva-extra:contactemail></silva-extra:contactemail>
-        <silva-extra:modificationtime type="datetime">2004-04-23T16:13:39Z</silva-extra:modificationtime>
-        <silva-extra:creationtime type="datetime">2004-04-23T16:13:39Z</silva-extra:creationtime>
+        <silva-extra:modificationtime>2004-04-23T16:13:39Z</silva-extra:modificationtime>
+        <silva-extra:creationtime>2004-04-23T16:13:39Z</silva-extra:creationtime>
         <silva-extra:lastauthor>unknown user</silva-extra:lastauthor>
         <silva-extra:creator>test_user_1_</silva-extra:creator>
         <silva-extra:contactname></silva-extra:contactname>
@@ -36,8 +36,8 @@
             <silva-extra:publicationtime></silva-extra:publicationtime>
             <silva-extra:location>http://nohost/root/testfolder/testfolder2</silva-extra:location>
             <silva-extra:contactemail></silva-extra:contactemail>
-            <silva-extra:modificationtime type="datetime">2004-04-23T16:13:39Z</silva-extra:modificationtime>
-            <silva-extra:creationtime type="datetime">2004-04-23T16:13:39Z</silva-extra:creationtime>
+            <silva-extra:modificationtime>2004-04-23T16:13:39Z</silva-extra:modificationtime>
+            <silva-extra:creationtime>2004-04-23T16:13:39Z</silva-extra:creationtime>
             <silva-extra:lastauthor>unknown user</silva-extra:lastauthor>
             <silva-extra:creator>test_user_1_</silva-extra:creator>
             <silva-extra:contactname></silva-extra:contactname>

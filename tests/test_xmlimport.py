@@ -10,6 +10,7 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
 from Products.Silva.silvaxml import xmlimport 
 from Products.Silva.interfaces import IGhost, IContainer
+from DateTime import DateTime
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     
@@ -22,7 +23,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             u'Publication',
             publication.get_title())
-
+            
     def test_folder_import(self):
         importfolder = self.add_folder(
             self.root,
@@ -53,6 +54,12 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             'approved title',
             linkversion.get_title())
+        self.assertEquals(
+            'approved title',
+            linkversion.get_title())
+        self.assertEquals(
+            DateTime('2004-04-23T16:13:40Z'),
+            linkversion.get_modification_datetime())
         metadata_service = linkversion.service_metadata
         binding = metadata_service.getMetadata(linkversion)
         self.assertEquals(

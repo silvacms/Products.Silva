@@ -14,6 +14,10 @@ Silva changes
 
       - Saving metadata uses Formulator forms for improved validation.
 
+      - The import/export of metadata values other than string now works 
+        correctly. (previously only datetime values were, hackishly, checked
+        for.) This requires an update of Formulator.
+
   1.2
 
     Bugs fixed
