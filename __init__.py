@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.58 $
+# $Revision: 1.59 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -99,7 +99,3 @@ def initialize(context):
     registerDirectory('globals', globals())
     registerDirectory('service_utils', globals())
 
-# register content objects for xml upgrade
-from upgrade import xml_upgrade_registry
-xml_upgrade_registry.register('Silva Document', None)
-xml_upgrade_registry.register('Silva DemoObject', 'content')
