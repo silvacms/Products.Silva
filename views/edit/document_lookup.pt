@@ -341,19 +341,12 @@
                       _______ modified date cell _______
                     </tal:block>
                     <td tal:define="modification_time asset/get_modification_datetime | nothing">
-                      <label title="properties"
-                        tal:condition="modification_time"
-                        tal:attributes="for asset/id"
-                        tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
-                        >
-                         date
-                      </label>
-                      <label title="properties" tal:condition="not: modification_time"
-                        tal:attributes="for asset/id">
-                        <i i18n:translate="unknown">
-                          unknown
-                        </i>
-                      </label>
+                      <tal:block condition="modification_time">
+                        <span tal:replace="structure python:mangle.DateTime(modification_time).toShortStr()" />
+                      </tal:block>
+                      <tal:block condition="not: modification_time">
+                        <i>n/a</i>
+                      </tal:block>
                     </td>
                     <tal:block replace="nothing">
                       _______ author cell _______
