@@ -343,6 +343,43 @@ select {
   border-bottom : 1px solid #333333;
 }
 
+/* input submit buttons (these might get deprecated, if we can get <button> to work in IE) */
+input.button {
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #bce4ee; 
+  background : #555555;
+  border-left : 1px solid #a2c9cc;
+  border-top : 1px solid #a2c9cc;
+  border-right : 1px solid #a2c9cc;
+  border-bottom : 1px solid #a2c9cc;
+}
+
+input.warningbutton {
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #f0c0c0; 
+  background : #555555;
+  border-left : 1px solid #d7acac;
+  border-top : 1px solid #d7acac;
+  border-right : 1px solid #d7acac;
+  border-bottom : 1px solid #d7acac;
+}
+
+input.cancelbutton {
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #dddddd; 
+  background : #676767;
+  border-left : 1px solid #cccccc;
+  border-top : 1px solid #cccccc;
+  border-right : 1px solid #cccccc;
+  border-bottom : 1px solid #cccccc;
+}
+
 /* submit buttons */
 button {
   font-size : 11px; 
@@ -389,55 +426,6 @@ button.cancel {
   line-height : 10px;
 }
 
-/* input submit buttons (these might get deprecated, if we can get <button> to work in IE) */
-input.button {
-  font-size : 11px; 
-  font-weight : normal; 
-  font-family : verdana, arial, helvetica, sans-serif;
-  color : #bce4ee; 
-  background : #555555;
-  border-left : 1px solid #a2c9cc;
-  border-top : 1px solid #a2c9cc;
-  border-right : 1px solid #a2c9cc;
-  border-bottom : 1px solid #a2c9cc;
-}
-
-input.warningbutton {
-  font-size : 11px; 
-  font-weight : normal; 
-  font-family : verdana, arial, helvetica, sans-serif;
-  color : #f0c0c0; 
-  background : #555555;
-  border-left : 1px solid #d7acac;
-  border-top : 1px solid #d7acac;
-  border-right : 1px solid #d7acac;
-  border-bottom : 1px solid #d7acac;
-}
-
-input.warningbox {
-  font-size : 11px; 
-  font-weight : normal; 
-  font-family : verdana, arial, helvetica, sans-serif;
-  color : #3f4570;
-  background : #ead5d3;
-  border-left : 1px solid #333333;
-  border-top : 1px solid #333333;
-  border-right : 1px solid #333333;
-  border-bottom : 1px solid #333333;
-}
-
-input.cancelbutton {
-  font-size : 11px; 
-  font-weight : normal; 
-  font-family : verdana, arial, helvetica, sans-serif;
-  color : #dddddd; 
-  background : #676767;
-  border-left : 1px solid #cccccc;
-  border-top : 1px solid #cccccc;
-  border-right : 1px solid #cccccc;
-  border-bottom : 1px solid #cccccc;
-}
-
 button[type="submit"]:hover, 
 button[type="button"]:hover { 
   color : #bff1ff; 
@@ -450,12 +438,14 @@ button[type="button"]:focus {
   background : #008a8a;
 }
 
-input[type="submit"]:hover, input[type="button"]:hover { 
+input[type="submit"]:hover, 
+input[type="button"]:hover { 
   color : #bff1ff; 
   background : #74748b; 
 }
 
-input[type="submit"]:focus, input[type="button"]:focus { 
+input[type="submit"]:focus, 
+input[type="button"]:focus { 
   color : #bff1ff; 
   background : #008a8a;
 }
@@ -466,14 +456,28 @@ input[type="submit"]:focus, input[type="button"]:focus {
   border : 0;
 }
 
-input[type="checkbox"]:focus, input[type="radio"]:focus { 
+input[type="checkbox"]:focus, 
+input[type="radio"]:focus { 
   color : #777; 
   background : #b9e3e8 none; 
 }
 
-input[type="checkbox"]:hover, input[type="radio"]:hover { 
+input[type="checkbox"]:hover, 
+input[type="radio"]:hover { 
   color : #777; 
   background : #b9e3e8 none; 
+}
+
+input.warningbox {
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #3f4570;
+  background : #ead5d3;
+  border-left : 1px solid #333333;
+  border-top : 1px solid #333333;
+  border-right : 1px solid #333333;
+  border-bottom : 1px solid #333333;
 }
 
 
