@@ -162,7 +162,7 @@
                   binding python:editable and view.service_metadata.getMetadata(editable) or None;
                   title_editable python: binding and binding.get('silva-content', 'maintitle') or default;
                   author_info python: binding and binding.get('silva-extra', 'lastauthor') or default;
-                  modification_time python: binding and binding.get('silva-extra', 'modificationtime') or default;
+                  modification_time python: binding and binding.get('silva-extra', 'modificationtime') or None;
                   ">
                   <tr tal:attributes="class python: iterate and 'odd' or 'even'">
                     <tal:block replace="nothing">
@@ -245,7 +245,7 @@
                         title="properties"
                         tal:condition="modification_time"
                         tal:attributes="href string:${item_url}/edit/tab_metadata"
-                        tal:content="structure python:binding and mangle.DateTime(modification_time).toShortStr() or default"
+                        tal:content="structure python:binding and modification_time and mangle.DateTime(modification_time).toShortStr() or default"
                       >
                         date
                       </a>
