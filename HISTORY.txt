@@ -1,10 +1,15 @@
-Version of this document: $Revision: 1.7 $
+Version of this document: $Revision: 1.8 $
 
 Silva changes
 
   0.8.3
 
     Features Added
+
+     - Custom error pages for HTTP error responses
+     
+     - New "Reader" role, for readonly access to Silva Management 
+     Interface (SMI) 
 
     Bugs Fixed
 
