@@ -7,6 +7,9 @@ Silva changes
 
     Bugs fixed:
     
+      - Fixed a bug in the xml exporter that tripped on the export of
+        citatation elements
+
       - Fixed problem with vanishing paragraphs after a save in Kupu.
 
   1.1.2
