@@ -151,7 +151,4 @@ class IIndexable(Interface):
 
     def getIndexes():
         """returns the indexes for a certain object, or an empty list."""
-
-class ITreeNode(Interface):
-    pass
         
