@@ -23,13 +23,13 @@
         <p>
           You're welcome to apply for membership (and the form has only three fields). Your request will be sent to the responsible person who will grant (or possibly deny) access. Then you'll be informed via email.
         </p>
-        <span class="subhead"><a href="become_visitor" tal:attributes="href string:service_resources/${here/service_members/get_subscription_url}">
+        <span class="subhead"><a href="become_visitor" tal:attributes="href string:service_resources/${here/service_members/get_subscription_url}?last_url=${here/absolute_url}">
         Become a visitor to the site
         </a><br /></span>
         As a visitor, you can view certain objects that unauthenticated users are not allowed to see.<br /><br />
       </div>
       <h3>Visitor options</h3>
-      <span class="subhead"><a href="public/request_roles">Request a role which allows access to this location
+      <span class="subhead"><a tal:attributes="href string:public/request_roles?last_url=${here/absolute_url}">Request a role which allows access to this location
       </a><br /></span>
       Note that you must already have visitor rights to apply for roles.
       <br /><br />
