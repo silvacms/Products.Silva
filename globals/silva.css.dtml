@@ -42,6 +42,37 @@ pre {
 
 
 /* _________________________________________________________ table definitions _____ */
+table.silvatable {
+  empty-cells: show;
+  border-collapse: collapse;
+}       
+table.silvatable tr.rowheading {
+  font-weight: bold;
+}
+
+table.plain {
+  border-style: none;
+}
+
+table.listing tr.rowheading td {
+  border-bottom: 3px solid black;
+}
+
+table.grid td {
+  border: 2px solid black;
+}
+
+table.datagrid {
+  border: 2px solid black;
+  border-top-style: hidden;
+}
+table.datagrid td {
+  border: 2px solid black;
+}
+table.datagrid tr.rowheading td {
+  border-left-style: hidden;
+  border-right-style: hidden;  
+}
 
 /* light gray bg on just-edited elements */
 td.post-focus {
