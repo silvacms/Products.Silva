@@ -31,7 +31,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
     <td>
 
       <form action="." method="POST">
-      <input type="hidden" name="refs" tal:attributes="value python: view.REQUEST['refs']" tal:condition="view/REQUEST/refs" />
+      <input type="hidden" name="refs" tal:attributes="value python: view.REQUEST['refs']" tal:condition="view/REQUEST/refs | nothing" />
         <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
           <tr>
