@@ -1,7 +1,8 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.36 $
+# $Revision: 1.37 $
 import unittest
+from os.path import dirname, join
 import Zope
 Zope.startup()
 from Products.Silva.IContent import IContent
@@ -16,8 +17,8 @@ from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
 from test_SilvaObject import hack_create_user
 
-def add_helper(object, typename, id, title):
-    getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
+def add_helper(object, typename, id, title, **kw):
+    getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title, **kw)
     return getattr(object, id)
 
 
@@ -62,6 +63,19 @@ class ContainerBaseTestCase(unittest.TestCase):
                       'Document', 'subsubdoc', 'Subsubdoc')
             self.subdoc2 = subdoc2 = add_helper(publication5,
                       'Document', 'subdoc2', 'Subdoc2')
+            directory = dirname(__file__)
+            test_image_filename = join(directory,'data','testimage.gif')
+            test_image = open(test_image_filename, 'r')
+            self.image1 = add_helper(sroot, 'Image','image1', 'Image1',
+                                     file=test_image)
+            test_image.close()
+            test_image = open(test_image_filename, 'r')
+            self.image2 = add_helper(sroot, 'Image','image2', 'Image2',
+                                     file=test_image)
+            test_image.close()
+            # adding role for action_rename may succeed
+            self.root.manage_addLocalRoles('TestUser', ['Manager'])
+            get_transaction().commit(1)
         except:
             self.tearDown()
             raise          
@@ -121,7 +135,11 @@ class ContainerTestCase(ContainerBaseTestCase):
                           nonactive)
         
     def test_get_assets(self):
-        pass # FIXME: make asset object
+        self.assertEquals(self.sroot.get_assets(), [self.image1, self.image2])
+        # assets should be sorted by id
+        r = self.sroot.action_rename('image2','aimage')
+        self.assertEquals(self.sroot.get_assets(), [self.image2, self.image1])
+        # FIXME: more tests with assets
 
     def test_get_tree(self):
         l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
@@ -274,17 +292,33 @@ class ContainerTestCase(ContainerBaseTestCase):
     def test_check_valid_id(self):
         self.assertEquals(check_valid_id(self.folder4, 'doc2'),
                           IdCheckValues.ID_OK)
+        self.assertEquals(check_valid_id(self.folder4, self.folder4.id),
+                          IdCheckValues.ID_OK)
         self.assertEquals(check_valid_id(self.folder4, 'subdoc'),
                           IdCheckValues.ID_IN_USE_CONTENT)
+        self.assertEquals(check_valid_id(self.folder4, 'subdoc',
+                                         allow_dup=1),
+                          IdCheckValues.ID_OK)
         self.assertEquals(check_valid_id(self.folder4, 'service_foo'),
                           IdCheckValues.ID_RESERVED_PREFIX)
         self.assertEquals(check_valid_id(self.folder4, 'edit'),
+                          IdCheckValues.ID_RESERVED)
+        self.assertEquals(check_valid_id(self.folder4, 'edit',
+                                         allow_dup=1),
                           IdCheckValues.ID_RESERVED)
         self.assertEquals(check_valid_id(self.folder4, 'manage'),
                           IdCheckValues.ID_RESERVED)
         self.assertEquals(check_valid_id(self.folder4, 'title'),
                           IdCheckValues.ID_RESERVED)
+        self.assertEquals(check_valid_id(self.folder4, 'index_html'),
+                          IdCheckValues.ID_RESERVED)
+        self.assertEquals(check_valid_id(self.folder4, 'index_html',
+                                         allow_dup=1),
+                          IdCheckValues.ID_RESERVED)
         self.assertEquals(check_valid_id(self.folder4, 'get_title_or_id'),
+                          IdCheckValues.ID_RESERVED)
+        self.assertEquals(check_valid_id(self.folder4, 'get_title_or_id',
+                                         allow_dup=1),
                           IdCheckValues.ID_RESERVED)
 
 
