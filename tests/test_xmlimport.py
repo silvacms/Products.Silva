@@ -60,6 +60,32 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             binding._getData(
                 'silva-extra').data['creator'])
 
+    def test_autotoc_import(self):
+        importfolder = self.add_folder(
+            self.root,
+            'testfolder',
+            'This is <boo>a</boo> testfolder',
+            policy_name='Auto TOC')
+        importer = xmlimport.theXMLImporter
+        test_settings = xmlimport.ImportSettings()
+        test_info = xmlimport.ImportInfo()
+        # import the ghost
+        source_file = open('data/test_autotoc.xml', 'r')
+        importer.importFromFile(
+            source_file,
+            result=self.root,
+            settings=test_settings,
+            info=test_info)
+        source_file.close()
+
+        autotoc = self.root.autotokkies
+        self.assertEquals(
+            'Tokkies, now with car',
+            autotoc.get_title())
+        self.assertEquals(
+            'Silva AutoTOC',
+            autotoc.meta_type)
+
     def test_ghost_import(self):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
