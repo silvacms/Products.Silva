@@ -32,7 +32,7 @@
 </div>
 
   <!-- this breadcrumb trail could be moved to layout_macro.html if it's always in use -->
-<div metal:fill-slot="navigation">
+<div metal:fill-slot="navigation" tal:omit-tag="">
   <!-- Start navigation slot -->
   <span class="breadcrumb"><span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
     <a tal:attributes="href item/absolute_url" tal:content="structure item/get_title_html">Name</a>
