@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Mon Nov 29 18:15:57 2004\n"
-"PO-Revision-Date: 2004-11-29 18:33+0100\n"
-"Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
+"POT-Creation-Date: Mon Nov 29 19:05:57 2004\n"
+"PO-Revision-Date: 2004-11-29 19:06+0100\n"
+"Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr "&#xab;${id}&#xbb; geplakt"
 
-#: /Ghost.py:61 /Ghost.py:70 /Ghost.py:82
+#: /Ghost.py:63 /Ghost.py:72 /Ghost.py:84
 msgid "Ghost target is broken"
 msgstr "'Ghost'-doel is gebroken"
 
@@ -630,7 +630,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:138
 #: /views/edit/Container/tab_status_export.pt:171
 #: /views/edit/Container/tab_status_export.pt:180
-#: /views/edit/VersionedContent/tab_status.pt:238
+#: /views/edit/VersionedContent/tab_status.pt:239
 msgid "access key: alt-e"
 msgstr "sneltoets: alt-e"
 
@@ -1731,7 +1731,7 @@ msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
 
 #: /views/edit/Container/tab_access_groups.pt:252
 #: /views/edit/Container/tab_edit.pt:548
-#: /views/edit/VersionedContent/tab_status.pt:325
+#: /views/edit/VersionedContent/tab_status.pt:326
 msgid "delete"
 msgstr "verwijderen"
 
@@ -1874,7 +1874,7 @@ msgid "paste ghost"
 msgstr "ghost plakken"
 
 #: /views/edit/Container/tab_edit.pt:548
-#: /views/edit/VersionedContent/tab_status.pt:325
+#: /views/edit/VersionedContent/tab_status.pt:326
 msgid "there's no undo: alt-d"
 msgstr "items verwijderen (er is geen undo): alt-d"
 
@@ -2111,7 +2111,7 @@ msgid "over to the export screen: alt-e"
 msgstr "naar het export scherm: alt-e"
 
 #: /views/edit/Container/tab_edit_import.pt:72
-#: /views/edit/VersionedContent/tab_status.pt:238
+#: /views/edit/VersionedContent/tab_status.pt:239
 msgid "export..."
 msgstr "exporteren..."
 
@@ -2359,7 +2359,7 @@ msgid "access key: alt-x"
 msgstr "sneltoets: alt-x"
 
 #: /views/edit/Container/tab_status.pt:328
-#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:485
+#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:485
 msgid "expiration time"
 msgstr "verlooptijdstip"
 
@@ -2441,7 +2441,7 @@ msgid "request approval"
 msgstr "goedkeuring aanvragen"
 
 #: /views/edit/Container/tab_status.pt:69
-#: /views/edit/VersionedContent/tab_status.pt:235
+#: /views/edit/VersionedContent/tab_status.pt:236
 msgid "publishing actions"
 msgstr "publicatie-acties"
 
@@ -2899,7 +2899,7 @@ msgstr "karakteristiek"
 #: /views/edit/VersionedContent/Ghost/edit.pt:110
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:74
 msgid "Link to editor screen of original."
-msgstr "Link naar 'editor' scherm van origineel."
+msgstr "Link naar 'bewerken' scherm van origineel."
 
 #: /views/edit/VersionedContent/Ghost/edit.pt:49
 msgid "ghost of &#xab;${name}&#xbb;"
@@ -3029,40 +3029,40 @@ msgstr "Blokkade verbroken"
 msgid "Version approved."
 msgstr "Versie goedgekeurd."
 
-#: /views/edit/VersionedContent/tab_status.pt:226
+#: /views/edit/VersionedContent/tab_status.pt:227
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr "versies beheren van &#xab;${export_id}&#xbb;"
 
-#: /views/edit/VersionedContent/tab_status.pt:253 /doc/silva-extra.xml:359
+#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:359
 msgid "modification time"
 msgstr "modificatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:422
+#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:422
 msgid "publication time"
 msgstr "publicatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:606
+#: /views/edit/VersionedContent/tab_status.pt:257 /doc/silva-extra.xml:606
 msgid "last author"
 msgstr "laatste auteur"
 
-#: /views/edit/VersionedContent/tab_status.pt:257 /doc/silva-extra.xml:545
+#: /views/edit/VersionedContent/tab_status.pt:258 /doc/silva-extra.xml:545
 msgid "creator"
 msgstr "aangemaakt"
 
-#: /views/edit/VersionedContent/tab_status.pt:258
+#: /views/edit/VersionedContent/tab_status.pt:259
 msgid "version status"
 msgstr "versie-status"
 
 # JS onclick string, not very nice but it works, make sure to copy JS code 1:1
-#: /views/edit/VersionedContent/tab_status.pt:325
+#: /views/edit/VersionedContent/tab_status.pt:326
 msgid "if (!confirm('Are you sure?')) return false"
 msgstr "if (!confirm('Weet je het zeker?')) return false"
 
-#: /views/edit/VersionedContent/tab_status.pt:334
+#: /views/edit/VersionedContent/tab_status.pt:335
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr "nieuwe bewerkbare versie van geselecteerde oude versie aanmaken: alt-f"
 
-#: /views/edit/VersionedContent/tab_status.pt:334
+#: /views/edit/VersionedContent/tab_status.pt:335
 msgid "copy for editing"
 msgstr "kopiëren om te bewerken"
 
@@ -3088,7 +3088,7 @@ msgid ""
 "make an editable copy by going to the ${editor}."
 msgstr ""
 "Deze inhoud is gepubliceerd (online voor publiek).<br /> Indien gewenst, kan "
-"er een bewerkbare kopie van worden gemaakt door naar ${editor} te gaan."
+"er een bewerkbare kopie van worden gemaakt door naar '${editor}' te gaan."
 
 #: /views/edit/VersionedContent/tab_status.pt:82
 msgid "Published version exists"
@@ -3112,12 +3112,7 @@ msgid ""
 "make an editable copy in the ${editor}."
 msgstr ""
 "Deze inhoud was ooit gepubliceerd maar is nu gesloten.<br /> Indien gewenst, "
-"kan er een bewerkbare kopie gemaakt worden in de ${editor}."
-
-# Default: "editor"
-#: /views/edit/VersionedContent/tab_status.pt:97
-msgid "editor-title"
-msgstr "editor"
+"kan er een bewerkbare kopie gemaakt worden in '${editor}'."
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
 msgid "There is no approved version."
@@ -3646,8 +3641,9 @@ msgstr "-"
 # Default: "editor"
 #: /views/edit/document_lookup.pt:315 /views/edit/Container/tab_edit.pt:363
 #: /views/edit/VersionedContent/tab_status.pt:73
+#: /views/edit/VersionedContent/tab_status.pt:97
 msgid "content-editor"
-msgstr "editor"
+msgstr "bewerken"
 
 #: /views/edit/document_lookup.pt:371
 msgid "insert the reference: alt-p"
@@ -4652,6 +4648,10 @@ msgstr "Volgende &gt;&gt;"
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+# Default: "editor"
+#~ msgid "editor-title"
+#~ msgstr "editor"
 
 #~ msgid "editor"
 #~ msgstr "editor"

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Mon Nov 29 18:15:57 2004\n"
+"POT-Creation-Date: Mon Nov 29 19:05:57 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr ""
 
-#: /Ghost.py:61 /Ghost.py:70 /Ghost.py:82
+#: /Ghost.py:63 /Ghost.py:72 /Ghost.py:84
 msgid "Ghost target is broken"
 msgstr ""
 
@@ -586,7 +586,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:138
 #: /views/edit/Container/tab_status_export.pt:171
 #: /views/edit/Container/tab_status_export.pt:180
-#: /views/edit/VersionedContent/tab_status.pt:238
+#: /views/edit/VersionedContent/tab_status.pt:239
 msgid "access key: alt-e"
 msgstr "Kurzwahl: alt-e"
 
@@ -1638,7 +1638,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:252
 #: /views/edit/Container/tab_edit.pt:548
-#: /views/edit/VersionedContent/tab_status.pt:325
+#: /views/edit/VersionedContent/tab_status.pt:326
 msgid "delete"
 msgstr "Löschen"
 
@@ -1777,7 +1777,7 @@ msgid "paste ghost"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:548
-#: /views/edit/VersionedContent/tab_status.pt:325
+#: /views/edit/VersionedContent/tab_status.pt:326
 msgid "there's no undo: alt-d"
 msgstr "es gibt kein Undo: alt-d"
 
@@ -1987,7 +1987,7 @@ msgid "over to the export screen: alt-e"
 msgstr "zur Export-Ansicht wechseln: alt-e"
 
 #: /views/edit/Container/tab_edit_import.pt:72
-#: /views/edit/VersionedContent/tab_status.pt:238
+#: /views/edit/VersionedContent/tab_status.pt:239
 msgid "export..."
 msgstr "Exportieren"
 
@@ -2229,7 +2229,7 @@ msgid "access key: alt-x"
 msgstr "Kurzwahl: alt-x"
 
 #: /views/edit/Container/tab_status.pt:328
-#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:485
+#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:485
 msgid "expiration time"
 msgstr "Verfallsdatum"
 
@@ -2311,7 +2311,7 @@ msgid "request approval"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:69
-#: /views/edit/VersionedContent/tab_status.pt:235
+#: /views/edit/VersionedContent/tab_status.pt:236
 msgid "publishing actions"
 msgstr "Veröffentlichungseinstellungen"
 
@@ -2861,40 +2861,40 @@ msgstr ""
 msgid "Version approved."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:226
+#: /views/edit/VersionedContent/tab_status.pt:227
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:253 /doc/silva-extra.xml:359
+#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:359
 msgid "modification time"
 msgstr "Änderungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:422
+#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:422
 msgid "publication time"
 msgstr "Veröffentlichungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:606
+#: /views/edit/VersionedContent/tab_status.pt:257 /doc/silva-extra.xml:606
 msgid "last author"
 msgstr "letzter Autor"
 
-#: /views/edit/VersionedContent/tab_status.pt:257 /doc/silva-extra.xml:545
+#: /views/edit/VersionedContent/tab_status.pt:258 /doc/silva-extra.xml:545
 msgid "creator"
 msgstr "Urheber"
 
-#: /views/edit/VersionedContent/tab_status.pt:258
+#: /views/edit/VersionedContent/tab_status.pt:259
 msgid "version status"
 msgstr "Versionsstatus"
 
-#: /views/edit/VersionedContent/tab_status.pt:325
+#: /views/edit/VersionedContent/tab_status.pt:326
 msgid "if (!confirm('Are you sure?')) return false"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:334
+#: /views/edit/VersionedContent/tab_status.pt:335
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr ""
 "Neue editierbare Version der ausgewählten alten Version erzeugen: alt-f"
 
-#: /views/edit/VersionedContent/tab_status.pt:334
+#: /views/edit/VersionedContent/tab_status.pt:335
 msgid "copy for editing"
 msgstr "kopieren zum bearbeiten"
 
@@ -2938,11 +2938,6 @@ msgstr ""
 msgid ""
 "This content was once published but is now closed.<br /> If you wish you can "
 "make an editable copy in the ${editor}."
-msgstr ""
-
-# Default: "editor"
-#: /views/edit/VersionedContent/tab_status.pt:97
-msgid "editor-title"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
@@ -3444,6 +3439,7 @@ msgstr "n.v."
 # Default: "editor"
 #: /views/edit/document_lookup.pt:315 /views/edit/Container/tab_edit.pt:363
 #: /views/edit/VersionedContent/tab_status.pt:73
+#: /views/edit/VersionedContent/tab_status.pt:97
 msgid "content-editor"
 msgstr ""
 
