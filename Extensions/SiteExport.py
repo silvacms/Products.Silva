@@ -9,7 +9,7 @@ from Globals import package_home
 from Interface import Base
 from StringIO import StringIO
 from cgi import escape
-from Products.Formulator.XMLSerialize import formToXML
+from Products.Formulator.FormToXML import formToXML
 
 class IExporter: 
   
