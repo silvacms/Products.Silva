@@ -314,6 +314,18 @@ div.header a.icon {
   width : 512px;
 }
 
+/* definitions for batching */
+div.listingBar {
+  margin-bottom: 2em;
+}
+
+div.listingBar .next {
+  padding-left: 5em;
+} 
+
+div.listingBar .previous {
+  padding-right: 5em;
+}
 </dtml-let>
 
 /* end cascade */
