@@ -1,6 +1,7 @@
 <h3>Index</h3>
 
-<table tal:define="model request/model; view here;
+<table class="indexer"
+  tal:define="model request/model; view here;
                    items model/get_index">
   <tr tal:condition="python: items != None">
 	<th class="transparent" align="left">

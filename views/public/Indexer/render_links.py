@@ -12,5 +12,5 @@ output_convert_html = model.output_convert_html
 
 result = []
 for name, url in links:
-    result.append('<a href="%s">%s</a>' % (url, output_convert_html(name)))
+    result.append('<a class="indexer" href="%s">%s</a>' % (url, output_convert_html(name)))
 return '<br />'.join(result)
