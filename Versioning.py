@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.46 $
+# $Revision: 1.47 $
 
 # Zope
 from DateTime import DateTime
@@ -515,8 +515,7 @@ class Versioning:
             self._approved_version = empty_version
             # index approved version that is now public
             self._index_version(self._public_version[0])
-            self._trigger_subscriptions(
-                self._public_version[0], self._public_version[1])
+            self._trigger_subscriptions()
         # get expiration datetime of public version 
         expiration_datetime = self._public_version[2]
         # expire public version if expiration datetime reached
@@ -529,22 +528,11 @@ class Versioning:
             self._public_version = empty_version
             self._previous_versions = previous_versions
             
-    def _trigger_subscriptions(self, version_id, publication_datetime):
-        # XXX This is called by _update_publication_status - which in turn
-        # is potentially called many times. We only want to trigger the
-        # subscription service once, so we check for a flag on the 
-        # public version.
-        version = getattr(self, version_id, None)
-        if version is None:
-            return
+    def _trigger_subscriptions(self):
         subscription_service = getattr(self, 'service_subscriptions', None)
         if subscription_service is None:
             return
-        triggered_datetime = getattr(
-            version, '__subscription_service_trigger_datetime__', None)
-        if triggered_datetime is None or publication_datetime >= triggered_datetime:
-            subscription_service.sendPublishNotification(self)
-            version.__subscription_service_trigger_datetime__ = DateTime()
+        subscription_service.sendPublishNotification(self)
         
     # ACCESSORS
 
