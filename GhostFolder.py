@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.20 2003/09/22 08:58:20 zagy Exp $
+# $Id: GhostFolder.py,v 1.21 2003/09/22 09:37:20 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -399,9 +399,12 @@ class GhostFolderIconAdapter(Adapter):
     __adapts__ = IGhostFolder
 
     def getIconIdentifier(self):
-        kind = 'folder'
         gf = self.adapted
-        if gf.implements_publication():
-            kind = 'publication'
+        if gf.get_link_status() == gf.LINK_OK:
+            kind = 'folder'
+            if gf.implements_publication():
+                kind = 'publication'
+        else:
+            kind = 'link_broken'
         return ('ghostfolder', kind)
     

@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.96 $
+# $Revision: 1.97 $
 
 import Metadata
 import Folder, Root
@@ -150,6 +150,7 @@ def initialize_icons():
     icon.registry.registerAdapter(icon.MetaTypeAdapter, 5)
     icon.registry.registerAdapter(icon.SilvaFileAdapter, 10)
     icon.registry.registerAdapter(GhostFolder.GhostFolderIconAdapter, 11)
+    icon.registry.registerAdapter(Ghost.GhostIconAdapter, 12)
     mimeicons = [
         ('audio/aiff', 'file_aiff.png'),
         ('audio/x-aiff', 'file_aiff.png'),
@@ -195,8 +196,15 @@ def initialize_icons():
     ri = icon.registry.registerIcon
     for mimetype, icon_name in mimeicons:
         ri(('mime_type', mimetype), 'www/%s' % icon_name, File.__dict__)
-    ri(('ghostfolder', 'folder'), 'www/silvaghostfolder.gif',
-        GhostFolder.__dict__)
-    ri(('ghostfolder', 'publication'), 'www/silvaghostpublication.gif',
-        GhostFolder.__dict__)
+
+    misc_icons = [
+        ('ghostfolder', 'folder', 'silvaghostfolder.gif'),
+        ('ghostfolder', 'publication', 'silvaghostpublication.gif'),
+        ('ghostfolder', 'link_broken', 'silvaghostbroken.png'),
+        ('ghost', 'link_ok', 'silvaghost.gif'),
+        ('ghost', 'link_broken', 'silvaghostbroken.png'),
+    ]
+    for klass, kind, icon_name in misc_icons:
+        ri((klass, kind), 'www/%s' % icon_name, GhostFolder.__dict__)
+
 

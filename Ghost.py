@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.71 $
+# $Revision: 1.72 $
 
 # Zope
 from OFS import SimpleItem
@@ -10,6 +10,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 
 # Silva
+from Products.Silva.icon import Adapter
 from VersionedContent import CatalogedVersionedContent
 from Version import CatalogedVersion
 from Products.Silva import mangle
@@ -19,7 +20,9 @@ from helpers import add_and_edit
 import urlparse
 
 from interfaces import \
-    IVersionedContent, IContainer, IVersion, IContent, IGhost, IGhostContent
+    IVersionedContent, IContainer, IVersion, IContent, IGhost, \
+    IGhostContent, IIcon
+    
 
 icon = "www/silvaghost.gif"
 
@@ -420,3 +423,16 @@ def canBeHaunted(to_be_haunted):
 
 
 
+class GhostIconAdapter(Adapter):
+   
+    __implements__ = IIcon
+    __adapts__ = IGhostContent
+
+    def getIconIdentifier(self):
+        gf = self.adapted
+        version = gf.getLastVersion()
+        kind = 'link_broken'
+        if version.get_link_status() == version.LINK_OK:
+            kind = 'link_ok'
+        return ('ghost', kind)
+    
