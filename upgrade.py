@@ -118,7 +118,10 @@ class UpgradeRegistry:
                 if stats['threshold'] > threshold:
                     print '#### Commit sub transaction ####'
                     get_transaction().commit(1)
-                    o._p_jar.cacheGC()
+                    if o._p_jar is not None:
+                        o._p_jar.cacheGC()
+                    else:
+                        print '_p_jar is None for', o
                     stats['threshold'] = 0
             stat['endtime'] = DateTime.DateTime()
         finally:
