@@ -8,7 +8,25 @@ from Membership import NoneMember, noneMember
 def from091to092(self, root):
     """Upgrade Silva content from 0.9.1 to 0.9.2
     """
-    upgrade_using_registry(root, '0.9.2')
+    # the manage_beforeDelete of the original Document doesn't work, since the 
+    # code will look for a 'content' attribute, which doesn't yet exist on 
+    # them, therefore we're going to have to do some trickery here...
+    # This is a nasty piece of monkeypatching, mainly because other functionality
+    # might require the original use of manage_beforeDelete somewhere, and
+    # it isn't possible to monkeypatch the object since no reference to the object
+    # can be used in monkeypatched object methods (self is not passed as a variable to
+    # those methods)
+    from Document import Document
+
+    old_manage_beforeDelete = Document.manage_beforeDelete
+    def manage_beforeDelete_old_style_docs(self, item, container):
+        Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
+    Document.manage_beforeDelete = manage_beforeDelete_old_style_docs
+    
+    try:
+        upgrade_using_registry(root, '0.9.2')
+    finally:
+        Document.manage_beforeDelete = old_manage_beforeDelete
 
 def from09to091(self, root):
     """Upgrade Silva from 0.9 to 0.9.1
@@ -216,7 +234,7 @@ def upgrade_using_registry(obj, version):
                 if res:
                     o = res
         if hasattr(o, 'objectValues'):
-            print 'Going to descend into', o.id
+            #print 'Going to descend into', o.id
             upgrade_using_registry(o, version)
 
 class UpgradeRegistry:
@@ -241,8 +259,8 @@ class UpgradeRegistry:
     def get_meta_type(self, meta_type, version):
         """Return the registered upgrade_handlers of meta_type
         """
-        print 'Going to return upgrades for %s: %s' % (meta_type, version)
-        print 'Upgrades:', self.__registry[meta_type][version]
+        #print 'Going to return upgrades for %s: %s' % (meta_type, version)
+        #print 'Upgrades:', self.__registry[meta_type][version]
         return self.__registry[meta_type][version]
 
     def is_registered(self, meta_type, version):
@@ -283,49 +301,21 @@ upgrade_registry.register('Silva DemoObject', upgrade_demoobject_091, '0.9.1')
 # in the chain of methods (old-style ParsedXML versions are converted to Version
 # objects, which means that the way to perform certain actions on them changes)
 
-# some helper function
-def get_versions_or_self(obj):
-    print 'Getting versions of', obj.id
-    ret = []
-    if (IVersionedContent.isImplementedBy(obj) or
-            ICatalogedVersionedContent.isImplementedBy(obj)):
-        versions = []
-        for version in ['_unapproved_version', '_approved_version',
-                        '_public_version']:
-            v = getattr(obj, version)
-            if v[0] is not None:
-                versions.append(v)
-            print version, ':', v
-        if obj._previous_versions is not None:
-            versions += obj._previous_versions
-            print 'Previous versions:', obj._previous_versions
-        for version in versions:
-            print 'Going to get version', version
-            print getattr(obj, version[0])
-            ret.append(getattr(obj, version[0]))
-    else:
-        ret = [obj]
-    return ret
-            
-# converting the data of the object to unicode will mostly (if not only)
-# consist of converting metadata fields, so it is probably nice to do
-# both in one go
+from StringIO import StringIO
 
-# mapping from metadata set name to a mapping of old metadata field names to 
-# new (the second mapping can not be the other way round since there can be several 
-# old names for one new metadata field)
-# note that this mapping is used to find out the fields that should be
-# converted, so all to-be-converted fields should be mentioned
-set_el_name_mapping = {'silva-extra': {'document_comment': 'comment', 
-                                    'container_comment': 'comment',
-                                    }
-                    }
+# small helper function to get the xml from an old-style version
+def get_version_xml(obj, version):
+    v = getattr(obj, version, None)
+    if v is None:
+        raise Exception, 'No version %s!' % version
+    s = StringIO()
+    v.documentElement.writeStream(s)
+    return s.getvalue().encode('UTF8')
 
-# convert old style documents (with ParsedXML as version) to new style ones (where
-# ParsedXML is an attribute of Version)
+from Document import DocumentVersion
+
 def convert_document_092(obj):
-    print 'Converting document',  obj.id
-    from StringIO import StringIO
+    #print 'Converting document',  obj.id
     from random import randrange
     from string import lowercase
     from DateTime import DateTime
@@ -336,94 +326,57 @@ def convert_document_092(obj):
             # bypass this document, as upgrade seems to be done already
             return
 
-    parent = obj.aq_parent.aq_inner
-    
-    # first copy self to some other name
-    # create some unique id
-    oldid = obj.id
-    uniqueid = ''
-    while 1:
-        uniqueid += lowercase[randrange(len(lowercase))]
-        if len(uniqueid) > 4 and uniqueid not in parent.objectIds():
-            break
+    for version in ['unapproved', 'approved', 'public', 'last_closed']:
+        v = getattr(obj, 'get_%s_version' % version)()
+        if v is not None:
+            xml = get_version_xml(obj, v)
+            newver = DocumentVersion(v, obj._title)
+            newver.content.manage_edit(xml)
+            setattr(obj, v, newver)
 
-    parent.manage_renameObject(obj.id, uniqueid)
-    parent.manage_addProduct['Silva'].manage_addDocument(oldid, obj._title)
-
-    newobj = getattr(parent, oldid)
-    
-    # we're going to have to do this from old to new: first the last
-    # closed, then the public, the approved and last the unapproved 
-    # versions. This way we can use Silva's version machinery without any 
-    # problems.
-
-    # set the id to use for creating new versions, should start at 1 'cause there
-    # already is the one that's created when creating a document
-    current_id = 1
-    
-    # we copy the last closed version because of the newly added revert
-    # machinery, the rest of the closed versions we skip since we don't
-    # have any use for them anyway. The user should be warned about this
-    # though!
-
-    def get_version_xml(obj, version):
-        v = getattr(obj, version, None)
-        if v is None:
-            raise Exception, 'No version %s!' % version
-        s = StringIO()
-        v.documentElement.writeStream(s)
-        return s.getvalue().encode('UTF8')
-    
-    last_closed = obj.get_last_closed_version()
-    if last_closed is not None:
-        xml = get_version_xml(obj, last_closed)
-        newobj.set_unapproved_version_publication_datetime(DateTime() - 1)
-        newobj.set_unapproved_version_expiration_datetime(DateTime() - 1)
-        newobj.approve_version() # should be closed directly because of expiration date
-        getattr(newobj, str(newobj.get_last_closed_version())).content.manage_edit(xml)
-        newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
-        newobj.create_version(str(current_id), None, None)
-        current_id += 1
-    public = obj.get_public_version()
-    if public is not None:
-        xml = get_version_xml(obj, public)
-        newobj.set_unapproved_version_publication_datetime(
-                obj.get_public_version_publication_datetime())
-        newobj.set_unapproved_version_expiration_datetime(
-                obj.get_public_version_expiration_datetime())
-        newobj.approve_version()
-        getattr(newobj, str(newobj.get_public_version())).content.manage_edit(xml)
-        newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
-        newobj.create_version(str(current_id), None, None)
-        current_id += 1
-    approved = obj.get_approved_version()
-    if approved is not None:
-        xml = get_version_xml(obj, approved)
-        newobj.set_unapproved_version_publication_datetime(
-                obj.get_approved_version_publication_datetime())
-        newobj.set_unapproved_version_expiration_datetime(
-                obj.get_approved_version_expiration_datetime())
-        newobj.approve_version()
-        getattr(newobj, str(newobj.get_approved_version())).content.manage_edit(xml)
-        newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
-        # since there can only be an approved OR an unapproved version, we don't
-        # have to create a new one here
-        current_id += 1
-    unapproved = obj.get_unapproved_version()
-    if unapproved is not None:
-        xml = get_version_xml(obj, unapproved)
-        newobj.set_unapproved_version_publication_datetime(
-                obj.get_unapproved_version_publication_datetime())
-        newobj.set_unapproved_version_expiration_datetime(
-                obj.get_unapproved_version_expiration_datetime())
-        getattr(newobj, str(newobj.get_unapproved_version())).content.manage_edit(xml)
-    
-    parent.manage_delObjects([uniqueid])
-    print 'Unique id %s is deleted' % uniqueid
-
-    return newobj
-
+    obj._previous_versions = None
+            
 upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
+
+# converting the data of the object to unicode will mostly (if not only)
+# consist of converting metadata fields, so it is probably nice to do
+# both in one go
+
+# mapping from metadata set name to a mapping of old metadata field names to 
+# new (the second mapping can not be the other way round since there can be several 
+# old names for one new metadata field)
+# note that this mapping is used to find out the fields that should be
+# converted, so all to-be-converted fields should be mentioned
+set_el_name_mapping = {'silva-content': {'short_title': 'shorttitle',
+                                    },
+                        'silva-extra': {'document_comment': 'comment', 
+                                    'container_comment': 'comment',
+                                    }
+                    }
+
+# some helper function
+def get_versions_or_self(obj):
+    #print 'Getting versions of', obj.id
+    ret = []
+    if (IVersionedContent.isImplementedBy(obj) or
+            ICatalogedVersionedContent.isImplementedBy(obj)):
+        versions = []
+        for version in ['_unapproved_version', '_approved_version',
+                        '_public_version']:
+            v = getattr(obj, version)
+            if v[0] is not None:
+                versions.append(v)
+            #print version, ':', v
+        if obj._previous_versions is not None:
+            versions += obj._previous_versions
+            #print 'Previous versions:', obj._previous_versions
+        for version in versions:
+            #print 'Going to get version', version
+            #print getattr(obj, version[0])
+            ret.append(getattr(obj, version[0]))
+    else:
+        ret = [obj]
+    return ret
 
 def unicode_and_metadata_092(obj):
     # get the metadata sets for the object
@@ -454,7 +407,17 @@ def unicode_and_metadata_092(obj):
         objects = get_versions_or_self(obj)
         for object in objects:
             binding = ms.getMetadata(object)
-            binding.setValues(set_name, values, 0)
+            if binding is None:
+                print 'Binding object:', object.meta_type
+                continue
+            if set_name in binding.getSetNames():
+                errors = binding._setData(values, set_id=set_name, reindex=0)
+                if errors:
+                    print 'Errors on setting metadata values', str(values).encode('ascii', 'ignore'), 'on set', set_name, 'for object on url', object.absolute_url(), ':', errors
+                else:
+                    print 'Set metadata values', str(values).encode('ascii', 'replace'), 'on set', set_name, 'for object on url', object.absolute_url()
+            else:
+                print 'Skipping meta_data values', str(values).encode('ascii', 'replace'), 'on set', set_name, 'for object on url', object.absolute_url()
 
 upgrade_registry.register('Silva Root', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva Folder', unicode_and_metadata_092, '0.9.2')
@@ -462,10 +425,10 @@ upgrade_registry.register('Silva Publication', unicode_and_metadata_092, '0.9.2'
 upgrade_registry.register('Silva Document', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva DemoObject', unicode_and_metadata_092, '0.9.2')
 # FIXME: upgrade metadata for Ghosts and Assets? The title?
-#upgrade_registry.register('Silva Ghost', unicode_and_metadata_092, '0.9.2')
-#upgrade_registry.register('Silva Image', unicode_and_metadata_092, '0.9.2')
-#upgrade_registry.register('Silva File', unicode_and_metadata_092, '0.9.2')
-#upgrade_registry.register('Silva SQL Data Source', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva Ghost', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva Image', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva File', unicode_and_metadata_092, '0.9.2')
+upgrade_registry.register('Silva SQL Data Source', unicode_and_metadata_092, '0.9.2')
 
             
 def set_cache_data_092(obj):
@@ -477,22 +440,6 @@ upgrade_registry.register('Silva Document', set_cache_data_092, '0.9.2')
 upgrade_registry.register('Silva Ghost', set_cache_data_092, '0.9.2')
 upgrade_registry.register('Silva DemoObject', set_cache_data_092, '0.9.2')
 
-
-def catalog_092(obj):
-    """Do initial catalogin of objects"""
-    print 'Catalog'
-    if ((IVersion.isImplementedBy(obj) or ICatalogedVersion.isImplementedBy(obj)) and
-            obj.id not in obj.aq_parent._get_indexable_versions()):
-        return
-    obj.index_object()
-    
-upgrade_registry.register('Silva Root', catalog_092, '0.9.2')
-upgrade_registry.register('Silva Folder', catalog_092, '0.9.2')
-upgrade_registry.register('Silva Publication', catalog_092, '0.9.2')
-upgrade_registry.register('Silva Document Version', catalog_092, '0.9.2')
-upgrade_registry.register('Silva DemoObject Version', catalog_092, '0.9.2')
-upgrade_registry.register('Silva Ghost Version', catalog_092, '0.9.2')
-
 def replace_container_title_092(obj):
     """Move the title to the metadata
     
@@ -502,8 +449,8 @@ def replace_container_title_092(obj):
     available. If not, the title should just be
     removed
     """
-    print 'Replace container'
-    if not hasattr(obj, '_title'):
+    #print 'Replace container'
+    if not '_title' in obj.aq_base.__dict__.keys():
         return
     title = obj._title
     del obj._title
@@ -511,6 +458,7 @@ def replace_container_title_092(obj):
         title = unicode(title, 'cp1252', 'replace')
     default = obj.get_default()
     if default is not None:
+        print 'Setting title', title.encode('ascii', 'replace'), 'on default of', obj.id
         # because this code is called *before* the folder is traversed,
         # the versionedcontent objects are still old style here, so we don't
         # have to go through all kinds of trouble to get all the versions
@@ -523,18 +471,28 @@ def replace_object_title_092(obj):
     If the object is a default document, pass because
     it should be/has been set by the folder method
     """
-    print 'Replace object title for', obj.id
-    if not hasattr(obj, '_title'):
+    #print 'Replace object title for', obj.id
+    if not '_title' in obj.aq_base.__dict__.keys():
+        print 'No title available on', obj.absolute_url()
         return
     if obj is obj.aq_parent.get_default():
         return
-    title = obj._title
-    del obj._title
+    print obj.absolute_url()
+    title = obj.aq_inner._title
+    print 'Title:', title.encode('ascii', 'replace')
+    print 'Plain title attribute:', obj.aq_inner.title
+    print dir(obj.aq_inner)
+    print obj.aq_base.__dict__
+    del obj.aq_inner._title
     if type(title) != type(u''):
         title = unicode(title, 'cp1252', 'replace')
     objects = get_versions_or_self(obj)
     for object in objects:
+        print 'Going to replace title of version', object.getPhysicalPath()
+        print 'New title:', title.encode('ascii', 'replace')
         object.set_title(title)
+        #print type(title)
+        #print type(object.title)
     """
     if obj is not obj.aq_parent.get_default():
         title = obj._title
@@ -549,11 +507,11 @@ def replace_object_title_092(obj):
                 v = getattr(obj, version)
                 if v[0] is not None:
                     versions.append(v)
-                print version
+                #print version
             if obj._previous_versions is not None:
                 versions += obj._previous_versions
             for version in versions:
-                print getattr(obj, version[0])
+                #print getattr(obj, version[0])
                 getattr(obj, version[0]).set_title(title)
         else:
             obj.set_title(title)
@@ -568,5 +526,24 @@ upgrade_registry.register('Silva File', replace_object_title_092, '0.9.2')
 upgrade_registry.register('Silva Image', replace_object_title_092, '0.9.2')
 upgrade_registry.register('Silva SQL Data Source', replace_object_title_092, '0.9.2')
 upgrade_registry.register('Silva Indexer', replace_object_title_092, '0.9.2')
+
+def catalog_092(obj):
+    """Do initial catalogin of objects"""
+    #print 'Catalog', obj.getPhysicalPath()
+    if ((IVersion.isImplementedBy(obj) or ICatalogedVersion.isImplementedBy(obj)) and
+            obj.id not in obj.aq_parent._get_indexable_versions()):
+        return
+    #if hasattr(obj, 'content'):
+        #print 'Type of content:', type(obj.content_xml())
+        #print 'Fulltext:', type(obj.fulltext())
+        #print 'Title:', type(obj.title)
+    obj.index_object()
+    
+upgrade_registry.register('Silva Root', catalog_092, '0.9.2')
+upgrade_registry.register('Silva Folder', catalog_092, '0.9.2')
+upgrade_registry.register('Silva Publication', catalog_092, '0.9.2')
+upgrade_registry.register('Silva Document Version', catalog_092, '0.9.2')
+upgrade_registry.register('Silva DemoObject Version', catalog_092, '0.9.2')
+upgrade_registry.register('Silva Ghost Version', catalog_092, '0.9.2')
 
 
