@@ -33,13 +33,13 @@ shade42:string=#666b6b
 shade40:string=#616665
 
 shade36:string=#575c5b
-
 shade30:string=#494c4c
-
 shade26:string=#3f4242
-
 nightShade:string=black
 
+
+workspace:string=#d1dcdb
+contentWorkspace:string=#e5eeea
 
 mainFont:string=70% Verdana, Helvetica, Arial, sans-serif
 mainBackground:string=#808989
@@ -60,8 +60,6 @@ mainTabFontWeight:string=normal
 mainTabFontColor:string=#e3ecff
 mainTabFontColorSelected:string=#424244
 mainTabBackgroundNotSelected:string=#000000
-
-workspace:string=#a7b0b5
 
 headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
 headingFontColor:string=#444446
@@ -85,7 +83,6 @@ contentTabBackdrop:string=#000000
 contentTabFontWeight:string=normal
 contentTabFontColorSelected:string=#000000
 
-contentWorkspace:string=#e5eeea
 contentTabBackground:string=#729b87
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2

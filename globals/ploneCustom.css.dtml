@@ -26,7 +26,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* darker870: cfd7e1; selected bac1cc; light d4dce6; */
 div.workspace {
-  background : #a7adb5;
+  background : &dtml-workspace;;
   margin: none;
 }
 
@@ -237,7 +237,7 @@ table.columns {
   border-collapse: collapse;
 }
 
-/* 3 column table (default) */
+/* 3 column table (defat) */
 table.columns td.left {
     width: 20%;
     padding: 8px 0.8em 0 8px;
