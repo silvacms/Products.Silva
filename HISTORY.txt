@@ -8,6 +8,8 @@ Silva changes
 
     Bugs fixed
 
+        - Renaming publishables no longer changes ordering (issue 635)
+
         - In the Docma queues, the fullname of the job owner is now shown
           instead of the userid, which was seen as a security issue by
           some customers.
@@ -23,6 +25,9 @@ Silva changes
 
     Features Added
 
+        - Added IP Groups. This replaces the `restriction by IP address' text
+          area in tab_access.
+          
         - Ghosts have a `get reference' button now.
     
         - Siva Files now have their icon dependent on the content. I.e. you 
