@@ -44,8 +44,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'test_link')
         # asset file import works
         self.assertEquals(
-            importfolder.testfolder.testfolder2['testzip']['sound1.mp3'].id,
-            'sound1.mp3')
+            importfolder.testfolder.testfolder2['testzip']['sound1.wav'].id,
+            'sound1.wav')
         # .zexp import works:
         self.assertEquals(
             importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].id,
@@ -63,7 +63,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         zip_out = ZipFile(f, 'r')
         namelist = zip_out.namelist()
         namelist.sort()
-        # self.assertEquals(namelist, ['assets/1', 'assets/2', 'assets/3', 'assets/4', 'assets/5', 'silva.xml', 'zexps/1.zexp', 'zexps/2.zexp'])
+        self.assertEquals(namelist, ['assets/1', 'assets/2', 'assets/3', 'assets/4', 'assets/5', 'assets/6', 'silva.xml'])
         zip_out.close()
         f.close()
         os.remove('test_export.zip')
