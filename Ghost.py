@@ -10,6 +10,8 @@ class Ghost(TocSupport, SimpleItem.Item):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Ghost"
+
+    __implements__ = Interfaces.Content
     
     def __init__(self, id, title):
         self.id = id

@@ -148,6 +148,12 @@ class Versioning:
         """
         self._update_publication_status()
         return self._approved_version != empty_version
+
+    def is_version_published(self):
+        """Check whether version is published.
+        """
+        self._update_publication_status()
+        return self._public_version != empty_version
     
     def get_unapproved_version(self):
         """Get the unapproved version.
@@ -197,13 +203,24 @@ class Versioning:
         """Get version datetime."""
         self._update_publication_status()
         return self._approved_version[2] or self._unapproved_version[2]
-    
+
+
+    def get_next_version_status(self):
+        """Get status of next version.
+        """
+        if self.get_unapproved_version() is not None:
+            return "not_approved"
+        elif self.get_approved_version() is not None:
+            return "approved"
+        else:
+            return "no_next_version"
+        
     def get_public_version(self):
         """Get the public version.
         """
         self._update_publication_status()
         return self._public_version[0]
-                
+
     def get_public_version_publication_datetime(self):
         """Get publication datetime."""
         self._update_publication_status()
@@ -213,6 +230,14 @@ class Versioning:
         """Get version datetime."""
         self._update_publication_status()
         return self._public_version[2]
+
+    def get_public_version_status(self):
+        if self.get_public_version() is not None:
+            return "published"
+        elif self.get_previous_versions():
+            return "closed"
+        else:
+            return "no_public_version"
     
     def get_previous_versions(self):
         """Get list of previous versions, index 0 most recent.

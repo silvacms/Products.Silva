@@ -9,6 +9,7 @@ from ViewRegistry import ViewAttribute
 from TocSupport import TocSupport
 from Versioning import Versioning
 import ForgivingParser
+import Interfaces
 # misc
 from helpers import add_and_edit
 from cgi import escape
@@ -18,6 +19,8 @@ class Document(TocSupport, Folder.Folder, Versioning):
     """
     meta_type = "Silva Document"
 
+    __implements__ = Interfaces.VersionedContent
+    
     security = ClassSecurityInfo()
    
     # allow edit view on this object
@@ -77,45 +80,6 @@ class Document(TocSupport, Folder.Folder, Versioning):
     def __repr__(self):
         return "<Silva Document instance at %s>" % self.id
 
-    def title(self):
-        """Get title. If we're 'doc', we get title from our folder.
-        """
-        if self.id == 'doc':
-            folder = self.get_folder()
-            if folder.meta_type in ['Silva Folder', 'Silva Root']:
-                return folder.title()
-            else:
-                return "(Default)"
-        elif self.id != '': 
-            return self._title
-        else:
-            return "(Untitled)"
-
-    def set_title(self, title):
-        """Set the title.
-        """
-        self._title = title
-
-    def get_creation_datetime(self):
-        """Get document creation date.
-        """
-        if hasattr(self, '_creation_datetime'):
-            return self._creation_datetime
-        else:
-            # hack
-            return DateTime.DateTime(2002, 1, 1, 12,  0)
-        
-    def get_modification_datetime(self):
-        """Get document modification date.
-        """
-        version = self.get_next_version() or get_public_version()
-        doc = getattr(self, version)
-        return doc.bobobase_modification_datetime()
-        
-    def get_document(self):
-        """Get the document."""
-        return self.aq_inner
-        
 #    def manage_afterClone(self, obj):
 #        """We were copied, make sure we're not public.
 #        """
@@ -125,23 +89,12 @@ class Document(TocSupport, Folder.Folder, Versioning):
 #        # close any public version
 #        self.close_version()
 
-
-    #def index_html(self, REQUEST=None, RESPONSE=None):
-    #    """Get rendered document.
-    #    """
-    #    if RESPONSE:
-    #        RESPONSE.setHeader('Content-Type', 'text/xml')
-    #    return self.doc.index_html(REQUEST, RESPONSE)
-
-    def document_url(self):
-        """Get document URL."""
-        return self.absolute_url()
-
-    def xml_url(self):
-        """Get URL for xml data.
+    # MANIPULATORS
+    def set_title(self, title):
+        """Set the title.
         """
-        return self.absolute_url() + '/' + self.get_unapproved_version()
-    
+        self._title = title
+
     def create_copy(self):
         """Create new version of public version.
         """
@@ -157,7 +110,55 @@ class Document(TocSupport, Folder.Folder, Versioning):
                           new_version_id,
                           self.REQUEST)
         self.create_version(new_version_id, None, None)
+
+    # ACCESSORS
+    def get_document(self):
+        """Get the document. Can be used with acquisition to get
+        the 'nearest' document."""
+        return self.aq_inner
+
+    def document_url(self):
+        """Get document URL."""
+        return self.absolute_url()
+
+    def xml_url(self):
+        """Get URL for xml data.
+        """
+        return self.absolute_url() + '/' + self.get_unapproved_version()
+
+    def title(self):
+        """Get title. If we're the default document,
+        we get title from our containing folder (or publication, etc).
+        """
+        if self.id == 'default':
+            # get the nearest container's title
+            return self.get_folder().title()
+        else:
+            return self._title
+
+    def is_published(self):
+        """Return true if this is published.
+        """
+        return self.get_public_version() is not None
+    
+    def get_creation_datetime(self):
+        """Get document creation date.
+        """
+        if hasattr(self, '_creation_datetime'):
+            return self._creation_datetime
+        else:
+            # hack
+            return DateTime.DateTime(2002, 1, 1, 12,  0)
         
+    def get_modification_datetime(self):
+        """Get document modification date.
+        """
+        doc_id = self.get_next_version() or self.get_public_version()
+        if doc_id is not None:
+            return getattr(self, doc_id).bobobase_modification_time()
+        else:
+            return None
+                        
     def editor(self):
         """Show document in editor mode.
         """
@@ -180,24 +181,13 @@ class Document(TocSupport, Folder.Folder, Versioning):
         if version_id is None:
             version_id = self.get_public_version()
             if version_id is None:
-                return "There is no document to preview."
+                return None
         doc = getattr(self, version_id)
         view_wm = self.view_wm
         node = view_wm.get_widget_node(doc.documentElement)
         return node.render(node, self.REQUEST)
 
     def view(self):
-        """View document as HTML
-        """
-        version_id = self.get_public_version()
-        if version_id is None:
-            return "There is no public version."
-        doc = getattr(self, version_id)
-        view_wm = self.view_wm
-        node = view_wm.get_widget_node(doc.documentElement)
-        return node.render(node, self.REQUEST)
-
-    def public(self):
         """Get version open to the public.
         """
         version_id = self.get_public_version()
@@ -207,21 +197,12 @@ class Document(TocSupport, Folder.Folder, Versioning):
         view_wm = self.view_wm
         node = view_wm.get_widget_node(doc.documentElement)
         return node.render(node, self.REQUEST)
-
-    def is_published(self):
-        """Return true if this is published.
-        """
-        return self.get_public_version() is not None
         
-    security.declareProtected('Access contents information',
-                              'get_metadata')
     def get_metadata(self, name):
         """Get meta data.
         """
         return self._metadata.get(name, None)
     
-    security.declareProtected('Change Silva Documents',
-                              'set_metadata')
     def set_metadata(self, name, value):
         """Set meta data.
         """
@@ -259,34 +240,7 @@ class Document(TocSupport, Folder.Folder, Versioning):
         folder = self.to_folder()
         # paste stuff into the folder
         folder.action_paste(REQUEST)
-    
-    def get_modification_datetime(self):
-        """Get modification date.
-        """
-        doc_id = self.get_next_version() or self.get_public_version()
-        if doc_id is not None:
-            return getattr(self, doc_id).bobobase_modification_time()
-        else:
-            return None
-
-    def get_unpublished_status(self):
-        """Get status of unpublished document.
-        """
-        if self.get_unapproved_version() is not None:
-            return "not_approved"
-        elif self.get_approved_version() is not None:
-            return "approved"
-        else:
-            return "no_next"
-
-    def get_published_status(self):
-        if self.get_public_version() is not None:
-            return "published"
-        elif self.get_previous_versions():
-            return "closed"
-        else:
-            return "no_published"
-        
+           
     def render_text_as_html(self, node):
         """Render textual content as HTML.
         """

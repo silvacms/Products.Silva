@@ -6,7 +6,7 @@ class SilvaObject:
         """Change the title of the content object.
         """
         pass
-    
+
     # ACCESSORS
     def title(self):
         """The title of the content object.
@@ -28,7 +28,28 @@ class SilvaObject:
         supported.
         """
         pass
-      
+
+class Information(SilvaObject):
+    """Information that does not appear in the official contents of a publication,
+    but can be referred to from documents and can be included
+    (images, contactinfo, etc)'
+    """
+    def editor(self):
+        """
+        """
+        pass
+
+    def preview(self):
+        """See the information as the user would see it.
+        """
+        pass
+
+    
+    def view(self):
+        """Use the information in context.
+        """
+        pass
+    
 class Content(SilvaObject):
     # MANIPULATORS
 
@@ -36,7 +57,7 @@ class Content(SilvaObject):
     # ACCESSORS    
     def editor(self):
         """Show the editor of the content object to the author.
-        """
+         """
         pass
 
     def preview(self):
@@ -49,6 +70,43 @@ class Content(SilvaObject):
         """Show the content object to the end user.
         """
         pass
+
+class Security:
+    """Can be mixed in with an object to support Silva security.
+    (built on top of Zope security)
+    """
+    def get_users(self):
+        """Get the users that have local roles here.
+        """
+        pass
+
+    def get_groups(self):
+        """Get the groups that have local roles here.
+        """
+        pass
+
+    def get_roles_for_user(self, userid):
+        """Get the local roles that a silva user has here.
+        """
+        pass
+
+    def get_roles_for_group(self, groupid):
+        """Get the local roles that a silva group has here.
+        """
+        pass
+
+    def set_roles_for_user(self, userid, roles):
+        pass
+
+    def add_role_to_user(self, userid, role):
+        pass
+
+    def set_roles_for_group(self, userid, roles):
+        pass
+
+    def add_role_to_group(self, userid, role):
+        pass
+    
 
 class Versioning:
     """Can be mixed in with an object to support simple versioning.

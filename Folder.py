@@ -9,6 +9,7 @@ import Globals
 from ViewRegistry import ViewAttribute
 from TocSupport import TocSupport
 import Copying
+import Interfaces
 # misc
 from helpers import add_and_edit
 
@@ -17,6 +18,8 @@ class Folder(TocSupport, Folder.Folder):
     """
     meta_type = "Silva Folder"
 
+    __implements__ = Interfaces.Container
+    
     security = ClassSecurityInfo()
 
     # allow edit view on this object
@@ -29,26 +32,37 @@ class Folder(TocSupport, Folder.Folder):
         
     def __repr__(self):
         return "<Silva Folder instance at %s>" % self.id
-    
-    def title(self):
-        """Get the title.
-        """
-        if hasattr(self, '_title'):
-            return self._title
-        else:
-            return ""
 
+    # MANIPULATORS
     def set_title(self, title):
         """Set the title of this folder.
         """
-        self._title = title
+        self._title = title 
+    
+    # ACCESSORS
 
+    def get_folder(self):
+        """Get the folder an object is in. Can be used with
+        acquisition to get the 'nearest' folder.
+        """
+        return self.aq_inner
+    
+    def folder_url(self):
+        """Get url for folder.
+        """
+        return self.absolute_url()
+
+    def title(self):
+        """Get the title.
+        """
+        return self._title
+    
     def is_published(self):
         """Return true if this is published."""
-        for item in self.objectValues(['Silva Folder', 'Silva Document']):
-            if item.is_published():
-                return 1            
-        return 0
+        #for item in self.objectValues(['Silva Folder', 'Silva Document']):
+        #    if item.is_published():
+        #        return 1            
+        return 1
         
     def move_object_up(self, ref):
         """Move object up.
@@ -59,16 +73,16 @@ class Folder(TocSupport, Folder.Folder):
         toc_ids = folder._toc_ids
         if object.id not in toc_ids:
             return None
-        # can't move up 'doc'
-        if object.id == 'doc':
+        # can't move up 'default'
+        if object.id == 'default':
             return None
         # find position of object in toc_ids
         i = toc_ids.index(object.id)
         # can't move up something already on top
         if i == 0:
             return None
-        # can't move above 'doc'
-        if i == 1 and toc_ids[0] == 'doc':
+        # can't move above 'default'
+        if i == 1 and toc_ids[0] == 'default':
             return None
         # now move up id
         toc_ids[i] = toc_ids[i - 1]
@@ -85,8 +99,8 @@ class Folder(TocSupport, Folder.Folder):
         # can't move anything not in toc_ids
         if object.id not in toc_ids:
             return None
-        # can't move down 'doc'
-        if object.id == 'doc':
+        # can't move down 'default'
+        if object.id == 'default':
             return None
         # find position of object in folder
         i = toc_ids.index(object.id)
@@ -98,37 +112,31 @@ class Folder(TocSupport, Folder.Folder):
         toc_ids[i + 1] = object.id
         folder._toc_ids = toc_ids
         return 1
-    
-    def folder_url(self):
-        """Get url for folder.
-        """
-        return self.absolute_url()
 
-    def get_folder(self):
-        """Get the folder an object is in.
+    def get_contents(self):
+        """Get list of contents of this folder.
         """
-        return self.aq_inner
+        return map(self._getOb, self._toc_ids)
         
-    def get_toc(self):
-        """Get flattened table of contents.
+    def get_tree(self):
+        """Get flattened tree of contents.
         """
         l = []
-        self._get_toc_helper(l, 0)
-        #for indent, item in l:
-        #    print item.aq_chain
+        self._get_tree_helper(l, 0)
         return l
 
-    def _get_toc_helper(self, l, indent):
+    def _get_tree_helper(self, l, indent):
         # make _toc_ids if we haven't got any
         toc_ids = getattr(self, '_toc_ids', None)
-        # uncomment next line to flush toc_ids attributes completely
+        # uncomment next lines to flush toc_ids attributes completely
         # (you'll lose order info too, though)
         #toc_ids = None
-        if toc_ids is None:
-            toc_ids = []
-            for item in self.objectValues(['Silva Folder', 'Silva Document']):
-                toc_ids.append(item.id)
-            self._toc_ids = toc_ids
+        # FIXME
+        #if toc_ids is None:
+        #    toc_ids = []
+        #    for item in self.objectValues(['Silva Folder', 'Silva Document']):
+        #        toc_ids.append(item.id)
+        #    self._toc_ids = toc_ids
             
         # first sort items so that doc is always the first item
         items = []
@@ -149,7 +157,7 @@ class Folder(TocSupport, Folder.Folder):
         for item in items:
             if item.meta_type == 'Silva Folder':
                 l.append((indent, item))
-                item._get_toc_helper(l, indent + 1)
+                item._get_tree_helper(l, indent + 1)
             else:
                 l.append((indent, item))
 
@@ -243,14 +251,14 @@ Globals.InitializeClass(Folder)
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
                                         __name__='manage_addFolderForm')
 
-def manage_addFolder(self, id, title, create_doc=1, REQUEST=None):
+def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     """Add a Folder."""
     object = Folder(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
     # add doc
-    if create_doc:
-        object.manage_addProduct['Silva'].manage_addDocument('doc', '')
+    if create_default:
+        object.manage_addProduct['Silva'].manage_addDocument('default', '')
     add_and_edit(self, id, REQUEST)
     return ''
 

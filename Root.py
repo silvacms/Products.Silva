@@ -4,7 +4,8 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
 # Silva
 from Folder import Folder
-# misc
+import Interfaces
+#misc
 from helpers import add_and_edit
 
 class Root(Folder):
@@ -12,6 +13,8 @@ class Root(Folder):
     """
     meta_type = "Silva Root"
 
+    __implements__ = Interfaces.Container
+    
     security = ClassSecurityInfo()
 
     def __init__(self, id, title):
@@ -22,17 +25,10 @@ class Root(Folder):
         return "<Silva Root instance at %s>" % self.id
 
     def get_root(self):
-        """Get root of site.
+        """Get root of site. Can be used with acquisition get the
+        'nearest' Silva root.
         """
         return self.aq_inner
-
-    #def __bobo_traverse__(self, request, key):
-    #    """Put in skin layer just below root.
-    #    """
-    #    # FIXME: only handle Silva Folder skin now..
-    #    r = self.service_view_registry
-    #    skin = getattr(r, r.view_types['edit']['Silva Folder'])
-    #    return getattr(self.__of__(skin), key)
     
     def get_view(self, view_type, obj):
         """Get a view for an object from the view registry.
