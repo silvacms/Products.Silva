@@ -25,13 +25,16 @@ def from085to086(self, root):
 
     # also copy over layout stuff
     layout_ids = [obj.getId() for obj in orig_root.objectValues() if
-                  obj.meta_type in ['DTML Method', 'Script (Python)', 'Page Template']]
+                  obj.meta_type in ['DTML Method', 'Script (Python)', 'Page Template']  or \
+                  obj.getId() in ('service_groups', 'service_files') ]
 
     other_ids = [obj.getId() for obj in orig_root.objectValues() if
                  obj.meta_type not in ['DTML Method', 'Script (Python)', 'Page Template', \
                                        'Silva View Registry', 'XMLWidgets Editor Service', 'XMLWidgets Registry'] \
-                 and obj.getId() not in ['globals', 'service_utils', 'service_setup', 'service_widgets', 'service_groups'] \
+                 and obj.getId() not in ['globals', 'service_utils', 'service_setup', 'service_widgets', 'service_groups', 'service_files'] \
                  and not ISilvaObject.isImplementedBy(obj) ]
+
+    
     cb = orig_root.manage_copyObjects(layout_ids)
     dest_root.manage_pasteObjects(cb_copy_data=cb)
 
