@@ -500,7 +500,7 @@ input.warningbox {
 }
 
 
-/* __________________________________________________ tab bar definition _____ */  
+/* _________________________________________________ tab bar definition _____ */  
 
 /* was 36445b */
 td.tab-bg {
@@ -597,6 +597,32 @@ td.tab a.tree:hover {
   font-family : verdana, arial, helvetica, sans-serif; 
   color : #330033;
 }
+
+/* __________________________________________________ footer definition _____ */  
+td.footer {
+  font-size : 11px;
+  background : #404452;
+}
+
+a.footer:link {
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #8dcdd2;
+  text-decoration : none;
+}
+a.footer:visited {
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #8dcdd2;
+  text-decoration : none;
+}
+a.footer:hover {
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #a3edf3;
+  text-decoration : none;
+}
+
 
 
 /* ____________________________________________________ link definitions _____ */
