@@ -15,9 +15,9 @@ except FormValidationError, e:
 layout_name = result['layout']
 model.set_layout(layout_name)
 if layout_name:
-    message='Layout saved'
+    message='Layout saved.'
 else:
-    message='no more layout'
+    message='Layout has been removed.'
 
 return view.tab_metadata(
     form_errors={},
