@@ -1,5 +1,5 @@
 <tal:block define="
-    global breadcrumb_vein string:Access;
+    global breadcrumb_vein string:Groups;
     global active_tab string:tab_access;" />
 <html metal:use-macro="here/macro_index/macros/master">
   <div class="margins"
@@ -26,7 +26,7 @@
           src="%s"
           width="16"
           tal:replace="structure python:view.render_icon(model.meta_type)" />
-        &nbsp; Group administration for
+        &nbsp; Groups administration for
         <span class="folder-title"
           tal:content="
             structure string:&#xab;${model/get_title_or_id_html}&#xbb;">
