@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Wed Dec  8 18:26:36 2004\n"
-"PO-Revision-Date: 2004-12-15 15:57+0100\n"
+"PO-Revision-Date: 2004-12-15 16:14+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -2921,7 +2921,7 @@ msgstr "Veröffentlichungseinstellungen"
 
 #: /views/edit/Container/tab_status.pt:90
 msgid "modify / preview"
-msgstr ""
+msgstr "Ändern / Vorschau"
 
 #: /views/edit/Container/tab_status.pt:93
 msgid "revision"
@@ -2937,7 +2937,7 @@ msgstr "Läuft aus am"
 
 #: /views/edit/Container/tab_status_approve.py:15
 msgid "Nothing was selected, so nothing was approved."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts bewilligt."
 
 #: /views/edit/Container/tab_status_approve.py:49
 #: /views/edit/Container/tab_status_change_settings.py:51
@@ -2964,11 +2964,11 @@ msgstr "Version ist bereits öffentlich"
 
 #: /views/edit/Container/tab_status_approve.py:76
 msgid "no publication time was set"
-msgstr ""
+msgstr "Es wurde kein Publikationszeitpunkt angegeben"
 
 #: /views/edit/Container/tab_status_approve.py:90
 msgid "Approval on: ${ids}"
-msgstr ""
+msgstr "Bewilligung von: ${ids}"
 
 #: /views/edit/Container/tab_status_approve.py:95
 msgid "<span class=\"error\">could not approve: ${ids}</span>"
@@ -2976,7 +2976,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_change_settings.py:103
 msgid "Changed settings on: ${ids}"
-msgstr ""
+msgstr "Einstellungen für ${ids} geändert"
 
 #: /views/edit/Container/tab_status_change_settings.py:108
 msgid "<span class=\"error\">could not change settings on: ${ids}</span>"
@@ -2984,7 +2984,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_change_settings.py:15
 msgid "Nothing was selected, so no settings were changed."
-msgstr ""
+msgstr "Es war nichts ausgewähl, folglich wurden keine Einstellungen verändert."
 
 #: /views/edit/Container/tab_status_change_settings.py:34
 msgid "No publication nor expiration time nor any of the flags were set."
@@ -3007,7 +3007,7 @@ msgstr "keine nicht genehmigte Version"
 
 #: /views/edit/Container/tab_status_close.py:15
 msgid "Nothing was selected, so nothing was closed."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts geschlossen."
 
 #: /views/edit/Container/tab_status_close.py:39
 msgid "is not published"
@@ -3032,12 +3032,12 @@ msgstr ""
 #: /views/edit/Container/tab_status_export.pt:148
 #: /views/edit/Container/tab_status_export.pt:358
 msgid "export newest versions?"
-msgstr ""
+msgstr "Die neuesten Versionen exportieren?"
 
 #: /views/edit/Container/tab_status_export.pt:159
 #: /views/edit/Container/tab_status_export.pt:369
 msgid "If not checked the published version is exported."
-msgstr ""
+msgstr "Wenn nicht markiert wird die publizierte Version exportiert."
 
 # Default: "p"
 #: /views/edit/Container/tab_status_export.pt:171
