@@ -18,9 +18,6 @@ class RenderableAdapter(adapter.Adapter):
         binding = metadata_system.getMetadata(self.context.get_editable())
         return binding['silva-extra']['renderer_id']
 
-    def getMetaType(self):
-        pass
-
 Globals.InitializeClass(RenderableAdapter)
 
 def getRenderableAdapter(context):
