@@ -24,6 +24,7 @@ body {
   background-image: url(<dtml-var root>/globals/skyrise.gif);
   background-repeat: repeat-x;
     font: &dtml-mainFont;;
+    font-size: 9px;
     color: &dtml-mainFontColor;;
     margin: 0;
     padding: 0;
