@@ -228,7 +228,7 @@ Notes
 <field tal:replace="structure python:view.tab_status_form_editor.publish_datetime.render(REQUEST=request)" />
 </td>
 <td>
-&nbsp;
+day/month/year 23:59
 </td>
 </tr>
 
