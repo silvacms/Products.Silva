@@ -148,7 +148,7 @@ class ViewCode:
                     
                 datetime = obj.get_public_version_expiration_datetime()
                 if datetime:
-                    str_datetime = mangle.Datetime(datetime).toDateStr()
+                    str_datetime = mangle.DateTime(datetime).toDateStr()
                     infodict['public_version_expiration_datetime'] = str_datetime
         return ret
     
