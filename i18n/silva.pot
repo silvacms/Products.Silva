@@ -1,7 +1,20 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 18 13:31:11 2004\n"
+"POT-Creation-Date: Thu Nov 18 14:22:46 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -3247,19 +3260,19 @@ msgstr ""
 msgid "Change your settings: alt-~"
 msgstr ""
 
-#: /views/macro_index.pt:252
-msgid "<img border=\"0\" height=\"9\" width=\"9\" src=\"\" /> user settings"
+#: /views/macro_index.pt:256
+msgid "user settings"
 msgstr ""
 
-#: /views/macro_index.pt:261
+#: /views/macro_index.pt:260
 msgid "Logout of Silva: alt-q"
 msgstr ""
 
-#: /views/macro_index.pt:270
+#: /views/macro_index.pt:269
 msgid "logout ${role} ${userid}"
 msgstr ""
 
-#: /views/macro_index.pt:276
+#: /views/macro_index.pt:275
 msgid "request access"
 msgstr ""
 
