@@ -1,12 +1,13 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.3 2003/08/21 11:24:58 zagy Exp $
+# $Id: icon.py,v 1.4 2003/08/21 12:08:00 zagy Exp $
 
 """Sivla icon registry"""
 
 # python
 import os
 from bisect import insort
+from types import InstanceType
 
 # zope
 import Globals
@@ -41,6 +42,17 @@ class MetaTypeAdapter(Adapter):
         return ('meta_type', self.adapted.meta_type)
 
 
+class MetaTypeClassAdapter(MetaTypeAdapter):
+
+    def __init__(self, adapt):
+        if type(adapt) == InstanceType:
+            raise AdaptationError, "This adapter can only handle classes"
+        if not self.__adapts__.isImplementedByInstancesOf(adapt):
+            raise AdaptationError, "%r doesn't implement %r" % (
+                adapt, self.__adapts__)
+        self.adapted = adapt
+
+
 class SilvaFileAdapter(Adapter):
 
     __implements__ = IIcon
@@ -55,7 +67,8 @@ class SilvaFileAdapter(Adapter):
         else:
             return i
 
-    
+
+   
 class _RegistredAdapter:
 
     def __init__(self, adapter, priority):
