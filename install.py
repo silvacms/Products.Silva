@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.14 2004/05/25 17:12:58 guido Exp $
+# $Id: install.py,v 1.97.4.9.4.15 2004/05/26 12:27:33 guido Exp $
 """Install for Silva Core
 """
 # Python
@@ -193,16 +193,19 @@ def configureMetadata(root):
     silva_docs = path.join(silva_home, 'doc')
 
     collection = root.service_metadata.getCollection()
+    if 'silva-content' in collection.objectIds():
+        collection.manage_delObjects(['silva-content'])
 
-    if not 'silva-content' in collection.objectIds():
-        xml_file = path.join(silva_docs, 'silva-content.xml')
-        fh = open(xml_file, 'r')        
-        collection.importSet(fh)
+    if 'silva-extra' in collection.objectIds():
+        collection.manage_delObjects(['silva-extra'])
 
-    if not 'silva-extra' in collection.objectIds():
-        xml_file = path.join(silva_docs, 'silva-extra.xml')
-        fh = open(xml_file, 'r')
-        collection.importSet(fh)    
+    xml_file = path.join(silva_docs, 'silva-content.xml')
+    fh = open(xml_file, 'r')        
+    collection.importSet(fh)
+
+    xml_file = path.join(silva_docs, 'silva-extra.xml')
+    fh = open(xml_file, 'r')
+    collection.importSet(fh)    
 
     # (re) set the default type mapping
     mapping = root.service_metadata.getTypeMapping()
