@@ -699,7 +699,7 @@
         __________________ main __________________
       </tal:block>
       <td class="main">
-        <table class="listing sublisting"
+        <table class="listing"
             tal:define="info view/get_viewer_role_info;
                         selected_role info/selected_role">
           <thead>
@@ -750,6 +750,8 @@
             </tr>
           </tbody>
         </table>
+      </td>
+      <td class="right">
       </td>
     </tr>
   </tbody>
