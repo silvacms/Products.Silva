@@ -1,13 +1,29 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 
 from bisect import insort_right
 
 import Products
 
 from Products.Silva import icon
-from Products.Silva.interfaces import ISilvaObject
+from Products.Silva.interfaces import ISilvaObject, IVersionedContent, IRoot
+
+def silva_objects_container_filter(container):
+    """ filter to allow to add silva objects
+        only inside another silva object.
+        this does not apply to roots, of course
+    """
+    return ISilvaObject.isImplementedBy(container)
+
+def silva_objects_version_filter(container):
+    """ filter to allow adding a version only inside
+        something which is a versioned content silva object
+    """
+    # XXX this does not check if the version matches
+    # the versioned content. this would need a different
+    # filter for each version class
+    return IVersionedContent.isImplementedBy(container)
 
 
 class Addable:
@@ -51,13 +67,19 @@ class ExtensionRegistry:
         __traceback_info__ = (module, classname, version_classname)
         meta_type = klass.meta_type
         priority = getattr(module, 'addable_priority', 0)
+        if not IRoot.isImplementedByInstancesOf(klass):
+            container_filter = silva_objects_container_filter
+        else:
+            container_filter = None
+
         # Register Silva Addable
         context.registerClass(
             klass,
             constructors = (
                 getattr(module, 'manage_add%sForm' % classname),
                 getattr(module, 'manage_add%s' % classname)),
-                icon = getattr(module, 'icon', None)
+                icon = getattr(module, 'icon', None),
+                container_filter=container_filter,
             )
         # Register version object, if available
         if hasattr(module, version_classname):
@@ -66,6 +88,7 @@ class ExtensionRegistry:
                 constructors = (
                     getattr(module, 'manage_add%sForm' % version_classname),
                     getattr(module, 'manage_add%s' % version_classname)),
+                    container_filter=silva_objects_version_filter
                     )
         icon_path = getattr(module, 'icon', None)
         if icon_path:
