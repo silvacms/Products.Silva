@@ -73,18 +73,19 @@
           oddrow repeat/indent_item/odd">
           <td class="hilight"
             tal:attributes="class python:test(model == item, 'hilight', 'focus')">
-            <img width="5" height="5" tal:attributes="width python:indent * 16 + 5; src string:${silva_root}/globals/pixel.gif" />
-            <span no-class="position-relative"
-              no-tal:attributes="style python:'left:%s%%' % str(indent*3)">
-            <a href="folder" title="Manage folder"
-              tal:attributes="href string:${item/absolute_url}/edit/tab_edit_new"><img src="%s" width="16" height="16" alt="%s"
-              tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
-            <a class="blacklink" href="title" title="id"
-              tal:attributes="href string:${item/absolute_url}/edit/tab_edit_new;
-                               title string:id: ${item/id}">
-              <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_or_id_html()">no title</span>
-            </a>
-            </span>
+            <div tal:attributes="style python:'margin-left:'+str(indent * 16 + 5)">
+              <span no-class="position-relative"
+               no-tal:attributes="style python:'left:%s%%' % str(indent*3)">
+                <a href="folder" title="Manage folder"
+                 tal:attributes="href string:${item/absolute_url}/edit/tab_edit_new"><img src="%s" width="16" height="16" alt="%s"
+                 tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
+                <a class="blacklink" href="title" title="id"
+                 tal:attributes="href string:${item/absolute_url}/edit/tab_edit_new;
+                                  title string:id: ${item/id}">
+                  <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_or_id_html()">no title</span>
+                </a>
+              </span>
+            </div>
           </td>
         </tr>
       </rowset>
