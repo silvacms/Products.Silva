@@ -1,13 +1,15 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.2 2004/04/06 09:50:36 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.3 2004/04/06 15:01:43 zagy Exp $
 
 # Python
 import re, string 
 from cStringIO import StringIO
 from types import StringType, IntType
 from zipfile import ZipFile
+from cgi import escape
+
 # Zope
 import OFS
 from AccessControl import ClassSecurityInfo
@@ -211,10 +213,54 @@ class Image(Asset):
             return str(image.data)
         
     security.declareProtected(SilvaPermissions.View, 'tag')
-    def tag(self, *args, **kw):
-        """ return tag for image """
-        return self.image.tag(*args, **kw)
-        
+    def tag(self, height=None, width=None, alt=None, scale=0, xscale=0,
+            yscale=0, css_class=None, title=None, **args):
+        """
+        COPIED from OFS.Image.Image
+        Generate an HTML IMG tag for this image, with customization.
+        Arguments to self.tag() can be any valid attributes of an IMG tag.
+        'src' will always be an absolute pathname, to prevent redundant
+        downloading of images. Defaults are applied intelligently for
+        'height', 'width', and 'alt'. If specified, the 'scale', 'xscale',
+        and 'yscale' keyword arguments will be used to automatically adjust
+        the output height and width values of the image tag.
+
+        Since 'class' is a Python reserved word, it cannot be passed in
+        directly in keyword arguments which is a problem if you are
+        trying to use 'tag()' to include a CSS class. The tag() method
+        will accept a 'css_class' argument that will be converted to
+        'class' in the output tag to work around this.
+        """
+        image = self.image
+        if height is None: height=image.height
+        if width is None:  width=image.width
+        # Auto-scaling support
+        xdelta = xscale or scale
+        ydelta = yscale or scale
+        if xdelta and width:
+            width =  str(int(round(int(width) * xdelta)))
+        if ydelta and height:
+            height = str(int(round(int(height) * ydelta)))
+        result='<img src="%s"' % (self.absolute_url())
+        if alt is None:
+            alt=getattr(image, 'title', '')
+        result = '%s alt="%s"' % (result, escape(alt, 1))
+        if title is None:
+            title=getattr(image, 'title', '')
+        result = '%s title="%s"' % (result, escape(title, 1))
+        if height:
+            result = '%s height="%s"' % (result, height)
+        if width:
+            result = '%s width="%s"' % (result, width)
+        if not 'border' in [ x.lower() for x in  args.keys()]:
+            result = '%s border="0"' % result
+        if css_class is not None:
+            result = '%s class="%s"' % (result, css_class)
+        for key in args.keys():
+            value = args.get(key)
+            result = '%s %s="%s"' % (result, key, value)
+        return '%s />' % result
+
     security.declareProtected(SilvaPermissions.View, 'getWebFormat')
     def getWebFormat(self):
         """Return file format of web presentation image

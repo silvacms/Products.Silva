@@ -8,6 +8,8 @@ Silva changes
 
     Features added
 
+      - Images can be viewed w/o the /image at the end (issue 594)
+
       - Kupu, a WYSIWYG editor for Silva Document. This editor offers
         a load of new features:
 
