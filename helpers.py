@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -8,6 +8,23 @@ from IVersioning import IVersioning
 from IContainer import IContainer
 # python
 import string, re, urllib
+
+p_ID = re.compile(r'^(.*?)([0-9]+)$')
+def getNewId(old_id):
+    """returns an id based on the old id
+
+        if old_id ends with a number, the number is increased, 
+        otherwise 2 is appended
+    """
+    
+    m = p_ID.match(old_id)
+    if m is None: return '%s2' % (old_id, )
+    
+    name = m.group(1)
+    count = int(m.group(2))
+    
+    return "%s%i" % (name, count+1)
+    
 
 def add_and_edit(self, id, REQUEST):
     """Helper function to point to the object's management screen if

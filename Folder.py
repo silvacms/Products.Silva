@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.77 $
+# $Revision: 1.78 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -737,6 +737,11 @@ def xml_import_handler(object, node):
     """Helper for importing folder objects into an other object"""
     id = get_xml_id(node)
     title = get_xml_title(node)
+
+    used_ids = object.objectIds()
+    while id in used_ids:
+        id = helpers.getNewId(id)
+    
     object.manage_addProduct['Silva'].manage_addFolder(id, title, 0)
     newfolder = getattr(object, id)
     for child in node.childNodes:
