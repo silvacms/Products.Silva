@@ -13,7 +13,7 @@ model = request.model
 
 context.set_cache_headers()
 context.set_content_type()
-xhtml = model.editor_storage(editor='epoz')
+xhtml = model.editor_storage(editor='kupu')
 
 return ('<html>\n'
         '<head>\n'
@@ -23,5 +23,5 @@ return ('<html>\n'
         '</head>\n'
         '%s\n'
         '</html>' % (model.get_title_editable(), 
-                        getattr(context.globals, 'epoz.css').absolute_url(),
+                        getattr(context.globals, 'kupu.css').absolute_url(),
                         xhtml))

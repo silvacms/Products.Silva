@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.112.6.6 $
+# $Revision: 1.112.6.6.6.1 $
 
 import ContainerPolicy
 
@@ -20,7 +20,7 @@ def initialize(context):
     from Products.FileSystemSite.FSPageTemplate import FSPageTemplate
 # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
-# enable some extensions for epoz
+# enable some extensions for kupu
     registerFileExtension('js', FSDTMLMethod)
     registerFileExtension('css', FSDTMLMethod)
     registerFileExtension('html', FSPageTemplate)
@@ -147,13 +147,13 @@ def initialize(context):
     registerDirectory('globals', globals())
 
     try:
-        from Products import epoz
+        from Products import kupu
     except ImportError:
         pass
     else:
-        print 'epoz imported'
-        registerDirectory('%s/common' % os.path.dirname(epoz.__file__), globals())
-        registerDirectory('%s/silva' % os.path.dirname(epoz.__file__), globals())
+        print 'kupu imported'
+        registerDirectory('%s/common' % os.path.dirname(kupu.__file__), globals())
+        registerDirectory('%s/silva' % os.path.dirname(kupu.__file__), globals())
 
     # initialize the metadata system
     #  register silva core types w/ metadata system

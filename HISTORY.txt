@@ -3,11 +3,11 @@ See also LICENSE.txt
 
 Silva changes
 
-  0.9.3 epoz 1 beta
+  0.9.3 kupu 1 beta
 
     Features added
 
-      - Epoz
+      - Kupu
 
     Bugs fixed
 

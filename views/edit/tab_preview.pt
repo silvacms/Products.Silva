@@ -14,7 +14,7 @@
 
 <metal:block metal:fill-slot="middleground">
   <div class="middleground"
-    tal:define="active python: editor == 'epoz'">
+    tal:define="active python: editor == 'kupu'">
     <a class="wide"
       title="see the content in the public layout: alt-;"
       accesskey=";"

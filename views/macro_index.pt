@@ -89,7 +89,7 @@ function handle_default_action(element, event, action)
 </head>
 
 <body tal:attributes="onload python: test(vein == 'editor' and editor == 'kupu', 
-                                          'startEpoz()', 
+                                          'startKupu()', 
                                           'if (window.focus_editor) window.focus_editor()')">
 <!-- __________________________ Start matrix tabs _________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">

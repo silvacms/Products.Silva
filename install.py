@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9 2004/03/10 22:04:55 clemens Exp $
+# $Id: install.py,v 1.97.4.9.4.1 2004/03/29 13:05:49 guido Exp $
 """Install for Silva Core
 """
 # Python
@@ -158,8 +158,8 @@ def install(root):
     from LayoutRegistry import DEFAULT_LAYOUT
     root.set_layout(DEFAULT_LAYOUT)
 
-    # try to install Epoz
-    installEpoz(root)
+    # try to install Kupu
+    installKupu(root)
 
 def configure_default_layout_package(root):
     from LayoutRegistry import DEFAULT_LAYOUT
@@ -632,16 +632,16 @@ def installSilvaDocument(root):
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
 
-def installEpoz(root):
+def installKupu(root):
     try:
-        from Products import epoz
+        from Products import kupu
     except:
         pass
     else:
-        if not hasattr(root, 'epoz'):
-            add_fss_directory_view(root, 'epoz', epoz.__file__, 'common')
-        if not hasattr(root, 'epoz_silva'):
-            add_fss_directory_view(root, 'epoz_silva', epoz.__file__, 'silva')
+        if not hasattr(root, 'kupu'):
+            add_fss_directory_view(root, 'kupu', kupu.__file__, 'common')
+        if not hasattr(root, 'kupu_silva'):
+            add_fss_directory_view(root, 'kupu_silva', kupu.__file__, 'silva')
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
