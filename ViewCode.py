@@ -3,7 +3,7 @@ from Globals import InitializeClass
 from Acquisition import aq_base
 
 from Products.Silva import SilvaPermissions
-from Products.Silva import mangle
+from Products.Silva import mangle, icon
 
 
 class ViewCode:
@@ -36,7 +36,7 @@ class ViewCode:
         if obj is None or not hasattr(aq_base(obj), 'icon'):
             icon_path = '%s/globals/silvageneric.gif' % self.get_root_url()
         else:
-            icon_path = '%s/%s' % (self.REQUEST['BASE1'], getattr(obj, 'icon'))
+            icon_path = icon.registry.getIcon(obj)
     
         if obj is not None:
             meta_type = getattr(obj, 'meta_type')
