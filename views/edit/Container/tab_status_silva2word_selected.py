@@ -33,6 +33,8 @@ for ref in request['refs'].split('||'):
 
 data = model.get_xml_for_objects(objects, with_sub_publications, export_last_version)
 
+view.cupboard.set('XML', data)
+
 if not request['email']:
     return view.tab_status(message_type='error', message='You have not entered your e-mail address')
 

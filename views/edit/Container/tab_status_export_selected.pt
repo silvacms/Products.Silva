@@ -175,7 +175,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
           <tr class="controls">
             <td colspan="3" align="right">
             <tal:block condition="silva_permissions/ChangeSilvaContent">
-                &nbsp;&nbsp;<input class="button" type="submit" name="tab_status_silva2word:method" value="Export to Docma" title="Export the current container to Word: alt-d" accesskey="d" />
+                &nbsp;&nbsp;<input class="button" type="submit" name="tab_status_silva2word_selected:method" value="Export to Docma" title="Export the current container to Word: alt-d" accesskey="d" />
             </tal:block>
             </td>
           </tr>

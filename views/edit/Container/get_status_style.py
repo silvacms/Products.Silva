@@ -9,14 +9,13 @@
 ##
 if obj.implements_versioning():
    status = obj.get_next_version_status()
-   public = obj.get_public_version_status()
    if status == 'not_approved':
        return 'redlink'
    elif status == 'request_pending':
        return 'yellowlink'
    elif status == 'approved':
        return 'greenlink'
-   elif status == 'no_next_version' and public == 'closed':
+   elif status == 'no_next_version' and obj.get_public_version_status() == 'closed':
        return 'graylink'
    elif status == 'no_next_version':
        return 'bluelink'
