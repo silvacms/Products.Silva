@@ -7,9 +7,6 @@ from AccessControl import ClassSecurityInfo
 
 # Silva
 from Products.Silva.transform.rendererreg import RendererRegistry
-from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
-from Products.Silva.transform.renderer.widgetsrenderer import WidgetsRenderer
-from Products.Silva.transform.renderer.basicxsltrenderer import BasicXSLTRenderer
 import SilvaPermissions
 from helpers import add_and_edit
 
@@ -33,12 +30,16 @@ class RendererRegistryService(SimpleItem.SimpleItem):
         # attribute of self, as it won't play nicely with the persistence machinery
         #
         # we might want to clean this up after the beta
+        from Products.Silva.transform.renderer.widgetsrenderer import WidgetsRenderer
         renderers = [WidgetsRenderer().__of__(self)]
+
         try:
             import libxslt
         except ImportError:
             pass
         else:
+            from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+            from Products.Silva.transform.renderer.basicxsltrenderer import BasicXSLTRenderer
             renderers.append(ImagesOnRightRenderer().__of__(self))
             renderers.append(BasicXSLTRenderer().__of__(self))
 
