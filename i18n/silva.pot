@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 25 17:04:43 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:18:18 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -1970,7 +1970,7 @@ msgid "Created a new version for: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_new_version.py:51
-msgid "<span class=\"error\">could not create a new version for: ${ids}</span>"
+msgid "could not create a new version for: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_reject.py:15
@@ -1993,7 +1993,7 @@ msgid "Rejected request for approval for: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_reject.py:58
-msgid "<span class=\"error\">Not rejected: ${ids}</span>"
+msgid "Not rejected: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_request_approval.py:15
@@ -2027,7 +2027,7 @@ msgid "Revoked approval of: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_revoke.py:51
-msgid "<span class=\"error\">Could not revoke approval of: ${ids}</span>"
+msgid "Could not revoke approval of: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_silva2word.py:20
@@ -2059,7 +2059,7 @@ msgid "Withdrawn request for approval for: ${list}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_withdraw.py:49
-msgid "<span class=\"error\">Not withdrawn: ${list}</span>"
+msgid "Not withdrawn: ${list}"
 msgstr ""
 
 #: /views/edit/Container/transform_folder_to_pub.py:12
@@ -2079,11 +2079,11 @@ msgid "settings"
 msgstr ""
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:19
-msgid ""
-"<dl>\n"
-"<dt>Sorry, content is missing:\n"
-"<dd><span class=\"error\">Both a name and e-mail address are required to approve someone</span>.</dd>\n"
-"</dl>"
+msgid "Both a name and e-mail address are required to approve someone."
+msgstr ""
+
+#: /views/edit/Member/SimpleMember/approve_visitor.py:19
+msgid "Sorry, content is missing:"
 msgstr ""
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:26
@@ -2321,7 +2321,7 @@ msgid "Can't delete all versions"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:35
-msgid "<span class=\"error\">could not delete ${id}: ${error}</span>"
+msgid "could not delete ${id}: ${error}"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:39
@@ -3024,10 +3024,6 @@ msgid "No users with local roles are defined here."
 msgstr ""
 
 #: /views/edit/tab_access.pt:151
-msgid "assign_role"
-msgstr ""
-
-#: /views/edit/tab_access.pt:151
 #: /views/edit/tab_access.pt:604
 msgid "select a role to assign"
 msgstr ""
@@ -3175,8 +3171,7 @@ msgid "(acquired)."
 msgstr ""
 
 #: /views/edit/tab_access.pt:582
-# Default: "Setting an access restriction here affects objects on this and lower levels."
-msgid "access_setting_restriction"
+msgid "Setting an access restriction here affects objects on this and lower levels."
 msgstr ""
 
 #: /views/edit/tab_access.pt:59

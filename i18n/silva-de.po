@@ -213,7 +213,7 @@ msgstr "Aspekt"
 #: /views/edit/Container/tab_status_export.pt:328
 #: /views/edit/Container/GhostFolder/tab_edit.pt:71
 #: /views/edit/Container/Publication/settings_addables.pt:78
-#: /views/edit/Container/Publication/tab_metadata.pt:78
+#: /views/edit/Container/Publication/tab_metadata.pt:88
 #: /views/edit/Member/SimpleMember/tab_edit.pt:68
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
 msgid "content"
@@ -877,19 +877,23 @@ msgstr ""
 msgid "Addable settings changed for: ${changed_metadata}"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:113
+#: /views/edit/Container/Publication/tab_metadata.pt:107
+msgid "Layout has been copied for customization."
+msgstr ""
+
+#: /views/edit/Container/Publication/tab_metadata.pt:123
 msgid "copy the layout into the Publication in order to customize it"
 msgstr "Das Layout in eine Publikation kopieren, um es anzupassen."
 
-#: /views/edit/Container/Publication/tab_metadata.pt:113
+#: /views/edit/Container/Publication/tab_metadata.pt:123
 msgid "customize layout"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:122
+#: /views/edit/Container/Publication/tab_metadata.pt:132
 msgid "save layout"
 msgstr "Layout auswählen"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:122
+#: /views/edit/Container/Publication/tab_metadata.pt:132
 msgid "access key: alt-l"
 msgstr "Kurzwahl: alt-l"
 
@@ -909,16 +913,12 @@ msgstr "Erweiterungen konfigurieren ..."
 msgid "change the addables allowed in this publication: alt-a"
 msgstr "erlaubten Erweiterungen für diese Publikation konfigurieren: alt-a"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:65
+#: /views/edit/Container/Publication/tab_metadata.pt:75
 msgid "layout"
 msgstr "Layout"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:81
+#: /views/edit/Container/Publication/tab_metadata.pt:91
 msgid "acquired layout"
-msgstr ""
-
-#: /views/edit/Container/Publication/tab_metadata.pt:97
-msgid "Layout has been copied for customization."
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:100
@@ -1926,7 +1926,7 @@ msgid "Created a new version for: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_new_version.py:51
-msgid "<span class=\"error\">could not create a new version for: ${ids}</span>"
+msgid "could not create a new version for: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_reject.py:15
@@ -1949,7 +1949,7 @@ msgid "Rejected request for approval for: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_reject.py:58
-msgid "<span class=\"error\">Not rejected: ${ids}</span>"
+msgid "Not rejected: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_request_approval.py:15
@@ -1983,7 +1983,7 @@ msgid "Revoked approval of: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_revoke.py:51
-msgid "<span class=\"error\">Could not revoke approval of: ${ids}</span>"
+msgid "Could not revoke approval of: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_silva2word.py:20
@@ -2015,7 +2015,7 @@ msgid "Withdrawn request for approval for: ${list}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_withdraw.py:49
-msgid "<span class=\"error\">Not withdrawn: ${list}</span>"
+msgid "Not withdrawn: ${list}"
 msgstr ""
 
 #: /views/edit/Container/transform_folder_to_pub.py:12
@@ -2035,11 +2035,11 @@ msgid "settings"
 msgstr "Einstellungen"
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:19
-msgid ""
-"<dl>\n"
-"<dt>Sorry, content is missing:\n"
-"<dd><span class=\"error\">Both a name and e-mail address are required to approve someone</span>.</dd>\n"
-"</dl>"
+msgid "Both a name and e-mail address are required to approve someone."
+msgstr ""
+
+#: /views/edit/Member/SimpleMember/approve_visitor.py:19
+msgid "Sorry, content is missing:"
 msgstr ""
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:26
@@ -2277,7 +2277,7 @@ msgid "Can't delete all versions"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:35
-msgid "<span class=\"error\">could not delete ${id}: ${error}</span>"
+msgid "could not delete ${id}: ${error}"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:39
@@ -2868,7 +2868,7 @@ msgstr "Metadatensatz"
 #: /views/edit/Container/tab_edit_import.pt:160
 #: /views/edit/Container/tab_edit_import.pt:298
 #: /views/edit/Container/Publication/settings_addables.pt:73
-#: /views/edit/Container/Publication/tab_metadata.pt:73
+#: /views/edit/Container/Publication/tab_metadata.pt:83
 msgid "element"
 msgstr "Element"
 
@@ -2888,7 +2888,7 @@ msgstr "Erworbener Inhalt"
 #: /views/edit/Container/tab_status_export.pt:331
 #: /views/edit/Container/GhostFolder/tab_edit.pt:74
 #: /views/edit/Container/Publication/settings_addables.pt:81
-#: /views/edit/Container/Publication/tab_metadata.pt:84
+#: /views/edit/Container/Publication/tab_metadata.pt:94
 #: /views/edit/VersionedContent/Ghost/edit.pt:65
 msgid "note"
 msgstr "Anmerkung"
@@ -2979,12 +2979,7 @@ msgstr ""
 msgid "No users with local roles are defined here."
 msgstr "Es sind hier keine Benutzer mit lokalen Rollen definiert."
 
-#: /views/edit/tab_access.pt:151
-msgid "assign_role"
-msgstr "Rolle zuweisen"
-
-#: /views/edit/tab_access.pt:151
-#: /views/edit/tab_access.pt:604
+#: /views/edit/tab_access.pt:151 /views/edit/tab_access.pt:604
 #, fuzzy
 msgid "select a role to assign"
 msgstr "Rolle zur Zuweisung auswählen"
@@ -3133,7 +3128,9 @@ msgid "(acquired)."
 msgstr "(erworben)."
 
 #: /views/edit/tab_access.pt:582
-msgid "access_setting_restriction"
+msgid ""
+"Setting an access restriction here affects objects on this and lower levels."
+msgstr ""
 msgstr "Zugangsbeschränkungen betreffen Objekte unterer Ebenen, einschliesslich der aktuellen Ebene."
 
 #: /views/edit/tab_access.pt:59
@@ -3225,18 +3222,32 @@ msgstr ""
 msgid "Minimum role to access is now set to ${role}"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:53
-msgid "metadata <span>x</span>"
-msgstr ""
-
-#: /views/edit/tab_metadata.pt:53
-msgid "for approved version of &#xab;${title}&#xbb;"
-msgstr "für die bestätigte Version von &#xab;${title}&#xbb;"
-
-#: /views/edit/tab_metadata.pt:72
+#: /views/edit/tab_metadata.pt:111
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr "für die öffentliche Version von &#xab;${title}&#xbb;"
+
+#: /views/edit/tab_metadata.pt:42
+msgid "properties of &#xab;${title}&#xbb;"
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:54
+#: /views/edit/Container/Publication/tab_metadata.pt:48
+msgid "manage subscriptions..."
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:54
+#: /views/edit/Container/Publication/tab_metadata.pt:48
+msgid "manage subscriptions: alt-m"
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:92
+msgid "metadata <span>x</span>"
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:92
+msgid "for approved version of &#xab;${title}&#xbb;"
+msgstr "für die bestätigte Version von &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
@@ -3419,4 +3430,3 @@ msgstr "Keine Rollen ausgewählt."
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
-

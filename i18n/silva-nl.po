@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 25 17:04:43 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:18:18 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -1779,7 +1779,7 @@ msgstr "afwijzen"
 
 #: /views/edit/Container/tab_status.pt:365
 msgid "reject pending request for approval: alt-j"
-msgstr "openstaand verzoek om goedkeuring afwijzen: alt-j"
+msgstr "uitstaande aanvraag voor goedkeuring afwijzen: alt-j"
 
 #: /views/edit/Container/tab_status.pt:374
 msgid "withdraw approval of approved versions: alt-v"
@@ -1829,7 +1829,7 @@ msgstr "intrekken"
 
 #: /views/edit/Container/tab_status.pt:433
 msgid "withdraw pending request for approval: alt-w"
-msgstr "openstaand verzoek om goedkeuring intrekken: alt-w"
+msgstr "uitstaand aanvraag voor goedkeuring intrekken: alt-w"
 
 #: /views/edit/Container/tab_status.pt:442
 msgid "revoke approval of approved versions: alt-v"
@@ -1837,12 +1837,12 @@ msgstr "goedkeuring van goedgekeurde versies intrekken: alt-v"
 
 #: /views/edit/Container/tab_status.pt:474
 msgid "request approval for new versions: alt-r"
-msgstr "goedkeuring van nieuwe versies verzoeken: alt-r"
+msgstr "goedkeuring van nieuwe versies aanvragen: alt-r"
 
 #: /views/edit/Container/tab_status.pt:474
 #: /views/edit/VersionedContent/tab_status_macros.pt:174
 msgid "request approval"
-msgstr "goedkeuring verzoeken"
+msgstr "goedkeuring aanvragen"
 
 #: /views/edit/Container/tab_status.pt:69
 #: /views/edit/VersionedContent/tab_status.pt:234
@@ -2041,29 +2041,28 @@ msgstr "${id} van ${parent_id}"
 
 #: /views/edit/Container/tab_status_new_version.py:15
 msgid "Nothing was selected, so no new version was created."
-msgstr "Nothing was selected, so no new version was created."
+msgstr "Er is niets geselecteerd, en dus geen nieuwe versie aangemaakt."
 
 #: /views/edit/Container/tab_status_new_version.py:39
 msgid "already has a next version"
-msgstr "already has a next version"
+msgstr "heeft reeds een volgende versie"
 
 #: /views/edit/Container/tab_status_new_version.py:46
 msgid "Created a new version for: ${ids}"
-msgstr "Created a new version for: ${ids}"
+msgstr "Nieuwe versie aangemaakt voor: ${ids}"
 
 #: /views/edit/Container/tab_status_new_version.py:51
-msgid "<span class=\"error\">could not create a new version for: ${ids}</span>"
-msgstr ""
-"<span class=\"error\">could not create a new version for: ${ids}</span>"
+msgid "could not create a new version for: ${ids}"
+msgstr "kon geen nieuwe versie aanmaken voor: ${ids}"
 
 #: /views/edit/Container/tab_status_reject.py:15
 msgid "Nothing was selected, so no approval was rejected."
-msgstr "Nothing was selected, so no approval was rejected."
+msgstr "Er is niets geselecteerd, en dus geen verzoek afgewezen."
 
 #: /views/edit/Container/tab_status_reject.py:42
 #: /views/edit/Container/tab_status_withdraw.py:32
 msgid "no approval requested"
-msgstr "no approval requested"
+msgstr "geen goedkeuring aangevraagd"
 
 #: /views/edit/Container/tab_status_reject.py:44
 msgid ""
@@ -2071,71 +2070,72 @@ msgid ""
 "of /${url}\n"
 "(automatically generated message)"
 msgstr ""
-"Request for approval was rejected via a bulk operation in the publish screen "
-"of /${url}\n"
-"(automatically generated message)"
+"Aanvraag voor goedkeuring is afgewezen d.m.v. een bulk-operatie in het "
+"scherm 'publiceren' van /${url}\n"
+"(automatisch gegenereerde melding)"
 
 #: /views/edit/Container/tab_status_reject.py:53
 msgid "Rejected request for approval for: ${ids}"
-msgstr "Rejected request for approval for: ${ids}"
+msgstr "Aanvraag voor goedkeuring afgewezen voor: ${ids}"
 
 #: /views/edit/Container/tab_status_reject.py:58
-msgid "<span class=\"error\">Not rejected: ${ids}</span>"
-msgstr "<span class=\"error\">Not rejected: ${ids}</span>"
+msgid "Not rejected: ${ids}"
+msgstr "Niet afgewezen: ${ids}"
 
 #: /views/edit/Container/tab_status_request_approval.py:15
 msgid "Nothing was selected, so no approval was requested."
-msgstr "Nothing was selected, so no approval was requested."
+msgstr "Er is niets geselecteerd, en dus geen goedkeuring aangevraagd."
 
 #: /views/edit/Container/tab_status_request_approval.py:58
 msgid "approval already requested"
-msgstr "approval already requested"
+msgstr "reeds goedkeuring aangevraagd"
 
 #: /views/edit/Container/tab_status_request_approval.py:68
 msgid "no publication time set"
-msgstr "no publication time set"
+msgstr "geen publicatie-tijdstip ingesteld"
 
 #: /views/edit/Container/tab_status_request_approval.py:78
 msgid ""
 "Request for approval via a bulk request in the publish screen of /${url}\n"
 "(automatically generated message)"
 msgstr ""
-"Request for approval via a bulk request in the publish screen of /${url}\n"
-"(automatically generated message)"
+"Aanvraag voor goedkeuring d.m.v. een bulk-verzoek in het scherm 'publiceren' "
+"van /${url}\n"
+"(automatisch gegenereerde melding)"
 
 #: /views/edit/Container/tab_status_revoke.py:15
 msgid "Nothing was selected, so no approval was revoked."
-msgstr "Nothing was selected, so no approval was revoked."
+msgstr "Er is niets geselecteerd, en dus geen goedkeuring ingetrokken."
 
 #: /views/edit/Container/tab_status_revoke.py:39
 msgid "it's not approved, or it's already published"
-msgstr "it's not approved, or it's already published"
+msgstr "niet goedgekeurd, of reeds gepubliceerd"
 
 #: /views/edit/Container/tab_status_revoke.py:46
 msgid "Revoked approval of: ${ids}"
-msgstr "Revoked approval of: ${ids}"
+msgstr "Goedkeuring ingetrokken van: ${ids}"
 
 #: /views/edit/Container/tab_status_revoke.py:51
-msgid "<span class=\"error\">Could not revoke approval of: ${ids}</span>"
-msgstr "<span class=\"error\">Could not revoke approval of: ${ids}</span>"
+msgid "Could not revoke approval of: ${ids}"
+msgstr "Kon goedkeuring niet intrekken voor: ${ids}"
 
 #: /views/edit/Container/tab_status_silva2word.py:20
 msgid "No items were selected, so nothing is exported"
-msgstr "No items were selected, so nothing is exported"
+msgstr "Er zijn geen items geselecteerd, en dus is er niets geëxporteerd"
 
 #: /views/edit/Container/tab_status_silva2word.py:35
 #: /views/edit/VersionedContent/tab_status_silva2word.py:25
 msgid "No description"
-msgstr "No description"
+msgstr "Geen omschrijving"
 
 #: /views/edit/Container/tab_status_silva2word.py:42
 #: /views/edit/VersionedContent/tab_status_silva2word.py:32
 msgid "You have not entered your e-mail address"
-msgstr "You have not entered your e-mail address"
+msgstr "Geen e-mailadres opgegeven"
 
 #: /views/edit/Container/tab_status_withdraw.py:12
 msgid "Nothing was selected, so no approval was withdrawn."
-msgstr "Nothing was selected, so no approval was withdrawn."
+msgstr "Er is niets geselecteerd, en dus geen goedkeuring ingetrokken."
 
 #: /views/edit/Container/tab_status_withdraw.py:35
 msgid ""
@@ -2143,25 +2143,25 @@ msgid ""
 "screen of /${url}\n"
 "(automatically generated message)"
 msgstr ""
-"Request for approval was withdrawn via a bulk operation in the publish "
-"screen of /${url}\n"
-"(automatically generated message)"
+"Aanvraag voor goedkeuring is ingetrokken d.m.v een bulk-operatie in het "
+"scherm 'publiceren' van /${url}\n"
+"(automatisch gegenereerde melding)"
 
 #: /views/edit/Container/tab_status_withdraw.py:44
 msgid "Withdrawn request for approval for: ${list}"
-msgstr "Withdrawn request for approval for: ${list}"
+msgstr "Aanvraag voor goedkeuring ingetrokken voor: ${list}"
 
 #: /views/edit/Container/tab_status_withdraw.py:49
-msgid "<span class=\"error\">Not withdrawn: ${list}</span>"
-msgstr "<span class=\"error\">Not withdrawn: ${list}</span>"
+msgid "Not withdrawn: ${list}"
+msgstr "Niet ingetrokken: ${list}"
 
 #: /views/edit/Container/transform_folder_to_pub.py:12
 msgid "Not yet :)"
-msgstr "Not yet :)"
+msgstr "Nog niet"
 
 #: /views/edit/Content/Indexer/tab_edit_update_index.py:15
 msgid "Index updated"
-msgstr "Index updated"
+msgstr "Index bijgewerkt"
 
 #: /views/edit/Content/SimpleContent/get_tabs.py:6
 #: /views/edit/hyperlink_lookup.pt:223
@@ -2169,81 +2169,76 @@ msgstr "Index updated"
 #: /views/edit/Container/GhostFolder/tab_edit.pt:334
 #: /views/edit/VersionedContent/tab_status_macros.pt:309
 msgid "settings"
-msgstr "settings"
+msgstr "instellingen"
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:19
-msgid ""
-"<dl>\n"
-"<dt>Sorry, content is missing:\n"
-"<dd><span class=\"error\">Both a name and e-mail address are required to "
-"approve someone</span>.</dd>\n"
-"</dl>"
+msgid "Both a name and e-mail address are required to approve someone."
 msgstr ""
-"<dl>\n"
-"<dt>Sorry, content is missing:\n"
-"<dd><span class=\"error\">Both a name and e-mail address are required to "
-"approve someone</span>.</dd>\n"
-"</dl>"
+"Zowel een naam als een e-mailadres zijn vereist om iemand goed te keuren."
+
+#: /views/edit/Member/SimpleMember/approve_visitor.py:19
+msgid "Sorry, content is missing:"
+msgstr "Ontbrekende inhoud:"
 
 #: /views/edit/Member/SimpleMember/approve_visitor.py:26
 msgid "Member is approved"
-msgstr "Member is approved"
+msgstr "Lid goedgekeurd"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:27
 msgid "fullname updated"
-msgstr "fullname updated"
+msgstr "Volledige naam bijgewerkt"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:31
 msgid "e-mail updated"
-msgstr "e-mail updated"
+msgstr "e-mail bijgewerkt"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:36
 msgid "editor updated"
-msgstr "editor updated"
+msgstr "'editor' bijgewerkt"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:39
 msgid "Nothing changed."
-msgstr "Nothing changed."
+msgstr "Niets veranderd."
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:112
 msgid "close window: alt-c"
-msgstr "close window: alt-c"
+msgstr "venster sluiten: alt-c"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:122
 msgid "save member data: alt-s"
-msgstr "save member data: alt-s"
+msgstr "gegevens lid opslaan: alt-s"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:139
 msgid ""
 "Dear ${user_id}<br /> You are not allowed to edit membership data of member "
 "${member_id}"
 msgstr ""
-"Dear ${user_id}<br /> You are not allowed to edit membership data of member "
-"${member_id}"
+"Beste ${user_id}<br /> Je hebt geen toestemming om lidmaatschapsgegevens van "
+"het lid ${member_id} te bewerken"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:141
 msgid "Add read only view here?"
-msgstr "Add read only view here?"
+msgstr "Alleen-lezen weergave hier toevoegen?"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:57
 msgid "member data of &#xab;${title}&#xbb;"
-msgstr "member data of &#xab;${title}&#xbb;"
+msgstr "gegevens van lid &#xab;${title}&#xbb;"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:65
 msgid "characteristic"
-msgstr "characteristic"
+msgstr "karakteristiek"
 
 #: /views/edit/VersionedContent/Ghost/edit.pt:110
 msgid "Link to editor screen of original."
-msgstr "Link to editor screen of original."
+msgstr "Link naar 'editor' scherm van origineel."
 
 #: /views/edit/VersionedContent/Ghost/edit.pt:49
 msgid "ghost of &#xab;${name}&#xbb;"
-msgstr "ghost of &#xab;${name}&#xbb;"
+msgstr "'ghost' van &#xab;${name}&#xbb;"
 
 #: /views/edit/VersionedContent/Ghost/submit.py:18
 msgid "Ghost changed."
-msgstr "Ghost changed."
+msgstr "'Ghost' veranderd."
 
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:40
 msgid "metadata ${for_public_version_of}"
@@ -2251,237 +2246,239 @@ msgstr "metadata ${for_public_version_of}"
 
 #: /views/edit/VersionedContent/Link/submit.py:11
 msgid "Link changed"
-msgstr "Link changed"
+msgstr "Link veranderd"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:105
 msgid ""
 "${note} there is already a published or closed version of this content. "
 "Changes can only be made in a new version."
 msgstr ""
-"${note} there is already a published or closed version of this content. "
-"Changes can only be made in a new version."
+"${note} er is reeds een gepubliceerde of gesloten versie van deze inhoud. "
+"Veranderingen kunnen alleen in een nieuwe versie worden gemaakt."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:117
 msgid "'first un-approve' this item in order to edit: alt-r"
-msgstr "'first un-approve' this item in order to edit: alt-r"
+msgstr ""
+"trek eerst de goedkeuring in voor dit item om het te kunnen bewerken: alt-r"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:126
 msgid ""
 "${note} this version is approved but not yet public. In order to make "
 "changes you need to first revoke the approval."
 msgstr ""
-"${note} this version is approved but not yet public. In order to make "
-"changes you need to first revoke the approval."
+"${note} deze versie is goedgekeurd maar nog niet publiek. Om veranderingen "
+"aan te brengen moet eerst de goedkeuring worden ingetrokken."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:137
 msgid "withdraw request"
-msgstr "withdraw request"
+msgstr "aanvraag intrekken"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:137
 msgid "withdraw a request for approval in order to edit: alt-w"
-msgstr "withdraw a request for approval in order to edit: alt-w"
+msgstr "een aanvraag voor goedkeuring intrekken om te kunnen bewerken: alt-w"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:148
 msgid ""
 "${note} this version has an request for approval pending. In order to make "
 "changes you need to first withdraw the pending request."
 msgstr ""
-"${note} this version has an request for approval pending. In order to make "
-"changes you need to first withdraw the pending request."
+"${note} er staat een aanvraag voor goedkeuring uit voor deze versie. Om "
+"veranderingen aan te kunnen brengen moet de uitstaande aanvraag eerst worden "
+"ingetrokken."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:41
 msgid "open&nbsp;to&nbsp;public&nbsp;now..."
-msgstr "open&nbsp;to&nbsp;public&nbsp;now..."
+msgstr "nu&nbsp;voor&nbsp;publiek&nbsp;openstellen..."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:41
 msgid "publish the unapproved version: alt-:"
-msgstr "publish the unapproved version: alt-:"
+msgstr "niet goedgekeurde versie publiceren: alt-:"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:76
 msgid ""
 "${note} This object is already being edited by another user, and is "
 "temporarily locked."
 msgstr ""
-"${note} This object is already being edited by another user, and is "
-"temporarily locked."
+"${note} Dit object wordt al door een andere gebruiker bewerkt, en is "
+"tijdelijk geblokkeerd."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:76
 #: /views/edit/VersionedContent/macro_tab_edit.pt:105
 #: /views/edit/VersionedContent/macro_tab_edit.pt:126
 #: /views/edit/VersionedContent/macro_tab_edit.pt:148
 msgid "Note:"
-msgstr "Note:"
+msgstr "N.B.:"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:80
 msgid "Somebody else just edited this item, unlock it: alt-u"
-msgstr "Somebody else just edited this item, unlock it: alt-u"
+msgstr "Iemand anders heeft dit item zojuist bewerkt. Blokkade opheffen: alt-u"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:80
 msgid "break lock"
-msgstr "break lock"
+msgstr "Blokkade verbreken"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:96
 msgid "work on a new version while the previous one stays online: alt-n"
-msgstr "work on a new version while the previous one stays online: alt-n"
+msgstr "aan een nieuwe versie werken terwijl de vorige online blijft: alt-n"
 
 #: /views/edit/VersionedContent/properties_make_copy.py:16
 #: /views/edit/VersionedContent/tab_edit_make_copy.py:16
 msgid "New version created."
-msgstr "New version created."
+msgstr "Nieuwe versie aangemaakt."
 
 #: /views/edit/VersionedContent/properties_revoke_approval.py:15
 #: /views/edit/VersionedContent/tab_edit_revoke_approval.py:14
 #: /views/edit/VersionedContent/tab_status_revoke.py:23
 msgid "Revoked approval."
-msgstr "Revoked approval."
+msgstr "Goedkeuring ingetrokken."
 
 #: /views/edit/VersionedContent/tab_edit_break_lock.py:14
 msgid "Lock broken"
-msgstr "Lock broken"
+msgstr "Blokkade verbroken"
 
 #: /views/edit/VersionedContent/tab_edit_publish.py:12
 msgid "There is no unapproved version to approve."
-msgstr "There is no unapproved version to approve."
+msgstr "Er is geen nog niet goedgekeurde versie om goed te keuren."
 
 #: /views/edit/VersionedContent/tab_edit_publish.py:24
 msgid "Version approved."
-msgstr "Version approved."
+msgstr "Versie goedgekeurd."
 
 #: /views/edit/VersionedContent/tab_status.pt:225
 msgid "manage versions of &#xab;${export_id}&#xbb;"
-msgstr "manage versions of &#xab;${export_id}&#xbb;"
+msgstr "versies beheren van &#xab;${export_id}&#xbb;"
 
 #: /views/edit/VersionedContent/tab_status.pt:252
 msgid "modification time"
-msgstr "modification time"
+msgstr "modificatie-tijdstip"
 
 #: /views/edit/VersionedContent/tab_status.pt:253
 msgid "publication time"
-msgstr "publication time"
+msgstr "publicatie-tijdstip"
 
 #: /views/edit/VersionedContent/tab_status.pt:255
 msgid "last author"
-msgstr "last author"
+msgstr "laatste auteur"
 
 #: /views/edit/VersionedContent/tab_status.pt:256
 msgid "creator"
-msgstr "creator"
+msgstr "aangemaakt"
 
 #: /views/edit/VersionedContent/tab_status.pt:257
 msgid "version status"
-msgstr "version status"
+msgstr "versie-status"
 
 #: /views/edit/VersionedContent/tab_status.pt:333
 msgid "create a new editable version of the selected old one: alt-f"
-msgstr "create a new editable version of the selected old one: alt-f"
+msgstr "nieuwe bewerkbare versie van geselecteerde oude versie aanmaken: alt-f"
 
 #: /views/edit/VersionedContent/tab_status.pt:333
 msgid "copy for editing"
-msgstr "copy for editing"
+msgstr "kopiëren om te bewerken"
 
 #: /views/edit/VersionedContent/tab_status.pt:49
 msgid "status of &#xab;${title}&#xbb;"
-msgstr "status of &#xab;${title}&#xbb;"
+msgstr "status van &#xab;${title}&#xbb;"
 
 #: /views/edit/VersionedContent/tab_status.pt:59
 msgid "Content is approved, not published"
-msgstr "Content is approved, not published"
+msgstr "Inhoud is goedgekeurd, niet gepubliceerd"
 
 #: /views/edit/VersionedContent/tab_status.pt:60
 msgid "Publication settings can be changed."
-msgstr "Publication settings can be changed."
+msgstr "Publicatie-instellingen kunnen worden veranderd."
 
 #: /views/edit/VersionedContent/tab_status.pt:69
 msgid "Content is published"
-msgstr "Content is published"
+msgstr "Inhoud is gepubliceerd"
 
 #: /views/edit/VersionedContent/tab_status.pt:72
 msgid ""
 "This content is published (online for the public).<br /> If you wish you can "
 "make an editable copy by going to the ${editor}."
 msgstr ""
-"This content is published (online for the public).<br /> If you wish you can "
-"make an editable copy by going to the ${editor}."
+"Deze inhoud is gepubliceerd (online voor publiek).<br /> Indien gewenst, kan "
+"er een bewerkbare kopie van worden gemaakt door naar ${editor} te gaan."
 
 #: /views/edit/VersionedContent/tab_status.pt:81
 msgid "Published version exists"
-msgstr "Published version exists"
+msgstr "Er bestaat een gepubliceerde versie"
 
 #: /views/edit/VersionedContent/tab_status.pt:82
 msgid ""
 "Note: an older version of this content is online.<br /> Publishing this "
 "version will replace the public version."
 msgstr ""
-"Note: an older version of this content is online.<br /> Publishing this "
-"version will replace the public version."
+"N.B.: een oudere versie van deze inhoud staat online.<br /> Het publiceren "
+"van deze versie zal de publieke versie vervangen."
 
 #: /views/edit/VersionedContent/tab_status.pt:92
 msgid "Content is closed"
-msgstr "Content is closed"
+msgstr "Inhoud is gesloten"
 
 #: /views/edit/VersionedContent/tab_status.pt:95
 msgid ""
 "This content was once published but is now closed.<br /> If you wish you can "
 "make an editable copy in the ${editor}."
 msgstr ""
-"This content was once published but is now closed.<br /> If you wish you can "
-"make an editable copy in the ${editor}."
+"Deze inhoud was ooit gepubliceerd maar is nu gesloten.<br /> Indien gewenst, "
+"kan er een bewerkbare kopie gemaakt worden in de ${editor}."
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
 msgid "There is no approved version."
-msgstr "There is no approved version."
+msgstr "Er is geen goedgekeurde versie."
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:32
 msgid "Changed publication settings."
-msgstr "Changed publication settings."
+msgstr "Publicatie-instellingen gewijzigd."
 
 #: /views/edit/VersionedContent/tab_status_close.py:16
 msgid "There is no public version to close"
-msgstr "There is no public version to close"
+msgstr "Er is geen publieke versie om te sluiten"
 
 #: /views/edit/VersionedContent/tab_status_close.py:21
 msgid "Closed public version."
-msgstr "Closed public version."
+msgstr "Publieke versie gesloten."
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:19
 msgid "No versions selected"
-msgstr "No versions selected"
+msgstr "Geen versies geselecteerd"
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:28
 msgid "Can't delete all versions"
-msgstr "Can't delete all versions"
+msgstr "Niet alle versies kunnen verwijderd worden"
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:35
-msgid "<span class=\"error\">could not delete ${id}: ${error}</span>"
-msgstr "<span class=\"error\">could not delete ${id}: ${error}</span>"
+msgid "could not delete ${id}: ${error}"
+msgstr "kon ${id} niet verwijderen: ${error}"
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:39
 msgid "deleted ${id}"
-msgstr "deleted ${id}"
+msgstr "${id} verwijderd"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:108
 msgid "request approval ${for_new_version}"
-msgstr "request approval ${for_new_version}"
+msgstr "goedkeuring aanvragen ${for_new_version}"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:108
 msgid "for new version"
-msgstr "for new version"
+msgstr "voor nieuwe versie"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:113
 msgid "message to editor"
-msgstr "message to editor"
+msgstr "bericht aan 'editor'"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:129
 msgid ""
 "This message will remain visible in the status screen for other authors and "
 "editors."
 msgstr ""
-"This message will remain visible in the status screen for other authors and "
-"editors."
+"Dit bericht zal zichtbaar blijven in het scherm 'status' voor andere auteurs "
+"en 'editors'."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:138
 msgid "content publish ti<u>m</u>e:"
-msgstr "content publish ti<u>m</u>e:"
+msgstr "publicatie-tijdstip inhoud (<u>m</u>):"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:138
 #: /views/edit/VersionedContent/tab_status_macros.pt:320
@@ -2502,20 +2499,20 @@ msgstr "sneltoets: alt-i (sommige platforms)"
 #: /views/edit/VersionedContent/tab_status_macros.pt:223
 #: /views/edit/VersionedContent/tab_status_macros.pt:339
 msgid "expiratio<u>n</u> time"
-msgstr "expiratio<u>n</u> time"
+msgstr "verlooptijdstip (<u>n</u>)"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:167
 #: /views/edit/VersionedContent/tab_status_macros.pt:232
 msgid "If this content should expire, set the time."
-msgstr "If this content should expire, set the time."
+msgstr "Stel een tijdstip in als deze inhoud moet verlopen."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:187
 msgid "change settings"
-msgstr "change settings"
+msgstr "instellingen veranderen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:194
 msgid "current timings"
-msgstr "current timings"
+msgstr "huidige tijdstippen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:205
 msgid "access key: alt-m (some platforms)"
@@ -2523,40 +2520,40 @@ msgstr "sneltoets: alt-m (sommige platforms)"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:205
 msgid "publish ti<u>m</u>e:"
-msgstr "publish ti<u>m</u>e:"
+msgstr "publicatie tijdstip (<u>m</u>):"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:241
 #: /views/edit/VersionedContent/tab_status_macros.pt:357
 msgid "p<u>u</u>blish right now?"
-msgstr "p<u>u</u>blish right now?"
+msgstr "nu direct p<u>u</u>bliceren?"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:258
 msgid "clear ex<u>p</u>iration?"
-msgstr "clear ex<u>p</u>iration?"
+msgstr "verloo<u>p</u>-tijdstip wissen?"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:26
 msgid "Publication ${and_expiration} time of public version"
-msgstr "Publication ${and_expiration} time of public version"
+msgstr "Publicatie- ${and_expiration} tijdstip van publieke versie"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:277
 msgid "change timings"
-msgstr "change timings"
+msgstr "tijdstippen wijzigen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:297
 msgid "publish new version"
-msgstr "publish new version"
+msgstr "nieuwe versie publiceren"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:301
 msgid "publish closed version"
-msgstr "publish closed version"
+msgstr "gesloten versie publiceren"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:320
 msgid "content publish ti<u>m</u>e"
-msgstr "content publish ti<u>m</u>e"
+msgstr "publicatie-tijdstip inhoud (<u>m</u>)"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:348
 msgid "Empty indicates no expiration."
-msgstr "Empty indicates no expiration."
+msgstr "Leeg betekent: verloopt niet."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:374
 msgid "access key: alt-o"
@@ -2564,11 +2561,11 @@ msgstr "sneltoets: alt-o"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:397
 msgid "${action} request"
-msgstr "${action} request"
+msgstr "${action} aanvraag"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:409
 msgid "add message on ${rejection_withdrawal}"
-msgstr "add message on ${rejection_withdrawal}"
+msgstr "bericht toevoegen bij ${rejection_withdrawal}"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:425
 msgid "The message may be viewed by local users."
@@ -2576,15 +2573,16 @@ msgstr "The message may be viewed by local users."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:45
 msgid "messages"
-msgstr "messages"
+msgstr "berichten"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:463
 msgid "If further editing is required, first revoke the approval."
-msgstr "If further editing is required, first revoke the approval."
+msgstr ""
+"Als verder bewerken nodig is, moet eerst de goedkeuring worden ingetrokken."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:489
 msgid "revert to previous version"
-msgstr "revert to previous version"
+msgstr "terugvallen op vorige versie"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:495
 msgid ""
@@ -2592,33 +2590,33 @@ msgid ""
 "version. This can not be undone afterwards and will discard all changes made "
 "to the current version."
 msgstr ""
-"The current editable version can be replaced with the previous (published) "
-"version. This can not be undone afterwards and will discard all changes made "
-"to the current version."
+"De huidige bewerkbare versie kan vervangen worden door de vorige "
+"(gepubliceerde) versie. Dit kan daarna niet meer worden ongedaan gemaakt en "
+"gooit alle wijzigingen die in de huidige versie zijn gemaakt weg."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:503
 msgid "revert to previous"
-msgstr "revert to previous"
+msgstr "terugvallen op vorige"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:527
 msgid "manual close"
-msgstr "manual close"
+msgstr "handmatig sluiten"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:534
 msgid ""
 "If necessary, the published version of this content can be manually closed "
 "(taken offline). It will also be removed from the public index."
 msgstr ""
-"If necessary, the published version of this content can be manually closed "
-"(taken offline). It will also be removed from the public index."
+"Indien nodig, kan de gepubliceerde versie van deze inhoud handmatig gesloten "
+"(offline gezet) worden. Deze zal ook verwijderd worden uit de publieke index."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:543
 msgid "close published version"
-msgstr "close published version"
+msgstr "gepubliceerde versie sluiten"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:57
 msgid "${author_id} sent a message on ${some_date} ${with_comments}"
-msgstr "${author_id} sent a message on ${some_date} ${with_comments}"
+msgstr "${author_id} verstuurde op ${some_date} een bericht ${with_comments}"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:86
 msgid ""
@@ -2626,9 +2624,10 @@ msgid ""
 "withdrawing the request; if this person for example made an empty reject, "
 "this is the message of the requester ..."
 msgstr ""
-"actually the last message may not have been written by the person "
-"withdrawing the request; if this person for example made an empty reject, "
-"this is the message of the requester ..."
+"het laatste bericht hoeft niet noodzakelijk door de persoon geschreven te "
+"zijn die de aanvraag intrekt; als deze persoon bijvoorbeeld een lege "
+"afwijzing heeft gemaakt, is dit het bericht van degene die de aanvraag heeft "
+"ingediend..."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:86
 msgid ""
@@ -2636,129 +2635,128 @@ msgid ""
 "${requester} on ${some_date}. ${comment} The last message regarding this "
 "issue is:"
 msgstr ""
-"A previous request for approval has been rejected / withdrawn by "
-"${requester} on ${some_date}. ${comment} The last message regarding this "
-"issue is:"
+"Een vorige aanvraag om goedkeuring is geweigerd / ingetrokken door "
+"${requester} op ${some_date}. ${comment} Het laatste bericht hierover is:"
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
 msgid "There is no unapproved version."
-msgstr "There is no unapproved version."
+msgstr "Er is geen niet goedgekeurde versie."
 
 #: /views/edit/VersionedContent/tab_status_request.py:18
 msgid "Approval has already been requested."
-msgstr "Approval has already been requested."
+msgstr "Er is al goedkeuring aangevraagd."
 
 #: /views/edit/VersionedContent/tab_status_request.py:37
 msgid "Approval requested."
-msgstr "Approval requested."
+msgstr "Goedkeuring aangevraagd."
 
 #: /views/edit/VersionedContent/tab_status_revert_to_old.py:16
 msgid "No version selected to copy."
-msgstr "No version selected to copy."
+msgstr "Geen versie geselecteerd om te kopiëren."
 
 #: /views/edit/VersionedContent/tab_status_revert_to_old.py:23
 msgid "Can only set 1 version as editable."
-msgstr "Can only set 1 version as editable."
+msgstr "Er kan maar één versie als bewerkbaar ingesteld worden."
 
 #: /views/edit/VersionedContent/tab_status_revert_to_old.py:31
 #: /views/edit/VersionedContent/tab_status_revert_to_previous.py:17
 msgid "Reverted to previous version."
-msgstr "Reverted to previous version."
+msgstr "Teruggevallen op vorige versie."
 
 #: /views/edit/VersionedContent/tab_status_revoke.py:16
 msgid "This content is not approved."
-msgstr "This content is not approved."
+msgstr "Deze inhoud is niet goedgekeurd."
 
 #: /views/edit/VersionedContent/tab_status_silva2word.py:36
 msgid "Your job is ${status}. The id of your job is ${job_id}."
-msgstr "Your job is ${status}. The id of your job is ${job_id}."
+msgstr "De taak is ${status}. Het id van de taak is ${job_id}."
 
 #: /views/edit/VersionedContent/tab_status_view_version.pt:52
 msgid "back"
-msgstr "back"
+msgstr "terug"
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:26
 msgid ""
 "Approval was rejected via the ${tab_name} screen\n"
 "            (automatically generated message)."
 msgstr ""
-"Approval was rejected via the ${tab_name} screen\n"
-"            (automatically generated message)."
+"Goedkeuring is geweigerd d.m.v. het scherm '${tab_name}'\n"
+"            (automatisch gegenereerde melding)."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:29
 msgid ""
 "Approval was withdrawn via the ${tab_name} screen.\n"
 "            (automatically generated message)"
 msgstr ""
-"Approval was withdrawn via the ${tab_name} screen.\n"
-"            (automatically generated message)"
+"Goedkeuring is ingetrokken d.m.v. het scherm '${tab_name}'.\n"
+"            (automatisch gegenereerde melding)."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:42
 msgid ""
 "This content is already public. You can close the current public version."
 msgstr ""
-"This content is already public. You can close the current public version."
+"Deze inhoud is al publiek. De huidige publieke versie kan worden gesloten."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:44
 msgid "This content is already public."
-msgstr "This content is already public."
+msgstr "Deze inhoud is al publiek."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:46
 msgid "This content is already approved. You can revoke the approval."
-msgstr "This content is already approved. You can revoke the approval."
+msgstr "Deze inhoud is al goedgekeurd. De goedkeuring kan worden ingetrokken."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:49
 msgid "No request for approval is pending for this content."
-msgstr "No request for approval is pending for this content."
+msgstr "Er staat geen aanvraag voor goedkeuring uit voor deze inhoud."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:61
 msgid "Rejected request for approval"
-msgstr "Rejected request for approval"
+msgstr "Aanvraag voor goedkeuring geweigerd"
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:63
 msgid "Withdrew request for approval"
-msgstr "Withdrew request for approval"
+msgstr "Aanvraag voor goedkeuring ingetrokken"
 
 #: /views/edit/access_assign_to_group.py:17
 #: /views/edit/access_assign_to_user.py:15
 msgid "No role selected."
-msgstr "No role selected."
+msgstr "Geen rol geselecteerd."
 
 #: /views/edit/access_assign_to_group.py:19
 msgid "No groups selected."
-msgstr "No groups selected."
+msgstr "Geen groepen geselecteerd."
 
 #: /views/edit/access_assign_to_group.py:29
 msgid "Role(s) assigned for ${list}"
-msgstr "Role(s) assigned for ${list}"
+msgstr "Rol(len) toegekend voor ${list}"
 
 #: /views/edit/access_assign_to_user.py:18
 msgid "No user(s) selected."
-msgstr "No user(s) selected."
+msgstr "Geen gebruiker(s) geselecteerd."
 
 #: /views/edit/access_revoke_from_group.py:20
 #: /views/edit/access_revoke_from_user.py:19
 msgid "No roles to revoke selected."
-msgstr "No roles to revoke selected."
+msgstr "Geen rollen om in te trekken geselecteerd."
 
 #: /views/edit/access_revoke_from_group.py:39
 msgid "Role(s) revoked for ${list}"
-msgstr "Role(s) revoked for ${list}"
+msgstr "Rol(len) ingetrokken voor ${list}"
 
 #: /views/edit/access_revoke_from_user.py:35
 msgid "Role(s) revoked"
-msgstr "Role(s) revoked"
+msgstr "Rol(len) ingetrokken"
 
 #: /views/edit/asset_lookup.pt:147 /views/edit/document_lookup.pt:150
 #: /views/edit/hyperlink_lookup.pt:109
 msgid "select"
-msgstr "select"
+msgstr "selecteren"
 
 #: /views/edit/asset_lookup.pt:150 /views/edit/document_lookup.pt:153
 #: /views/edit/document_lookup.pt:331 /views/edit/hyperlink_lookup.pt:112
 #: /views/edit/hyperlink_lookup.pt:199
 msgid "view"
-msgstr "view"
+msgstr "bekijken"
 
 #: /views/edit/asset_lookup.pt:153 /views/edit/document_lookup.pt:156
 #: /views/edit/hyperlink_lookup.pt:115
@@ -2776,48 +2774,48 @@ msgstr "auteur"
 
 #: /views/edit/asset_lookup.pt:191
 msgid "view this asset"
-msgstr "view this asset"
+msgstr "dit asset bekijken"
 
 #: /views/edit/asset_lookup.pt:218
 msgid "No ${asset} in this folder."
-msgstr "No ${asset} in this folder."
+msgstr "Geen ${asset} in deze folder."
 
 #: /views/edit/asset_lookup.pt:233 /views/edit/hyperlink_lookup.pt:359
 msgid "cancel operation: alt-c"
-msgstr "cancel operation: alt-c"
+msgstr "operatie annuleren: alt-c"
 
 #: /views/edit/asset_lookup.pt:243 /views/edit/document_lookup.pt:371
 #: /views/edit/hyperlink_lookup.pt:369
 msgid "place reference..."
-msgstr "place reference..."
+msgstr "verwijzing plaatsen..."
 
 #: /views/edit/asset_lookup.pt:243 /views/edit/hyperlink_lookup.pt:369
 msgid "insert a reference to this asset: alt-p"
-msgstr "insert a reference to this asset: alt-p"
+msgstr "een verwijzing naar dit asset invoegen: alt-p"
 
 #: /views/edit/asset_lookup.pt:84
 msgid "add a new item: alt-n"
-msgstr "add a new item: alt-n"
+msgstr "nieuw item toevoegen: alt-n"
 
 #: /views/edit/clear_mapping.py:20
 msgid "map cleared"
-msgstr "map cleared"
+msgstr "'map' leeggemaakt"
 
 #: /views/edit/document_lookup.pt:169 /views/edit/hyperlink_lookup.pt:128
 #: /views/edit/Container/tab_edit.pt:147
 #: /views/edit/Container/GhostFolder/tab_edit.pt:239
 msgid "There is no content here."
-msgstr "There is no content here."
+msgstr "Er bevindt zich hier geen inhoud."
 
 #: /views/edit/document_lookup.pt:212
 #: /views/edit/Container/GhostFolder/tab_edit.pt:293
 msgid "content is approved or published"
-msgstr "content is approved or published"
+msgstr "inhoud is goedgekeurd of gepubliceerd"
 
 #: /views/edit/document_lookup.pt:212 /views/edit/hyperlink_lookup.pt:182
 #: /views/edit/Container/tab_edit.pt:246
 msgid "content approved or published"
-msgstr "content approved or published"
+msgstr "inhoud goedgekeurd of gepubliceerd"
 
 #: /views/edit/document_lookup.pt:239 /views/edit/document_lookup.pt:250
 #: /views/edit/document_lookup.pt:348 /views/edit/hyperlink_lookup.pt:228
@@ -2827,36 +2825,36 @@ msgstr "content approved or published"
 #: /views/edit/Container/GhostFolder/tab_edit.pt:338
 #: /views/edit/Container/GhostFolder/tab_edit.pt:356
 msgid "n/a"
-msgstr "n/a"
+msgstr "-"
 
 #: /views/edit/document_lookup.pt:315 /views/edit/Container/tab_edit.pt:363
 #: /views/edit/VersionedContent/tab_status.pt:72
 #: /views/edit/VersionedContent/tab_status.pt:96
 msgid "editor"
-msgstr "editor"
+msgstr "'editor'"
 
 #: /views/edit/document_lookup.pt:371
 msgid "insert the reference: alt-p"
-msgstr "insert the reference: alt-p"
+msgstr "de verwijzing invoegen: alt-p"
 
 #: /views/edit/get_ghost_link_status_text.py:16
 msgid "You have to enter a path here."
-msgstr "You have to enter a path here."
+msgstr "Hier moet een pad worden ingevoerd."
 
 #: /views/edit/get_ghost_link_status_text.py:18
 msgid ""
 "The object &#xab;${haunted_url}&#xbb; the ghost points to does        not "
 "exist."
 msgstr ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to does        not "
-"exist."
+"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst bestaat "
+"niet exist."
 
 #: /views/edit/get_ghost_link_status_text.py:21
 msgid ""
 "The object &#xab;${haunted_url}&#xbb; the ghost points to is a        "
 "container."
 msgstr ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is a        "
+"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is een "
 "container."
 
 #: /views/edit/get_ghost_link_status_text.py:24
@@ -2864,31 +2862,31 @@ msgid ""
 "The object &#xab;${haunted_url}&#xbb; the ghost points to is        itself a "
 "ghost."
 msgstr ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is        itself a "
-"ghost."
+"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is zelf "
+"een 'ghost'."
 
 #: /views/edit/get_ghost_link_status_text.py:27
 msgid ""
 "The object &#xab;${haunted_url}&#xbb; the ghost points to is        not a "
 "content object."
 msgstr ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is        not a "
-"content object."
+"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is geen "
+"inhoudsobject."
 
 #: /views/edit/get_ghost_link_status_text.py:30
 msgid ""
 "The object &#xab;${haunted_url}&#xbb; the ghost points to is a        "
 "content object."
 msgstr ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is a        "
-"content object."
+"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is een "
+"inhoudsobject."
 
 #: /views/edit/get_ghost_link_status_text.py:33
 msgid ""
 "The object &#xab;${haunted_url}&#xbb; the ghost points to is        not a "
 "container."
 msgstr ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is        not a "
+"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is geen "
 "container."
 
 #: /views/edit/get_ghost_link_status_text.py:36
@@ -2896,12 +2894,12 @@ msgid ""
 "The object &#xab;${haunted_url}&#xbb; the ghost points is        either the "
 "ghost itself or an ancestor of the ghost."
 msgstr ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points is        either the "
-"ghost itself or an ancestor of the ghost."
+"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is ofwel "
+"de 'ghost' zelf of een 'ancestor' van de 'ghost'."
 
 #: /views/edit/get_ghost_link_status_text.py:39
 msgid "The ghost is in an undefined state."
-msgstr "The ghost is in an undefined state."
+msgstr "De 'ghost' is in een onbepaalde staat."
 
 #: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:108
 #: /views/edit/Container/GhostFolder/tab_edit.pt:443
@@ -2920,105 +2918,104 @@ msgstr "&#8211;"
 #: /views/edit/hyperlink_lookup.pt:334 /views/edit/Container/tab_edit.pt:412
 #: /views/edit/Container/GhostFolder/tab_edit.pt:452
 msgid "unknown"
-msgstr "unknown"
+msgstr "onbekend"
 
 #: /views/edit/lookup_add_to_selection.py:20
 msgid "Users selected."
-msgstr "Users selected."
+msgstr "Gebruikers geselecteerd."
 
 #: /views/edit/lookup_add_to_selection.py:9
 msgid "No users selected."
-msgstr "No users selected."
+msgstr "Geen gebruikers geselecteerd."
 
 #: /views/edit/lookup_remove_from_selection.py:18
 msgid "Users removed from selection."
-msgstr "Users removed from selection."
+msgstr "Gebruikers uit selectie verwijderd."
 
 #: /views/edit/lookup_remove_from_selection.py:9
 msgid "No users removed."
-msgstr "No users removed."
+msgstr "Geen gebruikers verwijderd."
 
 #: /views/edit/lookup_search.py:16
 msgid "No search string supplied."
-msgstr "No search string supplied."
+msgstr "Geen zoektekst ingegegeven."
 
 #: /views/edit/lookup_search.py:19
 msgid ""
 "Search string '${string}' is too short. Please try a longer search string."
-msgstr ""
-"Search string '${string}' is too short. Please try a longer search string."
+msgstr "Zoektekst '${string}' is te kort. Probeer a.u.b. een langere tekst."
 
 #: /views/edit/lookup_search.py:27
 msgid "No users found for search string '${string}'."
-msgstr "No users found for search string '${string}'."
+msgstr "Geen gebruikers gevonden voor zoektekst '${string}'."
 
 #: /views/edit/lookup_search.py:33
 msgid "Searched for '${string}'."
-msgstr "Searched for '${string}'."
+msgstr "Gezocht naar '${string}'."
 
 #: /views/edit/lookup_ui.pt:107
 msgid "search"
-msgstr "search"
+msgstr "zoeken"
 
 #: /views/edit/lookup_ui.pt:127 /views/edit/lookup_ui.pt:196
 msgid "add checked users to clipboard: alt-a"
-msgstr "add checked users to clipboard: alt-a"
+msgstr "Aangevinkte gebruikers aan 'clipboard' toevoegen: alt-a"
 
 #: /views/edit/lookup_ui.pt:127 /views/edit/lookup_ui.pt:196
 msgid "add to clipboard"
-msgstr "add to clipboard"
+msgstr "aan 'clipboard' toevoegen"
 
 #: /views/edit/lookup_ui.pt:135
 msgid "search results"
-msgstr "search results"
+msgstr "zoekresultaten"
 
 #: /views/edit/lookup_ui.pt:144
 msgid "user"
-msgstr "user"
+msgstr "gebruiker"
 
 #: /views/edit/lookup_ui.pt:147
 msgid "email"
-msgstr "email"
+msgstr "e-mail"
 
 #: /views/edit/lookup_ui.pt:185
 msgid "No search results."
-msgstr "No search results."
+msgstr "Geen zoekresultaten."
 
 #: /views/edit/lookup_ui.pt:215
 msgid "return to the access screen with this clipboard: alt-u"
-msgstr "return to the access screen with this clipboard: alt-u"
+msgstr "Naar het scherm 'toegang' terugkeren met dit 'clipboard': alt-u"
 
 #: /views/edit/lookup_ui.pt:215
 msgid "<u>u</u>se clipboard..."
-msgstr "<u>u</u>se clipboard..."
+msgstr "'clipboard' gebr<u>u</u>iken..."
 
 #: /views/edit/lookup_ui.pt:227
 msgid "remove users from the clipboard: alt-r"
-msgstr "remove users from the clipboard: alt-r"
+msgstr "gebruikers van het 'clipboard' verwijderen: alt-r"
 
 #: /views/edit/lookup_ui.pt:227
 msgid "remove user"
-msgstr "remove user"
+msgstr "gebruiker verwijderen"
 
 #: /views/edit/lookup_ui.pt:45
 msgid "return to previous screen: alt-k"
-msgstr "return to previous screen: alt-k"
+msgstr "naar vorig scherm terugkeren: alt-k"
 
 #: /views/edit/lookup_ui.pt:50
 msgid "bac<u>k</u>..."
-msgstr "bac<u>k</u>..."
+msgstr "terug (<u>k</u>)..."
 
 #: /views/edit/lookup_ui.pt:76
 msgid "user lookup at &#xab;${title_or_id}&#xbb;"
-msgstr "user lookup at &#xab;${title_or_id}&#xbb;"
+msgstr "gebruiker opzoeken bij &#xab;${title_or_id}&#xbb;"
 
 #: /views/edit/lookup_ui.pt:82
 msgid "user search"
-msgstr "user search"
+msgstr "gebruiker zoeken"
 
 #: /views/edit/lookup_ui.pt:91
 msgid "name (or part of name)"
-msgstr "name (or part of name)"
+msgstr "naam (of deel van naam)"
 
 #: /views/edit/macro_metadata.pt:132
 msgid "&#134;"
@@ -3026,44 +3023,47 @@ msgstr "&#134;"
 
 #: /views/edit/macro_metadata.pt:157
 msgid "date format: day / month / year &nbsp;23:59"
-msgstr "date format: day / month / year &nbsp;23:59"
+msgstr "datumformaat: dag / maand / jaar &nbsp;23:59"
 
 #: /views/edit/macro_metadata.pt:160
 msgid "&#134; acquireable"
-msgstr "&#134; acquireable"
+msgstr "&#134; 'overerfbaar'"
 
 #: /views/edit/macro_metadata.pt:195 /views/edit/macro_metadata.pt:354
 msgid "content renderer"
-msgstr "content renderer"
+msgstr "inhouds-'renderer'"
 
 #: /views/edit/macro_metadata.pt:204 /views/edit/macro_metadata.pt:363
 msgid "renderer"
-msgstr "renderer"
+msgstr "'renderer'"
 
 #: /views/edit/macro_metadata.pt:233
 msgid "Select a renderer that will be used to render this object."
-msgstr "Select a renderer that will be used to render this object."
+msgstr ""
+"Selecteer een 'renderer' die gebruikt zal worden om dit object weer te geven."
 
 #: /views/edit/macro_metadata.pt:385
 msgid "first 'un-approve' this item in order to edit: alt-r"
-msgstr "first 'un-approve' this item in order to edit: alt-r"
+msgstr ""
+"de goedkeuring voor dit item moet eerst worden ingetrokken om het te kunnen "
+"bewerken: alt-r"
 
 #: /views/edit/macro_metadata.pt:385
 #: /views/edit/VersionedContent/macro_tab_edit.pt:117
 #: /views/edit/VersionedContent/tab_status_macros.pt:454
 #: /views/edit/VersionedContent/tab_status_macros.pt:472
 msgid "revoke approval"
-msgstr "revoke approval"
+msgstr "goedkeuring intrekken"
 
 #: /views/edit/macro_metadata.pt:399
 msgid "create a new version of this content: alt-n"
-msgstr "create a new version of this content: alt-n"
+msgstr "een nieuwe versie van deze inhoud aanmaken: alt-n"
 
 #: /views/edit/macro_metadata.pt:399 /views/edit/Container/tab_status.pt:392
 #: /views/edit/Container/tab_status.pt:451
 #: /views/edit/VersionedContent/macro_tab_edit.pt:96
 msgid "new version"
-msgstr "new version"
+msgstr "nieuwe versie"
 
 #: /views/edit/macro_metadata.pt:42 /views/edit/macro_metadata.pt:287
 msgid "metadata ${for_title}"
@@ -3071,7 +3071,7 @@ msgstr "metadata ${for_title}"
 
 #: /views/edit/macro_metadata.pt:68 /views/edit/macro_metadata.pt:302
 msgid "metadata set"
-msgstr "metadata set"
+msgstr "metadata-set"
 
 #: /views/edit/macro_metadata.pt:73 /views/edit/macro_metadata.pt:307
 #: /views/edit/Asset/Image/edit.pt:140
@@ -3085,7 +3085,7 @@ msgstr "element"
 
 #: /views/edit/macro_metadata.pt:81
 msgid "acquired content"
-msgstr "acquired content"
+msgstr "'overgeërfde' inhoud"
 
 #: /views/edit/macro_metadata.pt:84 /views/edit/tab_access.pt:568
 #: /views/edit/tab_access.pt:741 /views/edit/Asset/Image/edit.pt:148
@@ -3100,19 +3100,19 @@ msgstr "acquired content"
 #: /views/edit/Container/Publication/tab_metadata.pt:94
 #: /views/edit/VersionedContent/Ghost/edit.pt:65
 msgid "note"
-msgstr "note"
+msgstr "notitie"
 
 #: /views/edit/macro_select_all.pt:11
 msgid "select all: alt-a"
-msgstr "select all: alt-a"
+msgstr "alles selecteren: alt-a"
 
 #: /views/edit/macro_select_all.pt:22
 msgid "select <u>a</u>ll"
-msgstr "select <u>a</u>ll"
+msgstr "<u>a</u>lles selecteren"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:24
 msgid "user clipboard"
-msgstr "gebruikers clipboard"
+msgstr "gebruikers-'clipboard'"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup users..."
@@ -3120,24 +3120,24 @@ msgstr "gebruikers opzoeken..."
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup users: alt-l"
-msgstr "lookup users: alt-l"
+msgstr "gebruikers opzoeken: alt-l"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:45
 msgid "ctrl-click to multi-select"
-msgstr "ctrl-click to multi-select"
+msgstr "ctrl-klik voor 'multi-selecteren'"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:60
 msgid "select users:"
-msgstr "select users:"
+msgstr "gebruikers selecteren:"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:75
 msgid "No users on clipboard"
-msgstr "Geen gebruikers op clipboard"
+msgstr "Geen gebruikers op 'clipboard'"
 
 #: /views/edit/macro_vein_navigation.pt:62
 #: /views/edit/macro_vein_navigation.pt:69
 msgid "up one level: alt-]"
-msgstr "een niveau naar boven: alt-]"
+msgstr "een niveau omhoog: alt-]"
 
 #: /views/edit/macro_vein_navigation.pt:76
 #: /views/edit/macro_vein_navigation.pt:82
@@ -3150,7 +3150,7 @@ msgstr "scherm herladen"
 
 #: /views/edit/promptWindow.pt:21
 msgid "session timeout"
-msgstr "session timeout"
+msgstr "sessie verlopen"
 
 #: /views/edit/promptWindow.pt:27
 msgid ""
@@ -3159,34 +3159,35 @@ msgid ""
 "Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;"
 "cancel&#8217; (alt-c) to do nothing, or save manually."
 msgstr ""
-"In about 5 minutes, the working session is going to expire for the document "
-"you are currently editing. This means that any unsaved work will be lost. "
-"Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;"
-"cancel&#8217; (alt-c) to do nothing, or save manually."
+"Over ongeveer vijf minuten verloopt de werk-sessie voor het document dat op "
+"dit moment wordt bewerkt. Dat betekent dat al het werk dat niet is "
+"opgeslagen, verloren gaat. Klik op &#8216;opslaan&#8217; (alt-s) om "
+"wijzigingen op te slaan, op &#8216;annuleren&#8217; (alt-c) om niets te "
+"doen, of sla handmatig op."
 
 #: /views/edit/promptWindow.pt:35
 msgid "cancel the automatic save action: alt-c"
-msgstr "cancel the automatic save action: alt-c"
+msgstr "opslag-actie annuleren: alt-c"
 
 #: /views/edit/promptWindow.pt:44
 msgid " save "
-msgstr " save "
+msgstr " opslaan "
 
 #: /views/edit/promptWindow.pt:44
 msgid "save the document you were working on: alt-s"
-msgstr "save the document you were working on: alt-s"
+msgstr "het document waar aan gewerkt werd opslaan: alt-s"
 
 #: /views/edit/save_metadata.py:30
 msgid "The data that was submitted did not validate properly."
-msgstr "The data that was submitted did not validate properly."
+msgstr "De verstuurde gegevens zijn niet goed gevalideerd."
 
 #: /views/edit/save_metadata.py:33
 msgid "Metadata saved."
-msgstr "Metadata saved."
+msgstr "Metadata opgeslagen."
 
 #: /views/edit/show_local.py:19
 msgid "This is the ${meta_type} \"${id}\""
-msgstr "This is the ${meta_type} \"${id}\""
+msgstr "Dit is ${meta_type} \"${id}\""
 
 #: /views/edit/show_local.py:24
 msgid "in"
@@ -3196,51 +3197,47 @@ msgstr "in"
 msgid "No users with local roles are defined here."
 msgstr "Er zijn hier geen gebruikers met lokale rollen gedefinieerd."
 
-#: /views/edit/tab_access.pt:151
-msgid "assign_role"
-msgstr "assign_role"
-
 #: /views/edit/tab_access.pt:151 /views/edit/tab_access.pt:604
 msgid "select a role to assign"
-msgstr "select a role to assign"
+msgstr "selecteer een rol om toe te kennen"
 
 #: /views/edit/tab_access.pt:155 /views/edit/tab_access.pt:296
 #: /views/edit/tab_access.pt:454 /views/edit/tab_access.pt:497
 msgid "select role:"
-msgstr "select role:"
+msgstr "selecteer rol:"
 
 #: /views/edit/tab_access.pt:160
 msgid "assign role"
-msgstr "assign role"
+msgstr "rol toekennen"
 
 #: /views/edit/tab_access.pt:160 /views/edit/tab_access.pt:308
 #: /views/edit/tab_access.pt:460
 msgid "assign a local role to selected user(s)"
-msgstr "assign a local role to selected user(s)"
+msgstr "een rol toekennen aan geselecteerde gebruiker(s)"
 
 #: /views/edit/tab_access.pt:170
 msgid "revoke selected role(s) from selected user(s)"
-msgstr "revoke selected role(s) from selected user(s)"
+msgstr "geselecteerde rol(len) van geselecteerde gebruiker(s) intrekken"
 
 #: /views/edit/tab_access.pt:170
 msgid "revoke role"
-msgstr "revoke role"
+msgstr "rol intrekken"
 
 #: /views/edit/tab_access.pt:199
 msgid "pending requests for roles"
-msgstr "pending requests for roles"
+msgstr "uitstaande aanvragen om rollen"
 
 #: /views/edit/tab_access.pt:206
 msgid "requested role"
-msgstr "requested role"
+msgstr "aangevraagde rol"
 
 #: /views/edit/tab_access.pt:209
 msgid "is approved"
-msgstr "is approved"
+msgstr "is goedgekeurd"
 
 #: /views/edit/tab_access.pt:245
 msgid "No roles have been requested."
-msgstr "No roles have been requested."
+msgstr "Er zijn geen rollen aangevraagd."
 
 #: /views/edit/tab_access.pt:252
 msgid "access key: alt-d"
@@ -3248,7 +3245,7 @@ msgstr "sneltoets: alt-d"
 
 #: /views/edit/tab_access.pt:252
 msgid "deny role"
-msgstr "deny role"
+msgstr "rol weigeren"
 
 #: /views/edit/tab_access.pt:264
 msgid "access key: alt-g"
@@ -3256,7 +3253,7 @@ msgstr "sneltoets: alt-g"
 
 #: /views/edit/tab_access.pt:264
 msgid "grant role"
-msgstr "grant role"
+msgstr "rol toekennen"
 
 #: /views/edit/tab_access.pt:272
 msgid "access key: alt-a"
@@ -3264,19 +3261,19 @@ msgstr "sneltoets: alt-a"
 
 #: /views/edit/tab_access.pt:272
 msgid "Grant and approve"
-msgstr "Grant and approve"
+msgstr "Toekennen en goedkeuren"
 
 #: /views/edit/tab_access.pt:308 /views/edit/tab_access.pt:509
 msgid "assign"
-msgstr "assign"
+msgstr "toekennen"
 
 #: /views/edit/tab_access.pt:330
 msgid "A Groups Service is not installed"
-msgstr "A Groups Service is not installed"
+msgstr "Er is geen 'Groups Service' geïnstalleerd"
 
 #: /views/edit/tab_access.pt:334
 msgid "Silva Root in the ZMI"
-msgstr "Silva Root in the ZMI"
+msgstr "'Silva Root' in de 'ZMI'"
 
 #: /views/edit/tab_access.pt:335
 msgid ""
@@ -3286,47 +3283,47 @@ msgid ""
 "Groups Service&#8221; from the add list and give it the id "
 "${service_groups}. No further configuration is necessary."
 msgstr ""
-"You are seeing this message because the Silva Groups extension is installed "
-"on the file system, but a Groups Service hasn't been added to this Silva "
-"instance. To install one, go to the ${silva_root_in_the_ZMI}, choose &#8220;"
-"Groups Service&#8221; from the add list and give it the id "
-"${service_groups}. No further configuration is necessary."
+"Je ziet deze melding omdat de 'Silva Groups' extensie is geïnstalleerd op "
+"het filesysteem, maar er geen 'Groups Service' aan deze Silva 'instantie' is "
+"toegevoegd. Ga, om er één te installeren, naar de ${silva_root_in_the_ZMI}, "
+"kies &#8220;Groups Service&#8221; uit de 'add' lijst en geef die het id "
+"${service_groups}. Verdere configuratie is niet nodig."
 
 #: /views/edit/tab_access.pt:355
 msgid "group roles"
-msgstr "group roles"
+msgstr "groepsrollen"
 
 #: /views/edit/tab_access.pt:362
 msgid "grant or revoke local roles for groups"
-msgstr "grant or revoke local roles for groups"
+msgstr "locale rollen voor groepen toekennen of intrekken"
 
 #: /views/edit/tab_access.pt:368
 msgid "groupname"
-msgstr "groupname"
+msgstr "groepsnaam"
 
 #: /views/edit/tab_access.pt:396
 msgid "&lt;broken&gt; <!-- XXX replace this by something nice -->"
-msgstr "&lt;broken&gt; <!-- XXX replace this by something nice -->"
+msgstr "&lt;gebroken&gt; <!-- XXX vervangen door iets beters -->"
 
 #: /views/edit/tab_access.pt:439
 msgid "No groups with (local) roles."
-msgstr "No groups with (local) roles."
+msgstr "Geen groepen met (locale) rollen."
 
 #: /views/edit/tab_access.pt:460
 msgid "assign role to group"
-msgstr "assign role to group"
+msgstr "rol aan groep toekennen"
 
 #: /views/edit/tab_access.pt:470
 msgid "revoke selected role(s) from selected group(s)"
-msgstr "revoke selected role(s) from selected group(s)"
+msgstr "geselecteerde rol(len) van geselecteerde groep(en) intrekken"
 
 #: /views/edit/tab_access.pt:470
 msgid "revoke role from group"
-msgstr "revoke role from group"
+msgstr "rol van groep intrekken"
 
 #: /views/edit/tab_access.pt:509
 msgid "assign selected role to selected group(s)"
-msgstr "assign selected role to selected group(s)"
+msgstr "geselecteerde rol aan geselecteerde groep(en) toekennen"
 
 #: /views/edit/tab_access.pt:548
 msgid "public view access restrictions for"
@@ -3334,7 +3331,7 @@ msgstr "Publieke toegangsbeperkingen voor"
 
 #: /views/edit/tab_access.pt:557 /views/edit/tab_access.pt:730
 msgid "access restriction by role"
-msgstr "toegangsbeperking voor rol"
+msgstr "toegangsbeperking per rol"
 
 #: /views/edit/tab_access.pt:565 /views/edit/tab_access.pt:738
 msgid "current restriction"
@@ -3346,12 +3343,14 @@ msgstr "Open voor het publiek"
 
 #: /views/edit/tab_access.pt:578 /views/edit/tab_access.pt:751
 msgid "(acquired)."
-msgstr "(gebruik rol van niveau hierboven)."
+msgstr "('overgeërfd')."
 
-# Default: "Setting an access restriction here affects objects on this and lower levels."
 #: /views/edit/tab_access.pt:582
-msgid "access_setting_restriction"
-msgstr "access_setting_restriction"
+msgid ""
+"Setting an access restriction here affects objects on this and lower levels."
+msgstr ""
+"Hier een toegangsbeperking instellen heeft invloed op objecten op dit en "
+"lagergelegen niveaus."
 
 #: /views/edit/tab_access.pt:59
 msgid "user roles for &#xab;${title}&#xbb;"
@@ -3359,7 +3358,7 @@ msgstr "gebruikersrollen voor &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_access.pt:593
 msgid "acquire restriction"
-msgstr "gebruik beperking van boven"
+msgstr "beperking 'overerven'"
 
 #: /views/edit/tab_access.pt:593
 msgid ""
@@ -3368,7 +3367,7 @@ msgstr "geen toegangsbeperking op dit niveau, gebruik beperking van boven"
 
 #: /views/edit/tab_access.pt:615
 msgid "set restriction"
-msgstr "stel beperking in"
+msgstr "beperking instellen"
 
 #: /views/edit/tab_access.pt:615
 msgid "restrict access to users with a specific role"
@@ -3376,11 +3375,11 @@ msgstr "toegang beperken tot gebruikers met een specifieke rol"
 
 #: /views/edit/tab_access.pt:65
 msgid "grant or revoke local roles for users"
-msgstr "toekennen of intrekken van lokale rollen voor gebruikers"
+msgstr "lokale rollen voor gebruikers toekennen of intrekken"
 
 #: /views/edit/tab_access.pt:721
 msgid "public view access restrictions for &#xab;${title}&#xbb;"
-msgstr "public view access restrictions for &#xab;${title}&#xbb;"
+msgstr "toegangsbeperkingen publieke weegave voor &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_access.pt:74 /views/edit/tab_access.pt:203
 msgid "username"
@@ -3656,6 +3655,43 @@ msgstr "No roles were selected."
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
+
+# Default: "Setting an access restriction here affects objects on this and lower levels."
+#~ msgid "access_setting_restriction"
+#~ msgstr "access_setting_restriction"
+
+#~ msgid "assign_role"
+#~ msgstr "assign_role"
+
+#~ msgid "<span class=\"error\">could not delete ${id}: ${error}</span>"
+#~ msgstr "<span class=\"error\">could not delete ${id}: ${error}</span>"
+
+#~ msgid ""
+#~ "<dl>\n"
+#~ "<dt>Sorry, content is missing:\n"
+#~ "<dd><span class=\"error\">Both a name and e-mail address are required to "
+#~ "approve someone</span>.</dd>\n"
+#~ "</dl>"
+#~ msgstr ""
+#~ "<dl>\n"
+#~ "<dt>Sorry, content is missing:\n"
+#~ "<dd><span class=\"error\">Both a name and e-mail address are required to "
+#~ "approve someone</span>.</dd>\n"
+#~ "</dl>"
+
+#~ msgid "<span class=\"error\">Not withdrawn: ${list}</span>"
+#~ msgstr "<span class=\"error\">Not withdrawn: ${list}</span>"
+
+#~ msgid "<span class=\"error\">Could not revoke approval of: ${ids}</span>"
+#~ msgstr "<span class=\"error\">Could not revoke approval of: ${ids}</span>"
+
+#~ msgid "<span class=\"error\">Not rejected: ${ids}</span>"
+#~ msgstr "<span class=\"error\">Not rejected: ${ids}</span>"
+
+#~ msgid ""
+#~ "<span class=\"error\">could not create a new version for: ${ids}</span>"
+#~ msgstr ""
+#~ "<span class=\"error\">could not create a new version for: ${ids}</span>"
 
 #~ msgid ""
 #~ "Note: Silva can provide image scaling and conversion with the help of PIL "

@@ -48,9 +48,9 @@ if revoked_ids:
     msg.append(unicode(message))
 
 if not_revoked:
-    message = _('<span class="error">Could not revoke approval of: ${ids}</span>')
+    message = _('Could not revoke approval of: ${ids}')
     message.set_mapping({'ids': view.quotify_list_ext(not_revoked)})
-    msg.append(unicode(message))
+    msg.append('<span class="error">' + unicode(message) + '</span>')
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

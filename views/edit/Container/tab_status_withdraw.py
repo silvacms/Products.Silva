@@ -46,9 +46,9 @@ if approved_ids:
     msg.append(unicode(message))
 
 if not_approved:
-    message = _('<span class="error">Not withdrawn: ${list}</span>')
+    message = _('Not withdrawn: ${list}')
     message.set_mapping({'list': view.quotify_list_ext(not_approved)})
-    msg.append(unicode(message))
+    msg.append('<span class="error">' + unicode(message) + '</span>')
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

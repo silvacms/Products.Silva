@@ -151,7 +151,7 @@
                     <select class="manipulator"
                       name="assign_role"
                       title="select a role to assign"
-                      i18n:attributes="name;title">
+                      i18n:attributes="title">
                       <option value="None" i18n:translate="">
                         select role:
                       </option>
@@ -579,7 +579,7 @@
                      condition="info/acquired">(acquired).</tal:block>
                   </i>
                 </td>
-                <td i18n:translate="access_setting_restriction"> 
+                <td i18n:translate=""> 
                   Setting an access restriction here affects objects on this and lower levels.
                 </td>
               </tr>

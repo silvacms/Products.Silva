@@ -48,8 +48,8 @@ if copied_ids:
     msg.append(unicode(message))
 
 if not_copied:
-    message = _('<span class="error">could not create a new version for: ${ids}</span>')
+    message = _('could not create a new version for: ${ids}')
     message.set_mapping({'ids': view.quotify_list_ext(not_copied)})
-    msg.append(unicode(message))
+    msg.append('<span class="error">' + unicode(message)  + '</span>')
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )
