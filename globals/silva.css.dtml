@@ -642,6 +642,10 @@ textarea.readable {
   font: 100% Verdana, Helvetica, Arial, sans-serif;
 }
 
+optgroup {
+  font-size: 100%;
+}
+
 select {
   color : &dtml-mainTabFontColorSelected;;
   background : &dtml-inputBackground;;
