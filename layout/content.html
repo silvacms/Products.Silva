@@ -49,12 +49,13 @@ Some slots are not active. Activate by removing the 'no' from 'nometal'.
 <body nometal:fill-slot="body" tal:omit-tag="">
 <div nometal:fill-slot="page_header" tal:omit-tag="">
   <!-- Begin page_header slot -->
-  <!-- this breadcrumb trail could be moved to layout_macro.html if it's always in use -->
+  <!-- this breadcrumb trail should be moved to layout_macro.html if it's always in use -->
   <div metal:fill-slot="top_navigation" tal:omit-tag="">
     <!-- Start top_navigation slot -->
-    <span class="breadcrumb"><span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
+    <span class="breadcrumb">
+      <span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
       <a tal:attributes="href item/absolute_url" tal:content="item/get_title">Name</a>
-      <span tal:condition="not:repeat/item/end" tal:omit-tag="">/</span></span>
+      <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
     </span>
     <!-- End top_navigation slot -->
   </div>
