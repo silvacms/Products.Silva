@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.3 $
+$Revision: 1.47.2.4 $
 
 Silva changes
 
@@ -10,6 +10,9 @@ Silva changes
 
         - Fix where the Groups administration button was shown, even
           if no service_groups was available.      
+
+        - Now refreshes all installed products before an 
+          "upgrade all" action.
 
   0.9.1 beta
 
