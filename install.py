@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.11 2004/05/05 05:38:41 kitblake Exp $
+# $Id: install.py,v 1.97.4.9.4.12 2004/05/11 15:36:37 faassen Exp $
 """Install for Silva Core
 """
 # Python
@@ -120,14 +120,8 @@ def install(root):
     # add and/or update catalog
     setup_catalog(root)
 
-    # Try to see if the Groups Product is installed.
-    # If so, register the views
-    try:
-        from Products import Groups
-    except ImportError, ie:
-        pass
-    else:
-        registerGroupsViews(root.service_view_registry)
+    # always register the groups views
+    registerGroupsViews(root.service_view_registry)
 
     # configure membership; this checks whether this is necessary
     configureMembership(root)
