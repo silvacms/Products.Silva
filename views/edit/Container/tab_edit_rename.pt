@@ -6,6 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/tal/i18n"
   tal:define="
     global breadcrumb_vein string:Rename;
     global active_tab string:tab_edit;
@@ -24,7 +25,8 @@
     <td class="top location" colspan="4">
     <h2>
       <img tal:replace="structure python:view.render_icon(model)" />
-      rename objects in       
+      <span i18n:translate="rename_objects_in">
+      rename objects in </span>       
       &#xab;<tal:block content="model/get_title" />&#xbb;
     </h2>
     </td>
@@ -33,17 +35,17 @@
 
 <tbody>
   <tr>
-    <th class="align-right">
+    <th class="align-right" i18n:translate="aspect">
       aspect
     </th>
-    <th>
+    <th i18n:translate="old">
       old
     </th>
-    <th>
+    <th i18n:translate="new">
       new
     </th>
-    <th>
-    Notes
+    <th i18n:translate="notes">
+    notes
     </th>
   </tr>
 
@@ -51,7 +53,7 @@
   <tal:define define="object python:getattr(model, objectid)">
   <tal:cycle define="oddrow repeat/objectid/odd">
   <tr class="odd" valign="top">
-  <td class="align-right">
+  <td class="align-right" i18n:translate="id">
     id
   </td>
   <td>
@@ -66,7 +68,7 @@
   </tr>
 
   <tr class="even" valign="top">
-  <td class="align-right">
+  <td class="align-right" i18n:translate="title">
     title
   </td>
   <td>
@@ -91,7 +93,8 @@
       tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
   </td>
   <td>
-    <span class="error" tal:condition="python: object.getId() == 'index'">
+    <span class="error" tal:condition="python: object.getId() == 'index'"
+      i18n:translate="changes_the_title_of_the_folder">
       Changes the title of the folder!
     </span>
   </td>
@@ -120,9 +123,13 @@
 
 </tal:condition>
 
-<tal:condition condition="python: not here.REQUEST.has_key('ids')">
+<tal:condition condition="python: not here.REQUEST.has_key('ids')"
+i18n:translate="no_items_to_rename">
 No items to rename!<br />
-<a href="#" tal:attributes="href python:'/'.join(model.getPhysicalPath()) + '/edit'">Edit</a>
+<a href="#" tal:attributes="href python:'/'.join(model.getPhysicalPath()) + '/edit'"
+  i18n:translate="edit">
+  edit
+</a>
 </tal:condition>
 
 </metal:block>
