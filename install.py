@@ -80,6 +80,7 @@ def installFromScratch(root):
     configureLayout(root)
     # now do the uinstallable stuff (views)
     install(root)
+    installSilvaDocument(root)
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
@@ -585,6 +586,13 @@ def configureContainerPolicies(root):
     })
     
 
+def installSilvaDocument(root):
+    # installs Silva Document if available
+    # see issue #536
+    from Products.Silva.ExtensionRegistry import extensionRegistry
+    if 'SilvaDocument' in extensionRegistry.get_names():
+        extensionRegistry.install('SilvaDocument', root)
+        
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
