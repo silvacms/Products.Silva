@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.58 $
+# $Revision: 1.59 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -23,12 +23,13 @@ icon="www/silvapublication.gif"
 addable_priority = -0.5
 
 class Publication(Folder.Folder):
-    """These containers function as the major organizing blocks of a 
-       Silva site. Publications instill a threshold of view, showing
-       only the contents of the current publication (keeping the overview
-       screens manageable) and have configuration settings which, a.o.,
-       determine which core and pluggable objects will be available. For
-       complex publications, sub-publications can be nested.
+    """Publications function as the major organizing blocks of a Silva site. 
+       They are comparable to binders, and can contain folders, documents, and assets. 
+       Publications are opaque. They instill a threshold of view, showing
+       only the contents of the current publication. This keeps the overview
+       screens manageable. Publications have configuration settings that
+       determine which core and pluggable objects are available. For
+       complex sites, sub-publications can be nested.
     """
     security = ClassSecurityInfo()
     

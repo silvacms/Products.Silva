@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.29 2003/11/20 14:10:12 zagy Exp $
+# $Id: GhostFolder.py,v 1.30 2003/11/23 11:18:00 kitblake Exp $
 
 from __future__ import nested_scopes
 
@@ -127,7 +127,9 @@ class SyncCopy(Sync):
 class GhostFolder(GhostBase, Publishable, Folder.Folder):
     """Ghost Folders are similar to Ghosts, but instead of being a 
        placeholder for a document, they create placeholders and/or copies of all 
-       the contents of the &#8216;original&#8217; folder. When a folder is
+       the contents of the &#8216;original&#8217; folder. The advantage of Ghost 
+       Folders is the contents stay in sync with the original, by manual or 
+       automatic resyncing. Note that when a folder is
        ghosted, assets &#8211; such as Images and Files &#8211; are copied
        (physically duplicated) while documents are ghosted."""
 
