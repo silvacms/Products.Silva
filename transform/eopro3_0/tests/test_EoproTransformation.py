@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import unittest
 
 # 
@@ -129,7 +129,7 @@ class HTML2XML(Base):
         dt = dlist.find_one('dt')
         dd = dlist.find_one('dd')
 
-    def test_dlist_brokenb(self):
+    def test_dlist_broken_desc(self):
         s = '''<ul type="none">
                    <li><term>term1</term></li>
                </ul>
@@ -344,28 +344,18 @@ class RoundtripWithTidy(Base):
 
         self._check_string(simple)
 
-    def _test_nlist_simple(self):
+    def test_nlist_simple(self):
         simple = '''
-        <silva_document id="test"><title>doc title</title>
-        <doc>
            <nlist type="disc">
                <li><p>one item</p>
                    <list type="square"><li>1</li><li>2</li></list>
                </li>
-           </nlist>
-        </doc>
-        </silva_document>'''
-        htmlnode = self.transformer.to_target(simple)
-        #print "htmlnode"
-        #print htmlnode.asBytes()
-        body = htmlnode.find('body')[0]
-        pre, list, post = body.find_and_partition('ul')
-        self.assert_(list)
-        pre = pre.compact()
-        self.assert_(pre)
-        self.assertEquals(pre[-1].name(),'h5')
+           </nlist>'''
 
-        self._check_doc(simple)
+        silvanode = self.parse_silvafrag(simple)
+        htmlnode = silvanode.conv()
+        list = htmlnode.find_one('ul')
+        self._check_string(simple)
 
     def _check_list(self, source, target=None):
         stag, stype = source.split(':')
@@ -423,47 +413,51 @@ class RoundtripWithTidy(Base):
         </doc>
         </silva_document>''' % locals()
 
-    def _test_nlist_disc(self):
+    def test_nlist_disc(self):
         self._check_doc(self._nlist('nlist:disc'))
-    def _test_nlist_circle(self):
+    def test_nlist_circle(self):
         self._check_doc(self._nlist('nlist:circle'))
-    def _test_nlist_square(self):
+    def test_nlist_square(self):
         self._check_doc(self._nlist('nlist:square'))
-    def _test_nlist_a(self):
+    def test_nlist_a(self):
         self._check_doc(self._nlist('nlist:a'))
-    def _test_nlist_i(self):
+    def test_nlist_i(self):
         self._check_doc(self._nlist('nlist:i'))
-    def _test_nlist_1(self):
+    def test_nlist_1(self):
         self._check_doc(self._nlist('nlist:1'))
-    def _test_nlist_none(self):
+    def test_nlist_none(self):
         self._check_doc(self._nlist('nlist:none'))
 
+    def test_nlist_detection(self):
+        frag = '<ul type="none"><li><ul type="circle"><li>one</li></ul></li></ul>'
+        htmlnode = self.parse_htmlfrag(frag)
+        silvanode = htmlnode.conv()
+        silvanode.find_one('nlist')
 
     def _check_modifier(self, htmltag, silvatag):
         """ check that given markups work """
-        silvadoc = '''<silva_document id="test"><title></title>
-                        <doc><p type="normal">
-                             <%(silvatag)s>text</%(silvatag)s>
-                             </p>
-                        </doc>
-                      </silva_document>''' % locals()
-        htmlnode = self._check_doc(silvadoc)
-        body = htmlnode.find('body')[0]
-        p = body.find('p')[0]
-        htmlmarkup = p.find(htmltag)
-        self.assert_(len(htmlmarkup)==1)
-        htmlmarkup = htmlmarkup[0]
-        self.assert_(htmlmarkup.extract_text()=='text')
+        frag = '<p type="normal"><%(silvatag)s>text</%(silvatag)s></p>' % locals()
 
-    def _test_modifier_b(self):
-        self._check_modifier('b','strong')
+        htmlnode = self._check_string(frag)
+        body = htmlnode.find_one('body')
+        p = body.find_one('p')
+        htmlmarkup = p.find_one(htmltag)
+        self.assertEquals(htmlmarkup.extract_text(), 'text')
 
-    def _test_modifier_em(self):
-        self._check_modifier('i','em')
+    def test_modifier_b(self):
+        self._check_modifier('strong','strong')
 
-    def _test_modifier_underline(self):
+    def test_modifier_em(self):
+        self._check_modifier('em','em')
+
+    def test_modifier_underline(self):
         self._check_modifier('u','underline')
 
+    def test_modifier_sub(self):
+        self._check_modifier('sub','sub')
+
+    def test_modifier_super(self):
+        self._check_modifier('sup','super')
 
     def _test_link_with_absolute_url(self):
         """ check that a link works """

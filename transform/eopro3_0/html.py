@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -180,11 +180,13 @@ class ul(Element):
 
         note that the html list constructs are heavily
         overloaded with respect to their silva source nodes.
-        they may come from nlist,dlist,list, their title 
-        may be outside the ul/ol tag, there are lots of different
-        types and the silva and html type names are different. 
+        they may come from nlist,dlist,list, 
+        there are lots of different types and the silva and 
+        html type names are different. 
 
-        this implementation currently is a bit hackish.
+        ol shares the same implementation except it has
+        different "default_types"
+
     """
     default_types = ('disc','circle','square','none')
 
@@ -205,8 +207,13 @@ class ul(Element):
         return result
 
     def is_nlist(self, context):
-        for i in self.find().compact():
-            if i.name()!='li':
+
+        for i in self.compact().find():
+            if i.name() != 'li':
+                return 1
+
+        for i in self.content.flatten():
+            if i.name() in ('ul', 'ol'):
                 return 1
 
     def convert_list(self, context):
@@ -300,23 +307,42 @@ class li(Element):
             self.content.convert(context),
             )
 
-class b(Element):
+class strong(Element):
     def convert(self, context):
         return silva.strong(
             self.content.convert(context),
             )
 
-class i(Element):
+class b(strong):
+    pass
+
+class em(Element):
     def convert(self, context):
         return silva.em(
             self.content.convert(context),
             )
+
+class i(em): 
+    pass
 
 class u(Element):
     def convert(self, context):
         return silva.underline(
             self.content.convert(context),
             )
+
+class sub(Element):
+    def convert(self, context):
+        return silva.sub(
+            self.content.convert(context),
+            )
+
+class sup(Element):
+    def convert(self, context):
+        return silva.super(
+            self.content.convert(context),
+            )
+
 
 class font(Element):
     def convert(self, context):

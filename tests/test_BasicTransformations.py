@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 import unittest
 
 # 
@@ -164,6 +164,22 @@ class SilvaXMLObjectParser(unittest.TestCase):
         self.assert_(not match)
         self.assert_(not post)
         self.assert_(len(post)==0)
+
+    def test_method_flatten(self):
+        doc = '''<doc>
+                        <heading type="normal">normal</heading>
+                        <list type="none">
+                           <li>one</li>
+                           <li>two</li>
+                        </list>
+                 </doc>
+              '''
+        node = self.parser.parse(doc)
+        flattened = node.flatten()
+        self.assertEquals(len(flattened.find('li')),2)
+        self.assertEquals(len(flattened.find('list')),1)
+        self.assertEquals(len(flattened.find('doc')),1)
+        self.assertEquals(len(flattened.find('heading')),1)
 
     def test_method_match(self):
         doc = '''<doc>

@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.13 $'
+__version__='$Revision: 1.14 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -114,12 +114,20 @@ class Frag(Node, List):
             node.append(cchild)
         return node
 
+    def flatten(self):
+        node = self.__class__()
+        for child in self:
+            f = child.flatten()
+            if f:
+                node.extend(f)
+        return node
+
     def find(self, tag=None, ignore=None):
         node = Frag()
         for child in self:
             if ignore and ignore(child):
                 continue
-            if child._matches(tag):
+            if hasattr(child, '_matches') and child._matches(tag):
                 node.append(child)
         return node
 
@@ -230,6 +238,9 @@ class Element(Node):
     def find_all_partitions(self, *args, **kwargs):
         return self.content.find_all_partitions(*args, **kwargs)
 
+    def flatten(self):
+        return Frag(self) + self.content.flatten()
+
     def convert(self, context):
         return self
 
@@ -306,6 +317,9 @@ class CharacterData(Node):
 
     def extract_text(self):
         return self.content
+
+    def flatten(self):
+        return 
 
     def convert(self, context):
         return self

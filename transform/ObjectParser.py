@@ -13,7 +13,7 @@ Currently only minidom is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 from base import Element, Frag, Text
 import inspect
@@ -68,7 +68,6 @@ class ObjectParser:
                 cls = self.typemap.get(node.nodeName)
                 if not cls:
                     self.unknown_tags.append(node.nodeName)
-                    print self.unknown_tags
                     res.extend(childs)
                 else:
                     attrs = {}

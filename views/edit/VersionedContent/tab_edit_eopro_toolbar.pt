@@ -19,6 +19,8 @@
 	</icon>
 	<icon paramname="UNDERLINE">
 	</icon>
+        <icon paramname="SUPERSCRIPT"/>
+        <icon paramname="SUBSCRIPT"/>
 	<separator />
 	<icon paramname="INSERTTABLEDIALOG">
 	</icon>
@@ -43,6 +45,9 @@
 	</icon>
 	<icon paramname="DECINDENT">
 		<iconfile>icons/decindent.gif</iconfile>
+	</icon>
+	<icon paramname="INCINDENT">
+		<iconfile>icons/incindent.gif</iconfile>
 	</icon>
 	<separator />
 	<icon paramname="LINK">
