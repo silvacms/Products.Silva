@@ -10,10 +10,11 @@
 <table class="columns columns3">
   <tbody>
     <tr>
-      <td class="left">
-        <tal:block replace="nothing">
-          _____________________ sidebar subtable _____________________
-        </tal:block>
+      <tal:block replace="nothing">
+        _____________________ sidebar subtable _____________________
+      </tal:block>
+      <td class="left"
+        tal:define="template_id string:tab_edit">
         <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
       </td>
 
