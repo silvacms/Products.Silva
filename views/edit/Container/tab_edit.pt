@@ -254,13 +254,13 @@
     </span>
   </td>
   <span tal:replace="nothing"> _______ shift _______ </span>
-  <td width="36px" align="right" tal:condition="silva_permissions/ApproveSilvaContent">
+  <td width="36px" align="right" tal:condition="silva_permissions/ChangeSilvaContent">
     <a href="" title="Move down"
       tal:attributes="href string:${model/absolute_url}/edit/tab_edit_move_down?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/down.gif" width="16" height="12" alt="Move down" border="0" /></a>
     <a href="" title="Move up"
       tal:attributes="href string:${model/absolute_url}/edit/tab_edit_move_up?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/up.gif" width="16" height="12" alt="Move up" border="0" /></a>
   </td>
-  <td width="36px" align="right" tal:condition="not:silva_permissions/ApproveSilvaContent">
+  <td width="36px" align="right" tal:condition="not:silva_permissions/ChangeSilvaContent">
   </td>
 </tr>
 </cycle>
@@ -279,7 +279,7 @@ There are no active content objects in this folder.
 <tr class="controls-cycle"
   tal:condition="python:len(publishables)">
   <td colspan="8"
-    tal:condition="python:len(publishables) >= 2 and silva_permissions['ApproveSilvaContent']"><span class="widebody"><label for="new_position" title="Access key: alt-p" accesskey="p">Move selected items to <u>p</u>osition:</label></span>
+    tal:condition="python:len(publishables) >= 2 and silva_permissions['ChangeSilvaContent']"><span class="widebody"><label for="new_position" title="Access key: alt-p" accesskey="p">Move selected items to <u>p</u>osition:</label></span>
     <select name="new_position" id="new_position" title="Choose new position: alt-p">
       <tal:block repeat="item publishables">
       <option value="0" tal:attributes="value repeat/item/number"
@@ -288,7 +288,7 @@ There are no active content objects in this folder.
       <option value="0"
         tal:attributes="value python:len(publishables) + 1">end</option>
     </select>&nbsp;&nbsp;
-    <input tal:condition="silva_permissions/ApproveSilvaContent" class="button" type="submit" 
+    <input tal:condition="silva_permissions/ChangeSilvaContent" class="button" type="submit" 
       name="tab_edit_move_to:method" value=" Move " title="Move items into selected position: alt-m" accesskey="m" />&nbsp;
   </td>
 </tr>
@@ -361,7 +361,7 @@ There are no active content objects in this folder.
 <span tal:replace="nothing"> ______________ activate ______________ </span>
 <tr class="controls-cycle">
   <td colspan="8">
-    <input tal:condition="silva_permissions/ApproveSilvaContent"
+    <input tal:condition="silva_permissions/ChangeSilvaContent"
       class="button" type="submit" name="tab_edit_activate:method" value="Activate" title="Return items to the publication Table of Contents" />
   </td>
 </tr>
