@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.93 2003/09/29 11:59:18 zagy Exp $
+# $Id: SilvaObject.py,v 1.94 2003/09/29 15:02:38 zagy Exp $
 
 # python
 from types import StringType
@@ -67,6 +67,8 @@ class SilvaObject(Security, ViewCode):
             binding = self.service_metadata.getMetadata(self)
         except BindingError:
             # Non metadata object, don't do anything
+            return
+        if binding is None:
             return
         for elem in ('creationtime', 'modificationtime'):
             old = binding.get('silva-extra', element_id=elem)
