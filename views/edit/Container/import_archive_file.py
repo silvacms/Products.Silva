@@ -41,7 +41,6 @@ else:
         msg.append(unicode(message))
     msg = ' '.join(msg)
 
-return view.tab_edit(
-    message = _('Finished importing: ${msg}')
-    message.set_mapping({'msg': msg})
-    message_type=message_type, message=message)
+message = _('Finished importing: ${msg}')
+message.set_mapping({'msg': msg})
+return view.tab_edit(message_type=message_type, message=message)
