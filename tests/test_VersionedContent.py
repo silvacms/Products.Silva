@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 import unittest
 import Zope
 Zope.startup()
@@ -8,6 +8,7 @@ Zope.startup()
 from DateTime import DateTime
 from Testing import makerequest
 from Products.Silva.Document import Document
+from Products.Silva.SilvaObject import SilvaObject
 from Products.ParsedXML.ParsedXML import ParsedXML
 from test_SilvaObject import hack_create_user
 
@@ -19,6 +20,19 @@ def _getCopy(self, container):
 
 def _verifyObjectPaste(self, ob):
     return
+
+# monkey patch for the SilvaObject.view
+not_viewable='not viewable'
+viewable='viewable'
+def base_view(self, view_type):
+    if self.get_viewable():
+        return viewable
+    else:
+        return not_viewable
+
+# backup of some methods to avoid interferences with other tests
+orig_view = SilvaObject.view
+orig_is_cacheable = Document.is_cacheable
 
 class VersionedContentTestCase(unittest.TestCase):
     def setUp(self):
@@ -43,6 +57,10 @@ class VersionedContentTestCase(unittest.TestCase):
             add = self.sroot.manage_addProduct['Silva']
             add.manage_addDocument('document', 'Document')
             self.document = self.sroot.document
+
+            # monkey patches to the test_cache
+            SilvaObject.view = base_view
+            Document.is_cacheable = lambda x: 1
         except:
             self.tearDown()
             raise
@@ -50,6 +68,8 @@ class VersionedContentTestCase(unittest.TestCase):
     def tearDown(self):
         get_transaction().abort()
         self.connection.close()
+        SilvaObject.view = orig_view
+        Document.is_cacheable = orig_is_cacheable
     
     def test_workflow1(self):
         document = self.document
@@ -82,7 +102,7 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(document.get_editable().id, '0')
         self.assertEquals(document.get_previewable().id, '0')
         self.assertEquals(document.get_viewable(), None)
-        # set publication datetime in the paste to ensure instant publication
+        # set publication datetime in the past to ensure instant publication
         document.set_unapproved_version_publication_datetime(DateTime() - 1)
         # also instant expiration
         document.set_unapproved_version_expiration_datetime(DateTime() - .5)
@@ -105,7 +125,7 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(document.get_editable().id, '0')
         self.assertEquals(document.get_previewable().id, '0')
         self.assertEquals(document.get_viewable(), None)
-        # set publication datetime in the paste to ensure instant publication
+        # set publication datetime in the past to ensure instant publication
         document.set_unapproved_version_publication_datetime(DateTime() - 1)
         # no expiration though
         # approve version so will be published at once
@@ -122,6 +142,59 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(document.get_editable().id, '1')
         self.assertEquals(document.get_previewable().id, '1')
         self.assertEquals(document.get_viewable(), None)
+
+
+    def test_cache(self):
+
+        # cacheability of the test document is actually 
+        # not part of the test, but a necessary preliminary
+        self.assert_(self.document.is_cacheable())
+        
+        self.assertEquals(not_viewable, self.document.view())
+        # the second call should come from the cache (can this be tested?)
+        self.assertEquals(not_viewable, self.document.view())
+
+        # we cannot use the "publish in the past trick" because
+        # this outsmarts the cache.
+        # instead wait one clock tick:
+        date = DateTime()
+        while DateTime() <= date:
+            pass        
+
+        self.document.set_unapproved_version_publication_datetime(DateTime())
+        self.document.approve_version()
+        self.assertEquals(viewable, self.document.view())
+        self.assertEquals(viewable, self.document.view())
+
+        # wait one tick more until closing
+        date = DateTime()
+        while DateTime() <= date:
+            pass        
+        self.document.close_version()
+        self.assertEquals(not_viewable, self.document.view())
+        self.assertEquals(not_viewable, self.document.view())
+
+        self.document.create_copy()
+        self.assertEquals(not_viewable, self.document.view())
+
+        date = DateTime()
+        while DateTime() <= date:
+            pass        
+        self.document.set_unapproved_version_publication_datetime(DateTime())
+        # expire after 0.1 second ....
+        self.document.set_unapproved_version_expiration_datetime(DateTime()+1.0/(3600.0*24.0*10.0))
+        date = self.document.get_unapproved_version_expiration_datetime()
+        self.document.approve_version()
+        self.assertEquals(viewable, self.document.view())
+        self.assertEquals(viewable, self.document.view())
+
+        # print 'waiting for expiry ...'
+        while DateTime() <= date:
+            pass     
+        self.assertEquals(not_viewable, self.document.view())
+        self.assertEquals(not_viewable, self.document.view())
+        
+        
         
 def test_suite():
     suite = unittest.TestSuite()
