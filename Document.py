@@ -1,12 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.64 $
+# $Revision: 1.65 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
-from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 
 # Silva interfaces
 from IVersionedContent import IVersionedContent
@@ -15,7 +14,7 @@ from IVersionedContent import IVersionedContent
 import SilvaPermissions
 from VersionedContent import CatalogedVersionedContent
 from helpers import add_and_edit, translateCdata, getNewId
-from Version import Version
+from Version import CatalogedVersion
 
 # For XML-Conversions for editors
 from transform.Transformer import EditorTransformer
@@ -248,14 +247,10 @@ class Document(CatalogedVersionedContent):
 
 InitializeClass(Document)
 
-class DocumentVersion(Version, CatalogPathAware):
+class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
-    security = ClassSecurityInfo()
-
     meta_type = "Silva Document Version"
-
-    default_catalog = 'service_catalog'
 
 InitializeClass(DocumentVersion)
 
