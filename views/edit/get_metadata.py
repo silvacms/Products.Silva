@@ -20,6 +20,9 @@ from Products.SilvaMetadata.Exceptions import BindingError
 #   set2:...
 # }
 
+request = context.REQUEST
+model = request.model
+
 if content is None:
     return None
 
@@ -60,7 +63,7 @@ def isEqualToOrGreaterThan(role1, role2):
 def isAllowed(set_name):
     minimal_role = binding.getSet(set_name).getMinimalRole()
     if minimal_role:
-        user_roles = context.REQUEST.model.sec_get_all_roles_for_userid(
+        user_roles = model.sec_get_all_roles_for_userid(
             context.REQUEST.AUTHENTICATED_USER.getId()
             )
         for role in user_roles:
