@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 import unittest
 import Zope
 Zope.startup()
@@ -10,6 +10,7 @@ from DateTime import DateTime
 from Products.ParsedXML.ParsedXML import ParsedXML
 import ZPublisher
 from test_SilvaObject import hack_create_user
+from AccessControl import getSecurityManager
 
 def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'],
@@ -104,6 +105,8 @@ class CopyTestCase(unittest.TestCase):
                               'Folder', 'subfolder', 'Subfolder')
             self.subsubdoc = subsubdoc = add_helper(subfolder,
                               'Document', 'subsubdoc', 'Subsubdoc')
+            self.root.manage_addLocalRoles('TestUser', ['Manager'])
+            get_transaction().commit(1)
         except:
             self.tearDown()
             raise
@@ -114,8 +117,10 @@ class CopyTestCase(unittest.TestCase):
         
     def test_copy1(self):
         self.sroot.action_copy(['doc1'], self.REQUEST)
+        get_transaction().commit(1)
         # now do the paste action
         self.sroot.action_paste(self.REQUEST)
+        get_transaction().commit(1)
         # should have a copy now with same title
         self.assertEquals('Doc1', self.sroot.copy_of_doc1.get_title())
 
@@ -177,7 +182,10 @@ class CopyTestCase(unittest.TestCase):
         # now copy the folder subdoc is in
         self.sroot.action_copy(['folder4'], self.REQUEST)
         # into folder5
+        print self.sroot.folder5
+        get_transaction().commit(1)
         self.sroot.folder5.action_paste(self.REQUEST)
+        get_transaction().commit(1)
         # the thing inside it should not be published
         self.assert_(not self.sroot.folder5.folder4.subdoc.is_version_published())
         # original *should* be published

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 import unittest
 import Zope
 Zope.startup()
@@ -14,10 +14,24 @@ from AccessControl.User import SimpleUser
 
 # Awful hack: add an authenticated user into the request.
 def hack_create_user(root):
+    from AccessControl import User
+    from AccessControl.SecurityManagement import newSecurityManager
+    
+    # we can restore the existing user latter if need be, we don't for now.
+
     if not hasattr(root, 'acl_users'):
         root.manage_addUserFolder()
-    # maybe add some testing roles here ?
     root.acl_users.userFolderAddUser(name='TestUser', password='TestUserPasswd', roles=(), domains=())
+    
+    # get the new user
+    user = root.acl_users.getUser('TestUser').__of__(root.acl_users)
+
+    # sign on the new user
+    try: req = self.REQUEST
+    except: req = None
+    newSecurityManager(req, user)
+
+    # maybe add some testing roles here ?
     
     REQUEST = root.REQUEST
     REQUEST.AUTHENTICATED_USER=root.acl_users.getUser('TestUser')
