@@ -7,6 +7,23 @@ Silva changes
 
     Features Added
 
+        - Container objects (e.g. Folder, Publications and the Silva
+          Root) now have a title independent of the index document inside
+          the container. The title is set during the creation of the
+          container and can be changed using the rename button in the
+          folder edit- or properties tab.
+
+        - "Container policies" - When creating a new container object the
+          author can choose the tpye of the index object being created. Or
+          not to create an index object at all. The options present can be
+          extended.
+
+        - Deprecated SQL Data Source assets in favor of the
+          SilvaExternalSources extension. Exsiting SQL Data Source assets
+          continue to work, but no new SQL Data Sources can be added to the
+          Silva tree. In future Silva versions SQL Data Source assets may
+          stop working.
+
         - Merged silva.css and ploneCustom.css (removed ploneCustom)
           to reduce hits and processing.
         
@@ -18,7 +35,7 @@ Silva changes
         - Added IP Groups. This replaces the `restriction by IP
           address' text area in tab_access.
           
-        - Ghosts have a `get reference' button now.
+        - Ghosts have a 'get reference' button now.
     
         - Siva Files now have their icon dependent on the
           content. I.e. you get a pdf icon if you uploaded a pf
@@ -58,6 +75,30 @@ Silva changes
           shown instead of the userid, which was seen as a security
           issue by some customers.
 
+        - Fixed unicode issue when deleting a table column
+
+        - XML export permissions rationalized: it is now accessible to
+          people having ReadSilvaContent permission.
+
+  0.9.2.5
+
+    Features Added
+
+        - Image elements in a Silva Document now have to possibility to
+          link to the hires version or other URLs with a optional "_target".
+
+    Bugs fixed
+
+        - No Catalog indexes are created for Metadata fields which do not
+          need indexing.
+
+        - Metadata form and acquisition didn't work properly in all cases.
+
+        - UI improvements in tab_edit and tab_publish
+
+        - XML export of folders when the "export last version" option is
+          checked, did not use correct Folder title.
+
         - Fixed two issues with the SQLDataSource and integer fields:
           the code doesn't try to convert the contents of the field to
           unicode anymore if it's not a plain string (fails with
@@ -66,10 +107,77 @@ Silva changes
           (previously it checked whether it resolved to true instead
           of checking for None).
 
-        - Fixed unicode issue when deleting a table column
+  0.9.2.4
 
-        - XML export permissions rationalized: it is now accessible to
-          people having ReadSilvaContent permission.
+    Features Added
+
+        - Import assets from a zipfile now creates Silva Folder for the
+          zipfiles's directory structure.
+
+    Bugs fixed
+
+        - Fixed bug where the widget caches were not cleared correctly
+          upon deletion of a Document.
+
+        - Fixed rare or edge-case situations in the Publish tab. UI
+          improvements, bugfixes and some code optimizations.
+
+        - SilvaMetadata contained a bug which actually made metadata
+          cataloging fail. This has been fixed in SilvaMetadata
+          0.7.2, so the only upgrade necessary is in fact of this
+          dependency. For convenience we've also done a new Silva
+          release, but the only thing it contains is one new test for
+          getting metadata.
+
+  0.9.2.3
+
+    Bugs fixed
+
+        - Authors can now create new document versions again. This was
+          a permission setting problem. It can be fixed by going to
+          service_extensions and pressing 'refresh' for the Silva
+          core.
+
+        - Fixed two issues with the SQLDataSource and integer fields:
+          the code doesn't try to convert the contents of the field to
+          unicode anymore if it's not a plain string (fails with
+          integers) and the code doesn't change the contents of the
+          field to '' anymore when it's something else than None
+          (previously it checked whether it resolved to true instead
+          of checking for None).
+
+        - Fixed a whole host of issues related to indexing. Indexing
+          of objects was both done incorrectly and the performance was
+          too slow. test_catalog was added which can be used to test
+          indexing correctness, and fixes were made where problems
+          were found. Indexing performance was increased by:
+
+            * Avoiding indexing something too frequently in the Silva
+              core.
+
+            * Improving Formulator so that TALES expressions are
+              cached. This avoids a massive Python expression
+              compilation overhead. Upgrade Formulator to version
+              1.5.0 for a massive boost in indexing performance.
+
+            * Fixing Silva metadata to avoid quadratic behavior while
+              indexing. Previously, for n elements that are indexed,
+              for each element indexing the data for the n indexes was
+              accessed, resulting in quadratic behavior while indexing
+              (n * n values were accessed per object). Upgrade SilvaMetadata
+              to version 0.7.1 for another boost in indexing performance.
+
+            * Fulltext indexing of unapproved versions is avoided.
+
+            * Old versions should now not show up in the catalog anymore.
+
+        - Fix icon rendering. It should now be faster and more
+          browser-cache friendly.
+ 
+        - Fixed unicode issue when deleting a table column.
+
+        - A number of things fixed in 0.9.1.x have also been fixed
+          for 0.9.2.
 
   0.9.2.2
  
