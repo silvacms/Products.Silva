@@ -120,6 +120,7 @@ def install(root):
     # forbid adding group & virtualgroup from the SMI
     root.add_silva_addable_forbidden('Silva Group')
     root.add_silva_addable_forbidden('Silva Virtual Group')
+    root.add_silva_addable_forbidden('Silva IP Group')
 
     # add or update service metadata
     configureMetadata(root)
@@ -288,6 +289,7 @@ def configureSecurity(root):
     # chief editors and up may also place groups and Datasources.
     root.manage_permission('Add Silva Groups', all_chief)
     root.manage_permission('Add Silva Virtual Groups', all_chief)
+    root.manage_permission('Add Silva IP Groups', all_chief)
     root.manage_permission('Add Silva SQL Data Sources', all_chief)
     
     # everybody may view root by default XXX
