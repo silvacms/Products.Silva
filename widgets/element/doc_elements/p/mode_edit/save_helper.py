@@ -32,14 +32,4 @@ if len(items) > 1:
         editorsupport.replace_text(p, item)
         node.parentNode.insertBefore(p, next)
 
-# special case of element switching:
-if getattr(request,'element_switched',None):
-   title = getattr(request,'list_title', None)
-   if title:
-      doc = node.ownerDocument
-      p = doc.createElement('p')
-      p.setAttribute('type','lead')
-      editorsupport.replace_heading(p, title)
-      node.parentNode.insertBefore(p, node)
-
 node.setAttribute('type', type)
