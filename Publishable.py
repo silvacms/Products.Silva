@@ -75,7 +75,7 @@ class Publishable:
             # FIXME: should always be published if no versioning supported?
             return 1
 
-    security.declareProtected(SilvaPermissions.ApprovemanaSilvaContent,
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'can_approve')
     def can_approve(self):
         """Return true if we can approve version.

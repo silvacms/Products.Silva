@@ -120,7 +120,7 @@ class Versioning:
         version_id, publication_datetime, expiration_datetime = self._unapproved_version
         self._unapproved_version = version_id, dt, expiration_datetime
 
-    security.declareProtected(SivlaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_unapproved_version_expiration_datetime')
     def set_unapproved_version_expiration_datetime(self, dt):
         """Set expiration datetime, or None for no expiration.

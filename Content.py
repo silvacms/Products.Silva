@@ -12,7 +12,7 @@ class Content(SilvaObject, Publishable):
     
     __implements__ = Interfaces.Content
     
-   security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                              'is_default')
     def is_default(self):
         return self.id == 'default'

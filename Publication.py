@@ -5,6 +5,7 @@ from Globals import InitializeClass
 # Silva
 from Folder import Folder
 import Interfaces
+import SilvaPermissions
 #misc
 from helpers import add_and_edit
 
