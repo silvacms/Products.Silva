@@ -51,7 +51,7 @@ pathBarLinkColor:string=#000
 
 mainTabBackdrop:string=#d7e8f0
 mainTabBackground:string=#7a90a6
-mainTabBackgroundRecede:string=#95b0cb
+mainTabBackgroundRecede:string=#9ebad7
 mainTabBackgroundSelected:string=#c1daf3
 mainTabBorderColor:string=#3d4b67
 mainTabBorderColorSelected:string=#26334c
