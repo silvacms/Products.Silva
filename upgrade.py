@@ -26,7 +26,12 @@ def from085to086(self, root):
     # also copy over layout stuff
     layout_ids = [obj.getId() for obj in orig_root.objectValues() if
                   obj.meta_type in ['DTML Method', 'Script (Python)', 'Page Template']]
-    
+
+    other_ids = [obj.getId() for obj in orig_root.objectValues() if
+                 obj.meta_type not in ['DTML Method', 'Script (Python)', 'Page Template', \
+                                       'Silva View Registry', 'XMLWidgets Editor Service', 'XMLWidgets Registry'] \
+                 and obj.getId() not in ['service_utils', 'service_setup', 'service_widgets', 'service_groups'] \
+                 and not ISilvaObject.isImplementedBy(obj) ]
     cb = orig_root.manage_copyObjects(layout_ids)
     dest_root.manage_pasteObjects(cb_copy_data=cb)
 
@@ -60,6 +65,8 @@ def from085to086(self, root):
     for id in ['acl_users', 'images', 'locals']:
         if hasattr(orig_root.aq_base, id):
             to_copy_ids.append(id)
+            if id in other_ids:
+                other_ids.remove(id)
     cb = orig_root.manage_copyObjects(to_copy_ids)
     dest_root.manage_pasteObjects(cb_copy_data=cb)
 
@@ -69,3 +76,4 @@ def from085to086(self, root):
     # we still may not have everything, but a good part..
     # should advise the upgrader to copy over the rest by hand
     
+    return other_ids

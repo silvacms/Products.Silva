@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -82,8 +82,13 @@ class Root(Publication):
         if from_version != '0.8.5':
             raise "Not supported", "Upgrading from another version than 0.8.5 is not supported."
         import upgrade
-        upgrade.from085to086(self.aq_inner.aq_parent, self)
-        return "Upgrade succeeded."
+        my_id = self.id
+        msg = upgrade.from085to086(self.aq_inner.aq_parent, self)
+        if msg:
+            msg = 'You may want to copy over the objects with the following ids by hand:<ul>%s</ul>' \
+                  % '\r\n'.join([ '<li>%s</li>' % id for id in msg ])
+        return "Upgrade of &laquo;%s&raquo; succeeded.<br /> A backup is in &laquo;%s_085&raquo;.<br /> %s" \
+               % (my_id, my_id, msg)
     
 InitializeClass(Root)
 
