@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 
 # Zope
 from OFS import Folder
@@ -107,7 +107,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             else:
                 self._cached_data = None
         else:
-            if not self.is_version_published():
+            if self._cached_data is not None and not self.is_version_published():
                 # XXX do not render versions, which have been closed explicitely
                 self._cached_data = None
             data = self._cached_data
