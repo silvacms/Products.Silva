@@ -21,7 +21,7 @@ try:
     result = view.form.validate_all(REQUEST)
 except FormValidationError, e:
     # in case of errors go back to add page and re-render form
-    return view.add(message_type="error", message=view.render_form_errors(e))
+    return view.add_form(message_type="error", message=view.render_form_errors(e))
 
 # get id and title from form, convert title to unicode
 id = result['object_id']
@@ -37,7 +37,7 @@ else:
 
 # if we don't have the right id, reject adding
 if not model.is_id_valid(id):
-  return view.add(message_type="error", message="%s is not a valid id." % view.quotify(id))
+  return view.add_form(message_type="error", message="%s is not a valid id." % view.quotify(id))
 
 # process data in result and add using validation result
 object = context.add_submit_helper(model, id, title, result)
