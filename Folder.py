@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.73 $
+# $Revision: 1.74 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -278,7 +278,10 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         self.manage_pasteObjects(REQUEST=REQUEST)
         # now unapprove & close everything just pasted
         for paste_id in paste_ids:
-            helpers.unapprove_close_helper(getattr(self, paste_id))
+            object = getattr(self, paste_id)
+            helpers.unapprove_close_helper(object)
+            object.sec_update_last_author_info()
+            
             
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_paste')
@@ -332,6 +335,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 # create ghost of item
                 self.manage_addProduct['Silva'].manage_addGhost(
                     paste_id, item.absolute_url())
+            new_object = getattr(self, paste_id)
+            new_object.sec_update_last_author_info()
         else:
             # this is an object that just needs to be copied
             item = item._getCopy(self)
@@ -410,7 +415,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         # NOTE: this is inefficient if there's a big unpublished hierarchy..
         # Folder is published if anything inside is published
         default = self.get_default()
-        if default and default.is_published():
+        if default and default.aq_explicit.is_published():
             return 1
         for object in self.get_ordered_publishables():        
             if object.is_published():
