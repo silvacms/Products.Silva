@@ -23,6 +23,15 @@ Silva changes
 
     Features Added
 
+        - Siva Files now have their icon dependent on the content. I.e. you 
+          get a pdf icon if you uploaded a pf file. Currently there are icons
+          for PDF, Word, Excel and PowerPoint.
+        
+        - Added GhostFolder: While a ghost haunts a content objects a
+          GhostFolder haunts a container.
+
+        - service_utils went away. All functionality moved to mangle.py
+    
         - Checks for valid IDs are all moved to a separate module.
 
         - Removed Silva Document and editor functionality from the core
