@@ -1,7 +1,7 @@
 from ISilvaObject import ISilvaObject
 from IContainer import IContainer
 from IVersionedContent import IVersionedContent
-from Membership import NoneMember
+from Membership import NoneMember, noneMember 
 
 def from09to091(self, root):
     """Upgrade Silva from 0.9 to 0.9.1
@@ -117,8 +117,11 @@ def upgrade_memberobjects(obj):
     for o in obj.aq_explicit.objectValues():
         info = getattr(o, '_last_author_info', None)
         if info is not None and type(info) == type({}):
-            o._last_author_info = service_members.get_cached_member(
-                info['uid'])
+            if info.has_key('uid'):
+                o._last_author_info = service_members.get_cached_member(
+                    info['uid'])
+            else:
+                o._last_author_info = noneMember.__of__(o)
         if IContainer.isImplementedBy(o):
             upgrade_memberobjects(o)
 
