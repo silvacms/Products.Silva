@@ -22,7 +22,8 @@ class EmailMessageService(SimpleItem.SimpleItem):
     messages.
     """
     
-    meta_type = 'Silva Email Message Service'
+    title = 'Silva Message Service'
+    meta_type = 'Silva Message Service'
 
     security = ClassSecurityInfo()
 
