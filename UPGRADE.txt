@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.36.8.12.8.5 $
+CVS:        $Revision: 1.36.8.12.8.6 $
 
 Introduction
 ------------
@@ -78,6 +78,9 @@ Upgrading from Silva 0.9.3 to Silva 1.0
 
 If you are using ExtFile for image storage, upgrading to version 1.4.2
 of ExtFile is required.
+
+You need to update your layout templates. To see how, please read the
+section ``Layout templates``_ below.
 
 [Metadata upgrade issue]
 [more to be done]
