@@ -1,12 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.44 $
+# $Revision: 1.45 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 # Silva
-from Folder import Folder
+import Folder
 import SilvaPermissions
 import ContainerPolicy
 # misc
@@ -20,7 +20,7 @@ from interfaces import IPublication
 
 icon="www/silvapublication.gif"
 
-class Publication(Folder):
+class Publication(Folder.Folder):
     """These containers function as the major organizing blocks of a 
        Silva site. Publications instill a threshold of view, showing
        only the contents of the current publication (keeping the overview
@@ -108,17 +108,10 @@ def manage_addPublication(self, id, title, create_default=1, REQUEST=None):
     return ''
 
 def xml_import_handler(object, node):
-    id = get_xml_id(node)
-    title = get_xml_title(node)
+    """import publication"""
     
-    id = str(mangle.Id(object, id).unique())
+    def factory(object, id, title):
+        object.manage_addProduct["Silva"].manage_addPublication(id, title, 0)
+    
+    return Folder.xml_import_handler(object, node, factory=factory)
         
-    object.manage_addProduct['Silva'].manage_addPublication(id, title, 0)
-    
-    newpub = getattr(object, id)
-    for child in node.childNodes:
-        if get_importer(child.nodeName):
-            xml_import_helper(newpub, child)
-        elif child.nodeName != u'title' and hasattr(newpub, 'set_%s' % child.nodeName) and child.childNodes[0].nodeValue:
-            getattr(newpub, 'set_%s' % child.nodeName)(child.childNodes[0].nodeValue)
-    return newpub
