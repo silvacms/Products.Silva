@@ -128,7 +128,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
 
     def __init__(self, id):
         self.id = id
-        self._allow_subscription = 0
+        self._allow_authentication_requests = 0
 
     # XXX will be used by access tab and should be opened wider if this
     # is central service..
@@ -167,27 +167,27 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         return cloneMember(self.get_member(userid)).__of__(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'allow_subscription')
-    def allow_subscription(self):
-        return self._allow_subscription 
+                              'allow_authentication_requests')
+    def allow_authentication_requests(self):
+        return self._allow_authentication_requests 
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'set_allow_subscription')
-    def set_allow_subscription(self, value):
-        """sets allow_subscription"""
-        self._allow_subscription = value
+                              'set_allow_authentication_requests')
+    def set_allow_authentication_requests(self, value):
+        """sets allow_authentication_requests"""
+        self._allow_authentication_requests = value
 
     security.declareProtected('View management screens',
-                              'manage_allowSubscription')
-    def manage_allowSubscription(self, REQUEST):
-        """manage method to set allow_subscription"""
-        self.set_allow_subscription(int(REQUEST['allow_subscription']))
+                              'manage_allowAuthenticationRequests')
+    def manage_allowAuthenticationRequests(self, REQUEST):
+        """manage method to set allow_authentication_requests"""
+        self.set_allow_authentication_requests(int(REQUEST['allow_authentication_requests']))
         return self.manage_editForm(manage_tabs_message='Changed settings')
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_subscription_url')
-    def get_subscription_url(self):
-        """Return the url for the subscription form, relative from resources
+                              'get_authentication_requests_url')
+    def get_authentication_requests_url(self):
+        """Return the url for the authentication_requests form, relative from resources
         directory (so including the escaped productname!!)
         """
         return None

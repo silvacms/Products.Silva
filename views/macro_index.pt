@@ -135,7 +135,7 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 </td>
 <td class="footer" align="center" width="36%">
 <a class="footer" tal:attributes="href string:public/request_roles?last_url=${model/absolute_url}" title="Request an additional role in this location: alt-," accesskey=","
-  tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()">
+  tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_authentication_requests()">
   Request access
 </a>
 </td>

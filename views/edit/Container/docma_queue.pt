@@ -253,8 +253,9 @@
               <td align="right"
                 colspan="2">
 
-                <tal:block condition="silva_permissions/ChangeSilvaContent">
+                <tal:block condition="silva_permissions/ChangeSilvaContent" tal:define="refresh_page options/refresh_page | string:tab_edit_import">
                   &nbsp;&nbsp;
+                  <input type="hidden" name="refresh_page" tal:attributes="value refresh_page" />
                   <input class="warningbutton"
                     accesskey="x"
                     name="tab_edit_import_delete:method"

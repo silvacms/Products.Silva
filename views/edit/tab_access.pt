@@ -5,7 +5,7 @@
   <tal:block 
     define="
       dummy python:model.security_trigger();
-      allow_subscription model/service_members/allow_subscription | nothing;"
+      allow_authentication_requests model/service_members/allow_authentication_requests | nothing;"
     condition="view/has_access">
     <h2>
       <img tal:replace="structure python:view.render_icon(model.meta_type)" />
@@ -161,7 +161,7 @@
       </table>
     </form>
   <!-- Pending role requests -->
-    <tal:block condition="allow_subscription">
+    <tal:block condition="allow_authentication_requests">
       <h4>
         Pending requests for roles
       </h4>
