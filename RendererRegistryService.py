@@ -67,11 +67,7 @@ class RendererRegistryService(SimpleItem.SimpleItem):
 
     security.declareProtected("View", "getRenderersForMetaType")
     def getRenderersForMetaType(self, meta_type):
-        # FIXME: this is really pretty terrible, but there's a demo in a week
-        # and customers don't pay for coding elegance. a more sound way
-        # of relating this, Zope-specific code to the normal Python renderer
-        # registry code should definintely be revisted after the Aug 16 demo.
-        return self.getRendererRegistry()[meta_type]
+        return self.getRendererRegistry().get(meta_type, [])
 
     def getRendererByName(self, name, meta_type):
         meta_type_renderers = self.getRenderersForMetaType(meta_type)
