@@ -28,6 +28,7 @@ def initializeXMLImportRegistry():
     importer.registerHandler((NS_URI, 'file_asset'), FileHandler)
     importer.registerHandler((NS_URI, 'image_asset'), ImageHandler)
     importer.registerHandler((NS_URI, 'auto_toc'), AutoTOCHandler)
+    importer.registerHandler((NS_URI, 'indexer'), IndexerHandler)
     importer.registerHandler(
         (NS_URI, 'unknown_content'),
         UnknownContentHandler)
@@ -199,6 +200,20 @@ class AutoTOCHandler(SilvaBaseHandler):
             
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'auto_toc'):
+            self.setMaintitle()
+            self.storeMetadata()
+
+class IndexerHandler(SilvaBaseHandler):
+    def startElementNS(self, name, qname, attrs):
+        if name == (NS_URI, 'indexer'):
+            id = str(attrs[(None, 'id')])
+            uid = generateUniqueId(id, self.parent())
+            self.parent().manage_addProduct['Silva'].manage_addIndexer(
+                uid, '')
+            self.setResult(getattr(self.parent(), uid))
+            
+    def endElementNS(self, name, qname):
+        if name == (NS_URI, 'indexer'):
             self.setMaintitle()
             self.storeMetadata()
             

@@ -164,6 +164,16 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
                 IGhost.isImplementedBy(obj) or
                 IContainer.isImplementedBy(obj))
 
+    def test_indexer_import(self):
+        source_file = open('data/test_indexer.xml', 'r')
+        xmlimport.importFromFile(
+            source_file,
+            self.root)
+        source_file.close()
+        indexer = self.root.testfolder.Indexer
+        self.assertEquals('Index', indexer.get_title())
+        self.assertEquals('Silva Indexer', indexer.meta_type)
+
     def test_zip_import(self):
         from StringIO import StringIO
         from zipfile import ZipFile
