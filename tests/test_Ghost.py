@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Revision: 1.28.8.1 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -9,71 +9,13 @@ import SilvaTestCase
 
 from Products.Silva import SilvaPermissions
 
-from Products.Silva.SilvaObject import SilvaObject
 from DateTime import DateTime
-from Products.SilvaDocument.Document import Document
-from Products.ParsedXML.ParsedXML import ParsedXML
-from Products.Silva.Ghost import Ghost, GhostVersion
-
-# need to monkey patch preview and view
-def preview(self, view_type='public'):
-  
-  return render_preview(self)
-
-def view(self, view_type='public'):
-    return render_view(self)
-
-def render_preview(self):
-    version = self.get_previewable()
-    if version.REQUEST is None:
-        print 'No request'
-        print self.id
-    if version is None:
-        return '%s no view' % self.id
-    if self.meta_type == 'Silva Ghost':
-        result = version.render_preview()
-        if result is None:
-            return 'Ghost is broken'
-        else:
-            return result
-    else:
-        return "%s %s" % (self.id, version.id)
-    
-def render_view(self):
-    version = self.get_viewable()
-    if version is None:
-        return '%s no view' % self.id
-    if self.meta_type == 'Silva Ghost':
-        result = version.render_view()
-        if result is None:
-            return 'Ghost is broken'
-        else:
-            return result
-    else:
-        return "%s %s" % (self.id, version.id)
-
-# awful HACK
-
-def _getCopyParsedXML(self, container):
-    """A hack to make copy & paste work (used by create_copy())
-    """
-    return ParsedXML(self.id, self.index_html())
-
-def _getCopyGhostVersion(self, container):
-    return GhostVersion(self.id)
-
-def _verifyObjectPaste(self, ob):
-    return
+from Products.Silva.Ghost import GhostVersion
 
 class GhostTestCase(SilvaTestCase.SilvaTestCase):
     """Test the Ghost object.
     """
     def afterSetUp(self):
-        # awful HACK to support manage_clone
-        ParsedXML._getCopy = _getCopyParsedXML
-        Document._verifyObjectPaste = _verifyObjectPaste
-        GhostVersion._getCopy = _getCopyGhostVersion
-        Ghost._verifyObjectPaste = _verifyObjectPaste
         
         # register silva document
         self.setPermissions([SilvaPermissions.ReadSilvaContent])
@@ -94,8 +36,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
                    'subdoc2', 'Subdoc2')
 
     def test_ghost(self):
-        self.root.manage_addProduct['Silva'].manage_addGhost('ghost1',
-            '/root/doc1')
+        self.add_ghost(self.root, 'ghost1', '/root/doc1')
     
         # testing call cases of published (1) and non published (0)
         
@@ -139,7 +80,6 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
             
         # make new version of doc1 ('1')
-        #self.doc1.REQUEST = {}
         self.doc1.create_copy()
         self.doc1.set_title('Doc1 1')
 
@@ -261,11 +201,9 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
     def test_ghost_points(self):
         # test that the ghost cannot point to the wrong thing;
         # only non-ghost versioned content
-        self.root.manage_addProduct['Silva'].manage_addGhost('ghost1',
-            '/root/does_not_exist')
-        self.root.manage_addProduct['Silva'].manage_addImage('image6',
-                                                              'Test image')
-        ghost = getattr(self.root, 'ghost1')
+        ghost = self.add_ghost(self.root, 'ghost1', '/root/does_not_exist')
+        self.add_image(self.root, 'image6', 'Test image')
+
         self.assertEquals('This ghost is broken. (/root/does_not_exist)', ghost.preview())
         self.assertEquals(GhostVersion.LINK_VOID,
                           ghost.get_editable().get_link_status())
@@ -283,12 +221,10 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
             ghost.get_editable().get_link_status())
 
     def test_ghostfolder(self):
-        self.root.manage_addProduct['Silva'].manage_addGhostFolder('gf1',
-            '/root/publication5')
-        self.root.manage_addProduct['Silva'].manage_addGhostFolder('gf2',
-            '/root/folder4')
-        gfpub = self.root.gf1
-        gffold = self.root.gf2
+        gfpub = self.addObject(self.root, 'GhostFolder', 'gf1',
+                               content_url='/root/publication5')
+        gffold = self.addObject(self.root, 'GhostFolder', 'gf2',
+                                content_url='/root/folder4')
         self.assert_(gfpub.implements_container())
         self.assert_(gfpub.implements_publication())
         self.assert_(not gffold.implements_publication())
@@ -303,9 +239,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         
     def test_ghostfolder_topub(self):
-        self.root.manage_addProduct['Silva'].manage_addGhostFolder('gf1',
-            '/root/publication5')
-        gfpub = self.root.gf1
+        gfpub = self.addObject(self.root, 'GhostFolder', 'gf1',
+                               content_url='/root/publication5')
         self.assert_(gfpub.implements_container())
         self.assert_(gfpub.implements_publication())
         self.assertEquals(gfpub.get_link_status(), gfpub.LINK_OK)
