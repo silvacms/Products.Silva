@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.64 $
+# $Revision: 1.65 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -213,7 +213,9 @@ class GhostVersion(CatalogedVersion):
             return self.LINK_EMPTY
         try: 
             content = self.unrestrictedTraverse(self._content_path)
-        except (AttributeError, KeyError):
+        except:
+            # unrestrictedTraverse can throw a myriad of exceptions all 
+            # meaning the object cannot be found.
             return self.LINK_VOID
         if IContainer.isImplementedBy(content):
             return self.LINK_FOLDER
