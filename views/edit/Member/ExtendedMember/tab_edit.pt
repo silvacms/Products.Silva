@@ -8,9 +8,6 @@
     global message request/SESSION/message | nothing;
     dummy view/clear_message;
 " />
-<div class="margins">
-
-<h2>Member data of <span tal:replace="model/id" /></h2>
 
 <tal:block condition="message">
 <div class="feedback" tal:condition="python:message_type == 'feedback'">
@@ -21,50 +18,53 @@
 </div>
 </tal:block>
 
+<div class="margins">
+
+<h2>Member data of &#xab;<span tal:replace="model/id" />&#xbb;</h2>
+
 <tal:block condition="silva_permissions/ChangeSilvaAccess">
 
 <form action="." method="post" tal:attributes="action python:model.absolute_url()+'/edit'">
-<table border="0" cellspacing="0" cellpading="0">
+<table border="0" cellspacing="0" cellpadding="3">
   <tr>
-    <th colspan="2" align="left">Field name:</th>
-    <th align="left">Field value:</th>
+    <th colspan="2" align="left">Descriptor</th>
+    <th align="left">Content</th>
   </tr>
 
   <tr tal:repeat="field fields" tal:attributes="class python:test(repeat['field'].odd, 'focus', 'focus-cycle')">
-    <td tal:content="structure python: test(field.is_required(), '*', '&nbsp;')">
-    </td>
     <td tal:content="field/title">
+    </td>
+    <td><span class="warning" tal:content="structure python: test(field.is_required(), '*', default)">&nbsp;</span>
     </td>
     <td>
       <span tal:replace="structure python: field.render(getattr(model, field.id)())" />
     </td>
   </tr>
 
-  <tr class="controls">
-    <td>
+  <tr class="controls-cycle">
+    <td colspan="2">
       &nbsp;
     </td>
-    <th valign="bottom">
-      Approved member:
-    </th>
-    <th valign="bottom" align="left">
-      <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')" />&nbsp;
-      <input  class="button" type="submit" name="approve_visitor:method" tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != request.AUTHENTICATED_USER.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()" value="Approve now"/>
-    </th>
+    <td align="right" valign="bottom">
+      <span class="widebody">Approved member?&nbsp;
+      <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')">&nbsp;</span>
+      <input class="button" type="submit" name="approve_visitor:method" value="Approve now"
+        title="Approve member: alt-a" accesskey="a"
+        tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != request.AUTHENTICATED_USER.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()" />
+    </td>
   </tr>
 
-  <tr class="focus"><td colspan="3" class="halfline">&nbsp;</td></tr>
   <tr class="controls">
     <td align="left" colspan="2">
       <input type="button" class="cancelbutton" name="close" value="  Close  " 
-          title="Close window - alt-c" accesskey="c"
+          title="Close window: alt-c" accesskey="c"
           onclick="window.close();return false;" 
       />
     </td>
     <td align="right">
       <input class="button" type="submit" 
              name="save_memberdata:method" value="   Save   "
-             title="Save member data - alt-s" accesskey="s"
+             title="Save member data: alt-s" accesskey="s"
       />
     </td>
   </tr>

@@ -10,7 +10,7 @@
 " />
 <div class="margins">
 
-<h2>Member data of <span tal:replace="model/id" /></h2>
+<h2>Member data of &#xab;<span tal:replace="model/id" />&#xbb;</h2>
 
 <tal:block condition="message">
 <div class="feedback" tal:condition="python:message_type == 'feedback'">
