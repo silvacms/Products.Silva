@@ -8,100 +8,6 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   i18n:domain="silva">
 
-<!-- Read only table -->
-<metal:block define-macro="view_table">
-  <tal:block define="
-    content version">
-    <tal:block 
-      condition="content"
-      define="
-        binding python: view.get_metadata_binding(content) or nothing;
-        is_container request/model/implements_container | nothing;
-        form_errors options/form_errors | nothing;
-        ">
-      <table class="listing"
-        tal:condition="binding">
-        <thead>
-          <tr tal:replace="nothing">
-            ______________ vein + title row ______________
-          </tr>
-          <tr>
-            <td class="top"
-              colspan="2">
-              <h2 metal:define-slot="table_title">
-                <img tal:replace="structure python:view.render_icon(model)" />
-                metadata
-                <span tal:condition="not: model/implements_container">
-                  for &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
-                </span>
-              </h2>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tal:block repeat="set_name binding/setNames">
-            <tr tal:condition="not:repeat/set_name/start">
-              <td class="divider"
-                style="background:#c5d4ca;"
-                colspan="2">
-              </td>
-            </tr>
-            <tr tal:replace="nothing">
-              ______________ top controls row ______________
-            </tr>
-            <tr class="top-controls">
-              <td colspan="2">
-                <h3>
-                <span i18n:translate="metadata_set">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
-                </h3>
-              </td>
-            </tr>
-            <tr>
-              <th class="align-right"
-                width="12%" i18n:translate="element">
-                element
-              </th>
-              <th i18n:translate="content">
-                content
-              </th>
-            </tr>
-            <tal:block repeat="element_name binding/?set_name/elementNames">
-              <tr 
-                tal:define="
-                  element binding/?set_name/?element_name;                  
-                  iterate repeat/element_name/odd;
-                  show_bottom_border repeat/element_name/end;"
-                tal:attributes="
-                  class python: iterate and 'odd' or 'even';
-                  style python: show_bottom_border and 'border-bottom: 1px solid #77858c' or nothing;">
-                <tal:block replace="nothing">
-                  ___ element name column ___
-                </tal:block>
-                <td class="align-right"
-                  tal:content="element/title">
-                  Element name
-                </td>
-                <tal:block replace="nothing">
-                  ___ element widget column ___
-                </tal:block>
-                <td tal:content="structure element/view">
-                  Element content view
-                </td>
-              </tr>
-            </tal:block>
-          </tal:block>
-        </tbody>
-        <tfoot>
-          <tr class="controls">
-            <td colspan="2">
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </tal:block>
-  </tal:block>
-</metal:block>
-
 <!-- Edit table -->
 <metal:block define-macro="edit_table">
   <tal:block define="
@@ -257,6 +163,101 @@
         </tbody>
       </table>
     </form>
+  </tal:block>
+</metal:block>
+
+
+<!-- Read only table -->
+<metal:block define-macro="view_table">
+  <tal:block define="
+    content version">
+    <tal:block 
+      condition="content"
+      define="
+        binding python: view.get_metadata_binding(content) or nothing;
+        is_container request/model/implements_container | nothing;
+        form_errors options/form_errors | nothing;
+        ">
+      <table class="listing"
+        tal:condition="binding">
+        <thead>
+          <tr tal:replace="nothing">
+            ______________ vein + title row ______________
+          </tr>
+          <tr>
+            <td class="top"
+              colspan="2">
+              <h2 metal:define-slot="table_title">
+                <img tal:replace="structure python:view.render_icon(model)" />
+                metadata
+                <span tal:condition="not: model/implements_container">
+                  for &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                </span>
+              </h2>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tal:block repeat="set_name binding/setNames">
+            <tr tal:condition="not:repeat/set_name/start">
+              <td class="divider"
+                style="background:#c5d4ca;"
+                colspan="2">
+              </td>
+            </tr>
+            <tr tal:replace="nothing">
+              ______________ top controls row ______________
+            </tr>
+            <tr class="top-controls">
+              <td colspan="2">
+                <h3>
+                  <span i18n:translate="metadata_set">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
+                </h3>
+              </td>
+            </tr>
+            <tr>
+              <th class="align-right"
+                width="12%" i18n:translate="element">
+                element
+              </th>
+              <th i18n:translate="content">
+                content
+              </th>
+            </tr>
+            <tal:block repeat="element_name binding/?set_name/elementNames">
+              <tr 
+                tal:define="
+                  element binding/?set_name/?element_name;                  
+                  iterate repeat/element_name/odd;
+                  show_bottom_border repeat/element_name/end;"
+                tal:attributes="
+                  class python: iterate and 'odd' or 'even';
+                  style python: show_bottom_border and 'border-bottom: 1px solid #77858c' or nothing;">
+                <tal:block replace="nothing">
+                  ___ element name column ___
+                </tal:block>
+                <td class="align-right"
+                  tal:content="element/title">
+                  Element name
+                </td>
+                <tal:block replace="nothing">
+                  ___ element widget column ___
+                </tal:block>
+                <td tal:content="structure element/view">
+                  Element content view
+                </td>
+              </tr>
+            </tal:block>
+          </tal:block>
+        </tbody>
+        <tfoot>
+          <tr class="controls">
+            <td colspan="2">
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </tal:block>
   </tal:block>
 </metal:block>
 </html>
