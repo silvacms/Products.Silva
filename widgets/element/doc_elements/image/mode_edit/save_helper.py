@@ -13,9 +13,9 @@ image_path = context.REQUEST['image_path']
 if context.REQUEST.has_key('alignment'):    
     align_attribute = context.REQUEST['alignment']
     if align_attribute != 'none':
-        node.setAttribute('alignment', align_attribute)
+        node.setAttribute('alignment', node.input_convert(align_attribute))
     else:
         node.removeAttribute('alignment')
 
-node.setAttribute('image_path', image_path)
+node.setAttribute('image_path', node.input_convert(image_path))
 
