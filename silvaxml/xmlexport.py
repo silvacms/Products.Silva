@@ -84,6 +84,9 @@ class BaseXMLSource:
         """
         reader.startPrefixMapping(None, self.ns_default)
         reader.startPrefixMapping('doc', SilvaDocumentNS)
+        mappings = settings.getMappings()
+        for prefix in mappings.keys():
+            reader.startPrefixMapping(prefix, mappings[prefix])
         for set in self.context.service_metadata.collection.getMetadataSets(
             ):
             reader.startPrefixMapping(set.id, set.metadata_uri)
@@ -383,7 +386,8 @@ class ExportSettings:
     def __init__(self):
         self._workflow = 1
         self._all_versions = 1
-
+        self._mappings = {}
+        
     def setOnlyPublishedNoWorkflow(self):
         self._workflow = 0
         self._all_versions = 0
@@ -393,3 +397,10 @@ class ExportSettings:
 
     def allVersions(self):
         return self._all_versions
+    
+    def setMappings(self, mappings):
+        self._mappings = mappings
+        
+    def getMappings(self):
+        return self._mappings
+    
