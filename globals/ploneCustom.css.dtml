@@ -30,10 +30,6 @@ div.workspace {
   margin: none;
 }
 
-pre {
-    font-size: 180%;
-}
-
 .readable {
   max-width : 40em;
   /* for IE5 */
@@ -673,6 +669,15 @@ input.cancel {
     padding: &dtml-contextButtonPadding;;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
+}
+
+label {
+  color : #403f80; 
+  text-transform : &dtml-textTransform;;
+}
+
+label.default {
+  text-transform : none;
 }
 
 
