@@ -27,7 +27,7 @@
       </h2>
 
       <h3>
-        Virtual Group "members"
+        Virtual Group &#8216;members&#8217;
       </h3>
       <!-- Defined virtual groups listing -->
       <metal:block use-macro="view/macro_groups_listing/macros/virtual_groups_listing">
@@ -100,7 +100,8 @@
                 title="Remove selected group(s) from this virtual group."
                 type="submit"
                 value="Remove groups"
-                onClick="return confirm('Really remove?')"/>
+                onClick="return confirm('Really remove?')"
+                tal:condition="groupids" />
             </td>
           </tr>
         </table>
