@@ -5,12 +5,12 @@
 
 <tal:block condition="not: code_objects">
   &nbsp;No code objects (Python Scripts, Page Templates, DTML Methods) are available.<br />
-  &nbsp;They should be located in a (non-silva) folder in the ZMI named <tt>code_source</tt>.<br />
+  &nbsp;They should be located in a (non-Silva) folder in the ZMI named <tt>code_source</tt>.
 </tal:block>
 
 <tal:block tal:condition="code_objects">
-  &nbsp;Available code elements:<br />
-  <select name="path">
+  &nbsp;Available code objects:<br />
+  &nbsp;<select name="path">
     <tal:block tal:define="selected_path python:node.output_convert_html(node.getAttribute('path'))" 
                repeat="obj code_objects">
       <option tal:define="path python:'/' + obj.absolute_url(1)"
