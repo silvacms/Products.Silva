@@ -48,18 +48,18 @@
         <content>
           <link id="test_link">
             <workflow>
-              <version id="1">
+              <version id="5">
                 <status>approved</status>
                 <publication_datetime></publication_datetime>
                 <expiration_datetime></expiration_datetime>
               </version>
-              <version id="0">
+              <version id="6">
                 <status>unapproved</status>
                 <publication_datetime></publication_datetime>
                 <expiration_datetime></expiration_datetime>
               </version>
             </workflow>
-            <content version_id="0">
+            <content version_id="6">
               <metadata>
                 <set id="silva-content">
                   <silva-content:maintitle>approved title</silva-content:maintitle>
@@ -83,7 +83,7 @@
               </metadata>
               <url>http://www.snpp.com/</url>
             </content>
-            <content version_id="1">
+            <content version_id="5">
               <metadata>
                 <set id="silva-content">
                   <silva-content:maintitle>unapproved title</silva-content:maintitle>
