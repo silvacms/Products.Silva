@@ -77,7 +77,7 @@ id: no spaces or special characters besides an underscore (_).
 <td colspan="2" align="right">
 <input class="button" type="submit" name="add_submit" value=" Add " />
 &nbsp;&nbsp;<input class="button" type="submit" name="add_edit_submit" value=" Add and edit "
-  tal:attributes="value python:test(here.id == 'Folder', ' Add and enter ', ' Add and edit ')" />
+  tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Add and enter ', ' Add and edit ')" />
 </td>
 </tr>
 </table>
