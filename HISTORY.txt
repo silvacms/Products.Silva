@@ -48,11 +48,6 @@ Silva changes
 
     Bugs Fixed
 
-        - Indexer - all non-versioned content actually - can now be deleted.
-
-        - Indexer objects now render the correct URLs in virtual host
-          situations.
-
         - (SQL)Datasources can now only be placed by ChiefEditors and up
           (using a Datasource in a document is not affected by this), and
           (SQL)Datasources now work with unicode.
@@ -63,12 +58,49 @@ Silva changes
 
         - Setting a TOC level would display one level too much.
 
+        - Fixed problems arising from allowing to create content objects
+          which may shadow important internal objects (issue321) or 
+          cause unfriendly Zope error messages (issue189)
+
+        - A number of minor bugs, mainly in UI.
+        
+  0.9.1.5
+                                                                                                
+    Bugs Fixed
+
+        - Help text opens in new browser window.
+                                                               
+        - Indexer -all non-versioned content actually- can now be deleted.
+
+        - Indexer objects now render the correct URLs in virtual host
+          situations.
+
+        - Setting a TOC level would display one level too much.
+
+  0.9.1.4
+
+    Bugs Fixed
+
         - The UI for 'Access Restriction by Role' did not properly expose
           the possibility to set this role more restrictive on a lower
           level. (the pull down menu and button would have been disabled).
-
+                                                                                            
         - get_public_tree() would not do the right thing with the depth-
           level control argument.
+
+  0.9.1.3
+
+    Features Added
+
+        - Alternating CSS classes in table rows for external data elements.
+
+    Bugs Fixed
+
+        - Fixed situation where authors could not move items to other
+          positions in the folders.
+
+        - Fixed bug where no asset could be added in the asset lookup
+          dialog when no previous assets where available in this folder.
 
         - Images nested in tables now keep their <a href="..."> tag (if set
           on the image element).
@@ -80,20 +112,56 @@ Silva changes
         - Fixed unwanted aquisition behaviour of Ghost paths and other
           improvements in the Ghost code.
 
+  0.9.1.2
+
+    Features Added
+
+        - Backport of the Hi-res images support.
+
+        - Backport of the multipe file repositories ability.
+
+        - Backport of single Document import/export.
+
+        - Asset references and code element references will now be relative
+          paths if the Assets are in the same container the Document is in,
+          or in a subcontainer of this container. If not, the path will be
+          an absolute path.
+
+        - Docma queue viewer is now on both import and export screen. On
+          import only Silva XML files are shown, on export only Word
+          documents.
+
+        - Export screen prefills email address and description.
+
+    Bugs Fixed
+
         - Fixed some bugs with copy/cut and paste: when an object is not
-          allowed somewhere, it's now not possible to paste it there anymore,
-          and also the id of the object to be pasted is now changed until
-          it's unique (in the past, a bug in creating a unique id kept the
-          status of a document 'public' in some cases).
-        
-        - Fixed problems arising from allowing to create content objects
-          which may shadow important internal objects (issue321) or 
-          cause unfriendly Zope error messages (issue189)
+          allowed somewhere, it's now not possible to paste it there
+          anymore, and also the id of the object to be pasted is now
+          changed until it's unique (in the past, a bug in creating a
+          unique id kept the status of a document 'public' in some cases).
 
         - Intermediate fix where an local roles mapping for an non-existing
           userid would display "Unknown User" and could not be deleted.
 
-        - Paste to ghost of Publications exposed two bugs. Fixed now.
+        - Past to ghost of Publications exposed two bugs. Fixed now. 
+
+  0.9.1.1
+
+    Bugs Fixed
+
+        - UI bug where the cursor would behave inconsistently when
+          hoovering buttons and buttonlinks.
+
+        - Membership now supports member objects that have different ids
+          than the userids. This is useful in LDAP setups where the userid
+          may contain characters illegal in URLs, such as the @ sign.
+
+        - Edit on pro transformations up to date.
+	  
+  0.9.1
+
+    Bugs Fixed
 
         - The "use selection" button would not return to tab_access 
           just after assigning a role to a user.
