@@ -187,11 +187,13 @@
               <tfoot tal:condition="may_change_content">
                 <tr tal:condition="objects">
                   <th class="controls listing-left"
-                    colspan="99">
+                    colspan="5">
                     <span class="widebody" style="float: right;">
                     date format: day/month/year hours:minutes
                     </span>
                     <metal:block use-macro="view/macro_select_all/macros/select_all" />
+                  </th>
+                  <th class="controls listing-left">
                   </th>
                 </tr>
                 <tr class="controls controls-1">
@@ -199,7 +201,7 @@
                     ______________ expiration time controls ______________
                   </tal:block>
                   <td class="align-right"
-                    colspan="4">
+                    colspan="5">
                     <!-- span class="widebody" style="float: left;">
                       format: day / month / year hour : minute <br />
                       if content should expire, set expiration time
@@ -219,16 +221,18 @@
                     <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
                   </td>
                   <td class="align-right"
-                    colspan="2">
-                    <label 
-                      for="publish_now_flag" 
-                      title="access key: alt-u" 
-                      accesskey="u">
-                      <span class="widebody">
-                        p<u>u</u>blish&nbsp;now?
-                      </span>
-                    </label>
-                    <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+                    style="white-space: nowrap;">
+                    <tal:block condition="may_approve_content">
+                      <label 
+                        for="publish_now_flag" 
+                        title="access key: alt-u" 
+                        accesskey="u">
+                        <span class="widebody">
+                          p<u>u</u>blish&nbsp;now?
+                        </span>
+                      </label>
+                      <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+                    </tal:block>
                   </td>
                 </tr>
                 <tal:block replace="nothing">
@@ -236,7 +240,7 @@
                 </tal:block>
                 <tr class="controls"
                   tal:condition="may_approve_content">
-                  <td colspan="3">
+                  <td colspan="4">
                     <input class="button"
                       accesskey="j"
                       name="tab_status_reject:method"
@@ -249,6 +253,12 @@
                       title="withdraw approval of new versions: alt-v"
                       type="submit"
                       value="Revoke approval" />
+                    <input class="button" 
+                      type="submit" 
+                      name="tab_status_new_version:method" 
+                      value="Create new versions" 
+                      title="Create new versions of published docs: alt-n" 
+                      accesskey="n" />
                     <input class="warning"
                       accesskey="c"
                       name="tab_status_close:method"
@@ -264,15 +274,7 @@
                       type="submit"
                       value="Change timings" />
                   </td>
-                  <td class="align-right"
-                    colspan="2">
-                    <input class="button" 
-                      style="float: left;"
-                      type="submit" 
-                      name="tab_status_new_version:method" 
-                      value="Create new versions" 
-                      title="Create new versions of published docs: alt-n" 
-                      accesskey="n" />
+                  <td class="align-right">
                     <input class="button"
                       accesskey="o"
                       name="tab_status_approve:method"
@@ -286,7 +288,7 @@
                   <tal:block replace="nothing">
                     ______________ author controls ______________
                   </tal:block>
-                  <td colspan="99">
+                  <td colspan="5">
                     <input class="button"
                       accesskey="w"
                       name="tab_status_withdraw:method"
@@ -299,6 +301,8 @@
                       title="revoke approval of new versions: alt-v"
                       type="submit"
                       value="Revoke approval" />
+                  </td>
+                  <td class="align-right">
                     <input class="button"
                       accesskey="r"
                       name="tab_status_request_approval:method"
