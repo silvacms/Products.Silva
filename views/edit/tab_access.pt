@@ -567,65 +567,6 @@
             </table>
           </form>
           <tal:block replace="nothing"> 
-            ____________ access restriction IP address ________
-          </tal:block>
-          <form action="access_restriction_submit"
-            method="POST"
-            tal:define="definition_aquired python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
-            <table class="listing">
-              <thead>
-                <tr tal:replace="nothing">
-                  ______________ top controls row ______________
-                </tr>
-                <tr class="top-controls">
-                  <td colspan="2">
-                    <h3 i18n:translate="define_restrictions_by_ip_address">
-                      Define restriction by IP address
-                    </h3>
-                  </td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="odd">
-                  <td><span i18n:translate="all_objects_on_level_can_be_restricted" tal:omit-tag="">
-		  All objects on this and lower levels can be restricted for access from specific IP ranges.</span>
-                      <span tal:omit-tag="" 
-                        tal:condition="definition_aquired" >
-		        <span i18n:translate="the_current_restriction" tal:omit-tag="">The current restriction</span>
-		        (<code tal:content="python:getattr(model, 'access_restriction')" />) 
-		        <span i18n:translate="is_aquired_from_above" tal:omit-tag="">is acquired from above</span>.
-                      </span>
-                  </td>
-                </tr>
-                <tr class="even">
-                  <td>
-                    <textarea name="access_restriction"
-                      style="width:100%;"
-                      tal:condition="python:model.hasProperty('access_restriction')"
-                      tal:content="python:model.getProperty('access_restriction')"></textarea>
-                    <textarea name="access_restriction"
-                      style="width:100%;"
-                      tal:condition="python:not model.hasProperty('access_restriction')"></textarea>
-                  </td>
-                </tr>
-              </tbody>
-              <tal:block replace="nothing"> 
-                __________________ controls ___________________
-              </tal:block>
-              <tfoot>
-                <tr class="controls">
-                  <td class="align-right">
-                    <input class="button"
-                      type="submit"
-                      value="Set ip restriction"
-                      title="restrict access to specified IP addresses" 
-		      i18n:attributes="title value"/>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </form>
-          <tal:block replace="nothing"> 
             ____________________ utilities ____________________
           </tal:block>
           <form action="minimal_access_role_submit"

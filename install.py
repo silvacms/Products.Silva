@@ -353,7 +353,7 @@ def configureLayout(root, default_if_existent=0):
                'standard_error_message', 'standard_unauthorized_message', ]:
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
-    for id in ['index_html.py', 'index_html_restricted.py', 'preview_html.py',
+    for id in ['index_html.py', 'preview_html.py',
                'get_metadata_element.py']:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
 
