@@ -87,7 +87,7 @@
           <title>Query parameters</title>
           <description>
             Parameter definitions for query, each on a new line. &lt;br /&gt; 
-            Syntax:&lt;code&gt; type : name : default value : description &lt;/code&gt; 
+            Syntax:&lt;code&gt;type : name : default value : description &lt;/code&gt; 
           </description>
           <extra></extra>
           <unicode>1</unicode>
@@ -111,9 +111,8 @@
           <title>SQL Query</title>
           <description>
             SQL Query. See "Z SQL Methods" for syntax. &lt;br /&gt;
-            Pay special attention to &lt;code&gt; &amp;lt;dtml-var&amp;gt; 
-            &lt;/code&gt; vs. &lt;code&gt; &amp;lt;dtml-sqlvar&amp;gt; 
-            &lt;/code&gt; usage.
+            Pay special attention to &lt;code&gt;&amp;lt;dtml-var&amp;gt;&lt;/code&gt; vs. 
+            &lt;code&gt;&amp;lt;dtml-sqlvar&amp;gt;&lt;/code&gt; usage.
           </description>
           <extra></extra>
           <unicode>1</unicode>

@@ -50,11 +50,10 @@
   <tal:repeat repeat="field here/form/get_fields">
   <tal:define define="oddrow repeat/field/odd">
   <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
-    <td class="align-right"
-      tal:content="python:field['title'].lower()">
-      title
-      <span class="warning"
-        tal:condition="python:field.is_required()">*</span>
+    <td class="align-right">
+      <span tal:replace="python:field['title'].lower()">
+        title
+      </span><span class="warning" tal:condition="python:field.is_required()">*</span>
     </td>
     <td tal:content="structure python:field.render_from_request(request)">
       <input />
@@ -69,33 +68,33 @@
 
 <tfoot>
   <tr class="controls">
-    <td colspan="3">
-      <div style="float:right;">
-        <input class="button"
-          type="submit"
-          name="add_submit"
-          value=" Save "
-          title="Access key: alt-s"
-          accesskey="s"
-        />
-        <tal:block condition="python: not mode_asset" >
-          <input class="button"
-            type="submit"
-            name="add_edit_submit"
-            value="Save + edit"
-            title="Access key: alt-e"
-            accesskey="e"
-            tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Save + enter ', ' Save + edit ')"
-          />
-        </tal:block>
-      </div>
+    <td class="align-right"
+      colspan="3">
       <input class="cancel"
+        style="float:left;"
         type="submit"
         name="add_cancel"
         value=" Cancel "
         title="Access key: alt-c"
         accesskey="c"
       />
+      <input class="button"
+        type="submit"
+        name="add_submit"
+        value=" Save "
+        title="Access key: alt-s"
+        accesskey="s"
+      />
+      <tal:condition condition="python: not mode_asset" >
+      <input class="button"
+        type="submit"
+        name="add_edit_submit"
+        value="Save + edit"
+        title="Access key: alt-e"
+        accesskey="e"
+        tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Save + enter ', ' Save + edit ')"
+      />
+      </tal:condition>
     </td>
   </tr>
 </tfoot>

@@ -44,7 +44,7 @@
     <h2>
       <img tal:replace="structure python:view.render_icon(model)" />
       status of 
-      &#xab;<tal:block content="model/get_title_or_id_editable" />&#xbb;
+      &#xab;<tal:block content="title" />&#xbb;
     </h2>
     </td>
   </tr>

@@ -1,4 +1,5 @@
-<div class="margins" tal:define="view here; model request/model">
+<html tal:omit-tag=""
+  tal:define="view here; model request/model">
 
 <h2><span tal:replace="model/meta_type">Meta type</span> for 
   <span class="document-title">
@@ -75,4 +76,5 @@ comments here (field description)
 </tr>
 </table>
 </form>
-</div>
+
+</html>
