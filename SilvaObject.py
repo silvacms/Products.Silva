@@ -95,14 +95,20 @@ class SilvaObject(Security):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_breadcrumbs')
-    def get_breadcrumbs(self):
+    def get_breadcrumbs(self, ignore_index=1):
         """Get information used to display breadcrumbs. This is a
         list of items from the Silva Root.
         """
         result = []
         item = self
         while Interfaces.SilvaObject.isImplementedBy(item):
-            result.append(item)
+            # Should the index be included?
+            if ignore_index:
+                if not (Interfaces.Content.isImplementedBy(item) 
+                        and item.is_default()):
+                    result.append(item)
+            else:
+                result.append(item)
             item = item.aq_parent
         result.reverse()
         return result
