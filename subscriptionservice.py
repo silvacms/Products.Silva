@@ -15,7 +15,7 @@ from Products.Silva import helpers
 from Products.Silva import SilvaPermissions
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva import subscriptionerrors as errors
-from Products.Silva.adapters import subscribable
+from Products.Silva.adapters import subscribable, haunted
 
 class SubscriptionService(Folder.Folder):
     """Subscription Service
@@ -194,6 +194,32 @@ class SubscriptionService(Folder.Folder):
     def sendPublishNotification(self, content):
         if not self._enabled:
             return
+        # first send notification for content
+        self._sendNotificationEmail(content)
+        # now send email for potential haunting ghosts
+        adapted = haunted.getHaunted(content)
+        thehaunting = adapted.getHaunting()
+        for haunting in thehaunting:
+            self._sendNotificationEmail(haunting)
+        
+    # Helpers
+
+    def _metadata(self, content, setname, fieldname):
+        metadata_service = content.service_metadata
+        value = metadata_service.getMetadataValue(content, setname, fieldname)
+        if type(value) == type(u''):
+            value = value.encode('utf-8')
+        return value
+    
+    _emailpattern = re.compile(
+        '^[0-9a-zA-Z_&.%+-]+@([0-9a-zA-Z]([0-9a-zA-Z-]*[0-9a-zA-Z])?\.)+[a-zA-Z]{2,6}$')
+    
+    def _isValidEmailaddress(self, emailaddress):
+        if self._emailpattern.search(emailaddress.lower()) == None:
+            return False
+        return True
+
+    def _sendNotificationEmail(self, content):
         data = {}
         data['contenturl'] = content.absolute_url()
         data['contenttitle'] = content.get_title().encode('utf-8')
@@ -211,23 +237,6 @@ class SubscriptionService(Folder.Folder):
             data['toaddress'] = subscription.emailaddress()
             self._sendEmail(template, data)
     
-    # Helpers
-                
-    def _metadata(self, content, setname, fieldname):
-        metadata_service = content.service_metadata
-        value = metadata_service.getMetadataValue(content, setname, fieldname)
-        if type(value) == type(u''):
-            value = value.encode('utf-8')
-        return value
-    
-    _emailpattern = re.compile(
-        '^[0-9a-zA-Z_&.%+-]+@([0-9a-zA-Z]([0-9a-zA-Z-]*[0-9a-zA-Z])?\.)+[a-zA-Z]{2,6}$')
-    
-    def _isValidEmailaddress(self, emailaddress):
-        if self._emailpattern.search(emailaddress.lower()) == None:
-            return False
-        return True
-
     def _sendSuperfluousCancellationRequestEmail(
         self, content, emailaddress, template_id):
         template = str(self[template_id])
