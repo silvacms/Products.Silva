@@ -299,10 +299,10 @@ def upgrade_using_registry(obj, version, stats={}):
         if stats['threshold'] > threshold:
             print '#### Commit sub transaction ####'
             get_transaction().commit(1)
-            if obj._p_jar is not None:
+            if hasattr(obj, '_p_jar') and obj._p_jar is not None:
                 obj._p_jar.cacheGC()
             else:
-                print '_p_jar is None for', obj                
+                print 'No _p_jar, or it is None for', repr(obj)
             stats['threshold'] = 0
                     
         if hasattr(o, 'objectValues'):
