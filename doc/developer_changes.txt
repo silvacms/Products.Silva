@@ -8,6 +8,8 @@ From 1.0 to 1.1:
   the ImportArchive module have been removed. Code that depended on this
   should be rewritten to use the archivefileimport adapter.
 
+* deprecated SQLDataSource has been removed. Use SilvaExternalSources instead.
+
 * XSLT support for document renderers. While this shouldn't break
   existing code, it opens up new possibilities for extension
   writers. You can register your own XSLT templates with Silva that
