@@ -79,7 +79,7 @@
   tal:attributes="href string:${model/index/absolute_url}/edit/tab_status">Not&nbsp;approved</a>
 <a class="yellowlink" title="Down to Publish tab of item"
   tal:condition="python:unpublished_status == 'request_pending'"
-  tal:attributes="href string:${model/index/absolute_url}/edit/tab_status">Approval&nbsp;request&nbsp;pending</a>
+  tal:attributes="href string:${model/index/absolute_url}/edit/tab_status">Pending</a>
 <a class="greenlink" title="Down to Publish tab of item"
   tal:condition="python:unpublished_status == 'approved'"
   tal:attributes="href string:${model/index/absolute_url}/edit/tab_status">Approved</a>
@@ -187,7 +187,7 @@
   tal:attributes="href string:${item/absolute_url}/edit/tab_status">Not&nbsp;approved</a>
 <a class="yellowlink" title="Down to Publish tab of item"
   tal:condition="python:unpublished_status == 'request_pending'"
-  tal:attributes="href string:${item/absolute_url}/edit/tab_status">Approval&nbsp;request&nbsp;pending</a>
+  tal:attributes="href string:${item/absolute_url}/edit/tab_status">Pending</a>
 <a class="greenlink" title="Down to Publish tab of item"
   tal:condition="python:unpublished_status == 'approved'"
   tal:attributes="href string:${item/absolute_url}/edit/tab_status">Approved</a>
