@@ -9,4 +9,4 @@
 ##
 from Products.Silva.i18n import translate as _
 
-return _("Not yet :)")
+return unicode(_("Not yet :)"))

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.83 $
+# $Revision: 1.84 $
 
 # Zope
 from OFS import SimpleItem
@@ -60,7 +60,7 @@ class GhostBase:
         """
         content = self.get_haunted_unrestricted()
         if content is None:
-            return _("Ghost target is broken")
+            return unicode(_("Ghost target is broken"))
         else:
             return content.get_title()
 
@@ -69,7 +69,7 @@ class GhostBase:
         """
         content = self.get_haunted_unrestricted()
         if content is None:
-            return _("Ghost target is broken")
+            return unicode(_("Ghost target is broken"))
         else:
             return content.get_title_editable()
 
@@ -81,7 +81,7 @@ class GhostBase:
         """        
         content = self.get_haunted_unrestricted()
         if content is None:
-            return _("Ghost target is broken")
+            return unicode(_("Ghost target is broken"))
         else:
             short_title = content.get_short_title()
         if not short_title:

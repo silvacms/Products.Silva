@@ -17,4 +17,4 @@ if map:
 
 model.sec_cleanup_groupsmapping()
 
-return _("map cleared")
+return unicode(_("map cleared"))

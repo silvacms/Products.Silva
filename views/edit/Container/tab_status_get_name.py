@@ -14,4 +14,4 @@ if not model.is_default():
 else:
     msg = _('${id} of ${parent_id}')
     msg.set_mapping({'id': model.id, 'parent_id ': model.get_container().getId()})
-    return msg
+    return unicode(msg)

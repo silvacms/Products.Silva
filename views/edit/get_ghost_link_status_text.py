@@ -13,7 +13,7 @@ status = ghost_version.get_link_status()
 if status == ghost_version.LINK_OK:
     return ''
 elif status == ghost_version.LINK_EMPTY:
-    return _('You have to enter a path here.')
+    return unicode(_('You have to enter a path here.'))
 elif status == ghost_version.LINK_VOID:
     msg = _('The object &#xab;${haunted_url}&#xbb; the ghost points to does\
         not exist.')
@@ -36,7 +36,7 @@ elif status == ghost_version.LINK_CIRC:
     msg = _('The object &#xab;${haunted_url}&#xbb; the ghost points is\
         either the ghost itself or an ancestor of the ghost.')
 else:
-    return _('The ghost is in an undefined state.')
+    return unicode(_('The ghost is in an undefined state.'))
 msg.set_mapping({'haunted_url': ghost_version.get_haunted_url()})
-return msg
+return unicode(msg)
 

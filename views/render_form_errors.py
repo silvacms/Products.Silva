@@ -12,17 +12,6 @@ result = []
 for error in validation_error.errors:
     result.append('<li class="error">%s: %s</li>\n' % (error.field['title'], error.error_text))
 
-msg = _("""
-<dl style="margin:0; padding:0.3em 0 0.2em 0;">
-<dt>Sorry, there are problems with these form fields:</dt>
-<dd>
-<ul class="tips">
-${tips}
-</ul>
-</dd>
-</dl>
-""")
-
-msg.set_mapping({'tips': ' '.join(result)})
-
-return msg
+return """<dl style="margin:0; padding:0.3em 0 0.2em 0;"><dt>""" + 
+unicode(_("Sorry, there are problems with these form fields:")) + 
+"""</dt><dd><ul class="tips">""" + ' '.join(result) + "</ul></dd></dl>"
