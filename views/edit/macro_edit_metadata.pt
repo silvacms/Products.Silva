@@ -31,9 +31,8 @@
           ______________ vein + title row ______________
         </tr>
         <tr>
-          <td class="top"
-            colspan="4">
-            <h2>
+          <td class="top" colspan="4">
+            <h2 metal:define-slot="table_title" i18n:translate="">
               <img tal:replace="structure python:view.render_icon(model)" />
               <tal:block i18n:translate="">
                 metadata
