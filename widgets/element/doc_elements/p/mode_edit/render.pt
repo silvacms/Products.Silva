@@ -3,7 +3,7 @@
 <script type="text/javascript" tal:content="structure here/asset_reference.js" />
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
 <div align="right">
-<input type="button" class="button" name="" value="Append asset reference"
+<input type="button" class="button" name="" value="Append asset reference" title="Access key: alt-a" accesskey="a"
   tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup\', \' ((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % node.get_container().absolute_url()" />
 </div>
 <div class="textarea">
@@ -29,12 +29,12 @@ Type:
 </metal:block>
 <metal:block fill-slot="edit_notes">
 <ul class="tips">
-  <li><b>Tip:</b> Tab to the save button.</li>
+  <li><b>Tip:</b> Tab to the exit button or alt-e.</li>
   <li>Multiple paragraphs can be entered in one step by adding an empty line space.</li>
-  <li>Text can be formatted (in <i>italic</i>, <b>bold</b>, etc) with markup:
+  <li>Text can be formatted (in <i>italic</i>, <b>bold</b>, etc) with &#8220;Silva markup&#8221;:
     <ul class="tips-nested">
       <li>**bold** ++italic++ __underlined__ ^^superscript^^ ~~subscript~~</li>
-      <li>((link text|http://www.x.yz)) ((target|http://www.x.yz|name)) if name is empty a new window opens</li>
+      <li>((link text|http://www.x.yz)) ((target|http://www.x.yz|name)) if &#8216;name&#8217; is empty a new window opens</li>
       <li>[[index item|item as shown in index]]</li>
       <li tal:replace="nothing">{{name of person|name in index}}</li>
     </ul>

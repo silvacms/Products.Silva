@@ -26,8 +26,10 @@
 
 <div metal:define-macro="edit_bottom_controls" tal:omit-tag="">
   <td align="right" width="25%">&nbsp;&nbsp;
-    <input class="button" type="submit" value=" Save " tal:attributes="name string:${rel_url_start}/save:method" />&nbsp; 
-    <input class="button" type="submit" value=" Save and exit " tal:attributes="name string:${rel_url_start}/save_and_exit:method" />&nbsp;
+    <input class="button" type="submit" value=" Save " title="Access key: alt-s" accesskey="s"
+      tal:attributes="name string:${rel_url_start}/save:method" />&nbsp; 
+    <input class="button" type="submit" value=" Save and exit "  title="Access key: alt-e" accesskey="e"
+      tal:attributes="name string:${rel_url_start}/save_and_exit:method" />&nbsp;
   </td>
   <div metal:use-macro="container/macro_helpers/macros/empty_buttons" />
 </div>
