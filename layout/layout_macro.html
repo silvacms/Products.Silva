@@ -36,17 +36,18 @@
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <!-- Access navigation links - if any are not needed remove for better performance -->
   <tal:define define="
-    not_top python:here.meta_type != 'Silva Root';
+    root python:here.meta_type == 'Silva Root';
     surround here/surroundlinks; 
     first python:surround[0];
     previous python: surround[1];
     next python:surround[2];
     last python:surround[3];">
   <link rel="top" title="Up to top of publication" 
-    tal:condition="not_top"
+    tal:condition="not: root"
     tal:attributes="href python:here.get_publication().absolute_url()" />
   <link rel="up" href="../" title="Up a level" 
-    tal:condition="not_top" />
+    tal:condition="not: root"
+    tal:attributes="href python: here.id == 'index' and '../../' or '../'" />
   <link rel="first" title="First document" 
     tal:condition="first"
     tal:attributes="href first/absolute_url" />
