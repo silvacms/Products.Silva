@@ -1,4 +1,6 @@
-# Version: $Revision: 1.5 $
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Revision: 1.6 $
 import Globals, AccessControl, Products
 from AccessControl import Permissions
 

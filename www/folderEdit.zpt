@@ -1,3 +1,8 @@
+<!--
+Copyright (c) 2002 Infrae. All rights reserved.
+See also LICENSE.txt
+Version of this file: $Revision: 1.2 $
+-->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"

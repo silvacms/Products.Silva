@@ -1,4 +1,6 @@
-# Version: $Revision: 1.34 $
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Revision: 1.35 $
 import Interfaces
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass

@@ -1,4 +1,6 @@
-# Version: $Revision: 1.9 $
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Revision: 1.10 $
 import Interfaces
 from SilvaObject import SilvaObject
 from Publishable import Publishable

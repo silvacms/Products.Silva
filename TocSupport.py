@@ -1,4 +1,6 @@
-# Version: $Revision: 1.3 $
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Revision: 1.4 $
 class TocSupport:
     """Mixin for Silva Objects to give them TOC Support.
     """

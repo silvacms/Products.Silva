@@ -1,4 +1,6 @@
-# Version: $Revision: 1.10 $
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Revision: 1.11 $
 from Content import Content
 from Versioning import Versioning, VersioningError
 from OFS import Folder
