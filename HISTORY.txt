@@ -7,6 +7,11 @@ Silva changes
 
     Bugs fixed
 
+      - Replaced print statement in Indexer for a LOG entry.
+
+      - The Indexer could break when the content tree it indexed contains
+        Silva Publications.
+
       - Protect methods on the service_files.
 
       - Content publication state is now not touched anymore when imported
