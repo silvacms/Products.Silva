@@ -144,7 +144,6 @@ def is_installed(root):
     return hasattr(root.service_views, 'Silva')
 
 def configureMetadata(root):
-    print 'Configuring metadata'
     from os import path
     from Products.Annotations.Extensions.SilvaInstall import install as install_annotations
     from Products.SilvaMetadata.Extensions.SilvaInstall import install as install_metadata
