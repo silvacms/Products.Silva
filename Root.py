@@ -1,13 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.65 $
+# $Revision: 1.66 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass, DTMLFile
 from DateTime import DateTime
-# Silva interfaces
-from IRoot import IRoot
 # Silva
 from Publication import Publication
 import SilvaPermissions
@@ -16,6 +14,8 @@ import install
 from helpers import add_and_edit
 
 from Products.Silva.Metadata import export_metadata
+
+from interfaces import IRoot
 
 icon="globals/silva.gif"
 

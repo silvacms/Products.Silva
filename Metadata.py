@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.10 2003/06/30 15:31:14 faassen Exp $    
+$Id: Metadata.py,v 1.11 2003/07/02 13:56:18 faassen Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
@@ -22,8 +22,8 @@ from Products.SilvaMetadata.Access import registerAccessHandler, invokeAccessHan
 from Products.SilvaMetadata.Initialize import registerInitHandler
 from Products.SilvaMetadata import Binding
 from Products.Silva.Versioning import Versioning
-from Products.Silva.IVersionedContent import IVersionedContent
 
+from interfaces import IVersionedContent
 
 #################################
 ### handlers and thin wrappers for metadata

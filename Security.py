@@ -1,12 +1,10 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.58 $
+# $Revision: 1.59 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from DateTime import DateTime
-# Silva interfaces
-from IContainer import IContainer
 # Silva
 import SilvaPermissions
 from Membership import noneMember
@@ -20,6 +18,8 @@ try:
     groups_enabled = 1
 except ImportError:
     groups_enabled = 0
+
+from interfaces import IContainer
 
 LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
 

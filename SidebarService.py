@@ -8,6 +8,8 @@ from SidebarCache import SidebarCache
 import SilvaPermissions
 from helpers import add_and_edit
 
+from interfaces import ISidebarService
+
 class SidebarService(SimpleItem):
     """Service for sidebar cache"""
 
@@ -15,6 +17,8 @@ class SidebarService(SimpleItem):
     
     security = ClassSecurityInfo()
 
+    __implements__ = ISidebarService
+    
     def __init__(self, id, title):
         self.id = id
         self._title = title

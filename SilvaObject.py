@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.84 2003/07/02 11:43:43 faassen Exp $
+# $Id: SilvaObject.py,v 1.85 2003/07/02 13:56:18 faassen Exp $
 
 # python
 from types import StringType
@@ -9,16 +9,6 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from DateTime import DateTime
 from StringIO import StringIO
-# Silva interfaces
-from ISilvaObject import ISilvaObject
-from IContent import IContent
-from IPublishable import IPublishable
-from IAsset import IAsset
-from IContent import IContent
-from IContainer import IContainer
-from IPublication import IPublication
-from IVersioning import IVersioning
-from IVersionedContent import IVersionedContent
 # Silva
 import SilvaPermissions
 from Products.SilvaViews.ViewRegistry import ViewAttribute
@@ -26,6 +16,10 @@ from Security import Security
 from ViewCode import ViewCode
 # misc
 from cgi import escape
+
+from interfaces import ISilvaObject, IContent, IPublishable, IAsset
+from interfaces import IContent, IContainer, IPublication
+from interfaces import IVersioning, IVersionedContent
 
 class XMLExportContext:
     """Simple context class used in XML export.

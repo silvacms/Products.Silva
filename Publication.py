@@ -1,12 +1,10 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.40 $
+# $Revision: 1.41 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
-# Silva interfaces
-from IPublication import IPublication
 # Silva
 from Folder import Folder
 import SilvaPermissions
@@ -15,6 +13,8 @@ from helpers import add_and_edit, getNewId
 
 from Products.Silva.ImporterRegistry import get_importer, xml_import_helper, get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
+
+from interfaces import IPublication
 
 icon="www/silvapublication.gif"
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 # Python
 from StringIO import StringIO
 # Zope
@@ -9,23 +9,19 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
-# Silva interfaces
-from Products.Silva.IVersionedContent import IVersionedContent
-from Products.Silva.IVersion import IVersion
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.helpers import add_and_edit, translateCdata
 from Products.Silva.Version import CatalogedVersion
-# misc
-from cgi import escape
-
 from Products.Silva.ImporterRegistry import importer_registry, \
                      xml_import_helper, get_xml_id, get_xml_title
 
 from Products.Silva.Metadata import export_metadata
 from Products.ParsedXML.ExtraDOM import writeStream
+
+from interfaces import IVersionedContent, IVersion
 
 icon="www/silvageneric.gif"
 

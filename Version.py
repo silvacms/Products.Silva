@@ -3,9 +3,9 @@ from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 
-from Products.Silva.IVersion import IVersion
 from Products.Silva import SilvaPermissions
 
+from interfaces import IVersion
 
 class Version(SimpleItem):
 

@@ -1,18 +1,15 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-# Silva interfaces
-from IPublishable import IPublishable
-from IContent import IContent
-from IVersioning import IVersioning
-from IContainer import IContainer
 # Silva 
 import SilvaPermissions
 # misc
 import helpers
+
+from interfaces import IPublishable, IContent, IVersioning, IContainer
 
 class Publishable:
     """Mixin class that can be provided to implement the Publishable

@@ -1,8 +1,8 @@
 from __future__ import nested_scopes
 from ISilvaObject import ISilvaObject
 from IContainer import IContainer
-from IVersionedContent import IVersionedContent, ICatalogedVersionedContent
-from IVersion import IVersion, ICatalogedVersion
+from IVersionedContent import IVersionedContent
+from IVersion import IVersion
 from Membership import NoneMember, noneMember 
 from helpers import check_valid_id
 
@@ -419,8 +419,7 @@ set_el_name_mapping = {
 def get_versions_or_self(obj):
     #print 'Getting versions of', obj.id
     ret = []
-    if (IVersionedContent.isImplementedBy(obj) or
-            ICatalogedVersionedContent.isImplementedBy(obj)):
+    if IVersionedContent.isImplementedBy(obj):
         versions = []
         for version in ['_unapproved_version', '_approved_version',
                         '_public_version']:
@@ -607,8 +606,8 @@ upgrade_registry.register('Silva Indexer', replace_object_title_092, '0.9.2')
 def catalog_092(obj):
     """Do initial catalogin of objects"""
     #print 'Catalog', obj.getPhysicalPath()
-    if ((IVersion.isImplementedBy(obj) or ICatalogedVersion.isImplementedBy(obj)) and
-            obj.id not in obj.aq_parent._get_indexable_versions()):
+    if (IVersion.isImplementedBy(obj) and
+        obj.id not in obj.aq_parent._get_indexable_versions()):
         return
     #if hasattr(obj, 'content'):
         #print 'Type of content:', type(obj.content_xml())

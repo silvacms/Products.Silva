@@ -7,10 +7,11 @@ from DateTime import DateTime
 
 # silva
 from Security import Security
-from IMembership import IMember, IMemberService
 from Membership import cloneMember, Member
 import SilvaPermissions
 from helpers import add_and_edit
+
+from interfaces import IMember, IMemberService
 
 class SimpleMember(Member, Security, SimpleItem.SimpleItem):
     """Silva Simple Member"""

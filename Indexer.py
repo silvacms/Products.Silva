@@ -1,20 +1,16 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 import OFS
 from OFS.SimpleItem import SimpleItem
-# Silva interfaces
-from Products.Silva.IContent import IContent
 # Silva
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
-# misc
 from Products.Silva.helpers import add_and_edit
-from IContainer import IContainer
 # try to import xpath
 try:
     from xml import xpath
@@ -22,6 +18,8 @@ try:
     XPATH_AVAILABLE = 1
 except ImportError:
     XPATH_AVAILABLE = 0
+
+from interfaces import IContent, IContainer
     
 icon = "www/silvaindexer.png"
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.36 2003/06/19 13:01:20 jw Exp $
+# $Id: Image.py,v 1.37 2003/07/02 13:56:18 faassen Exp $
 
 # Python
 import re, string 
@@ -13,8 +13,6 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
-# Silva interfaces
-from IAsset import IAsset
 # Silva
 import SilvaPermissions
 from Asset import Asset
@@ -32,6 +30,8 @@ try:
     from Products.ExtFile.ExtImage import ExtImage
 except ImportError:  
     pass
+
+from interfaces import IAsset
 
 icon = "www/silvaimage.gif"
 

@@ -1,20 +1,20 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from helpers import add_and_edit
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-# Silva interfaces
-from IDataSource import IDataSource
 # Silva
 from Asset import Asset
 import SilvaPermissions
 # Formulator
 from Products.Formulator.Form import BasicForm
 from Products.Formulator.StandardFields import StringField, IntegerField
+
+from interfaces import IDataSource
 
 class DataSource(Asset):
     """Silva can connect to external databases

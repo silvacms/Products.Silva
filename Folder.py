@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.115 $
+# $Revision: 1.116 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -10,15 +10,6 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode # HACK
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
-# Silva interfaces
-from IContainer import IContainer
-from IPublishable import IPublishable
-from IContent import IContent
-from IVersionedContent import IVersionedContent
-from ISilvaObject import ISilvaObject
-from IAsset import IAsset
-from IPublication import IPublication
-from IRoot import IRoot
 # Silva
 from SilvaObject import SilvaObject
 from Publishable import Publishable
@@ -36,6 +27,10 @@ from Products.Silva.Metadata import export_metadata
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.ExtraDOM import writeStream
+
+from interfaces import IPublishable, IContent
+from interfaces import IVersionedContent, ISilvaObject, IAsset
+from interfaces import IContainer, IPublication, IRoot
 
 icon="www/silvafolder.gif"
 

@@ -1,15 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.62 $
+# $Revision: 1.63 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
-# Silva interfaces
-from IVersionedContent import IVersionedContent
-from IContainer import IContainer
 # Silva
 from VersionedContent import CatalogedVersionedContent
 from Version import CatalogedVersion
@@ -17,6 +14,8 @@ import SilvaPermissions
 # misc
 from helpers import add_and_edit
 import urlparse
+
+from interfaces import IVersionedContent, IContainer
 
 icon = "www/silvaghost.gif"
 

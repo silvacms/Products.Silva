@@ -1,10 +1,11 @@
 # some common classes used by Membership implementations
 from AccessControl import ClassSecurityInfo
 import Globals
-from IMembership import IMember
 from Globals import Persistent
 import SilvaPermissions
 import Acquisition
+
+from interfaces import IMember
 
 class Member(Persistent, Acquisition.Implicit):
     __implements__ = IMember

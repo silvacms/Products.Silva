@@ -8,7 +8,6 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals, zLOG
 
 # silva
-from IMessageService import IMessageService
 import SilvaPermissions
 from helpers import add_and_edit
 
@@ -16,6 +15,8 @@ from helpers import add_and_edit
 from Products.Formulator.Form import ZMIForm
 from Products.Formulator.Errors import FormValidationError
 from Products.Formulator import StandardFields
+
+from interfaces import IMessageService
 
 class EmailMessageService(SimpleItem.SimpleItem):
     """Simple implementation of IMemberMessageService that sends email
