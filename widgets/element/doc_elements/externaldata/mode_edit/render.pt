@@ -107,7 +107,7 @@
             Type:
           </td>
           <td colspan="2" align="left">
-            <select name="element_type" tal:define="type python:here.getAttribute('type')">
+            <select name="element_type" tal:define="type python:node.getAttribute('type')">
               <option value="plain" 
                 tal:attributes="selected python:test(type == 'plain', 'selected', nothing)">
                 Plain table (bold borderless heading, borderless rows)
