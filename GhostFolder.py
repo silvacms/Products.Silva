@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.9 2003/08/07 18:05:50 kitblake Exp $
+# $Id: GhostFolder.py,v 1.10 2003/08/08 07:33:47 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -23,7 +23,8 @@ from Products.Silva.Publishable import Publishable
 from Products.Silva.Versioning import VersioningError
 
 from Products.Silva.interfaces import \
-    IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent
+    IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
+    IPublication
 
 icon = 'www/silvaghostfolder.gif'
 
@@ -92,6 +93,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                     ghost.manage_delObjects([haunted.id])
                 new_ghost = haunted._getCopy(ghost)
                 ghost._setObject(haunted.id, new_ghost)
+        self._invalidate_sidebar(self)
                 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
     def get_link_status(self, content=None):
@@ -153,7 +155,26 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
             self.getId(), self.get_content_url()))
         self._to_xml_helper(context)
         f.write("</silva_ghostfolder>")
-       
+    
+    
+    # all this is for a nice side bar
+    def is_transparent(self):
+        """show in subtree? depends on haunted object"""
+        content = self._get_content()
+        if IContainer.isImplementedBy(content):
+            return content.is_transparent()
+        return 0
+    
+    def get_publication(self):
+        """returns self if haunted object is a publication"""
+        content = self._get_content()
+        if IPublication.isImplementedBy(content):
+            return self.aq_inner
+        return self.aq_inner.aq_parent.get_publication()
+
+    def implements_publication(self):
+        content = self._get_content()
+        return content.implements_publication()
 
     # Publishable 
     
