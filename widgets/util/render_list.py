@@ -7,6 +7,9 @@
 ##parameters=type, texts
 ##title=
 ##
+model = context.REQUEST.model
+type = model.output_convert_html(type)
+
 if type in ['disc', 'square', 'circle']:
     tag = 'ul'
 elif type in ['1', 'I', 'i', 'A', 'a']:
@@ -16,8 +19,8 @@ elif type == 'none':
 
 if tag:
     content = ''.join(['<li>%s</li>' % text for text in texts])
-    return '<%s class="frontend" type="%s">%s</%s>' % (tag, type, 
-                                                       content, tag)
+    return '<%s class="frontend" type="%s">%s</%s>' % (
+        tag, type, content, tag)
 else:
     if texts:
         content = '<br />\n'.join(texts)
