@@ -87,6 +87,7 @@
         style="float:right; margin-right:6px; padding-left:0.8em; padding-right:0em;"
         title="Silva help: alt-h"
         accesskey="h"
+        target="_blank"
         tal:condition="exists:here/help_url"
         tal:attributes="href string:${here/help_url}"
       >
