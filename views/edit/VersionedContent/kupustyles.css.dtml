@@ -70,10 +70,14 @@ div.kupu-tb {
   cursor: pointer;
 }
 
+#kupu-tb-buttons button.kupu-logo {
+  border: none;
+}
+
 span.kupu-tb-buttongroup button.kupu-save {background-image: url("kupu/kupuimages/save.gif"); background-color: #cedae8;}
 span.kupu-tb-buttongroup button.kupu-save:hover {background-image: url("kupu/kupuimages/save.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-logo {background-image: url("kupu/kupuimages/kupu_icon.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-logo:hover {display:none; background-image: url("kupu/kupuimages/kupu_icon.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-logo {background-image: url("kupu/kupuimages/kupu_icon.gif"); background-color: transparent;}
+span.kupu-tb-buttongroup button.kupu-logo:hover {background-image: url("kupu/kupuimages/kupu_icon.gif");}
 
 span.kupu-tb-buttongroup button.kupu-bold {background-image: url("kupu/kupuimages/bold.gif"); background-color: #cedae8;}
 span.kupu-tb-buttongroup button.kupu-bold:hover, span.kupu-tb-buttongroup button.kupu-bold-pressed {background-image: url("kupu/kupuimages/bold.gif"); background-color: #b3d4bf;}
