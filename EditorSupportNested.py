@@ -1,8 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import re
 from sys import exc_info
+from StringIO import StringIO
 from xml.parsers.expat import ExpatError
 
 from AccessControl import ClassSecurityInfo
@@ -12,6 +13,14 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 
 import SilvaPermissions
 
+
+def _regular_expression_escape(st):
+    result = ""
+    for c in st:
+        result += '\\'+c
+    return result        
+
+
 class EditorSupportError(Exception):
     pass
 
@@ -20,9 +29,29 @@ class EditorSupport(SimpleItem):
     
     security = ClassSecurityInfo()
     meta_type = 'Silva Editor Support Service'
+
+
+
+    _silva_markup = {
+        '__': 'underline', 
+        '**': 'strong', 
+        '++': 'em', 
+        '^^': 'super',
+        '~~': 'sub',
+    }
+    
+    p_MARKUP = re.compile(r"(?P<markup>%s)(?P<text>.*?)(?P=markup)" % (
+        '|'.join(map(_regular_expression_escape, _silva_markup.keys())), ),
+        re.S)
+    p_LINK = re.compile(r"^([^<]*|.*>[^\"]*)\({2}(.*?)\|([^|]*?)(\|(.*?))?\){2}",
+       re.S)
+    p_INDEX = re.compile(r"^([^<]*|.*>[^\"]*)\[{2}(.*?)\|(.*?)\]{2}", re.S)
+    
     
     def __init__(self, id):
         self.id = id
+
+        
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_text_as_html')
@@ -195,28 +224,16 @@ class EditorSupport(SimpleItem):
         simplicity.
         """
         st = self.replace_xml_entities(st)
-        # Replace those stupid Windows linebreaks, take care of Mac's ones
-        # as well...
-        if st.find('\n') == -1 and st.find('\r') > -1:
-            # No \n's but we do have \r's, so we're retrieving from a Mac, I
-            # presume
-            st = st.replace('\r', '\n')
-        else:
-            st = st.replace('\r', '')
-        tags = {'__': 'underline', '**': 'strong', '++': 'em', '^^': 'super',
-            '~~': 'sub'}
-        reg = re.compile(r"(_{2}|\*{2}|\+{2}|\^{2}|~{2})(.*?)\1", re.S)
-        reg_a = re.compile(
-            r"^([^<]*|.*>[^\"]*)\({2}(.*?)\|([^|]*?)(\|(.*?))?\){2}", re.S)
-        reg_i = re.compile(r"^([^<]*|.*>[^\"]*)\[{2}(.*?)\|(.*?)\]{2}", re.S)
+        st = self._unifyLineBreak(st)
         while 1:
-            match = reg.search(st)
+            match = self.p_MARKUP.search(st)
             if not match:
                 break
             st = st.replace(match.group(0), '<%s>%s</%s>' % (
-                tags[match.group(1)], match.group(2), tags[match.group(1)]))
+                self._silva_markup[match.group('markup')], match.group('text'), 
+                self._silva_markup[match.group('markup')]))
         while 1:
-            match = reg_a.search(st)
+            match = self.p_LINK.search(st)
             if not match:
                 break
             if match.group(4):
@@ -235,27 +252,22 @@ class EditorSupport(SimpleItem):
                         self.replace_xml_entities(match.group(3)), 
                         match.group(2)))
         while 1:
-            match = reg_i.search(st)
+            match = self.p_INDEX.search(st)
             if not match:
                 break
             st = st.replace(match.group(0), 
                 '%s<index name="%s">%s</index>' % (match.group(1), 
                     self.replace_xml_entities(match.group(3)), 
                     match.group(2)))
-        st = st.replace('\n', '<br/>')                    
+        st = st.replace('\n', '<br/>')
         st = self.input_convert(st).encode('UTF8')
         node = node._node
         doc = node.ownerDocument
 
         # remove all old subnodes of node
-        # FIXME: hack to make copy of all childnodes
-        children = [child for child in node.childNodes]
-        children.reverse()
-        for child in children:
-            node.removeChild(child)
-
+        while node.firstChild:
+            node.removeChild(node.firstChild)
         newdom = self.create_dom_forgiving(doc, st)
-
         for child in newdom.childNodes:
             self._replace_helper(doc, node, child)
 
@@ -265,12 +277,7 @@ class EditorSupport(SimpleItem):
         """'Parse' the markup into XML using regular expressions
         """
         st = self.replace_xml_entities(st)
-        if st.find('\n') == -1 and st.find('\r') > -1:
-            # No \n's but we do have \r's, so we're retrieving from a Mac, I 
-            # presume
-            st = st.replace('\r', '\n')
-        else:
-            st = st.replace('\r', '')
+        st = self._unifyLineBreak(st)
         reg_i = re.compile(r"\[{2}(.*?)\|(.*?)\]{2}", re.S)
         while 1:
             match = reg_i.search(st)
@@ -282,14 +289,8 @@ class EditorSupport(SimpleItem):
         st = self.input_convert(st).encode('UTF8')
         node = node._node
         doc = node.ownerDocument
-
-        # remove all old subnodes of node
-        # FIXME: hack to make copy of all childnodes
-        children = [child for child in node.childNodes]
-        children.reverse()
-        for child in children:
-            node.removeChild(child)
-
+        while node.firstChild:
+            node.removeChild(node.firstChild)
         newdom = self.create_dom_forgiving(doc, st)
 
         for child in newdom.childNodes:
@@ -310,7 +311,6 @@ class EditorSupport(SimpleItem):
                     newnode.setAttribute(child.attributes.item(i).name, child.attributes.item(i).value)
                 node.appendChild(newnode)
                 self._replace_helper(doc, newnode, child)
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_pre')
     def replace_pre(self, node, text):
@@ -328,16 +328,8 @@ class EditorSupport(SimpleItem):
         # get actual DOM node
         node = node._node
         doc = node.ownerDocument
-
-        # remove all old subnodes of node
-        # FIXME: hack to make copy of all childnodes
-        # XXX This now removes all subnodes, while whis will only be 1 in 
-        # practice
-        children = [child for child in node.childNodes]
-        children.reverse()
-        for child in children:
-            node.removeChild(child)
-
+        while node.firstChild:
+            node.removeChild(node.firstChild)
         newNode = doc.createTextNode(text)
         node.appendChild(newNode)
 
@@ -353,10 +345,12 @@ class EditorSupport(SimpleItem):
 
     security.declarePrivate('create_dom_forgiving')
     def create_dom_forgiving(self, doc, st):
-        """When creating a domtree from the text goes wrong because of illegal markup, this method removes
-        ALL occurrences of the tag where it went wrong.
-        XXX This is rather rigorous, could we remove only the tag which is actually illegal?
+        """When creating a domtree from the text goes wrong because of illegal
+        markup, this method removes ALL occurrences of the tag where it went
+        wrong.  XXX This is rather rigorous, could we remove only the tag which
+        is actually illegal? 
         """
+        
         elements = ['a', 'strong', 'em', 'underline', 'sub', 'sup']
         while 1:
             try:
@@ -400,6 +394,21 @@ class EditorSupport(SimpleItem):
                 # get into an endless loop, avoid that by raising the 
                 # previous error
                 raise ExpatError, message
+
+    def _unifyLineBreak(self, data):
+        """returns data with unambigous line breaks, i.e only \n.
+
+            This is done by guessing... :)
+        """
+        if data.find('\n') == -1 and data.find('\r') > -1:
+            # looks like mac
+            return data.replace('\r', '\n')
+        else:
+            # looks like windows
+            return data.replace('\r', '')
+        # looks like unix :)
+        return data
+
 
 InitializeClass(EditorSupport)
 
