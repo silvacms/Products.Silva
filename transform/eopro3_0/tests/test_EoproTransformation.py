@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import unittest
 
 # 
@@ -695,7 +695,7 @@ class RoundtripSpecials(unittest.TestCase):
         silva_super = silva_super[0]
         self.assert_(silva_super.content.asBytes()=='2')
 
-    def _test_mixin_paragraphs(self):
+    def test_mixin_paragraphs(self):
         doc = '<li>bef<strong>bold</strong><heading>heading</heading><p>qweq</p></li>'
         li = self.transformer.source_parser.parse(doc)[0]
         self.assertEquals(li.name(),'li')
@@ -762,7 +762,7 @@ def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(HTML2XML, 'test'))
     suite.addTest(unittest.makeSuite(RoundtripWithTidy, 'test'))
-    #suite.addTest(unittest.makeSuite(RoundtripSpecials, 'test'))
+    suite.addTest(unittest.makeSuite(RoundtripSpecials, 'test'))
     return suite
     
 def main():

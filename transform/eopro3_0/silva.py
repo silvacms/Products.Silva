@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.8 $'
+__version__='$Revision: 1.9 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -293,7 +293,7 @@ class index(SilvaElement):
 
 
 def mixin_paragraphs(container):
-    """ wrap silva.p node around text"""
+    """ wrap silva.p node around dangling text elements"""
     content = Frag()
     breaks = 'heading','p', 'pre', 'list','dlist','nlist','table'
 
