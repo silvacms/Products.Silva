@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -17,7 +17,15 @@ from Products.Formulator.Form import Form, BasicForm
 from Products.Formulator.StandardFields import StringField, IntegerField
 
 class DataSource(Asset):
-    """A base class for data source
+    """Silva can connect to external databases
+       (such as LDAP, Postgres, MySQL). Assuming a database connection
+       already exists in Zope, content from database tables can be
+       retrieved and displayed in Silva pages. Parameters can be set
+       and SQL queries defined (using ZSQL method techniques). The data
+       is rendered on public pages in one of the Silva table styles. A
+       DataSource is usually used in conjunction with an External Data
+       element in the Silva editor, but could also be used with a Code
+       element.
     """
 
     __implements__ = IDataSource

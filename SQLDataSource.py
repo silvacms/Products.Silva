@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -43,7 +43,12 @@ class SQLDataSource(DataSource):
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_data')
     def get_data(self, params={}):
-        """Get data from source with parameter values applied.
+        """Silva can connect to external databases
+        (such as LDAP, Postgres, MySQL). In conjunction with a database
+        connection  in Zope,  content from data base tables can be
+        retrieved and displayed in Silva pages.  In the DataSource
+        parameters can be set and SQL queries defined (using ZSQL method
+        techniques). The data is rendered on public pages in a table.
         """
         if not self._sql_method:
             self._set_sql_method()

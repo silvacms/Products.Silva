@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -26,8 +26,8 @@ except ImportError:
 icon = "www/silvageneric.gif"
 
 class Indexer(Content, SimpleItem):
-    """Indexes can be created which function like an index in the 
-       back of a book. References must first be created by placing index 
+    """Indexes can be created that function like an index in the 
+       back of a book. References must first be marked by placing index 
        codes in text (these codes will also export to print formats). 
        Indexers cascade downwards, indexing all index items in the current 
        and underlying publications (indexes only published documents).
