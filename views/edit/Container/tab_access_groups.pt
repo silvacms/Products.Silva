@@ -75,20 +75,20 @@
       <tr tal:condition="groups">
         <th class="listing-left">
         </th>
-        <th>
-          Name
+        <th i18n:translate="name">
+          name
         </th>
-        <th>
-          Title
+        <th i18n:translate="title">
+          title
         </th>
-        <th>
-          Type
+        <th i18n:translate="type">
+          type
         </th>
-        <th>
-          Modified
+        <th i18n:translate="modified">
+          modified
         </th>
-        <th>
-          Modifier
+        <th i18n:translate="modifier">
+          modifier
         </th>
       </tr>
       <tal:repeat repeat="group groups">
@@ -384,7 +384,7 @@
           enctype="multipart/form-data">
           <table>
             <tr>
-              <td>
+              <td i18n:translate="id">
                 id
               </td>
               <td class="warning">
@@ -437,16 +437,16 @@
           Add a virtual group
         </b>
         <br />
-        <i i18n:translate="group_defined_by_list_groups">
-          (a group defined by a list of normal groups)
-        </i>
+        (<i i18n:translate="group_defined_by_list_groups">
+          a group defined by a list of normal groups
+        </i>)
         <form name="focusbox" 
           action="add_object_submit" 
           method="POST" 
           enctype="multipart/form-data">
           <table>
             <tr>
-              <td>
+              <td i18n:translate="id">
                 id
               </td>
               <td class="warning">

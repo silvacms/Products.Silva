@@ -5,13 +5,13 @@
   metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<h2>Info for 
+<h2><span i18n:translate="infor_for">Info for </span>
   <span class="folder-title">
     &#xab;<tal:block content="model/get_title_editable" />&#xbb;
   </span>
 </h2>
 
-<h3>Authorized users below this level</h3>
+<h3 i18n:translate="authorized_users_below">Authorized users below this level</h3>
 
 <!-- This form has no action on purpose -->
 <form>
