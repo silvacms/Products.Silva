@@ -526,7 +526,7 @@ table.listing th.top a.normal:hover {
 }
 
 td.selected {
-  background: #cde0f2;
+  background: &dtml-oddRowBackground;;
   border-top: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
 }
