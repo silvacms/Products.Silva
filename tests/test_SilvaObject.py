@@ -6,7 +6,7 @@ from Products.Silva import Document, Folder, Root #, Ghost, Publication
 
 class SilvaObjectTestCase(unittest.TestCase):
     """Test the SilvaObject interface.
-    """  
+    """
     def setUp(self):
         get_transaction().begin()
         self.connection = Zope.DB.open()
