@@ -6,7 +6,6 @@ headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
             ('Cache-Control', 'no-cache, must-revalidate'),
             ('Cache-Control', 'post-check=0, pre-check=0'),
             ('Pragma', 'no-cache'),
-	    ('Content-Type', 'text/html; charset:UTF-8'),
             ]
 
 placed = []
