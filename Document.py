@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.79.2.1 $
+# $Revision: 1.79.2.2 $
 # Zope
 
 from StringIO import StringIO
@@ -186,7 +186,12 @@ class DocumentVersion(CatalogedVersion):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'fulltext')
     def fulltext(self):
-        """Return the content of this object without any xml"""
+        """Return the content of this object without any xml
+
+        Don't do this in case of an unapproved document though.
+        """
+        if self.version_status() == 'unapproved':
+            return ''
         return self._flattenxml(self.content_xml())
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

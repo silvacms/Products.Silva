@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.25.2.1 $
 # Python
 from StringIO import StringIO
 # Zope
@@ -11,7 +11,7 @@ from DateTime import DateTime
 from Globals import InitializeClass
 # Silva interfaces
 from Products.Silva.IVersionedContent import IVersionedContent
-from Products.Silva.IVersion import IVersion
+from Products.Silva.IVersion import ICatalogedVersion
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
@@ -71,7 +71,7 @@ class DemoObjectVersion(CatalogedVersion):
 
     meta_type = "Silva DemoObject Version"
     
-    __implements__ = IVersion
+    __implements__ = ICatalogedVersion
 
     def __init__(self, id, title):
         """Set id and initialize the ParsedXML tree.
@@ -183,7 +183,6 @@ def manage_addDemoObject(self, id, title, REQUEST=None):
     # add first version
     object.manage_addProduct['Silva'].manage_addDemoObjectVersion('0', title)
     object.create_version('0', None, None)
-    getattr(object, '0').index_object()
     add_and_edit(self, id, REQUEST)
     return ''
 

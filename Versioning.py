@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.37 $
+# $Revision: 1.37.2.1 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -78,7 +78,7 @@ class Versioning:
                                     expiration_datetime)
         # overwrite possible previous info ...
         self._request_for_approval_info = RequestForApprovalInfo()
-        self._index_version(self._unapproved_version)
+        self._index_version(self._unapproved_version[0])
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'approve_version')
@@ -99,7 +99,7 @@ class Versioning:
             if not self.can_approve():
                 raise VersioningError,\
                       'Cannot approve version; not allowed.'
-        # turn any publication dates in the future into now
+        # turn any publication dates in the past into now
         # this is to avoid odd caching behavior
         if not self._unapproved_version[1].isFuture():
             publish_now = 1
@@ -115,8 +115,17 @@ class Versioning:
         if self._request_for_approval_info != empty_request_for_approval_info:
             self._request_for_approval_info.request_pending = None
             self._request_for_approval_info = self._request_for_approval_info
-        self._reindex_version(self._approved_version)
 
+        expiration_datetime = self._approved_version[2]
+
+        # update publication status; we may be published by now
+        # will take care of indexing
+        if publish_now:
+            self._update_publication_status()
+        else:
+            # otherwise simply reindex approved
+            self._reindex_version(self._approved_version[0])
+            
         # send messages
         info = self._get_editable_rfa_info()
         if info.requester is None:
@@ -126,7 +135,6 @@ class Versioning:
         else:
             publication_date_str = 'The version will be published at %s\n' % \
                                   _format_date_helper(publication_datetime)
-        expiration_datetime = self._approved_version[2]
         if expiration_datetime is None:
             expiration_date_str=''
         else:
@@ -155,7 +163,7 @@ class Versioning:
                    (self._unapproved_version[0], self._approved_version[0])
         self._unapproved_version = self._approved_version
         self._approved_version = empty_version
-        self._reindex_version(self._unapproved_version)
+        self._reindex_version(self._unapproved_version[0])
 
         # send messages to editor
         # XXX should the last author be informed, too?
@@ -176,11 +184,7 @@ class Versioning:
         if self._public_version == empty_version:
             raise VersioningError,\
                   'No public version to close.'
-        previous_versions = self._previous_versions or []
-        if previous_versions:
-            last_closed_version = previous_versions[-1]
-        else:
-            last_closed_version = empty_version            
+        previous_versions = self._previous_versions or []          
         previous_versions.append(self._public_version)
         self._public_version = empty_version
         self._previous_versions = previous_versions
@@ -188,7 +192,7 @@ class Versioning:
         # remove it from the catalog (if required)
         # this way the catalog only contains unapproved, approved 
         # and public versions
-        self._unindex_version(self._previous_versions[-1])
+        self._unindex_version(self._previous_versions[-1][0])
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'create_copy')
@@ -232,13 +236,13 @@ class Versioning:
         current_version_id = self.get_unapproved_version()
         if current_version_id is None:
             raise VersioningError, "No unapproved version available"
-        self._unindex_version((current_version_id,))
+        self._unindex_version(current_version_id)
         # delete the current version
         self.manage_delObjects([current_version_id])
         # and copy the previous using the current id
         self.manage_clone(getattr(self, version_id_to_copy),
                           current_version_id, self.REQUEST)
-        self._index_version((current_version_id,))
+        self._index_version(current_version_id)
     
     def _get_editable_rfa_info(self):
         """ helper method: return the request for approval information,
@@ -371,7 +375,7 @@ class Versioning:
         version_id, publication_datetime, expiration_datetime = \
                     self._unapproved_version
         self._unapproved_version = version_id, dt, expiration_datetime
-        self._reindex_version(self._unapproved_version)
+        self._reindex_version(self._unapproved_version[0])
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_unapproved_version_expiration_datetime')
@@ -384,7 +388,7 @@ class Versioning:
         version_id, publication_datetime, expiration_datetime = \
                     self._unapproved_version
         self._unapproved_version = version_id, publication_datetime, dt
-        self._reindex_version(self._unapproved_version)
+        self._reindex_version(self._unapproved_version[0])
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_approved_version_publication_datetime')
@@ -402,8 +406,9 @@ class Versioning:
         version_id, publication_datetime, expiration_datetime = \
                     self._approved_version
         self._approved_version = version_id, dt, expiration_datetime
-        self._reindex_version(self._approved_version)
-        
+        # may become published, update publication status
+        self._update_publication_status()
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_approved_version_expiration_datetime')
     def set_approved_version_expiration_datetime(self, dt):
@@ -415,7 +420,7 @@ class Versioning:
         version_id, publication_datetime, expiration_datetime = \
                     self._approved_version
         self._approved_version = version_id, publication_datetime, dt
-        self._reindex_version(self._approved_version)
+        self._reindex_version(self._approved_version[0])
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_next_version_publication_datetime')
@@ -426,12 +431,13 @@ class Versioning:
             version_id, publication_datetime, expiration_datetime = \
                         self._approved_version
             self._approved_version = version_id, dt, expiration_datetime
-            self._reindex_version(self._approved_version)
+            self._update_publication_status()
+            self._reindex_version(self._approved_version[0])
         elif self._unapproved_version[0]:
             version_id, publication_datetime, expiration_datetime = \
                         self._unapproved_version
             self._unapproved_version = version_id, dt, expiration_datetime
-            self._reindex_version(self._unapproved_version)
+            self._reindex_version(self._unapproved_version[0])
         else:
             raise VersioningError,\
                   'No next version.'
@@ -445,12 +451,12 @@ class Versioning:
             version_id, publication_datetime, expiration_datetime = \
                         self._approved_version
             self._approved_version = version_id, publication_datetime, dt
-            self._reindex_version(self._approved_version)
+            self._reindex_version(self._approved_version[0])
         elif self._unapproved_version[0]:
             version_id, publication_datetime, expiration_datetime = \
                         self._unapproved_version
             self._unapproved_version = version_id, publication_datetime, dt
-            self._reindex_version(self._unapproved_version)
+            self._reindex_version(self._unapproved_version[0])
         else:
             raise VersioningError,\
                   'No next version.'
@@ -482,31 +488,26 @@ class Versioning:
             if self._public_version != empty_version:
                 if not self._previous_versions:
                     self._previous_versions = []
-                    last_closed_version = empty_version
-                else:
-                    last_closed_version = self._previous_versions[-1]
                 self._previous_versions.append(self._public_version)
                 # unindex version (now last closed)
-                self._unindex_version(self._public_version)
+                self._unindex_version(self._public_version[0])
             self._public_version = self._approved_version
+            # unindex previously approved version
+            self._unindex_version(self._approved_version)
             self._approved_version = empty_version
-            # reindex approved version that is now public
-            self._reindex_version(self._public_version)
+            # index approved version that is now public
+            self._index_version(self._public_version[0])
         # get expiration datetime of public version 
         expiration_datetime = self._public_version[2]
         # expire public version if expiration datetime reached
         if expiration_datetime and now >= expiration_datetime:
             # make sure to add it to the previous versions
             previous_versions = self._previous_versions or []
-            if previous_versions:
-                last_closed_version = self._previous_versions[-1]
-            else:
-                last_closed_version = empty_version
             previous_versions.append(self._public_version)
+            # remove from index
+            self._unindex_version(self._public_version[0])
             self._public_version = empty_version
             self._previous_versions = previous_versions
-            # reindex last closed and now newly last closed version
-            self._unindex_version(last_closed_version)
             
     # ACCESSORS
 

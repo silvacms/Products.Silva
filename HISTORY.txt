@@ -7,12 +7,38 @@ Silva changes
 
     Bugs fixed
 
-         - Fixed two issues with the SQLDataSource and integer fields: 
+        - Fixed two issues with the SQLDataSource and integer fields:
           the code doesn't try to convert the contents of the field to
-          unicode anymore if it's not a plain string (fails with integers)
-          and the code doesn't change the contents of the field to '' 
-          anymore when it's something else than None (previously it checked
-          whether it resolved to true instead of checking for None).
+          unicode anymore if it's not a plain string (fails with
+          integers) and the code doesn't change the contents of the
+          field to '' anymore when it's something else than None
+          (previously it checked whether it resolved to true instead
+          of checking for None).
+
+        - Fixed a whole host of issues related to indexing. Indexing
+          of objects was both done incorrectly and the performance was
+          too slow. test_catalog was added which can be used to test
+          indexing correctness, and fixes were made where problems
+          were found. Indexing performance was increased by:
+
+            * Avoiding indexing something too frequently in the Silva
+              core.
+
+            * Improving Formulator so that TALES expressions are
+              cached. This avoids a massive Python expression
+              compilation overhead. Upgrade Formulator to version
+              1.x.x for a massive boost in indexing performance.
+
+            * Fixing Silva metadata to avoid quadratic behavior while
+              indexing. Previously, for n elements that are indexed,
+              for each element indexing the data for the n indexes was
+              accessed, resulting in quadratic behavior while indexing
+              (n * n values were accessed per object). Upgrade SilvaMetadata
+              to version x.x for another boost in indexing performance.
+
+          XXX put in the right versions
+          XXX upgrade script to fix existing catalogs?
+          XXX upgrade script from 0.9.1 needs to be re-tested
 
   0.9.2.2
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.64 $
+# $Revision: 1.64.2.1 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -50,8 +50,8 @@ class Root(Publication):
         
     def manage_beforeDelete(self, item, container):
         # since we're root, we don't want to notify our container
-        # we do, however, have to add ourselves to the catalog then
-        self.index_object()
+        # we do, however, have to remove ourselves from the catalog
+        self.unindex_object()
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'manage_main')

@@ -142,13 +142,33 @@ class Version(SimpleItem):
 
 InitializeClass(Version)
 
-# CatalogPathAware is the second inherited superclass and Version (which 
-# inherits from SimpleItem) the first. This way Version's manage_* methods 
-# override CatalogPathAware's, which is exactly what we want, since 
-# cataloging is done by VersionedContent (a superclass of the container).
-class CatalogedVersion(Version, CatalogPathAware):
-    """Superclass for cataloged version objects"""
-    default_catalog = 'service_catalog'
+class CatalogedVersion(Version):
+    """Base class for cataloged version objects"""
 
+    def getPath(self):
+        return '/'.join(self.getPhysicalPath())
+    
+    def index_object(self):
+        """Index"""
+        catalog = getattr(self, 'service_catalog', None)
+        if catalog is not None:
+            catalog.catalog_object(self, self.getPath())
+
+    def unindex_object(self):
+        """Unindex"""
+        catalog = getattr(self, 'service_catalog', None)
+        if catalog is not None:
+            catalog.uncatalog_object(self.getPath())
+
+    def reindex_object(self):
+        """Reindex."""
+        catalog = getattr(self, 'service_catalog', None)
+        if catalog is None:
+            return 
+        path = self.getPath()
+        catalog.uncatalog_object(path)
+        catalog.catalog_object(self, path)
+        
+    
 InitializeClass(CatalogedVersion)
 

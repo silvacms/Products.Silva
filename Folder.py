@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.114.2.2 $
+# $Revision: 1.114.2.3 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -39,7 +39,7 @@ from Products.ParsedXML.ExtraDOM import writeStream
 
 icon="www/silvafolder.gif"
 
-class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
+class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     """The presentation of the information within a
        publication is structured with folders. They determine the visual
        hierarchy that a Visitor sees as well. Folders on the top level
@@ -68,24 +68,31 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
             self, id, "[Containers have no titles, this is a bug]")
         self._ordered_ids = []
 
+
     def manage_afterAdd(self, item, container):
+        # call after add code on SilvaObject
+        self._afterAdd_helper(item, container)
+        # call code on CatalogAware
         Folder.inheritedAttribute('manage_afterAdd')(self, item, container)
+        # container added, always invalidate sidebar
         self._invalidate_sidebar(item)
-        self.index_object()
         # Walk recursively through self to find and
         # (if published) close versioned content items
         # this is probably only used when importing a zexp
         self._update_contained_documents_status()
 
     def manage_beforeDelete(self, item, container):
+        # call before delete code on SilvaObject
+        self._beforeDelete_helper(item, container)
+        # call code on CatalogAware
         Folder.inheritedAttribute('manage_beforeDelete')(self, item, container)
+        # container removed, always invalidate sidebar
         self._invalidate_sidebar(item)
-        self.unindex_object()
 
     def manage_afterClone(self, item):
         Folder.inheritedAttribute('manage_afterClone')(self, item)
+        # XXX is this really necessary?
         self._invalidate_sidebar(item)
-        self.index_object()
 
     def _invalidate_sidebar(self, item):
         # invalidating sidebar also takes place for folder when index gets
