@@ -161,7 +161,6 @@ class DocmaService(SimpleItem):
         """Returns a list of idents of finished jobs for a certain user"""
         server = xmlrpclib.Server("http://%s:%s" % (self._host, self._port))
         retval = server.getResultDescriptionsByUser(ident)
-        print "Sorting retval"
         retval.sort(self._sort_finished_results)
         return retval
 
