@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -245,6 +245,15 @@ class ContainerTestCase(ContainerBaseTestCase):
         # delete default object
         self.folder4.action_delete(['index'])
         self.assertEquals(None, self.folder4.get_default())
+
+
+    def test_rotten_default(self):
+        """ test for issue 85: if default is something odd, is_published should not create endless loop.
+        actually this has been an issue if the "index" does not have a "is_published"
+        and acquired it from container itself, causing the endless loop"""
+        # XXX what about the other publishables ?
+        self.sroot.manage_addDocument('index', 'Default')
+        self.assertRaises(AttributeError, self.sroot.is_published)
 
     def test_import_xml(self):
         xml1 = """<?xml version="1.0" ?>
