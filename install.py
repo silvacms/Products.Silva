@@ -1,9 +1,18 @@
 """Install for Silva Core
 """
 
-from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
+from Products.FileSystemSite.DirectoryView import manage_addDirectoryView, minimalpath
 from Globals import package_home
 import os
+
+# we can't guess how FileSystemSite cuts pathes so we probe it
+base = os.path.dirname(__file__)
+base = minimalpath(base)
+
+def fss_register_dir(name, obj, *args):
+    """ register FSS-DirectoryViews for silva-subdirectories"""
+    path = os.path.join(base, *args)
+    manage_addDirectoryView(obj, path, name)
 
 def installFromScratch(root):
     configureProperties(root)
@@ -18,8 +27,7 @@ def installFromScratch(root):
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
     # create the core views from filesystem
-    manage_addDirectoryView(root.service_views,
-                            'Products/Silva/views', 'Silva')
+    fss_register_dir('Silva', root.service_views, 'views')
     # also register views
     registerViews(root.service_view_registry)
     # also re-configure security (XXX should this happen?)
@@ -57,10 +65,9 @@ def configureCoreFolders(root):
     """A bunch of core directory views.
     """
     # images, stylesheets, etc
-    manage_addDirectoryView(root, 'Products/Silva/globals', 'globals')
+    fss_register_dir('globals', root, 'globals')
     # commonly used python scripts (XXX probably should go away)
-    manage_addDirectoryView(root,
-                            'Products/Silva/service_utils', 'service_utils')
+    fss_register_dir('service_utils', root, 'service_utils')
 
 def configureViews(root):
     """The view infrastructure for Silva.
@@ -237,8 +244,7 @@ def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'
     """
     # create the core widgets from the filesystem
-    manage_addDirectoryView(root,
-                            'Products/Silva/widgets', 'service_widgets')
+    fss_register_dir('service_widgets', root, 'widgets')
 
     # create the editor service
     root.manage_addProduct['XMLWidgets'].manage_addEditorService(
