@@ -79,34 +79,7 @@ class VersionHandler(BaseHandler):
             self._id = attrs[(None, 'id')]
 
     def endElementNS(self, name, qname):
-        status = self.getData('status')
-        if status == 'unapproved':
-            self._parent._unapproved_version = (
-                self._id,
-                self.getData('publication_datetime'),
-                self.getData('expiration_datetime')
-                )
-        elif status == 'approved':
-            self._parent._approved_version = (
-                self._id,
-                self.getData('publication_datetime'),
-                self.getData('expiration_datetime')
-                )
-        elif status == 'public':
-            self._parent._public_version = (
-                self._id,
-                self.getData('publication_datetime'),
-                self.getData('expiration_datetime')
-                )
-        else:
-            previous_versions = self._parent._previous_versions or []
-            previous_version = (
-                self._id,
-                self.getData('publication_datetime'),
-                self.getData('expiration_datetime')
-                )
-            previous_versions.append(previous_version)
-            self._parent._previous_versions = previous_versions
+        self.setWorkflowVersion(self._id,self.getData('publication_datetime'), self.getData('expiration_datetime'), self.getData('status'))
 
 class SetHandler(BaseHandler):
     def __init__(self, parent, parent_handler, options={}):
@@ -152,8 +125,9 @@ class GhostContentHandler(BaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'ghost'):
+            self.storeWorkflow()
             self.storeMetadata()
-
+            
 class LinkHandler(BaseHandler):
     def getOverrides(self):
         return {
@@ -188,6 +162,7 @@ class LinkContentHandler(BaseHandler):
             self._result.set_url(self.getData('url'))
             self._result.set_title(
                 self._metadata['silva-content']['maintitle'])
+            self.storeWorkflow()
             self.storeMetadata()
 
 class StatusHandler(BaseHandler):
@@ -244,6 +219,7 @@ class DocumentContentHandler(BaseHandler):
         if name == (NS_URI, 'content'):
             self._result.set_title(
                 self._metadata['silva-content']['maintitle'])
+            self.storeWorkflow()
             self.storeMetadata()
         
 class DocElementHandler(BaseHandler):

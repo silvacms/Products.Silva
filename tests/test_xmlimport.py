@@ -71,9 +71,14 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         parser.parse(source_file)
         source_file.close()
         linkversion = importfolder.testfolder.testfolder2.test_link.get_editable()
+        linkversion2 = importfolder.testfolder.testfolder2.test_link.get_previewable()
         self.assertEquals(
             linkversion.get_title(),
-            'This is a test link, you insensitive clod!'
+            'approved title'
+            )
+        self.assertEquals(
+            linkversion2.get_title(),
+            'unapproved title'
             )
         metadata_service = getToolByName(linkversion, 'portal_metadata')
         binding = metadata_service.getMetadata(linkversion)

@@ -112,6 +112,7 @@ class BaseHandler:
         self._metadata_key = None
         self._metadata = {}
         self._settings = settings
+        self._workflow = {}
         
     def getOverrides(self):
         """Returns a dictionary of overridden handlers for xml elements. 
@@ -140,8 +141,14 @@ class BaseHandler:
                 value = DateTime(value)
         self._metadata[set][key] = value
 
+    def setWorkflowVersion(self, version_id, publicationtime, expirationtime, status):
+        self._parent_handler._workflow[version_id] = (publicationtime, expirationtime, status)
+        
     def getMetadata(self, set, key):
         return self._metadata[set][key]
+
+    def getWorkflowVersion(self, version_id):
+        return self._parent_handler._workflow[version_id]
     
     def getResult(self):
         if self._result is not None:
@@ -177,6 +184,38 @@ class BaseHandler:
                 raise ValidationError(
                     "%s %s" % (str(content.getPhysicalPath()),str(errors)))
 
+    def storeWorkflow(self):
+        content = self._result
+        version_id = content.id
+        publicationtime, expirationtime, status = self.getWorkflowVersion(version_id)
+        if status == 'unapproved':
+            self._parent._unapproved_version = (
+                version_id,
+                publicationtime,
+                expirationtime
+                )
+        elif status == 'approved':
+            self._parent._approved_version = (
+                version_id,
+                publicationtime,
+                expirationtime
+                )
+        elif status == 'public':
+            self._parent._public_version = (
+                version_id,
+                publicationtime,
+                expirationtime
+                )
+        else:
+            previous_versions = self._parent._previous_versions or []
+            previous_version = (
+                version_id,
+                publicationtime,
+                expirationtime
+                )
+            previous_versions.append(previous_version)
+            self._parent._previous_versions = previous_versions
+        
 def generateUniqueId(org_id, context):
         i = 0
         id = org_id
@@ -188,3 +227,4 @@ def generateUniqueId(org_id, context):
                 add = str(i)
             id = 'copy%s_of_%s' % (add, org_id)
         return id
+   
