@@ -30,7 +30,7 @@
           value="Add users from group(s)" />
       </metal:block>
     </metal:block>
-    <!-- Clipboard -->
+    <!-- Clipboard -->        
     <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
       <metal:block fill-slot="clipboard_actions">
         <input class="button"

@@ -11,7 +11,7 @@ if not userids:
 added = []
 current_users = model.listUsers()
 for userid in userids:
-    if not user in current_users:
+    if not userid in current_users:
         model.addUser(userid)
         added.append(userid)
 

@@ -15,7 +15,7 @@
               </b>
               <br />
               <tal:block condition="groups">
-                (use the ctrl-key for a multi-select)
+                (Ctrl-mouseclick for a multi-select)
               </tal:block>
             </td>
           </tr>
