@@ -169,7 +169,7 @@ Problems when using Silva
     when the Localizer Product is installed. So far the only solution found
     is to uninstall Localizer, or set the environment variable
     LOCALIZER_USE_ZOPE_UNICODE in the script starting Zope.
-    This may break other products relying on Localizer do apply its
+    This may break other products which rely on Localizer to apply its
     unicode patches, however.
 
   Error when Adding a Silva Document
