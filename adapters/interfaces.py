@@ -143,6 +143,11 @@ class IAddables(Interface):
         """set the the Metatypes that are addable to this container."""
             
 class IIndexable:
+    def getTitle():
+        """returns the title of the indexable."""
+
+    def getPath():
+        """returns the path of the indexable."""
+
     def getIndexes():
-        """returns the indexes for a certain object, or None
-        """
+        """returns the indexes for a certain object, or an empty list."""

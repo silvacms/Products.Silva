@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -14,15 +14,9 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
-# try to import xpath
-try:
-    from xml import xpath
-    from xml.xpath.Context import Context
-    XPATH_AVAILABLE = 1
-except ImportError:
-    XPATH_AVAILABLE = 0
 
 from interfaces import IContent, IContainer, IPublication
+from adapters.indexableadapter import getIndexableAdapter
     
 icon = "www/silvaindexer.png"
 
@@ -42,91 +36,60 @@ class Indexer(Content, SimpleItem):
 
     def __init__(self, id, title):
         Indexer.inheritedAttribute('__init__')(self, id, title)
-        self._index = None
+        # index format:
+        # {index_name: (obj_path, obj_title),}
+        self._index = {}
 
-    def get_index_entries(self):
-        """Returns a list of all entries in the index, sorted alphabetically.
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'getIndexNames')
+    def getIndexNames(self):
+        """Returns a list of all index entry names in the index, sorted
+        alphabetically. 
         """
-        entries = self._index.keys()
-        # case insensitive sort
-        ci_entries = [(entry.lower(), entry) for entry in entries]
-        ci_entries.sort()
-        entries = [entry for entry_lower, entry in entries]
-        return entries
-        
-    def get_index_links(self, entry):
-        """Returns a list of link dicts for an entry.
-
-        Each link consists of a dictionary with keys 'title' and 'url'.
+        result = [(item.lower(), item) for item in self._index.keys()]
+        result.sort()
+        result = [second for first, second in result]
+        return result
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'getIndex')
+    def getIndexEntry(self, name):
+        """Returns a list of (title, path) tuples for an entry name in the
+        index, sorted alphabetically on title
         """
         result = []
-        
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_index')
-    def get_index(self):
-        """Get an index. Return None if there is no index.
+        for path, title in self._index[name].items():
+            result.append((title.lower(), title, path,))
+        result.sort()
+        result = [(title, path) for title_lowercase, title, path in result]
+        return result
+    
+    def _getIndexables(self):
+        """Returns all indexables from the container containing this Indexer object,
+        including and its subcontainers
         """
-        return self._index
-
+        result = []
+        return [item for i, item in self.get_container().get_public_tree_all()]
+                      
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'update_index')
-    def update_index(self):
+                              'update')
+    def update(self):
         """Update the index.
         """      
-        if not XPATH_AVAILABLE:
-            zLOG.LOG(
-                'Silva', zLOG.WARNING, 
-                'Cannot update index as xml.xpath not installed.')
-            return
         result = {}
         # get tree of all subobjects
-        items = self._get_tree()
-        # now go through all ParsedXML documents given as indexable and
-        # index them
-        for item in items:
-            self._indexObject(result, item)     
-
-        # now massage into final index structure
-        index = []
-        names = result.keys()
-        # case insensitive sort
-        ci_names = [(name.lower(), name) for name in names]
-        ci_names.sort()
-        names = [name for name_lower, name in ci_names]
-        for name in names:
-            links = [(content.get_title(), path)
-                     for path, content in result[name].items()]
-            index.append((name, links))
-        self._index = index
-
-    def _indexObject(self, result, object):
-        for version in object.get_indexables():
-            context = Context(version.content.getDOM(), 0, 0)
-            nodes = xpath.Evaluate('//index', context=context)
-            for node in nodes:
-                content = object.get_content()
-                
-                result.setdefault(node.getAttribute('name'), {})[
-                    content.getPhysicalPath()] = content
-
-    def _get_tree(self):
-        l = []
-        self._get_tree_helper(l, self.get_container())
-        return l
-
-    # XXX should be a helper method on folder that does this..
-    def _get_tree_helper(self, l, item):
-        default = item.get_default()
-        if default is not None and default.is_published():
-            l.append(default)
-        for child in item.get_ordered_publishables():
-            if not item.is_published():
+        for object in self._getIndexables():
+            #
+            indexable = getIndexableAdapter(object)
+            indexes = indexable.getIndexes()
+            if not indexes:
                 continue
-            if IContainer.isImplementedBy(child):
-                if not IPublication.isImplementedBy(child):
-                    self._get_tree_helper(l, child)
-            else:
-                l.append(child)
+
+            title = indexable.getTitle()
+            path = indexable.getPath()
+            for indexName in indexes:
+                result.setdefault(indexName, {})[path] = title
+        self._index = result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_deletable')

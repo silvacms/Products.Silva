@@ -10,8 +10,8 @@
 
 <table class="silvatable indexer"
   tal:define="model request/model; view here;
-                   items model/get_index">
-  <tr tal:condition="python: items != None">
+                   indexNames model/getIndexNames">
+  <tr tal:condition="python: indexNames != None">
 	<th class="transparent" align="left">
 	Terms
 	</th>
@@ -20,15 +20,16 @@
 	</th>
   </tr>
 
-  <tr tal:repeat="entry items">
-	<td tal:content="python:entry[0]"
-	  tal:condition="python:len(entry) != 0">
-  </td>
-  <td tal:content="structure python:view.render_links(entry[1])">
-  </td>
+  <tr tal:repeat="indexName indexNames">
+      <tal:block tal:define="indexEntry python: model.getIndexEntry(indexName)">
+  	<td tal:content="indexName">
+    </td>
+    <td tal:content="structure python:view.render_links(indexEntry)">
+    </td>
+      </tal:block>
   </tr>
 
-  <tr valign="top" tal:condition="python: items == None">
+  <tr valign="top" tal:condition="python: indexNames == None">
   <td colspan="2" i18n:translate="">
   No index items listed or found. Perhaps go to the edit tab and run the indexer.
 	</td>

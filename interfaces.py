@@ -552,15 +552,6 @@ class IContent(ISilvaObject, IPublishable):
         """
         pass
 
-    def get_indexables():
-        """ Return a list of versions (that can be indexed in various ways).
-        May return the empty list if there is nothing to index.
-
-        NOTE: This is "indexables" in the book index sense, not in catalog
-        sense.
-        """
-        pass
-
 class IVersioning(Interface):
     """Can be mixed in with an object to support simple versioning.
     This interface only keeps a reference id to the version and the

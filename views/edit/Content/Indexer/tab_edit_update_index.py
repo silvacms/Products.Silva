@@ -9,7 +9,7 @@
 ##
 from Products.Silva.i18n import translate as _
 
-model = context.REQUEST.model
+indexer = context.REQUEST.model
 view = context
-model.update_index()
+indexer.update()
 return view.tab_edit(message_type='feedback', message=_("Index updated"))
