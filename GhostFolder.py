@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.1 2003/07/22 10:05:08 zagy Exp $
+# $Id: GhostFolder.py,v 1.2 2003/07/23 08:13:07 zagy Exp $
 
 #zope
 import OFS.Folder
@@ -17,8 +17,7 @@ from Products.Silva.helpers import add_and_edit
 
 from Products.Silva.interfaces import IContainer, IContent
 
-
-icon = ''
+icon = 'www/silvaghost.gif'
 
 class GhostFolder(Folder):
     """GhostFolders are used to haunt folders."""
@@ -47,7 +46,10 @@ class GhostFolder(Folder):
         while object_list:
             haunted, ghost = object_list[0]
             del(object_list[0])
-            old_ghost = getattr(ghost, haunted.id, None)
+            if hasattr(ghost.aq_base, haunted.id):
+                old_ghost = getattr(ghost, haunted.id, None)
+            else:
+                old_ghost = None
             if IContainer.isImplementedBy(haunted):
                 if old_ghost is not None:
                     if IContainer.isImplementedBy(old_ghost):
@@ -56,15 +58,16 @@ class GhostFolder(Folder):
                         ghost.manage_delObjects([haunted.id])
                         old_ghost = None
                 if old_ghost is None:
-                    new_ghost = Folder(haunted.id)
-                    ghost._setObject(haunted.id, new_ghost)
+                    ghost.manage_addProduct['Silva'].manage_addFolder(
+                        haunted.id, '[no title]')
                     new_ghost = getattr(ghost, haunted.id)
                 object_list += [(h, new_ghost)
                     for h in haunted.objectValues()]
             elif IContent.isImplementedBy(haunted):
                 if haunted.meta_type == 'Silva Ghost':
                     version = self._get_version_from_ghost(haunted)
-                    content_url = version.get_content_url()
+                    content_url = '/'.join(
+                        version._get_content().getPhysicalPath())
                 else:
                     content_url = '/'.join(haunted.getPhysicalPath())
                 if old_ghost is not None:
@@ -76,8 +79,21 @@ class GhostFolder(Folder):
                         ghost.manage_delObjects([haunted.id])
                         old_ghost = None
                 if old_ghost is None:
-                    manage_addGhost(ghost, haunted.id, content_url)
-            
+                    ghost.manage_addProduct['Silva'].manage_addGhost(
+                        haunted.id, content_url)
+        
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'to_publication')
+    def to_publication(self):
+        """replace self with a folder"""
+        self._to_folder_or_publication_helper(to_folder=0)
+        
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'to_folder')
+    def to_folder(self):
+        """replace self with a folder"""
+        self._to_folder_or_publication_helper(to_folder=1)
+
     def _get_version_from_ghost(self, ghost):
         """returns `latest' version of ghost
 
