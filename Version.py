@@ -82,6 +82,16 @@ class Version(SimpleItem):
         """
         return self.aq_inner.aq_parent
 
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'object')
+    def get_version(self):
+        """Returns itself. Used by acquisition to get the
+           neared version.
+        """
+        return self.aq_inner
+
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'publication_datetime')
     def publication_datetime(self):
