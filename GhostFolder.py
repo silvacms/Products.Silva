@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.28 2003/11/11 16:05:16 zagy Exp $
+# $Id: GhostFolder.py,v 1.29 2003/11/20 14:10:12 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -65,9 +65,7 @@ class Sync:
             self.g_container.getId(), self.g_id)
 
 
-class SyncFolder(Sync):
-
-    factory = 'manage_addFolder'
+class SyncContainer(Sync):
 
     def finish(self):
         ordered_ids = [ ob.getId()
@@ -75,28 +73,15 @@ class SyncFolder(Sync):
         for index, id in zip(range(len(ordered_ids)), ordered_ids):
             self.g_ob.move_to([id], index)
 
-    def _do_update(self):
-        self._update_annotations()
-
     def _do_create(self):
-        getattr(self.g_container.manage_addProduct['Silva'], self.factory)(
-            self.h_id, '[no title]', 0)
+        self.g_container.manage_addProduct['Silva'].manage_addGhostFolder(
+            self.h_id, self.h_ob.absolute_url())
         self.g_ob = self.g_container._getOb(self.h_id)
         self._do_update()
 
-    def _update_annotations(self):
-        marker = []
-        a_attr = '_portal_annotations_'
-        annotations = getattr(self.h_ob, a_attr, marker)
-        if annotations is marker:
-            return
-        setattr(self.g_ob, a_attr, annotations)
-
-
-class SyncPublication(SyncFolder):
-
-    factory = 'manage_addPublication'
-
+    def _do_update(self):
+        pass
+        
 
 class SyncGhost(Sync):
 
@@ -155,9 +140,10 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     # sync map... (haunted objects interface, ghost objects interface, 
     #   update/create class)
     # order is important, i.e. interfaces are checked in this order
+    # I wonder if this needs to be pluggable, i.e. if third party components
+    # may register special upgraders.
     _sync_map = [
-        (IPublication, IPublication, SyncPublication),
-        (IContainer, IContainer, SyncFolder),
+        (IContainer, IContainer, SyncContainer),
         (IGhostContent, IGhostContent, SyncGhost),
         (IContent, IGhostContent, SyncContent),
         (None, None, SyncCopy),
@@ -181,7 +167,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         ghost = self
         assert IContainer.isImplementedBy(haunted)
         object_list = self._haunt_diff(haunted, ghost)
-        upd = SyncFolder(self, None, haunted, None, self)
+        upd = SyncContainer(self, None, haunted, None, self)
         updaters = [upd]
         
        
