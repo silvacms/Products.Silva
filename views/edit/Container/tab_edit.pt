@@ -197,7 +197,6 @@
                         tal:attributes="
                           href python:here.get_editor_link(item);
                           class status_style;"
-                        i18n:translate="id"
                       >
                         id
                       </a>
