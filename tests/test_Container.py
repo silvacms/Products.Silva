@@ -1,11 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
 from Products.Silva.ISilvaObject import ISilvaObject
 from Products.Silva.Folder import Folder
+import Products.Silva.Folder
 from Products.Silva.SilvaObject import SilvaObject
 from Testing import makerequest
 from Products.ParsedXML import ParsedXML
@@ -16,7 +17,17 @@ def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
     return getattr(object, id)
 
+
+
+def _rotten_index_helper(folder):
+    """ helper for test_rotten_index """
+    folder.manage_addDocument('index','DTML Document to trigger an error')
+
+
+
 class ContainerBaseTestCase(unittest.TestCase):
+
+
     def setUp(self):
         get_transaction().begin()
         self.connection = Zope.DB.open()
@@ -35,8 +46,11 @@ class ContainerBaseTestCase(unittest.TestCase):
         self.subfolder = subfolder = add_helper(folder4, 'Folder', 'subfolder', 'Subfolder')
         self.subsubdoc = subsubdoc = add_helper(subfolder, 'Document', 'subsubdoc', 'Subsubdoc')
         self.subdoc2 = subdoc2 = add_helper(publication5, 'Document', 'subdoc2', 'Subdoc2')
+        self._orig_manage_addIndexHook = Products.Silva.Folder.manage_addIndexHook
+
         
     def tearDown(self):
+        Products.Silva.Folder.manage_addIndexHook = self._orig_manage_addIndexHook
         get_transaction().abort()
         self.connection.close()
         
@@ -234,7 +248,8 @@ class ContainerTestCase(ContainerBaseTestCase):
 
     def test_get_default(self):
         # add default to root
-        self.sroot.manage_addProduct['Silva'].manage_addDocument('index', 'Default')
+        self.sroot.manage_addProduct['Silva']
+        #.manage_addDocument('index', 'Default')
         self.assertEquals(getattr(self.sroot, 'index'), self.sroot.get_default())
         # issue 47: index created by test user
         # XXX should strip the '(not in ldap)' if using LDAPUserManagement?
@@ -250,10 +265,13 @@ class ContainerTestCase(ContainerBaseTestCase):
     def test_rotten_default(self):
         """ test for issue 85: if default is something odd, is_published should not create endless loop.
         actually this has been an issue if the "index" does not have a "is_published"
-        and acquired it from container itself, causing the endless loop"""
-        # XXX what about the other publishables ?
-        self.sroot.manage_addDocument('index', 'Default')
-        self.assertRaises(AttributeError, self.sroot.is_published)
+        and acquired it from container itself, causing the endless loop."""
+        # XXX actually this does test the manage_addIndexHook works, too
+        # this should be done by a different test
+        Products.Silva.Folder.manage_addIndexHook = _rotten_index_helper
+        self.sroot.manage_addProduct['Silva'].manage_addFolder('folder6','Folder with broken index')
+        self.assert_(self.sroot.folder6.get_default())
+        self.assertRaises(AttributeError, self.sroot.folder6.is_published)
 
     def test_import_xml(self):
         xml1 = """<?xml version="1.0" ?>
