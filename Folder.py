@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.157 $
+# $Revision: 1.158 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -26,7 +26,6 @@ from sys import exc_info
 
 from Products.Silva.ImporterRegistry import get_importer, xml_import_helper
 from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
-from Products.Silva.ImportArchive import import_archive_helper
 from Products.Silva.Metadata import export_metadata
 from Products.Silva import mangle
 from Products.ParsedXML.ParsedXML import ParsedXML
@@ -906,15 +905,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 obj, info, tb = exc_info()
                 raise Exception, info, tb
             import_root = import_root.nextSibling
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'archive_file_import')
-    def archive_file_import(self, file, title='', recreate_dirs=1):
-        """Import archive file (currently zip format) and
-        create Assets from its contents. Use given title for 
-        all assets created
-        """
-        return import_archive_helper(self, file, title, recreate_dirs)
 
     security.declarePublic('url_encode')
     def url_encode(self, string):
