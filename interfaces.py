@@ -967,7 +967,7 @@ class IFile(IAsset):
         """
         pass
 
-class IMember(Interface):
+class IMember(ISilvaObject):
     # ACCESSORS
     def userid():
         """Return unique id for member/username
