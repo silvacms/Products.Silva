@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -234,7 +234,32 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assertEquals(getattr(self.sroot, 'index'), self.sroot.get_default())
         # delete default object
         self.folder4.action_delete(['index'])
-        self.assertEquals(None, self.folder4.get_default())        
+        self.assertEquals(None, self.folder4.get_default())
+
+    def test_import_xml(self):
+        xml1 = """<?xml version="1.0" ?>
+                <silva_publication id="test"><title>TestPub</title><silva_document id="index"><title>TestPub</title><doc><p>Content</p></doc></silva_document></silva_publication>"""
+
+        xml2 = '<silva_folder id="test2"><title>TestFolder</title><silva_demoobject id="do"><title>DemoObject</title><number>10</number><date>%s</date><info>Info</info><doc><p>Content</p></doc></silva_demoobject></silva_folder>' % DateTime('2002/10/16')
+
+        self.sroot.import_xml(xml1)
+
+        self.assert_(hasattr(self.sroot, 'test'))
+        self.assert_(self.sroot.test.get_title_html() == 'TestPub')
+        self.assert_(hasattr(self.sroot.test, 'index'))
+        self.assert_(self.sroot.test.index.get_title_html() == 'TestPub')
+        self.assert_(str(self.sroot.test.index.get_editable().documentElement) == '<doc><p>Content</p></doc>')
+
+        self.sroot.import_xml(xml2)
+
+        self.assert_(hasattr(self.sroot, 'test2'))
+        self.assert_(self.sroot.test2.get_title_html() == 'TestFolder')
+        self.assert_(hasattr(self.sroot.test2, 'do'))
+        self.assert_(self.sroot.test2.do.get_title_html() == 'DemoObject')
+        self.assert_(str(self.sroot.test2.do.get_editable().number()) == '10')
+        self.assert_(self.sroot.test2.do.get_editable().date() == DateTime('2002/10/16'))
+        self.assert_(self.sroot.test2.do.get_editable().info() == 'Info')
+        self.assert_(str(self.sroot.test2.do.get_editable().content.documentElement) == '<doc><p>Content</p></doc>')
 
 class AddableTestCase(ContainerBaseTestCase):
 
