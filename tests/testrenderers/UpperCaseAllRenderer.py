@@ -1,2 +1,0 @@
-class UpperCaseAllRenderer(object):
-    pass
