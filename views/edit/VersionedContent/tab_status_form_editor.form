@@ -65,7 +65,7 @@
           <css_class></css_class>
           <default type="int">0</default>
           <title>publish now</title>
-          <extra>id="publish_now_flag"</extra>
+          <extra></extra>
           <description></description>
           <external_validator></external_validator>
         </values>
