@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.89 $
+# $Revision: 1.90 $
 
 # Zope
 from OFS import SimpleItem
@@ -148,6 +148,11 @@ class GhostBase:
             return '/'.join(self._content_path)
         else:
             return '/' + object.absolute_url(1)
+        
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'haunted_path')
+    def haunted_path(self):
+        return self._content_path
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
     def get_link_status(self, content=None):
@@ -335,7 +340,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
                return public_version.fulltext()
        return ""
 
-    security.declareProtected(SilvaPermissions.View,'get_link_status')
+    security.declareProtected(SilvaPermissions.View, 'get_link_status')
     def get_link_status(self, content=None):
         """return an error code if this version of the ghost is broken.
         returning None means the ghost is Ok.
@@ -353,8 +358,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
         if IGhost.isImplementedBy(content):
             return self.LINK_GHOST
         return self.LINK_OK
-
-    
+        
 manage_addGhostForm = PageTemplateFile("www/ghostAdd", globals(),
                                        __name__='manage_addGhostForm')
 
