@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.1
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26.2.4 $
+  CVS:        $Revision: 1.26.2.5 $
 
 Upgrading from 0.9.1 beta to 0.9.1
  
@@ -54,7 +54,7 @@ Upgrading Silva 0.9.0.x to 0.9.1
     In order to upgrade to 0.9.1 you need a new version of Silva
     (0.9.1) and FileSystemSite (1.2). Download them here:
 
-      * "Silva-0.9.1b.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1b.tgz
+      * "Silva-0.9.1.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.tgz
   
       * "FileSystemSite-1.2.tgz":http://www.zope.org/Members/faassen/Silva/FileSystemSite-1.2.tgz
 
