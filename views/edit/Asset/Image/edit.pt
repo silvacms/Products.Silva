@@ -56,7 +56,7 @@
         <a href="" class="underline"
           title="see the original image"
           accesskey="v"
-          tal:attributes="href string:${model/absolute_url}/hires_image"
+          tal:attributes="href string:${model/absolute_url}?hires"
           i18n:attributes="title"
           i18n:translate="view_unscaled_image">
           view unscaled image

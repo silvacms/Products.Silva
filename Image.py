@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.3 2004/04/06 15:01:43 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.4 2004/04/07 12:12:18 zagy Exp $
 
 # Python
 import re, string 
@@ -68,12 +68,23 @@ class Image(Asset):
                               'image')
     
     security.declareProtected(SilvaPermissions.View, 'index_html')
-    def index_html(self, REQUEST, RESPONSE):
-        """view image data"""
+    def index_html(self, view_method=None, REQUEST=None):
+        """view image data
+        
+        view_method: parameter is set by preview_html (for instance) but
+            ignored here.
+        """
         img = self.image
+        if REQUEST is None:
+            REQUEST = self.REQUEST
+        RESPONSE = REQUEST.RESPONSE
         if REQUEST.QUERY_STRING == 'hires':
             img = self.hires_image
-        return img.index_html(REQUEST, RESPONSE)
+        args = ()
+        if img.meta_type == 'Image':
+            # ExtFile and OFS.Image have different signature
+            args = (REQUEST, RESPONSE)
+        return img.index_html(*args)
 
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -303,7 +314,7 @@ class Image(Asset):
         if isinstance(img, OFS.Image.Image):
             image_reference = StringIO(str(img.data))
         else:            
-            image_reference = img.get_filename()
+            image_reference = img._get_fsname(img.get_filename())
         try:
             image = PIL.Image.open(image_reference)
         except IOError:
