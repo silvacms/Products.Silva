@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.34 $
+# $Revision: 1.35 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -110,7 +110,9 @@ class Versioning:
         # are moved to the present to avoid strance cache behaviour.
         # XXX this is actually needed by VersionedContent
         publication_datetime = self._approved_version[1]
-        publish_now = not (publication_datetime.isFuture())
+        publish_now = 0
+        if publication_datetime is not None:
+            publish_now = not (publication_datetime.isFuture())
         if publish_now:
             self._approved_version = \
                                    (self._approved_version[0],
