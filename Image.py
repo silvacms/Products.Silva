@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -63,12 +63,16 @@ InitializeClass(Image)
 manage_addImageForm = PageTemplateFile("www/imageAdd", globals(),
                                        __name__='manage_addImageForm')
 
-def manage_addImage(self, id, title, REQUEST=None):
+def manage_addImage(self, id, title, file=None, REQUEST=None):
     """Add an Image."""
     if not self.is_id_valid(id):
         return
     object = Image(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
+
+    if file:
+        object.set_image(file)
+
     add_and_edit(self, id, REQUEST)
     return ''
