@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.7 2003/05/30 07:55:40 jw Exp $    
+$Id: Metadata.py,v 1.8 2003/06/10 14:40:34 jw Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
@@ -22,6 +22,7 @@ from Products.SilvaMetadata.Access import registerAccessHandler, invokeAccessHan
 from Products.SilvaMetadata.Initialize import registerInitHandler
 from Products.SilvaMetadata import Binding
 from Products.Silva.Versioning import Versioning
+from Products.Silva.IVersionedContent import IVersionedContent
 
 
 #################################
@@ -36,8 +37,7 @@ def export_metadata(content, context):
     return None
 
 def import_metadata_handler(container, content, node):
-    
-    if isinstance(content, Versioning):
+    if IVersionedContent.isImplementedBy(content):
         # the current import code all seems to create an initial version
         # of '0' on import
         version = getattr(content, '0')
