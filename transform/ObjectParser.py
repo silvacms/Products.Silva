@@ -13,7 +13,7 @@ Currently only minidom is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1 $'
+__version__='$Revision: 1.2 $'
 
 from base import Element, Frag, Text
 
@@ -53,7 +53,8 @@ class ObjectParser:
         else:
             tree = source # try just using it as dom
 
-        self.unknown = []
+        self.unknown_tags = []
+        self.unknown_types = []
         return self._dom2object(*tree.childNodes)
 
     def _dom2object(self, *nodes):
@@ -62,11 +63,12 @@ class ObjectParser:
 
         for node in filter(None, nodes):
             if node.nodeType == node.ELEMENT_NODE:
+                childs = self._dom2object(*node.childNodes)
                 cls = self.typemap.get(node.nodeName)
                 if not cls:
-                    raise str("warning: unknown element: " + node.nodeName)
+                    self.unknown_tags.append(node.nodeName)
+                    res.extend(childs)
                 else:
-                    childs = self._dom2object(*node.childNodes)
                     attrs = {}
                     if node.attributes:
                         for name, item in node.attributes.items():
@@ -76,5 +78,5 @@ class ObjectParser:
             elif node.nodeType == node.TEXT_NODE:
                 res.append(Text(node.nodeValue))
             else:
-                self.unknown.append(node)
+                self.unknown_types.append(node.nodeType)
         return res

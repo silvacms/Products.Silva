@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$revision$'
+__version__='$Revision: 1.2 $'
 
 try:
     from transform.base import Element, Attrs
@@ -101,12 +101,20 @@ class h4(Element):
 
 class h5(Element):
     """ List heading, make sure we find something """
-    def convert(self, *args, **kwargs):
-        """ this only gets called if the user erroronaously
-            used h5 somewhere (although it's preserved for list titles)
+    def convert(self, context, *args, **kwargs):
+        """ we try to make out a list-title if possible ...
         """
+        post = context.get('post_nodes',[])
+        for item in post:
+            if len(item.content)>0:
+                cls = item.__class__
+                if cls is ul or cls is ol:
+                    item.content.insert(0, self)
+                    return None
+                else:
+                    break
         return silva.heading(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context, *args, **kwargs),
             type="sub",
             )
 

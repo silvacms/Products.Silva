@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 import unittest
 
 # 
@@ -66,7 +66,7 @@ class SilvaXMLObjectParser(unittest.TestCase):
 
     def test_silva_basic_document(self):
         node = self.parser.parse(self.basicdoc)
-        self.assert_(not self.parser.unknown)
+        self.assert_(not self.parser.unknown_tags)
         node = self.find_exactly_one(node, 'silva_document')
         self.assert_(node.attrs['id'] == 'test')
         title = self.find_exactly_one(node, 'title')
@@ -99,6 +99,10 @@ class SilvaXMLObjectParser(unittest.TestCase):
         node1 = self.parser.parse(s1)
         node2 = self.parser.parse(s2)
         self.assert_(node1 != node2)
+
+        # test bogus comparison
+        self.assert_(node1 != 3)
+        self.assert_(node1 != "hall")
 
     def test_equality_operator(self):
         s1= '<silva_document><title>my title</title></silva_document>'
@@ -146,6 +150,19 @@ class SilvaXMLObjectParser(unittest.TestCase):
         self.assert_(node.compact())
         # should traverse the tree
 
+
+    def test_ignore_unknown_tags(self):
+        """ test that ignore_unknown contains unknown tags """
+        s1= '<doc><xtag attr="test"><p>test</p></xtag></doc>'
+        node1 = self.parser.parse(s1)
+        doc = node1.find('doc')[0]
+        self.assert_(not doc.find('xtag'))
+        self.assert_(len(self.parser.unknown_tags)==1)
+        self.assert_(self.parser.unknown_tags[0]=='xtag')
+
+        p = doc.find('p')
+        self.assert_(len(p)==1)
+        self.assert_(p[0].content.asBytes()=='test')
 
 #
 # invocation of test suite

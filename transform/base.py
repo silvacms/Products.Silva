@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1 $'
+__version__='$Revision: 1.2 $'
 
 # look ma, i only have these dependencies 
 # and with python2.2 even they would vanish
@@ -56,9 +56,14 @@ class Frag(Node, List):
         map(self.append, content)
 
     def __eq__(self, other):
-        for x,y in zip(self, other):
-            if not x == y:
+        try:
+            if len(self)!=len(other):
                 return 0
+            for x,y in zip(self, other):
+                if not x == y:
+                    return 0
+        except:
+            return 0
         return 1
 
     def __ne__(self, other):
@@ -74,11 +79,24 @@ class Frag(Node, List):
             elif other is not None:
                 List.append(self, other)
 
-    def convert(self, *args, **kwargs):
+    def convert(self, context, *args, **kwargs):
         frag = self.__class__()
-        for node in self:
-            frag.append(node.convert(*args, **kwargs))
+        pre = Frag()
+        post = Frag(self)
+        while post:
+            node = post.pop(0)
+            context['pre_nodes']=pre
+            context['post_nodes']=post
+            frag.append(node.convert(context, *args, **kwargs))
+            pre.append(node)
         return frag
+
+    def extract_text(self):
+        l = []
+        for node in self:
+            l.append(node.extract_text())
+        return u''.join(l)
+
 
     def compact(self):
         node = self.__class__()
@@ -144,6 +162,9 @@ class Element(Node):
         node.attrs = self.attrs.copy()
         return node
 
+    def extract_text(self):
+        return self.content.extract_text()
+
     def isEmpty(self):
         tmp = self.compact()
         return len(tmp.content.find())==0
@@ -185,7 +206,10 @@ class CharacterData(Node):
     def __init__(self, content=u""):
         if type(content)==type(''):
             content = unicode(content)
-        self.content = unicode(content)
+        self.content = content
+
+    def extract_text(self):
+        return self.content
 
     def convert(self, *args, **kwargs):
         return self
@@ -193,11 +217,8 @@ class CharacterData(Node):
     def __eq__(self, other):
         try:
             return self.content == other.content
-        except:
-            try:
-                return self.content == other
-            except:
-                pass
+        except AttributeError:
+            return self.content == other
     
     def __ne__(self, other):
         return self==other

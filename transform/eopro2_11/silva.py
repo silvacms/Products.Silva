@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$revision$'
+__version__='$Revision: 1.2 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -104,11 +104,13 @@ class list(SilvaElement):
             tag = html.ul
 
         node_title = self.find(tag=title)[0]
+        if len(node_title.compact().content)>0:
+            node_title = html.h5(node_title.convert(context))
+        else:
+            node_title=Text('')
         return Frag(
+            node_title,
             tag(
-                html.h5(
-                    node_title.convert(context),
-                ),
                 self.find(tag=li).convert(context),
                 attrs,
                 silva_type=listtype,
@@ -125,19 +127,19 @@ class li(SilvaElement):
 class strong(SilvaElement):
     def convert(self, context):
         return html.b(
-            self.content.convert()
+            self.content.convert(context)
             )
 
 class underline(SilvaElement):
     def convert(self, context):
         return html.u(
-            self.content.convert()
+            self.content.convert(context)
             )
 
 class em(SilvaElement):
     def convert(self, context):
         return html.i(
-            self.content.convert()
+            self.content.convert(context)
             )
 
 """ current mapping of silva

@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 import unittest
 
 # 
@@ -48,7 +48,7 @@ class Base(unittest.TestCase):
 class Fixup(Base):
     """ Check that a missing body tag is handled gracefully """
     def _test_fixup_html(self):
-        # disabled test
+        # XXX disabled test
         html_frag="""<h2 silva_origin="silva_document" silva_id="testid">titel</h2>
                      <h3 silva_origin="heading" silva_type="normal"></h3>"""
 
@@ -64,7 +64,7 @@ class HTML2XML(Base):
         """
         html_frag ="""<body><ul><li>eins</li></ul></body>"""
         node = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown)
+        self.assert_(not self.transformer.target_parser.unknown_tags)
         nodes = node.find('body')[0].find()
         nodes = nodes.conv()
         nodes = nodes.find('list')
@@ -84,13 +84,12 @@ class HTML2XML(Base):
         html_frag ="""<body><ul><li>eins</li></ul></body>"""
         nodes = self.transformer.to_source(html_frag, {'id':'testid', 
                                                        'title':'testtitle'})
-        
-        self.assert_(not self.transformer.target_parser.unknown)
+        self.assert_(not self.transformer.target_parser.unknown_tags)
 
     def test_heading_conversion(self):
         html_frag="""<body><h3>main title</h3><h4>sub title</h4></body>"""
         node = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown)
+        self.assert_(not self.transformer.target_parser.unknown_tags)
 
         nodes = node.find('body')[0].find()
         # convert to silva
@@ -104,7 +103,7 @@ class HTML2XML(Base):
         html_frag="""<body><h1>eins</h1><h2>zwei</h2><h3>drei</h3>
                      <h4>vier</h4><h5>fuenf</h5><h6>sechs</h6></body>"""
         htmlnode = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown)
+        self.assert_(not self.transformer.target_parser.unknown_tags)
 
         node = htmlnode.convert(context={'id':u'', 'title':u''})
 
@@ -123,7 +122,7 @@ class HTML2XML(Base):
     def test_ol_list_conversion(self):
         html_frag="""<ol><h5>titel</h5><li>eins</li><li>zwei</li></ol>"""
         node = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown)
+        self.assert_(not self.transformer.target_parser.unknown_tags)
         #node = node.find('body')[0]
         node = node.find('ol')[0]
         list_node = node.conv()
@@ -131,13 +130,13 @@ class HTML2XML(Base):
         self.assert_(list_node.attrs.has_key('type'))
         self.assert_(list_node.attrs['type']=='1')
         self.assert_(len(list_node.find('title'))==1)
-        self.assert_(list_node.find('title')[0].content.asBytes() == 'titel')
+        self.assert_(list_node.find('title')[0].extract_text()=='titel')
         self.assert_(len(list_node.find('li'))==2)
 
     def test_ul_list_conversion(self):
         html_frag="""<ul><h5>titel</h5><li>eins</li><li>zwei</li></ul>"""
         node = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown)
+        self.assert_(not self.transformer.target_parser.unknown_tags)
         #node = node.find('body')[0]
         node = node.find('ul')[0]
         list_node = node.conv()
@@ -145,7 +144,6 @@ class HTML2XML(Base):
         self.assert_(list_node.attrs.has_key('type'))
         self.assert_(list_node.attrs['type']=='disc')
         self.assert_(len(list_node.find('li'))==2)
-
 
     def test_ignore_html(self):
         """ test that a html tag doesn't modify the silva-outcome """
@@ -158,6 +156,7 @@ class HTML2XML(Base):
         node2 = node2.conv()
 
         self.assertEquals(node, node2)
+
 
 
 class RoundtripWithTidy(unittest.TestCase):
@@ -196,6 +195,40 @@ class RoundtripWithTidy(unittest.TestCase):
         </silva_document>'''
         self._check(simple)
 
+    def test_empty_list_title_produces_no_html_title(self):
+        simple = '''
+        <silva_document id="test"><title>doc title</title>
+        <doc>
+           <list type="disc"><title></title>
+               <li>eins</li>
+           </list>
+        </doc>
+        </silva_document>'''
+        htmlnode = self.transformer.to_target(simple)
+        body = htmlnode.find('body')[0]
+        list = body.find('ul')
+        self.assert_(len(list)==1)
+        # check no title
+        self.assert_(not list[0].find('h5'))
+        # check roundtrip
+        self._check(simple)
+
+    def test_existing_list_title_produces_h5(self):
+        simple = '''
+        <silva_document id="test"><title>doc title</title>
+        <doc>
+           <list type="disc"><title>listtitle</title>
+               <li>eins</li>
+           </list>
+        </doc>
+        </silva_document>'''
+        htmlnode = self.transformer.to_target(simple)
+        body = htmlnode.find('body')[0]
+        list = body.find('ul')
+        self.assert_(len(list)==1)
+        # check title
+        self.assert_(len(body.find('h5'))==1)
+        self.assert_(body.find('h5').extract_text()==u'listtitle')
 
     def _simplelist(self):
         return '''
@@ -239,7 +272,7 @@ class RoundtripWithTidy(unittest.TestCase):
         htmlmarkup = p.find(htmltag)
         self.assert_(len(htmlmarkup)==1)
         htmlmarkup = htmlmarkup[0]
-        self.assert_(htmlmarkup.content.asBytes()=='text')
+        self.assert_(htmlmarkup.extract_text()=='text')
 
     def test_modifier_b(self):
         self._check_modifier('b','strong')
@@ -247,7 +280,7 @@ class RoundtripWithTidy(unittest.TestCase):
     def test_modifier_em(self):
         self._check_modifier('i','em')
 
-    def test_modifier_em(self):
+    def test_modifier_underline(self):
         self._check_modifier('u','underline')
 
     def _checkhtml(self, html):
