@@ -6,9 +6,9 @@
   <div class="margins"
     metal:fill-slot="main">
     <h3>
-      <a href="tab_access"
+      <a tal:attributes="href view/lookup_get_referer"
         title="Up to top of Access tab">
-        Access
+        Back
         <img alt="Up to top of Access tab"
           border="0"
           height="11"

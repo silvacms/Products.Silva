@@ -20,7 +20,7 @@
                   <input class="button"
                     accesskey="l"
                     name="lookup:method"
-                    title="Lookup and select users to add to groups... - alt-l"
+                    title="Lookup users... - alt-l"
                     type="submit"
                     value="Lookup..." />
                 </metal:block>
