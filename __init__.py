@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.63 $
+# $Revision: 1.64 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -86,6 +86,11 @@ def initialize(context):
         constructors = (DocmaService.manage_addDocmaServiceForm,
                         DocmaService.manage_addDocmaService),
         icon = "www/docma.gif"
+        )
+
+    context.registerClass(
+        EditorSupportNested.EditorSupport,
+        constructors = (EditorSupportNested.manage_addEditorSupport, ),
         )
 
     # register xml import functions
