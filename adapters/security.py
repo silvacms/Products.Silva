@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: security.py,v 1.3 2003/11/10 14:19:38 jw Exp $
+# $Id: security.py,v 1.4 2003/11/17 12:34:17 faassen Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
@@ -51,7 +51,7 @@ class ViewerSecurityAdapter(adapter.Adapter):
                 roles=roleinfo.getRolesAbove(role),
                 acquire=0)
 
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'isAcquired')
     def isAcquired(self):
         if (silva_interfaces.IRoot.isImplementedBy(self.context) and
@@ -61,14 +61,14 @@ class ViewerSecurityAdapter(adapter.Adapter):
         p = Permission(SilvaPermissions.View, (), self.context)
         return type(p.getRoles(default=[])) is ListType
                 
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'getMinimumRole')
     def getMinimumRole(self):
         # XXX this only works if rolesForPermissionOn returns roles
         # in definition order..
         return str(rolesForPermissionOn(SilvaPermissions.View, self.context)[0])
     
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'getMinimumRoleAbove')
     def getMinimumRoleAbove(self):
         if silva_interfaces.IRoot.isImplementedBy(self.context):
