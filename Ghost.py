@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.48 $
+# $Revision: 1.49 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -142,7 +142,8 @@ class GhostVersion(SimpleItem.SimpleItem):
         try: 
             object = self.unrestrictedTraverse(self._content_path)
             return '/' + object.absolute_url(1)
-        except KeyError:
+        except (AttributeError, KeyError):
+            # AttributeError is what unrestrictedTraverse raises if it can find an object, but not its attribute
             # KeyError is what unrestrictedTraverse raises if it cannot find the object
             return '/'.join(self._content_path)
 
@@ -155,18 +156,14 @@ class GhostVersion(SimpleItem.SimpleItem):
             return self.LINK_EMPTY
         try: 
             content = self.unrestrictedTraverse(self._content_path)
-        except KeyError:
+        except (AttributeError, KeyError):
             return self.LINK_VOID
-            return "The object &laquo;%s&raquo; the ghost points to does no longer exist" % '/'.join(self._content_path)
         if IContainer.isImplementedBy(content):
             return self.LINK_FOLDER
-            return "The object &laquo;%s&raquo; the ghost points to is a container." % '/'.join(self._content_path)
         if not IVersionedContent.isImplementedBy(content):
             return self.LINK_NO_CONTENT
-            return "The object &laquo;%s&raquo; the ghost points to is not a content object." % '/'.join(self._content_path)
         if content.meta_type == 'Silva Ghost':
             return self.LINK_GHOST
-            return "The object &laquo;%s&raquo; the ghost points to is itself a ghost." % '/'.join(self._content_path)
 
         return self.LINK_OK
 
