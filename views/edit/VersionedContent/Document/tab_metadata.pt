@@ -14,7 +14,8 @@
 
 <tal:define define="global fields python:view.tab_metadata_form.get_fields()" />
 
-<div class="focus-box">
+<div class="focus-box"
+  style="padding-top:8px;">
 <form method="POST" name="form" action="tab_metadata_submit">
 <table class="listing">
 <thead>

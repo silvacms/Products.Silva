@@ -289,6 +289,8 @@ table.listing tfoot {
   border-top: &dtml-listingBorder; ! important;
 }
 
+/* _______ rows _______ */
+
 table.listing tr.controls {
   background-color: #567275;
   /* in case it's empty */
@@ -303,7 +305,6 @@ table.listing tr.controls-1 {
     background-color: #648589;
 }
 
-/* last situation */
 tr.unselected, td.unselected {
   background-color: &dtml-evenRowBackground;;
     border-top: none ! important;
@@ -311,7 +312,6 @@ tr.unselected, td.unselected {
   border-collapse: collapse;
 }
 
-/* last situation */
 tr.selected, td.selected {
   background-color: &dtml-oddRowBackground;;
     border-top: none ! important;
@@ -328,6 +328,8 @@ tr.divider, th.divider, td.divider {
 table.listing tr.fixed, td.fixed {
     background-color: &dtml-shade78;;
 }
+
+/* _______ cells _______ */
 
 table.listing th {
     text-align: left;
@@ -448,11 +450,6 @@ table.listing tr.controls td, tr.controls-1 td {
   color: #c9dfe2;
 }
 
-/* experimental */
-table.sublisting {
-  margin-top : 1em;
-}
-
 
 /* ______________ sidebar navigation ______________ */
 
@@ -527,13 +524,18 @@ table.listing a.up:hover {
 
 /* _____________________________________________________ focus shapes _____ */
 
+/* experimental */
+table.sublisting {
+  margin-top : 1em;
+  margin-bottom : 0em;
+}
+
 /* used to shape non-nested listing tables */
 .focus-box {
   /* for IE5 */
   width : 73%;
   max-width : 56em; 
-  margin : 0 8px;
-  padding-top: 8px;
+  margin : 0 8px 0 8px;
 }
 
 .focus-rectangle {

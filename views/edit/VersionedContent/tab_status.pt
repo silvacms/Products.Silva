@@ -22,7 +22,8 @@
   global next python:model.get_next_version() is not None;
 " />
 
-<div class="focus-box">
+<div class="focus-box"
+  style="padding-top:8px;">
 <table class="listing"
   style="margin-bottom:0em;">
 <thead>
@@ -130,7 +131,7 @@ revoke approval section here
 
 
 <span tal:replace="nothing"> _______ revert to previous _______ </span>
-<check tal:condition="python:may_approve_content and (published or closed) and unapproved"
+<check tal:condition="python:may_change_content and (published or closed) and unapproved"
   tal:omit-tag="">
 <div metal:use-macro="view/tab_status_macros/macros/revert_to_previous">
 _______ revert to previous section here _______
@@ -149,7 +150,7 @@ _______ manual close section here _______
 
 <span tal:replace="nothing"> _____________________ export table _____________________ </span>
     <div class="focus-box"
-      style="margin-top:0em;">
+      style="margin-top:1em;">
       <form action="." enctype="multipart/form-data" method="POST">
         <input type="hidden" 
           name="refs"
