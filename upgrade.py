@@ -5,6 +5,9 @@ from IVersionedContent import IVersionedContent, ICatalogedVersionedContent
 from IVersion import IVersion, ICatalogedVersion
 from Membership import NoneMember, noneMember 
 from helpers import check_valid_id
+from DateTime import DateTime
+
+threshold = 500
 
 def check_reserved_ids(obj):
     """Walk through the entire tree to find objects of which the id is not
@@ -58,8 +61,17 @@ def from091to092(self, root):
         elif not hasattr(sm, '_allow_authentication_requests'):
             sm._allow_authentication_requests = 0
     
+    statistics = {
+        'total': 0,
+        'total_upgraded': 0,
+        'threshold': 0,
+        'starttime': DateTime(),
+        'endtime': None,
+        }            
     try:
-        upgrade_using_registry(root, '0.9.2')
+        upgrade_using_registry(root, '0.9.2', statistics)
+        statistics['endtime'] = DateTime()
+        print repr(statistics)
     finally:
         Document.manage_beforeDelete = old_manage_beforeDelete
 
@@ -261,12 +273,15 @@ def upgrade_list_titles_in_parsed_xml(top):
 # Upgrade registry, this will be used to upgrade versions >= 0.9.1
 #-----------------------------------------------------------------------------
 
-def upgrade_using_registry(obj, version):
+def upgrade_using_registry(obj, version, stats={}):
     """Upgrades obj recursively for a specific Silva version
     """
     for o in obj.objectValues():
+        stats['total'] += 1
+        stats['threshold'] += 1
         mt = o.meta_type
         if upgrade_registry.is_registered(mt, version):
+            stats['total_upgraded'] += 1
             for upgrade in upgrade_registry.get_meta_type(mt, version):
                 print 'Going to run %s on %s' % (upgrade, o.absolute_url())
                 res = upgrade(o)
@@ -275,9 +290,16 @@ def upgrade_using_registry(obj, version):
                 # of the upgrade chain instead of the old (probably deleted) one
                 if res:
                     o = res
+                    
+        if stats['threshold'] > threshold:
+            print '#### Commit sub transaction ####'
+            get_transaction().commit(1)
+            o._p_jar.cacheGC()
+            stats['threshold'] = 0
+                    
         if hasattr(o, 'objectValues'):
             #print 'Going to descend into', o.id
-            upgrade_using_registry(o, version)
+            upgrade_using_registry(o, version, stats)
 
 class UpgradeRegistry:
     """Here people can register upgrade methods for their objects
