@@ -28,7 +28,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
-          <default>python:form.get_title()</default>
+          <default>python:form.REQUEST.model.get_title()</default>
         </tales>
       </field>
       <field><id>connection_id</id> <type>ListField</type>

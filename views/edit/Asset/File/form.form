@@ -30,6 +30,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
+          <default>python:form.REQUEST.model.get_title()</default>
         </tales>
       </field>
       </fields>
