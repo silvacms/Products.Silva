@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.5.2.1 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -57,7 +57,7 @@ class DataSource(Asset):
     # MODIFIERS
     security.declareProtected(
             SilvaPermissions.ChangeSilvaContent, 'set_parameter')
-    def set_parameter(self, name, type='string', default_value=None, description=''):
+    def set_parameter(self, name, type='string', default_value='', description=''):
         self._parameters[name] = (type, default_value, description)
 
     security.declareProtected(
@@ -87,8 +87,8 @@ class DataSource(Asset):
             values = map(lambda s: s.strip(), line.split(':'))
             type = values[0]
             name = values[1]
-            default_value = None
-            description = None
+            default_value = ''
+            description = ''
             if len(values) > 2:
                 default_value = values[2]
                 if len(values) > 3:
