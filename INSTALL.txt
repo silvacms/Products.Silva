@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.5
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.18 $
+  CVS:        $Revision: 1.19 $
 
 Installing Silva
 
@@ -145,8 +145,7 @@ Installing Silva
 
     or just download:
 
-      "silva-
-      0.8.5.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva-0.8.5.zexp.gz
+      "silva-0.8.5.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva-0.8.5.zexp.gz
 
     First unpack 'silva-0.8.5.zexp.gz' to get a 'silva-0.8.5.zexp'
     file. Then place this in your Zope's 'import' directory, and then
