@@ -26,6 +26,9 @@
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content silva_permissions/ChangeSilvaContent | nothing;"
   >
+  
+<span tal:replace="nothing">******* XXX: Fixme - this template needs to be stripped *******</span>
+
 <head>
 <title tal:content="title">
   Title

@@ -17,32 +17,18 @@
     ">
     <table class="listing"
       tal:condition="binding">
-      <thead>
-        <tr tal:replace="nothing">
-          ______________ vein + title row ______________
-        </tr>
-        <tr>
-          <td class="top"
-            colspan="99">
-            <h2>
-              <img tal:replace="structure python:view.render_icon(model)" />
-              metadata for &#xab;<span tal:replace="string:${model/get_title_editable}">title</span>&#xbb;
-            </h2>
-          </td>
-        </tr>
-      </thead>
       <tbody>
         <tal:block repeat="set_name binding/setNames">
           <tr tal:condition="not:repeat/set_name/start">
             <td class="top divider"
-              colspan="99">
+              colspan="4">
             </td>
           </tr>
           <tr tal:replace="nothing">
             ______________ top controls row ______________
           </tr>
           <tr class="top-controls">
-            <td colspan="99">
+            <td colspan="4">
               <h3>
                 Metadata set &#xab;<tal:block replace="set_name" />&#xbb;
               </h3>
@@ -100,10 +86,10 @@
       </tr>
       <tr>
         <td class="top"
-          colspan="99">
+          colspan="4">
           <h2>
             <img tal:replace="structure python:view.render_icon(model)" />
-            metadata
+            metadata <span tal:condition="not: model/implements_container">for &#xab;<span tal:replace="string:${title}">title</span>&#xbb;</span>
           </h2>
         </td>
       </tr>
@@ -113,14 +99,14 @@
         <tal:block define="set_errors form_errors/?set_name | nothing">
           <tr tal:condition="not:repeat/set_name/start">
             <td class="top divider"
-              colspan="99">
+              colspan="4">
             </td>
           </tr>
           <tr tal:replace="nothing">
             ______________ top controls row ______________
           </tr>
           <tr class="top-controls">
-            <td colspan="99">
+            <td colspan="4">
               <h3>
                 Metadata set &#xab;<tal:block replace="set_name" />&#xbb;
               </h3>
@@ -195,7 +181,7 @@
     <tfoot>
       <tr class="controls">
         <td class="align-right"
-          colspan="99">
+          colspan="4">
           <input class="button" 
             type="submit"
             name="save_metadata:method"

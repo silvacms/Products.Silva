@@ -39,6 +39,7 @@
         style="padding:0;">
 
         <table class="listing"
+          style="margin:0;"
           id="sortable"
           tal:define="
             global assets python:test((filter == 'Asset'), model.get_assets(), model.get_assets_of_type('Silva %s'%filter));

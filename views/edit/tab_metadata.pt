@@ -17,18 +17,20 @@
   <table class="columns columns2">
     <tbody>
       <tr>
+        <tal:block replace="nothing">
+          _____________________ sidebar _____________________
+        </tal:block>
         <td class="left">
-          <span tal:replace="nothing">
-            _____________________ sidebar subtable _____________________
-          </span>
           <metal:block use-macro="view/macro_parent_screen_navigation/macros/content_sidebar" />
         </td>
-        <td class="main">
 
+        <tal:block replace="nothing">
+          _____________________ main _____________________
+        </tal:block>
+        <td class="main">
           <tal:block define="macro python: model.get_editable() and 'edit_table' or 'view_table';">
             <metal:block use-macro="here/macro_metadata/macros/?macro" />
           </tal:block>
-
         </td>
       </tr>
     </tbody>

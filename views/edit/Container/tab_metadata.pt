@@ -17,19 +17,21 @@
   <table class="columns columns2">
     <tbody>
       <tr>
+        <tal:block replace="nothing">
+          _____________________ sidebar _____________________
+        </tal:block>
         <td class="left">
-          <span tal:replace="nothing">
-            _____________________ sidebar subtable _____________________
-          </span>
-          <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_metadata', breadcrumb_vein)" />
+          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_metadata', breadcrumb_vein)" />
+            </metal:fill-slot>
+          </metal:use-macro>
         </td>
+
+        <tal:block replace="nothing">
+          _____________________ main _____________________
+        </tal:block>
         <td class="main">
-
-          <span tal:replace="nothing">
-            _____________________ inner table  _____________________
-          </span>
-
-
           <form method="POST" name="form" action=".">
             <table class="listing">
               <thead>
@@ -40,7 +42,7 @@
                   <td class="top">
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />                      
-                      &#xab;<tal:block content="python:model.get_editable().get_title()" />&#xbb;
+                      &#xab;<tal:block content="title" />&#xbb;
                     </h2>
                   </td>
                 </tr>
@@ -57,12 +59,12 @@
                         href="settings_addables"
                         title="change the addables allowed in this publication: alt-a"
                         accesskey="c"
-                        tal:condition="python:model.meta_type == 'Silva Publication'">
+                        tal:condition="python:type == 'Silva Publication' or 'Silva Root'">
                         Configure <u>a</u>ddables...
                       </a>
                     </div>
                     <div class="buttons">
-                      <tal:block condition="python:model.meta_type == 'Silva Folder'">
+                      <tal:block condition="python:type == 'Silva Folder'">
                         <a class="button"
                           href="tab_edit_to_publication"
                           title="change Folder into Publication: alt-c"
@@ -70,7 +72,7 @@
                           Convert to publication
                         </a>
                       </tal:block>
-                      <tal:block condition="python:model.meta_type == 'Silva Publication'">
+                      <tal:block condition="python:type == 'Silva Publication'">
                         <a class="button"
                           href="tab_edit_to_folder"
                           title="change Publication into Folder: alt-c"

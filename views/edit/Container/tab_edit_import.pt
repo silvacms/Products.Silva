@@ -28,22 +28,28 @@
 <table class="columns columns2">
   <tbody>
     <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
       <td class="left">
-        <span tal:replace="nothing">
-          ______________ parent screen navigation ______________
-        </span>
-        <metal:block use-macro="view/macro_parent_screen_navigation/macros/parent" />
-
-        <span tal:replace="nothing">
-          _____________________ sidebar subtable _____________________
-        </span>
-        <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_edit_import', breadcrumb_vein)" />
+        <tal:block replace="nothing">
+          ______________ parent screen link ______________
+        </tal:block >
+        <metal:block use-macro="view/macro_vein_navigation/macros/parent" />
+        <tal:block replace="nothing">
+          ______________ vein navigation ______________
+        </tal:block >
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit_import', breadcrumb_vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
       </td>
 
+    <tal:block replace="nothing">
+      _____________________ main _____________________
+    </tal:block>
     <td class="main">
-      <tal:block replace="nothing">
-        _____________________ main subtable _____________________
-      </tal:block>
 
 <form action="." enctype="multipart/form-data" method="POST">
   <table class="listing">

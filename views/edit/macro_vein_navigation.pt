@@ -7,13 +7,12 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   >
-
 <metal:block define-macro="parent">
         <table class="listing"
           style="margin-bottom:0;">
           <thead>
             <tr tal:replace="nothing">
-              ______________ top controls row ______________
+              ______________ link to parent screen ______________
             </tr>
             <tr>
               <td class="parent">
@@ -31,6 +30,57 @@
           </thead>
         </table>
 </metal:block>
+
+
+<metal:define-macro define-macro="vein">
+          <table class="listing">
+            <thead>
+              <tr>
+                <th class="top"
+                  tal:define="
+                    model_is_root python: type == 'Silva Root';
+                    model_is_pub python: type == 'Silva Publication';
+                    vein_id template/id;
+                  ">
+                  <a class="up"
+                    href="../../edit/tab_edit"
+                    title="up one level: alt-]"
+                    accesskey="]"
+                    tal:condition="not: model_is_root"
+                    tal:attributes="href string:../../edit/${vein_id}">
+                    <img width="9"
+                      height="9"
+                      border="0"
+                      alt="Up one level"
+                      tal:attributes="src string:${root_url}/globals/up_level.gif" />
+                  </a>
+                  <a class="top"
+                    title="up to containing publication: alt-["
+                    accesskey="["
+                    tal:condition="not: model_is_root"
+                    tal:attributes="href python: model_is_pub and (containing_publication.absolute_url() + '/edit/' + vein_id) or (publication.absolute_url() + '/edit/' + vein_id)">
+                    <img width="9"
+                    height="9"
+                    border="0"
+                    alt="Up to containing Publication"
+                    tal:attributes="src python: model_is_pub and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
+                  </a>
+                  <a class="normal"
+                    style="padding: 0 1em;"
+                    tal:content="breadcrumb_vein"
+                    tal:attributes="href vein_id">
+                    vein
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <metal:define-slot define-slot="sidebar">
+                cached sidebar inserted
+              </metal:define-slot>
+            </tbody>
+          </table>
+</metal:define-macro>
 
 <metal:block define-macro="content_sidebar">
   <table class="listing"

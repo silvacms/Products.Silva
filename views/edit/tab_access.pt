@@ -17,27 +17,30 @@
   <table class="columns columns3"
     tal:condition="view/has_access">
     <tbody>
-      <tal:block replace="nothing"> 
-        ________________ user roles management ________________ 
-      </tal:block>
       <tr>
         <tal:block replace="nothing">
-          __________________ sidebar subtable _________________
+          __________________ sidebar _________________
         </tal:block>
         <td class="left" rowspan="99">
-          <tal:block 
-            condition="model_is_container"
-            replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
-          <tal:block condition="not: model_is_container">
+          <tal:condition condition="model_is_container">
+          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
+            </metal:fill-slot>
+          </metal:use-macro>
+          </tal:condition>
+          <tal:condition condition="not: model_is_container">
             <metal:block 
               use-macro="view/macro_parent_screen_navigation/macros/content_sidebar" />
-          </tal:block>
+          </tal:condition>
         </td>
         <td class="main">
           <tal:block replace="nothing">
-            __________________ main subtable __________________
+            __________________ main __________________
           </tal:block>
-          <!-- Role assignment table -->
+          <tal:block replace="nothing"> 
+            ________________ user roles management ________________ 
+          </tal:block>
           <form action="."
             method="POST">
             <table class="listing"

@@ -13,104 +13,62 @@
     containing_publication publication/../get_publication | publication;
     root_url model/get_root_url;
     root model/get_root;
-    " 
-  >
-  <table class="listing"
-    tal:define="publication_url string:${publication/absolute_url}/edit/{__vein_id__}">
-    <thead>
-      <tr>
-        <th class="top"
-          tal:define="model_is_root python:model == root">
-          <a class="up"
-            href="../../edit/tab_edit"
-            title="up one level: alt-]"
-            accesskey="]"
-            condition="not:model_is_root"
-            tal:attributes="href string:../../edit/{__vein_id__}">
-            <img width="9"
-              height="9"
-              border="0"
-              alt="Up one level"
-              tal:attributes="src string:${root_url}/globals/up_level.gif" />
-          </a>
-          <a class="top"
-            title="up to containing publication: alt-["
-            accesskey="["
-            condition="not:model_is_root"
-            tal:attributes="href string:${containing_publication/absolute_url}/edit/{__vein_id__}">
-            <img width="9"
-            height="9"
-            border="0"
-            alt="Up to containing Publication"
-            tal:attributes="src python:publication != model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url" />
-          </a>
-          <a class="normal"
-            style="padding: 0 1em;"
-            href="{__absolute_url__}"
-            title="reload screen">
-            {__breadcrumb_vein__}
-          </a>
-        </th>
-      </tr>
-    </thead>
+">
 
-    <tbody>
-      <tr tal:replace="nothing"> 
-        ______________ sidebar publication row ______________ 
-      </tr>
-      <tr>
-        <td class="{__class__}"
-          style="padding-left: 0;">
-          <a href="top"
-            title="up to top contents of publication"
-            tal:attributes="href string:${publication/absolute_url}/edit/tab_edit">
-            <img tal:replace="structure python:here.render_icon(model.get_publication())" />
-          </a>
-          <a class="blacklink"
-            href="top"
-            title="up to top of publication"
-            tal:attributes="href publication_url"
-            tal:content="publication/get_short_title_editable">
-            Publication
-          </a>
-        </td>
-      </tr>
+<tr tal:replace="nothing"> 
+  ______________ sidebar publication row ______________ 
+</tr>
+<tr>
+  <td class="{__class__}"
+    style="padding-left: 0;">
+    <a href="top"
+      title="up to top contents of publication"
+      tal:attributes="href string:${publication/absolute_url}/edit/tab_edit">
+      <img tal:replace="structure python:here.render_icon(model.get_publication())" />
+    </a>
+    <a class="blacklink"
+      href="top"
+      title="up to top of publication"
+      tal:attributes="href publication_url"
+      tal:content="publication/get_short_title_editable">
+      Publication
+    </a>
+  </td>
+</tr>
 
-      <span tal:replace="nothing">
-        ______________ sidebar iteration ______________
-      </span>
+<span tal:replace="nothing">
+  ______________ sidebar iteration ______________
+</span>
 
-      <tal:block repeat="indent_item tree">
-        <tr tal:define="
-          item python:indent_item[1];
-          indent python:indent_item[0];
-          oddrow repeat/indent_item/odd;">
-          <td class="{__class__}"
-            tal:define="item_url string:${item/absolute_url}">
-            <div tal:attributes="style python:'margin-left:'+str(indent * 10)+'px'">
-              <a title="contents"
-                tal:attributes="href string:${item_url}/edit/tab_edit">
-                <img tal:replace="structure python:here.render_icon(item)" />
-              </a>
-              <a class="blacklink"
-                title="id"
-                tal:attributes="
-                  href string:${item_url}/edit/{__vein_id__};
-                  title string:id: ${item/id};"
-                tal:define="title item/get_short_title_editable"
-                tal:content="title">
-                <i>no title</i>
-              </a>
-            </div>
-          </td>
-        </tr>
-        <tr class="controls"
-          tal:condition="repeat/indent_item/end">
-          <td>
-          </td>
-        </tr>
-      </tal:block>
-    </tbody>
-  </table>
+<tal:block repeat="indent_item tree">
+  <tr tal:define="
+    item python:indent_item[1];
+    indent python:indent_item[0];
+    oddrow repeat/indent_item/odd;">
+    <td class="{__class__}"
+      tal:define="item_url string:${item/absolute_url}">
+      <div tal:attributes="style python:'margin-left:'+str(indent * 10)+'px'">
+        <a title="contents"
+          tal:attributes="href string:${item_url}/edit/tab_edit">
+          <img tal:replace="structure python:here.render_icon(item)" />
+        </a>
+        <a class="blacklink"
+          title="id"
+          tal:attributes="
+            href string:${item_url}/edit/{__vein_id__};
+            title string:id: ${item/id};"
+          tal:define="title item/get_short_title_editable"
+          tal:content="title">
+          <i>no title</i>
+        </a>
+      </div>
+    </td>
+  </tr>
+  <tr class="controls"
+    tal:condition="repeat/indent_item/end">
+    <td>
+    </td>
+  </tr>
+</tal:block>
 
 </html>
