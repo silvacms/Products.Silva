@@ -31,6 +31,8 @@ Silva changes
       - The forms-based editor now highlights index items correctly in
         nested lists and tables.
 
+      - Fixed the rename form for objects with no title. 
+
   1.1 beta 1
 
     Features added
