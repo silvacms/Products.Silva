@@ -210,7 +210,7 @@ def upgrade_document(obj):
         upgrade_list_titles_in_parsed_xml(o)
 
 def upgrade_demoobject(obj):
-    for o in objectValues():
+    for o in obj.objectValues():
         upgrade_list_titles_in_parsed_xml(o.content)
 
 upgrade_registry.register('Silva Document', upgrade_document)
