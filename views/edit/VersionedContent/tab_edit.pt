@@ -92,7 +92,7 @@
   <div class="feedback"><span class="warning">
     <b>Note: </b>This object is already being edited by another user, and is temporarily locked.
     </span><br />
-    <input class="warning" style="margin-left:0;" type="submit" value="Break lock" title="Somebody else just edited this item, unlock it: alt-u" accesskey="u" />
+    <input class="warning" style="margin-left:0;" type="submit" value="break lock" title="Somebody else just edited this item, unlock it: alt-u" accesskey="u" />
   </div>
 </form>
 </tal:condition>
@@ -102,7 +102,7 @@
 <form action="tab_edit_make_copy" method="POST">
   <div class="feedback">
     <b>Note: </b>There is already a published (or closed) version of this content. Changes can only be made in a new version.<br />
-    <input class="button" style="margin-left:0;" type="submit" value="Create new version" title="Work on a new version while the previous one stays online: alt-c" accesskey="c" />
+    <input class="button" style="margin-left:0;" type="submit" value="create new version" title="Work on a new version while the previous one stays online: alt-c" accesskey="c" />
     </div>
 </form>
 </tal:condition>
@@ -112,7 +112,7 @@
 <form action="tab_edit_revoke_approval" method="POST">
   <div class="feedback">
     <b>Note: </b>This version is approved but not yet public. In order to make changes you need to first revoke the approval.<br />
-    <input class="button" style="margin-left:0;" type="submit" value="Revoke approval" title="'Un-approve' this item in order to edit: alt-r" accesskey="r" />
+    <input class="button" style="margin-left:0;" type="submit" value="revoke approval" title="'Un-approve' this item in order to edit: alt-r" accesskey="r" />
   </div>
 </form>
 </tal:condition>
@@ -122,7 +122,7 @@
 <form action="tab_status_withdraw" method="POST">
   <div class="feedback">
     <b>Note: </b>This version has an request for approval pending. In order to make changes you need to first withdraw the pending request.<br />
-    <input class="button" style="margin-left:0;" type="submit" value="Withdraw request" title="Withdraw a request for approval in order to edit: alt-w" accesskey="w" />
+    <input class="button" style="margin-left:0;" type="submit" value="withdraw request" title="Withdraw a request for approval in order to edit: alt-w" accesskey="w" />
     <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
     <input type="hidden" name="tab_name" value="edit" />
   </div>

@@ -227,7 +227,7 @@
         <value key="css_class" type="str" value="" />
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="comment" />
-        <value key="description" type="str" value="Additional comments on  this content." />
+        <value key="description" type="str" value="Internal comments." />
         <value key="max_length" type="str" value="" />
         <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
