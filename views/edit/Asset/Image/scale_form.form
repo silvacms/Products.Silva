@@ -21,7 +21,7 @@
           <required type="int">1</required>
           <items type="list">[('jpg', 'JPEG'), ('png', 'PNG'), ('gif', 'GIF')]</items>
           <default></default>
-          <title i18n="">Web format</title>
+          <title i18n="">web format</title>
           <first_item type="int">1</first_item>
           <alternate_name></alternate_name>
           <unicode type="int">0</unicode>

@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html tal:omit-tag=""
   tal:define="
     view here;
@@ -67,7 +68,7 @@
           colspan="3">
           <input class="button"
             type="submit"
-            value="Update index"
+            value="update index"
             title="access key: alt-u"
             accesskey="u"
             i18n:attributes="value title accesskey"
