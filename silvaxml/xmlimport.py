@@ -415,6 +415,8 @@ class UnknownContentHandler(SilvaBaseHandler):
             file = StringIO(
                 info.ZipFile().read(
                     'zexps/' + self.getData('zip_id')))
+            # Commit subtransaction to be able to get to a valid
+            # connection (the _p_jar attribute on the object)
             get_transaction().commit(1)
             ob = self.parent()._p_jar.importFile(file)
             id=ob.id
