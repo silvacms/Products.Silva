@@ -22,10 +22,11 @@ for set_name in binding.getSetNames():
 if all_errors:
     # There were errors...
     type = 'error'
-    msg = 'The data submitted did not validate properly.'
+    msg = 'The data that was submitted did not validate properly.'
 else:
     type = 'feedback'
     msg = 'Metadata saved.'
+    model.sec_update_last_author_info()
 
 return view.tab_metadata(
     form_errors=all_errors,
