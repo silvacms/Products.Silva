@@ -202,7 +202,8 @@
                           href item_url;
                           class status_style;"
                         tal:define="title python: item.get_title_editable() or default"
-                        tal:content="title">
+                        tal:content="title"
+                        i18n:attributes="title">
                         <i i18n:translate="no_title">no title</i>
                       </a>
                     </td>

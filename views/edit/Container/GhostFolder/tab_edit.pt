@@ -50,7 +50,10 @@
             colspan="3">
             <h2>
                <img tal:replace="structure python:view.render_icon(model)" />
-               ghost folder of &#xab;<tal:block content="title" />&#xbb;
+               <tal:block i18n:translate="ghostfolder_title">
+               ghost folder of &#xab;<tal:block 
+               content="title" i18n:name="ghostfolder_id" />&#xbb;
+               </tal:block>
             </h2>
          </td>
       </tr>
@@ -62,13 +65,13 @@
      <tbody>
         <tr>
            <th class="align-right"
-              width="12%">
+             width="12%" i18n:translate="attributes">
               attributes
            </th>
-           <th>
+           <th i18n:translate="content">
               content
            </th>
-           <th width="30%">
+           <th width="30%" i18n:translate="note">
               note
            </th>
         </tr>
@@ -84,6 +87,7 @@
                 accesskey="r"
                 tal:define="asset_context python:here.get_start_container();"
                 tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+                i18n:attributes="value title"
               /><span class="warning">*</span>
            </td>
            <td>
@@ -95,14 +99,14 @@
                  tal:attributes="value content_url"
               />
            </td>
-           <td>
+           <td i18n:translate="ghost_path_to_original">
               Path to original (begins with &#8216;/&#8217;).
            </td>
         </tr>
 
         <tr class="odd"
            tal:condition="not:link_status">
-           <td class="field-title">
+           <td class="field-title" i18n:translate="link">
               link
            </td>
            <td>
@@ -112,14 +116,14 @@
                  link
               </a>
            </td>
-           <td>
+           <td i18n:translate="ghost_link_content">
               Link to contents screen of original.
            </td>
         </tr>
 
         <tr class="odd"
            tal:condition="link_status">
-           <td class="field-title">
+           <td class="field-title" i18n:translate="problem">
               problem
            </td>
            <td class="alert">
@@ -142,6 +146,7 @@
                  value="save reference"
                  title="access key: alt-s"
                  accesskey="s"
+                 i18n:attributes="value title"
               />
            </td>
         </tr>
@@ -195,6 +200,7 @@
                 value="resync ghost folder"
                 title="re-synchronize with content from the source folder: alt-e"
                 accesskey="e"
+                i18n:attributes="value title"
                 tal:condition="not:link_status"
                />
             </form>
@@ -280,6 +286,7 @@
               tal:attributes="
                 href python:here.get_editor_link(item);
                 class status_style;"
+                i18n:attributes="title"
               >
               id
             </a>
@@ -305,7 +312,9 @@
                 href string:${item_url}/edit/tab_preview;
                 class status_style;"
               tal:define="title python:(item.get_title_editable() or default)"
-              tal:content="title">
+              tal:content="title"
+              i18n:attributes="title"
+              >
               <i i18n:translate="no_title">no title</i>
             </a>
           </td>
@@ -317,15 +326,15 @@
               tal:condition="modification_time"
               tal:attributes="href string:${item_url}/edit/tab_metadata"
               tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
-              >
+              i18n:attributes="metadata">
               date
             </a>
             <a class="closed" title="settings"
               tal:condition="not:modification_time"
               tal:attributes="href string:${item_url}/edit/tab_metadata"
-              i18n:translate="n/a"
+              i18n:attributes="title"
               >
-              <i>n/a</i>
+              <i i18n:translate="n/a">n/a</i>
             </a>
           </td>
           <tal:block replace="nothing">
@@ -336,13 +345,14 @@
               tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
               tal:attributes="href string:${item_url}/edit/tab_status"
               tal:content="structure last_author"
+              i18n:attributes="title"
               >
               authorname
             </a>
             <a class="closed" title="publish"
               tal:condition="python:item.implements_container()"
               tal:attributes="href string:${item_url}/edit/tab_status"
-              i18n:translate="n/a"
+              i18n:attributes="title"
               >
               <i>n/a</i>
             </a>
@@ -424,7 +434,7 @@
                 class python: asset.get_title() == '' and 'closed' or 'blacklink'"
               i18n:attributes="title"
               >
-              <i>view</i>
+              <i i18n:translate="view">view</i>
             </a>
           </td>
           <tal:block replace="nothing">
@@ -435,6 +445,7 @@
               tal:condition="modification_time"
               tal:attributes="href string:${asset_url}/edit/tab_metadata"
               tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
+              i18n:attributes="title"
               >
               date
             </a>
