@@ -1072,7 +1072,7 @@ class IGhost(Interface):
     def get_haunted_url():
         """return haunted object's url"""
 
-    def get_hanted():
+    def get_hanuted():
         """return the haunted object"""
 
     def _factory(container, id, content_url):
