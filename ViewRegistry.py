@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner
@@ -79,6 +79,15 @@ class ViewRegistry(Folder.Folder):
         result.sort()
         return result
 
+    def has_view(self, view_type, meta_type):
+        """Return true if system has a view of this type.
+        """
+        try:
+            self.view_types[view_type][meta_type]
+            return 1
+        except KeyError:
+            return 0
+        
     def get_view_path(self, view_type, meta_type):
         """Get view path used for view_type/meta_type combination.
         """
