@@ -29,10 +29,6 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
         self._creation_datetime = self._modification_datetime = DateTime()
         self._is_approved = 0
 
-    def manage_afterAdd(self, item, container):
-        # make the user chiefeditor of his own object
-        self.aq_inner.sec_assign(self.id, 'ChiefEditor')
-
     def manage_beforeDelete(self, item, container):
         pass
         
@@ -105,6 +101,7 @@ def manage_addSimpleMember(self, id, REQUEST=None):
     """Add a Simple Member."""
     object = SimpleMember(id)
     self._setObject(id, object)
+    object.sec_assign(id, 'ChiefEditor')
     add_and_edit(self, id, REQUEST)
     return ''
 
