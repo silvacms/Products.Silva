@@ -22,9 +22,11 @@ function Elements () {
         null,
         null);
     this.heading = new Array(
-        new Option("normal", "normal"),
-        new Option("sub", "sub"),
-        null,
+        new Option("Normal heading", "normal"),
+        new Option("Sub heading", "sub"),
+        new Option("Sub sub heading", "subsub"),
+        new Option("Paragraph heading", "paragraph"),
+        new Option("Sub paragraph heading", "subparagraph"),
         null,
         null,
         null,

@@ -23,6 +23,9 @@ Type:
 <select name="element_type" tal:define="type here/get_type">
   <option value="normal" tal:attributes="selected python:test(type == 'normal', 'selected', nothing)">Normal heading</option>
   <option value="sub" tal:attributes="selected python:test(type == 'sub', 'selected', nothing)">Sub heading</option>
+  <option value="subsub" tal:attributes="selected python:test(type == 'subsub', 'selected', nothing)">Sub sub heading</option>
+  <option value="paragraph" tal:attributes="selected python:test(type == 'paragraph', 'selected', nothing)">Paragraph heading</option>
+  <option value="subparagraph" tal:attributes="selected python:test(type == 'subparagraph', 'selected', nothing)">Sub paragraph heading</option>
 </select>
 </metal:block>
 </div>

@@ -6,5 +6,14 @@
   <span class="front4" tal:condition="python:type == 'sub'">
     <content tal:replace="structure here/content" />
   </span>
+  <span class="front5" tal:condition="python:type == 'subsub'">
+    <content tal:replace="structure here/content" />
+  </span>
+  <span class="front6" tal:condition="python:type == 'paragraph'">
+    <content tal:replace="structure here/content" />
+  </span>
+  <span class="front7" tal:condition="python:type == 'subparagraph'">
+    <content tal:replace="structure here/content" />
+  </span>
 </div>
 </div>
