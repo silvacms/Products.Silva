@@ -202,8 +202,8 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="3">
-          <h3 i18n:translate="thumbnailing">
-            thumbnailing 
+          <h3 i18n:translate="thumbnailer">
+            thumbnailer
           </h3>
         </td>
       </tr>
@@ -247,9 +247,9 @@
           <td>
           </td>
           <td>
-            <input class="button"
+            <input class="transport"
               type="button"
-              value="set crop coordinates"
+              value="set crop coordinates..."
               title="specify the center of the area to crop by clicking in the image: alt-o"
               accesskey="o"
               tal:define="asset_context python:request.model"
