@@ -7,7 +7,9 @@
 ##parameters=
 ##title=
 ##
-return [(item, item) for item in context.get_silva_addables_all()]
+request = context.REQUEST
+container = request.model.get_container()
+return [(item, item) for item in container.get_silva_addables_all()]
 
 # This method returns a list which appears in a form (in tab_metadata).
 # The entire list is a Silva 'something' (document, ghost, EUR meeting).
