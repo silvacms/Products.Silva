@@ -24,7 +24,7 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
     def test_renderers_registered_for_meta_type(self):
         registry = RendererRegistry()
         doc_version_renderers = registry.getRenderersForMetaType("Silva Document Version")
-        self.assertEquals(len(doc_version_renderers), 1)
+        self.assertEquals(len(doc_version_renderers), 2)
         self.assert_(isinstance(doc_version_renderers[0], RenderImagesOnRight))
 
     def test_get_renderer_by_name(self):
