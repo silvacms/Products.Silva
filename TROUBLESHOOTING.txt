@@ -240,7 +240,7 @@ Problems when using Silva
     uses the UTF-8 encoding for this.
     Earlier versions of Silva converted the snippets manually 
     to an 8-bit encoding, and Zope had to join the 8-bit strings
-    together. Since Zope2.6.1 it is longer necessary to do the
+    together. Since Zope2.6.1 it is no longer necessary to do the
     conversion on the snippet level; instead one could Zope let do the
     conversion on the complete result, which is much less error prone.
 
