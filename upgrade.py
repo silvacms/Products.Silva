@@ -1,28 +1,39 @@
 from __future__ import nested_scopes
-from ISilvaObject import ISilvaObject
-from IContainer import IContainer
-from IVersionedContent import IVersionedContent
-from IVersion import IVersion
-from Membership import NoneMember, noneMember 
-from helpers import check_valid_id
+
+# zope imports
+import zLOG
+
+# silva imports
+from Products.Silva.interfaces import \
+    ISilvaObject, IContainer, IVersionedContent, IVersion
+from Products.Silva.Membership import NoneMember, noneMember 
+from Products.Silva import mangle
 
 def check_reserved_ids(obj):
     """Walk through the entire tree to find objects of which the id is not
     allowed, and return a list of the urls of those objects
     """
     illegal_urls = []
-    for o in obj.objectValues():
+    object_list = obj.objectValues()
+    while object_list:
+        o = object_list[0]
+        del object_list[0]
         if IContainer.isImplementedBy(o):
-            illegal_urls += check_reserved_ids(o)
-        if (ISilvaObject.isImplementedBy(o) and 
-                check_valid_id(obj, str(o.id), 1)):
-            print 'Illegal id found:', o.absolute_url()
-            id = o.id
-            while (check_valid_id(obj, id, 1) or
-                    id in obj.objectIds()):
-                id = 'renamed_%s' % id
-            obj.manage_renameObject(o.id, id)
+            object_list.extend(o.objectValues())
+        if not ISilvaObject.isImplementedBy(o):
+            continue
+        old_id = o.getId()
+        id = mangle.Id(o.aq_parent, old_id, allow_dup=1)
+        if id.isValid():
+            continue
+        id.cook()
+        while not id.isValid():
+            id = mangle.Id(o.aq_parent, 'renamed_%s' % id, allow_dup=0)
+            o.aq_prent.manage_renameObject(old_id, str(id))
             illegal_urls.append(o.absolute_url())
+            zLOG.LOG("Silva", zLOG.INFO, 
+                'Invalid id %s found. Renamed to %s' % (old_id, str(id)),
+                'Location: %s' % id.absolute_urL())
     return illegal_urls
 
 def from091to092(self, root):
@@ -670,4 +681,5 @@ def update_indexers_092(obj):
     obj.update_index()
 
 upgrade_registry.register('Silva Indexer', update_indexers_092, '0.9.2')
+
 
