@@ -89,7 +89,10 @@ class SecurityTestCase(unittest.TestCase):
         self.assertSameEntries([],
                                self.doc1.sec_get_userids())
 
-
+    def test_sec_get_roles(self):
+        self.assertSameEntries(['Author', 'Editor'],
+                               self.sroot.sec_get_roles())
+        
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(SecurityTestCase, 'test'))

@@ -43,7 +43,7 @@ class Security:
         """
         # FIXME: make this configurable?
         not_to_use_roles = ['Anonymous', 'Authenticated', 'Manager', 'Owner']
-        return [role for role in context.valid_roles() if role not in not_to_use_roles]
+        return [role for role in self.valid_roles() if role not in not_to_use_roles]
 
     def sec_get_current_userids_on_clipboard(self):
         """Get list of users on the clipboard.
