@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -66,8 +66,50 @@ class Security:
         else:
             # if no more roles, remove user completely
             self.sec_remove(userid)
-            
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'sec_open_to_public')
+    def sec_open_to_public(self):
+        """Open this object to the public; accessible to everybody (if
+        at least container is accessible).
+        """
+        self.manage_permission('Access contents information',
+                               roles=[],
+                               acquire=1)
+        self.manage_permission('View',
+                               roles=[],
+                               acquire=1)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'sec_close_to_public')
+    def sec_close_to_public(self):
+        """Close this object to the public; only accessible to people
+        with Viewer role here.
+        """
+        # XXX should change this on dependencies on permissions somehow, not
+        # hard coded roles
+        allowed_roles = ['Viewer', 'Reader', 'Author', 'Editor', 
+                         'ChiefEditor', 'Manager']
+        self.manage_permission('Access contents information',
+                               roles=allowed_roles,
+                               acquire=0)
+        self.manage_permission('View',
+                               roles=allowed_roles,
+                               acquire=0)
+    
     # ACCESSORS
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'sec_is_open_to_public')
+    def sec_is_open_to_public(self):
+        """Check whether this is opened.
+        """
+        # XXX ugh
+        for role_info in self.rolesOfPermission('View'):
+            if (role_info['name'] == 'Viewer' and
+                role_info['selected'] == 'SELECTED'):
+                return 0
+        return 1
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_have_management_rights')
     def sec_have_management_rights(self):
