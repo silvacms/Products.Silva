@@ -287,6 +287,7 @@ def registerViews(reg):
     reg.register('public', 'Silva DemoObject', ['public', 'DemoObject'])
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
+    reg.register('public', 'Silva SQL Data Source', ['public', 'SQLDataSource'])
     
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
