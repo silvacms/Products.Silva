@@ -180,19 +180,6 @@
                       _______ id cell _______
                     </tal:block>
                     <td style="white-space: nowrap">
-                      <a style="float:right"
-                        title="see public version..."
-                        tal:attributes="
-                          href item_info/item_url;"
-                        i18n:attributes="title">
-                        <img alt="content approved or published"
-                          border="0"
-                          width="10"
-                          height="10"
-                          tal:condition="item_info/is_published_or_approved"
-                          tal:attributes="src string:${root_url}/globals/checkmark.gif"
-                        />
-                      </a>
                       <a class="icon"
                         tal:attributes="
                           href item_info/editor_link;
@@ -250,6 +237,19 @@
                       _______ author / publish downlink cell _______
                     </tal:block>
                     <td>
+                      <a style="float:right"
+                        title="see public version..."
+                        tal:attributes="
+                          href item_info/item_url;"
+                        i18n:attributes="title">
+                        <img alt="content approved or published"
+                          border="0"
+                          width="10"
+                          height="10"
+                          tal:condition="item_info/is_published_or_approved"
+                          tal:attributes="src string:${root_url}/globals/checkmark.gif"
+                        />
+                      </a>
                       <a class="blacklink"
                         title="publish"
                         tal:condition="item_info/is_versioned_content"
