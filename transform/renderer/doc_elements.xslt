@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet
   exclude-result-prefixes="doc silva silva-content silva-extra"
-  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns:doc="http://infrae.com/ns/silva_document"
   xmlns:silva="http://infrae.com/ns/silva"
@@ -59,12 +58,14 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="doc:p[@type='normal']">
-    <p class="p"><xsl:apply-templates mode="text-content" /></p>
-  </xsl:template>
-
   <xsl:template match="doc:p[@type]">
-    <p class="{@type}"><xsl:apply-templates mode="text-content" /></p>
+    <xsl:choose>
+      <xsl:when test="./@type='normal'">
+        <p class="p"><xsl:apply-templates mode="text-content" /></p>
+      </xsl:when>
+      <xsl:otherwise>
+        <p class="{@type}"><xsl:apply-templates mode="text-content" /></p>
+      </xsl:otherwise>
   </xsl:template>
 
   <xsl:template match="doc:p[not(@type)]">
