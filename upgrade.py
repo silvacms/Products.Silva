@@ -511,15 +511,10 @@ def replace_container_title_092(obj):
 
 def replace_object_title_092(obj):
     """Move the title to the metadata
-
-    If the object is a default document, pass because
-    it should be/has been set by the folder method
     """
     #print 'Replace object title for', obj.id
     if not '_title' in obj.aq_base.__dict__.keys():
         #print 'No title available on', obj.absolute_url()
-        return
-    if obj is obj.aq_parent.get_default():
         return
     #print obj.absolute_url()
     title = obj.aq_inner._title
