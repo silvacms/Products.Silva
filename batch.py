@@ -1,4 +1,4 @@
-# Credit, where credits due: code originally written for Plone
+# Credit, where credit is due: code originally written for Plone
 # by Helge Tesdal / Plone Solutions.
 #
 # Python

@@ -2,7 +2,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal">
   <body>
     <!--
-    Credit, where credits due: Code originally written for Plone 
+    Credit, where crediti is due: Code originally written for Plone 
     by Helge Tesdal / Plone Solutions.
 
     i18n and omit-tag attributes removed.
