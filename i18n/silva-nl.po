@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: Silva 1.1\n"
 "POT-Creation-Date: Wed Nov 17 18:14:21 2004\n"
 "PO-Revision-Date: 2004-11-17 18:17+0100\n"
-"Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
+"Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -681,7 +681,7 @@ msgstr "Image updated."
 #: /views/edit/Container/GhostFolder/tab_edit.pt:311
 #: /views/edit/Container/GhostFolder/tab_edit.pt:428
 msgid "preview"
-msgstr "preview"
+msgstr "bekijken"
 
 #: /views/edit/Asset/get_tabs.py:16
 #: /views/edit/Container/GhostFolder/get_tabs.py:19
@@ -693,7 +693,7 @@ msgstr "preview"
 #: /views/edit/Container/tab_edit.pt:219 /views/edit/Container/tab_edit.pt:228
 #: /views/edit/Container/tab_edit.pt:396 /views/edit/Container/tab_edit.pt:405
 msgid "properties"
-msgstr "properties"
+msgstr "eigenschappen"
 
 #: /views/edit/Asset/get_tabs.py:17
 #: /views/edit/Container/GhostFolder/get_tabs.py:20
@@ -704,7 +704,7 @@ msgstr "properties"
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:20
 #: /views/edit/VersionedContent/Link/get_tabs.py:18
 msgid "access"
-msgstr "access"
+msgstr "toegang"
 
 #: /views/edit/Container/Folder/placeholder.py:3
 msgid "This is just a placeholder so this directory won't get pruned."
@@ -721,7 +721,7 @@ msgstr "Ghost Folder has been replaced by a publication"
 #: /views/edit/Container/GhostFolder/get_tabs.py:17
 #: /views/edit/Container/get_tabs.py:17 /views/edit/get_authorized_tabs.py:14
 msgid "contents"
-msgstr "contents"
+msgstr "inhoud"
 
 #: /views/edit/Container/GhostFolder/get_tabs.py:21
 #: /views/edit/Container/get_tabs.py:21
@@ -732,7 +732,7 @@ msgstr "contents"
 #: /views/edit/Container/tab_status.pt:179
 #: /views/edit/Container/GhostFolder/tab_edit.pt:352
 msgid "publish"
-msgstr "publish"
+msgstr "publiceren"
 
 #: /views/edit/Container/GhostFolder/submit.py:19
 msgid ""
@@ -1065,7 +1065,7 @@ msgstr "delete selected groups: alt-d"
 #: /views/edit/Container/tab_edit.pt:547
 #: /views/edit/VersionedContent/tab_status.pt:324
 msgid "delete"
-msgstr "delete"
+msgstr "verwijderen"
 
 #: /views/edit/Container/tab_access_groups.pt:70
 msgid "groups in &#xab;${title}&#xbb;"
@@ -1116,11 +1116,11 @@ msgstr "import xml data or a zip file: alt-i"
 #: /views/edit/Container/tab_edit.pt:100
 #: /views/edit/Container/tab_status_export.pt:95
 msgid "import..."
-msgstr "import..."
+msgstr "importeren..."
 
 #: /views/edit/Container/tab_edit.pt:125 /views/edit/Container/tab_edit.pt:191
 msgid "modify"
-msgstr "modify"
+msgstr "bewerken"
 
 #: /views/edit/Container/tab_edit.pt:137
 msgid "&nbsp;&nbsp;Shift"
@@ -1152,11 +1152,11 @@ msgstr "move selected items to"
 
 #: /views/edit/Container/tab_edit.pt:460
 msgid "position"
-msgstr "position"
+msgstr "positie"
 
 #: /views/edit/Container/tab_edit.pt:471
 msgid "end"
-msgstr "end"
+msgstr "einde"
 
 #: /views/edit/Container/tab_edit.pt:478
 #: /views/edit/Container/tab_status.pt:343
@@ -1166,11 +1166,11 @@ msgstr "access key: alt-p"
 
 #: /views/edit/Container/tab_edit.pt:484
 msgid "move selected items into position: alt-m"
-msgstr "move selected items into position: alt-m"
+msgstr "verplaats geselecteerde items in positie: alt-m"
 
 #: /views/edit/Container/tab_edit.pt:484
 msgid "move"
-msgstr "move"
+msgstr "verplaatsen"
 
 #: /views/edit/Container/tab_edit.pt:494
 msgid "rename and retitle items: alt-r"
@@ -1178,39 +1178,39 @@ msgstr "rename and retitle items: alt-r"
 
 #: /views/edit/Container/tab_edit.pt:494
 msgid "rename..."
-msgstr "rename..."
+msgstr "hernoemen..."
 
 #: /views/edit/Container/tab_edit.pt:502
 msgid "cut"
-msgstr "cut"
+msgstr "knippen"
 
 #: /views/edit/Container/tab_edit.pt:502
 msgid "cut items: alt-x"
-msgstr "cut items: alt-x"
+msgstr "items knippen: alt-x"
 
 #: /views/edit/Container/tab_edit.pt:513
 msgid "copy items: alt-c"
-msgstr "copy items: alt-c"
+msgstr "items kopieëren: alt-c"
 
 #: /views/edit/Container/tab_edit.pt:513
 msgid "copy"
-msgstr "copy"
+msgstr "kopieëren"
 
 #: /views/edit/Container/tab_edit.pt:529
 msgid "paste items: alt-v"
-msgstr "paste items: alt-v"
+msgstr "items plakken: alt-v"
 
 #: /views/edit/Container/tab_edit.pt:529
 msgid "paste"
-msgstr "paste"
+msgstr "plakken"
 
 #: /views/edit/Container/tab_edit.pt:537
 msgid "paste (items on clipboard) as ghost objects: alt-g"
-msgstr "paste (items on clipboard) as ghost objects: alt-g"
+msgstr "plak (items op clipboard) als ghost objecten: alt-g"
 
 #: /views/edit/Container/tab_edit.pt:537
 msgid "paste ghost"
-msgstr "paste ghost"
+msgstr "plak ghost"
 
 #: /views/edit/Container/tab_edit.pt:547
 #: /views/edit/VersionedContent/tab_status.pt:324
@@ -1219,23 +1219,23 @@ msgstr "there's no undo: alt-d"
 
 #: /views/edit/Container/tab_edit.pt:69
 msgid "new..."
-msgstr "new..."
+msgstr "nieuw..."
 
 #: /views/edit/Container/tab_edit.pt:69
 msgid "add a new item - alt-n"
-msgstr "add a new item - alt-n"
+msgstr "nieuw item toevoegen - alt-n"
 
 #: /views/edit/Container/tab_edit.pt:84
 msgid "select a new item: alt-s"
-msgstr "select a new item: alt-s"
+msgstr "selecteer nieuw item: alt-s"
 
 #: /views/edit/Container/tab_edit.pt:90
 msgid "select:"
-msgstr "select:"
+msgstr "selecteer:"
 
 #: /views/edit/Container/tab_edit_activate.py:15
 msgid "Nothing was selected, so nothing is activated."
-msgstr "Nothing was selected, so nothing is activated."
+msgstr "Niets was geselecteerd, dus niets is geactiveerd."
 
 #: /views/edit/Container/tab_edit_activate.py:30
 msgid ""
@@ -1255,15 +1255,15 @@ msgstr "Could not activate ${not_activated}."
 
 #: /views/edit/Container/tab_edit_copy.py:16
 msgid "Nothing was selected, so nothing was copied."
-msgstr "Nothing was selected, so nothing was copied."
+msgstr "Niets was geselecteerd, dus niets was gekopieerd."
 
 #: /views/edit/Container/tab_edit_copy.py:19
 msgid "Placed ${ids} on the clipboard for copying."
-msgstr "Placed ${ids} on the clipboard for copying."
+msgstr "${ids} op het clipboard geplaatst voor kopieëren."
 
 #: /views/edit/Container/tab_edit_cut.py:16
 msgid "Nothing was selected, so nothing was cut."
-msgstr "Nothing was selected, so nothing was cut."
+msgstr "Niets was geselecteerd, dus niets was geknipt."
 
 #: /views/edit/Container/tab_edit_cut.py:31
 msgid ""
@@ -2641,13 +2641,13 @@ msgstr "view"
 #: /views/edit/Container/tab_edit.pt:131
 #: /views/edit/Container/GhostFolder/tab_edit.pt:226
 msgid "modified"
-msgstr "modified"
+msgstr "aangepast"
 
 #: /views/edit/asset_lookup.pt:156 /views/edit/document_lookup.pt:159
 #: /views/edit/hyperlink_lookup.pt:118 /views/edit/Container/tab_edit.pt:134
 #: /views/edit/Container/GhostFolder/tab_edit.pt:229
 msgid "author"
-msgstr "author"
+msgstr "auteur"
 
 #: /views/edit/asset_lookup.pt:191
 msgid "view this asset"
