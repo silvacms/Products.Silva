@@ -55,7 +55,7 @@
         <ol>
           <li>An index is not editable.  To view the index go to the <a class="underline" tal:attributes="href string:tab_preview">preview screen</a>.</li> 
           <li>Note that <span class="warning">the index only displays links to published content</span>, so the list may be empty if nothing is published.</li>
-          <li>If new content has been added, click the 'update index' button (in large publications this may take a while).</li>
+          <li>If new content has been added, click &#8220;update index&#8221; (in large publications this may take a while).</li>
         </ol>
       </td>
       </tr>
