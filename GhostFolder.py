@@ -1,12 +1,13 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.6 2003/08/06 07:19:31 zagy Exp $
+# $Id: GhostFolder.py,v 1.7 2003/08/06 09:06:26 zagy Exp $
 
 #zope
 import OFS.Folder
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from DateTime import DateTime
 
 
 # silva
@@ -16,17 +17,22 @@ from Products.Silva.Ghost import GhostBase, getLastVersionFromGhost
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.Metadata import export_metadata
+from Products.Silva.Publishable import Publishable
+from Products.Silva.Versioning import VersioningError
 
-from Products.Silva.interfaces import IContainer, IContent, IAsset, IGhost
+from Products.Silva.interfaces import \
+    IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent
 
 icon = 'www/silvaghost.gif'
 
-class GhostFolder(GhostBase, Folder.Folder):
+class GhostFolder(GhostBase, Publishable, Folder.Folder):
     """GhostFolders are used to haunt folders."""
 
     meta_type = 'Silva Ghost Folder'
-    __implements__ = IContainer, IGhost
+    __implements__ = IContainer, IGhost, IPublishable
     security = ClassSecurityInfo()
+
+    _active_flag = 0
 
     def set_content_url(self, content_url):
         GhostFolder.inheritedAttribute('set_content_url')(self, content_url)
@@ -127,8 +133,6 @@ class GhostFolder(GhostBase, Folder.Folder):
                 return 1
         return 0
 
-        
-    
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'to_publication')
     def to_publication(self):
@@ -148,7 +152,44 @@ class GhostFolder(GhostBase, Folder.Folder):
         self._to_xml_helper(context)
         export_metadata(self._get_content(), context)
         f.write("</silva_ghostfolder>")
-        
+       
+
+    # Publishable 
+    
+    def activate(self):
+        """activate self and publish containing objects"""
+        self._activate_helper(activate=1)
+        GhostFolder.inheritedAttribute('activate')(self)
+    
+    def deactivate(self):
+        """deactivate self and close containing objects"""
+        self._activate_helper(activate=0)
+        GhostFolder.inheritedAttribute('deactivate')(self)
+
+    
+    def _activate_helper(self, activate=1):
+        activate_list = self.get_ordered_publishables()
+        # ativate all containing objects, depth first
+        while activate_list:
+            object = activate_list.pop()
+            if IContainer.isImplementedBy(object):
+                activate_list += object.get_ordered_publishables()
+            if IPublishable.isImplementedBy(object):
+                if activate:
+                    object.activate()
+                else:
+                    object.deactivate()
+            if IVersionedContent.isImplementedBy(object):
+                if activate:
+                    object.create_copy()
+                    object.set_unapproved_version_publication_datetime(
+                        DateTime())
+                    object.approve_version()
+                else:
+                    object.close_version()
+                    
+
+       
 InitializeClass(GhostFolder)
 
     
