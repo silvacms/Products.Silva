@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -55,5 +55,34 @@ class DataSource(Asset):
         if self._parameters.has_key(name):
             del self._parameters[name]
 
+    # UI CONVENIENCE
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'parameter_string_to_dict')
+    def parameter_string_to_dict(self, parameter_string):
+        parameters = {}
+        if not parameter_string:
+            return parameters
+
+        if not parameter_string.find('\n'):
+            parameter_string = parameter_string.replace('\r', '\n')
+        else:
+            parameter_string = parameter_string.replace('\r', '')
+        parameter_string = parameter_string.split('\n')
+        
+        for line in parameter_string:
+            values = map(lambda s: s.strip(), line.split(':'))
+            type = values[0]
+            name = values[1]
+            default_value = None
+            description = None
+            if len(values) > 2:
+                default_value = values[2]
+                if len(values) > 3:
+                    description = values[3]
+            parameters[name] = (type, default_value, description)
+
+        return parameters
+
+    
 InitializeClass(DataSource)

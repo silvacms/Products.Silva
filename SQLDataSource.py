@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -25,13 +25,13 @@ class SQLDataSource(DataSource):
     sql_method_id = 'sql_method'
 
     def __init__(self, id, title):
-        DataSource.inheritedAttribute('__init__')(self, id, title)
+        SQLDataSource.inheritedAttribute('__init__')(self, id, title)
         self._sql_method = None
         self._statement = None
         self._connection_id = None
 
     # ACCESSORS
-
+   
     #FIXME: what permissions?
     def connection_id(self):
         return self._connection_id
@@ -55,7 +55,7 @@ class SQLDataSource(DataSource):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_parameter')
     def set_parameter(self, name, type='string', default_value=None, description=''):
-        DataSource.inheritedAttribute('set_parameter')(
+        SQLDataSource.inheritedAttribute('set_parameter')(
             self, name, type, default_value, description)
         #invalidate sql method
         self._sql_method = None
@@ -64,7 +64,7 @@ class SQLDataSource(DataSource):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'unset_parameter')
     def unset_parameter(self, name):
-        DataSource.inheritedAttribute('unset_parameter')(self, name)
+        SQLDataSource.inheritedAttribute('unset_parameter')(self, name)
         #invalidate sql method
         self._sql_method = None
         self._p_changed = 1

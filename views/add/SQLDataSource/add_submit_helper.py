@@ -12,35 +12,16 @@ sql_statement = result['sql_statement']
 parameters = result['parameters']
 connection_id = result['connection_id']
 
-model.manage_addProduct['Silva'].manage_addSQLDataSource(
-    id, title)
+model.manage_addProduct['Silva'].manage_addSQLDataSource(id, title)
 
-SQLObject = getattr(model, id)
+sqlobject = getattr(model, id)
+sqlobject.set_statement(sql_statement)
+sqlobject.set_connection_id(connection_id)
 
-SQLObject.set_statement(sql_statement)
-SQLObject.set_connection_id(connection_id)
-
-if not parameters.find('\n'):
-    parameters = parameters.replace('\r', '\n')
-else:
-    parameters = parameters.replace('\r', '')
-
-parameters = parameters.split('\n')
-for param in parameters:
-    values = map(lambda s: s.strip(), param.split(':'))
-
-    type = values[0]
-    name = values[1]
-    
-    default_value = None
-    description = ''
-    if len(values) > 2:
-        default_value = values[2]
-        if len(values) > 3:
-            description = values[3]
-    SQLObject.set_parameter(
+parameters_dict = sqlobject.parameter_string_to_dict(parameters)
+for name, (type, default_value, description) in parameters_dict:
+    sqlobject.set_parameter(
         name=name, type=type, default_value=default_value, 
         description=description)
 
-#raise str(SQLObject.parameters())
-return SQLObject
+return sqlobject

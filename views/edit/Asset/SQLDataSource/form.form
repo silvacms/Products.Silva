@@ -10,7 +10,27 @@
     <group>
       <title>Default</title>
       <fields multiple="true">
-
+        <field><id>object_title</id> <type>TextAreaField</type>
+          <values>
+            <alternate_name></alternate_name>
+            <hidden type="int">0</hidden>
+            <max_linelength></max_linelength>
+            <max_length></max_length>
+            <max_lines></max_lines>
+            <width type="int">40</width>
+            <external_validator></external_validator>
+            <height type="int">2</height>
+            <required type="int">1</required>
+            <css_class></css_class>
+            <default></default>
+            <title>Title</title>
+            <description>The title will be publicly visible, and is used as the default link in indexes.</description>
+            <extra></extra>
+          </values>
+          <tales>
+            <default>python:form.get_title()</default>
+          </tales>
+        </field>
       <field><id>connection_id</id> <type>ListField</type>
         <values>
           <size type="int">5</size>
@@ -27,6 +47,7 @@
           <extra></extra>
         </values>
         <tales>
+          <default>python:form.get_connection_id()</default>
           <items>python:form.connection_ids()</items>
         </tales>
       </field>
@@ -51,7 +72,7 @@
           <extra></extra>
         </values>
         <tales>
-          python:form.get_parameters()
+          <default>python:form.get_parameters()</default>
         </tales>
       </field>
       <field><id>statement</id> <type>TextAreaField</type>
@@ -77,6 +98,7 @@
           <extra></extra>
         </values>
         <tales>
+          <default>python:form.get_statement()</default>
         </tales>
       </field>
       </fields>

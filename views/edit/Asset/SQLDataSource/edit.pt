@@ -6,7 +6,7 @@
 
 <h3>Property</h3>
 
-<form method="POST" name="form" action="properties_submit">
+<form method="POST" name="form" action="submit">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">
@@ -20,7 +20,7 @@ Element
 <th align="left">
 Content
 </th>
-<th align="left" width="40%">
+<th align="left" width="27%">
 Note
 </th>
 </tr>
@@ -47,7 +47,7 @@ Note
 </span>
 </td>
 <td align="left">
-<input tal:replace="structure python:field.render(getattr(model, field.id)())" />
+<input tal:replace="structure python:field.render_from_request(request)" />
 </td>
 <td>
 <span tal:replace="structure python:field.get_value('description')">
@@ -65,7 +65,7 @@ comments here (field description)
 </td>
 <td colspan="2" align="right">
 <input class="button" type="submit"
-       name="properties_submit:method" value=" Save file properties " />
+       name="submit:method" value=" Save settings " />
 </td>
 </tr>
 </table>

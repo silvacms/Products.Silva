@@ -1,4 +1,4 @@
-p## Script (Python) "parameters"
+## Script (Python) "parameters"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
