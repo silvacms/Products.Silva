@@ -7,7 +7,7 @@
 ##parameters=model, id, title, result
 ##title=
 ##
-model.manage_addProduct['SilvaIndex'].manage_addIndex(id, title)
+model.manage_addProduct['Silva'].manage_addIndex(id, title)
 index = getattr(model, id)   
 
 return index

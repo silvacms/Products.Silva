@@ -1,10 +1,10 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.38 $
+# $Revision: 1.39 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
-import DemoObject, CatalogedDemoObject
+import DemoObject, CatalogedDemoObject, Index
 import install
 from Products.Silva.ImporterRegistry import importer_registry
 from ExtensionRegistry import extensionRegistry
@@ -20,7 +20,8 @@ registerFileExtension('ico', FSImage)
 def initialize(context):
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
-        Document, Folder, Root, Publication, Ghost, Image, File, DemoObject],
+        Document, Folder, Root, Publication, Ghost, Image, File,
+        DemoObject, Index],
         install, depends_on=None)
 
     context.registerClass(

@@ -73,7 +73,8 @@ def registerViews(reg):
     reg.register('edit', 'Silva Image', ['edit', 'Asset', 'Image'])
     reg.register('edit', 'Silva DemoObject', ['edit', 'VersionedContent', 'DemoObject'])
     reg.register('edit', 'Silva File', ['edit', 'Asset', 'File'])
-
+    reg.register('edit', 'Silva Index', ['edit', 'Content', 'Index'])
+    
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
     reg.register('public', 'Silva Publication', ['public', 'Folder'])
@@ -83,7 +84,8 @@ def registerViews(reg):
     reg.register('public', 'Silva Image', ['public', 'Image'])
     reg.register('public', 'Silva DemoObject', ['public', 'DemoObject'])
     reg.register('public', 'Silva File', ['public', 'File'])
-
+    reg.register('public', 'Silva Index', ['public', 'Index'])
+    
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
     reg.register('add', 'Silva Publication', ['add', 'Publication'])
@@ -92,7 +94,8 @@ def registerViews(reg):
     reg.register('add', 'Silva Image', ['add', 'Image'])
     reg.register('add', 'Silva DemoObject', ['add', 'DemoObject'])
     reg.register('add', 'Silva File', ['add', 'File'])
-
+    reg.register('add', 'Silva Index', ['add', 'Index'])
+    
 def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'
     """

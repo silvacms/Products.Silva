@@ -14,7 +14,7 @@
   </h2>
 </div>
 
-<form action="add_object" name="silvaObjects" method="POST">
+<form action="." name="silvaObjects" method="POST">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
   <tr>
     <td class="divider" width="3" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
@@ -48,7 +48,7 @@
        </tal:block>
     </select>
     &nbsp;
-    <input class="button" type="submit" name="submit" value=" Add " title="Add an object to this folder" />&nbsp;&nbsp;
+    <input class="button" type="submit" name="add_object:method" value=" Add " title="Add an object to this folder" />&nbsp;&nbsp;
   </td>
 </tr>
 
