@@ -15,7 +15,7 @@
   tal:define="
     objects python:model.get_tree();
     silva_permissions here/get_silva_permissions;
-    filter request/filter | request/SESSION/filter | string:Asset;
+    filter request/filter | request/SESSION/filter | string:asset;
     isMetaType python:filter in model.get_silva_addables_allowed();
     asset_context request/asset_context | request/SESSION/asset_context | string:/;
     dummy python: request.SESSION.set('filter', filter);
@@ -81,7 +81,7 @@
                       name="add_object:method" 
                       title="add a new item: alt-n"
                       accesskey="n" 
-                      tal:attributes="value string: New ${filter} "
+                      tal:attributes="value string: new ${filter} "
                       i18n:attributes="title"
                       />
                     <input type="hidden"
