@@ -72,10 +72,11 @@
           <td class="align-right" i18n:translate="title">
             title
           </td>
-          <td>
-            <span               
-              tal:define="
-                title object/get_title_editable | object/get_title | object/getId"
+          <td tal:define="
+                title python: object.get_title_editable()" >
+            <i tal:condition="not: title">no title</i> 
+            <span 
+              tal:condition="title"
               tal:content="
                 python: mangle.String.centeredTruncate(title, 30)"
               tal:attributes="
