@@ -9,7 +9,7 @@
 
   <groups multiple="true">
     <group>
-      <title>Default</title>
+      <title>default</title>
       <fields multiple="true">
 
       <field><id>file</id> <type>FileField</type>
@@ -20,7 +20,7 @@
           <display_width type="int">44</display_width>
           <css_class></css_class>
           <default></default>
-          <title>File</title>
+          <title>file</title>
           <description>Find a file on your disk.</description>
           <external_validator></external_validator>
           <extra>title="access key: alt-f" accesskey="f" style="width:100%;"</extra>

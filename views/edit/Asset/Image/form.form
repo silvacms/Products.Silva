@@ -9,7 +9,7 @@
 
   <groups>
     <group>
-      <title>Default</title>
+      <title>default</title>
       <fields>
 
       <field><id>image_title</id> <type>StringField</type>
@@ -24,7 +24,7 @@
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
-          <title>Title</title>
+          <title>title</title>
           <truncate type="int">0</truncate>
           <description>Optional, but useful.</description>
           <extra>style="width:100%;"</extra>

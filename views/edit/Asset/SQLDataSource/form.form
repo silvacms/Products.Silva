@@ -8,7 +8,7 @@
 
   <groups multiple="true">
     <group>
-      <title>Default</title>
+      <title>default</title>
       <fields multiple="true">
       <field><id>object_title</id> <type>StringField</type>
         <values>
@@ -21,7 +21,7 @@
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
-          <title>Title</title>
+          <title>title</title>
           <truncate type="int">0</truncate>
           <description></description>
           <extra>style="width:100%;"</extra>
@@ -41,7 +41,7 @@
           <required type="int">1</required>
           <css_class></css_class>
           <default></default>
-          <title>Connection id</title>
+          <title>connection id</title>
           <first_item type="int">0</first_item>
           <description>Select the id of the database connection to use.</description>
           <extra></extra>
@@ -62,7 +62,7 @@
           <required type="int">0</required>
           <css_class></css_class>
           <default>ascii</default>
-          <title>Data encoding</title>
+          <title>data encoding</title>
           <truncate type="int">0</truncate>
           <description></description>
           <extra>style="width:100%;"</extra>
@@ -85,7 +85,7 @@
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
-          <title>Query parameters</title>
+          <title>query parameters</title>
           <description>
             Parameter definitions for query, each on a new line. &lt;br /&gt; 
             Syntax: &lt;code&gt;type : name : default value : description&lt;/code&gt; 
@@ -110,7 +110,7 @@
           <required type="int">1</required>
           <css_class></css_class>
           <default></default>
-          <title>SQL Query</title>
+          <title>sql query</title>
           <description>
             See "ZSQL Methods" for syntax. &lt;br /&gt;
             Pay special attention to &lt;code&gt;&amp;lt;dtml-var&amp;gt;&lt;/code&gt; vs. 

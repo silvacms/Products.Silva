@@ -10,7 +10,7 @@
 
   <groups>
     <group>
-      <title>Web presentation</title>
+      <title>web presentation</title>
       <fields>
 
       <field><id>web_format</id> <type>RadioField</type>
@@ -45,7 +45,7 @@
           <required type="int">1</required>
           <css_class></css_class>
           <default>100%</default>
-          <title>Scaling</title>
+          <title>scaling</title>
           <alternate_name></alternate_name>
           <unicode type="int">0</unicode>
           <display_maxwidth></display_maxwidth>

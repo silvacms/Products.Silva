@@ -9,7 +9,7 @@
 
   <groups>
     <group>
-      <title>Default</title>
+      <title>default</title>
       <fields>
         <field><id>fulltext</id> <type>StringField</type>
           <values>
@@ -23,7 +23,7 @@
             <required type="int">0</required>
             <css_class></css_class>
             <default></default>
-            <title>Content</title>
+            <title>content</title>
             <truncate type="int">0</truncate>
             <description>
               Use an asterix ('*') for wildcard.
@@ -51,7 +51,7 @@
             <required type="int">0</required>
             <css_class></css_class>
             <default></default>
-            <title>Title</title>
+            <title>title</title>
             <truncate type="int">0</truncate>
             <description>
             </description>
@@ -72,7 +72,7 @@
             <hidden type="int">0</hidden>
             <css_class></css_class>
             <default type="int">1</default>
-            <title>Subtree only</title>
+            <title>subtree only</title>
             <description>
               Check to restrict search to this content's subtree.
             </description>
@@ -95,7 +95,7 @@
             <required type="int">0</required>
             <css_class></css_class>
             <default type="list">[]</default>
-            <title>Content type</title>
+            <title>content type</title>
             <description>
               Select (multiple using ctrl-key) object type(s) to search in. 
               If none is selected, all types are searched.
