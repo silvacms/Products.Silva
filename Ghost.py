@@ -1,6 +1,7 @@
+
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.82.26.2 $
+# $Revision: 1.82.26.3 $
 
 # Zope
 from OFS import SimpleItem
@@ -201,6 +202,7 @@ class GhostBase:
         """
         # FIXME what if content is None?
         # what if we get circular ghosts?
+        self.REQUEST.set('ghost_model', self.aq_inner)
         content = self.get_haunted_unrestricted()
         if content is None:
             # public render code of ghost should give broken message
@@ -210,11 +212,9 @@ class GhostBase:
         user = self.REQUEST.AUTHENTICATED_USER
         permission = 'View'
         if user.has_permission(permission, content):
-            self.REQUEST.set('ghost_model', self.aq_inner)
             return content.view()
         else:
             raise "Unauthorized"
-
 
 class Ghost(CatalogedVersionedContent):
     """Ghosts are special documents that function as a
