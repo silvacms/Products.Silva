@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_image.py,v 1.4 2004/08/03 13:36:06 guido Exp $
+# $Id: test_image.py,v 1.5 2005/01/19 14:26:09 faassen Exp $
 
 from __future__ import nested_scopes
 

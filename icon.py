@@ -1,6 +1,6 @@
-# Copyright (c) 2003, 2004 Infrae. All rights reserved.
+# Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.9 2004/11/29 15:53:30 guido Exp $
+# $Id: icon.py,v 1.10 2005/01/19 14:26:09 faassen Exp $
 
 """Sivla icon registry"""
 

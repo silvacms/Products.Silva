@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.110 2004/12/13 14:20:47 jw Exp $
+# $Id: install.py,v 1.111 2005/01/19 14:26:09 faassen Exp $
 """Install for Silva Core
 """
 # Python

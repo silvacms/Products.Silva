@@ -1,7 +1,7 @@
 <!--
-Copyright (c) 2002-2004 Infrae. All rights reserved.
+Copyright (c) 2002-2005 Infrae. All rights reserved.
 See also LICENSE.txt
-$Id: serviceRendererRegistryDefaultRenderersEdit.zpt,v 1.4 2004/09/28 15:08:40 faassen Exp $
+$Id: serviceRendererRegistryDefaultRenderersEdit.zpt,v 1.5 2005/01/19 14:26:10 faassen Exp $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 

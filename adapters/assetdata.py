@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: assetdata.py,v 1.3 2004/12/22 18:00:52 jw Exp $
+# $Id: assetdata.py,v 1.4 2005/01/19 14:26:09 faassen Exp $
 #
 
 # XXX These asset adapters are a temporary solution and will not be

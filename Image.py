@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.63 2005/01/17 14:07:29 jw Exp $
+# $Id: Image.py,v 1.64 2005/01/19 14:26:09 faassen Exp $
 # Python
 import re, string
 from cStringIO import StringIO

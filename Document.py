@@ -1,6 +1,6 @@
-# Copyright (c) 2003-2004 Infrae. All rights reserved.
+# Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Document.py,v 1.83 2004/07/21 11:40:40 jw Exp $
+# $Id: Document.py,v 1.84 2005/01/19 14:26:09 faassen Exp $
 
 # The soley purpose of this module is to allow Silva Documents from 0.9.2 to 
 # be unpickled so the upgrading mechanismn can read and transform them into

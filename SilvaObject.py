@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.109 2004/12/08 18:06:49 jw Exp $
+# $Id: SilvaObject.py,v 1.110 2005/01/19 14:26:09 faassen Exp $
 
 # python
 from types import StringType

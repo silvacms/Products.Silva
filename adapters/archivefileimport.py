@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: archivefileimport.py,v 1.4 2005/01/17 14:27:53 jw Exp $
+# $Id: archivefileimport.py,v 1.5 2005/01/19 14:26:09 faassen Exp $
 #
 # Python
 import os.path

@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.12 2004/07/21 11:40:41 jw Exp $
+# $Id: test_mangle.py,v 1.13 2005/01/19 14:26:09 faassen Exp $
 
 import os, sys
 if __name__ == '__main__':

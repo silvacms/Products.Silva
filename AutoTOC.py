@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.9 2004/12/02 10:23:55 walco Exp $
+# $Id: AutoTOC.py,v 1.10 2005/01/19 14:26:09 faassen Exp $
 
 # Zope
 from Globals import InitializeClass
