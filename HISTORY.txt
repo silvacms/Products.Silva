@@ -7,9 +7,10 @@ Silva changes
 
     Bugs fixed
 
-      - Fixed some bug to do with properties tab of Ghost Folders. (GuidoW)
-
-      - Fixed some imaged bug. (GuidoW?)
+      - Fixed broken properties tab of Ghost Folders.
+      
+      - Fixed bug in images that caused a ZODB transaction on every public
+        view.
 
       - Backport of Folder <-> Publication compatibility fix for Zope 2.7.
 
