@@ -14,7 +14,7 @@
     </div>
 
     <div class="margins" tal:condition="python: (options['error_type'] == 'Unauthorized' and here.service_members.allow_subscription())">
-      <h2>Silva Membership System</h2>
+      <h2>Membership System</h2>
       <p class="readable">
         This page is only available to visitors with the right credentials.
       </p>
