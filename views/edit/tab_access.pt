@@ -13,7 +13,7 @@
         src="%s"
         width="16"
         tal:replace="structure python:view.render_icon(model.meta_type)" />
-      &nbsp; Access Settings for
+      &nbsp;Access Settings for
       <span class="folder-title"
         tal:content="
           structure string:&#xab;${model/get_title_or_id_html}&#xbb;">
@@ -77,6 +77,9 @@
             </b>
           </th>
         </tr>
+        <tal:comment condition="nothing">
+          _______ why is line-height: 250%? _______ 
+        </tal:comment>
         <tal:block repeat="member members">
           <tr style="line-height: 250%;"
             valign="top"
@@ -136,30 +139,33 @@
           valign="top">
           <td align="left"
             colspan="2">
-            <select name="assign_role">
-              <option value="None">
-                Select role...
-              </option>
-              <option value="role"
-                tal:repeat="role model/sec_get_roles"
-                tal:content="role"
-                tal:attributes="value role">
-                Role name
-              </option>
-            </select>
-            &nbsp;
-            <input class="button"
-              name="access_assign_to_user:method"
-              title="Assign a local role to selected user(s)."
-              type="submit"
-              value="Assign role to user" />
+            <tal:block tal:condition="members">
+              <select name="assign_role">
+                <option value="None">
+                  Select role...
+                </option>
+                <option value="role"
+                  tal:repeat="role model/sec_get_roles"
+                  tal:content="role"
+                  tal:attributes="value role">
+                  Role name
+                </option>
+              </select>
+              &nbsp;
+              <input class="button"
+                name="access_assign_to_user:method"
+                title="Assign a local role to selected user(s)."
+                type="submit"
+                value="Assign role to user" />
+             </tal:block>
           </td>
           <td align="right">
             <input class="warningbutton"
               name="access_revoke_from_user:method"
               title="Revoke selected role(s) from selected user(s)."
               type="submit"
-              value="Revoke role from user" />
+              value="Revoke role from user" 
+              tal:condition="members" />
           </td>
         </tr>
       </table>
@@ -236,18 +242,21 @@
               <input class="warningbutton"
                 name="tab_access_deny_access:method"
                 type="submit"
-                value="Deny role" />
+                value="Deny role"
+                tal:condition="requested_roles" />
             </td>
             <td align="right"
               colspan="2">
-              <input class="button"
-                name="tab_access_allow_access:method"
-                type="submit"
-                value="Grant role" />
-              <input class="button"
-                name="tab_access_allow_and_approve:method"
-                type="submit"
-                value="Grant and approve" />
+              <tal:block tal:condition="requested_roles">
+                <input class="button"
+                  name="tab_access_allow_access:method"
+                  type="submit"
+                  value="Grant role" />
+                <input class="button"
+                  name="tab_access_allow_and_approve:method"
+                  type="submit"
+                  value="Grant and approve" />
+              </tal:block>
             </td>
           </tr>
         </table>
@@ -398,30 +407,33 @@
               valign="top">
               <td align="left"
                 colspan="2">
-                <select name="assign_role">
-                  <option value="None">
-                    Select role...
-                  </option>
-                  <option value="role"
-                    tal:repeat="role model/sec_get_roles"
-                    tal:content="role"
-                    tal:attributes="value role">
-                    Role name
-                  </option>
-                </select>
-                &nbsp;
-                <input class="button"
-                  name="access_assign_to_group:method"
-                  title="Assign a local role to selected user(s)."
-                  type="submit"
-                  value="Assign role to group" />
+                <tal:block tal:condition="groups">
+                  <select name="assign_role">
+                    <option value="None">
+                      Select role...
+                    </option>
+                    <option value="role"
+                      tal:repeat="role model/sec_get_roles"
+                      tal:content="role"
+                      tal:attributes="value role">
+                      Role name
+                    </option>
+                  </select>
+                  &nbsp;
+                  <input class="button"
+                    name="access_assign_to_group:method"
+                    title="Assign a local role to selected user(s)."
+                    type="submit"
+                    value="Assign role to group" />
+                 </tal:block>
               </td>
               <td align="right">
                 <input class="warningbutton"
                   name="access_revoke_from_group:method"
                   title="Revoke selected role(s) from selected group(s)."
                   type="submit"
-                  value="Revoke role from group" />
+                  value="Revoke role from group" 
+                  tal:condition="groups" />
               </td>
             </tr>
           </table>
@@ -486,6 +498,7 @@
               <input class="button"
                 type="submit"
                 value="Set restriction"
+                title="Restrict access to users with a specific role"
                 tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')" />
             </td>
           </tr>
@@ -502,9 +515,6 @@
           tal:define="definition_aquired python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
           <tr align="left">
             <td>
-              <span class="warning">
-                Experimental:
-              </span>
               <b>
                 Define restriction by IP address
               </b>
@@ -528,7 +538,8 @@
               <br />
               <input class="button"
                 type="submit"
-                value="Set restriction" />
+                value="Set restriction"
+                title="Restrict access to specified IP addresses" />
             </td>
           </tr>
         </table>
@@ -560,7 +571,8 @@
         <tr valign="top">
           <td>
             <a class="buttonlink"
-              href="tab_access_authorized_below">
+              href="tab_access_authorized_below"
+              title="Get a comma separated list of user email addresses">
               List email addresses
             </a>
           </td>

@@ -166,7 +166,8 @@
                       accesskey="a"                      
                       title="Add checked users to your selection list on the right - ctrl-a"
                       type="submit"
-                      value="Add to selection" />
+                      value="Add to selection"
+                      tal:condition="lookup_result" />
                   </td>
                 </tr>
               </table>

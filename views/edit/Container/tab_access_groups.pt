@@ -19,7 +19,8 @@
           Back
         </a>
       </h3>
-      <h2>
+     <div class="worksheet">
+     <h2>
         <img alt="%s"
           height="16"
           src="%s"
