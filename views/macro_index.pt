@@ -107,7 +107,8 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 </td>
 <td class="tab-up" align="right" width="30%">
 <span class="breadcrumb">
-<a tal:attributes="href model/absolute_url">See public version</a>
+<a title="Leave Silva and see the published version: alt-\" accesskey="\"
+  tal:attributes="href model/absolute_url">See public version</a>
 </span>
 </td>
 <td class="tab-up" width="2%">
@@ -135,7 +136,7 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
   </a>
 </td>
 <td class="footer" align="right" width="30%">
-<a class="footer" href="logout" title="Logout of Silva: alt-\" accesskey="\">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="userid" /></a>
+<a class="footer" href="logout" title="Logout of Silva: alt-q" accesskey="q">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="userid" /></a>
 </td>
 <td class="footer" width="2%">
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
@@ -144,7 +145,7 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 
 <span tal:replace="nothing"> _______ border _______ </span>
 <tr>
-<td colspan="5" class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="2" /></td>
+<td colspan="5" class="tab-bg"><a name="bottom"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="2" border="0"/></a></td>
 </tr>
 </table>
 <!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
