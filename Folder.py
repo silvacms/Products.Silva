@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.142 $
+# $Revision: 1.143 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -866,15 +866,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             object.to_xml(context)
         #for object in self.get_assets():
         #    pass
-
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'update')
-    def update(self):
-        for object in self.objectValues():
-            if object.meta_type == 'Silva Ghost':
-                object.update()
-            if IContainer.isImplementedBy(object):
-                object.update()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'xml_validate')

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74 $
+# $Revision: 1.75 $
 
 # Zope
 from OFS import SimpleItem
@@ -82,8 +82,8 @@ class GhostBase:
 
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_content_url')
-    def set_content_url(self, content_url):
+        SilvaPermissions.ChangeSilvaContent, 'set_haunted_url')
+    def set_haunted_url(self, content_url):
         """Set content url.
         """
         # simplify url
@@ -256,12 +256,6 @@ class Ghost(CatalogedVersionedContent):
         if content is None:
             return
         content.to_xml(context)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'update')
-    def update(self):
-        for object in self.objectValues():
-            object.set_content_url(object._content_url)
 
     security.declarePrivate('get_indexables')
     def get_indexables(self):
