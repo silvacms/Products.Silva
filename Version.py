@@ -9,6 +9,7 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.IVersion import IVersion
 from Products.Silva import SilvaPermissions
 
+
 class Version(SimpleItem):
 
     __implements__ = IVersion
@@ -95,8 +96,7 @@ class Version(SimpleItem):
                               'fulltext')
     def fulltext(self):
         """Return the content of this object without any xml"""
-        content = self._flattenxml(self.content_xml())
-        return content
+        return self.content_xml()
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'content_xml')
@@ -109,18 +109,6 @@ class Version(SimpleItem):
         s.close()
         return value
 
-    def _flattenxml(self, xmlinput):
-        """Cuts out all the XML-tags, helper for fulltext (for content-objects)
-        """
-        # FIXME: should take care of CDATA-chunks as well...
-        while 1:
-            ltpos = xmlinput.find('<')
-            gtpos = xmlinput.find('>')
-            if ltpos > -1 and gtpos > -1:
-                xmlinput = xmlinput.replace(xmlinput[ltpos:gtpos + 1], ' ')
-            else:
-                break
-        return xmlinput
 
 InitializeClass(Version)
 
