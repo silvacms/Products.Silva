@@ -38,7 +38,7 @@ body {
 
 div.workspace {
   background : &dtml-workspace;;
-  margin: none;
+  margin: 0;
 }
 
 img {
@@ -70,7 +70,7 @@ div.pathBar a:visited {
 }
 div.pathBar a:hover {
     color: &dtml-shade42;;
-    text-transform: underline;
+    text-decoration: underline;
 }
 
 div.pathBar a.manage {
@@ -103,11 +103,8 @@ div.tabs {
     background-image: url(<dtml-var root>/globals/skyrise.gif);
     background-repeat: repeat-x;
     background-color: &dtml-mainTabBackdrop;;
-    border-bottom-color: #8b939b;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
   margin : 0;
-    padding: 0 0 0 16px;
+    padding: 0 16px 0 16px;
 }
 
 div.tabs a {
@@ -118,8 +115,10 @@ div.tabs a {
   height : 1.1em;
     color: &dtml-mainTabFontColor;;
     background: &dtml-mainTabBackground;;
-  border : &dtml-mainTabBorderColor; 1px solid;
-    border-bottom-color: #8b939b;
+    border-color: &dtml-mainTabBorderColor;;
+    border-width: 1px;
+    border-style: solid solid solid solid;
+  border-bottom-color: &dtml-shade50;;
     margin: 0;
     padding: 0;
   text-align : center;
@@ -166,32 +165,31 @@ div.tabs a.left {
     /* The left side of the tab. */
   width : 1.5em;
     border-style: solid none solid solid;
-  border-bottom-color: #8b939b;
 }
 
 div.tabs a.left:hover {
-    border-style: solid none none solid;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.right {
     /* The right side of the tab. */
   width : 1.5em;
     border-style: solid solid solid none;
-  border-bottom-color: #8b939b;
 }
 
 div.tabs a.right:hover {
-    border-style: solid solid none none;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 /* help */
 div.tabs a.normal {
   float : right;
-  width : 5em;
+  width : 3em;
     font-size: 100%;
     color: &dtml-shade46;;
     background: transparent;
   border : none;
+  text-align : right;
 }
 div.tabs a.normal:visited {
   color: &dtml-shade46;;
@@ -224,15 +222,15 @@ div.flowBar {
   display : block;
     /* IE workaround */
     font-size : 20%;
-    height : 1em;
+    height : 1.8em;
   width : 100%;
-  min-height : 3px;
-  max-height : 0.3em;
+  min-height : 4px;
+  max-height : 0.4em;
   background: &dtml-mainTabBackgroundSelected;;
   margin: 0;
   padding: 0;
-  border-bottom: #636da6 1px solid;
-  clear : all;
+  /* was #636da6 */
+  border-bottom: 1px solid &dtml-shade60;;
 }
 
 
@@ -240,6 +238,7 @@ div.flowBar {
 
 div.footer {
   font-size: 94%;
+  color: &dtml-shade30;;
   background: &dtml-listingTopBackground;;
   margin: 0.5em 0em 0em 0em;
     padding: 0em 16px 0.1em 16px;
@@ -627,7 +626,7 @@ form.compact {
 }
 
 input {
-    color : $dtml-inputFontColor;;
+    color : &dtml-inputFontColor;;
   background : &dtml-inputBackground;;
   margin-top: 1px;
     margin-bottom: 1px; /* IE bug fix */
@@ -887,7 +886,7 @@ h2.info {
   color: #394b4d;
   color: &dtml-inputFontColor;;
   margin-top : 0em;
-  margin-bottom : 0.1em;  
+  margin-bottom : 0.1em;
   font-size: 120%;
 }
 
@@ -943,10 +942,9 @@ div.alert {
 }
 
 div.clear {
-    color: transparent;
     background: transparent;
-    border: 1px solid transparent;
-    border-style: solid none none none;
+    border: 1px solid &dtml-workspace;;
+    border-style: solid none none solid;
     margin: 0;
     padding: 0em 0.6em 0.1em 0.6em;
 }
@@ -971,7 +969,7 @@ table.listing .alert {
 }
 
 
-/* Plone message box aliased to Silva name */
+/* message box in content publish screen */
 
 table.listing .message {
   padding : 0 ! important;

@@ -21,12 +21,26 @@ div.tabs a:visited {
 
 div.tabs a.selected {
   background: &dtml-contentTabBackgroundSelected;;
-  border-bottom: &dtml-contentTabBackgroundSelected; 1px solid;
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
 }
 
 div.tabs a.selected:visited {
   color: &dtml-contentTabFontColorSelected;;
   background: &dtml-contentTabBackgroundSelected;;
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a:hover {
+  color: &dtml-contentTabFontColorSelected;;
+  background: &dtml-contentTabBackgroundSelected;;
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a.left:hover {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a.right:hover {
   border-bottom-color: &dtml-contentTabBackgroundSelected;;
 }
 
@@ -37,12 +51,7 @@ div.tabs a.recede {
 
 div.tabs a.recede:hover {
   background: &dtml-contentTabBackgroundSelected;;
-  border-bottom: #8b939b 1px solid;
-}
-
-div.tabs a:hover {
-  color: &dtml-contentTabFontColorSelected;;
-  background: &dtml-contentTabBackgroundSelected;;
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
 }
 
 div.tabs a.normal:visited {
