@@ -40,18 +40,23 @@ class EditorSupport:
                 for subchild in child.childNodes:
                     result.append(escape(subchild.data, 1))
                 result.append('</a>')
+            elif child.nodeName == 'underline':
+                result.append('<u>')
+                for subchild in child.childNodes:
+                    result.append(escape(subchild.data, 1))
+                    result.append('</u>')
             elif child.nodeName == 'index':
                 result.append('<a name="%s">' %
                               escape(child.getAttribute('name'), 1))
                 for subchild in child.childNodes:
                     result.append(escape(subchild.data, 1))
                 result.append('</a>')
-            elif child.nodeName == 'person':
-                for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
+            #elif child.nodeName == 'person':
+            #    for subchild in child.childNodes:
+            #        result.append(escape(subchild.data, 1))
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-        return ''.join(result)
+        return self.normalize(''.join(result))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'render_text_as_editable')
@@ -76,11 +81,16 @@ class EditorSupport:
                     result.append(subchild.data)
                 result.append('++')
             elif child.nodeName == 'link':
-                result.append('__')
+                result.append('((')
                 for subchild in child.childNodes:
                     result.append(subchild.data)
                 result.append('|')
                 result.append(child.getAttribute('url'))
+                result.append('))')
+            elif child.nodeName == 'underline':
+                result.append('__')
+                for subchild in child.childNodes:
+                    result.append(subchild.data)
                 result.append('__')
             elif child.nodeName == 'index':
                 result.append('[[')
@@ -89,35 +99,37 @@ class EditorSupport:
                 result.append('|')
                 result.append(child.getAttribute('name'))
                 result.append(']]')
-            elif child.nodeName == 'person':
-                result.append('{{')
-                for subchild in child.childNodes:
-                    result.append(subchild.data)
-                result.append('}}')
+            #elif child.nodeName == 'person':
+            #    result.append('{{')
+            #    for subchild in child.childNodes:
+            #        result.append(subchild.data)
+            #    result.append('}}')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-
-        return ''.join(result)
+            
+        return self.normalize(''.join(result))
     
     _strongStructure = ForgivingParser.Structure(['**', '**'])
     _emStructure = ForgivingParser.Structure(['++', '++'])
-    _linkStructure = ForgivingParser.Structure(['__', '|', '__'])
+    _linkStructure = ForgivingParser.Structure(['((', '|', '))'])
+    _underlineStructure = ForgivingParser.Structure(['__', '__'])
     _indexStructure = ForgivingParser.Structure(['[[', '|', ']]'])
-    _personStructure = ForgivingParser.Structure(['{{', '}}'])
-    
+    #_personStructure = ForgivingParser.Structure(['{{', '}}'])
+
     _parser = ForgivingParser.ForgivingParser([
         _strongStructure,
         _emStructure,
         _linkStructure,
-        _indexStructure,
-        _personStructure])
+        _underlineStructure,
+        _indexStructure])
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_text')
     def replace_text(self, node, text):
         """Replace text in a text containing node.
         """
-        #text = escape(text, 1)
+        # first preprocess the text, collapsing all whitespace
+        text = self.normalize(text)
         
         # parse the data
         result = self._parser.parse(text)
@@ -132,7 +144,7 @@ class EditorSupport:
         children.reverse()  
         for child in children:
             node.removeChild(child)
-            
+
         # now use tokens in result to add them to XML
         for structure, data in result:
             if structure is None:
@@ -152,23 +164,25 @@ class EditorSupport:
                 newnode = doc.createElement('link')
                 newnode.appendChild(doc.createTextNode(link_text))
                 newnode.setAttribute('url', link_url)
-                node.appendChild(newnode) 
+                node.appendChild(newnode)
+            elif structure is self._underlineStructure:
+                newnode = doc.createElement('underline')
+                newnode.appendChild(doc.createTextNode(data[0]))
+                node.appendChild(newnode)
             elif structure is self._indexStructure:
                 index_text, index_name = data
                 newnode = doc.createElement('index')
                 newnode.appendChild(doc.createTextNode(index_text))
                 newnode.setAttribute('name', index_name)
                 node.appendChild(newnode)
-            elif structure is self._personStructure:
-                newnode = doc.createElement('person')
-                newnode.appendChild(doc.createTextNode(data[0]))
-                node.appendChild(newnode)
+            #elif structure is self._personStructure:
+            #    newnode = doc.createElement('person')
+            #    newnode.appendChild(doc.createTextNode(data[0]))
+            #    node.appendChild(newnode)
             else:
                 raise EditorSupportError, "Unknown structure: %s" % structure
 
-    def normalize_whitespace(self, s):
-        """Collapse all whitespace in string to single spaces.
-        """
+    def normalize(self, s):
         return ' '.join(s.split())
-
+    
 InitializeClass(EditorSupport)
