@@ -15,7 +15,7 @@
   vein vein | nothing;
   mangle python:modules['Products'].Silva.mangle;
 ">
-<!-- ______________ Breadcrumb path ______________ -->
+<!-- ______________ Breadcrumb space ______________ -->
   <div class="pathBar">
     <div style="float: right; margin-right: 5px;">
       <a class="idea"      
@@ -83,7 +83,7 @@
     </a>
   </div>
 
-<!-- ______________ Tabs ______________ -->
+<!-- ______________ Matrix tabs ______________ -->
 <span tal:replace="nothing">
   <!-- _______ help link _______ -->
 </span>
