@@ -118,6 +118,10 @@ span.kupu-tb-buttongroup button.kupu-redo:hover {background-image: url("kupu/kup
 
 span.kupu-tb-buttongroup button.kupu-source {background-image: url("kupu/kupuimages/source.gif"); background-color: #cedae8;}
 
+span.kupu-tb-buttongroup button.kupu-hyperlink {background-image: url("kupu/kupuimages/link.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-hyperlink-pressed {background-image: url("kupu/kupuimages/link.png"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-image {background-image: url("kupu/kupuimages/image.png"); background-color: #cedae8;}
+
 div.kupu-tb select {
   color : #333767;
   background: #cedae8;
