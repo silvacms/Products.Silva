@@ -172,6 +172,14 @@ Problems when using Silva
     caching policy of your browser; set the caching policy so the
     browser checks for a newer version every time it loads the page.
 
+  When using Kupu, the basic buttons don't seem to work (bold, italic etc.)
+
+    If you're using some Mozilla based browser (Netscape, Mozilla, Firefox 
+    etc.) you may have set your security settings too high. Go to 'Scripts 
+    and plugins' in the 'Advanced' section of the preferences screen 
+    (edit->preferences) and make sure everything in the 'allow scripts to'
+    window is checked.
+
   "AttributeError: is_id_valid" or other errors when adding a Silva
   object via the ZMI
 
