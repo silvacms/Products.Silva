@@ -325,12 +325,19 @@ class GhostVersionXMLSource(VersionXMLSource):
     def _sax(self, reader, settings):
         self._startElement(
             reader, 'content', {'version_id': self.context.id})
-        content = self.context.get_haunted_unrestricted()
+        content = self.context.get_haunted_unrestricted().get_viewable()
+        contenttype = self.context.get_haunted_unrestricted().meta_type
+        self._startElement(reader, 'metatype', {})
+        reader.characters(contenttype)
+        self._endElement(reader, 'metatype')
         if content is None:
-            return
-        new_settings = ExportSettings()
-        new_settings.setOnlyPublishedNoWorkflow()
-        getXMLSource(content)._sax(reader, new_settings)
+            self._startElement(reader, 'broken', {})
+            self._endElement(reader, 'broken')
+        else:
+            self._startElement(reader, 'haunted_url', {})
+            reader.characters(self.context.get_haunted_url())
+            self._endElement(reader, 'haunted_url')
+            getXMLSource(content)._sax(reader, settings)
         self._endElement(reader, 'content')
         
 class GhostFolderXMLSource(SilvaBaseXMLSource):

@@ -10,6 +10,7 @@ from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.Link import manage_addLink
 from Products.ParsedXML.ParsedXML import ParsedXML
+from DateTime import DateTime
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
 
@@ -87,6 +88,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'test_link',
             'This is a test link, you insensitive clod!',
             'http://www.snpp.com/')
+        testfolder2.test_link.set_unapproved_version_publication_datetime(DateTime() - 1)
+        testfolder2.test_link.approve_version()
         testfolder3 = self.add_folder(
             self.root,
             'testfolder3',
@@ -101,13 +104,17 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # columns without a lot of pain.
         splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
         settings = xmlexport.ExportSettings()
-        part1, part2, part3, part4, part5, part6 = splittor.split(xmlexport.getXMLSource(testfolder3).xmlToString(settings))
+        part1, part2, part3, part4, part5, part6, part7 = splittor.split(xmlexport.getXMLSource(testfolder3).xmlToString(settings))
         self.assertEquals(part1, '<silva xmlns="http://infrae.com/ns/silva/0.5" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder3" url="http://nohost/root/testfolder3" datetime="')
         self.assertEquals(part2, '"><folder id="testfolder3"><metadata><set id="silva-content"><silva-content:maintitle>This is yet &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder3</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
         self.assertEquals(part3, '</silva-extra:modificationtime><silva-extra:creationtime>')
-        self.assertEquals(part4, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><content><ghost id="caspar"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><link id="test_link"><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is a test link, you insensitive clod!</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder/testfolder2/test_link</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
-        self.assertEquals(part5, '</silva-extra:modificationtime><silva-extra:creationtime>')
-        self.assertEquals(part6, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><url>http://www.snpp.com/</url></content></link></content></ghost></content></folder></silva>')
+        self.assertEquals(part4, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><content><ghost id="caspar"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><metatype>Silva Link</metatype><haunted_url>/root/testfolder/testfolder2/test_link</haunted_url><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is a test link, you insensitive clod!</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime>')
+        self.assertEquals(part5, '</silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder/testfolder2/test_link</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
+        self.assertEquals(part6, '</silva-extra:modificationtime><silva-extra:creationtime>')
+        self.assertEquals(part7, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><url>http://www.snpp.com/</url></content></content></ghost></content></folder></silva>')
+        f = open('test_ghost.xml', 'w')
+        xmlexport.getXMLSource(testfolder3).xmlToFile(f, settings)
+        f.close()
         
     def test_xml_ghost_folder_export(self):
         testfolder = self.add_folder(
