@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.37 $
+# $Revision: 1.38 $
 import Interfaces
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -203,7 +203,7 @@ class SilvaObject(Security):
         SilvaPermissions.ChangeSilvaContent, 'security_trigger')
     def security_trigger(self):
         """This is equivalent to activate_security_hack(), however this 
-        method name is less, er, hackish... (e.g. when visible in error
+        method's name is less, er, hackish... (e.g. when visible in error
         messages and trace-backs).
         """
         pass
