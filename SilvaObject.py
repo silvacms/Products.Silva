@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.104 2004/09/09 18:27:47 eric Exp $
+# $Id: SilvaObject.py,v 1.105 2004/10/08 12:26:42 guido Exp $
 
 # python
 from types import StringType
@@ -293,7 +293,7 @@ class SilvaObject(Security, ViewCode):
         """
         content = self.get_previewable()
         if content is not None:
-            result = getRenderableAdapter(content).preview()
+            result = self._view_helper(content)
             if result is not None:
                 return result
         return self.service_view_registry.render_preview(view_type, self)
@@ -305,10 +305,16 @@ class SilvaObject(Security, ViewCode):
         """
         content = self.get_viewable()
         if content is not None:
-            result = getRenderableAdapter(content).view()
+            result = self._view_helper(content)
             if result is not None:
                 return result
         return self.service_view_registry.render_view(view_type, self)
+
+    def _view_helper(self, version):
+        result = getRenderableAdapter(version).view()
+        if result is not None:
+            return result
+        return None
 
     # these help the UI that can't query interfaces directly
 
