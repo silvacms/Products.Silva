@@ -1004,12 +1004,12 @@ class IMemberService(Interface.Base):
         """Get memberobject which can be cached, or None if no such memberobject.
         """
 
-    def allow_subscription():
-        """Return true if subscription is allowed, false if not
+    def allow_authentication_requests():
+        """Return true if authentication requests are allowed, false if not
         """
 
-    def get_subscription_url():
-        """Returns the url of the subscription form
+    def get_authentication_requests_url():
+        """Returns the url of the authentication_requests form
         """
     
 # there is also expected to be a 'Members' object that is traversable

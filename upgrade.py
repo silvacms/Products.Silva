@@ -50,10 +50,15 @@ def from091to092(self, root):
 
     print 'Going to upgrade'
 
-    # set the '_allow_subscription' attribute on servce_members if it isn't there yet
+    # set the '_allow_authentication_requests' attribute on servce_members if it isn't there yet
     sm = getattr(root, 'service_members', None)
+    
     if sm is not None:
-        sm._allow_subscription = 0
+        if hasattr(sm, '_allow_subscription'):
+            sm._allow_authentication_requests = sm._allow_subscription
+            del sm._allow_subscription
+        elif not hasattr(sm, '_allow_authentication_requests'):
+            sm._allow_authentication_requests = 0
     
     try:
         upgrade_using_registry(root, '0.9.2')
