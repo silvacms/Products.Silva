@@ -8,11 +8,11 @@ def from09to091(self, root):
     """
     id = root.id
     # Put a copy of the current Silva Root in a backup folder.
-    #backup_id = id + '_09'
-    #self.manage_addFolder(backup_id)
-    #cb = self.manage_copyObjects([id])
-    #backup_folder = getattr(self, backup_id)
-    #backup_folder.manage_pasteObjects(cb_copy_data=cb)
+    backup_id = id + '_09'
+    self.manage_addFolder(backup_id)
+    cb = self.manage_copyObjects([id])
+    backup_folder = getattr(self, backup_id)
+    backup_folder.manage_pasteObjects(cb_copy_data=cb)
     # upgrade xml in the site
     upgrade_xml_09to091(root)
     # upgrade member objects in the site if they're still using the old system
