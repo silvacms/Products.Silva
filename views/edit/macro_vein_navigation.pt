@@ -11,36 +11,6 @@
 >
 
 <tal:block replace="nothing">
-  _______ macro parent _______
-  _______ for subscreens that need an obvious link up to parent (import, export, etc.) _______
-</tal:block>
-<metal:block define-macro="parent">
-  <table class="listing"                    tal:replace="nothing"
-    style="margin-bottom:0;">
-    <thead>
-      <tr tal:replace="nothing">
-        ______________ link to parent screen ______________
-      </tr>
-      <tr>
-        <td class="parent">
-          <a href="parent screen"
-            title="up to parent screen: alt-u"
-            accesskey="u"
-            tal:attributes="href active_tab"
-            i18n:attributes="title;accesskey up_to_parent_screen_accesskey">
-            <div class="transport-border"
-              tal:content="structure string:<u>u</u>p to ${parent_screen_name}...">
-              parent screen
-            </div>
-          </a>
-        </td>
-      </tr>
-    </thead>
-  </table>
-</metal:block>
-
-
-<tal:block replace="nothing">
   _______ macro vein _______
   _______ renders the uplinks cap and vein navigation stack _______
   _______ only containers have a slot for vein navigation thru the content tree_______

@@ -21,10 +21,6 @@
       <td class="left"
         tal:define="template_id string:tab_edit">
         <tal:block replace="nothing">
-          ______________ parent screen link ______________
-        </tal:block>
-        <metal:block use-macro="view/macro_vein_navigation/macros/parent" />
-        <tal:block replace="nothing">
           ______________ vein navigation ______________
         </tal:block>
         <metal:block use-macro="view/macro_vein_navigation/macros/vein" />

@@ -20,10 +20,6 @@
     <tr>
       <td class="left">
         <tal:block replace="nothing">
-          ______________ parent screen link ______________
-        </tal:block >
-        <metal:block use-macro="view/macro_vein_navigation/macros/parent" />
-        <tal:block replace="nothing">
           ______________ vein navigation ______________
         </tal:block >
         <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
