@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Mon Dec 20 16:39:05 2004\n"
-"PO-Revision-Date: 2004-12-21 13:18+0100\n"
+"PO-Revision-Date: 2004-12-21 14:31+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -1786,7 +1786,7 @@ msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables.pt:61
 msgid "addable settings for &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Erweiterungseinstellungen für &#xab;${title}&#xbb;"
 
 #: /views/edit/Container/Publication/settings_addables_form.form:23
 msgid "acquire"
@@ -1794,23 +1794,23 @@ msgstr "Erwerben"
 
 #: /views/edit/Container/Publication/settings_addables_form.form:25
 msgid "If checked, inherit the addables from above. Uncheck this to change the allowed addables below."
-msgstr ""
+msgstr "Wenn ausgewählt, werden die Erweiterungen ererbt. Abwählen um Änderungen machen zu können."
 
 #: /views/edit/Container/Publication/settings_addables_form.form:39
 msgid "addables"
-msgstr ""
+msgstr "Erweiterungen"
 
 #: /views/edit/Container/Publication/settings_addables_form.form:41
 msgid "If 'acquire' is not checked, these settings will determine the items allowed in this publication. Otherwise the addables are acquired from the publication above."
-msgstr ""
+msgstr "Wenn 'Erwerben' nicht ausgewählt ist, legen diese Einstellungen fest, welche Erweiterungen in dieser Publikation verfügbar sind. Andernfalls werden die Einstellungen von der übergeordneten Publikation verwendet."
 
 #: /views/edit/Container/Publication/settings_addables_submit.py:34
 msgid "Addable settings have not changed and remain acquired."
-msgstr ""
+msgstr "Die Erweiterungseinstellungen wurden nicht verändert und werden weiterhin erworben."
 
 #: /views/edit/Container/Publication/settings_addables_submit.py:45
 msgid "Addable settings changed for: ${changed_metadata}"
-msgstr ""
+msgstr "Erweiterungseinstellungen für: ${changed_metadata}"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:105
 msgid "Layout has been copied for customization."
@@ -4218,7 +4218,7 @@ msgstr ""
 
 #: /views/edit/macro_groups_listing.pt:66
 msgid "existing ${type} groups"
-msgstr ""
+msgstr "Existierende ${type} Gruppe"
 
 # Default: "g"
 #: /views/edit/macro_groups_listing.pt:78
@@ -4231,7 +4231,7 @@ msgstr "Gruppen verwalten: alt-g"
 
 #: /views/edit/macro_groups_listing.pt:78
 msgid "<u>g</u>roups admin..."
-msgstr ""
+msgstr "Gruppen verwalten"
 
 #: /views/edit/macro_groups_listing.pt:91
 #: /views/edit/macro_user_lookup_clipboard.pt:45
@@ -4561,7 +4561,7 @@ msgstr "Gruppenname"
 
 #: /views/edit/tab_access.pt:397
 msgid "&lt;broken&gt; <!-- XXX replace this by something nice -->"
-msgstr ""
+msgstr "&lt;kaputt&gt;"
 
 #: /views/edit/tab_access.pt:440
 msgid "No groups with (local) roles."
