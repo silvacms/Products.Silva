@@ -10,6 +10,7 @@ def installFromScratch(root):
     configureCoreFolders(root)
     configureViews(root)
     configureXMLWidgets(root)
+    configureSecurity(root)
     configureLayout(root)
     # now do the uinstallable stuff (views)
     install(root)
@@ -67,7 +68,57 @@ def configureViews(root):
     root.manage_addFolder('service_views')
     # and set Silva tree XXX should be more polite to extension packages
     root.service_view_registry.set_trees(['Silva'])
+
+def configureSecurity(root):
+    """Update the security tab settings to the Silva defaults.
+    """
+    # add the appropriate roles if necessary
+    roles = ['Reader', 'Author', 'Editor', 'ChiefEditor']
+    userdefined_roles = root.userdefined_roles()
+    request = root.REQUEST
+    for role in roles:
+        if role not in userdefined_roles:
+            request.set('role', role)
+            root.manage_defined_roles(submit='Add Role', REQUEST=request)
+
+    # now configure permissions
+    all_reader = ['Reader', 'Author', 'Editor',
+                  'ChiefEditor', 'Manager']
+    all_author = ['Author', 'Editor', 'ChiefEditor', 'Manager']
+    all_editor = ['Editor', 'ChiefEditor', 'Manager']
+    all_chief = ['ChiefEditor', 'Manager']
     
+    add_permissions = [
+        'Add Documents, Images, and Files',
+        'Add Silva DemoObject Versions',
+        'Add Silva DemoObjects',
+        'Add Silva Documents',
+        'Add Silva Folders',
+        'Add Silva Ghost Versions',
+        'Add Silva Ghosts',
+        'Add Silva Images'
+        ]
+    
+    for add_permission in add_permissions:
+        root.manage_permission(add_permission, all_author)
+    
+    root.manage_permission('Add Silva Publications', all_editor)
+    root.manage_permission('Approve Silva content', all_editor)
+    root.manage_permission('Change Silva access', all_chief)
+    root.manage_permission('Change Silva content', all_author)
+    root.manage_permission('Manage properties', all_author)
+    root.manage_permission('Read Silva content', all_reader)
+    # authenticated needs this permission as we are not
+    # allowed to use service_editor otherwise
+    root.manage_permission('Use XMLWidgets Editor Service',
+                           all_reader + ['Authenticated'])
+
+    # XXX Set permissions/roles for Groups Service
+    # root.manage_permission('Access Groups information', all)
+    # root.manage_permission('Access Group mappings', all)
+    # root.manage_permission('Change Groups', all_chief)
+    # root.manage_permission('Change Group mappings', all_chief)
+
 def configureLayout(root, default=0):
     """Install layout code into root.
     If the default argument is true, ids will be prefixed with default_.
