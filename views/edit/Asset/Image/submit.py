@@ -9,7 +9,7 @@ except FormValidationError, e:
     return view.tab_edit(message_type="error", message=context.render_form_errors(e))
 
 model.sec_update_last_author_info()
-model.set_title(mangle.Title(result['image_title']))
+model.set_title(mangle.entities(result['image_title']))
 
 msg = ['Properties changed']
 msg_type = 'feedback'

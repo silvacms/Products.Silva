@@ -1,10 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.5 2003/08/13 11:45:44 zagy Exp $
+# $Id: mangle.py,v 1.6 2003/08/14 13:31:44 zagy Exp $
 
 # Python
 import string
 import re
+import cgi
 from types import StringType, UnicodeType, InstanceType
 
 # Zope
@@ -252,6 +253,8 @@ class Id:
 class _Path:
     """mangle path
     
+        i.e. /foo/bar, /foo/bar/baz -> baz
+    
         SINGLETON
     """
     
@@ -285,5 +288,16 @@ class _Path:
 
 module_security.declarePublic('Path')
 Path = _Path()
+        
+
+class _Entities:
+    """escape entities)"""
+    
+    def __call__(self, text):
+        """return text with &, >, < and " escaped by their html entities"""
+        return cgi.escape(text, 1)
+
+module_security.declarePublic('entities')
+entities = _Entities()
         
 

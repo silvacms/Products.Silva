@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva 
@@ -12,12 +12,6 @@ from cgi import escape
 from interfaces import ISilvaObject, IVersioning, IContainer, IAsset
 
 module_security =  ModuleSecurityInfo('Products.Silva.helpers')
-
-module_security.declarePublic('escape_entities')
-def escape_entities(text):
-    """Escape entities.
-    """
-    return escape(text, 1)
 
 def add_and_edit(self, id, REQUEST):
     """Helper function to point to the object's management screen if

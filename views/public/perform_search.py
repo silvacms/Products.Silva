@@ -1,4 +1,3 @@
-from Products.Silva.helpers import escape_entities
 from Products.Formulator.Errors import ValidationError, FormValidationError
 
 request = context.REQUEST

@@ -1,4 +1,4 @@
-from Products.Silva.helpers import escape_entities
+from Products.Silva import mangle
 from Products.Formulator.Errors import ValidationError, FormValidationError
 
 model = context.REQUEST.model
@@ -23,16 +23,16 @@ new_title = result['object_title']
 if current_title != new_title:
     model.set_title(new_title)
     changed.append(('title',
-                    '%s to %s' % (escape_entities(current_title),
-                                  escape_entities(model.get_title() ))))
+                    '%s to %s' % (mangle.entities(current_title),
+                                  mangle.entities(model.get_title() ))))
 
 current_data_encoding = model.get_data_encoding()
 new_data_encoding = result['data_encoding']
 if current_data_encoding != new_data_encoding:
     model.set_data_encoding(new_data_encoding)
     changed.append(('data encoding',
-                    '%s to %s' % (escape_entities(current_data_encoding),
-                                  escape_entities(model.get_data_encoding() ))))
+                    '%s to %s' % (mangle.entities(current_data_encoding),
+                                  mangle.entities(model.get_data_encoding() ))))
 
 new_parameters = model.parameter_string_to_dict(
     result['parameters'].encode('ascii'))

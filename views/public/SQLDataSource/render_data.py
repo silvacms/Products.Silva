@@ -1,4 +1,4 @@
-from Products.Silva.helpers import escape_entities
+from Products.Silva import mangle
 
 request = context.REQUEST
 datasource = request.model
@@ -23,7 +23,7 @@ except:
 
 # FIXME: Using CSS this hairball is slightly less hairy
 # than is used to be
-caption = escape_entities(datasource.get_title())
+caption = mangle.entities(datasource.get_title())
 data_encoding = datasource.get_data_encoding()
 type = u'listing'
 show_headings = u'true'
