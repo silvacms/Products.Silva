@@ -1,7 +1,5 @@
 
 class SimpleUserManagement:
-    def __init__(self):
-        pass
 
     def find_users(self, object, search_string):
         userids = object.get_valid_userids()
