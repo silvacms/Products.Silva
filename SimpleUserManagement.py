@@ -5,6 +5,7 @@ class SimpleUserManagement:
 
     def find_users(self, object, search_string):
         userids = object.acl_users.getUserNames()
+        result = []
         for userid in userids:
             if userid.find(search_string) != -1:
                 result.append(userid)
