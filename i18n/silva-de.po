@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-17 15:30+0100\n"
+"PO-Revision-Date: 2004-12-17 16:02+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -3353,15 +3353,15 @@ msgstr "Verweis"
 
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:57
 msgid "path to original (begins with &#8216;/&#8217;)."
-msgstr ""
+msgstr "Pfad zum Original (beginnt mit &#8216;/&#8217;)."
 
 #: /views/edit/VersionedContent/Ghost/submit.py:18
 msgid "Ghost changed."
-msgstr ""
+msgstr "Ghost-Objekt geändert."
 
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:40
 msgid "metadata ${for_public_version_of}"
-msgstr ""
+msgstr "Metadaten ${for_public_version_of}"
 
 #: /views/edit/VersionedContent/Link/edit.pt:72
 msgid "link url"
@@ -3369,7 +3369,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Link/edit.pt:89
 msgid "change link"
-msgstr ""
+msgstr "Link ändern"
 
 # Default: "c"
 #: /views/edit/VersionedContent/Link/edit.pt:89
@@ -3378,11 +3378,11 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Link/submit.py:11
 msgid "Link changed"
-msgstr ""
+msgstr "Link geändert"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:105
 msgid "${note} there is already a published or closed version of this content. Changes can only be made in a new version."
-msgstr ""
+msgstr "${note} es existiert bereits eine publizierte oder geschlossene Version dieses Inhaltes. Änderungen können nur in einer neuen Version."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:117
 msgid "'first un-approve' this item in order to edit: alt-r"
@@ -3390,7 +3390,7 @@ msgstr "Widerrufen der Genehmigung des Dokumentes: alt-r"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:126
 msgid "${note} this version is approved but not yet public. In order to make changes you need to first revoke the approval."
-msgstr ""
+msgstr "$(note} diese Version ist bewilligt aber noch nicht veröffentlicht. Um Äderungen durchführen zu können, muß erst die Bewilligung entzogen werden."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:137
 msgid "withdraw request"
@@ -3407,15 +3407,15 @@ msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:148
 msgid "${note} this version has an request for approval pending. In order to make changes you need to first withdraw the pending request."
-msgstr ""
+msgstr "${note} für diese Version liegt eine Bewilligungsanfrage vor. Um Änderungen durchführen zu können, muß erst der Antrag zurückgenommen werden."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:41
 msgid "open&nbsp;to&nbsp;public&nbsp;now..."
-msgstr ""
+msgstr "Jetzt &nbsp; Veröffentlichen"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:41
 msgid "publish the unapproved version: alt-:"
-msgstr ""
+msgstr "Publizieren der nicht bewilligten Version: alt-:"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:76
 msgid "${note} This object is already being edited by another user, and is temporarily locked."
@@ -3454,7 +3454,7 @@ msgstr "Neue Version erzeugt."
 #: /views/edit/VersionedContent/tab_edit_revoke_approval.py:14
 #: /views/edit/VersionedContent/tab_status_revoke.py:23
 msgid "Revoked approval."
-msgstr ""
+msgstr "Zustimmung zurückziehen."
 
 #: /views/edit/VersionedContent/tab_edit_break_lock.py:14
 msgid "Lock broken"
@@ -3466,7 +3466,7 @@ msgstr "Version bewilligt"
 
 #: /views/edit/VersionedContent/tab_status.pt:227
 msgid "manage versions of &#xab;${export_id}&#xbb;"
-msgstr ""
+msgstr "Versionen verwalten für &#xab;${export_id}&#xbb;"
 
 #: /views/edit/VersionedContent/tab_status.pt:254
 #: /doc/silva-extra.xml:335
@@ -3552,7 +3552,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status.pt:93
 msgid "Content is closed"
-msgstr ""
+msgstr "Inhalt wurde geschlossen."
 
 #: /views/edit/VersionedContent/tab_status.pt:96
 msgid "This content was once published but is now closed.<br /> If you wish you can make an editable copy in the ${editor}."
@@ -3560,7 +3560,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
 msgid "There is no approved version."
-msgstr ""
+msgstr "Es gibt keine bewilligte Version."
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:32
 msgid "Changed publication settings."
@@ -3568,7 +3568,7 @@ msgstr "Veröffentlichungseinstellungen geändert."
 
 #: /views/edit/VersionedContent/tab_status_close.py:16
 msgid "There is no public version to close"
-msgstr ""
+msgstr "Es gibt keine öffentliche Version die geschlossen werden kann."
 
 #: /views/edit/VersionedContent/tab_status_close.py:21
 msgid "Closed public version."
@@ -3601,7 +3601,7 @@ msgstr "Ansicht «${version_title}»"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:107
 msgid "request approval ${for_new_version}"
-msgstr ""
+msgstr "Bewilligung beantragen ${for_new_version}"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:107
 msgid "for new version"
@@ -3609,7 +3609,7 @@ msgstr "für neue Version"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:112
 msgid "message to editor"
-msgstr ""
+msgstr "Nachricht an Redakteur"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:128
 msgid "This message will remain visible in the status screen for other authors and editors."
@@ -3645,7 +3645,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:170
 #: /views/edit/VersionedContent/tab_status_macros.pt:245
 msgid "If this content should expire, set the time."
-msgstr ""
+msgstr "Wenn dieser Inhalt verfallen soll, den Verfallszeitpunkt festlegen."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:196
 msgid "change settings"
@@ -3653,11 +3653,11 @@ msgstr "Einstellungen ändern"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:203
 msgid "current timings"
-msgstr ""
+msgstr "Aktuelle Zeiteinstellungen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:214
 msgid "access key: alt-m (some platforms)"
-msgstr ""
+msgstr "Kurzwahl: alt-m (einige Plattformen)"
 
 # Default: "m"
 #: /views/edit/VersionedContent/tab_status_macros.pt:214
@@ -3666,7 +3666,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:214
 msgid "publish ti<u>m</u>e:"
-msgstr ""
+msgstr "Publikationszeit:"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:24
 msgid "Publication time of public version"
@@ -3681,7 +3681,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:254
 #: /views/edit/VersionedContent/tab_status_macros.pt:375
 msgid "p<u>u</u>blish right now?"
-msgstr ""
+msgstr "Jetzt Publizieren?"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:27
 msgid "Publication and expiration time of public version"
@@ -4751,7 +4751,7 @@ msgstr ""
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
 msgid "public&nbsp;preview..."
-msgstr "Vorschau der öffentlichen Version"
+msgstr "Vorschau"
 
 #: /views/edit/tab_preview.pt:45
 msgid "This is a closed version. You see it, but the public won't!"
@@ -4948,7 +4948,7 @@ msgstr "Kontakt:"
 
 #: /views/macro_index.pt:229
 msgid "no name"
-msgstr ""
+msgstr "Kein Name"
 
 #: /views/macro_index.pt:236
 msgid "Leave Silva and view the public page: alt-:"
@@ -5052,7 +5052,7 @@ msgstr ""
 
 #: /views/public/Ghost/preview/render.py:15
 msgid "This ghost is broken. (${haunted_url})"
-msgstr ""
+msgstr "Diese Ghost-Objekt ist fehlerhaft (%{haunted_url})."
 
 #: /views/public/Ghost/view/render.py:15
 msgid "This 'ghost' document is broken. Please inform the site administrator."
