@@ -99,12 +99,13 @@
 
 <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
 <tal:condition condition="python: not model.get_next_version()">
-<form action="tab_edit_make_copy" method="POST">
-  <div class="feedback">
-    <b>Note: </b>There is already a published (or closed) version of this content. Changes can only be made in a new version.<br />
-    <input class="button" style="margin-left:0;" type="submit" value="create new version" title="Work on a new version while the previous one stays online: alt-c" accesskey="c" />
+  <form action="tab_edit_make_copy" method="POST">
+    <div class="feedback">
+      <b>Note: </b>There is already a published (or closed) version of this content. Changes can only be made in a new version.<br />
+      <input class="button" style="margin-left:0;" type="submit" value="create new version" title="Work on a new version while the previous one stays online: alt-c" accesskey="c" />
     </div>
-</form>
+  </form>
+  <div tal:content="structure here/edit_info | nothing" />
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
