@@ -12,6 +12,7 @@ from Globals import package_home
 from Products.Silva.interfaces import IUpgrader, IContainer, IContent
 from Products.Silva import upgrade
 from Products.Silva.adapters import security
+from Products.Silva.VersionedContent import VersionedContent
 from Products.SilvaMetadata.Exceptions import BindingError
 
 #-----------------------------------------------------------------------------
@@ -253,6 +254,10 @@ class UpgradeTime:
             binding = obj.service_metadata.getMetadata(obj)
         except BindingError:
             return obj
+        if binding is None:
+            # hmm, maybe broken ghost version ?
+            zLOG.LOG('s-up',100,'cannot upgrade meta data of '+obj.absolute_url())
+            return obj
         mtime = getattr(obj, '_modification_datetime',
             obj.bobobase_modification_time())
         ctime = getattr(obj, '_creation_datetime', None)
@@ -306,8 +311,9 @@ class PublicRenderingCacheFlusher:
     __implements__ = IUpgrader
 
     def upgrade(self, obj):
-        if hasattr(obj.aq_base, 'clean_public_rendering_cache'):
-            obj.clean_public_rendering_cache()
+        if isinstance(obj,VersionedContent):
+            obj._cached_data = {}
+            obj._cached_checked = {}
         return obj
 
 class GroupsService:
@@ -339,10 +345,10 @@ class BuryDemoObjectCorpses:
             zLOG.LOG('Silva',-200,
                      'found demo object corpses %s in %s' %\
                      (broken_ids, obj.absolute_url()))
-            obj.manage_delObjects(broken_ids)
-            # the following assumes all IContainer inherit from Folder ...
-            obj._ordered_ids = [ id for id in  obj._ordered_ids
+            # the next statement assumes all IContainer inherit from Folder ...
+            obj._ordered_ids = [ id for id in obj._ordered_ids
                                  if id not in broken_ids ]
+            obj.manage_delObjects(broken_ids)
             # FIXME: how do we unindex broken object form the catalog?
         return obj
                      
