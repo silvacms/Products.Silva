@@ -235,3 +235,10 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
 
 if __name__ == '__main__':
     framework()
+else:
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(VersionManagementTestCase))
+        return suite
+    
