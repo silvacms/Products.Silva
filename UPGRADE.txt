@@ -3,12 +3,12 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.8.3
+  Valid for:  Silva 0.8.4
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.9 $
+  CVS:        $Revision: 1.10 $
 
-Upgrading Silva 0.8 to 0.8.3
+Upgrading Silva 0.8.3 to 0.8.4
 
   This document applies to upgrading Silva only; if you are newly
   installing Silva please look at 'INSTALL.txt'.
@@ -16,60 +16,69 @@ Upgrading Silva 0.8 to 0.8.3
   NOTE: It makes of course sense to make a backup of Silva before
   trying to upgrade!
 
-  WARNING: Before upgrading Silva at all, **please remove** all Course
-  objects. Course objects are **not supported by** the core Silva release
-  0.8.3 and if you don't remove them, Silva will **not** work properly.
-
-  After installing there is no good way to remove the broken course
-  objects. Instead of a course object there is now a demo object which
-  demonstrates how to mix structured content and data fields.
+  NOTE: We have not tested an upgrade from 0.8 to 0.8.4 directly; 
+  things may break if you try. To be safe you could first upgrade 
+  0.8 to 0.8.3 before upgrading to 0.8.4 (see the instructions in
+  Silva 0.8.3 for more information).
 
   Silva Filesystem Products
 
-    First you need to upgrade the underlying Silva product and the
-    XMLWidgets product. Download the new versions here:
+    First you need to upgrade the underlying Silva product. Download
+    the new version here:
 
-      * "Silva-0.8.3.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.3.tgz
+      * "Silva-0.8.4.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.4.tgz
   
-      * "XMLWidgets-0.8.1.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.1.tgz
+    The other required products (XMLWidgets, Formulator and ParsedXML)
+    do not have to be updated.
 
-    The other required products (Formulator and ParsedXML) do not have
-    to be updated.
-
-    Remove the 'Silva' and 'XMLWidgets' directories in your Zope's
-    Products directory (usually this is 'lib/python/Products' in your
-    Zope install). Now unpack 'Silva-0.8.3.tgz' and
-    'XMLWidgets-0.8.1.tgz'.
+    To upgrade the Silva product, first remove the 'Silva' and
+    directory in your Zope's Products directory (usually this is
+    'lib/python/Products' in your Zope install). Now unpack
+    'Silva-0.8.4.tgz'.
 
     If you are using Silva's LDAP support (turned off by default), you
     should consult the section in 'INSTALL.txt' to see how to
     configure the newly Silva product to use this again.
 
-    Restart Zope to make the new products take effect.
+    Restart Zope to make the new product code to take effect.
+
+  Groups support
+
+    If you want to take advantage of Groups support, please download and
+    install the Groups product, here:
+  
+       * "Groups-0.1.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.1.tgz
+
+    Groups support is optional; Silva should run without the Groups
+    product installed. Groups use a rather hackish technique called
+    'monkey patching' to hook groups support into the Silva core, and
+    this may conflict with other products that do the same. If you get
+    strange behavior, removing the Groups product and restarting Zope
+    will safely remove it.
 
   Silva services (ZODB)
     
-    Next, you need 'silva_upgrade_0.8.3.zexp.gz', which can be found
+    Next, you need 'silva_upgrade_0.8.4.zexp.gz', which can be found
     here:
 
-      * "silva_upgrade_0.8.3.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva_upgrade_0.8.3.zexp.gz
+      * "silva_upgrade_0.8.4.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva_upgrade_0.8.4.zexp.gz
 
-    You do not need 'silva-0.8.3.zexp.gz', as you are upgrading, not
+    You do not need 'silva-0.8.4.zexp.gz', as you are upgrading, not
     installing from scratch.
 
-    Unpack 'silva_upgrade_0.8.3.zexp.gz' and place it in your Zope's 'import'
-    directory. Now import it into the same folder where you installed
-    silva previously (i.e as a sibling to the silva root, not into the
-    silva root itself). Usually this means importing it into your
-    Zope's root, if you installed silva there. 
+    Unpack 'silva_upgrade_0.8.4.zexp.gz' and place it in your Zope's
+    'import' directory. Now import it into the same folder where you
+    installed silva previously (i.e as a sibling to the silva root,
+    not into the silva root itself). Usually this means importing it
+    into your Zope's root, if you installed silva there.
 
-    You should now have a folder 'silva_upgrade_0.8.3'. This folder
+    You should now have a folder 'silva_upgrade_0.8.4'. This folder
     contains a script to upgrade your Silva install, called
-    'upgrade_from_0.8_to_0.8.3'. If you want to know in detail what it
-    does before executing it, see the section below descripting this.
+    'upgrade_from_0.8.3_to_0.8.4'. If you want to know in detail what
+    it does before executing it, see the section below.
 
-    Enter the 'silva_upgrade_0.8.3' folder and execute the script
-    'upgrade_from_0.8_to_0.8.3', by going to its 'Test' tab. It will
+    Enter the 'silva_upgrade_0.8.4' folder and execute the script
+    'upgrade_from_0.8.3_to_0.8.4', by going to its 'Test' tab. It will
     ask for a 'silva_root_id'; fill in the name of your silva root --
     usually this is just 'silva'. Then click on 'Run
     script'. Upgrading should now proceed. This will take a while.
@@ -79,9 +88,6 @@ Upgrading Silva 0.8 to 0.8.3
     (as you may have changed them). See the next section for more
     information on this.
     
-    After the upgrade, you can safely remove 'service_course_editor' and
-    'service_course_viewer', as they are not in use anymore.
-
   Page templates for presentation of public views
     
     The upgrade will have installed new default versions of the page
@@ -90,9 +96,9 @@ Upgrading Silva 0.8 to 0.8.3
     'default_layout_macro.html', 'default_standard_error_message' and
     'default_frontend.css'. You may want to replace your own versions
     with these, if you haven't modified them. Note that these default
-    versions contain some fixes compared to the versions delivered
+    versions may contain some fixes compared to the versions delivered
     with the previous release, so it may be advisable to review them
-    in any case.
+    in any case (there were only minor changes from 0.8.3 to 0.8.4).
 
   What the upgrade script does.
 
@@ -105,14 +111,6 @@ Upgrading Silva 0.8 to 0.8.3
 
     The upgrade will also install new default versions of the page
     templates used for presentation of the public website (see
-    previous version).
-  
-    Next, the upgrade script will hunt down all your Silva Images and
-    execute a fix to make their title display properly where it didn't
-    under some circumstances.
-
-    Finally, the upgrade will tweak the security settings of the Silva
-    Root folder to set the permissions right (see the security tab in
-    the ZMI).
+    previous section).
 
 

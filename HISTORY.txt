@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.13 $
+$Revision: 1.14 $
 
 Silva changes
 
@@ -8,26 +8,32 @@ Silva changes
 
     Features Added
 
-      - Further split of non-core objects, improving API interfaces for
-      readability.
-
       - A Silva File object to store arbitrary file in either ZODB or on
-      the filesystem.
+        the filesystem.
 
-      - First implementation of Group access definitions.
+      - First implementation of group access. Groups can be assigned
+        local roles and managed from Silva. The groups system is only
+        enabled if the optional Groups product is installed.
+
+      - Improved object rename functionality; multiple items can now
+        be renamed in one go.
+
+      - More XML export options; XML can now be exported with or
+        without sub publication. It is also possible to export the
+        newest version of content instead of the public version.
+
+      - Refactored Silva (API) Interfaces into separate files.
 
     Bugs Fixed
 
-      - Less restrictive object id validation (underscore and period is
-      allowed).
+      - Less restrictive object id validation (underscore and period
+        is allowed).
 
-      - Sorting "addables" lists.
+      - "addables" list is now sorted.
 
       - Paste as ghost for a folder now also ghosts the index.
 
-      - Improved object rename functionality.
-
-      - Code cosmetics.
+      - many small UI tweaks and bugfixes.
 
   0.8.3
 

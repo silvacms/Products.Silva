@@ -3,15 +3,15 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.8.3
+  Valid for:  Silva 0.8.4
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.12 $
+  CVS:        $Revision: 1.13 $
 
 Installing Silva
 
-  NOTE: If you are upgrading to Silva 0.8.3 from Silva 0.8, please
-  consult
+  NOTE: If you are upgrading to Silva 0.8.4 from Silva 0.8.3 or
+  earlier, please consult
   "UPGRADE.txt":http://www.zope.org/Members/faassen/Silva/UPGRADE.txt
   instead for instructions.
 
@@ -26,7 +26,7 @@ Installing Silva
 
   Silva Filesystem Products
 
-    Silva (0.8.3)
+    Silva (0.8.4)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some basic
@@ -38,7 +38,7 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.8.3.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.3.tgz
+        "Silva-0.8.3.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.4.tgz
   
     XMLWidgets (0.8.1)
 
@@ -63,8 +63,9 @@ Installing Silva
 
       ParsedXML depends on the PyXML library for some of its
       operation; the Python interpreter that is used to run Zope must
-      have access to a recent version of PyXML (0.7 and up should
-      work).
+      have access to a recent version of PyXML (0.7 should work. We
+      have heard some reports about later versions not working
+      correctly, and are still investigating this).
 
       ParsedXML can be found here:
  
@@ -115,9 +116,9 @@ Installing Silva
 
     or just download:
 
-      "silva-0.8.3.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva-0.8.3.zexp.gz
+      "silva-0.8.4.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva-0.8.4.zexp.gz
 
-    First unpack 'silva-0.8.3.zexp.gz' to get a 'silva-0.8.3.zexp'
+    First unpack 'silva-0.8.4.zexp.gz' to get a 'silva-0.8.4.zexp'
     file. Then place this in your Zope's 'import' directory, and then
     import it through the Zope management interface into your Zope's
     root. This can be done by using the 'import/export' button on the
