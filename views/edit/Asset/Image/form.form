@@ -17,7 +17,7 @@
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
           <display_width type="int">41</display_width>
-          <unicode type="int">0</unicode>
+          <unicode type="int">1</unicode>
           <max_length></max_length>
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
@@ -28,7 +28,6 @@
           <truncate type="int">0</truncate>
           <description>Optional, but useful.</description>
           <extra>style="width:100%;"</extra>
-          <unicode>1</unicode>
         </values>
         <tales>
           <default>python:form.REQUEST.model.get_title()</default>
