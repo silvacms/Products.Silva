@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.4 $
+Version of this file: $Revision: 1.5 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -28,9 +28,14 @@ Version of this file: $Revision: 1.4 $
   <form action="." method="POST" tal:condition="python:module_name =='Silva'">
     <input type="hidden" name="name" value="value"
       tal:attributes="value module_name" />
-    <input type="submit" name="install_layout:method" value="install default layout" />
-    <input type="submit" name="upgrade_silva:method" value="upgrade" />
+    <input type="submit" name="install_layout:method" value="install default layout" />    
     <input type="submit" name="refresh:method" value="refresh" />
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    <input type="submit" name="upgrade_silva:method" value="upgrade" />
   </form>
 
 </div>
