@@ -12,7 +12,14 @@ Silva changes
       - Fixed bug in images that caused a ZODB transaction on every public
         view.
 
-      - Backport of Folder <-> Publication compatibility fix for Zope 2.7.
+      - Fixed kupu transformation bug that made paragraph type not
+        come through on save.
+
+      - The target attribute was not taken into account in the silva
+        xml -> kupu html transformation. Fixed.
+
+      - Backport of Folder <-> Publication compatibility fix for Zope
+        2.7.
 
       - Backport of fix in test_image.py so that unit tests now run
         properly even without PIL being installed.
