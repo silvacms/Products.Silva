@@ -93,11 +93,17 @@ def install(root):
     # FIXME: should we check if the registries exist?
     # (for upgrading, and maybe to handle accidential deletion)
     registerCoreWidgets(root)
+    # add editor support service
+    EditorSupportNested.manage_addEditorSupport(root)
 
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     root.service_views.manage_delObjects(['Silva'])
-
+    try:
+        root.manage_delObjects(['service_editorsupport'])
+    except 'BadRequest':
+        pass
+    
 def is_installed(root):
     return hasattr(root.service_views, 'Silva')
 
@@ -360,8 +366,6 @@ def configureXMLWidgets(root):
     # now register all widgets
     registerCoreWidgets(root)
     
-    # add editor support service
-    EditorSupportNested.manage_addEditorSupport(root)
     
 def registerCoreWidgets(root):
     """ register the core widgets at the corresponding registries.
