@@ -1,11 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27 $
+# $Revision: 1.28 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
 from UserManagement import user_management
 import Interfaces
+from DateTime import DateTime
 
 # Are groups available?
 try:
@@ -28,7 +29,8 @@ class Security:
 
     _last_author_userid = None
     _last_author_info = None
-    
+    _lock_info = None
+
     __ac_local_groups__ = None
     
     # MANIPULATORS
@@ -84,9 +86,9 @@ class Security:
         """Open this object to the public; accessible to everybody (if
         at least container is accessible).
         """
-        self.manage_permission('Access contents information',
-                               roles=[],
-                               acquire=1)
+        #self.manage_permission('Access contents information',
+        #                       roles=[],
+        #                       acquire=1)
         self.manage_permission('View',
                                roles=[],
                                acquire=1)
@@ -101,9 +103,9 @@ class Security:
         # hard coded roles
         allowed_roles = ['Viewer', 'Reader', 'Author', 'Editor', 
                          'ChiefEditor', 'Manager']
-        self.manage_permission('Access contents information',
-                               roles=allowed_roles,
-                               acquire=0)
+        #self.manage_permission('Access contents information',
+        #                       roles=allowed_roles,
+        #                       acquire=0)
         self.manage_permission('View',
                                roles=allowed_roles,
                                acquire=0)
@@ -111,14 +113,15 @@ class Security:
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_create_lock')
     def sec_create_lock(self):
-        """Create lock for this object.
+        """Create lock for this object. Return true if successful.
         """
         if self.sec_is_locked():
-            return
+            return 0
         username = self.REQUEST.AUTHENTICATED_USER.getUserName()
         dt = DateTime()
         self._lock_info = username, dt
-        
+        return 1
+    
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_is_open_to_public')
@@ -145,7 +148,7 @@ class Security:
         if current_dt - dt >= LOCK_DURATION:
             return 0
         current_username = self.REQUEST.AUTHENTICATED_USER.getUserName()
-        return username == current_username
+        return username != current_username
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_have_management_rights')
