@@ -101,6 +101,9 @@
                     </a>
                   <h3 i18n:translate="export_to_silva_xml">
                     export to Silva xml (.xml)
+                    <tal:condition condition="view/service_docmapdf | nothing">
+                      or Adobe PDF (.pdf)
+                    </tal:condition>
                   </h3>
                 </td>
               </tr>
@@ -159,6 +162,17 @@
               <tr class="controls">
                 <td class="align-right"
                   colspan="3">
+                  <tal:condition
+                  condition="view/service_docmapdf | nothing">
+                    <input class="button"
+                      type="submit"
+                      name="download_pdf_selected:method"
+                      value="export pdf"
+                      title="access key: alt-e"
+                      accesskey="e"
+                      i18n:attributes="value title"
+                    />
+                  </tal:condition>
                   <input class="button"
                     type="submit"
                     name="download_xml_selected:method"
