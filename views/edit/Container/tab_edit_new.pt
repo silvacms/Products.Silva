@@ -22,7 +22,7 @@
 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
 <span tal:replace="nothing"> ______________ framing table header ______________ </span>
-<tr>
+<tr tal:replace="nothing">
   <td class="divider" colspan="3"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></td>
 </tr>
 
@@ -36,10 +36,8 @@
     <a href="../../edit/tab_edit_new" title="Up one level: alt-]" accesskey="]"
       tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
   </td>
-
   <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
-
-  <td class="focus-light">
+  <td class="transparent">
     <span class="back3" style="margin-left:20px;">&nbsp;Object descriptions</span>  
   </td>
   <td tal:replace="nothing">
@@ -47,7 +45,6 @@
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
     <span class="tablehead3"><span tal:replace="model/id">id</span></span>
   </td>
-
 </tr>
 
 <span tal:replace="nothing"> _____________________ sidebar _____________________ </span>
@@ -95,7 +92,7 @@
   </td>
   <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
 
-  <td class="focus-light">
+  <td class="transparent">
     <!-- inner table -->
 
 <span tal:replace="nothing"> _____________________ objects subtable _____________________ </span>
@@ -139,9 +136,8 @@
      tal:condition="python: addable.has_key('instance')"
      tal:content="structure addable/doc">
       Description lorem ipsum dolor....
-    <br />
-    <br />
     </p>
+    <span tal:replace="nothing" tal:condition="repeat/addable/end" tal:omit-tag=""><br /></span>
   </td>
 </tr>
 </tal:define>
@@ -149,14 +145,14 @@
 </table>
 
     <tal:block condition="not:silva_permissions/ChangeSilvaContent">
-    Soryy, ou're not authorized to add anything here.
+    Soryy, you're not authorized to add anything here.
     </tal:block>
 
   </td>
 </tr>
 
 <tr>
-  <td class="divider" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="3" /></td>
+  <td class="divider" colspan="2"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></td>
 </tr>
 </table>
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -24,7 +24,11 @@ from Products.ParsedXML.ExtraDOM import writeStream
 icon="www/silvageneric.gif"
 
 class DemoObject(VersionedContent):
-    """Silva DemoObject.
+    """Developers can create 'pluggable' Silva objects,
+       new content types which can be plugged into Silva. They can be 
+       turned on and off per publication (same as Silva core objects). 
+       The Silva DemoObject is provided as an example of a hybrid content 
+       type, which mixes required fields with free flowing structured text.
     """
     security = ClassSecurityInfo()
     
