@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -219,11 +219,10 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assert_(not hasattr(self.sroot, 'this is wrong too'))
         r = self.sroot.manage_addProduct['Silva'].manage_addFolder('this$iswrong', 'This is wrong too')
         self.assert_(not hasattr(self.sroot, 'this$iswrong'))
-        r = self.sroot.manage_addProduct['Silva'].manage_addFolder('this__', 'Cannot be')
-        self.assert_(not hasattr(self.sroot, 'this__'))
-        # shouldn't add anything with finishing underscore to make life easy for regex (or me..)
-        r = self.sroot.manage_addProduct['Silva'].manage_addDocument('foo_', 'This should not work')
-        self.assert_(not hasattr(self.sroot, 'foo_'))
+        r = self.sroot.manage_addProduct['Silva'].manage_addFolder('.this__', 'Cannot be')
+        self.assert_(not hasattr(self.sroot, '.this__'))
+        r = self.sroot.manage_addProduct['Silva'].manage_addDocument('.foo_', 'This should not work')
+        self.assert_(not hasattr(self.sroot, '.foo_'))
         # during rename
         r = self.sroot.action_rename('doc1', '_doc')
         self.assert_(hasattr(self.sroot, 'doc1'))
