@@ -106,7 +106,7 @@
             style="float:left;"
             type="button"
             name="edit_cancel"
-            value="cancel"
+            value="close"
             title="close window: alt-c"
             accesskey="c"
             i18n:attributes="title value"
