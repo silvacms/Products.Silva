@@ -172,12 +172,11 @@ div.tabs a.normal {
 /* ________________________________________ river bar (or sidewalk :) _____ */
 
 div.riverBar {
-  /* for IE5 */
-  font-size: 15%;
-  height: 1.5em;
+  height : 0.3em;
   background: &dtml-mainTabBackgroundSelected;;
   border-bottom: &dtml-shade50; 1px solid;
   margin-bottom: 0;
+  border-collapse: collapse;
 }
 
 
@@ -351,14 +350,12 @@ table.listing th.empty {
     border-bottom: &dtml-listingBorder;;
 }
 
-/* not in use if we scrap the uplinks */
-table.listing th img {
-    vertical-align: bottom;
-    padding: 0;
-}
-
 table.listing th.align-left, table.listing td.align-left {
   text-align: left;
+}
+
+table.listing th.align-center, table.listing td.align-center {
+  text-align: center;
 }
 
 table.listing th.align-right, table.listing td.align-right {
@@ -452,6 +449,19 @@ table.sublisting {
 
 /* ______________ sidebar navigation ______________ */
 
+tr.unselected, td.unselected {
+  background-color: &dtml-evenRowBackground;;
+}
+
+tr.selected, td.selected {
+  background-color: &dtml-oddRowBackground;;
+}
+
+table.listing th img {
+    vertical-align: bottom;
+    padding: 0;
+}
+
 table.listing th.top {
   color: #e3eef0;
   background: #71969a;
@@ -522,11 +532,13 @@ table.listing td.parent {
   padding : 0 ! important;
   border: &dtml-listingBorder;;
   text-align : center;
+  vertical-align : bottom;
 }
 
 table.listing td.parent a {
   color: &dtml-standaloneButtonFontColor;;
   text-decoration: none;
+  text-transform: &dtml-textTransform;;
 }
 
 table.listing td.parent a:hover {
@@ -743,18 +755,20 @@ div.feedback {
     color: #555555;
     background: #f3f3d9;
     border: &dtml-messageBorder;;
-    border-style: none none solid none;
-    margin: 0 0 -0.2em 0;
+    border-style: solid solid solid solid;
+    margin: 0;
     padding: 0.1em 9px 0.2em 9px;
+  border-collapse: collapse;
 }
 
 div.alert {
     color: #3c2d50;
     background: #f7d1d1;
     border: &dtml-messageBorder;;
-    border-style: none none solid none;
-    margin: 0 0 -0.2em 0;
+    border-style: solid solid solid solid;
+    margin: 0;
     padding: 0.1em 9px 0.1em 9px;
+  border-collapse: collapse;
 }
 
 /* not in use */
