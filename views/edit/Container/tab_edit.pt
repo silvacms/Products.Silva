@@ -365,7 +365,7 @@
                         title="editor"
                         tal:attributes="href asset_info/editor_link"
                         tal:content="structure asset_info/asset_id"
-                        i18n:attributes="title"
+                        i18n:attributes="title content-editor;"
                       >
                         id
                       </a>
