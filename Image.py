@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.24 2004/05/13 15:34:14 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.25 2004/05/18 10:12:32 zagy Exp $
 
 # Python
 import re, string
@@ -248,14 +248,19 @@ class Image(Asset):
             img = self.hires_image
         if img is None:
             img = self.image
+        if img is None:
+            return (0, 0)
         width, height = img.width, img.height
-        if callable(width):
+        if img.meta_type == 'ExtImage':
             width = width()
-        if callable(height):
             height = height()
+            if (width, height) == (0, 0):
+                width = height = None
         if not (isinstance(width, IntType) and isinstance(height, IntType)):
-            pil_image = self._getPILImage(img)
-            width, height = pil_image.size
+            width, height = self._get_dimensions_from_image_data(img)
+        if img.meta_type == 'Image':
+            img.width = width
+            img.height = height
         return width, height
 
     security.declareProtected(SilvaPermissions.View, 'getFormat')
@@ -384,20 +389,17 @@ class Image(Asset):
         """return PIL of an image
 
             raise ValueError if no PIL is available
+            raise ValueError if image could not be identified
         """
         if not havePIL:
             raise ValueError, "No PIL installed."""
         if img is None:
             img = self.image
-        if img.meta_type == 'Image': #OFS.Image.Image
-            image_reference = StringIO(str(img.data))
-        else:
-            image_reference = img._get_fsname(img.get_filename())
+        image_reference = self._get_image_data(img)
         try:
             image = PIL.Image.open(image_reference)
-        except IOError:
-            get_transaction().abort()
-            raise
+        except IOError, e:
+            raise ValueError, e
         return image
 
     def _createDerivedImages(self):
@@ -479,6 +481,8 @@ class Image(Asset):
             image = image.aq_base
             # set the actual id (so that absolute_url works)
             image.id = id
+        # assert we "know" the image type and can do something with it:
+        self.getDimensions(image)
         if created:
             old_img = getattr(self, id, None)
             if old_img is not None:
@@ -533,6 +537,33 @@ class Image(Asset):
         return (self.image is not None and
             self.image.aq_base is self.hires_image.aq_base)
 
+    def _get_dimensions_from_image_data(self, img):
+        """return width, heigth computed from image's data
+
+            raises ValueError if the dimensions could not be determined
+        """
+        if havePIL:
+            pil_image = self._getPILImage(img)
+            w, h = pil_image.size
+        else:
+            data_handle = self._get_image_data(img)
+            data = data_handle.read()
+            data_handle.close()
+            ct, w, h = OFS.Image.getImageInfo(data)
+            if w <= 0 or h <= 0:
+                raise ValueError, "Could not identify image type."
+        return w, h
+            
+            
+
+    def _get_image_data(self, img):
+        """return file like object of image's data"""
+        if img.meta_type == 'Image': #OFS.Image.Image
+            image_reference = StringIO(str(img.data))
+        else:
+            image_reference = img._get_fsname(img.get_filename())
+            image_reference = open(image_reference, 'rb')
+        return image_reference
 
 InitializeClass(Image)
     

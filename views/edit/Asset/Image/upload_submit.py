@@ -16,7 +16,7 @@ if not file or not getattr(file, 'filename', None):
 
 try:
     model.set_image(file)
-except IOError, e:
+except ValueError, e:
     return view.tab_edit(message_type="error", message='Problem: %s' % e)
 
 model.sec_update_last_author_info()
