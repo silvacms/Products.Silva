@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.111 2005/01/19 14:26:09 faassen Exp $
+# $Id: install.py,v 1.112 2005/02/21 14:48:44 gst Exp $
 """Install for Silva Core
 """
 # Python
@@ -671,7 +671,7 @@ def installSubscriptions(root):
             manage_addMaildropHost(root, MAILHOST_ID, 'Spool based mail delivery') 
         else:
             from Products.MailHost.MailHost import manage_addMailHost 
-            manage_addMailHost(root, MAILHOST_ID, 'Mail delivery') 
+            manage_addMailHost(root, MAILHOST_ID, 'Mail Delivery Service') 
     
     for id in (
         'subscription_confirmation_template',
