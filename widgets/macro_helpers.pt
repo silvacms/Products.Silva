@@ -10,7 +10,7 @@
   <td class="invisible" width="16">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="20" border="0" />
   </td>
-  <th align="left">
+  <th style="border-left:1px solid #617681;">
   <span tal:replace="python:here.get_display_name(wr_name, node)">Edit title</span>
   <a href="#top" title="up to top of page"><img tal:attributes="src string:${silva_root}/globals/up_to_top.gif" width="16" height="12" border="0" hspace="7" /></a>
   </th>
@@ -21,7 +21,9 @@
 </div>
 
 <div metal:define-macro="edit_bottom_start" tal:omit-tag="">
-  <td class="invisible" width="16">
+  <td class="invisible"
+    style="border-right:1px solid #617681;"
+    width="16">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" />
   </td>
 </div>
