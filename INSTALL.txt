@@ -6,9 +6,15 @@ Meta::
   Valid for:  Silva 0.9.2.3
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.32.2.2 $
+  CVS:        $Revision: 1.32.2.3 $
 
 Installing Silva
+
+  NOTE: As a special convenience we've started to release Silva-all
+  distributions as well. These contain all required products. The one
+  requirement for Silva that remains is PyXML (to make ParsedXML
+  work). Install Silva-all into your Products directory and restart Zope
+  to make it work.
 
   NOTE: If you are upgrading from a previous version of Silva, please see
   "UPGRADE.txt":http://www.zope.org/Members/infrae/Silva/UPGRADE.txt
@@ -50,11 +56,7 @@ Installing Silva
       The Silva product can be found here:
 
         "Silva":http://www.zope.org/Members/infrae/Silva
-
-      or just download:
-
-        "Silva-0.9.2.3.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.2.3/Silva-0.9.2.3.tgz
-  
+ 
     XMLWidgets (0.10.1)
 
       A system that builds on top of ParsedXML to assist in the
@@ -64,10 +66,6 @@ Installing Silva
       XMLWidgets can be found here:
 
         "XMLWidgets":http://www.zope.org/Members/faassen/XMLWidgets
-
-      or just download:
-
-        "XMLWidgets-0.9.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.9.tgz
 
     ParsedXML (1.3.1)
 
@@ -85,11 +83,7 @@ Installing Silva
  
         "ParsedXML":http://www.zope.org/Members/faassen/ParsedXML
 
-      or just download:
-
-        "ParsedXML-1.3.1.tgz":http://www.zope.org/Members/faassen/ParsedXML/ParsedXML-1.3.1.tgz
-   
-    Formulator (1.4.2)
+    Formulator (1.5.0)
 
       A system for the construction and validation of web forms, used
       by Silva's views.
@@ -97,11 +91,6 @@ Installing Silva
       Formulator can be found here:
 
         "Formulator":http://www.zope.org/Members/faassen/Formulator
-
-      or just download:
-
-        "Formulator-
-        1.4.2.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.4.2.tgz
 
     FileSystemSite (1.2)
 
@@ -114,28 +103,28 @@ Installing Silva
 
         "FileSystemSite":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite
 
-      or just download:
+    SilvaMetadata (0.7.1)
   
-        "FileSystemSite-1.2.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite/FileSystemSite-1.2.tgz
+      SilvaMetadata can be found here:
 
-    SilvaMetadata (0.7)
+        "SilvaMetadata":http://www.zope.org/Members/infrae/SilvaMetadata
 
-      "SilvaMetadata-0.7.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.7.tgz
+    ProxyIndex (1.1.1)
 
-    ProxyIndex (1.1)
+      ProxyIndex can be found here:
+       
+        "ProxyIndex":http://www.zope.org/Members/infrae/ProxyIndex
 
-      "ProxyIndex-1.1.tgz":http://www.zope.org/Members/infrae/Silva/ProxyIndex-1.1.tgz
+    Annotations (0.4.2)
 
-    Annotations (0.4.1)
-
-      "Annotations-0.4.1.tgz":http://www.zope.org/Members/infrae/Silva/Annotations-0.4.1.tgz
+      "Annotations":http://www.zope.org/Members/infrae/Annotations
 
     Groups (0.3.1)
 
       If you want to take advantage of Groups support, please download and
       install the Groups product, here:
   
-       "Groups-0.3.1.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz
+       "Groups":http://www.zope.org/Members/faassen/Groups
 
       Groups support is optional; Silva should run without the Groups
       product installed. Groups use a rather hackish technique called
@@ -155,7 +144,7 @@ Installing Silva
       should not be stored in the ZODB but the plain file system, you
       may consider installing the ExtFile product from here:
 
-       "ExtFile":http://www.zope.org/Members/MacGregor/ExtFile/ExtFile-1.1.3.tgz
+       "ExtFile":http://www.zope.org/Members/MacGregor/ExtFile
 
       This product is optional; see "Installing Silva with ExtFile" below.
       You may want to look into the README.txt of ExtFile at

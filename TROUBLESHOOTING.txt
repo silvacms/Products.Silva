@@ -50,6 +50,14 @@ Installation problems
     (or wherever the "pyexpat" module has been installed).
 
 
+  I cannot create new document versions as a non-manager.
+
+    This was a problem with early versions of Silva 0.9.2. From
+    version 0.9.2.3 onwards this should be fixed. In an existing Silva
+    root, press 'refresh' in 'service_extensions' in the Silva root to
+    set the right permission.
+
+
   After installing the Silva Product and restarting Zope, the server
   does not respond to HTTP request.
 
