@@ -14,7 +14,8 @@
 <!-- ____________________________ start index_html/slot main ___________________________ -->
 
 <tal:block condition="view/REQUEST/focus | nothing">
-<script language="JavaScript" tal:content="string:document.location = 'tab_edit_import#${view/REQUEST/focus}';" />
+<script language="JavaScript" tal:content="string:document.location = 'tab_edit_import#${view/REQUEST/focus}';">
+</script>
 </tal:block>
 
 <div class="margins">
@@ -286,6 +287,7 @@
             <th align="left" colspan="2" width="8%">Job&nbsp;id</th>
             <th align="left" width="10%">Type</th>
             <th align="left">Description</th>
+            <th align="right" width="1%">Download</th>
           </tr>
 
           <tr tal:repeat="job finished_jobs" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
@@ -294,10 +296,11 @@
             <td align="left" tal:condition="python: job[2] == 'silva'">Silva XML</td>
             <td align="left" tal:condition="python: job[2] == 'word'">Word Document</td>
             <td align="left" tal:content="python: job[1]">Description</td>
+            <td align="right"><a href="#" tal:attributes="href python:'tab_edit_import_download?storageid=%s|%s' % (job[0], job[2])">Download</a></td>
           </tr>
 
           <tr class="focus" tal:condition="python: len(finished_jobs) == 0">
-            <td align="left" colspan="4">There are no processed jobs</td>
+            <td align="left" colspan="5">There are no processed jobs</td>
           </tr>
 
           <tr class="controls">
@@ -311,10 +314,9 @@
               //-->
             </script>
             </td>
-            <td align="right">
+            <td align="right" colspan="2">
             <tal:block condition="silva_permissions/ChangeSilvaContent">
                 &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_edit_import_delete:method" value=" Remove " title="There's no undo: alt-x" accesskey="x" onClick="return confirm('Really remove?')" />
-                &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import_download:method" value=" Download " title="Download this item: alt-d" accesskey="d" />
                 &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import_import_and_delete:method" value=" Import and remove " title="Import to the current location and remove from the list: alt-m" accesskey="m" />
                 &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import_w2s:method" value=" Import " title="Import to the current location: alt-p" accesskey="p" />
             </tal:block>

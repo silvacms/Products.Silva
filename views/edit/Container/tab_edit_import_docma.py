@@ -14,12 +14,12 @@ model = request.model
 model.security_trigger()
 
 if not request.has_key('importfile') or not request['importfile']:
-    return view.tab_edit_import_docma(message_type='error', message='Select a file for upload')
+    return view.tab_edit_import(message_type='error', message='Select a file for upload')
 
 if not request.has_key('email') or not request['email']:
-    return view.tab_edit_import_docma(message_type='error', message='You must enter your e-mail address')
+    return view.tab_edit_import(message_type='error', message='You must enter your e-mail address')
 
-description = 'No description'
+description = request['importfile'].filename
 if request.has_key('description') and request['description']:
     description = request['description']
 
