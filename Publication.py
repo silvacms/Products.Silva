@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.60 $
+# $Revision: 1.61 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -166,10 +166,11 @@ class Publication(Folder.Folder):
         current = self
         root = self.get_root()
         while 1:
-            addables = current._addables_allowed_in_publication
-            if addables is not None:
-                return addables
-            elif current == root:
+            if IPublication.isImplementedBy(current):
+                addables = current._addables_allowed_in_publication
+                if addables is not None:
+                    return addables
+            if current == root:
                 return self.get_silva_addables_all()
             current = current.aq_parent
 
