@@ -18,10 +18,10 @@ if not request.has_key('versions'):
 from Products.Silva.adapters import version_management
 adapter = version_management.getVersionManagementAdapter(model)
 
-version = request['versions']
-if same_type(version, []):
+versions = request['versions']
+if len(versions) > 1:
     return view.tab_status(message_type="error", message=_("Can only set 1 version as editable."))
-    
+version = versions[0]    
 model.sec_update_last_author_info()
 try:
     adapter.revertPreviousToEditable(version)
