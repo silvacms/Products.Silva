@@ -17,28 +17,21 @@
     </tr>
     <tr>
       <td class="invisible align-right" style="background:#d7e4f0;">
-        url for image hyperlink
+<input type="button" class="navigation" name="" value="get link reference..." title="Access key: alt-l" accesskey="l"
+  tal:define="container node/get_container"
+  tal:attributes="onclick python:'getAssetReference(\'%s/edit/hyperlink_lookup?asset_context=%s\', \'_reference_\', \'focusbox\', \'data\', 1);;return false;;' % (container.absolute_url(), '/'.join(container.getPhysicalPath()))" />
       </td>
       <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">
+        <input type="radio" name="link_selector" value="entered_url"
+                tal:attributes="checked python:node.getAttribute('link_to_hires') != '1'"/>
+        <input style="width: 100%;" type="text" id="data" name="link" value=""
+            tal:attributes="value python:node.getAttribute('link');"  />
+        <br />
         <label>
             <input type="radio" name="link_selector" value="hiresimg_url" 
                 tal:attributes="checked python:node.getAttribute('link_to_hires') == '1'"/>
             <span style="width:100%">High resolution version of image</span>
         </label>
-        <br />
-        <input type="radio" name="link_selector" value="entered_url"
-                tal:attributes="checked python:node.getAttribute('link_to_hires') != '1'"/>
-        <input style="width: 100%;" type="text" name="link" value=""
-            tal:attributes="value python:node.getAttribute('link');"  />
-      </td>
-    </tr>
-    <tr>
-      <td class="invisible align-right">
-        title for hyperlink
-      </td>
-      <td class="invisible align-left" colspan="3">  
-        <input style="width:100%;" type="text" name="title" value=""
-          tal:attributes="value python:node.getAttribute('title');"  />
       </td>
     </tr>
     <tr>
@@ -46,17 +39,26 @@
         target frame
       </td>
       <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">  
-        <label>
-            <input type="radio" name="target_selector" value="_blank"
-              tal:attributes="checked python:node.getAttribute('target') == '_blank'"/>
-            new window
-        </label>
-        <br />
         <input type="radio" name="target_selector" value="_user" 
             tal:attributes="checked python:node.getAttribute('target') != '_blank'"
         />
         <input style="width:100%;" type="text" name="target" value=""
           tal:attributes="value python:node.getAttribute('target');"  />
+        <br />
+        <label>
+            <input type="radio" name="target_selector" value="_blank"
+              tal:attributes="checked python:node.getAttribute('target') == '_blank'"/>
+            new window
+        </label>
+      </td>
+    </tr>
+    <tr>
+      <td class="invisible align-right">
+        tooltip for hyperlink
+      </td>
+      <td class="invisible align-left" colspan="3">  
+        <input style="width:100%;" type="text" name="title" value=""
+          tal:attributes="value python:node.getAttribute('title');"  />
       </td>
     </tr>
     <tr>
@@ -104,14 +106,19 @@
 </metal:block>
 <metal:block fill-slot="edit_notes">
   <ul class="tips">
-    <li>Use &#8220;get image reference...&#8221; (alt-g) to locate an image, or
-      type in the full path.
+    <li>Use &#8220;get image reference...&#8221; (alt-g) to locate an image, or type in the full path.
     </li>
     <li>
-      Set a URL to make this image a link.
+      Set a URL to make this image a link (alt-l). For other sites, prepend &#8216;http://&#8217; to the address.
     </li>
-    <li>A &#8216;float&#8217; alignment allows the next document element
-      to wrap around the image &#8211; if there&#8217;s room.
+    <li>
+      Set an optional target for the link. Turning on &#8220;new window&#8221; inserts &#8216;_blank&#8217; after saving.
+    </li>
+    <li>
+      It&#8217;s good practice to give the link of an image a title, which will appear as a tooltip.
+    </li>
+    <li>
+      A float alignment allows the next document element to wrap &#8211; if there&#8217;s room.
     </li>
   </ul>
 </metal:block>
