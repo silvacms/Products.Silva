@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51.2.4 $
+# $Revision: 1.51.2.5 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -225,29 +225,37 @@ class GhostVersion(SimpleItem.SimpleItem):
     def render_preview(self):
         """Render preview of this version (which is what we point at)
         """
-        # FIXME: should only call view if we are allowed to by content
         # FIXME what if content is None?
         # what if we get circular ghosts?
         content = self._get_content()
         if content is None:
             return None # public render code of ghost should give broken message
-        else:
+
+        user = self.REQUEST.AUTHENTICATED_USER
+        permission = 'View'
+        if user.has_permission(permission, content):
             self.REQUEST.set('ghost_model', self.aq_inner)
             return content.view()
+        else:
+            raise "Unauthorized"
 
     def render_view(self):
         """Render view of this version (which is what we point at)
         """
-        # FIXME: should only call view if we are allowed to by content
         # FIXME what if content is None?
         # what if we get circular ghosts?
         content = self._get_content()
         if content is None:
             return None # public render code of ghost should give broken message
-        else:            
+
+        user = self.REQUEST.AUTHENTICATED_USER
+        permission = 'View'
+        if user.has_permission(permission, content):
             self.REQUEST.set('ghost_model', self.aq_inner)
             return content.view()
-    
+        else:
+            raise "Unauthorized"
+
 manage_addGhostForm = PageTemplateFile("www/ghostAdd", globals(),
                                        __name__='manage_addGhostForm')
 
