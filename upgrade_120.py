@@ -42,7 +42,22 @@ class ReindexHauntedPath:
         catalog = silvaroot.service_catalog
         catalog.reindexIndex('haunted_path', None)
         return silvaroot
-            
+
+class UpdateIndexers:
+    """The indexers' implementation has changed. We need to trigger
+    an update call on each instance to get the contained information
+    up to date.
+    """
+    
+    __implements__ = IUpgrader
+    
+    def upgrade(self, indexer):
+        zLOG.LOG(
+            'Silva', zLOG.INFO, 
+            'Update index for %s' % '/'.join(indexer.getPhysicalPath()))
+        indexer.update()
+        return indexer
+    
 class RefreshAll:
     " refresh all products "
 
@@ -56,4 +71,5 @@ class RefreshAll:
 def initialize():
     upgrade.registry.registerUpgrader(CatalogUpgrade(), '1.2', 'Silva Root')
     upgrade.registry.registerUpgrader(ReindexHauntedPath(), '1.2', 'Silva Root')
+    upgrade.registry.registerUpgrader(UpdateIndexers(), '1.2', 'Silva Indexer')
     upgrade.registry.registerUpgrader(RefreshAll(), '1.2', 'Silva Root')
