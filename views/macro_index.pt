@@ -110,15 +110,15 @@ function handle_default_action(element, event, action)
 <div class="workspace">
   <metal:block define-slot="middleground" />
 
-<tal:condition condition="python: not (template.id == 'tab_edit' and editor == 'kupu')">
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
 <tal:block define="
-  type options/message_type | request/message_type | nothing;
-  notice options/message | request/message | nothing;
-  dummy python:here.recordError(type, notice);
-">
+    type options/message_type | request/message_type | nothing;
+    notice options/message | request/message | nothing;
+    dummy python:here.recordError(type, notice);
+  "
+  condition="python: type or (template.id != 'tab_edit' or editor != 'kupu')">
   <div class="feedback"
     tal:condition="python: template.id != 'tab_preview'"
     tal:attributes="class python:type == 'feedback' and 'fixed-feedback' or (type == 'error' and 'fixed-alert' or 'fixed-clear')">
@@ -162,7 +162,6 @@ function handle_default_action(element, event, action)
 <span tal:replace="nothing">
 <!-- ______________ end feedback ______________ -->
 </span>
-</tal:condition>
 
 <!-- _____________________ Start main _____________________ -->
 <div metal:define-slot="main">
