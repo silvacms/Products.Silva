@@ -1,4 +1,4 @@
-This folder ('Silva//globals') contains Silva specific items, and *will* be 
+This folder ('mySilva/globals') contains Silva specific items, and *will* be 
 overwritten in an upgrade.
 
 If you have created similar items, we suggest making a 'locals' folder in
