@@ -347,7 +347,8 @@ def convert_document_092(obj):
         newobj.approve_version()
         getattr(newobj, str(newobj.get_approved_version())).content.manage_edit(xml)
         newobj.manage_addProduct['Silva'].manage_addDocumentVersion(str(current_id), '')
-        newobj.create_version(str(current_id), None, None)
+        # since there can only be an approved OR an unapproved version, we don't
+        # have to create a new one here
         current_id += 1
     unapproved = obj.get_unapproved_version()
     if unapproved is not None:
