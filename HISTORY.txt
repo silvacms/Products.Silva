@@ -10,11 +10,37 @@ Silva changes
         - Removed Silva Document and editor functionality from the core
           into its own product, SilvaDocument.
 
+  0.9.2.2
+ 
+    Bugs Fixed
+                                                                                                    
+        - The metadata tab wouldn't show the metadata set's title when it
+          was available.
+ 
+  0.9.2.1
+ 
+    Features added
+ 
+        - Added support for ExternalEditor, Silva Files and Images can now
+          be edited using your favorite editor
+ 
+    Bugs Fixed
+ 
+        - Fix bug where viewing content normally restricted by an
+          AccessRestriction, could be viewed via a Ghost.
+ 
+        - Pressing upgrade more than once now doesn't mess up object titles
+          anymore
+ 
+        - All content types should now have the correct metadata sets setup
+          for them (led to a KeyError on 'silva-extra' in all of the views
+          of those content types)
+
   0.9.2 
 
     Features Added
 
-        - Bulk import of files (for FIle Assets) and/or images (for Image
+        - Bulk import of files (for File Assets) and/or images (for Image
           Assets) using a zipfile.
 
         - New metadata architecture, which provides multiple configurable
@@ -71,6 +97,36 @@ Silva changes
 
         - A number of minor bugs, mainly in UI.
         
+  0.9.1.8
+ 
+    Bugs Fixed
+ 
+      - The bug fixed in 0.9.1.7 regarding _allow_authentication_requests
+        should have been fixed in a backward compatible way in 0.9.1.7, 
+        which it wasn't. Therefore old content and extensions broke. This 
+        release adds only some backward compatible code to resolve this 
+        issue. From now on, 0.9.1.4 (and older 0.9.1.x) content and extensions 
+        should work again.
+ 
+  0.9.1.7
+ 
+    Features Added
+ 
+      - Support for external editor is now complete, users don't have to
+        manually setup anything anymore to use it.
+ 
+    Bugs Fixed
+ 
+      - Fixed bug in the upgrade script that lead to an AttbributeError
+        on '_allow_authentication_requests'
+ 
+  0.9.1.6
+ 
+    Bugs Fixed
+ 
+        - Fix bug where viewing content normally restricted by an
+          AccessRestriction, could be viewed via a Ghost.
+
   0.9.1.5
                                                                                                 
     Bugs Fixed
