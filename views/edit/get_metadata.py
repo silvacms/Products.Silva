@@ -44,7 +44,6 @@ def isAcquired(set_name, element_name):
 
 isViewable = binding.isViewable
 isEditable = binding.isEditable
-value = binding.get
 
 pt_binding = {}
 pt_binding['setNames'] = set_names = binding.getSetNames()
@@ -65,6 +64,8 @@ for set_name in set_names:
     # Per element:
     for element_name in element_names:
         set[element_name] = element = {}
+        # current value
+        element['value'] = binding.get(set_name, element_name)
         # view, maybe acquired
         element['view'] = renderView(set_name, element_name)
         # isAquired
