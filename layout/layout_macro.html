@@ -22,9 +22,9 @@
 <metal:block define-slot="page_header">
   <!-- page_header slot -->
 </metal:block>
-<table width="100%" height="100%" border="1" cellspacing="0" cellpadding="0">
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
 <tr valign="top" height="1%">
-  <td width="16" bgcolor="#d1d4d8">
+  <td width="1%" bgcolor="#d1d4d8">
     <img src="globals/silva_icon_32.gif" tal:attributes="src here/globals/silva_icon_32.gif/absolute_url" height="32" width="32" />
   </td>
   <td width="16" bgcolor="#dde1e4">
@@ -33,7 +33,7 @@
   <td width="12">
     <img src="globals/pixel.gif" tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
   </td>
-  <td width="512" class="margins">
+  <td width="512">
     <metal:block define-slot="navigation">
       <!-- navigation slot -->
     </metal:block>
@@ -44,6 +44,7 @@
 </tr>
 <tr valign="top" height="100%">
   <td bgcolor="#d1d4d8">
+    &nbsp;
   </td>
   <td bgcolor="#dde1e4">
     &nbsp;
@@ -51,7 +52,7 @@
   <td>
     &nbsp;
   </td>
-  <td width="512">
+  <td width="512" height="100%">
     <metal:block define-slot="table_of_contents">
       <!-- table_of_contents slot -->
     </metal:block>
