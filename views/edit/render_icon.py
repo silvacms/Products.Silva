@@ -15,7 +15,18 @@ dict = { 'Silva Root' : 'silva.gif',
          'Silva Course' : 'silvacourse.gif',
          'Silva Contact Info' : 'silvacontactinfo.gif',
          'Silva Ghost' : 'silvaghost.gif',
-         'Silva DemoObject' : 'silvageneric.gif' }
+         'Silva DemoObject' : 'silvageneric.gif',
+         'Silva News NewsItem' : 'silvanewsitem.gif',
+         'Silva News AgendaItem' : 'silvaagendaitem.gif',
+         'Silva News PlainArticle' : 'silvanewsitem.gif',
+         'Silva News PlainAgendaItem' : 'silvaagendaitem.gif',
+         'Silva News NewsSource' : 'silvanewssource.gif',
+         'Silva News NewsFilter' : 'silvanewsfilter.gif',
+         'Silva News AgendaFilter' : 'silvanewsfilter.gif',
+         'Silva News NewsViewer' : 'silvanewsviewer.gif',
+         'Silva News AgendaViewer' : 'silvaagendaviewer.gif',
+         'Silva News RSSViewer' : 'silvanewsviewer.gif'
+         }
 
 icon_name = dict.get(meta_type, 'silvageneric.gif')
 return '<img src="%s/globals/%s" width="16" height="16" border="0" alt="%s" />' % (context.silva_root(),icon_name, meta_type)
