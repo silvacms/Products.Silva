@@ -18,6 +18,10 @@ Silva changes
         If a visitor is subscribed, he will receive notifications by email
         whenever a publication event for this object is triggered.
 
+      - When ExtFile is installed, a site manager can switch between ZODB
+        storage and file system storage of assets with one click of a 
+        button.
+
     Bugs fixed
 
       - Fixed a bug in the xml importer that could result in loss of text
