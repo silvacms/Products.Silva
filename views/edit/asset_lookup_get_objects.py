@@ -10,18 +10,22 @@
 #filter: 'Asset', 'Content' or a certain meta_type
 
 model = context.REQUEST.model
+assets = []
 if filter == 'Asset':
-    return model.get_assets()
-if filter == 'Content':
-    return [ content
+    assets = model.get_assets()
+elif filter == 'Content':
+    assets = [ content
         for content in model.get_ordered_publishables()
         if content.implements_content()]
-if filter == 'Container':
-    return [ content
+elif filter == 'Container':
+    assets = [ content
         for content in model.get_ordered_publishables()
         if content.implements_container()]
-if filter == 'Publishables':
-    return model.get_ordered_publishables()
-return model.objectValues(filter)
+elif filter == 'Publishables':
+    assets = model.get_ordered_publishables()
+else:
+    assets = model.objectValues(filter)
+assets.sort(lambda a,b: cmp(a.id, b.id))
+return assets
 
 
