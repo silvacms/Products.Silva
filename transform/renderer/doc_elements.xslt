@@ -15,25 +15,25 @@
   
   <xsl:template match="doc:heading[@type='normal']">
     <xsl:choose>
-    <xsl:when test="not(child::*)" />
-    <xsl:otherwise>
-      <h3 class="heading"><xsl:apply-templates /></h3>
-    </xsl:otherwise>
+      <xsl:when test="not(text()[normalize-space(.)] | *)" />
+      <xsl:otherwise>
+        <h3 class="heading"> <xsl:apply-templates /></h3>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
   <xsl:template match="doc:heading[@type='sub']">
     <xsl:choose>
-    <xsl:when test="not(child::*)" />
-    <xsl:otherwise>
-      <h4 class="heading"><xsl:apply-templates mode="text-content" /></h4>
-    </xsl:otherwise>
+      <xsl:when test="not(text()[normalize-space(.)] | *)" />
+      <xsl:otherwise>
+        <h4 class="heading"> <xsl:apply-templates mode="text-content" /></h4>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
   <xsl:template match="doc:heading[@type='subsub']">
     <xsl:choose>
-      <xsl:when test="not(child::*)" />
+      <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
         <h5 class="heading"><xsl:apply-templates mode="text-content" /></h5>
       </xsl:otherwise>
@@ -42,7 +42,7 @@
 
   <xsl:template match="doc:heading[@type='paragraph']">
     <xsl:choose>
-      <xsl:when test="not(child::*)" />
+      <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
         <h6 class="heading"><xsl:apply-templates mode="text-content" /></h6>
       </xsl:otherwise>
@@ -51,7 +51,7 @@
 
   <xsl:template match="doc:heading[@type='subparagraph']">
     <xsl:choose>
-      <xsl:when test="not(child::*)" />
+      <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
         <h6 class="minor"><xsl:apply-templates mode="text-content" /></h6>
       </xsl:otherwise>
