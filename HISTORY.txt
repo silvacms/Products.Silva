@@ -15,6 +15,9 @@ Silva changes
         recommended by Infrae), suppress source code encoding warnings when
         starting up.
 
+      - Another problem with the upgrade code for handling index elements,
+        which causes a few of them to be missed, has been repaired.
+
   0.9.3.4
   
     Bugs fixed
