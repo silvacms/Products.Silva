@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.37 2004/12/13 13:49:13 jw Exp $
+# $Id: GhostFolder.py,v 1.38 2005/01/12 09:30:46 jw Exp $
 
 from __future__ import nested_scopes
 
@@ -381,8 +381,8 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                     DateTime())
                 object.approve_version()
                     
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                                'is_published')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'is_published')
     def is_published(self):
         return Folder.Folder.is_published(self)
                     
