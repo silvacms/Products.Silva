@@ -20,8 +20,8 @@ for set_name in binding.getSetNames():
 
 if all_errors:
     # There were errors...
-    type = 'warning'
-    msg = 'Metadata input had validation errors.'
+    type = 'error'
+    msg = 'The data submitted did not validate properly.'
 else:
     type = 'feedback'
     msg = 'Metadata saved.'
