@@ -70,7 +70,7 @@
             href="top"
             title="up to top of publication"
             tal:attributes="href publication_url"
-            tal:content="python: publication.getProperty('short_title') or publication.get_title()">
+            tal:content="python: publication.getProperty('short_title') or publication.get_title_editable()">
             Publication
           </a>
         </td>
@@ -97,7 +97,7 @@
                 tal:attributes="
                   href string:${item_url}/edit/{__vein_id__};
                   title string:id: ${item/id};"
-                tal:define="title python: (item.getProperty('short_title') or item.get_title() or default)"
+                tal:define="title python: (item.getProperty('short_title') or item.get_title_editable() or default)"
                 tal:content="title">
                 <i>no title</i>
               </a>

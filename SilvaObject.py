@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.76 2003/05/16 11:52:38 faassen Exp $
+# $Id: SilvaObject.py,v 1.77 2003/05/16 15:26:00 jw Exp $
 
 # python
 from types import StringType
@@ -66,26 +66,15 @@ class SilvaObject(Security, ViewCode):
     # MANIPULATORS
     def manage_afterAdd(self, item, container):
         container._add_ordered_id(item)
-        # If we are a container, walk recursively through self to find and
-        # (if published) close versioned content items
-        # this is probably only used when importing a zexp
-        if IContainer.isImplementedBy(self):
-            self._update_contained_documents_status()
+        if self.id == 'index':
+            container = self.get_container()
+            container._invalidate_sidebar(container)
         
-    def _update_contained_documents_status(self):
-        """Closes all objects that implement VersionedContent (if public) and recurses into subcontainers"""
-        for obj in self.objectValues():
-            if IVersionedContent.isImplementedBy(obj):
-                if obj.is_version_published():
-                    obj.close_version()
-                    obj.create_copy()
-                if obj.is_version_approved():
-                    obj.unapprove_version()
-            elif IContainer.isImplementedBy(obj):
-                obj._update_contained_documents_status()
-    
     def manage_beforeDelete(self, item, container):
         container._remove_ordered_id(item)
+        if self.id == 'index':
+            container = self.get_container()
+            container._invalidate_sidebar(container)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')

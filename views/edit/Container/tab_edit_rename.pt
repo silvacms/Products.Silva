@@ -122,13 +122,15 @@
 
 </tal:condition>
 
-<tal:condition condition="python: not here.REQUEST.has_key('ids')"
-i18n:translate="no_items_to_rename">
-No items to rename!<br />
-<a href="#" tal:attributes="href python:'/'.join(model.getPhysicalPath()) + '/edit'"
-  i18n:translate="edit">
-  edit
-</a>
+<tal:condition condition="python: not here.REQUEST.has_key('ids')">
+  <span i18n:translate="no_items_to_rename">
+    No items to rename!
+  </span>
+  <br />
+  <a href="#" tal:attributes="href python:'/'.join(model.getPhysicalPath()) + '/edit'"
+    i18n:translate="edit">
+    edit
+  </a>
 </tal:condition>
 
 </metal:block>

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27 $
+# $Revision: 1.28 $
 
 # Python
 from StringIO import StringIO
@@ -57,7 +57,10 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         """
         viewable = self.get_viewable()
         if viewable is None:
-            return "[No title available]"
+            last_closed_version = self.get_last_closed()
+            if last_closed_version is None:
+                return "[No title available]"
+            return last_closed_version.get_title()
         return viewable.get_title()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -120,6 +123,17 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         no versioning).
         """
         version_id = self.get_public_version()
+        if version_id is None:
+            return None # There is no public document
+        return getattr(self, version_id)
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_last_closed')
+    def get_last_closed(self):
+        """Get the last closed version (may be the object itself if
+        no versioning).
+        """
+        version_id = self.get_last_closed_version()
         if version_id is None:
             return None # There is no public document
         return getattr(self, version_id)

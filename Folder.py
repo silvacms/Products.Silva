@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.102 $
+# $Revision: 1.103 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -71,6 +71,10 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         Folder.inheritedAttribute('manage_afterAdd')(self, item, container)
         self._invalidate_sidebar(item)
         self.index_object()
+        # Walk recursively through self to find and
+        # (if published) close versioned content items
+        # this is probably only used when importing a zexp
+        self._update_contained_documents_status()
 
     def manage_beforeDelete(self, item, container):
         Folder.inheritedAttribute('manage_beforeDelete')(self, item, container)
@@ -94,6 +98,19 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         if IPublication.isImplementedBy(item) and not IRoot.isImplementedBy(item):
             service_sidebar.invalidate(item.aq_inner.aq_parent)
 
+    def _update_contained_documents_status(self):
+        """Closes all objects that implement VersionedContent (if public) 
+        and recurses into subcontainers"""
+        for obj in self.objectValues():
+            if IVersionedContent.isImplementedBy(obj):
+                if obj.is_version_published():
+                    obj.close_version()
+                    obj.create_copy()
+                if obj.is_version_approved():
+                    obj.unapprove_version()
+            elif IContainer.isImplementedBy(obj):
+                obj._update_contained_documents_status()
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title')
     def get_title(self):
