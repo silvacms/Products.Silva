@@ -1,8 +1,15 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.44 $
+$Revision: 1.47.2.45 $
 
 Silva changes
+
+  0.9.1.9
+
+    Bugs Fixed
+
+      - EditorSupportNested was passing along a document object as an
+        object id. That can't be right. Fixed.
 
   0.9.1.8
 

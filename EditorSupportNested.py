@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13.2.3 $
+# $Revision: 1.13.2.4 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -357,7 +357,7 @@ class EditorSupport(SimpleItem):
         elements = ['a', 'strong', 'em', 'underline', 'sub', 'sup']
         while 1:
             try:
-                dom = ParsedXML(doc, '<p>%s</p>' % st)
+                dom = ParsedXML('temporary', '<p>%s</p>' % st)
                 return dom
             except ExpatError, message:
                 message = str(message)
