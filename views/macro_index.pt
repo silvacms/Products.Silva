@@ -23,6 +23,7 @@
 <style tal:define="local_style view/local_style"
   tal:condition="local_style"
   tal:content="structure local_style">color container tabs green</style>
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
 <script tal:replace="nothing"> _______ editor hooks _______ </script>
 <script type="text/javascript" language="JavaScript"
   tal:condition="python: template.id == 'tab_edit_bxe'"
