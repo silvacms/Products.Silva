@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 18 15:40:25 2004\n"
+"POT-Creation-Date: Thu Nov 18 15:58:21 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -643,7 +643,7 @@ msgstr ""
 #: /views/edit/hyperlink_lookup.pt:313
 #: /views/edit/Container/tab_edit.pt:128
 #: /views/edit/Container/tab_edit.pt:205
-#: /views/edit/Container/tab_edit.pt:381
+#: /views/edit/Container/tab_edit.pt:382
 #: /views/edit/Container/GhostFolder/tab_edit.pt:223
 #: /views/edit/Container/GhostFolder/tab_edit.pt:311
 #: /views/edit/Container/GhostFolder/tab_edit.pt:428
@@ -659,8 +659,8 @@ msgstr ""
 #: /views/edit/VersionedContent/Link/get_tabs.py:17
 #: /views/edit/Container/tab_edit.pt:219
 #: /views/edit/Container/tab_edit.pt:228
-#: /views/edit/Container/tab_edit.pt:396
-#: /views/edit/Container/tab_edit.pt:405
+#: /views/edit/Container/tab_edit.pt:397
+#: /views/edit/Container/tab_edit.pt:406
 msgid "properties"
 msgstr ""
 
@@ -699,6 +699,7 @@ msgstr ""
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
 #: /views/edit/hyperlink_lookup.pt:243
 #: /views/edit/Container/tab_edit.pt:255
+#: /views/edit/Container/tab_edit.pt:264
 #: /views/edit/Container/tab_status.pt:170
 #: /views/edit/Container/tab_status.pt:179
 #: /views/edit/Container/GhostFolder/tab_edit.pt:352
@@ -1031,7 +1032,7 @@ msgid "delete selected groups: alt-d"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:252
-#: /views/edit/Container/tab_edit.pt:547
+#: /views/edit/Container/tab_edit.pt:548
 #: /views/edit/VersionedContent/tab_status.pt:324
 msgid "delete"
 msgstr ""
@@ -1084,97 +1085,91 @@ msgstr ""
 msgid "modify"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:137
-msgid "&nbsp;&nbsp;Shift"
+#: /views/edit/Container/tab_edit.pt:138
+msgid "shift"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:241
 msgid "content approved, or published..."
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:282
+#: /views/edit/Container/tab_edit.pt:283
+#: /views/edit/Container/tab_edit.pt:288
 msgid "move down"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:287
-msgid "Move down"
-msgstr ""
-
-#: /views/edit/Container/tab_edit.pt:294
+#: /views/edit/Container/tab_edit.pt:295
+#: /views/edit/Container/tab_edit.pt:300
 msgid "move up"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:299
-msgid "Move up"
-msgstr ""
-
-#: /views/edit/Container/tab_edit.pt:454
+#: /views/edit/Container/tab_edit.pt:455
 msgid "move selected items to"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:460
+#: /views/edit/Container/tab_edit.pt:461
 msgid "position"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:471
+#: /views/edit/Container/tab_edit.pt:472
 msgid "end"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:478
+#: /views/edit/Container/tab_edit.pt:479
 #: /views/edit/Container/tab_status.pt:343
 #: /views/edit/VersionedContent/tab_status_macros.pt:503
 msgid "access key: alt-p"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:484
+#: /views/edit/Container/tab_edit.pt:485
 msgid "move selected items into position: alt-m"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:484
+#: /views/edit/Container/tab_edit.pt:485
 msgid "move"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:494
+#: /views/edit/Container/tab_edit.pt:495
 msgid "rename and retitle items: alt-r"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:494
+#: /views/edit/Container/tab_edit.pt:495
 msgid "rename..."
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:502
+#: /views/edit/Container/tab_edit.pt:503
 msgid "cut"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:502
+#: /views/edit/Container/tab_edit.pt:503
 msgid "cut items: alt-x"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:513
+#: /views/edit/Container/tab_edit.pt:514
 msgid "copy"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:513
+#: /views/edit/Container/tab_edit.pt:514
 msgid "copy items: alt-c"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:529
+#: /views/edit/Container/tab_edit.pt:530
 msgid "paste items: alt-v"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:529
+#: /views/edit/Container/tab_edit.pt:530
 msgid "paste"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:537
+#: /views/edit/Container/tab_edit.pt:538
 msgid "paste (items on clipboard) as ghost objects: alt-g"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:537
+#: /views/edit/Container/tab_edit.pt:538
 msgid "paste ghost"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:547
+#: /views/edit/Container/tab_edit.pt:548
 #: /views/edit/VersionedContent/tab_status.pt:324
 msgid "there's no undo: alt-d"
 msgstr ""
@@ -2035,11 +2030,11 @@ msgid "${note} this version is approved but not yet public. In order to make cha
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:137
-msgid "withdraw a request for approval in order to edit: alt-w"
+msgid "withdraw request"
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:137
-msgid "withdraw request"
+msgid "withdraw a request for approval in order to edit: alt-w"
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:148
@@ -2188,15 +2183,15 @@ msgstr ""
 msgid "No versions selected"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:22
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:28
 msgid "Can't delete all versions"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:29
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:35
 msgid "<span class=\"error\">could not delete ${id}: ${error}</span>"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:33
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:39
 msgid "deleted ${id}"
 msgstr ""
 
@@ -2540,7 +2535,7 @@ msgstr ""
 #: /views/edit/hyperlink_lookup.pt:228
 #: /views/edit/hyperlink_lookup.pt:248
 #: /views/edit/Container/tab_edit.pt:234
-#: /views/edit/Container/tab_edit.pt:269
+#: /views/edit/Container/tab_edit.pt:270
 #: /views/edit/Container/tab_status.pt:185
 #: /views/edit/Container/GhostFolder/tab_edit.pt:338
 #: /views/edit/Container/GhostFolder/tab_edit.pt:356
@@ -2548,7 +2543,7 @@ msgid "n/a"
 msgstr ""
 
 #: /views/edit/document_lookup.pt:315
-#: /views/edit/Container/tab_edit.pt:362
+#: /views/edit/Container/tab_edit.pt:363
 #: /views/edit/VersionedContent/tab_status.pt:72
 #: /views/edit/VersionedContent/tab_status.pt:96
 msgid "editor"
@@ -2611,7 +2606,7 @@ msgid "&#8211;"
 msgstr ""
 
 #: /views/edit/hyperlink_lookup.pt:334
-#: /views/edit/Container/tab_edit.pt:411
+#: /views/edit/Container/tab_edit.pt:412
 #: /views/edit/Container/GhostFolder/tab_edit.pt:452
 msgid "unknown"
 msgstr ""
