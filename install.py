@@ -55,8 +55,10 @@ def add_fss_directory_view(obj, name, base, *args):
     except:
         pass
     else:
-        pass #if info is None:
-            #raise ValueError('Not a FSS registered directory: %s' % path)
+        # XXX need to comment this out to make tests run in INSTANCE_HOME
+        # situation..
+        if info is None:
+            raise ValueError('Not a FSS registered directory: %s' % path)
     
     # -- end sanity check because of FSS 1.1 bug --
     
