@@ -126,7 +126,7 @@
                   <input class="button"
                     style="float:right;"
                     type="submit"
-                    value="Add to clipboard"
+                    value="add to clipboard"
                     title="add checked users to clipboard: alt-a"
                     accesskey="a"                      
                     i18n:attributes="value title"
