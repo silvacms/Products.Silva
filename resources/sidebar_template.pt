@@ -27,7 +27,7 @@
       href="top"
       title="up to top of publication"
       tal:attributes="href publication_url"
-      tal:content="publication/get_short_title_editable">
+      tal:content="python: publication.get_short_title_editable() == '' and publication.id or publication.get_short_title_editable()">
       Publication
     </a>
   </td>

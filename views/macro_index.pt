@@ -50,7 +50,7 @@
 />
 <link href="globals/silvaContentStyle.css"
   rel="stylesheet"
-  tal:condition="python: not model.implements_container()"
+  tal:condition="python: not model.implements_container() or model.meta_type == 'Silva Ghost Folder'"
   tal:attributes="href string:${root_url}/globals/silvaContentStyle.css"
 />
 <tal:block replace="nothing"> _______ hook for metatype stylesheet _______ </tal:block>

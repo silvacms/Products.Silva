@@ -88,7 +88,7 @@
                 </th>
               </tr>
             </thead>
-            <tbody tal:condition="model/implements_container">
+            <tbody tal:condition="python: model.implements_container() and model.meta_type != 'Silva Ghost Folder'">
               <metal:define-slot define-slot="sidebar">
                 cached sidebar inserted with template variables
               </metal:define-slot>

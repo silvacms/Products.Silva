@@ -45,6 +45,35 @@
           </h2>
         </td>
       </tr>
+      <tal:block replace="nothing">
+        ______________ top controls row ______________
+      </tal:block>
+      <tr class="top-controls">
+        <td colspan="3" class="align-right">
+          <input class="navigation"
+            style="float:left;"
+            type="submit"
+            name="sync:method"
+            value="resync ghost folder"
+            title="re-synchronize with content from the source folder: alt-r"
+            accesskey="r"
+          />
+          <input class="button"
+            type="submit" 
+            name="convert_to_folder:method" 
+            value="convert to folder"
+            title="access key: alt-f"
+            accesskey="f"
+          />
+          <input class="button"
+            type="submit" 
+            name="convert_to_publication:method" 
+            value="convert to publication"
+            title="access key: alt-p"
+            accesskey="p"
+          />
+        </td>
+      </tr>
     </thead>
 
     <tbody>
@@ -63,8 +92,7 @@
 
       <tr class="even" valign="top">
         <td class="field-title">
-          Path
-          <span class="required">*</span>
+          Path<span class="required">*</span>
         </td>
         <td>
           <input type="text"
@@ -82,17 +110,17 @@
       <tr class="odd"
         tal:condition="not:link_status">
         <td class="field-title">
-          Link:
+          Link
         </td>
         <td>
           <a href="original"
-            tal:attributes="href python:content_url + '/edit/tab_preview'"
-            tal:content="python:content_url + ' (' + model.get_editable().get_title() + ')'">
+            tal:attributes="href python:content_url + '/edit/tab_edit'"
+            tal:content="python: model.get_editable().get_title()">
             Link
           </a>
         </td>
         <td>
-          &nbsp;<span tal:replace="nothing"> _______ FIXME: add 'Locate original' button _______ </span>
+          Link to editor screen of original.
         </td>
       </tr>
 
@@ -138,20 +166,6 @@
   </table>
 </form>
        
-<form method="POST" name="form" action="sync">
-   <input type="submit" name="sync" value="sync ghost folder" />
-</form>
-
-<form method="POST" name="form" action="convert_to_folder">
-   <input type="submit" name="sync" value="convert to folder" />
-</form>
-
-<form method="POST" name="form" action="convert_to_publication">
-   <input type="submit" name="sync" value="convert to publication" />
-</form>
-
-
-   
       </td>
     </tr>
   </tbody>
