@@ -3,7 +3,7 @@
     <tal:block 
       define="global image here/content"
       condition="image"
-      replace="structure python:image.image.tag()" />
+      replace="structure python:here.tag()" />
     <tal:block condition="not:image">
       <div class="error">[image element is broken]</div>
     </tal:block>

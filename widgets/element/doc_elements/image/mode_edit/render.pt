@@ -6,11 +6,22 @@
   <div class="margins">
   <table cellpadding="2" border="0" width="100%">
     <tr>
-      <td colspan="3">
+      <td colspan="1" width="10%">
         <input type="button" class="button" name="" value="Get image reference"
           tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Image\', \'_reference_\', \'focusbox\', \'image_path\');;return false;;' % here.get_start_container().absolute_url();" />
-        <input style="width:50%;" type="text" name="image_path" value=""
+      </td>
+      <td colspan="2">  
+        <input style="width:100%;" type="text" name="image_path" value=""
           tal:attributes="value python:node.output_convert_editable(node.getAttribute('image_path'));"  />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1" align="right">
+        Enter URL to link to:
+      </td>
+      <td colspan="2">  
+        <input style="width:100%;" type="text" name="image_link" value=""
+          tal:attributes="value python:node.output_convert_editable(node.getAttribute('link'));"  />
       </td>
     </tr>
     <tr>
@@ -71,6 +82,9 @@
   <ul class="tips">
     <li>Use the "Get image reference" button to locate an image, or
       type in the full path.
+    </li>
+    <li>
+      Set a URL to make a link from this image.
     </li>
     <li>A 'float' alignment allows the next document element
       to wrap around the image - if there's room.

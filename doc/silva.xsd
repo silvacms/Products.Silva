@@ -196,6 +196,7 @@
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:attribute>
+    <xsd:attribute name="link" type="xsd:anyURI" />
     <!-- there should be som uri -->
   </xsd:complexType>
 
@@ -253,7 +254,7 @@
   <xsd:complexType name="Table">
     <xsd:sequence>
       <xsd:choice maxOccurs="unbounded">
-      
+
         <xsd:element name="row_heading" type="xsd:string" />
         
         <xsd:element name="row">

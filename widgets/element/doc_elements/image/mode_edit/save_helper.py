@@ -7,15 +7,22 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
-image_path = context.REQUEST['image_path']
+request = context.REQUEST
+node = request.node
+image_path = request['image_path']
 
-if context.REQUEST.has_key('alignment'):    
-    align_attribute = context.REQUEST['alignment']
+if request.has_key('alignment'):
+    align_attribute = request['alignment']
     if align_attribute != 'none':
         node.setAttribute('alignment', node.input_convert(align_attribute))
     else:
         node.removeAttribute('alignment')
+
+if request.has_key('image_link'):
+    link = request['image_link']
+    node.setAttribute('link', node.input_convert(link))
+else:
+    node.removeAttribute('link')
 
 node.setAttribute('image_path', node.input_convert(image_path))
 
