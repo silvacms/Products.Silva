@@ -1887,17 +1887,8 @@ msgstr "Rolle zuweisen"
 msgid "Assign role to group"
 msgstr "Rolle der Gruppe zuweisen"
 
-msgid "revoke selected role(s) from selected user(s)"
-msgstr "Rollenzuweisung für ausgewählte Benutzer zürucksetzen."
-
-msgid "restrict access to users with a specific role"
-msgstr "Zugangsbeschränkung für bestimmte Benutzerrollen."
-
 msgid "set restriction"
 msgstr "Beschränkung festlegen"
-
-msgid "restrict access to users with a specific role"
-msgstr "Zugangsbeschränkung speziellen Benutzerrollen zuweisen."
 
 #: from ../Silva/views/edit/macro_role_options.pt
 msgid "public silva roles"
@@ -2100,38 +2091,11 @@ msgstr "Löschen"
 msgid "Optional title for all assets"
 msgstr "Optionaler Titel für alle Anlagen"
 
-#~ msgid "Paste"
-#~ msgstr "Einfügen"
-
-#~ msgid "Paste ghost"
-#~ msgstr "Geist einfügen"
-
-#~ msgid "Select all"
-#~ msgstr "Alles auswählen"
-
-#~ msgid "access key: alt-i"
-#~ msgstr "Kurzwahl: alt-i"
-
-#~ msgid "access key: alt-p"
-#~ msgstr "Kurzwahl: alt-p"
-
-#~ msgid "add"
-#~ msgstr "neu"
-
-#~ msgid "add a new item - alt-n"
-#~ msgstr "neues Item hinzufügen - alt-n"
-
-#~ msgid "add_normal_group"
-#~ msgstr "Gruppe hinzufügen"
-
 msgid "addable_settings_for"
 msgstr "Erweiterungseinstellungen für"
 
 msgid "aspect"
 msgstr "Aspekt"
-
-#~ msgid "author"
-#~ msgstr "Autor"
 
 msgid "browse"
 msgstr "durchsuchen"
@@ -2142,25 +2106,8 @@ msgstr "Datei auf Festplatte suchen"
 msgid "create"
 msgstr "Erstelle"
 
-#~ msgid "changes_the_title_of_the_folder"
-#~ msgstr "ändert den Titel des Ordners"
-
-#~ msgid "click_name_to_create_object"
-#~ msgstr "auf Namen clicken um Objekt zu erstellen"
-
 msgid "copy items: alt-c"
 msgstr "Objekte kopieren: alt-x"
-
-#~ msgid "create_an_object"
-#~ msgstr "Objekt erstellen"
-
-#, fuzzy
-#~ msgid "create_virtual_group"
-#~ msgstr "virtuelle Gruppe hinzufügen"
-
-#~ msgid "current_job"
-#~ msgstr "aktueller Job"
-
 
 msgid "download"
 msgstr "Download"
@@ -2188,21 +2135,6 @@ msgstr "Ghost Ordner angleichen"
 
 msgid "re-synchronize with content from the source folder: alt-e"
 msgstr "Inhalt von Quellordner angleichen: alt-e"
-
-#~ msgid "group_defined_by_list_groups"
-#~ msgstr "Gruppe definiert durch Gruppen-Liste"
-
-#~ msgid "group_defined_by_list_users"
-#~ msgstr "Gruppe definiert durch Benutzer-Liste"
-
-#~ msgid "group_definitions"
-#~ msgstr "Gruppendefinitionen"
-
-#~ msgid "import XML data - alt-i"
-#~ msgstr "XML-Daten importieren: alt-i"
-
-#~ msgid "import to the current location and remove from the list: alt-m"
-#~ msgstr "an diese Stelle importieren und aus der Liste entfernen: alt-m"
 
 msgid "groups_located_in_folder"
 msgstr "definierte Gruppen in diesem Ordner"
@@ -2241,45 +2173,6 @@ msgstr "ZIP importieren"
 msgid "id"
 msgstr "Id"
 
-
-#~ msgid "job_id"
-#~ msgstr "Job-Id"
-
-#~ msgid "job_number"
-#~ msgstr "Job-Nummer"
-
-#~ msgid "job_owner"
-#~ msgstr "Job-Owner"
-
-#~ msgid "key-export_to_word"
-#~ msgstr "Keys nach Word exportieren"
-
-#~ msgid "key-import"
-#~ msgstr "Keys importieren"
-
-#~ msgid "list_proccessed_items"
-#~ msgstr "liste bearbeitete Items"
-
-#~ msgid "list_processed_items"
-#~ msgstr "Liste der bearbeiteten Items"
-
-
-#, fuzzy
-#~ msgid "locate_word_file_to_upload"
-#~ msgstr "Word-Datei zum Upload auswählen"
-
-
-#~ msgid "logout_link"
-#~ msgstr "Abmelde Link"
-
-#, fuzzy
-#~ msgid "modifier"
-#~ msgstr "von"
-
-#~ msgid "name"
-#~ msgstr "Name"
-
-
 msgid "new"
 msgstr "neu"
 
@@ -2315,60 +2208,12 @@ msgstr "Verweis auf diese Anlage setzen: alt-p"
 
 msgid "n/a"
 msgstr "n.v."
-#~ msgid "no_content_objects_in_folder"
-#~ msgstr "keine Objekte im Ordner"
-
-#~ msgid "no_groups_defined_in_folder"
-#~ msgstr "keine Gruppen im Ordner definiert"
-
-#~ msgid "no_items_to_rename"
-#~ msgstr "nichts umzubenennen"
-
-#~ msgid "no_jobs_in_queue"
-#~ msgstr "keine Jobs in Warteschlange"
-
-#~ msgid "no_processed_jobs"
-#~ msgstr "keine fertigen Jobs"
 
 msgid "no_title"
 msgstr "kein Titel"
 
-#~ msgid "not_authorized"
-#~ msgstr "nicht autorisiert"
-
-#~ msgid "old"
-#~ msgstr "alt"
-
-#~ msgid "only"
-#~ msgstr "nur"
-
 msgid "over to the export screen: alt-e"
 msgstr "zur Export-Ansicht wechseln: alt-e"
-
-#~ msgid "owner"
-#~ msgstr "Owner"
-
-#~ msgid "paste (items on clipboard) as ghost objects: alt-g"
-#~ msgstr "Einfügen der Items im Clipbord als Geister Objekte: alt-g"
-
-#~ msgid "paste items: alt-v"
-#~ msgstr "Item einfügen: alt-v"
-
-#~ msgid "position"
-#~ msgstr "Position"
-
-
-#~ msgid "queue_items_process"
-#~ msgstr "Warteschlange Items Process"
-
-#~ msgid "queue_of_items"
-#~ msgstr "Warteschlange der Items"
-
-#~ msgid "refresh_queue_lists"
-#~ msgstr "Warteschlangenliste refresch"
-
-#~ msgid "reload to update the queue lists: alt-r"
-#~ msgstr "neu laden um Warteschlange upzudaten: alt-r"
 
 msgid "rename and retitle items: alt-r"
 msgstr "Objekte umbenennen: alt-r"
@@ -2382,37 +2227,3 @@ msgstr "alles auswählen: alt-a"
 msgid "select a new item: alt-s"
 msgstr "neues Objekt hinzufügen: alt-s"
 
-#~ msgid "rename_objects_in"
-#~ msgstr "Objekte umbenennen in"
-
-#, fuzzy
-#~ msgid "return confirm('Really delete?')"
-#~ msgstr "wirklich löschen ? (return)"
-
-#~ msgid "seconds"
-#~ msgstr "Sekunden"
-
-#~ msgid "select"
-#~ msgstr "auswählen"
-
-#~ msgid "select all items: alt-a"
-#~ msgstr "alle Items auswählen: alt-a"
-
-
-#~ msgid "silva_doc"
-#~ msgstr "Silva-Dokumentation"
-
-#~ msgid "status"
-#~ msgstr "Status"
-
-
-
-
-#~ msgid "unknown"
-#~ msgstr "unbekannt"
-
-#~ msgid "upload a Word document from your local drive: alt-u"
-#~ msgstr "upload eines Word-Dokument von der lokalen Platte: alt-u"
-
-#~ msgid "upload_word_document"
-#~ msgstr "Word-Dokument hochladen"
