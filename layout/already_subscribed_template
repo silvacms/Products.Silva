@@ -1,4 +1,4 @@
-To: %(toaddress)s
+To: <%(toaddress)s>
 From: Silva Subscription Service <subscription-service@do.not.reply>
 Subject: Silva Subscription Service - subscription confirmation for %(contenturl)s
 Content-Type: text/plain; charset=utf-8; format=flowed

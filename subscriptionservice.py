@@ -222,7 +222,7 @@ class SubscriptionService(Folder.Folder):
         data = {}
         data['toaddress'] = emailaddress
         data['contenturl'] = content.absolute_url()
-        data['contenttitle'] = content.get_title_or_id()
+        data['contenttitle'] = content.get_title().encode('utf-8')
         self._sendEmail(template, data)
 
     def _sendSuperfluousSubscriptionRequestEmail(
@@ -232,7 +232,7 @@ class SubscriptionService(Folder.Folder):
         data = {}
         data['toaddress'] = emailaddress
         data['contenturl'] = content.absolute_url()
-        data['contenttitle'] = content.get_title_or_id()
+        data['contenttitle'] = content.get_title().encode('utf-8')
         emailaddress = urllib.quote(emailaddress)
         data['confirmationurl'] = '%s/public/%s?ref=%s&emailaddress=%s&token=%s' % (
             content.absolute_url(), action, ref, emailaddress, token)
@@ -248,7 +248,7 @@ class SubscriptionService(Folder.Folder):
         data = {}
         data['toaddress'] = emailaddress
         data['contenturl'] = content.absolute_url()
-        data['contenttitle'] = content.get_title_or_id()
+        data['contenttitle'] = content.get_title().encode('utf-8')
         emailaddress = urllib.quote(emailaddress)
         data['confirmationurl'] = '%s/public/%s?ref=%s&emailaddress=%s&token=%s' % (
             content.absolute_url(), action, ref, emailaddress, token)
