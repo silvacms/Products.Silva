@@ -70,7 +70,7 @@ Installing Silva
 
       or just download:
 
-        "Formulator-1.2.0.tgz":http://www.zope.org/Members/faassen/Formulator-1.2.0.tgz
+        "Formulator-1.2.0.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.2.0.tgz
 
   Silva services (ZODB)
 
