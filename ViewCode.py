@@ -21,7 +21,7 @@ class ViewCode:
         """
         tab = 'tab_edit'
         if not self.REQUEST['AUTHENTICATED_USER'].has_permission(
-                    SilvaPermissions.ChangeSilvaContent, self):
+                    SilvaPermissions.ChangeSilvaContent, target):
             tab = 'tab_preview'
 
         return '%s/edit/%s' % (target.absolute_url(), tab)
