@@ -22,6 +22,13 @@ if tab_id:
 else:
     tab_url = None
 
+uplink_title = _('up a level: alt-${key}')
+uplink_title.set_mapping({'key': uplink_accesskey})
+toplink_title = _('up to top of publication: alt-${key}')
+toplink_title.set_mapping({'key': toplink_accesskey})
+tab_title = _('access key: alt-${key}')
+tab_title.set_mapping({'key': tab_accesskey})
+
 return { 
   'tab_name' : _(tab_name),
   'tab_id' : tab_id,
@@ -30,5 +37,8 @@ return {
   'uplink_url' : uplink_url,
   'toplink_accesskey' : toplink_accesskey,
   'tab_accesskey' : tab_accesskey,
-  'uplink_accesskey' : uplink_accesskey
+  'uplink_accesskey' : uplink_accesskey,
+  'uplink_title': uplink_title,
+  'toplink_title': toplink_title,
+  'tab_title': tab_title,
 }
