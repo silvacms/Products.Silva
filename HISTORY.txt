@@ -65,7 +65,9 @@ Silva changes
           SilvaExternalSources extension. Existing SQL Data Source
           assets continue to work, but no new SQL Data Sources can be
           added to the Silva tree. In future Silva versions SQL Data
-          Source assets may stop working.
+          Source assets may stop working. Add an external source in
+          the editor using 'External Source' (not 'External Data',
+          which is way to add the deprecrated SQL Data Source assets).
 
         - Improved virtual hosting support. Both the public screens as
           well as the Silva edit screens should behave better in the
