@@ -3,14 +3,27 @@ See also LICENSE.txt
 
 Silva changes
 
-  Current CVS
+  1.1 beta 2
+
+    Features added
+
+      - Revision of the XSLT support so that it can work with any
+        object in Silva, not just Silva Document. The properties tab
+        and service_renderer_registry also now take this into
+        account. If you're upgrading from 1.1b1, please remove
+        service_renderer_registry in the ZMI and do a refresh all in
+        service_extensions to install a new one.
 
     Bugs fixed
 
-      - Remnants of old parser code in SilvaDocument (silvaparser.py, 
-        search.py) and all references to it have been removed. In 
-        EditorSupportNested the render_links method has been removed - this
-        might break old extensions. 
+      - Remnants of old parser code in SilvaDocument (silvaparser.py,
+        search.py) and all references to it have been removed. In
+        EditorSupportNested the render_links method has been removed -
+        this might break old extensions.
+
+      - Remove a memory leak from XSLT support.
+
+      - Some fixes for the full-media import/export system.
 
   1.1 beta 1
 
