@@ -7,7 +7,7 @@ class DummyMessageID:
         when PlacelessTranslationService can not be imported.
     """
     mapping = None
-    reg_interpolation = re.compile('${([a-zA-Z0-9_]*)}')
+    reg_interpolation = re.compile('\$\{([a-zA-Z0-9_]*)\}')
     __allow_access_to_unprotected_subobjects__ = 1
 
     def __init__(self, input):
