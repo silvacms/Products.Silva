@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Wed Nov 17 18:14:21 2004\n"
+"POT-Creation-Date: Thu Nov 18 13:31:11 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -589,11 +589,11 @@ msgid "50x50 pixel"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
-msgid "75x75 pixels"
+msgid "75x75 pixel"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
-msgid "75x75 pixel"
+msgid "75x75 pixels"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:154
@@ -1165,11 +1165,11 @@ msgid "cut items: alt-x"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:513
-msgid "copy items: alt-c"
+msgid "copy"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:513
-msgid "copy"
+msgid "copy items: alt-c"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:529
@@ -2357,11 +2357,11 @@ msgid "${author_id} sent a message on ${some_date} ${with_comments}"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:86
-msgid "A previous request for approval has been rejected / withdrawn by ${requester} on ${some_date}. ${comment} The last message regarding this issue is:"
+msgid "actually the last message may not have been written by the person withdrawing the request; if this person for example made an empty reject, this is the message of the requester ..."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:86
-msgid "actually the last message may not have been written by the person withdrawing the request; if this person for example made an empty reject, this is the message of the requester ..."
+msgid "A previous request for approval has been rejected / withdrawn by ${requester} on ${some_date}. ${comment} The last message regarding this issue is:"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
@@ -2802,8 +2802,8 @@ msgid "acquired content"
 msgstr ""
 
 #: /views/edit/macro_metadata.pt:84
-#: /views/edit/tab_access.pt:569
-#: /views/edit/tab_access.pt:742
+#: /views/edit/tab_access.pt:568
+#: /views/edit/tab_access.pt:741
 #: /views/edit/Asset/Image/edit.pt:148
 #: /views/edit/Container/tab_edit_import.pt:99
 #: /views/edit/Container/tab_edit_import.pt:168
@@ -2906,210 +2906,210 @@ msgstr ""
 msgid "in"
 msgstr ""
 
-#: /views/edit/tab_access.pt:140
+#: /views/edit/tab_access.pt:139
 msgid "No users with local roles are defined here."
 msgstr ""
 
-#: /views/edit/tab_access.pt:152
+#: /views/edit/tab_access.pt:151
 msgid "assign_role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:152
-#: /views/edit/tab_access.pt:605
+#: /views/edit/tab_access.pt:151
+#: /views/edit/tab_access.pt:604
 msgid "select a role to assign"
 msgstr ""
 
-#: /views/edit/tab_access.pt:156
-#: /views/edit/tab_access.pt:297
-#: /views/edit/tab_access.pt:455
-#: /views/edit/tab_access.pt:498
+#: /views/edit/tab_access.pt:155
+#: /views/edit/tab_access.pt:296
+#: /views/edit/tab_access.pt:454
+#: /views/edit/tab_access.pt:497
 msgid "select role:"
 msgstr ""
 
-#: /views/edit/tab_access.pt:161
+#: /views/edit/tab_access.pt:160
 msgid "assign role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:161
-#: /views/edit/tab_access.pt:309
-#: /views/edit/tab_access.pt:461
+#: /views/edit/tab_access.pt:160
+#: /views/edit/tab_access.pt:308
+#: /views/edit/tab_access.pt:460
 msgid "assign a local role to selected user(s)"
 msgstr ""
 
-#: /views/edit/tab_access.pt:171
+#: /views/edit/tab_access.pt:170
 msgid "revoke selected role(s) from selected user(s)"
 msgstr ""
 
-#: /views/edit/tab_access.pt:171
+#: /views/edit/tab_access.pt:170
 msgid "revoke role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:200
+#: /views/edit/tab_access.pt:199
 msgid "pending requests for roles"
 msgstr ""
 
-#: /views/edit/tab_access.pt:207
+#: /views/edit/tab_access.pt:206
 msgid "requested role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:210
+#: /views/edit/tab_access.pt:209
 msgid "is approved"
 msgstr ""
 
-#: /views/edit/tab_access.pt:246
+#: /views/edit/tab_access.pt:245
 msgid "No roles have been requested."
 msgstr ""
 
-#: /views/edit/tab_access.pt:253
+#: /views/edit/tab_access.pt:252
 msgid "access key: alt-d"
 msgstr ""
 
-#: /views/edit/tab_access.pt:253
+#: /views/edit/tab_access.pt:252
 msgid "deny role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:265
+#: /views/edit/tab_access.pt:264
 msgid "access key: alt-g"
 msgstr ""
 
-#: /views/edit/tab_access.pt:265
+#: /views/edit/tab_access.pt:264
 msgid "grant role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:273
+#: /views/edit/tab_access.pt:272
 msgid "access key: alt-a"
 msgstr ""
 
-#: /views/edit/tab_access.pt:273
+#: /views/edit/tab_access.pt:272
 msgid "Grant and approve"
 msgstr ""
 
-#: /views/edit/tab_access.pt:309
-#: /views/edit/tab_access.pt:510
+#: /views/edit/tab_access.pt:308
+#: /views/edit/tab_access.pt:509
 msgid "assign"
 msgstr ""
 
-#: /views/edit/tab_access.pt:331
+#: /views/edit/tab_access.pt:330
 msgid "A Groups Service is not installed"
 msgstr ""
 
-#: /views/edit/tab_access.pt:335
+#: /views/edit/tab_access.pt:334
 msgid "Silva Root in the ZMI"
 msgstr ""
 
-#: /views/edit/tab_access.pt:336
+#: /views/edit/tab_access.pt:335
 msgid "You are seeing this message because the Silva Groups extension is installed on the file system, but a Groups Service hasn't been added to this Silva instance. To install one, go to the ${silva_root_in_the_ZMI}, choose &#8220;Groups Service&#8221; from the add list and give it the id ${service_groups}. No further configuration is necessary."
 msgstr ""
 
-#: /views/edit/tab_access.pt:356
+#: /views/edit/tab_access.pt:355
 msgid "group roles"
 msgstr ""
 
-#: /views/edit/tab_access.pt:363
+#: /views/edit/tab_access.pt:362
 msgid "grant or revoke local roles for groups"
 msgstr ""
 
-#: /views/edit/tab_access.pt:369
+#: /views/edit/tab_access.pt:368
 msgid "groupname"
 msgstr ""
 
-#: /views/edit/tab_access.pt:397
+#: /views/edit/tab_access.pt:396
 msgid "&lt;broken&gt; <!-- XXX replace this by something nice -->"
 msgstr ""
 
-#: /views/edit/tab_access.pt:440
+#: /views/edit/tab_access.pt:439
 msgid "No groups with (local) roles."
 msgstr ""
 
-#: /views/edit/tab_access.pt:461
+#: /views/edit/tab_access.pt:460
 msgid "assign role to group"
 msgstr ""
 
-#: /views/edit/tab_access.pt:471
+#: /views/edit/tab_access.pt:470
 msgid "revoke selected role(s) from selected group(s)"
 msgstr ""
 
-#: /views/edit/tab_access.pt:471
+#: /views/edit/tab_access.pt:470
 msgid "revoke role from group"
 msgstr ""
 
-#: /views/edit/tab_access.pt:510
+#: /views/edit/tab_access.pt:509
 msgid "assign selected role to selected group(s)"
 msgstr ""
 
-#: /views/edit/tab_access.pt:549
+#: /views/edit/tab_access.pt:548
 msgid "public view access restrictions for"
 msgstr ""
 
-#: /views/edit/tab_access.pt:558
-#: /views/edit/tab_access.pt:731
+#: /views/edit/tab_access.pt:557
+#: /views/edit/tab_access.pt:730
 msgid "access restriction by role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:566
-#: /views/edit/tab_access.pt:739
+#: /views/edit/tab_access.pt:565
+#: /views/edit/tab_access.pt:738
 msgid "current restriction"
 msgstr ""
 
-#: /views/edit/tab_access.pt:574
-#: /views/edit/tab_access.pt:749
+#: /views/edit/tab_access.pt:573
+#: /views/edit/tab_access.pt:748
 msgid "Open to the public"
 msgstr ""
 
-#: /views/edit/tab_access.pt:579
-#: /views/edit/tab_access.pt:752
+#: /views/edit/tab_access.pt:578
+#: /views/edit/tab_access.pt:751
 msgid "(acquired)."
 msgstr ""
 
-#: /views/edit/tab_access.pt:583
+#: /views/edit/tab_access.pt:582
 # Default: "Setting an access restriction here affects objects on this and lower levels."
 msgid "access_setting_restriction"
 msgstr ""
 
-#: /views/edit/tab_access.pt:594
-msgid "acquire restriction"
-msgstr ""
-
-#: /views/edit/tab_access.pt:594
-msgid "cancel the access restriction at this level, making it inherit from above"
-msgstr ""
-
-#: /views/edit/tab_access.pt:60
+#: /views/edit/tab_access.pt:59
 msgid "user roles for &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_access.pt:616
+#: /views/edit/tab_access.pt:593
+msgid "acquire restriction"
+msgstr ""
+
+#: /views/edit/tab_access.pt:593
+msgid "cancel the access restriction at this level, making it inherit from above"
+msgstr ""
+
+#: /views/edit/tab_access.pt:615
 msgid "set restriction"
 msgstr ""
 
-#: /views/edit/tab_access.pt:616
+#: /views/edit/tab_access.pt:615
 msgid "restrict access to users with a specific role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:66
+#: /views/edit/tab_access.pt:65
 msgid "grant or revoke local roles for users"
 msgstr ""
 
-#: /views/edit/tab_access.pt:722
+#: /views/edit/tab_access.pt:721
 msgid "public view access restrictions for &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_access.pt:75
-#: /views/edit/tab_access.pt:204
+#: /views/edit/tab_access.pt:74
+#: /views/edit/tab_access.pt:203
 msgid "username"
 msgstr ""
 
-#: /views/edit/tab_access.pt:755
+#: /views/edit/tab_access.pt:754
 msgid "An access restriction here affects objects on this and lower levels."
 msgstr ""
 
-#: /views/edit/tab_access.pt:78
-#: /views/edit/tab_access.pt:372
+#: /views/edit/tab_access.pt:77
+#: /views/edit/tab_access.pt:371
 msgid "roles defined above"
 msgstr ""
 
-#: /views/edit/tab_access.pt:81
-#: /views/edit/tab_access.pt:375
+#: /views/edit/tab_access.pt:80
+#: /views/edit/tab_access.pt:374
 msgid "roles defined here"
 msgstr ""
 
@@ -3201,6 +3201,91 @@ msgstr ""
 
 #: /views/logout.pt:9
 msgid "logout"
+msgstr ""
+
+#: /views/macro_batch.pt:29
+msgid "&laquo; Previous ${n} items"
+msgstr ""
+
+#: /views/macro_batch.pt:40
+msgid "Next ${n} items &raquo;"
+msgstr ""
+
+#: /views/macro_index.pt:100
+msgid "Silva copyright info"
+msgstr ""
+
+#: /views/macro_index.pt:132
+msgid "jump to zope root: alt-z"
+msgstr ""
+
+#: /views/macro_index.pt:132
+msgid "zroot..."
+msgstr ""
+
+#: /views/macro_index.pt:141
+msgid "sroot..."
+msgstr ""
+
+#: /views/macro_index.pt:141
+msgid "jump to silva root in zodb: alt-'"
+msgstr ""
+
+#: /views/macro_index.pt:150
+msgid "jump to silva services: alt-`"
+msgstr ""
+
+#: /views/macro_index.pt:150
+msgid "sservices..."
+msgstr ""
+
+#: /views/macro_index.pt:182
+#: /views/macro_index.pt:195
+msgid "jump to top"
+msgstr ""
+
+#: /views/macro_index.pt:216
+msgid "contact:"
+msgstr ""
+
+#: /views/macro_index.pt:224
+msgid "Leave Silva and view the public page: alt-:"
+msgstr ""
+
+#: /views/macro_index.pt:224
+msgid "see public version"
+msgstr ""
+
+#: /views/macro_index.pt:243
+msgid "Change your settings: alt-~"
+msgstr ""
+
+#: /views/macro_index.pt:252
+msgid "<img border=\"0\" height=\"9\" width=\"9\" src=\"\" /> user settings"
+msgstr ""
+
+#: /views/macro_index.pt:261
+msgid "Logout of Silva: alt-q"
+msgstr ""
+
+#: /views/macro_index.pt:270
+msgid "logout ${role} ${userid}"
+msgstr ""
+
+#: /views/macro_index.pt:276
+msgid "request access"
+msgstr ""
+
+#: /views/macro_index.pt:94
+msgid "Up to Silva top"
+msgstr ""
+
+#: /views/macro_index.pt:97
+msgid "Up one level"
+msgstr ""
+
+#: /views/macro_index.pt:99
+msgid "Help with access keys"
 msgstr ""
 
 #: /views/macro_tabs.pt:21
