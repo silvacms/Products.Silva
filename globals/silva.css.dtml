@@ -295,6 +295,10 @@ table.columns {
     padding: 0;
 }
 
+table.columns tr {
+  vertical-align: top;
+}
+
 /* 3 column table (default) */
 table.columns td.left {
     width: 20%;
