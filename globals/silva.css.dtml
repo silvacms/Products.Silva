@@ -295,6 +295,10 @@ table.columns {
     padding: 0;
 }
 
+table.columns tr {
+  vertical-align: top;
+}
+
 /* 3 column table (default) */
 table.columns td.left {
     width: 20%;
@@ -348,7 +352,6 @@ table.listing img {
 }
 
 /* _____________________ rows ______________________ */
-
 table.listing tr.controls {
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
