@@ -105,6 +105,11 @@ div.citation p.source {
   margin-bottom : 0;
 }
 
+.error {
+  color : #cc0000;
+  background: transparent;
+}
+
 
 /* _________________________________________________ silva table styles _____ */
 
