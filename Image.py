@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.19 2004/04/29 16:50:04 roman Exp $
+# $Id: Image.py,v 1.50.4.1.6.20 2004/05/04 17:40:30 zagy Exp $
 
 # Python
 import re, string 
@@ -63,7 +63,13 @@ class Image(Asset):
     web_format = 'JPEG'
     web_formats = ('JPEG', 'GIF', 'PNG')
     cropped = 0 
-    
+
+    _web2ct = {
+        'JPEG': 'image/jpeg',
+        'GIF': 'image/gif',
+        'PNG': 'image/png',
+    }
+
     def __init__(self, id, title):
         Image.inheritedAttribute('__init__')(self, id, title)
         self.image = None # should create default 
@@ -90,11 +96,22 @@ class Image(Asset):
         if img is None:
             img = self.image
         args = ()
+        kw = {}
         if img.meta_type == 'Image':
             # ExtFile and OFS.Image have different signature
             args = (REQUEST, RESPONSE)
-        return img.index_html(*args)
+        else:
+            kw['REQUEST'] = REQUEST
+        return img.index_html(*args, **kw)
 
+    def manage_beforeDelete(self, item, container):
+        """explicitly remove the images"""
+        self._clean_images()
+        if self.hires_image is not None:
+            self.hires_image.manage_beforeDelete(self.hires_image, self)
+        return Image.inheritedAttribute('manage_beforeDelete')(self, item,
+            container)
+    
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
@@ -167,8 +184,14 @@ class Image(Asset):
         """
         if self.hires_image is not None:
             self.hires_image.manage_beforeDelete(self.hires_image, self)
+        try:
+            ct = file.headers.get('Content-Type')
+        except AttributeError:
+            ct = None
         self.hires_image = self._image_factory(
-            'hires_image', self.get_title(), file)
+            'hires_image', self.get_title(), file, ct)
+        if self.hires_image.meta_type == 'ExtImage':
+            self.hires_image.redirect_default_view = 1
         format = self.getFormat()
         if format in self.web_formats:
             self.web_format = format
@@ -221,7 +244,7 @@ class Image(Asset):
         return self.image.width, self.image.height
     
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
-    def getDimensions(self):
+    def getDimensions(self, img=None):
         """returns width, heigt of (hi res) image
         
             raises ValueError if there is no way of determining the dimenstions
@@ -229,8 +252,9 @@ class Image(Asset):
             returns width, height otherwise
         
         """
-        img = self.hires_image
-        if self.hires_image is None:
+        if img is None:
+            img = self.hires_image
+        if img is None:
             img = self.image
         width, height = img.width, img.height
         if callable(width):
@@ -238,8 +262,8 @@ class Image(Asset):
         if callable(height):
             height = height()
         if not (isinstance(width, IntType) and isinstance(height, IntType)):
-            image = self._getPILImage(self.hires_image)
-            width, height = image.size
+            pil_image = self._getPILImage(img)
+            width, height = pil_image.size
         return width, height
 
     security.declareProtected(SilvaPermissions.View, 'getFormat')
@@ -275,26 +299,24 @@ class Image(Asset):
             return str(image.data)
         
     security.declareProtected(SilvaPermissions.View, 'tag')
-    def tag(self, hires=0, **kw):
+    def tag(self, hires=0, thumbnail=0, **kw):
         "return xhtml tag"
-        hires_str = ''
-        if hires:
-            hires_str = '?hires'
+        image, img_src = self._get_image_and_src(hires, thumbnail)
         title = self.get_title()
-        if hires:
-            width, height = self.getDimensions()
-        elif self.cropped:
-            width, height = self.getCroppedSize()
-        else:
-            width, height = self.getCanonicalWebScale()
+        width, height = self.getDimensions(image)
         named = []
         for name, value in kw.items():
-            named.append('%s="%s"' % (name, escape(value)))
+            named.append('%s="%s"' % (escape(name), escape(value)))
         named = ' '.join(named)
-        return '<img src="%s%s" width="%s" height="%s" alt="%s" %s />' % (
-            self.absolute_url(), hires_str, width, height, escape(title),
-            named)
+        return '<img src="%s" width="%s" height="%s" alt="%s" %s />' % (
+            img_src, width, height, escape(title), named)
             
+    security.declareProtected(SilvaPermissions.View, 'tag')
+    def url(self, hires=0, thumbnail=0):
+        "return url of image"
+        image, img_src = self._get_image_and_src(hires, thumbnail)
+        return img_src
+
     security.declareProtected(SilvaPermissions.View, 'getWebFormat')
     def getWebFormat(self):
         """Return file format of web presentation image
@@ -373,6 +395,7 @@ class Image(Asset):
         return image
 
     def _createDerivedImages(self):
+        self._clean_images()
         self._createWebPresentation()
         self._createThumbnail()
 
@@ -392,8 +415,9 @@ class Image(Asset):
         web_image = image.resize((width, height), PIL.Image.ANTIALIAS)
         web_image = self._prepareWebFormat(web_image)
         web_image.save(web_image_data, self.web_format)
-        self.image = OFS.Image.Image(
-            'image', self.get_title(), web_image_data)
+        ct = self._web2ct[self.web_format]
+        self.image = self._image_factory('image', self.get_title(),
+            web_image_data, ct)
 
     def _createThumbnail(self):
         try:
@@ -407,27 +431,37 @@ class Image(Asset):
         thumb.thumbnail((ts, ts), PIL.Image.ANTIALIAS)
         thumb_data = StringIO()
         thumb.save(thumb_data, self.web_format)
-        self.thumbnail_image = OFS.Image.Image('thumbnail_image',
-            self.get_title(), thumb_data)
+        ct = self._web2ct[self.web_format]
+        self.thumbnail_image = self._image_factory('thumbnail_image',
+            self.get_title(), thumb_data, ct)
         
+    def _clean_images(self):
+        if self.image is not None and self.image is not self.hires_image:
+            self.image.manage_beforeDelete(self.image, self)
+            self.image = None
+        if self.thumbnail_image is not None:
+            self.thumbnail_image.manage_beforeDelete(self.thumbnail_image,
+                self)
+            self.thumbnail_image = None
 
     def _prepareWebFormat(self, pil_image):
         """converts image's mode if necessary"""
 
         if pil_image.mode != 'RGB' and self.web_format == 'JPEG':
             pil_image = pil_image.convert("RGB")
-        return pil_image                    
+        return pil_image
 
-    def _image_factory(self, id, title, file):
+    def _image_factory(self, id, title, file, content_type):
         repository = self._useFSStorage()
         if repository is None:
-            image = OFS.Image.Image(id, title, file)
+            image = OFS.Image.Image(id, title, file, content_type=content_type)
         else:
             # self.getId() is used to get a `normal' file name
             image = ExtImage(self.getId(), title)
             image._repository = repository
             image = image.__of__(self)
-            image.manage_file_upload(file)
+            file.seek(0)
+            image.manage_file_upload(file, content_type=content_type)
             image = image.aq_base
             # set the actual id (so that absolute_url works)
             image.id = id
@@ -441,6 +475,21 @@ class Image(Asset):
         if service_files.useFSStorage():
             return cookPath(service_files.filesystem_path())
         return None
+
+    def _get_image_and_src(self, hires=0, thumbnail=0):
+        img_src = self.absolute_url()
+        if hires:
+            image = self.hires_image
+            img_src += '?hires'
+        elif thumbnail:
+            image = self.thumbnail_image
+            img_src += '?thumbnail'
+        else:
+            image = self.image
+        if self._is_static_mode(image):
+            # apache rewrite in effect
+            img_src = image.static_url()
+        return image, img_src
 
     def manage_FTPget(self, *args, **kwargs):
         return self.image.manage_FTPget(*args, **kwargs)
@@ -473,6 +522,13 @@ class Image(Asset):
         if self.cropped:
             return "cropped"
         return "scaled"
+
+    def _is_static_mode(self, image):
+        if image.meta_type == 'Image':
+            return 0
+        assert image.meta_type == 'ExtImage'
+        return image.static_mode()
+
 
 InitializeClass(Image)
     
