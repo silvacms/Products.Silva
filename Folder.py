@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.129 $
+# $Revision: 1.130 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -921,14 +921,19 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     helpers.add_and_edit(self, id, REQUEST)
     return ''
 
-def xml_import_handler(object, node):
+def xml_import_handler(object, node, factory=None):
     """Helper for importing folder objects into an other object"""
+
+    def default_factory(object, id, title):
+        object.manage_addProduct["Silva"].manage_addFolder(id, title, 0)
+    
     id = get_xml_id(node)
     title = get_xml_title(node)
-    
     id = str(mangle.Id(object, id).unique())
-
-    object.manage_addProduct['Silva'].manage_addFolder(id, title, 0)
+    if factory is None:
+        factory = default_factory
+    assert callable(factory), "Factory is not callable"
+    factory(object, id, title)
     newfolder = getattr(object, id)
     for child in node.childNodes:
         if get_importer(child.nodeName):
