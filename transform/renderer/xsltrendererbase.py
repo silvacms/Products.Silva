@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import os
 import libxml2, libxslt
 import urllib
@@ -34,8 +32,17 @@ class XSLTRendererBase(Acquisition.Implicit):
     security = ClassSecurityInfo()
     security.declareObjectPublic()
 
-    def __init__(self):
-        self._stylesheet_path = None
+    def __init__(self, path, file_context):
+        """XSLT-based renderer.
+
+        path - the relative path to use to the XSLT stylesheet
+        file_context - the directory or file in the directory to look in.
+        Typically __file__ is passed to look in the module's context.
+        """
+        path_context = os.path.dirname(os.path.abspath(file_context))
+        if os.path.isdir(path_context) and not path_context.endswith('/'):
+            path_context += '/'
+        self._stylesheet_path = os.path.join(path_context, path)
         self._stylesheet = None
         self._error_handler = ErrorHandler()
         libxml2.registerErrorHandler(self._error_handler.callback, None)
