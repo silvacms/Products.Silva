@@ -32,6 +32,9 @@ elif status_code == id.IN_USE_CONTENT:
 elif status_code == id.IN_USE_ASSET:
     return """There is already an asset with the id %s in this folder.<br />
 Please use another id.""" % view.quotify(id)
+elif status_code == id.RESERVED_POSTFIX:
+    return """Sorry, the id %s ends with invalid characters.<br />
+Please use another id.""" % view.quotify(id)
 
 # this should not happen
 return """(Internal Error): An invalid status %s occured while checking the 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.7 2003/10/18 17:15:18 clemens Exp $
+# $Id: test_mangle.py,v 1.8 2003/10/20 08:35:35 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -62,7 +62,7 @@ class MangleIdTest(SilvaTestCase.SilvaTestCase):
         # Zope does not allow any id ending with '__' in a hard boiled manner
         # (see OFS.ObjectManager.checkValidId)
         id = mangle.Id(self.folder, 'index__', allow_dup=1)
-        self.assertEqual(id.validate(), id.CONTAINS_BAD_CHARS)
+        self.assertEqual(id.validate(), id.RESERVED_POSTFIX)
    
         id = mangle.Id(self.folder, 'index')
         self.assertEqual(id.validate(), id.OK)

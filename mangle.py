@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.16 2003/10/18 17:15:18 clemens Exp $
+# $Id: mangle.py,v 1.17 2003/10/20 08:35:34 zagy Exp $
 
 # Python
 import string
@@ -44,6 +44,7 @@ class Id:
     RESERVED = 3
     IN_USE_CONTENT = 4
     IN_USE_ASSET = 5
+    RESERVED_POSTFIX = 6
     
     
     # does only match strings containig valid chars
@@ -168,9 +169,9 @@ class Id:
         allow_dup = self._allow_dup
         if self._valid_id.match(maybe_id) is None:
             return self.CONTAINS_BAD_CHARS
-        if maybe_id[-2:]=='__':
+        if maybe_id.endswith('__'):
             # ugly, but Zope explicitely checks this ...
-            return self.CONTAINS_BAD_CHARS            
+            return self.RESERVED_POSTFIX
         prefixing = maybe_id.split('_')
         if (len(prefixing)>1) and (prefixing[0] in self._reserved_prefixes):
             return self.RESERVED_PREFIX
