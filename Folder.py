@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.162 $
+# $Revision: 1.163 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -28,6 +28,7 @@ from Products.Silva.ImporterRegistry import get_importer, xml_import_helper
 from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 from Products.Silva import mangle
+from Products.Silva.i18n import translate as _
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.ExtraDOM import writeStream
@@ -36,20 +37,21 @@ from interfaces import IPublishable, IContent, IGhost
 from interfaces import IVersionedContent, ISilvaObject, IAsset
 from interfaces import IContainer, IPublication, IRoot
 
+
 from Products.Silva.i18n import translate as _
 
 icon="www/silvafolder.gif"
 addable_priority = -.5
 
 class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
-    """The presentation of the information within a
+    __doc__ = _("""The presentation of the information within a
        publication is structured with folders. They determine the visual
        hierarchy that a Visitor sees. Folders on the top level
        define sections of a publication, subfolders define chapters, etc.
        Note that unlike publications, folders are transparent, meaning you
        can see through them in the sidebar tree navigation and the Publish 
        screen.
-    """
+    """)
     security = ClassSecurityInfo()
 
     meta_type = "Silva Folder"

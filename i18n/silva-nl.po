@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Tue Nov 30 16:36:46 2004\n"
+"POT-Creation-Date: Wed Dec  1 17:30:36 2004\n"
 "PO-Revision-Date: 2004-11-30 13:20+0100\n"
 "Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -15,6 +15,13 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "Domain: silva\n"
 
+#: /AutoTOC.py:27
+msgid ""
+"Automatically displays a table of contents. If it's named 'index', the "
+"parent folder will show a table of contents when requested (e.g. http://www."
+"x.yz/silva/myFolder/)."
+msgstr "Dit object laat een inhoudsopgave zien."
+
 #: /DocmaService.py:117
 msgid "Not connected"
 msgstr "Niet verbonden"
@@ -27,16 +34,73 @@ msgstr "Instellingen gewijzigd."
 msgid "Validation error(s)"
 msgstr "Validatie fout(en)"
 
-#: /Folder.py:329 /Folder.py:423
+#: /File.py:38
+msgid ""
+"Any digital file can be uploaded as Silva content. \n"
+"       For instance large files such as pdf docs or mpegs can be placed in "
+"a\n"
+"       site. File objects have metadata as well. \n"
+"       <!-- Abstract base class. Depends on a _file attribute and various \n"
+"       methods in the concrete subclasses. (sorry) -->\n"
+"    "
+msgstr ""
+"Elk bestand kan worden gebruikt als Silva content, bijvoorbeeld "
+"pdfdocumenten of mpeg films. File objecten hebben ook metadata."
+
+#: /Folder.py:331 /Folder.py:425
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
 msgstr ""
 "het plakken van &#xab;${id}&#xbb; is niet toegestaan in dit type container"
 
-#: /Folder.py:387 /Folder.py:419
+#: /Folder.py:389 /Folder.py:421
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr "&#xab;${id}&#xbb; geplakt"
 
-#: /Image.py:215
+#: /Folder.py:47
+msgid ""
+"The presentation of the information within a\n"
+"       publication is structured with folders. They determine the visual\n"
+"       hierarchy that a Visitor sees. Folders on the top level\n"
+"       define sections of a publication, subfolders define chapters, etc.\n"
+"       Note that unlike publications, folders are transparent, meaning you\n"
+"       can see through them in the sidebar tree navigation and the Publish \n"
+"       screen.\n"
+"    "
+msgstr ""
+"Folders kunnen gebruikt worden om een publicatie te structureren. Zij "
+"bepalen de hiërarchie die een site-bezoeker ziet."
+
+#: /Ghost.py:220
+msgid ""
+"Ghosts are special documents that function as a\n"
+"       placeholder for an object in another location (like an alias,\n"
+"       symbolic link, shortcut). Unlike a hyperlink, which takes the\n"
+"       Visitor to another location, a ghost object keeps the Visitor in the\n"
+"       current publication, and presents the content of the ghosted item.\n"
+"       The ghost object inherits properties from its location (e.g. layout \n"
+"       and stylesheets).  \n"
+"    "
+msgstr ""
+"Ghosts zijn speciale documenten die als fungeren als verwijzing naar een "
+"object in een andere locatie."
+
+#: /GhostFolder.py:127
+msgid ""
+"Ghost Folders are similar to Ghosts, but instead of being a \n"
+"       placeholder for a document, they create placeholders and/or copies of "
+"all \n"
+"       the contents of the &#8216;original&#8217; folder. The advantage of "
+"Ghost \n"
+"       Folders is the contents stay in sync with the original, by manual "
+"or \n"
+"       automatic resyncing. Note that when a folder is\n"
+"       ghosted, assets &#8211; such as Images and Files &#8211; are copied\n"
+"       (physically duplicated) while documents are ghosted."
+msgstr ""
+"Ghost folders zijn vergelijkbaar met Ghostobjecten, maar maken een kopie van "
+"de inhoud waarnaar ze verwijzen."
+
+#: /Image.py:216
 msgid ""
 "'${scale}' is not a valid scale identifier. Probably a percent symbol is "
 "missing."
@@ -44,32 +108,78 @@ msgstr ""
 "'${scale}' is geen geldige schaalwaarde. Waarschijnlijk ontbreekt er een "
 "procentteken."
 
-#: /Image.py:234
+#: /Image.py:235
 msgid ""
 "'${scale} is not a valid scale identifier. At least one number is required."
 msgstr ""
 "'${scale}' is geen geldige schaalwaarde. Tenminste één getalwaarde is "
 "vereist."
 
-#: /Image.py:259
+#: /Image.py:260
 msgid "'${crop} is not a valid crop identifier"
 msgstr "'${crop}' is geen geldige afsnijd-waarde"
 
-#: /Image.py:285
+#: /Image.py:286
 msgid "'${crop}' defines an impossible cropping"
 msgstr "'${crop}' is een onmogelijke afsnijdwaarde"
 
-#: /Image.py:425
+#: /Image.py:426
 msgid "square"
 msgstr "vierkant"
 
-#: /Image.py:427
+#: /Image.py:428
 msgid "landscape"
 msgstr "landschap"
 
-#: /Image.py:428
+#: /Image.py:429
 msgid "portrait"
 msgstr "portret"
+
+#: /Image.py:49
+msgid ""
+"Web graphics (gif, jpg, png) can be uploaded and inserted in \n"
+"       documents, or used as viewable assets.\n"
+"    "
+msgstr ""
+"Verschillende grafische bestandsformaten (gif, jpg, png) kunnenworden "
+"toegevoegd en gebruikt worden in documenten, of als zichtbare inhoud dienen."
+
+#: /Indexer.py:30
+msgid ""
+"Indexes can be created that function like an index in the \n"
+"       back of a book. References must first be marked by placing index \n"
+"       codes in text (these codes will also export to print formats). \n"
+"       Indexers cascade downwards, indexing all index items in the current \n"
+"       and underlying folders and publications (note that it only indexes \n"
+"       documents that are published).\n"
+"    "
+msgstr ""
+"Indexers kunnen worden gebruikt als de index achterin een boek. Referenties "
+"moeten wel gemarkeerd zijn in tekst om ze te kunnen opnemen."
+
+#: /Link.py:29
+msgid ""
+"A Link makes it possible to include links to external sites &#8211; \n"
+"       outside of Silva &#8211; in a Table of Contents. The content of a "
+"Link \n"
+"       is simply a hyperlink, beginning with &#8220;http://....&#8221;.\n"
+"    "
+msgstr ""
+"Het Link-object maakt het mogelijk links naar externe sites op tenemen."
+
+#: /Publication.py:27
+msgid ""
+"Publications function as the major organizing blocks of a Silva site. \n"
+"       They are comparable to binders, and can contain folders, documents, "
+"and assets. \n"
+"       Publications are opaque. They instill a threshold of view, showing\n"
+"       only the contents of the current publication. This keeps the "
+"overview\n"
+"       screens manageable. Publications have configuration settings that\n"
+"       determine which core and pluggable objects are available. For\n"
+"       complex sites, sub-publications can be nested.\n"
+"    "
+msgstr "Publicaties dienen als de hoofdbouwstenen van een Silva site."
 
 #: /SilvaObject.py:319
 msgid "Sorry, this ${meta_type} version is not viewable."
@@ -444,13 +554,14 @@ msgstr "Link url."
 
 #: /views/add/Publication/form.form:62
 msgid "What type of object should be added after creating the folder."
-msgstr "Welke type object moet er worden toegevoegd na het aanmaken van de folder."
+msgstr ""
+"Welke type object moet er worden toegevoegd na het aanmaken van de folder."
 
 #: /views/add/Publication/form.form:70
 msgid "First item"
 msgstr "Eerste item"
 
-#: /views/add/add_form.pt:102 /views/add/Ghost/add_form.pt:106
+#: /views/add/add_form.pt:102 /views/add/Ghost/add_form.pt:107
 #: /views/add/GhostFolder/add_form.pt:114
 #: /views/edit/Container/tab_access_groups.pt:140
 #: /views/edit/Container/tab_status_export.pt:171
@@ -497,7 +608,7 @@ msgstr "inhoud"
 msgid "notes"
 msgstr "notities"
 
-#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:87
+#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:88
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:127
 #: /views/edit/VersionedContent/tab_status_macros.pt:276
@@ -506,14 +617,14 @@ msgstr "notities"
 msgid "access key: alt-c"
 msgstr "sneltoets: alt-c"
 
-#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:87
+#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:88
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/asset_lookup.pt:233
 #: /views/edit/hyperlink_lookup.pt:359 /views/edit/promptWindow.pt:35
 #: /views/edit/Container/tab_edit_rename.pt:127
 msgid "cancel"
 msgstr "afbreken"
 
-#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
+#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:97
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/lookup_ui.pt:109
 #: /views/edit/macro_metadata.pt:170 /views/edit/macro_metadata.pt:243
 #: /views/edit/Asset/macro_asset_edit.pt:94
@@ -524,7 +635,7 @@ msgstr "afbreken"
 msgid "access key: alt-s"
 msgstr "sneltoets: alt-s"
 
-#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
+#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:97
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/macro_metadata.pt:170
 #: /views/edit/macro_metadata.pt:243 /views/edit/Asset/macro_asset_edit.pt:94
 #: /views/edit/Container/tab_access_groups.pt:132
@@ -1246,11 +1357,11 @@ msgstr "Vormgeving opgeslagen."
 msgid "Layout has been removed."
 msgstr "Vormgeving is verwijderd."
 
-#: /views/edit/Container/Publication/settings_addables.pt:111
+#: /views/edit/Container/Publication/settings_addables.pt:110
 msgid "save addables settings"
 msgstr "toevoeg-instellingen opslaan"
 
-#: /views/edit/Container/Publication/settings_addables.pt:111
+#: /views/edit/Container/Publication/settings_addables.pt:110
 msgid "save addable settings for this publication: alt-a"
 msgstr "toevoeg-instellingen voor deze publicatie opslaan: alt-a"
 
@@ -1267,9 +1378,8 @@ msgid ""
 "If checked, inherit the addables from above. Uncheck this to change the "
 "allowed addables below."
 msgstr ""
-"Indien aangevinkt, worden de toevoeg-instellingen overgeërfd van boven. "
-"Niet aanvinken als toevoeg-instellingen hieronder gewijzigd moeten kunnen "
-"worden."
+"Indien aangevinkt, worden de toevoeg-instellingen overgeërfd van boven. Niet "
+"aanvinken als toevoeg-instellingen hieronder gewijzigd moeten kunnen worden."
 
 #: /views/edit/Container/Publication/settings_addables_form.form:39
 msgid "addables"
@@ -1281,9 +1391,9 @@ msgid ""
 "in this publication. Otherwise the addables are acquired from the "
 "publication above."
 msgstr ""
-"Als overerven niet is aangevinkt, bepalen deze instellingen wat voor "
-"items in deze publicatie mogen worden toegevoegd. Anders worden de "
-"toevoeg-instellingen overgeërfd van de bovenliggende publicatie."
+"Als overerven niet is aangevinkt, bepalen deze instellingen wat voor items "
+"in deze publicatie mogen worden toegevoegd. Anders worden de toevoeg-"
+"instellingen overgeërfd van de bovenliggende publicatie."
 
 #: /views/edit/Container/Publication/settings_addables_submit.py:34
 msgid "Addable settings have not changed and remain acquired."
@@ -2651,9 +2761,9 @@ msgid ""
 "WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1"
 "+)"
 msgstr ""
-"Kies 'forms editor' voor de formulier-gebaseerde editor, of 'kupu' voor "
-"de Kupu WYSIWYG editor (vereist Internet Explorer 5.5+, Netscape 7+ of "
-"Mozilla 1.3.1+)"
+"Kies 'forms editor' voor de formulier-gebaseerde editor, of 'kupu' voor de "
+"Kupu WYSIWYG editor (vereist Internet Explorer 5.5+, Netscape 7+ of Mozilla "
+"1.3.1+)"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:27
 msgid "fullname updated"
@@ -2979,8 +3089,9 @@ msgstr ""
 "auteurs en redacteuren."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
-msgid "content publish ti<u>m</u>e:"
-msgstr "publicatie-tijdstip inhoud:"
+#: /views/edit/VersionedContent/tab_status_macros.pt:319
+msgid "content publish ti<u>m</u>e"
+msgstr "publicatie-<u>m</u>oment inhoud"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
 #: /views/edit/VersionedContent/tab_status_macros.pt:319
@@ -3001,7 +3112,7 @@ msgstr "sneltoets: alt-i (sommige platforms)"
 #: /views/edit/VersionedContent/tab_status_macros.pt:222
 #: /views/edit/VersionedContent/tab_status_macros.pt:338
 msgid "expiratio<u>n</u> time"
-msgstr "verlooptijdstip"
+msgstr "verlooptijdst<u>i</u>p"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:166
 #: /views/edit/VersionedContent/tab_status_macros.pt:231
@@ -3018,11 +3129,16 @@ msgstr "huidige tijdstippen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:204
 msgid "access key: alt-m (some platforms)"
-msgstr "sneltoets: alt-m (sommige platforms)"
+msgstr "sneltoets: alt-p (sommige platforms)"
+
+# Default: "m"
+#: /views/edit/VersionedContent/tab_status_macros.pt:204
+msgid "access_key_publish_datetime"
+msgstr "p"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:204
 msgid "publish ti<u>m</u>e:"
-msgstr "publicatie tijdstip:"
+msgstr "<u>p</u>ublicatie tijdstip:"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:24
 msgid "Publication time of public version"
@@ -3052,10 +3168,6 @@ msgstr "nieuwe versie publiceren"
 #: /views/edit/VersionedContent/tab_status_macros.pt:300
 msgid "publish closed version"
 msgstr "gesloten versie publiceren"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:319
-msgid "content publish ti<u>m</u>e"
-msgstr "publicatie-tijdstip inhoud"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:347
 msgid "Empty indicates no expiration."
@@ -4286,8 +4398,8 @@ msgid ""
 "              If none is selected, all types are searched.\n"
 "            "
 msgstr ""
-"Selecteer één of meer (met de ctrl-toets) objecttypen om in te zoeken. "
-"Als er niets is geselecteerd, wordt in alle typen gezocht."
+"Selecteer één of meer (met de ctrl-toets) objecttypen om in te zoeken. Als "
+"er niets is geselecteerd, wordt in alle typen gezocht."
 
 #: /views/public/search_form.form:32
 msgid ""
@@ -4329,7 +4441,7 @@ msgstr "Resultaten van ${batch_start} tot ${batch_end}."
 msgid "Next &gt;&gt;"
 msgstr "Volgende &gt;&gt;"
 
-#: /views/render_form_errors.py:16
+#: /views/render_form_errors.py:15
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
 

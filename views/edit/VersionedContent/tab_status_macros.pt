@@ -139,7 +139,7 @@ This message will remain visible in the status screen for other authors and edit
    tal:attributes="for field/id"
    i18n:attributes="title"
    >
-   content publish ti<u>m</u>e:</label>
+   content publish ti<u>m</u>e</label>
 <tal:block 
   attributes="id field/id" 
   replace="structure python: field.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)"
@@ -203,7 +203,7 @@ notes
 <td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-m (some platforms)" accesskey="m"
   tal:attributes="for field/id"
-  i18n:attributes="title"
+  i18n:attributes="title; accesskey access_key_publish_datetime;"
   i18n:translate=""
   >publish ti<u>m</u>e:</label>&nbsp;
 <tal:block 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -13,6 +13,7 @@ from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
+from Products.Silva.i18n import translate as _
 # try to import xpath
 try:
     from xml import xpath
@@ -26,13 +27,13 @@ from interfaces import IContent, IContainer, IPublication
 icon = "www/silvaindexer.png"
 
 class Indexer(Content, SimpleItem):
-    """Indexes can be created that function like an index in the 
+    __doc__ = _("""Indexes can be created that function like an index in the 
        back of a book. References must first be marked by placing index 
        codes in text (these codes will also export to print formats). 
        Indexers cascade downwards, indexing all index items in the current 
        and underlying folders and publications (note that it only indexes 
        documents that are published).
-    """
+    """)
     security = ClassSecurityInfo()
 
     meta_type = "Silva Indexer"

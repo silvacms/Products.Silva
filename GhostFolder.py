@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.33 2004/11/29 12:50:52 guido Exp $
+# $Id: GhostFolder.py,v 1.34 2004/12/02 10:23:55 walco Exp $
 
 from __future__ import nested_scopes
 
@@ -20,6 +20,7 @@ from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.Publishable import Publishable
 from Products.Silva.Versioning import VersioningError
+from Products.Silva.i18n import translate as _
 
 from Products.Silva.interfaces import \
     IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
@@ -123,13 +124,13 @@ class SyncCopy(Sync):
 
 
 class GhostFolder(GhostBase, Publishable, Folder.Folder):
-    """Ghost Folders are similar to Ghosts, but instead of being a 
+    __doc__ = _("""Ghost Folders are similar to Ghosts, but instead of being a 
        placeholder for a document, they create placeholders and/or copies of all 
        the contents of the &#8216;original&#8217; folder. The advantage of Ghost 
        Folders is the contents stay in sync with the original, by manual or 
        automatic resyncing. Note that when a folder is
        ghosted, assets &#8211; such as Images and Files &#8211; are copied
-       (physically duplicated) while documents are ghosted."""
+       (physically duplicated) while documents are ghosted.""")
 
     meta_type = 'Silva Ghost Folder'
     __implements__ = IContainer, IGhostFolder

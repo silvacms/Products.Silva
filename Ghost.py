@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.87 $
+# $Revision: 1.88 $
 
 # Zope
 from OFS import SimpleItem
@@ -13,6 +13,7 @@ from DateTime import DateTime
 from VersionedContent import CatalogedVersionedContent
 from Version import CatalogedVersion
 from Products.Silva import mangle
+from Products.Silva.i18n import translate as _
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
@@ -216,14 +217,14 @@ class GhostBase:
 
 
 class Ghost(CatalogedVersionedContent):
-    """Ghosts are special documents that function as a
+    __doc__ = _("""Ghosts are special documents that function as a
        placeholder for an object in another location (like an alias,
        symbolic link, shortcut). Unlike a hyperlink, which takes the
        Visitor to another location, a ghost object keeps the Visitor in the
        current publication, and presents the content of the ghosted item.
        The ghost object inherits properties from its location (e.g. layout 
        and stylesheets).  
-    """
+    """)
     
     security = ClassSecurityInfo()
 

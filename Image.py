@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.59 2004/11/29 15:30:23 guido Exp $
+# $Id: Image.py,v 1.60 2004/12/02 10:23:55 walco Exp $
 
 # Python
 import re, string
@@ -23,6 +23,7 @@ import SilvaPermissions
 from Asset import Asset
 from Products.Silva import mangle
 from Products.Silva import upgrade
+from Products.Silva.i18n import translate as _
 # misc
 from helpers import add_and_edit, fix_content_type_header
 
@@ -45,9 +46,9 @@ icon = "www/silvaimage.gif"
 addable_priority = -0.4
 
 class Image(Asset):
-    """Web graphics (gif, jpg, png) can be uploaded and inserted in 
+    __doc__ = _("""Web graphics (gif, jpg, png) can be uploaded and inserted in 
        documents, or used as viewable assets.
-    """    
+    """)
     security = ClassSecurityInfo()
 
     meta_type = "Silva Image"

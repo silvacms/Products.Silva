@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.62 $
+# $Revision: 1.63 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -16,6 +16,7 @@ from helpers import add_and_edit
 from Products.Silva.ImporterRegistry import get_importer, xml_import_helper, get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 from Products.Silva import mangle
+from Products.Silva.i18n import translate as _
 
 from interfaces import IPublication
 
@@ -23,14 +24,14 @@ icon="www/silvapublication.gif"
 addable_priority = -0.5
 
 class Publication(Folder.Folder):
-    """Publications function as the major organizing blocks of a Silva site. 
+    __doc__ = _("""Publications function as the major organizing blocks of a Silva site. 
        They are comparable to binders, and can contain folders, documents, and assets. 
        Publications are opaque. They instill a threshold of view, showing
        only the contents of the current publication. This keeps the overview
        screens manageable. Publications have configuration settings that
        determine which core and pluggable objects are available. For
        complex sites, sub-publications can be nested.
-    """
+    """)
     security = ClassSecurityInfo()
     
     meta_type = "Silva Publication"

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Tue Nov 30 16:36:46 2004\n"
+"POT-Creation-Date: Wed Dec  1 17:29:47 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -15,6 +15,13 @@ msgstr ""
 "Language-name: Deutsch\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: silva\n"
+
+#: /AutoTOC.py:27
+msgid ""
+"Automatically displays a table of contents. If it's named 'index', the "
+"parent folder will show a table of contents when requested (e.g. http://www."
+"x.yz/silva/myFolder/)."
+msgstr ""
 
 #: /DocmaService.py:117
 msgid "Not connected"
@@ -28,43 +35,133 @@ msgstr "Einstellungen geändert."
 msgid "Validation error(s)"
 msgstr ""
 
-#: /Folder.py:329 /Folder.py:423
+#: /File.py:38
+msgid ""
+"Any digital file can be uploaded as Silva content. \n"
+"       For instance large files such as pdf docs or mpegs can be placed in "
+"a\n"
+"       site. File objects have metadata as well. \n"
+"       <!-- Abstract base class. Depends on a _file attribute and various \n"
+"       methods in the concrete subclasses. (sorry) -->\n"
+"    "
+msgstr ""
+
+#: /Folder.py:331 /Folder.py:425
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
 msgstr ""
 
-#: /Folder.py:387 /Folder.py:419
+#: /Folder.py:389 /Folder.py:421
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr ""
 
-#: /Image.py:215
+#: /Folder.py:47
+msgid ""
+"The presentation of the information within a\n"
+"       publication is structured with folders. They determine the visual\n"
+"       hierarchy that a Visitor sees. Folders on the top level\n"
+"       define sections of a publication, subfolders define chapters, etc.\n"
+"       Note that unlike publications, folders are transparent, meaning you\n"
+"       can see through them in the sidebar tree navigation and the Publish \n"
+"       screen.\n"
+"    "
+msgstr ""
+
+#: /Ghost.py:220
+msgid ""
+"Ghosts are special documents that function as a\n"
+"       placeholder for an object in another location (like an alias,\n"
+"       symbolic link, shortcut). Unlike a hyperlink, which takes the\n"
+"       Visitor to another location, a ghost object keeps the Visitor in the\n"
+"       current publication, and presents the content of the ghosted item.\n"
+"       The ghost object inherits properties from its location (e.g. layout \n"
+"       and stylesheets).  \n"
+"    "
+msgstr ""
+
+#: /GhostFolder.py:127
+msgid ""
+"Ghost Folders are similar to Ghosts, but instead of being a \n"
+"       placeholder for a document, they create placeholders and/or copies of "
+"all \n"
+"       the contents of the &#8216;original&#8217; folder. The advantage of "
+"Ghost \n"
+"       Folders is the contents stay in sync with the original, by manual "
+"or \n"
+"       automatic resyncing. Note that when a folder is\n"
+"       ghosted, assets &#8211; such as Images and Files &#8211; are copied\n"
+"       (physically duplicated) while documents are ghosted."
+msgstr ""
+
+#: /Image.py:216
 msgid ""
 "'${scale}' is not a valid scale identifier. Probably a percent symbol is "
 "missing."
 msgstr ""
 
-#: /Image.py:234
+#: /Image.py:235
 msgid ""
 "'${scale} is not a valid scale identifier. At least one number is required."
 msgstr ""
 
-#: /Image.py:259
+#: /Image.py:260
 msgid "'${crop} is not a valid crop identifier"
 msgstr ""
 
-#: /Image.py:285
+#: /Image.py:286
 msgid "'${crop}' defines an impossible cropping"
 msgstr ""
 
-#: /Image.py:425
+#: /Image.py:426
 msgid "square"
 msgstr ""
 
-#: /Image.py:427
+#: /Image.py:428
 msgid "landscape"
 msgstr ""
 
-#: /Image.py:428
+#: /Image.py:429
 msgid "portrait"
+msgstr ""
+
+#: /Image.py:49
+msgid ""
+"Web graphics (gif, jpg, png) can be uploaded and inserted in \n"
+"       documents, or used as viewable assets.\n"
+"    "
+msgstr ""
+
+#: /Indexer.py:30
+msgid ""
+"Indexes can be created that function like an index in the \n"
+"       back of a book. References must first be marked by placing index \n"
+"       codes in text (these codes will also export to print formats). \n"
+"       Indexers cascade downwards, indexing all index items in the current \n"
+"       and underlying folders and publications (note that it only indexes \n"
+"       documents that are published).\n"
+"    "
+msgstr ""
+
+#: /Link.py:29
+msgid ""
+"A Link makes it possible to include links to external sites &#8211; \n"
+"       outside of Silva &#8211; in a Table of Contents. The content of a "
+"Link \n"
+"       is simply a hyperlink, beginning with &#8220;http://....&#8221;.\n"
+"    "
+msgstr ""
+
+#: /Publication.py:27
+msgid ""
+"Publications function as the major organizing blocks of a Silva site. \n"
+"       They are comparable to binders, and can contain folders, documents, "
+"and assets. \n"
+"       Publications are opaque. They instill a threshold of view, showing\n"
+"       only the contents of the current publication. This keeps the "
+"overview\n"
+"       screens manageable. Publications have configuration settings that\n"
+"       determine which core and pluggable objects are available. For\n"
+"       complex sites, sub-publications can be nested.\n"
+"    "
 msgstr ""
 
 #: /SilvaObject.py:319
@@ -438,7 +535,7 @@ msgstr ""
 msgid "First item"
 msgstr ""
 
-#: /views/add/add_form.pt:102 /views/add/Ghost/add_form.pt:106
+#: /views/add/add_form.pt:102 /views/add/Ghost/add_form.pt:107
 #: /views/add/GhostFolder/add_form.pt:114
 #: /views/edit/Container/tab_access_groups.pt:140
 #: /views/edit/Container/tab_status_export.pt:171
@@ -485,7 +582,7 @@ msgstr "Inhalt"
 msgid "notes"
 msgstr "Anmerkungen"
 
-#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:87
+#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:88
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:127
 #: /views/edit/VersionedContent/tab_status_macros.pt:276
@@ -494,14 +591,14 @@ msgstr "Anmerkungen"
 msgid "access key: alt-c"
 msgstr "Kurzwahl: alt-c"
 
-#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:87
+#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:88
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/asset_lookup.pt:233
 #: /views/edit/hyperlink_lookup.pt:359 /views/edit/promptWindow.pt:35
 #: /views/edit/Container/tab_edit_rename.pt:127
 msgid "cancel"
 msgstr "Abbrechen"
 
-#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
+#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:97
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/lookup_ui.pt:109
 #: /views/edit/macro_metadata.pt:170 /views/edit/macro_metadata.pt:243
 #: /views/edit/Asset/macro_asset_edit.pt:94
@@ -512,7 +609,7 @@ msgstr "Abbrechen"
 msgid "access key: alt-s"
 msgstr "Kurzwahl: alt-s"
 
-#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
+#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:97
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/macro_metadata.pt:170
 #: /views/edit/macro_metadata.pt:243 /views/edit/Asset/macro_asset_edit.pt:94
 #: /views/edit/Container/tab_access_groups.pt:132
@@ -1196,11 +1293,11 @@ msgstr ""
 msgid "Layout has been removed."
 msgstr ""
 
-#: /views/edit/Container/Publication/settings_addables.pt:111
+#: /views/edit/Container/Publication/settings_addables.pt:110
 msgid "save addables settings"
 msgstr "Erweiterungseinstellungen speichern"
 
-#: /views/edit/Container/Publication/settings_addables.pt:111
+#: /views/edit/Container/Publication/settings_addables.pt:110
 msgid "save addable settings for this publication: alt-a"
 msgstr ""
 "Speichern der Erweiterungseinstellungen für diese Veröffentlichung: ALT-a"
@@ -2847,7 +2944,8 @@ msgid ""
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
-msgid "content publish ti<u>m</u>e:"
+#: /views/edit/VersionedContent/tab_status_macros.pt:319
+msgid "content publish ti<u>m</u>e"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
@@ -2888,6 +2986,11 @@ msgstr ""
 msgid "access key: alt-m (some platforms)"
 msgstr ""
 
+# Default: "m"
+#: /views/edit/VersionedContent/tab_status_macros.pt:204
+msgid "access_key_publish_datetime"
+msgstr ""
+
 #: /views/edit/VersionedContent/tab_status_macros.pt:204
 msgid "publish ti<u>m</u>e:"
 msgstr ""
@@ -2919,10 +3022,6 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:300
 msgid "publish closed version"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:319
-msgid "content publish ti<u>m</u>e"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:347
@@ -4156,7 +4255,7 @@ msgstr ""
 msgid "Next &gt;&gt;"
 msgstr ""
 
-#: /views/render_form_errors.py:16
+#: /views/render_form_errors.py:15
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
 

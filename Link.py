@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 
 # python
 import re
@@ -17,6 +17,7 @@ import mangle
 from helpers import add_and_edit
 from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
+from Products.Silva.i18n import translate as _
 
 icon = "www/link.png"
 
@@ -25,10 +26,10 @@ URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@
 _url_match = re.compile(URL_PATTERN)
 
 class Link(CatalogedVersionedContent):
-    """A Link makes it possible to include links to external sites &#8211; 
+    __doc__ = _("""A Link makes it possible to include links to external sites &#8211; 
        outside of Silva &#8211; in a Table of Contents. The content of a Link 
        is simply a hyperlink, beginning with &#8220;http://....&#8221;.
-    """
+    """)
     security = ClassSecurityInfo()
 
     meta_type = "Silva Link"

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.8 2004/09/30 13:05:15 jw Exp $
+# $Id: AutoTOC.py,v 1.9 2004/12/02 10:23:55 walco Exp $
 
 # Zope
 from Globals import InitializeClass
@@ -16,6 +16,7 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
+from Products.Silva.i18n import translate as _
 from Products.Silva.interfaces import IContent, IContainerPolicy
 from Products.Silva.helpers import add_and_edit
 
@@ -23,7 +24,8 @@ icon = "www/autotoc.png"
 addable_priority = 2
 
 class AutoTOC(Content, SimpleItem):
-    """Automatically displays a table of contents. If it's named 'index', the parent folder will show a table of contents when requested (e.g. http://www.x.yz/silva/myFolder/)."""
+    __doc__ = _("""Automatically displays a table of contents. If it's named 'index', the parent folder will show a table of contents when requested (e.g. http://www.x.yz/silva/myFolder/).""")
+
     security = ClassSecurityInfo()
 
     meta_type = "Silva AutoTOC"

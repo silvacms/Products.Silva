@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.34 $
+# $Revision: 1.35 $
 
 # Python
 import os
@@ -20,6 +20,7 @@ from Asset import Asset
 from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
 from Products.Silva import upgrade
+from Products.Silva.i18n import translate as _
 # Storages
 from OFS import Image                            # For ZODB storage
 try:                                             #
@@ -34,12 +35,12 @@ icon="www/silvafile.png"
 addable_priority = -0.3
 
 class File(Asset):
-    """Any digital file can be uploaded as Silva content. 
+    __doc__ = _("""Any digital file can be uploaded as Silva content. 
        For instance large files such as pdf docs or mpegs can be placed in a
        site. File objects have metadata as well. 
        <!-- Abstract base class. Depends on a _file attribute and various 
        methods in the concrete subclasses. (sorry) -->
-    """
+    """)
     security = ClassSecurityInfo()
     
     meta_type = "Silva File"
