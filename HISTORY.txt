@@ -7,6 +7,14 @@ Silva changes
 
     Bugs Fixed
 
+        - get CSS style iteration right for containers only containing 
+          Assets (which otherwise would break the container view).
+
+        - Add a silva root in the ploneCustom style sheet for the tabbar
+          background images (which would not display if the silva root
+          folder did not have 'silva' for id and be located directly in 
+          the zope root).
+
         - Changed check_reserved_ids() function in the content upgrade
           script from breadth-first to depth-first. This work better for
           content hierarchies where folders with an invalid id containing
