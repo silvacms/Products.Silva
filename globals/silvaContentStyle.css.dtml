@@ -10,10 +10,6 @@
 
 <dtml-with stylesheet_properties>
 
-div.workspace {
-  background: &dtml-contentWorkspace;;
-}
-
 div.tabs a {
   background: &dtml-contentTabBackground;;
 }

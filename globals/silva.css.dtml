@@ -105,7 +105,7 @@ div.tabs a {
     /* The normal, unselected tabs. They are all links */
   float : left;
   display : block;
-  width : 7em;
+  width : 7.5em;
   height : 1.1em;
   text-align : center;
     background: &dtml-mainTabBackground;;
@@ -154,7 +154,7 @@ div.tabs a.recede:hover {
 
 div.tabs a.left {
     /* The left side of the tab. */
-  width : 1.4em;
+  width : 1.5em;
     border-style: solid none solid solid;
   border-bottom-color: #8b939b;
 }
@@ -165,7 +165,7 @@ div.tabs a.left:hover {
 
 div.tabs a.right {
     /* The right side of the tab. */
-  width : 1.4em;
+  width : 1.5em;
     border-style: solid solid solid none;
   border-bottom-color: #8b939b;
 }

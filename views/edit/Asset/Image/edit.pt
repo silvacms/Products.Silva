@@ -157,7 +157,7 @@
             <input class="button"
               type="submit"
               name="scale_submit:method"
-              value="Change format/scale"
+              value="change format/scale"
               title="access key: alt-c"
               accesskey="c"
 	      i18n:attributes="title value"
