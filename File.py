@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
@@ -85,8 +85,9 @@ class File(Asset):
         if style_attr:
             attrs.append('style="%"' % style_attr)
         attrs = ' '.join(attrs)
+        link_text = self.get_title_html() or self.id
         return '<a %s href="%s">%s</a>' % (
-            attrs, self.get_download_url(), self._title)
+            attrs, self.get_download_url(), link_text)
 
     # Overide SilvaObject.to_xml().
     security.declareProtected(
@@ -160,10 +161,10 @@ class FileSystemFile(File):
     def __init__(self, id, title, file, repository=None):
         FileSystemFile.inheritedAttribute('__init__')(self, id, title)        
         if not repository:
-            repository = _config_repository
+            repository = self._config_repository
         self._file = ExtFile(id, title)
         self._file._repository = [
-            dir for dir in repository.split('/') if dir not in _baddirs]
+            dir for dir in repository.split('/') if dir not in self._baddirs]
         self._set_file_data_helper(file)
 
     def _set_file_data_helper(self, file):
