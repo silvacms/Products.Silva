@@ -6,6 +6,10 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
+/* -- for debugging -- */
+
+/* {border: 1px dotted Red; } */
+
 /* _____________________ style sheet voor Silva backend ______________________ */
 
 /* standard bg color, change in overide stylesheet */ 
