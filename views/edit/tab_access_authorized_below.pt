@@ -1,0 +1,22 @@
+<tal:block define="global breadcrumb_vein string:Access;" />
+<html metal:use-macro="here/macro_index/macros/master">
+<div class="margins" metal:fill-slot="main">
+<p class="halfline">&nbsp;</p>
+
+<check tal:omit-tag=""
+  tal:condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
+  <dummy tal:omit-tag="" tal:define="dummy python:model.security_trigger()" />
+
+  <h3>Authorized users below this level</h3>
+
+  <form>
+    <span class="textarea">
+      <textarea name="data" cols="65" rows="5" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="userinfo python:model.sec_get_user_info(userid)"
+        tal:condition="userinfo/mail | nothing" tal:replace="userinfo/mail">
+        userid
+      </span><span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></repeat></textarea>
+    </span>
+  </form>
+</check>
+</div>
+</html>
