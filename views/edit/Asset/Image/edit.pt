@@ -15,30 +15,46 @@
   <h3 class="info">
     <img tal:replace="structure icon" /> Image info
   </h3>
-  <tal:condition condition="python: model.hires_image is None">
+  <tal:condition condition="not: model/hires_image">
     <span class="subhead">format</span><br />
     <span tal:replace="model/getFormat" /> image<br />
     <span class="subhead">dimensions</span><br />
-    <span tal:on-error="string: unknown"
-      tal:replace="model/getDimensions"
+    <span 
+      tal:define="
+        img_width python: model.getDimensions()[0];
+        img_height python: model.getDimensions()[1];
+        "
+      tal:on-error="string: unknown"
+      tal:replace="string:${img_width}x${img_height}"
     />
   </tal:condition> 
-  <tal:condition condition="python: model.hires_image is not None">
+  <tal:condition condition="model/hires_image">
     <span class="subhead">format</span><br />
-        <span tal:replace="model/web_format" /> image<br />
+    <span tal:replace="model/web_format" /> image<br />
     <span class="subhead">dimensions</span><br />
-    <span tal:on-error="string: unknown"
-      tal:replace="model/getDimensions"
-    />
-    image scaled to 
-    <span tal:on-error="string: unknown"
-      tal:replace="model/getCanonicalWebScale"
+    <span 
+      tal:define="
+        img_width python: model.getDimensions()[0];
+        img_height python: model.getDimensions()[1];
+        "
+      tal:on-error="string: unknown"
+      tal:replace="string:${img_width}x${img_height}"
+    />, scaled to 
+    <span 
+      tal:define="
+        img_width python: model.getCanonicalWebScale()[0];
+        img_height python: model.getCanonicalWebScale()[1];
+        "
+      tal:on-error="string: unknown"
+      tal:replace="string:${img_width}x${img_height}"
     />
   </tal:condition>        
 </div>
 <div class="info"
   tal:condition="not: model/canScale">
-  Note: Silva offers image scaling and conversion if PIL (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>) is installed. 
+  Note: Silva offers image scaling and conversion when PIL 
+  (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>) 
+  is installed. 
 </div>
 </metal:fill-slot>
 
