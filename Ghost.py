@@ -93,6 +93,8 @@ manage_addGhostForm = PageTemplateFile("www/ghostAdd", globals(),
 
 def manage_addGhost(self, id, content_url, REQUEST=None):
     """Add a Ghost."""
+    if not self.is_id_valid(id):
+        return
     object = Ghost(id)
     self._setObject(id, object)
     object = getattr(self, id)
@@ -107,8 +109,6 @@ manage_addGhostVersionForm = PageTemplateFile("www/ghostversionAdd", globals(),
 
 def manage_addGhostVersion(self, id, content_url, REQUEST=None):
     """Add a Ghost version."""
-    if not self.is_id_valid(id):
-        return
     object = GhostVersion(id, content_url)
     self._setObject(id, object)
     add_and_edit(self, id, REQUEST)
