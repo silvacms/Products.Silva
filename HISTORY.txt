@@ -1,0 +1,39 @@
+Silva020403
+
+  Features Added
+
+    - Access tab to assign author/editor roles.
+
+    - Lookup screen to find users in LDAP database.
+
+    - Simple lookup screen can be configured to work without LDAP
+      (for local testing).
+
+Silva020402
+
+  Features Added
+
+    - Created simple import/export scripts for upgrades of running Silva.
+
+    - Ghosts now display a link to the original document they are ghosting.
+
+    - Lots of small interface improvements (icons are links, etc).
+
+    - First stab at dynamic element switchers (not fully functional yet,
+      but present in the interface).
+
+  Bugs Fixed
+            
+    - Can see access tab now if you have the right roles. Access tab
+      doesn't work properly with LDAP yet, though.                  
+
+    - Deleting folders without default now works. Some other fixes for
+      folders without default documents.
+                                        
+    - Authoring tool now allows multi-line list titles.
+
+  Unresolved
+            
+    - Tested 'Add and edit' on ariel with folder, document, etc, but
+      cannot reproduce multiple login effect yet.
+
