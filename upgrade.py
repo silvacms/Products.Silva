@@ -210,7 +210,7 @@ def upgrade_using_registry(obj, version):
         if upgrade_registry.is_registered(mt, version):
             for upgrade in upgrade_registry.get_meta_type(mt, version):
                 res = upgrade(o)
-                # sometimes upgrde methods will replace objects, if so the
+                # sometimes upgrade methods will replace objects, if so the
                 # new object should be returned so that can be used for the rest
                 # of the upgrade chain instead of the old (probably deleted) one
                 if res:
@@ -332,7 +332,8 @@ def convert_document_092(obj):
 
     for version in ['unapproved', 'approved', 'public', 'last_closed']:
         v = getattr(obj, 'get_%s_version' % version)()
-        if v is not None and not hasattr(getattr(obj, v), 'documentElement'):
+        if v is not None and not hasattr(getattr(obj, v).aq_base, 'documentElement'):
+            # bypass this document, as upgrade seems to be done already
             return
 
     parent = obj.aq_parent.aq_inner
@@ -416,7 +417,7 @@ def convert_document_092(obj):
         newobj.set_unapproved_version_expiration_datetime(
                 obj.get_unapproved_version_expiration_datetime())
         getattr(newobj, str(newobj.get_unapproved_version())).content.manage_edit(xml)
-
+    
     parent.manage_delObjects([uniqueid])
     print 'Unique id %s is deleted' % uniqueid
 
@@ -437,13 +438,16 @@ def unicode_and_metadata_092(obj):
             # if somehow the string is already unicode (who knows, right :)
             # skip conversion
             new_value = old_value
-            if type(old_value) != unicode:
+            if type(old_value) != type(u' '):
                 # we are assuming all data is cp1252 here, since that's what we've
                 # been using all along, but maybe some funky custom setups may want
                 # to interfere here...
                 # XXX do we really want to continue on errors here instead of an exception?
                 new_value = unicode(old_value, 'cp1252', 'replace')
             values[new_name] = new_value
+        # FIXME: formulator wants utf-8 for validation ...
+        for key in values.keys():
+            values[key] = values[key].encode('utf-8')
         # now set it
         # if an object is a VersionedContent, walk through all versions, else just
         # set it to the current version
@@ -457,11 +461,23 @@ upgrade_registry.register('Silva Folder', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva Publication', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva Document', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva DemoObject', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva Ghost', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva Image', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva File', unicode_and_metadata_092, '0.9.2')
-upgrade_registry.register('Silva SQL Data Source', unicode_and_metadata_092, '0.9.2')
+# FIXME: upgrade metadata for Ghosts and Assets? The title?
+#upgrade_registry.register('Silva Ghost', unicode_and_metadata_092, '0.9.2')
+#upgrade_registry.register('Silva Image', unicode_and_metadata_092, '0.9.2')
+#upgrade_registry.register('Silva File', unicode_and_metadata_092, '0.9.2')
+#upgrade_registry.register('Silva SQL Data Source', unicode_and_metadata_092, '0.9.2')
+
             
+def set_cache_data_092(obj):
+    """ add the new cache data variable """
+    # XXX does not check if content is already upgraded
+    obj.cleanPublicRenderingCache()
+
+upgrade_registry.register('Silva Document', set_cache_data_092, '0.9.2')
+upgrade_registry.register('Silva Ghost', set_cache_data_092, '0.9.2')
+upgrade_registry.register('Silva DemoObject', set_cache_data_092, '0.9.2')
+
+
 def catalog_092(obj):
     """Do initial catalogin of objects"""
     print 'Catalog'
@@ -478,7 +494,7 @@ upgrade_registry.register('Silva DemoObject Version', catalog_092, '0.9.2')
 upgrade_registry.register('Silva Ghost Version', catalog_092, '0.9.2')
 
 def replace_container_title_092(obj):
-    """Move te title to the metadata
+    """Move the title to the metadata
     
     Is a bit of a hairball situation, since the
     title should be set on all the versions
