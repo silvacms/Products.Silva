@@ -248,7 +248,7 @@
             <input class="button" 
               type="submit" 
               name="add_submit" 
-              value="save" 
+              value="save group" 
               title="access key: alt-s" 
               accesskey="s" 
               i18n:attributes="title value"
