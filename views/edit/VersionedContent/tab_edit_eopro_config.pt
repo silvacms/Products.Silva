@@ -40,13 +40,9 @@
                 <color rgb="#111111" />
         </presetcolors>
         <customtags>
-                <customtag name="customreadonlytag" alwaysshow="true" isreadonlytag="true"></customtag>
-                <customtag name="customreadonlyarea" alwaysshow="true" isreadonlyarea="true"></customtag>
                 <customtag name="term" alwaysshow="true"></customtag>
                 <customtag name="desc" alwaysshow="true"></customtag>
-                <customtag name="customblock" alwaysshow="true"  isblockelement="true"></customtag>
-                <customtag name="doctitle" alwaysshow="true" isblockelement="true" isreadonlytag="true">
-                </customtag>
+                <customtag name="doctitle" alwaysshow="true" isblockelement="true" isreadonlytag="true"></customtag>
         </customtags>
         <spellingcheckers>
                 <spellingchecker name="US English" properties="sc-americanenglish.txt" default="true" />

@@ -4,7 +4,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=encoding='latin1'
+##parameters=encoding='utf-8'
 ##title=
 ##
 from Products.PythonScripts.standard import html_quote

@@ -1,46 +1,51 @@
-<tal:block define="global breadcrumb_vein string:EoPro;" />
-<html metal:use-macro="here/macro_index/macros/master">
-<div metal:fill-slot="main" tal:omit-tag="">
-<!-- ___________________________ start index_html/slot main ___________________________ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<tal:block tal:define="dummy python:model.security_trigger();
-                       global could_lock model/sec_create_lock;
-                       global unapproved_version model/get_unapproved_version;
-                       " />
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global breadcrumb_vein string:Edit;
+    refresh_time python:19 * 60;
+    dummy python: here.set_content_type();
+  ">
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
+
+  <tal:block tal:define="
+    global is_locked model/sec_is_locked;
+    global unapproved_version model/get_unapproved_version;
+    global request_pending python:model.is_version_approval_requested();" />
+
 <div>
 
 <iframe id="RSIFrame"
   name="RSIFrame"
   style="width:0; height:0px; border: 0px"
-  src="blank.html"></iframe>
+  src="blank.html"
+></iframe>
+
+
 
 <table width="100%">
 <tr>
 <td width="810" >
-        <APPLET code="com.realobjects.eop.applet.EditorApplet" id="editor" name="editor"
-                archive="edit-on-pro-signed.jar,ssce.jar" width="800"  height="500" 
-                tal:attributes="codeBase template/eopro/absolute_url" 
-                VIEWASTEXT MAYSCRIPT SCRIPTABLE
-        >
-            <!-- <PARAM NAME="sethtmldataurl" tal:attributes="VALUE python: model.absolute_url()+'/editor_storage'"/>  -->
-            <PARAM NAME="encoding" VALUE="UTF8"/>
 
 
+      <applet code="com.realobjects.eop.applet.EditorApplet" height="350"
+      id="editor" name="editor" width="725"
+      archive="edit-on-pro-signed.jar,tidy.jar,ssce.jar" 
+      tal:attributes="codebase template/eopro/absolute_url" 
+      mayscript="">
+       
+        <PARAM NAME="sethtmldataurl" tal:attributes="value python: model.absolute_url()+'/editor_storage'"/>
+        <PARAM NAME="toolbarurl" tal:attributes="VALUE python: model.absolute_url() + '/edit/tab_edit_eopro_toolbar'"/>
+        <PARAM NAME="configurl" tal:attributes="VALUE python: model.absolute_url() + '/edit/tab_edit_eopro_config'"/>
 
-        <!-- general settings (configuration files) (relative to CODEBASE!?) -->
-
-            <PARAM NAME="cabbase" VALUE="edit-on-pro-signed.cab,ssce.cab"/>
-            <PARAM NAME="locale" VALUE="en_US"/>           
-            <PARAM NAME="help" VALUE="eophelp/en_US/help_en_US.htm"/>
-            <PARAM NAME="configurl" tal:attributes="VALUE python: template.tab_edit_eopro_config.absolute_url()"/>
-            <PARAM NAME="toolbarurl" tal:attributes="VALUE python: template.tab_edit_eopro_toolbar.absolute_url()"/>
-            <PARAM NAME="spellcheckproperties" VALUE="sc-americanenglish.txt"/>
-
-            <!--    <PARAM NAME="imageroot" VALUE="http://localhost"/> relative image SRCs -->
-            <!--    <PARAM NAME="imageproxyurl" VALUE="/cgi-bin/imageproxy.cgi?"/> unsigned CAB/JAR and want to insert remote images-->
-
-        <!-- Display options -->
-
+        <PARAM NAME="encoding" VALUE="UTF-8"/>
             <PARAM NAME="startupscreenbackgroundcolor" value="#e2e9eb"/>
             <PARAM NAME="defaultfontcolor" VALUE="black"/>
             <PARAM NAME="defaultbackgroundcolor" VALUE="#e2e9eb"/>
@@ -48,27 +53,20 @@
             <PARAM NAME="defaultfontsize" VALUE="12"/>
             <PARAM NAME="defaultfontface" VALUE="Serif"/>
 
-        <!-- formatting parameters -->
+        <param name="cabbase"
+        value="edit-on-pro-signed.cab,tidy.cab,ssce.cab" />
+        <param name="locale" value="en_US" />
+        <param name="help" value="eophelp/en_US/help_en_US.htm" />
+        <param name="sourceview" value="true" />
+        <param name="smartindent" value="true" />
+        <param name="bodyonly" value="false" />
+        <param name="multipleundoredo" value="true" />
+        <param name="nbspfill" value="true" />
+        <param name="tablenbspfill" value="true" />
+        <param name="inserttext_html" value="true" />
+        <param name="standalonemode" value="false" />
+      </applet>
 
-            <PARAM NAME="sourceview" VALUE="true"/>
-            <PARAM NAME="smartindent" VALUE="true"/>
-            <PARAM NAME="sourceviewwordwrap" VALUE="true"/>
-            <PARAM NAME="inserttext_html" VALUE="TRUE"/>
-            <PARAM NAME="bodyonly" VALUE="false"/>
-            <PARAM NAME="textmode" VALUE="false"/>
-            <PARAM NAME="xhtmlmode" VALUE="true"/>
-
-
-            <PARAM NAME="simpletable" VALUE="true"/>
-            <PARAM NAME="tableNBSPfill" VALUE="true"/>
-            <PARAM NAME="table_numrows" VALUE="3"/>
-            <PARAM NAME="table_numcols" VALUE="4"/>
-            <PARAM NAME="table_overallwidth" VALUE="100%"/>
-            <PARAM NAME="table_rowheight" VALUE="10"/>
-            <PARAM NAME="table_colwidth" VALUE="25%"/>
-
-            <PARAM NAME="oneditorloaded" VALUE="editorloaded"/>
-        </APPLET>
 </td>
 <td valign="top" align="left">
 <form name="myForm" target="RSIFrame" method="POST" tal:attributes="action python: 'tab_edit_eopro_submit'">
@@ -76,7 +74,7 @@
 			<br/><br/>
     <input type="button" name="reload" value="Reload" onClick="functReload();">
     <input type="hidden" name="HTMLDATA"
-            tal:attributes="value python: model.editor_storage()"
+            tal:attributes="value python: model.editor_storage(encoding=None)"
 	   >
 <br><br><small>(buttons require LiveConnect)</small>
 </form>
@@ -92,7 +90,7 @@
       </div>
 
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
-<tal:block tal:condition="python:unapproved_version and not could_lock">
+<tal:block tal:condition="python:unapproved_version and is_locked">
 <div class="feedback"><span class="warning">
 <b>Note: </b>This object is already being edited by another user, and is temporarily locked.
 </span>
@@ -127,8 +125,9 @@
 </div>
 
 <!-- ___________________________ end index_html/slot main ___________________________ -->
-</div>
 
-</html>
+</metal:block>
+</metal:block>
 <!-- ___________________________ end index_html ___________________________ -->
+</html>
 

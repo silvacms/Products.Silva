@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 """
 This module defines a class and an instance of the importer_registry, a place
 to register xml_import_handlers. The handlers should be registered at runtime
@@ -105,7 +105,7 @@ def get_xml_id(node):
     for attr in node._attributes:
         if attr[1] == u'id':
             # the id MUST be ASCII
-            id = attr[4].encode()
+            id = attr[4].encode('ascii')
     if not id:
         raise Exception, 'No id found'
     return id
