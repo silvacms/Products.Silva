@@ -1,21 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html tal:omit-tag=""
-  lang="en"
-  xml:lang="en"
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:notal="http://www.infrae.com/silva/notal"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  tal:define="
-    global breadcrumb_vein string:EoPro;
-  ">
-<metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
+<tal:block define="global breadcrumb_vein string:EoPro;" />
+<html metal:use-macro="here/macro_index/macros/master">
+<div metal:fill-slot="main" tal:omit-tag="">
+<!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<tal:block tal:define="
-  global could_lock model/sec_create_lock;
-  global unapproved_version model/get_unapproved_version;
-  " />
+<tal:block tal:define="dummy python:model.security_trigger();
+                       global could_lock model/sec_create_lock;
+                       global unapproved_version model/get_unapproved_version;
+                       " />
 <div>
 
 <iframe id="RSIFrame"
@@ -26,74 +17,38 @@
 <table width="100%">
 <tr>
 <td width="810" >
-<<<<<<< tab_edit_eopro.pt
         <APPLET code="com.realobjects.eop.applet.EditorApplet" id="editor" name="editor"
                 archive="edit-on-pro-signed.jar,ssce.jar" width="800"  height="500" 
                 tal:attributes="codeBase template/eopro/absolute_url" 
                 VIEWASTEXT MAYSCRIPT
-=======
-        <APPLET code="EditorApplet" id="myEditor" name="myEditor"
-                archive="edit-on-pro-signed.jar,ssce.jar" width="800"  height="500" VIEWASTEXT="VIEWASTEXT" MAYSCRIPT="MAYSCRIPT"
-                tal:attributes="codeBase template/eopro/absolute_url"
->>>>>>> 1.6.4.5
         >
             <!-- <PARAM NAME="sethtmldataurl" tal:attributes="VALUE python: model.absolute_url()+'/editor_storage'"/>  -->
             <PARAM NAME="encoding" VALUE="UTF8"/>
 
 
 
-<<<<<<< tab_edit_eopro.pt
         <!-- general settings (configuration files) (relative to CODEBASE!?) -->
-=======
--->
-            <PARAM NAME="sethtmldataurl" tal:attributes="VALUE python: model.absolute_url()+'/editor_storage'" />
->>>>>>> 1.6.4.5
 
-<<<<<<< tab_edit_eopro.pt
             <PARAM NAME="cabbase" VALUE="edit-on-pro-signed.cab,ssce.cab"/>
             <PARAM NAME="locale" VALUE="en_US"/>           
             <PARAM NAME="help" VALUE="eophelp/en_US/help_en_US.htm"/>
             <PARAM NAME="configurl" tal:attributes="VALUE python: template.tab_edit_eopro_config.absolute_url()"/>
             <PARAM NAME="toolbarurl" tal:attributes="VALUE python: template.tab_edit_eopro_toolbar.absolute_url()"/>
             <PARAM NAME="spellcheckproperties" VALUE="sc-americanenglish.txt"/>
-=======
-            <PARAM NAME="encoding" VALUE="UTF8" />
->>>>>>> 1.6.4.5
 
-<<<<<<< tab_edit_eopro.pt
             <!--    <PARAM NAME="imageroot" VALUE="http://localhost"/> relative image SRCs -->
             <!--    <PARAM NAME="imageproxyurl" VALUE="/cgi-bin/imageproxy.cgi?"/> unsigned CAB/JAR and want to insert remote images-->
-=======
-            <PARAM NAME="toolbarurl" tal:attributes="VALUE python: template.tab_edit_eopro_toolbar.absolute_url()" />
-      <!-- This is relative to CODEBASE -->
->>>>>>> 1.6.4.5
 
-<<<<<<< tab_edit_eopro.pt
         <!-- Display options -->
-=======
-            <PARAM NAME="cabbase" VALUE="edit-on-pro-signed.cab,ssce.cab" />
->>>>>>> 1.6.4.5
 
-<<<<<<< tab_edit_eopro.pt
             <PARAM NAME="startupscreenbackgroundcolor" value="#e2e9eb"/>
             <PARAM NAME="defaultfontcolor" VALUE="black"/>
             <PARAM NAME="defaultbackgroundcolor" VALUE="#e2e9eb"/>
             <PARAM NAME="defaultlinkcolor" VALUE="blue"/>
             <PARAM NAME="defaultfontsize" VALUE="12"/>
             <PARAM NAME="defaultfontface" VALUE="Serif"/>
-=======
-            <PARAM NAME="locale" VALUE="en_US" />            <!-- Change this to change UI language e.g de_DE, fr_
-FR, es_ES -->
-            <PARAM NAME="help" VALUE="eophelp/en_US/help_en_US.htm" />   <!-- This is relative to CODEBASE, can be
- changed according to UI language -->
->>>>>>> 1.6.4.5
 
-<<<<<<< tab_edit_eopro.pt
         <!-- formatting parameters -->
-=======
-            <PARAM NAME="spellcheckproperties" VALUE="sc-americanenglish.txt" />  <!-- This is relative to CODEBAS
-E -->
->>>>>>> 1.6.4.5
 
             <PARAM NAME="sourceview" VALUE="true"/>
             <PARAM NAME="smartindent" VALUE="true"/>
@@ -103,13 +58,7 @@ E -->
             <PARAM NAME="textmode" VALUE="false"/>
             <PARAM NAME="xhtmlmode" VALUE="true"/>
 
-<<<<<<< tab_edit_eopro.pt
-=======
-            <PARAM NAME="sourceview" VALUE="true" />
-            <PARAM NAME="sourceviewwordwrap" VALUE="true" />
->>>>>>> 1.6.4.5
 
-<<<<<<< tab_edit_eopro.pt
             <PARAM NAME="simpletable" VALUE="true"/>
             <PARAM NAME="tableNBSPfill" VALUE="true"/>
             <PARAM NAME="table_numrows" VALUE="3"/>
@@ -117,41 +66,12 @@ E -->
             <PARAM NAME="table_overallwidth" VALUE="100%"/>
             <PARAM NAME="table_rowheight" VALUE="10"/>
             <PARAM NAME="table_colwidth" VALUE="25%"/>
-=======
-            <PARAM NAME="startupscreenbackgroundcolor" value="#e2e9eb" />
->>>>>>> 1.6.4.5
 
-<<<<<<< tab_edit_eopro.pt
             <PARAM NAME="oneditorloaded" VALUE="editorloaded"/>
-=======
-            <PARAM NAME="defaultfontcolor" VALUE="black" />
-  <PARAM NAME="defaultbackgroundcolor" VALUE="#e2e9eb" />
-            <PARAM NAME="defaultlinkcolor" VALUE="blue" />
-            <PARAM NAME="defaultfontsize" VALUE="12" />
-            <PARAM NAME="defaultfontface" VALUE="Serif" />
-
-            <PARAM NAME="bodyonly" VALUE="false" />
-            <PARAM NAME="textmode" VALUE="false" />
-            <PARAM NAME="xhtmlmode" VALUE="true" />
-
-            <PARAM NAME="inserttext_html" VALUE="TRUE" />
-
-
-            <PARAM NAME="simpletable" VALUE="true" />
-            <PARAM NAME="tableNBSPfill" VALUE="true" />
-            <PARAM NAME="table_numrows" VALUE="3" />
-            <PARAM NAME="table_numcols" VALUE="4" />
-            <PARAM NAME="table_overallwidth" VALUE="100%" />
-            <PARAM NAME="table_rowheight" VALUE="10" />
-            <PARAM NAME="table_colwidth" VALUE="25%" />
-
-            <PARAM NAME="ONEDITORLOADED" VALUE="onEditorLoaded" />
->>>>>>> 1.6.4.5
         </APPLET>
 </td>
 <td valign="top" align="left">
 <form name="myForm" target="RSIFrame" method="POST" tal:attributes="action python: 'tab_edit_eopro_submit'">
-<<<<<<< tab_edit_eopro.pt
     <input type="button" name="save" value="Save Document" onClick="functSave();">
 			<br/><br/>
     <input type="button" name="reload" value="Reload" onClick="functReset();">
@@ -159,13 +79,6 @@ E -->
             tal:attributes="value python: model.editor_storage()"
 	   >
 <br><br><small>(buttons require LiveConnect)</small>
-=======
-    <input type="button" name="save" value="Save Document" onClick="functSave();" />
-			<br /><br />
-    <input type="button" name="reset" value="Reset Document" onClick="functReload();" />
-    <input type="hidden" name="HTMLDATA" />
-<br /><br /><small>(buttons require LiveConnect)</small>
->>>>>>> 1.6.4.5
 </form>
 
 <iframe id="logframe" name="logframe"
@@ -185,7 +98,7 @@ E -->
 </span>
 </div>
 <div class="margins">
-<form action="tab_edit_break_lock" method="POST"><input class="warningbutton" type="submit" value="Break lock" /></form>
+<form action="tab_edit_break_lock" action="POST"><input class="warningbutton" type="submit" value="Break lock" /></form>
 </div>
 </tal:block>
 
@@ -213,7 +126,9 @@ E -->
 </form>
 </div>
 
-</metal:block>
-</metal:block>
+<!-- ___________________________ end index_html/slot main ___________________________ -->
+</div>
+
 </html>
+<!-- ___________________________ end index_html ___________________________ -->
 
