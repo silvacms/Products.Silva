@@ -1,7 +1,8 @@
 from Content import Content
 from Versioning import Versioning, VersioningError
+from OFS import Folder
 
-class VersionedContent(Content, Versioning):
+class VersionedContent(Content, Versioning, Folder.Folder):
     # there is always at least a single version to start with,
     # created by the object's factory function
     _version_count = 1

@@ -1,5 +1,4 @@
 # Zope
-from OFS import Folder, ObjectManager, SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
@@ -13,7 +12,7 @@ import Interfaces
 from helpers import add_and_edit
 from cgi import escape
 
-class Document(VersionedContent, Folder.Folder):
+class Document(VersionedContent):
     """Silva Document.
     """
     meta_type = "Silva Document"
