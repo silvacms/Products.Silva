@@ -22,9 +22,11 @@ def install(root):
                             'Products/Silva/views', 'Silva')
     # also register views
     registerViews(root.service_view_registry)
+    # also re-configure security (XXX should this happen?)
+    configureSecurity(root)
     # and reconfigure xml widget registries
     # FIXME: should we check if the registries exist?
-    # (for upgrading, and maybe to hande accidential deletion)
+    # (for upgrading, and maybe to handle accidential deletion)
     registerCoreWidgets(root)
     
 def uninstall(root):
@@ -117,12 +119,18 @@ def configureSecurity(root):
     root.manage_permission('Use XMLWidgets Editor Service',
                            all_reader + ['Authenticated'])
 
-    # XXX Set permissions/roles for Groups Service
-    # root.manage_permission('Access Groups information', all)
-    # root.manage_permission('Access Group mappings', all)
-    # root.manage_permission('Change Groups', all_chief)
-    # root.manage_permission('Change Group mappings', all_chief)
-
+    # Set permissions/roles for Groups Service
+    # XXX this is a bit of a hack, as Groups may not be installed we
+    # catch exceptions. A 'refresh' after Groups is installed should
+    # set the permissions right
+    try:
+        root.manage_permission('Access Groups information', all_reader)
+        root.manage_permission('Access Group mappings', all_reader)
+        root.manage_permission('Change Groups', all_chief)
+        root.manage_permission('Change Group mappings', all_chief)
+    except:
+        pass
+    
 def configureLayout(root, default=0):
     """Install layout code into root.
     If the default argument is true, ids will be prefixed with default_.

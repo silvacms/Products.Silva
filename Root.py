@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.29 $
+# $Revision: 1.30 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -73,6 +73,17 @@ class Root(Publication):
             return self.get_silva_addables_all()
         else:
             return addables
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'upgrade_silva')
+    def upgrade_silva(self, from_version='0.8.5'):
+        """Upgrade Silva from previous version.
+        """
+        if from_version != '0.8.5':
+            raise "Not supported", "Upgrading from another version than 0.8.5 is not supported."
+        import upgrade
+        upgrade.from085to086(self.aq_inner.aq_parent, self)
+        return "Upgrade succeeded."
     
 InitializeClass(Root)
 
