@@ -23,6 +23,8 @@ if request.has_key('image_link'):
     node.setAttribute('link', node.input_convert(link))
 else:
     node.removeAttribute('link')
-
+image = context.get_image(image_path)
+if image is not None:
+    image_path = '/'.join(image.getPhysicalPath())
 node.setAttribute('image_path', node.input_convert(image_path))
 

@@ -13,7 +13,7 @@ image_path = node.output_convert_html(node.getAttribute('image_path'))
 if image_path:
     try:
         image = node.restrictedTraverse(image_path)
-    except (KeyError, AttributeError):
+    except (KeyError, AttributeError, ValueError, IndexError):
         # image reference is broken (i.e. renamed)
         image = None
 else:
