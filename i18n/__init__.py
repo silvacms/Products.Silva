@@ -28,6 +28,8 @@ class DummyMessageID:
 
     def __init__(self, input):
         """store the input to return (untranslated) later on __str__()"""
+	if not isinstance(input, basestring):
+	    input = str(input)
         self.__str = input
         self.__parsed = None
     
