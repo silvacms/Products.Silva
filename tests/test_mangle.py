@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.9 2003/11/17 14:49:11 zagy Exp $
+# $Id: test_mangle.py,v 1.10 2003/11/18 11:47:32 gotcha Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -78,8 +78,8 @@ class MangleIdTest(SilvaTestCase.SilvaTestCase):
     def test_cook(self):
         id = mangle.Id(self.folder, u'Gro\N{LATIN SMALL LETTER SHARP S}e Datei').cook()
         self.assert_(id.isValid())
-        self.assertEquals(str(id), 'Grose Datei')
-        #self.assertEquals(str(id), 'Grosse Datei') # this would be german replacement 
+        self.assertEquals(str(id), 'Grose_Datei')
+        #self.assertEquals(str(id), 'Grosse_Datei') # this would be german replacement 
         
 
 class MangleTest(SilvaTestCase.SilvaTestCase):
