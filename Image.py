@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.45 2003/08/04 09:25:14 zagy Exp $
+# $Id: Image.py,v 1.46 2003/08/12 07:54:38 zagy Exp $
 
 # Python
 import re, string 
@@ -111,7 +111,7 @@ class Image(Asset):
         if self.hires_image is not None:
             self.hires_image.manage_beforeDelete(self.hires_image, self)
         self.hires_image = self._image_factory(
-            'hires_image', self.get_title(), file)
+            self.getId(), self.get_title(), file)
         format = self.getFormat()
         if format in self.web_formats:
             self.web_format = format
@@ -227,7 +227,6 @@ class Image(Asset):
         if isinstance(image, OFS.Image.Image):
             return None
         return image.get_filename()
-        return '/'.join(image.filename)
 
     
     def _getPILImage(self, img):
@@ -242,7 +241,7 @@ class Image(Asset):
         if isinstance(img, OFS.Image.Image):
             image_reference = StringIO(str(img.data))
         else:            
-            image_reference = img._get_filename(img.filename)
+            image_reference = img.get_filename()
         try:
             image = PIL.Image.open(image_reference)
         except IOError:
