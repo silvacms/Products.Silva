@@ -1,8 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 import unittest
 import Zope
+Zope.startup()
 from Products.Silva.IContent import IContent
 from Products.Silva.ISilvaObject import ISilvaObject
 from Products.Silva.Folder import Folder
@@ -36,6 +37,8 @@ class ContainerBaseTestCase(unittest.TestCase):
             self.root = makerequest.makerequest(self.connection.root()
                                                 ['Application'])
             self.REQUEST = self.root.REQUEST
+            self.REQUEST['URL1'] = ''
+            self.root.REQUEST['URL1'] = ''
             # make it work with SimpleMembership by creating a user. This way,
             # member object will be automatically created, so that the last
             # author username is indeed 'TestUser'

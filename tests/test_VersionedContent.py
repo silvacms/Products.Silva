@@ -1,8 +1,10 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 import unittest
 import Zope
+Zope.startup()
+
 from DateTime import DateTime
 from Testing import makerequest
 from Products.Silva.Document import Document
@@ -30,6 +32,8 @@ class VersionedContentTestCase(unittest.TestCase):
         try:
             self.root = makerequest.makerequest(self.connection.root()
                                                 ['Application'])
+            self.root.REQUEST['URL1'] = ''
+            self.REQUEST = self.root.REQUEST
             # awful hack: add a user who may own the 'index'
             # of the test containers
             hack_create_user(self.root)
