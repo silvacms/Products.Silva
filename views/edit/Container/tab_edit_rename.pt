@@ -18,14 +18,14 @@
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">
 <tr>
-<th align="left">
-Current id
+<th align="right">
+Current id&nbsp;
 </th>
 <th align="left">
 New id
 </th>
-<th align="left">
-Current title
+<th align="right">
+Current title&nbsp;
 </th>
 <th align="left">
 New title
@@ -40,19 +40,20 @@ Notes
 <tal:cycle define="oddrow repeat/objectid/odd">
 <tr class="focus" valign="top"
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
-<td align="left">
-<span tal:replace="object/getId" />
+<td align="right">
+<span tal:replace="object/getId" />&nbsp;
 </td>
 <td>
 <input type="text" name="name" style="width: 100%" value="value" tal:attributes="name string:id_${object/getId}; value object/getId" />
 </td>
-<td align="left">
+<td align="right">
 <span tal:condition="python: object.getId() != 'index'" tal:replace="structure object/get_title_html" />
 <span tal:condition="python: object.getId() == 'index'" tal:replace="structure object/aq_inner/aq_parent/get_title_html" />
+&nbsp;
 </td>
 <td>
 <input type="text" name="name" style="width: 100%" value="value" tal:condition="python: object.getId() != 'index'" tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
-<input tal:condition="python: object.getId() == 'index'" type="text" name="name" style="width: 100%" tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
+<input type="text" name="name" style="width: 100%" tal:condition="python: object.getId() == 'index'" tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
 </td>
 <td>
 <span class="error" tal:condition="python: object.getId() == 'index'">
