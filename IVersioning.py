@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 import Interface
 
 class IVersioning(Interface.Base):
@@ -34,7 +34,7 @@ class IVersioning(Interface.Base):
         pass
 
 
-    def request_version_approval():
+    def request_version_approval(self, message):
         """Request approval for the current unapproved version
         Implementation should raise VersioningError, if there
         is no such version.
@@ -42,11 +42,21 @@ class IVersioning(Interface.Base):
         """
         pass
 
-    def withdraw_version_approval():
+    def withdraw_version_approval(self, message):
         """Withdraw a previous request for approval
         Implementation should raise VersioningError, if the
         currently unapproved version has no request for approval yet,
         or if there is no unapproved version.
+        """
+        pass
+
+    def reject_version_approval(self, message):
+        """Reject a request for approval made by some Author
+        Implementation should raise VersioningError, if the
+        currently unapproved version has no request for approval yet,
+        or if there is no unapproved version.
+        One need to have the ApproveSilvaContent permission to call
+        this method
         """
         pass
 
@@ -74,15 +84,6 @@ class IVersioning(Interface.Base):
         """
         pass
 
-    def set_approval_request_message(message):
-        """Allows to add a message concerning the
-        current request for approval.
-        setting the currently approved message
-        overwrites any previous message for this content.
-        The implementation may clean the message
-        after the content is approved.
-        """
-        pass
     
     
     # ACCESSORS
