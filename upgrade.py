@@ -404,13 +404,16 @@ upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
 # the old names can refer to a Zope Property, an attribute or a method on the object
 # note that this mapping is used to find out the fields that should be
 # converted, so all to-be-converted fields should be mentioned
-set_el_name_mapping = {'silva-content': {},
-                        'silva-extra': {'document_comment': 'comment', 
-                                        'container_comment': 'comment',
-                                        'contact_email': 'contactemail',
-                                        'contact_name': 'contact_name',
-                                    }
-                    }
+set_el_name_mapping = {
+    'silva-content': {},
+    'silva-extra': {
+        'document_comment': 'comment', 
+        'container_comment': 'comment',
+        'subject': 'subject',
+        'contact_email': 'contactemail',
+        'contact_name': 'contactname',
+        }
+    }
 
 # some helper function
 def get_versions_or_self(obj):
@@ -436,6 +439,18 @@ def get_versions_or_self(obj):
         ret = [obj]
     return ret
 
+def getPropertyOrAttrValue(object, attr):
+    value = None
+    if object.hasProperty(attr):
+        value = object.getProperty(attr)
+        object.manage_delProperties(ids=[attr])
+    elif hasattr(object.aq_inner, attr):
+        value = getattr(object.aq_inner, attr)
+        #if callable(value):
+        #    value = value()
+        delattr(object.aq_inner, attr)
+    return value
+
 def unicode_and_metadata_092(obj):
     # get the metadata sets for the object
     ms = obj.service_metadata
@@ -444,17 +459,10 @@ def unicode_and_metadata_092(obj):
     for set_name, el_name_mapping in set_el_name_mapping.items():
         for old_name, new_name in el_name_mapping.items():
             #print 'Testing for', old_name, 'on object', obj.absolute_url()
-            old_value = obj.aq_inner.getProperty(old_name)
+            old_value = getPropertyOrAttrValue(obj, old_name)
             if old_value is None:
-                old_value = getattr(obj.aq_inner, old_name, None)
-                if old_value is None:
-                    #print 'Not found'
-                    continue
-                if callable(old_value):
-                    old_value = old_value()
-                if old_value is None:
-                    #print 'Not found'
-                    continue
+                #print 'Not found'
+                continue
             #print 'Old value:', old_value
             # if somehow the string is already unicode (who knows, right :)
             # skip conversion
@@ -527,12 +535,7 @@ def replace_container_title_092(obj):
     del obj._title
     if type(title) != type(u''):
         title = unicode(title, 'cp1252', 'replace')
-    short_title = obj.getProperty('short_title')
-    if not short_title:
-        short_title = getattr(obj, 'short_title', None)
-        if short_title is not None:
-            del obj.short_title
-        
+    short_title = getPropertyOrAttrValue(obj, 'short_title')
     default = obj.get_default()
     if default is not None:
         #print 'Setting title', title.encode('ascii', 'replace'), 'on default of', obj.id
@@ -561,11 +564,7 @@ def replace_object_title_092(obj):
         return
     #print obj.absolute_url()
     title = obj.aq_inner._title
-    short_title = obj.getProperty('short_title')
-    if not short_title:
-        short_title = getattr(obj.aq_inner, 'short_title', None)
-        if short_title is not None:
-            del obj.short_title
+    short_title = getPropertyOrAttrValue(obj, 'short_title')
     if short_title is not None and type(short_title) != type(u''):
         short_title = unicode(short_title, 'cp1252', 'replace')
     #print 'Title:', title.encode('ascii', 'replace')
@@ -584,6 +583,8 @@ def replace_object_title_092(obj):
         #print type(object.title)
         
         if short_title is not None:
+            set_name = 'silva-content'
+            values = {'shorttitle': short_title}
             binding = ms.getMetadata(object)
             if binding is None:
                 #print 'Binding object:', object.meta_type
