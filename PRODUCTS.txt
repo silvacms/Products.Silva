@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.13 $
+CVS:        $Revision: 1.14 $
 
 Introduction
 ------------
@@ -121,7 +121,7 @@ optionally be extended with SilvaExternalSources.
 
 http://www.infrae.com/download/SilvaDocument
 
-XMLWidgets 0.10.3 (DI)
+XMLWidgets 0.11 (DI)
 ----------------------
 
 A system used to construct the forms-based editor for XML used by
