@@ -21,13 +21,12 @@
   <br />
   <p style="margin-top:0.3em; margin-bottom:0.2em;">
 
-  <span class="subhead" i18n:translate=""> 
-    Publication 
-    <tal:block condition="end_time" i18n:name="and_expiration"> 
-      <tal:block i18n:translate="">and expiration</tal:block>
-    </tal:block> 
-    time of public version 
-  </span> 
+  <span class="subhead" tal:condition="not:end_time" i18n:translate="">
+  Publication time of public version
+  </span>
+  <span class="subhead" tal:condition="end_time" i18n:translate="">
+  Publication and expiration time of public version
+  </span>
 
   <br />
   <tal:block
