@@ -12,7 +12,7 @@
 
     type model/meta_type;
     url model/absolute_url;
-    title python: model.get_title_editable() == '' and model.id or model.get_title_editable();
+    title python: model.get_title_editable() or model.id;
 
     root_url model/get_root_url;
     global publication model/get_publication;
