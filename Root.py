@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.61 $
+# $Revision: 1.62 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -193,9 +193,9 @@ class Root(Publication):
         return "Upgrade of %s succeeded." \
                % my_id
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'start_status_update')
-    def start_status_update(self):
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'status_update')
+    def status_update(self):
         """Updates status for objects that need status updated
 
         Searches the ZCatalog for objects that should be published or closed
