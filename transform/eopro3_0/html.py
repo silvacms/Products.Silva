@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -85,12 +85,15 @@ class desc(Element):
 
 class h1(Element):
     def convert(self, context):
-        return u''
+        return silva.heading(
+            self.content.convert(context), 
+            type="normal")
 
 class h2(Element):
-    ""
     def convert(self, context):
-        return u''
+        return silva.heading(
+            self.content.convert(context), 
+            type="normal")
 
 class h3(Element):
     ""
@@ -343,6 +346,12 @@ class sup(Element):
             self.content.convert(context),
             )
 
+class span(Element):
+    def convert(self, context):
+        style = self.attrs.get('style','')
+        if style.startswith('text-decoration:underline'):
+            return silva.underline(self.content.convert(context))
+        return self.content.convert(context)
 
 class font(Element):
     def convert(self, context):
@@ -368,7 +377,7 @@ class a(Element):
 class img(Element):
     def convert(self, context):
         from urlparse import urlparse
-        src = self.attrs['src'].content
+        src = self.attrs['src']
         src = urlparse(src)[2]
         link = self.attrs.get('link')
         if src.endswith('/image'):

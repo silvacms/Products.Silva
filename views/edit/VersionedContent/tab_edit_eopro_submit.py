@@ -29,6 +29,11 @@ else:
     else:
        try: 
            model.editor_storage(htmldata)
+
+           #node = request.node
+           #context.service_editor.invalidateCaches(node,
+           #        ['mode_normal', 'mode_insert', 'mode_done', 
+           #         'mode_edit', 'mode_view'])
        except Exception,error:
            pass
 if error:

@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 import unittest
 
 # 
@@ -27,12 +27,13 @@ import sys,os
 
 try:
     sys.path.append('../../..')
-    from transform.eopro3_0 import silva
-    from transform.eopro3_0 import html
+    from transform.eopro3_0 import silva, html
+    from transform.base import Context
     from transform.Transformer import Transformer, EditorTransformer
 except ImportError:
     import Zope
     from Products.Silva.transform.eopro3_0 import silva, html
+    from Products.Silva.transform.base import Context
     from Products.Silva.transform.Transformer import Transformer, EditorTransformer
 
 # lazy, but in the end we want to test everything anyway
@@ -85,6 +86,12 @@ class HTML2XML(Base):
         self.assertEquals(title.extract_text(), 'test title')
         doc = silvadoc.find('doc')
         self.assertEquals(len(doc), 1)
+
+    def test_modified_title(self):
+        silvadoc = self.htmlfrag_to_silvadocument("<doctitle>new title</doctitle>")
+
+        title = silvadoc.find_one('title')
+        self.assertEquals(title.extract_text(), 'new title')
 
     def _check_heading(self, htag, stype, htag_back=None):
         if htag_back is None:
@@ -141,17 +148,15 @@ class HTML2XML(Base):
         dd = dlist.find_one('dd')
         self.assertEquals(dd.extract_text(), '')
 
-    def _test_default_heading_conversion_h1(self):
-        html_frag="""<body><h1>eins</h1></body>"""
-        htmlnode = self.transformer.target_parser.parse(html_frag)
-        self.assert_(not self.transformer.target_parser.unknown_tags)
-        node = htmlnode.convert(context={'id':u'', 'title':u''})
-        doc = node.find('silva_document')[0].find('doc')[0]
-        heading = doc.find('heading')
-        self.assertEquals(len(heading), 1)
-        self.assertEquals(heading[0].attrs.get('type'), 'normal')
+    def test_default_heading_conversion_h1(self):
+        html_frag="<h1>eins</h1>"
 
-    def _test_ol_list_conversion(self):
+        htmlnode = self.parse_htmlfrag(html_frag)
+        silvanode = htmlnode.conv()
+        heading = silvanode.find_one('heading')
+        self.assertEquals(heading.attrs.get('type'), 'normal')
+
+    def test_ol_list_conversion(self):
         html_frag="""<ol><li>eins</li><li>zwei</li></ol>"""
         node = self.transformer.target_parser.parse(html_frag)
         self.assert_(not self.transformer.target_parser.unknown_tags)
@@ -164,18 +169,6 @@ class HTML2XML(Base):
         self.assert_(list_node.attrs.has_key('type'))
         self.assert_(list_node.attrs['type']=='1')
         self.assert_(len(list_node.find('li'))==2)
-
-    def _test_ignore_html(self):
-        """ test that a html tag doesn't modify the silva-outcome """
-        frag="""<body silva_id="test"><h2 silva_id="test">titel</h2><h3>titel</h3></body>"""
-        node = self.transformer.target_parser.parse(frag)
-        node = node.conv()
-
-        frag2="""<html><head></head>%(frag)s</html>""" % locals()
-        node2 = self.transformer.target_parser.parse(frag2)
-        node2 = node2.conv()
-
-        self.assertEquals(node, node2)
 
     def _test_image_within_p_turns_outside(self):
         frag="""<p>hallo<img src="/path/to/image"/>dies</p>"""
@@ -450,33 +443,35 @@ class RoundtripWithTidy(Base):
     def test_modifier_em(self):
         self._check_modifier('em','em')
 
-    def test_modifier_underline(self):
-        self._check_modifier('u','underline')
-
     def test_modifier_sub(self):
         self._check_modifier('sub','sub')
 
     def test_modifier_super(self):
         self._check_modifier('sup','super')
 
-    def _test_link_with_absolute_url(self):
-        """ check that a link works """
-        silvadoc = '''<silva_document id="test"><title>title</title>
-                        <doc><p type="normal">
-                             <link url="http://www.heise.de">linktext</link>
-                             </p>
-                        </doc>
-                      </silva_document>''' 
-        htmlnode = self._check_doc(silvadoc)
-        body = htmlnode.find('body')[0]
-        p = body.find('p')[0]
-        a = p.find('a')
-        self.assert_(len(a)==1)
-        a = a[0]
-        self.assert_(a.attrs.get('href')=='http://www.heise.de')
-        self.assert_(a.content.asBytes()=='linktext')
+    def test_underline(self):
+        frag = '<p type="normal"><underline>under</underline></p>'
+        silvanode = self.parse_silvafrag(frag)
 
-    def _test_table1(self):
+        htmlnode = silvanode.conv()
+
+        p = htmlnode.find_one('p')
+        span = p.find_one('span')
+        self.assertEquals(span.attrs.get('style'), "text-decoration:underline;")
+
+        self._check_string(frag)
+
+    def test_link_with_absolute_url(self):
+        """ check that a link works """
+        frag = '<p type="normal"><link url="http://www.heise.de">text</link></p>'
+        silvanode = self.parse_silvafrag(frag)
+        htmlnode = silvanode.conv()
+        p = htmlnode.find_one('p')
+        a = p.find_one('a')
+        self.assert_(a.attrs.get('href')=='http://www.heise.de')
+        self.assert_(a.content.asBytes()=='text')
+
+    def test_table1(self):
         tabledoc = '''<table columns="3">
                           <row>
                               <field><p>eins</p></field>
@@ -504,27 +499,23 @@ class RoundtripWithTidy(Base):
         tablenode = self._check_string(tabledoc)
         return tablenode
 
-    def _test_table_listing(self):
+    def test_table_listing(self):
         self._check_table(columns="3", type='listing', column_info="L:1 L:1 L:1")
 
-    def _test_table_grid(self):
+    def test_table_grid(self):
         self._check_table(columns="3", type='grid', column_info="L:1 L:1 L:1")
 
-    def _test_table_data_grid(self):
+    def test_table_data_grid(self):
         self._check_table(columns="3", type='datagrid', column_info="L:1 L:1 L:1")
 
-    def _test_image(self):
-        silvadoc = '''<silva_document id="test"><title>title</title>
-                        <doc><image path="path/file"/></doc>
-                      </silva_document>'''
-        htmlnode = self._check_doc(silvadoc)
-        body = htmlnode.find('body')[0]
-        img = body.find('img')
-        self.assertEquals(len(img),1)
-        img = img[0]
+    def test_image(self):
+        silvadoc = '<image path="path/file"/>'
+        htmlnode = self._check_string(silvadoc)
+        body = htmlnode.find_one('body')
+        img = body.find_one('img')
         self.assertEquals(img.attrs.get('src'), 'path/file/image')
 
-    def _test_br(self):
+    def test_br(self):
         """ check that 'br' works """
         self._check_string('<p>before<br/>after</p>')
 
