@@ -10,7 +10,7 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
 from Products.SilvaMetadata.Compatibility import getToolByName
 from Products.Silva.silvaxml import silva_import
-from Products.Silva.silvaxml.xmlimport import SaxImportHandler
+from Products.Silva.silvaxml.xmlimport import SaxImportHandler, initializeElementRegistry
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_document_import(self):
@@ -19,17 +19,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        handler_map = {
-            (silva_import.NS_URI, 'silva'): silva_import.SilvaHandler,
-            (silva_import.NS_URI, 'folder'): silva_import.FolderHandler,
-            (silva_import.NS_URI, 'ghost'): silva_import.GhostHandler,
-            (silva_import.NS_URI, 'version'): silva_import.VersionHandler,
-            (silva_import.NS_URI, 'link'): silva_import.LinkHandler,
-            (silva_import.NS_URI, 'set'): silva_import.SetHandler,
-            (silva_import.NS_URI, 'document'): silva_import.DocumentHandler,
-            }
+        initializeElementRegistry()
         source_file = open('data/test_document.xml', 'r')
-        handler = SaxImportHandler(importfolder, handler_map)
+        handler = SaxImportHandler(importfolder)
         parser = xml.sax.make_parser()
         parser.setFeature(feature_namespaces, 1)
         parser.setContentHandler(handler)
@@ -42,16 +34,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        handler_map = {
-            (silva_import.NS_URI, 'silva'): silva_import.SilvaHandler,
-            (silva_import.NS_URI, 'folder'): silva_import.FolderHandler,
-            (silva_import.NS_URI, 'ghost'): silva_import.GhostHandler,
-            (silva_import.NS_URI, 'version'): silva_import.VersionHandler,
-            (silva_import.NS_URI, 'link'): silva_import.LinkHandler,
-            (silva_import.NS_URI, 'set'): silva_import.SetHandler,
-            }
+        initializeElementRegistry()
         source_file = open('data/test_link.xml', 'r')
-        handler = SaxImportHandler(importfolder, handler_map)
+        handler = SaxImportHandler(importfolder)
         parser = xml.sax.make_parser()
         parser.setFeature(feature_namespaces, 1)
         parser.setContentHandler(handler)

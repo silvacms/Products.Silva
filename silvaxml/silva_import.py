@@ -2,7 +2,7 @@ from Products.SilvaDocument.Document import Document, DocumentVersion
 from Products.Silva.Ghost import Ghost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.Folder import manage_addFolder
-from Products.Silva.silvaxml.xmlimport import BaseHandler
+from Products.Silva.silvaxml.xmlimport import BaseHandler, theElementRegistry
 from Products.Silva.Link import Link, LinkVersion
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
@@ -10,6 +10,22 @@ from Products.Silva import mangle
 NS_URI = 'http://infrae.com/ns/silva/0.5'
 # XXX Move to SilvaDocument
 DOC_NS_URI = 'http://infrae.com/ns/silva_document/1.0'
+
+def initializeElementRegistry():
+    """Here the importable (namespaced!) xml elements are registered. 
+    Non-Silva-Core content types probably need to register themselves in 
+    their product __init__.pies
+    """
+    handler_map = {
+        (NS_URI, 'silva'): SilvaHandler,
+        (NS_URI, 'folder'): FolderHandler,
+        (NS_URI, 'ghost'): GhostHandler,
+        (NS_URI, 'version'): VersionHandler,
+        (NS_URI, 'link'): LinkHandler,
+        (NS_URI, 'set'): SetHandler,
+        (NS_URI, 'document'): DocumentHandler,
+        }
+    theElementRegistry.addHandlerMap(handler_map)
 
 class SilvaHandler(BaseHandler):
     pass

@@ -5,12 +5,14 @@ from Products.SilvaMetadata.Compatibility import getToolByName
 class XMLOverridableElementRegistry:
     """An element registry which can be overridden while handling events.
     """
-    def __init__(self, handler_map):
+    def __init__(self):
         self._mapping = {}
         self._stack = []
+
+    def addHandlerMap(self, handler_map):
         for element, handler in handler_map.items():
             self._mapping[element] = [handler]
-   
+            
     def _pushOverride(self, element, handler):
         self._mapping.setdefault(element, []).append(handler)
     
@@ -35,10 +37,14 @@ class XMLOverridableElementRegistry:
             return self._mapping[element][-1]
         except KeyError:
             return None
-    
+
+theElementRegistry = XMLOverridableElementRegistry()
+
+getXMLElementHandler = theElementRegistry.getXMLElementHandler
+
 class SaxImportHandler(ContentHandler):
-    def __init__(self, start_object, handler_map, settings=None):
-        self._registry = XMLOverridableElementRegistry(handler_map)
+    def __init__(self, start_object, settings=None):
+        self._registry = theElementRegistry
         self._handler_stack = []
         self._depth_stack = []
         self._object = start_object
