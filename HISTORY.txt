@@ -23,6 +23,8 @@ Silva changes
 
     Features Added
 
+        - Ghosts have a `get reference' button now.
+    
         - Siva Files now have their icon dependent on the content. I.e. you 
           get a pdf icon if you uploaded a pf file. Currently there are icons
           for PDF, Word, Excel and PowerPoint.
