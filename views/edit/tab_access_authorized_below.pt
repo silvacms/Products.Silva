@@ -12,9 +12,10 @@
   Authorized users below this level
 </h2>
 <div class="worksheet">
-<check tal:omit-tag=""
-  tal:condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
-<dummy tal:omit-tag="" tal:define="dummy python:model.security_trigger()" />
+<tal:check
+   condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
+<tal:trigger
+   define="dummy python:model.security_trigger()" />
 <form action="." method="POST">
 <table width="100%" cellspacing="0" cellpadding="3" border="0">
   <tr>
@@ -26,10 +27,9 @@
     <td class="focus">
       Addresses are formatted for copying and pasting in the &#8216;To:&#8217; field of a message.<br />
       <span class="textarea">
-        <textarea name="data" cols="65" rows="5" wrap="soft"><tal:block repeat="userid model/sec_get_userids_deep"><span tal:define="member python:model.sec_get_member(userid)"
-          tal:condition="member/email | nothing" tal:replace="member/email">
-          userid</span>
-        <span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></tal:block></textarea>
+        <textarea name="data" cols="65" rows="5" wrap="soft"><tal:loop 
+           repeat="userid model/sec_get_userids_deep"><tal:if_email 
+           define="member python:model.sec_get_member(userid)" condition="member/email/strip | nothing"><tal:block replace="member/email">userid</tal:block><tal:if condition="not:repeat/userid/end">, </tal:if></tal:if_email></tal:loop></textarea>
       </span>
     </td>
   </tr>
@@ -41,7 +41,7 @@
 </table>
 </form>
 
-</check>
+</tal:check>
 </div>
 </div>
 </html>
