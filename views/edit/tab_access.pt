@@ -13,7 +13,7 @@
         src="%s"
         width="16"
         tal:replace="structure python:view.render_icon(model.meta_type)" />
-      &nbsp;Access Settings for
+      &nbsp;Access Permissions for
       <span class="folder-title"
         tal:content="
           structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">
