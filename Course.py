@@ -1,10 +1,10 @@
 # Zope
+from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
 import SilvaPermissions
-
 # Silva
 from VersionedContent import VersionedContent
 import Interfaces
