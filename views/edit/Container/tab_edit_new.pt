@@ -111,10 +111,8 @@
 
 <span tal:replace="nothing"> ______________ listing iteration ______________ </span>
 <tal:repeat repeat="addable model/get_silva_addables">
-<tal:define define="oddrow repeat/addable/odd">
 
-<tr class="focus-cycle" valign="bottom"
- tal:attributes="class python:test(oddrow, None, None)">
+<tr valign="bottom">
   <td width="16"><img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(addable['name'])" /></td>
   <td>
@@ -127,8 +125,7 @@
   </td>
 </tr>
 
-<tr class="focus-cycle" valign="top"
-  tal:attributes="class python:test(oddrow, None, None)">
+<tr valign="top">
   <td>
   </td>
   <td>
@@ -140,7 +137,6 @@
     <span tal:replace="nothing" tal:condition="repeat/addable/end" tal:omit-tag=""><br /></span>
   </td>
 </tr>
-</tal:define>
 </tal:repeat>
 </table>
 
