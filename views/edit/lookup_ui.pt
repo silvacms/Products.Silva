@@ -30,49 +30,46 @@
     Back
   </a>
 </h3>
-<h2 class="worksheet">
-  <img tal:replace="structure python:view.render_icon(model)" />&nbsp;
-  Users lookup at <span class="folder-title" tal:content="structure string:&amp;#xab;${model/get_title_or_id_html}&amp;#xbb;">title here</span>
-</h2>
-<div class="worksheet borders top bottom left right"
-  tal:define="global no_entry string:-"
-  tal:condition="python:view.has_access()">
-  <table border="0"
-    cellpadding="5"
-    cellspacing="0"
-    width="100%">
+
+<table class="columns columns3">
+  <tbody>
     <tr>
-      <td>
-        <h3>
-          Search
-        </h3>
+      <td class="left">
       </td>
-      <td>
-        <h3>
-          Selection
-        </h3>
-      </td>
-    </tr>
-    <tr align="left"
-      valign="top">
-      <td width="50%">
-        <form action="lookup_search"
-          method="POST">
-          <table border="0"
-            cellpadding="3"
-            cellspacing="0"
-            width="100%">
+      <td class="main">
+        <span tal:replace="nothing">
+          _____________________ inner table  _____________________
+        </span>
+        <table class="listing"
+          width="100%">
+
+          <thead>
+            <tr tal:replace="nothing">
+              ______________ vein + title row ______________
+            </tr>
+            <tr>
+              <td class="top"
+                colspan="3">
+                <h2 tal:attributes="title string:id: ${model/id}">
+                  <img tal:replace="structure python:view.render_icon(model)" />
+                  Users lookup at:                
+                  &#xab;<span tal:replace="structure string:${model/get_title_html}">title</span>&#xbb;
+                </h2>
+              </td>
+            </tr>
+          </thead>
+
+          <form action="lookup_search"
+            method="POST">
             <tr class="topcontrols">
-              <th align="left"
-                colspan="2">
+              <th align="left">
                 <span class="tablehead4">
                   User search
                 </span>
               </th>
             </tr>
             <tr class="focus">
-              <td class="rowhead"
-                colspan="2">
+              <td class="rowhead">
                 Name (or part of name):
                 <br />
                 <input class="textarea"
@@ -83,7 +80,7 @@
               </td>
             </tr>
             <tr class="controls">
-              <td colspan="2" align="right">
+              <td align="right">
                 <input class="button"
                   accesskey="s"                      
                   title="Search - alt-s"
@@ -92,34 +89,26 @@
               </td>
             </tr>
             <tr>
-              <td align="left"
-                colspan="2">
+              <td align="left">
                 &nbsp;
               </td>
             </tr>
-          </table>
-        </form>
-          <!-- __________________________ search results ______________________________ -->
-        <form action="lookup_add_to_selection" method="POST">
-          <table border="0"
-            cellpadding="3"
-            cellspacing="0"
-            width="100%">
+          </form>
+              <!-- __________________________ search results ______________________________ -->
+          <form action="lookup_add_to_selection" method="POST">
             <tr class="topcontrols">
-              <th align="left"
-                colspan="2">
+              <th align="left">
                 <span class="tablehead4">
                   Search results
                 </span>
               </th>
             </tr>
             <tal:block define="global lookup_result options/results | nothing" />
-          <!-- If many items in result; put a second button on top as well. 
+            <!-- If many items in result; put a second button on top as well. 
             Is this UI-wise "done" or "not done"? -->
             <tr class="topcontrols"
               tal:condition="python:lookup_result and len(lookup_result) > 3">
-              <td align="right"
-                colspan="2">
+              <td align="right">
                 <img height="18px"
                   src="pixel.gif"
                   width="1px"
@@ -131,11 +120,11 @@
                   value="Add to selection" />
               </td>
             </tr>
-          <!-- Listing loop -->
+            <!-- Listing loop -->
             <tal:block repeat="member lookup_result">
               <tr class="focus"
-                tal:define="oddrow repeat/member/odd"
-                tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
+                tal:define="iterate repeat/member/odd"
+                tal:attributes="class python:iterate and 'odd' or 'even';">
                 <td align="left"
                   valign="top"
                   width="1%">
@@ -143,12 +132,9 @@
                     type="checkbox"
                     value=""
                     tal:attributes="value member/userid" />
-                </td>
-                <td>
                   <span class="subhead"
                     tal:content="member/fullname" />
                   &nbsp;
-                  <br />
                   <span class="subhead">
                     email:
                   </span>
@@ -178,11 +164,10 @@
                   tal:condition="lookup_result" />
               </td>
             </tr>
-          </table>
-        </form>
+          </form>
+        </table>
       </td>
-    <!-- __________________________ selection ______________________________ -->
-      <td class="align-left">
+      <td class="right">
         <!-- Clipboard -->
         <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
           <metal:block fill-slot="clipboard_lookup_action">
@@ -205,9 +190,13 @@
           </metal:block>
         </metal:block>
       </td>
-    <!-- ________________________ end selection ____________________________ -->
     </tr>
-  </table>
+  </tbody>
+</table>
+
+<div class="worksheet borders top bottom left right"
+  tal:define="global no_entry string:-"
+  tal:condition="python:view.has_access()">
 </div>
 
 </metal:block>
