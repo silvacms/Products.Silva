@@ -250,30 +250,30 @@ table.columns {
 /* 3 column table (default) */
 table.columns td.left {
     width: 20%;
-    padding: 8px 8px 0 8px;
+    padding: 0px 8px 0 8px;
 }
 table.columns td.main {
     width: 60%;
-    padding: 8px 8px 0 0;
+    padding: 0px 8px 0 0;
 }
 table.columns td.right {
     width: 20%;
-    padding: 8px 8px 0 0;
+    padding: 0px 8px 0 0;
 }
 
 /* 2 column table */
 table.columns2 td.left {
     width: 20%;
-    padding: 8px 0 0 8px;
+    padding: 0px 0 0 8px;
 }
 table.columns2 td.main {
     width: 80%;
-    padding: 8px 8px 0 8px;
+    padding: 0px 8px 0 8px;
 }
 
 table.columns1 td.main {
     width: 100%;
-    padding: 8px 8px 0 8px;
+    padding: 0px 8px 0 8px;
 }
 
 
@@ -891,7 +891,7 @@ div.feedback {
     background: #f3f3d9;
     border: &dtml-inputBorder;;
     border-style: solid solid solid solid;
-    margin: -1px 0 1em 0;
+    margin: -1px 0 0 0;
     padding: 0.1em 0.6em 0.2em 0.6em;
 }
 
@@ -900,8 +900,17 @@ div.alert {
     background: #f7d1d1;
     border: &dtml-inputBorder;;
     border-style: solid solid solid solid;
-    margin: -1px 0 1em 0;
-    padding: 0.1em 9px 0.1em 9px;
+    margin: -1px 0 0 0;
+    padding: 0.1em 0.6em 0.2em 0.6em;
+}
+
+div.clear {
+    color: transparent;
+    background: transparent;
+    border: 1px solid transparent;
+    border-style: solid solid none solid;
+    margin: 0;
+    padding: 0.1em 0.6em 0.2em 0.6em;
 }
 
 div.feedback a {
