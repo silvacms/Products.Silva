@@ -1,6 +1,6 @@
 import sys, string
 from StringIO import StringIO
-from sprout.saxext import xmlimport
+from sprout.saxext import xmlimport, collapser
 from Products.Silva.Ghost import Ghost, GhostVersion
 from Products.Silva.GhostFolder import manage_addGhostFolder, GhostFolder
 from Products.Silva.Folder import manage_addFolder
@@ -47,6 +47,10 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         self._metadata_type = None
         self._metadata = {}
         self._workflow = {}
+
+    def characters(self, chrs):
+        c = collapser.CollapsingHandler(self)
+        c.characters(chrs)
         
     def setMetadata(self, set, key, value, value_type=None):
         if value_type == 'datetime' and value:
