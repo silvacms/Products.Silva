@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8.6.1.16.2 $
+# $Revision: 1.8.6.1.16.3 $
 # Python
 from bisect import insort_right
 
@@ -62,6 +62,8 @@ class ContainerPolicyRegistry(SimpleItem):
         assert IContainerPolicy.isImplementedBy(policy), "The object %r " \
             "does not implement IContainerPolicy, try restarting Zope." % (
                 policy, )
+        # XXX it seems that if the next line is commented out the
+        # InvalidObjectReference exceptions don't appear anymore...
         self._policies[name] = (policy, priority)
         self._p_changed = 1
 
