@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Wed Nov 24 18:41:38 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:04:43 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -135,6 +135,58 @@ msgstr ""
 msgid "container"
 msgstr ""
 
+#: /roleinfo.py:16
+msgid "zope roles"
+msgstr ""
+
+#: /roleinfo.py:17
+msgid "silva roles"
+msgstr ""
+
+#: /roleinfo.py:18
+msgid "public silva roles"
+msgstr ""
+
+#: /roleinfo.py:19
+msgid "Anonymous"
+msgstr ""
+
+#: /roleinfo.py:20
+msgid "Authenticated"
+msgstr ""
+
+#: /roleinfo.py:21
+msgid "Manager"
+msgstr ""
+
+#: /roleinfo.py:22
+msgid "Viewer"
+msgstr ""
+
+#: /roleinfo.py:23
+msgid "Viewer +"
+msgstr ""
+
+#: /roleinfo.py:24
+msgid "Viewer ++"
+msgstr ""
+
+#: /roleinfo.py:25
+msgid "Reader"
+msgstr ""
+
+#: /roleinfo.py:26
+msgid "Author"
+msgstr ""
+
+#: /roleinfo.py:27
+msgid "Editor"
+msgstr ""
+
+#: /roleinfo.py:28
+msgid "ChiefEditor"
+msgstr ""
+
 #: /views/add/File/add_submit.py:68
 #: /views/add/Groups/add_submit.py:60
 #: /views/add/Image/add_submit.py:68
@@ -206,7 +258,7 @@ msgstr ""
 #: /views/edit/Container/tab_status_export.pt:328
 #: /views/edit/Container/GhostFolder/tab_edit.pt:71
 #: /views/edit/Container/Publication/settings_addables.pt:78
-#: /views/edit/Container/Publication/tab_metadata.pt:78
+#: /views/edit/Container/Publication/tab_metadata.pt:88
 #: /views/edit/Member/SimpleMember/tab_edit.pt:68
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
 msgid "content"
@@ -869,19 +921,23 @@ msgstr ""
 msgid "Addable settings changed for: ${changed_metadata}"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:113
+#: /views/edit/Container/Publication/tab_metadata.pt:107
+msgid "Layout has been copied for customization."
+msgstr ""
+
+#: /views/edit/Container/Publication/tab_metadata.pt:123
 msgid "copy the layout into the Publication in order to customize it"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:113
+#: /views/edit/Container/Publication/tab_metadata.pt:123
 msgid "customize layout"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:122
+#: /views/edit/Container/Publication/tab_metadata.pt:132
 msgid "save layout"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:122
+#: /views/edit/Container/Publication/tab_metadata.pt:132
 msgid "access key: alt-l"
 msgstr ""
 
@@ -901,16 +957,12 @@ msgstr ""
 msgid "change the addables allowed in this publication: alt-a"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:65
+#: /views/edit/Container/Publication/tab_metadata.pt:75
 msgid "layout"
 msgstr ""
 
-#: /views/edit/Container/Publication/tab_metadata.pt:81
+#: /views/edit/Container/Publication/tab_metadata.pt:91
 msgid "acquired layout"
-msgstr ""
-
-#: /views/edit/Container/Publication/tab_metadata.pt:97
-msgid "Layout has been copied for customization."
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:100
@@ -2676,7 +2728,7 @@ msgid "The ghost is in an undefined state."
 msgstr ""
 
 #: /views/edit/hyperlink_lookup.pt:215
-#: /views/edit/tab_metadata.pt:69
+#: /views/edit/tab_metadata.pt:108
 #: /views/edit/Container/GhostFolder/tab_edit.pt:443
 msgid "metadata"
 msgstr ""
@@ -2860,7 +2912,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit_import.pt:160
 #: /views/edit/Container/tab_edit_import.pt:298
 #: /views/edit/Container/Publication/settings_addables.pt:73
-#: /views/edit/Container/Publication/tab_metadata.pt:73
+#: /views/edit/Container/Publication/tab_metadata.pt:83
 msgid "element"
 msgstr ""
 
@@ -2880,7 +2932,7 @@ msgstr ""
 #: /views/edit/Container/tab_status_export.pt:331
 #: /views/edit/Container/GhostFolder/tab_edit.pt:74
 #: /views/edit/Container/Publication/settings_addables.pt:81
-#: /views/edit/Container/Publication/tab_metadata.pt:84
+#: /views/edit/Container/Publication/tab_metadata.pt:94
 #: /views/edit/VersionedContent/Ghost/edit.pt:65
 msgid "note"
 msgstr ""
@@ -3216,17 +3268,31 @@ msgstr ""
 msgid "Minimum role to access is now set to ${role}"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:53
+#: /views/edit/tab_metadata.pt:111
+#: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
+msgid "for public version of &#xab;${title}&#xbb;"
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:42
+msgid "properties of &#xab;${title}&#xbb;"
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:54
+#: /views/edit/Container/Publication/tab_metadata.pt:48
+msgid "manage subscriptions..."
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:54
+#: /views/edit/Container/Publication/tab_metadata.pt:48
+msgid "manage subscriptions: alt-m"
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:92
 msgid "metadata <span>x</span>"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:53
+#: /views/edit/tab_metadata.pt:92
 msgid "for approved version of &#xab;${title}&#xbb;"
-msgstr ""
-
-#: /views/edit/tab_metadata.pt:72
-#: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
-msgid "for public version of &#xab;${title}&#xbb;"
 msgstr ""
 
 #: /views/edit/tab_preview.pt:19

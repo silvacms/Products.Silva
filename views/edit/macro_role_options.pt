@@ -3,26 +3,22 @@
     preselected preselected | nothing;
     i_am_manager i_am_manager | silva_permissions/ChangeSilvaViewRegistry | nothing;    
     managers_only_options managers_only_options | python: ('Manager', 'ChiefEditor');
-    optgroups python: {
-      'public silva roles' : ('Viewer', 'Viewer +', 'Viewer ++'),
-      'silva roles' : ('Reader', 'Author', 'Editor', 'ChiefEditor'),
-      'zope roles' : ('Manager', )};
+    optgroups python: here.macro_role_options_roles()['local_roles'];
       "
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      i18n:domain="silva"
     >
-    <!-- XXX: MANY i18n hazards ahead!-->
     <optgroup 
       tal:repeat="
-        optgroup python: ('public silva roles', 'silva roles', 'zope roles')"
+        optgroup optgroups/keys"
       tal:attributes="
         label optgroup"
+      i18n:attributes="label"
       >
       <tal:block
         tal:repeat="
           option optgroups/?optgroup"        
         >
-        <option i18n:translate="" 
+        <option 
+          i18n:translate="" 
           tal:condition="
             python: i_am_manager or option not in managers_only_options"
           tal:content="
@@ -40,24 +36,23 @@
 <metal:block define-macro="access_restriction_options">
   <tal:block define="
     preselected preselected | nothing;
-    optgroups python: {
-    'zope roles' : ('Anonymous', 'Authenticated'),
-    'public silva roles' : ('Viewer', 'Viewer +', 'Viewer ++')};
+    optgroups python: here.macro_role_options_roles()['ar_roles'];
     "
     >
     <optgroup
       tal:repeat="
-        optgroup python: ('zope roles', 'public silva roles')"
+        optgroup optgroups/keys"
       tal:attributes="
         label optgroup"
+      i18n:attributes="label"
       >
       <tal:block
         tal:repeat="
           option optgroups/?optgroup"        
         >
         <option
-          tal:content="
-            option"
+          i18n:translate=""
+          tal:content="option"
           tal:attributes="
             value option;
             selected python: option == preselected and 'selected' or nothing;

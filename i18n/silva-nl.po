@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Wed Nov 24 18:41:38 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:04:43 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -137,6 +137,58 @@ msgstr "naar het scherm 'inhoud'"
 msgid "container"
 msgstr "container"
 
+#: /roleinfo.py:16
+msgid "zope roles"
+msgstr "zope rollen"
+
+#: /roleinfo.py:17
+msgid "silva roles"
+msgstr "silva rollen"
+
+#: /roleinfo.py:18
+msgid "public silva roles"
+msgstr "publieke silva rollen"
+
+#: /roleinfo.py:19
+msgid "Anonymous"
+msgstr "Anoniem"
+
+#: /roleinfo.py:20
+msgid "Authenticated"
+msgstr "Ingelogd"
+
+#: /roleinfo.py:21
+msgid "Manager"
+msgstr "Beheerder"
+
+#: /roleinfo.py:22
+msgid "Viewer"
+msgstr "Kijker"
+
+#: /roleinfo.py:23
+msgid "Viewer +"
+msgstr "Kijker +"
+
+#: /roleinfo.py:24
+msgid "Viewer ++"
+msgstr "Kijker ++"
+
+#: /roleinfo.py:25
+msgid "Reader"
+msgstr "Lezer"
+
+#: /roleinfo.py:26
+msgid "Author"
+msgstr "Auteur"
+
+#: /roleinfo.py:27
+msgid "Editor"
+msgstr "Redacteur"
+
+#: /roleinfo.py:28
+msgid "ChiefEditor"
+msgstr "Hoofdredacteur"
+
 #: /views/add/File/add_submit.py:68 /views/add/Groups/add_submit.py:60
 #: /views/add/Image/add_submit.py:68 /views/add/add_submit.py:51
 msgid "Added ${meta_type} ${id}."
@@ -207,7 +259,7 @@ msgstr "aspect"
 #: /views/edit/Container/tab_status_export.pt:328
 #: /views/edit/Container/GhostFolder/tab_edit.pt:71
 #: /views/edit/Container/Publication/settings_addables.pt:78
-#: /views/edit/Container/Publication/tab_metadata.pt:78
+#: /views/edit/Container/Publication/tab_metadata.pt:88
 #: /views/edit/Member/SimpleMember/tab_edit.pt:68
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
 msgid "content"
@@ -887,19 +939,23 @@ msgstr "Toevoeg-instellingen zijn niet veranderd en blijven 'overgeërfd'."
 msgid "Addable settings changed for: ${changed_metadata}"
 msgstr "Toevoeg-instellingen veranderd voor: ${changed_metadata}"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:113
+#: /views/edit/Container/Publication/tab_metadata.pt:107
+msgid "Layout has been copied for customization."
+msgstr "Vormgeving is gekopieerd voor aanpassing."
+
+#: /views/edit/Container/Publication/tab_metadata.pt:123
 msgid "copy the layout into the Publication in order to customize it"
 msgstr "de vormgeving naar de 'Publication' kopiëren om deze aan te passen"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:113
+#: /views/edit/Container/Publication/tab_metadata.pt:123
 msgid "customize layout"
 msgstr "vormgeving aanpassen"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:122
+#: /views/edit/Container/Publication/tab_metadata.pt:132
 msgid "save layout"
 msgstr "vormgeving opslaan"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:122
+#: /views/edit/Container/Publication/tab_metadata.pt:132
 msgid "access key: alt-l"
 msgstr "sneltoets: alt-l"
 
@@ -919,17 +975,13 @@ msgstr "<u>a</u>ddables configureren..."
 msgid "change the addables allowed in this publication: alt-a"
 msgstr "toevoeg-instellingen voor deze publicatie veranderen: alt-a"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:65
+#: /views/edit/Container/Publication/tab_metadata.pt:75
 msgid "layout"
 msgstr "vormgeving"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:81
+#: /views/edit/Container/Publication/tab_metadata.pt:91
 msgid "acquired layout"
 msgstr "'overgeërfde' vormgeving"
-
-#: /views/edit/Container/Publication/tab_metadata.pt:97
-msgid "Layout has been copied for customization."
-msgstr "Vormgeving is gekopieerd voor aanpassing."
 
 #: /views/edit/Container/docma_queue.pt:100
 msgid "${estimated_time} &nbsp;seconds"
@@ -1858,7 +1910,8 @@ msgstr "Instellingen veranderd op: ${ids}"
 
 #: /views/edit/Container/tab_status_change_settings.py:108
 msgid "<span class=\"error\">could not change settings on: ${ids}</span>"
-msgstr "<span class=\"error\">kon instellingen niet veranderen op: ${ids}</span>"
+msgstr ""
+"<span class=\"error\">kon instellingen niet veranderen op: ${ids}</span>"
 
 #: /views/edit/Container/tab_status_change_settings.py:15
 msgid "Nothing was selected, so no settings were changed."
@@ -1866,7 +1919,8 @@ msgstr "Niets geselecteerd, en dus geen instellingen veranderd."
 
 #: /views/edit/Container/tab_status_change_settings.py:34
 msgid "No publication nor expiration time nor any of the flags were set."
-msgstr "Geen publicatie- of verloop-tijdstip noch één van de 'flags' ingesteld."
+msgstr ""
+"Geen publicatie- of verloop-tijdstip noch één van de 'flags' ingesteld."
 
 #: /views/edit/Container/tab_status_change_settings.py:60
 msgid "no next or public version available"
@@ -2849,7 +2903,7 @@ msgstr ""
 msgid "The ghost is in an undefined state."
 msgstr "The ghost is in an undefined state."
 
-#: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:69
+#: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:108
 #: /views/edit/Container/GhostFolder/tab_edit.pt:443
 msgid "metadata"
 msgstr "metadata"
@@ -3025,7 +3079,7 @@ msgstr "metadata set"
 #: /views/edit/Container/tab_edit_import.pt:160
 #: /views/edit/Container/tab_edit_import.pt:298
 #: /views/edit/Container/Publication/settings_addables.pt:73
-#: /views/edit/Container/Publication/tab_metadata.pt:73
+#: /views/edit/Container/Publication/tab_metadata.pt:83
 msgid "element"
 msgstr "element"
 
@@ -3043,7 +3097,7 @@ msgstr "acquired content"
 #: /views/edit/Container/tab_status_export.pt:331
 #: /views/edit/Container/GhostFolder/tab_edit.pt:74
 #: /views/edit/Container/Publication/settings_addables.pt:81
-#: /views/edit/Container/Publication/tab_metadata.pt:84
+#: /views/edit/Container/Publication/tab_metadata.pt:94
 #: /views/edit/VersionedContent/Ghost/edit.pt:65
 msgid "note"
 msgstr "note"
@@ -3392,18 +3446,32 @@ msgstr "Minimum role to access has not changed"
 msgid "Minimum role to access is now set to ${role}"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:53
-msgid "metadata <span>x</span>"
-msgstr "metadata <span>x</span>"
-
-#: /views/edit/tab_metadata.pt:53
-msgid "for approved version of &#xab;${title}&#xbb;"
-msgstr "for approved version of &#xab;${title}&#xbb;"
-
-#: /views/edit/tab_metadata.pt:72
+#: /views/edit/tab_metadata.pt:111
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr "for public version of &#xab;${title}&#xbb;"
+
+#: /views/edit/tab_metadata.pt:42
+msgid "properties of &#xab;${title}&#xbb;"
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:54
+#: /views/edit/Container/Publication/tab_metadata.pt:48
+msgid "manage subscriptions..."
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:54
+#: /views/edit/Container/Publication/tab_metadata.pt:48
+msgid "manage subscriptions: alt-m"
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:92
+msgid "metadata <span>x</span>"
+msgstr "metadata <span>x</span>"
+
+#: /views/edit/tab_metadata.pt:92
+msgid "for approved version of &#xab;${title}&#xbb;"
+msgstr "for approved version of &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
