@@ -1,11 +1,12 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.36 $
+# $Revision: 1.37 $
 
 # Python
 import os
 import string
+import StringIO
 from cgi import escape
 # Zope
 from OFS import SimpleItem
@@ -15,6 +16,9 @@ from Globals import InitializeClass
 from mimetypes import guess_extension
 from helpers import add_and_edit, fix_content_type_header
 from webdav.WriteLockInterface import WriteLockInterface
+import zLOG
+# Silva adapters
+from Products.Silva.adapters import assetdata
 # Silva
 from Asset import Asset
 from Products.Silva import mangle
@@ -342,37 +346,54 @@ class FilesService(SimpleItem.SimpleItem):
             return self.manage_filesServiceEditForm(
                 manage_tabs_message='Settings Changed')
 
-    security.declareProtected('View management screens',
-        'manage_convertImageStorage')
-    def manage_convertImageStorage(self, REQUEST=None):
-        """converts images to be stored like set in files service"""
+    security.declareProtected(
+        'View management screens', 'manage_convertImageStorage')
+    def manage_convertStorage(self, REQUEST=None):
+        """converts images and files to be stored like set in files service"""
         from Products.Silva.Image import ImageStorageConverter
         upg = upgrade.UpgradeRegistry()
         upg.registerUpgrader(
             StorageConverterHelper(self.aq_parent), '0.1', upgrade.AnyMetaType)
+        upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
         upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
-        #upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
-        parent = self.aq_parent
-        upg.upgrade(parent, '0.0', '0.1')
+        upg.upgrade(self.aq_parent, '0.0', '0.1')
         if REQUEST is not None:
-            return self.manage_filesServiceEditForm(
-                manage_tabs_message= \
-                    ('Silva Images converted. See Zope '
-                    'log for details.'))
+            return self.manage_filesServiceEditForm(manage_tabs_message=(
+                'Silva Files and Images converted. See Zope log for details.'))
 
 InitializeClass(FilesService)
 
 manage_addFilesServiceForm = PageTemplateFile(
     "www/filesServiceAdd", globals(), __name__='manage_addFilesServiceForm')
 
-class FilesStorageConverter:
+class FileStorageConverter:
     
     __implements__ = IUpgrader
     
     def upgrade(self, context):
-        # XXX The actual conversion should take place now...
-        return context
-    
+        adapted = assetdata.getAssetDataAdapter(context)
+        if adapted is None:
+            return context
+        data = adapted.getData()
+        data = StringIO.StringIO(data)
+        id = context.id
+        title = context.get_title()
+        files_service = context.service_files
+        if files_service.useFSStorage():
+            fileobject = FileSystemFile(
+                id, title, files_service.filesystem_path())
+        else:
+            fileobject = ZODBFile(id, title)
+        del context.__dict__['_file']
+        fileobject.__dict__.update(context.__dict__)
+        container = context.aq_parent
+        setattr(container, id, fileobject)
+        fileobject = getattr(container, id)
+        fileobject.set_file_data(data)
+        zLOG.LOG(
+            'Silva', zLOG.INFO, "File %s migrated" % '/'.join(fileobject.getPhysicalPath())) 
+        return fileobject
+
 class StorageConverterHelper:
     
     __implements__ = IUpgrader
@@ -419,6 +440,3 @@ def cookPath(path):
             break
     path_items.reverse()        
     return tuple(path_items)
-
-
-

@@ -1,15 +1,13 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.62 2005/01/10 17:29:08 guido Exp $
-
+# $Id: Image.py,v 1.63 2005/01/17 14:07:29 jw Exp $
 # Python
 import re, string
 from cStringIO import StringIO
 from types import StringType, IntType
 from zipfile import ZipFile
 from cgi import escape
-
 # Zope
 import OFS
 from AccessControl import ClassSecurityInfo
@@ -17,7 +15,7 @@ from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from webdav.WriteLockInterface import WriteLockInterface
-
+import zLOG
 # Silva
 import SilvaPermissions
 from Asset import Asset
@@ -714,6 +712,8 @@ class ImageStorageConverter:
         assert asset.meta_type == 'Silva Image'
         self._restore_image(asset, 'hires_image')
         asset._createDerivedImages()
+        zLOG.LOG(
+            'Silva', zLOG.INFO, "Image %s migrated" % '/'.join(asset.getPhysicalPath())) 
         return asset
 
     def _restore_image(self, asset, id):
