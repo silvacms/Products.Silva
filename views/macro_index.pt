@@ -104,7 +104,7 @@ Contact person: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contac
 </span>
 &nbsp;&nbsp;
 <span class="breadcrumb">
-<a tal:attributes="href string:${silva_root}/Members/${userid}">My member page</a>
+<a target="silva_member_page" tal:attributes="href string:${silva_root}/Members/${userid}/edit">My member page</a>
 </span>
 </td>
 <td class="tab-up" align="right" width="30%">
