@@ -178,8 +178,9 @@ function handle_default_action(element, event, action)
 <div style="clear: both;">
   <div style="float: left;">
     <a href="#top"
-      title="jump to top: alt-t">
-      <img alt="jump to top"
+      title="jump to top: alt-t" 
+      i18n:attributes="title">
+      <img alt="jump to top: alt-t"
         border="0"
         height="16"
         width="16"
@@ -191,8 +192,9 @@ function handle_default_action(element, event, action)
   <div style="float: right;">
     <a accesskey="t"
       href="#top"
-      title="jump to top: alt-t">
-      <img alt="jump to top"
+      title="jump to top: alt-t"
+      i18n:attributes="title">
+      <img alt="jump to top: alt-t"
         border="0"
         height="16"
         width="16"

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 18 15:58:21 2004\n"
+"POT-Creation-Date: Thu Nov 18 16:07:32 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -3220,40 +3220,42 @@ msgstr ""
 msgid "sservices..."
 msgstr ""
 
-#: /views/macro_index.pt:182
-#: /views/macro_index.pt:195
-msgid "jump to top"
+#: /views/macro_index.pt:180
+#: /views/macro_index.pt:183
+#: /views/macro_index.pt:193
+#: /views/macro_index.pt:197
+msgid "jump to top: alt-t"
 msgstr ""
 
-#: /views/macro_index.pt:216
+#: /views/macro_index.pt:218
 msgid "contact:"
 msgstr ""
 
-#: /views/macro_index.pt:224
+#: /views/macro_index.pt:226
 msgid "Leave Silva and view the public page: alt-:"
 msgstr ""
 
-#: /views/macro_index.pt:224
+#: /views/macro_index.pt:226
 msgid "see public version"
 msgstr ""
 
-#: /views/macro_index.pt:243
+#: /views/macro_index.pt:245
 msgid "Change your settings: alt-~"
 msgstr ""
 
-#: /views/macro_index.pt:256
+#: /views/macro_index.pt:258
 msgid "user settings"
 msgstr ""
 
-#: /views/macro_index.pt:260
+#: /views/macro_index.pt:262
 msgid "Logout of Silva: alt-q"
 msgstr ""
 
-#: /views/macro_index.pt:269
+#: /views/macro_index.pt:271
 msgid "logout ${role} ${userid}"
 msgstr ""
 
-#: /views/macro_index.pt:275
+#: /views/macro_index.pt:277
 msgid "request access"
 msgstr ""
 
