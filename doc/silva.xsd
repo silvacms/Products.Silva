@@ -12,7 +12,7 @@
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      $Id: silva.xsd,v 1.15 2003/01/22 14:10:55 zagy Exp $
+      $Id: silva.xsd,v 1.16 2003/02/04 09:59:11 zagy Exp $
     
       Silva XML schema
       Copyright 2002 Infrae
@@ -218,7 +218,7 @@
   </xsd:complexType>
 
   <xsd:complexType name="Image">
-    <xsd:attribute name="image_path" type="xsd:string" />
+    <xsd:attribute name="path" type="xsd:string" />
     <xsd:attribute name="alignment">
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">            
