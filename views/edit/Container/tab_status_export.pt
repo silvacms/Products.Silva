@@ -10,7 +10,7 @@
     view here;
     vein string:export;
     active_tab string:tab_status;
-    parent_screen_name string:Publish;
+    parent_screen_name string:publish;
     docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
     refs request/refs | python:[request['model'].create_ref(request['model'])];
     "

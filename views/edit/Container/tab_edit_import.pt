@@ -11,7 +11,7 @@
     global view here;
     global vein string:import;
     global active_tab string:tab_edit;
-    global parent_screen_name string:Contents;
+    global parent_screen_name string:contents;
     global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
     global silva_permissions here/get_silva_permissions;
     "
