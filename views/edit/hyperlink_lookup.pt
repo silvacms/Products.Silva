@@ -175,7 +175,7 @@
                           title string:choose this ${item/meta_type};
                           ">
                         <img tal:replace="structure python:view.render_icon(item)" />
-                        <tal:block tal:replace="item/id">
+                        <tal:block tal:replace="python: mangle.String.centeredTruncate(item.id, 30)">
                           id
                         </tal:block>
                       </label>
@@ -201,7 +201,8 @@
                         tal:attributes="
                           href item_url;
                           class status_style;"
-                        tal:define="title python: item.get_title_editable() or default"
+                        tal:define="title python: mangle.String.centeredTruncate(item.get_title_editable(), 30)
+                                                    or default"
                         tal:content="title"
                         i18n:attributes="title">
                         <i i18n:translate="no_title">no title</i>
@@ -295,7 +296,7 @@
                           title string:choose this ${asset/meta_type};
                           ">
                         <img tal:replace="structure python:view.render_icon(asset)" />
-                        <tal:block tal:replace="asset/id">
+                        <tal:block tal:replace="python: mangle.String.centeredTruncate(asset.id, 30)">
                           id
                         </tal:block>
                       </label>
@@ -306,7 +307,8 @@
                     <td>
                       <a class="blacklink"
                         title="preview"
-                        tal:content="python: asset.get_title_editable() or default"
+                        tal:content="python: mangle.String.centeredTruncate(asset.get_title_editable(), 30) 
+                                            or default"
                         tal:attributes="
                           href asset_url;
                           class python: asset.get_title() == '' and 'closed' or 'blacklink'"

@@ -208,7 +208,7 @@
                           title string:choose this ${item/meta_type};"
                         i18n:attributes="title"
                         ><img tal:replace="structure python:view.render_icon(item)" />
-                        <tal:block tal:replace="item/id">id</tal:block>
+                        <tal:block tal:replace="python: mangle.String.centeredTruncate(item.id, 30)">id</tal:block>
                       </label>
                       <img alt="content approved or published"
                         border="0"
@@ -226,7 +226,7 @@
                       _______ title cell _______
                     </tal:block>
                     <td>
-                      <span tal:content="python:(item.get_title_editable() or item.id)" />
+                      <span tal:content="python:mangle.String.centeredTruncate((item.get_title_editable() or item.id), 30)" />
                     </td>
                     <tal:block replace="nothing">
                       _______ modified date / properties downlink cell _______
@@ -313,7 +313,7 @@
                         <img tal:replace="structure python:view.render_icon(asset)" />
                       </label>
                       <label style="text-transform: none" title="editor" tal:attributes="for identifier"
-                        tal:content="structure asset/id"
+                        tal:content="structure python: mangle.String.centeredTruncate(asset.id, 30)"
                         i18n:attributes="title"
                       >
                         id
@@ -330,7 +330,7 @@
                     <td>
                       <a class="blacklink"
                           title="view" 
-                          tal:content="python: asset.get_title() == '' and default or asset.get_title()"
+                          tal:content="python: asset.get_title() == '' and default or mangle.String.centeredTruncate(asset.get_title(), 30)"
                           tal:attributes="href asset/absolute_url"
                           i18n:attributes="title"
                         >

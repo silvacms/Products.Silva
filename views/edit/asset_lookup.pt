@@ -183,14 +183,14 @@ function setReference() {
                       title string:choose this ${asset/meta_type};"
                     i18n:attributes="title"
                     ><img tal:replace="structure python:view.render_icon(asset)" />
-                    <tal:block tal:replace="asset/id">id</tal:block>
+                    <tal:block tal:replace="python: mangle.String.centeredTruncate(asset.id, 30)">id</tal:block>
                   </label>
                 </td>
                 <tal:block tal:replace="nothing"> _______ title cell _______ </tal:block>
                 <td>
                   <a class="blacklink"
                     title="view this asset"
-                    tal:content="python: asset.get_title_editable() or default"
+                    tal:content="python: mangle.String.centeredTruncate(asset.get_title_editable(), 30) or default"
                     tal:attributes="
                       href string:${asset/absolute_url};
                       class status_style;"

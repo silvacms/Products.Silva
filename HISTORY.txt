@@ -31,6 +31,9 @@ Silva changes
 
       - Unused XSLT support cruft has been cleaned up.
 
+      - Fixed problem with very long titles and ids in lookup screens, they're
+        truncated now
+
     Removals
 
       - Remnant of SQLDataSource removed. Use SilvaExternalSources instead.
