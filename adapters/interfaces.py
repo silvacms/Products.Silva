@@ -82,3 +82,52 @@ class IAssetData(Interface):
         """ Get actual data stored for this asset as calling index_html()
         for assets can have all kinds of unwanted side effects.
         """        
+
+class IVersionManagement(Interface):
+    def getVersionById(id):
+        """get a version by id"""
+
+    def getPublishedVersion():
+        """return the current published version, None if it doesn't exist"""
+
+    def getUnapprovedVersion():
+        """return the current unapproved (editable) version, None if it doesn't exist"""
+
+    def getApprovedVersion():
+        """return the current approved version, None if it doesn't exist"""
+
+    def revertEditableToOld(id):
+        """revert editable to an older version
+
+            the current editable will become the last closed (last closed will
+            move to closed list), if there's a published version that will
+            not be changed.
+            can raise AttributeError when no editable version is available
+            (XXX what to do when there is an approved version?)
+        """
+
+    def getVersionIds():
+        """return a list of all version ids"""
+
+    def getVersions(sort_attribute='id'):
+        """return a list of version objects
+        
+            if sort_attribute resolves to False, no sorting is done,
+            by default it sorts on id converted to int (so [0,1,2,3,...]
+            instead of [0,1,10,2,3,...] if values < 20)
+        """
+
+    def deleteVersion(id):
+        """delete a version
+
+            can raise AttributeError when the version doesn't exist, 
+            VersioningError if the version is approved(XXX?) or published
+        """
+
+    def deleteOldVersions(number_to_keep):
+        """delete all but <number_to_keep> last closed versions
+
+            can be called only by managers, and should be used with great care,
+            since it can potentially remove interesting versions
+        """
+    
