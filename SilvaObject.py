@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.69 2003/03/18 14:22:36 guido Exp $
+# $Id: SilvaObject.py,v 1.70 2003/03/18 14:38:28 guido Exp $
 
 # python
 from types import StringType
@@ -23,6 +23,7 @@ from IVersionedContent import IVersionedContent
 import SilvaPermissions
 from ViewRegistry import ViewAttribute
 from Security import Security
+from ViewCode import ViewCode
 # misc
 from cgi import escape
 
@@ -31,7 +32,7 @@ class XMLExportContext:
     """
     pass
 
-class SilvaObject(Security):
+class SilvaObject(Security, ViewCode):
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()

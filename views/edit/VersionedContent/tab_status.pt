@@ -107,7 +107,8 @@ _______ manual close section here _______
 </div>
 </check>
 
-<br /><br />
+<br />
+
 <form action="." method="POST">
   <table width="96%" cellspacing="0" cellpadding="3" border="0">
 
@@ -158,6 +159,9 @@ _______ manual close section here _______
   </table>
 
 </form>
+
+<br />
+<br />
 
 <div tal:condition="docma_running">
 
@@ -233,6 +237,8 @@ _______ manual close section here _______
   </table>
 
 </form>
+
+<br />
 
 <tal:block tal:condition="python: processingident != 0">
   <table width="100%" cellspacing="0" cellpadding="0" class="feedback">

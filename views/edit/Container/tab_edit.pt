@@ -64,12 +64,11 @@
      <span tal:replace="nothing"> ______________ publication header ______________ </span>
       <tr>
         <td class="border"
-          tal:attributes="class python:test(model == model.get_publication(), 'hilight', 'focus-fixed')">
+          tal:attributes="class python:test(model == model.get_publication(), 'hilight', 'focus-fixed')" tal:define="url python:model.get_publication().absolute_url()">
           <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" />
           <a href="top" title="Up to publication top"
-            tal:define="url python:model.get_publication().absolute_url()"
             tal:attributes="href string:${url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(model.get_publication().meta_type)" /></a>
-          <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
+          <a class="blacklink" href="top" title="Up to publication top"
             tal:attributes="href string:${url}/edit/tab_edit"><span tal:replace="structure python:model.get_publication().get_title_or_id_html()">Publication top</span></a>
         </td>
       </tr>
@@ -81,14 +80,14 @@
           oddrow repeat/indent_item/odd">
           <td class="hilight"
             tal:attributes="class python:test(model == item, 'hilight', 'focus')">
-            <div tal:attributes="style python:'margin-left:'+str(indent * 16 + 5)">
+            <div tal:attributes="style python:'margin-left:'+str(indent * 16 + 5)" tal:define="url item/absolute_url">
               <a href="folder" title="Manage..."
                 tal:attributes="
-                  href string:${item/absolute_url}/edit/tab_edit;
+                  href string:${url}/edit/tab_edit;
                   title string:Manage '${item/id}'"><img src="%s" width="16" height="16" alt="%s"
                 tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
               <a class="blacklink" href="title" title="id"
-                tal:attributes="href string:${item/absolute_url}/edit/tab_edit;
+                tal:attributes="href string:${url}/edit/tab_edit;
                                 title string:id: ${item/id}">
                 <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_or_id_html()">no title</span>
               </a>
@@ -133,7 +132,8 @@
 
 <span tal:replace="nothing"> ______________ default row ______________ </span>
 <!-- default -->
-<tr class="focus-fixed" tal:condition="model/get_default" tal:define="default model/get_default">
+<tr class="focus-fixed" tal:condition="model/get_default">
+<tal:block tal:define="default model/get_default; url default/absolute_url">
   <span tal:replace="nothing"> _______ position cell _______ </span>
   <td align="right">
     0
@@ -162,7 +162,7 @@
   <td>
     <a class="blacklink" title="Preview"
       tal:condition="python:default.get_title_html() != ''"
-      tal:attributes="href string:${default/absolute_url}/edit/tab_preview">
+      tal:attributes="href string:${url}/edit/tab_preview">
       <span tal:replace="structure default/get_title_html">title</span>
     </a>
   </td>
@@ -175,13 +175,14 @@
   <span tal:replace="nothing"> _______ author cell _______ </span>
   <td> 
     <a class="blacklink" title="Down to Status tab of item"
-      tal:attributes="href string:${default/absolute_url}/edit/tab_status"><span tal:replace="python:default.sec_get_last_author_info().fullname()">
+      tal:attributes="href string:${url}/edit/tab_status"><span tal:replace="python:default.sec_get_last_author_info().fullname()">
     Author</span></a>
   </td>
   <span tal:replace="nothing"> _______ shift _______ </span>
   <td>
     &nbsp;
   </td>
+</tal:block>
 </tr>
 
 <span tal:replace="nothing"> _____________________ publishables _____________________ </span>
@@ -191,7 +192,7 @@
   ______________ listing iteration ______________ </span>
 <!-- iteration over ordered publishables -->
 <rowset tal:omit-tag="" tal:repeat="item publishables">
-<cycle tal:omit-tag="" tal:define="oddrow repeat/item/odd">
+<cycle tal:omit-tag="" tal:define="oddrow repeat/item/odd; item_url item/absolute_url; model_url model/absolute_url">
 <tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
   <span tal:replace="nothing"> _______ position cell _______ </span>
   <td align="right" tal:content="repeat/item/number">
@@ -222,7 +223,7 @@
   <td>
     <a class="blacklink" title="Preview"
       tal:condition="python:item.get_title_html() != ''"
-      tal:attributes="href string:${item/absolute_url}/edit/tab_preview">
+      tal:attributes="href string:${item_url}/edit/tab_preview">
       <span tal:replace="structure item/get_title_html">title</span>
     </a>
   </td>
@@ -238,13 +239,13 @@
   <td>
     <a class="blacklink" title="Down to Status tab of item"
       tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
-      tal:attributes="href string:${item/absolute_url}/edit/tab_status"
+      tal:attributes="href string:${item_url}/edit/tab_status"
       tal:content="python:item.sec_get_last_author_info().fullname()">
       author&nbsp;name
     </a>
     <a class="graylink" title="Down to Publish tab of container"
       tal:condition="python:item.implements_container()"
-      tal:attributes="href string:${item/absolute_url}/edit/tab_status">
+      tal:attributes="href string:${item_url}/edit/tab_status">
       n/a
     </a>
     <span 
@@ -256,9 +257,9 @@
   <span tal:replace="nothing"> _______ shift _______ </span>
   <td width="36px" align="right" tal:condition="silva_permissions/ApproveSilvaContent">
     <a href="" title="Move down"
-      tal:attributes="href string:${model/absolute_url}/edit/tab_edit_move_down?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/down.gif" width="16" height="12" alt="Move down" border="0" /></a>
+      tal:attributes="href string:${model_url}/edit/tab_edit_move_down?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/down.gif" width="16" height="12" alt="Move down" border="0" /></a>
     <a href="" title="Move up"
-      tal:attributes="href string:${model/absolute_url}/edit/tab_edit_move_up?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/up.gif" width="16" height="12" alt="Move up" border="0" /></a>
+      tal:attributes="href string:${model_url}/edit/tab_edit_move_up?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/up.gif" width="16" height="12" alt="Move up" border="0" /></a>
   </td>
   <td width="36px" align="right" tal:condition="not:silva_permissions/ApproveSilvaContent">
   </td>
