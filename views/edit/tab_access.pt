@@ -468,32 +468,31 @@
               </b>
               <br />
               <br />
-              Setting an access restriction here affects all objects on this and lower levels.
+              Setting an access restriction here affects all objects on this 
+              and lower levels.
             </td>
           </tr>
           <tr valign="top">
             <td>
-              <select name="role"
-                tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', nothing)">
+              <select name="role">
                 <option value="Anonymous"
                   tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
                   Anonymous
                 </option>
-                <option value="Viewer"
-                  tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">
-                  Viewer
-                </option>
                 <option value="Authenticated"
                   tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">
                   Authenticated
+                </option>
+                <option value="Viewer"
+                  tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">
+                  Viewer
                 </option>
               </select>
               &nbsp;
               <input class="button"
                 type="submit"
                 value="Set restriction"
-                title="Restrict access to users with a specific role"
-                tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')" />
+                title="Restrict access to users with a specific role" />
             </td>
           </tr>
         </table>
