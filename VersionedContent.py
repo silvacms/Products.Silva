@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 
 # Python
 from StringIO import StringIO
@@ -101,8 +101,10 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             return VersionedContent.inheritedAttribute('view')(self, view_type)
 
         if (self._cached_datetime is None or
-                self._cached_datetime < self.get_public_version_publication_datetime() or
-                self._cached_datetime < self.service_extensions.get_refresh_datetime()):
+             self._cached_datetime <
+             self.get_public_version_publication_datetime() or
+             self._cached_datetime <
+             self.service_extensions.get_refresh_datetime()):
             data = VersionedContent.inheritedAttribute('view')(self, view_type)
             self._cached_datetime = DateTime()
             if self.is_cacheable():
@@ -110,13 +112,16 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             else:
                 self._cached_data = None
         else:
-            if self._cached_data is not None and not self.is_version_published():
-                # XXX do not render versions, which have been closed explicitely
+            # XXX is_version_published() triggers a workflow update
+            # check that is not necessary, ideally remove it somehow.
+            if (self._cached_data is not None and
+                 not self.is_version_published()):
+                # do not render versions which have been closed explicitely
                 self._cached_data = None
             data = self._cached_data
             if data is None:
-                data = VersionedContent.inheritedAttribute('view')(self, view_type)
-
+                data = VersionedContent.inheritedAttribute('view')(
+                    self, view_type)
         return data
         
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
