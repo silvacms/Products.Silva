@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -14,9 +14,14 @@ from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 # misc
 from Products.Silva.helpers import add_and_edit
-from xml import xpath
-from xml.xpath.Context import Context
-
+# try to import xpath
+try:
+    from xml import xpath
+    from xml.xpath.Context import Context
+    XPATH_AVAILABLE = 1
+except ImportError:
+    XPATH_AVAILABLE = 0
+    
 icon = "www/silvageneric.gif"
 
 class Index(Content, SimpleItem):
@@ -44,6 +49,9 @@ class Index(Content, SimpleItem):
     def update_index(self):
         """Update the index.
         """
+        if not XPATH_AVAILABLE:
+            print "Silva Index: cannot update index as xml.xpath not installed."
+            return
         result = {}
         # get status tree from folder by acquisition
         # XXX perhaps get_status_tree() should be renamed or some
