@@ -41,8 +41,8 @@
 
 <span tal:replace="nothing"> ______________ table header ______________ </span>
 <tr tal:condition="python:len(objects) != 0 or model.get_default()">
-<th align="left" width="3%" nowrap="1">Type</th>
-<th align="left" width="12%">Edit</th>
+<th align="left" width="1%">Type</th>
+<th align="left" width="20%">Edit</th>
 <th align="left">Preview</th>
 <th align="right" width="12%" nowrap="1">New&nbsp;version<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="8" border="0" /></th>
 <th align="left" width="9%">Publish&nbsp;date&nbsp;</th>
@@ -53,7 +53,7 @@
 <tr class="focus-fixed"
   tal:condition="model/get_default">
 <span tal:replace="nothing"> _______ checkbox + icon _______ </span>
-<td nowrap="1">
+<td align="right" nowrap="1">
 <input type="checkbox" name="refs:list" value="value"
   tal:define="ref python:model.create_ref(model.get_default())"
   tal:attributes="value ref; checked python:test(here.is_item_in_ids(ref),'checked','')" />
@@ -124,10 +124,11 @@
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
 
 <span tal:replace="nothing"> _______ checkbox + icon _______ </span>
-<td nowrap="1">
+<td align="right" nowrap="1">
 <input type="checkbox" name="refs:list" value="value"
+  tal:condition="python:item.implements_versioning()"
   tal:attributes="value ref; checked python:test(here.is_item_in_ids(ref),'checked','')" />
-<a href="edit" title="Edit this item"
+<a href="edit" title="Edit..."
   tal:attributes="href string:${item/absolute_url}/edit/tab_edit">
 <img tal:replace="structure python:view.render_icon(item.meta_type)" />
 </a>
