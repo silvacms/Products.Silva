@@ -81,6 +81,9 @@ def installFromScratch(root):
     configureLayout(root)
     # now do the uinstallable stuff (views)
     install(root)
+    # metadata needs the catalog from above
+    configureMetadata(root)    
+
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
@@ -130,13 +133,7 @@ def install(root):
     root.add_silva_addable_forbidden('Silva Group')
     root.add_silva_addable_forbidden('Silva Virtual Group')
 
-    # install annotations
-    from Products.PortalAnnotations.Extensions.SilvaInstall import install as install_annotations
-    install_annotations(root)
-    
-    # install metadata
-    from Products.SilvaMetadata.Extensions.SilvaInstall import install as install_metadata
-    install_metadata(root)
+
     
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -152,6 +149,40 @@ def uninstall(root):
     
 def is_installed(root):
     return hasattr(root.service_views, 'Silva')
+
+def configureMetadata(root):
+    from os import path
+    from Products.PortalAnnotations.Extensions.SilvaInstall import install as install_annotations
+    from Products.SilvaMetadata.Extensions.SilvaInstall import install as install_metadata
+    from Globals import package_home
+    
+    # install annotations
+    install_annotations(root)
+    
+    # install metadata
+    install_metadata(root)
+    
+    # load up the default metadata
+    silva_home = package_home(globals())
+    silva_docs = path.join(silva_home, 'doc')
+
+    collection = root.service_metadata.getCollection()
+
+    xml_file = path.join(silva_docs, 'silva.xml')
+    fh = open(xml_file, 'r')
+    collection.importSet(fh)
+
+    xml_file = path.join(silva_docs, 'silva-extra.xml')
+    fh = open(xml_file, 'r')
+    collection.importSet(fh)    
+
+    # set the default type mapping
+    mapping = root.service_metadata.getTypeMapping()
+    mapping.setDefaultChain('silva')
+
+    # initialize the default sets
+    for set in collection.getMetadataSets():
+        set.initialize()
 
 def configureProperties(root):
     """Configure properties on the root folder.
@@ -674,6 +705,10 @@ def registerTableViewer(root):
 
 def setup_catalog(silva_root):
     """Sets the ZCatalog up"""
+    from Products.ZCTextIndex.ZCTextIndex import PLexicon
+    from Products.ZCTextIndex.Lexicon import Splitter
+    from Products.ZCTextIndex.Lexicon import CaseNormalizer, StopWordRemover
+    
     if hasattr(silva_root, 'service_catalog'):
         catalog = silva_root.service_catalog
         if hasattr(catalog, 'UnicodeVocabulary'):
@@ -681,6 +716,11 @@ def setup_catalog(silva_root):
     else:
         silva_root.manage_addProduct['ZCatalog'].manage_addZCatalog('service_catalog', 'Silva Service Catalog')
         catalog = silva_root.service_catalog
+
+    if not 'silva_lexicon' in catalog.objectIds():
+        catalog._setObject('silva_lexicon',
+                           PLexicon('silva_lexicon', '', Splitter(), CaseNormalizer(), StopWordRemover())
+                           )
 
     catalog.manage_addProduct['ZCatalog'].manage_addVocabulary('UnicodeVocabulary', 'UnicodeVocabulary', 1, splitter='UnicodeSplitter')
 
