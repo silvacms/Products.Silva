@@ -1,10 +1,11 @@
 <dtml-let last_modified="_.DateTime()-14"
-          expires="_.DateTime()+7" >
+          expires="_.DateTime()+7"
+          root="get_root_url()" >
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
-</dtml-let>
+
 
 /*
 **  Silva style sheet classes
@@ -45,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 div.pathBar {
   font-size: 90%;
     color: &dtml-shade36;;
-    background-image: url(/silva/globals/skylight.gif);
+    background-image: url(<dtml-var root>/globals/skylight.gif);
     background-repeat: repeat-x;
     background-color: &dtml-pathBarBackground;;
     padding: 0em 4px 0.2em 22px;
@@ -93,7 +94,7 @@ div.pathBar img {
 
 div.tabs {
     background-color: &dtml-mainTabBackdrop;;
-    background-image: url(/silva/globals/skyrise.gif);
+    background-image: url(<dtml-var root>/globals/skyrise.gif);
     background-repeat: repeat-x;
     border-bottom-color: #8b939b;
     padding: 0em 0em 0em 15px;
@@ -934,4 +935,4 @@ table.listing div.message {
 }
 
 </dtml-with>
-
+</dtml-let>
