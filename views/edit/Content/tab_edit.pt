@@ -1,14 +1,22 @@
-<!-- ___________________________ start index_html ___________________________ -->
-<tal:block define="global breadcrumb_vein string:Edit;" />
-<html metal:use-macro="here/macro_index/macros/master">
-<div metal:fill-slot="main" tal:omit-tag="">
-<!-- ___________________________ start index_html/slot main ___________________________ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/tal/i18n"
+  tal:define="breadcrumb_vein string:Edit;"
+>
 
-<model tal:replace="structure view/edit">Content</model>
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main" tal:omit-tag="">
 
-<!-- ___________________________ end index_html/slot main ___________________________ -->
-</div>
+<model tal:condition="model/get_editable"
+  tal:replace="structure view/edit">Content</model>
+
+</metal:block>
+</metal:block>
 
 </html>
-<!-- ___________________________ end index_html ___________________________ -->
-
