@@ -88,7 +88,7 @@
 </div>
 </td>
 
-<td class="tab-up" width="95%">
+<td class="tab-up" width="90%">
 <div class="breadcrumb">
 <repeat tal:omit-tag="" tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
 <a href="url"
@@ -98,7 +98,8 @@
 </repeat>
 <tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'], object=here)">
   &nbsp;
-  <a href="" tal:attributes="href python:'%s/manage_main' % model.absolute_url()"><span class="idea">/manage...</span></a>
+  <a href="" title="Zope manage_main: alt-." accesskey="."
+    tal:attributes="href python:'%s/manage_main' % model.absolute_url()"><span class="idea">/manage...</span></a>
 <tal:block replace="nothing"> ___________ Start hook for the experimental WYSIWYG editor integration ___________ </tal:block>
 <tal:block condition="
     python:model.meta_type == 'Silva Document'
@@ -127,7 +128,7 @@
 
 <td class="tab-up" align="right">
 <div class="breadcrumb" tal:condition="exists:here/help_url">
-<a href="/silva/help/" title="Silva help: alt-h" accesskey="h" target="_blank"
+<a href="/silva/help/" title="Silva help: alt-h" accesskey="h"
   tal:attributes="href string:${here/help_url}">Help</a>
 </div>
 </td>

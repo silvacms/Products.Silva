@@ -1,0 +1,76 @@
+<html metal:define-macro="master"
+  tal:define="
+    silva_root here/silva_root;
+    global table_colspan python: 4;
+    global tabs_colspan python: 1;
+    selected_tab_id template/id
+    ">
+<head>
+<title metal:define-slot="title">Reference</title>
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="stylesheet" href="base.css" />
+<link rel="stylesheet" href="globals/silva_.css" />
+</head>
+
+<body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+
+<span tal:replace="nothing"> ______________ background behind tabs ______________ </span>
+<tr>
+<td class="tab-bg" width="2%"><img width="1" height="15" tal:attributes="src string:${silva_root}/globals/pixel.gif" /></td>
+<td class="tab-bg" valign="top"><a name="top"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" border="1" /></a></td>
+<td class="tab-bg" width="4%" align="right" valign="bottom"><a href="reference" title="Silva info: alt-|" accesskey="|"><span class="idea">Silva&nbsp;&nbsp;</span></a></td>
+</tr>
+
+<span tal:replace="nothing"> ______________ tabs lower edge ______________ </span>
+<tr>
+<td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<td class="tab-edge"><img width="1" height="1" tal:attributes="src string:${silva_root}/globals/pixel.gif" /></td>
+</tr>
+</table>
+
+
+<span tal:replace="nothing"> ______________ breadcrumb trail ______________ </span>
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+<td class="tab-up" width="2%"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<td class="tab-up" width="96%" align="right">
+<div class="breadcrumb">
+<a href="javascript:history.back();" title="Access key: alt-b" accesskey="b">Back</a>
+</div>
+</td>
+<td class="tab-up" width="2%"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="13" /></td>
+</tr>
+
+<span tal:replace="nothing"> ______________ bottom edge ______________ </span>
+<tr>
+<td class="tab-edge" colspan="3"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+</tr>
+</table>
+<!-- ____________________________ end tabs ____________________________ -->
+
+<span class="halfline"><br /></span>
+
+<div class="margins">
+
+<div metal:define-slot="main">
+  Here the local content (a.k.a. "model") is inserted (this text will be replaced).
+</div>
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td width="2%">
+<br /><a href="#top" title="jump to top: alt-t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
+</td>
+<td colspan="3">
+</td>
+<td width="2%">
+<br /><a href="#top" title="jump to top: alt-t" accesskey="t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
+</td>
+</tr>
+</table>
+
+</div>
+</html>

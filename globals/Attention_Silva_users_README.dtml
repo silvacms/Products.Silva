@@ -1,8 +1,6 @@
-This folder ('/globals') contains Silva specific items, and *will* be overwritten in 
-an upgrade.
+This folder ('Silva//globals') contains Silva specific items, and *will* be 
+overwritten in an upgrade.
 
-If you have created similar items, we suggest making a 'locals' folder, and storing 
-them there.
+If you have created similar items, we suggest making a 'locals' folder in
+the ZMI, and storing them there.
 
-The folder '/images' is meant for images which are in use for (your) public layouts. 
-It will not be overwritten in an upgrade.

@@ -1,120 +1,180 @@
-<pre>
-Documentation can be installed here.
+<html metal:use-macro="here/index_macro/macros/master">
+<title metal:fill-slot="title">Silva help</title>
+<div class="readable" metal:fill-slot="main">
 
-Here is in the 'globals' folder, and if you wish to install docs, 
-(your own or Silva documentation) you should put them elsewhere, 
-since globals will be overwritten in an upgrade.
+<h1><img width="16" height="16" tal:attributes="src string:${silva_root}/globals/silva.gif" />&nbsp;
+Silva help</h1>
 
-If you have a 'locals' folder, add a folder called 'help' there, 
-put the documentation in it, and then change a property in the 
-Silva root. Go to the top of Silva in the ZMI and click the 
-properties tab and change the help_url property to: 
-  /silva/locals/help
+<h2>Access keys</h2>
 
-Documentation (in structured text format) can be found at:
-<a href="http://www.infrae.com/products/silva/docs">http://www.infrae.com/products/silva/docs</a>
+<ul class="tips">
+<li>
+The access key on your system may be 'alt' or something else.
+</li>
+<li>
+Hover over the link or button to see a tool tip with the key.
+</li>
+</ul>
+  
+<h3>Global keys that are always available</h3>
 
-
-Silva access keys
-=================
-+ The access key on your system may be 'alt' or something else.
-+ Hover over the link or button to see a tool tip with the key.
-+ Some access keys can conflict with browser menus. However the 
-  key works if the focus is in the page (a form element is active 
-  or just click in the page).
-
-Global keys that are always available
--------------------------------------
-General
-  t Jump to top of page
-  b Jump to bottom of page
-  / Jump to top of Silva (Silva icon)
-  h Help
-
+<p class="leadedbody">
+<span class="subhead">General</span><br />
+t &nbsp; Jump to top of page<br />
+b &nbsp; Jump to bottom of page<br />
+/ &nbsp; Jump to top of Silva (Silva icon)<br />
+h &nbsp; Help
+</p>
+<p class="leadedbody">
+<span class="subhead">Footer</span><br />
+\ &nbsp; See public page<br />
+~ &nbsp; User settings<br />
+q &nbsp; Logout
+</p>
+<p class="leadedbody">
+<span class="subhead">Tabs</span><br />
 The tabs have numbered access keys, starting from one (the first 
-tab) going up to five. You can navigate horizontally accross the 
-tabs by using alt-1, alt-2, and so forth. 
-
+tab) going up to five. You can navigate horizontally accross an
+item's tabs by using alt-1, alt-2, and so forth. 
+</p>
+<p class="leadedbody">
 Each tab has a top link (the tall tree on the left side, which 
 takes you to the top of the current publication, within the
 same tab 'vein'). The access key is the shift character of the 
 corresponding number (on the English keyboard, sorry if you have 
 an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% 
 (note that the characters resemble the number).
-
+</p>
+<p class="leadedbody">
 On the right of each tab is an uplink (the small tree, which
 takes you up one level in the same vein). The access keys for the 
 uplinks are the remaining numbers (add five to the access key for 
 the tab). If you are  in a screen with five tabs, the uplinks are 
 alt-6, alt-7, alt-8, alt-9, and alt-0. (If there are less than 
 five tabs, you still add five to get the uplink key.)
+</p>
 
-Footer
-  \ See public page
-  ~ User settings
-  q Logout
+<h3>Contents screen (folder or publication)</h3>
 
-Contents screen (folder or publication)
----------------------------------------------------------
-Table header
-  n New 
-  s Select list for a new object (doesn't work in Mozilla)
-  i Import
+<p class="leadedbody">
+<span class="subhead">Table header</span><br />
+n &nbsp; New<br />
+s &nbsp; Select list for a new object (doesn't work in Mozilla)<br />
+i &nbsp; Import
+</p>
+<p class="leadedbody">
+<span class="subhead">Table body</span><br />
+p &nbsp; Select list for position number (doesn't work in Mozilla)<br />
+m &nbsp; Move
+</p>
+<p class="leadedbody">
+<span class="subhead">Table footer</span><br />
+a &nbsp; Select all<br />
+r &nbsp; Rename<br />
+d &nbsp; Delete<br />
+x &nbsp; Cut<br />
+c &nbsp; Copy<br />
+v &nbsp; Paste<br />
+g &nbsp; Paste as ghost
+</p>
 
-Table body
-  p Select list for position number (doesn't work in Mozilla)
-  m Move
+<h3>Publish screen (folder or publication)</h3>
 
-Table footer
-  a Select all
-  r Rename
-  d Delete
-  x Cut
-  c Copy
-  v Paste
-  g Paste as ghost
+<p class="leadedbody">
+<span class="subhead">Table header</span><br />
+e &nbsp; Export 
+</p>
+<p class="leadedbody">
+<span class="subhead">Table footer</span><br />
+a &nbsp; Select all<br />
+n &nbsp; Create new vesions<br />
+j &nbsp; Reject request for approval<br />
+v &nbsp; Revoke request for approval<br />
+c &nbsp; Close public<br />
+s &nbsp; Change settings<br />
+o &nbsp; Approve<br />
+</p>
 
+<h3>Add screen</h3>
 
-Publish screen (folder or publication)
----------------------------------------------------------
-Table header
-  e Export 
+<p class="leadedbody">
+c &nbsp; Cancel<br />
+a &nbsp; Add<br />
+e &nbsp; Add and edit/enter
+</p>
 
-Table footer
-  a Select all
-  n Create new vesions
-  j Reject request for approval
-  v Revoke request for approval
-  c Close public
-  s Change settings
-  o Approve
+<h3>Silva editor</h3>
 
-Add screen
-----------
-  c Cancel
-  a Add
-  e Add and edit/enter
+<p class="leadedbody">
+s &nbsp; Save<br />
+e &nbsp; Save and exit<br />
+tab Use your tab key to edit without using the mouse. Shift-tab goes backwards.
+</p>
 
-Silva editor
-------------
-  s Save
-  e Save and exit
-  tab Use your tab key to edit without using the mouse.
-      Shift-tab goes backwards.
+<h3>Other screens</h3>
 
-Other screens
--------------
+<p class="leadedbody">
 The Metadata, Access, and Status screens as well as their
 subscreens (such as Lookup, Import, and Export) have access 
 keys for most buttons (sometimes there are multiples of the 
 same button, in which case only the first has an access key). 
 Usually the first letter of the button is the access key. 
 You can always hover over the button to see the tool tip. 
+</p>
 
+<h3>Notes</h3>
 
+<ul class="tips">
+<li>
+Some access keys can conflict with browser menus. However the 
+key works if the focus is in the page (a form element is active  
+or just click in the page).
+</li>
+<li>
+Mozilla and Internet Explorer handle access keys for hyperlinks 
+differently. Mozilla initiates the action (same as clicking the 
+link), whereas Explorer just highlights the link, and then you 
+have to hit return to activate it. Both browsers treat form 
+buttons the same, initiating the action immediately.
+</li>
+<li>
 Don't forget that most browsers use alt-left arrow to go
 back, and alt-right arrow to go forward.
+</li>
+</ul>
 
-<a href="mailto:docs@infrae.com">Feedback</a>
-</pre>
+<h2>Installing documentation for Silva</h2>
 
+<p class="leadedbody">
+The most up to date documentation is at:<br />
+<a href="http://www.infrae.com/products/silva/docs">http://www.infrae.com/products/silva/docs</a>
+</p>
+<p class="leadedbody">
+Documentation can also be installed 'here'.
+Here is in the 'globals' folder, which is on the file system. 
+If you wish to install docs (your own or Silva documentation), 
+you should put them elsewhere, since 'globals' will be 
+overwritten in an upgrade.
+</p>
+<p class="leadedbody">
+In Zope, create a folder in the Silva root (we'll call it 'help' in this 
+example). Put the documentation in it, and then change the <tt>help_url</tt> 
+property in the Silva root. Go to the Silva instance in the ZMI and click the 
+properties tab and (assuming your Silva instance is called 'silva') change 
+the <tt>help_url</tt> property to:<br />
+<tt>/silva/help</tt>
+</p>
+<p class="leadedbody">
+Documentation (in web structured text format) can be found at:
+<a href="http://www.infrae.com/products/silva/docs/SilvaDocumentation.tar.gz">http://www.infrae.com/products/silva/docs/SilvaDocumentation.tar.gz</a>
+</p>
+<p class="leadedbody">
+The same documentation is included in the Silva product download in 'plain' 
+structured text, gracefully degraded for text mode (no links, unicode entities, etc.).
+</p>
+<p class="leadedbody">
+<a href="mailto:docs@infrae.com">Feedback</a> is welcome.
+</p>
+</div>
+
+</html>

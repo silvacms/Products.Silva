@@ -43,7 +43,7 @@ p.lead {
 }
 
 h1 {
-  font-size : 19px; 
+  font-size : 18px; 
   font-weight : bold; 
   font-family : verdana, arial, helvetica, sans-serif; 
   color : #777777; 
@@ -302,16 +302,7 @@ input {
   border-right : 1px solid #333333;
   border-bottom : 1px solid #333333;
 }
-
-select {
-  color : #333333;
-  background : #d7e9ee;
-  border-left : 1px solid #333333;
-  border-top : 1px solid #333333;
-  border-right : 1px solid #333333;
-  border-bottom : 1px solid #333333;
-}
-
+ 
 textarea {
   font-family : clean, fixed, courier, monospace; 
   font-size : 12px; 
@@ -373,6 +364,7 @@ input.button {
   border-top : 1px solid #a2c9cc;
   border-right : 1px solid #a2c9cc;
   border-bottom : 1px solid #a2c9cc;
+  cursor : crosshair;
 }
 
 input.warningbutton {
@@ -385,6 +377,7 @@ input.warningbutton {
   border-top : 1px solid #d7acac;
   border-right : 1px solid #d7acac;
   border-bottom : 1px solid #d7acac;
+  cursor : crosshair;
 }
 
 input.cancelbutton {
@@ -397,6 +390,7 @@ input.cancelbutton {
   border-top : 1px solid #cccccc;
   border-right : 1px solid #cccccc;
   border-bottom : 1px solid #cccccc;
+  cursor : crosshair;
 }
 
 /* submit buttons */
@@ -413,6 +407,7 @@ button {
   padding : 1px 0 0 0;
   margin : 0;
   line-height : 10px;
+  cursor : crosshair;
 }
 
 button.warning {
@@ -428,6 +423,7 @@ button.warning {
   padding : 1px 0 0 0;
   margin : 0;
   line-height : 10px;
+  cursor : crosshair;
 }
 
 button.cancel {
@@ -443,6 +439,7 @@ button.cancel {
   padding : 1px 0 0 0;
   margin : 0;
   line-height : 10px;
+  cursor : crosshair;
 }
 
 button[type="submit"]:hover, 
@@ -661,6 +658,7 @@ a.buttonlink {
 a.buttonlink:hover {
   color : #bff1ff; 
   background : #74748b; 
+  cursor : crosshair;
 }
 a.cancellink {
   font-size : 11px; 
@@ -787,6 +785,10 @@ h2.worksheet {
   border-right : 1px solid #333333;
   border-bottom : 1px solid #333333;
   padding : 2px;
+}
+
+.readable {
+  max-width:40em;"
 }
 
 /* development note */
