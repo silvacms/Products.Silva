@@ -123,8 +123,8 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="12" />
 </td>
 <td class="footer" width="30%">
-<a class="footer" title="Change your settings: alt-~" accesskey="~" target="silva_member_page" href="#"
-  tal:attributes="onclick string:userWindow = window.open('${silva_root}/Members/${userid}/edit', 'userWindow', 'width=450,height=350,resizable=no');; userWindow.focus();;">
+<a class="footer" title="Change your settings: alt-~" accesskey="~" href="#"
+  tal:attributes="onclick string: userWindow = window.open('edit_member?lasturl=${view/absolute_url}', 'userWindow', 'width=450,height=350,resizable=no');; userWindow.focus();;">
   <img tal:attributes="src string:${silva_root}/globals/user.gif" width="8" height="9" border="0"/>
   User settings
 </a>
