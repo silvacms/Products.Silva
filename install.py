@@ -81,6 +81,8 @@ def install(root):
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     # also register views
     registerViews(root.service_view_registry)
+    # configure membership; this checks whether this is necessary
+    configureMembership(root)
     # also re-configure security (XXX should this happen?)
     configureSecurity(root)
     # and reconfigure xml widget registries
@@ -112,6 +114,17 @@ def configureProperties(root):
     for prop_id, value, prop_type in property_info:
         root.manage_addProperty(prop_id, value, prop_type)
 
+def configureMembership(root):
+    """Add SimpleMembership. The user can replace this service_members
+    with another that hooks into their own user database.
+    """
+    ids = root.objectIds()
+    if 'service_members' not in ids:
+        root.manage_addProduct['Silva'].manage_addSimpleMemberService(
+            'service_members')
+    if 'Members' not in ids:
+        root.manage_addFolder('Members')
+    
 def configureCoreFolders(root):
     """A bunch of core directory views.
     """
