@@ -1,6 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<tal:block condition="python: options['error_type'] != 'NotFound'">
-<html tal:define="mangle python:modules['Products'].Silva.mangle;">
+<tal:block define="error_type options/error_type | nothing;
+                    error_value options/error_value | nothing;
+                    message_type options/message_type | nothing;
+                    message options/message | nothing;
+                    allow_authentication_requests here/service_members/allow_authentication_requests | nothing;
+                    mangle python:modules['Products'].Silva.mangle;">
+<tal:block condition="python: error_type != 'NotFound'">
+<html>
   <head>
     <link rel="stylesheet"
       tal:attributes="href here/globals/silva.css/absolute_url | nothing" />
@@ -9,20 +15,20 @@
     <title>Message from server</title>
   </head>
   <body>
-    <tal:block condition="python:options.has_key('message_type')">
+    <tal:block condition="message_type">
       <div class="feedback"
-        tal:condition="python:options['message_type'] == 'feedback'">
-        <span tal:replace="structure python:options['message']" />&nbsp;&nbsp;(<span tal:replace="python:mangle.Now().toStr()">datetime</span>)
+        tal:condition="python:message_type == 'feedback'">
+        <span tal:replace="structure message" />&nbsp;&nbsp;(<span tal:replace="python:mangle.Now().toStr()">datetime</span>)
       </div>
-      <div class="alert" tal:condition="python:options['message_type'] == 'error'">
-        <span class="error" tal:content="structure python:options['message']" />
+      <div class="alert" tal:condition="python:message_type == 'error'">
+        <span class="error" tal:content="structure message" />
       </div>
     </tal:block>
 
-    <tal:block condition="python: options['error_type'] == 'Unauthorized'">
+    <tal:block condition="python: error_type == 'Unauthorized'">
 
      <!-- unauthorized, allow registration -->
-     <div class="public" tal:condition="here/service_members/allow_authentication_requests">
+     <div class="public" tal:condition="allow_authentication_requests">
       <br />
       <h2>Membership system</h2>
       <p class="readable">
@@ -51,7 +57,7 @@
      </div>
 
      <!-- unauthorized, don't allow registration -->
-     <div class="info" tal:condition="not:here/service_members/allow_authentication_requests">
+     <div class="info" tal:condition="not:allow_authentication_requests">
       <div class="public">
        <h2>Login required</h2>
        <p>
@@ -65,7 +71,7 @@
      </div>
     </tal:block>
 
-  <tal:condition condition="python: options['error_type'] != 'Unauthorized'">
+  <tal:condition condition="python: error_type != 'Unauthorized'">
     <div class="public">
       <br /><br />
       <h2>System problem</h2>
@@ -75,8 +81,8 @@
         <br /><br />
       </p>
 
-      <h4>Error Type: <span class="error" tal:content="structure options/error_type|string:unknwon">error_type</span></h4>
-      <h4>Error Value: <span class="error" tal:content="structure options/error_value|string:unknown"></span></h4>
+      <h4>Error Type: <span class="error" tal:content="structure error_type|string:unknwon">error_type</span></h4>
+      <h4>Error Value: <span class="error" tal:content="structure error_value|string:unknown"></span></h4>
       <h4>Error info</h4>
       Path: <span class="error" tal:content="request/PATH_INFO|string:unknown">error</span> <br />
       URL: <span class="error" tal:content="request/SERVER_URL|string:unknown" /><span class="error" tal:content="request/PATH_INFO|string:unknown" /><span tal:replace="request/QUERY_STRING|string:unknown" />
@@ -117,11 +123,10 @@
 </html>
 </tal:block>
 
-<tal:block tal:condition="python: options['error_type'] == 'NotFound'">
+<tal:block tal:condition="python: error_type == 'NotFound'">
 <!-- _____________________ 404 error message  _____________________ -->
 <!-- _____________________ Silva version 0.9.3.0 __________________ -->
-<html metal:use-macro="here/get_layout_macro"
-  tal:define="mangle python:modules['Products'].Silva.mangle;">
+<html metal:use-macro="here/get_layout_macro">
 <head>
 <title metal:fill-slot="title" 
   tal:content="here/get_title_or_id">
@@ -152,4 +157,5 @@
 
 </body>
 </html>
+</tal:block>
 </tal:block>
