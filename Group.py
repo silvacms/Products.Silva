@@ -1,13 +1,15 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from OFS.SimpleItem import SimpleItem
+
 # Silva interfaces
-from IAsset import IAsset
+from ISilvaObject import ISilvaObject
 # Silva
-from Asset import Asset
+from SilvaObject import SilvaObject
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
@@ -16,19 +18,18 @@ try:
 except ImportError, ie:
     pass
 
-class Group(Asset):
+class Group(SilvaObject, SimpleItem):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Group"
 
-    __implements__ = IAsset
+    __implements__ = ISilvaObject
 
     manage_options = (
         {'label': 'Edit', 'action': 'manage_main'},
-    ) + Asset.manage_options
-
+    ) + SimpleItem.manage_options
+    
     manage_main = PageTemplateFile('www/groupEdit', globals())
-
 
     def __init__(self, id, title, group_name):
         Group.inheritedAttribute('__init__')(self, id, title)
@@ -52,7 +53,7 @@ class Group(Asset):
             A group asset becomes invalid if it gets moved around ...
         """
         return (self.valid_path == self.getPhysicalPath())
-        
+
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'addUser')

@@ -1,27 +1,28 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.4 2003/01/30 17:20:32 jw Exp $
+# $Id: VirtualGroup.py,v 1.5 2003/02/10 15:35:47 faassen Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from OFS.SimpleItem import SimpleItem
 # Silva interfaces
-from IAsset import IAsset
+from ISilvaObject import ISilvaObject
 # Silva
-from Asset import Asset
+from SilvaObject import SilvaObject
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
 
-class VirtualGroup(Asset):
+class VirtualGroup(SilvaObject, SimpleItem):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Virtual Group"
     
-    __implements__ = IAsset
+    __implements__ = ISilvaObject
 
     manage_options = (
         {'label': 'Edit', 'action': 'manage_main'},
-    ) + Asset.manage_options
+    ) + SimpleItem.manage_options
 
     manage_main = PageTemplateFile('www/virtualGroupEdit', globals())
 
@@ -40,7 +41,7 @@ class VirtualGroup(Asset):
             A group asset becomes invalid if it gets moved around ...
         """
         return (self.valid_path == self.getPhysicalPath())
-
+    
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'addGroup')
