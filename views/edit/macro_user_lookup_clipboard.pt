@@ -1,6 +1,6 @@
 <metal:block define-macro="clipboard">
   <div class="hilight borders top bottom left right"
-    style="padding: 0.5em; width: 32%; float: right; margin: 0em 0em 2em 1em;">
+    style="padding: 0.5em; width: 23em; float: right; margin: 0em 0em 2em 1em;">
     <metal:block define-macro="clipboard_no_style">
       <form action="."
         method="POST"
