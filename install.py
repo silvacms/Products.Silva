@@ -87,6 +87,16 @@ def install(root):
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     # also register views
     registerViews(root.service_view_registry)
+
+    # Try to see if the Groups Product is installed.
+    # If so, register the views
+    try:
+        from Products import Groups
+    except ImportError, ie:
+        pass
+    else:
+        registerGroupsViews(root.service_view_registry)
+
     # configure membership; this checks whether this is necessary
     configureMembership(root)
     # also re-configure security (XXX should this happen?)
@@ -319,10 +329,6 @@ def registerViews(reg):
                  ['edit', 'Content', 'Indexer'])
     reg.register('edit', 'Silva SQL Data Source',
                  ['edit', 'Asset', 'SQLDataSource'])
-    reg.register('edit', 'Silva Group',
-                 ['edit', 'Asset', 'Group'])
-    reg.register('edit', 'Silva Virtual Group',
-                 ['edit', 'Asset', 'VirtualGroup'])
     reg.register('edit', 'Silva Extended Member',
                  ['edit', 'Member', 'ExtendedMember'])
     
@@ -349,6 +355,14 @@ def registerViews(reg):
     reg.register('add', 'Silva File', ['add', 'File'])
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
     reg.register('add', 'Silva SQL Data Source', ['add', 'SQLDataSource'])
+
+def registerGroupsViews(reg):
+    """Register groups views on registry.
+    """
+    reg.register(
+        'edit', 'Silva Group', ['edit', 'Asset', 'Group'])
+    reg.register(
+        'edit', 'Silva Virtual Group', ['edit', 'Asset', 'VirtualGroup'])
     reg.register('add', 'Silva Group', ['add', 'Group'])
     reg.register('add', 'Silva Virtual Group', ['add', 'VirtualGroup'])
 
@@ -356,7 +370,8 @@ def unregisterViews(reg):
     for meta_type in ['Silva Folder', 'Silva Document',
                       'Silva Publication', 'Silva Ghost', 'Silva Image',
                       'Silva DemoObject', 'Silva File', 'Silva Indexer',
-                      'Silva SQL Data Source',]:
+                      'Silva SQL Data Source', 'Silva Group', 
+                      'Silva Virtual Group']:
         reg.unregister('edit', meta_type)
         reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)
