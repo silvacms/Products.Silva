@@ -27,10 +27,10 @@ body {
     color: &dtml-mainFontColor;;
     margin: 0;
     padding: 0;
-    scrollbar-base-color: &dtml-mainTabBackground;;
-    scrollbar-highlight-color: &dtml-mainTabBackground;;
-    scrollbar-track-color: &dtml-evenRowBackground;;
-    scrollbar-darkshadow-color: &dtml-evenRowBackground;;
+    scrollbar-base-color: &dtml-shade70;;
+    scrollbar-highlight-color: &dtml-shade70;;
+    scrollbar-track-color: &dtml-shade56;;
+    scrollbar-darkshadow-color: &dtml-shade56;;
     scrollbar-3dlight-color: &dtml-mainTabBorderColorSelected;;
     scrollbar-shadow-color: &dtml-mainTabBorderColorSelected;;
     scrollbar-arrow-color: &dtml-mainTabFontColorSelected;;
@@ -449,15 +449,8 @@ table.listing tr.top-controls td {
   padding: 0em 0.4em;
 }
 
+/* _______ subhead cell _______ */
 table.listing tr.top-controls h3 {
-  color: &dtml-listingTopControlsHeadingColor;;
-  margin: 0.1em 0.2em 0.2em 0.2em;
-  padding: 0em;
-  border: none;
-  line-height : 100%;
-}
-
-table.listing tr.top-controls h4 {
   color: &dtml-listingTopControlsHeadingColor;;
   margin: 0.1em 0.2em 0.2em 0.2em;
   padding: 0em;
@@ -961,7 +954,7 @@ table.listing .alert {
 }
 
 
-/* message box in content publish screen */
+/* _______ message box in content publish screen _______ */
 
 table.listing .message {
   padding : 0 ! important;
@@ -977,10 +970,6 @@ table.listing div.message {
   border-style: solid none solid none;
   border-collapse: collapse;
   text-transform : none;
-}
-
-.highlight {
-  background-color: #b8ccce;
 }
 
 

@@ -19,9 +19,9 @@
 />
 <div style="width:24em;"
    tal:define="notice options/message | nothing">
-  <h4 i18n:translate="request_roles">
+  <h3 i18n:translate="request_roles">
     Request roles at this location
-  </h4>
+  </h3>
   <!-- __________________________ feedback _________________________ -->
   <p tal:condition="notice">
     <span class="error"
