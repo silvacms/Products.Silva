@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 import unittest
 import Zope
 #import ZODB
@@ -222,9 +222,8 @@ class VersioningTestCase(unittest.TestCase):
         # test request for approval
         self._check_version_state()
         self.versioning.create_version('0', DateTime() + 10, None)
-        self._check_version_state()        
-        self.versioning.set_approval_request_message('foo')
-        self.versioning.request_version_approval('Request message')
+        self._check_version_state()
+        self.versioning.request_version_approval('foo')
         self._check_version_state(approval_requested=true)
         self.assertEquals('TestUser',self.versioning.get_approval_requester())
         self.assertEquals('foo',

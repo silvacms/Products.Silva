@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -198,7 +198,7 @@ class Versioning:
         info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
         info.request_date = DateTime()
         info.request_pending=1
-        self.set_approval_request_message(message)
+        self._set_approval_request_message(message)
         # send messages
         text = "\nApproval was requested by %s.\nMessage:\n%s" % (info.requester, message)
         self._send_message_to_editors(info.requester, 'Approval requested', text)
@@ -223,7 +223,7 @@ class Versioning:
         info = self._get_editable_rfa_info()
         info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
         info.request_pending=None
-        self.set_approval_request_message(message)
+        self._set_approval_request_message(message)
         # send messages
         text = "\nRequest for approval was withdrawn by %s.\nMessage:\n%s" % (info.requester, message)
         self._send_message_to_editors(info.requester,
@@ -250,7 +250,7 @@ class Versioning:
         original_requester = info.requester
         info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
         info.request_pending=None
-        self.set_approval_request_message(message)
+        self._set_approval_request_message(message)
         # send message back to requester
         text = "Request for approval was rejected by %s.\nMessage:\n%s" % (info.requester, message)
         self._send_message(info.requester, original_requester,
@@ -342,9 +342,7 @@ class Versioning:
             raise VersioningError,\
                   'No next version.'
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_approval_request_message')
-    def set_approval_request_message(self, message):
+    def _set_approval_request_message(self, message):
         """Allows to add a message concerning the
         current request for approval.
         setting the currently approved message

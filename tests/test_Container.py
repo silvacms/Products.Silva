@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -310,6 +310,8 @@ class AddableTestCase(ContainerBaseTestCase):
 
     def setUp(self):
         ContainerBaseTestCase.setUp(self)
+        # hack so we pretend we have add view for all addables
+        self.sroot.service_view_registry.has_view = lambda x, y: 1
         self.original_get_silva_addables_allowed = Folder.get_silva_addables_allowed
         self.original_filtered_meta_types = Folder.filtered_meta_types
         Folder.filtered_meta_types = filtered_meta_types_hack
