@@ -63,3 +63,13 @@ else:
         child.setAttribute('key', name)
         child.setAttribute('value', default_value)
         node.appendChild(child)
+
+type = 'listing'
+if request.has_key('element_type'):
+    type = request['element_type']
+node.setAttribute('type', type)
+
+show_headings = 'yes'
+if request.has_key('show_headings'):
+    show_headings = request['show_headings']
+node.setAttribute('show_headings', show_headings)

@@ -5,6 +5,14 @@
     <div class="margins">
       <table cellpadding="2" border="0" width="100%">
         <tr>
+          <td colspan="1">
+            <b>Data Source reference:</b>
+          </td>
+          <td colspan="2">  
+            &nbsp;
+          </td>
+        </tr>
+        <tr>
           <td colspan="1" width="10%">
             <input type="button" class="button" name="" value="Get data source reference"
               tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=SQL%%20Data%%20Source\', \'_reference_\', \'focusbox\', \'path\');;return false;;' % here.get_start_container().absolute_url();" />
@@ -19,7 +27,7 @@
           condition="form">
           <tr>
             <td colspan="1">
-              Parameters:
+              <b>Parameters:</b>
             </td>
             <td colspan="2">  
               &nbsp;
@@ -55,6 +63,53 @@
             </tal:block>
           </tal:block>
         </tal:block>
+        <tr>
+          <td colspan="1">
+            <b>Layout options:</b>
+          </td>
+          <td colspan="2">  
+            &nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Show table column headings:
+          </td>
+          <td colspan="2" align="left"
+            tal:define="show_headings python:node.getAttribute('show_headings')">
+            Yes:&nbsp;
+            <input type="radio" name="show_headings" value="yes"
+              tal:attributes="checked python:test(show_headings == 'yes', 'checked', nothing)" />&nbsp;
+            No:&nbsp;
+            <input type="radio" name="show_headings" value="no" 
+              tal:attributes="checked python:test(show_headings == 'no', 'checked', nothing)"/>&nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Type:
+          </td>
+          <td colspan="2" align="left">
+            <select name="element_type" tal:define="type python:here.getAttribute('type')">
+              <option value="plain" 
+                tal:attributes="selected python:test(type == 'plain', 'selected', nothing)">
+                Plain table (bold borderless heading, borderless rows)
+              </option>
+              <option value="listing" 
+                tal:attributes="selected python:test(type == 'listing', 'selected', nothing)">
+                Listing table (bold borderless heading, horizontal line, borderless rows)
+              </option>
+              <option value="grid" 
+                tal:attributes="selected python:test(type == 'grid', 'selected', nothing)" >
+                Grid table (bold bordered heading, bordered rows)
+              </option>
+              <option value="datagrid"
+                tal:attributes="selected python:test(type == 'datagrid', 'selected', nothing)">
+                Data grid table (bold borderless heading, bordered rows)
+              </option>
+            </select>
+          </td>
+        </tr>
       </table>
     </div>
   </metal:block>

@@ -18,13 +18,15 @@ output_convert = context.output_convert_html
 # FIXME: Using CSS this hairball is slightly less hairy
 # than is used to be
 caption = datasource.get_title_html()
-type = 'listing' #node.getAttribute('type')
+type = node.getAttribute('type') or 'listing'
+show_headings = node.getAttribute('show_headings') or 'yes'
 
 table_data = []
-table_data.append("""<tr class="rowheading">""")
-for name in data.names():
-    table_data.append("""<td align="%s">\n  %s\n</td>""" % ('left', name))
-table_data.append("""</tr>""")
+if show_headings == 'yes':
+    table_data.append("""<tr class="rowheading">""")
+    for name in data.names():
+        table_data.append("""<td align="%s">\n  %s\n</td>""" % ('left', name))
+    table_data.append("""</tr>""")
 
 for row in data:
     row_data = []
