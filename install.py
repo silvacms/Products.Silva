@@ -3,7 +3,7 @@
 
 from Globals import package_home
 import os
-
+import File
 import EditorSupportNested
 from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
@@ -114,6 +114,11 @@ def install(root):
     registerCoreWidgets(root)
     # add editor support service
     EditorSupportNested.manage_addEditorSupport(root)
+    # add service_files if it doesn't exist
+    if not hasattr(root, 'service_files'):
+        File.manage_addFilesService(
+            root, 'service_files', 'Silva Files Service', 
+            filesystem_path='var/repository')
     # forbid adding group & virtualgroup from the SMI
     root.add_silva_addable_forbidden('Silva Group')
     root.add_silva_addable_forbidden('Silva Virtual Group')

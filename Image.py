@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.14.2.3 2003/03/21 14:24:23 zagy Exp $
+# $Id: Image.py,v 1.14.2.4 2003/03/25 13:09:27 jw Exp $
 
 # Python
 import re
@@ -261,9 +261,12 @@ class Image(Asset):
     
     def _useFSStorage(self):
         """return true if we should store images on the filesystem"""
-        service_files = getattr(self.get_root(), 'service_files', None)
+        service_files = getattr(self.aq_inner, 'service_files', None)
         assert service_files is not None, "There is no service_files. " \
             "Refresh your silva root."
+        assert service_files.meta_type == 'Silva Files Service', \
+            "Cannot reach the files service, a `%s' is in the way." % (
+                service_files.meta_type, )
         if service_files.useFSStorage():
             return cookPath(service_files.filesystem_path())
         return None

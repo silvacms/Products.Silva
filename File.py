@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6.2.2 $
+# $Revision: 1.6.2.3 $
 
 # Python
 import os
@@ -205,9 +205,11 @@ def manage_addFile(self, id='', title='', file=''):
     id = string.translate(id, TRANSMAP)
 
     # Switch storage type:
-    service_files = getattr(self.get_root(), 'service_files', None)
+    service_files = getattr(self.aq_inner, 'service_files', None)
     assert service_files is not None, "There is no service_files. " \
         "Refresh your silva root."
+    assert service_files.meta_type == 'Silva Files Service', "Cannot reach "\
+        "the files service, a `%s' is in the way" % (service_files.meta_type, )
     if service_files.useFSStorage():        
         object = FileSystemFile(id, title, file, 
             service_files.filesystem_path())
