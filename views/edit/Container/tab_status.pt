@@ -9,14 +9,13 @@
   "
   i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block tal:define="
-  objects model/get_processed_status_tree;"
-  fill-slot="main">
+<metal:block fill-slot="main">
 
 <form action="."
   method="POST"
   name="silvaObjects"
   tal:define="
+    objects model/get_processed_status_tree;
     global approveables nothing;
     global rejectables nothing;
     global revokeables nothing;
