@@ -7,100 +7,41 @@ if __name__ == '__main__':
 
 import SilvaTestCase
 
-from Products.Silva import Folder, Ghost
+from Products.Silva import Folder, Ghost, Root
 from Products.SilvaDocument import Document
 from DateTime import DateTime
 from Products.ParsedXML.ParsedXML import ParsedXML
-import ZPublisher
-from AccessControl import getSecurityManager
 
-# Awful hack
-def _getCopyParsedXML(self, container):
-    return ParsedXML(self.id, self.index_html())
-
-def _getCopyDocument(self, container):
-    # really really ugly..why doesn't copy work out of the box oh why..
-    result = Document.Document(self.id, self.get_title())
-    result = result.__of__(container)
-    cb = self.manage_copyObjects(self.objectIds())
-    result.manage_pasteObjects(cb)
-    result._unapproved_version = self._unapproved_version
-    result._approved_version = self._approved_version
-    result._public_version = self._public_version
-    result._previous_versions = self._previous_versions 
-    return result
-
-def _getCopyFolder(self, container):
-    # very ugly as well. :)
-    result = Folder.Folder(self.id, self.get_title())
-    result = result.__of__(container)
-    cb = self.manage_copyObjects(self.objectIds())
-    result.manage_pasteObjects(cb)
-    return result
-
-def _getCopyGhost(self, container):
-    # ghost need their own monkeypatch, too
-    result = Ghost.Ghost(self.id)
-    result.set_title(self.get_title())
-    result = result.__of__(container)
-    cb = self.manage_copyObjects(self.objectIds())
-    result.manage_pasteObjects(cb)
-    result._unapproved_version = self._unapproved_version
-    result._approved_version = self._approved_version
-    result._public_version = self._public_version
-    result._previous_versions = self._previous_versions 
-    return result
-
-def _getCopyGhostVersion(self, container):
-    # ghost version want a monkeypatch, too
-    result = Ghost.GhostVersion(self.id)
-    result = result.__of__(container)
-    return result
-
-def _verifyObjectPaste(self, ob):
-    return
+# XXX ugh, awful monkey patch
+Document.Document.cb_isMoveable = lambda self: 1
+Folder.Folder.cb_isMoveable = lambda self: 1
+Ghost.Ghost.cb_isMoveable = lambda self: 1
+# manage_main hacks to copy succeeds
+Root.Root.manage_main = lambda *foo, **bar: None
+Folder.Folder.manage_main = lambda *foo, **bar: None
 
 class CopyTestCase(SilvaTestCase.SilvaTestCase):
     """Test cut/copy/test/delete.
     """
     def afterSetUp(self):
-        Document.Document._getCopy = _getCopyDocument
-        ParsedXML._getCopy = _getCopyParsedXML
-        Folder.Folder._getCopy = _getCopyFolder
-        Folder.Folder._verifyObjectPaste = _verifyObjectPaste
-        Document.Document._verifyObjectPaste = _verifyObjectPaste
-        Ghost.Ghost._getCopy = _getCopyGhost
-        Ghost.GhostVersion._getCopy = _getCopyGhostVersion
-        Ghost.Ghost._verifyObjectPaste = _verifyObjectPaste
-        
-        self.REQUEST = self.root.REQUEST
-        self.root.REQUEST['URL1'] = ''
-
-        # dummy manage_main so that copy succeeds
-        self.root.manage_main = lambda *foo, **bar: None
         self.doc1 = doc1 = self.add_document(self.root, 'doc1', 'Doc1')
         self.doc2 = doc2 = self.add_document(self.root, 'doc2', 'Doc2')
         self.doc3 = doc3 = self.add_document(self.root, 'doc3', 'Doc3')
         self.folder4 = folder4 = self.add_folder(self.root,
                           'folder4', 'Folder4')
-        self.folder4.manage_main = lambda *foo, **bar: None
         self.folder5 = folder5 = self.add_folder(self.root,
                           'folder5', 'Folder5')
-        self.folder5.manage_main = lambda *foo, **bar: None
         self.subdoc = subdoc = self.add_document(folder4,
                           'subdoc', 'Subdoc')
         self.subfolder = subfolder = self.add_folder(folder4,
                           'subfolder', 'Subfolder')
         self.subsubdoc = subsubdoc = self.add_document(subfolder,
                           'subsubdoc', 'Subsubdoc')
-        self.setRoles(['Manager'])
 
     def test_copy1(self):
-        self.root.action_copy(['doc1'], self.REQUEST)
-        get_transaction().commit(1)
+        self.root.action_copy(['doc1'], self.app.REQUEST)
         # now do the paste action
-        self.root.action_paste(self.REQUEST)
-        get_transaction().commit(1)
+        self.root.action_paste(self.app.REQUEST)
         # should have a copy now with same title
         self.assertEquals('Doc1', self.root.copy_of_doc1.get_title())
 
@@ -110,8 +51,8 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.doc1.approve_version()
         self.assert_(self.root.doc1.is_version_approved())
         # copy of approved version should not be approved
-        self.root.action_copy(['doc1'], self.REQUEST)
-        self.root.action_paste(self.REQUEST)
+        self.root.action_copy(['doc1'], self.app.REQUEST)
+        self.root.action_paste(self.app.REQUEST)
         self.assert_(not self.root.copy_of_doc1.is_version_approved())
         # original *should* be approved
         self.assert_(self.root.doc1.is_version_approved())
@@ -122,8 +63,8 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.doc1.approve_version()
         self.assert_(self.root.doc1.is_version_published())
         # copy of approved version should not be approved
-        self.root.action_copy(['doc1'], self.REQUEST)
-        self.root.action_paste(self.REQUEST)
+        self.root.action_copy(['doc1'], self.app.REQUEST)
+        self.root.action_paste(self.app.REQUEST)
         self.assert_(not self.root.copy_of_doc1.is_version_published())
         # original *should* be published
         self.assert_(self.root.doc1.is_version_published())
@@ -134,8 +75,8 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.subdoc.approve_version()
         self.assert_(self.subdoc.is_version_approved())
         # now copy the folder subdoc is in
-        self.root.action_copy(['folder4'], self.REQUEST)
-        self.root.action_paste(self.REQUEST)
+        self.root.action_copy(['folder4'], self.app.REQUEST)
+        self.root.action_paste(self.app.REQUEST)
         # the thing inside it should not be approved
         self.assert_(not self.root.copy_of_folder4.subdoc.is_version_approved())
         # original *should* be approved
@@ -147,8 +88,8 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.subdoc.approve_version()
         self.assert_(self.subdoc.is_version_published())
         # now copy the folder subdoc is in
-        self.root.action_copy(['folder4'], self.REQUEST)
-        self.root.action_paste(self.REQUEST)
+        self.root.action_copy(['folder4'], self.app.REQUEST)
+        self.root.action_paste(self.app.REQUEST)
         # the thing inside it should not be published
         self.assert_(not self.root.copy_of_folder4.subdoc.is_version_published())
         # original *should* be published
@@ -160,11 +101,9 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.subdoc.approve_version()
         self.assert_(self.subdoc.is_version_published())
         # now copy the folder subdoc is in
-        self.root.action_copy(['folder4'], self.REQUEST)
+        self.root.action_copy(['folder4'], self.app.REQUEST)
         # into folder5
-        get_transaction().commit(1)
-        self.root.folder5.action_paste(self.REQUEST)
-        get_transaction().commit(1)
+        self.root.folder5.action_paste(self.app.REQUEST)
         # the thing inside it should not be published
         self.assert_(not self.root.folder5.folder4.subdoc.is_version_published())
         # original *should* be published
@@ -175,51 +114,58 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         # test for issue 92: pasted ghosts have unknown author
         self.add_ghost(self.root.folder4, 'ghost6', 'Test Ghost')
         self.root.folder4.ghost6.sec_update_last_author_info()
-        self.assertEquals('TestUser', self.root.folder4.ghost6.sec_get_last_author_info().fullname())
+        self.assertEquals(
+            'test_user_1_',
+            self.root.folder4.ghost6.sec_get_last_author_info().fullname())
         # copy ghost to folder 4 and check author
         # XXX maybe we should rename the user inbetween ?
-        self.root.folder4.action_copy(['ghost6'], self.REQUEST)
-        self.root.folder5.action_paste(self.REQUEST)
-        self.assertEquals('TestUser', self.root.folder5.ghost6.sec_get_last_author_info().fullname())
+        self.root.folder4.action_copy(['ghost6'], self.app.REQUEST)
+        self.root.folder5.action_paste(self.app.REQUEST)
+        self.assertEquals(
+            'test_user_1_',
+            self.root.folder5.ghost6.sec_get_last_author_info().fullname())
         # move ghost to root and check author        
-        self.root.folder4.action_cut(['ghost6'], self.REQUEST)
-        self.root.action_paste(self.REQUEST)
-        self.assertEquals('TestUser', self.root.ghost6.sec_get_last_author_info().fullname())
+        self.root.folder4.action_cut(['ghost6'], self.app.REQUEST)
+        self.root.action_paste(self.app.REQUEST)
+        self.assertEquals(
+            'test_user_1_',
+            self.root.ghost6.sec_get_last_author_info().fullname())
         
 
     def test_cut1(self):
         # try to cut object to paste it to the same folder
-        self.root.action_cut(['doc1'], self.REQUEST)
-        self.root.action_paste(self.REQUEST)
+        self.root.action_cut(['doc1'], self.app.REQUEST)
+        self.root.action_paste(self.app.REQUEST)
         self.assert_(hasattr(self.root, 'doc1'))
 
     def test_cut2(self):
         # try to cut object and paste it into another folder
-        self.root.action_cut(['doc1'], self.REQUEST)
-        self.root.folder4.action_paste(self.REQUEST)
+        self.root.action_cut(['doc1'], self.app.REQUEST)
+        self.root.folder4.action_paste(self.app.REQUEST)
         self.assert_(not hasattr(self.root, 'doc1'))
         self.assert_(hasattr(self.root.folder4, 'doc1'))
 
     def test_cut3(self):
         # try to cut folder and paste it into another folder
-        self.root.action_cut(['folder4'], self.REQUEST)
-        self.root.folder5.action_paste(self.REQUEST)
+        self.root.action_cut(['folder4'], self.app.REQUEST)
+        self.root.folder5.action_paste(self.app.REQUEST)
         self.assert_(not hasattr(self.root, 'folder4'))
         self.assert_(hasattr(self.root.folder5, 'folder4'))
 
     def test_cut4(self):
         # try to cut and paste folder to this folder again
-        self.root.action_cut(['folder4'], self.REQUEST)
-        self.root.action_paste(self.REQUEST)
+        self.root.action_cut(['folder4'], self.app.REQUEST)
+        self.root.action_paste(self.app.REQUEST)
         self.assert_(hasattr(self.root, 'folder4'))
 
     def test_cut5(self):
         # try to cut an approved content
         # should lead to an empty clipboard
-        self.root.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
+        self.root.doc1.set_unapproved_version_publication_datetime(
+            DateTime() - 1)
         self.root.doc1.approve_version()
-        self.root.action_cut(['doc1'], self.REQUEST)
-        self.root.folder4.action_paste(self.REQUEST)
+        self.root.action_cut(['doc1'], self.app.REQUEST)
+        self.root.folder4.action_paste(self.app.REQUEST)
         self.assert_(hasattr(self.root.aq_explicit, 'doc1'),
                      msg='doc1 should be still in root folder')
         self.assert_(not hasattr(self.root.folder4.aq_explicit, 'doc1'),
@@ -231,11 +177,11 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
     def test_cut6(self):
         # try to cut a content, approve it and paste it later on
         # (should lead to an error at paste time, for now nothing happens)
-        self.root.action_cut(['doc1'], self.REQUEST)
+        self.root.action_cut(['doc1'], self.app.REQUEST)
         self.root.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.root.doc1.approve_version()
         self.assert_(self.root.doc1.is_published())
-        self.root.folder4.action_paste(self.REQUEST)
+        self.root.folder4.action_paste(self.app.REQUEST)
         self.assert_(hasattr(self.root.aq_explicit, 'doc1'),
                      msg='doc1 should be still in root folder')
         self.assert_(not hasattr(self.root.folder4.aq_explicit, 'doc1'),
@@ -259,6 +205,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         # make doc1 approved
         self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
         self.doc1.approve_version()
+        self.assert_(self.doc1.is_approved())
         # now try to delete it (shouldn't be possible)
         self.assert_(not self.root.is_delete_allowed('doc1'))
         self.root.action_delete(['doc1'])

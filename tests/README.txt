@@ -75,7 +75,7 @@ work.
 
 test_CatalogedVersioning .. errors 1 (to do with catalog, test in 2.6.2)
 test_Container           .. ok
-test_Copy                .. broken
+test_Copy                .. errors 2 (title change, username issue)
 test_Ghost               .. errors 1 (render_view issue)
 test_Publishable         .. ok
 test_Security            .. ok
@@ -92,7 +92,7 @@ test_mangle              .. ok
 
 runalltests result: 
 
-119 tests, failures=9, errors=11
+119 tests, failures=3, errors=4
 
   
 
