@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -285,15 +285,12 @@ class EditorSupport:
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_pre')
     def replace_pre(self, node, text):
-        """Replace text in a heading containing node.
+        """Replace text in a pre containing node.
         """
         # first preprocess the text, collapsing all whitespace
         # FIXME: does it make sense to expect cp437, which is
         # windows only?
         text = self.input_convert2(text)
-
-        # parse the data
-        #result = self._preParser.parse(text)
 
         # get actual DOM node
         node = node._node
@@ -301,14 +298,16 @@ class EditorSupport:
 
         # remove all old subnodes of node
         # FIXME: hack to make copy of all childnodes
-        # XXX This now removes all subnodes, while whis will only be 1 in practice
+        # XXX This now removes all subnodes, while this will only be 1 in practice
         children = [child for child in node.childNodes]
         children.reverse()
         for child in children:
             node.removeChild(child)
 
-        newNode = doc.createTextNode(text)
-        node.appendChild(newNode)
+        if text.split():
+            # If text contains more than just whitespace:
+            newNode = doc.createTextNode(text)
+            node.appendChild(newNode)
 
     # XXX should really be in a better place, like some kind of editor
     # support service
