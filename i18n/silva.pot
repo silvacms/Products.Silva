@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 18 17:04:31 2004\n"
+"POT-Creation-Date: Thu Nov 18 18:56:34 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -32,7 +32,7 @@ msgid "published"
 msgstr ""
 
 #: /ViewCode.py:96
-#: /views/edit/Container/tab_status.pt:233
+#: /views/edit/Container/tab_status.pt:238
 msgid "closed"
 msgstr ""
 
@@ -700,8 +700,8 @@ msgstr ""
 #: /views/edit/hyperlink_lookup.pt:243
 #: /views/edit/Container/tab_edit.pt:255
 #: /views/edit/Container/tab_edit.pt:264
-#: /views/edit/Container/tab_status.pt:170
-#: /views/edit/Container/tab_status.pt:179
+#: /views/edit/Container/tab_status.pt:175
+#: /views/edit/Container/tab_status.pt:184
 #: /views/edit/Container/GhostFolder/tab_edit.pt:352
 msgid "publish"
 msgstr ""
@@ -1116,7 +1116,7 @@ msgid "end"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:479
-#: /views/edit/Container/tab_status.pt:343
+#: /views/edit/Container/tab_status.pt:348
 #: /views/edit/VersionedContent/tab_status_macros.pt:503
 msgid "access key: alt-p"
 msgstr ""
@@ -1518,119 +1518,121 @@ msgstr ""
 msgid "Changed into publication"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:155
+#: /views/edit/Container/tab_status.pt:157
 msgid "index of"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:217
+#: /views/edit/Container/tab_status.pt:165
+msgid "<em>x</em> <i></i> <i></i>"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:222
 msgid "public version"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:247
+#: /views/edit/Container/tab_status.pt:252
 msgid "There are no publishable items here."
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:263
-#: /views/edit/VersionedContent/tab_status_macros.pt:149
-#: /views/edit/VersionedContent/tab_status_macros.pt:331
-msgid "day / month / year &nbsp;23:59"
+#: /views/edit/Container/tab_status.pt:270
+msgid "day / month / year"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:280
+#: /views/edit/Container/tab_status.pt:285
 msgid "publish time"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:296
+#: /views/edit/Container/tab_status.pt:301
 msgid "p<u>u</u>blish&nbsp;now?"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:296
+#: /views/edit/Container/tab_status.pt:301
 #: /views/edit/VersionedContent/tab_status_macros.pt:241
 #: /views/edit/VersionedContent/tab_status_macros.pt:258
 #: /views/edit/VersionedContent/tab_status_macros.pt:357
 msgid "access key: alt-u"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:324
+#: /views/edit/Container/tab_status.pt:329
 msgid "access key: alt-x"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:324
+#: /views/edit/Container/tab_status.pt:329
 #: /views/edit/VersionedContent/tab_status.pt:254
 msgid "expiration time"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:343
+#: /views/edit/Container/tab_status.pt:348
 msgid "clear&nbsp;ex<u>p</u>iration"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:361
+#: /views/edit/Container/tab_status.pt:366
 msgid "reject"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:361
+#: /views/edit/Container/tab_status.pt:366
 msgid "reject pending request for approval: alt-j"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:370
+#: /views/edit/Container/tab_status.pt:375
 msgid "withdraw approval of approved versions: alt-v"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:370
-#: /views/edit/Container/tab_status.pt:438
+#: /views/edit/Container/tab_status.pt:375
+#: /views/edit/Container/tab_status.pt:443
 msgid "revoke"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:379
+#: /views/edit/Container/tab_status.pt:384
 msgid "close published items: alt-c"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:379
+#: /views/edit/Container/tab_status.pt:384
 #: /views/edit/Member/SimpleMember/tab_edit.pt:112
 msgid "close"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:388
-#: /views/edit/Container/tab_status.pt:447
+#: /views/edit/Container/tab_status.pt:393
+#: /views/edit/Container/tab_status.pt:452
 msgid "create new versions of published docs: alt-n"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:400
-#: /views/edit/Container/tab_status.pt:459
+#: /views/edit/Container/tab_status.pt:405
+#: /views/edit/Container/tab_status.pt:464
 msgid "change publish and expiration times: alt-s"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:400
-#: /views/edit/Container/tab_status.pt:459
+#: /views/edit/Container/tab_status.pt:405
+#: /views/edit/Container/tab_status.pt:464
 msgid "set timing"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:411
+#: /views/edit/Container/tab_status.pt:416
 msgid "approve or publish new versions: alt-o"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:411
+#: /views/edit/Container/tab_status.pt:416
 #: /views/edit/VersionedContent/tab_status_macros.pt:374
 msgid "open to public"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:429
+#: /views/edit/Container/tab_status.pt:434
 msgid "withdraw"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:429
+#: /views/edit/Container/tab_status.pt:434
 msgid "withdraw pending request for approval: alt-w"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:438
+#: /views/edit/Container/tab_status.pt:443
 msgid "revoke approval of approved versions: alt-v"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:470
+#: /views/edit/Container/tab_status.pt:475
 msgid "request approval for new versions: alt-r"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:470
+#: /views/edit/Container/tab_status.pt:475
 #: /views/edit/VersionedContent/tab_status_macros.pt:174
 msgid "request approval"
 msgstr ""
@@ -2220,6 +2222,11 @@ msgstr ""
 msgid "access key: alt-m"
 msgstr ""
 
+#: /views/edit/VersionedContent/tab_status_macros.pt:149
+#: /views/edit/VersionedContent/tab_status_macros.pt:331
+msgid "day / month / year &nbsp;23:59"
+msgstr ""
+
 #: /views/edit/VersionedContent/tab_status_macros.pt:157
 #: /views/edit/VersionedContent/tab_status_macros.pt:223
 msgid "access key: alt-i (some platforms)"
@@ -2536,7 +2543,7 @@ msgstr ""
 #: /views/edit/hyperlink_lookup.pt:248
 #: /views/edit/Container/tab_edit.pt:234
 #: /views/edit/Container/tab_edit.pt:270
-#: /views/edit/Container/tab_status.pt:185
+#: /views/edit/Container/tab_status.pt:190
 #: /views/edit/Container/GhostFolder/tab_edit.pt:338
 #: /views/edit/Container/GhostFolder/tab_edit.pt:356
 msgid "n/a"
@@ -2751,8 +2758,8 @@ msgid "create a new version of this content: alt-n"
 msgstr ""
 
 #: /views/edit/macro_metadata.pt:399
-#: /views/edit/Container/tab_status.pt:388
-#: /views/edit/Container/tab_status.pt:447
+#: /views/edit/Container/tab_status.pt:393
+#: /views/edit/Container/tab_status.pt:452
 #: /views/edit/VersionedContent/macro_tab_edit.pt:96
 msgid "new version"
 msgstr ""

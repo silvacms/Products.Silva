@@ -151,14 +151,19 @@
                   class obj/status_style | default;
                   href string:${obj_url}/edit/tab_preview;
                   title string:preview ${obj/id};
-                  ">
-                  <em tal:condition="obj/is_default | nothing" i18n:translate="">
+                  "
+                i18n:translate="">
+                <tal:block condition="obj/is_default | nothing">
+                  <em i18n:translate="">
                     index of
                   </em>
-                  <tal:block replace="title"  />
-                  <tal:block condition="python:title == ''">
-                    <i tal:content="obj/id">id</i>
-                  </tal:block>
+                  <tal:block condition="title" replace="title" />
+                  <i tal:condition="not:title" tal:content="obj/id">id</i>
+                </tal:block>
+                <tal:block condition="not:obj/is_default | nothing">
+                  <tal:block condition="title" replace="title" />
+                  <i tal:condition="not:title" tal:content="obj/id">id</i>
+                </tal:block>
               </a>
             </div>
           </div>
@@ -261,8 +266,8 @@
       <th class="align-right"
         colspan="3">
         <span tal:condition="
-          python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)" i18n:translate="">
-          day / month / year &nbsp;23:59
+          python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)">
+          <tal:block i18n:translate="">day / month / year</tal:block> &nbsp;23:59
         </span>
       </th>
       <th>
