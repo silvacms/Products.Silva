@@ -123,7 +123,7 @@ contextButtonFontColor:string=#d9f3da
 destructiveButtonBackground:string=#755c5c
 destructiveButtonPadding:string=0em
 destructiveButtonBorder:string=1px solid #b48f8f
-destructiveButtonFontColor:string=#f3c2c2
+destructiveButtonFontColor:string=#fdeaea
 
 cancelButtonBackground:string=#666668
 cancelButtonPadding:string=0em

@@ -584,6 +584,7 @@ textarea {
   font: &dtml-inputFont;;
   color : &dtml-inputFontColor;;
   background : &dtml-inputBackground;;
+  text-transform: none;
 }
 
 textarea.readable {

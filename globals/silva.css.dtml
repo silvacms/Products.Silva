@@ -134,7 +134,7 @@ input.button[type="submit"]:focus, button[type="button"]:focus {
 
 /* hot glow: 74748b */
 input.warning[type="submit"]:hover { 
-  color : #ffd8d8; 
+  color : #fff5f5; 
   background : #a85353; 
   border-color : #cdb1a3;
 }
