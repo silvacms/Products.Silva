@@ -73,26 +73,72 @@
 
 <h3><img src="silva_icon_32.gif" width="32" height="32" alt="Silva" />&nbsp;&nbsp;Silva - an extensible XML Publication System</h3>
 
-<pre>
-From WordNet (r) 1.6 [wn]:
+<div class="message">
+<pre>  From WordNet (r) 1.6 [wn]:
 
-  silva
-       n : the forest trees growing in a country or region [syn: {sylva}]
+    silva
+         n : the forest trees growing in a country or region [syn: {sylva}]
 
 
-From Webster's Revised Unabridged Dictionary (1913) [web1913]:
+  From Webster's Revised Unabridged Dictionary (1913) [web1913]:
 
-  Silva \Sil"va\, n.; pl. E. {Silvas}, L. {Silvae}. [L., properly,
-     a wood, forest.] [Written also {sylva}.] (Bot.)
-     (a) The forest trees of a region or country, considered
-         collectively.
-     (b) A description or history of the forest trees of a
-         country.
-
+    Silva \Sil"va\, n.; pl. E. {Silvas}, L. {Silvae}. [L., properly,
+       a wood, forest.] [Written also {sylva}.] (Bot.)
+       (a) The forest trees of a region or country, considered
+           collectively.
+       (b) A description or history of the forest trees of a
+           country.
 </pre>
+</div>
 
-<p class="subhead">
-Silva v0.8.6
+<p class="halfline">&nbsp;</p>
+
+<h3>Credits</h3>
+
+<p>
+Silva is developed by <a href="http://www.infrae.com/">Infrae</a>. <br />
+Initial (and continued) development was for the <a href="http://www.eur.nl/">Erasmus University Rotterdam</a>.
+</p>
+
+<h4>Infrae Silva team</h4>
+
+<p>
+<a href="mailto:kitblake@infrae.com">Kit Blake</a><br />
+<a href="mailto:faassen@infrae.com">Martijn Faassen</a><br />
+<a href="mailto:jw@infrae.com">Jan-Wijbrand Kolman</a><br />
+<a href="mailto:guido@infrae.com">Guido Wesdorp</a><br />
+<a href="mailto:info@infrae.com">Torvald de Boskat</a><br />
+</p>
+
+<h4>External developers</h4>
+
+<p>
+<a href="mailto:hpk@devel.trillke.net">Holger Krekel</a><br />
+<a href="mailto:robbenhaar@espresto.com">Clemens Klein-Robbenhaar</a><br />
+<a href="mailto:alexander@limi.net">Alexander Limi</a>
+</p>
+  
+<h4>Thanks to:</h4>
+
+<p>
+Jim Washington for fixing &lt;script /&gt; and &lt;meta /&gt; in
+layout_macro.html.
+</p>
+
+<p>
+The people at <a href="http://www.id.ethz.ch/">ETH in Zürich</a> for their feedback and support and examples.
+</p>
+
+<p>
+Many thanks go to <a href="mailto:verster@daz.eur.nl">Hans Verster</a> at the Erasmus University Rotterdam for his vision and support.
+<br />
+<br />
+</p>
+
+<p>
+<span class="subhead">
+Silva v0.8.6</span><br />
+Copyright &copy; 2002 Infrae. All rights reserved.
 </p>
 
 </div>
