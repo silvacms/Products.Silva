@@ -13,9 +13,9 @@
   &nbsp;<select name="path">
     <tal:block tal:define="selected_path python:node.output_convert_html(node.getAttribute('path'))" 
                repeat="obj code_objects">
-      <option tal:define="path python:'/' + obj.absolute_url(1)"
+      <option tal:define="path python:'/'.join(obj.getPhysicalPath())"
               tal:attributes="value path; selected python:test(path == selected_path, 'selected', None)" 
-              tal:content="python:'%s (/%s)' % (obj.title_or_id(), obj.absolute_url(1))" />
+              tal:content="python:'%s (%s)' % (obj.get_title_or_id_html(), path)" />
     </tal:block>
   </select>
 </tal:block>

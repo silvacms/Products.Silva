@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.13 $
+$Revision: 1.47.2.14 $
 
 Silva changes
 
@@ -8,7 +8,11 @@ Silva changes
 
     Bugs Fixed
 
-        - Datasource parameters store empty srtings instead of None
+        - Changed from absolute_url(1) to getPhysicalPath() for 
+          code elements - this should make code elements work in a
+          virtual host setup.
+
+        - Datasource parameters store empty strings instead of None
           for default values.
 
         - Fixed bug where the title of a SQLDatasource Asset was not 
