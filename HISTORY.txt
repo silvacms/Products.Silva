@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.37 $
+$Revision: 1.47.2.38 $
 
 Silva changes
 
@@ -8,6 +8,9 @@ Silva changes
                                                                                                 
     Features Added
                                                                                                     
+        - Added support for ExternalEditor, Silva Files and Images can now
+          be edited using your favorite editor.
+
         - Bulk import of files (for File Assets) and/or images (for Image
           Assets) using a zipfile. Note though, that the 091 id
           checking is less tolerant compared to the 092 id checking.
