@@ -1,10 +1,25 @@
 from ISilvaObject import ISilvaObject
 from IContainer import IContainer
-from IPublication import IPublication
+from IVersionedContent import IVersionedContent
 from Membership import NoneMember
 
+def from09to091(self, root):
+    """Upgrade Silva from 0.9 to 0.9.1
+    """
+    id = root.id
+    # Put a copy of the current Silva Root in a backup folder.
+    backup_id = id + '_09'
+    self.manage_addFolder(backup_id)
+    cb = self.manage_copyObjects([id])
+    backup_folder = getattr(self, backup_id)
+    backup_folder.manage_pasteObjects(cb_copy_data=cb)
+    # upgrade member objects in the site if they're still using the old system
+    upgrade_memberobjects(root)
+    # upgrade xml in the site
+    upgrade_xml_09to091(root)
+    
 def from086to09(self, root):
-    """Upgrade Silva from 0.8.6(.1) to 0.9 as a simple matter of programming.
+    """Upgrade Silva from 0.8.6(.1) to 0.9.
     """
     id = root.id
     # Put a copy of the current Silva Root in a backup folder.
@@ -105,14 +120,73 @@ def from085to086(self, root):
     return other_ids
 
 def upgrade_memberobjects(obj):
+    service_members = obj.service_members
     for o in obj.aq_explicit.objectValues():
-        if hasattr(o, 'sec_get_last_author_info'):
-            try:
-                ai = o.sec_get_last_author_info()
-            except AttributeError, e:
-                nonemem = NoneMember() 
-                o._last_author_info = nonemem
-            
-        if IContainer.isImplementedBy(o) or IPublication.isImplementedBy(o):
+        info = getattr(o, '_last_author_info', None)
+        if info is not None and type(info) == type({}):
+            o._last_author_info = service_members.get_cached_member(
+                info['uid'])
+        if IContainer.isImplementedBy(o):
             upgrade_memberobjects(o)
 
+def upgrade_xml_09to091(obj):
+    for o in obj.objectValues():
+        if IVersionedContent.isImplementedBy(o):
+            for parsed_xml in find_parsed_xmls(o):
+                upgrade_list_titles_in_parsed_xml(parsed_xml.documentElement)
+        if IContainer.isImplementedBy(o):
+            upgrade_xml_09to091(o)
+
+def upgrade_list_titles_in_parsed_xml(top):
+    for child in top.childNodes:
+        if child.nodeName in ('list', 'nlist', 'dlist'):
+            for list_child in child.childNodes:
+                if list_child.nodeType == list_child.TEXT_NODE:
+                    continue
+                if list_child.nodeName == 'title':
+                    data = ''
+                    for data_child in list_child.childNodes:
+                        data += data_child.data
+                    list_child.parentNode.removeChild(list_child)
+                    if data.strip() == '':
+                        break
+                    heading = list_child.ownerDocument.createElement(
+                        u'heading')
+                    heading_text = list_child.ownerDocument.createTextNode(
+                        data)
+                    heading.appendChild(heading_text)
+                    heading.setAttribute(u'type', u'subsub')
+                    child.parentNode.insertBefore(heading, child)
+                    break
+                elif list_child.nodeName != 'title':
+                    break
+        if child.nodeName == 'nlist':
+            for list_child in child.childNodes:
+                if list_child.nodeType == list_child.TEXT_NODE:
+                    continue
+                upgrade_list_titles_in_parsed_xml(list_child)
+        if child.nodeName == 'table':
+            for table_child in child.childNodes:
+                if table_child.nodeType == table_child.TEXT_NODE:
+                    continue
+                if table_child.nodeName != 'row':
+                    continue
+                for field in table_child.childNodes:
+                    if field.nodeType == field.TEXT_NODE:
+                        continue
+                    upgrade_list_titles_in_parsed_xml(field)
+        
+def find_parsed_xmls(obj):
+    meta_type = obj.meta_type
+    if meta_type == 'Silva Document':
+        return obj.objectValues()
+    elif meta_type == 'Silva DemoObject':
+        return [version.content for version in obj.objectValues()]
+    else:
+        return []
+    # XXX should upgrade extension products if they use Silva XML stuff?
+    
+    
+        
+
+        

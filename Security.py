@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.52 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -296,8 +296,10 @@ class Security(AccessManager):
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_find_users')
     def sec_find_users(self, search_string):
-        """Find users in user database.
+        """Find users in user database. This method delegates to
+        service_members for security reasons.
         """
+        # XXX this loop seems useless, why is it here?
         members = []
         for member in self.service_members.find_members(search_string):
             members.append(member)
@@ -306,7 +308,8 @@ class Security(AccessManager):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'sec_get_member')  
     def sec_get_member(self, userid):
-        """Get information for userid.
+        """Get information for userid. This method delegates to
+        service_members for security reasons.
         """
         return self.service_members.get_cached_member(userid)
 
@@ -322,21 +325,19 @@ class Security(AccessManager):
         # get cached author info (may be None)
         info = self._last_author_info
         if info is None:
-            info = noneMember.__of__(self)
-        elif not hasattr(info, 'fullname') and info.has_key('uid'):
-            # old userinfo object, convert and set the new object as self._last_author_info
-            self._last_author_info = info = self.service_members.get_cached_member(info['uid'])
-            if info is None:
-                info = noneMember.__of__(self)
-        return info
+            return noneMember.__of__(self)
+        else:
+            return info
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_update_last_author_info')
     def sec_update_last_author_info(self):
         """Update the author info with the current author.
         """
-        self._last_author_userid = self.REQUEST.AUTHENTICATED_USER.getUserName()
-        self._last_author_info = self.sec_get_member(self._last_author_userid)
+        userid = self._last_author_userid = (self.REQUEST.
+                                             AUTHENTICATED_USER.getUserName())
+        # This will already give a cached member
+        self._last_author_info = self.sec_get_member(userid)
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_userids')
