@@ -200,11 +200,17 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             return
         op, ref = _cb_decode(REQUEST['__cp'])
 
+        # copy-paste operation
+        # items on clipboard should be unapproved & closed, but
+        # only the *copies*
+        ids = []
+        for item in self.cb_dataItems():
+            #item.set_title(item.get_title())
+            ids.append(item.id)
+            
         if op == 0:
-            # copy-paste operation
-            # items on clipboard should be unapproved & closed, but
-            # only the *copies*
-            copy_ids = [item.id for item in self.cb_dataItems()]
+            # also update title of index documents
+            copy_ids = ids
             # modify ids to copy_to if necessary
             paste_ids = []
             ids = self.objectIds()
@@ -217,7 +223,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                     paste_ids.append(copy_id)
         else:
             # cut-paste operation
-            cut_ids = [item.id for item in self.cb_dataItems()]
+            cut_ids = ids
             # check where we're cutting from
             cut_container = item.aq_parent.get_container()
             # if not cutting to the same folder as we came from
