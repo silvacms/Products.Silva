@@ -1,25 +1,24 @@
-## Script (Python) "tab_status_request_approval"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
 ##parameters=refs=None
-##title=
-##
-model = context.REQUEST.model
+
+request = context.REQUEST
+model = request.model
 view = context
+
 from DateTime import DateTime
 from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(message_type='error', message='Nothing was selected, so no approval was requested')
+    return view.tab_status(
+        message_type='error', 
+        message='Nothing was selected, so no approval was requested')
 
 try:
-    result = view.tab_status_form.validate_all(context.REQUEST)
+    result = view.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
-    return view.tab_status(message_type="error", message=view.render_form_errors(e))
+    return view.tab_status(
+        message_type="error", 
+        message=view.render_form_errors(e))
 
 #publish_now_flag = result['publish_now_flag']
 #publish_datetime = result['publish_datetime']
@@ -67,11 +66,11 @@ Request for approval via a bulk request in the publish screen of /%s
     obj.request_version_approval(message)    
     approved_ids.append(get_name(obj))
 
-
-context.REQUEST.set('refs', [])
-
 if approved_ids:
+    request.set('refs', [])
+    request.set('redisplay_timing_form', 0)
     msg.append('Request approval for: %s' % view.quotify_list(approved_ids))
+
 if not_approved:
     msg.append('<span class="error">No request for approval on: %s</span>' % view.quotify_list_ext(not_approved))
 
