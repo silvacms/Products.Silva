@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.104 2004/09/09 18:27:47 eric Exp $
+# $Id: SilvaObject.py,v 1.104.4.1 2004/12/16 17:55:20 guido Exp $
 
 # python
 from types import StringType
@@ -293,7 +293,7 @@ class SilvaObject(Security, ViewCode):
         """
         content = self.get_previewable()
         if content is not None:
-            result = getRenderableAdapter(content).preview()
+            result = getRenderableAdapter(content).view()
             if result is not None:
                 return result
         return self.service_view_registry.render_preview(view_type, self)
