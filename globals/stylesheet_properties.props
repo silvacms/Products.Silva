@@ -122,12 +122,12 @@ boxEvenBackground:string=#F8F8F8
 boxOddBackground:string=White
 boxHighlight:string=2px solid #FFCF7F
 
-listingBorder:string=1px solid red
+listingBorder:string=1px solid #567275
 listingHeaderBackground:string=transparent
 listingHeaderFontColor:string=#555557
 listingLinkHover:string=underline
-listingEvenBackground:string=#d4e6e6
-listingOddBackground:string=#c9dbdb
+listingEvenBackground:string=#c9dbdb
+listingOddBackground:string=#d4e6e6
 
 topBackground:string=#BEBEBE
 topMargin:string=0

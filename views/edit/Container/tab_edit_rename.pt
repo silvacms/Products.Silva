@@ -16,7 +16,8 @@
 <tal:condition condition="python:view.REQUEST.has_key('ids')">
 <tal:define define="global objects view/REQUEST/ids" />
 
-<form class="focus-box" style="width:98%; max-width:98%;" action="tab_edit_rename_submit" method="POST">
+<div class="focus-rectangle">
+<form action="tab_edit_rename_submit" method="POST">
 <table class="listing">
 <thead>
   <tr>
@@ -27,10 +28,12 @@
     </h2>
     </td>
   </tr>
+</thead>
 
+<tbody>
   <tr>
     <th class="align-right">
-      item
+      aspect
     </th>
     <th>
       old
@@ -42,9 +45,7 @@
     Notes
     </th>
   </tr>
-</thead>
 
-<tbody>
   <tal:repeat repeat="objectid objects">
   <tal:define define="object python:getattr(model, objectid)">
   <tal:cycle define="oddrow repeat/objectid/odd">
@@ -115,6 +116,7 @@
 </tfoot>
 </table>
 </form>
+</div>
 
 </tal:condition>
 

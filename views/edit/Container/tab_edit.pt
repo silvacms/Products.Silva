@@ -136,7 +136,7 @@
                     is_default python: item.id == 'index';
                     item_url item/absolute_url;
                     oddrow repeat/item/odd">
-                    <tr tal:attributes="class python:oddrow and 'even' or 'odd'">
+                    <tr tal:attributes="class python:oddrow and 'odd' or 'even'">
                       <tal:block replace="nothing">
                         _______ checkbox + position cell _______
                       </tal:block>

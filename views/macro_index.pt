@@ -34,22 +34,8 @@
   rel="shortcut icon"
   tal:attributes="href string:${root_url}/globals/favicon.ico"
 />
-<!-- Temp Stylesheets -->
-<link href="globals/base.css" tal:replace="nothing"
-  rel="stylesheet"
-  tal:attributes="href string:${root_url}/globals/base.css"
-/>
-<link href="globals/silva.css"
-  rel="stylesheet"
-  tal:replace="nothing"
-  tal:attributes="href string:${root_url}/globals/silva.css"
-/>
-<link href="frontend.css"
-  rel="stylesheet"
-  tal:condition="python:template.id == 'tab_preview'"
-  tal:attributes="href string:${root_url}/frontend.css"
-/>
 <!-- Plone Stylesheets -->
+<span tal:replace="nothing"> _______ XXX Fixme: these need to be absoluted _______ </span>
 <style media="all"
   type="text/css"
   xml:space="preserve"
@@ -63,8 +49,13 @@
 />
 <link href="globals/silvaContentStyle.css"
   rel="stylesheet"
-  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css;"
   tal:condition="python: not model.implements_container()"
+  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css | nothing"
+/>
+<link href="frontend.css"
+  rel="stylesheet"
+  tal:condition="python:template.id == 'tab_preview'"
+  tal:attributes="href here/frontend.css/absolute_url | nothing"
 />
 <!-- Plone Javascript -->
 <script type="text/javascript"
@@ -98,16 +89,16 @@ _______ editor hooks _______
   type="text/javascript"
   xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_bxe'"
-  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url"
+  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url | nothing"
 >
-
 </script>
 <script language="JavaScript"
   type="text/javascript"
   xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
-  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url"
+  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url | nothing"
 />
+<span tal:replace="nothing"> _______ XXX Fixme: this needs to be absoluted _______ </span>
 <script language="JavaScript"
   type="text/javascript"
   xml:space="preserve"

@@ -199,9 +199,10 @@
                     ______________ publication time controls ______________
                   </tal:block>
                   <td class="align-right"
+                  style="vertical-align:bottom;"
                     colspan="2">
                     <span class="widebody">
-                      Date format: day / month / year hours : minutes
+                      date format: day/month/year&nbsp;23:59
                     </span >
                   </td>
                   <td class="align-right"
@@ -215,17 +216,6 @@
                   </td>
                   <td class="align-right"
                     style="white-space: nowrap;">
-                    <tal:block condition="may_approve_content">
-                      <label 
-                        for="publish_now_flag" 
-                        title="access key: alt-u" 
-                        accesskey="u">
-                        <span class="widebody">
-                          p<u>u</u>blish&nbsp;now?
-                        </span>
-                      </label>
-                      <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
-                    </tal:block>
                   </td>
                 </tr>
                 <tr class="controls controls-1">
@@ -233,9 +223,10 @@
                     ______________ expiration time controls ______________
                   </tal:block>
                   <td class="align-right"
+                    style="vertical-align:bottom;"
                     colspan="2">
                     <span class="widebody">
-                      If content should expire, set expiration time
+                      expiration time is optional
                     </span>
                   </td>
                   <td class="align-right"
@@ -248,7 +239,18 @@
                     <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
                   </td>
                   <td class="align-right"
-                    style="white-space: nowrap;">
+                    style="white-space:nowrap; vertical-align:bottom;">
+                    <tal:block condition="may_approve_content">
+                      <label 
+                        for="publish_now_flag" 
+                        title="access key: alt-u" 
+                        accesskey="u">
+                        <span class="widebody">
+                          p<u>u</u>blish&nbsp;now?
+                        </span>
+                      </label>
+                      <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+                    </tal:block>
                   </td>
                 </tr>
                 <tal:block replace="nothing">

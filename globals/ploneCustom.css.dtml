@@ -230,34 +230,33 @@ div.personalBar img {
 /* ____________________________________________________ table columns _____ */
 
 table.columns {
-  padding-top : 7px;
 }
 
 /* 3 column table (default) */
 table.columns td.left {
     width: 20%;
-    padding: 0 8px 0 8px ! important;
+    padding: 8px 1em 0 8px;
 }
 table.columns td.main {
     width: 60%;
-    padding: 0 8px 0 0;
+    padding: 8px 1em 0 0;
 }
 table.columns td.right {
     width: 20%;
-    padding: 0 8px 0 0 ! important;
+    padding: 8px 8px 0 0;
 }
 
 /* 2 column table */
 table.columns2 td.left {
     width: 20%;
-    padding: 0 0 0 8px ! important;
+    padding: 8px 0 0 8px;
 }
 table.columns2 td.main {
     width: 80%;
-    padding: 0 8px 0 8px;
+    padding: 8px 8px 0 1em;
 }
 
-/* 1 column table */
+/* 1 column table, not in use */
 table.columns1 {
     width: 100%;
     padding: 0 8px 0 8px;
@@ -268,6 +267,14 @@ table.columns1 {
   /* for IE5 */
   width : 90%;
   max-width : 55em; 
+  margin : 0em 8px 0em 8px;
+  padding-top: 8px;
+}
+
+.focus-rectangle {
+  /* for IE5 */
+  width : 100%;
+  max-width : 98%;
   margin : 0em 8px 0em 8px;
   padding-top: 8px;
 }
@@ -302,8 +309,8 @@ table.listing tr.fixed, td.fixed {
 }
 
 tr.divider, th.divider, td.divider {
-  font-size : 45%;
-  background : &dtml-shade36;;
+  font-size : 33%;
+  background-color: #648589;
 }
 
 table.listing th {
@@ -327,7 +334,7 @@ table.listing th.listing-right {
   padding-right: 0.4em;
 }
 
-/* not in use? */
+/* not in use */
 table.listing th.empty {
     border: none;
     border-bottom: &dtml-listingBorder;;
@@ -396,6 +403,7 @@ table.listing tr.top-controls h3 {
 
 table.listing tr.top-controls td {
   vertical-align: top;
+  border-top: none;
   padding-left: 0.4em;
   padding-right: 0.4em;
 }
