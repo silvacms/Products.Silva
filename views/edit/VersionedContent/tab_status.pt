@@ -336,7 +336,7 @@ _______ manual close section here _______
                 <input class="button"
                   type="submit"
                   name="tab_status_revert_to_old:method"
-                  value="copy as editable"
+                  value="copy for editing"
                   title="create a new editable version of the selected old one: alt-f"
                   accesskey="f"
                   i18n:attributes="value title"
