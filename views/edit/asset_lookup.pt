@@ -11,7 +11,7 @@
         tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
     Contents of <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
   </h2>
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<table cellspacing="0" cellpadding="0" border="0" width="96%">
 <span tal:replace="nothing"> ______________ framing table header ______________ </span>
 <tr class="topcontrols" valign="bottom"> 
   <!-- top row of complete table with sidebar -->
