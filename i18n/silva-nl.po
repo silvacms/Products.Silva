@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Mon Nov 29 19:05:57 2004\n"
+"POT-Creation-Date: Mon Nov 29 19:24:37 2004\n"
 "PO-Revision-Date: 2004-11-29 19:06+0100\n"
 "Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -3486,22 +3486,6 @@ msgstr "De taak is ${status}. Het id van de taak is ${job_id}."
 msgid "back"
 msgstr "terug"
 
-#: /views/edit/VersionedContent/tab_status_withdraw.py:26
-msgid ""
-"Approval was rejected via the ${tab_name} screen\n"
-"            (automatically generated message)."
-msgstr ""
-"Goedkeuring is geweigerd d.m.v. het scherm '${tab_name}'\n"
-"            (automatisch gegenereerde melding)."
-
-#: /views/edit/VersionedContent/tab_status_withdraw.py:29
-msgid ""
-"Approval was withdrawn via the ${tab_name} screen.\n"
-"            (automatically generated message)"
-msgstr ""
-"Goedkeuring is ingetrokken d.m.v. het scherm '${tab_name}'.\n"
-"            (automatisch gegenereerde melding)."
-
 #: /views/edit/VersionedContent/tab_status_withdraw.py:42
 msgid ""
 "This content is already public. You can close the current public version."
@@ -4648,6 +4632,20 @@ msgstr "Volgende &gt;&gt;"
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+#~ msgid ""
+#~ "Approval was rejected via the ${tab_name} screen\n"
+#~ "            (automatically generated message)."
+#~ msgstr ""
+#~ "Goedkeuring is geweigerd d.m.v. het scherm '${tab_name}'\n"
+#~ "            (automatisch gegenereerde melding)."
+
+#~ msgid ""
+#~ "Approval was withdrawn via the ${tab_name} screen.\n"
+#~ "            (automatically generated message)"
+#~ msgstr ""
+#~ "Goedkeuring is ingetrokken d.m.v. het scherm '${tab_name}'.\n"
+#~ "            (automatisch gegenereerde melding)."
 
 # Default: "editor"
 #~ msgid "editor-title"

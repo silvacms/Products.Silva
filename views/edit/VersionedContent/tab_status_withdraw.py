@@ -23,12 +23,12 @@ if message:
 else:
     tab_name = request['tab_name']
     if is_rejection:
-        message = _("""Approval was rejected via the ${tab_name} screen
-            (automatically generated message).""") 
+        message = ("Approval was rejected via the %s screen "
+                    "(automatically generated message).") 
     else:
-        message = _("""Approval was withdrawn via the ${tab_name} screen.
-            (automatically generated message)""") 
-    message.set_mapping({'tab_name': tab_name})
+        message = ("Approval was withdrawn via the %s screen. "
+                    "(automatically generated message)""")
+    message = message % tab_name
     # next fish
     if tab_name == 'edit':
         view = context.tab_edit

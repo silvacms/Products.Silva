@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 29 19:05:57 2004\n"
+"POT-Creation-Date: Mon Nov 29 19:24:37 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -3244,18 +3244,6 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_view_version.pt:52
 msgid "back"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_withdraw.py:26
-msgid ""
-"Approval was rejected via the ${tab_name} screen\n"
-"            (automatically generated message)."
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_withdraw.py:29
-msgid ""
-"Approval was withdrawn via the ${tab_name} screen.\n"
-"            (automatically generated message)"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:42
