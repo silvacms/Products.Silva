@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.17 $
+CVS:        $Revision: 1.18 $
 
 Introduction
 ------------
@@ -173,7 +173,7 @@ for more details).
 
 http://www.zope.org/Members/shh/ExtFile
 
-SilvaExternalSources 0.9.1 (E)
+SilvaExternalSources 0.10 (E)
 ------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
