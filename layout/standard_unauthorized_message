@@ -1,7 +1,7 @@
 <html
     tal:define="mangle python:modules['Products'].Silva.mangle;">
   <head>
-    <link rel="stylesheet" href="globals/base.css"  tal:attributes="href here/globals/base.css/absolute_url | nothing " />
+    <link rel="stylesheet" tal:attributes="href here/globals/silva.css/absolute_url | nothing " />
     <title>Who are you?</title>
   </head>
 

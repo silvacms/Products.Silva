@@ -8,7 +8,7 @@
 <head>
 <title metal:define-slot="title">Reference</title>
 <link rel="shortcut icon" href="favicon.ico" />
-<link rel="stylesheet" href="base.css" />
+<link rel="stylesheet" href="ploneCustom.css" />
 <link rel="stylesheet" href="silva.css" />
 </head>
 
