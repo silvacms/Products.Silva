@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 
 # Python
 import os
@@ -18,16 +18,12 @@ from IAsset import IAsset
 from Asset import Asset
 import SilvaPermissions
 # Storages
-import config
 from OFS import Image                            # For ZODB storage
 try:                                             #
     from Products.ExtFile.ExtFile import ExtFile # For Filesystem storage;
     FILESYSTEM_STORAGE_AVAILABLE = 1             # try to see if it is 
 except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
-
-INDIRECT = 0
-DIRECT = 1
 
 icon="www/silvageneric.gif"
 
@@ -45,7 +41,7 @@ class File(Asset):
     def __init__(self, id, title):
         File.inheritedAttribute('__init__')(self, id, title)
         # Anticipating hook:
-        self._direct_download = DIRECT
+        self._direct_download = 1
 
     # ACCESSORS
 
@@ -163,13 +159,8 @@ class FileSystemFile(File):
     from the ExtFile Product - if available.
     """    
 
-    # Path to file repository according to config.py
-    _config_repository = config.FILESYSTEM_PATH
-
-    def __init__(self, id, title, file, repository=None):
+    def __init__(self, id, title, file, repository):
         FileSystemFile.inheritedAttribute('__init__')(self, id, title)        
-        if not repository:
-            repository = self._config_repository
         self._file = ExtFile(id, title)
         self._file._repository = cookPath(repository)
         self._set_file_data_helper(file)
@@ -205,7 +196,6 @@ TRANSMAP = string.maketrans(bad_chars, good_chars)
 def manage_addFile(self, id='', title='', file=''):
     """Add a File
     """
-    files_service = getattr(self.aq_parent, 'service_files', None)
     id, _title = Image.cookId(id, title, file)
     #    ^
     #    |  
@@ -215,26 +205,14 @@ def manage_addFile(self, id='', title='', file=''):
     id = string.translate(id, TRANSMAP)
 
     # Switch storage type:
-    # FIXME: I guess this check could be more compact. However, it works
-    # for now. I'll leave it for the moment.
-    if FILESYSTEM_STORAGE_AVAILABLE and config.FILESYSTEM_STORAGE_ENABLED:
-        # Filesystem is available and enabled in config.py
-        if files_service:
-            # Files Service availale, use its settings:
-            if files_service.filesystem_storage_enabled():
-                object = FileSystemFile(id, title, file, files_service.filesystem_path())
-            else:
-                object = ZODBFile(id, title, file)
-        else:
-            # No Files Service, use configured settings:
-            if config.FILESYSTEM_STORAGE_ENABLED:
-                object = FileSystemFile(id, title, file, config.FILESYSTEM_PATH)
-            else:
-                object = ZODBFile(id, title, file)
+    service_files = getattr(self.get_root(), 'service_files', None)
+    assert service_files is not None, "There is no service_files. " \
+        "Refresh your silva root."
+    if service_files.useFSStorage():        
+        object = FileSystemFile(id, title, file, 
+            service_files.filesystem_path())
     else:
-        # Filesystem is not enabled nor available at all:
         object = ZODBFile(id, title, file)
-
     self._setObject(id, object)
     object = getattr(self, id)
     return object
@@ -249,31 +227,37 @@ class FilesService(SimpleItem.SimpleItem):
         {'label':'Edit', 'action':'manage_filesServiceEditForm'},
         ) + SimpleItem.SimpleItem.manage_options
 
-    security.declareProtected('View management screens', 'manage_filesServiceEditForm')
+    security.declareProtected('View management screens', 
+        'manage_filesServiceEditForm')
     manage_filesServiceEditForm = PageTemplateFile(
-            'www/filesServiceEdit', globals(),  __name__='manage_filesServiceEditForm')
+        'www/filesServiceEdit', globals(),  
+        __name__='manage_filesServiceEditForm')
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_filesServiceEditForm # used by add_and_edit()
 
-    def __init__(self, id, title):
+    def __init__(self, id, title, filesystem_storage_enabled=0,
+            filesystem_path='var/repository'):
         self.id = id
         self.title = title
-        # Initial settings according to config.py
-        self._filesystem_storage_enabled = config.FILESYSTEM_STORAGE_ENABLED
-        self._filesystem_path = config.FILESYSTEM_PATH 
+        self._filesystem_storage_enabled = filesystem_storage_enabled
+        self._filesystem_path = filesystem_path
 
     # ACCESSORS
 
     def is_filesystem_storage_available(self):
         """is_filesystem_storage_available
         """
-        return FILESYSTEM_STORAGE_AVAILABLE and config.FILESYSTEM_STORAGE_ENABLED
+        return FILESYSTEM_STORAGE_AVAILABLE 
     
     def filesystem_storage_enabled(self):
         """filesystem_storage_enabled
         """
         return self._filesystem_storage_enabled
+
+    def useFSStorage(self):
+        return (self.is_filesystem_storage_available() and 
+            self.filesystem_storage_enabled())
 
     def filesystem_path(self):
         """filesystem_path
@@ -281,19 +265,18 @@ class FilesService(SimpleItem.SimpleItem):
         return self._filesystem_path
 
     # MANIPULATORS
-    security.declareProtected('View management screens', 'manage_filesServiceEdit')
-    def manage_filesServiceEdit(self, title='', filesystem_storage_enabled=0, filesystem_path=''):
+    security.declareProtected('View management screens', 
+        'manage_filesServiceEdit')
+    def manage_filesServiceEdit(self, title='', filesystem_storage_enabled=0, 
+            filesystem_path='', REQUEST=None):
         """Sets storage type/path for this site.
         """
         self.title = title
-        # Is filesystem storage enabled according to         
-        # User's input AND config.py AND availabilty?
-        self._filesystem_storage_enabled = filesystem_storage_enabled and\
-                                           config.FILESYSTEM_STORAGE_ENABLED and\
-                                           FILESYSTEM_STORAGE_AVAILABLE
+        self._filesystem_storage_enabled = filesystem_storage_enabled
         self._filesystem_path = filesystem_path
-        self._p_changed = 1
-        return self.manage_filesServiceEditForm(manage_tabs_message='Settings Changed')
+        if REQUEST is not None:
+            return self.manage_filesServiceEditForm(
+                manage_tabs_message='Settings Changed')
 
 InitializeClass(FilesService)
 
@@ -301,10 +284,11 @@ InitializeClass(FilesService)
 manage_addFilesServiceForm = PageTemplateFile(
     "www/filesServiceAdd", globals(), __name__='manage_addFilesServiceForm')
 
-def manage_addFilesService(
-    self, id, title='', filesystem_storage_enabled=0, filesystem_path='', REQUEST=None):    
+def manage_addFilesService(self, id, title='', filesystem_storage_enabled=0,
+        filesystem_path='', REQUEST=None):    
     """Add files service."""
-    object = FilesService(id, title)    
+    object = FilesService(id, title, filesystem_storage_enabled,
+        filesystem_path)    
     self._setObject(id, object)
     object = getattr(self, id)
     add_and_edit(self, id, REQUEST)

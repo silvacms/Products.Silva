@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1 $
+Version of this file: $Revision: 1.2 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
@@ -15,8 +15,8 @@ Version of this file: $Revision: 1.1 $
   </p>
   <div style="background-color: #FFEEDD; width:60%;"
     tal:condition="not:here/is_filesystem_storage_available">
-    <span class="form-label">Filesystem storage is not available or not enabled.</span>
-    <br />Thus, following settings do not have any effect.
+    <span class="form-label">Filesystem storage is not available.</span>
+    <br />Thus, following settings do not have any effect. 
   </div>
   <br />
   <form action="manage_filesServiceEdit" method="post">

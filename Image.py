@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.18 2003/02/14 14:49:16 zagy Exp $
+# $Id: Image.py,v 1.19 2003/02/17 14:57:10 zagy Exp $
 
 # Python
 import re
@@ -16,7 +16,6 @@ from DateTime import DateTime
 from IAsset import IAsset
 # Silva
 import SilvaPermissions
-import config
 from Asset import Asset
 from File import cookPath
 # misc
@@ -30,13 +29,8 @@ except ImportError:
 
 try:
     from Products.ExtFile.ExtImage import ExtImage
-    couldUseFSStorage = 1
 except ImportError:  
-    couldUseFSStorage = 0
-if config.FILESYSTEM_STORAGE_ENABLED and couldUseFSStorage:
-    useFSStorage = 1
-else:
-    useFSStorage = 0
+    pass
     
 class Image(Asset):
     """Web graphics (gif, jpg, png) can be uploaded and inserted in Silva
@@ -254,14 +248,10 @@ class Image(Asset):
     def _useFSStorage(self):
         """return true if we should store images on the filesystem"""
         service_files = getattr(self.get_root(), 'service_files', None)
-        if not couldUseFSStorage:
-            return None
-        if service_files is not None:
-            if service_files.filesystem_storage_enabled():
-                return cookPath(service_files.filesystem_path())
-            return None
-        if useFSStorage:
-            return cookPath(config.FILESYSTEM_PATH)
+        assert service_files is not None, "There is no service_files. " \
+            "Refresh your silva root."
+        if service_files.useFSStorage():
+            return cookPath(service_files.filesystem_path())
         return None
 
 
