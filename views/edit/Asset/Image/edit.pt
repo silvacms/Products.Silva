@@ -10,72 +10,70 @@
   i18n:domain="silva">
 
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
+
 <metal:fill-slot fill-slot="info">
   <div class="info">
-   
     <h3 class="info">
       <img tal:replace="structure icon" /> image info
     </h3>
     <tal:block tal:condition="model/canScale">
-        <p tal:condition="not: model/hires_image">
-          <span class="subhead">format</span><br />
-          <span tal:replace="python: model.web_format.lower()" /> image
-          <br />
-          <span class="subhead">dimensions</span><br />
-          <span 
-            tal:define="
-              img_width python: model.getDimensions()[0];
-              img_height python: model.getDimensions()[1];
-              "
-            tal:on-error="string: unknown"
-            tal:replace="string:${img_width}x${img_height} pixels"
-          />
-        </p> 
-        <p tal:condition="model/hires_image">
-          <span class="subhead">format</span><br />
-          <span tal:replace="python: model.web_format.lower()">format</span> image
-        </p>
-        <p tal:define="
-          image_width python: model.getDimensions()[0];
-          image_height python: model.getDimensions()[1];
-          scale_width python: model.getCanonicalWebScale()[0];
-          scale_height python: model.getCanonicalWebScale()[1];
+      <p tal:condition="not: model/hires_image">
+        <span class="subhead">format</span><br />
+        <span tal:replace="python: model.web_format.lower()" /> image
+        <br />
+        <span class="subhead">dimensions</span><br />
+        <span 
+          tal:define="
+            img_width python: model.getDimensions()[0];
+            img_height python: model.getDimensions()[1];
+            "
+          tal:on-error="string: unknown"
+          tal:replace="string:${img_width}x${img_height} pixels"
+        />
+      </p> 
+      <p tal:condition="model/hires_image">
+        <span class="subhead">format</span><br />
+        <span tal:replace="python: model.web_format.lower()">format</span> image
+      </p>
+      <p tal:define="
+        image_width python: model.getDimensions()[0];
+        image_height python: model.getDimensions()[1];
+        scale_width python: model.getCanonicalWebScale()[0];
+        scale_height python: model.getCanonicalWebScale()[1];
         ">
-          <span class="subhead">dimensions</span><br />
+        <span class="subhead">dimensions</span><br />
+        <span tal:on-error="string: unknown"
+          tal:replace="string:${image_width}x${image_height} pixels"
+          /><tal:condition condition="python:
+            image_width != scale_width and
+            image_height != scale_height">,<br />scaled to 
           <span tal:on-error="string: unknown"
-            tal:replace="string:${image_width}x${image_height} pixels"
-            /><tal:condition condition="python:
-              image_width != scale_width and
-              image_height != scale_height">,<br />scaled to 
-            <span tal:on-error="string: unknown"
-              tal:replace="string:${scale_width}x${scale_height} pixels"
-              /></tal:condition>
-        </p>
-        <p>
-          <span class="subhead">original</span><br />
-          <a href="" class="underline"
-            title="see the original image"
-            accesskey="v"
-            tal:attributes="href string:${model/absolute_url}/hires_image"
-	     i18n:attributes="title"
-	     i18n:translate="view_unscaled_image">
-              view unscaled image
-          </a>
-        </p>
+            tal:replace="string:${scale_width}x${scale_height} pixels"
+            /></tal:condition>
+      </p>
+      <p>
+        <span class="subhead">original</span><br />
+        <a href="" class="underline"
+          title="see the original image"
+          accesskey="v"
+          tal:attributes="href string:${model/absolute_url}/hires_image"
+          i18n:attributes="title"
+          i18n:translate="view_unscaled_image">
+          view unscaled image
+        </a>
+      </p>
     </tal:block>
     <p tal:condition="not: model/canScale" i18n:translate="note_silva_can_provide_image_scaling">
       Note: Silva can provide image scaling and conversion with the help of PIL 
       (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
     <span i18n:translate="pil_not_installed">PIL doesn't seem to be installed.</span>
     </p>
-    <p
-      tal:define="
+    <p tal:define="
         size model/get_file_size;
         scaled_size model/get_scaled_file_size;
       ">
       <span class="subhead"><b i18n:translate="file_size">file size</b><br /></span>
-      <span 
-        tal:attributes="title string: ${size} Bytes"
+      <span tal:attributes="title string: ${size} Bytes"
         tal:content="python:mangle.Bytes(size)" />
       <tal:block tal:condition="model/canScale">
          <br />
@@ -97,7 +95,6 @@
   </div>
 </metal:fill-slot>
 
-<metal:block use-macro="view/macro_asset_edit/macros/uploader" />
 <metal:fill-slot fill-slot="additional_tools">
   <form method="POST"
     name="form"
@@ -120,7 +117,8 @@
       <tbody tal:define="fields view/scale_form/get_fields">
         <tr>
           <th class="align-right"
-            width="12%" i18n:translate="element">
+            width="12%"
+            i18n:translate="element">
             element
           </th>
           <th i18n:translate="content">
@@ -160,16 +158,16 @@
               value="change format/scale"
               title="access key: alt-c"
               accesskey="c"
-	      i18n:attributes="title value"
+              i18n:attributes="title value"
             />
           </td>
         </tr>
       </tfoot>
     </table>
   </form>
-
   <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
+
 </metal:use-macro>
 
 </html>
