@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.61 $
+# $Revision: 1.62 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -29,7 +29,7 @@ def initialize(context):
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
         Document, Folder, Root, Publication, Ghost, Image, File,
-        SQLDataSource, Indexer, DemoObject, Group, VirtualGroup],
+        Indexer, SQLDataSource, DemoObject, Group, VirtualGroup],
         install, depends_on=None)
 
     context.registerClass(
