@@ -49,15 +49,16 @@
         ______________ top controls row ______________
       </tal:block>
       <tr class="top-controls">
-        <td colspan="3" class="align-right">
-          <input class="navigation"
-            style="float:left;"
-            type="submit"
-            name="sync:method"
-            value="resync ghost folder"
-            title="re-synchronize with content from the source folder: alt-r"
-            accesskey="r"
-          />
+        <td colspan="3">
+          <a class="navigation"
+            style="float: right;"
+            href="../../edit/tab_edit_import"
+            title="import XML data - alt-i"
+            i18n:attributes="title"
+            accesskey="i"
+            >
+            <span i18n:translate="import">import</span>...
+          </a>
           <input class="button"
             type="submit" 
             name="convert_to_folder:method" 
@@ -153,6 +154,13 @@
         </td>
         <td class="align-right" 
           colspan="2">
+          <input class="button"
+            type="submit"
+            name="sync:method"
+            value="resync ghost folder"
+            title="re-synchronize with content from the source folder: alt-r"
+            accesskey="r"
+          />
           <input class="button"
             type="submit"
             name="form_submitted"
