@@ -1,4 +1,4 @@
-# Version: $Revision: 1.6 $
+# Version: $Revision: 1.7 $
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -35,7 +35,9 @@ class Image(Asset):
         Overrides SilvaObject set_title() to accomodate the OFS.Image.Image 
         title attribute - which in turn is used in the tag() method.
         """
-        self._title = self.image.title = title    
+        self._title = title
+        if self.image:
+            self.image.title = title
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
