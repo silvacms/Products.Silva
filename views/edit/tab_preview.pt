@@ -8,8 +8,8 @@
 <metal:preview use-macro="model/layout_macro.html/macros/previewer">
 
 <!-- start Silva content -->
-<div metal:fill-slot="main" omit-tag="" 
-  tal:content="structure model/view">
+<div metal:fill-slot="main" tal:omit-tag="" 
+  tal:content="structure model/preview">
   <!-- this comment gets replaced by the Silva document content -->
 </div>
 <!-- end Silva content -->
