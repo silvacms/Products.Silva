@@ -15,7 +15,7 @@ view = context
 # we might be called 'accidentally' if after creating a new copy the editor
 # does a client-side reload of the current URL (after a save or something),
 # in that case just return tab_edit
-if model.get_editable():
+if model.get_next_version():
     return view.tab_edit()
 
 model.sec_update_last_author_info()
