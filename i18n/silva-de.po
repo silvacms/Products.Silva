@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Tue Nov 30 12:13:24 2004\n"
+"POT-Creation-Date: Tue Nov 30 12:30:24 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -34,10 +34,6 @@ msgstr ""
 
 #: /Folder.py:387 /Folder.py:419
 msgid "pasted &#xab;${id}&#xbb;"
-msgstr ""
-
-#: /Ghost.py:63 /Ghost.py:72 /Ghost.py:84
-msgid "Ghost target is broken"
 msgstr ""
 
 #: /Image.py:215
@@ -3058,6 +3054,10 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:90
 msgid "tab_status_form_editor_message_description"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_get_status_link_title.py:12
+msgid "view ${version_title}"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:107

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue Nov 30 12:13:24 2004\n"
+"POT-Creation-Date: Tue Nov 30 12:59:29 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -29,12 +29,6 @@ msgstr ""
 #: /Folder.py:387
 #: /Folder.py:419
 msgid "pasted &#xab;${id}&#xbb;"
-msgstr ""
-
-#: /Ghost.py:63
-#: /Ghost.py:72
-#: /Ghost.py:84
-msgid "Ghost target is broken"
 msgstr ""
 
 #: /Image.py:215
@@ -3031,6 +3025,10 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:90
 msgid "tab_status_form_editor_message_description"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_get_status_link_title.py:37
+msgid "view \302\253${version_title}\302\273"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:107
