@@ -1,19 +1,156 @@
 from __future__ import nested_scopes
 
+# python imports
+import string
+import re
+from types import TupleType, ListType
+
 # zope imports
 import zLOG
 
 # silva imports
 from Products.Silva.interfaces import \
-    ISilvaObject, IContainer, IVersionedContent, IVersion
-from Products.Silva.Membership import NoneMember, noneMember 
+    ISilvaObject, IContainer, IVersionedContent, IVersion, IUpgrader
+from Products.Silva.Membership import NoneMember, noneMember
 from Products.Silva import mangle
 
+
+
+class GeneralUpgrader:
+    """wrapper for upgrade functions"""
+    
+    __implements__ = IUpgrader
+
+    def __init__(self, upgrade_handler):
+        """constructor
+
+            upgrade_handler: function which actually does the upgrade
+                one argument: the object to be opgraded
+        """
+        self._upgrade_handler = upgrade_handler
+
+    def upgrade(self, obj):
+        new_object = self._upgrade_handler(obj)
+        if new_object:
+            return new_obj
+        return obj
+   
+    def __repr__(self):
+        return "<GeneralUpgrader %r>" % self._upgrade_handler
+
+
+# marker for upgraders to be called for any object
+class AnyMetaType:
+    pass
+AnyMetaType = AnyMetaType()
+
+
+class UpgradeRegistry:
+    """Here people can register upgrade methods for their objects
+    """
+    
+    def __init__(self):
+        self.__registry = {}
+        self._setUp = {}
+        self._tearDown = {}
+    
+    def register(self, meta_type, upgrade_handler, version):
+        """Register a meta_type for upgrade.
+
+        The upgrade handler is called with the object as its only argument
+        when the upgrade script encounters an object of the specified
+        meta_type.
+        """
+        self.registerFunction(upgrade_handler, version, meta_type)
+
+    def registerFunction(self, function, version, meta_type):
+        upgrader = GeneralUpgrader(function)
+        self.registerUpgrader(upgrader, version, meta_type)
+        
+
+    def registerUpgrader(self, upgrader, version, meta_type):
+        assert IUpgrader.isImplementedBy(upgrader)
+        self.__registry.setdefault(version, {}).setdefault(meta_type, []).\
+            append(upgrader)
+
+    def registerSetUp(self, function, version):
+        self._setUp.setdefault(version, []).append(function)
+
+    def registerTearDown(self, function, version):
+        self._tearDown.setdefault(version, []).append(function)
+        
+    def getUpgraders(self, version, meta_type):
+        """Return the registered upgrade_handlers of meta_type
+        """
+        upgraders = []
+        v_mt = self.__registry.get(version, {})
+        upgraders.extend(v_mt.get(meta_type, []))
+        upgraders.extend(v_mt.get(AnyMetaType, []))
+        return upgraders
+
+    def upgradeObject(self, obj, version):
+        mt = obj.meta_type
+        for upgrader in self.getUpgraders(version, mt):
+            zLOG.LOG('Silva', zLOG.INFO, 'Upgrading %s' % obj.absolute_url(),
+                'Upgrading with %r' % upgrader)
+            # sometimes upgrade methods will replace objects, if so the
+            # new object should be returned so that can be used for the rest
+            # of the upgrade chain instead of the old (probably deleted) one
+            obj = upgrader.upgrade(obj)
+        return obj
+        
+    def upgradeTree(self, root, version):
+        """upgrade a whole tree to version"""
+        metatype_upgrader_mapping = self.__registry.get(version)
+        if not metatype_upgrader_mapping:
+            # XXX: log something
+            return
+        
+        self.setUp(root, version)
+        object_list = [root]
+        try:
+            while object_list:
+                o = object_list[0]
+                del object_list[0]
+                self.upgradeObject(o, version)
+                if hasattr(o, 'objectValues'):
+                    object_list.extend(o.objectValues())
+        finally:
+            self.tearDown(root, version)
+
+    def upgrade(self, root, from_version, to_version):
+        versions = self.__registry.keys()
+        versions.sort(lambda x, y: cmp(self._vers_str_to_int(x),
+            self._vers_str_to_int(y)))
+        try:
+            version_index = versions.index(from_version) + 1
+        except ValueError:
+            version_index = 0
+        for version_index in range(version_index, len(versions)):
+            self.upgradeTree(root, versions[version_index])
+
+        
+    def setUp(self, root, version):
+        for function in self._setUp.get(version, []):
+            function(root)
+    
+    def tearDown(self, root, version):
+        for function in self._tearDown.get(version, []):
+            function(root)
+
+    def _vers_str_to_int(self, version):
+        return tuple([ int(s) for s in version.split('.') ])
+
+    def _vers_int_to_str(self, version):
+        return '.'.join([ str(i) for i in version ])
+        
+
+
+upgrade_registry = UpgradeRegistry()
 def check_reserved_ids(obj):
     """Walk through the entire tree to find objects of which the id is not
     allowed, and return a list of the urls of those objects
     """
-    illegal_urls = []
     object_list = obj.objectValues()
     while object_list:
         o = object_list[0]
@@ -30,15 +167,27 @@ def check_reserved_ids(obj):
         while not id.isValid():
             id = mangle.Id(o.aq_parent, 'renamed_%s' % id, allow_dup=0)
             o.aq_prent.manage_renameObject(old_id, str(id))
-            illegal_urls.append(o.absolute_url())
-            zLOG.LOG("Silva", zLOG.INFO, 
+            zLOG.LOG("Silva", zLOG.INFO,
                 'Invalid id %s found. Renamed to %s' % (old_id, str(id)),
-                'Location: %s' % id.absolute_urL())
-    return illegal_urls
+                'Location: %s' % o.absolute_url())
+upgrade_registry.registerFunction(check_reserved_ids, '0.9.2', AnyMetaType)
+upgrade_registry.registerFunction(check_reserved_ids, '0.9.3', AnyMetaType)
 
-def from091to092(self, root):
-    """Upgrade Silva content from 0.9.1 to 0.9.2
-    """
+
+
+#-----------------------------------------------------------------------------
+# 0.9.1 to 0.9.2
+#-----------------------------------------------------------------------------
+
+# This is a complicated set of upgrades!! The order of the upgrades is important
+# (they are called in the order in which they are registered), because most
+# methods expect objects to be a certain type and the type can change somewhere
+# in the chain of methods (old-style ParsedXML versions are converted to Version
+# objects, which means that the way to perform certain actions on them changes)
+
+
+
+def silvaDocumentBeforeDeleteDisable(root):
     # the manage_beforeDelete of the original Document doesn't work, since the 
     # code will look for a 'content' attribute, which doesn't yet exist on 
     # them, therefore we're going to have to do some trickery here...
@@ -47,160 +196,32 @@ def from091to092(self, root):
     # it isn't possible to monkeypatch the object since no reference to the object
     # can be used in monkeypatched object methods (self is not passed as a variable to
     # those methods)
-    from Document import Document
-
-    old_manage_beforeDelete = Document.manage_beforeDelete
+    from Products.SilvaDocument.Document import Document
+    upgrade_registry.old_manage_beforeDelete = Document.manage_beforeDelete
     def manage_beforeDelete_old_style_docs(self, item, container):
-        Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
+        Document.inheritedAttribute('manage_beforeDelete')(self, item,
+            container)
     Document.manage_beforeDelete = manage_beforeDelete_old_style_docs
+upgrade_registry.registerSetUp(silvaDocumentBeforeDeleteDisable, '0.9.2')
 
-    print 'Going to check ids'
-    # first check the object tree for illegal ids, since they will break the upgrade
-    illegal_urls = check_reserved_ids(root)
+def silvaDocumentBeforeDeleteEnable(root):
+    from Products.SilvaDocument.Document import Document
+    Document.manage_beforeDelete = upgrade_registry.old_manage_beforeDelete
+    delattr(upgrade_registry, 'old_manage_beforeDelete')
+upgrade_registry.registerTearDown(silvaDocumentBeforeDeleteEnable, '0.9.2')
 
-    print 'Going to upgrade'
-    # set the '_allow_authentication_requests' attribute on servce_members if it isn't there yet
+def root_092(root):
+    # set the '_allow_authentication_requests' attribute on servce_members if
+    # it isn't there yet
     sm = getattr(root, 'service_members', None)
-    
     if sm is not None:
         if hasattr(sm, '_allow_subscription'):
             sm._allow_authentication_requests = sm._allow_subscription
             del sm._allow_subscription
         elif not hasattr(sm, '_allow_authentication_requests'):
             sm._allow_authentication_requests = 0
-    
-    try:
-        upgrade_using_registry(root, '0.9.2')
-    finally:
-        Document.manage_beforeDelete = old_manage_beforeDelete
+upgrade_registry.registerFunction(root_092, '0.9.2', 'Silva Root')
 
-    if illegal_urls:
-        return ('Upgrade succeeded, but the following objects have been renamed to '
-                    'be able to continue:<br /><br />') + '<br />\n'.join(illegal_urls)
-    else:
-        return ('Upgrade succeeded')
-
-def from09to091(self, root):
-    """Upgrade Silva from 0.9 to 0.9.1
-    """
-    # upgrade member objects in the site if they're still using the old system
-    upgrade_memberobjects(root)
-    # upgrade xml in the site
-    upgrade_using_registry(root, '0.9.1')
-    
-def from086to09(self, root):
-    """Upgrade Silva from 0.8.6(.1) to 0.9.
-    """
-    id = root.id
-    # Put a copy of the current Silva Root in a backup folder.
-    backup_id = id + '_086'
-    self.manage_addFolder(backup_id)
-    cb = self.manage_copyObjects([id])
-    backup_folder = getattr(self, backup_id)
-    backup_folder.manage_pasteObjects(cb_copy_data=cb)
-    # Delete and re-install the DirectoryViews
-    from install import add_fss_directory_view
-    root.service_views.manage_delObjects(['Silva'])
-    add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
-    root.manage_delObjects([
-        'globals', 'service_utils', 'service_widgets'])       
-    add_fss_directory_view(root, 'globals', __file__, 'globals')
-    add_fss_directory_view(root, 'service_utils', __file__, 'service_utils')
-    add_fss_directory_view(root, 'service_widgets', __file__, 'widgets')
-
-def from085to086(self, root):
-    """Upgrade Silva from 0.8.5 to 0.8.6 as a simple matter of programming.
-    """
-    # rename silva root so we can drop in fresh new one
-    id = root.id
-    backup_id = id + '_085'
-    self.manage_renameObject(id, backup_id)
-    orig_root = getattr(self, backup_id)
-    # create new silva root
-    self.manage_addProduct['Silva'].manage_addRoot(id, orig_root.title)
-    dest_root = getattr(self, id)
-    # wipe out layout stuff from root as we're going to copy it over
-    delete_ids = [obj.getId() for obj in dest_root.objectValues() if
-                  obj.meta_type in ['DTML Method', 'Script (Python)', 'Page Template']]
-    dest_root.manage_delObjects(delete_ids)
-
-    # now copy over silva contents from old root; everything should be a
-    # SilvaObject
-    copy_ids = [obj.getId() for obj in orig_root.objectValues() if
-                ISilvaObject.isImplementedBy(obj)]
-    cb = orig_root.manage_copyObjects(copy_ids)
-    dest_root.manage_pasteObjects(cb_copy_data=cb)
-
-    # also copy over layout stuff and various services
-    layout_ids = [obj.getId() for obj in orig_root.objectValues() if
-                  obj.meta_type in ['DTML Method', 'Script (Python)', 'Page Template']  or \
-                  obj.getId() in ('service_groups', 'service_files', 'service_mailhost', 'service_catalog') ]
-
-    other_ids = [obj.getId() for obj in orig_root.objectValues() if
-                 obj.meta_type not in ['DTML Method', 'Script (Python)', 'Page Template', \
-                                       'Silva View Registry', 'XMLWidgets Editor Service', 'XMLWidgets Registry'] \
-                 and obj.getId() not in ['globals', 'service_utils', 'service_setup', 'service_widgets', 'service_groups', 'service_files'] \
-                 and not ISilvaObject.isImplementedBy(obj) ]
-
-    
-    cb = orig_root.manage_copyObjects(layout_ids)
-    dest_root.manage_pasteObjects(cb_copy_data=cb)
-
-    # now to copy over properties
-
-    # figure out what changed
-    dest_properties = dest_root.propertyIds()
-    new_properties = []
-    changed_properties = []
-    for id in orig_root.propertyIds():
-        if id in dest_properties:
-            changed_properties.append(id)
-        else:
-            new_properties.append(id)
-    # alter properties that need to be altered
-    for id in changed_properties:
-        dest_root.manage_changeProperties({id: orig_root.getProperty(id)})
-    # add properties that need to be added
-    for id in new_properties:
-        dest_root.manage_addProperty(id, orig_root.getProperty(id),
-                                     orig_root.getPropertyType(id))
-    
-    # now copy over the roles information
-    if hasattr(orig_root, '__ac_local_roles__'):
-        dest_root.__ac_local_roles__ = orig_root.__ac_local_roles__
-    if hasattr(orig_root, '__ac_local_groups__'):
-        dest_root.__ac_local_groups__ = orig_root.__ac_local_groups__
-
-    # if there's an 'acl_users', 'images', or 'locals' copy that over as well.
-    to_copy_ids = []
-    for id in ['acl_users', 'images', 'locals']:
-        if hasattr(orig_root.aq_base, id):
-            to_copy_ids.append(id)
-            if id in other_ids:
-                other_ids.remove(id)
-    cb = orig_root.manage_copyObjects(to_copy_ids)
-    dest_root.manage_pasteObjects(cb_copy_data=cb)
-
-    # copy over order information
-    dest_root._ordered_ids = orig_root._ordered_ids
-    
-    # we still may not have everything, but a good part..
-    # should advise the upgrader to copy over the rest by hand
-    
-    return other_ids
-
-def upgrade_memberobjects(obj):
-    service_members = obj.service_members
-    for o in obj.aq_explicit.objectValues():
-        info = getattr(o, '_last_author_info', None)
-        if info is not None and type(info) == type({}):
-            if info.has_key('uid'):
-                o._last_author_info = service_members.get_cached_member(
-                    info['uid'])
-            else:
-                o._last_author_info = noneMember
-        if IContainer.isImplementedBy(o):
-            upgrade_memberobjects(o)
 
 def upgrade_list_titles_in_parsed_xml(top):
     for child in top.childNodes:
@@ -268,91 +289,6 @@ def upgrade_list_titles_in_parsed_xml(top):
                         continue
                     upgrade_list_titles_in_parsed_xml(field)
         
-#-----------------------------------------------------------------------------
-# Upgrade registry, this will be used to upgrade versions >= 0.9.1
-#-----------------------------------------------------------------------------
-
-def upgrade_using_registry(obj, version):
-    """Upgrades obj recursively for a specific Silva version
-    """
-    for o in obj.objectValues():
-        mt = o.meta_type
-        if upgrade_registry.is_registered(mt, version):
-            for upgrade in upgrade_registry.get_meta_type(mt, version):
-                print 'Going to run %s on %s' % (upgrade, o.absolute_url())
-                res = upgrade(o)
-                # sometimes upgrade methods will replace objects, if so the
-                # new object should be returned so that can be used for the rest
-                # of the upgrade chain instead of the old (probably deleted) one
-                if res:
-                    o = res
-        if hasattr(o, 'objectValues'):
-            #print 'Going to descend into', o.id
-            upgrade_using_registry(o, version)
-
-class UpgradeRegistry:
-    """Here people can register upgrade methods for their objects
-    """
-    def __init__(self):
-        self.__registry = {}
-    
-    def register(self, meta_type, upgrade_handler, version):
-        """Register a meta_type for upgrade.
-
-        The upgrade handler is called with the object as its only argument
-        when the upgrade script encounters an object of the specified
-        meta_type.
-        """
-        if not self.__registry.has_key(meta_type):
-            self.__registry[meta_type] = {}
-        if not self.__registry[meta_type].has_key(version):
-            self.__registry[meta_type][version] = []
-        self.__registry[meta_type][version].append(upgrade_handler)
-
-    def get_meta_type(self, meta_type, version):
-        """Return the registered upgrade_handlers of meta_type
-        """
-        #print 'Going to return upgrades for %s: %s' % (meta_type, version)
-        #print 'Upgrades:', self.__registry[meta_type][version]
-        return self.__registry[meta_type][version]
-
-    def is_registered(self, meta_type, version):
-        """Returns whether the meta_type is registered"""
-        return self.__registry.has_key(meta_type) and self.__registry[meta_type].has_key(version)
-
-upgrade_registry = UpgradeRegistry()
-
-#-----------------------------------------------------------------------------
-# Upgrade functions using the upgrade registry
-#-----------------------------------------------------------------------------
-
-#-----------------------------------------------------------------------------
-# 0.9 to 0.9.1
-#-----------------------------------------------------------------------------
-
-# Some upgrade stuff
-def upgrade_document_091(obj):
-    for o in obj.objectValues():
-        if o.meta_type == 'Silva Document Version':
-            upgrade_list_titles_in_parsed_xml(o.content.documentElement)
-
-def upgrade_demoobject_091(obj):
-    for o in obj.objectValues():
-        if o.meta_type == 'Silva DemoObject Version':
-            upgrade_list_titles_in_parsed_xml(o.content.documentElement)
-
-upgrade_registry.register('Silva Document', upgrade_document_091, '0.9.1')
-upgrade_registry.register('Silva DemoObject', upgrade_demoobject_091, '0.9.1')
-
-#-----------------------------------------------------------------------------
-# 0.9.1 to 0.9.2
-#-----------------------------------------------------------------------------
-
-# This is a complicated set of upgrades!! The order of the upgrades is important
-# (they are called in the order in which they are registered), because most
-# methods expect objects to be a certain type and the type can change somewhere
-# in the chain of methods (old-style ParsedXML versions are converted to Version
-# objects, which means that the way to perform certain actions on them changes)
 
 from StringIO import StringIO
 
@@ -365,7 +301,7 @@ def get_version_xml(obj, version):
     v.documentElement.writeStream(s)
     return s.getvalue().encode('UTF8')
 
-from Document import DocumentVersion
+from Products.SilvaDocument.Document import DocumentVersion
 
 def convert_document_092(obj):
     #print 'Converting document',  obj.id
@@ -627,8 +563,8 @@ def catalog_092(obj):
     
 def catalog_version_092(obj):
     """Do initial catalogin of objects"""
-    if not ICatalogedVersion.isImplementedBy(obj):
-        return
+    #if not ICatalogedVersion.isImplementedBy(obj):
+    #    return
     if obj.version_status() in ['last_closed', 'closed']:
         return
     obj.index_object()
@@ -682,4 +618,152 @@ def update_indexers_092(obj):
 
 upgrade_registry.register('Silva Indexer', update_indexers_092, '0.9.2')
 
+#-----------------------------------------------------------------------------
+# 0.9.2 to 0.9.3
+#-----------------------------------------------------------------------------
+
+
+class UpgradeAccessRestriction:
+    """upgrade access restrction
+
+        access restriction by ip address was a proof of concept and has been
+        replaced by IP groups.
+
+        This upgrade does:
+
+            XXX
+
+    """
+
+    __implements__ = IUpgrader
+
+    ACCESS_RESTRICTION_PROPERTY = 'access_restriction'
+
+    # match any quote _not_ preceeded by a backslash
+    re_quote_split = re.compile(r'(?<![^\\]\\)"', re.M)
+
+    # match any escapes of quotes (e.g. \\ or \" )
+    re_drop_escape = re.compile(r'\\(\\|")')
+
+
+    def upgrade(self, obj):
+        if not hasattr(obj.aq_base, '_properties'):
+            # if it is not a property manager it hardly can have access 
+            # restrictions
+            return obj
+        ar = self.parseAccessRestriction(obj).get('allowed_ip_addresses')
+        if ar:
+            ar = [ s.upper() for s in ar ]
+            if 'ALL' in ar:
+                self._all_allowed(obj)
+            else:
+                self._restrict(obj, ar)
+        try:
+            obj._delProperty(self.ACCESS_RESTRICTION_PROPERTY)
+        except ValueError:
+            pass
+        return obj
+        
+    def _all_allowed(self, obj):
+        pass
+
+    def _restrict(self, obj, ar):
+        if not obj.sec_is_closed_to_public():
+            obj.sec_close_to_public()
+        ipg = self._createIPGroup(obj)
+        for ip in ar:
+            ipg.addIPRange(ip)
+        
+    def _createIPGroup(self, context):
+        if not IContainer.isImplementedBy(context):
+            context = context.aq_parent
+        assert IContainer.isImplementedBy(context)
+        id = 'access_restriction_upgrade_group'
+        id_template = id + '_%i'
+        counter = 0
+        while 1:
+            if counter:
+                id = id_template % counter
+            try: 
+                context.manage_addProduct['Silva'].manage_addIPGroup(id,
+                    'Automatically created IP Group', id)
+            except ValueError:
+                counter += 1
+            else:
+                break
+        return context._getOb(id)
+    
+    ### ACCCESS RESTRICTION PARSER
+    ### formerly found in helpers.py
+
+    # This code is based on Clemens Klein-Robbenhaar's "CommentParser.py" 
+    # Marc Petitmermet's and Wolfgang Korosec's code.
+    #
+    def parseAccessRestriction(self, obj):
+        raw_string = ''
+        raw_string = getattr(obj.aq_base, self.ACCESS_RESTRICTION_PROPERTY, '')
+        if not raw_string:
+            return {}
+        return self._parse_raw(raw_string)
+
+    #stupid record
+    class State:
+        pass
+
+    def _parse_raw(self, raw_string):
+        props = {}
+        state = self.State()
+        # first split due to quotes
+        quoted = self.re_quote_split.split(raw_string)
+        in_quote = None
+        state.read_props = None
+        for item in quoted:
+            if in_quote:
+                self._parse_quote(item, state, props)
+            else:
+                self._parse_unquote(item, state, props)
+            in_quote = not in_quote
+        return props
+
+
+    def _parse_unquote(self, something, state, props):
+        
+        if not state.read_props:
+            try:
+                name, something = map (string.strip, something.split(':',1) )
+            except ValueError:
+                # no name: quit.
+                return
+            state.name = name
+            props[name] = []
+            state.plist = props[name]
+            state.read_props = 1
+
+        separate = something.split(';',1)
+        if len(separate) > 1:
+            something, rest = map (string.strip, separate)
+        else:
+            rest=None
+
+        for p in map (string.strip, something.split(',') ):
+            if p:
+                state.plist.append(p)
+
+        if rest is not None:
+            state.read_props=None
+            self._parse_unquote(rest, state, props)
+
+
+    def _parse_quote(self, something, state, props):
+        """ parse everything enclosed in quotes.
+        this is an easy one: just remove the escapes
+        """
+        if not state.read_props:
+            raise ValueError, "not inside a property definition: <<%s>>" % something
+
+        something = self.re_drop_escape.sub(lambda match: match.group(1), something )
+        state.plist.append(something)
+
+upgrade_registry.registerUpgrader(UpgradeAccessRestriction(), '0.9.3',
+    AnyMetaType)
 

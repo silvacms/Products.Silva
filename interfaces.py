@@ -1098,4 +1098,15 @@ class IIcon(Interface):
             identifier
         """
 
+class IUpgrader(Interface):
+    """interface for upgrade classes"""
 
+    def upgrade(anObject):
+        """upgrades object
+        
+            during upgrade the object identity of the upgraded object may 
+            change
+
+            returns object
+        """
+        

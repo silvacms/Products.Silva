@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.71 $
+# $Revision: 1.72 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -167,7 +167,7 @@ class Root(Publication):
     def get_silva_software_version(self):
         """The version of the Silva software.
         """
-        return '0.9.2'
+        return '0.9.3'
     
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_content_version')
@@ -181,17 +181,16 @@ class Root(Publication):
     
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'upgrade_silva')
-    def upgrade_silva(self, from_version='0.9.1'):
+    def upgrade_silva(self):
         """Upgrade Silva from previous version.
         """
-        if not from_version == '0.9.1':
-            raise "Not supported", "Upgrading from another version than 0.9.1 is not supported."
+        from_version = self.get_silva_content_version()
+        to_version = self.get_silva_software_version()
         import upgrade
         my_id = self.id
-        ret = upgrade.from091to092(self.aq_inner.aq_parent, self)
-        self._content_version = self.get_silva_software_version()
-        return ret or "Upgrade of %s succeeded." \
-               % my_id
+        upgrade.upgrade_registry.upgrade(self, from_version, to_version)
+        self._content_version = to_version
+        return  "Upgrade of %s succeeded." % my_id
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'status_update')
