@@ -13,10 +13,10 @@ def from09to091(self, root):
     cb = self.manage_copyObjects([id])
     backup_folder = getattr(self, backup_id)
     backup_folder.manage_pasteObjects(cb_copy_data=cb)
-    # upgrade xml in the site
-    upgrade_xml_09to091(root)
     # upgrade member objects in the site if they're still using the old system
     upgrade_memberobjects(root)
+    # upgrade xml in the site
+    upgrade_xml_09to091(root)
     
 def from086to09(self, root):
     """Upgrade Silva from 0.8.6(.1) to 0.9.
