@@ -51,7 +51,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         if version_id is not None:
             return getattr(self, version_id).bobobase_modification_time()
         else:
-            return None
+            return self.bobobase_modification_time()
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
