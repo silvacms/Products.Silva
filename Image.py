@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.14.2.4 2003/03/25 13:09:27 jw Exp $
+# $Id: Image.py,v 1.14.2.5 2003/07/03 12:50:57 guido Exp $
 
 # Python
 import re
@@ -12,6 +12,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
+from webdav.WriteLockInterface import WriteLockInterface
 # Silva interfaces
 from IAsset import IAsset
 # Silva
@@ -42,7 +43,7 @@ class Image(Asset):
 
     meta_type = "Silva Image"
 
-    __implements__ = IAsset
+    __implements__ = (WriteLockInterface, IAsset)
     
     re_WidthXHeight = re.compile(r'^([0-9]+)[Xx]([0-9]+)$')
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
@@ -271,7 +272,15 @@ class Image(Asset):
             return cookPath(service_files.filesystem_path())
         return None
 
+    def manage_FTPget(self, *args, **kwargs):
+        return self.image.manage_FTPget(*args, **kwargs)
 
+    def content_type(self):
+        return self.image.content_type
+
+    def PUT(self, REQUEST, RESPONSE):
+        """Handle HTTP PUT requests"""
+        return self.image.PUT(REQUEST, RESPONSE)
 
 InitializeClass(Image)
     
