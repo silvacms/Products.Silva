@@ -3,14 +3,15 @@ from Interface import Interface
 class IRenderable(Interface):
     """I'm implemented by objects that can be rendered."""
 
-    def getRendererName():
-        """Returns a string that is the name of the renderer
-        which will be used to render the object."""
-        pass
+    def getRendererId():
+        """Returns a string that is the ID of the renderer which will
+        be used to render the object."""
+
+    def setRendererId():
+        """Set the renderer to be used to display this object."""
 
     def getMetaType():
         """Return the meta type of this object."""
-        pass
 
 class IXMLSource(Interface):
     """I'm implemented by objects that use XML as their source content."""
@@ -24,28 +25,8 @@ class IRenderer(Interface):
     def render(obj):
         """Renders obj; returns the rendering as a string."""
 
-    def setName(name):
-        """Set a human-readable name for this renderer, e.g.
-        'Lower-case all text.'"""
-
     def getName():
         """Return the human-readable name of this renderer."""
-
-    def getId():
-        """Get the ID of the object."""
-
-    def setId(renderer_id):
-        """Set the ID of the object."""
-
-    def supportsMetaType(meta_type):
-        """Is this meta type supported by this renderer?"""
-
-    def getSupportedMetaTypes():
-        """Returns a list of strings, which are the names of all
-        meta types that this renderer supports."""
-
-    def setSupportedMetaTypes(meta_types):
-        """Takes a list of meta types that this renderer supports."""
 
 class IRendererRegistry(Interface):
     """I'm implemented by something that tracks the existence of
