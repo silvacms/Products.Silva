@@ -10,7 +10,7 @@
 model = context.REQUEST.model
 version = model.get_viewable()
 if version is None:
-   return "There is no public version"
+   return "Sorry, this document is not published yet."
 node = version.content.documentElement
 context.service_editor.setViewer('service_doc_viewer')
 return context.service_editor.renderView(node)

@@ -10,9 +10,9 @@
 model = context.REQUEST.model
 version = model.get_viewable()
 if version is None:
-  return "There is no public version."
+  return "Sorry, this document is not published yet."
 result = version.render_view()
 if result is None:
-   return "This ghost is broken. Please inform the site administrator."
+   return "This 'ghost' document is broken. Please inform the site administrator."
 else:
    return result
