@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.48 $
+# $Revision: 1.49 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -131,7 +131,17 @@ class Root(Publication):
         import upgrade
         upgrade.upgrade_memberobjects(self)
         return 'Upgrade of the memberobjects succeeded.'
-    
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'refresh_all')
+    def refresh_all(self):
+        """Refreshes all installed products
+        """
+        for name in self.service_extensions.get_installed_names():
+            self.service_extensions.refresh(name)
+
+        return 'All installed products are successfully refreshed.'
+                              
 InitializeClass(Root)
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),

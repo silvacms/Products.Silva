@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.5 $
+Version of this file: $Revision: 1.6 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -11,6 +11,16 @@ Version of this file: $Revision: 1.5 $
 <h3>
   Configure Silva Extension Products:
 </h3>
+
+<div style="width:70%; border:solid 1px; padding:1em; margin:1em; background:White;" >
+  <h3>General actions</h3>
+  <p>Here you can perform some actions on all (installed) products.</p>
+  <form action="." method="POST">
+    <input type="submit" name="refresh_all:method" value="refresh" />
+    <input type="submit" name="upgrade_silva:method" value="upgrade" />
+  </form>
+
+</div>
 
 <div tal:repeat="module_name here/get_names"
   tal:attributes="
@@ -30,12 +40,6 @@ Version of this file: $Revision: 1.5 $
       tal:attributes="value module_name" />
     <input type="submit" name="install_layout:method" value="install default layout" />    
     <input type="submit" name="refresh:method" value="refresh" />
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    <input type="submit" name="upgrade_silva:method" value="upgrade" />
   </form>
 
 </div>
