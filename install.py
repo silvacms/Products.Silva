@@ -178,7 +178,21 @@ def configureMetadata(root):
 
     # set the default type mapping
     mapping = root.service_metadata.getTypeMapping()
-    mapping.setDefaultChain('silva')
+    default = 'silva'
+    tm = (
+        {'type':'Silva Document Version',   'chain':'silva, silva-extra'},
+        {'type':'Silva DemoObject Version', 'chain':'silva, silva-extra'},
+        {'type':'Silva Ghost Version',      'chain':''},
+        {'type':'Silva Folder',             'chain':'silva-extra'},
+        {'type':'Silva File',               'chain':''},
+        {'type':'Silva Image',              'chain':''},
+        {'type':'Silva Indexer',            'chain':''},
+        {'type':'Silva Publication',        'chain':'silva-extra'},
+        {'type':'Silva Root',               'chain':'silva-extra'},
+        {'type':'Silva SQL Data Source',    'chain':''},
+        )
+
+    mapping.editMappings(default, tm)
 
     # initialize the default sets
     for set in collection.getMetadataSets():
