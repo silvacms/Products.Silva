@@ -51,12 +51,12 @@ On the right of each tab is an uplink (the small tree, which takes you up one le
 <p class="leadedbody">
 <span class="subhead">Table header</span><br />
 n &nbsp; New<br />
-s &nbsp; Select list for a new object (doesn't work in Mozilla)<br />
+s &nbsp; Select list for a new object<br />
 i &nbsp; Import
 </p>
 <p class="leadedbody">
 <span class="subhead">Table body</span><br />
-p &nbsp; Select list for position number (doesn't work in Mozilla)<br />
+p &nbsp; Select list for position number<br />
 m &nbsp; Move
 </p>
 <p class="leadedbody">
