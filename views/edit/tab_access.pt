@@ -240,7 +240,7 @@
   </td>
   <td>
     &nbsp;
-  </td> define="lastclass string:focus-cycle"
+  </td> 
 </tr>
 <tal:block repeat="group upward_groups">
 <tr class="focus"
