@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.133 $
+# $Revision: 1.134 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -23,7 +23,8 @@ import re
 import urllib
 from sys import exc_info
 
-from Products.Silva.ImporterRegistry import get_importer, xml_import_helper, get_xml_id, get_xml_title
+from Products.Silva.ImporterRegistry import get_importer, xml_import_helper
+from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.ImportArchive import import_archive_helper
 from Products.Silva.Metadata import export_metadata
 from Products.Silva import mangle
@@ -54,8 +55,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     # A hackish way to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = Folder.Folder.manage_options
     manage_options=(
-        (inherited_manage_options[0],) +
-        ({'label':'Silva /edit...', 'action':'edit'},) +
+        (inherited_manage_options[0], ) +
+        ({'label':'Silva /edit...', 'action':'edit'}, ) +
         inherited_manage_options[1:]
         )
 
@@ -65,7 +66,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         Folder.inheritedAttribute('__init__')(
             self, id, "[Containers have no titles, this is a bug]")
         self._ordered_ids = []
-
 
     def manage_afterAdd(self, item, container):
         # call after add code on SilvaObject
@@ -101,7 +101,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             return
         service_sidebar = self.aq_inner.service_sidebar
         service_sidebar.invalidate(item)
-        if IPublication.isImplementedBy(item) and not IRoot.isImplementedBy(item):
+        if (IPublication.isImplementedBy(item) and 
+                not IRoot.isImplementedBy(item)):
             service_sidebar.invalidate(item.aq_inner.aq_parent)
 
     def _update_contained_documents_status(self):
@@ -276,7 +277,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             ids.remove(item.id)
             self._ordered_ids = ids
 
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent, 'refresh_active_publishables')
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent, 
+                              'refresh_active_publishables')
     def refresh_active_publishables(self):
         """Clean up all ordered ids in this container and all subcontainers.
         This method normally does not need to be called, but if something is
@@ -294,7 +296,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             if IContainer.isImplementedBy(object):
                 object.refresh_active_publishables()
         self._ordered_ids = ids
-
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_rename')
@@ -362,11 +363,14 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         messages = []
         ids = []
         for item in self.cb_dataItems():
-            if ((op == 0 or item.get_container().is_delete_allowed(item.id)) and 
-                    item.meta_type in [addable['name'] for addable in self.get_silva_addables()]):
+            if ((op == 0 or item.get_container().is_delete_allowed(item.id)) 
+                    and item.meta_type in [addable['name'] for 
+                        addable in self.get_silva_addables()]):
                 ids.append(item.id)
-            elif item.meta_type not in [addable['name'] for addable in self.get_silva_addables()]:
-                messages.append('pasting &#xab;%s&#xbb; is not allowed in this type of container' % item.id)
+            elif item.meta_type not in [addable['name'] for 
+                    addable in self.get_silva_addables()]:
+                messages.append('pasting &#xab;%s&#xbb; is not allowed in '\
+                                'this type of container' % item.id)
 
         if len(ids) == 0:
             return ', '.join(messages).capitalize()
@@ -378,7 +382,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             paste_ids = []
             ids = self.objectIds()
             for copy_id in copy_ids:
-                # keep renaming until we have a unique id (like Zope does, so copy_of_x and copy2_of_x)
+                # keep renaming until we have a unique id (like Zope does, 
+                # so copy_of_x and copy2_of_x)
                 i = 0
                 org_copy_id = copy_id
                 while copy_id in ids:
@@ -399,7 +404,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 paste_ids = []
                 ids = self.objectIds()
                 for cut_id in cut_ids:
-                    # keep renaming until we have a unique id (like Zope does, so copy_of_x and copy2_of_x)
+                    # keep renaming until we have a unique id (like Zope 
+                    # does, so copy_of_x and copy2_of_x)
                     i = 0
                     org_cut_id = cut_id
                     while cut_id in ids:
@@ -429,7 +435,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """Paste what is on clipboard to ghost.
         """
         # create ghosts for each item on clipboard
-        allowed_meta_types = [addable['name'] for addable in self.get_silva_addables()]
+        allowed_meta_types = [addable['name'] for 
+            addable in self.get_silva_addables()]
         messages = []
         for item in self.cb_dataItems():
             if item.meta_type in allowed_meta_types:
@@ -450,7 +457,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 self._ghost_paste(paste_id, item, REQUEST)
                 messages.append('pasted &#xab;%s&#xbb;' % paste_id)
             else:
-                messages.append('pasting &#xab;%s&#xbb; is not allowed in this type of container' % item.id)
+                messages.append('pasting &#xab;%s&#xbb; is not allowed in '\
+                                'this type of container' % item.id)
         return ', '.join(messages).capitalize()
 
     def _ghost_paste(self, paste_id, item, REQUEST):
@@ -545,7 +553,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 continue
             if (self._is_silva_addable(addable_dict) and
                 addable_dict['instance']._is_allowed_in_publication):
-                # add the docstring to the dict so it is available in pythonscripts
+                # add the docstring to the dict so it is available 
+                # in pythonscripts
                 addable_dict['doc'] = addable_dict['instance'].__doc__
                 result.append(addable_dict)
         return result
@@ -582,8 +591,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     def get_container(self):
         """Get the container an object is in. Can be used with
         acquisition to get the 'nearest' container.
-        FIXME: currently the container of a container is itself. Is this the right
-        behavior? It leads to subtle bugs..
+        FIXME: currently the container of a container is itself. Is this the 
+        right behavior? It leads to subtle bugs..
         """
         return self.aq_inner
 
@@ -690,7 +699,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             if (IPublishable.isImplementedBy(object) and
                 not object.is_active()):
                 result.append(object)
-        result.sort(lambda x,y: cmp(x.getId(), y.getId()) )
+        result.sort(lambda x, y: cmp(x.getId(), y.getId()))
         return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -700,7 +709,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         for object in self.objectValues():
             if IAsset.isImplementedBy(object):
                 result.append(object)
-        result.sort(lambda x,y: cmp(x.getId(), y.getId()) )
+        result.sort(lambda x, y: cmp(x.getId(), y.getId()) )
         return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -711,7 +720,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             if (IAsset.isImplementedBy(object) and
                 object.meta_type == meta_type):
                 result.append(object)
-        result.sort(lambda x,y: cmp(x.getId(), y.getId()) )
+        result.sort(lambda x, y: cmp(x.getId(), y.getId()) )
         return result
 
     # FIXME: what if the objects returned are not accessible with my
@@ -826,12 +835,14 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         f.write('</silva_folder>')
 
     def _to_xml_helper(self, context):
-        context.f.write('<title>%s</title>' % helpers.translateCdata(self.get_title()))
+        context.f.write('<title>%s</title>' % 
+                helpers.translateCdata(self.get_title()))
         default = self.get_default()
         if default is not None:
             default.to_xml(context)
         for object in self.get_ordered_publishables():
-            if IPublication.isImplementedBy(object) and not context.with_sub_publications:
+            if (IPublication.isImplementedBy(object) and 
+                    not context.with_sub_publications):
                 continue
             object.to_xml(context)
         #for object in self.get_assets():
@@ -862,7 +873,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         if import_root.nodeName == u'silva':
             import_root = import_root.firstChild
         while import_root:
-            # since some exceptions raised are strings or so, we're going to      
+            # since some exceptions raised are strings or so, we're going to
             # convert them to 'Exception' here
             try:
                 xml_import_helper(self, import_root)
@@ -884,7 +895,10 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
 
     security.declarePublic('url_encode')
     def url_encode(self, string):
-        """A wrapper for the urllib.quote function to be used in Python scripts and PT's"""
+        """A wrapper for the urllib.quote function
+        
+        to be used in Python scripts and PT's
+        """
         return urllib.quote(string)
 
     def get_all_descendants(self):
@@ -916,7 +930,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                         v = str(pvs.pop(0)[0])
                         if v in item.objectIds():
                             item.manage_delObjects([v])
-                            print 'Removed old version %s/%s' % (item.absolute_url(), v)
+                            print ('Removed old version %s/%s' % 
+                                    (item.absolute_url(), v))
         return 'Done!'
         
 InitializeClass(Folder)
@@ -954,7 +969,10 @@ def xml_import_handler(object, node, factory=None):
     for child in node.childNodes:
         if get_importer(child.nodeName):
             xml_import_helper(newfolder, child)
-        elif child.nodeName != u'title' and hasattr(newfolder, 'set_%s' % child.nodeName) and child.childNodes[0].nodeValue:
-            getattr(newfolder, 'set_%s' % child.nodeName)(child.childNodes[0].nodeValue)
+        elif (child.nodeName != u'title' and 
+                hasattr(newfolder, 'set_%s' % child.nodeName) and 
+                child.childNodes[0].nodeValue):
+            getattr(newfolder, 'set_%s' % child.nodeName)(
+                                    child.childNodes[0].nodeValue)
 
     return newfolder
