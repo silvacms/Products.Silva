@@ -75,6 +75,10 @@ table.silvatable {
 table.silvatable tr {
   vertical-align: top;
 } 
+table.silvatable tr.odd {
+  background: transparent;
+} 
+
 table.silvatable tr.rowheading {
   font-weight: bold;
 } 
