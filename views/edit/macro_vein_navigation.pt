@@ -40,7 +40,8 @@
                   tal:define="
                     model_is_root python: type == 'Silva Root';
                     model_is_pub python: type == 'Silva Publication';
-                    vein_id template/id;
+                    query_string query_string | nothing;
+                    vein_id string:${template/id}${query_string};
                   ">
                   <a class="up"
                     href="../../edit/tab_edit"

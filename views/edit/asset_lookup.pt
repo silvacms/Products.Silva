@@ -13,13 +13,13 @@
 <metal:block fill-slot="main">
 
 <tal:block define="
-  global objects python:model.get_tree();
-  global silva_permissions here/get_silva_permissions;
-  global filter request/filter | request/SESSION/filter | string:Asset;
-  global asset_context request/asset_context | request/SESSION/asset_context | string:/;
+  objects python:model.get_tree();
+  silva_permissions here/get_silva_permissions;
+  filter request/filter | request/SESSION/filter | string:Asset;
+  asset_context request/asset_context | request/SESSION/asset_context | string:/;
   dummy python: request.SESSION.set('filter', filter);
   dummy python: request.SESSION.set('asset_context', asset_context);
-  " />
+">
 
 <table class="columns columns2">
   <tbody>
@@ -28,10 +28,11 @@
         _____________________ sidebar _____________________
       </tal:block>
         <td class="left"
-          style="padding:0;">
+          style="padding:0;"
+          tal:define="query_string string:?filter=${filter}">
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'asset_lookup?filter=%s', breadcrumb_vein)" />
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'asset_lookup?filter=%s' % filter, breadcrumb_vein)" />
             </metal:fill-slot>
           </metal:use-macro>
         </td>
@@ -231,196 +232,7 @@ function setReference() {
   </tbody>
 </table>
 
-<div class="margins"               tal:replace="nothing">
-  <h2><img src="%s" width="16" height="16" alt="%s" 
-        tal:replace="structure python:view.render_icon(model)" />&nbsp;
-    Contents of 
-    <span class="folder-title">
-      &#xab;<tal:block content="model/get_title_or_id_editable" />&#xbb;
-    </span>
-  </h2>
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
-<span tal:replace="nothing"> ______________ framing table header ______________ </span>
-<tr class="topcontrols" valign="bottom"> 
-  <!-- top row of complete table with sidebar -->
-  <td width="22%" nowrap="1">
-    <img tal:attributes="src string:${root_url}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication: alt-[" accesskey="["
-      tal:condition="python:model != model.get_root()"
-      tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/asset_lookup?filter=%s' % (filter, )"><img width="16" height="16" border="0" alt="Up to containing Publication" hspace="3"
-      tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%root_url, '%s/globals/up_tree_gray.gif'%root_url)" /></a>
-    <span class="tablehead3">Publication</span>
-    <a href="../../edit/tab_edit" title="Up one level: alt-]" accesskey="]"
-      tal:attributes="href python:'../../edit/asset_lookup?filter=%s' % (filter)"
-      tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${root_url}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
-  </td>
-  <td class="divider"><img tal:attributes="src string:${root_url}/globals/pixel.gif" width="1" height="22" /></td>
-  <td>
-    <img tal:attributes="src string:${root_url}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s" 
-      tal:replace="structure python:view.render_icon(model)" />&nbsp;
-    <span class="tablehead3"><span tal:replace="model/id">id</span></span>
-  </td>
-  <td align="right">
-    <form action="." name="silvaObjects" method="POST">
-      <tal:block condition="python: not silva_permissions['ChangeSilvaContent'] or filter == 'Asset'">
-        &nbsp;
-      </tal:block>
-      <tal:block condition="python:silva_permissions['ChangeSilvaContent'] and filter != 'Asset'">
-        <input class="button" type="submit" name="add_object:method" 
-          value=" New:" title="Add a new item: alt-n" accesskey="n" 
-          tal:attributes="value string: New: ${filter} "
-          />
-        <input type="hidden" id="meta_type" name="meta_type" value="" 
-          tal:attributes="value string:Silva ${filter}" />
-        <input type="hidden" name="mode_asset:int" value="1" />
-      </tal:block>
-    </form>
-  </td>
-</tr>
-<span tal:replace="nothing"> _____________________ sidebar _____________________ </span>
-<tr class="focus" valign="top">
-  <td>
-    <!-- inner table for sidebar -->
-<table cellspacing="0" cellpadding="1" border="0" width="100%">
-<span tal:replace="nothing"> ______________ publication header ______________ </span>
-<tr>
-  <td align="left"
-    tal:attributes="class python:test(model == model.get_publication(), 'hilight', 'focus-fixed')">
-    <img tal:attributes="src string:${root_url}/globals/pixel.gif" width="1" height="16" />
-    <a href="top" title="Up to publication top" 
-      tal:define="url python:model.get_publication().absolute_url()"
-      tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><img tal:replace="structure python:view.render_icon(model.get_publication())" /></a>
-      <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
-        tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><span tal:replace="python:model.get_publication().get_title()">Publication top</span></a>
-  </td>
-</tr>
-
-<span tal:replace="nothing"> ______________ pub folders ______________ </span>
-<tal:block repeat="indent_item python:model.get_publication().get_container_tree()">
-  <tr tal:define="item python:indent_item[1]; indent python:indent_item[0]; 
-    oddrow repeat/indent_item/odd">
-    <td class="hilight"
-      tal:attributes="class python:test(model == item, 'focus', 'focus-cycle')">
-      <img width="5" height="5" tal:attributes="width python:indent * 16 + 5; src string:${root_url}/globals/pixel.gif" />
-      <span no-class="position-relative"
-        no-tal:attributes="style python:'left:%s%%' % str(indent*3)">
-        <a href="folder" title="Manage folder"
-          tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (item.absolute_url(), filter)"><img src="%s" width="16" height="16" alt="%s" 
-          tal:replace="structure python:view.render_icon(item)" /></a>
-          <a class="blacklink" href="title" title="id"
-            tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (item.absolute_url(), filter);
-              title string:id: ${item/id}">
-            <span tal:replace="python:item.getProperty('short_title') or item.get_title()">no title</span>
-          </a>
-      </span>
-    </td>
-  </tr>
 </tal:block>
-</table>
-</td>
-<td class="divider"><img tal:attributes="src string:${root_url}/globals/pixel.gif" width="1" height="1" /></td>
-<script language="JavaScript">
-<!--
-function setReference() {
-  doc = document.all ? document.all : document;
-  l = doc.mumble_form.mumble.length;
-  if (l) {
-    for (i=0; i<l; i++) {
-      if (doc.mumble_form.mumble[i].checked) {
-        reference = doc.mumble_form.mumble[i];
-        break;
-      }
-    }
-  } else {
-    // Just one radio button available.
-    // So element itself and not a NodeList returned *sigh*.
-    reference = doc.mumble_form.mumble;
-  }
-  // Split from value attribute, since NS4 does not know of a id attribute
-  retrieved = reference.value;
-  splitpos = retrieved.indexOf('||');
-  id = retrieved.substring(0, splitpos)
-  value = retrieved.substring(splitpos + 2, retrieved.length);
-  // Send back id and reference to calling window
-  opener.insertAssetReference(id, value, self);
-}
-//-->
-</script>
-<td class="focus-cycle" colspan="2">
-<form name="mumble_form" id="mumble_form">
-<table cellspacing="0" cellpadding="3" border="0" width="100%"
- tal:define="global assets python:test((filter == 'Asset'), model.get_assets(), model.get_assets_of_type('Silva %s'%filter))">
-<tr>
-  <th align="left" colspan="10">
-    <tal:block condition="python:not len(assets)">No</tal:block>
-    <tal:block content="string:${filter}s" />
-    <tal:block condition="python:not len(assets)">in this folder</tal:block>
-  </th>
-</tr>
-<tal:block repeat="asset assets">
-<tal:block define="oddrow repeat/asset/odd">
-<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
-  <td>
-    &nbsp;
-  </td>
-<span tal:replace="nothing"> _______ icon cell _______ </span>
-  <td nowrap="1">
-    <input type="radio" name="mumble" value=""
-      tal:attributes="value python:'%s||%s' % (asset.id, here.asset_lookup_path_mangler(asset_context, asset))" />
-    <a href="asset" title="View this asset"
-      tal:attributes="href string:${asset/absolute_url}"><img tal:replace="structure python:view.render_icon(asset)" /></a>
-  </td>
-<span tal:replace="nothing"> _______ id + title cell _______ </span>
-  <td> 
-    <a class="blacklink" href="asset" title="View this asset"
-      tal:attributes="href string:${asset/absolute_url}">
-      <span tal:replace="asset/id">id</span>
-    </a>
-  </td>
-<span tal:replace="nothing"> _______ title cell _______ </span>
-  <td>
-    <a class="blacklink" title="Preview"
-      tal:attributes="href string:${asset/absolute_url}/edit/tab_preview">
-      <span tal:replace="asset/get_title"
-        tal:condition="python:asset.get_title() != ''">title</span>
-    </a>
-  </td>
-<span tal:replace="nothing"> _______ modification date cell _______ </span>
-  <td>
-    <span tal:condition="python:asset.get_modification_datetime() != None"
-      tal:replace="structure python:view.service_utils.backend_short_datetime_to_str(asset.get_modification_datetime())">21 oct 2001 18:18</span>
-    <span tal:condition="python:asset.get_modification_datetime() == None" tal:omit-tag="">&nbsp;</span>
-  </td>
-<span tal:replace="nothing"> _______ author cell _______ </span>
-  <td tal:content="python:asset.sec_get_last_author_info().fullname()">
-    author name
-  </td>
-  <td>
-    &nbsp;
-  </td>
-</tr>
-</tal:block>
-</tal:block>
-<tr class="controls">
-  <td colspan="5" align="left">
-    <input type="button" class="cancelbutton" name="cancel" value="Cancel" title="Cancel operation - alt-c" accesskey="c"
-      onclick="window.close();return false;" />
-  </td>
-  <td colspan="5" align="right">
-    <input type="button" class="button" name="place" value="Place reference" title="Insert a reference to this asset - alt-p" accesskey="p" 
-      onclick="setReference();return false;" 
-      tal:condition="python:len(assets)" />
-  </td>
-</tr>
-</table>
-</form>
-</td>
-</tr>
-<tr>
-  <td class="divider" colspan="5"><img tal:attributes="src string:${root_url}/globals/pixel.gif" width="1" height="3" /></td>
-</tr>
-</table>
-</div>
-
 </metal:block>
 </metal:block>
 </html>
