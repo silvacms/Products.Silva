@@ -6,6 +6,9 @@
   <action></action>
   <enctype></enctype>
   <method>POST</method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>scale</i18n>
+  
   <groups>
     <group>
       <title>web presentation</title>
