@@ -6,7 +6,7 @@ from __future__ import nested_scopes
 # Zope
 from AccessControl import ModuleSecurityInfo
 from ZTUtils.Batch import Batch as ZTUBatch
-from ZTUtils import make_query
+from ZTUtils.Zope import make_query
 from ExtensionClass import Base
 
 module_security = ModuleSecurityInfo('Products.Silva.batch')
