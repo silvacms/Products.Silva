@@ -42,12 +42,12 @@ div.workspace {
 }
 
 img {
-    border: none;
-	vertical-align: middle;
+  border: none;
+  vertical-align: middle;
 }
 
 img.icon {
-    margin: 0em;
+  margin: 0em;
 }
 
 a.icon:hover {
@@ -109,8 +109,8 @@ div.pathBar img {
 div.tabs {
   display : block;
   height : 1.2em;
-    background-image: url(<dtml-var root>/globals/skyrise.gif);
-    background-repeat: repeat-x;
+  background-image: url(<dtml-var root>/globals/skyrise.gif);
+  background-repeat: repeat-x;
     background-color: &dtml-mainTabBackdrop;;
   margin : 0;
     padding: 0 16px 0 16px;
@@ -290,7 +290,7 @@ table {
 }
 
 table.columns {
-	width: 100%;
+    width: 100%;
     padding: 0;
 }
 
@@ -313,21 +313,21 @@ table.columns td.right {
 
 /* 2 column table */
 table.columns2 td.left {
-    width: 20%;
-    padding: 0 0 0 6px;
-    vertical-align: top;
+  width: 20%;
+  padding: 0 0 0 6px;
+  vertical-align: top;
 }
 table.columns2 td.main {
-    width: 80%;
-    padding: 0 6px 0 7px;
-    vertical-align: top;
+  width: 80%;
+  padding: 0 6px 0 7px;
+  vertical-align: top;
 }
 
 /* 1 column */
 table.columns1 td.main {
-    width: 100%;
-    padding: 0 6px 0 6px;
-    vertical-align: top;
+  width: 100%;
+  padding: 0 6px 0 6px;
+  vertical-align: top;
 }
 
 
@@ -336,14 +336,14 @@ table.columns1 td.main {
 table.listing {
     color: #444444;
     width: 100%;
-    margin: 0em 0em 2em 0em;    
+    margin: 0em 0em 2em 0em;
     border-left: &dtml-listingBorder;;
     border-bottom: &dtml-listingBorder;;
     border-collapse: collapse;
 }
 
 table.listing img {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 /* _____________________ rows ______________________ */
@@ -438,12 +438,12 @@ table.listing td.top {
 }
 table.listing td.top h2 {
   color: &dtml-listingTopHeadingColor;;
-    text-align: left;
-    margin: 0.1em 0.4em;
-    border: none;
+  text-align: left;
+  margin: 0.1em 0.4em;
+  border: none;
 }
 table.listing td.top img {
-    vertical-align: top;
+  vertical-align: top;
 }
 
 table.listing tr.top-controls td {
@@ -612,12 +612,6 @@ table.sublisting {
 form {
     border: none;
     margin: 0;
-}
-
-/* in use? */
-form.compact {
-    margin: 0;
-    padding: 0;
 }
 
 input {
@@ -920,46 +914,46 @@ select.clipboard option.disabled {
 
 /* feedback under the matrix nav */
 div.fixed-feedback {
-    position:relative; /* for IE6 peakaboo bug */
-    color: #555;
-    background: #f3f3d9;
-    margin: 0;
-    border-bottom: &dtml-inputBorder;;
-    padding: 0em 0.8em 0.1em 0.8em;
+  position:relative; /* for IE6 peakaboo bug */
+  color: #555;
+  background: #f3f3d9;
+  margin: 0;
+  border-bottom: &dtml-inputBorder;;
+  padding: 0em 0.8em 0.1em 0.8em;
 }
 div.fixed-alert {
-    position:relative; /* for IE6 peakaboo bug */
-    color: #3c2d50;
-    background: #f7d1d1;
-    margin: 0;
-    border-bottom: &dtml-inputBorder;;
-    padding: 0em 0.8em 0.1em 0.8em;
+  position:relative; /* for IE6 peakaboo bug */
+  color: #3c2d50;
+  background: #f7d1d1;
+  margin: 0;
+  border-bottom: &dtml-inputBorder;;
+  padding: 0em 0.8em 0.1em 0.8em;
 }
 div.fixed-clear {
-    background: transparent;
-    margin: 0;
-    padding: 0em 0.8em 0.1em 0.8em;
-    border-bottom: 1px solid &dtml-workspace;;
+  background: transparent;
+  margin: 0;
+  padding: 0em 0.8em 0.1em 0.8em;
+  border-bottom: 1px solid &dtml-workspace;;
 }
 
 /* floating feedback  */
 div.feedback {
-    color: #555;
-    background: #f3f3d9;
-    margin: 0;
-    border: &dtml-inputBorder;;
-    padding: 0.4em 0.7em 0.7em 0.7em;
+  color: #555;
+  background: #f3f3d9;
+  margin: 0;
+  border: &dtml-inputBorder;;
+  padding: 0.4em 0.7em 0.7em 0.7em;
 }
 div.alert {
-    color: #3c2d50;
-    background: #f7d1d1;
-    margin: 0;
-    border: &dtml-inputBorder;;
-    padding: 0.4em 0.7em 0.7em 0.7em;
+  color: #3c2d50;
+  background: #f7d1d1;
+  margin: 0;
+  border: &dtml-inputBorder;;
+  padding: 0.4em 0.7em 0.7em 0.7em;
 }
 div.feedback a {
-	color: &dtml-mainLinkColor;;
-    text-decoration: underline;
+    color: &dtml-mainLinkColor;;
+  text-decoration: underline;
 }
 
 /* table row/cell feedback  */
@@ -1025,7 +1019,7 @@ h6 {
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   margin: 0em 0em 1em 0em;
-    padding: 0;
+  padding: 0;
   border: none;
 }
 
@@ -1034,7 +1028,7 @@ code {
 }
 
 a {
-	text-decoration: none;
+    text-decoration: none;
     color: &dtml-mainLinkColor;;
     background-color: transparent;
 }
@@ -1108,7 +1102,7 @@ ul.tips-nested {
 
 
 .fixIE6widget {
-    width : 96%;
+  width : 96%;
 }
 
 input:focus, textarea:focus { 
@@ -1384,12 +1378,7 @@ a.closed:hover {
 
 .error {
   color : #cc0000;
-    /* negate plone error selector */
-    background: none;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    width: 100%;
+  background: transparent;
 }
 
 .fault {
