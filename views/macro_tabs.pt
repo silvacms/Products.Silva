@@ -62,6 +62,17 @@
       >
         /manage...
       </a>
+    <!-- ____________ Start hook for the EditOnPro Integration ____________ -->
+
+      <tal:block condition="python:model.meta_type == 'Silva Document' and hasattr(here, 'eopro')">
+        &nbsp;&nbsp;
+        <a tal:attributes="href python:'%s/edit/tab_edit_eopro' % url"
+        >
+          /eopro edit...
+        </a>
+      </tal:block>
+
+    <!-- ____________ End hook for the EditOnPro Integration ____________ -->
     <!-- ___________ Start hook for the experimental Bitflux WYSIWYG editor integration ___________ -->
 
       <tal:block condition="python:model.meta_type == 'Silva Document' and getattr(here, 'bxe_edit', None) and getattr(here, 'bxe_config.xml', None)">
