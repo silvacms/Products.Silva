@@ -291,7 +291,7 @@
         <value key="allow_empty_time" type="int" value="0" />
         <value key="css_class" type="str" value="" />
         <value key="title" type="str" value="Publication time" />
-        <value key="description" type="str" value="Automatically set." />
+        <value key="description" type="str" value="" />
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
@@ -354,7 +354,7 @@
         <value key="allow_empty_time" type="int" value="0" />
         <value key="css_class" type="str" value="" />
         <value key="title" type="str" value="Expiration time" />
-        <value key="description" type="str" value="Automatically set." />
+        <value key="description" type="str" value="" />
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
@@ -476,7 +476,7 @@
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="Last author" />
         <value key="truncate" type="int" value="0" />
-        <value key="description" type="str" value="User who last edited this content. Automatically set." />
+        <value key="description" type="str" value="User who last edited this content." />
         <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="" />
    </field_values>
@@ -537,7 +537,7 @@
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="URL" />
         <value key="truncate" type="int" value="0" />
-        <value key="description" type="str" value="Resource location of this content. Automatically set." />
+        <value key="description" type="str" value="Resource location of this content." />
         <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="" />
    </field_values>
