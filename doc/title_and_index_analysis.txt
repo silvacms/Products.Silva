@@ -1,0 +1,110 @@
+Problem/Solution/Implications analysis for the Folder title and index
+Content object issue.
+
+  Meta::
+
+    Valid for:  Silva development version
+    Author:     Jan-Wijbrand Kolman
+    Email:      jw@infrae.com
+    CVS:        $Revision: 1.1 $ $Date: 2003/09/30 16:12:30 $
+
+Problem :
+---------
+
+  In Silva it currently is hard for normal Authors to understand how the
+  title of a Container is related to the title of the "default" or "index"
+  Content object.
+
+  A Container does have a "index" Content object by default, even if the Author
+  does not really need one in the content structure he's producing. The
+  title of the Container completely depends on the title of the "index" -
+  if there is no "index" (e.g. it is deleted), the Container does not have
+  a title.
+
+Question:
+---------
+
+  Make Silva work in a simple, intuitive and self-explaining manner.
+
+Solutions:
+---------
+
+  o Containers will have their own title.
+
+  o The exceptional case of the "index" Content object is dropped.
+
+Consequences / Implications:
+----------------------------
+
+  o Container titles are not versionable.
+
+      Question:
+
+        This means an Author can change the title of a Container without
+        the review of an Editor.
+
+      Solution 1:
+
+        We leave it a that - it is just possible, like with other non-
+        versioned Content object types like Indexers.
+
+      Solution 2:
+
+         The Author can only change the title of a Container, if it does
+         not contain any published Content object (recursively).
+
+  o A Container does not have "content" to show.
+
+      Question:
+
+       What content should then be shown, when the URL to a Container is
+       opened?
+
+      Solution:
+
+        When the URL to a Container is opened, the content of the first
+        publically viewable Content object is shown.
+
+      Question:
+
+        How will Docma handle this? Since it expects, currently, to place
+        the content of the current "index" Content object, just after the heading
+        denoting a chapter.
+
+      Solution 1:
+
+        We leave it at that - there's no content right after the chapter's
+        heading.
+
+      Solution 2:
+
+        Since Authors who work with Silva content and Docma already, have
+        to know/learn some special rules, we add one rule:
+
+        "If the Author wants content just after the chapter's heading, he
+        has to give the publically viewable Content object the id 'index'. Docma
+        then, will suppress the title of this Content object."
+
+      Solution 3:
+
+        Provide an option at Silva-to-Docma-export-time to suppress the
+        titles for the first publically viewable Content objects. Maybe
+        even per Publication.
+
+  o In a TOC rendering, both the title of the Containers and the titles of
+    the contained Content objects are shown.
+
+      Question:
+
+        Whereto do these titles link to, especially in the case of the
+        Container title and the title of the first publically viewable
+        Content object?
+
+      Solution:
+
+        The titles link to the URL of their respective objects.
+ 
+  o Misc.
+
+    o No change in the Silva XML export schema; "silva_folder" elements
+      already have a "title" child element.
