@@ -36,6 +36,10 @@ Silva changes
               (n * n values were accessed per object). Upgrade SilvaMetadata
               to version x.x for another boost in indexing performance.
 
+            * Fulltext indexing of unapproved versions is avoided.
+
+            * Old versions should now not show up in the catalog anymore.
+
           XXX put in the right versions
           XXX upgrade script to fix existing catalogs?
           XXX upgrade script from 0.9.1 needs to be re-tested
