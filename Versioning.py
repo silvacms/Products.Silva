@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -215,7 +215,8 @@ class Versioning:
         """Create a new version of public version, throw away the current one
         """
         # get the id of the version to revert to
-        version_id_to_copy = self.get_public_version() or self.get_last_closed_version()
+        version_id_to_copy = (self.get_public_version() or
+                              self.get_last_closed_version())
         if version_id_to_copy is None:
             raise VersioningError, "Should never happen!"
         # get the id of the current version
@@ -226,7 +227,8 @@ class Versioning:
         # delete the current version
         self.manage_delObjects([current_version_id])
         # and copy the previous using the current id
-        self.manage_clone(getattr(self, version_id_to_copy), current_version_id, self.REQUEST)
+        self.manage_clone(getattr(self, version_id_to_copy),
+                          current_version_id, self.REQUEST)
         self._index_version((current_version_id,))
     
     def _get_editable_rfa_info(self):
