@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # Zope
 import Acquisition
 from OFS import SimpleItem, PropertyManager
@@ -109,7 +109,7 @@ class MultiViewRegistry(SimpleItem.SimpleItem):
         # start at the view root
         object = view_root
         # now search through the trees
-        # FIXME: breath first search instead?
+        # FIXME: breadth first search instead?
         for tree in self.trees:
             # get the tree in the acquisition context of whatever object
             # we are in (either the views_root or in fact somewhere in
