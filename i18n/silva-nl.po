@@ -1560,13 +1560,13 @@ msgstr "toevoegbare items"
 #: /views/edit/Container/Publication/settings_addables_form.form:41
 msgid "addables_addables_description"
 msgstr ""
-"Als 'overerven' niet is aangevinkt, bepalen deze instellingen wat voor items "
+"Als overerven niet is aangevinkt, bepalen deze instellingen wat voor items "
 "in deze publicatie mogen worden toegevoegd. Anders worden de toevoeg-"
 "instellingen overgeërfd van de bovenliggende publicatie."
 
 #: /views/edit/Container/Publication/settings_addables_submit.py:34
 msgid "Addable settings have not changed and remain acquired."
-msgstr "Toevoeg-instellingen zijn niet veranderd en blijven 'overgeërfd'."
+msgstr "Toevoeg-instellingen zijn niet veranderd en blijven overgeërfd."
 
 #: /views/edit/Container/Publication/settings_addables_submit.py:45
 msgid "Addable settings changed for: ${changed_metadata}"
@@ -1602,7 +1602,7 @@ msgstr "omzetten naar folder"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:40
 msgid "configure <u>a</u>ddables..."
-msgstr "toevoeg-instellingen configureren (<u>a</u>)..."
+msgstr "toevoeg-instellingen configureren..."
 
 #: /views/edit/Container/Publication/tab_metadata.pt:40
 msgid "change the addables allowed in this publication: alt-a"
@@ -1614,7 +1614,7 @@ msgstr "vormgeving"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:91
 msgid "acquired layout"
-msgstr "'overgeërfde' vormgeving"
+msgstr "overgeërfde vormgeving"
 
 #: /views/edit/Container/docma_queue.pt:100
 msgid "${estimated_time} &nbsp;seconds"
@@ -3225,7 +3225,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:138
 msgid "content publish ti<u>m</u>e:"
-msgstr "publicatie-tijdstip inhoud (<u>m</u>):"
+msgstr "publicatie-tijdstip inhoud:"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:138
 #: /views/edit/VersionedContent/tab_status_macros.pt:320
@@ -3246,7 +3246,7 @@ msgstr "sneltoets: alt-i (sommige platforms)"
 #: /views/edit/VersionedContent/tab_status_macros.pt:223
 #: /views/edit/VersionedContent/tab_status_macros.pt:339
 msgid "expiratio<u>n</u> time"
-msgstr "verlooptijdstip (<u>n</u>)"
+msgstr "verlooptijdstip"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:167
 #: /views/edit/VersionedContent/tab_status_macros.pt:232
@@ -3267,7 +3267,7 @@ msgstr "sneltoets: alt-m (sommige platforms)"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:205
 msgid "publish ti<u>m</u>e:"
-msgstr "publicatie tijdstip (<u>m</u>):"
+msgstr "publicatie tijdstip:"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:241
 #: /views/edit/VersionedContent/tab_status_macros.pt:357
@@ -3296,7 +3296,7 @@ msgstr "gesloten versie publiceren"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:320
 msgid "content publish ti<u>m</u>e"
-msgstr "publicatie-tijdstip inhoud (<u>m</u>)"
+msgstr "publicatie-tijdstip inhoud"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:348
 msgid "Empty indicates no expiration."
@@ -3766,7 +3766,7 @@ msgstr "naar vorig scherm terugkeren: alt-k"
 
 #: /views/edit/lookup_ui.pt:50
 msgid "bac<u>k</u>..."
-msgstr "terug (<u>k</u>)..."
+msgstr "terug..."
 
 #: /views/edit/lookup_ui.pt:76
 msgid "user lookup at &#xab;${title_or_id}&#xbb;"
@@ -3790,7 +3790,7 @@ msgstr "datumformaat: dag / maand / jaar &nbsp;23:59"
 
 #: /views/edit/macro_metadata.pt:160
 msgid "&#134; acquireable"
-msgstr "&#134; 'overerfbaar'"
+msgstr "&#134; overerfbaar"
 
 #: /views/edit/macro_metadata.pt:195 /views/edit/macro_metadata.pt:354
 msgid "content renderer"
@@ -3848,7 +3848,7 @@ msgstr "element"
 
 #: /views/edit/macro_metadata.pt:81
 msgid "acquired content"
-msgstr "'overgeërfde' inhoud"
+msgstr "overgeërfde inhoud"
 
 #: /views/edit/macro_metadata.pt:84 /views/edit/tab_access.pt:568
 #: /views/edit/tab_access.pt:741 /views/edit/Asset/Image/edit.pt:148
@@ -4036,7 +4036,7 @@ msgstr "Er is geen 'Groups Service' geïnstalleerd"
 
 #: /views/edit/tab_access.pt:334
 msgid "Silva Root in the ZMI"
-msgstr "'Silva Root' in de 'ZMI'"
+msgstr "Silva Root in de ZMI"
 
 #: /views/edit/tab_access.pt:335
 msgid ""
@@ -4047,7 +4047,7 @@ msgid ""
 "${service_groups}. No further configuration is necessary."
 msgstr ""
 "Je ziet deze melding omdat de 'Silva Groups' extensie is geïnstalleerd op "
-"het filesysteem, maar er geen 'Groups Service' aan deze Silva 'instantie' is "
+"het filesysteem, maar er geen 'Groups Service' aan deze Silva instantie is "
 "toegevoegd. Ga, om er één te installeren, naar de ${silva_root_in_the_ZMI}, "
 "kies &#8220;Groups Service&#8221; uit de 'add' lijst en geef die het id "
 "${service_groups}. Verdere configuratie is niet nodig."
@@ -4106,7 +4106,7 @@ msgstr "Open voor het publiek"
 
 #: /views/edit/tab_access.pt:578 /views/edit/tab_access.pt:751
 msgid "(acquired)."
-msgstr "('overgeërfd')."
+msgstr "(overgeërfd)."
 
 #: /views/edit/tab_access.pt:582
 msgid ""
@@ -4121,7 +4121,7 @@ msgstr "gebruikersrollen voor &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_access.pt:593
 msgid "acquire restriction"
-msgstr "beperking 'overerven'"
+msgstr "beperking overerven"
 
 #: /views/edit/tab_access.pt:593
 msgid ""
@@ -4164,7 +4164,7 @@ msgstr "hier gedefinieerde rollen"
 
 #: /views/edit/tab_access_acquire_minimum_role_submit.py:14
 msgid "Minimum role to access is now acquired"
-msgstr "Minimale rol voor toegang is nu 'overgeërfd'"
+msgstr "Minimale rol voor toegang is nu overgeërfd"
 
 #: /views/edit/tab_access_allow_access.py:17
 #: /views/edit/tab_access_allow_and_approve.py:17
