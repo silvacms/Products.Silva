@@ -98,14 +98,9 @@ input:hover, textarea:hover {
   background : #e3f0e4 none; 
 }
 
-select:focus { 
+select:focus, select:hover { 
   color : #333344; 
-  background : #b8d7da;
-}
-
-select:hover { 
-  color : #333344; 
-  background : #b8d7da;
+  background : #c3d5e7;
 }
 
 input:focus:hover, textarea:focus:hover { 
@@ -275,15 +270,15 @@ a.closed:hover {
 
 /* blacklink selectors */
 a.blacklink:link {
-  color : #444444;
+  color : #333333;
   text-decoration : none;
 }
 a.blacklink:visited {
-  color : #444444;
+  color : #333333;
   text-decoration : none;
 }
 a.blacklink:hover {
-  color : #444444;
+  color : #333333;
   text-decoration : underline;
 }
 

@@ -18,13 +18,6 @@ div.workspace {
   background: &dtml-contentWorkspace;;
 }
 
-/*
-div.tabs {
-    background-image: url(/silva/globals/skyrise.gif);
-    background-repeat: repeat-x;
-}
-*/
-
 div.tabs a {
   background: &dtml-contentTabBackground;;
 }
@@ -34,8 +27,12 @@ div.tabs a.selected {
   border-bottom: &dtml-contentTabBackgroundSelected; 1px solid;
 }
 
+div.tabs a.recede {
+  background: &dtml-contentTabBackgroundRecede;;
+  border-bottom: #8b939b 1px solid;
+}
+
 /* yellowjacket b3d4bf */
-/* green b3d4c4; bg e5eeea; */
 div.tabs a.interim {
   background: #729b7b;
 }

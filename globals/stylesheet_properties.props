@@ -62,9 +62,9 @@ mainTabBackgroundNotSelected:string=#000000
 
 headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
 headingFontColor:string=red
-headingSize1:string=140%
+headingSize1:string=150%
 headingSize2:string=130%
-headingSize3:string=120%
+headingSize3:string=115%
 headingSize4:string=110%
 headingSize5:string=105%
 headingSize6:string=100%
@@ -83,6 +83,7 @@ contentTabFontWeight:string=normal
 contentTabFontColorSelected:string=#000000
 
 contentTabBackground:string=#729b87
+contentTabBackgroundRecede:string=#8fb39e
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
@@ -98,12 +99,12 @@ requiredField:string=url(required.gif) right no-repeat
 
 textTransform:string=lowercase
 noBorder:string=none
-evenRowBackground:string=#c5d6dc
+evenRowBackground:string=#c6d2dd
 oddRowBackground:string=#000000
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 inputFontColor:string=#333767
-inputBackground:string=#d5e7e6
+inputBackground:string=#d5e7e7
 inputBorder:string=1px solid #797f7f
 
 buttonWeight:string=normal
@@ -141,20 +142,20 @@ boxHighlight:string=2px solid #000000
 
 
 listingTopBackground:string=#c4d6e7
-listingTopControlsBackground:string=#77868c
-listingControlsBackground:string=#7d8d94
-listingInter-ControlsBackground:string=#86979e
+listingTopControlsBackground:string=#616d73
+listingControlsBackground:string=#6c797f
+listingInter-ControlsBackground:string=#77858c
 listingDividerBackground:string=#6c7a7f
-listingBorder:string=1px solid #7d8d94
+listingBorder:string=1px solid #77858c
 
-listingTopHeadingColor:string=#2d374c
-listingTopControlsHeadingColor:string=#cce0f1
+listingTopHeadingColor:string=#2d2d4c
+listingTopControlsHeadingColor:string=#d0e4f6
 
-listingHeaderBackground:string=#8e9fa8
+listingHeaderBackground:string=#829199
 listingHeaderFontColor:string=#e0eefc
 listingLinkHover:string=underline
-listingEvenBackground:string=#cfe0e7
-listingOddBackground:string=#d7e8f0
+listingEvenBackground:string=#cfdbe7
+listingOddBackground:string=#d7e4f0
 
 listingTopBackgroundContent:string=#c5d4ca
 listingTopHeadingColorContent:string=

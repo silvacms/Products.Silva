@@ -281,7 +281,7 @@ table.columns1 {
 table.listing {
     color: #444444;
     width: 100%;
-    margin: 0em 0em 1em 0em;    
+    margin: 0em 0em 2em 0em;    
   border-collapse: collapse;
 }
 
@@ -380,6 +380,7 @@ table.listing td.top {
   color: &dtml-shade40;;
   background: &dtml-listingTopBackground;;
     border: &dtml-listingBorder; ! important;
+    border-style: solid solid solid solid ! important;
     padding-top: 0em;
     padding-bottom: 0em;
     vertical-align: bottom;
