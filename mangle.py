@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.6 2003/08/14 13:31:44 zagy Exp $
+# $Id: mangle.py,v 1.7 2003/08/14 15:01:05 zagy Exp $
 
 # Python
 import string
@@ -10,6 +10,7 @@ from types import StringType, UnicodeType, InstanceType
 
 # Zope
 from AccessControl import ModuleSecurityInfo
+from DateTime import DateTime as _DateTime
 
 # Silva
 from interfaces import ISilvaObject, IVersioning, IContainer, IAsset
@@ -300,4 +301,57 @@ class _Entities:
 module_security.declarePublic('entities')
 entities = _Entities()
         
+
+
+module_security.declarePublic('DateTime')
+class DateTime:
+    
+    __allow_access_to_unprotected_subobjects__ = 1
+    
+    def __init__(self, dt):
+        self._dt = dt
+    
+    def toStr(self):
+        dt = self._dt
+        if dt is None:
+            return ''
+        return "%02d %s %04d %02d:%02d" % (dt.day(), dt.aMonth().lower(),
+            dt.year(), dt.hour(), dt.minute())
+    __str__ = toStr
+
+    def toDahsedDateStr(self):
+        dt = self._dt
+        if dt is None:
+            return ''
+        return "%02d-%02d-%04d" % (dt.day(), dt.month(), dt.year())
+    
+    def toDateStr(self):
+        dt = self._dt
+        if dt is None:
+            return ''
+        return "%02d %s %s" % (dt.day(), dt.aMonth().lower(), dt.yy())
+    
+    def toShortStr(self):
+        dt = self._dt
+        if dt is None:
+            return ''
+        return "%02d&nbsp;%s&nbsp;%s&nbsp;%02d:%02d" % (dt.day(),
+            dt.aMonth().lower(), dt.yy(), dt.hour(), dt.minute())
+
+    def toDottedStr(self):
+        dt = self._dt
+        if dt is None:
+            return ''
+        return "%02d.%s.%s&middot;%02d:%02d" % (dt.day(), dt.aMonth().lower(),
+            dt.yy(), dt.hour(), dt.minute())
+
+module_security.declarePublic('Now')
+class Now(DateTime):
+
+    def __init__(self):
+        self._dt = _DateTime()
+
+    
+
+
 
