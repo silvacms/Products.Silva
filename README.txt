@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.10 $
+  CVS:        $Revision: 1.10.2.1 $
 
 Silva
 
@@ -51,6 +51,8 @@ Silva
 Installing Silva
 
   See INSTALL.txt
+
+  As of Silva 0.9.1.12, Zope 2.6.x is required.
 
 Using Silva
 

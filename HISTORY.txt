@@ -1,15 +1,17 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.49 $
+$Revision: 1.47.2.50 $
 
 Silva changes
 
-  0.9.1.12a1
+  0.9.1.12
 
     Features Added
 
       - New viewer + and viewer ++ roles can be used in access restriction.
 
+    Note that Zope 2.6.x is now required; 2.5.x is not supported anymore.
+    
   0.9.1.10
 
     Features Added
