@@ -11,10 +11,10 @@ node = context.REQUEST.node
 image = context.content()
 
 if not image:
-    return '<div class="error">[image element is broken]</div>'
+    return '<div class="error">[image reference is broken]</div>'
 
 alignment = node.getAttribute('alignment')
-if alignment == 'none':    
+if alignment == '':    
     return image.image.tag()
 elif alignment.startswith('image-'):
     # I don't want to do this... Oh well, long live CSS...
