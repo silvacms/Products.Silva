@@ -414,7 +414,7 @@
                         />
                       </tal:block>
                       <tal:block replace="nothing">
-                        ______________ past (to ghost) controls exist even
+                        ______________ paste (to ghost) controls exist even
                         if there's no content (there should be something on 
                         the clipboard though). ______________
                       </tal:block>
