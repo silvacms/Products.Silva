@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78.4.1.24.4 $
+# $Revision: 1.78.4.1.24.5 $
 
 import os
 
@@ -262,7 +262,7 @@ class Root(Publication):
             import Products.SilvaDocument
         except ImportError:
             raise DocumentationInstallationException, 'Documentation can not be installed since SilvaDocument is not available'
-        self.aq_inner._importObjectFromFile('%s/www/silva_docs.zexp' % os.path.dirname(__file__))
+        self.aq_inner._importObjectFromFile('%s/doc/silva_docs.zexp' % os.path.dirname(__file__))
         self._recursivePublish(self.silva_docs)
 
     def _recursivePublish(self, obj):
