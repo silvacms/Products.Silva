@@ -1,4 +1,4 @@
-Version of this document: $Revision: 1.9 $
+Version of this document: $Revision: 1.10 $
 
 Silva changes
 
@@ -6,8 +6,6 @@ Silva changes
 
     Features Added
 
-     - Custom error pages for HTTP error responses
-     
      - New "Reader" role, for readonly access to Silva Management 
      Interface (SMI) 
 
@@ -20,9 +18,11 @@ Silva changes
      - SMI (Silva Management Interface)
 
         * Fix and cleanup of tabs_status code (thanks to Clemens Klein-
-	Robbenhaar (a.o.) for reporting)
+	      Robbenhaar (a.o.) for reporting)
 
      - Presentation Pagetemplates: 
+
+        * Images "alt" attributes now show correct title
 
         * Cleanup of index_html
 
