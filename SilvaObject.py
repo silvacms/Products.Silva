@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.98 2003/11/24 19:58:19 clemens Exp $
+# $Id: SilvaObject.py,v 1.98.4.1 2004/01/05 09:51:39 faassen Exp $
 
 # python
 from types import StringType
@@ -49,7 +49,7 @@ class SilvaObject(Security, ViewCode):
 
     # location of the xml schema
     _xml_namespace = "http://www.infrae.com/xml"
-    _xml_schema = "silva-0.9.1.xsd"
+    _xml_schema = "silva-0.9.3.xsd"
 
     def __init__(self, id, title):
         self.id = id
