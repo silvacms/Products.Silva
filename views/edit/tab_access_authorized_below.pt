@@ -66,12 +66,14 @@
         Addresses are formatted for copying and pasting 
         in the &#8216;To:&#8217; field of an email message.
         <br />
+            <div class="fixIE6widget">  
         <textarea style="width:100%"
           name="data"
           cols="60"
           rows="5"
           wrap="soft" 
           tal:content="view/tab_access_get_emails" />
+            </div>
       </td>
     </tr>
   </tbody>

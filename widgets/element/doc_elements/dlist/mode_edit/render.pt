@@ -8,8 +8,11 @@
 </div>
 <script type="text/javascript" tal:content="structure here/asset_reference.js" />
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
+<div class="fixIE6widget">  
 <textarea style="width:100%" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
-  tal:content="here/editable_content">Dummy</textarea><br />
+    tal:content="here/editable_content">Dummy</textarea>
+</div>
+<br />
 </div>
 
 <div metal:fill-slot="element_controls" tal:omit-tag="">

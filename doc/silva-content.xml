@@ -35,7 +35,7 @@
         <value key="title" type="str" value="Title" />
         <value key="truncate" type="int" value="0" />
         <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+        <value key="extra" type="str" value="style=&quot;width: 96%&quot;" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -96,7 +96,7 @@
         <value key="title" type="str" value="Short title" />
         <value key="truncate" type="int" value="0" />
         <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+        <value key="extra" type="str" value="style=&quot;width: 96%&quot;" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>

@@ -363,9 +363,11 @@
           description
         </td>
         <td>
-          <textarea name="description"
-            style="width: 100%;"
-          ></textarea>
+            <div class="fixIE6widget">  
+            <textarea name="description"
+                      style="width: 100%;"
+            ></textarea>
+            </div>
         </td>
         <td i18n:translate="description_shown_in_queue">
           This description will be shown in the queue and the list of processed items.

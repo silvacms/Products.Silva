@@ -7,7 +7,7 @@
   tal:define="container node/get_container"
   tal:attributes="onclick python:'getAssetReference(\'%s/edit/hyperlink_lookup?asset_context=%s\', \' ((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % (container.absolute_url(), '/'.join(container.getPhysicalPath()))" />
 </div>
-<div class="textarea">
+<div class="fixIE6widget">
   <textarea style="width:100%" id="data" name="data" cols="65" rows="10" wrap="soft" 
     tal:attributes="rows here/get_lines" tal:content="here/editable_content">Content</textarea>
 </div>

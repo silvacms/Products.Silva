@@ -582,6 +582,7 @@
                 </tr>
                 <tr class="even">
                   <td>
+                    <div class="fixIE6widget">
                     <textarea name="access_restriction"
                       style="width:100%;"
                       tal:condition="python:model.hasProperty('access_restriction')"
@@ -589,6 +590,7 @@
                     <textarea name="access_restriction"
                       style="width:100%;"
                       tal:condition="python:not model.hasProperty('access_restriction')"></textarea>
+                    </div>
                   </td>
                 </tr>
               </tbody>

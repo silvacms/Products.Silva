@@ -7,9 +7,12 @@
 <input type="button" class="navigation" name="" value="add hyperlink..." title="create a hyperlink: alt-a" accesskey="a"
   tal:define="container node/get_container"
     tal:attributes="onclick python:'getAssetReference(\'%s/edit/hyperlink_lookup?asset_context=%s\', \' ((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % (container.absolute_url(), '/'.join(container.getPhysicalPath()))" />
-    </div>
+</div>
+<div class="fixIE6widget">  
 <textarea style="width:100%" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
-  tal:content="here/editable_content">Dummy</textarea><br />
+    tal:content="here/editable_content">Dummy</textarea>
+</div>
+<br />
 </div>
 
 <div metal:fill-slot="element_controls" tal:omit-tag="">

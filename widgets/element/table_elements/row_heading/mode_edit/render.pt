@@ -6,8 +6,10 @@
   <table width="100%" cellspacing="0"  border="0">
     <tr tal:attributes="colspan here/get_columns"  valign="top"><td>
       <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
-      <textarea id="data" name="data" cols="80" rows="2" wrap="soft" style="width:100%;"
-        tal:content="here/text_editable_content"></textarea><!--(rowh_mode_e)-->
+         <div class="fixIE6widget">
+          <textarea id="data" name="data" cols="80" rows="2" wrap="soft" style="width:100%;"
+              tal:content="here/text_editable_content"></textarea><!--(rowh_mode_e)-->
+         </div> 
     </td></tr>
   </table>
 </div>

@@ -36,7 +36,7 @@
         <value key="description" type="str" value="Subject of this content area." />
         <value key="max_length" type="str" value="" />
         <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+        <value key="extra" type="str" value="style=&quot;width: 96%&quot;" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -101,7 +101,7 @@
         <value key="description" type="str" value="Additional comments on  this content." />
         <value key="max_length" type="str" value="" />
         <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+        <value key="extra" type="str" value="style=&quot;width: 96%&quot;" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -597,7 +597,7 @@
         <value key="title" type="str" value="Contact name" />
         <value key="truncate" type="int" value="0" />
         <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+        <value key="extra" type="str" value="style=&quot;width: 96%&quot;" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -658,7 +658,7 @@
         <value key="title" type="str" value="Contact email" />
         <value key="truncate" type="int" value="0" />
         <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+        <value key="extra" type="str" value="style=&quot;width: 96%&quot;" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>

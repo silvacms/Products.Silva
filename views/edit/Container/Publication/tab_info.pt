@@ -15,12 +15,12 @@
 
 <!-- This form has no action on purpose -->
 <form>
-<span class="textarea">
+<div class="fixIE6widget">
 <textarea name="data" cols="65" rows="12" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="member python:model.sec_get_member(userid)"
     tal:condition="member/email | nothing" tal:replace="member/email">
 userid
 </span><span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></repeat></textarea>
-</span>
+</div>
 </form>
 
 <ul tal:replace="nothing">

@@ -16,6 +16,7 @@
 </enable>
 
 <td width="100%">
+ <div class="fixIE6widget">  
   <textarea style="width:100%" name="nodepath" cols="70" rows="2"
     tal:condition="simple"
     tal:attributes="name node_path"
@@ -24,6 +25,7 @@
   <ul tal:condition="not:simple">
     <li tal:replace="structure here/content" />
   </ul>
+ </div>
 </td>
 </tr>
 </table>
