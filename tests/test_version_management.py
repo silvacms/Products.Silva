@@ -7,10 +7,11 @@ if __name__ == '__main__':
 
 import SilvaTestCase
 from DateTime import DateTime
-from Products.Silva.adapters.version_management import getVersionManagementAdapter
 from StringIO import StringIO
-from Products.Silva.Versioning import VersioningError
 from OFS.ObjectManager import BadRequest
+from Products.Silva.Versioning import VersioningError
+from Products.Silva.adapters.version_management import getVersionManagementAdapter
+from Products.Silva.Versioning import VersioningError
 
 now = DateTime()
 
@@ -60,7 +61,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.doc.approve_version()
         self.assertEquals(self.adapter.getApprovedVersion().id, '10')
 
-    def test_revertEditableToOld(self):
+    def test_revertPreviousToEditable(self):
         # publish the current editable
         self.doc.set_unapproved_version_publication_datetime(now)
         self.doc.approve_version()
@@ -70,13 +71,15 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         # one after reverting
         old_doc = getattr(self.doc, '9')
         old_doc.content.manage_edit('<doc>foobar</doc>')
-        # since there are other tests to cover get*Version, we won't test if
-        # the publish and create actions succeeded, let's assume they did,
-        # we should now have an unapproved version 11 and a public 10
-        # let's revert the editable to version 9, which would make editable
-        # 9, public still 10 and the last closed (using the old API to get 
-        # that) 11
-        self.adapter.revertEditableToOld('9')
+        # Since there are other tests to cover get*Version, we won't test if
+        # the publish and create actions succeeded, let's assume they did.
+        #
+        # We should now have an unapproved version 11 and a public version 10.       
+        #
+        # Let's revert previous version 9 to editable, which would make
+        # editable version 12, public still is version 10 and the last
+        # closed is version 11.
+        self.adapter.revertPreviousToEditable('9')
         self.assertEquals(self.adapter.getUnapprovedVersion().id, '12')
         self.assertEquals(self.adapter.getPublishedVersion().id, '10')
         org_content_buffer = StringIO()
@@ -86,6 +89,22 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         getattr(self.doc, '9').content.writeStream(new_content_buffer)
         new_content = new_content_buffer.getvalue()
         self.assertEquals(org_content, new_content)
+        # We now have a unapproved (editable) version.
+        # Let's request approval for it, which should put it in pending
+        # state in turn result in an error raised.
+        self.doc.request_version_approval('foo bar')
+        self.assertRaises(
+            VersioningError, self.adapter.revertPreviousToEditable, '8')
+        # Now approve the editable version, without yet publishing it. This
+        # should result in an error raised too when trying to revert.
+        # To do this, we first need to close the currently published version
+        # and reject the approval request.
+        self.doc.close_version()
+        self.doc.reject_version_approval('baz qux')
+        self.doc.set_unapproved_version_publication_datetime(now + 1)
+        self.doc.approve_version()
+        self.assertRaises(
+            VersioningError, self.adapter.revertPreviousToEditable, '7')
 
     def test_getVersionIds(self):
         ids = self.adapter.getVersionIds()
@@ -141,7 +160,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
 
     # catalog tests, see if the adapter methods that change
     # workflow in some way result in correct catalog changes
-    def test_revertEditableToOld_catalog(self):
+    def test_revertPreviousToEditable_catalog(self):
         # queries for the interesting versions
         query_editable = {'meta_type': 'Silva Document Version',
                             'version_status': 'unapproved'}
@@ -175,7 +194,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(current_public[0].id, '10')
 
         # revert editable to some old version
-        self.adapter.revertEditableToOld('4')
+        self.adapter.revertPreviousToEditable('4')
 
         # get the ids of the current editable and public again
         current_editable = self.doc.service_catalog(query_editable)
@@ -195,7 +214,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(self.doc.get_last_closed_version(), '8')
         self.assertEquals(len(self.doc._previous_versions), 9)
 
-    def test_revertEditableToOld_integrity(self):
+    def test_revertPreviousToEditable_integrity(self):
         # publish the current editable
         self.doc.set_unapproved_version_publication_datetime(now)
         self.doc.approve_version()
@@ -206,7 +225,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         old_doc = getattr(self.doc, '9')
         old_doc.content.manage_edit('<doc>foobar</doc>')
         # revert to some old version
-        self.adapter.revertEditableToOld('9')
+        self.adapter.revertPreviousToEditable('9')
 
         # test the VersionedContent object's attributes
         self.assert_(self.doc._unapproved_version[0] is not None)

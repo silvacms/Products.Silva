@@ -96,14 +96,17 @@ class IVersionManagement(Interface):
     def getApprovedVersion():
         """return the current approved version, None if it doesn't exist"""
 
-    def revertEditableToOld(id):
-        """revert editable to an older version
+    def revertPreviousToEditable(id):
+        """revert a previous version to be editable version
 
-            the current editable will become the last closed (last closed will
-            move to closed list), if there's a published version that will
-            not be changed.
-            can raise AttributeError when no editable version is available
-            (XXX what to do when there is an approved version?)
+            The current editable will become the last closed (last closed
+            will move to closed list). If the published version will not be
+            changed.
+            
+            Raises AttributeError when version id is not available.
+            
+            Raises VersioningError when 'editable' version is approved or
+            in pending for approval.
         """
 
     def getVersionIds():

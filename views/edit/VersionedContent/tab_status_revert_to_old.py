@@ -22,7 +22,7 @@ if same_type(version, []):
     
 model.sec_update_last_author_info()
 try:
-    adapter.revertEditableToOld(version)
+    adapter.revertPreviousToEditable(version)
 except Exception, e:
     return view.tab_status(message_type="error", message=e)
 

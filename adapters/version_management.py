@@ -69,16 +69,23 @@ class VersionManagementAdapter(adapter.Adapter):
         return objects
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'revertEditableToOld')
-    def revertEditableToOld(self, copy_id):
-        if self.getApprovedVersion() is not None:
-            raise VersioningError, 'approved version available'
+                                'revertPreviousToEditable')
+    def revertPreviousToEditable(self, copy_id):
         if not hasattr(self.context, copy_id):
             raise AttributeError, copy_id
+
+        approved_version = self.getApprovedVersion()
+        if approved_version is not None:
+            raise VersioningError, 'No unapproved version available'
+            
         current_version = self.getUnapprovedVersion()
         # move the current editable version to _previous_versions
         if current_version is not None:
             current_version_id = current_version.id
+            status = self.getVersionStatus(current_version_id)
+            if status in ('pending', 'approved'):
+                raise VersioningError, 'No unapproved version available'
+            
             version_tuple = self.context._unapproved_version 
             if self.context._previous_versions is None:
                 self.context._previous_versions = []
