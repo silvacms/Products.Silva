@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.17 2003/09/18 13:56:01 zagy Exp $
+# $Id: GhostFolder.py,v 1.18 2003/09/18 17:44:39 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -25,18 +25,125 @@ from Products.Silva.icon import Adapter
 
 from Products.Silva.interfaces import \
     IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
-    IPublication, ISilvaObject, IGhostFolder, IIcon
+    IPublication, ISilvaObject, IGhostFolder, IIcon, IGhostContent
+    
 
 icon = 'www/silvaghostfolder.gif'
+
+class Sync:
+
+    def __init__(self, gf, h_container, h_ob, g_container, g_ob):
+        self.h_container = h_container
+        self.h_ob = h_ob
+        self.g_container = g_container
+        self.g_ob = g_ob
+
+        self.h_id = h_ob.getId()
+        if g_ob is not None:
+            self.g_id = g_ob.getId()
+
+    def update(self):
+        self._do_update()
+        return self.g_container._getOb(self.h_id)
+
+    def create(self):
+        self._do_create()
+        return self.g_container._getOb(self.h_id)
+
+    def _do_update(self):
+        raise NotImplementedError, "implemented in subclasses"
+
+    def _do_create(self):
+        raise NotImplementedError, "implemented in subclasses"
+
+    def __repr__(self):
+        return "<%s %s.%s -> %s.%s>" % (
+            str(self.__class__).split('.')[-1],
+            self.h_container.getId(), self.h_id,
+            self.g_container.getId(), self.g_id)
+
+class SyncFolder(Sync):
+
+    def _do_update(self):
+        pass
+
+    def _do_create(self):
+        self.g_container.manage_addProduct['Silva'].manage_addFolder(
+            self.h_id, '[no title]', 0)
+
+
+class SyncPublication(Sync):
+
+    def _do_update(self):
+        pass
+
+    def _do_create(self):
+        self.g_container.manage_addProduct['Silva'].manage_addPublication(
+            self.h_id, '[no title]', 0)
+
+
+class SyncGhost(Sync):
+
+    def _do_update(self):
+        content_url = self._get_content_url()
+        old_content_url = self.g_ob.get_content_url()
+        if content_url == old_content_url:
+            return
+        # if nobody changes a ghost manually this will never be reached, 
+        # but you never know
+        self.g_ob.create_copy()
+        version = self.g_ob.get_unapproved_version()
+        version.set_content_url(content_url)
+
+    def _do_create(self):
+        content_url = self._get_content_url()
+        self.g_container.manage_addProduct['Silva'].manage_addGhost(
+            self.h_id, content_url)
+
+    def _get_content_url(self):
+        return  self.h_ob.get_content_url()
+
+    
+class SyncContent(SyncGhost):
+
+    def _get_content_url(self):
+        return '/'.join(self.h_ob.getPhysicalPath())
+
+
+class SyncCopy(Sync):
+    # this is anything else -- copy it. We cannot check if it was 
+    # modified and if copying is really necessary.
+
+    def _do_update(self):
+        assert self.g_ob is not None
+        self.g_container.manage_delObjects([self.h_id])
+        self.create()
+    
+    def _do_create(self):
+        g_ob_new = self.h_ob._getCopy(self.g_container)
+        self.g_container._setObject(self.h_id, g_ob_new)
+
 
 class GhostFolder(GhostBase, Publishable, Folder.Folder):
     """GhostFolders are used to haunt folders."""
 
     meta_type = 'Silva Ghost Folder'
-    __implements__ = IContainer, IGhost, IGhostFolder
+    __implements__ = IContainer, IGhostFolder
     security = ClassSecurityInfo()
 
     _active_flag = 1
+
+    # sync map... (haunted objects interface, ghost objects interface, 
+    #   update/create class)
+    # order is important, i.e. interfaces are checked in this order
+    _sync_map = [
+        (IPublication, IPublication, SyncPublication),
+        (IContainer, IContainer, SyncFolder),
+        (IGhostContent, IGhostContent, SyncGhost),
+        (IContent, IGhostContent, SyncContent),
+        (None, None, SyncCopy),
+    ]
+        
 
     def __init__(self, id):
         GhostFolder.inheritedAttribute('__init__')(self, id)
@@ -47,7 +154,6 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     def haunt(self):
         """populate the the ghost folder with ghosts
         """
-        # XXX: this method is to long and should be splitted
         haunted = self._get_content()
         if haunted is None:
             return
@@ -67,49 +173,36 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                 g_container.manage_delObjects([g_id])
                 continue
             h_ob = h_container._getOb(h_id)
+            
             if g_id is None:
                 # object was added to haunted
                 g_ob = None
             else:
                 # object is there but may have changed
                 g_ob = g_container._getOb(g_id)
+            g_ob_new = None
+            
+            for h_if, g_if, update_class in self._sync_map:
+                if h_if and not h_if.isImplementedBy(h_ob):
+                    continue
+                if g_ob is None:
+                    # matching haunted interface, no ghost -> create
+                    g_ob_new = update_class(self, h_container, h_ob,
+                        g_container, g_ob).create()
+                    break
+                if g_if and not g_if.isImplementedBy(g_ob):
+                    # haunted interface machces but ghost interface doesn't
+                    continue
+                # haunted interface and ghost interface match -> update
+                g_ob_new = update_class(self, h_container, h_ob, g_container,
+                    g_ob).update()
+                break
+            
+            assert g_ob_new is not None, "no updater was called for %r" % (
+                (self, h_container, h_ob, g_container, g_ob), )
             if IContainer.isImplementedBy(h_ob):
-                if g_ob is not None:
-                    if IContainer.isImplementedBy(g_ob):
-                        # no need to change
-                        g_ob_new = g_ob
-                    else:
-                        g_container.manage_delObjects([h_id])
-                        g_ob = None
-                if g_ob is None:
-                    g_container.manage_addProduct['Silva'].manage_addFolder(
-                        h_id, '[no title]', 0)
-                    g_ob_new = g_container._getOb(h_id)
                 object_list.extend(self._haunt_diff(h_ob, g_ob_new))
-            elif IContent.isImplementedBy(h_ob):
-                if h_ob.meta_type == 'Silva Ghost':
-                    content_url = h_ob.get_content_url()
-                else:
-                    content_url = '/'.join(h_ob.getPhysicalPath())
-                if g_ob is not None:
-                    if g_ob.meta_type == 'Silva Ghost':
-                        # we already have a ghost sitting there, create a new
-                        g_ob.create_copy()
-                        version = g_ob.getLastVersion()
-                        version.set_content_url(content_url)
-                    else:
-                        g_container.manage_delObjects([h_id])
-                        g_ob = None
-                if g_ob is None:
-                    g_container.manage_addProduct['Silva'].manage_addGhost(
-                     h_id, content_url)
-            else:
-                # this is anything else -- copy it. We cannot check if it was 
-                # modified and if copying is really necessary.
-                if g_ob is not None:
-                    g_container.manage_delObjects([h_id])
-                g_ob_new = h_ob._getCopy(g_container)
-                g_container._setObject(h_id, g_ob_new)
+
         self._publish_ghosts()
         self._invalidate_sidebar(self)
 
@@ -157,7 +250,6 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         objects = [ (haunted,h_id, ghost, g_id)
             for (h_id, g_id) in ids ]
         return objects
-        
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
     def get_link_status(self, content=None):
@@ -245,7 +337,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     def is_deletable(self):
         return 1
 
-    def _publish_ghosts(self, activate=1):
+    def _publish_ghosts(self):
         activate_list = self.get_ordered_publishables()
         # ativate all containing objects, depth first
         while activate_list:
@@ -253,13 +345,13 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
             if IContainer.isImplementedBy(object):
                 activate_list += object.get_ordered_publishables()
             if IVersionedContent.isImplementedBy(object):
-                if activate:
+                if object.is_published():
+                    continue
+                if not object.get_unapproved_version():
                     object.create_copy()
-                    object.set_unapproved_version_publication_datetime(
-                        DateTime())
-                    object.approve_version()
-                else:
-                    object.close_version()
+                object.set_unapproved_version_publication_datetime(
+                    DateTime())
+                object.approve_version()
                     
     def _factory(self, container, id, content_url):
         return container.manage_addProduct['Silva'].manage_addGhostFolder(id,

@@ -1072,8 +1072,10 @@ class IGhost(Interface):
     def _factory(container, id, content_url):
         """call factory method in container context"""
 
+class IGhostContent(IGhost):
+    """Marker interface for "normal" ghosts, i.e. Silva.Ghost.Ghost"""
 
-class IGhostFolder(Interface):
+class IGhostFolder(IGhost):
     """Marker interface for ghost folders"""
     
 
