@@ -29,12 +29,12 @@ Type:
 </metal:block>
 <metal:block fill-slot="edit_notes">
 <ul class="tips">
-  <li><b>Tip:</b> Tab to the exit button or alt-e.</li>
+  <li><b>Tip:</b> Tab to the exit button or use alt-e.</li>
   <li>Multiple paragraphs can be entered in one step by adding an empty line space.</li>
-  <li>Text can be formatted (in <i>italic</i>, <b>bold</b>, etc) with &#8220;Silva markup&#8221;:
+  <li>Text can be formatted &#8211; in <i>italic</i>, <b>bold</b>, etc. &#8211; with &#8220;Silva markup&#8221;:
     <ul class="tips-nested">
       <li>**bold** ++italic++ __underlined__ ^^superscript^^ ~~subscript~~</li>
-      <li>((link text|http://www.x.yz)) ((target|http://www.x.yz|name)) if &#8216;name&#8217; is empty a new window opens</li>
+      <li>((link text|http://www.x.yz)) ((target|http://www.x.yz|name)) &#8212; if &#8216;name&#8217; is empty a new window opens</li>
       <li>[[index item|item as shown in index]]</li>
       <li tal:replace="nothing">{{name of person|name in index}}</li>
     </ul>

@@ -80,14 +80,14 @@
 </metal:block>
 <metal:block fill-slot="edit_notes">
   <ul class="tips">
-    <li>Use the "Get image reference" button to locate an image, or
+    <li>Use &#8220;Get image reference&#8221; (alt-i) to locate an image, or
       type in the full path.
     </li>
     <li>
-      Set a URL to make a link from this image.
+      Set a URL to make this image a link.
     </li>
-    <li>A 'float' alignment allows the next document element
-      to wrap around the image - if there's room.
+    <li>A &#8216;float&#8217; alignment allows the next document element
+      to wrap around the image &#8211; if there&#8217;s room.
     </li>
   </ul>
 </metal:block>
