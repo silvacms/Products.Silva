@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.46 $
+# $Revision: 1.47 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -9,6 +9,7 @@ import install
 from Products.Silva.ImporterRegistry import importer_registry
 from ExtensionRegistry import extensionRegistry
 import ExtensionService
+import SimpleMembership
 # enable Formulator support for FileSystemSite
 from Products.Formulator import FSForm
 # so we can register directories for FileSystemSite
@@ -52,6 +53,18 @@ def initialize(context):
         icon = "www/files_service.gif"
         )
 
+    context.registerClass(
+        SimpleMembership.SimpleMemberService,
+        constructors = (SimpleMembership.manage_addSimpleMemberServiceForm,
+                        SimpleMembership.manage_addSimpleMemberService),
+        )
+
+    context.registerClass(
+        SimpleMembership.SimpleMember,
+        constructors = (SimpleMembership.manage_addSimpleMemberForm,
+                        SimpleMembership.manage_addSimpleMember),
+        )
+    
     # register xml import functions
     importer_registry.register_tag('silva_publication', Publication.xml_import_handler)
     importer_registry.register_tag('silva_folder', Folder.xml_import_handler)

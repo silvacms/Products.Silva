@@ -55,8 +55,8 @@ def add_fss_directory_view(obj, name, base, *args):
     except:
         pass
     else:
-        if info is None:
-            raise ValueError('Not a FSS registered directory: %s' % path)
+        pass #if info is None:
+            #raise ValueError('Not a FSS registered directory: %s' % path)
     
     # -- end sanity check because of FSS 1.1 bug --
     
