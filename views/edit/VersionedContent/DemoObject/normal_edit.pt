@@ -54,7 +54,7 @@ The title
 <td class="transparent" width="16">&nbsp;</td>
 <td align="right">Information</td>
 <td align="right" class="warning">
-*
+&nbsp;
 </td>
 <td align="left">
 <input tal:replace="structure python:view.form.info.render(editable.info())" />
