@@ -176,4 +176,15 @@ class BaseHandler:
             if errors:
                 raise ValidationError(
                     "%s %s" % (str(content.getPhysicalPath()),str(errors)))
-        
+
+def generateUniqueId(org_id, context):
+        i = 0
+        id = org_id
+        ids = context.objectIds()
+        while id in ids:
+            i += 1
+            add = ''
+            if i > 1:
+                add = str(i)
+            id = 'copy%s_of_%s' % (add, org_id)
+        return id

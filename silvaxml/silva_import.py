@@ -3,7 +3,7 @@ from Products.Silva.Ghost import Ghost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.Folder import manage_addFolder
 from Products.Silva.Publication import manage_addPublication
-from Products.Silva.silvaxml.xmlimport import BaseHandler, theElementRegistry
+from Products.Silva.silvaxml.xmlimport import BaseHandler, theElementRegistry, generateUniqueId
 from Products.Silva.Link import Link, LinkVersion
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
@@ -37,10 +37,11 @@ class SilvaHandler(BaseHandler):
 class FolderHandler(BaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'folder'):
-            id = str(attrs[(None, 'id')])
+            id = attrs[(None, 'id')].encode('utf-8')
+            uid = generateUniqueId(id, self._parent)
             self._parent.manage_addProduct['Silva'].manage_addFolder(
-                id, '')
-            self._result = getattr(self._parent, id)
+                uid, '')
+            self._result = getattr(self._parent, uid)
                 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
@@ -53,9 +54,10 @@ class PublicationHandler(BaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'publication'):
             id = str(attrs[(None, 'id')])
+            uid = generateUniqueId(id, self._parent)
             self._parent.manage_addProduct['Silva'].manage_addPublication(
-                id, '')
-            self._result = getattr(self._parent, id)
+                uid, '')
+            self._result = getattr(self._parent, uid)
                 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'publication'):
@@ -133,7 +135,9 @@ class GhostHandler(BaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'ghost'):
-            ghost_object = Ghost(attrs[(None, 'id')])
+            id = str(attrs[(None, 'id')])
+            uid = generateUniqueId(id, self._parent)
+            ghost_object = Ghost(uid)
             self._parent.addItem(ghost_object)
             self._result = ghost_object
 
@@ -159,11 +163,10 @@ class LinkHandler(BaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'link'):
             id = attrs[(None, 'id')].encode('utf-8')
-            if not mangle.Id(self._parent, id).isValid():
-                return
-            object = Link(id)
-            self._parent._setObject(id, object)
-            self._result = getattr(self._parent, id)
+            uid = generateUniqueId(id, self._parent)
+            object = Link(uid)
+            self._parent._setObject(uid, object)
+            self._result = getattr(self._parent, uid)
         
 class LinkContentHandler(BaseHandler):
     def getOverrides(self):
@@ -213,11 +216,10 @@ class DocumentHandler(BaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'document'):
             id = attrs[(None, 'id')].encode('utf-8')
-            if not mangle.Id(self._parent, id).isValid():
-                return
-            object = Document(id)
-            self._parent._setObject(id, object)
-            self._result = getattr(self._parent, id)
+            uid = generateUniqueId(id, self._parent)
+            object = Document(uid)
+            self._parent._setObject(uid, object)
+            self._result = getattr(self._parent, uid)
 
     def EndElementNS(self, name, qname):
         if name == (NS_URI, 'document'):
