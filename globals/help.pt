@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- _______ Silva version 0.9.3.0b _______ -->
+<!-- _______ Silva version 0.9.3.0 _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal">
@@ -51,7 +51,7 @@
 </p>
 <p>
   <span class="subhead"><a name="nav">Changing screens with the tabs</a></span><br />
-  The tabs have numbered access keys, starting from one (the first tab) going up to five. You can navigate horizontally accross an item&#8217;s screens by using alt-1, alt-2, and so forth. 
+  The tabs have numbered access keys, starting from one going up to five. You can navigate horizontally accross an item&#8217;s screens by using alt-1, alt-2, and so forth. 
 </p>
 <p>
   Each tab has a toplink, the tall tree on the left side. It takes you to the top of the current publication, within the same tab, or &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
@@ -137,7 +137,10 @@
 <h3>Other screens</h3>
 
 <p>
-The Properties, Access, and Status screens as well as their subscreens (such as Lookup, Import, and Export) have access keys for most buttons. Usually the first letter of the button is the access key. You can always hover over the button to see the tooltip. Sometimes there are multiples of the same button, in which case only the first has an access key. 
+The Properties, Access, and Publish screens as well as their subscreens (such as Lookup, Import, and Export) have access keys for most buttons. Usually the first letter of the button is the access key. You can always hover over the button to see the tooltip. 
+</p>
+<p>
+If there are two buttons with the same name, the access key for the second is usually the first letter of the second word (e.g. for &#8220;get image reference&#8221; and &#8220;get link reference&#8221;, the access keys are &#8216;g&#8217; and &#8216;l&#8217;). Sometimes there are multiples of the same button, in which case only the first has an access key.
 </p>
 
 <h4>Notes</h4>
