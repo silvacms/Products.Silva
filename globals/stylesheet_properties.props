@@ -60,12 +60,8 @@ mainTabFontColor:string=#e3ecff
 mainTabFontColorSelected:string=#424244
 mainTabBackgroundNotSelected:string=#000
 
-subTabBackground:string=#66798c
-subTabBackgroundSelected:string=#cde0f2
-
-
 headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
-headingFontColor:string=red
+headingFontColor:string=#000
 headingSize1:string=150%
 headingSize2:string=130%
 headingSize3:string=115%
@@ -76,11 +72,11 @@ headingSize6:string=100%
 descriptionFont:string=bold 80% Verdana, Helvetica, Arial, sans-serif
 
 contentFont:string=80% Verdana, Helvetica, Arial, sans-serif
-contentBackground:string=#000
+contentBackground:string=red
 contentImageBorder:string=#000
 contentLinkActiveColor:string=#3399aa
 contentLinkVisitedColor:string=#4a00b2
-contentTabBorder:string=1px solid #000
+contentTabBorder:string=0px solid #000
 contentTabBackgroundNotSelected:string=#000
 contentTabBackdrop:string=#000
 contentTabFontWeight:string=normal
@@ -134,21 +130,21 @@ cancelButtonPadding:string=0 0.2em
 cancelButtonBorder:string=1px solid #b9c2c1
 cancelButtonFontColor:string=#ccd7d6
 
-boxBorder:string=1px solid #000
+boxBorder:string=0px solid #000
 boxHeaderBackground:string=#000
 boxHeaderFontColor:string=#000
 boxLinkBackground:string=url(linkTransparent.gif) 0em 0px no-repeat
 boxLinkColor:string=#000
 boxEvenBackground:string=#000
 boxOddBackground:string=000
-boxHighlight:string=2px solid #000
+boxHighlight:string=0px solid #000
 
 
 
 listingTopBackground:string=#c4d6e7
 listingTopControlsBackground:string=#616d73
 listingControlsBackground:string=#6c797f
-listingInter-ControlsBackground:string=#77858c
+listingInterControlsBackground:string=#77858c
 listingDividerBackground:string=#6c7a7f
 listingBorder:string=1px solid #77858c
 
@@ -177,7 +173,7 @@ searchPadding:string=0
 searchFontColor:string=#000
 
 footerBackground:string=#000
-footerBorder:string=1px solid #000
+footerBorder:string=0px solid #000
 
 
 

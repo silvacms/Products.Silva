@@ -339,15 +339,12 @@ table.listing {
 }
 
 table.listing thead {
-  border-top: &dtml-listingBorder; ! important;
 }
 
 table.listing tbody {
-  border-top: &dtml-listingBorder; ! important;
 }
 
 table.listing tfoot {
-  border-top: &dtml-listingBorder; ! important;
 }
 
 /* _____________________ rows ______________________ */
@@ -366,7 +363,7 @@ table.listing tr.top-controls {
 
 table.listing tr.inter-controls {
   color: #c9dfe2;
-  background: &dtml-listingInter-ControlsBackground;;
+  background: &dtml-listingInterControlsBackground;;
 }
 
 tr.divider, th.divider, td.divider {
@@ -374,20 +371,15 @@ tr.divider, th.divider, td.divider {
   background: &dtml-listingDividerBackground;;
 }
 
-/* not in use */
-table.listing tr.fixed, td.fixed {
-    background: &dtml-evenRowBackground;;
-}
-
 /* _____________________ cells _____________________ */
 
 table.listing th {
-    text-align: left;
     color: &dtml-listingHeaderFontColor;;
-    background: #71969a;
     background: &dtml-listingHeaderBackground;; 
     padding-left: 0.6em;
     padding-right: 0.6em;
+  border-top: none;
+    text-align: left;
 }
 
 table.listing th.listing-left {
@@ -400,12 +392,6 @@ table.listing th.listing-right {
   width: 4%;
   text-align: right;
   padding-right: 0.4em;
-}
-
-/* not in use */
-table.listing th.empty {
-    border: none;
-    border-bottom: &dtml-listingBorder;;
 }
 
 table.listing th.align-left, table.listing td.align-left {
@@ -429,15 +415,11 @@ table.listing td {
 table.listing td.top {
   color: &dtml-shade40;;
   background: &dtml-listingTopBackground;;
-    border: &dtml-listingBorder; ! important;
-    border-style: solid solid solid solid ! important;
-    padding-top: 0em;
-    padding-bottom: 0em;
-    vertical-align: bottom;
-    /* workaround for plone 'insane IE row bug workaround' */
-    position: relative;
-    left: 0px;
-    top: 0px;
+  border: &dtml-listingBorder;;
+  border-style: solid solid solid solid;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  vertical-align: bottom;
 }
 
 table.listing td.top h2 {
@@ -445,13 +427,6 @@ table.listing td.top h2 {
     text-align: left;
     margin: 0.1em 0.4em 0.1em 0.4em;
     border: none;
-}
-
-/* not in use */
-table.listing td.top div.addMenu {
-    padding-left: 0.4em;
-    display: inline;
-    float: left;
 }
 
 table.listing td.top img {

@@ -264,8 +264,8 @@ div.searchBox {
 }
 
 input.searchButton {
-    font-size: 100% ! important;
-    margin-bottom: 1px ! important;
+    font-size: 100%red;
+    margin-bottom: 1pxred;
 }
 
 div.tabs {
@@ -613,14 +613,10 @@ table.listing th {
 
 table.listing td.top {
     border-left: 1px solid &dtml-contentBackground;;
-    border-top: 1px solid &dtml-contentBackground; ! important;
-    border-right: 1px solid &dtml-contentBackground; ! important;
-    text-align: right ! important;
+    border-top: 1px solid &dtml-contentBackground;;
+    border-right: 1px solid &dtml-contentBackground;;
+    text-align: right;
     padding: 0em 0em 1em 0em;
-    /* insane IE row bug workaround */
-    position: relative;
-    left: -1px;
-    top: -1px;
 }
 
 table.listing tr.odd {
