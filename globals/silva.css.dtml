@@ -66,6 +66,32 @@ tr.hilite {
   background-color : #8cb0b0; 
 }
 
+.borders {
+    border-width : 1px;
+    border-color : #090909;
+    border-style : none;
+    }
+
+.topleft {
+    border-top-style : solid;
+    border-left-style : solid;
+    }
+
+.top {
+    border-top-style : solid;
+    }
+
+.left {
+    border-left-style : solid;
+    }
+
+.bottom {
+    border-bottom-style : solid;
+    }
+
+.right {
+    border-right-style : solid;
+    }
 
 
 /* _________________________________________________________ link definitions _____ */
