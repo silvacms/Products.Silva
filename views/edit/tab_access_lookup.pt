@@ -21,8 +21,10 @@
         Back
       </a>
     </h3>
-    <h2 class="worksheet">
-      Users lookup
+    <h2 class="worksheet"><img src="%s" width="16" height="16" alt="%s"
+    tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+      Users lookup at <span class="folder-title" 
+        tal:content="structure string:&#xab;${model/get_title_html}&#xbb;">title here</span>
     </h2>
     <div class="worksheet borders top bottom left right"
       tal:define="global no_entry string:-"
@@ -193,7 +195,7 @@
                     accesskey="d"
                     name="lookup_remove_from_selection:method"
                     style="float: left;"
-                    title="Remove users from your selection - ctrl-d"
+                    title="Remove users from your selection: alt-d"
                     type="submit"
                     value="Deselect" />
                 </metal:block>
