@@ -18,6 +18,11 @@
 
 <dtml-with stylesheet_properties>
 
+body {
+  background-image: url(<dtml-var root>/globals/skyrise.gif);
+  background-repeat: repeat-x;
+}
+
 div.workspace {
   background : &dtml-workspace;;
   margin: none;
@@ -85,56 +90,62 @@ div.pathBar img {
 /* _____________________________________________________________ tabs _____ */
 
 div.tabs {
-    background-color: &dtml-mainTabBackdrop;;
+  display : block;
+  width : 100%;
+  height : 1.2em;
     background-image: url(<dtml-var root>/globals/skyrise.gif);
     background-repeat: repeat-x;
+    background-color: &dtml-mainTabBackdrop;;
     border-bottom-color: #8b939b;
-    padding: 0em 0em 0em 15px;
-}
-
-div.tabs img {
-    vertical-align: bottom;
-    padding: 0;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+  margin : 0;
+    padding: 0 0 0 15px;
 }
 
 div.tabs a {
     /* The normal, unselected tabs. They are all links */
+  float : left;
+  display : block;
+  width : 7em;
+  height : 1.1em;
+  text-align : center;
     background: &dtml-mainTabBackground;;
-    border-width: 1px;
-    border-style: solid solid none solid;
+  border : &dtml-mainTabBorderColor; 1px solid;
+    border-bottom-color: #8b939b;
     margin: 0;
-    padding: 0em 1.5em;
+    padding: 0;
 }
 
 div.tabs a:hover {
     background: &dtml-mainTabBackgroundSelected;;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
   text-decoration: none;
 }
 
 div.tabs a.selected {
     /* The selected tab. There's only one of these */
     background: &dtml-mainTabBackgroundSelected;;
-    border-style: solid solid solid solid;
-    border-bottom: &dtml-mainTabBackgroundSelected; 1px solid;
+    border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.recede {
   /* The parent tab of a subscreen. There might be one of these :) */
   color: &dtml-mainTabFontColorSelected;;
-  background: #99a9c0;
   background: &dtml-mainTabBackgroundRecede;;
-  border-style: solid solid solid solid;
-  border-bottom: &dtml-shade50; 1px solid;
+  border-bottom-color: &dtml-mainTabBackground;;
 }
 
 div.tabs a.recede:hover {
-    background: &dtml-mainTabBackgroundSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.left {
     /* The left side of the tab. */
-    border-style: solid none none solid;
-  padding: 0em 0em 0em 0.3em;
+  width : 1.4em;
+    border-style: solid none solid solid;
+  border-bottom-color: #8b939b;
 }
 
 div.tabs a.left:hover {
@@ -143,9 +154,9 @@ div.tabs a.left:hover {
 
 div.tabs a.right {
     /* The right side of the tab. */
-    border-style: solid solid none none;
-    margin-left: -0.4em;
-  padding: 0em 0em 0em 0.3em;
+  width : 1.4em;
+    border-style: solid solid solid none;
+  border-bottom-color: #8b939b;
 }
 
 div.tabs a.right:hover {
@@ -156,33 +167,147 @@ div.tabs a.right:hover {
 div.tabs a.normal {
     font-size: 100%;
     color: &dtml-shade46;;
-    background: none;
+    background: transparent;
     border: none;
-    margin: 0;
+    margin: 0 9px 0 0;
     padding: 0;
 }
 div.tabs a.normal:visited {
   color: &dtml-shade46;;
 }
 div.tabs a.normal:hover {
-  color: &dtml-shade68;;
+  color: &dtml-shade36;;
   text-decoration: underline;
 }
 
+div.tabs img {
+    margin: 0.3em 0 0 0;
+  vertical-align : bottom;
+}
 
-/* ________________________________________ river bar (or sidewalk :) _____ */
-
-div.riverBar {
-  /* IE workaround */
-  font-size : 30%;
-  min-height : 3px;
+div.tabs div.air {
+  display : block;
+  float : left;
+  background : transparent;
+  width : 2em;
   height : 1em;
+}
+
+
+/* __________________________________________________________ subtabs _____ */
+
+div.subtabs {
+  display : block;
+  width : 100%;
+  height : 1.2em;
+  background-image: url(<dtml-var root>/globals/skyglint.gif);
+  background-repeat: repeat-x;
+  background-color: &dtml-mainTabBackgroundRecede;;
+  border: none;
+  margin: 0;
+  padding: 0em 0em 0em 15px;
+}
+
+div.subtabs a {
+  /* The normal, unselected subtabs */
+  display : block;
+  float : left;
+  width : 7em;
+  height : 1.1em;
+  text-align : center;
+  color : &dtml-mainTabFontColor;;
+  background: &dtml-subTabBackground;;
+  margin: 1px 0 0 0;
+  padding: 0;
+  border : #535d96 1px solid;
+  border-bottom: none;
+  border-collapse : collapse;
+}
+
+div.subtabs a:hover {
+  color : &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-top-color: &dtml-mainTabBackgroundSelected;;
+  text-decoration: none;
+}
+
+div.subtabs a.selected {
+  /* The selected subtab. There's only one of these */
+  background: &dtml-mainTabBackgroundSelected;;
+  color : &dtml-mainTabFontColorSelected;;
+  border-top-color: &dtml-mainTabBackgroundSelected;;
+}
+
+div.subtabs a.selected:hover {
+  border-top-color: &dtml-mainTabBackgroundSelected;;
+}
+
+div.subtabs a.left {
+  /* The left side of the subtab */
+  width : 1.4em;
+  border-style: solid none none solid;
+}
+
+div.subtabs a.left:hover {
+    border-style: none none none solid;
+}
+
+div.subtabs a.right {
+    /* The right side of the tab */
+  width : 1.4em;
+    border-style: solid solid none none;
+}
+
+div.subtabs a.right:hover {
+    border-style: none solid none none;
+}
+
+div.subtabs img {
+    margin: 0.3em 0 0 0;
+  vertical-align : bottom;
+}
+
+div.subtabs div.air {
+  display : block;
+  float : left;
+  background : transparent;
+  width : 2em;
+  height : 1em;
+}
+
+
+/* _________________________________________ flow bar (or sidewalk :) _____ */
+
+div.flowBar {
+  display : block;
+    /* IE workaround */
+    font-size : 30%;
+    height : 1em;
+  width : 100%;
+  min-height : 3px;
   max-height : 0.3em;
   background: &dtml-mainTabBackgroundSelected;;
-  margin-bottom: 0;
+  margin: 0;
   padding: 0;
   border-bottom: #636da6 1px solid;
-  border-collapse: collapse;
+  border-collapse : collapse;
+  clear : all;
+}
+
+div.subBar {
+  display : block;
+    /* IE workaround */
+    font-size : 20%;
+    height : 1em;
+  width : 100%;
+  min-height : 2px;
+  max-height : 0.2em;
+  background: &dtml-subTabBackground;;
+  margin: -1px 0 0 0;
+  padding: 0;
+  border-top: #636da6 1px solid;
+  border-bottom: #434d86 1px solid;
+  clear : all;
 }
 
 
@@ -476,9 +601,8 @@ table.listing th.top a.normal:hover {
 
 td.unselected {
   background: &dtml-evenRowBackground;;
-  border-top: &dtml-evenRowBackground;;
-  border-bottom: &dtml-evenRowBackground;;
-  border-collapse: collapse;
+  border-top: 1px solid &dtml-evenRowBackground;;
+  border-bottom: px solid &dtml-evenRowBackground;;
 }
 
 td.selected {
@@ -894,7 +1018,7 @@ div.clear {
     color: transparent;
     background: transparent;
     border: 1px solid transparent;
-    border-style: solid solid none solid;
+    border-style: solid none none none;
     margin: 0;
     padding: 0em 0.6em 0.1em 0.6em;
 }

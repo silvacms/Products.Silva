@@ -92,7 +92,7 @@
   <!-- Help link -->
   <div class="tabs">
       <a class="normal"
-        style="float:right; margin-right:6px; padding-left:0.8em; padding-right:0em;"
+        style="float:right;"
         title="Silva help: alt-h"
         i18n:attributes="title"
         accesskey="h"
@@ -103,7 +103,7 @@
       >
         help
       </a>
-
+ 
     <tal:repeat tal:repeat="item tabs">
       <tal:define define="
         tab_info python:view.get_tab_info(item);
@@ -139,13 +139,13 @@
           ">
           <img tal:replace="structure here/globals/up_level.gif" />
         </a>
-        &nbsp;&nbsp;
+        <div class="air"> </div>
       </tal:define>
     </tal:repeat>
 
   </div>
 
-  <div class="riverBar"></div>
+  <div class="flowBar"></div>
 
 </tal:block>
 

@@ -51,7 +51,7 @@ pathBarLinkColor:string=#000000
 
 mainTabBackdrop:string=#d7e8f0
 mainTabBackground:string=#7a90a6
-mainTabBackgroundRecede:string=#9baec9
+mainTabBackgroundRecede:string=#b1c7e6
 mainTabBackgroundSelected:string=#c1daf3
 mainTabBorderColor:string=#3d4b67
 mainTabBorderColorSelected:string=#26334c
@@ -59,6 +59,10 @@ mainTabFontWeight:string=normal
 mainTabFontColor:string=#e3ecff
 mainTabFontColorSelected:string=#424244
 mainTabBackgroundNotSelected:string=#000000
+
+subTabBackground:string=#66798c
+subTabBackgroundSelected:string=#cde0f2
+
 
 headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
 headingFontColor:string=red
