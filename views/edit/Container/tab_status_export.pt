@@ -108,7 +108,7 @@
 
             <tbody>
               <tr>
-                <th class="align-right"
+                <th width="30%" class="align-right"
                   i18n:translate="options">
                   options
                 </th>
@@ -119,14 +119,14 @@
                 </th>
               </tr>
 
-              <tr class="even">
+              <tr class="odd">
                 <td class="align-right">
                   <label for="with_sub_publications"
                     i18n:translate="include_sub_publications?">
                     include sub publications?
                   </label>
                 </td>
-                <td class="align-center">
+                <td width="8%" class="align-center">
                   <input type="checkbox"
                     name="with_sub_publications"
                     id="with_sub_publications"
@@ -136,7 +136,7 @@
                 </td>
               </tr>
 
-              <tr class="odd">
+              <tr class="even">
                 <td class="align-right">
                   <label for="export_last_version"
                     i18n:translate="export_newest_versions?">
@@ -151,24 +151,6 @@
                 </td>
                 <td i18n:translate="if_not_checked_the_published_version_is_exported">
                   If not checked the published version is exported.
-                </td>
-              </tr>
-
-              <tr class="even">
-                <td class="align-right">
-                  <label for="export_closed_content"
-                    i18n:translate="export_closed_content?">
-                    export closed content?
-                  </label>
-                </td>
-                <td class="align-center">
-                  <input type="checkbox"
-                    name="export_closed_content"
-                    id="export_closed_content"
-                  />
-                </td>
-                <td i18n:translate="check_to_include_closed_content">
-                  Check to include closed content in the export.
                 </td>
               </tr>
             </tbody>
@@ -209,7 +191,7 @@
 
       <tbody>
         <tr>
-          <th class="align-right"
+          <th width="30%" class="align-right"
             i18n:translate="options">
             options
           </th>
@@ -220,14 +202,14 @@
           </th>
       </tr>
 
-        <tr class="even">
+        <tr class="odd">
           <td class="align-right">
             <label for="with_sub_publications"
               i18n:translate="include_sub_publications?">
               include sub publications?
             </label>
           </td>
-          <td class="align-center">
+          <td width="8%" class="align-center">
             <input type="checkbox"
               name="with_sub_publications"
               id="with_sub_publications"
@@ -237,11 +219,11 @@
           </td>
         </tr>
 
-        <tr class="odd">
+        <tr class="even">
           <td class="align-right">
             <label for="export_last_version"
               i18n:translate="export_last_version?">
-              export last version?
+              export only last version?
             </label>
           </td>
           <td class="align-center">

@@ -186,11 +186,12 @@
           />
         </td>
         <td i18n:translate="locate_archive_file_to_import">
-          Locate a zip file containing Assets to import (file names will become ids).
+          Locate a zip file containing Assets to import or a zip file created
+          by a full media export.
         </td>
       </tr>
 
-      <tr class="odd">
+      <tr class="even">
         <td class="align-right">
           <span i18n:translate="title_for_assets">
             title for assets
@@ -206,11 +207,12 @@
           />
         </td>
         <td i18n:translate="provide_optional_title_for_assets">
-          Provide an optional title for all Assets created from the contents of the zip file.
+          Provide an optional title for all Assets created from the contents
+          of a zip file with Assets.
         </td>
       </tr>
 
-      <tr class="even">
+      <tr class="odd">
         <td class="align-right">
           <span i18n:translate="recreate_subdirs">
             subdirectories
@@ -223,7 +225,8 @@
           />
         </td>
         <td i18n:translate="recreate_subdirs_with_silva_folders">
-          Recreate the subdirectory structure of the zip file by adding Silva Folders.
+          Recreate the subdirectory structure of a zip file with Assets by
+          adding Silva Folders. 
         </td>
       </tr>
 
