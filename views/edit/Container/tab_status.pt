@@ -294,14 +294,6 @@
                       title="withdraw approval of approved versions: alt-v"
                       accesskey="v"
                     />
-                    <input class="button" 
-                      style="background:#303060;"
-                      type="submit" 
-                      name="tab_status_new_version:method" 
-                      value="New version" 
-                      title="create new versions of published docs: alt-n" 
-                      accesskey="n"
-                    />
                     <input class="button"
                       style="background:#000070;"
                       type="submit"
@@ -309,6 +301,13 @@
                       value="Close"
                       title="close published items: alt-c"
                       accesskey="c"
+                    />
+                    <input class="button" 
+                      type="submit" 
+                      name="tab_status_new_version:method" 
+                      value="New version" 
+                      title="create new versions of published docs: alt-n" 
+                      accesskey="n"
                     />
                   </td>
                   <td class="align-right">
@@ -322,7 +321,6 @@
                   </td>
                   <td class="align-right">
                     <input class="button"
-                      style="background:#aa2400;"
                       name="tab_status_approve:method"
                       type="submit"
                       value="Approve"
@@ -341,7 +339,7 @@
                       style="background:#8f7f01;"
                       type="submit"
                       name="tab_status_withdraw:method"
-                      value="Withdraw approval request"
+                      value="Withdraw"
                       title="withdraw pending request for approval: alt-w"
                       accesskey="w"
                     />
@@ -354,7 +352,6 @@
                       value="Revoke"
                     />
                     <input class="button" 
-                      style="background:#303060;"
                       type="submit" 
                       name="tab_status_new_version:method" 
                       value="New version" 
@@ -364,7 +361,6 @@
                   </td>
                   <td class="align-right">
                     <input class="button"
-                      style="background:#600000;"
                       type="submit"
                       name="tab_status_request_approval:method"
                       value="Request approval"
