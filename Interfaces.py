@@ -312,4 +312,15 @@ class Container(SilvaObject):
         """
         pass
     
-    
+class TransparentContainer(Container):
+    """A container that is transparent in the sense that get_tree
+    queries for subjects.
+    """
+    pass
+
+class OpaqueContainer(Container):
+    """A container that is opaque in the sense that get_tree doesn't
+    query for subobjects, but stops.
+    """
+    pass
+

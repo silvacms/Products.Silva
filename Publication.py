@@ -13,7 +13,7 @@ class Publication(Folder):
     """
     meta_type = "Silva Publication"
 
-    __implements__ = Interfaces.Container
+    __implements__ = Interfaces.OpaqueContainer
     
     security = ClassSecurityInfo()
 

@@ -18,7 +18,7 @@ class Folder(TocSupport, Folder.Folder):
     """
     meta_type = "Silva Folder"
 
-    __implements__ = Interfaces.Container
+    __implements__ = Interfaces.TransparentContainer
     
     security = ClassSecurityInfo()
 
@@ -155,7 +155,7 @@ class Folder(TocSupport, Folder.Folder):
             items.insert(0, first_item)
         # now add them to the main toc list
         for item in items:
-            if Interfaces.Container.isImplementedBy(item):
+            if Interfaces.TransparentContainer.isImplementedBy(item):
                 l.append((indent, item))
                 item._get_tree_helper(l, indent + 1)
             else:
