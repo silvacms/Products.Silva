@@ -25,7 +25,7 @@ class SilvaObject(Interface.Base):
         pass        
 
     # ACCESSORS
-    def title(self):
+    def get_title(self):
         """The title of the content object.
         """
         pass

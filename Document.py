@@ -111,13 +111,13 @@ class Document(VersionedContent):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'title')
-    def title(self):
+    def get_title(self):
         """Get title. If we're the default document,
         we get title from our containing folder (or publication, etc).
         """
         if self.is_default():
             # get the nearest container's title
-            return self.get_container().title()
+            return self.get_container().get_title()
         else:
             return self._title
 

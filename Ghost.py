@@ -27,13 +27,13 @@ class Ghost(VersionedContent):
         # FIXME: what to do here?
         pass
     
-    def title(self):
+    def get_title(self):
         """Get title.
         """
         ghost_version = self.get_viewable()
         if ghost_version is None:
             return 'no title available'
-        return ghost_version._get_content().title()
+        return ghost_version._get_content().get_title()
 
     def get_creation_datetime(self):
         """Get creation datetime.

@@ -172,7 +172,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'title')
-    def title(self):
+    def get_title(self):
         """Get the title.
         """
         return self._title
