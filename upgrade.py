@@ -4,7 +4,7 @@ from IContainer import IContainer
 from IVersionedContent import IVersionedContent, ICatalogedVersionedContent
 from IVersion import IVersion, ICatalogedVersion
 from Membership import NoneMember, noneMember 
-from helpers import reserved_ids
+from helpers import check_valid_id
 
 def check_reserved_ids(obj):
     """Walk through the entire tree to find objects of which the id is not
@@ -12,7 +12,7 @@ def check_reserved_ids(obj):
     """
     illegal_urls = []
     for o in obj.objectValues():
-        if o.id in reserved_ids:
+        if not check_valid_id(obj, o.id, 1):
             illegal_urls.append(o.absolute_url())
         if hasattr(o, 'objectValues'):
             illegal_urls += check_reserved_ids(o)
