@@ -428,7 +428,7 @@
 
 <h2><img src="%s" width="16" height="16" alt="%s"
     tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    Experimental: Minimal Access Role for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
+    Minimal Access Role for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
 </h2>
 <div class="worksheet borders top bottom left right">
 <table width="100%" cellspacing="0" cellpadding="5" border="0">
@@ -446,7 +446,7 @@
 </tr>
 <tr class="focus">
   <td>
-  Minimal role for viewing this page:<br />
+  Minimal role for viewing this object (and all children):<br />
   <tal:block define="is_closed model/sec_is_closed_to_public">
     <div tal:condition="python: is_closed > 1">This restriction is acquired from the object on <span tal:replace="python: view.REQUEST['URLPATH%s' % (is_closed + 1)]" />, and can be changed only on the object it's acquired from.</div>
     <select name="role" tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')">
