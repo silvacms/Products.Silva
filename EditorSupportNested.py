@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -180,7 +180,7 @@ class EditorSupport:
             st = st.replace('\r', '\n')
         else:
             st = st.replace('\r', '')
-        st = st.replace('\n\n', '</p><p>')
+        #st = st.replace('\n\n', ' ')
         tags = {'__': 'underline', '**': 'strong', '++': 'em', '^^': 'super', '~~': 'sub'}
         reg = re.compile(r"(_{2}|\*{2}|\+{2}|\^{2}|~{2})(.*?)\1", re.S)
         reg_a = re.compile(r"\({2}(.*?)\|(.*?)\){2}", re.S)
@@ -329,7 +329,7 @@ class EditorSupport:
                 text = text[char:]
                 # expat seems to sometimes return a number a little lower than the index of the start of the tag,
                 # so walk to the next tag
-                while text[0] != '<':
+                while not text or text[0] != '<':
                     if not text:
                         # this should not happen, but just in case respond to it by raising the exception again
                         raise ExpatError
@@ -353,7 +353,5 @@ class EditorSupport:
                 # we should never get here, but if we would somehow, we'd get into an endless loop,
                 # avoid that by raising the previous error
                 raise ExpatError, message
-
-
 
 InitializeClass(EditorSupport)
