@@ -32,11 +32,9 @@
 
 <table width="100%">
 <tr>
-<td width="810" >
-
-
+<td width="780" >
       <applet code="com.realobjects.eop.applet.EditorApplet" height="350"
-      id="editor" name="editor" width="725"
+      id="editor" name="editor" width="780"
       archive="edit-on-pro-signed.jar,tidy.jar,ssce.jar" 
       tal:attributes="codebase template/eopro/absolute_url" 
       mayscript="">

@@ -20,6 +20,11 @@
 	</icon>
         <icon paramname="SUPERSCRIPT"/>
         <icon paramname="SUBSCRIPT"/>
+
+<!--
+	<separator />
+  	<icon paramname="ALIGN" />
+-->
 	<separator />
 	<icon paramname="INSERTTABLEDIALOG">
 	</icon>
