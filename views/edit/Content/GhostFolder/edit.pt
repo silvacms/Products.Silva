@@ -30,7 +30,7 @@
 
 <form method="POST" 
   name="form" 
-  action="submit"
+  action="."
   tal:define="
   version     python:model.get_editable();
   link_status python:here.get_ghost_link_status_text(version);
@@ -158,7 +158,7 @@
           />
           <input class="button"
             type="submit"
-            name="form_submitted"
+            name="submit:method"
             value="Save path"
             title="access key: alt-s"
             accesskey="s"

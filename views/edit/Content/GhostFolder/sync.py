@@ -9,6 +9,10 @@
 ##
 model = context.REQUEST.model
 view = context
+if model.get_link_status() != model.LINK_OK:
+    return view.tab_edit(message_type="error",
+        message="Ghost Folder was not synchronized, because the target is "\
+            "invalid.")
 model.haunt()
 return view.tab_edit(message_type="feedback",
-    message="Ghost Folder synchronised")
+    message="Ghost Folder synchronized")
