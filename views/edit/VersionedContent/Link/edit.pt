@@ -38,7 +38,7 @@
             <img tal:replace="structure python:view.render_icon(model)" />
             <span style="text-transform:lowercase;"
               tal:content="model/meta_type">Meta type</span> 
-            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+            &#xab;<tal:block content="model/get_title_or_id_editable" />&#xbb;
           </h2>
         </td>
       </tr>
