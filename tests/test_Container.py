@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.32 $
+# $Revision: 1.33 $
 import unittest
 import Zope
 Zope.startup()
@@ -329,7 +329,7 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assert_(self.sroot.test.get_title_html() == 'TestPub')
         self.assert_(hasattr(self.sroot.test, 'index'))
         self.assert_(self.sroot.test.index.get_title_html() == 'TestPub')
-        self.assert_(str(self.sroot.test.index.get_editable().documentElement) == '<doc><p>Content</p></doc>')
+        self.assert_(str(self.sroot.test.index.get_editable().content.documentElement) == '<doc><p>Content</p></doc>')
 
         self.sroot.xml_import(xml2)
 

@@ -230,8 +230,8 @@ upgrade_registry = UpgradeRegistry()
 # Some upgrade stuff
 def upgrade_document(obj):
     for o in obj.objectValues():
-        if o.meta_type == 'Parsed XML':
-            upgrade_list_titles_in_parsed_xml(o.documentElement)
+        if o.meta_type == 'Silva Document Version':
+            upgrade_list_titles_in_parsed_xml(o.content.documentElement)
 
 def upgrade_demoobject(obj):
     for o in obj.objectValues():

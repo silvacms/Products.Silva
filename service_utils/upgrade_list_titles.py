@@ -41,11 +41,11 @@ def find_silva_xml_doc(start_point):
         elif obj.meta_type in ['Silva Document']:
            print 'update document '+obj.absolute_url(1)
            for xml_id, xml in  obj.objectItems():
-              if xml.meta_type != 'Parsed XML':
+              if xml.content.meta_type != 'Parsed XML':
                  print 'XXX Hey, got a version which is not parsed xml:'+id
               else:
                  print '  update version',xml_id
-                 print update_list_item(xml.documentElement),
+                 print update_list_item(xml.content.documentElement),
     return printed
 
 root_folder = getattr(context, root_id)
