@@ -73,8 +73,11 @@ class Subscribable(adapter.Adapter):
     # ACCESSORS
     
     def getSubscriptions(self):
+        return self._getSubscriptions().values()
+    
+    def _getSubscriptions(self):
         if self.context.__subscribability__ == NOT_SUBSCRIBABLE:
-            return []
+            return {}
         subscriptions = {}
         subscribables = self._buildSubscribablesList()
         for subscribable in subscribables:
@@ -84,7 +87,7 @@ class Subscribable(adapter.Adapter):
                     contentsubscribedto = subscribable.context.aq_inner
                     subscriptions[emailaddress] = Subscription(
                         emailaddress, contentsubscribedto)
-        return subscriptions.values()
+        return subscriptions
         
     def _buildSubscribablesList(self, subscribables=None, marker=0):
         if subscribables is None:
@@ -114,6 +117,11 @@ class Subscribable(adapter.Adapter):
     def isSubscribed(self, emailaddress):
         subscriptions = self.context.__subscriptions__
         return bool(subscriptions.has_key(emailaddress))
+        
+    security.declarePrivate('getSubscription')
+    def getSubscription(self, emailaddress):
+        subscriptions = self._getSubscriptions()
+        return subscriptions.get(emailaddress, None)
     
     # MODIFIERS
 

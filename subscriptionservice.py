@@ -110,12 +110,16 @@ class SubscriptionService(Folder.Folder):
         # validate address
         if not self._isValidEmailaddress(emailaddress):
             raise errors.EmailaddressError('emailaddress not valid')
-        # check if not yet subscribed
-        if adapted.isSubscribed(emailaddress):
-            # send an email informing about this situation
-            raise errors.EmailaddressError('emailaddress already subscribed')
         # generate confirmation token using adapter
         token = adapted.generateConfirmationToken(emailaddress)
+        # check if not yet subscribed
+        subscription = adapted.getSubscription(emailaddress)
+        if subscription is not None:
+            # send an email informing about this situation
+            self._sendSuperfluousSubscriptionRequestEmail(
+                content, emailaddress, token, 'already_subscribed_template', 
+                'confirm_subscription', subscription.contentSubscribedTo())
+            raise errors.EmailaddressError('emailaddress already subscribed')
         # send confirmation email to emailaddress
         self._sendConfirmationEmail(
             content, emailaddress, token, 
@@ -140,6 +144,8 @@ class SubscriptionService(Folder.Folder):
         # check if indeed subscribed
         if not adapted.isSubscribed(emailaddress):
             # send an email informing about this situation
+            self._sendSuperfluousCancellationRequestEmail(
+                content, emailaddress, 'not_subscribed_template')
             raise errors.EmailaddressError('emailaddress was not subscribed')
         # generate confirmation token using adapter
         token = adapted.generateConfirmationToken(emailaddress)
@@ -210,6 +216,31 @@ class SubscriptionService(Folder.Folder):
             return False
         return True
 
+    def _sendSuperfluousCancellationRequestEmail(
+        self, content, emailaddress, template_id):
+        template = str(self[template_id])
+        data = {}
+        data['toaddress'] = emailaddress
+        data['contenturl'] = content.absolute_url()
+        data['contenttitle'] = content.get_title_or_id()
+        self._sendEmail(template, data)
+
+    def _sendSuperfluousSubscriptionRequestEmail(
+        self, content, emailaddress, token, template_id, action, subscribedcontent):
+        ref = self._create_ref(content)
+        template = str(self[template_id])
+        data = {}
+        data['toaddress'] = emailaddress
+        data['contenturl'] = content.absolute_url()
+        data['contenttitle'] = content.get_title_or_id()
+        emailaddress = urllib.quote(emailaddress)
+        data['confirmationurl'] = '%s/public/%s?ref=%s&emailaddress=%s&token=%s' % (
+            content.absolute_url(), action, ref, emailaddress, token)
+        data['subscribedcontenturl'] = subscribedcontent.absolute_url()
+        data['serviceurlforsubscribedcontent'] = \
+            subscribedcontent.absolute_url() + '/public/subscriptions'
+        self._sendEmail(template, data)
+
     def _sendConfirmationEmail(
         self, content, emailaddress, token, template_id, action):
         ref = self._create_ref(content)
@@ -217,6 +248,7 @@ class SubscriptionService(Folder.Folder):
         data = {}
         data['toaddress'] = emailaddress
         data['contenturl'] = content.absolute_url()
+        data['contenttitle'] = content.get_title_or_id()
         emailaddress = urllib.quote(emailaddress)
         data['confirmationurl'] = '%s/public/%s?ref=%s&emailaddress=%s&token=%s' % (
             content.absolute_url(), action, ref, emailaddress, token)

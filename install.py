@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.107 2004/12/07 11:17:12 jw Exp $
+# $Id: install.py,v 1.108 2004/12/07 14:08:11 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -670,7 +670,9 @@ def installSubscriptions(root):
     
     for id in (
         'subscription_confirmation_template',
+        'already_subscribed_template',
         'cancellation_confirmation_template',
+        'not_subscribed_template',
         'publication_event_template'):
         add_helper(
             root.service_subscriptions, id, globals(), fileobject_add_helper, True)
