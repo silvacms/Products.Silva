@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.19.8.3.6.2 2004/05/21 11:48:02 guido Exp $
+# $Id: mangle.py,v 1.19.8.3.6.3 2004/06/14 14:01:17 guido Exp $
 # Python
 import string
 import re
@@ -20,7 +20,10 @@ module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
 __allow_access_to_unprotected_subobjects__ = 1
 
-_marker = ()
+class _Marker:
+    """A marker"""
+    
+_marker = _Marker()
 
 module_security.declarePublic('Id')
 class Id:
