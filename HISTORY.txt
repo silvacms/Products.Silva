@@ -31,6 +31,11 @@ Silva changes
 
       - Properties tab for Ghost Folder works again.
 
+      - Fixed unicode issues in Groups support. This is only an issue
+        for Membership extensions that allow non-ascii characters in
+        their group names, for instance the ones based on LDAP. Core
+        groups support is not affected by this change.
+
   1.0 final
   
     Bugs fixed
