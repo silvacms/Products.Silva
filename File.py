@@ -1,11 +1,12 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27.8.1.6.4 $
+# $Revision: 1.27.8.1.6.5 $
 
 # Python
 import os
 import string
+from cgi import escape
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -14,7 +15,6 @@ from Globals import InitializeClass
 from mimetypes import guess_extension
 from helpers import add_and_edit
 from webdav.WriteLockInterface import WriteLockInterface
-
 # Silva
 from Asset import Asset
 from Products.Silva import mangle
@@ -73,31 +73,12 @@ class File(Asset):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_download_url')
+    # XXX deprecated, method left for backwards compatibility
     def get_download_url(self):
         """Obtain the public URL the public could use to download this file
         """
+        # XXX print deprecated warning?
         return self.absolute_url()
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_download_link')
-    def get_download_link(
-        self, title_attr='', name_attr='', class_attr='', style_attr=''):
-        """Obtain a complete HTML hyperlink by which the public can download
-        this file. FIXME: Is this method really needed?
-        """
-        attrs = []
-        if title_attr:
-            attrs.append('title="%s"' % title_attr)
-        if name_attr:
-            attrs.append('name="%s"' % name_attr)
-        if class_attr:
-            attrs.append('class="%s"' % class_attr)
-        if style_attr:
-            attrs.append('style="%"' % style_attr)
-        attrs = ' '.join(attrs)
-        link_text = self.get_title() or self.id
-        return '<a %s href="%s">%s</a>' % (
-            attrs, self.get_download_url(), link_text)
 
     # Overide SilvaObject.to_xml().
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'to_xml')
@@ -121,9 +102,40 @@ class File(Asset):
         return self._index_html_helper(request)
     
     security.declareProtected(SilvaPermissions.View, 'download')
-    # for backwards compatibility - do we need that here?
-    download = index_html
+    # XXX deprecated, method left for backwards compatibility
+    def download(self, *args, **kw):
+        # XXX print deprecated warning?
+        return self.index_html(*args, **kw)
 
+    security.declareProtected(SilvaPermissions.View, 'tag')
+    def tag(self, **kw):
+        """ return xhtml tag
+        
+        Since 'class' is a Python reserved word, it cannot be passed in
+        directly in keyword arguments which is a problem if you are
+        trying to use 'tag()' to include a CSS class. The tag() method
+        will accept a 'css_class' argument that will be converted to
+        'class' in the output tag to work around this.
+        """
+        src = self.absolute_url()
+        title = self.get_title_or_id()
+        named = []
+        
+        if kw.has_key('css_class'):
+            kw['class'] = kw['css_class']
+            del kw['css_class']
+        
+        for name, value in kw.items():
+            named.append('%s="%s"' % (escape(name), escape(value)))
+        named = ' '.join(named)
+        return '<a href="%s" alt="%s" %s />' % (src, escape(title), named)
+    
+    security.declareProtected(SilvaPermissions.View, 'get_download_link')
+    # XXX deprecated, method left for backwards compatibility
+    def get_download_link(self, *args, **kw):
+        # XXX print deprecated warning?
+        return self.tag(*args, **kw)
+    
     # MODIFIERS
 
     security.declareProtected(

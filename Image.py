@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.20 2004/05/04 17:40:30 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.21 2004/05/11 07:17:52 jw Exp $
 
 # Python
 import re, string 
@@ -300,11 +300,23 @@ class Image(Asset):
         
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, hires=0, thumbnail=0, **kw):
-        "return xhtml tag"
+        """ return xhtml tag
+        
+        Since 'class' is a Python reserved word, it cannot be passed in
+        directly in keyword arguments which is a problem if you are
+        trying to use 'tag()' to include a CSS class. The tag() method
+        will accept a 'css_class' argument that will be converted to
+        'class' in the output tag to work around this.
+        """
         image, img_src = self._get_image_and_src(hires, thumbnail)
         title = self.get_title()
         width, height = self.getDimensions(image)
         named = []
+        
+        if kw.has_key('css_class'):
+            kw['class'] = kw['css_class']
+            del kw['css_class']
+            
         for name, value in kw.items():
             named.append('%s="%s"' % (escape(name), escape(value)))
         named = ' '.join(named)
