@@ -3,6 +3,22 @@ See also LICENSE.txt
 
 Silva changes
 
+0.9.3.3
+
+    Bugs fixed
+
+      - created a new method addAddable on ExtensionRegistry. This makes 
+        it possible (again) to add classes to Silva without being required
+        to name your class the same as the module name (which the 
+        registerClass method needs). You simply register your class
+        the normal way with Zope, and then invoke addAddable for its
+        meta type.
+    
+      - Fixed acquisition for viewing locally defined roles on Silva
+        objects. (For instance: if user1 has editor role on pub1, and not
+        on pub2, viewing /pub1/pub2/foo/tab_access shouldn't show user1
+        as an editor, and now doesn't)
+
 0.9.3.2
 
     Bugs fixed
@@ -14,11 +30,6 @@ Silva changes
         would not get recognized.
 
       - Improved link parser for anchors and query fragments.
-
-      - Fixed acquisition for viewing locally defined roles on Silva
-        objects. (For instance: if user1 has editor role on pub1, and not
-        on pub2, viewing /pub1/pub2/foo/tab_access shouldn't show user1
-        as an editor, and now doesn't)
 
   0.9.3.1
 
