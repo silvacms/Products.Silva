@@ -36,12 +36,12 @@ class RendererRegistryService(SimpleItem.SimpleItem):
         try:
             import libxslt
         except ImportError:
-            pass
-        else:
-            from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
-            from Products.Silva.transform.renderer.basicxsltrenderer import BasicXSLTRenderer
-            renderers.append(ImagesOnRightRenderer().__of__(self))
-            renderers.append(BasicXSLTRenderer().__of__(self))
+            return {'Silva Document Version' : renderers}
+
+        from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+        from Products.Silva.transform.renderer.basicxsltrenderer import BasicXSLTRenderer
+        renderers.append(ImagesOnRightRenderer().__of__(self))
+        renderers.append(BasicXSLTRenderer().__of__(self))
 
         return {'Silva Document Version' : renderers}
 
