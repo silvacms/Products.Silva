@@ -53,7 +53,7 @@
   <td align="left" width="16"
     tal:condition="python:is_embedded"><a title="insert item" tal:condition="python:not insert_now" tal:attributes="href string:${url_start}/insert_mode" href="insert"><img tal:attributes="src string:${silva_root}/globals/insert_low.gif" width="16" height="7" alt="insert element" border="0" /></a><a title="insert line item" tal:condition="python:insert_now" tal:attributes="href string:${url_start}/insert?what=li" href="insert_mode"><img tal:attributes="src string:${silva_root}/globals/insert_now.gif" width="16" height="7" alt="insert item" border="0" /></a></td>
   <td tal:attributes="class insert_cell_class" colspan="2"><span class="halfline">&nbsp;</span></td>
-  <td class="transparent" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1"></td>
+  <td class="transparent" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
 </tr>
 <form tal:condition="python:mode == 'insert'" action="." method="POST" tal:omit-tag="is_embedded">
 <tr class="halfline" tal:condition="python:not is_embedded">
@@ -67,16 +67,17 @@
     <span class="subhead">&nbsp;Add element</span>&nbsp;&nbsp;
     <select name="what" notal:attributes="onChange string:location.href='${url_start}/insert?what='+this.options[this.selectedIndex].value">
       <option tal:replace="nothing" value="" disabled="disabled">Select item....</option>
-      <option tal:repeat="item python:here.get_allowed_info(wr_name, node)" tal:attributes="value python:item[1]" tal:content="python:item[0]"></option>
+      <option tal:repeat="item python:here.get_allowed_info(wr_name, node)" 
+        tal:attributes="value python:item[1]" tal:content="python:item[0]"></option>
     </select>&nbsp;&nbsp;&nbsp;&nbsp;
     <input tal:attributes="name string:${rel_url_start}/insert:method"
       class="button" type="submit" name="submit_method" value=" Insert " />
   </td>
-  <td class="transparent" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1"></td>
+  <td class="transparent" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
 </tr>
 <tr class="halfline" tal:condition="python:not is_embedded">
   <td class="transparent" colspan="4">
-    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="4">
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="4" />
   </td>
 </tr>
 </form>
