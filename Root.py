@@ -1,10 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
+from DateTime import DateTime
 # Silva interfaces
 from IPublication import IPublication
 # Silva
@@ -105,6 +106,14 @@ InitializeClass(Root)
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
                                       __name__='manage_addRootForm')
 
+def create_published_demo_index(silva_root, title):
+    silva_root.manage_addProduct['Silva'].manage_addDocument('index', title)
+    doc = silva_root.index
+    version = doc.get_editable()
+    version.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p></doc>')
+    doc.set_unapproved_version_publication_datetime(DateTime())
+    doc.approve_version()
+
 def manage_addRoot(self, id, title, REQUEST=None):
     """Add a Silva root."""
     # no id check possible or necessary, as this only happens rarely and the
@@ -112,6 +121,8 @@ def manage_addRoot(self, id, title, REQUEST=None):
     object = Root(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
+
+    create_published_demo_index(object, title)
 
     # now set it all up
     install.installFromScratch(object)
