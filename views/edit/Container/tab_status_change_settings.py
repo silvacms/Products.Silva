@@ -53,9 +53,10 @@ for ref in refs:
             # No next version, so start looking for the published version
             # since we can change the expiration time for published content.
             if not obj.get_public_version():
-                not_changed.append((get_name(obj), 'no next- or public version available'))
+                not_changed.append(
+                    (get_name(obj), 'no next- or public version available'))
                 continue
-            # cannot publish
+            # cannot publish, so report that when publ. times have been set
             if publish_now_flag or publish_datetime:
                 not_changed.append((get_name(obj), 'cannot change publication time of version already public'))
             # expire
@@ -64,16 +65,19 @@ for ref in refs:
             elif expiration_datetime:
                 obj.set_public_version_expiration_datetime(expiration_datetime)
         else:
+            # expire
+            # XXX- aaargll.. I had to put this before the publish code since
+            # after setting the publication datetime, the 'next' version
+            # might get published and no next version is available anymore...
+            if clear_expiration_flag:
+                obj.set_next_version_expiration_datetime(None)
+            elif expiration_datetime:
+                obj.set_next_version_expiration_datetime(expiration_datetime)
             # publish
             if publish_now_flag:
                 obj.set_next_version_publication_datetime(now)
             elif publish_datetime:
                 obj.set_next_version_publication_datetime(publish_datetime)
-            # expire
-            if clear_expiration_flag:
-                obj.set_next_version_expiration_datetime(None)
-            elif expiration_datetime:
-                obj.set_next_version_expiration_datetime(expiration_datetime)
         changed_ids.append(get_name(obj))
     else:
         if not obj.get_unapproved_version():

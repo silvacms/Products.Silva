@@ -114,7 +114,7 @@
           state obj/status_style | nothing;
           global rejectables python: test(state == 'pending', 1, rejectables);
           global revokeables python: test(state == 'approved', 1, revokeables);
-          global approveables python: test(state == 'draft' or state == 'closed', 1, approveables);
+          global approveables python: test(state == 'draft', 1, approveables);
           global new_versionables python: test(state == 'closed', 1, new_versionables);"
         tal:attributes="
           class python: iterate and 'odd' or 'even';">
