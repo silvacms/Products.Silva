@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.59 $
+# $Revision: 1.60 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -609,7 +609,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 object.update()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'import_xml')
-    def import_xml(self, xml=open('/home/guido/test_pub_2.slv').read()):
+    def import_xml(self, xml):
         from xml.dom.minidom import parseString
         dom = parseString(xml)
 
