@@ -206,7 +206,7 @@ def main():
     root.manage_addProduct['Silva'].manage_addRoot(
         'silva_test', 'Silva Test')
     global silva_ids
-    silva_ids = root.silva.objectIds()
+    silva_ids = root.silva_test.objectIds()
     
     try:
         unittest.TextTestRunner().run(test_suite())        
