@@ -2,6 +2,22 @@ Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Silva changes
+
+  0.9.2.1
+
+    Features added
+
+        - Added support for ExternalEditor, Silva Files and Images can now be
+          edited using your favorite editor
+
+    Bugs Fixed
+
+        - Pressing upgrade more than once now doesn't mess up object titles
+          anymore
+
+        - All content types should now have the correct metadata sets setup
+          for them (led to a KeyError on 'silva-extra' in all of the views
+          of those content types)
   
   0.9.2 
 
