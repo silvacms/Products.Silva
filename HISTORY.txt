@@ -12,15 +12,16 @@ Silva changes
 
     Bugs fixed
 
-        - No Catalog indexes are created for Metadata fields which do not
-          need indexing.
+        - No Catalog indexes are created for Metadata fields which do
+          not need indexing.
 
-        - Metadata form and acquisition didn't work properly in all cases.
+        - Metadata form and acquisition didn't work properly in all
+          cases.
 
         - UI improvements in tab_edit and tab_publish
 
-        - XML export of folders when the "export last version" option is
-          checked, did not use correct Folder title.
+        - XML export of folders when the "export last version" option
+          is checked, did not use correct Folder title.
 
         - Fixed two issues with the SQLDataSource and integer fields:
           the code doesn't try to convert the contents of the field to
