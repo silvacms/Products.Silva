@@ -689,6 +689,14 @@ textarea {
   text-transform: none;
 }
 
+/* 
+* the selector works only for standard compatible browsers like mozilla, so
+* IE ignore this definition below
+*/
+td>textarea, td>input[type=text] {
+  width: 100%;
+}
+
 textarea.readable {
   font: 100% Verdana, Helvetica, Arial, sans-serif;
 }
