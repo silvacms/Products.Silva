@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.13.2.1 $
 import unittest
 import Zope
 from DateTime import DateTime
@@ -111,7 +111,9 @@ class SecurityTestCase(unittest.TestCase):
                                self.doc1.sec_get_userids())
 
     def test_sec_get_roles(self):
-        self.assertSameEntries(['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager'],
+        self.assertSameEntries(['Viewer', 'Viewer +', 'Viewer ++', \
+                                'Reader', 'Author', 'Editor', \
+                                'ChiefEditor', 'Manager'],
                                self.sroot.sec_get_roles())
         
 def test_suite():
