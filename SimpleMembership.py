@@ -8,11 +8,11 @@ from DateTime import DateTime
 # silva
 from IMembership import IMember, IMemberService
 from Content import Content
-from Membership import cloneMember
+from Membership import cloneMember, Member
 import SilvaPermissions
 from helpers import add_and_edit
 
-class SimpleMember(Content, SimpleItem.SimpleItem):
+class SimpleMember(Member, SimpleItem.SimpleItem):
     """Silva Simple Member"""
 
     __implements__ = IMember
