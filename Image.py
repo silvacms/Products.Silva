@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.26 2004/05/27 13:38:24 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.27 2004/06/02 10:11:47 zagy Exp $
 
 # Python
 import re, string
@@ -120,7 +120,7 @@ class Image(Asset):
     def manage_beforeDelete(self, item, container):
         """explicitly remove the images"""
         for id in ('hires_image', 'image', 'thumbnail_image'):
-            self._remove_image(id)
+            self._remove_image(id, set_none=0)
         return Image.inheritedAttribute('manage_beforeDelete')(self, item,
             container)
 
@@ -136,8 +136,6 @@ class Image(Asset):
             img.id = id
         return Image.inheritedAttribute('manage_afterClone')(self, item)
         
-        
-    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
     def set_title(self, title):
@@ -588,12 +586,13 @@ class Image(Asset):
         if image.meta_type == 'ExtImage':
             image.redirect_default_view = to
 
-    def _remove_image(self, id):
+    def _remove_image(self, id, set_none=1):
         image = getattr(self, id, None)
         if image is None:
             return
         image.manage_beforeDelete(self.image, self)
-        setattr(self, id, None)
+        if set_none:
+            setattr(self, id, None)
 
     def _image_is_hires(self):
         return (self.image is not None and
