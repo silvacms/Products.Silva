@@ -271,7 +271,7 @@ def unicode_and_metadata_092(obj):
 def set_cache_data_092(obj):
     """ add the new cache data variable """
     # XXX does not check if content is already upgraded
-    obj.cleanPublicRenderingCache()
+    obj.clean_public_rendering_cache()
 
 
 def add_default_doc_092(obj):
