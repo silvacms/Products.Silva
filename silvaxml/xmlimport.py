@@ -419,9 +419,9 @@ class UnknownContentHandler(SilvaBaseHandler):
             # connection (the _p_jar attribute on the object)
             get_transaction().commit(1)
             ob = self.parent()._p_jar.importFile(file)
-            id=ob.id
+            id = ob.id
             if hasattr(id, 'im_func'):
-                id=id()
+                id = id()
             self.parent()._setObject(id, ob)
         
 class ZipIdHandler(SilvaBaseHandler):
