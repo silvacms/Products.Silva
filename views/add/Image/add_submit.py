@@ -51,7 +51,10 @@ else:
 # process data in result and add using validation result
 view = context
 
-model.manage_addProduct['Silva'].manage_addImage(id, title, file=file)
+try:
+    model.manage_addProduct['Silva'].manage_addImage(id, title, file=file)
+except IOError, e:
+    return view.add_form(message_type="error", message=e)
 object = getattr(model, id)
 
 # update last author info in new object

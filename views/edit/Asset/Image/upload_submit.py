@@ -16,8 +16,11 @@ try:
 except FormValidationError, e:
     return view.tab_edit(message_type="error",
                          message=context.render_form_errors(e))
+try:
+    model.set_image(result['image_file'])
+except IOError, e:
+    return view.tab_edit(message_type="error", message=e)
 model.sec_update_last_author_info()
-model.set_image(result['image_file'])
-
 #context.REQUEST.RESPONSE.redirect('%s/edit/tab_edit' % context.container_url())
 return container.tab_edit(message_type="feedback", message="Image uploaded.")
+
