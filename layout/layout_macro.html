@@ -1,15 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- _______ Silva version 0.9.3.0 _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   metal:define-macro="layout">
+<!-- _______ Silva version 0.9.3.0 _______ -->
 
 <head metal:define-slot="head">
   <title metal:define-slot="title"
     tal:content="here/get_title">doc title</title>
   <!-- Begin metatags -->
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="subject"
     tal:define="subject python: here.get_metadata_element('silva-extra', 'subject') or nothing"
     tal:condition="subject"
@@ -59,12 +58,11 @@
     <metal:block define-slot="top_navigation">
       <!-- Begin top_navigation slot -->
       <span class="breadcrumb"
-				style="display:block;">
-				<tal:block repeat="item python:here.get_breadcrumbs()"> 
-					<a tal:content="item/get_title" tal:attributes="href item/absolute_url">Name</a>
-					<span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span>
-				</tal:block>
-			</span>
+         style="display:block;">
+        <span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
+        <a tal:content="item/get_title_or_id" tal:attributes="href item/absolute_url">Name</a>
+        <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
+      </span>
       <!-- End top_navigation slot -->
     </metal:block>
   </div>
