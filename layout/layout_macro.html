@@ -8,6 +8,7 @@
 <head metal:define-slot="head">
   <title metal:define-slot="title"
     tal:content="here/get_title">doc title</title>
+  <!-- Begin metatags -->
   <meta name="keywords"
     tal:define="keywords python: here.get_metadata_element('silva-extra', 'keywords') or nothing"
     tal:condition="keywords"
@@ -25,10 +26,14 @@
     tal:condition="email"
     tal:attributes="content email" />
   <meta metal:define-slot="meta" tal:omit-tag="" />
+  <!-- End metatags -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
-  <link metal:define-slot="style" rel="stylesheet" href="frontend.css"
-    type="text/css" tal:omit-tag="" />
+  <!-- Begin stylesheets -->
+  <link rel="stylesheet" href="frontend.css" type="text/css"
+    tal:attributes="href here/frontend.css/absolute_url | nothing" />
+  <link metal:define-slot="style" tal:omit-tag="" />
+  <!-- End stylesheets -->
   <script metal:define-slot="script" type="text/javascript" tal:omit-tag="">
     <!-- script slot -->
   </script>
@@ -38,8 +43,8 @@
 
 <metal:block define-slot="page_header">
   <!-- Start page_header slot -->
-  <div style="margin: 2em 2.1em 0 0;">
-    <a style="float:left; display:block; width:7em; text-align:center;"
+  <div class="header">
+    <a class="icon"
       href="http://www.infrae.com/products/silva" 
       title="Silva info on the Infrae site: alt-i"
       accesskey="i">
