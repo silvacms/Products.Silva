@@ -124,15 +124,6 @@
       <tr class="controls">
         <td class="align-right"
           colspan="3">
-          <input class="cancel"
-            style="float: left;"
-            type="button"
-            value="cancel"
-            title="access key: alt-c"
-            accesskey="c"
-            onClick="history.back()"
-            i18n:attributes="value title"
-          />
           <input class="button"
             type="submit"
             value="import"

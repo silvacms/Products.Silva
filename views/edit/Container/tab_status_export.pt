@@ -175,24 +175,12 @@
 
             <tfoot>
               <tr class="controls">
-                <td>
-                  <input
-                    class="cancel"
-                    type="button"
-                    name="edit_cancel"
-                    value=" Cancel "
-                    onClick="history.back()"
-                    title="access key: alt-c"
-                    accesskey="c"
-                    i18n:attributes="value title"
-                  />
-                </td>
                 <td class="align-right"
-                  colspan="2">
+                  colspan="3">
                   <input class="button"
                     type="submit"
                     name="download_xml_selected:method"
-                    value="export"
+                    value="export xml"
                     title="access key: alt-e"
                     accesskey="e"
                     i18n:attributes="value title"
