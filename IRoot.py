@@ -1,8 +1,15 @@
 from IPublication import IPublication
 
-class IPublication(IPublication):
+class IRoot(IPublication):
     """An interface supported by Silva root objects.
     """
+
+    def get_root():
+        """Get root of site. Can be used with acquisition get the
+        'nearest' Silva root.
+        """
+        pass
+    
     def add_silva_addable_forbidden(meta_type):
         """Forbid use of meta_type in SMI. The meta_type won't show
         up anymore, including in the publication metadata tab where
