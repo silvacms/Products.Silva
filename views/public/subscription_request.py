@@ -6,17 +6,17 @@ service = context.service_subscriptions
 
 content = context.restrictedTraverse(request['path'], None)
 if content is None:
-    return context.subscriptions_ui(
+    return context.subscriptor(
         message=_('Path does not lead to a content object'))
 
 try:
     service.requestSubscription(content, request['emailaddress'])
 except errors.NotSubscribableError, e:
-    return context.subscriptions_ui(
+    return context.subscriptor(
         message=_('content is not subscribable'), 
         subscr_emailaddress=request['emailaddress'])
 except errors.InvalidEmailaddressError, e:
-    return context.subscriptions_ui(
+    return context.subscriptor(
         message=_('emailaddress not valid'), 
         subscr_emailaddress=request['emailaddress'])
 except (errors.AlreadySubscribedError, errors.NotSubscribedError), e:
@@ -28,5 +28,5 @@ mailedmessage = _(
     'Confirmation request for subscription has been emailed to ${emailaddress}')
 mailedmessage.set_mapping({'emailaddress': request['emailaddress']})
 
-return context.subscriptions_ui(message=mailedmessage, show_form=False)
+return context.subscriptor(message=mailedmessage, show_form=False)
     

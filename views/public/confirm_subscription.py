@@ -8,10 +8,10 @@ try:
     service.subscribe(
         request['ref'], request['emailaddress'], request['token'])
 except subscriptionerrors.SubscriptionError, e:
-    return context.subscriptions_ui(
+    return context.subscriptor(
         message=_('Subscription failed'), show_form=False)
 
-return context.subscriptions_ui(
+return context.subscriptor(
     message=_(
         'You have been successfully subscribed. '
         'This means you will receive email notifications '
