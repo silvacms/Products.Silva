@@ -38,7 +38,7 @@
   <tal:block define="surround here/get_navigation_links | nothing">
     <tal:repeat repeat="link surround/keys">
     <link tal:attributes="rel link; href python:surround[link].absolute_url()"
-        tal:condition="surround/link | nothing"/>
+        tal:condition="python:surround[link] or None"/>
     </tal:repeat>
     <link rel="up" tal:condition="python:surround.has_key('up')" tal:attributes="href
     surround/up" />
