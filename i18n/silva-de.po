@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Fri Nov 26 19:16:05 2004\n"
+"POT-Creation-Date: Mon Nov 29 14:09:57 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -15,29 +15,6 @@ msgstr ""
 "Language-name: Deutsch\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: silva\n"
-
-#: /AccessManager.py:141
-msgid "Requests for authentication to this site are not allowed."
-msgstr ""
-
-#: /AccessManager.py:29
-msgid "Sorry, no ChiefEditors are available to receive the request."
-msgstr ""
-"Es stehen keine ChiefEditors bereit, die die Anfrage empfangen könnten."
-
-#: /AccessManager.py:60
-msgid "Member is not approved"
-msgstr ""
-
-#: /AccessManager.py:76 /AccessManager.py:98
-msgid "No ChiefEditors are available to receive the request."
-msgstr ""
-
-#: /ContainerPolicy.py:67
-msgid ""
-"The object ${policy} does not implement IContainerPolicy, try restarting "
-"Zope."
-msgstr ""
 
 #: /DocmaService.py:117
 msgid "Not connected"
@@ -51,26 +28,6 @@ msgstr "Einstellungen geändert."
 msgid "Validation error(s)"
 msgstr ""
 
-#: /ExtensionService.py:106
-msgid "Default layout code installed"
-msgstr ""
-
-#: /ExtensionService.py:82
-msgid "Silva and all installed extensions have been refreshed"
-msgstr "Silva und alle installierten Erweiterungen wurden erneuert"
-
-#: /ExtensionService.py:96
-msgid "Content upgrade succeeded. See event log for details."
-msgstr "Upgrade des Inhaltes erfolgreich. Weiteres im Event-Log."
-
-#: /File.py:258
-msgid "There is no service_files. Refresh your silva root."
-msgstr ""
-
-#: /File.py:359
-msgid "Silva Images converted. See Zope log for details."
-msgstr "Silva-Bilder umgestellt. Weitere Details im Zope-Log."
-
 #: /Folder.py:329 /Folder.py:423
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
 msgstr ""
@@ -79,42 +36,8 @@ msgstr ""
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr ""
 
-#: /Folder.py:942
-msgid "Factory is not callable"
-msgstr "Factory kann nicht aufgerufen werden"
-
-#: /Ghost.py:217
-msgid "Unauthorized"
-msgstr "Unbefugt"
-
-#: /Ghost.py:63 /Ghost.py:72 /Ghost.py:84
+#: /Ghost.py:61 /Ghost.py:70 /Ghost.py:82
 msgid "Ghost target is broken"
-msgstr ""
-
-#: /GhostFolder.py:215
-msgid "no updater was called for ${info_tuple}"
-msgstr ""
-
-#: /GhostFolder.py:413
-msgid "got ${url}, expected a unicode"
-msgstr ""
-
-#: /GhostFolder.py:56 /GhostFolder.py:59
-msgid "implemented in subclasses"
-msgstr ""
-
-#: /Group.py:136 /IPGroup.py:119 /VirtualGroup.py:122
-msgid "There is no service_groups"
-msgstr ""
-
-#: /Group.py:138 /IPGroup.py:121 /VirtualGroup.py:124
-msgid "There is already a group of that name."
-msgstr "Es existiert bereits eine Gruppe mit diesem Namen."
-
-#: /Group.py:80 /Group.py:88 /Group.py:111 /Group.py:120 /IPGroup.py:62
-#: /IPGroup.py:90 /IPGroup.py:101 /VirtualGroup.py:68 /VirtualGroup.py:94
-#: /VirtualGroup.py:104
-msgid "Zombie group asset"
 msgstr ""
 
 #: /Image.py:215
@@ -136,84 +59,20 @@ msgstr ""
 msgid "'${crop}' defines an impossible cropping"
 msgstr ""
 
-#: /Image.py:344
-msgid "Low resolution image in original format is not supported"
-msgstr ""
-
-#: /Image.py:423
+#: /Image.py:425
 msgid "square"
 msgstr ""
 
-#: /Image.py:425
+#: /Image.py:427
 msgid "landscape"
 msgstr ""
 
-#: /Image.py:426
+#: /Image.py:428
 msgid "portrait"
-msgstr ""
-
-#: /Image.py:469
-msgid "No PIL installed."
-msgstr ""
-
-#: /Image.py:579
-msgid "There is no service_files. Refresh your Silva root."
-msgstr ""
-
-#: /Image.py:636
-msgid "Could not identify image type."
-msgstr ""
-
-#: /Image.py:708
-msgid "Invalid asset at ${url}"
-msgstr ""
-
-#: /ImporterRegistry.py:125
-msgid "No id found"
-msgstr ""
-
-#: /ImporterRegistry.py:70
-msgid "can't only register initializer for tag_name *or* as a default"
-msgstr ""
-
-#: /LayoutService.py:51
-msgid "${name} installed"
-msgstr ""
-
-#: /LayoutService.py:60
-msgid "${name} uninstalled"
-msgstr ""
-
-#: /LayoutService.py:72
-msgid "${name} refreshed"
-msgstr ""
-
-#: /LayoutService.py:82
-msgid "All layouts have been refreshed"
-msgstr ""
-
-#: /Root.py:224
-msgid "No catalog found!"
-msgstr ""
-
-#: /Root.py:246
-msgid "Status updated"
-msgstr ""
-
-#: /SidebarService.py:54
-msgid "Id does not provide for an existing cache container"
-msgstr ""
-
-#: /SidebarService.py:57
-msgid "Id changed"
 msgstr ""
 
 #: /SilvaObject.py:319
 msgid "Sorry, this ${meta_type} version is not viewable."
-msgstr ""
-
-#: /SilvaObject.py:329
-msgid "no ${view_type} view defined"
 msgstr ""
 
 #: /Versioning.py:100
@@ -228,52 +87,54 @@ msgstr ""
 msgid "No approved version to unapprove."
 msgstr ""
 
-#: /Versioning.py:189
+#: /Versioning.py:163
+msgid ""
+"Should never happen: unapproved version ${unapproved} found while approved "
+"version ${approved} exists at the same time."
+msgstr ""
+
+#: /Versioning.py:190
 msgid "No public version to close."
 msgstr ""
 
-#: /Versioning.py:216 /Versioning.py:237
-msgid "Should never happen!"
-msgstr ""
-
-#: /Versioning.py:241 /adapters/version_management.py:81
+#: /Versioning.py:242 /adapters/version_management.py:81
 #: /adapters/version_management.py:89
 msgid "No unapproved version available"
 msgstr ""
 
-#: /Versioning.py:274 /Versioning.py:323 /Versioning.py:353
+#: /Versioning.py:275 /Versioning.py:324 /Versioning.py:354
 msgid "There is no unapproved version to request approval for."
 msgstr ""
 
-#: /Versioning.py:278
+#: /Versioning.py:279
 msgid "The version is already requested for approval."
 msgstr ""
 
-#: /Versioning.py:327 /Versioning.py:357
+#: /Versioning.py:328 /Versioning.py:358
 msgid "The version is not requested for approval."
 msgstr ""
 
-#: /Versioning.py:377 /Versioning.py:390
+#: /Versioning.py:378 /Versioning.py:391
 msgid "No unapproved version."
 msgstr ""
 
-#: /Versioning.py:403 /Versioning.py:424
+#: /Versioning.py:404 /Versioning.py:425
 msgid "No approved version."
 msgstr ""
 
-#: /Versioning.py:406
+#: /Versioning.py:407
 msgid "Must specify publication datetime."
 msgstr ""
 
-#: /Versioning.py:437
+#: /Versioning.py:438
 msgid "No public version."
 msgstr ""
 
-#: /Versioning.py:464 /Versioning.py:483
+#: /Versioning.py:465 /Versioning.py:484
 msgid "No next version."
 msgstr ""
 
-#: /Versioning.py:497
+#: /Versioning.py:498
 msgid "There is no version to add messages for."
 msgstr ""
 
@@ -387,26 +248,6 @@ msgstr ""
 
 #: /doc/silva-publication.xml:21
 msgid "Default Document Policy"
-msgstr ""
-
-#: /icon.py:55
-msgid "Icon not found"
-msgstr ""
-
-#: /icon.py:63
-msgid "No icon for ${identifier}"
-msgstr ""
-
-#: /icon.py:84
-msgid "The product ${product} doesn't exist"
-msgstr ""
-
-#: /mangle.py:139
-msgid "id must be str or unicode (${id})"
-msgstr ""
-
-#: /mangle.py:311
-msgid "obj_context is not list type"
 msgstr ""
 
 #: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:62
@@ -1215,11 +1056,11 @@ msgid "50x50 pixel"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
-msgid "75x75 pixels"
+msgid "75x75 pixel"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
-msgid "75x75 pixel"
+msgid "75x75 pixels"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:154
@@ -3577,12 +3418,12 @@ msgid "<u>u</u>se clipboard..."
 msgstr ""
 
 #: /views/edit/lookup_ui.pt:227
-msgid "remove users from the clipboard: alt-r"
-msgstr "Benutzer vom Clipbord entfernen: alt-r"
-
-#: /views/edit/lookup_ui.pt:227
 msgid "remove user"
 msgstr "Benutzer entfernen"
+
+#: /views/edit/lookup_ui.pt:227
+msgid "remove users from the clipboard: alt-r"
+msgstr "Benutzer vom Clipbord entfernen: alt-r"
 
 #: /views/edit/lookup_ui.pt:45
 msgid "return to previous screen: alt-k"
@@ -4296,6 +4137,28 @@ msgstr ""
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
+
+#~ msgid "Sorry, no ChiefEditors are available to receive the request."
+#~ msgstr ""
+#~ "Es stehen keine ChiefEditors bereit, die die Anfrage empfangen könnten."
+
+#~ msgid "Silva and all installed extensions have been refreshed"
+#~ msgstr "Silva und alle installierten Erweiterungen wurden erneuert"
+
+#~ msgid "Content upgrade succeeded. See event log for details."
+#~ msgstr "Upgrade des Inhaltes erfolgreich. Weiteres im Event-Log."
+
+#~ msgid "Silva Images converted. See Zope log for details."
+#~ msgstr "Silva-Bilder umgestellt. Weitere Details im Zope-Log."
+
+#~ msgid "Factory is not callable"
+#~ msgstr "Factory kann nicht aufgerufen werden"
+
+#~ msgid "Unauthorized"
+#~ msgstr "Unbefugt"
+
+#~ msgid "There is already a group of that name."
+#~ msgstr "Es existiert bereits eine Gruppe mit diesem Namen."
 
 #~ msgid "When the login dialog appears, choose <b>\"Cancel\"</b>"
 #~ msgstr "Wenn der Logindialg erscheint, <b>Abbruch</b> wählen."

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Fri Nov 26 19:16:05 2004\n"
+"POT-Creation-Date: Mon Nov 29 14:09:57 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -15,31 +15,6 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "Domain: silva\n"
 
-#: /AccessManager.py:141
-msgid "Requests for authentication to this site are not allowed."
-msgstr "Aanmeldingsaanvragen zijn voor deze website niet toegestaan."
-
-#: /AccessManager.py:29
-msgid "Sorry, no ChiefEditors are available to receive the request."
-msgstr ""
-"Sorry, er zijn geen Hoofdredacteuren beschikbaar om de aanvraag te ontvangen."
-
-#: /AccessManager.py:60
-msgid "Member is not approved"
-msgstr "Lid is niet goedgekeurd"
-
-#: /AccessManager.py:76 /AccessManager.py:98
-msgid "No ChiefEditors are available to receive the request."
-msgstr "Geen Hoofdredacteuren aanwezig om de aanvraag te ontvangen."
-
-#: /ContainerPolicy.py:67
-msgid ""
-"The object ${policy} does not implement IContainerPolicy, try restarting "
-"Zope."
-msgstr ""
-"Het object ${policy} ondersteunt IContainerPolicy niet, probeer te "
-"herstarten."
-
 #: /DocmaService.py:117
 msgid "Not connected"
 msgstr "Niet verbonden"
@@ -52,26 +27,6 @@ msgstr "Instellingen gewijzigd."
 msgid "Validation error(s)"
 msgstr "Validatie fout(en)"
 
-#: /ExtensionService.py:106
-msgid "Default layout code installed"
-msgstr "Standaard layout-code geïnstalleerd"
-
-#: /ExtensionService.py:82
-msgid "Silva and all installed extensions have been refreshed"
-msgstr "Silva and alle geïnstalleerde uitbreidingen zijn ververst"
-
-#: /ExtensionService.py:96
-msgid "Content upgrade succeeded. See event log for details."
-msgstr "Content upgrade succesvol. Zie de 'event log' voor details."
-
-#: /File.py:258
-msgid "There is no service_files. Refresh your silva root."
-msgstr "Er is geen service_files gevonden. Ververs de Silva root."
-
-#: /File.py:359
-msgid "Silva Images converted. See Zope log for details."
-msgstr "Silva Images zijn omgezet. Zie de Zope log voor details."
-
 #: /Folder.py:329 /Folder.py:423
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
 msgstr ""
@@ -81,43 +36,9 @@ msgstr ""
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr "&#xab;${id}&#xbb; geplakt"
 
-#: /Folder.py:942
-msgid "Factory is not callable"
-msgstr "Factory is niet aanroepbaar"
-
-#: /Ghost.py:217
-msgid "Unauthorized"
-msgstr "Niet geauthoriseerd"
-
-#: /Ghost.py:63 /Ghost.py:72 /Ghost.py:84
+#: /Ghost.py:61 /Ghost.py:70 /Ghost.py:82
 msgid "Ghost target is broken"
 msgstr "'Ghost'-doel is gebroken"
-
-#: /GhostFolder.py:215
-msgid "no updater was called for ${info_tuple}"
-msgstr "er is geen updater aangeroepen voor ${info_tuple}"
-
-#: /GhostFolder.py:413
-msgid "got ${url}, expected a unicode"
-msgstr "url ${url} ontvangen terwijl we unicode werd verwacht"
-
-#: /GhostFolder.py:56 /GhostFolder.py:59
-msgid "implemented in subclasses"
-msgstr "geïmplementeerd in subclasses"
-
-#: /Group.py:136 /IPGroup.py:119 /VirtualGroup.py:122
-msgid "There is no service_groups"
-msgstr "Er is geen 'service_groups' gevonden"
-
-#: /Group.py:138 /IPGroup.py:121 /VirtualGroup.py:124
-msgid "There is already a group of that name."
-msgstr "Er bestaat al een groep met deze naam."
-
-#: /Group.py:80 /Group.py:88 /Group.py:111 /Group.py:120 /IPGroup.py:62
-#: /IPGroup.py:90 /IPGroup.py:101 /VirtualGroup.py:68 /VirtualGroup.py:94
-#: /VirtualGroup.py:104
-msgid "Zombie group asset"
-msgstr "Zombie groep asset"
 
 #: /Image.py:215
 msgid ""
@@ -142,87 +63,21 @@ msgstr "'${crop}' is geen geldige afsnijd-waarde"
 msgid "'${crop}' defines an impossible cropping"
 msgstr "'${crop}' is een onmogelijke afsnijdwaarde"
 
-#: /Image.py:344
-msgid "Low resolution image in original format is not supported"
-msgstr "Lage resolutie afbeelding is niet ondersteund in het originele formaat"
-
-#: /Image.py:423
+#: /Image.py:425
 msgid "square"
 msgstr "vierkant"
 
-#: /Image.py:425
+#: /Image.py:427
 msgid "landscape"
 msgstr "landschap"
 
-#: /Image.py:426
+#: /Image.py:428
 msgid "portrait"
 msgstr "portret"
-
-#: /Image.py:469
-msgid "No PIL installed."
-msgstr "PIL is niet geïnstalleerd."
-
-#: /Image.py:579
-msgid "There is no service_files. Refresh your Silva root."
-msgstr "Kan geen 'service_files' vinden. Ververs de Silva 'root'"
-
-#: /Image.py:636
-msgid "Could not identify image type."
-msgstr "Kan afbeeldingstype niet bepalen"
-
-#: /Image.py:708
-msgid "Invalid asset at ${url}"
-msgstr "Ongeldige asset op ${url}"
-
-#: /ImporterRegistry.py:125
-msgid "No id found"
-msgstr "Geen id gevonden"
-
-#: /ImporterRegistry.py:70
-msgid "can't only register initializer for tag_name *or* as a default"
-msgstr ""
-"kan niet alleen een 'initializer' registreren voor 'tag_name' *of* als "
-"standaard"
-
-#: /LayoutService.py:51
-msgid "${name} installed"
-msgstr "${name} geïnstalleerd"
-
-#: /LayoutService.py:60
-msgid "${name} uninstalled"
-msgstr "${name} gedeïnstalleerd"
-
-#: /LayoutService.py:72
-msgid "${name} refreshed"
-msgstr "${name} ververst"
-
-#: /LayoutService.py:82
-msgid "All layouts have been refreshed"
-msgstr "Alle vromgevingen zijn ververst"
-
-#: /Root.py:224
-msgid "No catalog found!"
-msgstr "Geen 'catalog' gevonden!"
-
-#: /Root.py:246
-msgid "Status updated"
-msgstr "Status bijgewerkt"
-
-#: /SidebarService.py:54
-msgid "Id does not provide for an existing cache container"
-msgstr ""
-
-#: /SidebarService.py:57
-msgid "Id changed"
-msgstr "Id veranderd"
 
 #: /SilvaObject.py:319
 msgid "Sorry, this ${meta_type} version is not viewable."
 msgstr ""
-
-#: /SilvaObject.py:329
-msgid "no ${view_type} view defined"
-msgstr "geen ${view_type}-'view' gedefinieerd"
 
 #: /Versioning.py:100
 msgid "Cannot approve version without publication datetime."
@@ -236,54 +91,56 @@ msgstr "Kan versie niet goedkeuren; geen toestemming."
 msgid "No approved version to unapprove."
 msgstr "Geen goedgekeurde versie om de goedkeuring van in te trekken."
 
-#: /Versioning.py:189
+#: /Versioning.py:163
+msgid ""
+"Should never happen: unapproved version ${unapproved} found while approved "
+"version ${approved} exists at the same time."
+msgstr ""
+
+#: /Versioning.py:190
 msgid "No public version to close."
 msgstr "Geen publieke versie om te sluiten."
 
-#: /Versioning.py:216 /Versioning.py:237
-msgid "Should never happen!"
-msgstr ""
-
-#: /Versioning.py:241 /adapters/version_management.py:81
+#: /Versioning.py:242 /adapters/version_management.py:81
 #: /adapters/version_management.py:89
 msgid "No unapproved version available"
 msgstr "Geen versie beschikbaar die nog niet is goedgekeurd"
 
-#: /Versioning.py:274 /Versioning.py:323 /Versioning.py:353
+#: /Versioning.py:275 /Versioning.py:324 /Versioning.py:354
 msgid "There is no unapproved version to request approval for."
 msgstr ""
 "Er is geen versie die nog niet is goedgekeurd waar goedkeuring voor kan "
 "worden aangevraagd."
 
-#: /Versioning.py:278
+#: /Versioning.py:279
 msgid "The version is already requested for approval."
 msgstr "Er is al goedkeuring aangevraagd voor deze versie."
 
-#: /Versioning.py:327 /Versioning.py:357
+#: /Versioning.py:328 /Versioning.py:358
 msgid "The version is not requested for approval."
 msgstr "Er is geen goedkeuring voor de versie aangevraagd."
 
-#: /Versioning.py:377 /Versioning.py:390
+#: /Versioning.py:378 /Versioning.py:391
 msgid "No unapproved version."
 msgstr "Geen versie die nog niet is goedgekeurd."
 
-#: /Versioning.py:403 /Versioning.py:424
+#: /Versioning.py:404 /Versioning.py:425
 msgid "No approved version."
 msgstr "Geen goedgekeurde versie."
 
-#: /Versioning.py:406
+#: /Versioning.py:407
 msgid "Must specify publication datetime."
 msgstr "Publicatie-tijdstip moet worden opegeven."
 
-#: /Versioning.py:437
+#: /Versioning.py:438
 msgid "No public version."
 msgstr "Geen publieke versie."
 
-#: /Versioning.py:464 /Versioning.py:483
+#: /Versioning.py:465 /Versioning.py:484
 msgid "No next version."
 msgstr "Geen volgende versie."
 
-#: /Versioning.py:497
+#: /Versioning.py:498
 msgid "There is no version to add messages for."
 msgstr "Er is geen versie om boodschappen voor toe te voegen."
 
@@ -398,26 +255,6 @@ msgstr "steekwoorden"
 #: /doc/silva-publication.xml:21
 msgid "Default Document Policy"
 msgstr "Standaard Documentbeleid"
-
-#: /icon.py:55
-msgid "Icon not found"
-msgstr "Ikoon niet gevonden"
-
-#: /icon.py:63
-msgid "No icon for ${identifier}"
-msgstr "Geen ikoon voor ${identifier}"
-
-#: /icon.py:84
-msgid "The product ${product} doesn't exist"
-msgstr "Het product ${product} bestaat niet"
-
-#: /mangle.py:139
-msgid "id must be str or unicode (${id})"
-msgstr "id moet string of unicode-string zijn (${id})"
-
-#: /mangle.py:311
-msgid "obj_context is not list type"
-msgstr "'obj_context' is geen lijst-type"
 
 #: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:62
 msgid "slide to the publish screen"
@@ -1285,11 +1122,11 @@ msgid "50x50 pixel"
 msgstr "50x50 pixels"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
-msgid "75x75 pixels"
+msgid "75x75 pixel"
 msgstr "75x75 pixels"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
-msgid "75x75 pixel"
+msgid "75x75 pixels"
 msgstr "75x75 pixels"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:154
@@ -3757,12 +3594,12 @@ msgid "<u>u</u>se clipboard..."
 msgstr "'clipboard' gebr<u>u</u>iken..."
 
 #: /views/edit/lookup_ui.pt:227
-msgid "remove users from the clipboard: alt-r"
-msgstr "gebruikers van het 'clipboard' verwijderen: alt-r"
-
-#: /views/edit/lookup_ui.pt:227
 msgid "remove user"
 msgstr "gebruiker verwijderen"
+
+#: /views/edit/lookup_ui.pt:227
+msgid "remove users from the clipboard: alt-r"
+msgstr "gebruikers van het 'clipboard' verwijderen: alt-r"
 
 #: /views/edit/lookup_ui.pt:45
 msgid "return to previous screen: alt-k"
@@ -4490,6 +4327,129 @@ msgstr "Aanvinken om zoekopdracht te beperken to de sub-boom van deze inhoud."
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+#~ msgid "Requests for authentication to this site are not allowed."
+#~ msgstr "Aanmeldingsaanvragen zijn voor deze website niet toegestaan."
+
+#~ msgid "Sorry, no ChiefEditors are available to receive the request."
+#~ msgstr ""
+#~ "Sorry, er zijn geen Hoofdredacteuren beschikbaar om de aanvraag te "
+#~ "ontvangen."
+
+#~ msgid "Member is not approved"
+#~ msgstr "Lid is niet goedgekeurd"
+
+#~ msgid "No ChiefEditors are available to receive the request."
+#~ msgstr "Geen Hoofdredacteuren aanwezig om de aanvraag te ontvangen."
+
+#~ msgid ""
+#~ "The object ${policy} does not implement IContainerPolicy, try restarting "
+#~ "Zope."
+#~ msgstr ""
+#~ "Het object ${policy} ondersteunt IContainerPolicy niet, probeer te "
+#~ "herstarten."
+
+#~ msgid "Default layout code installed"
+#~ msgstr "Standaard layout-code geïnstalleerd"
+
+#~ msgid "Silva and all installed extensions have been refreshed"
+#~ msgstr "Silva and alle geïnstalleerde uitbreidingen zijn ververst"
+
+#~ msgid "Content upgrade succeeded. See event log for details."
+#~ msgstr "Content upgrade succesvol. Zie de 'event log' voor details."
+
+#~ msgid "There is no service_files. Refresh your silva root."
+#~ msgstr "Er is geen service_files gevonden. Ververs de Silva root."
+
+#~ msgid "Silva Images converted. See Zope log for details."
+#~ msgstr "Silva Images zijn omgezet. Zie de Zope log voor details."
+
+#~ msgid "Factory is not callable"
+#~ msgstr "Factory is niet aanroepbaar"
+
+#~ msgid "Unauthorized"
+#~ msgstr "Niet geauthoriseerd"
+
+#~ msgid "no updater was called for ${info_tuple}"
+#~ msgstr "er is geen updater aangeroepen voor ${info_tuple}"
+
+#~ msgid "got ${url}, expected a unicode"
+#~ msgstr "url ${url} ontvangen terwijl we unicode werd verwacht"
+
+#~ msgid "implemented in subclasses"
+#~ msgstr "geïmplementeerd in subclasses"
+
+#~ msgid "There is no service_groups"
+#~ msgstr "Er is geen 'service_groups' gevonden"
+
+#~ msgid "There is already a group of that name."
+#~ msgstr "Er bestaat al een groep met deze naam."
+
+#~ msgid "Zombie group asset"
+#~ msgstr "Zombie groep asset"
+
+#~ msgid "Low resolution image in original format is not supported"
+#~ msgstr ""
+#~ "Lage resolutie afbeelding is niet ondersteund in het originele formaat"
+
+#~ msgid "No PIL installed."
+#~ msgstr "PIL is niet geïnstalleerd."
+
+#~ msgid "There is no service_files. Refresh your Silva root."
+#~ msgstr "Kan geen 'service_files' vinden. Ververs de Silva 'root'"
+
+#~ msgid "Could not identify image type."
+#~ msgstr "Kan afbeeldingstype niet bepalen"
+
+#~ msgid "Invalid asset at ${url}"
+#~ msgstr "Ongeldige asset op ${url}"
+
+#~ msgid "No id found"
+#~ msgstr "Geen id gevonden"
+
+#~ msgid "can't only register initializer for tag_name *or* as a default"
+#~ msgstr ""
+#~ "kan niet alleen een 'initializer' registreren voor 'tag_name' *of* als "
+#~ "standaard"
+
+#~ msgid "${name} installed"
+#~ msgstr "${name} geïnstalleerd"
+
+#~ msgid "${name} uninstalled"
+#~ msgstr "${name} gedeïnstalleerd"
+
+#~ msgid "${name} refreshed"
+#~ msgstr "${name} ververst"
+
+#~ msgid "All layouts have been refreshed"
+#~ msgstr "Alle vromgevingen zijn ververst"
+
+#~ msgid "No catalog found!"
+#~ msgstr "Geen 'catalog' gevonden!"
+
+#~ msgid "Status updated"
+#~ msgstr "Status bijgewerkt"
+
+#~ msgid "Id changed"
+#~ msgstr "Id veranderd"
+
+#~ msgid "no ${view_type} view defined"
+#~ msgstr "geen ${view_type}-'view' gedefinieerd"
+
+#~ msgid "Icon not found"
+#~ msgstr "Ikoon niet gevonden"
+
+#~ msgid "No icon for ${identifier}"
+#~ msgstr "Geen ikoon voor ${identifier}"
+
+#~ msgid "The product ${product} doesn't exist"
+#~ msgstr "Het product ${product} bestaat niet"
+
+#~ msgid "id must be str or unicode (${id})"
+#~ msgstr "id moet string of unicode-string zijn (${id})"
+
+#~ msgid "obj_context is not list type"
+#~ msgstr "'obj_context' is geen lijst-type"
 
 #~ msgid "Publication ${and_expiration} time of public version"
 #~ msgstr "Publicatie- ${and_expiration} tijdstip van publieke versie"
