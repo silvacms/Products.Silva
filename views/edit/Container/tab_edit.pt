@@ -382,10 +382,13 @@
                       _______ modified date cell _______
                     </tal:block>
                     <td tal:define="modification_time asset/get_modification_datetime | nothing">
-                      <tal:block
-                        condition="modification_time"
-                        content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)">
-                      </tal:block>
+                      <a class="blacklink" title="metadata"
+                        tal:condition="modification_time"
+                        tal:attributes="href string:${asset_url}/edit/tab_metadata"
+                        tal:content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)"
+                        >
+                         date
+                      </a>
                       <tal:block condition="not:modification_time">
                         <i i18n:translate="unknown">
                           unknown
