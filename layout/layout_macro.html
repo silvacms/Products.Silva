@@ -34,7 +34,7 @@
   <!-- Start related links -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
-  <!-- Access navigation links - more to come after the beta -->
+  <!-- Access navigation links - more in the works after the beta -->
   <tal:block define="
     at_root python:here.meta_type == 'Silva Root';
     publication python:here.get_publication();
@@ -56,9 +56,9 @@
   <!-- Begin stylesheets -->
   <link rel="stylesheet" type="text/css" media="all"
     tal:attributes="href here/frontend.css/absolute_url | nothing" />
-  <link metal:define-slot="style" tal:omit-tag="" />
   <link rel="stylesheet" type="text/css" media="print"
     tal:attributes="href here/print.css/absolute_url | nothing" />
+  <link metal:define-slot="style" tal:omit-tag="" />
   <!-- /End stylesheets -->
   <script metal:define-slot="script" type="text/javascript"
     tal:replace="nothing">
