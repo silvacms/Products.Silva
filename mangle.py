@@ -1,20 +1,19 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.14 2003/09/07 03:10:37 kitblake Exp $
-
+# $Id: mangle.py,v 1.14.4.1 2003/09/18 13:21:22 jw Exp $
 # Python
 import string
 import re
 import cgi
 from types import StringType, UnicodeType, InstanceType
-
 # Zope
 from AccessControl import ModuleSecurityInfo
 from DateTime import DateTime as _DateTime
-
 # Silva
-from interfaces import ISilvaObject, IVersioning, IContainer, IAsset
-
+from ISilvaObject import ISilvaObject
+from IVersioning import IVersioning
+from IContainer import IContainer
+from IAsset import IAsset
 
 module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
