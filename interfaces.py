@@ -1,9 +1,5 @@
 from Interface import Interface
 
-from AccessControl import ModuleSecurityInfo
-module_security = ModuleSecurityInfo('Products.Silva.interfaces')
-__allow_access_to_unprotected_subobjects__ = 1
-
 class IAccessManager(Interface):
     """Mixin class for objects to request local roles on the object"""
 
