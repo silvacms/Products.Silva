@@ -102,7 +102,9 @@
         tal:attributes="href tab_info/toplink_url;
           title string:up to top of publication: alt-${top_key};
           accesskey top_key;
-          ">
+          "
+          i18n:attributes="title top_publication"
+          >
         <img border="0"
            height="9"
            width="9"
@@ -116,7 +118,8 @@
           class python:is_selected_tab and (active_tab and 'recede' or 'selected') or '';
           title string:access key: alt-${tab_key};
           accesskey tab_key;"
-        i18n:translate=""
+          i18n:translate=""
+          i18n:attributes="title"
         >
         Tab Name
       </a>

@@ -86,7 +86,8 @@
         tal:define="orientation model/getOrientation">
         <span class="subhead">orientation</span><br />
         <span tal:content="orientation" 
-          tal:attributes="class string:${orientation} orientation">Square</span>
+          tal:attributes="class string:${orientation} orientation"
+          i18n:translate="">Square</span>
       </p>
     </tal:block>
     <p tal:condition="not: model/canScale" i18n:translate="note_silva_can_provide_image_scaling">

@@ -6,6 +6,8 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
   >
 
 <span tal:replace="nothing"> _______ notice of previous version times _______ </span>
@@ -126,10 +128,12 @@ This message will remain visible in the status screen for other authors and edit
 <tr class="inter-controls">
 <td class="align-right"
  style="vertical-align:bottom; white-space: nowrap;'">
-<label title="access key: alt-m" accesskey="m">content publish ti<u>m</u>e:</label>
+ <label title="access key: alt-m" accesskey="m"
+   i18n:translate="access_publish_time">
+   content publish ti<u>m</u>e:</label>
 <field tal:replace="structure python:view.tab_status_form_author.publish_datetime.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)" />
 </td>
-<td style="vertical-align:middle;">
+<td style="vertical-align:middle;" i18n:translate="publish_dateformat">
 day / month / year &nbsp;23:59
 </td>
 </tr>
@@ -197,7 +201,12 @@ If this content should expire, set the time.
 <tr>
 <th class="align-right"
   colspan="2">
-<span class="widebody"><label for="publish_now_flag" title="access key: alt-u" accesskey="u">p<u>u</u>blish right now?</label></span>
+  <span class="widebody">
+    <label for="publish_now_flag" title="access key: alt-u" accesskey="u"
+      i18n:translate="publish_now">
+      p<u>u</u>blish right now?
+  </label>
+</span>
 <field tal:replace="structure python:view.tab_status_form_change_settings.publish_now_flag.render()" />
 </th>
 </tr>
@@ -239,15 +248,25 @@ If this content should expire, set the time.
 <table class="listing sublisting">
 <tr class="top-controls">
 <td colspan="2">
-<h3>approve <span tal:condition="not: closed">request for approval</span><span tal:condition="python:may_change_content and unapproved and published"> of new version</span><span tal:condition="closed">closed version</span></h3>
+  <h3><tal:block i18n:translate="approve_request">approve</tal:block> 
+    <span tal:condition="not: closed" i18n:translate="approve_request_approval">
+      request for approval
+    </span>
+    <span tal:condition="python:may_change_content and unapproved and published"
+      i18n:translate="approve_request_newversion">
+      of new version
+  </span>
+  <span tal:condition="closed" i18n:translate="approve_request_closed">
+    closed version
+</span></h3>
 </td>
 </tr>
 
 <tr>
-<th class="align-right">
+  <th class="align-right" i18n:translate="settings">
 settings
 </th>
-<th style="width:40%">
+<th style="width:40%" i18n:translate="notes">
 notes
 </th>
 </tr>
@@ -255,20 +274,23 @@ notes
 <tr class="even">
 <td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-m"
-  accesskey="m">content publish ti<u>m</u>e</label>&nbsp;
+  accesskey="m"
+  i18n:translate="access_publish_time"
+  >content publish ti<u>m</u>e</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_editor.publish_datetime.render(REQUEST=request)" />
 </td>
-<td>
+<td i18n:translate="publish_dateformat">
 day / month / year &nbsp;23:59
 </td>
 </tr>
 
 <tr class="odd">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-i" accesskey="i">expiratio<u>n</u> time</label>&nbsp;
+  <label title="access key: alt-i" accesskey="i"
+    i18n:translate="access_expiration">expiratio<u>n</u> time</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_editor.expiration_datetime.render(REQUEST=request)" />
 </td>
-<td style="vertical-align:middle;">
+<td style="vertical-align:middle;" i18n:translate="publish_empty">
 Empty indicates no expiration.
 </td>
 </tr>
@@ -276,7 +298,12 @@ Empty indicates no expiration.
 <tr>
 <th class="align-right"
   colspan="2">
-<span class="widebody"><label for="publish_now_flag" title="access key: alt-u" accesskey="u">p<u>u</u>blish right now?</label></span>
+  <span class="widebody">
+    <label for="publish_now_flag" title="access key: alt-u" accesskey="u"
+      i18n:translate="publish_now">
+      p<u>u</u>blish right now?
+  </label>
+</span>
 <field tal:replace="structure python:view.tab_status_form_editor.publish_now_flag.render(REQUEST=request)" />
 </th>
 </tr>
@@ -289,6 +316,7 @@ Empty indicates no expiration.
   value="open to public"
   title="access key: alt-o"
   accesskey="o"
+  i18n:attributes="value title"
 />
 </td> 
 </tr>
@@ -398,14 +426,16 @@ If further editing is required, first revoke the approval.
 <table class="listing">
 <tr class="top-controls">
 <td>
-<h3>
+  <h3 i18n:translate="revert_previous">
   revert to previous version
 </h3>
 </td>
 </tr>
 <tr class="even">
-<td>
-The current editable version can be replaced with the previous (published) version. This can not be undone afterwards and will discard all changes made to the current version.
+  <td i18n:translate="revert_previous_description">
+The current editable version can be replaced with the previous (published)
+version. This can not be undone afterwards and will discard all changes
+made to the current version.
 </td>
 </tr>
 <tr class="inter-controls">
@@ -433,14 +463,14 @@ The current editable version can be replaced with the previous (published) versi
 <thead>
 <tr class="top-controls">
 <td>
-<h3>manual close</h3> 
+  <h3 i18n:translate="publish_manual_close">manual close</h3> 
 </td>
 </tr>
 </thead>
 
 <tbody>
 <tr class="even">
-<td>
+  <td i18n:translate="publish_manual_close_description">
 If necessary, the published version of this content can be manually closed (taken offline). It will also be removed from the public index.
 </td>
 </tr>
@@ -449,7 +479,13 @@ If necessary, the published version of this content can be manually closed (take
 <tfoot>
 <tr class="controls">
 <td class="align-right">
-<input class="button" type="submit" value="close published version" title="access key: alt-c" accesskey="c" />
+  <input class="button"
+    type="submit"
+    value="close published version"
+    title="access key: alt-c"
+    accesskey="c" 
+    i18n:attributes="value title"
+    />
 </td>
 </tr>
 </tfoot>

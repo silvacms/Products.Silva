@@ -128,9 +128,19 @@
 <tal:condition condition="python:unapproved_version and is_locked">
 <form action="tab_edit_break_lock" method="POST">
   <div class="feedback"><span class="warning">
-    <b>Note: </b>This object is already being edited by another user, and is temporarily locked.
+      <tal:block i18n:translate="publish_break_lock_description">
+        <b>Note: </b>This object is already being edited by another user,
+        and is temporarily locked.
+      </tal:block>
     </span><br />
-    <input class="warning" style="margin-left:0;" type="submit" value="break lock" title="Somebody else just edited this item, unlock it: alt-u" accesskey="u" />
+    <input 
+      class="warning"
+      style="margin-left:0;"
+      type="submit" 
+      value="break lock" 
+      title="Somebody else just edited this item, unlock it: alt-u" 
+      accesskey="u"
+      i18n:attributes="value title"/>
   </div>
 </form>
 </tal:condition>
@@ -139,8 +149,17 @@
 <tal:condition condition="python: not model.get_next_version()">
   <form action="tab_edit_make_copy" method="POST">
     <div class="feedback">
-      <input class="button" style="margin-left:0;" type="submit" value="create new version" title="work on a new version while the previous one stays online: alt-c" accesskey="c" />
-      <b>Note: </b>there is already a published (or closed) version of this content. Changes can only be made in a new version.
+      <input class="button"
+        style="margin-left:0;"
+        type="submit"
+        value="create new version"
+        title="work on a new version while the previous one stays online: alt-c"
+        accesskey="c"
+        i18n:attributes="value title"/>
+        <tal:block i18n:translate="publish_create_newversion">
+      <b>Note: </b>there is already a published (or closed) version of this
+      content. Changes can only be made in a new version.
+      </tal:block>
     </div>
   </form>
   <div tal:replace="structure here/edit_info | nothing" />
@@ -150,8 +169,17 @@
 <tal:condition condition="python: model.get_approved_version()">
 <form action="tab_edit_revoke_approval" method="POST">
   <div class="feedback">
-    <input class="button" style="margin-left:0;" type="submit" value="revoke approval" title="'first un-approve' this item in order to edit: alt-r" accesskey="r" />
-    <b>Note: </b>this version is approved but not yet public. In order to make changes you need to first revoke the approval.
+    <input 
+      class="button" 
+      style="margin-left:0;" 
+      type="submit" 
+      value="revoke approval" 
+      title="'first un-approve' this item in order to edit: alt-r" 
+      accesskey="r"
+      i18n:attributes="value title"/>
+      <span i18n:translate="note_revoke_approval">
+        <b>Note: </b>this version is approved but not yet public. In order to make changes you need to first revoke the approval.
+      </span>
   </div>
 </form>
   <div tal:replace="structure here/edit_info | nothing" />
@@ -161,10 +189,19 @@
 <tal:condition condition="python:model.is_version_approval_requested()">
 <form action="tab_status_withdraw" method="POST">
   <div class="feedback">
-    <input class="button" style="margin-left:0;" type="submit" value="withdraw request" title="withdraw a request for approval in order to edit: alt-w" accesskey="w" />
+    <input 
+      class="button" 
+      style="margin-left:0;" 
+      type="submit" 
+      value="withdraw request" 
+      title="withdraw a request for approval in order to edit: alt-w" 
+      accesskey="w"
+      i18n:attributes="value title"/>
     <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
     <input type="hidden" name="tab_name" value="edit" />
-    <b>Note: </b>this version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
+    <span i18n:translate="note_withdraw_request">
+      <b>Note: </b>this version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
+    </span>
   </div>
 </form>
   <div tal:replace="structure here/edit_info | nothing" />

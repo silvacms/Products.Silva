@@ -49,6 +49,7 @@
 </style>
 <link href="globals/silvaContentStyle.css"
   rel="stylesheet"
+  type="text/css"
   tal:condition="python: not model.implements_container()"
   tal:attributes="href string:${root_url}/globals/silvaContentStyle.css"
 />
@@ -56,6 +57,7 @@
 <metal:block define-slot="metatype_css" />
 <tal:block replace="nothing"> _______ use frontend.css in preview _______ </tal:block>
 <link rel="stylesheet"
+  type="text/css"
   tal:condition="python:template.id == 'tab_preview'"
   tal:attributes="href here/frontend.css/absolute_url | nothing"
 />

@@ -38,15 +38,15 @@
   Tip: one click editing
 </h4>
 
-<p>
-  When viewing a public Silva page, switching to the SMI is is easiest if there's a bookmark on your toolbar. Add a bookmark with the following javascript:
-</p>
-<pre>
-  javascript:window.location.pathname=(window.location.pathname +'/edit').replace(/\/\//,'/')
-</pre>
-<p>
-  Or, save this link &#8211; <a href="javascript:window.location.pathname=(window.location.pathname +'/edit').replace(/\/\//,'/')">Silva edit</a> &#8211; as a bookmark. Thanks to ETH Z&uuml;rich for this winner.
-<br /><br />
+<p> When viewing a public Silva page, switching to the SMI is is easiest if
+  there's a bookmark on your toolbar. Add a bookmark with the following
+  javascript: </p>
+<pre> javascript:window.location.pathname=(window.location.pathname
+  +'/edit').replace(/\/\//,'/') </pre>
+<p> Or, save this link &#8211; <a
+  href="javascript:window.location.pathname=(window.location.pathname
+  +'/edit').replace(/\/\//,'/')">Silva edit</a> &#8211; as a bookmark.
+Thanks to ETH Z&uuml;rich for this winner.  <br /><br />
 </p>
 
 <h2>
@@ -55,15 +55,13 @@
 
 <ul class="square"
   style="padding-left:1.4em;">
-  <li>
-    The access key on your machine may be &#8216;alt&#8217;. On a Mac it&#8217;s &#8216;ctrl&#8217;. 
-  </li>
-  <li>
-    Hover over the link or button and a tooltip will popup with the access key.
-  </li>
-  <li>
-    The most useful access keys are for screen navigation, <a title="Save time, energy, and wrists by keying to your destination." href="#nav">see below</a>.
-  </li>
+  <li> The access key on your machine may be &#8216;alt&#8217;. On a Mac
+  it&#8217;s &#8216;ctrl&#8217;.  </li>
+  <li> Hover over the link or button and a tooltip will popup with the
+  access key.  </li>
+  <li> The most useful access keys are for screen navigation, <a
+    title="Save time, energy, and wrists by keying to your destination."
+    href="#nav">see below</a>.  </li>
 </ul>
   
 <h3>Global keys that are always available</h3>
@@ -75,10 +73,10 @@
   / &nbsp; Jump to top of Silva (Silva icon)<br />
   h &nbsp; Help
 </p>
-<p>
-  <span class="subhead"><a name="nav">Changing screens with the tabs</a></span><br />
-  The tabs have numbered access keys, starting from one going up to five. You can navigate horizontally accross an item&#8217;s screens by using alt-1, alt-2, and so forth. 
-</p>
+<p> <span class="subhead"><a name="nav">Changing screens with the
+    tabs</a></span><br /> The tabs have numbered access keys, starting from
+one going up to five. You can navigate horizontally accross an item&#8217;s
+screens by using alt-1, alt-2, and so forth.  </p>
 <p>
   Each tab has a toplink, the tall tree on the left side. It takes you to the top of the current publication, within the same tab, or &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
 </p>
