@@ -54,9 +54,9 @@ def get_xml_id(node):
     return id
 
 def get_xml_title(node):
-    title = ''
+    title = 'unknown'
     for child in node.childNodes:
-        if child.nodeName == u'title':
+        if child.nodeName == u'title' and len(child.childNodes) > 0:
             title = child.childNodes[0].nodeValue
     return title
 
