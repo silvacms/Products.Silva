@@ -22,6 +22,11 @@ def from091to092(self, root):
     def manage_beforeDelete_old_style_docs(self, item, container):
         Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
     Document.manage_beforeDelete = manage_beforeDelete_old_style_docs
+
+    # set the '_allow_subscription' attribute on servce_members if it isn't there yet
+    sm = getattr(root, 'service_members', None)
+    if sm is not None:
+        sm._allow_subscription = 0
     
     try:
         upgrade_using_registry(root, '0.9.2')
@@ -328,24 +333,22 @@ def convert_document_092(obj):
 
     used_ids = []
     for version in ['unapproved', 'approved', 'public', 'last_closed']:
-        print 'Testing for', version, 'on', obj.absolute_url()
         v = getattr(obj, 'get_%s_version' % version)()
         if v is not None:
-            print 'Going to replace', version
-            print 'Version before upgrade:', getattr(obj, 'get_%s_version' % version)()
             xml = get_version_xml(obj, v)
             newver = DocumentVersion(v, obj._title)
             newver.content.manage_edit(xml)
             setattr(obj, v, newver)
             used_ids.append(v)
-            print 'Version after upgrade:', getattr(obj, 'get_%s_version' % version)()
+            obj._update_publication_status()
 
-    obj._previous_versions = None
+    if obj._previous_versions is not None:
+        obj._previous_versions = obj._previous_versions[-1:]
             
     # remove all the unconverted versions
     for o in obj.objectValues('Silva Document Version'):
         if o not in used_ids:
-            print 'Going to delete obsolete version', o.absolute_url()
+            #print 'Going to delete obsolete version', o.absolute_url()
             obj.manage_deleteObjects([o.id])
 
 upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
@@ -357,6 +360,7 @@ upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
 # mapping from metadata set name to a mapping of old metadata field names to 
 # new (the second mapping can not be the other way round since there can be several 
 # old names for one new metadata field)
+# the old names can refer to a Zope Property, an attribute or a method on the object
 # note that this mapping is used to find out the fields that should be
 # converted, so all to-be-converted fields should be mentioned
 set_el_name_mapping = {'silva-content': {'short_title': 'shorttitle',
@@ -397,9 +401,19 @@ def unicode_and_metadata_092(obj):
     values = {}
     for set_name, el_name_mapping in set_el_name_mapping.items():
         for old_name, new_name in el_name_mapping.items():
+            #print 'Testing for', old_name, 'on object', obj.absolute_url()
             old_value = obj.getProperty(old_name)
-            if old_value is None or old_value == '':
-                continue
+            if old_value is None:
+                old_value = getattr(obj, old_name, None)
+                if old_value is None:
+                    #print 'Not found'
+                    continue
+                if callable(old_value):
+                    old_value = old_value()
+                if old_value is None:
+                    #print 'Not found'
+                    continue
+            #print 'Old value:', old_value
             # if somehow the string is already unicode (who knows, right :)
             # skip conversion
             new_value = old_value
@@ -423,13 +437,8 @@ def unicode_and_metadata_092(obj):
                 #print 'Binding object:', object.meta_type
                 continue
             if set_name in binding.getSetNames():
-                errors = binding._setData(values, set_id=set_name, reindex=0)
-                #if errors:
-                #    print 'Errors on setting metadata values', str(values).encode('ascii', 'ignore'), 'on set', set_name, 'for object on url', object.absolute_url(), ':', errors
-                #else:
-                #    print 'Set metadata values', str(values).encode('ascii', 'replace'), 'on set', set_name, 'for object on url', object.absolute_url()
-            #else:
-            #    print 'Skipping meta_data values', str(values).encode('ascii', 'replace'), 'on set', set_name, 'for object on url', object.absolute_url()
+                binding._setData(values, set_id=set_name, reindex=0)
+                #print 'Values', str(values).encode('ascii', 'replace'), 'set on', obj.absolute_url()
 
 upgrade_registry.register('Silva Root', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva Folder', unicode_and_metadata_092, '0.9.2')
@@ -500,8 +509,8 @@ def replace_object_title_092(obj):
         title = unicode(title, 'cp1252', 'replace')
     objects = get_versions_or_self(obj)
     for object in objects:
-        print 'Going to replace title of version', object.getPhysicalPath()
-        print 'New title:', title.encode('ascii', 'replace')
+        #print 'Going to replace title of version', object.getPhysicalPath()
+        #print 'New title:', title.encode('ascii', 'replace')
         object.set_title(title)
         #print type(title)
         #print type(object.title)
@@ -569,7 +578,7 @@ def get_text_from_node(node):
 def replace_list(node):
     for child in node.childNodes:
         if child.nodeName == u'list' and child.getAttribute('type') == u'none':
-            print 'No bulleted lists'
+            #print 'No bulleted lists'
             p = child.createElement('p')
             for sc in child.childNodes:
                 if sc.nodeName == 'li':
@@ -588,3 +597,9 @@ def convert_no_bullet_lists_092(obj):
 
 upgrade_registry.register('Silva Document Version', convert_no_bullet_lists_092, '0.9.2')
 upgrade_registry.register('Silva DemoObject Version', convert_no_bullet_lists_092, '0.9.2')
+
+def update_indexers_092(obj):
+    obj.update_index()
+
+upgrade_registry.register('Silva Indexer', update_indexers_092, '0.9.2')
+
