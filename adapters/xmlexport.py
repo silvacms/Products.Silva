@@ -246,7 +246,7 @@ class DocumentVersionXMLSource(VersionXMLSource):
     """
     def _sax(self, reader, settings):
         self._startElement(
-            reader, 'document_version', {'version_id': self.context.id})
+            reader, 'document_version', {'id': self.context.id})
         self._startElement(reader, 'title', {})
         reader.characters(self.context.title)
         self._endElement(reader, 'title')
@@ -289,7 +289,7 @@ class LinkVersionXMLSource(VersionXMLSource):
     """
     def _sax(self, reader, settings):
         self._startElement(
-            reader, 'version', {'version_id': self.context.id})
+            reader, 'version', {'id': self.context.id})
         self._metadata(reader, settings)
         self._startElement(reader, 'url', {})
         reader.characters(self.context.get_url())
@@ -310,7 +310,7 @@ class GhostVersionXMLSource(VersionXMLSource):
     """
     def _sax(self, reader, settings):
         self._startElement(
-            reader, 'version', {'version_id': self.context.id})
+            reader, 'version', {'id': self.context.id})
         # XXX aha! will the versions themselves have metadata or just the
         # haunted objects? Right now, they don't apparently.
         # self._metadata(reader, settings)
