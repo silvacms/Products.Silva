@@ -68,8 +68,8 @@ class Publishable(Interface.Base):
         """
         pass
 
-    def deactive(self):
-        """Deactive publishable item.
+    def deactivate(self):
+        """Deactivate publishable item.
         """
         pass
     

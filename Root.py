@@ -3,12 +3,12 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
 # Silva
-from Folder import Folder
+from Publication import Publication
 import Interfaces
 #misc
 from helpers import add_and_edit
 
-class Root(Folder):
+class Root(Publication):
     """Root of Silva site.
     """
     meta_type = "Silva Root"

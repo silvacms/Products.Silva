@@ -25,6 +25,8 @@ class Publishable:
             if self.is_version_approved():
                 self.unapprove_version() 
         self._active_flag = 0
+        # FIXME: should we deactivate all contents if this is a container?
+
         # refresh container of parent (may be parent itself)
         # we use parent so we don't get *this* publishable container
         self.aq_parent.get_container()._refresh_ordered_ids(self)
