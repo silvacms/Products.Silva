@@ -12,6 +12,8 @@ def check_reserved_ids(obj):
     """
     illegal_urls = []
     for o in obj.objectValues():
+        if IContainer.isImplementedBy(o):
+            illegal_urls += check_reserved_ids(o)
         if (ISilvaObject.isImplementedBy(o) and 
                 check_valid_id(obj, str(o.id), 1)):
             print 'Illegal id found:', o.absolute_url()
@@ -21,8 +23,6 @@ def check_reserved_ids(obj):
                 id = 'renamed_%s' % id
             obj.manage_renameObject(o.id, id)
             illegal_urls.append(o.absolute_url())
-        if IContainer.isImplementedBy(o):
-            illegal_urls += check_reserved_ids(o)
     return illegal_urls
 
 def from091to092(self, root):
