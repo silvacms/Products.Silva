@@ -11,7 +11,7 @@ See also LICENSE.txt
 Valid for:  Silva 1.1.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.44 $
+CVS:        $Revision: 1.45 $
 
 Introduction
 ------------
@@ -79,6 +79,10 @@ http://www.infrae.com/download/SilvaWindowsInstaller
 
 Optional extensions
 ===================
+
+Silva extensions in general are discussed in PRODUCTS.txt, so please
+see that document for more detail. This section discusses some
+particular deep extensions to Silva.
 
 XSLT support
 ------------
