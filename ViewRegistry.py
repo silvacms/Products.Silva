@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner
@@ -124,7 +124,7 @@ class ViewRegistry(Folder.Folder):
     def get_method_on_view(self, view_type, obj, name):
         """Get a method on the view for the object.
         """
-        return getattr(self.get_view(view_type, obj.meta_type), name)
+        return getattr(self.get_view(view_type, obj.meta_type), name, None)
     
     #def wrap(self, view_type, obj):
     #    """Wrap object in view (wrapping skin)
@@ -155,14 +155,24 @@ class ViewAttribute(Acquisition.Implicit):
         self._default_method = default_method
 
     def index_html(self):
-        """
+        """Default method on view
         """
         return self[self._default_method]()
     
     def __getitem__(self, name):
-        """
+        """Get correct method on view
         """
         self.REQUEST['model'] = model = self.aq_parent
-        return self.service_view_registry.get_method_on_view(
+        method_on_view =  self.service_view_registry.get_method_on_view(
             self._view_type, model, name)
- 
+
+        if not method_on_view:
+            # "Method on view" does not exist: redirect to default method.
+            self.REQUEST.RESPONSE.redirect(
+                '%s/%s/%s' % (model.absolute_url(), self._view_type, self._default_method))
+            # A return is needed, although the client actually *will*
+            # redirect (If the client does not redirect, it should still
+            # show the default method on view).
+            return self.index_html
+
+        return method_on_view
