@@ -2,6 +2,9 @@
   tal:define="
     view here;
     model request/model;
+    
+    mangle modules/Products/Silva/mangle;
+
     root_url model/get_root_url;
     title model/get_title_editable;
     breadcrumb_vein string:Editor;
@@ -72,13 +75,13 @@
       <span class="subhead"><b>file size</b><br /></span>
       <span 
         tal:attributes="title string: ${size} Bytes"
-        tal:content="python:view.convertBytesToHumanReadable(size)" />
+        tal:content="python:mangle.Bytes(size)" />
       <tal:block tal:condition="model/canScale">
          <br />
          <tal:condition condition="python: size != scaled_size">
           <span 
             tal:attributes="title string: ${scaled_size}"
-            tal:content="python:view.convertBytesToHumanReadable(scaled_size)" /> 
+            tal:content="python:mangle.Bytes(scaled_size)" /> 
           scaled
           </tal:condition>
       </tal:block>

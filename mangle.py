@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.8 2003/08/27 12:45:11 zagy Exp $
+# $Id: mangle.py,v 1.9 2003/08/28 09:45:21 jw Exp $
 
 # Python
 import string
@@ -366,4 +366,37 @@ class _List:
 
 module_security.declarePublic('List')
 List = _List()
+
+
+class _Bytes:
+    """convert size to a human readable format
+    size: int, size of a file in bytes
+    returns str, like '8.2M'
+    """
+
+    __allow_access_to_unprotected_subobjects__ = 1
+
+    _magnitudes = ['', 'K', 'M', 'G', 'T']
+    _magnitudes.reverse()
+
+    _threshold = 500
+
+    def __call__(self, nrOfBytes):
+        size = float(nrOfBytes)
+        threshold = self._threshold
+        magnitude = self._magnitudes[:]
+        mag = magnitude.pop()
+
+        while size > threshold and magnitude:
+            size = size / 1024
+            mag = magnitude.pop()
+
+        if int(size) == size:
+            return '%i%s' % (size, mag)
+        return '%.1f%s' % (size, mag)
+
+module_security.declarePublic('Bytes')
+Bytes = _Bytes()
+
+
 
