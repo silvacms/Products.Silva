@@ -46,7 +46,7 @@ Messages
 <td class="feedback"
   colspan="2">
 <span tal:replace="python:model.get_approval_requester()">author id</span>
-has requested approval on 
+responded on
 <span tal:replace="structure python:here.service_utils.backend_datetime_to_str(model.get_approval_request_datetime())">some date</span>
 <tal:if condition="python:model.get_approval_request_message()">
 with the following comments:
