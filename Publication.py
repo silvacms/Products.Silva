@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.34 $
+# $Revision: 1.35 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -34,7 +34,6 @@ class Publication(Folder):
                               'set_silva_addables_allowed_in_publication')
     def set_silva_addables_allowed_in_publication(self, addables):
         self._addables_allowed_in_publication = addables
-
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_folder')

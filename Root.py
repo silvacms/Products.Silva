@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.41 $
+# $Revision: 1.42 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -43,7 +43,17 @@ class Root(Publication):
         """Don't do anything here. Can't do this with root.
         """
         pass
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'set_silva_addables_forbidden')
+    def set_silva_addables_forbidden(self, addable_names):
+        """Set addables that are forbidden for use in this site.
+        """
+        addables_forbidden = {}
+        for name in addable_names:
+            addables_forbidden[name] = 0
+        self._addables_forbidden = addables_forbidden
+        
     # ACCESSORS
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -83,6 +93,17 @@ class Root(Publication):
         else:
             return addables
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_silva_addables_forbidden')
+    def is_silva_addable_forbidden(self, meta_type):
+        """Return true if addable is forbidden to be used in this
+        site.
+        """
+        if not hasattr(self.aq_base, '_addables_forbidden'):
+            return 0
+        else:
+            return self._addables_forbidden.has_key(meta_type)
+    
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'upgrade_silva')
     def upgrade_silva(self, from_version='0.8.6'):
