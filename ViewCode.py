@@ -32,15 +32,13 @@ class ViewCode:
         """Gets the icon for the object and wraps that in an image tag"""
         tag = ('<img src="%(icon_path)s" width="16" height="16" border="0" '
                 'alt="%(alt)s" />')
-
-        if obj is None or not hasattr(aq_base(obj), 'icon'):
-            icon_path = '%s/globals/silvageneric.gif' % self.get_root_url()
-        else:
-            icon_path = icon.registry.getIcon(obj)
-    
+        icon_path = '%s/globals/silvageneric.gif' % self.get_root_url()
         if obj is not None:
+            try:
+                icon_path = icon.registry.getIcon(obj)
+            except icon.RegistryError:
+                icon_path = getattr(aq_base(obj), 'icon', icon_path)
             meta_type = getattr(obj, 'meta_type')
-
         return tag % {'icon_path': icon_path, 'alt': meta_type}
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
