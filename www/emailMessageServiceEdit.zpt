@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.7 $
+Version of this file: $Revision: 1.8 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -28,7 +28,9 @@ Version of this file: $Revision: 1.7 $
       &nbsp;
     </td>
     <td align="left" valign="top">
-      <input class="form-element" type="submit" value=" Change Settings " />
+      <input class="form-element" type="submit" 
+              i18n:attributes="value" 
+              value=" Change Settings " />
     </td>
   </tr>
 </table>

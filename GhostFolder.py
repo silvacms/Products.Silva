@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.31 2004/07/21 11:40:40 jw Exp $
+# $Id: GhostFolder.py,v 1.32 2004/11/19 18:19:49 guido Exp $
 
 from __future__ import nested_scopes
 
@@ -25,6 +25,7 @@ from Products.Silva.interfaces import \
     IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
     IPublication, ISilvaObject, IGhostFolder, IIcon, IGhostContent
     
+from Products.Silva.i18n import translate as _
 
 icon = 'www/silvaghostfolder.gif'
 
@@ -52,10 +53,10 @@ class Sync:
         pass
 
     def _do_update(self):
-        raise NotImplementedError, "implemented in subclasses"
+        raise NotImplementedError, _("implemented in subclasses")
 
     def _do_create(self):
-        raise NotImplementedError, "implemented in subclasses"
+        raise NotImplementedError, _("implemented in subclasses")
 
     def __repr__(self):
         return "<%s %s.%s -> %s.%s>" % (
@@ -211,8 +212,10 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                 g_ob_new = uc.update()
                 break
             
-            assert g_ob_new is not None, "no updater was called for %r" % (
-                (self, h_container, h_ob, g_container, g_ob), )
+            msg = _("no updater was called for ${info_tuple}") 
+            msg.set_mapping({'info_tuple': 
+                repr(((self, h_container, h_ob, g_container, g_ob), ))})
+            assert g_ob_new is not None, msg
             if IContainer.isImplementedBy(h_ob):
                 object_list.extend(self._haunt_diff(h_ob, g_ob_new))
         for updater in updaters:
@@ -407,8 +410,9 @@ def xml_import_handler(object, node):
 
     def _get_content_url(node):
         content_url = node.attributes.getNamedItem('content_url').nodeValue
-        assert type(content_url) == type(u''), \
-            "got %r, expected a unicode" % content_url
+        msg = _("got ${url}, expected a unicode")
+        msg.set_mapping({'url': content_url})
+        assert type(content_url) == type(u''), msg
         return content_url.encode('us-ascii', 'ignore')
     
     def factory(object, id, title, content_url):
