@@ -13,7 +13,9 @@ model.set_title(model.input_convert(result['image_title']))
 msg = ['Properties changed']
 msg_type = 'feedback'
 
-if model.canScale():
+if (model.canScale() and
+        result.has_key('web_format') and
+        result.has_key('web_scaling')):
     model.set_web_presentation_properties(
         result['web_format'], result['web_scaling'])
     
