@@ -1,18 +1,20 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.10 $
+Version of this file: $Revision: 1.11 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
-<h3 i18n:translate="config_silva_extension_products">
-  Configure Silva Extension Products:
-</h3>
+<h4><a href="../manage_services">Silva Services</a></h4>
 
-<h3 i18n:translate="general_actions">general actions</h3>
+<h2 i18n:translate="config_silva_extension_products">
+  Configure Silva Extension Products
+</h2>
+
+<h3 i18n:translate="general_actions">General actions</h3>
 <form action="." method="POST">
   <input type="submit" name="refresh_all:method" value="refresh all" i18n:attributes="value"/>
   <input type="submit" name="upgrade_all:method" value="upgrade content" onclick="if (!confirm('This will upgrade all Silva content, and may take a long time on a large site.\nThis is, however, necessary to make old Silva content work with new versions.\nAre you sure you want to continue?')) return false;" />

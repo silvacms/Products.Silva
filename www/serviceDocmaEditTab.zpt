@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.4 $
+Version of this file: $Revision: 1.5 $
 -->
 <tal:define define="global view here;
                     global conn_and_pw view/try_connection_and_pw;
@@ -18,7 +18,9 @@ Version of this file: $Revision: 1.4 $
 <span tal:condition="not:conn_and_pw">Status: not connected</span>
 </div>
 
-<div class="form-title">Docma service settings:</div><br />
+<h4><a href="../manage_services">Silva Services</a></h4>
+
+<div class="form-title">Docma service settings</div><br />
 <form method="POST" action="." enctype="multipart/form-data">
 <div class="form-text">DocmaServer host name or IP address:</div>
 <input type="text" class="form-element" name="host" tal:attributes="value view/host" /><br /><br />
