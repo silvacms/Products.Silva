@@ -185,7 +185,17 @@
       </xsd:annotation>
     </xsd:attribute>
     <xsd:attribute name="path" type="xsd:string" />
-    <xsd:attribute name="alignment" type="xsd:string" />
+    <xsd:attribute name="alignment">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">            
+          <xsd:enumeration value="image-left" />
+          <xsd:enumeration value="image-center" />
+          <xsd:enumeration value="image-right" />
+          <xsd:enumeration value="float-left" />
+          <xsd:enumeration value="float-right" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
     <!-- there should be som uri -->
   </xsd:complexType>
 
