@@ -7,9 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="
-    global vein string:contents;
-    "
+  tal:define="global vein string:contents;"
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
@@ -23,12 +21,10 @@
     default_doc_list python: test(default_document, [default_document], []);
     publishables python: default_doc_list + model.get_ordered_publishables();
     assets model/get_assets;
-    
     ids request/ids | options/ids | python: [];
     position request/position | options/position | nothing;
-    
     iterate string:odd;
-    ">
+">
   <table class="columns columns2">
     <tbody>
       <tr>
