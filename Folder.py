@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.114 $
+# $Revision: 1.114.2.1 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -912,10 +912,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         create Assets from its contents. Use given title for 
         all assets created
         """
-        #try:
         return import_archive_helper(self, file, title)
-        #except Exception:
-        #    raise
 
     security.declarePublic('url_encode')
     def url_encode(self, string):
