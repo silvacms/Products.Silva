@@ -24,10 +24,9 @@
     <span tal:replace="structure notice">
       message
     </span>
-    <span tal:replace="structure string:&nbsp;&nbsp;(${here/service_utils/backend_now_to_str})"
-      tal:condition="python:type == 'feedback'">
-      datetime
-    </span>
+    <tal:block tal:condition="python:type == 'feedback'">
+      &nbsp;&nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
+    </tal:block>
   </div>
 </tal:condition>
 

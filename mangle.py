@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.7 2003/08/14 15:01:05 zagy Exp $
+# $Id: mangle.py,v 1.8 2003/08/27 12:45:11 zagy Exp $
 
 # Python
 import string
@@ -352,6 +352,18 @@ class Now(DateTime):
         self._dt = _DateTime()
 
     
+class _List:
+    """list mangler"""
 
+    __allow_access_to_unprotected_subobjects__ = 1
+    
+    def __call__(self, elements):
+        if not elements:
+            return ''
+        if len(elements) == 1:
+            return elements[0]
+        return ', '.join(elements[:-1]) + ' and ' + elements[-1]
 
+module_security.declarePublic('List')
+List = _List()
 

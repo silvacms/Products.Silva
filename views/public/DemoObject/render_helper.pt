@@ -2,7 +2,9 @@
                   global title options/version/get_title;
                   global info options/version/info;
                   global number options/version/number;
-                  global date options/version/date" />
+                  global date options/version/date;
+                  global mangle python:modules['Products'].Silva.mangle;
+                  " />
 
 <!-- Course Title and Code -->
 <div tal:omit-tag="" tal:condition="title | nothing">
@@ -48,7 +50,7 @@ Date
 &nbsp;
 </td>
 <td>
-<span tal:replace="structure python:view.service_utils.frontend_datetime_to_str(date)"></span>
+<span tal:replace="structure python:mangle.DateTime(date).toStr()"></span>
 </td>
 </tr>
 

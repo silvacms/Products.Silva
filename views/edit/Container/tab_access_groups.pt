@@ -133,7 +133,7 @@
               type
             </td>
             <td>
-              <tal:block replace="structure python:view.service_utils.backend_short_datetime_to_str(group.get_modification_datetime()) or default">
+              <tal:block replace="structure python:mangle.DateTime(group.get_modification_datetime()).toShortStr() or default">
                 -
               </tal:block>
             </td>
@@ -560,7 +560,7 @@
                   </i>)
                 </td>
                 <td>
-                  <tal:block replace="structure python:view.service_utils.backend_short_datetime_to_str(group.get_modification_datetime()) or default">
+                  <tal:block replace="structure python:mangle.DateTime(group.get_modification_datetime()).toShortStr() or default">
                     -
                   </tal:block>
                 </td>

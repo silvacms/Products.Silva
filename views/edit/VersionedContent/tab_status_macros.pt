@@ -25,7 +25,7 @@ Messages
   colspan="2">
 <span tal:replace="python:model.get_approval_requester()">author id</span>
 has requested approval on 
-<span tal:replace="structure python:here.service_utils.backend_datetime_to_str(model.get_approval_request_datetime())">some date</span>
+<span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()">some date</span>
 <tal:if condition="python:model.get_approval_request_message()">
 with the following comments:
 </tal:if>
@@ -53,7 +53,7 @@ message text
  colspan="2">
 A previous request for approval has been rejected / withdrawn by 
 <span tal:replace="python:model.get_approval_requester()" /> on 
-<span tal:replace="structure python:here.service_utils.backend_datetime_to_str(model.get_approval_request_datetime())">some date</span>.
+<span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()">some date</span>.
 <comment tal:condition="nothing"> actually the last message may not been written
    by the person withdrawing the request; if this person did an e.g. an empty reject,
    this is the message of the requester ...

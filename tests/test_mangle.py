@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.2 2003/08/13 11:45:45 zagy Exp $
+# $Id: test_mangle.py,v 1.3 2003/08/27 12:45:12 zagy Exp $
 
 import Zope
 Zope.startup()
@@ -61,7 +61,7 @@ class MangleIdTest(SilvaTestCase):
         self.assertEqual(id.validate(), id.RESERVED)
     
 
-class ManglePathTest(SilvaTestCase):
+class MangleTest(SilvaTestCase):
 
     def test_path(self):
         test_cases = [
@@ -78,11 +78,18 @@ class ManglePathTest(SilvaTestCase):
             __traceback_info__ = case
             self.assertEquals(expected_result, actual_result)
 
-    
+    def test_list(self):
+        self.assertEquals(mangle.List([]), '')
+        self.assertEquals(mangle.List(['foo']), 'foo')
+        self.assertEquals(mangle.List(['foo', 'bar']), 'foo and bar')
+        self.assertEquals(mangle.List(['foo', 'bar', 'baz']),
+            'foo, bar and baz')
+   
+   
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(MangleIdTest))
-    suite.addTest(unittest.makeSuite(ManglePathTest))
+    suite.addTest(unittest.makeSuite(MangleTest))
     return suite
 
 def main():

@@ -8,6 +8,8 @@
 ##title=
 ##
 if not ids:
-   return
+   return ''
+from Products.Silva import mangle
 ids = ['%s (%s)' % (context.quotify(id[0]), id[1]) for id in ids]
-return context.service_utils.frontend_render_list(ids)
+return mangle.List(ids)
+

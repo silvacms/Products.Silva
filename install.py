@@ -218,9 +218,6 @@ def configureCoreFolders(root):
     """
     # images, stylesheets, etc
     add_fss_directory_view(root, 'globals', __file__, 'globals')
-    # commonly used python scripts (XXX probably should go away)
-    add_fss_directory_view(root, 'service_utils', __file__, 'service_utils')
-
     # folder containing some extra views and resources
     root.manage_addFolder('service_resources', 'Silva Product Resources')
 
