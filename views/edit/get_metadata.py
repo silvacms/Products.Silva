@@ -1,5 +1,6 @@
 ##parameters=content
 from Products.SilvaMetadata.Exceptions import BindingError
+from Products.Silva.roleinfo import CHIEF_ROLES, READER_ROLES
 
 # Build a dict for use in the edit pagetemplate,
 # format:
@@ -22,6 +23,8 @@ from Products.SilvaMetadata.Exceptions import BindingError
 
 request = context.REQUEST
 model = request.model
+user_id = request.AUTHENTICATED_USER.getId()
+user_roles = model.sec_get_all_roles_for_userid(user_id)
 
 if content is None:
     return None
@@ -46,25 +49,19 @@ def isAcquired(set_name, element_name):
     return 0
 
 def isEqualToOrGreaterThan(role1, role2):
-    if role1 == 'Manager' or role1 == 'ChiefEditor':
+    if role1 in CHIEF_ROLES:
         return True
-    if role2 == 'Manager' or role2 == 'ChiefEditor':
+    roles = list(READER_ROLES)
+    try:
+        return roles.index(role1) >= roles.index(role2)
+    except ValueError:
+        if role2 not in roles:
+            return True
         return False
-    if role1 == 'Editor':
-        return True
-    if role2 == 'Editor':
-        return False
-    if role1 == 'Author':
-        return True
-    if role2 == 'Author':
-        return False
-    return True
 
 def isAllowed(set_name):
     minimal_role = binding.getSet(set_name).getMinimalRole()
     if minimal_role:
-        user_id = request.AUTHENTICATED_USER.getId()
-        user_roles = model.sec_get_all_roles_for_userid(user_id)
         for role in user_roles:
             if isEqualToOrGreaterThan(role, minimal_role):
                 return True
@@ -72,7 +69,16 @@ def isAllowed(set_name):
     return True
 
 isViewable = binding.isViewable
-isEditable = binding.isEditable
+
+def isEditable(set_name, element_name):
+    at_least_author = [
+        role for role in user_roles if isEqualToOrGreaterThan(role, 'Author')]
+    if not at_least_author:
+        return False
+    # XXX: hack - this check should go in the element's guard
+    if set_name == 'silva-content':
+        return content.can_set_title()
+    return binding.isEditable(set_name, element_name)
 
 pt_binding = {}
 set_names = binding.getSetNames()
@@ -88,12 +94,6 @@ for set_name in set_names:
     set['elementNames'] = element_names = binding.getElementNames(
         set_name, mode='view')
 
-    # XXX: hack - this check should go in the element's guard
-    if set_name == 'silva-content':
-        xtra_editable_check = content.can_set_title()
-    else:
-        xtra_editable_check = 1
-
     # Per element:
     for element_name in element_names:
         set[element_name] = element = {}
@@ -106,10 +106,9 @@ for set_name in set_names:
             element['isAcquired'] = 1
         else:
             element['isAcquired'] = 0
-        # isEditable, render
-        # XXX: using the afformentioned hack...
-        if isEditable(set_name, element_name) and xtra_editable_check:
-            element['isEditable'] = 1 #isEditable(set_name, element_name)
+            
+        if isEditable(set_name, element_name):
+            element['isEditable'] = 1
             element['render'] = renderEdit(set_name, element_name)
         else:
             # show a field, when it is read-only *and not* acquired (since

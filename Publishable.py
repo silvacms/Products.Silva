@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -102,7 +102,7 @@ class Publishable:
         return not self.is_published() and not self.is_approved()
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'can_set_title')
+        SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
         """Analogous to is_deletable() (?)
         """

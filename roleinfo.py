@@ -6,10 +6,12 @@ module_security = ModuleSecurityInfo('Products.Silva.roleinfo')
 BUILTIN_VIEWER_ROLES = ('Anonymous', 'Authenticated')
 SILVA_VIEWER_ROLES = ('Viewer', 'Viewer +', 'Viewer ++')
 VIEWER_ROLES = BUILTIN_VIEWER_ROLES + SILVA_VIEWER_ROLES
+
 CHIEF_ROLES = ('ChiefEditor', 'Manager')
 EDITOR_ROLES = ('Editor',) + CHIEF_ROLES
 AUTHOR_ROLES = ('Author',) + EDITOR_ROLES
 READER_ROLES = ('Reader',) + AUTHOR_ROLES
+
 ALL_ROLES = VIEWER_ROLES + READER_ROLES
 
 _i18n_markers = (

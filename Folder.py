@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.165 $
+# $Revision: 1.166 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -507,7 +507,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     # ACCESSORS
     
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'can_set_title')    
+        SilvaPermissions.ReadSilvaContent, 'can_set_title')    
     def can_set_title(self):
         """Check to see if the title can be set by user, meaning:
         * he is Editor/ChiefEditor/Manager, or
