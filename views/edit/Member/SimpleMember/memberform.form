@@ -27,7 +27,7 @@
           <truncate type="int">0</truncate>
           <description></description>
           <unicode>1</unicode>
-          <extra>accept-charset="UTF-8"</extra>
+          <extra>accept-charset="UTF-8" style="width:98%"</extra>
         </values>
         <tales>
         </tales>
@@ -44,11 +44,11 @@
           <required type="int">1</required>
           <css_class></css_class>
           <default></default>
-          <title>e-mail address</title>
+          <title>email address</title>
           <truncate type="int">0</truncate>
           <description></description>
           <unicode>1</unicode>
-          <extra>accept-charset="UTF-8"</extra>
+          <extra>accept-charset="UTF-8" style="width:98%"</extra>
         </values>
         <tales>
         </tales>
@@ -59,18 +59,18 @@
           <size type="int">1</size>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <items type="list">['builtin']</items>
+          <items type="list">['field editor', 'kupu']</items>
           <external_validator></external_validator>
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
-          <title>Preferred editor</title>
+          <title>preferred editor</title>
           <first_item type="int">0</first_item>
-          <description>Choose 'builtin' for the plain XMLWidgets based editor, or 'kupu' (if available) for the Kupu WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1+)</description>
+          <description>Choose 'field editor' for the forms-based editor, or 'kupu' for the Kupu WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1+)</description>
           <unicode>1</unicode>
         </values>
         <tales>
-          <items type="list">python: hasattr(form, 'kupu') and ['builtin', 'kupu'] or ['builtin']</items>
+          <items type="list">python: hasattr(form, 'kupu') and ['field editor', 'kupu'] or ['field editor']</items>
         </tales>
       </field>
 
