@@ -188,10 +188,10 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         self._allow_authentication_requests = value
 
     security.declareProtected('View management screens',
-                              'manage_allowAuthenticationRequests')
-    def manage_allowAuthenticationRequests(self, REQUEST):
+                              'manage_allowSubscription')
+    def manage_allowSubscription(self, REQUEST):
         """manage method to set allow_authentication_requests"""
-        self.set_allow_authentication_requests(int(REQUEST['allow_authentication_requests']))
+        self.set_allow_authentication_requests(int(REQUEST['allow_subscription']))
         return self.manage_editForm(manage_tabs_message='Changed settings')
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
