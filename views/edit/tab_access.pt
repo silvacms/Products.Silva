@@ -3,12 +3,11 @@
 <div class="margins" metal:fill-slot="main">
 <tal:block  
   condition="python:view.has_access()"
-  define="
-   dummy python:model.security_trigger();">
+  define="dummy python:model.security_trigger();">
 
 <h2><img src="%s" width="16" height="16" alt="%s" 
-    tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    Access Settings for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
+  tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+  Access Settings for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
 </h2>
 
 <!-- div align="right">
@@ -31,14 +30,14 @@
 <tr>
   <td colspan="3">
     <h3>UserRoles from a higher level down
-    <img src="pixel.gif" width="1px" height="18px"
+    <img src="pixel.gif" width="1px" height="14px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     </h3>
   </td>
 </tr>
 <tr class="topcontrols">
   <td style="background:#c0dbe0;" align="left" colspan="2">
-    <img src="pixel.gif" width="1px" height="18px"
+    <img src="pixel.gif" width="1px" height="14px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     &nbsp;
   </td>
@@ -91,7 +90,7 @@
 <tr>
   <td>
     <h3>Local UserRoles
-      <img src="pixel.gif" width="1px" height="18px"
+      <img src="pixel.gif" width="1px" height="14px"
         tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     </h3>
   </td>
@@ -103,7 +102,7 @@
 </tr>
 <tr class="topcontrols">
   <td style="background:#b0cbd0;" align="right" colspan="3">
-    <img src="pixel.gif" width="1px" height="18px"
+    <img src="pixel.gif" width="1px" height="14px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
   </td>
 </tr>
@@ -190,14 +189,23 @@
 </tr>
 </table>
 <!-- _____________________ GROUPS AND ROLES ____________________________ -->
+<br />
+<hr />
 <tal:block condition="python:model.sec_groups_enabled()">
 <tal:block condition="python:not getattr(here, 'service_groups', None)">
-  <h3>To actually use Group access definitions, a Groups Service is needed.</h3>
-  <p>This service should have an id 'service_groups' and be placed in the Silva Root.</p>
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<tr>
+  <td>
+    <h3>Groups</h3>
+    <p>To actually use Group access definitions, a Groups Service is needed.<br />
+      This service should have <code>service_groups</code> for its and be placed 
+      in the Silva Root.
+    </p>
+  </td>
+</tr>
+</table>
 </tal:block>
 <tal:block condition="python:getattr(here, 'service_groups', None)">
-  <br />
-  <hr />
 <tal:block
     define="
       all_groups view/access_get_all_groups;
@@ -213,14 +221,14 @@
 <tr>
   <td colspan="2">
     <h3>GroupRoles from a higher level down
-      <img src="pixel.gif" width="1px" height="18px"
+      <img src="pixel.gif" width="1px" height="14px"
         tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     </h3>
   </td>
 </tr>
 <tr class="topcontrols">
   <td style="background:#c0dbe0;" align="left" colspan="2">
-    <img src="pixel.gif" width="1px" height="18px"
+    <img src="pixel.gif" width="1px" height="14px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
   </td>
 </tr>
@@ -271,7 +279,7 @@
 <tr>
   <td>
     <h3>Local GroupRoles
-      <img src="pixel.gif" width="1px" height="18px"
+      <img src="pixel.gif" width="1px" height="14px"
         tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     </h3>
   </td>
@@ -282,7 +290,7 @@
 </tr>
 <tr class="topcontrols">
   <td style="background:#b0cbd0;" align="right" colspan="3">
-    <img src="pixel.gif" width="1px" height="18px"
+    <img src="pixel.gif" width="1px" height="14px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     <select name="add_group">
       <option value="None">Select...</option>
@@ -384,76 +392,92 @@
 
 <h2><img src="%s" width="16" height="16" alt="%s"
     tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    Experimental: Access Restriction for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
-</h2>
-<div class="worksheet borders top bottom left right">
-<table width="100%" cellspacing="0" cellpadding="5" border="0">
-<tr align="left" valign="top">
-<td>
-<form action="access_restriction_submit" method="POST">
-<table width="100%" cellspacing="0" cellpadding="3" border="0">
-<tr>
-  <td colspan="3">
-    <h3>Define restriction
-    <img src="pixel.gif" width="1px" height="18px"
-      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-    </h3>
-  </td>
-</tr>
-<tr class="focus">
-  <td>
-    <tal:block condition="python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
-      This restriction is acquired from above: <code tal:content="python:getattr(model, 'access_restriction')" />
-    <br />
-    <br />
-    </tal:block>
-    <textarea name="access_restriction"
-      tal:condition="python:model.hasProperty('access_restriction')"
-      tal:content="python:model.getProperty('access_restriction')" />
-    <textarea name="access_restriction"
-      tal:condition="python:not model.hasProperty('access_restriction')"
-    ></textarea>
-  </td>
-</tr>
-<tr class="controls" align="right">
-  <td>
-    <input class="button" type="submit" value="Set restriction">
-  </td>
-</tr>
-</table>
-</form>
-</tr>
-</table>
-</div>
-
-<h2><img src="%s" width="16" height="16" alt="%s"
-    tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    Minimal Access Role for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
+    Access Restrictions for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
 </h2>
 <div class="worksheet borders top bottom left right">
 <table width="100%" cellspacing="0" cellpadding="5" border="0">
 <tr align="left" valign="top">
 <td>
 <form action="minimal_access_role_submit" method="POST">
-<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<table width="100%" cellspacing="0" cellpadding="3" border="0"
+  tal:define="is_closed model/sec_is_closed_to_public">
+  <tr>
+    <td colspan="3">
+      <h3>Access restriction by Role:
+        <img src="pixel.gif" width="1px" height="14px"
+          tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+      </h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" style="background:#c0dbe0;"
+      tal:attributes="style python:test(is_closed > 1, 'background:#b0cbd0;;', 'background:#c0dbe0;;')">
+      <img src="pixel.gif" width="1px" height="14px"
+        tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+      &nbsp;
+    </td>
+  </tr>  
+  <tr class="focus">
+    <td valign="top">
+        <p>
+        Minimal role for viewing this object (and all children):
+        <select name="role" tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')">
+          <option value="None" tal:attributes="selected python:test(not is_closed, 'SELECTED', '')">Unauthenticated</option>
+          <option value="Viewer" tal:attributes="selected python:test(is_closed, 'SELECTED', '')">Viewer</option>
+        </select>
+        </p>
+        <p tal:condition="python: is_closed > 1">
+          This restriction is acquired from above and can be changed here: 
+          <a tal:attributes="href python:'%s/edit/tab_access' % view.REQUEST['URLPATH%s' % (is_closed + 1)]"
+            tal:content="python: view.REQUEST['URLPATH%s' % (is_closed + 1)]">here</a>
+        </p>
+    </td>
+  </tr>
+  <tr class="controls" align="right">
+    <td>
+      <input class="button" type="submit" value="Set restriction">
+    </td>
+  </tr>
+</table>
+</form>
+</tr>
+</table>
+
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+<tr align="left" valign="top">
+<td>
+<form action="access_restriction_submit" method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0"
+  tal:define="definition_aquired python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
 <tr>
   <td colspan="3">
-    <h3>Access restriction by role:
-    <img src="pixel.gif" width="1px" height="18px"
+    <h3>Experimental: Define restriction by IP address:
+    <img src="pixel.gif" width="1px" height="14px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     </h3>
   </td>
 </tr>
+<tr>
+  <td colspan="3" style="background:#c0dbe0;"
+    tal:attributes="style python:test(definition_aquired, 'background:#b0cbd0;;', 'background:#c0dbe0;;')">
+    <img src="pixel.gif" width="1px" height="14px"
+      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+    &nbsp;
+  </td>
+</tr>  
 <tr class="focus">
   <td>
-  Minimal role for viewing this object (and all children):<br />
-  <tal:block define="is_closed model/sec_is_closed_to_public">
-    <div tal:condition="python: is_closed > 1">This restriction is acquired from the object on <span tal:replace="python: view.REQUEST['URLPATH%s' % (is_closed + 1)]" />, and can be changed only on the object it's acquired from.</div>
-    <select name="role" tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')">
-        <option value="None" tal:attributes="selected python:test(not is_closed, 'SELECTED', '')">Unauthenticated</option>
-        <option value="Viewer" tal:attributes="selected python:test(is_closed, 'SELECTED', '')">Viewer</option>
-    </select>
-  </tal:block>
+    <p tal:condition="definition_aquired">
+      This restriction is acquired from above: <code tal:content="python:getattr(model, 'access_restriction')" />
+    </p>
+    <p>
+      <textarea name="access_restriction"
+        tal:condition="python:model.hasProperty('access_restriction')"
+        tal:content="python:model.getProperty('access_restriction')" />
+      <textarea name="access_restriction"
+        tal:condition="python:not model.hasProperty('access_restriction')">
+      </textarea>
+    </p>
   </td>
 </tr>
 <tr class="controls" align="right">
