@@ -123,7 +123,7 @@
                 <td class="align-right">
                   <label for="with_sub_publications"
                     i18n:translate="include_sub_publications?">
-                    Include sub publications?
+                    include sub publications?
                   </label>
                 </td>
                 <td class="align-center">

@@ -9,7 +9,7 @@
 ##
 # define:
 # name, id/None, up_id, toplink_accesskey, tab_accesskey, uplink_accesskey
-tabs = [('editor', 'tab_edit', 'tab_edit', '!', '1', '6'),
+tabs = [('edit', 'tab_edit', 'tab_edit', '!', '1', '6'),
         ('groups', None, 'tab_access_groups', '@', '2', '7'),
        ]
 
