@@ -26,7 +26,6 @@
 	<icon paramname="UNDERLINE">
 	</icon>
 	<separator />
-<!--
 	<icon paramname="INSERTTABLEDIALOG">
 	</icon>
 	<icon paramname="INSERTTABLE">
@@ -36,7 +35,6 @@
 	<icon paramname="INSERTCOLUMN">
 	</icon>
 	<separator />
--->
 	<icon paramname="BULLETS">
 		<iconfile>icons/list.gif</iconfile>
 	</icon>

@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 import unittest
 
 # 
@@ -415,13 +415,13 @@ class RoundtripWithTidy(unittest.TestCase):
         return tablenode
 
     def test_table_listing(self):
-        self._check_table(type='listing', column_info="L:1 L:1 L:1")
+        self._check_table(columns="3", type='listing', column_info="L:1 L:1 L:1")
 
     def test_table_grid(self):
-        self._check_table(type='grid', column_info="L:1 L:1 L:1")
+        self._check_table(columns="3", type='grid', column_info="L:1 L:1 L:1")
 
     def test_table_data_grid(self):
-        self._check_table(type='datagrid', column_info="L:1 L:1 L:1")
+        self._check_table(columns="3", type='datagrid', column_info="L:1 L:1 L:1")
 
     def test_preformatted(self):
         """ check that 'pre' (preformatted text) works """
