@@ -335,8 +335,6 @@ a.index-element {
 .punctuation {
   font-family : impact, verdana, arial, helvetica, sans-serif;
   font-size : 15px; 
-/* for all forms? */
-  color: #c9dfe2;
 }
 
 .required {
