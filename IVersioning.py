@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 import Interface
 
 class IVersioning(Interface.Base):
@@ -32,6 +32,24 @@ class IVersioning(Interface.Base):
         """Close the public version.
         """
         pass
+
+
+    def request_version_approval():
+        """Request approval for the current unapproved version
+        Implementation should raise VersioningError, if there
+        is no such version.
+        Returns None otherwise
+        """
+        pass
+
+    def withdraw_version_approval():
+        """Withdraw a previous request for approval
+        Implementation should raise VersioningError, if the
+        currently unapproved version has no request for approval yet,
+        or if there is no unapproved version.
+        """
+        pass
+
     
     def set_unapproved_version_publication_datetime(dt):
         """Set the publicationd datetime for the unapproved version,
@@ -56,6 +74,16 @@ class IVersioning(Interface.Base):
         """
         pass
 
+    def set_approval_request_message(message):
+        """Allows to add a message concerning the
+        current request for approval.
+        setting the currently approved message
+        overwrites any previous message for this content.
+        The implementation may clean the message
+        after the content is approved.
+        """
+        pass
+    
     
     # ACCESSORS
 
@@ -68,6 +96,13 @@ class IVersioning(Interface.Base):
         """Check whether there exists a published version.
         """
         pass
+
+    def is_version_approval_requested():
+        """Check if there exists an unapproved version
+        which has a request for approval.
+        """
+        pass
+    
     
     def get_unapproved_version():
         """Get the id of the unapproved version.
@@ -159,6 +194,32 @@ class IVersioning(Interface.Base):
     def get_last_closed_version():
         """Get the id of the version that was last closed, or None if
         no such version.
+        """
+        pass
+
+    def get_approval_requester():
+        """Return the id of the user requesting approval
+        of the currently unapproved version.
+        XXX fishy: If the request for approval is withdrawn/rejected,
+        this returns the user id of the one having
+        withdrawn/rejected the request.
+        (Maybe write another method for this?)
+        """
+        pass
+    
+    def get_approval_request_message():
+        """Get the current message associated with
+        request for approval; i.e. argument passed the
+        on the last call to "set_approval_request_message".
+        May return None if there is no such message or
+        the message has been purged by an approval.
+        """
+        pass
+
+    def get_approval_request_datetime():
+        """Get the date when the currently unapproved version
+        did get a request for approval as a DateTime object,
+        or None if there is no such version or request.
         """
         pass
     
