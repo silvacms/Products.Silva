@@ -5,6 +5,11 @@ Silva changes
 
   Current development
 
+    Features added
+
+      - Link objects now accept other protocols in the URL too (https,
+        news, ftp, mailto).
+
     Bugs fixed
 
       - Fixed incorrect recursive call for get_public_tree_helper

@@ -1,8 +1,13 @@
+# Copyright (c) 2003-2004 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Revision: 1.5 $
+
+# python
+import re
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-
 # Silva
 from VersionedContent import CatalogedVersionedContent
 from Version import CatalogedVersion
@@ -14,6 +19,10 @@ from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 
 icon = "www/link.png"
+
+# XXX taken from SilvaDocument/mixedcontentsupport.py
+URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
+_url_match = re.compile(URL_PATTERN)
 
 class Link(CatalogedVersionedContent):
     """A Link makes it possible to include links to external sites &#8211; 
@@ -104,10 +113,18 @@ class LinkVersion(CatalogedVersion):
             response.redirect(self._url)
             return ""
         
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'is_valid_url')
+    def is_valid_url(self, url):
+        if _url_match.match(url):
+            return True
+        return False
+        
     # MANIPULATORS
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_url')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_url')
     def set_url(self, url):
-        if not url.startswith('http://'):
+        if not self.is_valid_url(url):
             url = 'http://' + url
         self._url = url
 
