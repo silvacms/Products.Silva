@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.57 $
+# $Revision: 1.58 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -298,8 +298,8 @@ class Security(AccessManager):
         """
         return self.service_members.get_cached_member(userid)
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'sec_get_last_author_info')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'sec_get_last_author_info')
     def sec_get_last_author_info(self):
         """Get the info of the last author (this is a IMember object)
         """
