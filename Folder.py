@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.131 $
+# $Revision: 1.132 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -743,6 +743,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_status_tree')
     def get_status_tree(self, depth=-1):
+        '''get Silva tree'''
         l = []
         self._get_status_tree_helper(l, 0, depth)
         return l
