@@ -7,7 +7,8 @@ From 1.0 to 1.1:
 * XSLT support for document renderers. While this shouldn't break
   existing code, it opens up new possibilities for extension
   writers. You can register your own XSLT templates with Silva that
-  handle content rendering.
+  handle content rendering. Read doc/xslt_renderers_howto.txt for more   
+  information
 
 * new parser in forms-based editor. The existing parser for bold,
   italic and the like in the forms based editor has been scrapped and
@@ -21,7 +22,7 @@ From 1.0 to 1.1:
     supp = context.editorsupport.getMixedContentSupport(model, node)
     supp.parse(text)
 
-* new method on Folder objects, get_public_tree_all().  
-    Returns a list of all published content objects (including containers)
-    below this object (not including this object itself), including
-    non-transparent containers like publications.
+* new method on Folder objects, get_public_tree_all().  Returns a list
+  of all published content objects (including containers) below this
+  object (not including this object itself), including non-transparent
+  containers like publications.
