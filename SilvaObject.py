@@ -1,3 +1,9 @@
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id: SilvaObject.py,v 1.60 2003/02/11 17:13:41 zagy Exp $
+
+# python
+from types import StringType
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -264,39 +270,32 @@ class SilvaObject(Security):
     def output_convert_html(self, s):
         """Turn unicode text to something displayable on the web.
         """
+        if isinstance(s, StringType):
+            s = unicode(s, 'cp1252')
         # make sure HTML is quoted
-        return escape(s.encode('cp1252'), 1)
+        return escape(s, 1)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'output_convert_editable')
     def output_convert_editable(self, s):
         """Turn unicode text to something editable.
         """
-        # use windows code page..
-        return s.encode('cp1252')
+        if isinstance(s, StringType):
+            return unicode(s, 'cp1252')
+        return s
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'input_convert')
     def input_convert(self, s):
         """Turn input to unicode.
         """
-        # input will be from windows normally, so use that code page
-        # FIXME: Is this right?
-        # get rid of any weird characters, such as bullets
-        for c in ['\237', '\247']:
-            s = s.replace(c, '')
-        return unicode(' '.join(s.split()), 'cp1252')
+        return unicode(' '.join(s.split()), 'utf-8')
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'input_convert2')
     def input_convert2(self, s):
         """Turn input to unicode.
         """
-        # input will be from windows normally, so use that code page
-        # FIXME: Is this right?
-        # get rid of any weird characters, such as bullets
-        for c in ['\237', '\247']:
-            s = s.replace(c, '')
-        return unicode(s, 'cp1252')
-    
+        return unicode(s, 'utf-8')
+   
 InitializeClass(SilvaObject)

@@ -3,6 +3,7 @@
     silva_root here/silva_root;
     view here;
     model request/model;
+    dummy here/set_content_type;
     ">
 <head>
 <title tal:content="structure python:model.get_title_html()">Title</title>

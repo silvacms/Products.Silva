@@ -20,6 +20,7 @@
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
           <display_width type="int">60</display_width>
+          <unicode type="int">1</unicode>
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
@@ -39,6 +40,7 @@
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
           <display_width type="int">60</display_width>
+          <unicode type="int">1</unicode>
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
@@ -58,6 +60,7 @@
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
           <display_width type="int">60</display_width>
+          <unicode type="int">1</unicode>
           <required type="int">0</required>
           <css_class></css_class>
           <default></default>
@@ -95,6 +98,7 @@
           <max_linelength></max_linelength>
           <max_length></max_length>
           <max_lines></max_lines>
+          <unicode type="int">1</unicode>
           <width type="int">58</width>
           <external_validator></external_validator>
           <height type="int">4</height>

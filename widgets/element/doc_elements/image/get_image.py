@@ -8,7 +8,7 @@
 ##title=
 ##
 try:
-    image = context.restrictedTraverse(image_path)
+    image = context.restrictedTraverse(str(image_path))
 except (KeyError, AttributeError, ValueError, IndexError):
     # image reference is broken (i.e. renamed)
     image = None

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.54 $
+# $Revision: 1.55 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -284,5 +284,9 @@ def xml_import_handler(object, node):
             version = getattr(newdoc, '0')
             childxml = writeStream(child).getvalue().encode('utf8')
             version.manage_edit(childxml) # expects utf8
-        elif hasattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252')) and child.nodeValue:
-            getattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252'))(child.nodeValue.encode('cp1252'))
+        elif hasattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252')) \
+                and child.nodeValue:
+            getattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252'))(
+                child.nodeValue.encode('utf-8'))
+
+            
