@@ -117,7 +117,7 @@
    </index_args>
   </metadata_element>
   <metadata_element id="creationtime">
-   <index_type>TopicIndex</index_type>
+   <index_type>DateIndex</index_type>
    <index_p>1</index_p>
    <field_type>DateTimeField</field_type>
    <read_guard>
