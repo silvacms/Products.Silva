@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.28 2004/06/22 12:11:28 roman Exp $
+# $Id: Image.py,v 1.50.4.1.6.29 2004/07/09 10:20:07 zagy Exp $
 
 # Python
 import re, string
@@ -98,12 +98,7 @@ class Image(Asset):
             img = self.image
         args = ()
         kw = {}
-        if img.meta_type == 'Image':
-            # ExtFile and OFS.Image have different signature
-            args = (REQUEST, RESPONSE)
-        else:
-            kw['REQUEST'] = REQUEST
-        return img.index_html(*args, **kw)
+        return self._image_index_html(img, REQUEST, RESPONSE)
 
     def manage_afterAdd(self, item, container):
         for id in ('hires_image', 'image', 'thumbnail_image'):
@@ -340,9 +335,9 @@ class Image(Asset):
             raise ValueError, "Low resolution image in original format is " \
                 "not supported"
         if REQUEST is not None:
-            return image.index_html(REQUEST, REQUEST.RESPONSE)
+            return self._image_index_html(image, REQUEST, REQUEST.RESPONSE)
         else:
-            return str(image.data)
+            return self._get_image_data(image).read()
         
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, hires=0, thumbnail=0, **kw):
@@ -637,6 +632,15 @@ class Image(Asset):
             image_reference = img._get_fsname(img.get_filename())
             image_reference = open(image_reference, 'rb')
         return image_reference
+
+    def _image_index_html(self, image, REQUEST, RESPONSE):
+        if img.meta_type == 'Image':
+            # ExtFile and OFS.Image have different signature
+            args = (REQUEST, RESPONSE)
+        else:
+            kw['REQUEST'] = REQUEST
+        return img.index_html(*args, **kw)
+
 
 InitializeClass(Image)
     
