@@ -19,7 +19,7 @@ class GeneralUpgrader:
         """constructor
 
             upgrade_handler: function which actually does the upgrade
-                one argument: the object to be opgraded
+                one argument: the object to be upgraded
         """
         self._upgrade_handler = upgrade_handler
 
