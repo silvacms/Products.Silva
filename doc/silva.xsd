@@ -12,7 +12,7 @@
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      $Id: silva.xsd,v 1.19 2003/10/06 09:09:03 zagy Exp $
+      $Id: silva.xsd,v 1.20 2003/10/06 09:09:56 zagy Exp $
     
       Silva XML schema
       Copyright 2002 Infrae
@@ -181,6 +181,7 @@
     <xsd:simpleContent>
       <xsd:extension base="xsd:string">
         <xsd:attribute name="url" type="xsd:anyURI" />
+        <xsd:attribute name="target" type="xsd:string" />
       </xsd:extension>
     </xsd:simpleContent>
   </xsd:complexType>
