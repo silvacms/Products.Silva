@@ -27,18 +27,12 @@
     rel="stylesheet"
   />
 </head>
-<body leftmargin="0"
-  marginheight="0"
-  marginwidth="0"
-  rightmargin="0"
-  topmargin="0"
->
+<body>
 <!--__________________________ feedback start _________________________-->
 
   <div style="margin: 8px;">
     <div class="feedback"
-      style="width:55%"
-    >
+      style="width:55%">
       <span i18n:translate="to_logout_wait">To <b>actually</b> logout, wait 5 seconds or hit this</span>
       <a href="/manage_zmi_logout"
         title="accesskey: alt-l"
