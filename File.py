@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27.8.1.6.5 $
+# $Revision: 1.27.8.1.6.6 $
 
 # Python
 import os
@@ -104,6 +104,8 @@ class File(Asset):
     security.declareProtected(SilvaPermissions.View, 'download')
     # XXX deprecated, method left for backwards compatibility
     def download(self, *args, **kw):
+        """ view (download) file data.
+        """
         # XXX print deprecated warning?
         return self.index_html(*args, **kw)
 
