@@ -1,12 +1,16 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.28 $
+$Revision: 1.47.2.29 $
 
 Silva changes
 
   0.9.1.4
 
     Bugs Fixed
+
+        - The UI for 'Access Restriction by Role' did not properly expose
+          the possibility to set this role more restrictive on a lower
+          level. (the pull down menu and button would have been disabled).
                                                                                             
         - get_public_tree() would not do the right thing with the depth-
           level control argument.
