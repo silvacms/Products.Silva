@@ -41,6 +41,11 @@ def from091to092(self, root):
     # those methods)
     from Document import Document
 
+    # monkeying the sidebar
+    def doNothing(self, *args, **kwargs):
+        pass
+    SidebarService.SidebarService.invalidate = doNothing
+    
     old_manage_beforeDelete = Document.manage_beforeDelete
     def manage_beforeDelete_old_style_docs(self, item, container):
         Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
