@@ -113,9 +113,9 @@ notes
 
 <tr class="odd">
 <td class="align-right">
-<span class="textarea">
-<field tal:replace="structure python:view.tab_status_form_author.message.render(REQUEST=request)" />
-</span>
+    <div class="fixIE6widget">
+        <field tal:replace="structure python:view.tab_status_form_author.message.render(REQUEST=request)" />
+</div>
 </td>
 <td>
 This message will remain visible in the status screen for other authors and editors.
@@ -318,14 +318,14 @@ notes
 
 <tr class="odd">
 <td>
-<span class="textarea">
+<div class="fixIE6widget">
 <textarea
-  style="width:100%"
+  class="fixIE6widget"
   name="message"
   cols="65"
   rows="7"
   wrap="soft"></textarea>
-</span>
+</div>
 </td>
 <td width="40%">
 The message may be viewed by local users.

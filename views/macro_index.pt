@@ -103,7 +103,6 @@ function handle_default_action(element, event, action)
   dummy python:here.recordError(type, notice);
 ">
   <div class="feedback"
-    style="margin-bottom:0;"
     tal:condition="python: template.id != 'tab_preview'"
     tal:attributes="class python:type == 'feedback' and 'feedback' or (type == 'error' and 'alert' or 'clear')">
     <span tal:replace="structure notice">

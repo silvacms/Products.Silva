@@ -66,7 +66,7 @@
         Addresses are formatted for copying and pasting 
         in the &#8216;To:&#8217; field of an email message.
         <br />
-        <textarea style="width:100%"
+        <textarea class="fixIE6widget"
           name="data"
           cols="60"
           rows="5"
