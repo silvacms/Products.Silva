@@ -21,39 +21,34 @@
 
 <tal:define define="global view here; global member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId())" />
 
-<form action="request_roles_submit" method="POST">
+<form action="request_roles_submit" method="POST"
+  tal:condition="python: not member.email() or not member.fullname()">
 <input type="hidden" name="last_url" tal:attributes="value view/REQUEST/last_url" />
 
-<div class="hilight borders top right left"
-  style="padding: 0 0.5em 0 0.5em; clear: both; width: 50%;">
-<span class="subhead">Request roles at this location</span>
-</div>
-
 <div class="hilight borders top right bottom left"
-  style="padding: 0.5em; margin: 0em 0em 0em 0em; clear: both; width: 50%;">
-<div tal:condition="python: not member.email() or not member.fullname()">
-  Please fill in the following fields:<br /><br />
-  Full name:<br />
-  <input type="text" name="fullname" style="width: 100%;"
-    tal:attributes="value member/fullname" /><br /><br />
-  E-mail address:<br />
-  <input type="text" name="email" style="width: 100%;"
-    tal:attributes="value member/email" /><br /><br />
-</div>
+  style="padding: 0.2em 0.5em 1em 0.5em; clear: both; width: 20em; line-height:1.1em;">
+<span class="subhead">Request roles at this location</span><br /><br />
+Please fill in the following fields.<br /><br />
+
+Full name:<br />
+<input type="text" name="fullname" style="width: 100%;"
+ tal:attributes="value member/fullname" /><br /><br />
+
+E-mail address:<br />
+<input type="text" name="email" style="width: 100%;"
+ tal:attributes="value member/email" /><br /><br />
 
 Choose role(s) to request:<br />
 <tal:repeat repeat="role view/get_available_roles">
 <input type="checkbox" name="roles:list" 
-  tal:attributes="
-    value role;
-    id role;" /> <label tal:attributes="for role" tal:content="role">Role</label><br />
+ tal:attributes="
+  value role;
+  id role;" />&nbsp;<label tal:attributes="for role" tal:content="role">Role</label><br />
 </tal:repeat>
-</div>
 
-<div class="hilight borders right bottom left"
-  style="padding: 0.2em 0.5em 0.2em 0.5em; margin: 0em 0em 2em 0em; clear: both; text-align: right; width: 50%;">
 <input class="button" type="submit" value=" Send request " 
-  title="Send request for role: alt-s" accesskey="s" />
+  title="Send request for role: alt-s" accesskey="s" style="float:right;" />
+<br />
 </div>
 
 </form>
