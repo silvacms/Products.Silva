@@ -152,6 +152,19 @@ class CopyTestCase(unittest.TestCase):
         self.assert_(not hasattr(self.sroot, 'doc1'))
         self.assert_(hasattr(self.sroot.folder4, 'doc1'))
 
+    def test_cut3(self):
+        # try to cut folder and paste it into another folder
+        self.sroot.action_cut(['folder4'], self.REQUEST)
+        self.sroot.folder5.action_paste(self.REQUEST)
+        self.assert_(not hasattr(self.sroot, 'folder4'))
+        self.assert_(hasattr(self.sroot.folder5, 'folder4'))
+
+    def test_cut4(self):
+        # try to cut and paste folder to this folder again
+        self.sroot.action_cut(['folder4'], self.REQUEST)
+        self.sroot.action_paste(self.REQUEST)
+        self.assert_(hasattr(self.sroot, 'folder4'))
+
     # should add unit tests for cut-pasting approved content
     # could occur if content is approved after its put on clipboard..
     

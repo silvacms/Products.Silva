@@ -216,7 +216,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             # cut-paste operation
             cut_ids = [item.id for item in self.cb_dataItems()]
             # check where we're cutting from
-            cut_container = item.get_container()
+            cut_container = item.aq_parent.get_container()
             # if not cutting to the same folder as we came from
             if self != cut_container:
                 # modify ids to copy_to if necessary
@@ -243,6 +243,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def get_container(self):
         """Get the container an object is in. Can be used with
         acquisition to get the 'nearest' container.
+        FIXME: currently the container of a container is itself. Is this the right
+        behavior? It leads to subtle bugs..
         """
         return self.aq_inner
 
