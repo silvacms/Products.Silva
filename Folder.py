@@ -297,6 +297,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def action_delete(self, ids):
         """Delete objects monikers refer to.
         """
+        # FIXME: do checks at deleting for publication
         self.manage_delObjects(ids)
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -318,6 +319,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def action_paste(self, REQUEST):
         """Paste objects on clipboard.
         """
+        # FIXME: do checks at pasting
         self.manage_pasteObjects(REQUEST=REQUEST)
     
 InitializeClass(Folder)

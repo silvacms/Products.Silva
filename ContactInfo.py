@@ -18,8 +18,8 @@ class ContactInfo(Asset):
     __implements__ = Interfaces.Asset
 
     def __init__(self, id, title):
-        ContactInfo.inheritedAttribute('__init__')(id, title)
-        self._data = {}
+        ContactInfo.inheritedAttribute('__init__')(id, 'No title for ContactInfo')
+        self._data = { 'name': title }
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_data')
@@ -30,6 +30,19 @@ class ContactInfo(Asset):
         # format, but formulator does that so well already..
         self._data = dict
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
+    def set_title(self, title):
+        # should set title through setting the data, as we don't
+        # want any title rename field to be able to change the
+        # name of a contact info that can be used in quite a few places
+        pass
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_title')
+    def get_title(self):
+        return self._data['name']
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_data')
     def get_data(self):
