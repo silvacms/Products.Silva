@@ -26,12 +26,12 @@ model.action_delete(ids)
 
 if deleted_ids:
     if not_deleted_ids:
-        message = 'Deleted %s, <span class="error">but could not delete %s.</span>' % (view.quotify_list(deleted_ids),
+        message = 'Deleted %s, <span class="error">but could not delete %s. Probably there is a published version that must be closed, or an approved version that needs to be revoked. Change the status in the Publish screen (alt-5).</span>' % (view.quotify_list(deleted_ids),
             view.quotify_list(not_deleted_ids))
     else:
         message = 'Deleted %s.' % view.quotify_list(deleted_ids)
 else:
-    message = 'Could not delete %s.' % view.quotify_list(not_deleted_ids)
+    message = 'Could not delete %s. Possibly there is a published version, which must be closed before it can be deleted. Or, the document is approved (the link will be green), and approval needs to be revoked. Change the status in the Publish screen (alt-5).' % view.quotify_list(not_deleted_ids)
     message_type = 'error'
 
 return view.tab_edit(message_type=message_type, message=message)
