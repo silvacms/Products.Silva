@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.86 $
+# $Revision: 1.87 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -699,10 +699,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def xml_import(self, xml):
         """Import XML"""
         dom = createDOMDocument(xml)
-        silvanode = dom.documentElement
-        if not silvanode.nodeName == u'silva':
-            raise Exception, 'No Silva node found in XML'
-        import_root = silvanode.firstChild
+        import_root = dom.documentElement
+        if import_root.nodeName == u'silva':
+            import_root = import_root.firstChild
         while import_root:
             # since some exceptions raised are strings or so, we're going to      
             # convert them to 'Exception' here
