@@ -18,7 +18,7 @@ class ContactInfo(Asset):
     __implements__ = Interfaces.Asset
 
     def __init__(self, id, title):
-        ContactInfo.inheritedAttribute('__init__')(id, 'No title for ContactInfo')
+        ContactInfo.inheritedAttribute('__init__')(self, id, 'No title for ContactInfo')
         self._data = { 'name': title }
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
