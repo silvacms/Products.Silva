@@ -25,11 +25,12 @@ def setDefaultRoles(permission, roles):
 
 # Silva permissions
 ChangeSilvaContent = 'Change Silva content'
-setDefaultRoles(ChangeSilvaContent, ('Manager', 'Silva Author', 'Silva Editor'))
+setDefaultRoles(ChangeSilvaContent, ('Manager', 'ChiefEditor',
+                                     'Editor', 'Author'))
 
 ApproveSilvaContent = 'Approve Silva content'
-setDefaultRoles(ApproveSilvaContent, ('Manager', 'Silva Editor'))
+setDefaultRoles(ApproveSilvaContent, ('Manager', 'ChiefEditor', 'Editor'))
 
-ChangeSilvaPermissions = 'Change Silva permissions'
-setDefaultRoles(ChangeSilvaPermissions, ('Manager', 'Silva Editor'))
+ChangeSilvaAccess = 'Change Silva access'
+setDefaultRoles(ChangeSilvaAccess, ('Manager', 'ChiefEditor'))
 

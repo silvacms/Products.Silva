@@ -43,6 +43,9 @@ class EditorSupport:
                 for subchild in child.childNodes:
                     result.append(escape(subchild.data, 1))
                 result.append('</a>')
+            elif child.nodeName == 'person':
+                for subchild in child.childNodes:
+                    result.append(escape(subchild.data, 1))
             else:
                 raise "Unknown element: %s" % child.nodeName
         return ''.join(result)
@@ -83,6 +86,11 @@ class EditorSupport:
                 result.append('|')
                 result.append(child.getAttribute('name'))
                 result.append(']]')
+            elif child.nodeName == 'person':
+                result.append('{{')
+                for subchild in child.childNodes:
+                    result.append(subchild.data)
+                result.append('}}')
             else:
                 raise "Unknown element: %s" % child.nodeName
 
@@ -92,12 +100,14 @@ class EditorSupport:
     _emStructure = ForgivingParser.Structure(['++', '++'])
     _linkStructure = ForgivingParser.Structure(['__', '|', '__'])
     _indexStructure = ForgivingParser.Structure(['[[', '|', ']]'])
+    _personStructure = ForgivingParser.Structure(['{{', '}}'])
     
     _parser = ForgivingParser.ForgivingParser([
         _strongStructure,
         _emStructure,
         _linkStructure,
-        _indexStructure])
+        _indexStructure,
+        _personStructure])
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_text')
@@ -145,7 +155,11 @@ class EditorSupport:
                 newnode = doc.createElement('index')
                 newnode.appendChild(doc.createTextNode(index_text))
                 newnode.setAttribute('name', index_name)
-                node.appendChild(newnode) 
+                node.appendChild(newnode)
+            elif structure is self._personStructure:
+                newnode = doc.createElement('person')
+                newnode.appendChild(doc.createTextNode(data[0]))
+                node.appendChild(newnode)
             else:
                 raise "Unknown structure: %s" % structure
 

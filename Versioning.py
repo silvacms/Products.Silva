@@ -155,6 +155,36 @@ class Versioning:
                   'No approved version.'
         version_id, publication_datetime, expiration_datetime = self._approved_version
         self._approved_version = version_id, publication_datetime, dt
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_next_version_publication_datetime')
+    def set_next_version_publication_datetime(self, dt):
+        """Set publication datetime of next version.
+        """
+        if self._approved_version[0]:
+            version_id, publication_datetime, expiration_datetime = self._approved_version
+            self._approved_version = version_id, dt, expiration_datetime
+        elif self._unapproved_version[0]:
+            version_id, publication_datetime, expiration_datetime = self._unapproved_version
+            self._unapproved_version = version_id, dt, expiration_datetime
+        else:
+            raise VersioningError,\
+                  'No next version.'
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_next_version_expiration_datetime')
+    def set_next_version_expiration_datetime(self, dt):
+        """Set expiration datetime of next version.
+        """
+        if self._approved_version[0]:
+            version_id, publication_datetime, expiration_datetime = self._approved_version
+            self._approved_version = version_id, publication_datetime, dt
+        elif self._unapproved_version[0]:
+            version_id, publication_datetime, expiration_datetime = self._unapproved_version
+            self._unapproved_version = version_id, publication_datetime, dt
+        else:
+            raise VersioningError,\
+                  'No next version.'
         
     def _update_publication_status(self):
         now = DateTime()
