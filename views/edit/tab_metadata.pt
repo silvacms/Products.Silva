@@ -49,7 +49,7 @@
               </tr>
               <tr class="top-controls">
                 <td>
-                  <tal:condition condition="may_change_content">
+                  <tal:condition condition="may_approve_content">
                     <tal:block 
                       condition="here/service_subscriptions/subscriptionsEnabled | nothing">
                       <a class="transport"

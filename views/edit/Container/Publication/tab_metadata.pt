@@ -21,7 +21,7 @@
   <tal:block replace="nothing">
     _______ table required for vertical lineup of buttons _______ 
   </tal:block>
-  <table tal:condition="silva_permissions/ApproveSilvaContent" cellspacing="0" cellpadding="0" width="100%" border="0">
+  <table cellspacing="0" cellpadding="0" width="100%" border="0">
     <tr>
       <td style="padding: 0.2em 0 0.2em 0">
           <a class="button"
