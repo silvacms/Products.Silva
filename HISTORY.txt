@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.46 $
+$Revision: 1.47 $
 
 Silva changes
 
@@ -16,8 +16,9 @@ Silva changes
  
         - Improved tab_access user interface.
 
-        - Group and VirtualGroup assets. This makes group management
-          a lot easier.
+        - Group and VirtualGroup objects. Can be managed by going to
+          'Group Administration' if Group product is installed. This
+          makes group management a lot easier.
 
         - Optional message service ('service_message') which will send
           email on some workflow events.
@@ -38,6 +39,8 @@ Silva changes
 
         - List titles have been removed and transformed into headings.
  
+        - 'image_path' has been renamed to 'path' in the XML.
+
    Bugs Fixed
 
         - Fix where the "/manage" display link in the SMI tabs didn't
@@ -60,9 +63,7 @@ Silva changes
         - New ('add') button should work properly again (issue 162).
 
         - Invalid image references now properly display error message
-          (issue 204).
-
- 
+          (issue 204). 
 
   0.9.0.3
 
