@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1 $'
+__version__='$Revision: 1.2 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -74,6 +74,14 @@ class body(Element):
 class doctitle(Element):
     def convert(self, context):
         context.title = self.extract_text()
+
+class term(Element):
+    def convert(self, context):
+        return silva.dt(self.content.convert(context))
+
+class desc(Element):
+    def convert(self, context):
+        return silva.dd(self.content.convert(context))
 
 class h1(Element):
     def convert(self, context):
@@ -263,27 +271,18 @@ class ul(Element):
 
     def is_dlist(self, context):
         for item in self.find('li'):
-            font = item.find('font')
-            if len(font)>0 and font[0].attrs.get('color')=='green':
+            if item.find('term'):
                 return 1
         
     def convert_dlist(self, context):
         tags = []
         for item in self.find('li'):
-            pre,font,post = item.find_and_partition('font')
-            if font and font.attrs['color']=='green':
-                tags.append(silva.dt(font.content.convert(context)))
-            else:
-                tags.append(silva.dt())
-
-            if post:
-                try: 
-                    post[0].content = post[0].content.lstrip()
-                except AttributeError:
-                    pass
-
-            tags.append(silva.dd(post.convert(context)))
-
+            term = item.find('term')
+            if term:
+                desc = item.find('desc') 
+                tags.append(term[0].convert(context))
+                tags.append(desc and desc.convert(context) or 
+                            silva.dd(''))
         return silva.dlist(
             type='normal',
             *tags

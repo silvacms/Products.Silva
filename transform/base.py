@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.12 $'
+__version__='$Revision: 1.13 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -126,7 +126,6 @@ class Frag(Node, List):
     def find_one(self, tag=None, ignore=None):
         l = self.find(tag,ignore)
         if len(l)==0:
-            print l.find()
             raise ValueError, "result set for %s is empty with %s" % (
                 repr(tag), self.asBytes())
         elif len(l)>1:

@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1 $'
+__version__='$Revision: 1.2 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -104,7 +104,9 @@ class dlist(SilvaElement):
 
     def convert(self, context):
         #print "checking", self.asBytes()
-        listtype = self.attrs.get('type', 'normal')
+        type = self.attrs.get('type')
+        listtype = {'compact': 'circle'}.get(
+            type,'none')
 
         li_list = []
         for tag,nexttag in zip(self.content, self.content[1:]):
@@ -112,23 +114,23 @@ class dlist(SilvaElement):
                 li_list.append(
                     html.li(
                         tag.convert(context), 
-                        ' ',
                         nexttag.convert(context)
                     )
                 )
         return html.ul(
-                       *li_list
+                       li_list,
+                       type=listtype,
                        )
 
 class dt(SilvaElement):
     """dlist define term"""
     def convert(self, context):
-        return html.font(self.content.convert(context), color='green')
+        return html.term(self.content.convert(context))
 
 class dd(SilvaElement):
     """dlist define term"""
     def convert(self, context):
-        return self.content.convert(context)
+        return html.desc(self.content.convert(context))
 
 class list(SilvaElement):
     """ Simple lists """

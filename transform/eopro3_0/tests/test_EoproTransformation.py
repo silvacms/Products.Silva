@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 import unittest
 
 # 
@@ -38,15 +38,17 @@ except ImportError:
 # lazy, but in the end we want to test everything anyway
 
 from xml.dom import minidom
-#
-# getting test content
-#
 
 class Base(unittest.TestCase):
     """ Check various conversions/transformations """
 
     def setUp(self):
         self.transformer = EditorTransformer('eopro3_0')
+
+    def parse_silvafrag(self, frag):
+        s = '<doc>%s</doc>' % frag
+        node = self.transformer.source_parser.parse(s)
+        return node.find_one('doc').find()
 
     def parse_htmlfrag(self, html_frag):
 
@@ -116,6 +118,29 @@ class HTML2XML(Base):
     def test_h6(self):
         self._check_heading('h6', 'paragraph')
 
+    def test_dlist_simple(self):
+        s = '''<ul type="none">
+                   <li><term>term1</term><desc>desc1</desc></li>
+               </ul>
+            '''
+        htmlnode = self.parse_htmlfrag(s)
+        sn = htmlnode.conv()
+        dlist = sn.find_one('dlist') 
+        dt = dlist.find_one('dt')
+        dd = dlist.find_one('dd')
+
+    def test_dlist_brokenb(self):
+        s = '''<ul type="none">
+                   <li><term>term1</term></li>
+               </ul>
+            '''
+        htmlnode = self.parse_htmlfrag(s)
+        sn = htmlnode.conv()
+        dlist = sn.find_one('dlist') 
+        dt = dlist.find_one('dt')
+        dd = dlist.find_one('dd')
+        self.assertEquals(dd.extract_text(), '')
+
     def _test_default_heading_conversion_h1(self):
         html_frag="""<body><h1>eins</h1></body>"""
         htmlnode = self.transformer.target_parser.parse(html_frag)
@@ -164,12 +189,10 @@ class HTML2XML(Base):
         self.assert_(p[0].content.asBytes()=='hallo')
         self.assert_(p[1].content.asBytes()=='dies')
 
-    def _test_empty_paras_are_preserved(self):
-        frag="""<body><p>hallo</p><p></p><p></p></body>"""
-        node = self.transformer.target_parser.parse(frag)
-        node = node.convert(self.context)
-
-        doc = node.find('silva_document')[0].find('doc')[0]
+    def test_empty_paras_are_preserved(self):
+        frag="""<p>hallo</p><p></p><p></p>"""
+        node = self.parse_htmlfrag(frag)
+        doc = node.convert(self.context)
         p = doc.find('p')
         self.assert_(len(p)==3)
         self.assert_(p[0].content.asBytes()=='hallo')
@@ -201,7 +224,7 @@ class HTML2XML(Base):
         img = img[0]
         self.assertEquals(img.attrs.get('path'), '/silva/path')
 
-    def _test_nested_list_conversion_works_with_titles(self):
+    def test_nested_list_conversion_works_with_titles(self):
         frag="""<ul><li>one</li>
                     <ol><li>nested item</li></ol>
                 </ul>"""
@@ -241,7 +264,7 @@ class HTML2XML(Base):
 
 
 
-class RoundtripWithTidy(unittest.TestCase):
+class RoundtripWithTidy(Base):
     """ Transform and validate with 'tidy' if available. Also do a roundtrip """
     def setUp(self):
         self.transformer = Transformer(source='eopro3_0.silva', target='eopro3_0.html')
@@ -289,7 +312,7 @@ class RoundtripWithTidy(unittest.TestCase):
         </silva_document>'''
         self._check_doc(simple)
 
-    def _test_heading_and_p_special_chars(self):
+    def test_heading_and_p_special_chars(self):
         simple = '''
         <silva_document id="test"><title>doc title</title>
         <doc>
@@ -299,50 +322,27 @@ class RoundtripWithTidy(unittest.TestCase):
         </silva_document>'''
         self._check_doc(simple)
 
-    def _test_empty_list_title_produces_no_html_title(self):
+    def test_dlist_produces_term_desc(self):
         simple = '''
-        <silva_document id="test"><title>doc title</title>
-        <doc>
-           <list type="disc">
-               <li>eins</li>
-           </list>
-        </doc>
-        </silva_document>'''
-        htmlnode = self.transformer.to_target(simple)
-        body = htmlnode.find('body')[0]
-        list = body.find('ul')
-        self.assert_(len(list)==1)
-        # check roundtrip
-        self._check_doc(simple)
-
-    def _test_dlist_produces_bold_dword(self):
-        simple = '''
-        <silva_document id="test"><title>doc title</title>
-        <doc>
            <dlist type="normal">
-           <dt>term1</dt><dd>description of term1</dd></dlist>
-        </doc>
-        </silva_document>'''
-        htmlnode = self.transformer.to_target(simple)
-        #print "result of dlist"
-        #print htmlnode.asBytes()
-        body = htmlnode.find('body')[0]
-        list = body.find('ul')
-        self.assert_(len(list)==1)
-        # check no title
+              <dt>term1</dt><dd>desc1</dd>
+           </dlist>
+           '''
 
-        li = list[0].find('li')
-        self.assert_(len(li)==1)
+        silvanode = self.parse_silvafrag(simple)
+        htmlnode = silvanode.conv()
 
-        li = li[0]
+        ul = htmlnode.find_one('ul')
+        self.assertEquals(ul.attrs.get('type'), 'none')
 
-        font = li.find('font')
-        self.assert_(len(font)==1)
-        font = font[0]
-        self.assertEquals(font.attrs['color'], 'green')
+        li = ul.find_one('li')
 
-        # check roundtrip
-        self._check_doc(simple)
+        self.assertEquals(li.find_one('term').extract_text(),
+                          'term1')
+        self.assertEquals(li.find_one('desc').extract_text()
+                          , 'desc1')
+
+        self._check_string(simple)
 
     def _test_nlist_simple(self):
         simple = '''
@@ -534,15 +534,11 @@ class RoundtripWithTidy(unittest.TestCase):
         """ check that 'br' works """
         self._check_string('<p>before<br/>after</p>')
 
-    def _test_preformatted(self):
+    def test_preformatted(self):
         """ check that 'pre' (preformatted text) works """
-        silvadoc = '''<silva_document id="test"><title>title</title>
-                        <doc><pre>\n  &quot;&gt;&lt;dies\n</pre>
-                        </doc>
-                      </silva_document>''' 
-        htmlnode = self._check_doc(silvadoc)
-        body = htmlnode.find('body')[0]
-        pre = body.find('pre')
+        silvadoc = '<pre>\n  &quot;&gt;&lt;dies\n</pre>'
+        htmlfrag = self.parse_htmlfrag(silvadoc)
+        pre = htmlfrag.find('pre')
         self.assert_(len(pre)==1)
         pre = pre[0]
         self.assert_(pre.content.asBytes()=='\n  &quot;&gt;&lt;dies\n')
