@@ -95,7 +95,6 @@
 </table>
 
 <br />
-<br />
 
 <table width="100%" cellspacing="0" cellpadding="5" border="0" tal:condition="docma_running">
   <tr>
@@ -268,7 +267,7 @@
 
       </form>
 
-      <br /><br />
+      <br />
 
       <form name="finishedJobQueue" action="." method="POST">
 

@@ -196,7 +196,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
         </table>
       </tal:block>
 
-      <br /><br />
+      <br />
 
       <form action="." enctype="multipart/form-data" method="POST">
 
