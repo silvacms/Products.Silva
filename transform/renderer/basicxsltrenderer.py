@@ -10,4 +10,3 @@ class BasicXSLTRenderer(XSLTRendererBase):
         self._stylesheet_path = os.path.join(
             os.path.dirname(os.path.abspath(__file__)),
             "normal_view.xslt")
-        self._stylesheet = None
