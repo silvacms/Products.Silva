@@ -126,21 +126,21 @@ class EditorSupport:
                 # create a text node, data is plain text
                 newnode = doc.createTextNode(data)
                 node.appendChild(newnode)
-            elif structure is Document._strongStructure:
+            elif structure is self._strongStructure:
                 newnode = doc.createElement('strong')
                 newnode.appendChild(doc.createTextNode(data[0]))
                 node.appendChild(newnode)
-            elif structure is Document._emStructure:
+            elif structure is self._emStructure:
                 newnode = doc.createElement('em')
                 newnode.appendChild(doc.createTextNode(data[0]))
                 node.appendChild(newnode)
-            elif structure is Document._linkStructure:
+            elif structure is self._linkStructure:
                 link_text, link_url = data
                 newnode = doc.createElement('link')
                 newnode.appendChild(doc.createTextNode(link_text))
                 newnode.setAttribute('url', link_url)
                 node.appendChild(newnode) 
-            elif structure is Document._refStructure:
+            elif structure is self._refStructure:
                 ref_text, ref_name = data
                 newnode = doc.createElement('ref')
                 newnode.appendChild(doc.createTextNode(ref_text))
