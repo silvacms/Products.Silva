@@ -10,6 +10,8 @@ import zLOG
 from Products.Silva.interfaces import IUpgrader, IContainer
 from Products.Silva import upgrade
 
+from Products.SilvaMetadata.Exceptions import BindingError
+
 #-----------------------------------------------------------------------------
 # 0.9.2 to 0.9.3
 #-----------------------------------------------------------------------------
@@ -25,8 +27,8 @@ class MovedViewRegistry:
         root.manage_addProduct['SilvaViews'].manage_addMultiViewRegistry(
             'service_view_registry')
         zLOG.LOG('Silva', zLOG.WARNING,
-            'service_view_registry had to be recreated.'
-            "Be sure to 'refresh all' your extensions")
+            'service_view_registry had to be recreated.\n'
+            "Be sure to 'refresh all' your extensions.\n")
         return root
             
 
@@ -108,17 +110,17 @@ class UpgradeAccessRestriction:
     def _all_allowed(self, obj, ar):
         zLOG.LOG('Silva', zLOG.INFO, "Access restriction removed",
             "The access restriction of the object located at %s "
-            "has been removed as it allowed ALL addresses access." % (
+            "has been removed as it allowed ALL addresses access.\n" % (
                 obj.absolute_url(), ))
                 
     def _none_allowed(self, obj, ar):
         if not obj.sec_is_closed_to_public():
             obj.sec_close_to_public()
-            zLOG.LOG('Silva', 'Access restriction removed', 
+            zLOG.LOG('Silva', 'Access restriction removed',
                 "The access restriction of the object located at %s "
                 "has been removed. The object's 'access restriction by role' "
                 "was set to 'viewer' as the access restriction did not allow "
-                "any ip addresses access." % obj.absolute_url())
+                "any ip addresses access.\n" % obj.absolute_url())
 
     def _restrict(self, obj, ar):
         if not obj.sec_is_closed_to_public():
@@ -129,7 +131,7 @@ class UpgradeAccessRestriction:
         self._assignRoleToGroup(obj, 'Viewer', ipg.getId())
         zLOG.LOG('Silva', zLOG.INFO, "Created IP Group %s" % ipg.getId(),
             "The ip based access restriction of the object located at %s"
-            "was replaced by the newly created IP Group at %s." % (
+            "was replaced by the newly created IP Group at %s.\n" % (
                 obj.absolute_url(), ipg.absolute_url()))
         
     def _createIPGroup(self, context):
@@ -241,7 +243,32 @@ class UpgradeAccessRestriction:
         state.plist.append(something)
 
 
+class UpgradeTime:
+
+    __implements__ = IUpgrader
+
+    def upgrade(self, obj):
+        try:
+            binding = obj.service_metadata.getMetadata(obj)
+        except BindingError:
+            return obj
+        mtime = getattr(obj, '_modification_datetime',
+            obj.bobobase_modification_time())
+        ctime = getattr(obj, '_creation_datetime', None)
+        timings = {}
+        for element, time in [
+                ('creationtime', ctime),
+                ('modificationtime', mtime)]:
+            old = binding.get('silva-extra', element_id=element)
+            if old is None:
+                timings[element] = time
+        binding.setValues('silva-extra', timings)
+        return obj
+
+
 def initialize():
+    upgrade.registry.registerUpgrader(UpgradeTime(), '0.9.3',
+        upgrade.AnyMetaType)
     upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.3',
         upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(MovedViewRegistry(), '0.9.3',
