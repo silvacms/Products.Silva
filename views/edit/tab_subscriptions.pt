@@ -101,7 +101,7 @@
                           value="Save"
                           title="access key: alt-c"
                           accesskey="c"
-                          i18n:attributes="title value"
+                          i18n:attributes="title;value"
                         />
                       </td>
                     </tr>
