@@ -59,6 +59,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.doc.approve_version()
         # create a new document
         self.doc.manage_addProduct['SilvaDocument'].manage_addDocumentVersion('11', 'someTitle')
+        self.doc.create_version('11', None, None)
         # add some content to the old doc so we can compare that to the new
         # one after reverting
         old_doc = getattr(self.doc, '9')
@@ -79,6 +80,12 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         getattr(self.doc, '9').content.writeStream(new_content_buffer)
         new_content = new_content_buffer.getvalue()
         self.assertEquals(org_content, new_content)
+        # this was a bit scary, check the integrity of all the _*_version 
+        # attributes on the VersionedContent object
+        self.assert_(self.doc._unapproved_version[0] is not None)
+        self.assert_(self.doc._approved_version[0] is None)
+        self.assert_(self.doc._public_version[0] is not None)
+        self.assert_(len(self.doc._previous_versions) == 11)
 
     def test_getVersionIds(self):
         ids = self.adapter.getVersionIds()
@@ -98,6 +105,9 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
     def test_deleteVersion(self):
         self.adapter.deleteVersion('9')
         self.assert_('9' not in self.doc.objectIds('Silva Document Version'))
+        # some integrity checks
+        self.assertEquals(self.doc.get_last_closed_version(), '8')
+        self.assertEquals(len(self.doc._previous_versions), 9)
 
     def test_deleteOldVersions(self):
         # there should be 10 versions that *can* be deleted

@@ -21,6 +21,7 @@
     published python:model.get_public_version() is not None;
     closed python:model.get_public_version_status() == 'closed';
     next python:model.get_next_version() is not None;
+    mangle modules/Products/Silva/mangle;
 ">
 
 <table class="columns columns3">
@@ -151,15 +152,6 @@ revoke approval section here
 </check>
 
 
-<span tal:replace="nothing"> _______ revert to previous _______ </span>
-<check tal:condition="python:may_change_content and (published or closed) and unapproved"
-  tal:omit-tag="">
-<div metal:use-macro="view/tab_status_macros/macros/revert_to_previous">
-_______ revert to previous section here _______
-</div>
-</check>
-
-
 <span tal:replace="nothing"> _______ manual close _______ </span>
 <check tal:condition="python:may_approve_content and published"
   tal:omit-tag="">
@@ -170,62 +162,7 @@ _______ manual close section here _______
 
 
 <span tal:replace="nothing"> _____________________ export focus box _____________________ </span>
- <form action="." enctype="multipart/form-data" method="POST" 
-   tal:condition="python: model.meta_type in ['Silva Document', 'Silva Article', 'Silva Agenda Item']">
-   <input type="hidden" 
-     name="refs:list"
-     tal:attributes="value python: request['model'].create_ref(request['model'])" />
-   <table class="listing sublisting">
-     <thead>
-       <tr tal:replace="nothing">
-         ______________ vein + title row ______________
-       </tr>
-       <tr>
-         <td class="top">
-           <h2 tal:attributes="title string:id: ${model/id}">
-             <img tal:replace="structure python:view.render_icon(model)" />
-             <tal:block i18n:translate="export_document">
-             export &#xab;
-             <tal:block content="string:${model/get_title_editable}"
-              i18n:name="export_id">id</tal:block>&#xbb;
-             </tal:block>
-           </h2>
-         </td>
-       </tr>
-     </thead>
-
-     <tbody>
-       <tr class="even">
-         <td>
-           <span i18n:translate="access_export_description">
-           Export this document via the export screen as Silva XML, or
-           &#8211; if the <a
-             href="http://www.infrae.com/products/docma">DocmaServer</a> is
-           installed &#8211; convert it to a another format.</span><span
-           tal:condition="python: not next and not closed"
-           i18n:translate="access_export_noversion">There is no
-             new version, so the published version will be exported.</span>
-         </td>
-       </tr>
-     </tbody>
-
-     <tfoot>
-       <tr class="controls">
-         <td class="align-right">
-           <input class="transport"
-             type="submit"
-             tal:attributes="name python: '%s/edit/tab_status_export:method' % '/'.join(request['model'].get_container().getPhysicalPath())"
-             value="export..."
-             title="access key: alt-e"
-             accesskey="e"
-             i18n:attributes="value title"
-           />
-         </td>
-       </tr>
-     </tfoot>
-   </table>
- </form>
-
+ <form action="." enctype="multipart/form-data" method="POST">
 
 <tal:replace replace="nothing">
 <span tal:replace="nothing"> _______ status: content is approved, not published _______ </span>
@@ -272,6 +209,148 @@ _______ manual close section here _______
 </div>
 </tal:replace>
 
+      <!-- version management -->
+      <tal:block define="versions here/get_sorted_model_versions;
+                          version_status_list python: [v.version_status() for v in versions];
+                          "
+      >
+        <input type="hidden" 
+                name="refs:list"
+                tal:attributes="value python: request['model'].create_ref(request['model'])" />
+        <table class="listing" id="sortable" tal:condition="may_change_content">
+          <thead>
+            <tr>
+              <td class="top" colspan="6">
+                 <h2 tal:attributes="title string:id: ${model/id}">
+                   <img tal:replace="structure python:view.render_icon(model)" />
+                   <tal:block i18n:translate="manage_document_versions">
+                   manage versions of &#xab;
+                   <tal:block content="string:${model/get_title_editable}"
+                    i18n:name="export_id">id</tal:block>&#xbb;
+                   </tal:block>
+                 </h2>
+              </td>
+            </tr>
+            <tr class="top-controls">
+              <td colspan="6" class="align-right">
+                <h3 style="float:left;" i18n:translate="">
+                  publishing actions
+                </h3>
+                <input class="transport"
+                        type="submit"
+                        tal:attributes="name python: ('%s/edit/tab_status_export:method' % 
+                                          '/'.join(request['model'].get_container().getPhysicalPath()))"
+                        value="export..."
+                        title="access key: alt-e"
+                        accesskey="e"
+                        i18n:attributes="value title"
+                />
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>&#xa0;</th>
+              <th width="25%">modification time</th>
+              <th width="25%">publication time</th>
+              <th width="25%">expiration time</th>
+              <th>version status</th>
+            </tr>
+            <tr  tal:repeat="version versions">
+              <tal:block define="metadata python: here.get_metadata(version);
+                                  creationtime python: mangle.DateTime(
+                                      metadata['silva-extra']['creationtime']['value']).toStr();
+                                  modificationtime python: mangle.DateTime(
+                                      metadata['silva-extra']['modificationtime']['value']).toStr();
+                                  publicationtime python: mangle.DateTime(
+                                      version.publication_datetime()).toStr();
+                                  expirationtime python: mangle.DateTime(
+                                      version.expiration_datetime()).toStr();
+              ">
+                <td style="white-space: nowrap">
+                  <input type="checkbox" 
+                          name="versions" 
+                          tal:attributes="value version/id; id string:version_${version/id}" />
+                  <label tal:attributes="for string:version_${version/id}"
+                          tal:content="version/id">
+                    id
+                  </label>
+                </td>
+                <td style="white-space: nowrap">
+                  <a tal:content="modificationtime" 
+                      tal:attributes="href python:'%s/edit/tab_view' % version.absolute_url()">
+                    modificationtime
+                  </a>
+                </td>
+                <td style="white-space: nowrap" tal:content="publicationtime">
+                  publicationtime
+                </td>
+                <td style="white-space: nowrap" tal:content="expirationtime">
+                  expirationtime
+                </td>
+                <td tal:define="version_status version/version_status;
+                                color python: ((version_status == 'unapproved' and 'red') or 
+                                                (version_status == 'approved' and 'green') or 
+                                                (version_status == 'public' and 'blue') or 
+                                                'grey');
+                
+                    "
+                    tal:attributes="style string:color: ${color}"
+                    tal:content="version_status"
+                >
+                  version_status
+                </td>
+              </tal:block>
+            </tr>
+          </tbody>
+          <tfoot tal:define="approveables python: 'unapproved' in version_status_list;
+                              closeables python: 'public' in version_status_list;
+                              revokeables python: 'last_closed' in version_status_list;
+                              rejectables python: 'unapproved' in version_status_list;
+                              expireables closeables;
+                              new_versionables python: len(version_status_list);
+                              redisplay_timing_form request/redisplay_timing_form | 
+                                                    options/redisplay_timing_form | 
+                                                    python: 1;
+                              "
+          >
+            <tr tal:condition="versions">
+              <th class="listing-left"
+                colspan="2">
+                <tal:define define="select_id string:versions">
+                  <metal:block use-macro="view/macro_select_all/macros/select_all" />
+                </tal:define>
+              </th>
+              <th colspan="3">
+                &#xa0;
+              </th>
+            </tr>
+            <tr class="controls">
+              <td class="align-right" colspan="5">
+                <input class="warning"
+                  type="submit"
+                  name="tab_status_delete_versions:method"
+                  value="delete"
+                  title="access key: alt-r"
+                  accesskey="r"
+                  onclick="if (!confirm('Are you sure?')) return false"
+                  i18n:attributes="value title"
+                />
+                <input class="button"
+                  type="submit"
+                  name="tab_status_revert_to_old:method"
+                  value="copy as editable"
+                  title="access key: alt-r"
+                  accesskey="r"
+                  i18n:attributes="value title"
+                />
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </tal:block>
+
+ </form>
       </td>
       <tal:block replace="nothing">
         _____________________ right column _____________________ 
