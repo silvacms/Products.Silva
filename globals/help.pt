@@ -9,8 +9,112 @@ If you have a 'locals' folder, add a folder called 'help' there,
 put the documentation in it, and then change a property in the 
 Silva root. Go to the top of Silva in the ZMI and click the 
 properties tab and change the help_url property to: 
-/silva/locals/help
+  /silva/locals/help
 
 Documentation (in structured text format) can be found at:
 <a href="http://www.infrae.com/products/silva/docs">http://www.infrae.com/products/silva/docs</a>
+
+
+Silva access keys
+=================
++ The access key on your system may be 'alt' or something else.
++ Hover over the link or button to see a tool tip with the key.
++ Some access keys can conflict with browser menus. However the 
+  key works if the focus is in the page (a form element is active 
+  or just click in the page).
+
+Global keys that are always available
+-------------------------------------
+General
+  t Jump to top of page
+  b Jump to bottom of page
+  / Jump to top of Silva (Silva icon)
+  h Help
+
+The tabs have numbered access keys, starting from one (the first 
+tab) going up to five. You can navigate horizontally accross the 
+tabs by using alt-1, alt-2, and so forth. 
+
+Each tab has a top link (the tall tree on the left side, which 
+takes you to the top of the current publication, within the
+same tab 'vein'). The access key is the shift character of the 
+corresponding number (on the English keyboard, sorry if you have 
+an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% 
+(note that the characters resemble the number).
+
+On the right of each tab is an uplink (the small tree, which
+takes you up one level in the same vein). The access keys for the 
+uplinks are the remaining numbers (add five to the access key for 
+the tab). If you are  in a screen with five tabs, the uplinks are 
+alt-6, alt-7, alt-8, alt-9, and alt-0. (If there are less than 
+five tabs, you still add five to get the uplink key.)
+
+Footer
+  \ See public page
+  ~ User settings
+  q Logout
+
+Contents screen (folder or publication)
+---------------------------------------------------------
+Table header
+  n New 
+  s Select list for a new object (doesn't work in Mozilla)
+  i Import
+
+Table body
+  p Select list for position number (doesn't work in Mozilla)
+  m Move
+
+Table footer
+  a Select all
+  r Rename
+  d Delete
+  x Cut
+  c Copy
+  v Paste
+  g Paste as ghost
+
+
+Publish screen (folder or publication)
+---------------------------------------------------------
+Table header
+  e Export 
+
+Table footer
+  a Select all
+  n Create new vesions
+  j Reject request for approval
+  v Revoke request for approval
+  c Close public
+  s Change settings
+  o Approve
+
+Add screen
+----------
+  c Cancel
+  a Add
+  e Add and edit/enter
+
+Silva editor
+------------
+  s Save
+  e Save and exit
+  tab Use your tab key to edit without using the mouse.
+      Shift-tab goes backwards.
+
+Other screens
+-------------
+The Metadata, Access, and Status screens as well as their
+subscreens (such as Lookup, Import, and Export) have access 
+keys for most buttons (sometimes there are multiples of the 
+same button, in which case only the first has an access key). 
+Usually the first letter of the button is the access key. 
+You can always hover over the button to see the tool tip. 
+
+
+Don't forget that most browsers use alt-left arrow to go
+back, and alt-right arrow to go forward.
+
+<a href="mailto:docs@infrae.com">Feedback</a>
 </pre>
+
