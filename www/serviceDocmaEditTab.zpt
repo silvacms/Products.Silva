@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.2 $
+Version of this file: $Revision: 1.3 $
 -->
 <tal:define define="global view here;
                     global conn_and_pw view/try_connection_and_pw;
@@ -27,7 +27,7 @@ Version of this file: $Revision: 1.2 $
 <div class="form-text">Password:</div>
 <input type="text" class="form-element" name="password" tal:attributes="value view/password" /><br /><br />
 <tal:block condition="conn_and_pw">
-<div class="form-text">Front page templates:</div>
+<div class="form-text">Word templates:</div>
 <select class="form-element" name="template" tal:define="templates view/get_templates">
 <tal:repeat repeat="template templates">
 <option tal:attributes="value template" tal:content="template"></option>
