@@ -24,7 +24,7 @@ for id, value in result.items():
         #---Document title hack---#
         if id == 'document_title':
             if not model.get_title_editable() == value:
-                model.set_title(model.input_convert(value))            
+                model.set_title(value) 
                 changed_metadata.append(('title', 'changed'))
             continue
         

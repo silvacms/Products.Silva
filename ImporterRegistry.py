@@ -20,11 +20,11 @@ class ImporterRegistry:
 
     def register_tag(self, tag_name, import_function):
         """Register a tag"""
-        self._reg[tag_name.encode('cp1252')] = import_function
+        self._reg[tag_name] = import_function
 
     def import_function(self, tag_name):
         """Returns the import_function handler for tag_name"""
-        return self._reg.get(tag_name.encode('cp1252'), None)
+        return self._reg.get(tag_name, None)
 
     def keys(self):
         """Returns a list of registered objecttags"""
@@ -40,7 +40,7 @@ importer_registry = ImporterRegistry()
 # Some helper functions
 def xml_import_helper(object, node):
     """Parses node into object."""
-    func = importer_registry.import_function(node.nodeName.encode('cp1252'))
+    func = importer_registry.import_function(node.nodeName)
     if func:
         func(object, node)
 
@@ -48,7 +48,8 @@ def get_xml_id(node):
     id = None
     for attr in node._attributes:
         if attr[1] == u'id':
-            id = attr[4].encode('cp1252')
+            # the id MUST be ASCII
+            id = attr[4].encode()
     if not id:
         raise Exception, 'No id found'
     return id

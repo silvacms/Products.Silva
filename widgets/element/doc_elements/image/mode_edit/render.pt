@@ -2,7 +2,7 @@
 <metal:block fill-slot="edit_input">
   <script type="text/javascript"
     tal:content="structure here/asset_reference.js" />
-  <tal:block define="global alignment python:node.output_convert_editable(node.getAttribute('alignment'))" />
+  <tal:block define="global alignment python:node.getAttribute('alignment')" />
   <div class="margins">
   <table cellpadding="2" border="0" width="100%">
     <tr>
@@ -13,7 +13,7 @@
       </td>
       <td colspan="2">  
         <input style="width:100%;" type="text" name="path" value=""
-          tal:attributes="value python:node.output_convert_editable(node.getAttribute('path'));"  />
+          tal:attributes="value python:node.getAttribute('path');"  />
       </td>
     </tr>
     <tr>
@@ -22,7 +22,7 @@
       </td>
       <td colspan="2">  
         <input style="width:100%;" type="text" name="link" value=""
-          tal:attributes="value python:node.output_convert_editable(node.getAttribute('link'));"  />
+          tal:attributes="value python:node.getAttribute('link');"  />
       </td>
     </tr>
     <tr>

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="latin-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <form>
   <title></title>
-  <name>add_course_form</name>
+  <name>add_form</name>
   <action></action>
   <enctype>None</enctype>
   <method>POST</method>
@@ -27,6 +27,7 @@
           <truncate type="int">0</truncate>
           <description>The id is seen by the public in their browsers. No spaces or special characters are allowed besides an underscore '_' and a period '.'</description>
           <extra>style="width:100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -47,6 +48,7 @@
           <title>Title</title>
           <description>The title will be publicly visible, and is used as the default link in indexes.</description>
           <extra>style="width:100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>

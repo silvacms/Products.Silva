@@ -20,7 +20,6 @@ if p:
         parameters[name] = default
 
 data = datasource.get_data(parameters)
-output_convert = context.output_convert_html
 
 # FIXME: Using CSS this hairball is slightly less hairy
 # than is used to be

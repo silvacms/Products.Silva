@@ -11,7 +11,7 @@ request = context.REQUEST
 node = request.node
 columns = int(node.getAttribute('columns'))
 if node.hasAttribute('column_info'):
-    column_info = node.output_convert_html(node.getAttribute('column_info'))
+    column_info = node.getAttribute('column_info')
 else:
     result = []
     for i in range(columns):

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="latin-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <form>
   <title></title>
@@ -100,6 +100,7 @@
           <truncate type="int">0</truncate>
           <description></description>
           <extra>wrap="soft"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>

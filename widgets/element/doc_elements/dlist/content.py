@@ -12,7 +12,7 @@ content = node.get_content()
 
 type = None
 if node.hasAttribute('type'):
-    type = node.output_convert_html(node.getAttribute('type'))
+    type = node.getAttribute('type')
 
 # first remove any crap
 items = [child for child in node.childNodes if child.nodeType == node.ELEMENT_NODE and (child.nodeName == 'dt' or child.nodeName == 'dd')]

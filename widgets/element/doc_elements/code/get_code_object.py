@@ -1,5 +1,5 @@
 node = context.REQUEST.node
-path = node.output_convert_html(node.getAttribute('path'))
+path = node.getAttribute('path')
 
 if path:
     try:

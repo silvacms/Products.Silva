@@ -13,7 +13,7 @@
   &nbsp;Available code objects:<br />
   &nbsp;<select name="path">
     <tal:block 
-      define="selected_path python:node.output_convert_html(node.getAttribute('path'))"
+      define="selected_path python:node.getAttribute('path')"
       repeat="obj code_objects">
       <option 
         tal:define="

@@ -14,7 +14,7 @@ if not code:
 
 # this is also done in get_code(), but I need to get to path:
 node = context.REQUEST.node
-path = node.output_convert_html(node.getAttribute('path'))
+path = node.getAttribute('path')
 
 return 'Code element: %s at %s' % (code.title_or_id(), path)
 

@@ -8,7 +8,6 @@
 ##title=
 ##
 model = context.REQUEST.model
-type = model.output_convert_html(type)
 
 tag = None
 

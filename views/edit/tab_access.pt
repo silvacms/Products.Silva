@@ -354,7 +354,7 @@
                             group
                           </label>
                           <tal:block 
-                            condition="python: group.encode('latin1') not in group_service.listAllGroups()">
+                            condition="python: group not in group_service.listAllGroups()">
                             &lt;broken&gt; <!-- XXX replace this by something nice
                             -->
                           </tal:block>

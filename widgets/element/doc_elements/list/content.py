@@ -14,7 +14,7 @@ texts = [context.service_editorsupport.render_text_as_html(child)
             if child.nodeType == node.ELEMENT_NODE and child.nodeName == 'li'
         ]
 if node.hasAttribute('type'):
-    type = node.output_convert_html(node.getAttribute('type'))
+    type = node.getAttribute('type')
 else:
     type = 'disc'
 return context.util.render_list(type, texts)

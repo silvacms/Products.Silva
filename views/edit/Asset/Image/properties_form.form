@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <form>
   <title></title>
@@ -28,6 +28,7 @@
           <truncate type="int">0</truncate>
           <description>A descriptive title pays off in the future.</description>
           <extra></extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -82,6 +83,7 @@
           <extra></extra>
           <truncate type="int">0</truncate>
           <description>Image scaling for web presentation. WidthXheight or percentage (100x200, 40%)</description>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>

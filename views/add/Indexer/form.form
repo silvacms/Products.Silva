@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="latin-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <form>
   <title></title>
@@ -27,6 +27,7 @@
           <truncate type="int">0</truncate>
           <description>id: no spaces or special characters besides an underscore ("_") or a period (".")</description>
           <extra>style="width:100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -47,6 +48,7 @@
           <title>Title</title>
           <description>The title will be publicly visible, and is used as the default link in indexes.</description>
           <extra>style="width:100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>

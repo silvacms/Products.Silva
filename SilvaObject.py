@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.73 2003/04/28 10:19:43 jw Exp $
+# $Id: SilvaObject.py,v 1.74 2003/05/12 13:33:46 guido Exp $
 
 # python
 from types import StringType
@@ -132,8 +132,8 @@ class SilvaObject(Security, ViewCode):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title_editable')
     def get_title_editable(self):
-        return self.output_convert_editable(self.get_title())
-    
+        return self.get_title()
+        
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):
@@ -317,19 +317,8 @@ class SilvaObject(Security, ViewCode):
     def output_convert_html(self, s):
         """Turn unicode text to something displayable on the web.
         """
-        if isinstance(s, StringType):
-            s = unicode(s, 'cp1252')
         # make sure HTML is quoted
         return escape(s, 1)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'output_convert_editable')
-    def output_convert_editable(self, s):
-        """Turn unicode text to something editable.
-        """
-        if isinstance(s, StringType):
-            return unicode(s, 'cp1252')
-        return s
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'input_convert')

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -12,7 +12,6 @@ from OFS.SimpleItem import SimpleItem
 from Products.ParsedXML.ParsedXML import ParsedXML
 
 import SilvaPermissions
-
 
 def _regular_expression_escape(st):
     result = ""
@@ -71,10 +70,9 @@ class EditorSupport(SimpleItem):
         """Render textual content as HTML.
         """
         result = []
-        output_convert = self.output_convert_html
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(output_convert(child.data))
+                result.append(self.output_convert_html(child.data))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -96,10 +94,10 @@ class EditorSupport(SimpleItem):
                 result.append('</sub>')
             elif child.nodeName == 'link':
                 result.append('<a href="%s"' %
-                              output_convert(child.getAttribute('url')))
+                              self.output_convert_html(child.getAttribute('url')))
                 if child.getAttribute('target'):
                     result.append(' target="%s"' %
-                                  output_convert(child.getAttribute('target')))
+                                  self.output_convert_html(child.getAttribute('target')))
                 result.append('>')
                 result.append(self.render_text_as_html(child))
                 result.append('</a>')
@@ -109,7 +107,7 @@ class EditorSupport(SimpleItem):
                 result.append('</u>')
             elif child.nodeName == 'index':
                 result.append('<a class="index-element" name="%s">' %
-                              output_convert(child.getAttribute('name')))
+                              self.output_convert_html(child.getAttribute('name')))
                 result.append(self.render_text_as_html(child))
                 result.append('</a>')
             #elif child.nodeName == 'person':
@@ -127,16 +125,15 @@ class EditorSupport(SimpleItem):
         """Render heading content as HTML.
         """
         result = []
-        output_convert = self.output_convert_html
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(output_convert(child.data))
+                result.append(self.output_convert_html(child.data))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
             if child.nodeName == 'index':
                 result.append('<a class="index-element" name="%s">' %
-                              output_convert(child.getAttribute('name')))
+                              self.output_convert_html(child.getAttribute('name')))
                 result.append(self.render_heading_as_html(child))
                 result.append('</a>')
             else:
@@ -149,11 +146,10 @@ class EditorSupport(SimpleItem):
         """Render textual content as editable text.
         """
         result = []
-        convert = self.output_convert_editable
         chars_to_entities = self._silva_chars_to_entities
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(chars_to_entities(convert(child.data)))
+                result.append(chars_to_entities(child.data))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -177,12 +173,10 @@ class EditorSupport(SimpleItem):
                 result.append('((')
                 result.append(self.render_text_as_editable(child))
                 result.append('|')
-                result.append(chars_to_entities(convert(
-                    child.getAttribute('url'))))
+                result.append(chars_to_entities(child.getAttribute('url')))
                 if child.getAttribute('target'):
                     result.append('|')
-                    result.append(chars_to_entities(convert(
-                        child.getAttribute('target'))))
+                    result.append(chars_to_entities(child.getAttribute('target')))
                 result.append('))')
             elif child.nodeName == 'underline':
                 result.append('__')
@@ -192,8 +186,7 @@ class EditorSupport(SimpleItem):
                 result.append('[[')
                 result.append(self.render_text_as_editable(child))
                 result.append('|')
-                result.append(chars_to_entities(convert(
-                    child.getAttribute('name'))))
+                result.append(chars_to_entities(child.getAttribute('name')))
                 result.append(']]')
             #elif child.nodeName == 'person':
             #    result.append('{{')
@@ -214,8 +207,7 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(self._silva_chars_to_entities(
-                                self.output_convert_editable(child.data)))
+                result.append(self._silva_chars_to_entities(child.data))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -228,7 +220,7 @@ class EditorSupport(SimpleItem):
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
 
-        return self.output_convert_editable(''.join(result))
+        return ''.join(result)
 
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -238,13 +230,16 @@ class EditorSupport(SimpleItem):
         Regular Expressions, which do not make it more neat but do improve
         simplicity.
         """
+        # since we don't use Formulator we get UTF8 from the forms, so encode
+        # manually here
+        st = self.input_convert(st)
         st = self.replace_xml_entities(st)
         st = self._unifyLineBreak(st)
         while 1:
             match = self.p_MARKUP.search(st)
             if not match:
                 break
-            st = st.replace(match.group(0), '<%s>%s</%s>' % (
+            st = st.replace(match.group(0), u'<%s>%s</%s>' % (
                 self._silva_markup[match.group('markup')], match.group('text'), 
                 self._silva_markup[match.group('markup')]))
         while 1:
@@ -256,14 +251,14 @@ class EditorSupport(SimpleItem):
                 if not target:
                     target = '_blank'
                 st = st.replace(match.group(0), 
-                    '%s<link url="%s" target="%s">%s</link>' % (
+                    u'%s<link url="%s" target="%s">%s</link>' % (
                         match.group(1), 
                         match.group(3), 
                         target, 
                         match.group(2)))
             else:
                 st = st.replace(match.group(0), 
-                    '%s<link url="%s">%s</link>' % (
+                    u'%s<link url="%s">%s</link>' % (
                         match.group(1), 
                         match.group(3), 
                         match.group(2)))
@@ -272,13 +267,12 @@ class EditorSupport(SimpleItem):
             if not match:
                 break
             st = st.replace(match.group(0), 
-                '%s<index name="%s">%s</index>' % (
+                u'%s<index name="%s">%s</index>' % (
                     match.group(1), 
                     match.group(3), 
                     match.group(2)))
         st = st.replace('\n', '<br/>')
         st = self._replace_silva_entities(st)
-        st = self.input_convert(st).encode('UTF8')
         node = node._node
         doc = node.ownerDocument
 
@@ -294,6 +288,7 @@ class EditorSupport(SimpleItem):
     def replace_heading(self, node, st):
         """'Parse' the markup into XML using regular expressions
         """
+        st = self.input_convert(st)
         st = self.replace_xml_entities(st)
         st = self._unifyLineBreak(st)
         reg_i = re.compile(r"\[{2}(.*?)\|(.*?)\]{2}", re.S)
@@ -301,11 +296,10 @@ class EditorSupport(SimpleItem):
             match = reg_i.search(st)
             if not match:
                 break
-            st = st.replace(match.group(0), '<index name="%s">%s</index>' % (
+            st = st.replace(match.group(0), u'<index name="%s">%s</index>' % (
                 match.group(2), match.group(1)))
 
         st = self._replace_silva_entities(st)
-        st = self.input_convert(st).encode('UTF8')
         node = node._node
         doc = node.ownerDocument
         while node.hasChildNodes():
@@ -337,15 +331,6 @@ class EditorSupport(SimpleItem):
         """Replace text in a heading containing node. Does not do much since 
             no markup is allowed in preformatted block
         """
-        # first preprocess the text, collapsing all whitespace
-        # FIXME: does it make sense to expect cp437, which is
-        # windows only?
-        text = self.input_convert2(text)
-
-        # parse the data
-        #result = self._preParser.parse(text)
-
-        # get actual DOM node
         node = node._node
         doc = node.ownerDocument
         while node.hasChildNodes():
@@ -381,7 +366,8 @@ class EditorSupport(SimpleItem):
         wrong.  XXX This is rather rigorous, could we remove only the tag which
         is actually illegal? 
         """
-        
+        # ParsedXML requires UTF8 encoded strings
+        st = st.encode('utf8')
         elements = ['a', 'strong', 'em', 'underline', 'sub', 'sup']
         while 1:
             try:

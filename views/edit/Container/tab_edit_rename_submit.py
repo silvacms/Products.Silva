@@ -13,17 +13,21 @@ form = context.REQUEST.form
 model = context.REQUEST.model
 items = []
 
+messages = []
+message_type = None
+
 # make a list of items, tuples with old and new data (oldid, newid, newtitle)
 for key in form.keys():
     if key[:2] == "id":
         oldid = key[3:]
-        newid = form[key]
-        newtitle = form["title_" + oldid]
-        items.append((oldid, newid, newtitle))
-
-messages = []
-message_type = None
-
+        try:
+            newid = form[key].encode('ascii')
+        except:
+            messages.append(u'&#xab;%s&#xbb; could not be renamed to %s (invalid id)' % (oldid, unicode(form[key], 'UTF-8')))
+            message_type = 'error'
+        else:
+            newtitle = form["title_" + oldid]
+            items.append((oldid, newid, newtitle))
 
 # remove the items that are not renamed, change only the title
 to_rename = []

@@ -8,9 +8,8 @@
 ##title=
 ##
 model = context.REQUEST.model
-output_convert_html = model.output_convert_html
 
 result = []
 for name, url in links:
-    result.append('<a class="indexer" href="%s">%s</a>' % (url, output_convert_html(name)))
+    result.append('<a class="indexer" href="%s">%s</a>' % (url, name))
 return '<br />'.join(result)

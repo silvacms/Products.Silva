@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -175,8 +175,8 @@ def xml_import_handler(object, node):
         if child.nodeName == u'doc':
             childxml = writeStream(child).getvalue().encode('utf8')
             version.content.manage_edit(childxml) # expects utf8
-        elif (hasattr(version, 'set_%s' % child.nodeName.encode('cp1252'))
+        elif (hasattr(version, 'set_%s' % child.nodeName)
               and child.childNodes and child.childNodes[0].nodeValue):
-            getattr(version, 'set_%s' % child.nodeName.encode('cp1252')) \
-                        (child.childNodes[0].nodeValue.encode('cp1252'))
+            getattr(version, 'set_%s' % child.nodeName) \
+                        (child.childNodes[0].nodeValue)
 

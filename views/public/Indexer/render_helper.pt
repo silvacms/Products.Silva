@@ -13,7 +13,7 @@
   </tr>
 
   <tr valign="top" tal:repeat="entry items">
-	<td tal:content="python:model.output_convert_html(entry[0])"
+	<td tal:content="python:entry[0]"
 	  tal:condition="python:len(entry) != 0">
   </td>
   <td tal:content="structure python:view.render_links(entry[1])">

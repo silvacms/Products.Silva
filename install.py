@@ -674,7 +674,7 @@ def setup_catalog(silva_root):
         silva_root.manage_addProduct['ZCatalog'].manage_addZCatalog('service_catalog', 'Silva Service Catalog')
         catalog = silva_root.service_catalog
 
-    catalog.manage_addProduct['ZCatalog'].manage_addVocabulary('UnicodeVocabulary', 'UnicodeVocabulary', 1, 'UnicodeSplitter')
+    catalog.manage_addProduct['ZCatalog'].manage_addVocabulary('UnicodeVocabulary', 'UnicodeVocabulary', 1, splitter='UnicodeSplitter')
 
     columns = ['expiration_datetime', 'id', 'meta_type', 'object_path', 'publication_datetime',
                 'title', 'version_status', 'object_type']

@@ -9,7 +9,6 @@
 ##
 
 node = context.REQUEST.node
-output_convert = context.output_convert_html
 
 datasource = context.get_datasource()
 parameters = context.get_parameters()

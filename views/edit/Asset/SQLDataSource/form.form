@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="latin-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <form>
   <title></title>
   <name>edit_sql_object_form</name>
@@ -25,6 +25,7 @@
           <truncate type="int">0</truncate>
           <description></description>
           <extra>style="width:100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
           <default>python:form.get_title()</default>
@@ -69,6 +70,7 @@
             Syntax:&lt;code&gt; type : name : default value : description &lt;/code&gt; 
           </description>
           <extra></extra>
+          <unicode>1</unicode>
         </values>
         <tales>
           <default>python:form.get_parameters()</default>
@@ -95,6 +97,7 @@
             &lt;/code&gt; usage.
           </description>
           <extra></extra>
+          <unicode>1</unicode>
         </values>
         <tales>
           <default>python:form.get_statement()</default>

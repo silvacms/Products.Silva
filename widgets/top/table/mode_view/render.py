@@ -8,14 +8,13 @@
 ##title=
 ##
 node = context.REQUEST.node
-output_convert = context.output_convert_html
 columns_info = context.get_columns_info()
 
 # FIXME: Using CSS this hairball is slightly less hairy
 # than is used to be
 caption = ""
 nr_of_columns = len(columns_info)
-type = node.output_convert_html(node.getAttribute('type'))
+type = node.getAttribute('type')
 
 table_data = []
 for child in node.childNodes:

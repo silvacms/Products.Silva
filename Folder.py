@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.98 $
+# $Revision: 1.99 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -823,9 +823,9 @@ def xml_import_handler(object, node):
     object.manage_addProduct['Silva'].manage_addFolder(id, title, 0)
     newfolder = getattr(object, id)
     for child in node.childNodes:
-        if child.nodeName.encode('cp1252') in importer_registry.keys():
+        if child.nodeName in importer_registry.keys():
             xml_import_helper(newfolder, child)
-        elif child.nodeName != u'title' and hasattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252')) and child.childNodes[0].nodeValue:
-            getattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252'))(child.childNodes[0].nodeValue.encode('cp1252'))
+        elif child.nodeName != u'title' and hasattr(newfolder, 'set_%s' % child.nodeName) and child.childNodes[0].nodeValue:
+            getattr(newfolder, 'set_%s' % child.nodeName)(child.childNodes[0].nodeValue)
 
 

@@ -12,4 +12,4 @@
 if not node.hasAttribute('type'):
     return 'plain'
 else:
-    return node.output_convert_html(node.getAttribute('type'))
+    return node.node.getAttribute('type')

@@ -14,8 +14,8 @@ image = context.content()
 if not image:
     return '<div class="error">[image reference is broken]</div>'
 
-alignment = node.output_convert_editable(node.getAttribute('alignment'))
-link = node.output_convert_editable(node.getAttribute('link'))
+alignment = node.getAttribute('alignment')
+link = node.getAttribute('link')
 
 tag = image.image.tag(css_class=alignment)
 

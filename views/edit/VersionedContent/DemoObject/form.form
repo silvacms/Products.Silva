@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="latin-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <form>
   <title>DemoObject form</title>
@@ -28,6 +28,7 @@
           <title>Title</title>
           <description></description>
           <extra></extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -48,6 +49,7 @@
           <title>Information</title>
           <description>Some information</description>
           <extra></extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>

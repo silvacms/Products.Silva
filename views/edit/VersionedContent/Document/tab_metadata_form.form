@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="latin-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <form>
   <title></title>
@@ -27,6 +27,7 @@
           <truncate type="int">0</truncate>
           <description></description>
           <extra>style="width: 100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -46,6 +47,7 @@
           <truncate type="int">0</truncate>
           <description></description>
           <extra>style="width: 100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -65,6 +67,7 @@
           <truncate type="int">0</truncate>
           <description>For archiving</description>
           <extra>style="width: 100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -85,6 +88,7 @@
           <title>Description</title>
           <description>Add a description for all top level pages (used by Internet search engines)</description>
           <extra>style="width: 100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -104,6 +108,7 @@
           <truncate type="int">0</truncate>
           <description>If blank, content will be inherited</description>
           <extra>style="width: 100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -123,6 +128,7 @@
           <truncate type="int">0</truncate>
           <description>If blank, content will be inherited</description>
           <extra>style="width: 100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>
@@ -143,6 +149,7 @@
           <title>Comment</title>
           <description>For internal use</description>
           <extra>style="width: 100%;"</extra>
+          <unicode>1</unicode>
         </values>
         <tales>
         </tales>

@@ -113,7 +113,6 @@ class Version(SimpleItem):
         """Cuts out all the XML-tags, helper for fulltext (for content-objects)
         """
         # FIXME: should take care of CDATA-chunks as well...
-        xmlinput = xmlinput.encode('cp1252')
         while 1:
             ltpos = xmlinput.find('<')
             gtpos = xmlinput.find('>')
