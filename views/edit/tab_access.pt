@@ -204,7 +204,8 @@
                   name
                 </b>
               </td>
-              <td tal:content="requested_role">
+              <td style="border-left: 1px solid black; border-right: 1px solid black;"
+                tal:content="requested_role">
               </td>
               <td tal:content="python: test(member.is_approved(), 'Yes', 'No')">
                 Yes or No
