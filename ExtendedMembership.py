@@ -8,7 +8,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Content import Content
 import Globals
 import SilvaPermissions
-from Membership import cloneMember
+from Membership import cloneMember, noneMember
 from helpers import add_and_edit
 
 class ExtendedMember(Content, SimpleMember):
@@ -44,48 +44,48 @@ class ExtendedMember(Content, SimpleMember):
     def manage_beforeDelete(self, item, container):
         pass
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'security_trigger')
     def security_trigger(self):
         pass
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_address')
     def set_address(self, address):
         """set address"""
         self._address = address
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_postal_code')
     def set_postal_code(self, pc):
         """set postal code"""
         self._postal_code = pc
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_city')
     def set_city(self, city):
         """set city"""
         self._city = city
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_country')
     def set_country(self, country):
         """set country"""
         self._country = country
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_telephone')
     def set_telephone(self, telephone):
         """set telephone number"""
         self._telephone = telephone
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_fax')
     def set_fax(self, fax):
         """set fax"""
         self._fax = fax
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'approve')
     def approve(self):
         """approve member"""

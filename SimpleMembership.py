@@ -1,4 +1,4 @@
-import smtplib
+import string, smtplib
 from IMembership import IMember, IMemberService, IMemberMessageService
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -25,19 +25,24 @@ class SimpleMember(SimpleItem.SimpleItem):
         self._email = None
         self._departments = None
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_fullname')
     def set_fullname(self, fullname):
+        """set the full name"""
         self._fullname = fullname
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_email')
     def set_email(self, email):
+        """ set the email address.
+           (does not test, if email address is valid)
+        """
         self._email = email
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_departments')
     def set_departments(self, departments):
+        """ set departments """
         self._departments = departments
 
     # ACCESSORS
