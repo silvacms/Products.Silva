@@ -75,9 +75,9 @@
       <input />
     </td>
     <td>
-      <span tal:content="structure string:${field/description}&nbsp;"
-        tal:condition="python:field.getId() != 'content_url'">
-        note
+      <span tal:condition="python:field.getId() != 'content_url'">
+        <tal:block content="structure field/description" i18n:translate="">note</tal:block>
+        &nbsp;
       </span>
       <tal:block tal:condition="python:field.getId() == 'content_url'"
       i18n:translate="">

@@ -72,8 +72,9 @@
     <td tal:content="structure python:field.render_from_request(request)">
       <input />
     </td>
-    <td tal:content="structure string:${field/description}&nbsp;">
-      note
+    <td>
+      <tal:block content="structure field/description" i18n:translate="">note</tal:block>
+      &nbsp;
     </td>
   </tr>
   </tal:define>

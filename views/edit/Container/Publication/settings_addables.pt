@@ -88,16 +88,15 @@
                     <tr valign="top"
                       tal:attributes="class python:oddrow and 'even' or 'odd'">
                       <td class="align-right">
-                        <span tal:replace="structure python: field.title()">title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
+                        <tal:block content="structure python: field.title()" i18n:translate="">title</tal:block><span class="warning" tal:condition="python:field.is_required()">*</span>
                       </td>
                       <td>
                         <input tal:replace="structure python:field.render(value=model.getProperty(field.id))" />
                       </td>
                       <td>
-                        <span tal:replace="python:field.get_value('description')">
+                        <tal:block content="python:field.get_value('description')" i18n:translate="">
                           comments here (field description)
-                        </span><br />
-                        <span tal:condition="python:field.id == 'contact_name' or field.id == 'contact_email'" tal:omit-tag="">(<em tal:content="python:getattr(model, field.id, 'None')"></em>)</span>
+                        </tal:block><br />
                       </td>
                     </tr>
                   </tal:define>
