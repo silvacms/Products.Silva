@@ -26,7 +26,7 @@
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra>style="width:100%;"</extra>
+          <extra>class="fixIE6widget"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -46,7 +46,7 @@
           <title>url</title>
           <truncate type="int">0</truncate>
           <description>Location of originating folder.</description>
-          <extra>style="width:100%;"</extra>
+          <extra>class="fixIE6widget"</extra>
           <unicode>1</unicode>
         </values>
         <tales>

@@ -26,7 +26,7 @@
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra>style="width:100%;"</extra>
+          <extra>class="fixIE6widget"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -47,7 +47,7 @@
           <default></default>
           <title>title</title>
           <description>The title will be publicly visible, and is used for the link in indexes.</description>
-          <extra>style="width:100%;"</extra>
+          <extra>class="fixIE6widget"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
