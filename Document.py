@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78 $
+# $Revision: 1.79 $
 # Zope
 
 from StringIO import StringIO
@@ -159,11 +159,19 @@ class DocumentVersion(CatalogedVersion):
     __implements__ = IVersion, ICatalogedVersion
 
     security = ClassSecurityInfo()
+
+    manage_options = (
+        {'label':'Edit',       'action':'manage_main'},
+        ) + CatalogedVersion.manage_options
     
     def __init__(self, id, title):
         DocumentVersion.inheritedAttribute('__init__')(self, id, title)
         self.content = ParsedXML('content', '<doc></doc>')
 
+    # display edit screen as main management screen
+    security.declareProtected('View management screens', 'manage_main')
+    manage_main = PageTemplateFile('www/documentVersionEdit', globals())
+        
     def to_xml(self, context):
         f = context.f
         f.write('<title>%s</title>' % translateCdata(self.get_title()))
