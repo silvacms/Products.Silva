@@ -2,6 +2,7 @@
 <metal:slot fill-slot="main">
 <tal:block define="
     global view here;
+    global dummy view/security_trigger;
     global fields view/memberform/get_fields;
     global silva_permissions here/get_silva_permissions;
     global message_type request/SESSION/message_type | nothing;
@@ -73,7 +74,7 @@
 
 </tal:block>
 
-<tal:block condition="not:silva_permissions/ChangeSilvaContent">
+<tal:block condition="not:silva_permissions/ChangeSilvaAccess">
   <h3>Dear <span tal:content="python:request.AUTHENTICATED_USER.getId()" /><br />
 You are not allowed to edit membership data of member <span tal:content="model/id" /></h3>
   <tal:comment condition="nothing">Add read only view here?</tal:comment>
