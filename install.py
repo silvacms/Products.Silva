@@ -128,10 +128,6 @@ def uninstall(root):
         # XXX this can happen always if service_resources is
         # assumed to be just there in the future (like service_views)
         root.service_resources.manage_delObjects(['Silva'])
-    try:
-        root.manage_delObjects(['service_editorsupport'])
-    except 'BadRequest':
-        pass
     
 def is_installed(root):
     return hasattr(root.service_views, 'Silva')
