@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.14 2003/09/07 03:10:37 kitblake Exp $
+# $Id: mangle.py,v 1.15 2003/10/17 18:30:37 kitblake Exp $
 
 # Python
 import string
@@ -376,7 +376,7 @@ class _Bytes:
 
     __allow_access_to_unprotected_subobjects__ = 1
 
-    _magnitudes = ['', 'KB', 'MB', 'GB', 'TB']
+    _magnitudes = ['', 'k', 'MB', 'GB', 'TB']
     _magnitudes.reverse()
 
     _threshold = 512
@@ -392,8 +392,8 @@ class _Bytes:
             mag = magnitude.pop()
 
         if int(size) == size:
-            return '%i%s' % (size, mag)
-        return '%.1f%s' % (size, mag)
+            return '%i %s' % (size, mag)
+        return '%.1f %s' % (size, mag)
 
 module_security.declarePublic('Bytes')
 Bytes = _Bytes()

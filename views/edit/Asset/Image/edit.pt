@@ -19,7 +19,8 @@
     <tal:block tal:condition="model/canScale">
         <p tal:condition="not: model/hires_image">
           <span class="subhead">format</span><br />
-          <span tal:replace="model/getFormat" /> image<br />
+          <span tal:replace="python: model.web_format.lower()" /> image
+          <br />
           <span class="subhead">dimensions</span><br />
           <span 
             tal:define="
@@ -32,7 +33,7 @@
         </p> 
         <p tal:condition="model/hires_image">
           <span class="subhead">format</span><br />
-          <span tal:replace="model/web_format">format</span> image
+          <span tal:replace="python: model.web_format.lower()">format</span> image
         </p>
         <p tal:define="
           image_width python: model.getDimensions()[0];
@@ -62,8 +63,7 @@
           </a>
         </p>
     </tal:block>
-    <p
-      tal:condition="not: model/canScale" i18n:translate="note_silva_can_provide_image_scaling">
+    <p tal:condition="not: model/canScale" i18n:translate="note_silva_can_provide_image_scaling">
       Note: Silva can provide image scaling and conversion with the help of PIL 
       (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
     <span i18n:translate="pil_not_installed">PIL doesn't seem to be installed.</span>

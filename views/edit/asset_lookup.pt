@@ -227,7 +227,7 @@ function setReference() {
                  onclick="window.close();return false;"
                 />
                <input class="button"
-                 type="button"
+                 type="navigation"
                  name="place"
                  value="place reference"
                  title="insert a reference to this asset - alt-p"
