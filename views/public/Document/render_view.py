@@ -13,4 +13,4 @@ if version is None:
    return "There is no public version"
 node = version.content.documentElement
 context.service_editor.setViewer('service_doc_viewer')
-return context.service_editor.getViewer().getWidget(node).render()
+return context.service_editor.renderView(node)

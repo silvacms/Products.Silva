@@ -8,4 +8,4 @@
 ##title=
 ##
 context.service_editor.setViewer("service_nlist_previewer")
-return context.service_editor.getViewer().getWidget(context.REQUEST.node).render()
+return context.service_editor.renderView(context.REQUEST.node)

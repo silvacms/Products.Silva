@@ -8,4 +8,4 @@
 ##title=
 ##
 context.service_editor.setViewer('service_sub_previewer')
-return context.service_editor.getViewer().getWidget(node).render()
+return context.service_editor.renderView(node)

@@ -9,5 +9,4 @@
 ##
 node = context.REQUEST.node
 context.service_editor.setViewer('service_nlist_viewer')
-viewer = context.service_editor.getViewer()
-return viewer.getWidget(node).render()
+return context.service_editor.renderView(node)

@@ -37,7 +37,7 @@ for child in node.childNodes:
                             p_node)
                 else:
                     context.service_editor.setViewer('service_sub_previewer')
-                    content = context.service_editor.getViewer().getWidget(field).render()
+                    content = context.service_editor.renderView(field)
                 # append field content
                 if content == '':
                     content = '&nbsp;'

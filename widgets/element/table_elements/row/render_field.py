@@ -26,6 +26,6 @@ if context.is_field_simple(node):
             context.service_editorsupport.render_text_as_html(node))
 else:
     context.service_editor.setViewer('service_sub_previewer')
-    content = context.service_editor.getViewer().getWidget(node).render()
+    content = context.service_editor.renderView(node)
     return '<td align="%s" width="%s">%s</td>' % (info['align'],
         info['html_width'], content)

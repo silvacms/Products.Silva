@@ -8,4 +8,4 @@
 ##title=
 ##
 context.service_editor.setViewer('service_field_viewer')
-return context.service_editor.getViewer().getWidget(version.content.documentElement).render()
+return context.service_editor.renderView(version.content.documentElement)

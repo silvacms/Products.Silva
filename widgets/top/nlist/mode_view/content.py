@@ -8,8 +8,9 @@
 ##title=
 ##
 node = context.REQUEST.node
+service_editor = context.service_editor
 viewer = context.service_editor.getViewer()
-texts = [viewer.getWidget(child).render() for child in node.childNodes if 
+texts = [service_editor.renderView(child) for child in node.childNodes if 
          child.nodeType == node.ELEMENT_NODE and child.nodeName == 'li']
 if node.hasAttribute('type'):
     type = node.getAttribute('type')
