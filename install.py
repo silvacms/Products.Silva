@@ -282,16 +282,16 @@ def configureSecurity(root):
         'Add Silva Ghost Versions',
         'Add Silva Ghosts',
         'Add Silva Images',
-        'Add Silva Files',
-        'Add Silva SQL Data Sources',
+        'Add Silva Files',        
         ]
     
     for add_permission in add_permissions:
         root.manage_permission(add_permission, all_author)
 
-    # chief editors and up may also place groups.
+    # chief editors and up may also place groups and Datasources.
     root.manage_permission('Add Silva Groups', all_chief)
     root.manage_permission('Add Silva Virtual Groups', all_chief)
+    root.manage_permission('Add Silva SQL Data Sources',, all_chief)
     
     # everybody may view root by default XXX
     # (is this bad in case of upgrade/refresh)

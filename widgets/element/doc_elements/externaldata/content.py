@@ -21,6 +21,8 @@ except:
 
 # FIXME: Using CSS this hairball is slightly less hairy
 # than it used to be
+# The Silva views expect unicode everywhere, so we create unicode strings
+# and decode the external data into unicode too.
 caption = escape_entities(datasource.get_title())
 data_encoding = datasource.get_data_encoding()
 type = node.getAttribute('type') or u'list'

@@ -1,12 +1,3 @@
-## Script (Python) "render_data"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
 from Products.Silva.helpers import escape_entities
 
 request = context.REQUEST
@@ -26,34 +17,39 @@ data = datasource.get_data(parameters)
 # FIXME: Using CSS this hairball is slightly less hairy
 # than is used to be
 caption = escape_entities(datasource.get_title())
-type = 'listing'
-show_headings = 'true'
-show_caption = 'true'
+data_encoding = datasource.get_data_encoding()
+type = u'listing'
+show_headings = u'true'
+show_caption = u'true'
 
 table_data = []
 if show_headings == 'true':
-    table_data.append("""<tr class="rowheading">""")
+    table_data.append(u"""<tr class="rowheading">""")
     for name in data.names():
-        table_data.append("""<td align="%s">\n  %s\n</td>""" % ('left', name))
-    table_data.append("""</tr>""")
+        table_data.append(u"""<td align="%s">\n  %s\n</td>""" % (u'left', unicode(name, data_encoding, 'replace') ))
+    table_data.append(u"""</tr>""")
 
+rownr = 0
 for row in data:
     row_data = []
     col = 0
     for field in row:
-        row_data.append(
-            """<td align="%s">\n  %s\n</td>""" % ('left', field))
         col += 1
+        row_data.append(
+            u"""<td align="%s">\n  %s\n</td>""" % (u'left', unicode(field, data_encoding, 'replace') ))
+    rownr += 1
+    if rownr % 2: cssclass = u"odd"
+    else: cssclass = u"even"
     table_data.append(
-        """<tr>\n%s\n</tr>""" % '\n'.join(row_data))
+        u"""<tr class="%s">\n%s\n</tr>""" % (cssclass, u'\n'.join(row_data)))
 
 table = []
-table.append("""<table class="silvatable %s" width="100%%" cellspacing="0" cellpadding="3px">""" % (type))
+table.append(u"""<table class="silvatable %s" width="100%%" cellspacing="0" cellpadding="3px">""" % (type))
 if show_caption == 'true':
-    table.append("""<caption>%s</caption>""" % (caption))
-table.append("""<tbody>""")
-table.append('\n'.join(table_data))
-table.append("""</tbody>""")
-table.append("""</table>""")
+    table.append(u"""<caption>%s</caption>""" % (caption))
+table.append(u"""<tbody>""")
+table.append(u'\n'.join(table_data))
+table.append(u"""</tbody>""")
+table.append(u"""</table>""")
 
-return '\n'.join(table) + '\n'
+return (u'\n'.join(table) + u'\n')

@@ -1,12 +1,3 @@
-## Script (Python) "submit"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
 from Products.Silva.helpers import escape_entities
 from Products.Formulator.Errors import ValidationError, FormValidationError
 
@@ -43,7 +34,8 @@ if current_data_encoding != new_data_encoding:
                     '%s to %s' % (escape_entities(new_data_encoding),
                                   escape_entities(model.get_data_encoding() ))))
 
-new_parameters = model.parameter_string_to_dict(result['parameters'])
+new_parameters = model.parameter_string_to_dict(
+    result['parameters'].encode('ascii'))
 current_parameters = model.parameters()
 
 # clear parameters if not in new_parameters:
@@ -72,7 +64,7 @@ for name in new_names:
         changed.append(('added parameter', name))
 
 curr_statement = model.statement()
-new_statement = result['statement']
+new_statement = result['statement'].encode('ascii')
 if curr_statement != new_statement:
     model.set_statement(new_statement)
     changed.append(('query changed', ''))

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -104,7 +104,7 @@ class SQLDataSource(DataSource):
         arguments = '\n'.join(arguments)
         self._sql_method = SQL(
             self.sql_method_id, '', self._connection_id, 
-            arguments, self._statement)
+            arguments.encode('ascii'), self._statement.encode('ascii'))
         self._p_changed = 1
 
 

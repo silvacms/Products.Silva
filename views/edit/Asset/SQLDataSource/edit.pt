@@ -5,8 +5,9 @@
     root_url model/get_root_url;
     title model/get_title_editable;
     breadcrumb_vein string:Edit;
-">
-
-<metal:block use-macro="view/macro_asset_edit/macros/editor" />
+    has_access here/has_change_access_permission;"
+  tal:condition="has_access"
+  >
+  <metal:block use-macro="view/macro_asset_edit/macros/editor" />
 
 </html>
