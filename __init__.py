@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.86 $
+# $Revision: 1.87 $
 
 import Metadata
 import Folder, Root
@@ -112,7 +112,6 @@ def initialize(context):
     registerDirectory('views', globals())
     registerDirectory('resources', globals())
     registerDirectory('globals', globals())
-    registerDirectory('service_utils', globals())
 
     # initialize the metadata system
     #  register silva core types w/ metadata system
