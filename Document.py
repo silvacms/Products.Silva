@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.57 $
+# $Revision: 1.58 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -131,8 +131,19 @@ class Document(VersionedContent):
         That means the document contains no dynamic elements like
         code, datasource or toc.
         """
-        # XXX hack, should check for dynamic content in public view
-        return 1
+        non_cacheable_objects = ['toc', 'code', 'externaldata']
+        is_cacheable = 1 
+    
+        viewable = self.get_viewable()
+
+        # it should suffice to test the children of the root element only,
+        # since currently the only non-cacheable elements are root elements
+        for node in viewable.documentElement.childNodes:
+            if node.nodeName in non_cacheable_objects:
+                is_cacheable = 0
+                break
+        
+        return is_cacheable
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
