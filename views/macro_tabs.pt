@@ -101,10 +101,11 @@
   tal:content="structure python: item.getProperty('short_title') or item.get_title_html()">Name</a>
 <span tal:condition="not:repeat/item/end" tal:omit-tag="">/</span>
 </repeat>
-<tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'], object=here)">
+<tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'], object=model)">
   &nbsp;
   <a class="idea" href="" title="Zope manage_main: alt-." accesskey="."
     tal:attributes="href python:'%s/manage_main' % model.absolute_url()">/manage...</a>
+</tal:block>
 <tal:block replace="nothing"> ___________ Start hook for the experimental WYSIWYG editor integration ___________ </tal:block>
 <tal:block condition="python:model.meta_type == 'Silva Document' and hasattr(here, 'bxe')">
   &nbsp;experimental:&nbsp;
@@ -118,9 +119,7 @@
   &nbsp;experimental:&nbsp;
   <a class="idea" href="" tal:attributes="href python:'%s/edit/tab_edit_eopro' % model.absolute_url()">/eopro edit</a>
 </tal:block>
-
 <tal:block replace="nothing"> ____________ End hook for the experimental WYSIWYG editor integration ____________ </tal:block>
-</tal:block>
 </div>
 </td>
 
