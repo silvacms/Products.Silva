@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.62 $
+# $Revision: 1.63 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -306,7 +306,9 @@ class Security(AccessManager):
         # containers have no author
         if IContainer.isImplementedBy(self):
             return noneMember.__of__(self)
-        binding = self.service_metadata.getMetadata(self.get_editable())
+        version = self.get_previewable()
+        assert version is not None
+        binding = self.service_metadata.getMetadata(version)
         if binding is None:
             return noneMember.__of__(self)
         userid = binding.get('silva-extra', element_id='lastauthor',
@@ -324,9 +326,11 @@ class Security(AccessManager):
     def sec_update_last_author_info(self):
         """Update the author info with the current author.
         """
-        userid = self._last_author_userid = (self.REQUEST.
-                                             AUTHENTICATED_USER.getUserName())
-        binding = self.service_metadata.getMetadata(self.get_editable())
+        userid = self._last_author_userid = (
+            self.REQUEST.AUTHENTICATED_USER.getUserName())
+        version = self.get_previewable()
+        assert version is not None
+        binding = self.service_metadata.getMetadata(version)
         if binding is None:
             return
         binding.setValues(

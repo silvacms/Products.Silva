@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.88 2003/07/21 07:09:17 zagy Exp $
+# $Id: SilvaObject.py,v 1.89 2003/07/21 13:29:38 zagy Exp $
 
 # python
 from types import StringType
@@ -173,7 +173,9 @@ class SilvaObject(Security, ViewCode):
                               'get_modification_datetime')
     def get_modification_datetime(self, update_status=1):
         """Return modification datetime."""
-        binding = self.service_metadata.getMetadata(self.get_editable())
+        version = self.get_previewable()
+        assert version is not None
+        binding = self.service_metadata.getMetadata(version)
         if binding is None:
             return None
         last_modification = binding.get('silva-extra',
