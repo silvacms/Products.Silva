@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.1
+
+    Bugs fixed
+
+      - Remnants of old archive file import code (for bulk creation of
+        assets) has been removed.
+
   1.1 beta 2
 
     Features added
