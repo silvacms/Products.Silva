@@ -140,19 +140,17 @@ div.kupu-editorframe {
 
 #kupu-editor {
   height: 580px;
-  width: 100%;
-  margin-left: 0em;
-  margin-bottom: 0em;
+  width: 99%;
+  margin: 0em;
   border: solid 1px #6c797f;
-  border-style: solid none solid solid;
 }
 
 #kupu-editor-textarea {
   height: 580px;
   width: 99%;
-  margin-left: 0em;
-  margin-bottom: 0em;
+  margin: 0em;
   border: solid 1px #6c797f;
+  display: none;
 }
 
 .kupu-toolboxes {
