@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.151 $
+# $Revision: 1.152 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -478,7 +478,12 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         for id, value in self.propertyItems():
             type = self.getPropertyType(id)
             if folder.hasProperty(id):
-                folder.manage_delProperties([id])
+                try:
+                    folder.manage_delProperties([id])
+                except KeyError:
+                    # this can now have a key error if property cannot
+                    # be deleted (Zope 2.7?)
+                    pass
             # if we still have property it must be required, change it
             if folder.hasProperty(id):
                 folder.manage_changeProperties(id=value)
