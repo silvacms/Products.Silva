@@ -1,12 +1,13 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 import OFS
 from OFS.SimpleItem import SimpleItem
+import zLOG
 # Silva
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
@@ -72,7 +73,9 @@ class Indexer(Content, SimpleItem):
         """Update the index.
         """      
         if not XPATH_AVAILABLE:
-            print "Silva Indexer: cannot update index as xml.xpath not installed."
+            zLOG.LOG(
+                'Silva', zLOG.WARNING, 
+                'Cannot update index as xml.xpath not installed.')
             return
         result = {}
         # get tree of all subobjects
@@ -96,6 +99,7 @@ class Indexer(Content, SimpleItem):
         self._index = index
 
     def _indexObject(self, result, object):
+        print repr(result), repr(object)
         for version in object.get_indexables():
             context = Context(version.content.getDOM(), 0, 0)
             nodes = xpath.Evaluate('//index', context=context)
@@ -112,14 +116,16 @@ class Indexer(Content, SimpleItem):
 
     # XXX should be a helper method on folder that does this..
     def _get_tree_helper(self, l, item):
+        print repr(l), repr(item)
         default = item.get_default()
         if default is not None and default.is_published():
             l.append(default)
         for child in item.get_ordered_publishables():
             if not item.is_published():
                 continue
-            if IContainer.isImplementedBy(child) and not IPublication.isImplementedBy(child):
-                self._get_tree_helper(l, child)
+            if IContainer.isImplementedBy(child):
+                if not IPublication.isImplementedBy(child):
+                    self._get_tree_helper(l, child)
             else:
                 l.append(child)
 
