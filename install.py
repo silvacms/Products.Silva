@@ -114,7 +114,10 @@ def install(root):
     registerCoreWidgets(root)
     # add editor support service
     EditorSupportNested.manage_addEditorSupport(root)
-
+    # forbid adding group & virtualgroup from the SMI
+    root.add_silva_addable_forbidden('Silva Group')
+    root.add_silva_addable_forbidden('Silva Virtual Group')
+    
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     root.service_views.manage_delObjects(['Silva'])
