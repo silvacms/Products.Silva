@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 from ISecurity import ISecurity
 
 class ISilvaObject(ISecurity):
@@ -104,3 +104,23 @@ class ISilvaObject(ISecurity):
         """Render this object as XML, write unicode to fileobject f.
         """
         pass
+
+    def implements_publishable():
+        """This object implements IPublishable."""
+
+    def implements_asset():
+        """This object implements IAsset."""
+
+    def implements_content():
+        """This object implements IContent."""
+
+    def implements_container():
+        """This object implements IContainer."""
+
+    def implements_publication():
+        """This object implements IPublication."""
+
+    def implements_versioned_content():
+        """This object implements IVersionedContent."""
+
+    
