@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+    xml:lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:notal="http://www.infrae.com/silva/notal"
+    xmlns:tal="http://xml.zope.org/namespaces/tal" 
+    metal:use-macro="here/macro_no_tabs/macros/master">
+
+<metal:fill-slot fill-slot="main">
+
+<form>
+  <table class="listing"
+    style="margin-bottom:0;">
+    <tbody>
+      <tr class="top-controls">
+        <td width="25%">
+        </td>
+        <td>
+          <h3 style="text-align:center ! important">
+            Session timeout
+          </h3>
+        </td>
+        <td width="25%">
+        </td>
+        <td width="25%">
+        </td>
+      </tr>
+
+      <tr class="even">
+        <td>
+        </td>
+        <td class="feedback"
+          colspan="2">
+          In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; to save any changes, or &#8216;cancel&#8217; to go back to the editor and save manually (or not at all).
+        </td>
+        <td>
+        </td>
+      </tr>
+
+      <tr class="controls">
+        <td width="25%">
+        </td>
+        <td>
+          <input class="cancel" type="button" value="Cancel" onClick="window.close()" />
+        <td class="align-right">
+        <input class="button" type="button" value=" Save " onClick="window.opener.saveHelper(); window.close()" />
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+</metal:fill-slot>
+</html>
