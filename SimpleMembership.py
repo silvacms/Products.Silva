@@ -130,7 +130,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
 
     security.declareProtected('View management screens', 'manage_editForm')
     manage_editForm = PageTemplateFile(
-        'www/extendedMemberServiceEdit', globals(),  __name__='manage_editForm')
+        'www/simpleMemberServiceEdit', globals(),  __name__='manage_editForm')
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm

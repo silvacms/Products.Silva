@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1 $
+Version of this file: $Revision: 1.2 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -9,7 +9,7 @@ Version of this file: $Revision: 1.1 $
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
 <p class="form-help">
-Add Simple Member Service 
+Add Simple Member Service
 </p>
 
 <form action="manage_addSimpleMemberService" method="post">
