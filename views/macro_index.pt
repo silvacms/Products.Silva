@@ -131,12 +131,6 @@ _______ editor hooks _______
 </span>
 <div class="workspace">
 
-<span class="halfline"
-  tal:condition="python:template.id != 'tab_preview'"
->
-  <br clear="none" />
-</span>
-
 <span tal:replace="nothing">
 <!-- _______ start feedback _______ -->
 </span>
