@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51.2.1 $
+# $Revision: 1.51.2.2 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -112,33 +112,57 @@ class GhostVersion(SimpleItem.SimpleItem):
     def __init__(self, id):
         self.id = id
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_content_url')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_content_url')
     def set_content_url(self, content_url):
         """Set content url.
         """
-        # FIXME: should never ever be allowed to point to a ghost
-        # or a container - do a lot of tests (actually done in get_content_object)
         # simplify url
         scheme, netloc, path, parameters, query, fragment = \
-                urlparse.urlparse(content_url)
-        steps = path.split('/')
-        # cut off anything after edit
-        if len(steps) >= 2 and steps[-2] == 'edit':
-            steps = steps[:-2]
-        # cut off initial slash
-        if steps[0] == '':
-            steps = steps[1:]
-        content_url = '/'.join(steps)
-        # now resolve it
+                urlparse.urlparse(content_url)        
+        path_elements = path.split('/')
+
+        # Cut off 'edit' and anything after it
         try:
-            object = self.unrestrictedTraverse(content_url)
-            # and get physical path for it
-            self._content_path = object.getPhysicalPath()
-        except:
-            # in case of errors, set it to the raw input
-            steps.insert(0,'')
-            self._content_path = steps
+            idx = path_elements.index('edit')
+        except ValueError:
+            pass
+        else:
+            path_elements = path_elements[:idx]
+
+        content_url = '/'.join(path_elements)
+
+        if path_elements[0] == '':
+            # absolute, so traverse relatively from silva root
+            traversal_root = silva_root = self.get_root()
+            silva_root_url = '/' + silva_root.absolute_url(1)
+
+            if not silva_root_url.endswith('/'):
+                silva_root_url = silva_root_url + '/'            
+
+            # Cut the 'silva root url' part off from the content url.
+            # This will result in a relative (to the silva root) path
+            # to the object            
+            if content_url.startswith(silva_root_url):
+                # replace only first occurence
+                content_url = content_url.replace(silva_root_url, '', 1)
+        else:
+            # relative, so traverse from ghost's container:
+            traversal_root = self.get_container()               
+
+        # Now resolve it...
+        try:
+            target = traversal_root.unrestrictedTraverse(content_url)
+            # ...and get physical path for it
+            self._content_path = target.getPhysicalPath()
+        except (AttributeError, KeyError):
+            # ...or, in case of errors, set it to the raw input
+            #
+            # AttributeError is what unrestrictedTraverse raises
+            # if it can find an object, but not its attribute.
+            # KeyError is what unrestrictedTraverse raises
+            # if it cannot find the object.
+            self._content_path = path_elements
         
     def get_content_url(self):
         """Get content url.
@@ -146,13 +170,13 @@ class GhostVersion(SimpleItem.SimpleItem):
         if self._content_path is None:
             return None
         try: 
-            object = self.unrestrictedTraverse(self._content_path)
+            object = self.get_root().unrestrictedTraverse(self._content_path)
             return '/' + object.absolute_url(1)
         except (AttributeError, KeyError):
-            # AttributeError is what unrestrictedTraverse raises if it can 
-            # find an object, but not its attribute
-            # KeyError is what unrestrictedTraverse raises if it cannot 
-            # find the object
+            # AttributeError is what unrestrictedTraverse raises
+            # if it can find an object, but not its attribute.
+            # KeyError is what unrestrictedTraverse raises
+            # if it cannot find the object.
             return '/'.join(self._content_path)
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
@@ -175,20 +199,19 @@ class GhostVersion(SimpleItem.SimpleItem):
 
         return self.LINK_OK
 
-
     def _get_content_object(self, path):
         """Get content object for a url.
         """
         # XXX what if we're pointing to something that cannot be viewed
         # publically?
-        if url is None:
+        if path is None:
             return None
         # XXX should this be a bare exception? catch all traversal failures
         try:
-            content = self.unrestrictedTraverse(url)
+            content = self.unrestrictedTraverse(path)
         except:
             return None
-        
+        # Not allowed to ghost to a ghost or a container
         if (not IVersionedContent.isImplementedBy(content) or    
             content.meta_type == 'Silva Ghost'):
             return None
@@ -197,21 +220,8 @@ class GhostVersion(SimpleItem.SimpleItem):
     def _get_content(self):
         """Get the real content object.
         """
-        # XXX what if we're pointing to something that cannot be viewed
-        # publically?
         path = self._content_path
-        if path is None:
-            return None
-        # XXX should this be a bare exception? catch all traversal failures
-        try:
-            content = self.unrestrictedTraverse(path)
-        except:
-            return None
-        
-        if (not IVersionedContent.isImplementedBy(content) or    
-            content.meta_type == 'Silva Ghost'):
-            return None        
-        return content
+        return self._get_content_object(path)
 
     def render_preview(self):
         """Render preview of this version (which is what we point at)
