@@ -37,10 +37,13 @@
 
 <tbody>
   <tr>
-    <th class="align-right" i18n:translate="attributes">
+    <th class="align-right"
+      style="width:12%;"
+      i18n:translate="attributes">
       attributes
     </th>
-    <th style="width:50%;" i18n:translate="content">
+    <th style="width:50%;"
+      i18n:translate="content">
       content
     </th>
     <th i18n:translate="notes">
@@ -52,27 +55,33 @@
   <tal:define define="oddrow repeat/field/odd">
   <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
     <td class="align-right">
-      <span tal:condition="python:field.getId() != 'content_url'"
-        tal:replace="python:field['title'].lower()" />
+      <tal:block tal:condition="python:field.getId() != 'content_url'">
+        <span tal:replace="python:field['title']" /><span class="warning" tal:condition="python:field.is_required()">*</span>
+      </tal:block>
       <tal:block tal:condition="python:field.getId() == 'content_url'">
         <script type="text/javascript"
           tal:content="structure here/reference.js" />
-          <input type="button"
-            class="navigation"
-            value="reference..."
-            title="find the folder this ghost should refer to: alt-r"
-            accesskey="r"
-            tal:define="asset_context model"
-            tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'focusbox\', \'field_content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
-            />
+        <input type="button"
+          class="navigation"
+          value="reference..."
+          title="find the folder this ghost should refer to: alt-r"
+          accesskey="r"
+          tal:define="asset_context model"
+          tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'focusbox\', \'field_content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+          /><span class="warning" tal:condition="python:field.is_required()">*</span>
       </tal:block>
-      <span class="warning" tal:condition="python:field.is_required()">*</span>
     </td>
     <td tal:content="structure python:field.render_from_request(request)">
       <input />
     </td>
-    <td tal:content="structure string:${field/description}&nbsp;">
-      note
+    <td>
+      <span tal:content="structure string:${field/description}&nbsp;"
+        tal:condition="python:field.getId() != 'content_url'">
+        note
+      </span>
+      <tal:block tal:condition="python:field.getId() == 'content_url'">
+        Location of originating folder. Depending on how much content there is, <span class="warning">creation may take a while</span>.
+      </tal:block>
     </td>
   </tr>
   </tal:define>
