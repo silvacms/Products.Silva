@@ -109,9 +109,9 @@
           indent_depth python: '%spx' % str(obj['indent'] * 10);
           obj_url obj/absolute_url;
           state obj/status_style | nothing;
-          global approveables python:test(state == 'draft' or state == 'closed', 1, approveables);
-          global revokeables python:test(state == 'approved', 1, revokeables);
-          global rejectables python:test(state == 'pending', 1, rejectables)"
+          global approveables python: test(state == 'draft' or state == 'closed', 1, approveables);
+          global revokeables python: test(state == 'approved', 1, revokeables);
+          global rejectables python: test(state == 'pending', 1, rejectables)"
         tal:attributes="
           class python: iterate and 'odd' or 'even';">
         <td class="listing-left">
@@ -181,7 +181,10 @@
           _______ expiration datetime cell _______
         </tal:block>
         <td class="align-right"
-          tal:content="structure obj/next_version_expiration_datetime | nothing">
+          tal:define="
+            expire_time obj/next_version_expiration_datetime | nothing;
+            global expireables python:expire_time and 1 or expireables;"
+          tal:content="structure expire_time">
           21 oct 2001 18:18
         </td>
         <tal:block replace="nothing">
@@ -196,16 +199,21 @@
             title="public version"
             tal:attributes="href obj_url;"
             tal:condition="python: public_status == 'published'">
-            <span tal:condition="start_time"
-              tal:define="
-                global closeables string:1;
-                global new_versionables string:1"
-              tal:replace="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
-            </span>
+            <tal:block
+              condition="start_time"
+              define="
+                global closeables python: 1;
+                global new_versionables python: 1"
+              replace="
+                python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
+            </tal:block>
           </a>
-          <tal:block condition="python: public_status == 'closed'"> 
-            <span i18n:translate="closed"
-              tal:define="global new_versionables string:1">
+          <tal:block 
+            define="
+              closed python: public_status == 'closed';
+              global new_versionables python: closed and 1 or new_versionables;"
+            condition="closed"> 
+            <span i18n:translate="closed">
               closed
             </span>
           </tal:block>
@@ -279,7 +287,8 @@
       </td>
       <td class="align-right"
         style="vertical-align:bottom; line-height:160%; padding-bottom:0.3em;">
-        <tal:block condition="may_approve_content">
+        <tal:block 
+          condition="python: may_approve_content and expireables">
           <label for="clear_expiration"
             title="access key: alt-p"
             accesskey="p">
