@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Wed Dec  8 18:26:36 2004\n"
-"PO-Revision-Date: 2004-12-15 16:14+0100\n"
+"PO-Revision-Date: 2004-12-16 10:22+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -2897,11 +2897,11 @@ msgstr "Zurücknehmen"
 
 #: /views/edit/Container/tab_status.pt:447
 msgid "revoke approval of approved versions: alt-v"
-msgstr ""
+msgstr "Bewilligung für bewilligtes Objekt zurückziehen: alt-v"
 
 #: /views/edit/Container/tab_status.pt:479
 msgid "request approval for new versions: alt-r"
-msgstr ""
+msgstr "Bewilligung für neue Versionen beantragen: alt-r"
 
 # Default: "r"
 #: /views/edit/Container/tab_status.pt:479
@@ -2912,7 +2912,7 @@ msgstr ""
 #: /views/edit/Container/tab_status.pt:479
 #: /views/edit/VersionedContent/tab_status_macros.pt:177
 msgid "request approval"
-msgstr ""
+msgstr "Bewilligung beantragen"
 
 #: /views/edit/Container/tab_status.pt:69
 #: /views/edit/VersionedContent/tab_status.pt:236
@@ -2996,7 +2996,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_change_settings.py:64
 msgid "cannot change publication time of already public versions."
-msgstr ""
+msgstr "Die Veröffentlichungszeit einer öffentlichen Version kann nicht geändert werden."
 
 #: /views/edit/Container/tab_status_change_settings.py:87
 #: /views/edit/Container/tab_status_reject.py:39
@@ -3015,7 +3015,7 @@ msgstr "ist nicht veröffentlicht"
 
 #: /views/edit/Container/tab_status_export.pt:106
 msgid "export to Silva xml (.xml) ${or_adobe}"
-msgstr ""
+msgstr "Als Silva XML ${or_adobe} exportieren"
 
 #: /views/edit/Container/tab_status_export.pt:118
 #: /views/edit/Container/tab_status_export.pt:212
@@ -3027,7 +3027,7 @@ msgstr "Optionen"
 #: /views/edit/Container/tab_status_export.pt:225
 #: /views/edit/Container/tab_status_export.pt:341
 msgid "include sub publications?"
-msgstr ""
+msgstr "Sub-Publikationen einschliessen?"
 
 #: /views/edit/Container/tab_status_export.pt:148
 #: /views/edit/Container/tab_status_export.pt:358
@@ -3046,7 +3046,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:171
 msgid "export pdf"
-msgstr ""
+msgstr "PDF Export"
 
 #: /views/edit/Container/tab_status_export.pt:180
 msgid "export xml"
@@ -3058,19 +3058,19 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:203
 msgid "full media export (.zip)"
-msgstr ""
+msgstr "Full-Media Export (.zip)"
 
 #: /views/edit/Container/tab_status_export.pt:242
 msgid "export only last version?"
-msgstr ""
+msgstr "Nur die letzte Version exportieren?"
 
 #: /views/edit/Container/tab_status_export.pt:253
 msgid "Check to export only the last version."
-msgstr ""
+msgstr "Auswählen, wenn nur die letzte Version exportier werden soll."
 
 #: /views/edit/Container/tab_status_export.pt:263
 msgid "export zip"
-msgstr ""
+msgstr "ZIP Export"
 
 # Default: "z"
 #: /views/edit/Container/tab_status_export.pt:263
@@ -3079,15 +3079,15 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:317
 msgid "export to Docma (.doc)"
-msgstr ""
+msgstr "Nach Docma (.doc) exportieren"
 
 #: /views/edit/Container/tab_status_export.pt:376
 msgid "export closed content?"
-msgstr ""
+msgstr "Geschlossenen Inhalt exportieren?"
 
 #: /views/edit/Container/tab_status_export.pt:387
 msgid "Check to include closed content in the export."
-msgstr ""
+msgstr "Auswählen, wenn bereits abgeschlossener Inhalt exportier werden soll."
 
 #: /views/edit/Container/tab_status_export.pt:410
 msgid "choose a template"
@@ -3095,7 +3095,7 @@ msgstr "Vorlage auswählen"
 
 #: /views/edit/Container/tab_status_export.pt:417
 msgid "none"
-msgstr ""
+msgstr "Nix"
 
 #: /views/edit/Container/tab_status_export.pt:453
 msgid "export to Docma"
@@ -5033,7 +5033,7 @@ msgstr "Der Pfad führt nicht zu einem Inhaltsobjekt"
 
 #: /views/public/cancellation_request.py:23
 msgid "Confirmation request for cancellation has been emailed"
-msgstr ""
+msgstr "Bestätigung der Anfrage auf Abmeldung wurde via Email zugestellt."
 
 #: /views/public/confirm_cancellation.py:12
 msgid "Something went wrong in unsubscribing from this page. It might be that the link you followed was too old."
@@ -5041,28 +5041,28 @@ msgstr ""
 
 #: /views/public/confirm_cancellation.py:15
 msgid "You have been successfully unsubscribed."
-msgstr ""
+msgstr "Sie wurden erfolgreich ausgetragen."
 
 #: /views/public/confirm_subscription.py:12
 msgid "Subscription failed"
-msgstr ""
+msgstr "Eintragung fehlgeschlagen."
 
 #: /views/public/confirm_subscription.py:15
 msgid "You have been successfully subscribed. This means you will receive email notifications whenever a new version of these pages becomes available."
-msgstr ""
+msgstr "Sie wurden erfolgreich eingetragen. Das bedeutet, Sie bekommen eine Email Benachrichtigung für jede neue Version dieser Seite."
 
 #: /views/public/request_roles.pt:12
 #: /views/public/request_roles.pt:20
 msgid "membership"
-msgstr ""
+msgstr "Mitgliedschaft"
 
 #: /views/public/request_roles.pt:31
 msgid "Request roles at this location"
-msgstr ""
+msgstr "An dieser Stelle eine Rolle beantragen"
 
 #: /views/public/request_roles.pt:43
 msgid "Please fill in the following fields. <br /><br />"
-msgstr ""
+msgstr "Bitte die folgenden Felder ausfüllen. <br /><br />"
 
 #: /views/public/request_roles.pt:48
 #: /views/edit/Member/SimpleMember/memberform.form:28
@@ -5116,7 +5116,7 @@ msgstr "Suche"
 
 #: /views/public/search.pt:43
 msgid "Search in ${meta_type} &#xAB;${title_or_id}&#xbb;"
-msgstr ""
+msgstr "Suche in ${meta_type} &#xAB;${title_or_id}&#xbb;"
 
 #: /views/public/search.pt:52
 msgid "Search interface"
@@ -5220,15 +5220,15 @@ msgstr ""
 #: /views/public/subscriptions.pt:53
 #: /views/public/subscriptions.pt:101
 msgid "emailaddress"
-msgstr ""
+msgstr "Emailadresse"
 
 #: /views/public/subscriptions.pt:70
 msgid "subscribe"
-msgstr ""
+msgstr "Abonnieren"
 
 #: /views/public/subscriptions.pt:89
 msgid "Unsubscribe from &#xab;${title_or_id}&#xbb;"
-msgstr ""
+msgstr "Abonnement von #xab;${title_or_id}&#xbb; beenden"
 
 #: /views/public/subscriptions.pt:91
 msgid "Fill in your emailaddress here if you want to unsubscribe from email notifications for this page and its subsections."
@@ -5236,5 +5236,5 @@ msgstr ""
 
 #: /views/render_form_errors.py:15
 msgid "Sorry, there are problems with these form fields:"
-msgstr ""
+msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
