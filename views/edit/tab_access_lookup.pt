@@ -41,7 +41,7 @@
         <tr align="left"
           valign="top">
           <td width="50%">
-            <form action="."
+            <form action="lookup_search"
               method="POST">
               <table border="0"
                 cellpadding="3"
@@ -86,7 +86,7 @@
               </table>
             </form>
               <!-- __________________________ search results ______________________________ -->
-            <form action="." method="POST">
+            <form action="lookup_add_to_selection" method="POST">
               <table border="0"
                 cellpadding="3"
                 cellspacing="0"
