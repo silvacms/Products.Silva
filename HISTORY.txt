@@ -45,7 +45,6 @@ Silva changes
         their group names, for instance the ones based on LDAP. Core
         groups support is not affected by this change.
 
->>>>>>> 1.117
   1.0 final
   
     Bugs fixed
