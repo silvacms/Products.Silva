@@ -130,7 +130,6 @@ class EditorSupport:
             #    result.append('}}')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-            
         return self.output_convert_editable(''.join(result))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
