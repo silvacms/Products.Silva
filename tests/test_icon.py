@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_icon.py,v 1.2 2003/08/21 11:01:17 zagy Exp $
+# $Id: test_icon.py,v 1.3 2003/08/21 11:24:59 zagy Exp $
 
 import Zope
 Zope.startup()
@@ -51,6 +51,8 @@ class RegistryTest(SilvaTestCase):
         self.assertEquals(self.silva.fileasset.get_mime_type(),
             'application/pdf')
         r = registry
+        self.assertEquals(r._get_module_from_context(Root.__dict__), 'Silva')
+        self.assertEquals(r._get_module_from_context(Zope.__dict__), 'Zope')
         r.registerAdapter(MetaTypeAdapter, 0)
         r.registerAdapter(SilvaFileAdapter, 10)
         self.assertEquals(len(r._adapters), 2)
@@ -61,15 +63,11 @@ class RegistryTest(SilvaTestCase):
         adapter = r.getAdapter(self.silva)
         self.assert_(isinstance(adapter, MetaTypeAdapter))
         
-        self.assertRaises(ValueError, r.registerIcon,
-            ('meta_type', 'Silva Root'), 'ProductWhichDoesNotExist',
+        r.registerIcon(('meta_type', 'Silva Root'),
             'www/members.png', Root.__dict__)
-            
-        r.registerIcon(('meta_type', 'Silva Root'), 'Silva',
-            'www/members.png', Root.__dict__)
-        r.registerIcon(('meta_type', 'Silva File'), 'Silva',
+        r.registerIcon(('meta_type', 'Silva File'),
             'www/silvafile.png', Root.__dict__)
-        r.registerIcon(('mime_type', 'application/pdf'), 'Silva',
+        r.registerIcon(('mime_type', 'application/pdf'),
             'www/user.png', Root.__dict__)
             
         icon = r.getIcon(self.silva)

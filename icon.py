@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.2 2003/08/21 11:01:17 zagy Exp $
+# $Id: icon.py,v 1.3 2003/08/21 11:24:58 zagy Exp $
 
 """Sivla icon registry"""
 
@@ -109,11 +109,10 @@ class _IconRegistry:
         insort(self._adapters, _RegistredAdapter(adapter, priority))
         
 
-    def registerIcon(self, identifier, product, icon, context):
+    def registerIcon(self, identifier, icon, context):
         """register icon
 
             identifier: icon identifier as returned from getIconIdentifier()
-            product: the product the icon resides (i.e. 'Silva')
             icon: path to icon (i.e. 'www/root.png')
             context: module context of icon (i.e. globals())
 
@@ -121,6 +120,7 @@ class _IconRegistry:
             NOTE: this will overwrite previous icon declarations
         """
         # NOTE: code copied from App.ProductContext, modified though
+        product = self._get_module_from_context(context)
         name = os.path.split(icon)[1]
         icon = Globals.ImageFile(icon, context)
         icon.__roles__ = None
@@ -129,6 +129,13 @@ class _IconRegistry:
         getattr(OFS.misc_.misc_, product)[name] = icon
         self._icon_mapping[identifier] = 'misc_/%s/%s' % (product, name)
             
+    def _get_module_from_context(self, context):
+        name = context['__name__']
+        name_parts = name.split('.')
+        if name.startswith('Products.'):
+            return name_parts[1]
+        return name_parts[0]
+
 
 registry = _IconRegistry()
 
