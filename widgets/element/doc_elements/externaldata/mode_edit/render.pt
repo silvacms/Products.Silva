@@ -3,21 +3,18 @@
     <script type="text/javascript"
       tal:content="structure here/asset_reference.js" />  
     <div class="margins">
-      <table cellpadding="2" border="0" width="100%">
+      <table cellspacing="0" cellpadding="2" border="0" width="100%">
         <tr>
-          <td colspan="1">
-            <b>Data Source reference:</b>
-          </td>
-          <td colspan="2">  
-            &nbsp;
+          <td colspan="3">
+            <b>Data Source reference</b>
           </td>
         </tr>
         <tr>
-          <td colspan="1" width="10%">
-            <input type="button" class="button" name="" value="Get data source reference"
-              tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=SQL%%20Data%%20Source\', \'_reference_\', \'focusbox\', \'path\');;return false;;' % here.get_start_container().absolute_url();" />
+          <td width="10%">
           </td>
           <td colspan="2">  
+            <input type="button" class="button" name="" value="Get data source reference" title="Access key: alt-g" accesskey="g"
+              tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=SQL%%20Data%%20Source\', \'_reference_\', \'focusbox\', \'path\');;return false;;' % here.get_start_container().absolute_url();" /><br />
             <input style="width:75%;" type="text" name="path" value=""
               tal:attributes="value python:node.output_convert_editable(node.getAttribute('path'));" />
             &nbsp;
@@ -29,11 +26,8 @@
           define="form here/get_form"
           condition="form">
           <tr>
-            <td colspan="1">
-              <b>Parameters:</b>
-            </td>
-            <td colspan="2">  
-              &nbsp;
+            <td colspan="3">
+              <b>Parameters</b>
             </td>
           </tr>
           <tr>
@@ -51,7 +45,7 @@
             <tal:block
               define="oddrow repeat/field/odd">
               <tr class="focus" valign="top"
-                tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+                tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
                 <td class="leadedbody" width="40%" tal:content="structure string:${field/description}&nbsp;">
                   description
                 </td>
@@ -67,16 +61,13 @@
           </tal:block>
         </tal:block>
         <tr>
-          <td colspan="1">
-            <b>Layout options:</b>
-          </td>
-          <td colspan="2">  
-            &nbsp;
+          <td colspan="3">
+            <b>Layout options</b>
           </td>
         </tr>
         <tr>
           <td>
-            Show Data source title as caption:
+            Caption:
           </td>
           <td colspan="2" align="left"
             tal:define="show_caption python:node.getAttribute('show_caption')">
@@ -85,12 +76,12 @@
               tal:attributes="checked python:test(show_caption == 'true', 'checked', nothing)" />&nbsp;
             No:&nbsp;
             <input type="radio" name="show_caption" value="false" 
-              tal:attributes="checked python:test(show_caption == 'false', 'checked', nothing)"/>&nbsp;
+              tal:attributes="checked python:test(show_caption == 'false', 'checked', nothing)"/>&nbsp;(Show Data Source title as caption)
           </td>
         </tr>
         <tr>
           <td>
-            Show table column headings:
+            Headings:
           </td>
           <td colspan="2" align="left"
             tal:define="show_headings python:node.getAttribute('show_headings')">
@@ -99,12 +90,12 @@
               tal:attributes="checked python:test(show_headings == 'true', 'checked', nothing)" />&nbsp;
             No:&nbsp;
             <input type="radio" name="show_headings" value="false" 
-              tal:attributes="checked python:test(show_headings == 'false', 'checked', nothing)"/>&nbsp;
+              tal:attributes="checked python:test(show_headings == 'false', 'checked', nothing)"/>&nbsp;(Show table column headings)
           </td>
         </tr>
         <tr>
           <td>
-            Type:
+            Table&nbsp;style:
           </td>
           <td colspan="2" align="left">
             <select name="element_type" tal:define="type python:node.getAttribute('type')">
