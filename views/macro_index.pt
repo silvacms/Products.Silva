@@ -126,36 +126,37 @@ function handle_default_action(element, event, action)
     <span tal:replace="structure notice">
       message
     </span>
+    &nbsp;
     <tal:block condition="python:model.sec_in_development_mode() and not notice">
       <a class="reveal"
         href="/manage_main"
-        title="jump to zope top: alt-`"
-        accesskey="`"
+        title="jump to zope root: alt-z"
+        accesskey="z"
         i18n:attributes="title"
         i18n:translate="">
         zroot...
       </a>
       &nbsp;&nbsp;&nbsp;
       <a class="reveal"
-        title="jump to silva root in zodb: alt-*"
+        title="jump to silva root in zodb: alt-'"
         tal:attributes="href string:${root_url}/manage_main"
-        accesskey="*"
+        accesskey="'"
         i18n:attributes="title"
         i18n:translate="">
         sroot...
       </a>
       &nbsp;&nbsp;&nbsp;
       <a class="reveal"
-        title="jump to silva root in zodb: alt-"
+        title="jump to silva services: alt-`"
         tal:attributes="href string:${root_url}/manage_services"
-        accesskey=""
+        accesskey="`"
         i18n:attributes="title"
         i18n:translate="">
         sservices...
       </a>
     </tal:block>
     <tal:block tal:condition="python:type == 'feedback' and notice">
-      &nbsp;&nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
+      &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
     </tal:block>
   </div>
 </tal:block>
