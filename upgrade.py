@@ -331,19 +331,25 @@ def convert_document_092(obj):
             # bypass this document, as upgrade seems to be done already
             return
 
+    def upgrade_doc_version(doc, version):
+        xml = get_version_xml(doc, version)
+        newver = DocumentVersion(version, doc._title)
+        newver.content.manage_edit(xml)
+        setattr(doc, version, newver)
+        used_ids.append(version)
+        doc._update_publication_status()
+            
     used_ids = []
     for version in ['unapproved', 'approved', 'public', 'last_closed']:
         v = getattr(obj, 'get_%s_version' % version)()
         if v is not None:
-            xml = get_version_xml(obj, v)
-            newver = DocumentVersion(v, obj._title)
-            newver.content.manage_edit(xml)
-            setattr(obj, v, newver)
-            used_ids.append(v)
-            obj._update_publication_status()
+            upgrade_doc_version(obj, v)
 
     if obj._previous_versions is not None:
-        obj._previous_versions = obj._previous_versions[-1:]
+        # the first element of previous versions is last_closed,
+        # so that's done already
+        for versionid, pdt, edt in obj._previous_versions[1:]:
+            upgrade_doc_version(obj, versionid)
             
     # remove all the unconverted versions
     for o in obj.objectValues('Silva Document Version'):
