@@ -24,6 +24,7 @@
         <img 
           width="12" 
           height="14"
+          alt=""
           tal:condition="python:indent > 0"
           tal:attributes="
             width python:indent * 24;
