@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.73 $
+# $Revision: 1.74 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -260,8 +260,10 @@ class Security(AccessManager):
     def sec_update_last_author_info(self):
         """Update the author info with the current author.
         """
-        userid = self._last_author_userid = (
-            self.REQUEST.AUTHENTICATED_USER.getUserName())
+        from AccessControl import getSecurityManager
+        security = getSecurityManager()
+        username = security.getUser().getUserName()
+        userid = self._last_author_userid = username
         version = self.get_previewable()
         assert version is not None
         try:
