@@ -74,7 +74,7 @@ function Draggable(draggable, dragbar) {
     this._startOffsetTop = 0;
 
     this.initialize = function() {
-        addEventHandler(this.draggable, 'mousedown', this.startDrag, this);
+        addEventHandler(this.dragbar, 'mousedown', this.startDrag, this);
         addEventHandler(document, 'mousemove', this.dragElement, this);
         addEventHandler(document, 'mouseup', this.endDrag, this);
     };
@@ -91,13 +91,16 @@ function Draggable(draggable, dragbar) {
         };
         this.draggable.style.left = '' + (getPageX(event) - this._startOffsetLeft) + 'px';
         this.draggable.style.top = '' + (getPageY(event) - this._startOffsetTop) + 'px';
+        if (event.preventDefault) {
+            event.preventDefault();
+        } else {
+            event.returnValue = false;
+        };
     };
 
     this.endDrag = function(event) {
         this._dragging = false;
     };
-
-    this.initialize();
 };
 
 function Resizable(resizable, handle, minwidth, minheight) {
@@ -112,7 +115,6 @@ function Resizable(resizable, handle, minwidth, minheight) {
 
     this.initialize = function() {
         addEventHandler(this.handle, "mousedown", this.startResize, this);
-        //addEventHandler(this.handle, "mousemove", this.resizeElement, this);
         addEventHandler(document, "mousemove", this.resizeElement, this);
         addEventHandler(document, "mouseup", this.stopResize, this);
     };
@@ -121,8 +123,6 @@ function Resizable(resizable, handle, minwidth, minheight) {
         this.resizing = true;
         this.startOffsetRight = event.layerX ? (parseInt(this.resizable.style.width) - event.layerX) : (parseInt(this.handle.style.width) - event.offsetX);
         this.startOffsetBottom = event.layerY ? (parseInt(this.resizable.style.height) - event.layerY) : (parseInt(this.handle.style.height) - event.offsetY);
-        
-        parseInt(this.resizable.style.height) - (event.layerY ? event.layerY : event.offsetY);
     };
 
     this.resizeElement = function(event) {
@@ -137,21 +137,32 @@ function Resizable(resizable, handle, minwidth, minheight) {
         if (height > this.minheight) {
             this.resizable.style.height = '' + height + 'px';
         };
+        if (event.preventDefault) {
+            event.preventDefault();
+        } else {
+            event.returnValue = false;
+        };
     };
 
     this.stopResize = function(event) {
         this.resizing = false;
     };
-
-    this.initialize();
 };
 
 function Cropper(layer, dragbar, resizehandle, minwidth, minheight) {
-    this.draggable = new Draggable(layer, dragbar);
     this.resizable = new Resizable(layer, resizehandle, minwidth, minheight);
+    this.draggable = new Draggable(layer, dragbar);
     
     this.layer = document.getElementById(layer);
     this.dragbar = document.getElementById(dragbar);
+    this.resizehandle = document.getElementById(resizehandle);
+
+    this.initialize = function() {
+        var additional = document.getElementById('additional_draggable');
+        addEventHandler(additional, 'mousedown', this.draggable.startDrag, this.draggable);
+        this.draggable.initialize();
+        this.resizable.initialize();
+    };
 
     this.width = function() {
         return parseInt(this.layer.style.width);
@@ -162,12 +173,14 @@ function Cropper(layer, dragbar, resizehandle, minwidth, minheight) {
     };
 
     this.left = function() {
-        return this.layer.style.left;
+        return parseInt(this.layer.style.left);
     };
 
     this.top = function() {
         return parseInt(this.layer.style.top);
     };
+
+    this.initialize();
 };
 
 function getCoordinates(event) {
@@ -183,7 +196,6 @@ function getCoordinates(event) {
   document.getElementById("image").addEventListener("click", setCoords, true);
   }
 }
-
 
 function setCoords(ev) {
   x = ev.layerX;
@@ -213,4 +225,3 @@ function insertCropCoords(x, y, wndw) {
   // Close LookupWindow
   wndw.close();
 }
-//  -->
