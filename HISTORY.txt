@@ -28,6 +28,9 @@ Silva changes
 
     Bugs Fixed
 
+        - Datasource parameters store empty srtings instead of None
+          for default values.
+
         - Fixed bug where the title of a SQLDatasource Asset was not set 
           in the edit tab.
 
