@@ -19,7 +19,7 @@ sqlobject.set_statement(sql_statement)
 sqlobject.set_connection_id(connection_id)
 
 parameters_dict = sqlobject.parameter_string_to_dict(parameters)
-for name, (type, default_value, description) in parameters_dict:
+for name, (type, default_value, description) in parameters_dict.items():
     sqlobject.set_parameter(
         name=name, type=type, default_value=default_value, 
         description=description)
