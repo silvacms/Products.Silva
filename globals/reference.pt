@@ -25,7 +25,9 @@
 <h2 style="margin-top:2em;">
   <a href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-s"
-    accesskey="s"><img src="silva_icon_32.gif" width="32" height="32" border="0" alt="Silva" /></a>
+    accesskey="s">
+    <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
+      tal:attributes="href here/globals/silva_32.png/absolute_url | nothing" /></a>
   &nbsp;Silva &#8211; a cross medium publication system<br />
 </h2>
 

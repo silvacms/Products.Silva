@@ -34,11 +34,11 @@
       tal:attributes="href string:${root_url}/edit/tab_edit"
       i18n:attributes="title"
       >
-      <img alt="Silva emblem"
+      <img alt="Silva"
         height="14"
         width="14"
         border="0"
-        tal:attributes="src string:${root_url}/globals/silva_emblem.gif"
+        tal:attributes="src string:${root_url}/globals/silva_emblem.png"
         i18n:attributes="alt"
       />
     </a>

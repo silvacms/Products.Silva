@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.75 $
+# $Revision: 1.76 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -18,7 +18,7 @@ from Products.Silva.Metadata import export_metadata
 
 from interfaces import IRoot, IVersionedContent, IContainer
 
-icon="globals/silva.gif"
+icon="www/silva.png"
 
 class Root(Publication):
     """Root of Silva site.
