@@ -7,6 +7,12 @@ def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
     return getattr(object, id)
 
+def preview(self):
+    pass
+
+def view(self):
+    pass
+
 class GhostTestCase(unittest.TestCase):
     """Test the Ghost object.
     """
@@ -33,6 +39,9 @@ class GhostTestCase(unittest.TestCase):
     def test_ghost(self):
         ghost = self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
                                                                       '/root/doc1')
+        self.assertEquals('', ghost.preview())
+        self.assertEquals(None, ghost.view())
+
         self.assertEquals('/root/doc1', ghost.get_editable())
         self.assert_(not ghost.get_previewable())
         self.assert_(not ghost.get_viewable())

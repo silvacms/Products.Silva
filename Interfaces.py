@@ -53,18 +53,25 @@ class SilvaObject(Interface.Base):
         Returns None if there is no such version.
         """
         pass
+   
+    def get_viewable(self):
+        """Get the publically viewable version (may be the object itself if
+        no versioning).
+        Returns None if there is no such version.
+        """
+        pass
 
-    def render(self):
+    def preview(self):
         """Render this object using the public view defined in the view registry.
         This should use methods on the object itself and the version object
         obtained by get_previewable() to render the object to HTML.
         """
         pass
     
-    def get_viewable(self):
-        """Get the publically viewable version (may be the object itself if
-        no versioning).
-        Returns None if there is no such version.
+    def view(self):
+        """Render this object using the public view defined in the view registry.
+        This should use methods on the object itself and the version object
+        obtained by get_viewable() to render the object to HTML.
         """
         pass
 

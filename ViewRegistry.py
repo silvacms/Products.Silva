@@ -65,12 +65,19 @@ class ViewRegistry(Folder.Folder):
         """
         return self.view_types[view_type][meta_type]
 
-    def render(self, view_type, obj):
+    def render_preview(self, view_type, obj):
+        """Call render method for preview.
+        """
+        return getattr(self,
+                       self.view_types[view_type][obj.meta_type]).__of__(obj).render(version=self.get_previewable())
+    
+    def render_view(self, view_type, obj):
         """Call render method in view.
         """
         return getattr(self,
-                       self.view_types[view_type][obj.meta_type]).__of__(obj).render()
-        
+                       self.view_types[view_type][obj.meta_type]).__of__(obj).render(version=self.get_viewable())
+
+    
     def wrap(self, view_type, obj):
         """Wrap object in view (wrapping skin)
         """

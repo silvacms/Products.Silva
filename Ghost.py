@@ -39,17 +39,29 @@ class Ghost(VersionedContent):
         """
         return DateTime.DateTime(2002, 1, 1, 12, 0)
 
-    def get_previewable(self):
-        ghost_version = Ghost.inheritedAttribute('get_previewable')(self)
-        if ghost_version is None:
-            return None
-        return ghost_version._get_content().get_viewable()
+    #def get_previewable(self):
+    #    ghost_version = Ghost.inheritedAttribute('get_previewable')(self)
+    #    if ghost_version is None:
+    #        return None
+    #    return ghost_version._get_content().get_viewable()
 
-    def get_viewable(self):
-        ghost_version = Ghost.inheritedAttribute('get_viewable')(self)
-        if ghost_version is None:
+    def preview(self):
+        version = self.get_previewable()
+        if version is None:
             return None
-        return ghost_version._get_content().get_viewable()
+        content = version._get_content()
+        if content is None:
+            return None
+        return content.preview()
+        
+    def view(self):
+        version = self.get_viewable()
+        if version is None:
+            return None
+        content = version._get_content()
+        if content is None:
+            return None
+        return content.view()
 
 Globals.InitializeClass(Ghost)
 

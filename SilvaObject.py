@@ -14,9 +14,11 @@ class SilvaObject:
     # MANIPULATORS
     def manage_afterAdd(self, item, container):
         #self.inheritedAttribute('manage_afterAdd')(self, item, container)
+        print "afterAdd", item.id, container.id
         container._refresh_ordered_ids(item)
         
     def manage_beforeDelete(self, item, container):
+        print "beforeDelete", item.id, container.id
         #self.inheritedAttribute('manage_beforeDelete')(self, item, container)
         container._refresh_ordered_ids(item)
 
@@ -54,12 +56,16 @@ class SilvaObject:
         """
         return self
 
-    security.declareProtected(SilvaPermissions.View, 'render')
-    def render(self):
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'preview')
+    def preview(self):
         """Render this with the public view. This will presumably use
         get_viewable() to get the information for the public version.
         """
-        return self.service_view_registry.render('public', self)
+        return self.service_view_registry.render_preview('public', self)
+
+    security.declareProtected(SilvaPermissions.View, 'view')
+    def view(self):
+        return self.service_view_registry.render_view('public', self)
     
     # these help the UI that can't query interfaces directly
 
