@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.35 $
+$Revision: 1.36 $
 
 Silva changes
 
@@ -14,6 +14,9 @@ Silva changes
 
         - Fix where the "/manage" display link in the SMI tabs didn't
         didn't regard the local roles on the current object.
+
+        - Asset reference fix where it didn;t work in virtual host
+        setups.
 
   0.9
 
