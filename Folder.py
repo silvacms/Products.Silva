@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.139 $
+# $Revision: 1.140 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -842,8 +842,12 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         f.write('</silva_folder>')
 
     def _to_xml_helper(self, context):
-        context.f.write('<title>%s</title>' % 
-                helpers.translateCdata(self.get_title()))
+        if context.last_version:
+            title = self.get_title_editable()
+        else:
+            title = self.get_title()
+            
+        context.f.write('<title>%s</title>' % helpers.translateCdata(title))
         default = self.get_default()
         if default is not None:
             default.to_xml(context)
