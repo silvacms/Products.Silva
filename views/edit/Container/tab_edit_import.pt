@@ -159,7 +159,7 @@
       </tr>
       <tr class="top-controls">
         <td colspan="3">
-          <h3 i18n:translate="import_silva_xml">
+          <h3 i18n:translate="import_zip_file">
             import and extract zip archive file (.zip)
           </h3>
         </td>

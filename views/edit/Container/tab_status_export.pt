@@ -331,7 +331,7 @@
           />
         </td>
         <td i18n:translate="email_will_be_sent">
-          An email will be sent when the item is processed.
+          An e-mail will be sent to you when the item is processed.
         </td>
       </tr>
 
