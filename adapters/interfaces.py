@@ -55,6 +55,19 @@ class IArchiveFileImporter(Interface):
         imported into Silva Assets and what contents have not.
         """
 
+class IZipfileImporter(Interface):
+    def isFullmediaArchive(zipname):
+        """Tests if the zip archive is a fullmedia archive
+        """
+
+    def importFromZip(context, zipname, settings):
+        """Import Silva content from a full media zip file.
+
+        context -- The content object to be imported into
+        zipname -- The filename of the zip archive
+        settings -- The import settings
+        """
+
 class IZipfileExporter(Interface):
     def exportToZip(context, zipname, settings):
         """Export Silva content to a zip file.

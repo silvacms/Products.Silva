@@ -29,7 +29,7 @@ if len(objects) == 1:
 RESPONSE.setHeader('Content-Type', 'application/download')
 RESPONSE.setHeader('Content-Length', len(data))
 RESPONSE.setHeader('Content-Disposition',
-    'attachment;filename=%s_export_%s.slv' % (filename,
+    'attachment;filename=%s_export_%s.xml' % (filename,
     DateTime().strftime('%Y-%m-%d')))
 
 return data

@@ -82,7 +82,7 @@
             export...
           </a>
           <h3 i18n:translate="import_silva_xml">
-            import silva xml (.slv)
+            import silva xml (.xml)
           </h3>
         </td>
       </tr>

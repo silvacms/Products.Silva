@@ -100,8 +100,8 @@
                       <span i18n:translate="import">import</span>...
                     </a>
                   <h3 i18n:translate="export_to_silva_xml">
-                    export to Silva xml (.slv)
-	                </h3>
+                    export to Silva xml (.xml)
+                  </h3>
                 </td>
               </tr>
             </thead>
@@ -191,6 +191,88 @@
           </table>
         </form>
 
+    <form tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model)"
+      action="." enctype="multipart/form-data" method="POST">
+      <input type="hidden" 
+        name="refs"
+        tal:attributes="value python: '||'.join(refs)" />
+      <table class="listing">
+      <thead>
+        <tr class="top-controls">
+          <td colspan="3">
+            <h3 i18n:translate="export_to_zip">
+              full media export (.zip)
+          </h3>
+        </td>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <th class="align-right"
+            i18n:translate="options">
+            options
+          </th>
+          <th>
+          </th>
+          <th i18n:translate="note">
+            note
+          </th>
+      </tr>
+
+        <tr class="even">
+          <td class="align-right">
+            <label for="with_sub_publications"
+              i18n:translate="include_sub_publications?">
+              include sub publications?
+            </label>
+          </td>
+          <td class="align-center">
+            <input type="checkbox"
+              name="with_sub_publications"
+              id="with_sub_publications"
+            />
+          </td>
+          <td>
+          </td>
+        </tr>
+
+        <tr class="odd">
+          <td class="align-right">
+            <label for="export_last_version"
+              i18n:translate="export_last_version?">
+              export last version?
+            </label>
+          </td>
+          <td class="align-center">
+              <input type="checkbox"
+                name="export_last_version"
+                id="export_last_version"
+              />
+          </td>
+          <td i18n:translate="export_last_version_note">
+            Check to export only the last version. 
+          </td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr class="controls">
+        <td class="align-right"
+        colspan="3">
+        <input class="button"
+        type="submit"
+        name="download_fullmedia_selected:method"
+        value="export zip"
+        title="access key: alt-z"
+        accesskey="z"
+        i18n:attributes="value title"
+        />
+        </td>
+        </tr>
+      </tfoot>
+      </table>
+      </form>
 
 <span tal:replace="nothing">
   ____________________________ docma facilities ____________________________

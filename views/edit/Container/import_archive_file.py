@@ -1,4 +1,4 @@
-from Products.Silva.adapters import archivefileimport
+from Products.Silva.adapters import archivefileimport, zipfileimport
 
 view = context
 request = view.REQUEST
@@ -9,13 +9,18 @@ if archive is None or not archive:
     return view.tab_edit_import(
         message_type='error', message='Select a file for upload.')
         
-importer = archivefileimport.getArchiveFileImportAdapter(model)
 
 recreate = request.get('recreate_dirs', None)
 title = unicode(request.get('title', ''), 'utf-8')
+importer = zipfileimport.getZipfileImportAdapter(model)
+fullmedia = importer.isFullmediaArchive(archive)
 
 try:
-    succeeded, failed = importer.importArchive(archive, title, recreate)
+    if fullmedia:
+        succeeded, failed = importer.importFromZip(model, archive)
+    else:
+        importer = archivefileimport.getArchiveFileImportAdapter(model)
+        succeeded, failed = importer.importArchive(archive, title, recreate)
 except archivefileimport.BadZipfile, e:
     msg = 'Something bad with the zipfile; ' + str(e)
     message_type='alert'
