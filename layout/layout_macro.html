@@ -58,11 +58,12 @@
     <metal:block define-slot="top_navigation">
       <!-- Begin top_navigation slot -->
       <span class="breadcrumb"
-         style="display:block;">
-        <span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
-        <a tal:content="item/get_title" tal:attributes="href item/absolute_url">Name</a>
-        <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
-      </span>
+				style="display:block;">
+				<tal:block repeat="item python:here.get_breadcrumbs()"> 
+					<a tal:content="item/get_title" tal:attributes="href item/absolute_url">Name</a>
+					<span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span>
+				</tal:block>
+			</span>
       <!-- End top_navigation slot -->
     </metal:block>
   </div>

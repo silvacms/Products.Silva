@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.108 $
+# $Revision: 1.109 $
 
 import ContainerPolicy
 
@@ -232,6 +232,4 @@ def initialize_upgrade():
 
     for upgrade_module in [upgrade_092, upgrade_093]:
         upgrade_module.initialize()
-
-
 

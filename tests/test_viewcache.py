@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -148,6 +148,64 @@ class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(not doc.is_cached())
         self.assertNotEquals(data, doc.view())
         
+class ViewCacheVirtualHostTestCase(ViewCacheTestCase):
+    def afterSetUp(self):
+        # Run all tests in a virtual host setup:
+        # first setup a folder structure to be able to test
+        # virtual hosts.
+        self.add_folder(self.root, 'vhost1', 'Virtual Host One')
+        self.add_folder(self.root, 'level1', 'Level One')
+        self.add_folder(self.root.level1, 'level2', 'Level Two')
+        self.add_folder(
+            self.root.level1.level2, 'vhost2', 'Virtual Host Two')
+        self.add_folder(
+            self.root.level1.level2.vhost2, 'level3', 'Level Three')
+        for container in [
+            self.root,
+            self.root.vhost1, 
+            self.root.level1,
+            self.root.level1.level2,
+            self.root.level1.level2.vhost2]:
+            self.add_document(
+                container, 'index', 'Index of %s' % container.id)
+        self.add_document(
+            container, 'anotherdoc', 'Another doc of %s' % container.id)                
+        # Get REQUEST in shape
+        request = self.request = self.app.REQUEST
+        request['PARENTS'] = [self.root.level1.level2.vhost2]
+        request.setServerURL(
+            protocol='http', hostname='foo.bar.com', port='80')
+        request.setVirtualRoot(('', 'root', 'level1', 'level2', 'vhost2'))
+        self.document = self.root.level1.level2.vhost2.index
+        
+    def test_cachedDocumentsWithLinks(self):
+        doc = self.root.level1.level2.vhost2.index
+        dom = doc.get_editable().content
+        # Create a paragraph with link elements, since link elements will be
+        # clearly different for different virtual hosts
+        p = dom.createElement('p')        
+        dom.documentElement.appendChild(p)
+        p.appendChild(dom.createElement('link'))
+        p.appendChild(dom.createElement('link'))
+        p.childNodes[0].setAttribute('url', 'anotherdoc')
+        p.childNodes[1].setAttribute('url', '/root/level1/index')
+        now = DateTime()
+        doc.set_unapproved_version_publication_datetime(now - 1)
+        doc.approve_version()        
+        self.assert_(not doc.is_cached())
+        data1 = doc.view()
+        self.assert_(doc.is_cached())
+        # Get REQUEST in shape for different virtual host
+        request = self.request
+        request['PARENTS'] = [self.app]
+        request.setServerURL(
+            protocol='http', hostname='baz.bar.com', port='80')
+        request.setVirtualRoot(('',))
+        self.assert_(not doc.is_cached())
+        data2 = doc.view()
+        self.assert_(doc.is_cached())
+        self.assertNotEquals(data1, data2)        
+        
 if __name__ == '__main__':
     framework()
 else:
@@ -155,5 +213,6 @@ else:
     def test_suite():
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(ViewCacheTestCase))
+        suite.addTest(unittest.makeSuite(ViewCacheVirtualHostTestCase))
         return suite
     

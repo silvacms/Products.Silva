@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.96 2003/10/16 16:08:40 jw Exp $
+# $Id: SilvaObject.py,v 1.97 2003/11/03 18:23:24 jw Exp $
 
 # python
 from types import StringType
@@ -14,10 +14,11 @@ import SilvaPermissions
 from Products.SilvaViews.ViewRegistry import ViewAttribute
 from Security import Security
 from ViewCode import ViewCode
-
 from interfaces import ISilvaObject, IContent, IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent
+# Silva adapters
+from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 
 from Products.SilvaMetadata.Exceptions import BindingError
 
@@ -212,27 +213,34 @@ class SilvaObject(Security, ViewCode):
         last_modification = binding.get('silva-extra',
             element_id='modificationtime', no_defaults=1)
         return last_modification
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_breadcrumbs')
+       
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_breadcrumbs')
     def get_breadcrumbs(self, ignore_index=1):
         """Get information used to display breadcrumbs. This is a
-        list of items from the Silva Root.
+        list of items from the Silva Root or the object being the root of 
+        the virtual host - which ever comes first.
         """
+        adapter = getVirtualHostingAdapter(self)
+        root = adapter.getVirtualRoot()
+        if root is None:
+            root = self.get_root()
+            
         result = []
         item = self
         while ISilvaObject.isImplementedBy(item):
-            # Should the index be included?
-            if ignore_index:
-                if not (IContent.isImplementedBy(item) 
-                        and item.is_default()):
+            if ignore_index: # Should the index be included?
+                if not (IContent.isImplementedBy(item) and item.is_default()):
                     result.append(item)
             else:
                 result.append(item)
+                
+            if item == root: # XXX does equality always work in Zope?
+                break
             item = item.aq_parent
         result.reverse()
         return result
-        
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
     def get_editable(self):

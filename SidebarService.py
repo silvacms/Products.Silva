@@ -1,13 +1,18 @@
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id: SidebarService.py,v 1.15 2003/11/03 18:23:24 jw Exp $
+# Zope
 from OFS.SimpleItem import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-
+# Silva
 from SidebarCache import SidebarCache
-
 import SilvaPermissions
 from helpers import add_and_edit
-
+# Silva adapters
+from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
+# Silva interfaces
 from interfaces import ISidebarService
 
 class SidebarService(SimpleItem):
@@ -60,6 +65,12 @@ class SidebarService(SimpleItem):
         the full pagetemplate and stores that in the cache
         """
         pub = obj.get_publication()
+        adapter = getVirtualHostingAdapter(pub)        
+        if adapter.containsVirtualRoot():
+            # If the virtual host points inside the publication, 
+            # use that point as 'publication' to start from.
+            pub = adapter.getVirtualRoot()
+        
         abs_url = pub.absolute_url()
         ph_path = pub.getPhysicalPath()
 
