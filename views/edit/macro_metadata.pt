@@ -10,189 +10,196 @@
 <!-- Read only table -->
 <metal:block define-macro="view_table">
   <tal:block define="
-    content python: model.get_viewable();
-    binding python: view.get_metadata_binding(content) or nothing;
-    is_container request/model/implements_container | nothing;
-    form_errors options/form_errors | nothing;
-    ">
-    <table class="listing"
-      tal:condition="binding">
-      <tbody>
-        <tal:block repeat="set_name binding/setNames">
-          <tr tal:condition="not:repeat/set_name/start">
-            <td class="top divider"
-              colspan="4">
-            </td>
-          </tr>
-          <tr tal:replace="nothing">
-            ______________ top controls row ______________
-          </tr>
-          <tr class="top-controls">
-            <td colspan="4">
-              <h3>
-                Metadata set &#xab;<tal:block replace="set_name" />&#xbb;
-              </h3>
-            </td>
-          </tr>
-          <tr>
-            <th class="align-right"
-              width="30%">
-              Element
-            </th>
-            <th>
-              Content
-            </th>
-          </tr>
-          <tal:block repeat="element_name binding/?set_name/elementNames">
-            <tr 
-              tal:define="
-                element binding/?set_name/?element_name;                  
-                iterate repeat/element_name/odd;"
-              tal:attributes="class python: iterate and 'odd' or 'even';">
-              <tal:block replace="nothing">
-                ___ element name column ___
-              </tal:block>
-              <td class="field-title"
-                tal:content="element/title">
-                Element name
-              </td>
-              <tal:block replace="nothing">
-                ___ element widget column ___
-              </tal:block>
-              <td tal:content="structure element/view">
-                Element content view
+    content python: model.get_viewable();">
+    <tal:block 
+      condition="content"
+      define="
+        binding python: view.get_metadata_binding(content) or nothing;
+        is_container request/model/implements_container | nothing;
+        form_errors options/form_errors | nothing;
+        ">
+      <table class="listing"
+        tal:condition="binding">
+        <tbody>
+          <tal:block repeat="set_name binding/setNames">
+            <tr tal:condition="not:repeat/set_name/start">
+              <td class="top divider"
+                colspan="4">
               </td>
             </tr>
+            <tr tal:replace="nothing">
+              ______________ top controls row ______________
+            </tr>
+            <tr class="top-controls">
+              <td colspan="4">
+                <h3>
+                  Metadata set &#xab;<tal:block replace="set_name" />&#xbb;
+                </h3>
+              </td>
+            </tr>
+            <tr>
+              <th class="align-right"
+                width="30%">
+                Element
+              </th>
+              <th>
+                Content
+              </th>
+            </tr>
+            <tal:block repeat="element_name binding/?set_name/elementNames">
+              <tr 
+                tal:define="
+                  element binding/?set_name/?element_name;                  
+                  iterate repeat/element_name/odd;"
+                tal:attributes="class python: iterate and 'odd' or 'even';">
+                <tal:block replace="nothing">
+                  ___ element name column ___
+                </tal:block>
+                <td class="field-title"
+                  tal:content="element/title">
+                  Element name
+                </td>
+                <tal:block replace="nothing">
+                  ___ element widget column ___
+                </tal:block>
+                <td tal:content="structure element/view">
+                  Element content view
+                </td>
+              </tr>
+            </tal:block>
           </tal:block>
-        </tal:block>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </tal:block>
   </tal:block>
 </metal:block>
 
 <!-- Edit table -->
 <metal:block define-macro="edit_table">
-<form method="POST" name="form" action="."
-  tal:define="
-    content python: model.get_editable();
-    binding python: view.get_metadata_binding(content) or nothing;
-    is_container request/model/implements_container | nothing;
-    form_errors options/form_errors | nothing;
-  ">
-  <table class="listing"
-    tal:condition="binding">
-    <thead>
-      <tr tal:replace="nothing">
-        ______________ vein + title row ______________
-      </tr>
-      <tr>
-        <td class="top"
-          colspan="4">
-          <h2>
-            <img tal:replace="structure python:view.render_icon(model)" />
-            metadata <span tal:condition="not: model/implements_container">for &#xab;<span tal:replace="string:${title}">title</span>&#xbb;</span>
-          </h2>
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <tal:block repeat="set_name binding/setNames">
-        <tal:block define="set_errors form_errors/?set_name | nothing">
-          <tr tal:condition="not:repeat/set_name/start">
-            <td class="top divider"
-              colspan="4">
-            </td>
-          </tr>
+  <tal:block define="
+    content python: model.get_editable();">
+    <form method="POST" name="form" action="."
+      tal:condition="content"
+      tal:define="
+        binding python: view.get_metadata_binding(content) or nothing;
+        is_container request/model/implements_container | nothing;
+        form_errors options/form_errors | nothing;
+        ">
+      <table class="listing"
+        tal:condition="binding">
+        <thead>
           <tr tal:replace="nothing">
-            ______________ top controls row ______________
-          </tr>
-          <tr class="top-controls">
-            <td colspan="4">
-              <h3>
-                Metadata set &#xab;<tal:block replace="set_name" />&#xbb;
-              </h3>
-            </td>
+            ______________ vein + title row ______________
           </tr>
           <tr>
-            <th class="align-right">
-              Element
-            </th>
-            <th>
-              Content
-            </th>
-            <th>
-              Acquired content
-            </th>
-            <th width="25%">
-              Note
-            </th>
+            <td class="top"
+              colspan="4">
+              <h2>
+                <img tal:replace="structure python:view.render_icon(model)" />
+                metadata <span tal:condition="not: model/implements_container">for &#xab;<span tal:replace="string:${title}">title</span>&#xbb;</span>
+              </h2>
+            </td>
           </tr>
-          <tal:block repeat="element_name binding/?set_name/elementNames">
-            <tr 
-              tal:define="
-                element binding/?set_name/?element_name;
-                element_error form_errors/?set_name/?element_name | nothing;
-                iterate repeat/element_name/odd;"
-              tal:attributes="
-                class python:element_error and 'alert' or iterate and 'odd' or 'even';">
-              <tal:block replace="nothing">
-                ___ element name column ___
+        </thead>
+        <tbody>
+          <tal:block repeat="set_name binding/setNames">
+            <tal:block define="set_errors form_errors/?set_name | nothing">
+              <tr tal:condition="not:repeat/set_name/start">
+                <td class="top divider"
+                  colspan="4">
+                </td>
+              </tr>
+              <tr tal:replace="nothing">
+                ______________ top controls row ______________
+              </tr>
+              <tr class="top-controls">
+                <td colspan="4">
+                  <h3>
+                    Metadata set &#xab;<tal:block replace="set_name" />&#xbb;
+                  </h3>
+                </td>
+              </tr>
+              <tr>
+                <th class="align-right">
+                  Element
+                </th>
+                <th>
+                  Content
+                </th>
+                <th>
+                  Acquired content
+                </th>
+                <th width="25%">
+                  Note
+                </th>
+              </tr>
+              <tal:block repeat="element_name binding/?set_name/elementNames">
+                <tr 
+                  tal:define="
+                    element binding/?set_name/?element_name;
+                    element_error form_errors/?set_name/?element_name | nothing;
+                    iterate repeat/element_name/odd;"
+                  tal:attributes="
+                    class python:element_error and 'alert' or iterate and 'odd' or 'even';">
+                  <tal:block replace="nothing">
+                    ___ element name column ___
+                  </tal:block>
+                  <td class="field-title"
+                    tal:content="element/title">
+                    Element name
+                    <span class="warning"
+                      tal:condition="element/isRequired">
+                      *
+                    </span>
+                  </td>
+                  <tal:block replace="nothing">
+                    ___ element widget column ___
+                  </tal:block>
+                  <td tal:content="structure element/render">
+                    Element edit widget
+                  </td>
+                  <tal:block replace="nothing">
+                    ___ element acquired value column ___
+                  </tal:block>
+                  <td>
+                    <tal:block 
+                      condition="element/isAcquired"
+                      replace="structure element/view" />
+                    <tal:block condition="not: element/isAcquired">
+                      &nbsp;
+                    </tal:block>
+                  </td>
+                  <tal:block replace="nothing">
+                    ___ element desc. column ___
+                  </tal:block>
+                  <td>
+                    <tal:block content="structure element/description">
+                      Element description
+                    </tal:block>
+                    <span class="error"
+                      tal:condition="element_error"
+                      tal:content="element_error">
+                    </span>
+                  </td>
+                </tr>
               </tal:block>
-              <td class="field-title"
-                tal:content="element/title">
-                Element name
-                <span class="warning"
-                  tal:condition="element/isRequired">
-                  *
-                </span>
-              </td>
-              <tal:block replace="nothing">
-                ___ element widget column ___
-              </tal:block>
-              <td tal:content="structure element/render">
-                Element edit widget
-              </td>
-              <tal:block replace="nothing">
-                ___ element acquired value column ___
-              </tal:block>
-              <td>
-                <tal:block 
-                  condition="element/isAcquired"
-                  replace="structure element/view" />
-                <tal:block condition="not: element/isAcquired">
-                  &nbsp;
-                </tal:block>
-              </td>
-              <tal:block replace="nothing">
-                ___ element desc. column ___
-              </tal:block>
-              <td>
-                <tal:block content="structure element/description">
-                  Element description
-                </tal:block>
-                <span class="error"
-                  tal:condition="element_error"
-                  tal:content="element_error">
-                </span>
+            </tal:block>
+            <tr class="controls">
+              <td class="align-right"
+                colspan="4">
+                <input class="button" 
+                  type="submit"
+                  name="save_metadata:method"
+                  value=" Save metadata "
+                  title="access key: alt-s"
+                  accesskey="s"
+                />
               </td>
             </tr>
           </tal:block>
-        </tal:block>
-        <tr class="controls">
-          <td class="align-right"
-            colspan="4">
-            <input class="button" 
-              type="submit"
-              name="save_metadata:method"
-              value=" Save metadata "
-              title="access key: alt-s"
-              accesskey="s"
-            />
-          </td>
-        </tr>
-      </tal:block>
-    </tbody>
-  </table>
-</form>
+        </tbody>
+      </table>
+    </form>
+  </tal:block>
 </metal:block>
 </html>
