@@ -23,6 +23,10 @@
     default_doc_list python: test(default_document, [default_document], []);
     publishables python: default_doc_list + model.get_ordered_publishables();
     assets model/get_assets;
+    
+    ids request/ids | options/ids | python: [];
+    position request/position | options/position | nothing;
+    
     iterate string:odd;
     ">
   <table class="columns columns2">
@@ -159,25 +163,28 @@
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
                     </tal:block>
-                    <td class="listing-left">
+                    <td class="listing-left"
+                      tal:define="item_id item/id">
                       <input name="ids:list"
                         type="checkbox"
                         value="value"
                         tal:attributes="
-                          value item/id;
-                          id item/id;"
+                          value item_id;
+                          id item_id;
+                          checked python: item_id in ids and 'checked' or nothing;
+                          "
                         onkeypress="handle_default_action(this, event, 'tab_edit_copy')"
                       />
                       <label 
                         tal:condition="default_document"
                         tal:content="repeat/item/index"
-                        tal:attributes="for item/id">
+                        tal:attributes="for item_id">
                         # with default doc, starts at 0
                       </label>
                       <label 
                         tal:condition="not: default_document"
                         tal:content="repeat/item/number"
-                        tal:attributes="for item/id">
+                        tal:attributes="for item_id">
                         # without default doc, starts at 1
                       </label>
                     </td>
@@ -450,10 +457,14 @@
                           <option value="position">
                             <span i18n:translate="position">position</span>:
                           </option>
-                          <tal:block repeat="item python:range(length)">
-                            <option value="0"                              
-                              tal:content="repeat/item/number"
-                              tal:attributes="value repeat/item/number" />
+                          <tal:block repeat="item python:range(length)">                            
+                            <option value="0"   
+                              tal:define="pos repeat/item/number"
+                              tal:content="pos"
+                              tal:attributes="
+                                value pos;
+                                selected python: str(pos) == position and 'selected' or nothing;
+                                " />
                           </tal:block>
                           <option value="0"
                             tal:attributes="value python:len(publishables) + 1"

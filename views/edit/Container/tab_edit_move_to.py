@@ -13,12 +13,14 @@ view = context
 if ids is None or new_position is None:
     return view.tab_edit(
         message_type="error", 
-        message="Nothing was selected, so nothing was moved.")
+        message="Nothing was selected, so nothing was moved.",
+        position=new_position)
 
-if new_position == 'Position':
+if new_position.lower() == 'position':
     return view.tab_edit(
         message_type="error", 
-        message="First choose a position number.")
+        message="First choose a position number.",
+        ids=ids)
 
 actives = []
 inactives = []
