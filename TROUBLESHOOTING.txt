@@ -40,17 +40,33 @@ Installation problems
 
 Problems when using Silva 
 
+  Document rendering is slow
+
+    The XMLWidgets-based renderer uses FileSystemSite, which is
+    extremely slow due to repeated file accesses when Zope is run in
+    debug mode. This can cause preview, or the first view of
+    especially long documents to be slow. Turn off debug mode in
+    etc/zope.conf and it should be quite a bit faster.
+
+    Alternatively, and giving you even more of a speed boost, you can
+    decide to set the site's default renderering policy
+    (service_renderer_registry in the services tab) to 'Basic XSLT
+    Renderer'. All documents will be rendered with this now. You need
+    to have libxml2 and libxslt installed on your system to make this
+    word; see INSTALL.txt for more information.
+
   Version bloat
 
-    Since version 1.2 Silva harbours functionality to manage old 
-    VersionedContent (e.g. Document) versions, it is now possible to remove
-    older versions of objects. However, instances that have been live long
-    can still suffer from what we call 'version bloat': certain documents
-    can have enormous lists of old versions. To remove all those old versions
-    in a Silva instance, one needs to write a Python script in the ZMI and
-    call that. An example of such a Python script that will discard all but
-    the current editable, public and last closed versions from the entire
-    Silva root (this can potentially take a very long time to run!)::
+    Since version 1.2 Silva has functionality to manage old
+    VersionedContent (e.g. Document) versions, it is now possible to
+    remove older versions of objects. However, instances that have
+    been live long can still suffer from what we call 'version bloat':
+    certain documents can have enormous lists of old versions. To
+    remove all those old versions in a Silva instance, one needs to
+    write a Python script in the ZMI and call that. An example of such
+    a Python script that will discard all but the current editable,
+    public and last closed versions from the entire Silva root (this
+    can potentially take a very long time to run!)::
       
       from Products.Silva.adapters.cleanup import getCleanupVersionsAdapter
       root = context.get_root()
