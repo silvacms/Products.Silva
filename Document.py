@@ -137,7 +137,7 @@ class Document(VersionedContent, EditorSupport):
         f.write('<title>%s</title>' % self.get_title())
         for key, value in self._metadata.items():
             f.write('<%s>%s</%s>' % (key, value, key))            
-        version.writeStream(f)
+        version.documentElement.writeStream(f)
         f.write('</silva_document>')
         
 #    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
