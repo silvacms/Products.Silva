@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.39 $
+# $Revision: 1.40 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -138,12 +138,15 @@ class Document(VersionedContent, EditorSupport):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'store_xml')
     def store_xml(self, xml):
-        """Store xml in this object.
+        """Store xml in this object. 
+
+           xml must be utf8-encoded. 
         """
         version = self.get_editable()
         if version is None:
             # XXX should put in nicer exceptions (or just return)
             raise "Hey, no version to edit!"
+
         dom = ParsedXML('dummy', xml)
         title = None
         content = None
@@ -154,7 +157,8 @@ class Document(VersionedContent, EditorSupport):
             if node.nodeName == 'title':
                 title = node.childNodes[0].data
             if node.nodeName == 'doc':
-                content = node.writeStream().getvalue()
+                # manage_edit needs latin1-encoding
+                content = node.writeStream().getvalue().encode('latin1')
         if title is None or content is None:
             # XXX should put in nicer exceptions (or just return)
             raise "Hey, title or content was empty! %s %s" % (repr(title), repr(content))
