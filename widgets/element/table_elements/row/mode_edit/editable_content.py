@@ -9,6 +9,13 @@
 ##
 node = context.REQUEST.node
 render_field = context.render_editable_field
-texts = [render_field(node=child) for child in node.childNodes 
-         if child.nodeType == node.ELEMENT_NODE]
+
+child_nodes = [child for child in node.childNodes 
+               if child.nodeType == node.ELEMENT_NODE]
+
+if not child_nodes:
+    return ''
+
+cellwidth = '%s%%' % int(1.0/len(child_nodes) * 100)
+texts = [render_field(node=child, cellwidth=cellwidth) for child in child_nodes]
 return ''.join(texts)
