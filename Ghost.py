@@ -32,7 +32,7 @@ class Ghost(VersionedContent):
         """
         ghost_version = self.get_viewable()
         if ghost_version is None:
-            return 'no title available'
+            return 'ghosted object unpublished'
         return ghost_version._get_content().get_title()
 
 InitializeClass(Ghost)
