@@ -29,9 +29,16 @@ class Security:
     
     # ACCESSORS
     def sec_get_userids(self):
-        """Get the userids that have local roles here.
+        """Get the userids that have local roles here that we care about.
         """
-        return [userid for userid, roles in self.get_local_roles()]
+        interesting_roles = self.sec_get_roles()
+        result = []
+        for userid, roles in self.get_local_roles():
+            for role in roles:
+                if role in interesting_roles:
+                    result.append(userid)
+                    break
+        return result
 
     def sec_get_roles_for_userid(self, userid):
         """Get the local roles that a userid has here.
