@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 import unittest
 import Zope
 from DateTime import DateTime
@@ -42,12 +42,13 @@ class SecurityTestCase(unittest.TestCase):
         get_transaction().abort()
         self.connection.close()
 
-    def assertSameEntries(self, list1, list2):
+    def assertSameEntries(self, list1, list2, msg=''):
         # FIXME: should we check for duplicates? not necessary for
         # current case
-        self.assert_(len(list1) == len(list2))
+        self.assert_(len(list1) == len(list2),
+                     msg=msg+('\nlist1 %s not equal to list 2 %s' % (str(list1), str(list2)) ) )
         for entry in list1:
-            self.assert_(entry in list2)
+            self.assert_(entry in list2, msg=('entry %s in list 1 not in %s' % (entry, str(list2)) ) )
 
     def test_sec_do_nothing(self):
         # foo and bar don't have any relevant roles anywhere
@@ -93,7 +94,7 @@ class SecurityTestCase(unittest.TestCase):
                                self.doc1.sec_get_userids())
 
     def test_sec_get_roles(self):
-        self.assertSameEntries(['Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager'],
+        self.assertSameEntries(['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager'],
                                self.sroot.sec_get_roles())
         
 def test_suite():
