@@ -263,12 +263,11 @@ div.footer a {
 }
 div.footer a:visited {
   color: &dtml-mainLinkColor;;
-
+}
 
 /* _____________________________________________________ personal bar _____ */
 
 div.personalBar {
-  clear: both;
   text-align: center;
   background: #505e65;
   margin: 0em 0em 0em 0em;
