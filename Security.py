@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74.4.1 $
+# $Revision: 1.74.4.2 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -241,8 +241,7 @@ class Security(AccessManager):
         binding = self.service_metadata.getMetadata(version)
         if binding is None:
             return noneMember.__of__(self)
-        userid = binding.get('silva-extra', element_id='lastauthor',
-                             no_defaults=1)
+        userid = self._last_author_userid
         # XXX: the userid comes back as unicode which zope doesn't
         # like as id. Just using str might not be a good idea, but
         # weird characters are not allowed in userids anyway, so that
@@ -262,8 +261,8 @@ class Security(AccessManager):
         """
         from AccessControl import getSecurityManager
         security = getSecurityManager()
-        username = security.getUser().getUserName()
-        userid = self._last_author_userid = username
+        self._last_author_userid = userid = security.getUser().getUserName()
+        username = self.service_members.get_member(userid).fullname()
         version = self.get_previewable()
         assert version is not None
         try:
@@ -274,7 +273,7 @@ class Security(AccessManager):
             return
         binding.setValues(
             'silva-extra', {
-                'lastauthor': userid,
+                'lastauthor': username.encode('UTF-8'),
                 'modificationtime': DateTime(),
             })
 
