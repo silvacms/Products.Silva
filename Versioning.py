@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.23 $
+# $Revision: 1.24 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -44,7 +44,8 @@ class Versioning:
     _request_for_approval_info = empty_request_for_approval_info
     
     def manage_afterAdd(self, item, container):
-        #Versioning.inheritedAttribute('manage_afterAdd')(self, item, container)
+        #Versioning.inheritedAttribute('manage_afterAdd')
+        #  (self, item, container)
         self.reindex_object()
 
     # MANIPULATORS
@@ -131,8 +132,8 @@ class Versioning:
         if self._unapproved_version != empty_version:
             raise VersioningError,\
                   ('Should never happen: unapproved version %s found while '
-                   'approved version %s exists at the same time.') % (self._unapproved_version[0],
-                                                                      self._approved_version[0])        
+                   'approved version %s exists at the same time.') % \
+                   (self._unapproved_version[0], self._approved_version[0])
         self._unapproved_version = self._approved_version
         self._approved_version = empty_version
         self._reindex_version(self._unapproved_version)
@@ -167,9 +168,9 @@ class Versioning:
 
     def _get_editable_rfa_info(self):
         """ helper method: return the request for approval information,
-        this creates a new one, if necessary; notifes Zope that this has changed
-        in advance ... i.e. do not call this method if You do not want to change
-        the information.
+        this creates a new one, if necessary; notifes Zope that this
+        has changed in advance ... i.e. do not call this method
+        if You do not want to change the information.
         """
         if self._request_for_approval_info == empty_request_for_approval_info:
             self._request_for_approval_info =  RequestForApprovalInfo()
@@ -182,7 +183,8 @@ class Versioning:
                               'request_version_approval')
     def request_version_approval(self, message):
         """Request approval for the current unapproved version
-        Raises VersioningError, if there is no such version, or it is already approved.
+        Raises VersioningError, if there is no such version,
+        or it is already approved.
         Returns None otherwise
         """
         # called implicitely: self._update_publication_status()
@@ -200,8 +202,10 @@ class Versioning:
         info.request_pending=1
         self._set_approval_request_message(message)
         # send messages
-        text = "\nApproval was requested by %s.\nMessage:\n%s" % (info.requester, message)
-        self._send_message_to_editors(info.requester, 'Approval requested', text)
+        text = "\nApproval was requested by %s.\nMessage:\n%s" \
+               % (info.requester, message)
+        self._send_message_to_editors(info.requester,
+                                      'Approval requested', text)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'withdraw_version_approval')
@@ -225,7 +229,8 @@ class Versioning:
         info.request_pending=None
         self._set_approval_request_message(message)
         # send messages
-        text = "\nRequest for approval was withdrawn by %s.\nMessage:\n%s" % (info.requester, message)
+        text = "\nRequest for approval was withdrawn by %s.\nMessage:\n%s" \
+               % (info.requester, message)
         self._send_message_to_editors(info.requester,
                                       'Approval withdrawn by author', text)
 
@@ -252,7 +257,8 @@ class Versioning:
         info.request_pending=None
         self._set_approval_request_message(message)
         # send message back to requester
-        text = "Request for approval was rejected by %s.\nMessage:\n%s" % (info.requester, message)
+        text = "Request for approval was rejected by %s.\nMessage:\n%s" \
+               % (info.requester, message)
         self._send_message(info.requester, original_requester,
                            "Approval rejected by editor", text)
 
@@ -265,7 +271,8 @@ class Versioning:
         if self._unapproved_version == empty_version:
             raise VersioningError,\
                   'No unapproved version.'
-        version_id, publication_datetime, expiration_datetime = self._unapproved_version
+        version_id, publication_datetime, expiration_datetime = \
+                    self._unapproved_version
         self._unapproved_version = version_id, dt, expiration_datetime
         self._reindex_version(self._unapproved_version)
         
@@ -277,7 +284,8 @@ class Versioning:
         if self._unapproved_version == empty_version:
             raise VersioningError,\
                   'No unapproved version.'
-        version_id, publication_datetime, expiration_datetime = self._unapproved_version
+        version_id, publication_datetime, expiration_datetime = \
+                    self._unapproved_version
         self._unapproved_version = version_id, publication_datetime, dt
         self._reindex_version(self._unapproved_version)
         
@@ -292,7 +300,8 @@ class Versioning:
         if dt is None:
             raise VersioningError,\
                   'Must specify publication datetime.'
-        version_id, publication_datetime, expiration_datetime = self._approved_version
+        version_id, publication_datetime, expiration_datetime = \
+                    self._approved_version
         self._approved_version = version_id, dt, expiration_datetime
         self._reindex_version(self._approved_version)
         
@@ -304,7 +313,8 @@ class Versioning:
         if self._approved_version == empty_version:
             raise VersioningError,\
                   'No approved version.'
-        version_id, publication_datetime, expiration_datetime = self._approved_version
+        version_id, publication_datetime, expiration_datetime = \
+                    self._approved_version
         self._approved_version = version_id, publication_datetime, dt
         self._reindex_version(self._approved_version)
         
@@ -314,11 +324,13 @@ class Versioning:
         """Set publication datetime of next version.
         """
         if self._approved_version[0]:
-            version_id, publication_datetime, expiration_datetime = self._approved_version
+            version_id, publication_datetime, expiration_datetime = \
+                        self._approved_version
             self._approved_version = version_id, dt, expiration_datetime
             self._reindex_version(self._approved_version)
         elif self._unapproved_version[0]:
-            version_id, publication_datetime, expiration_datetime = self._unapproved_version
+            version_id, publication_datetime, expiration_datetime = \
+                        self._unapproved_version
             self._unapproved_version = version_id, dt, expiration_datetime
             self._reindex_version(self._unapproved_version)
         else:
@@ -331,11 +343,13 @@ class Versioning:
         """Set expiration datetime of next version.
         """
         if self._approved_version[0]:
-            version_id, publication_datetime, expiration_datetime = self._approved_version
+            version_id, publication_datetime, expiration_datetime = \
+                        self._approved_version
             self._approved_version = version_id, publication_datetime, dt
             self._reindex_version(self._approved_version)
         elif self._unapproved_version[0]:
-            version_id, publication_datetime, expiration_datetime = self._unapproved_version
+            version_id, publication_datetime, expiration_datetime = \
+                        self._unapproved_version
             self._unapproved_version = version_id, publication_datetime, dt
             self._reindex_version(self._unapproved_version)
         else:
