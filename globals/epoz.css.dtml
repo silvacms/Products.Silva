@@ -17,7 +17,7 @@ body {
   background-repeat: repeat-x;
   background-color: #dde5ee;
   color: #2d374c;
-  margin: 0;
+  margin: 0.6em;
 }
 
 /* _________________________________________________________ typography _____ */
