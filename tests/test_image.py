@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_image.py,v 1.3 2004/07/23 05:56:28 zagy Exp $
+# $Id: test_image.py,v 1.4 2004/08/03 13:36:06 guido Exp $
 
 from __future__ import nested_scopes
 
@@ -17,7 +17,7 @@ from Testing.ZopeTestCase import utils
 from StringIO import StringIO
 
 try:
-    import P_IL
+    import PIL
 except ImportError:
     havePIL = 0
 else:
@@ -142,3 +142,4 @@ else:
     def test_suite():
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(FileTest))
+        return suite
