@@ -1,10 +1,25 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Revision: 1.29 $
 import Document, Folder, Root, ViewRegistry,\
-       Publication, Ghost, Image, DemoObject
+       Publication, Ghost, Image, DemoObject,\
+       File
 
 def initialize(context):
+    context.registerClass(
+        File.FilesService,
+        constructors = (
+            File.manage_addFilesServiceForm, File.manage_addFilesService),
+        icon = "www/files_service.gif"
+        )
+
+    context.registerClass(
+        File.File,
+        constructors = (
+            File.manage_addFileForm, File.manage_addFile),
+        icon="www/silvageneric.gif"
+        )
+
     context.registerClass(
         Document.Document,
         constructors = (Document.manage_addDocumentForm,
