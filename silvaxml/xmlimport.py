@@ -54,6 +54,7 @@ class SaxImportHandler(ContentHandler):
         self._settings = settings
         # XXX Might need this later for context sensitive parsing
         self._depth = 0
+        self._character_data = ''
         
     def startDocument(self):
         # XXX probably some export metadata should be read and handled here.
@@ -67,6 +68,9 @@ class SaxImportHandler(ContentHandler):
         pass
     
     def startElementNS(self, name, qname, attrs):
+        if self._character_data and self._handler_stack:
+            self._handler_stack[-1].characters(self._character_data)
+        self._character_data = ''
         factory = self._registry.getXMLElementHandler(name)
         if factory is None:
             handler = self._handler_stack[-1]
@@ -85,8 +89,11 @@ class SaxImportHandler(ContentHandler):
         self._depth += 1
 
     def endElementNS(self, name, qname):
-        self._depth -= 1
         handler = self._handler_stack[-1]
+        if self._character_data:
+            handler.characters(self._character_data)
+        self._character_data = ''
+        self._depth -= 1
         if self._depth == self._depth_stack[-1]:
             self._handler_stack.pop()
             self._depth_stack.pop()
@@ -94,8 +101,7 @@ class SaxImportHandler(ContentHandler):
         handler.endElementNS(name, qname)
         
     def characters(self, chrs):
-        handler = self._handler_stack[-1]
-        handler.characters(chrs)
+        self._character_data += chrs
     
 class BaseHandler:
     def __init__(self, parent, parent_handler, settings=None):
