@@ -28,6 +28,8 @@ Silva changes
       - Fixed standard_error_message, it's now displayed properly when a user
         chooses 'cancel' when the browser asks for login credentials.
 
+      - Fixed problem with vanishing paragraphs after a Kupu save.
+
   1.1.2
 
   1.1.1
