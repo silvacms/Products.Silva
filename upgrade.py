@@ -404,7 +404,7 @@ def unicode_and_metadata_092(obj):
             #print 'Testing for', old_name, 'on object', obj.absolute_url()
             old_value = obj.getProperty(old_name)
             if old_value is None:
-                old_value = getattr(obj, old_name, None)
+                old_value = getattr(obj.aq_inner, old_name, None)
                 if old_value is None:
                     #print 'Not found'
                     continue
