@@ -78,11 +78,10 @@
 <div class="tabs">
   <a class="normal"
     title="Silva access keys: alt-?"
-    i18n:attributes="title"
     accesskey="?"
     tal:condition="exists:here/help_url"
     tal:attributes="href string:${here/help_url}"
-    i18n:translate=""
+    i18n:attributes="title"
     ></a>
  
   <tal:repeat tal:repeat="item tabs">
@@ -94,12 +93,10 @@
       up_key tab_info/uplink_accesskey | nothing;
       ">
       <a class="left"
-        title 
         tal:condition="tab_info/toplink_url"
         tal:attributes="href tab_info/toplink_url;
           title string:up to top of publication: alt-${top_key};
-          accesskey top_key;
-          "
+          accesskey top_key;"
           i18n:attributes="title"
           >
         <img border="0"

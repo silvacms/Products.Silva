@@ -58,7 +58,7 @@
     <td class="feedback" colspan="3">
       <span class="subhead" style="color:ForestGreen;" i18n:translate="">Content is approved, not published</span><br />
       <span tal:condition="may_approve_content"
-        tal:omit-tag="">Publication settings can be changed.</span>
+        tal:omit-tag="" i18n:translate="">Publication settings can be changed.</span>
         <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
   </tr>
@@ -69,7 +69,7 @@
       <span class="subhead" i18n:translate="published_content">Content is published</span><br />
       <tal:block i18n:translate="published_content_description">
       This content is published (online for the public).<br />
-      If you wish you can make an editable copy by going to the <a href="tab_edit">editor</a>.
+      If you wish you can make an editable copy by going to the <a href="tab_edit" i18n:name="editor"><tal:block i18n:translate="">editor</tal:block></a>.
       </tal:block>
       <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
@@ -93,7 +93,7 @@
       <tal:block i18n:translate="closed_content_description">  
         This content was once published but is now closed.<br /> If you
         wish you can make an editable copy in the <a
-          href="tab_edit">editor</a>.
+        href="tab_edit" i18n:name="editor"><tal:block i18n:translate="">editor</tal:block></a>.
       </tal:block>
      <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
@@ -168,9 +168,9 @@ _______ manual close section here _______
 <tal:replace replace="nothing">
 <span tal:replace="nothing"> _______ status: content is approved, not published _______ </span>
 <div class="feedback" tal:condition="python:may_change_content and approved">
-<span class="subhead">Content is approved, not published</span><br />
+<span class="subhead" i18n:translate="">Content is approved, not published</span><br />
 <span tal:condition="not:may_approve_content"
-  tal:omit-tag="">Publication settings can be changed.<br /></span>
+  tal:omit-tag="" i18n:translate="">Publication settings can be changed.<br /></span>
 <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>
 
@@ -182,7 +182,7 @@ _______ manual close section here _______
   <br />
   <tal:block i18n:translate="published_content_description">
   This content is published (online for the public).<br /> If you wish you
-  can make an editable copy by going to the <a href="tab_edit">editor</a>.
+  can make an editable copy by going to the <a href="tab_edit" i18n:name="editor"><tal:block i18n:translate="">editor</tal:block></a>.
   </tal:block>
 <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>
@@ -203,8 +203,8 @@ _______ manual close section here _______
 <span class="subhead" i18n:translate="closed_content">Content is closed</span><br />
 <tal:block i18n:translate="closed_content_description">
   This content was once published but is now closed.<br /> If you wish you
-  can make an editable copy by going to the <a href="tab_edit"><span
-      class="index-link">Edit tab</span></a>.
+  can make an editable copy by going to the <a href="tab_edit" i18n:name="edit_tab"><span
+      class="index-link" i18n:translate="">Edit tab</span></a>.
 </tal:block>
 <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>

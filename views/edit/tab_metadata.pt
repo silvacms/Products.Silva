@@ -6,9 +6,10 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:properties;"
-    i18n:domain="silva">
+  i18n:domain="silva">
 
 <!-- tab_metadata for content (non-Container) objects -->
 <metal:block use-macro="here/macro_index/macros/master">
@@ -47,9 +48,9 @@
                   >
                   <img tal:replace="structure python:view.render_icon(model)" />
                   metadata
-                  <span tal:condition="not: model/implements_container">
-                    <span i18n:translate="for_public_version_of">for approved version of</span>
-                    &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                  <span tal:condition="not: model/implements_container" >
+                    <span i18n:name="for_approved_version_of"><span i18n:translate="for_approved_version_of">for approved version of</span></span>
+                    &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
                   </span>
                 </h2>
               </metal:block>
@@ -70,7 +71,7 @@
                   metadata
                   <span tal:condition="not: model/implements_container">
                     <span i18n:translate="for_public_version_of">for public version of</span>
-                    &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                    &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
                   </span>
                 </h2>
               </metal:block>

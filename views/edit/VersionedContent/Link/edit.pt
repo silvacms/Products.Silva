@@ -61,7 +61,7 @@
       </tr>
 
       <tr class="even">
-        <td class="align-right">
+        <td class="align-right" i18n:translate="">
           link url
         </td>
         <td>
@@ -83,7 +83,7 @@
             value="change link"
             title="access key: alt-c"
             accesskey="c"
-            i18n:attributes="value title accesskey"
+            i18n:attributes="value title"
            />
         </td>
       </tr>

@@ -11,7 +11,8 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="silva"
     >
-    <optgroup i18n:attributes="label" 
+    <!-- XXX: MANY i18n hazards ahead!-->
+    <optgroup 
       tal:repeat="
         optgroup python: ('public silva roles', 'silva roles', 'zope roles')"
       tal:attributes="
@@ -44,7 +45,7 @@
     'public silva roles' : ('Viewer', 'Viewer +', 'Viewer ++')};
     "
     >
-    <optgroup i18n:attributes="label" 
+    <optgroup
       tal:repeat="
         optgroup python: ('zope roles', 'public silva roles')"
       tal:attributes="
@@ -54,7 +55,7 @@
         tal:repeat="
           option optgroups/?optgroup"        
         >
-        <option i18n:translate="" 
+        <option
           tal:content="
             option"
           tal:attributes="

@@ -6,6 +6,8 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
   tal:define="
     global vein string:properties;
 ">
@@ -32,12 +34,13 @@
             define="version python: model.get_viewable() or model.get_previewable()"
             condition="version">
             <metal:block use-macro="here/macro_metadata/macros/view_table">
-              <h2 metal:fill-slot="table_title">
+              <h2 metal:fill-slot="table_title" i18n:translate="">
                 <img tal:replace="structure python:view.render_icon(model)" />
                 metadata
-                <span tal:condition="not: model/implements_container">
+                <span tal:condition="not: model/implements_container" i18n:name="for_public_version_of">
+                  <tal:block i18n:translate="">
                   for public version of
-                  &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                  &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;</tal:block>
                 </span>
               </h2>
             </metal:block>

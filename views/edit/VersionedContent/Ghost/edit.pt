@@ -97,7 +97,7 @@
 
       <tr class="odd"
         tal:condition="not:link_status">
-        <td class="align-right">
+        <td class="align-right" i18n:translate="">
           link
         </td>
         <td>
@@ -114,7 +114,7 @@
 
       <tr class="odd"
         tal:condition="link_status">
-        <td class="field-title">
+        <td class="field-title" i18n:translate="">
           problem
         </td>
         <td class="alert">

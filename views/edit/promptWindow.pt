@@ -5,6 +5,7 @@
     xmlns:metal="http://xml.zope.org/namespaces/metal"
     xmlns:notal="http://www.infrae.com/silva/notal"
     xmlns:tal="http://xml.zope.org/namespaces/tal" 
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     metal:use-macro="here/macro_no_tabs/macros/master"
     i18n:domain="silva">
 
@@ -37,6 +38,7 @@
             title="cancel the automatic save action: alt-c"
             accesskey="c"
             onClick="window.close()"
+            i18n:attributes="value title"
           />
         <td class="align-right">
           <input class="button"
@@ -45,7 +47,7 @@
             title="save the document you were working on: alt-s"
             accesskey="s"
             onClick="window.opener.saveHelper(); window.close()" 
-            i18n:attributes="value" 
+            i18n:attributes="value title" 
           />
         </td>
       </tr>

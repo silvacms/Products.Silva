@@ -105,16 +105,14 @@
                   <td class="align-right"
                     tal:define="upward_roles python:model.sec_get_upward_roles_for_userid(userid)">
                     <tal:block repeat="upward upward_roles">
-                    <i tal:content="upward" 
-                      i18n:translate="" /><br tal:condition="not:repeat/upward/end" />
+                    <i tal:content="upward" /><br tal:condition="not:repeat/upward/end" />
                     </tal:block>
                   </td>
                   <td class="align-right">
                     <tal:block repeat="local python:model.sec_get_local_roles_for_userid(userid)">
                       <label style="text-transform:none"
                         tal:content="local" 
-                        tal:attributes="for string:revoke_${local}-${userid}"
-                        i18n:translate="">
+                        tal:attributes="for string:revoke_${local}-${userid}">
                         local
                       </label>
                         <input class="warning-checkbox"
@@ -158,7 +156,8 @@
                       <option value="None" i18n:translate="access_select_role">
                         select role:
                       </option>
-                      <metal:block use-macro="here/macro_role_options/macros/options" />                    </select>
+                      <metal:block use-macro="here/macro_role_options/macros/options" />
+                    </select>
                     <input class="button"
                       name="access_assign_to_user:method"
                       title="assign a local role to selected user(s)"
@@ -232,6 +231,7 @@
                   </td>
                   <td tal:content="requested_role">
                   </td>
+                  <!--XXX: More i18n trouble:-->
                   <td tal:content="python: member.is_approved() and 'Yes' or 'No'" >
                     yes or no
                   </td>
@@ -332,8 +332,8 @@
               </span><br /><span i18n:translate="groups_service_not_defined_explanation">
               You are seeing this message because the Silva Groups extension is installed on the file system, 
               but a Groups Service hasn't been added to this Silva instance. To install one, go to the 
-              <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services">Silva Root in the ZMI</a>,
-              choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>. 
+              <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services" i18n:name="silva_root_in_the_ZMI"><span i18n:translate="">Silva Root in the ZMI</span></a>,
+              choose &#8220;Groups Service&#8221; from the add list and give it the id <code i18n:name="service_groups">service_groups</code>. 
               No further configuration is necessary.</span>
           </div>
           <tal:block condition="group_service">
@@ -353,7 +353,7 @@
                       colspan="3">
                       <h2 tal:attributes="title string:id: ${model/id}">
                         <img tal:replace="structure python:view.render_icon(model)" />
-                        <span i18n:translate="group_roles_for" tal:omit-tag="">group roles</span>
+                        <span i18n:translate="group_roles" tal:omit-tag="">group roles</span>
                       </h2>
                     </td>
                   </tr>
@@ -395,7 +395,7 @@
                           group
                         </label>
                         <tal:block 
-                          condition="python: group not in group_service.listAllGroups()">
+                          condition="python: group not in group_service.listAllGroups()" i18n:translate="">
                           &lt;broken&gt; <!-- XXX replace this by something nice
                           -->
                         </tal:block>
@@ -546,7 +546,7 @@
                   colspan="2">
                   <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
-                    <span i18n:translate="public_view_access_restrictions" tal:omit-tag="">public view access restrictions for</span> &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                    <span i18n:translate="public_view_access_restrictions_for" tal:omit-tag="">public view access restrictions for</span> &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
                   </h2>
                 </td>
               </tr>
@@ -746,13 +746,13 @@
             <tr class="even">
               <td>
                 <i>
-                  <tal:block condition="info/is_public">Open to the public</tal:block>
+                  <tal:block condition="info/is_public" i18n:translate="">Open to the public</tal:block>
                   <tal:block condition="not: info/is_public"
                     tal:content="selected_role">role</tal:block>
-                  <tal:block condition="info/acquired">(acquired).</tal:block>
+                  <tal:block condition="info/acquired" i18n:translate="">(acquired).</tal:block>
                 </i>
               </td>
-              <td> 
+              <td i18n:translate=""> 
                 An access restriction here affects objects on this and lower levels.
               </td>
             </tr>

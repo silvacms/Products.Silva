@@ -6,6 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:preview;"
   i18n:domain="silva">
@@ -29,11 +30,11 @@
 <metal:block fill-slot="main" tal:omit-tag="">
   <span tal:replace="nothing"> _______ XXX turned off: link to see page in public/local style _______ </span>
   <span tal:replace="nothing" class="widebody"><a style="float:right; margin-right:3em;" title="see the content in the public layout: alt-;" accesskey=";"
-    tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank">Presentation&nbsp;preview</a></span>
+    tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank" i18n:translate="" i18n:attributes="title">Presentation&nbsp;preview</a></span>
 
   <span tal:replace="nothing"> _______ closed message _______ </span>
   <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
-    <b class="warning" i18n:translate="closed_message">This is a closed version. You see it, but the public won't!</b>
+    <strong class="warning" i18n:translate="closed_message">This is a closed version. You see it, but the public won't!</strong>
   </div>
 
   <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>

@@ -6,6 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
 
 <!-- Edit table -->
@@ -38,10 +39,11 @@
                 <img tal:replace="structure python:view.render_icon(model)" />
                 <tal:block i18n:translate="">
                 metadata
-                <tal:block condition="not: model/implements_container">
+                <tal:block condition="not: model/implements_container" i18n:name="for_title">
+                  <span i18n:translate="for_metadata_title">
                   for &#xab;<tal:block content="string:${title}"
                   i18n:name="metadata_title">
-                  title</tal:block>&#xbb;
+                  title</tal:block>&#xbb;</span>
                   </tal:block>
                 </tal:block>
               </h2>
@@ -96,8 +98,7 @@
                     ___ element name column ___
                   </tal:block>
                   <td class="align-right">
-                    <tal:block content="element/title"
-                    i18n:translate="">
+                    <tal:block content="element/title">
                     Element name
                     </tal:block>
                     <span class="warning"
@@ -128,7 +129,7 @@
                         data python: element_name in truncatable and ct(data, 50) or data;"
                       condition="element/isAcquired"
                       replace="structure data" />
-                    <sup tal:condition="element/isAcquireable">
+                    <sup tal:condition="element/isAcquireable" i18n:translate="">
                       &#134;
                     </sup>
                     <tal:block condition="not: element/isAcquired">
@@ -139,7 +140,7 @@
                     ___ element desc. column ___
                   </tal:block>
                   <td>
-                    <tal:block i18n:translate="" content="structure element/description">
+                    <tal:block content="structure element/description">
                       Element description
                     </tal:block>
                     <span class="error"
@@ -280,11 +281,11 @@
           <tr>
             <td class="top"
               colspan="2">
-              <h2 metal:define-slot="table_title">
+              <h2 metal:define-slot="table_title" i18n:translate="">
                 <img tal:replace="structure python:view.render_icon(model)" />
                 metadata
-                <span tal:condition="not: model/implements_container">
-                  for &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                <span tal:condition="not: model/implements_container" i18n:name="for_title"><span i18:translate="">
+                  for &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;</span>
                 </span>
               </h2>
             </td>
@@ -324,8 +325,7 @@
                   ___ element name column ___
                 </tal:block>
                 <td class="align-right"
-                  tal:content="element/title"
-                  i18n:translate="">
+                  tal:content="element/title">
                   Element name
                 </td>
                 <tal:block replace="nothing">

@@ -189,7 +189,7 @@
                           is_approved item/is_version_approved | nothing"
                         tal:condition="python:is_published or is_approved"
                         tal:attributes="src string:${root_url}/globals/checkmark.gif" 
-                        i18n:attributes="title"
+                        i18n:attributes="alt"
                       />
                     </td>
                     <tal:block replace="nothing">
@@ -216,12 +216,14 @@
                         tal:condition="modification_time"
                         tal:attributes="href string:${item_url}/edit/tab_metadata"
                         tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
+                        i18n:attributes="title"
                         >
                         date
                       </span>
                       <span class="closed" title="settings"
                         tal:condition="not:modification_time"
                         tal:attributes="href string:${item_url}/edit/tab_metadata"
+                        i18n:attributes="title"
                         >
                         <i i18n:translate="n/a">n/a</i>
                       </span>
@@ -234,12 +236,14 @@
                         tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
                         tal:attributes="href string:${item_url}/edit/tab_status"
                         tal:content="structure last_author"
+                        i18n:attributes="title"
                         >
                         authorname
                       </span>
                       <span class="closed" title="publish"
                         tal:condition="python:item.implements_container()"
                         tal:attributes="href string:${item_url}/edit/tab_status"
+                        i18n:attributes="title"
                         >
                         <i i18n:translate="n/a">n/a</i>
                       </span>
@@ -282,7 +286,8 @@
                       />
                       <label 
                         tal:condition="default_document"
-                        tal:attributes="for identifier">
+                        tal:attributes="for identifier"
+                        i18n:translate="">
                         &#8211;
                       </label>
                     </td>

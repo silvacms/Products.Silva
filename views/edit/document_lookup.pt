@@ -147,10 +147,10 @@
                 <th class="listing-left">
                  &nbsp;
                 </th>
-                <th i18n:translate="modify">
+                <th i18n:translate="">
                   select
                 </th>
-                <th i18n:translate="preview">
+                <th i18n:translate="">
                   view
                 </th>
                 <th i18n:translate="modified">
@@ -206,7 +206,6 @@
                         tal:attributes="
                           for identifier;
                           title string:choose this ${item/meta_type};"
-                        i18n:attributes="title"
                         ><img tal:replace="structure python:view.render_icon(item)" />
                         <tal:block tal:replace="python: mangle.String.centeredTruncate(item.id, 30)">id</tal:block>
                       </label>
@@ -220,6 +219,7 @@
                           is_approved item/is_version_approved | nothing"
                         tal:condition="python:is_published or is_approved"
                         tal:attributes="src string:${root_url}/globals/checkmark.gif"
+                        i18n:attributes="alt title"
                       />
                     </td>
                     <tal:block replace="nothing">
@@ -236,7 +236,7 @@
                         <span tal:content="structure python:mangle.DateTime(modification_time).toShortStr()" />
                       </tal:block>
                       <tal:block condition="not: modification_time">
-                        <i>n/a</i>
+                        <em i18n:translate="">n/a</em>
                       </tal:block>
                     </td>
                     <tal:block replace="nothing">
@@ -247,7 +247,7 @@
                         <span tal:content="structure last_author" />
                       </tal:block>
                       <tal:block condition="python:item.implements_container()">
-                        <i>n/a</i>
+                        <em i18n:translate="">n/a</em>
                       </tal:block>
                       <span 
                         tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
@@ -334,7 +334,7 @@
                           tal:attributes="href asset/absolute_url"
                           i18n:attributes="title"
                         >
-                        <i>view</i>
+                        <em i18n:translate="">view</em>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -345,7 +345,7 @@
                         <span tal:replace="structure python:mangle.DateTime(modification_time).toShortStr()" />
                       </tal:block>
                       <tal:block condition="not: modification_time">
-                        <i>n/a</i>
+                        <em i18n:translate="">n/a</em>
                       </tal:block>
                     </td>
                     <tal:block replace="nothing">

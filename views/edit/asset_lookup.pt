@@ -80,6 +80,7 @@
                     <tal:block content="string:${base_type}s" />
                   </h3>
                   <tal:block condition="python:silva_permissions['ChangeSilvaContent'] and isMetaType">
+                    <!--XXX i18n problem ahead-->
                     <input class="transport"
                       type="submit"
                       name="add_object:method" 
@@ -181,7 +182,6 @@ function setReference() {
                     tal:attributes="
                       for identifier;
                       title string:choose this ${asset/meta_type};"
-                    i18n:attributes="title"
                     ><img tal:replace="structure python:view.render_icon(asset)" />
                     <tal:block tal:replace="python: mangle.String.centeredTruncate(asset.id, 30)">id</tal:block>
                   </label>
@@ -195,7 +195,7 @@ function setReference() {
                       href string:${asset/absolute_url};
                       class status_style;"
                     i18n:attributes="title">
-                    <i i18n:translate="view">view</i>
+                    <em i18n:translate="">view</em>
                   </a>
                 </td>
                 <tal:block tal:replace="nothing"> _______ modification date cell _______ </tal:block>
@@ -215,7 +215,9 @@ function setReference() {
                 tal:condition="empty">
                 <tal:block tal:replace="nothing"> _______ if no assets _______ </tal:block>
                 <td>
-                  <i>No <span tal:replace="python:filter.lower()">assets</span>s in this folder.</i>
+                  <em i18n:translate="">No <span
+                  tal:replace="python:filter.lower()" i18n:name="asset">asset</span> in
+                  this folder.</em>
                 </td>
               </tr>
             </tbody>
