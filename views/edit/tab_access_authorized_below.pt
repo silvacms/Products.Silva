@@ -21,7 +21,7 @@
         <tal:block replace="nothing">
           _____________________ sidebar subtable _____________________
         </tal:block>
-        <metal:block use-macro="view/macro_parent_screen_navigation/macros/parent" />
+        <metal:block use-macro="view/macro_vein_navigation/macros/parent" />
         <tal:block tal:replace="structure python: view.service_sidebar.render(model, 'tab_status', breadcrumb_vein)" />
       </td>
       <td class="main">

@@ -31,7 +31,7 @@
           </tal:condition>
           <tal:condition condition="not: model_is_container">
             <metal:block 
-              use-macro="view/macro_parent_screen_navigation/macros/content_sidebar" />
+              use-macro="view/macro_vein_navigation/macros/content_sidebar" />
           </tal:condition>
         </td>
         <td class="main">
