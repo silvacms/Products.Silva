@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -217,13 +217,13 @@ class Versioning:
         publication_datetime = self._approved_version[1]
         # if it is time make approved version public
         if publication_datetime and now >= publication_datetime:
-	    if self._public_version != empty_version:
-	        if not self._previous_versions:
-		    self._previous_versions = []
+            if self._public_version != empty_version:
+                if not self._previous_versions:
+                    self._previous_versions = []
                     last_closed_version = empty_version
                 else:
                     last_closed_version = self._previous_versions[-1]
-		self._previous_versions.append(self._public_version)
+                self._previous_versions.append(self._public_version)
                 # reindex version (now last closed)
                 self._reindex_version(self._public_version)
                 # reindex previously last_closed_version
