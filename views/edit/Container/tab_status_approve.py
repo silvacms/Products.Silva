@@ -72,7 +72,7 @@ for ref in refs:
         obj.set_unapproved_version_publication_datetime(publish_datetime)
     elif not obj.get_unapproved_version_publication_datetime():
         # no date set, neither on unapproved version nor in tab_status form
-        not_approved.append((get_name(obj), 'no publication time was set, you insensitive clod!'))
+        not_approved.append((get_name(obj), 'no publication time was set'))
         no_date_refs.append(ref)
         continue
     # expire
