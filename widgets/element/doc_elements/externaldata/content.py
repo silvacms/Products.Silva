@@ -9,14 +9,23 @@
 ##
 
 node = context.REQUEST.node
+output_convert = context.output_convert_html
+
 datasource = context.get_datasource()
 parameters = context.get_parameters()
 
+errmsg = "<span class='warning'>[externaldata element broken]</span>"
 if not datasource:
-    return "<span class='warning'>[externaldata element broken]</span>"
+    return errmsg
 
-data = datasource.get_data(parameters)
-output_convert = context.output_convert_html
+#formerr = context.get_formerror()
+#if formerr:
+#    return errmsg
+
+try:
+    data = datasource.get_data(parameters)
+except: 
+    return errmsg
 
 # FIXME: Using CSS this hairball is slightly less hairy
 # than is used to be

@@ -7,8 +7,12 @@
 ##parameters=
 ##title=
 ##
+from Products.Formulator.Errors import FormValidationError, ValidationError
+
 request = context.REQUEST
 node = request.node
+session = request.SESSION
+
 current_path = node.getAttribute('path')
 new_path = ''
 if request.has_key('path'):
@@ -38,21 +42,22 @@ datasource_parameters = datasource.parameters()
 
 if current_path == new_path:
     # same datasource path:
-    form = datasource.parameter_values_as_form({})
-    # validate form
-    from Products.Formulator.Errors import FormValidationError
-    try:
-        result = form.validate_all(request)
-    except FormValidationError, e:
-        err = e.errors[0]
-        raise str(err.error_text)
     removeParameterElements(node)
-    # set parameter data from form.
-    for name in datasource_parameters.keys():
-        child = node.createElement('parameter')
-        child.setAttribute('key', name)
-        child.setAttribute('value', result[name])
-        node.appendChild(child)
+    
+    # validate form
+    errors = {}
+    form = datasource.parameter_values_as_form()
+    for field in form.get_fields():
+        try:
+            value = field.validate(request)
+        except ValidationError, e:
+            errors[e.field_id] = e.error_text
+        else:
+            # set parameter data from form.
+            child = node.createElement('parameter')
+            child.setAttribute('key', field.id)
+            child.setAttribute('value', value)
+            node.appendChild(child)
 else:
     # different datasource path:
     removeParameterElements(node)

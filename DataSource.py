@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -90,7 +90,7 @@ class DataSource(Asset):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'parameter_as_form')
-    def parameter_values_as_form(self, parameters):
+    def parameter_values_as_form(self, parameters={}):
         """ Parameter format: {name: value}
         """
         # FIXME (?):
