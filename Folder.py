@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.93 $
+# $Revision: 1.94 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -376,9 +376,6 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             item = item._getCopy(self)
             item._setId(paste_id)
             self._setObject(paste_id, item)
-
-    def action_import_xml(self, f):
-        XMLImporter.importFile(self, f)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_publication')
