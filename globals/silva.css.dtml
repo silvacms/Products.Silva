@@ -413,11 +413,6 @@ table.listing tr.top-controls {
   height : 0.2em;
 }
 
-table.listing tr.even {
-    /* cycling starts darker (count begins at 0) */
-    background: &dtml-listingEvenBackground;;
-}
-
 table.listing tr.odd {
     background: &dtml-listingOddBackground;;
 }
@@ -428,7 +423,7 @@ td.main>table.listing tr.even:hover td {
     background-color: #e5f2ff;
   }
 
-table.listing tr.inter-controls {
+table.listing tr.inter-controls td {
   color: #c9dfe2;
   background: &dtml-listingInterControlsBackground;;
 }
