@@ -87,7 +87,7 @@
               <tr>
                 <td colspan="3" align="right">
                   <input type="hidden" name="meta_type" value="Silva Group" />
-                  <input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
+                  <input class="button" type="submit" name="add_submit" value="Add group" title="Access key: alt-a" accesskey="a" />
                 </td>
               </tr>
             </table>
@@ -142,7 +142,7 @@
               <tr>
                 <td colspan="3" align="right">
                   <input type="hidden" name="meta_type" value="Silva Virtual Group" />
-                  <input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
+                  <input class="button" type="submit" name="add_submit" value="Add virtual group" title="Access key: alt-v" accesskey="v" />
                 </td>
               </tr>
             </table>
@@ -201,7 +201,7 @@
                       href="asset"
                       title="Edit this asset"
                       tal:attributes="href string:${group/absolute_url}/edit">
-                    <tal:block replace="structure group/get_title_or_id_html">
+                    <tal:block replace="structure group/get_title_html">
                       title
                     </tal:block>                    
                     </a>
