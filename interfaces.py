@@ -1115,4 +1115,12 @@ class ISubscription(Interface):
         """Return object for this subscription.
         """
         pass
-        
+
+class IHaunted(Interface):
+    """Interface for haunted adapter
+    """
+    
+    def getHaunting():
+        """Return list of objects (ghosts) haunting the adapted object.
+        """
+        pass
