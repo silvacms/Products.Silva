@@ -62,9 +62,7 @@
           <css_class></css_class>
           <default></default>
           <title>Image</title>
-          <description>
-            &lt;b&gt;Tip:&lt;/b&gt; You don't have to fill in the id and 
-            title.
+          <description i18n="tip-no-id-or-title">&lt;b&gt;Tip:&lt;/b&gt; You don't have to fill in the id and title.
           </description>
           <external_validator></external_validator>
           <required type="int">1</required>

@@ -38,7 +38,8 @@
 <td class="tab-up" width="2%"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
 <td class="tab-up" width="96%" align="right">
 <div class="breadcrumb">
-<a href="javascript:history.back();" title="Access key: alt-b" accesskey="b">Back</a>
+<a href="javascript:history.back();" title="Access key: alt-b" accesskey="b"
+   i18n:attributes="title" i18n:translate="back">Back</a>
 </div>
 </td>
 <td class="tab-up" width="2%"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="13" /></td>
@@ -62,12 +63,12 @@
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
 <td width="2%">
-<br /><a href="#top" title="jump to top: alt-t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
+<br /><a href="#top" title="jump to top: alt-t" i18n:attributes="title"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
 </td>
 <td colspan="3">
 </td>
 <td width="2%">
-<br /><a href="#top" title="jump to top: alt-t" accesskey="t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
+<br /><a href="#top" title="jump to top: alt-t" accesskey="t" i18n:attributes="title"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
 </td>
 </tr>
 </table>

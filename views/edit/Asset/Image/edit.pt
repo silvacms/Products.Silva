@@ -8,7 +8,8 @@
     root_url model/get_root_url;
     title model/get_title_editable;
     breadcrumb_vein string:Editor;
-    ">
+    "
+  i18n:domain="silva">
 
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
 <metal:fill-slot fill-slot="info">
@@ -56,23 +57,25 @@
           <a href="" class="underline"
             title="see the original image"
             accesskey="v"
-            tal:attributes="href string:${model/absolute_url}/hires_image">
+            tal:attributes="href string:${model/absolute_url}/hires_image"
+	     i18n:attributes="title"
+	     i18n:translate="view_unscaled_image">
               view unscaled image
           </a>
         </p>
     </tal:block>
     <p
-      tal:condition="not: model/canScale">
+      tal:condition="not: model/canScale" i18n:translate="note_silva_can_provide_image_scaling">
       Note: Silva can provide image scaling and conversion with the help of PIL 
       (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
-      PIL doesn't seem to be installed.
+    <span i18n:translate="pil_not_installed">PIL doesn't seem to be installed.</span>
     </p>
     <p
       tal:define="
         size model/get_file_size;
         scaled_size model/get_scaled_file_size;
       ">
-      <span class="subhead"><b>file size</b><br /></span>
+      <span class="subhead"><b i18n:translate="file_size">file size</b><br /></span>
       <span 
         tal:attributes="title string: ${size} Bytes"
         tal:content="python:mangle.Bytes(size)" />
@@ -82,14 +85,14 @@
           <span 
             tal:attributes="title string: ${scaled_size}"
             tal:content="python:mangle.Bytes(scaled_size)" /> 
-          scaled
+            <span i18n:translate="scaled">scaled</span>
           </tal:condition>
       </tal:block>
     </p>
     <tal:block tal:condition="python:user.has_role(['Manager'], model)">
       <p tal:define="path model/getFileSystemPath"
         tal:condition="path">
-        <span class="subhead"><b>file system path</b><br /></span>
+        <span class="subhead"><b i18n:translate="file_system_path">file system path</b><br /></span>
         <span tal:replace="structure python:  ' / '.join(path.split('/'))" />
       </p>
     </tal:block>
@@ -110,7 +113,7 @@
         </tal:block>
         <tr class="top-controls">
           <td colspan="3">
-            <h3>
+            <h3 i18n:translate="format_and_scaling">
               Format and Scaling
             </h3>
           </td>
@@ -119,13 +122,13 @@
       <tbody tal:define="fields view/scale_form/get_fields">
         <tr>
           <th class="align-right"
-            width="12%">
+            width="12%" i18n:translate="element">
             Element
           </th>
-          <th>
+          <th i18n:translate="content">
             Content
           </th>
-          <th width="40%">
+          <th width="40%" i18n:translate="note">
             Note
           </th>
         </tr>
@@ -159,6 +162,7 @@
               value="Change format/scale"
               title="access key: alt-c"
               accesskey="c"
+	      i18n:attributes="title value"
             />
           </td>
         </tr>

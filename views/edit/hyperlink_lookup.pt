@@ -187,7 +187,8 @@
                           is_published item/is_version_published | nothing;
                           is_approved item/is_version_approved | nothing"
                         tal:condition="python:is_published or is_approved"
-                        tal:attributes="src string:${root_url}/globals/checkmark.gif" />
+                        tal:attributes="src string:${root_url}/globals/checkmark.gif" 
+			i18n:attributes="title"/>
 
                     </td>
                     <tal:block replace="nothing">
@@ -218,9 +219,8 @@
                       <span class="closed" title="settings"
                         tal:condition="not:modification_time"
                         tal:attributes="href string:${item_url}/edit/tab_metadata"
-                        i18n:translate="n/a"
                         >
-                        <i>n/a</i>
+                        <i i18n:translate="n/a">n/a</i>
                       </span>
                     </td>
                     <tal:block replace="nothing">
@@ -237,9 +237,8 @@
                       <span class="closed" title="publish"
                         tal:condition="python:item.implements_container()"
                         tal:attributes="href string:${item_url}/edit/tab_status"
-                        i18n:translate="n/a"
                         >
-                        <i>n/a</i>
+                        <i i18n:translate="n/a">n/a</i>
                       </span>
                       <span 
                         tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
@@ -307,7 +306,7 @@
                           class python: asset.get_title() == '' and 'closed' or 'blacklink'"
                         i18n:attributes="title"
                         >
-                        <i>view</i>
+                        <i i18n:translate="view">view</i>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -351,6 +350,7 @@
                   value="Cancel"
                   title="cancel operation - alt-c"
                   accesskey="c"
+		  i18n:attributes="title value"
                   onclick="window.close();return false;"
                 />
                 <input class="button"
@@ -358,7 +358,8 @@
                   name="place"
                   value="Place reference"
                   title="insert a reference to this asset - alt-p"
-                  accesskey="p" 
+                  i18n:attributes="title value"
+		  accesskey="p" 
                   onclick="setReference();return false;" 
                   tal:condition="publishables"
                 />

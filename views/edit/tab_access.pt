@@ -6,7 +6,8 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  tal:define="global breadcrumb_vein string:Access;">
+  tal:define="global breadcrumb_vein string:Access;"
+  i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="

@@ -20,14 +20,16 @@
     style="padding-left: 0;">
     <a href="top"
       title="up to top contents of publication"
-      tal:attributes="href string:${publication/absolute_url}/edit/tab_edit">
+      tal:attributes="href string:${publication/absolute_url}/edit/tab_edit"
+       i18n:attributes="title">
       <img tal:replace="structure python:here.render_icon(model.get_publication())" />
     </a>
     <a class="blacklink"
       href="top"
       title="up to top of publication"
       tal:attributes="href publication_url"
-      tal:content="python: publication.get_short_title_editable() == '' and publication.id or publication.get_short_title_editable()">
+      tal:content="python: publication.get_short_title_editable() == '' and publication.id or publication.get_short_title_editable()"
+       i18n:attributes="title">
       Publication
     </a>
   </td>
@@ -63,7 +65,8 @@
             href string:${item_url}/edit/{__vein_id__};
             title string:id: ${item/id};"
           tal:condition="python:title == ''"
-          tal:content="item/id">
+          tal:content="item/id"
+	    i18n:translate="no_title">
           no title
         </a>
       </div>

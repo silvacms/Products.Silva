@@ -6,6 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  i18n:domain="silva"
   >
 
 <metal:block define-macro="clipboard">
@@ -31,7 +32,7 @@
                     href="lookup"
                     title="lookup users: alt-l" 
                     accesskey="l"
-		     i18n:translate="lookup_users"
+		     i18n:translate="lookup_users" 
 		     i18n:attributes="title">
                     Lookup users...
                   </a>

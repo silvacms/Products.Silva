@@ -6,7 +6,8 @@
     title model/get_title_editable;
     breadcrumb_vein string:Edit;
     has_access here/has_change_access_permission;"
-  tal:condition="has_access"
+    tal:condition="has_access"
+    i18n:domain="silva"
   >
   <metal:block use-macro="view/macro_asset_edit/macros/editor" />
 

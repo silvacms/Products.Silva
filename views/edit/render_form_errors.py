@@ -13,7 +13,7 @@ for error in validation_error.errors:
 
 return """
 <dl>
-<dt>Sorry, errors in form:</dt>
+<dt i18n:translate="errors-in-form">Sorry, errors in form:</dt>
 <dd>
 <ul class="error">
 %s

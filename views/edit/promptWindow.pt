@@ -5,7 +5,8 @@
     xmlns:metal="http://xml.zope.org/namespaces/metal"
     xmlns:notal="http://www.infrae.com/silva/notal"
     xmlns:tal="http://xml.zope.org/namespaces/tal" 
-    metal:use-macro="here/macro_no_tabs/macros/master">
+    metal:use-macro="here/macro_no_tabs/macros/master"
+    i18n:domain="silva">
 
 <metal:fill-slot fill-slot="main">
 
@@ -16,7 +17,7 @@
       <tr class="top-controls">
         <td class="align-left"
           colspan="2">
-          <h3>
+          <h3 i18n:translate="session_timeout">
             Session timeout
           </h3>
         </td>
@@ -24,7 +25,7 @@
 
       <tr class="even">
         <td class="feedback"
-          colspan="2">
+          colspan="2" i18n:translate="working_session_is_going_to_expire">
           In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; to save any changes, or &#8216;cancel&#8217; to go back to the editor and save manually (or not at all).
         </td>
       </tr>
@@ -33,7 +34,8 @@
         <td>
           <input class="cancel" type="button" value="Cancel" onClick="window.close()" />
         <td class="align-right">
-        <input class="button" type="button" value=" Save " onClick="window.opener.saveHelper(); window.close()" />
+        <input class="button" type="button" value=" Save " onClick="window.opener.saveHelper(); window.close()" 
+	       i18n:attributes="value"/>
         </td>
       </tr>
     </tbody>
