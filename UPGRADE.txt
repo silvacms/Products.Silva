@@ -3,94 +3,85 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.2.2
-  Author:     Martijn Faassen
-  Email:      faassen@infrae.com
-  CVS:        $Revision: 1.33 $
+  Valid for:  Silva 0.9.3
+  Author:     Martijn Faassen, Jan-Wijbrand Kolman
+  Email:      faassen@infrae.com, jw@infrae.com
+  CVS:        $Revision: 1.34 $
 
-Upgrading from 0.8.6 and below
+Upgrading from 0.9.1 and below
 
-  Please upgrade your Silva to 0.9 first. Be careful to read its
-  upgrade instructions! You can find Silva 0.9 here:
+  Please upgrade your Silva to 0.9.2 first. Be careful to read its
+  upgrade instructions! You can find Silva 0.9.2 here:
 
-  "Silva 0.9.0.4":http://www.zope.org/Members/faassen/Silva/Silva-0.9.0.4.tgz
-
-  Please read the UPGRADE.txt included with that release.
-
-Upgrading Silva 0.9.0.x to 0.9.1.x
-
-  Please upgrade your Silva to 0.9.1.x first. Be careful to read its
-  upgrade instructions! You can find Silva 0.9.1.x here:
-
-  "Silva 0.9.0.x":http://www.zope.org/Members/faassen/Silva/
+  "Silva 0.9.2.x":http://www.zope.org/Members/infrae/Silva/
 
   Please read the UPGRADE.txt included with that release.
 
-Upgrading Silva 0.9.1.x to 0.9.2.2
+Upgrading Silva 0.9.2.x to 0.9.3
 
   This document applies to upgrading Silva only; if you are newly
   installing Silva please look at 'INSTALL.txt'. If you encounter
   problems you may wish to consult 'TROUBLESHOOTING.txt'.
 
-  NOTE: It makes of course sense to make a backup of Silva before trying to
-  upgrade! The simplest way to make sure you have a functional backup is to
-  backup the whole ZODB; make a copy of 'var/Data.fs'.
-
-  NOTE: The Groups functionality is changing. With this release existing
-  Group definitions are still working but not directly accessible. To get
-  access to a Group definition (you can list existing groups by clicking
-  the service_groups object in the Silva root in the ZMI) place - in
-  the ZMI - a Silva Group object. If you specify an existing name AND check
-  the "only create asset" checkbox, you are again able to edit this Group
-  definition.
+  NOTE: It makes of course sense to make a backup of Silva before
+  trying to upgrade! The simplest way to make sure you have a
+  functional backup is to backup the whole ZODB; make a copy of
+  'var/Data.fs'.
 
   Silva Filesystem Products
 
-    In order to upgrade to 0.9.2.2 you need a new versions of Silva, Formulator,
-    XMLWidgets. In addition to this you now need ProxyIndex, Annotations and 
-    SilvaMetadata too.
+    In order to upgrade to 0.9.3 you need a new versions of Silva,
+    Formulator, XMLWidgets. In addition to this you now need
+    ProxyIndex, Annotations and SilvaMetadata too.
+
+    Silva Documents are now in a seperate package called
+    SilvaDocument. This you need to have this Product too.
 
     Silva:
     
-        "Silva-0.9.2.2.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.2.2.tgz
+        "Silva-0.9.3.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3.tgz
+
+    SilvaDocument:
+    
+        "SilvaDocument-0.XXX.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.XXX.tgz
 
     Formulator:
 
-        "Formulator-1.4.2.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.4.2.tgz
+        "Formulator-1.XXX.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.XXX.tgz
 
     XMLWidgets:
 
-        "XMLWidgets-0.10.tar.gz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.10.tgz
+        "XMLWidgets-0.XXX.tar.gz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.XXX.tgz
 
     ProxyIndex:
 
-        "ProxyIndex-1.1.tgz":http://www.zope.org/Members/infrae/Silva/ProxyIndex-1.1.tgz
+        "ProxyIndex-1.XXX.tgz":http://www.zope.org/Members/infrae/Silva/ProxyIndex-1.XXX.tgz
 
     Annotations:
 
-        "Annotations-0.4.1.tgz":http://www.zope.org/Members/infrae/Silva/Annotations-0.4.1.tgz
+        "Annotations-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/Annotations-0.XXX.tgz
 
     SilvaMetadata:
 
-        "SilvaMetadata-0.7.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.7.tgz
+        "SilvaMetadata-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.XXX.tgz
     
 
   Refreshing and upgrading the Silva product
 
-    If you are upgrading from 0.9.1 to 0.9.2.2, you need to upgrade the
-    content of Silva, as some of the structures have changed. After
-    the restart, go to 'service_extensions' in the Silva Root as Zope
-    manager and click the 'upgrade content' button. This will
+    If you are upgrading from 0.9.2.x to 0.9.3, you need to upgrade
+    the content of Silva, as some of the structures have changed.
+    After the restart, go to 'service_extensions' in the Silva Root
+    as Zope manager and click the 'upgrade content' button. This will
     automatically refresh all installed Silva extensions as well as
     upgrade the Silva content that needs upgrading. Note that this
     will take a while if your site is large.
 
-    In Silva 0.9.2.2, several reserved ids are added. When the upgrade
-    script encounters an object with a reserved id, the object is renamed
-    and the id is added to a list, which is shown after the upgrade has
-    finished. Copy this list somewhere and make sure all the links and
-    references to those objects are manually modified, since the upgrade
-    script doesn't update those!
+    In Silva 0.9.3, several reserved ids are added. When the upgrade
+    script encounters an object with a reserved id, the object is
+    renamed and the id is added to a list, which is shown after the
+    upgrade has finished. Copy this list somewhere and make sure all
+    the links and references to those objects are manually modified,
+    since the upgrade script doesn't update those!
     
     You should be done upgrading now.
  
@@ -102,23 +93,18 @@ Upgrading Silva 0.9.1.x to 0.9.2.2
     going to 'service_extensions' in the Silva Root and pressing the
     'install default layout' button.
 
-    Doing this won't overwrite your public layout code; the only thing
-    overwritten will be whatever in the current 'default_' objects, if
-    any exist. You can then look at this code for examples. If you're
-    satisfied with their contents you can also rename them to versions
-    without the 'default_' prefix and start using them.
-
-    The most important change in the Page templates for for presentation 
-    of public views is the deprecation of the get_[something]_html methods.
-    E.g. where "get_title_html" has been used, you now should use
-    "get_title". See for more info on this and other methods the API.txt
-    document in the doc subdirectory of the Silva Product directory.
+    Doing this won't overwrite your public layout code; the only
+    thing overwritten will be whatever in the current 'default_'
+    objects, if any exist. You can then look at this code for
+    examples. If you're satisfied with their contents you can also
+    rename them to versions without the 'default_' prefix and start
+    using them.
  
   Upgrading Custom Content Types.
 
-    If you have custom content types in a separate Zope Product,
-    and these content types use same the XML as the Silva Document,
-    you should include the objects of your content types in the upgrade
+    If you have custom content types in a separate Zope Product, and
+    these content types use same the XML as the Silva Document, you
+    should include the objects of your content types in the upgrade
     process.
 
     For this you need to register an upgrade function associated with
