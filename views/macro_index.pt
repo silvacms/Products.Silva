@@ -6,15 +6,15 @@
     ">
 <head>
 <title tal:content="structure python:model.get_title_html()">Title</title>
-<link rel="shortcut icon" href="globals/favicon.ico"
-  tal:attributes="href here/globals/favicon.ico/absolute_url" />
+<link rel="shortcut icon" href="globals/favicon.ico | nothing"
+  tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
 <link rel="stylesheet" href="globals/base.css"
-  tal:attributes="href here/globals/base.css/absolute_url" />
+  tal:attributes="href here/globals/base.css/absolute_url | nothing" />
 <link rel="stylesheet" href="globals/silva.css"
-  tal:attributes="href here/globals/silva.css/absolute_url" />
+  tal:attributes="href here/globals/silva.css/absolute_url | nothing" />
 <link rel="stylesheet" href="frontend.css"
   tal:condition="python:template.id == 'tab_preview'"
-  tal:attributes="href model/frontend.css/absolute_url" />
+  tal:attributes="href model/frontend.css/absolute_url | nothing" />
 <script tal:replace="nothing"> 
   _______ application specific stylesheet extension _______ </script>
 <link rel="stylesheet" href="ext_stylesheet"
@@ -22,16 +22,16 @@
   tal:attributes="href python:here.extension_style_url()" />
 <style tal:define="local_style view/local_style"
   tal:condition="local_style"
-  tal:content="structure local_style">color container tabs green</style>
+  tal:content="structure local_style | nothing">color container tabs green</style>
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <script tal:replace="nothing"> _______ editor hooks _______ </script>
 <script type="text/javascript" language="JavaScript"
   tal:condition="python: template.id == 'tab_edit_bxe'"
-  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url">
+  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url | nothing">
 </script>
 <script type="text/javascript" language="JavaScript"
   tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
-  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url">
+  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url | nothing">
 </script>
 <script type="text/javascript" language="JavaScript"
   tal:condition="python: template.id == 'tab_edit_eopro'"
