@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 25 17:44:17 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:49:35 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -3545,12 +3545,12 @@ msgstr "abonnementen beheren: alt-m"
 
 #: /views/edit/tab_metadata.pt:88
 msgid "metadata ${for_approved_version_of_title}"
-msgstr ""
+msgstr "metadata ${for_approved_version_of_title}"
 
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
 msgid "see the content in the public layout: alt-;"
-msgstr "see the content in the public layout: alt-;"
+msgstr "de inhoud in de publieke vormgeving bekijken: alt-;"
 
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
@@ -3559,7 +3559,9 @@ msgstr "publieke&nbsp;preview..."
 
 #: /views/edit/tab_preview.pt:37
 msgid "This is a closed version. You see it, but the public won't!"
-msgstr "This is a closed version. You see it, but the public won't!"
+msgstr ""
+"Dit is een gesloten versie. Die is hier zichtbaar, maar niet voor het "
+"publiek!"
 
 #: /views/get_tab_info.py:25
 msgid "up a level: alt-${key}"
@@ -3575,16 +3577,15 @@ msgstr "sneltoets: alt-${key}"
 
 #: /views/logout.pt:36
 msgid "To <b>actually</b> logout, wait 5 seconds or hit this"
-msgstr "To <b>actually</b> logout, wait 5 seconds or hit this"
+msgstr "Wacht 5 seconden of klik hier, om <strong>echt</strong> uit te loggen."
+
+#: /views/logout.pt:37
+msgid "logout link"
+msgstr ""
 
 #: /views/logout.pt:37
 msgid "accesskey: alt-l"
-msgstr "accesskey: alt-l"
-
-# Default: "logout link"
-#: /views/logout.pt:37
-msgid "logout_link"
-msgstr "logout_link"
+msgstr "sneltoets: alt-l"
 
 #: /views/logout.pt:43
 msgid "When the login dialog appears, choose <b>\"Cancel\"</b>"
@@ -3730,6 +3731,10 @@ msgstr "No roles were selected."
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
+
+# Default: "logout link"
+#~ msgid "logout_link"
+#~ msgstr "logout_link"
 
 #~ msgid "metadata <span>x</span>"
 #~ msgstr "metadata <span>x</span>"

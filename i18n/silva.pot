@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 25 17:44:17 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:49:35 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -3397,12 +3397,11 @@ msgid "To <b>actually</b> logout, wait 5 seconds or hit this"
 msgstr ""
 
 #: /views/logout.pt:37
-msgid "accesskey: alt-l"
+msgid "logout link"
 msgstr ""
 
 #: /views/logout.pt:37
-# Default: "logout link"
-msgid "logout_link"
+msgid "accesskey: alt-l"
 msgstr ""
 
 #: /views/logout.pt:43

@@ -38,7 +38,7 @@
         title="accesskey: alt-l"
         accesskey="l"
         i18n:attributes="title"
-        i18n:translate="logout_link">logout link</a>.
+        i18n:translate="">logout link</a>.
       <br />
         <span i18n:translate="">When the login dialog appears, choose <b>"Cancel"</b></span>.
     </div>

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Thu Nov 25 17:44:17 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:49:35 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -3441,13 +3441,12 @@ msgid "To <b>actually</b> logout, wait 5 seconds or hit this"
 msgstr ""
 
 #: /views/logout.pt:37
+msgid "logout link"
+msgstr ""
+
+#: /views/logout.pt:37
 msgid "accesskey: alt-l"
 msgstr "Kurzwahl: alt-l"
-
-# Default: "logout link"
-#: /views/logout.pt:37
-msgid "logout_link"
-msgstr ""
 
 #: /views/logout.pt:43
 msgid "When the login dialog appears, choose <b>\"Cancel\"</b>"
