@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.8 2003/03/28 09:02:56 zagy Exp $
+# $Id: DocmaService.py,v 1.9 2003/05/08 18:19:28 clemens Exp $
 
 from __future__ import nested_scopes
 
@@ -36,6 +36,9 @@ class DocmaService(SimpleItem):
 
     manage_main = edit_tab = PageTemplateFile('www/serviceDocmaEditTab', globals(), __name__='edit_tab')
     info_tab = PageTemplateFile('www/serviceDocmaInfoTab', globals(), __name__='info_tab')
+
+    for tab in ('manage_main', 'edit_tab', 'info_tab'):
+        security.declareProtected('View management screens', tab)
 
     def __init__(self, id, title):
         self.id = id
