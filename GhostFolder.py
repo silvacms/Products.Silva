@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.18 2003/09/18 17:44:39 zagy Exp $
+# $Id: GhostFolder.py,v 1.19 2003/09/19 08:13:53 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -89,10 +89,9 @@ class SyncGhost(Sync):
         old_content_url = self.g_ob.get_content_url()
         if content_url == old_content_url:
             return
-        # if nobody changes a ghost manually this will never be reached, 
-        # but you never know
         self.g_ob.create_copy()
-        version = self.g_ob.get_unapproved_version()
+        version_id = self.g_ob.get_unapproved_version()
+        version = getattr(self.g_ob, version_id)
         version.set_content_url(content_url)
 
     def _do_create(self):
