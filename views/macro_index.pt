@@ -35,6 +35,7 @@
   rel="shortcut icon"
   tal:attributes="href string:${root_url}/globals/favicon.ico"
 />
+<metal:block define-slot="meta" />
 <tal:block replace="nothing"> <!-- Plone Stylesheets --> </tal:block>
 <style media="all"
   type="text/css"
@@ -63,17 +64,16 @@
 />
 <tal:block replace="nothing"> _______ hook for application specific stylesheet extension _______ </tal:block>
 <metal:block define-slot="extension_css" />
-<tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
-<metal:block define-slot="meta" />
+<tal:block replace="nothing"> _______ hook for refresh function _______ </tal:block>
 <metal:block define-slot="refresher" />
-<!-- Plone Javascript -->
-<script type="text/javascript"
+<tal:block replace="nothing"> _______ XXX turned off, doesn't work _______ </tal:block>
+<script type="text/javascript" tal:replace="nothing"
   xml:space="preserve"
   tal:attributes="src string:${root_url}/globals/plone_javascripts.js"
 >
+<!-- Plone Javascript -->
 </script>
 <script language="JavaScript">
-
 // can be attached to formfields so that pressing enter makes the form use
 // a specific action, useful in forms with more than 1 submit button
 function handle_default_action(element, event, action)
@@ -85,29 +85,19 @@ function handle_default_action(element, event, action)
         element.form.submit();
     }
 }
-
 </script>
-<script tal:replace="nothing"> _______ editor hooks _______ </script>
-<script language="JavaScript"
-  type="text/javascript"
-  xml:space="preserve"
-  tal:condition="python: template.id == 'tab_edit_bxe'"
-  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url | nothing">
-</script>
-<script language="JavaScript"
-  type="text/javascript"
-  xml:space="preserve"
-  tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
-  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url | nothing"
-/>
-<span tal:replace="nothing"> _______ XXX Fixme: this needs to be absoluted _______ </span>
+<tal:block replace="nothing"> _______ editor hooks _______ </tal:block>
+<tal:block replace="nothing"> _______ XXX Fixme: this needs to be absoluted (deleted) _______ </tal:block>
 <script language="JavaScript"
   type="text/javascript"
   xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_eopro'"
   tal:content="structure python: template.tab_edit_eopro_js()"
 />
+<tal:block tal:replace="nothing"> _______ script slot _______ </tal:block>
+<metal:block define-slot="script" />
 </head>
+
 <body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
 <!-- ___________________________ start tabs ___________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">

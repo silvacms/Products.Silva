@@ -15,13 +15,15 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="script">
+  <script type="text/javascript" 
+    tal:content="structure python:here.focus_editor('field_object_id')" />
+</metal:block>
 <metal:block fill-slot="main"
   tal:define="
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;"
   tal:condition="has_access">
-<script type="text/javascript" 
-  tal:content="structure python:here.focus_editor('field_object_id')" />
 
 <table class="columns columns3">
   <tbody>
