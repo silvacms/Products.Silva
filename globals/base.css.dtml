@@ -8,10 +8,6 @@
 
 /* __________________ style sheet voor Silva backend __________________ */
 
-a.tree:hover img {
-    background : #666666;
-}
-
 /* standard bg color, change in overide stylesheet */ 
 body {
     font-family : verdana, arial, helvetica, sans-serif; 
@@ -27,35 +23,6 @@ body {
     margin-right: 2%;
 }
 
-.worksheet {
-    margin-left: 3%;
-    margin-right: 5%;
-    margin-top: 3%;
-    margin-bottom: 2%;
-}
-
-/* _________________________________________________________ float definitions _____ */
-
-.image-left {
-    text-align: left;
-}
-
-.image-center {
-    text-align: center;
-}
-
-.image-right {
-    text-align: right;
-}
-
-.float-left {
-    float: left;
-    clear: none;
-}
-.float-right {
-    float: right;
-    clear: none;
-}
 
 /* _________________________________________________________ element typography _____ */
 
@@ -137,6 +104,7 @@ h5 {
 }
 
 .datacell {}
+
 
 /* __________________________________________________ table style definitions _____ */
 .borders {
@@ -424,12 +392,6 @@ input[type="checkbox"]:hover, input[type="radio"]:hover {
 }
 
 
-/* Explorer kludge */
-input[type="checkbox"] {
-    padding: -3px
-}
-
-
 /* ______________________________________________________ tab bar definition _____ */  
 
 td.tab-bg {
@@ -528,19 +490,20 @@ a:link {
     color : #000080;
     text-decoration : none;
 }
-
 a:visited {
     color : #000080;
     text-decoration : none;
 }
-
 a:active {
     color : #3399cc;
 }
-
 a:hover {
     color : #005050;
     text-decoration : underline;
+}
+
+a.tree:hover img {
+    background : #666666;
 }
 
 /* pseudo form button selectors, matches button style */
@@ -576,6 +539,30 @@ a.cancellink:hover {
 a.index-element {
     background-color : #aa0000;
     text-decoration : none;
+}
+
+
+/* __________________________________________________ align/float definitions _____ */
+
+.image-left {
+    text-align: left;
+}
+
+.image-center {
+    text-align: center;
+}
+
+.image-right {
+    text-align: right;
+}
+
+.float-left {
+    float: left;
+    clear: none;
+}
+.float-right {
+    float: right;
+    clear: none;
 }
 
 
@@ -649,6 +636,13 @@ a.index-element {
     margin-bottom : 6px;
     padding : 4px;
     width : 96%;
+}
+
+.worksheet {
+    margin-left: 3%;
+    margin-right: 5%;
+    margin-top: 3%;
+    margin-bottom: 2%;
 }
 
 /* development note */
