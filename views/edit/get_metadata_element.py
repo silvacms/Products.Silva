@@ -11,14 +11,5 @@ content = model.get_previewable()
 if content is None:
     return None
 
-ms = context.service_metadata
-
-try:
-    binding = ms.getMetadata(content)
-except BindingError, be:
-    # No binding found..
-    return None
-if binding is None:
-    return None
-
-return binding.get(set_name, element_name)
+return context.service_metadata.getMetadataValue(
+    content, set_name, element_name)
