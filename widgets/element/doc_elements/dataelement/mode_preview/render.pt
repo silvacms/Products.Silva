@@ -1,0 +1,1 @@
+<tal:block replace="structure here/content" />
