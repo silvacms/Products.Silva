@@ -1,11 +1,28 @@
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id: DocmaService.py,v 1.7 2003/03/24 15:18:23 zagy Exp $
+
+from __future__ import nested_scopes
+
 # Python
 import xmlrpclib
 # Zope
 import Globals
+from Acquisition import Implicit
 from AccessControl import Permissions, ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
+from ExtensionClass import Base 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.Silva.helpers import add_and_edit
+
+class Job:
+    __allow_access_to_unprotected_subobjects__ = 1
+    
+    def __init__(self, id, format, description):
+        self.id = id
+        self.format = format
+        self.description = description
+
 
 class DocmaService(SimpleItem):
 
@@ -159,16 +176,18 @@ class DocmaService(SimpleItem):
         return server.getDescription(ident)
 
     security.declareProtected(Permissions.access_contents_information, 'get_finished_jobs_for_userid')
-    def get_finished_jobs_for_userid(self, ident):
+    def get_finished_jobs_for_userid(self, ident, format=None):
         """Returns a list of idents of finished jobs for a certain user"""
         server = xmlrpclib.Server("http://%s:%s" % (self._host, self._port))
         retval = server.getResultDescriptionsByUser(ident)
-        retval.sort(self._sort_finished_results)
+        retval = \
+            map(lambda (storage_id, description, format): \
+                Job(storage_id, format, description), 
+                retval)
+        if format is not None:
+            retval = filter(lambda job: job.format == format, retval)
+        retval.sort(lambda job1, job2: job1.id > job2.id or -1)
         return retval
-
-    def _sort_finished_results(self, a, b):
-        """Sort function for the get_finished_jobs_for_userid result"""
-        return a[0] > b[0] or -1
 
     security.declareProtected(Permissions.access_contents_information, 'get_finished_job')
     def get_finished_job(self, userid, storageid):
