@@ -260,7 +260,6 @@ div.middleground a:visited {
   color: &dtml-transportFontColor;;
   background: #4d5680;
 }
-
 div.middleground a:hover {
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-mainTabBackgroundSelected;;
@@ -522,6 +521,19 @@ table.listing tr.controls td, tr.inter-controls td {
 
 table.listing td.field-title {
   text-align : right;
+}
+
+/* some usability fixes
+ * create a displayed block of the links, because then you can click on
+ * the whole tablecell and don't have to focus the text
+ */
+ 
+table#sortable tbody a {
+  display: block;
+}
+
+table#sortable a.icon img {
+  float: left;
 }
 
 /* rename this selector */
@@ -1369,6 +1381,7 @@ a:visited {
   color : #5900b2;
   text-decoration : none;
 }
+
 a:active {
   color : #3399cc;
 }
