@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.37 $
+# $Revision: 1.38 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -12,9 +12,9 @@ from IVersionedContent import IVersionedContent
 import SilvaPermissions
 from VersionedContent import VersionedContent
 from EditorSupport import EditorSupport
-
 # misc
 from helpers import add_and_edit, translateCdata
+from Products.ParsedXML.ParsedXML import ParsedXML
 
 class Document(VersionedContent, EditorSupport):
     """Silva Document.
@@ -133,7 +133,33 @@ class Document(VersionedContent, EditorSupport):
         #    f.write('<%s>%s</%s>' % (key, translateCdata(value), key))            
         version.documentElement.writeStream(f)
         f.write('</silva_document>')
-                            
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'store_xml')
+    def store_xml(self, xml):
+        """Store xml in this object.
+        """
+        version = self.get_editable()
+        if version is None:
+            # XXX should put in nicer exceptions (or just return)
+            raise "Hey, no version to edit!"
+        dom = ParsedXML('dummy', xml)
+        title = None
+        content = None
+        # hackish way to do this..
+        for node in dom.documentElement.childNodes:
+            if node.nodeType != node.ELEMENT_NODE:
+                continue
+            if node.nodeName == 'title':
+                title = node.childNodes[0].data
+            if node.nodeName == 'doc':
+                content = node.writeStream().getvalue()
+        if title is None or content is None:
+            # XXX should put in nicer exceptions (or just return)
+            raise "Hey, title or content was empty! %s %s" % (repr(title), repr(content))
+        self.set_title(title)
+        version.manage_edit(content)
+
 #    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
 #                              'to_folder')
 #    def to_folder(self):
