@@ -12,7 +12,7 @@
 
 <metal:fill-slot fill-slot="info">
   <div class="info">
-    <h3 class="info">
+    <h3>
       <img tal:replace="structure icon" /> file info
     </h3>
     <p>

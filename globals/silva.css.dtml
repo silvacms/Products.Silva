@@ -882,15 +882,7 @@ div.info {
   width : 100%; /* fix IE glitch */
 }
 
-h2.info {
-  color: #394b4d;
-  color: &dtml-inputFontColor;;
-  margin-top : 0em;
-  margin-bottom : 0.1em;
-  font-size: 120%;
-}
-
-h3.info {
+div.info h3 {
   color: &dtml-inputFontColor;;
   margin-top : 0em;
   margin-bottom : 0.2em;  

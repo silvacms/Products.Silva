@@ -13,7 +13,7 @@
 
 <metal:fill-slot fill-slot="info">
   <div class="info">
-    <h3 class="info">
+    <h3>
       <img tal:replace="structure icon" /> image info
     </h3>
     <tal:block tal:condition="model/canScale">

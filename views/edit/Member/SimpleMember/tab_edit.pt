@@ -128,7 +128,7 @@
 
 
 <div class="info" tal:condition="not:silva_permissions/ChangeSilvaAccess">
-  <h3 class="info"><span i18n:translate="">Dear</span> <span tal:content="python:user.getId()" /><br />
+  <h3><span i18n:translate="">Dear</span> <span tal:content="python:user.getId()" /><br />
     You are not allowed to edit membership data of member <span tal:content="model/id" />
   </h3>
   <tal:comment condition="nothing">Add read only view here?</tal:comment>
