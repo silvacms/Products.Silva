@@ -125,7 +125,7 @@ class SubscriptionService(Folder.Folder):
             self._sendSuperfluousSubscriptionRequestEmail(
                 content, emailaddress, token, 'already_subscribed_template', 
                 'confirm_subscription', subscription.contentSubscribedTo())
-            raise errors.AlreadySubscribedError('emailaddress already subscribed')
+            raise errors.AlreadySubscribedError()
         # send confirmation email to emailaddress
         self._sendConfirmationEmail(
             content, emailaddress, token, 
