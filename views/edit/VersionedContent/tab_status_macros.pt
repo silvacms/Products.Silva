@@ -8,6 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   >
 
+<span tal:replace="nothing"> _______ notice of previous version times _______ </span>
 <metal:block define-macro="datetime_info"
   tal:define="
     start_time python: mangle.DateTime(model.get_public_version_publication_datetime()).toStr();
@@ -21,7 +22,7 @@
     <tal:block condition="end_time">
       and expiration
     </tal:block>
-    time of public version:
+    time of public version
   </span>
   <br />
   <tal:block

@@ -12,7 +12,7 @@ request = view.REQUEST
 model = request.model
 
 if not request.has_key('importfile') or not request['importfile']:
-    return view.tab_edit_import(message_type='error', message='Select a file for upload')
+    return view.tab_edit_import(message_type='error', message='Select a file for upload.')
 
 if not getattr( request['importfile'], 'filename', None):
     return view.tab_edit_import(message_type="error", message="Empty or invalid file.")
@@ -25,4 +25,4 @@ if not model.xml_validate(data):
 
 model.xml_import(data)
 
-return view.tab_edit(message_type='feedback', message='Finished importing')
+return view.tab_edit(message_type='feedback', message='Finished importing.')
