@@ -104,6 +104,7 @@ with the following comments:
 </td></tr>
 <tr>
 <input type="hidden" name="rejection_status" tal:attributes="value python:test(silva_permissions['ApproveSilvaContent'], 'true', 'false')" />
+<input type="hidden" name="tab_name" value="publish" />
 <th align="left" colspan="2">
 Add message on 
 <span tal:replace="python:test(silva_permissions['ApproveSilvaContent'],'rejection',default)">withdraw</span>:

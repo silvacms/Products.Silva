@@ -13,22 +13,29 @@ model = request.model
 is_rejection = request['rejection_status'] == 'true'
 
 # XXX fishy: if no message, we are called from the edit tab ...
-if request.has_key('message'):
-  message = request['message']
+# also use dummy message, if author leaves input box empty
+message = request.get('message','')
+if message:
   view  = context.tab_status
 else:
+  tab_name = request['tab_name']
   if is_rejection:
     message = '''\
-rejected request for approval via the publish tab.
+Rejected request for approval via the %s tab.
 (Automatically generated message)
-'''
+''' % tab_name
   else:
     message = '''\
-Withdrew request for approval via the publish tab. 
+Withdrew request for approval via the %s tab. 
 (Automatically generated message)
-'''
-  view = context.tab_edit
- 
+''' % tab_name
+  # next fish
+  if tab_name == 'edit':
+    view = context.tab_edit
+  else:
+    view = context.tab_status
+
+
 if model.get_unapproved_version() is None:
   if model.get_public_version() is not None:
     if view.get_silva_permissions()['ApproveSilvaContent']:
