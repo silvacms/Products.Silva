@@ -1,3 +1,7 @@
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id: security.py,v 1.3 2003/11/10 14:19:38 jw Exp $
+#
 import Globals
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo,\

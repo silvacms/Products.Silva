@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.42 $
+# $Revision: 1.43 $
 
 # Zope
 from DateTime import DateTime
@@ -704,6 +704,29 @@ class Versioning:
         else:
             return versions[-1]
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'cleanup_versions')
+    def cleanup_versions(self):
+        """ Remove unreachable version objects
+        """
+        pvs = self._previous_versions        
+        if pvs is None:
+            return
+                
+        removable_versions = pvs[:-1] # get older versions
+        self._previous_versions = pvs[-1:] # keep the last one
+        
+        contained_ids = self.objectIds()            
+        
+        removable_version_ids = [
+            str(version[0]) for version in removable_versions
+            if version[0] in contained_ids]
+            
+        if removable_version_ids:
+            print 'Removing old versions for %s %s' %  (
+                repr(self), removable_version_ids)
+            self.manage_delObjects(removable_version_ids)                        
+        
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_approval_requester')
     def get_approval_requester(self):

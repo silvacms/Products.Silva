@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.145 $
+# $Revision: 1.146 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -870,38 +870,29 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """
         return urllib.quote(string)
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'cleanup_versions')
+    def cleanup_versions(self):
+        """ Cleanup versions of VersionContent objects
+        contained in this Folder recursively down.
+        """
+        for descendant in self.get_all_descendants():
+            if IVersionedContent.isImplementedBy(descendant):
+                descendant.cleanup_versions()            
+        return 'Done!'
+
     def get_all_descendants(self):
-        """Returns a list of all descendants"""
-        obj = self
+        """ Return a list of all descendants
+        """
         descendants = []
-        self._get_descendants_helper(obj, descendants)
-        
+        self._get_descendants_helper(self, descendants)        
         return descendants
         
     def _get_descendants_helper(self, obj, descendants):
-        for i in obj.objectValues():
+        for i in obj.objectValues():            
             descendants.append(i)
             if IContainer.isImplementedBy(i):
-                self._get_descendants_helper(i, descendants)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'delete_old_versions')
-    def delete_old_versions(self):
-        """Delete all versions from the current location downward"""
-        items = self.get_all_descendants()
-        for item in items:
-            if IVersionedContent.isImplementedBy(item):
-                pvs = item._previous_versions
-                if not pvs is None:
-                    while len(pvs) > 1:
-                        # remove from list of previous versions and 
-                        # from container (Document)
-                        v = str(pvs.pop(0)[0])
-                        if v in item.objectIds():
-                            item.manage_delObjects([v])
-                            print ('Removed old version %s/%s' % 
-                                    (item.absolute_url(), v))
-        return 'Done!'
+                self._get_descendants_helper(i, descendants)    
         
 InitializeClass(Folder)
 
