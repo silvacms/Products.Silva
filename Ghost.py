@@ -3,6 +3,7 @@ from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 # Silva
 from TocSupport import TocSupport
+import Interfaces
 # misc
 from helpers import add_and_edit
 
