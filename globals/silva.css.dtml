@@ -194,24 +194,11 @@ div.tabs a.right:hover {
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
-/* help (accesskey link) */
+/* help (available as accesskey link) */
 div.tabs a.normal {
-  float : right;
-  width : 0em;
-    color: &dtml-shade46;;
-    background: transparent;
-  border : none;
-  text-align : right;
+  float: right;
+  width: 0em;
   display: none;
-}
-div.tabs a.normal:visited {
-  color: &dtml-shade46;;
-  background : transparent;
-}
-div.tabs a.normal:hover {
-  color: &dtml-shade36;;
-  background: transparent;
-  text-decoration: underline;
 }
 
 div.tabs img {
