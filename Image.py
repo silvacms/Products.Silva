@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1 2004/03/04 17:44:43 faassen Exp $
+# $Id: Image.py,v 1.50.4.1.6.1 2004/04/02 12:46:29 jw Exp $
 
 # Python
 import re, string 
@@ -350,3 +350,11 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
 
     add_and_edit(context, id, REQUEST)
     return img
+
+# Register Image factory for image mimetypes
+import mimetypes
+from Products.Silva import assetregistry
+
+mt = mimetypes.types_map.values()
+mt  = [mt for mt in mt if mt.startswith('image')]
+assetregistry.registerFactoryForMimetypes(mt, manage_addImage, 'Silva')

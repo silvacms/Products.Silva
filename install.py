@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.1 2004/03/29 13:05:49 guido Exp $
+# $Id: install.py,v 1.97.4.9.4.2 2004/04/02 12:46:30 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -22,6 +22,8 @@ from Products.Silva.AutoTOC import AutoTOCPolicy
 from Products.Silva import roleinfo
 from Products.Silva.SimpleMembership import SimpleMemberService
 from Products.Silva import File
+from Products.Silva import assetregistry
+
 
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.112.6.6.6.2 $
+# $Revision: 1.112.6.6.6.3 $
 
 import ContainerPolicy
 
@@ -48,7 +48,6 @@ def initialize(context):
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
     
-
     from Products.Silva.LayoutRegistry import layoutRegistry
     from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT
     from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT_DESCRIPTION
@@ -184,9 +183,10 @@ else:
 def __allow_access_to_unprotected_subobjects__(name, value=None):
     return name in ('mangle', 'batch')
 
-from Products.PythonScripts.Utility import allow_module
+from AccessControl import allow_module
 
 allow_module('Products.Silva.adapters.security')
+allow_module('Products.Silva.adapters.archivefileimport')
 allow_module('Products.Silva.roleinfo')
 
 def initialize_icons():

@@ -1,21 +1,23 @@
+from Products.Silva.adapters import archivefileimport
+
 view = context
 request = view.REQUEST
 model = request.model
 
-if not request.has_key('importfile') or not request['importfile']:
+archive = request.get('importfile', None)
+if archive is None or not archive:
     return view.tab_edit_import(
         message_type='error', message='Select a file for upload.')
+        
+importer = archivefileimport.getArchiveFileImportAdapter(model)
 
-feedback = model.archive_file_import(
-    request.get('importfile'), 
-    request.get('title', ''),
-    request.get('recreate_dirs', ''))
+recreate = request.get('recreate_dirs', None)
+title = unicode(request.get('title', ''), 'utf-8')
 
 try:
-    succeeded, failed = feedback
-except:
-    # feedback is not a tuple, just a message
-    msg = feedback
+    succeeded, failed = importer.importArchive(archive, title, recreate)
+except archivefileimport.BadZipfile, e:
+    msg = 'Something bad with the zipfile; ' + str(e)
     message_type='alert'
 else:
     msg = []
