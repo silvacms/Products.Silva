@@ -91,15 +91,25 @@ Installing Silva
     authors. The Silva root object also defines various properties and
     security settings needed by Silva, and some demo objects.
 
-    Silva is packaged as a silva.zexp file, which can be imported into
-    Zope after installing the filesystem products previously listed.
+    Silva is packaged as a .zexp file, which can be imported into Zope
+    after installing the filesystem products previously listed.
 
-    Place the silva.zexp in your Zope's 'import' directory, and then
-    import this through the Zope management interface into your Zope's
+    You can find it here:
+
+      http://www.zope.org/Members/faassen/Silva
+
+    or just download:
+
+      http://www.zope.org/Members/faassen/Silva/silva-0.8.zexp.gz
+
+    First unpack 'silva-0.8.zexp.gz' to get a 'silva-0.8.zexp'
+    file. Then place this in your Zope's 'import' directory, and then
+    import it through the Zope management interface into your Zope's
     root. This can be done by using the 'import/export' button on the
     Zope's management screen. Silva currently expects to be installed
-    directly under the Zope root, but it should be possible to change
-    this by altering some properties.
+    directly under the Zope root and is named 'silva', but it should
+    be possible to change this by altering some properties in the
+    Silva root.
 
   Installing Silva with LDAP support
 
