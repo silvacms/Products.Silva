@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.20 2003/02/18 15:49:34 zagy Exp $
+# $Id: Image.py,v 1.21 2003/02/19 15:16:11 zagy Exp $
 
 # Python
 import re
@@ -201,13 +201,15 @@ class Image(Asset):
         """
         if not havePIL:
             raise ValueError, "No PIL installed."""
-        if isinstance(self.hires_image, OFS.Image.Image):
-            image_file = StringIO(str(self.hires_image.data))
+        img = self.hires_image
+        if img is None:
+            img = self.image
+        if isinstance(img, OFS.Image.Image):
+            image_file = StringIO(str(img.data))
             image = PIL.Image.open(image_file)
         else:            
-            assert isinstance(self.hires_image, ExtImage)
-            image_file_name = self.hires_image._get_filename(
-                self.hires_image.filename)
+            image_file_name = img._get_filename(
+                img.filename)
             image = PIL.Image.open(image_file_name)
         return image
 
