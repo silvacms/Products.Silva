@@ -94,18 +94,16 @@ function handle_default_action(element, event, action)
 </head>
 
 <body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
-<!-- ___________________________ start tabs ___________________________ -->
+<!-- ___________________________ Start matrix nav ___________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   top navigation plugs in here....
 </metal:block>
-<!-- ____________________________ end tabs _____________________________ -->
-<span tal:replace="nothing">
-<!-- ____________________________ start workspace ____________________________ -->
-</span>
+<!-- ____________________________ End matrix nav _____________________________ -->
+<!-- ____________________________ Start workspace ____________________________ -->
 <div class="workspace">
 
 <span tal:replace="nothing">
-<!-- ______________ start feedback ______________ -->
+<!-- ______________ Start feedback ______________ -->
 </span>
 <tal:block define="
   type options/message_type | request/message_type | nothing;
@@ -128,15 +126,13 @@ function handle_default_action(element, event, action)
 <!-- ______________ end feedback ______________ -->
 </span>
 
-<!-- _____________________ main start _____________________ -->
+<!-- _____________________ Main start _____________________ -->
 <div metal:define-slot="main">
   Here the local content (a.k.a. "model") is inserted (this text will be replaced).
 </div>
-<!-- _____________________ main ends _____________________ -->
+<!-- _____________________ Main ends _____________________ -->
 
-<span tal:replace="nothing">
-<!-- _____________________ footer start _____________________ -->
-</span>
+<!-- ____________________________ Footer start _____________________________ -->
 <span tal:replace="nothing">
 <!-- _______ white space + jump to top _______ -->
 </span>
@@ -240,7 +236,7 @@ function handle_default_action(element, event, action)
   </a>
 </div>
 <span tal:replace="nothing">
-<!-- _____________________ footer ends _____________________ -->
+  <!-- ____________________________ footer ends _____________________________ -->
 </span>
 
 <span tal:replace="nothing">

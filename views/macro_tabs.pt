@@ -15,7 +15,7 @@
   vein vein | nothing;
   mangle python:modules['Products'].Silva.mangle;
 ">
-<!-- Breadcrumbs -->
+<!-- ______________ Breadcrumb path ______________ -->
   <div class="pathBar">
     <div style="float: right; margin-right: 5px;">
       <a class="idea"      
@@ -42,23 +42,21 @@
         i18n:attributes="alt"
       />
     </a>
-
-    <span tal:replace="nothing">Vein</span><a name="top"> </a>
-    
+    <a name="top"> </a>
     <tal:block tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
-
       <a href="url"
         tal:content="python: item.get_short_title_editable() or item.id"
         tal:attributes="href string:${item/absolute_url}/edit/${template/id}"
         >
         Name
       </a>
-
       <tal:block tal:condition="not:repeat/item/end">
         &middot;
       </tal:block>
     </tal:block>
-
+    <span tal:replace="nothing">
+      <!-- ____________ manage link ____________ -->
+    </span>
     <tal:block condition="python:user.has_role(['Manager'], object=model)">
       <a class="manage"
         title="Zope manage_main: alt-."
@@ -69,8 +67,9 @@
       >
         &middot; manage...
       </a>
-    <!-- ____________ Start hook for EditOnPro Integration ____________ -->
-
+      <span tal:replace="nothing">
+        <!-- ____________ hook for EditOnPro Integration ____________ -->
+      </span>
       <tal:block condition="python:model.meta_type == 'Silva Document' and hasattr(here, 'eopro')">
         &nbsp;&nbsp;
         <a tal:attributes="href python:'%s/edit/tab_edit_eopro' % url"
@@ -79,72 +78,70 @@
           /eopro edit...
         </a>
       </tal:block>
-
-    <!-- ____________ End hook for EditOnPro Integration ____________ -->
     </tal:block>
-
     <a href="#bottom" accesskey="b">
     </a>
-
   </div>
 
-<!-- Tabs -->
-  <!-- Help link -->
-  <div class="tabs">
-      <a class="normal"
-        title="Silva help: alt-h"
-        i18n:attributes="title"
-        accesskey="h"
-        target="_blank"
-        tal:condition="exists:here/help_url"
-        tal:attributes="href string:${here/help_url}"
-        i18n:translate=""
-      >
-        help
-      </a>
+<!-- ______________ Tabs ______________ -->
+<span tal:replace="nothing">
+  <!-- _______ help link _______ -->
+</span>
+<div class="tabs">
+  <a class="normal"
+    title="Silva help: alt-h"
+    i18n:attributes="title"
+    accesskey="h"
+    target="_blank"
+    tal:condition="exists:here/help_url"
+    tal:attributes="href string:${here/help_url}"
+    i18n:translate=""
+    >
+    help
+  </a>
  
-    <tal:repeat tal:repeat="item tabs">
-      <tal:define define="
-        tab_info python:view.get_tab_info(item);
-        is_selected_tab python:tab_info['tab_id'] == template.id or item[1] == active_tab;
-        top_key tab_info/toplink_accesskey | nothing;
-        tab_key tab_info/tab_accesskey | nothing;
-        up_key tab_info/uplink_accesskey | nothing;
+  <tal:repeat tal:repeat="item tabs">
+    <tal:define define="
+      tab_info python:view.get_tab_info(item);
+      is_selected_tab python:tab_info['tab_id'] == template.id or item[1] == active_tab;
+      top_key tab_info/toplink_accesskey | nothing;
+      tab_key tab_info/tab_accesskey | nothing;
+      up_key tab_info/uplink_accesskey | nothing;
       ">
-        <a class="left"
-          tal:condition="tab_info/toplink_url"
-          tal:attributes="href tab_info/toplink_url;
-            title string:up to top of publication: alt-${top_key};
-            accesskey top_key;
-        ">
-          <img tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url" />
-        </a>
-        <a class=""
-          href=""
-          tal:content="structure string:${tab_info/tab_name}"
-          tal:attributes="href tab_info/tab_url;
-            class python:is_selected_tab and (active_tab and 'recede' or 'selected') or '';
-            title string:access key: alt-${tab_key};
-            accesskey tab_key;"
-          i18n:translate=""
-          >
-          Tab Name
-        </a>
-        <a class="right"
-          tal:condition="tab_info/uplink_url"
-          tal:attributes="href tab_info/uplink_url;
-            title string:up a level: alt-${up_key};
-            accesskey up_key;
+      <a class="left"
+        tal:condition="tab_info/toplink_url"
+        tal:attributes="href tab_info/toplink_url;
+          title string:up to top of publication: alt-${top_key};
+          accesskey top_key;
           ">
-          <img tal:replace="structure here/globals/up_level.gif" />
-        </a>
-        <div class="air"> </div>
-      </tal:define>
-    </tal:repeat>
+        <img tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url" />
+      </a>
+      <a class=""
+        href=""
+        tal:content="structure string:${tab_info/tab_name}"
+        tal:attributes="href tab_info/tab_url;
+          class python:is_selected_tab and (active_tab and 'recede' or 'selected') or '';
+          title string:access key: alt-${tab_key};
+          accesskey tab_key;"
+        i18n:translate=""
+        >
+        Tab Name
+      </a>
+      <a class="right"
+        tal:condition="tab_info/uplink_url"
+        tal:attributes="href tab_info/uplink_url;
+          title string:up a level: alt-${up_key};
+          accesskey up_key;
+          ">
+        <img tal:replace="structure here/globals/up_level.gif" />
+      </a>
+      <div class="air"> </div>
+    </tal:define>
+  </tal:repeat>
 
-  </div>
+</div>
 
-  <div class="flowBar"></div>
+<div class="flowBar"></div>
 
 </tal:block>
 
