@@ -23,7 +23,21 @@ lookup = { 'L':'left', 'C':'center', 'R': 'right' }
 
 result = []
 for info in column_info.split():
-    result.append({ 'align': lookup[info[0]], 'width': int(info[2:]) })
+    info = info.split(':')
+    try:
+        align = info[0]
+    except IndexError:
+        align = 'L'
+    try:
+        width = int(info[1])
+    except IndexError:
+        width = 1
+    except ValueError:
+        width = 1
+    result.append({
+        'align': lookup.get(align, 'L'),
+        'width': width,
+    })
 
 # too much info, ignore it
 if len(result) > columns:
