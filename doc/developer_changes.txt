@@ -20,3 +20,8 @@ From 1.0 to 1.1:
 
     supp = context.editorsupport.getMixedContentSupport(model, node)
     supp.parse(text)
+
+* new method on Folder objects, get_public_tree_all().  
+    Returns a list of all published content objects (including containers)
+    below this object (not including this object itself), including
+    non-transparent containers like publications.
