@@ -17,15 +17,18 @@ adapter = getVersionManagementAdapter(model)
 if not request.has_key('versions'):
     return view.tab_status(message_type="error", message="No versions selected")
 
+if len(request['versions']) == len(adapter.getVersionIds()):
+    return view.tab_status(message_type="error", message="Can't delete all versions")
+    
+result = adapter.deleteVersions(request['versions'])
+
 message_type = 'feedback'
 messages = []
-for version in request['versions']:
-    try:
-        adapter.deleteVersion(version)
-    except Exception, e:
+for id, error in result:
+    if error is not None:
         message_type = 'error'
-        messages.append('error deleting %s: %s' % (version, e))
+        messages.append('could not delete %s: %s' % (id, error))
     else:
-        messages.append('deleted version %s' % version)
+        messages.append('deleted %s' % id)
 
 return view.tab_status(message_type=message_type, message=', '.join(messages).capitalize())

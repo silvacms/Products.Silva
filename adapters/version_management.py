@@ -93,12 +93,19 @@ class VersionManagementAdapter(adapter.Adapter):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'deleteVersion')
     def deleteVersion(self, id):
+        """Delete a single version
+
+            If the version can't be deleted for some reason, a VersioningError
+            gets raised.
+        """
+        if len(self.getVersionIds()) == 1:
+            raise VersioningError, 'can\'t delete the last version'
         approved = self.getApprovedVersion()
         if approved is not None and approved.id == id:
             raise VersioningError, 'version is approved'
         published = self.getPublishedVersion()
         if published is not None and published.id == id:
-            raise VersioningError, 'version is public'
+            raise VersioningError, 'version is published'
         # remove any reference from the version list
         # we can skip approved and published, since we checked those above
         unapproved = self.getUnapprovedVersion()
@@ -109,6 +116,49 @@ class VersionManagementAdapter(adapter.Adapter):
                 if version[0] == id:
                     self.context._previous_versions.remove(version)
         self.context.manage_delObjects([id])
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'deleteVersions')
+    def deleteVersions(self, ids):
+        """Delete a number of versions
+        
+            If all versions are selected, a VersioningError is raised, apart
+            from that this will try to delete as much as possible and return
+            a list of tuples (id, errorstring) (where errorstring is None for
+            a successful deletion).
+        """
+        if len(ids) == self.getVersionIds():
+            raise VersioningError, 'Can not delete all versions'
+        ret = []
+        delids = []
+        for id in ids:
+            approved = self.getApprovedVersion()
+            if approved is not None and approved.id == id:
+                ret.append((id, 'version is approved'))
+                continue
+            published = self.getPublishedVersion()
+            if published is not None and published.id == id:
+                ret.append((id, 'version is published'))
+                continue
+            # remove any reference from the version list
+            # we can skip approved and published, since we checked those above
+            unapproved = self.getUnapprovedVersion()
+            if unapproved is not None and unapproved.id == id:
+                self.context._unapproved_version = (None, None, None)
+                self.context._p_changed = 1
+            else:
+                # XXX it's a pity we have to traverse the whole list for each
+                # id...
+                for version in self.context._previous_versions:
+                    if version[0] == id:
+                        self.context._previous_versions.remove(version)
+            delids.append(id)
+            ret.append((id, None))
+        delret = self.context.manage_delObjects(delids)
+        # XXX somehow the transaction needs to be committed manually, can we 
+        # fix that??
+        get_transaction().commit()
+        return ret
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                                 'deleteOldVersions')
