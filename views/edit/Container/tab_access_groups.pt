@@ -248,9 +248,9 @@
             <input class="button" 
               type="submit" 
               name="add_submit" 
-              value="add" 
-              title="access key: alt-a" 
-              accesskey="a" 
+              value="save" 
+              title="access key: alt-s" 
+              accesskey="s" 
               i18n:attributes="title value"
             />
           </td>
