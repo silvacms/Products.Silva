@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 29 16:09:45 2004\n"
+"POT-Creation-Date: Mon Nov 29 16:37:30 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -599,6 +599,8 @@ msgstr ""
 #: /views/add/GhostFolder/add_form.pt:45
 #: /views/edit/macro_metadata.pt:78
 #: /views/edit/macro_metadata.pt:311
+#: /views/edit/Asset/macro_asset_edit.pt:69
+#: /views/edit/Asset/macro_asset_edit.pt:153
 #: /views/edit/Asset/Image/edit.pt:145
 #: /views/edit/Container/tab_edit_import.pt:95
 #: /views/edit/Container/tab_edit_import.pt:164
@@ -648,6 +650,7 @@ msgstr ""
 #: /views/edit/lookup_ui.pt:107
 #: /views/edit/macro_metadata.pt:169
 #: /views/edit/macro_metadata.pt:242
+#: /views/edit/Asset/macro_asset_edit.pt:94
 #: /views/edit/Container/tab_access_groups.pt:130
 #: /views/edit/Container/tab_edit.pt:78
 #: /views/edit/Container/GhostFolder/tab_edit.pt:143
@@ -660,6 +663,7 @@ msgstr ""
 #: /views/add/GhostFolder/add_form.pt:105
 #: /views/edit/macro_metadata.pt:169
 #: /views/edit/macro_metadata.pt:242
+#: /views/edit/Asset/macro_asset_edit.pt:94
 #: /views/edit/Container/tab_access_groups.pt:130
 #: /views/edit/Member/SimpleMember/tab_edit.pt:122
 msgid "save"
@@ -1197,6 +1201,19 @@ msgstr ""
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:20
 #: /views/edit/VersionedContent/Link/get_tabs.py:18
 msgid "access"
+msgstr ""
+
+#: /views/edit/Asset/macro_asset_edit.pt:142
+#: /views/edit/Container/tab_edit_import.pt:357
+msgid "upload"
+msgstr ""
+
+#: /views/edit/Asset/macro_asset_edit.pt:178
+msgid "upload file"
+msgstr ""
+
+#: /views/edit/Asset/macro_asset_edit.pt:53
+msgid "characterization"
 msgstr ""
 
 #: /views/edit/Asset/upload_form.form:25
@@ -1911,10 +1928,6 @@ msgstr ""
 #: /views/edit/Container/tab_edit_import.pt:349
 #: /views/edit/Container/tab_status_export.pt:442
 msgid "This description will be shown in the queue and the list of processed items."
-msgstr ""
-
-#: /views/edit/Container/tab_edit_import.pt:357
-msgid "upload"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:357
@@ -3502,6 +3515,7 @@ msgstr ""
 
 #: /views/edit/macro_metadata.pt:73
 #: /views/edit/macro_metadata.pt:307
+#: /views/edit/Asset/macro_asset_edit.pt:64
 #: /views/edit/Asset/Image/edit.pt:140
 #: /views/edit/Container/tab_edit_import.pt:90
 #: /views/edit/Container/tab_edit_import.pt:159

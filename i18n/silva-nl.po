@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Mon Nov 29 16:09:45 2004\n"
-"PO-Revision-Date: 2004-11-29 16:11+0100\n"
+"POT-Creation-Date: Mon Nov 29 16:37:30 2004\n"
+"PO-Revision-Date: 2004-11-29 16:40+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -634,7 +634,9 @@ msgstr "aspect"
 
 #: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:43
 #: /views/add/GhostFolder/add_form.pt:45 /views/edit/macro_metadata.pt:78
-#: /views/edit/macro_metadata.pt:311 /views/edit/Asset/Image/edit.pt:145
+#: /views/edit/macro_metadata.pt:311 /views/edit/Asset/macro_asset_edit.pt:69
+#: /views/edit/Asset/macro_asset_edit.pt:153
+#: /views/edit/Asset/Image/edit.pt:145
 #: /views/edit/Container/tab_edit_import.pt:95
 #: /views/edit/Container/tab_edit_import.pt:164
 #: /views/edit/Container/tab_edit_import.pt:302
@@ -674,6 +676,7 @@ msgstr "afbreken"
 #: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/lookup_ui.pt:107
 #: /views/edit/macro_metadata.pt:169 /views/edit/macro_metadata.pt:242
+#: /views/edit/Asset/macro_asset_edit.pt:94
 #: /views/edit/Container/tab_access_groups.pt:130
 #: /views/edit/Container/tab_edit.pt:78
 #: /views/edit/Container/GhostFolder/tab_edit.pt:143
@@ -683,7 +686,7 @@ msgstr "sneltoets: alt-s"
 
 #: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/macro_metadata.pt:169
-#: /views/edit/macro_metadata.pt:242
+#: /views/edit/macro_metadata.pt:242 /views/edit/Asset/macro_asset_edit.pt:94
 #: /views/edit/Container/tab_access_groups.pt:130
 #: /views/edit/Member/SimpleMember/tab_edit.pt:122
 msgid "save"
@@ -1259,6 +1262,19 @@ msgstr "eigenschappen"
 #: /views/edit/VersionedContent/Link/get_tabs.py:18
 msgid "access"
 msgstr "toegang"
+
+#: /views/edit/Asset/macro_asset_edit.pt:142
+#: /views/edit/Container/tab_edit_import.pt:357
+msgid "upload"
+msgstr "uploaden"
+
+#: /views/edit/Asset/macro_asset_edit.pt:178
+msgid "upload file"
+msgstr "bestand uploaden"
+
+#: /views/edit/Asset/macro_asset_edit.pt:53
+msgid "characterization"
+msgstr "karakteristiek"
 
 #: /views/edit/Asset/upload_form.form:25
 msgid "form_file_title"
@@ -2039,10 +2055,6 @@ msgid ""
 msgstr ""
 "Deze omschrijving wordt in de wachtrij en de lijst van verwerkte items "
 "getoond."
-
-#: /views/edit/Container/tab_edit_import.pt:357
-msgid "upload"
-msgstr "uploaden"
 
 #: /views/edit/Container/tab_edit_import.pt:357
 msgid "upload a word document from your local drive: alt-u"
@@ -3547,8 +3559,8 @@ msgid ""
 "The object &#xab;${haunted_url}&#xbb; the ghost points to is either the "
 "ghost itself or an ancestor of the ghost."
 msgstr ""
-"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is "
-"ofwel de 'ghost' zelf of een 'ancestor' van de 'ghost'."
+"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is ofwel "
+"de 'ghost' zelf of een 'ancestor' van de 'ghost'."
 
 #: /views/edit/get_ghost_link_status_text.py:39
 msgid "The ghost is in an undefined state."
@@ -3727,6 +3739,7 @@ msgid "metadata set"
 msgstr "metadata-set"
 
 #: /views/edit/macro_metadata.pt:73 /views/edit/macro_metadata.pt:307
+#: /views/edit/Asset/macro_asset_edit.pt:64
 #: /views/edit/Asset/Image/edit.pt:140
 #: /views/edit/Container/tab_edit_import.pt:90
 #: /views/edit/Container/tab_edit_import.pt:159

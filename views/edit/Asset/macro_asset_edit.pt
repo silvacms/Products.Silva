@@ -4,8 +4,9 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    vein string:edit;
-">
+    vein string:edit;"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 
 <metal:define-macro define-macro="editor"
   tal:define="icon python:view.render_icon(model)">
