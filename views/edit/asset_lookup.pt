@@ -24,11 +24,11 @@
   <td width="22%" nowrap="1">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication: alt-[" accesskey="["
       tal:condition="python:model != model.get_root()"
-      tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/asset_lookup?filter=%s' % (filter, )"><img width="16" height="16" border="0" alt="Up to containing Publication" hspace="3"
+      tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/asset_lookup?filter=%s' % filter"><img width="16" height="16" border="0" alt="Up to containing Publication" hspace="3"
       tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%silva_root, '%s/globals/up_tree_gray.gif'%silva_root)" /></a>
     <span class="tablehead3">Publication</span>
     <a href="../../edit/tab_edit" title="Up one level: alt-]" accesskey="]"
-      tal:attributes="href python:'../../edit/asset_lookup?filter=%s' % (filter)"
+      tal:attributes="href python:'../../edit/asset_lookup?filter=%s' % filter"
       tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
   </td>
   <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
@@ -42,7 +42,7 @@
       <tal:block condition="not:silva_permissions/ChangeSilvaContent">
         &nbsp;
       </tal:block>
-      <tal:block condition="silva_permissions/ChangeSilvaContent">
+      <tal:block condition="python: silva_permissions['ChangeSilvaContent'] and filter != 'Asset'">
         <input class="button" type="submit" name="add_object:method" 
           value=" New:" title="Add a new item: alt-n" accesskey="n" 
           tal:attributes="value string: New: ${filter} "
@@ -126,7 +126,7 @@ function setReference() {
 <td class="focus-cycle" colspan="2">
 <form name="mumble_form" id="mumble_form">
 <table cellspacing="0" cellpadding="3" border="0" width="100%"
- tal:define="global assets python:test((filter == 'Asset'), model.get_assets(), model.get_assets_of_type('Silva %s'%filter))">
+ tal:define="global assets python:test((filter == 'Asset'), model.get_assets(), model.get_assets_of_type('Silva %s' % filter ))">
 <tr>
   <th align="left" colspan="10">
     <tal:block condition="python:not len(assets)">No</tal:block>
