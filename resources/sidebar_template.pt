@@ -18,7 +18,7 @@
 <tr>
   <td class="{__class__}"
     style="padding-left: 0;"
-    tal:attributes="onclick string:javascript:window.location='${publication/absolute_url}/edit'">
+    tal:attributes="onclick string:javascript:window.location='${publication/absolute_url}/edit/{__vein_id__}'">
     <a class="icon"
       title="up to top contents of publication"
       tal:attributes="href string:${publication/absolute_url}/edit;"
