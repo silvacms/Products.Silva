@@ -15,59 +15,61 @@
 <metal:block fill-slot="main">
 <metal:use use-macro="view/Container/tab_metadata/macros/master">
 <metal:fill fill-slot="more_control">
-    <form method="POST" action=".">
-         <table class="listing">
-             <thead>
-                  
-                <tr tal:replace="nothing">
-                  ______________ vein + title row ______________
-                </tr>
-                <tr>
-                  <td class="top" colspan="3">
-                    <h2 tal:attributes="title string:id: ${model/id}">
-                      <img tal:replace="structure python:view.render_icon(model)" />                      
-                      Layout
-                    </h2>
-                  </td>
-                </tr>
-              </thead>
-          <tbody>
-              <tr>
-                <th class="align-right">
-                  Element
-                </th>
-                <th>
-                  Content
-                </th>
-                <th width="25%">
-                  Note
-                </th>
-              </tr>
-  <tal:repeat repeat="field here/layout_form/get_fields">
-  <tal:define define="oddrow repeat/field/odd">
-  <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
-    <td class="align-right">
-      <span tal:replace="python:field['title'].lower()">
-        title
-      </span><span class="warning" tal:condition="python:field.is_required()">*</span>
-    </td>
-    <td tal:content="structure python:field.render(getattr(model, field.id), request)">
-      <input />
-    </td>
-    <td tal:content="structure string:${field/description}&nbsp;">
-      note
-    </td>
-  </tr>
-  </tal:define>
-  </tal:repeat>
-            <tr class="controls">
-              <td class="align-right" colspan="4">
-                <input class="button" type="submit" name="layout_submit:method" value=" Save layout " title="access key: alt-l" accesskey="l" />
-              </td>
-            </tr>
-          </tbody>    
-      </table>
-  </form>
+<form method="POST" action=".">
+  <table class="listing">
+    <thead>
+      <tr tal:replace="nothing">
+        ______________ vein + title row ______________
+      </tr>
+      <tr>
+        <td class="top" colspan="3">
+          <h2 tal:attributes="title string:id: ${model/id}">
+            <img tal:replace="structure python:view.render_icon(model)" />                      
+            layout
+          </h2>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="align-right"
+          width="12%"
+          i18n:translate="element">
+          element
+        </th>
+        <th i18n:translate="content">
+          content
+        </th>
+        <th width="25%"
+          i18n:translate="note">
+          note
+        </th>
+      </tr>
+      <tal:repeat repeat="field here/layout_form/get_fields">
+      <tal:define define="oddrow repeat/field/odd">
+      <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
+        <td class="align-right">
+          <span tal:replace="python:field['title'].lower()">
+            title
+          </span><span class="warning" tal:condition="python:field.is_required()">*</span>
+        </td>
+        <td tal:content="structure python:field.render(getattr(model, field.id), request)">
+          <input />
+        </td>
+        <td tal:content="structure string:${field/description}&nbsp;">
+          note
+        </td>
+      </tr>
+      </tal:define>
+      </tal:repeat>
+      <tr class="controls">
+        <td class="align-right" colspan="4">
+          <input class="button" type="submit" name="layout_submit:method" value=" Save layout " title="access key: alt-l" accesskey="l" />
+        </td>
+      </tr>
+    </tbody>    
+  </table>
+</form>
 </metal:fill>
 </metal:use>
 </metal:block>

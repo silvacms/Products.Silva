@@ -139,17 +139,20 @@
                 </td>
               </tr>
               <tr>
-                <th class="align-right" i18n:translate="element">
-                  Element
+                <th class="align-right"
+                  width="12%"
+                  i18n:translate="element">
+                  element
                 </th>
                 <th i18n:translate="content">
-                  Content
+                  content
                 </th>
                 <th i18n:translate="acquired_content">
-                  Acquired content
+                  acquired content
                 </th>
-                <th width="25%" i18n:translate="note">
-                  Note
+                <th width="25%"
+                  i18n:translate="note">
+                  note
                 </th>
               </tr>
               <tal:block repeat="element_name binding/?set_name/elementNames">
