@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.98.4.2.14.1 2004/04/01 12:34:50 faassen Exp $
+# $Id: SilvaObject.py,v 1.98.4.2.14.2 2004/04/25 05:28:57 kitblake Exp $
 
 # python
 from types import StringType
@@ -157,6 +157,7 @@ class SilvaObject(Security, ViewCode):
         if not title:
             return self.service_metadata.getMetadataValue(
                 self, 'silva-content', 'maintitle')
+        return title
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title_or_id')
