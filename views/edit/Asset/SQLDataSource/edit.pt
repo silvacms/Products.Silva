@@ -1,5 +1,136 @@
 <html tal:omit-tag=""
-  tal:define="view here; model request/model">
+  tal:define="
+    view here;
+    model request/model;
+    root_url model/get_root_url;
+    title model/get_title_editable;
+    breadcrumb_vein string:Edit;
+">
+
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
+      <td class="left"
+        tal:define="template_id string:tab_edit">
+        <metal:block use-macro="view/macro_vein_navigation/macros/content_sidebar" />
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ main _____________________
+      </tal:block>
+      <td class="main">
+
+<form method="POST" name="form" action=".">
+  <table class="listing">
+    <thead>
+      <tal:block replace="nothing">
+        ______________ vein + title row ______________
+      </tal:block>
+      <tr>
+        <td class="top"
+          colspan="3">
+          <h2>
+            <img tal:replace="structure python:view.render_icon(model)" />
+            <span style="text-transform:lowercase;"
+              tal:content="model/meta_type">Meta type</span> 
+            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+          </h2>
+        </td>
+      </tr>
+      <tal:block replace="nothing">
+        ______________ top controls row ______________
+      </tal:block>
+      <tr class="top-controls">
+        <td colspan="3">
+          <h3>
+            Properties
+          </h3>
+        </td>
+      </tr>
+    </thead>
+
+
+    <tbody tal:define="fields view/form/get_fields">
+      <tr>
+        <th class="align-right">
+          Element
+        </th>
+        <th>
+          Content
+        </th>
+        <th width="27%">
+          Note
+        </th>
+      </tr>
+
+      <tal:repeat repeat="field fields">
+      <tal:define define="iterate repeat/field/odd">
+      <tr tal:attributes="class python:test(iterate, 'even', 'odd')">
+      <td class="field-title">
+        <span tal:replace="python:field['title']">
+          Title</span><span class="warning"
+          tal:condition="python:field.is_required()">*</span>
+      </td>
+      <td>
+        <input tal:replace="structure python:field.render_from_request(request)" />
+      </td>
+      <td>
+        <span tal:replace="structure python:field.get_value('description')">
+        comments here (field description)
+        </span>&nbsp;
+      </td>
+      </tr>
+      </tal:define>
+      </tal:repeat>
+    </tbody>
+
+    <tfoot>
+      <tr class="controls">
+        <td class="align-right"
+          colspan="3">
+          <input class="cancel"
+            style="float:left;"
+            type="button"
+            name="edit_cancel"
+            value="Cancel"
+            title="access key: alt-c"
+            accesskey="c"
+            onClick="history.back()"
+          />
+          <input class="button"
+            type="submit"
+            name="submit:method"
+            value="Save properties"
+            title="access key: alt-s"
+            accesskey="s"
+          />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<tal:block                               tal:replace="nothing"
+  define="global fields python:view.form.get_fields()">
 
 <h2><span tal:replace="model/meta_type">Meta type</span> for 
   <span class="document-title">
@@ -7,7 +138,6 @@
   </span>
 </h2>
 
-<tal:block define="global fields python:view.form.get_fields()" />
 
 <h3>Properties</h3>
 
@@ -76,5 +206,6 @@ comments here (field description)
 </tr>
 </table>
 </form>
+</tal:block>
 
 </html>

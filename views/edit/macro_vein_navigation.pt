@@ -7,6 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   >
+
 <metal:block define-macro="parent">
         <table class="listing"
           style="margin-bottom:0;">
@@ -83,9 +84,14 @@
           </table>
 </metal:define-macro>
 
+
 <metal:block define-macro="content_sidebar">
   <table class="listing"
-    tal:define="containing_publication model/../get_publication | publication;">
+    tal:define="
+      containing_publication model/../get_publication | publication;
+      query_string query_string | nothing;
+      vein_id template_id | string:${template/id}${query_string};
+  ">
     <thead>
       <tr>
         <th class="top">
@@ -93,7 +99,7 @@
             href="../../edit/tab_edit"
             title="up one level: alt-]"
             accesskey="]"
-            tal:attributes="href string:../../edit/${template/id}">
+            tal:attributes="href string:../../edit/${vein_id}">
             <img width="9"
               height="9"
               border="0"
@@ -103,7 +109,7 @@
           <a class="top"
             title="up to containing publication: alt-["
             accesskey="["
-            tal:attributes="href string:${containing_publication/absolute_url}/edit/${template/id}">
+            tal:attributes="href string:${containing_publication/absolute_url}/edit/${vein_id}">
             <img width="9"
             height="9"
             border="0"
@@ -113,7 +119,7 @@
           <a class="normal"
             style="padding: 0 1em;"
             title="reload screen"
-            tal:attributes="href template/id"
+            tal:attributes="href vein_id"
             tal:content="string:${breadcrumb_vein}">
             vein
           </a>

@@ -11,13 +11,18 @@
     refresh_time python:19 * 60;
   ">
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
-
-  <tal:block tal:define="
-    global is_locked model/sec_is_locked;
-    global unapproved_version model/get_unapproved_version;
-    global request_pending python:model.is_version_approval_requested();" />
-
+<metal:block fill-slot="metatype_css">
+<link href="globals/widgetEditor.css"
+  rel="stylesheet"
+  tal:attributes="href string:${root_url}/globals/widgetEditor.css"
+/>
+</metal:block>
+<metal:block fill-slot="main"
+  tal:define="
+    is_locked model/sec_is_locked;
+    unapproved_version model/get_unapproved_version;
+    request_pending python:model.is_version_approval_requested();
+">
 <model tal:condition="python:unapproved_version and not request_pending and not is_locked"
          tal:replace="structure view/edit">Content</model>
 

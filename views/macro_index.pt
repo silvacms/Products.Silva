@@ -28,8 +28,11 @@
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content silva_permissions/ChangeSilvaContent | nothing;
 ">
-<head>
 
+<head>
+<title tal:content="model/get_title_or_id">
+  Title
+</title>
 <tal:block define="rft refresh_time | python: 0">
 <tal:block condition="python: rft > 0">
 <tal:block condition="nothing"> Refresh code for session timeout </tal:block>
@@ -82,9 +85,7 @@ setTimeout('handleTimeout()', document.timeout * 1000, '');
 </script>
 </tal:block>
 </tal:block>
-<title tal:content="title">
-  Title
-</title>
+
 <link href="globals/favicon.ico"
   rel="shortcut icon"
   tal:attributes="href string:${root_url}/globals/favicon.ico"
@@ -108,11 +109,8 @@ setTimeout('handleTimeout()', document.timeout * 1000, '');
   tal:condition="python: not model.implements_container()"
   tal:attributes="href string:${root_url}/globals/silvaContentStyle.css"
 />
-<link href="globals/widgetEditor.css"
-  rel="stylesheet"
-  tal:condition="python: not model.implements_container() and template.id == 'tab_edit'"
-  tal:attributes="href string:${root_url}/globals/widgetEditor.css"
-/>
+<tal:block replace="nothing"> _______ hook for metatype stylesheet _______ </tal:block>
+<metal:block define-slot="metatype_css" />
 <link href="frontend.css"
   rel="stylesheet"
   tal:condition="python:template.id == 'tab_preview'"
@@ -140,11 +138,9 @@ function handle_default_action(element, event, action)
 }
 
 </script>
-<script xml:space="preserve"
-  tal:replace="nothing"
->
+<tal:block replace="nothing">
 _______ application specific stylesheet extension _______
-</script>
+</tal:block>
 <link href="ext_stylesheet"
   rel="stylesheet"
   tal:condition="view/extension_style_url | nothing"
@@ -152,21 +148,17 @@ _______ application specific stylesheet extension _______
 />
 <style type="text/css"
   xml:space="preserve"
-  tal:condition="python: template.id == 'tab_preview'"
->
+  tal:condition="python: template.id == 'tab_preview'">
 div.workspace {background: #e6e6ee;}
 </style>
-<script xml:space="preserve"
-  tal:replace="nothing"
->
+<script tal:replace="nothing">
 _______ editor hooks _______
 </script>
 <script language="JavaScript"
   type="text/javascript"
   xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_bxe'"
-  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url | nothing"
->
+  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url | nothing">
 </script>
 <script language="JavaScript"
   type="text/javascript"
@@ -183,11 +175,6 @@ _______ editor hooks _______
 />
 </head>
 <body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
-
-<tal:block replace="nothing">
-  Previous onload tests facilitate Bitflux editor support
-</tal:block>
-
 <!-- ____________________________ start tabs ___________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   Tab bar plugs in here....
