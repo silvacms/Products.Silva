@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.49 $
+# $Revision: 1.50 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -559,22 +559,23 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
-    def to_xml(self, f):
+    def to_xml(self, context):
         """Render object to XML.
         """
+        f = context.f
         f.write('<silva_folder id="%s">' % self.id)
-        self._to_xml_helper(f)
+        self._to_xml_helper(context)
         f.write('</silva_folder>')
 
-    def _to_xml_helper(self, f):
-        f.write('<title>%s</title>' % helpers.translateCdata(self.get_title()))
+    def _to_xml_helper(self, context):
+        context.f.write('<title>%s</title>' % helpers.translateCdata(self.get_title()))
         default = self.get_default()
         if default is not None:
-            default.to_xml(f)
+            default.to_xml(context)
         for object in self.get_ordered_publishables():
-            if Interfaces.Publication.isImplementedBy(object):
+            if Interfaces.Publication.isImplementedBy(object) and not context.with_sub_publications:
                 continue
-            object.to_xml(f)
+            object.to_xml(context)
         #for object in self.get_assets():
         #    pass
 

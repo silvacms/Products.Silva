@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.33 $
+# $Revision: 1.34 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -113,10 +113,17 @@ class Document(VersionedContent, EditorSupport):
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
-    def to_xml(self, f):
+    def to_xml(self, context):
         """Render object to XML.
         """
-        version_id = self.get_public_version()
+        f = context.f
+        if context.last_version == 1:
+            version_id = self.get_next_version()
+            if version_id is None:
+                version_id = self.get_public_version()
+        else:
+            version_id = self.get_public_version()
+            
         if version_id is None:
             return
         version = getattr(self, version_id)

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -76,11 +76,12 @@ class Publication(Folder):
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
-    def to_xml(self, f):
+    def to_xml(self, context):
         """Render object to XML.
         """
+        f = context.f
         f.write('<silva_publication id="%s">' % self.id)
-        self._to_xml_helper(f)
+        self._to_xml_helper(context)
         f.write('</silva_publication>')
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,

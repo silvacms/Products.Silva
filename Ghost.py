@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.41 $
+# $Revision: 1.42 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -49,15 +49,20 @@ class Ghost(VersionedContent):
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
-    def to_xml(self, f):
-        version_id = self.get_public_version()
+    def to_xml(self, context):
+        if context.last_version == 1:
+            version_id = self.get_next_version()
+            if version_id is None:
+                version_id = self.get_public_version()
+        else:
+            version_id = self.get_public_version()
         if version_id is None:
             return
         version = getattr(self, version_id)
         content = version._get_content()
         if content is None:
             return
-        content.to_xml(f)
+        content.to_xml(context)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'update')

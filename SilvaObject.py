@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.38 $
+# $Revision: 1.39 $
 import Interfaces
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -20,6 +20,9 @@ CONVERT_CHARS = (('\221', '&lsquo;', "'",   u'\u2018'),
                  ('\200', '&euro;',  'EUR', u'\u20AC'),
                  ('\203', '&fnof;',  'NLG', u'\u0192'),
                  )
+
+class XMLExportContext:
+    pass
 
 class SilvaObject(Security):
     """Inherited by all Silva objects.
@@ -210,21 +213,24 @@ class SilvaObject(Security):
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'get_xml')
-    def get_xml(self):
+    def get_xml(self, with_sub_publications=0, last_version=0):
         """Get XML for object and everything under it.
         """
-        f = StringIO(u'<?xml version="1.0" ?>\n')
-        self.to_xml(f)
+        context = XMLExportContext()
+        context.f = StringIO(u'<?xml version="1.0" ?>\n')
+        context.with_sub_publications = with_sub_publications
+        context.last_version = last_version
+        self.to_xml(context)
         # XXX HACK
-        result = ''.join(f.buflist)
+        result = ''.join(context.f.buflist)
         return result.encode('UTF-8') #return f.getvalue()
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml') 
-    def to_xml(self, f):
+    def to_xml(self, context):
         """Handle unknown objects. (override in subclasses)
         """
-        f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))
+        context.f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'output_convert_html')
