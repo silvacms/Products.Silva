@@ -964,7 +964,7 @@ table.listing tr.feedback, table.listing td.feedback {
   padding-top : 0.1em;
   padding-bottom : 0.2em;
 }
-table.listing tr.alert. table.listing td.alert {
+table.listing tr.alert, table.listing td.alert {
   color: #3c2d50;
   background: #f7d1d1;
   padding-top : 0.1em;
