@@ -40,7 +40,7 @@ nightShade:string=black
 
 mainFont:string=70% Verdana, Helvetica, Arial, sans-serif
 mainBackground:string=#91989b
-mainFontColor:string=#red
+mainFontColor:string=red
 mainLinkColor:string=#000080
 
 workspace:string=#dde5ee
@@ -63,29 +63,31 @@ contentTabBackgroundRecede:string=#8fb39e
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
+evenRowBackground:string=#c6d2dd
+oddRowBackground:string=#cde0f2
 
 listingTopBackground:string=#c4d6e7
-listingTopControlsBackground:string=#616d73
-listingControlsBackground:string=#6c797f
-listingInterControlsBackground:string=#77858c
-listingDividerBackground:string=#6c7a7f
-listingBorder:string=1px solid #77858c
-
 listingTopHeadingColor:string=#2d2d4c
+
+listingTopControlsBackground:string=#616d73
 listingTopControlsHeadingColor:string=#d0e4f6
 
 listingHeaderBackground:string=#829199
 listingHeaderFontColor:string=#e0eefc
-listingLinkHover:string=underline
+
+listingInterControlsBackground:string=#77858c
+listingControlsBackground:string=#6c797f
+listingDividerBackground:string=#6c7a7f
+
+listingBorder:string=1px solid #77858c
 listingEvenBackground:string=#cfdbe7
 listingOddBackground:string=#d7e4f0
+listingLinkHover:string=underline
+
 
 listingTopBackgroundContent:string=#c5d4ca
 listingTopHeadingColorContent:string=#51545c
 listingTopControlsHeadingColorContent:string=#ddeee3
-
-evenRowBackground:string=#c6d2dd
-oddRowBackground:string=#cde0f2
 
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
@@ -96,25 +98,25 @@ inputBorder:string=1px solid #797f7f
 buttonWeight:string=normal
 controlBackground:string=#000
 
-standaloneButtonBackground:string=#283365
-standaloneButtonPadding:string=0 0.2em
-standaloneButtonBorder:string=1px solid #8faecf
-standaloneButtonFontColor:string=#d9f3f1
+transportBackground:string=#283365
+transportPadding:string=0 0.2em
+transportBorder:string=1px solid #8faecf
+transportFontColor:string=#d9f3f1
 
-contextButtonBackground:string=#064C29
-contextButtonPadding:string=0 0.2em
-contextButtonBorder:string=1px solid #6bb591
-contextButtonFontColor:string=#d9f3da
+manipulatorBackground:string=#064C29
+manipulatorPadding:string=0 0.2em
+manipulatorBorder:string=1px solid #6bb591
+manipulatorFontColor:string=#d9f3da
 
-destructiveButtonBackground:string=#752e2f
-destructiveButtonPadding:string=0 0.2em
-destructiveButtonBorder:string=1px solid #b48f8f
-destructiveButtonFontColor:string=#fdeaea
+destructiveBackground:string=#752e2f
+destructivePadding:string=0 0.2em
+destructiveBorder:string=1px solid #b48f8f
+destructiveFontColor:string=#fdeaea
 
-cancelButtonBackground:string=#444446
-cancelButtonPadding:string=0 0.2em
-cancelButtonBorder:string=1px solid #b9c2c1
-cancelButtonFontColor:string=#ccd7d6
+cancelBackground:string=#444446
+cancelPadding:string=0 0.2em
+cancelBorder:string=1px solid #b9c2c1
+cancelFontColor:string=#ccd7d6
 
 textTransform:string=lowercase
 

@@ -25,13 +25,13 @@ div.tabs a.selected {
 }
 
 div.tabs a.selected:visited {
-  color: &dtml-contentTabFontColorSelected;;
+  color: &dtml-mainTabFontColorSelected;;
   background: &dtml-contentTabBackgroundSelected;;
   border-bottom-color: &dtml-contentTabBackgroundSelected;;
 }
 
 div.tabs a:hover {
-  color: &dtml-contentTabFontColorSelected;;
+  color: &dtml-mainTabFontColorSelected;;
   background: &dtml-contentTabBackgroundSelected;;
   border-bottom-color: &dtml-contentTabBackgroundSelected;;
 }
