@@ -676,6 +676,12 @@ input.cancel {
     text-transform: &dtml-textTransform;;
 }
 
+/* checkboxes used (only) for deletion */
+input.warningbox {
+  color : #3f4570;
+  background : #ead5d3;
+}
+
 /* publish screen state coded buttons */
 input.reject {
   font-size: 95%;
