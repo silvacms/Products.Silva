@@ -147,15 +147,11 @@
             </span><br />
             <tal:block i18n:translate=""
               tal:condition="not: is_subscribable">
-              This object is currently
-              <strong i18n:name="not" tal:content="string:not"/>
-              subscribable.
+              This object is currently not subscribable.
             </tal:block>
             <tal:block i18n:translate=""
               tal:condition="is_subscribable">
-              This object
-              <strong i18n:name="is" tal:content="string:is"/>
-              currently subscribable.
+              This object is currently subscribable.
             </tal:block>
           </p>
           <p tal:define="
