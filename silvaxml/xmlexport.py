@@ -82,7 +82,7 @@ class BaseXMLSource:
         """
         reader.startPrefixMapping(None, self.ns_default)
         for set in self.context.service_metadata.collection.getMetadataSets():
-            reader.startPrefixMapping(set.metadata_prefix, set.metadata_uri)
+            reader.startPrefixMapping(set.id, set.metadata_uri)
         # XXX start all registered prefixmappings here
         self._startElement(
             reader,
@@ -106,7 +106,7 @@ class BaseXMLSource:
         self._startElement(reader, 'metadata', {})
         for set_id in binding.collection.keys():
             prefix, namespace = binding.collection[set_id].getNamespace()
-            self._startElement(reader, 'set', {'id': prefix})
+            self._startElement(reader, 'set', {'id': set_id})
             for key, value in binding._getData(set_id).items():
                 self._startElementNS(reader, namespace, key, {})
                 if value:
