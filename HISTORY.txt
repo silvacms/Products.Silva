@@ -36,6 +36,13 @@ Silva changes
 
     Bugs Fixed
 
+        - Images nested in tables now keep their <a href="..."> tag (if set
+          on the image element).
+
+        - Ghosts of Documents containing a TOC will render this TOC with
+          the Ghost's container context and not with the container context
+          of the target Document.
+
         - Fixed some bugs with copy/cut and paste: when an object is not
           allowed somewhere, it's now not possible to paste it there anymore,
           and also the id of the object to be pasted is now changed until
