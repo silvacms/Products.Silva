@@ -15,9 +15,33 @@ class SidebarService(SimpleItem):
     
     security = ClassSecurityInfo()
 
+    cache_container_id = 'temp_folder'
+
+    manage_options = (
+        {'label':'Edit', 'action':'manage_sidebarServiceEditTab'},
+        ) + SimpleItem.manage_options
+
+    manage_sidebarServiceEditTab = PageTemplateFile(
+        'www/sidebarServiceEditTab', globals(), 
+        __name__='manage_sidebarServiceEditTab')
+
     def __init__(self, id, title):
         self.id = id
         self._title = title
+
+    def manage_sidebarServiceEdit(self, id):
+        """set the cache container
+        """
+        # check validity
+        if getattr(self.aq_inner, id, None) is None:
+            # not valid
+            msg = 'Id does not provide for an existing cache container'
+        else:
+            self.cache_container_id = id
+            msg = 'Id changed'
+
+        return self.manage_sidebarServiceEditTab(
+            manage_tabs_message=msg)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render')
@@ -71,13 +95,13 @@ class SidebarService(SimpleItem):
         del storage._path_mapping[ph_path]
 
     def _get_storage(self, create=1):
-        storage = getattr(self.aq_inner.temp_folder, 'silva_sidebar_cache', None)
+        cc = getattr(self.aq_inner, self.cache_container_id)
+        storage = getattr(cc, 'silva_sidebar_cache', None)
         if storage is None and create:
-            cache_container = self.aq_inner.temp_folder
-            cache_container.silva_sidebar_cache = SidebarCache('silva_sidebar_cache')
+            cc.silva_sidebar_cache = SidebarCache('silva_sidebar_cache')
             # Trigger persistence machinery
-            cache_container._p_changed = 1
-            storage = cache_container.silva_sidebar_cache
+            cc._p_changed = 1
+            storage = cc.silva_sidebar_cache
         return storage
     
     def _render_template(self, pub):
