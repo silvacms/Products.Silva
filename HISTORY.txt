@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.38 $
+$Revision: 1.39 $
 
 Silva changes
 
@@ -14,6 +14,8 @@ Silva changes
           clear_silva_addables_forbidden()) for absolutely forbidding
           visibility of certain meta_types in SMI. See also IRoot.py.
  
+        - Improved tab_access user interface.
+
     Bugs Fixed
 
         - Fix where the "/manage" display link in the SMI tabs didn't
@@ -29,6 +31,9 @@ Silva changes
 
 	- Modification time of assets should now be updated properly
 	  (issue147).
+
+        - Some characters that were removed by the Silva editor
+          shouldn't be removed -- made these work (issue 176).
 	  
   0.9
 
