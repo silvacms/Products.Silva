@@ -52,7 +52,7 @@
   <!-- Role assignment table -->
     <form action="."
       method="POST">
-      <table class="borders top bottom left right"
+      <table class="borders top right bottom left"
         border="0"
         cellpadding="5"
         cellspacing="0"
@@ -164,7 +164,7 @@
       </h4>
       <form action="."
         method="POST">
-        <table class="borders top bottom left right"
+        <table class="borders top right bottom left"
           border="0"
           cellpadding="5"
           cellspacing="0"
@@ -254,7 +254,7 @@
       <h4>
         Grant or revoke local roles for groups of users
       </h4>
-      <div class="hilight borders top bottom left right"
+      <div class="hilight borders top right bottom left"
         style="padding: 0.5em;"
         tal:condition="python:not getattr(here, 'service_groups', None)">
         <div style="padding: 0em 2em 0em 2em;">
@@ -300,7 +300,7 @@
       <!-- Role assignment table -->
         <form action="."
           method="POST">
-          <table class="borders top bottom left right"
+          <table class="borders top right bottom left"
             border="0"
             cellpadding="5"
             cellspacing="0"
@@ -416,13 +416,12 @@
       &nbsp; Access Restrictions for
       <span class="folder-title"
         tal:content="
-          structure string:&#xab;
-          ${model/get_title_or_id_html}&#xbb;">
+          structure string:&#xab;${model/get_title_or_id_html}&#xbb;">
         title
       </span>
     </h2>
-    <div class="hilight borders top bottom left right"
-      style="padding: 0.5em; margin: 0em 0em 2em 1em;">
+    <div class="hilight borders top right bottom left"
+      style="padding: 0.5em; margin: 0em 0em 2em 0em;">
       <form action="minimal_access_role_submit"
         method="POST">
         <table border="0"
@@ -468,8 +467,8 @@
         </table>
       </form>
     </div>
-    <div class="hilight borders top bottom left right"
-      style="padding: 0.5em; margin: 0em 0em 2em 1em;">
+    <div class="hilight borders top right bottom left"
+      style="padding: 0.5em; margin: 0em 0em 2em 0em;">
       <form action="access_restriction_submit"
         method="POST">
         <table border="0"
@@ -518,8 +517,8 @@
         tal:replace="structure python:view.render_icon(model.meta_type)" />
       &nbsp; Utilities
     </h2>
-    <div class="hilight borders top bottom left right"
-      style="padding: 0.5em; margin: 0em 0em 2em 1em; clear: both;">
+    <div class="hilight borders top right bottom left"
+      style="padding: 0.5em; margin: 0em 0em 2em 0em; clear: both;">
       <table border="0"
         cellpadding="3"
         cellspacing="0">
