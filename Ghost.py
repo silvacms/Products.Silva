@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78 $
+# $Revision: 1.79 $
 
 # Zope
 from OFS import SimpleItem
@@ -233,7 +233,7 @@ class GhostBase:
 
 
 class Ghost(CatalogedVersionedContent):
-    """Ghosts are special documents wich function as a
+    """Ghosts are special documents that function as a
        placeholder for an object in another location (like an alias,
        symbolic link, shortcut). Unlike a hyperlink, which takes the
        Visitor to another location, a ghost object keeps the Visitor in the

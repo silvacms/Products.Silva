@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 
 # Python
 import os
@@ -29,7 +29,7 @@ except:                                          # available for import
 from interfaces import IFile, IAsset
 
 icon="www/silvafile.png"
-addable_priority = 1
+addable_priority = -0.3
 
 class File(Asset):
     """Any digital file can be uploaded as Silva content. 

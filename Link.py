@@ -11,7 +11,13 @@ from interfaces import IVersionedContent, IVersion
 import mangle
 from helpers import add_and_edit
 
+icon = "www/link.png"
+
 class Link(CatalogedVersionedContent):
+    """A Link makes it possible to include links to external sites &#8211; 
+       outside of Silva &#8211; in a Table of Contents. The content of a Link 
+       is simply a hyperlink, beginning with &#8220;http://....&#8221;.
+    """
     security = ClassSecurityInfo()
 
     meta_type = "Silva Link"

@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.23 2003/10/14 15:51:03 zagy Exp $
+# $Id: GhostFolder.py,v 1.24 2003/11/02 09:56:28 kitblake Exp $
 
 from __future__ import nested_scopes
 
@@ -124,7 +124,11 @@ class SyncCopy(Sync):
 
 
 class GhostFolder(GhostBase, Publishable, Folder.Folder):
-    """GhostFolders are used to haunt folders."""
+    """Ghost Folders are similar to Ghosts, but instead of being a 
+       placeholder for a document, they create placeholders and/or copies of all 
+       the contents of the &#8216;original&#8217; folder. When a folder is
+       ghosted, assets &#8211; such as Images and Files &#8211; are copied
+       (physically duplicated) while documents are ghosted."""
 
     meta_type = 'Silva Ghost Folder'
     __implements__ = IContainer, IGhostFolder
