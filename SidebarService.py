@@ -31,46 +31,55 @@ class SidebarService(SimpleItem):
         pub = obj.get_publication()
         abs_url = pub.absolute_url()
         ph_path = pub.getPhysicalPath()
-        
-        storage = getattr(self.aq_inner.temp_folder, 'silva_sidebar_cache', None)
-        if storage is None:
-            temp_folder = self.aq_inner.temp_folder
-            temp_folder.silva_sidebar_cache = SidebarCache('silva_sidebar_cache')
-            storage = temp_folder.silva_sidebar_cache
 
+        storage = self._get_storage()
         sidebar_cache = storage._sidebar_cache
 
         cached_template = sidebar_cache.get(abs_url)
-
+        
         if cached_template is None:
             cached_template = sidebar_cache[abs_url] = self._render_template(pub)
-            # now add the abs_url to the path_mapping of the storage so we can find it 
-            # for invalidation when the invalidation is done from another virtual host
+            # now add the abs_url to the path_mapping of the storage so we
+            # can find it for invalidation when the invalidation is done
+            # from another virtual host.
             mapping = storage._path_mapping
             if not mapping.has_key(ph_path):
-                mapping[ph_path] = []
-            mapping[ph_path].append(abs_url)
+                mapping[ph_path] = ()
+            abs_urls = mapping[ph_path] + (abs_url,)
+            mapping[ph_path] = abs_urls
 
-        return self._finalize_template(cached_template, obj, tab_name, breadcrumb_vein)
+        return self._finalize_template(
+            cached_template, obj, tab_name, breadcrumb_vein)
 
     security.declareProtected(SilvaPermissions.ViewAuthenticated,
                               'invalidate')
     def invalidate(self, obj):
         """Invalidate the cache for a specific object
         """
-        storage = getattr(self.aq_inner.temp_folder, 'silva_sidebar_cache', None)
+        storage = self._get_storage(create=0)
         if storage is None:
             return
             
         pub = obj.get_publication()
         ph_path = pub.getPhysicalPath()
         abs_urls = storage._path_mapping.get(ph_path)
+
         if abs_urls is None:
             return
         for abs_url in abs_urls:
             del storage._sidebar_cache[abs_url]
         del storage._path_mapping[ph_path]
 
+    def _get_storage(self, create=1):
+        storage = getattr(self.aq_inner.silva_cache, 'silva_sidebar_cache', None)
+        if storage is None and create:
+            cache_container = self.aq_inner.silva_cache
+            cache_container.silva_sidebar_cache = SidebarCache('silva_sidebar_cache')
+            # Trigger persistence machinery
+            cache_container._p_changed = 1
+            storage = cache_container.silva_sidebar_cache
+        return storage
+    
     def _render_template(self, pub):
         """Actually render the pagetemplate
 
