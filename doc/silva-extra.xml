@@ -5,7 +5,7 @@
 <description></description>
  <metadata_element id="subject">
    <index_type>ZCTextIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>TextAreaField</field_type>
    <acquire_p>1</acquire_p>
    <read_only_p>0</read_only_p>
@@ -70,7 +70,7 @@
  </metadata_element>
  <metadata_element id="keywords">
    <index_type>ZCTextIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>TextAreaField</field_type>
    <acquire_p>1</acquire_p>
    <read_only_p>0</read_only_p>
@@ -135,7 +135,7 @@
  </metadata_element>
  <metadata_element id="content_description">
    <index_type>ZCTextIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>TextAreaField</field_type>
    <acquire_p>1</acquire_p>
    <read_only_p>0</read_only_p>
@@ -200,7 +200,7 @@
  </metadata_element>
  <metadata_element id="comment">
    <index_type>ZCTextIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>TextAreaField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>0</read_only_p>
@@ -265,7 +265,7 @@
  </metadata_element>
  <metadata_element id="creationtime">
    <index_type>DateIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>DateTimeField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>1</read_only_p>
@@ -328,7 +328,7 @@
  </metadata_element>
  <metadata_element id="modificationtime">
    <index_type>DateIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>DateTimeField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>1</read_only_p>
@@ -391,7 +391,7 @@
   </metadata_element>
  <metadata_element id="publicationtime">
    <index_type>DateIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>DateTimeField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>1</read_only_p>
@@ -454,7 +454,7 @@
  </metadata_element>
  <metadata_element id="expirationtime">
    <index_type>DateIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>DateTimeField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>1</read_only_p>
@@ -517,7 +517,7 @@
  </metadata_element>
  <metadata_element id="creator">
    <index_type>ZCTextIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>StringField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>1</read_only_p>
@@ -697,7 +697,7 @@
  </metadata_element>
  <metadata_element id="contactname">
    <index_type>ZCTextIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>StringField</field_type>
    <acquire_p>1</acquire_p>
    <read_only_p>0</read_only_p>
@@ -758,7 +758,7 @@
  </metadata_element>
  <metadata_element id="contactemail">
    <index_type>ZCTextIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>EmailField</field_type>
    <acquire_p>1</acquire_p>
    <read_only_p>0</read_only_p>
