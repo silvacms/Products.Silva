@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.51.2.1 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -149,8 +149,10 @@ class GhostVersion(SimpleItem.SimpleItem):
             object = self.unrestrictedTraverse(self._content_path)
             return '/' + object.absolute_url(1)
         except (AttributeError, KeyError):
-            # AttributeError is what unrestrictedTraverse raises if it can find an object, but not its attribute
-            # KeyError is what unrestrictedTraverse raises if it cannot find the object
+            # AttributeError is what unrestrictedTraverse raises if it can 
+            # find an object, but not its attribute
+            # KeyError is what unrestrictedTraverse raises if it cannot 
+            # find the object
             return '/'.join(self._content_path)
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
@@ -208,7 +210,7 @@ class GhostVersion(SimpleItem.SimpleItem):
         
         if (not IVersionedContent.isImplementedBy(content) or    
             content.meta_type == 'Silva Ghost'):
-            return None    
+            return None        
         return content
 
     def render_preview(self):
@@ -221,6 +223,7 @@ class GhostVersion(SimpleItem.SimpleItem):
         if content is None:
             return None # public render code of ghost should give broken message
         else:
+            self.REQUEST.set('ghost_model', self.aq_inner)
             return content.view()
 
     def render_view(self):
@@ -232,7 +235,8 @@ class GhostVersion(SimpleItem.SimpleItem):
         content = self._get_content()
         if content is None:
             return None # public render code of ghost should give broken message
-        else:
+        else:            
+            self.REQUEST.set('ghost_model', self.aq_inner)
             return content.view()
     
 manage_addGhostForm = PageTemplateFile("www/ghostAdd", globals(),

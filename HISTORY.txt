@@ -1,8 +1,29 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.25 $
+$Revision: 1.47.2.26 $
 
 Silva changes
+
+  0.9.1.3
+
+    Features Added
+
+        - Alternating CSS classes in table rows for external data elements.
+
+    Bugs Fixed
+
+        - Fixed situation where authors could not move items to other
+          positions in the folders.
+
+        - Fixed bug where no asset could be added in the asset lookup
+          dialog when no previous assets where available in this folder.
+
+        - Images nested in tables now keep their <a href="..."> tag (if set
+          on the image element).
+
+        - Ghosts of Documents containing a TOC will render this TOC with
+          the Ghost's container context and not with the container context
+          of the target Document.
 
   0.9.1.2
 

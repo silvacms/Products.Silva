@@ -1,0 +1,1 @@
+return context.content(append_to_url='', public=1)
