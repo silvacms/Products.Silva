@@ -1,9 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74.4.8 $
+# $Revision: 1.74.4.8.12.1 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
-from Globals import InitializeClass
+from Globals import InitializeClass, DevelopmentMode
 from DateTime import DateTime
 # Silva
 from Products.Silva import roleinfo
@@ -482,4 +482,15 @@ class Security(AccessManager):
             if not self.__ac_local_groups__.getMappings():
                 self.__ac_local_groups__ = None
 
+    # XXX where does this method belong? it needs to be accessible
+    # from page templates easily so i put it here
+    security.declarePublic('sec_in_development_mode')
+    def sec_in_development_mode(self):
+        """Returns true if the site is in development mode and user is
+        Manager.
+        """
+        is_manager = getSecurityManager().getUser().has_role(
+            ['Manager'], object=self)
+        return DevelopmentMode and is_manager
+    
 InitializeClass(Security)

@@ -126,7 +126,7 @@ function handle_default_action(element, event, action)
     <span tal:replace="structure notice">
       message
     </span>
-    <tal:block condition="python:user.has_role(['Manager'], object=model) and not notice">
+    <tal:block condition="python:model.sec_in_development_mode() and not notice">
       <a class="reveal"
         href="/manage_main"
         title="jump to zope top: alt-`"
