@@ -123,7 +123,7 @@ function setReference() {
 <span tal:replace="nothing"> _______ icon cell _______ </span>
   <td nowrap="1">
     <input type="radio" name="mumble" value=""
-      tal:attributes="value python:'%s||/%s' % (asset.id, asset.absolute_url(1))" />
+      tal:attributes="value python:'%s||%s' % (asset.id, ('/').join(asset.getPhysicalPath()))" />
     <a href="asset" title="View this asset"
       tal:attributes="href string:${asset/absolute_url}"><img tal:replace="structure python:view.render_icon(asset.meta_type)" /></a>
   </td>
