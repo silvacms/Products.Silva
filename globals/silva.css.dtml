@@ -244,6 +244,7 @@ div.flowBar {
 /* ___________________________________________________________ footer _____ */
 
 div.footer {
+  clear: both;
   font-size: 94%;
   color: &dtml-shade30;;
   background: &dtml-listingTopBackground;;
@@ -265,6 +266,7 @@ div.footer a {
 /* _____________________________________________________ personal bar _____ */
 
 div.personalBar {
+  clear: both;
   text-align: center;
   background: #505e65;
   margin: 0em 0em 0em 0em;
