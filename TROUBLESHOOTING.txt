@@ -76,14 +76,23 @@ Installation problems
 
 Problems when using Silva 
 
-  Unicode problems with Silva Images when Localizer is installed.
+  Unicode problems with Silva Images when Localizer or
+  PlacelessTranslationService is installed.
 
     There're some reports of unicode problems regarding Silva images when
-    when the Localizer Product is installed. So far the only solution found
-    is to uninstall Localizer, or set the environment variable
-    LOCALIZER_USE_ZOPE_UNICODE in the script starting Zope.
-    This may break other products relying on Localizer do apply its
-    unicode patches, however.
+    when the Localizer Product is installed. A quite reproducible way
+    to check this issue is to visit the preview tab of the Silva
+    Documentation installed inside Silva, e.g.:
+
+      http://localhost:8080/silva/silva_docs/edit/tab_preview
+
+    So far the only solution found is to uninstall Localizer, or set the
+    environment variable LOCALIZER_USE_ZOPE_UNICODE in the script
+    starting Zope. This may break other products relying on Localizer do
+    apply its unicode patches, however.
+		For PlacelessTranslationService setting the environment variable as
+    above has no effect and at the time of writing this (with PTS-1.0rc8
+    released) one needs to uninstall that product to get rid of the error.
 
   Error when Adding a Silva Document
     
@@ -138,9 +147,8 @@ Problems when using Silva
     ZSESSION_TIMEOUT_MINS in the script used to start Zope (2.6)
     You should be able to find more information about this in the 
     doc/ENVIRONMENT.txt of the Zope installation.
-    Since Zope 2.7 (which is not yet supported by Silva),
-    check with the variable "session-timeout-minutes" in the servers
-    configuration file.
+    Since Zope 2.7 check with the variable "session-timeout-minutes" in
+    the server configuration file.
 
 
   "KeyError" in the user lookup view of the "Access" tab
