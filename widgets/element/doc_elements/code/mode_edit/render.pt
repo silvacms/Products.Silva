@@ -15,7 +15,7 @@
                repeat="obj code_objects">
       <option tal:define="path python:'/'.join(obj.getPhysicalPath())"
               tal:attributes="value path; selected python:test(path == selected_path, 'selected', None)" 
-              tal:content="python:'%s (%s)' % (obj.get_title_or_id_html(), path)" />
+              tal:content="python:'%s (%s)' % (obj.title_or_id(), path)" />
     </tal:block>
   </select>
 </tal:block>

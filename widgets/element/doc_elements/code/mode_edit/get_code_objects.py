@@ -44,7 +44,7 @@ while 1:
     obj = obj.aq_parent
 
 # sort by title/id
-code_objects.sort(lambda x, y: cmp(x.get_title_or_id_html(), y.get_title_or_id_html()))
+code_objects.sort(lambda x, y: cmp(x.title_or_id(), y.title_or_id()))
 
 # return list of code objects
 return code_objects
