@@ -273,8 +273,8 @@ There are no active content objects in this folder.
 <tr class="controls-cycle"
   tal:condition="python:len(publishables)">
   <td colspan="8">
-    <tal:block condition="python:len(publishables) > 1 and silva_permissions['ApproveSilvaContent']"><span class="widebody">Move selected items to position:</span>
-    <select name="new_position" title="Choose new position: alt-p" accesskey="p">
+    <tal:block condition="python:len(publishables) > 1 and silva_permissions['ApproveSilvaContent']"><span class="widebody"><label for="new_position" title="Access key: alt-p" accesskey="p">Move selected items to <u>p</u>osition:</label></span>
+    <select name="new_position" id="new_position" title="Choose new position: alt-p">
       <tal:block repeat="item publishables">
       <option value="0" tal:attributes="value repeat/item/number"
         tal:content="repeat/item/number" />

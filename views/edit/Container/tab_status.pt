@@ -278,12 +278,12 @@ if (document.forms[0]) {
 </td>
 <tal:editors-tab condition="silva_permissions/ApproveSilvaContent">
 <td class="widebody" align="right" colspan="2">
-Expiration time:&nbsp;
+<label title="Access key: alt-i (some platforms)" accesskey="i">Expiration time:</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form.expiration_datetime.render(REQUEST=request)" />
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
 </td>
 <td class="widebody" align="right" colspan="2">
-<label for="expires_flag">Set&nbsp;expiration&nbsp;time?&nbsp;</label>
+<label for="expires_flag" title="Access key: alt-x" accesskey="x">Set&nbsp;e<u>x</u>piration&nbsp;time?&nbsp;</label>
 <field tal:replace="structure python:view.tab_status_form.expires_flag.render(REQUEST=request)" />
 </td>
 </tal:editors-tab>
@@ -298,13 +298,13 @@ Expiration time:&nbsp;
 </td>
 <tal:editors-tab condition="silva_permissions/ApproveSilvaContent">
 <td class="widebody" align="right" colspan="2">
-Publish time:&nbsp;
+<label title="Access key: alt-m (some platforms)" accesskey="m">Publish time:</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
 </td>
 <td class="widebody" align="right" colspan="2"
   tal:condition="silva_permissions/ApproveSilvaContent">
-<label for="publish_now_flag">Publish&nbsp;right&nbsp;now?&nbsp;</label>
+<label for="publish_now_flag" title="Access key: alt-u" accesskey="u">P<u>u</u>blish&nbsp;right&nbsp;now?&nbsp;</label>
 <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
 </td>
 </tal:editors-tab>

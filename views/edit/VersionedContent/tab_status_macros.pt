@@ -40,20 +40,7 @@ The last message related to this is:
 
 <tr class="focus" valign="top">
 <td align="right">
-Content publish time:&nbsp;
-<field tal:replace="structure 
-      python:view.tab_status_form_author.publish_datetime.
-                render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)" 
-/>
-</td>
-<td>
-&nbsp;
-</td>
-</tr>
-
-<tr class="focus-cycle" valign="top">
-<td align="right">
-Expiration time:&nbsp;
+<label title="Access key: alt-i (some platforms)" accesskey="i">Expiration time:</label>&nbsp;
 <field tal:replace="structure 
      python:view.tab_status_form_author.expiration_datetime.
           render(value=model.get_unapproved_version_expiration_datetime(), REQUEST=request)" 
@@ -64,12 +51,25 @@ If this content should expire, set the time.&nbsp;
 </td>
 </tr>
 
+<tr class="focus-cycle" valign="top">
+<td align="right">
+<label title="Access key: alt-m (some platforms)" accesskey="m">Content publish time:</label>&nbsp;
+<field tal:replace="structure 
+      python:view.tab_status_form_author.publish_datetime.
+                render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)" 
+/>
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+
 <tr class="focus" valign="top">
 <td align="right">
 &nbsp;
 </td>
 <td align="right">
-<label for="expires_flag">Turn on expiration time?&nbsp;</label><field
+<label for="expires_flag" title="Access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_author.expires_flag.render(REQUEST=request)" />
 </td>
 </tr>
@@ -167,20 +167,7 @@ Notes
 
 <tr class="focus" valign="top">
 <td align="right">
-Content publish time:&nbsp;
-<field tal:replace="structure 
-    python:view.tab_status_form_editor.publish_datetime.
-       render(REQUEST=request)
-" />
-</td>
-<td>
-&nbsp;
-</td>
-</tr>
-
-<tr class="focus-cycle" valign="top">
-<td align="right">
-Expiration time:&nbsp;
+<label title="Access key: alt-i (some platforms)" accesskey="i">Expiration time:</label>&nbsp;
 <field tal:replace="structure 
      python:view.tab_status_form_editor.expiration_datetime.
          render(REQUEST=request)
@@ -191,12 +178,24 @@ If this content should expire, set the time.&nbsp;
 </td>
 </tr>
 
+<tr class="focus-cycle" valign="top">
+<td align="right">
+<label title="Access key: alt-m (some platforms)" accesskey="m">Content publish time:</label>&nbsp;
+<field tal:replace="structure 
+    python:view.tab_status_form_editor.publish_datetime.render(REQUEST=request)
+" />
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+
 <tr class="focus" valign="top">
 <td align="right">
 &nbsp;
 </td>
 <td align="right">
-<label for="expires_flag">Turn on expiration time?&nbsp;</label><field
+<label for="expires_flag" title="Access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_editor.expires_flag.render(REQUEST=request)" />
 </td>
 </tr>
@@ -206,7 +205,7 @@ If this content should expire, set the time.&nbsp;
 &nbsp;
 </td>
 <td align="right">
-<label for="publish_now_flag">Publish right now?&nbsp;</label><field
+<label for="publish_now_flag" title="Access key: alt-u" accesskey="u">P<u>u</u>blish right now?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_editor.publish_now_flag.render(REQUEST=request)" />
 </td>
 </tr>
@@ -240,17 +239,7 @@ _____________________ Editor can change settings _______________________
 
 <tr class="focus" valign="top">
 <td align="right">
-Publish time:&nbsp;
-<field tal:replace="structure python:view.tab_status_form_change_settings.publish_datetime.render(model.get_next_version_publication_datetime())" />
-</td>
-<td>
-&nbsp;
-</td>
-</tr>
-
-<tr class="focus-cycle" valign="top">
-<td align="right">
-Expiration time:&nbsp;
+<label title="Access key: alt-i (some platforms)" accesskey="i">Expiration time:</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
 </td>
 <td>
@@ -258,12 +247,23 @@ If this content should expire, set the time.&nbsp;
 </td>
 </tr>
 
+<tr class="focus-cycle" valign="top">
+<td align="right">
+<label title="Access key: alt-m (some platforms)" accesskey="m">Publish time:</label>&nbsp;
+<field tal:replace="structure python:view.tab_status_form_change_settings.publish_datetime.render(model.get_next_version_publication_datetime())" />
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+<td align="right">
 <tr class="focus" valign="top">
 <td align="right">
 &nbsp;
 </td>
 <td align="right">
-<label for="expires_flag">Turn on expiration time?&nbsp;</label><field
+<label for="expires_flag" title="Access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_change_settings.expires_flag.render(model.get_next_version_expiration_datetime() is not None)" />
 </td>
 </tr>
@@ -272,7 +272,7 @@ If this content should expire, set the time.&nbsp;
 <td align="left">&nbsp;
 </td>
 <td align="right">
-<label for="publish_now_flag">Publish right now?&nbsp;</label><field
+<label for="publish_now_flag" title="Access key: alt-u" accesskey="u">P<u>u</u>blish right now?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_change_settings.publish_now_flag.render()" />
 </td>
 </tr>
