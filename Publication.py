@@ -89,6 +89,11 @@ class Publication(Folder):
             return self.aq_parent.get_silva_addables_allowed_in_publication()
         else:
             return addables
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'is_silva_addables_acquired')
+    def is_silva_addables_acquired(self):
+        return self._addables_allowed_in_publication is None
           
 InitializeClass(Publication)
 

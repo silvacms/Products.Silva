@@ -361,11 +361,15 @@ class Publication(Container):
     
     def get_silva_addables_allowed_in_publication(self):
         """Get a list of all addables explicitly allowed in this
-        publication (and its subcontainers). If this returns None,
-        the list is cquired from the publication higher in the hierarchy,
-        or is the complete list of addables in case this is the root.
+        publication (and its subcontainers).
         """
 
+    def is_silva_addables_acquired(self):
+        """Return true if the list of addables is acquired from
+        above (set_silva_addables_allowed_in_publication set to None), false
+        if not.
+        """
+        
 class Versioning(Interface.Base):
     """Can be mixed in with an object to support simple versioning.
     This interface only keeps a reference id to the version and the

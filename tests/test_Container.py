@@ -282,14 +282,20 @@ class AddableTestCase(ContainerBaseTestCase):
                           self.get_meta_types(
             self.publication5.get_silva_addables()))
         self.publication5.set_silva_addables_allowed_in_publication(['Baz', 'Qux'])
+        self.assertEquals(0,
+                          self.publication5.is_silva_addables_acquired())
         self.assertEquals(['Baz', 'Qux'],
                           self.get_meta_types(self.publication5.get_silva_addables()))
         self.publication5.set_silva_addables_allowed_in_publication(None)
         self.assertEquals(['Foo', 'Bar'],
                           self.get_meta_types(self.publication5.get_silva_addables()))
+        self.assertEquals(1,
+                          self.publication5.is_silva_addables_acquired())
         self.sroot.set_silva_addables_allowed_in_publication(None)
         self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
                           self.get_meta_types(self.publication5.get_silva_addables()))
+        self.assertEquals(1,
+                          self.sroot.is_silva_addables_acquired())
         
 def get_silva_addables_hack(self):
     return ['Foo', 'Bar', 'Baz', 'Qux']

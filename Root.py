@@ -72,7 +72,7 @@ class Root(Publication):
             return self.get_silva_addables_all()
         else:
             return addables
-        
+    
 InitializeClass(Root)
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
