@@ -1,6 +1,6 @@
 <html>
   <head>
-    <link rel="stylesheet" href="globals/base.css"  tal:attributes="href here/globals/base.css/absolute_url | nothing "
+    <link rel="stylesheet" href="globals/base.css"  tal:attributes="href here/globals/base.css/absolute_url | nothing " />
     <title>Message from system</title>
   </head>
   <body>
