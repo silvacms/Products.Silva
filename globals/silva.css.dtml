@@ -259,7 +259,7 @@ div.footer a {
   font-weight: &dtml-mainTabFontWeight;;
   padding: 0;
   margin: 0;
-  text-transform: none;
+  text-decoration: none;
 }
 div.footer a:visited {
   color: &dtml-mainLinkColor;;
@@ -279,8 +279,7 @@ div.personalBar a {
   color: #b7cee6;
     padding: 0;
     margin: 0;
-    text-transform: none;
-    cursor: pointer;
+    text-decoration: none;
 }
 div.personalBar a:visited {
   color: #b7cee6;
