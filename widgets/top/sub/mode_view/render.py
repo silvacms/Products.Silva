@@ -21,7 +21,7 @@ viewer = context.service_editor.getViewer()
 if firstNode.nodeName == 'p':
     result.append(context.service_editorsupport.render_text_as_html(firstNode))
 elif firstNode.nodeName == 'image':
-    result.append(viewer.getWidget(firstNode).render_simple())
+    result.append(viewer.getWidget(firstNode).tag())
 else:
     result.append(viewer.getWidget(firstNode).render())
 # handle the rest
