@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.94 2003/09/29 15:02:38 zagy Exp $
+# $Id: SilvaObject.py,v 1.95 2003/10/10 12:07:57 faassen Exp $
 
 # python
 from types import StringType
@@ -316,7 +316,7 @@ class SilvaObject(Security, ViewCode):
         #    self.get_root().service_members.get_member(
         #        self.REQUEST.AUTHENTICATED_USER.getUserName())
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_xml')
     def get_xml(self, with_sub_publications=0, last_version=0):
         """Get XML-Document in UTF8-Encoding for object (recursively).
@@ -344,7 +344,7 @@ class SilvaObject(Security, ViewCode):
         result = context.f.getvalue()
         return result.encode('UTF-8') 
     
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_xml_for_objects')
     def get_xml_for_objects(self, objects, with_sub_publications=0, last_version=0):
         """Get XML-Document in UTF8-Encoding for a list of object references
@@ -369,7 +369,7 @@ class SilvaObject(Security, ViewCode):
         result = context.f.getvalue()
         return result.encode('UTF-8') 
     
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml') 
     def to_xml(self, context):
         """Handle unknown objects. (override in subclasses)

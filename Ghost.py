@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.72 $
+# $Revision: 1.73 $
 
 # Zope
 from OFS import SimpleItem
@@ -251,7 +251,7 @@ class Ghost(CatalogedVersionedContent):
     def __init__(self, id):
         Ghost.inheritedAttribute('__init__')(self, id)
     
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
         if context.last_version == 1:

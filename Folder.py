@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.140 $
+# $Revision: 1.141 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -830,7 +830,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """
         return Copying.resolve_ref(self.getPhysicalRoot(), ref)
 
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
         """Render object to XML.

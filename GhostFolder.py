@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.21 2003/09/22 09:37:20 zagy Exp $
+# $Id: GhostFolder.py,v 1.22 2003/10/10 12:07:57 faassen Exp $
 
 from __future__ import nested_scopes
 
@@ -304,6 +304,8 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         """replace self with a folder"""
         self._to_folder_or_publication_helper(to_folder=1)
 
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'to_xml')
     def to_xml(self, context):
         f = context.f
         f.write("<silva_ghostfolder id='%s' content_url='%s'>" % (

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 # Python
 from StringIO import StringIO
 # Zope
@@ -41,7 +41,7 @@ class DemoObject(CatalogedVersionedContent):
 
     __implements__ = IVersionedContent
        
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
         """Returns this object as XML"""
