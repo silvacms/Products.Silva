@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -17,7 +17,8 @@ from Products.Silva.helpers import add_and_edit, translateCdata
 # misc
 from cgi import escape
 
-from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
+from Products.Silva.ImporterRegistry import importer_registry, \
+                     xml_import_helper, get_xml_id, get_xml_title
 from Products.ParsedXML.ExtraDOM import writeStream
 
 icon="www/silvageneric.gif"
@@ -170,6 +171,8 @@ def xml_import_handler(object, node):
         if child.nodeName == u'doc':
             childxml = writeStream(child).getvalue().encode('utf8')
             version.content.manage_edit(childxml) # expects utf8
-        elif hasattr(version, 'set_%s' % child.nodeName.encode('cp1252')) and child.childNodes[0].nodeValue:
-            getattr(version, 'set_%s' % child.nodeName.encode('cp1252'))(child.childNodes[0].nodeValue.encode('cp1252'))
+        elif (hasattr(version, 'set_%s' % child.nodeName.encode('cp1252'))
+              and child.childNodes and child.childNodes[0].nodeValue):
+            getattr(version, 'set_%s' % child.nodeName.encode('cp1252')) \
+                        (child.childNodes[0].nodeValue.encode('cp1252'))
 
