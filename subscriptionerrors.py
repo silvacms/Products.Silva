@@ -14,6 +14,21 @@ class SubscriptionError(Exception):
 
 allow_class(SubscriptionError)
 
+class CancellationError(Exception):
+    pass
+
+allow_class(CancellationError)
+
+class InvalidEmailaddressError(Exception):
+    pass
+
+allow_class(InvalidEmailaddressError)
+
+class NotSubscribableError(Exception):
+    pass
+
+allow_class(NotSubscribableError)
+
 class AlreadySubscribedError(SubscriptionError):
     # NOTE: Please make sure in the UI code not to expose any information
     # about the validity of the email address!

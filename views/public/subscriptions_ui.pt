@@ -14,7 +14,7 @@
       path python: '/'.join(model.getPhysicalPath());"
     i18n:domain="silva"
     >
-    <div tal:condition="feedback" class="feedback" tal:content="feedback">
+    <div tal:condition="feedback" class="feedback" i18n:translate="" tal:content="feedback">
       feedback message
     </div>
     <tal:block condition="show_form"> 

@@ -1,5 +1,4 @@
 from Products.Silva import subscriptionerrors as errors
-from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 service = context.service_subscriptions
@@ -7,7 +6,7 @@ service = context.service_subscriptions
 content = context.restrictedTraverse(request['path'], None)
 if content is None:
     return context.subscriptions_ui(
-        message=_('Path does not lead to a content object'))
+        message='Path does not lead to a content object')
 
 try:
     service.requestSubscription(content, request['emailaddress'])
@@ -17,8 +16,8 @@ except (errors.AlreadySubscribedError, errors.NotSubscribedError), e:
     pass
 except errors.SubscriptionError, e:
     return context.subscriptions_ui(
-        message=_(e), subscr_emailaddress=request['emailaddress'])
+        message=e, subscr_emailaddress=request['emailaddress'])
 
 return context.subscriptions_ui(
-    message=_('Confirmation request for subscription has been emailed'),
+    message='Confirmation request for subscription has been emailed',
     show_form=False)

@@ -105,7 +105,6 @@ class SubscriptionService(Folder.Folder):
         return adapted.isSubscribable()
     
     security.declareProtected(SilvaPermissions.View, 'requestSubscription')
-    _ = lambda x: x
     def requestSubscription(self, content, emailaddress):
         # Send out request for subscription
         # NOTE: no doc string, so, not *publishable* TTW        
@@ -113,10 +112,10 @@ class SubscriptionService(Folder.Folder):
         adapted = subscribable.getSubscribable(content)
         # see if content is subscribable
         if adapted is None or not adapted.isSubscribable(): 
-            raise errors.SubscriptionError(_('content is not subscribable'))
+            raise errors.NotSubscribableError()
         # validate address
         if not self._isValidEmailaddress(emailaddress):
-            raise errors.SubscriptionError(_('emailaddress not valid'))
+            raise errors.InvalidEmailaddressError()
         # generate confirmation token using adapter
         token = adapted.generateConfirmationToken(emailaddress)
         # check if not yet subscribed
@@ -140,16 +139,16 @@ class SubscriptionService(Folder.Folder):
         adapted = subscribable.getSubscribable(content)
         # see if content is subscribable
         if adapted is None:
-            raise errors.SubscriptionError('content does not support subscriptions')
+            raise errors.NotSubscribableError()
         # validate address
         if not self._isValidEmailaddress(emailaddress):
-            raise errors.SubscriptionError('emailaddress not valid')
+            raise errors.InvalidEmailaddressError()
         # check if indeed subscribed
         if not adapted.isSubscribed(emailaddress):
             # send an email informing about this situation
             self._sendSuperfluousCancellationRequestEmail(
                 content, emailaddress, 'not_subscribed_template')
-            raise errors.NotSubscribedError('emailaddress was not subscribed')
+            raise errors.NotSubscribedError()
         # generate confirmation token using adapter
         token = adapted.generateConfirmationToken(emailaddress)
         # send confirmation email to emailaddress
@@ -167,10 +166,10 @@ class SubscriptionService(Folder.Folder):
         context = self._resolve_ref(ref)
         subscr = subscribable.getSubscribable(context)
         if subscr is None:
-            raise errors.SubscriptionError('subscription failed!')
+            raise errors.SubscriptionError()
         emailaddress = urllib.unquote(emailaddress)
         if not subscr.isValidSubscription(emailaddress, token):
-            raise errors.SubscriptionError('subscription failed!')
+            raise errors.SubscriptionError()
         subscr.subscribe(emailaddress)
         
     security.declareProtected(SilvaPermissions.View, 'unsubscribe')
@@ -181,10 +180,10 @@ class SubscriptionService(Folder.Folder):
         context = self._resolve_ref(ref)
         subscr = subscribable.getSubscribable(context)
         if subscr is None:
-            raise errors.SubscriptionError('cancellation failed!')
+            raise errors.CancellationError()
         emailaddress = urllib.unquote(emailaddress)
         if not subscr.isValidCancellation(emailaddress, token):
-            raise errors.SubscriptionError('cancellation failed!')
+            raise errors.CancellationError()
         subscr.unsubscribe(emailaddress)
 
     # Notification trigger
