@@ -90,7 +90,7 @@ Comment 26
 
 Comment 27
 {
-	{ Name "$Id: core.ssd,v 1.1 2003/07/29 06:19:03 zagy Exp $" }
+	{ Name "$Id: core.ssd,v 1.2 2003/07/29 06:21:18 zagy Exp $" }
 	{ Annotation "" }
 	{ Parent 0 }
 	{ Index "" }
@@ -398,7 +398,7 @@ TextBox 39
 {
 	{ View 13 }
 	{ Subject 27 }
-	{ Position 630 20 }
+	{ Position 510 20 }
 	{ Size 20 20 }
 	{ Color "black" }
 	{ LineWidth 1 }
