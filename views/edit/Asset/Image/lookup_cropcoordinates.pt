@@ -17,35 +17,27 @@
       background: #91989b;
     }
     #draggable {
-      background-color: white;
+      background-color: transparent;
       position: absolute;
       z-index: 1;
-      border: 1px dashed black;
-      -moz-opacity: 0.5;
+      border: 1px dashed #73868c;
+      /*-moz-opacity: 0.50;*/
     }
 
-    #dragbar table {
-      border: 1px solid black;
-    }
-    
-    #dragbar {
-      background-color: #91989b;
-      border: 1px solid black;
-      color: white;
+    #dragbar, #additional_draggable {
+      color: #73868c;
       text-align: center;
       cursor: move;
-      z-index: 5;
-      -moz-opacity: 1;
     }
 
-    #dragbar:active {
-      background-color: red;
+    #draggable{
+      border: 1px dashed red;
     }
-
+  
     #handle {
       cursor: se-resize;
-      border-right: 2px solid black;
-      border-bottom: 2px solid black;
+      border-right: 3px solid #73868c;
+      border-bottom: 3px solid #73868c;
       z-index: 5;
     }
     
@@ -74,8 +66,16 @@
         
         //]]>
       </script>
-      <div style="position: absolute; top: 0px; left: 0px;">
-        <ul style="position: absolute;">
+      <div class="info" style='width: 180px; float: left;'>
+        <h3>predefined sizes:</h3>
+        <ul style="list-item-style: none">
+          <li>
+            <a href="#"
+              onclick="setDraggableSize(50, 50)"
+              title="Resize to 50x50 pixels">
+              set window to 50x50 Pixel
+            </a>
+          </li>
           <li>
             <a href="#"
               onclick="setDraggableSize(75, 75)"
@@ -87,17 +87,17 @@
             <a href="#" 
               onclick="setDraggableSize(100, 100)" 
               title="Resize to 100x100 pixels">
-              set window to 100x100
+              set window to 100x100 Pixel
             </a>
           </li>
           <li>
             <a href="#" 
               onclick="setDraggableSize(250, 250)" 
               title="Resize to 250x250 pixels">
-              set to 250x250
+              set window to 250x250 Pixel
             </a>
           </li>
-          <li>
+        </ul>
             <input class="transport" 
               type="button" 
               onclick="opener.insertCropCoords(cropper.width(),
@@ -105,40 +105,38 @@
               value="use coordinates..."
               title="alt-u"
               accesskey="u"
+              style="float: right"
             />
-          </li>
-        </ul>
+      </div>
+        <div style="top: 0px; margin-left: 200px;">
       <div id="draggable" 
         style="position: absolute; 
           min-width: 25px;
           width: 150px; 
           min-height: 25px; 
           height: 100px;
-          top: 10px; 
+          top: 100px; 
           left: 10px">
           <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
             <thead>
               <tr>
                 <th id="dragbar" 
                   colspan="2" 
-                  style="text-align: left; height: 20px; line-height: 20px;" 
+                  style="height: 20px; line-height: 20px; position:
+                  absolute;" 
                   onclick="this.blur()">
                   &nbsp;drag
                 </th>
               </tr>
+            </thead>
+            <tbody>
               <tr>
                 <td colspan="2" id="additional_draggable">&nbsp;
                 </td>
               </tr>
-            </thead>
-            <tbody>
               <tr>
-                <td colspan="2" height="100%" valign="top">
-                  &nbsp;
+                <td>&nbsp;
                 </td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
                 <td width="14" height="14" style="line-height: 10px; padding: 0px">
                   <div id="handle" style="width: 10px; height: 10px;">&nbsp;</div>
                 </td>
@@ -147,7 +145,7 @@
           </table>
         </div>
         
-        <img id="image"
+        <img id="image" 
           tal:attributes="src string:${model/absolute_url}/hires_image;
                           alt model/title_or_id"
         /> 
@@ -159,8 +157,8 @@
           cropper = new Cropper('draggable', 
                                   'dragbar', 
                                   'handle', 
-                                  50, 
-                                  10);
+                                  25, 
+                                  25);
 
         //]]>
       </script>

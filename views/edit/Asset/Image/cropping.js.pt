@@ -45,7 +45,7 @@ getPageX = function(event) {
             currnode = currnode.offsetParent;
         };
         return left;
-    } else {
+      } else {
         return event.pageX;
     };
 };
@@ -147,7 +147,9 @@ function Resizable(resizable, handle, minwidth, minheight) {
     this.stopResize = function(event) {
         this.resizing = false;
     };
+
 };
+
 
 function Cropper(layer, dragbar, resizehandle, minwidth, minheight) {
     this.resizable = new Resizable(layer, resizehandle, minwidth, minheight);
@@ -157,9 +159,11 @@ function Cropper(layer, dragbar, resizehandle, minwidth, minheight) {
     this.dragbar = document.getElementById(dragbar);
     this.resizehandle = document.getElementById(resizehandle);
 
+    
     this.initialize = function() {
         var additional = document.getElementById('additional_draggable');
         addEventHandler(additional, 'mousedown', this.draggable.startDrag, this.draggable);
+        addEventHandler(document, 'dblclick', this.insertCropCoords, this);
         this.draggable.initialize();
         this.resizable.initialize();
     };
@@ -173,11 +177,25 @@ function Cropper(layer, dragbar, resizehandle, minwidth, minheight) {
     };
 
     this.left = function() {
-        return parseInt(this.layer.style.left);
+    return parseInt(this.layer.style.left) - 200;
     };
 
     this.top = function() {
         return parseInt(this.layer.style.top);
+    };
+    
+    this.insertCropCoords = function(event) {
+        // Append to previously focused text area
+        field_x = opener.document.getElementById("x");
+        field_y = opener.document.getElementById("y");
+        field_size = opener.document.getElementById("size");
+        
+        field_x.value = this.left();
+        field_y.value = this.top();
+        field_size.value = this.width() + 'x' + this.height();
+        
+        // Close LookupWindow
+        self.close();
     };
 
     this.initialize();
