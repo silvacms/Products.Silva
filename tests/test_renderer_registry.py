@@ -45,5 +45,5 @@ else:
     import unittest
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(SilvaObjectTestCase))
+        suite.addTest(unittest.makeSuite(RendererRegistryTest))
         return suite
