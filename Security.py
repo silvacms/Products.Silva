@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.47 $
+# $Revision: 1.48 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -10,10 +10,12 @@ from IContainer import IContainer
 # Silva
 import SilvaPermissions
 from Membership import noneMember
+from AccessManager import AccessManager
+
 # Groups
 try:
     # Are groups available?
-    from Products.Groups.ZGroupsMapping import ZGroupsMapping    
+    from Products.Groups.ZGroupsMapping import ZGroupsMapping
     from Products.Groups.GroupsErrors import GroupsError
     groups_enabled = 1
 except ImportError:
@@ -23,7 +25,7 @@ LOCK_DURATION = 1./24./3./20. # 20 minutes
 
 interesting_roles = ['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager']
 
-class Security:
+class Security(AccessManager):
     """Can be mixed in with an object to support Silva security.
     (built on top of Zope security)
     Methods prefixed with sec_ so as not to disrupt similarly named
@@ -36,7 +38,7 @@ class Security:
     _lock_info = None
 
     __ac_local_groups__ = None
-    
+
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_assign')

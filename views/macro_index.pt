@@ -98,6 +98,7 @@ Contact person: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contac
 <span class="breadcrumb">
 <a href="logout">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="request/AUTHENTICATED_USER/getUserName" /></a>
 <!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
+&nbsp;&nbsp;<a href="request_roles">(request more roles)</a>
 </span>
 </td>
 <td class="tab-up" align="right" width="30%">

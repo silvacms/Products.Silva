@@ -12,7 +12,13 @@
         <span class="error" tal:content="structure python:options['message']" />
       </div>
     </div>
-    <div class="margins">
+    <div class="margins" tal:condition="python: (options['error_type'] == 'Unauthorized' and here.service_members.allow_subscription())">
+      You are not allowed to view this page without the right credentials. If you have a valid login for this part of the site, click the refresh button on your webbrowser's toolbar to retry logging in. If not, choose one of the following options:<br /><br />
+      <a href="become_visitor">Click here to become a visitor to the site. As a visitor, you can view certain objects unauthenticated users can't view.</a><br /><br />
+      <a href="request_roles">If you already are a visitor, click here to request a role which allows access to the current object. Note that you have to be a visitor to apply for roles.</a><br /><br />
+      <span style="color: red; font-weight: bold;">Error: <span tal:replace="options/error_value" /></span>
+    </div>
+    <div class="margins" tal:condition="python: (options['error_type'] != 'Unauthorized' or not here.service_members.allow_subscription())">
 
       <h2>System problem</h2>
       <p>Something went wrong. If you're testing, the information below is important. <br />

@@ -42,7 +42,7 @@ def add_fss_directory_view(obj, name, base, *args):
 
     # -- sanity check --
     exp_path = expandpath(path)
-        
+
     if normcase(normpath(exp_path)) != normcase(normpath(abs_path)):
         raise ValueError("detected FSS minimalpath/expandpath error, "+
                          "path: %s, FSS path: %s" % ( abs_path, exp_path ))
@@ -59,9 +59,9 @@ def add_fss_directory_view(obj, name, base, *args):
         # situation..
         if info is None:
             raise ValueError('Not a FSS registered directory: %s' % path)
-    
+
     # -- end sanity check because of FSS 1.1 bug --
-    
+
     # FSS should eat the path now and work correctly with it
     manage_addDirectoryView(obj, path, name)
 
@@ -74,7 +74,7 @@ def installFromScratch(root):
     configureLayout(root)
     # now do the uinstallable stuff (views)
     install(root)
-    
+
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
     # create the core views from filesystem
@@ -89,10 +89,10 @@ def install(root):
     # FIXME: should we check if the registries exist?
     # (for upgrading, and maybe to handle accidential deletion)
     registerCoreWidgets(root)
-    
+
 def uninstall(root):
     unregisterViews(root.service_view_registry)
-    root.service_views.manage_delObjects(['Silva'])  
+    root.service_views.manage_delObjects(['Silva'])
 
 def is_installed(root):
     return hasattr(root.service_views, 'Silva')
@@ -108,23 +108,12 @@ def configureProperties(root):
         ('table_cellpadding', '3', 'string'),
         ('table_border', '0', 'string'),
         ('help_url', '/silva/globals/help', 'string'),
-        ('comment', "This is just a place for local notes.", 'string'),     
+        ('comment', "This is just a place for local notes.", 'string'),
         ('access_restriction', 'allowed_ip_addresses: ALL', 'string'),
         ]
     for prop_id, value, prop_type in property_info:
         root.manage_addProperty(prop_id, value, prop_type)
 
-def configureMembership(root):
-    """Add SimpleMembership. The user can replace this service_members
-    with another that hooks into their own user database.
-    """
-    ids = root.objectIds()
-    if 'service_members' not in ids:
-        root.manage_addProduct['Silva'].manage_addSimpleMemberService(
-            'service_members')
-    if 'Members' not in ids:
-        root.manage_addFolder('Members')
-    
 def configureCoreFolders(root):
     """A bunch of core directory views.
     """
@@ -211,28 +200,56 @@ def configureSecurity(root):
         root.manage_permission('Change Group mappings', all_chief)
     except:
         pass
-    
+
 def configureLayout(root, default=0):
     """Install layout code into root.
     If the default argument is true, ids will be prefixed with default_.
     """
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
                'standard_error_message', 'standard_unauthorized_message', ]:
-        add_helper(root, id, globals(), zpt_add_helper, default)    
+        add_helper(root, id, globals(), zpt_add_helper, default)
 
     for id in ['index_html.py', 'index_html_restricted.py', 'preview_html.py']:
         add_helper(root, id, globals(), py_add_helper, default)
-       
+
     add_helper(root, 'frontend.css', globals(), dtml_add_helper, default)
+
+def configureMembership(root):
+    """Install membership code into root.
+    """
+    for id in ['become_visitor.pt', 'request_processed.pt', 'request_roles.pt']:
+        add_helper(root, id, globals(), zpt_add_helper, 0, 'membership')
+
+    for id in ['add_visitor.py', 'request_roles_submit.py']:
+        add_helper(root, id, globals(), py_add_helper, 0, 'membership')
+
+    # add member service and message service
+    ids = root.objectIds()
+    if 'service_members' not in ids:
+        root.manage_addProduct['Silva'].manage_addExtendedMemberService(
+            'service_members')
+    if 'Members' not in ids:
+        root.manage_addFolder('Members')
+
+    if 'service_messages' not in ids:
+        root.manage_addProduct['Silva'].manage_addEmailMessageService('service_messages', 'Service for Messages')
 
 # helpers to add various objects to the root from the layout directory
 # these won't add FS objects but genuine ZMI managed code
-def add_helper(root, id, info, add_func, default=0):
+def add_helper(root, id, info, add_func, default=0, folder='layout'):
     filename = id
     if default:
         id = 'default_' + id
-    text = read_file(filename, info)
+    text = read_file(filename, info, folder)
     add_func(root, id, text)
+
+def pt_add_helper(root, id, text):
+    id = os.path.splitext(id)[0]
+    if hasattr(root.aq_base, id):
+        getattr(root, id).write(text)
+    else:
+        root.manage_addProduct['PageTemplates'].manage_addPageTemplate(
+            id, text=text)
 
 def zpt_add_helper(root, id, text):
     if hasattr(root.aq_base, id):
@@ -240,7 +257,7 @@ def zpt_add_helper(root, id, text):
     else:
         root.manage_addProduct['PageTemplates'].manage_addPageTemplate(
             id, text=text)
-    
+
 def dtml_add_helper(root, id, text):
     if hasattr(root.aq_base, id):
         getattr(root, id).manage_edit(text, '')
@@ -255,8 +272,8 @@ def py_add_helper(root, id, text):
         root.manage_addProduct['PythonScripts'].manage_addPythonScript(id)
         getattr(root, id).write(text)
 
-def read_file(id, info):
-    filename = os.path.join(package_home(info), 'layout', id)
+def read_file(id, info, folder):
+    filename = os.path.join(package_home(info), folder, id)
     f = open(filename, 'rb')
     text = f.read()
     f.close()
@@ -288,7 +305,8 @@ def registerViews(reg):
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
     reg.register('public', 'Silva SQL Data Source', ['public', 'SQLDataSource'])
-    
+    reg.register('public', 'Silva Extended Member', ['public', 'ExtendedMember'])
+
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
     reg.register('add', 'Silva Publication', ['add', 'Publication'])
@@ -310,7 +328,7 @@ def unregisterViews(reg):
         reg.unregister('add', meta_type)
     reg.unregister('edit', 'Silva Root')
     reg.unregister('public', 'Silva Root')
-    
+
 def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'
     """
@@ -348,16 +366,16 @@ def registerCoreWidgets(root):
     registerSubViewer(root)
     registerTableEditor(root)
     registerTableViewer(root)
-    
+
 def registerDocEditor(root):
     wr = root.service_doc_editor
     wr.clearWidgets()
-    
+
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_normal'))
 
-    for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table', 
+    for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table',
                      'nlist', 'dlist', 'code', 'externaldata']:
-        wr.addWidget(nodeName, 
+        wr.addWidget(nodeName,
                      ('service_widgets', 'element', 'doc_elements', nodeName, 'mode_normal'))
 
     wr.setDisplayName('doc', 'Title')
@@ -372,27 +390,27 @@ def registerDocEditor(root):
     wr.setDisplayName('dlist', 'Definition list')
     wr.setDisplayName('code', 'Code Element')
     wr.setDisplayName('externaldata', 'External Data')
-    
-    wr.setAllowed('doc', ['p', 'heading', 'list', 'pre', 'nlist', 'table', 
+
+    wr.setAllowed('doc', ['p', 'heading', 'list', 'pre', 'nlist', 'table',
                   'image', 'toc', 'dlist', 'code', 'externaldata'])
 
 
 def registerDocViewer(root):
     wr = root.service_doc_viewer
     wr.clearWidgets()
-    
+
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
-    for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist', 
+    for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist',
                  'table', 'dlist', 'code', 'externaldata']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
 
 def registerDocPreviewer(root):
     wr = root.service_doc_previewer
     wr.clearWidgets()
-    
+
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
-    
+
     for name in ['p', 'list', 'heading', 'pre', 'nlist', 'table', 'dlist', 'externaldata']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
 
@@ -403,11 +421,11 @@ def registerDocPreviewer(root):
 def registerFieldEditor(root):
     wr = root.service_field_editor
     wr.clearWidgets()
-    
+
     wr.addWidget('doc', ('service_widgets', 'top', 'field', 'mode_normal'))
-    
+
     for nodeName in ['p', 'heading', 'list', 'image', 'nlist']:
-        wr.addWidget(nodeName, 
+        wr.addWidget(nodeName,
                      ('service_widgets', 'element', 'doc_elements', nodeName, 'mode_normal'))
 
     wr.setDisplayName('p', 'Paragraph')
@@ -415,22 +433,22 @@ def registerFieldEditor(root):
     wr.setDisplayName('list', 'List')
     wr.setDisplayName('image', 'Image')
     wr.setDisplayName('nlist', 'Complex list')
-    
+
     wr.setAllowed('doc', ['p', 'heading', 'list', 'nlist', 'image'])
 
 def registerFieldViewer(root):
     wr = root.service_field_viewer
     wr.clearWidgets()
-    
+
     wr.addWidget('doc', ('service_widgets', 'top', 'field', 'mode_view'))
-    
+
     for name in ['p', 'list', 'heading', 'image', 'nlist']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
 
 def registerNListEditor(root):
     wr = root.service_nlist_editor
     wr.clearWidgets()
-    
+
     wr.addWidget('nlist', ('service_widgets', 'top', 'nlist', 'mode_normal'))
     
     for nodeName in ['li']:

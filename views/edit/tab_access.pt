@@ -4,7 +4,8 @@
 <div class="margins" metal:fill-slot="main">
 <tal:block
   condition="python:view.has_access()"
-  define="dummy python:model.security_trigger();">
+  define="dummy python:model.security_trigger();
+          global lastclass string:focus;">
 
 <h2><img src="%s" width="16" height="16" alt="%s"
   tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
@@ -57,7 +58,7 @@
   <td align="left" width="50%">
     <input type="checkbox" name="userids:list" value="userid"
       tal:attributes="value member/userid" />
-    <b tal:content="member/fullname" />
+    <b tal:content="member/fullname" /> (<i tal:content="member/userid" />)
   </td>
   <td align="right" width="50%">
     <i>has role(s): </i>
@@ -119,7 +120,7 @@
   <td align="left">
     <input type="checkbox" name="userids:list" value="userid"
       tal:attributes="value python:member.userid()" />
-    <b tal:content="python:member.fullname()" />
+    <b tal:content="python:member.fullname()" /> (<i tal:content="member/userid" />)
   </td>
   <td align="right">
     <i tal:condition="python:local_roles or upward_roles">has role(s):</i>
@@ -239,7 +240,7 @@
   </td>
   <td>
     &nbsp;
-  </td>
+  </td> define="lastclass string:focus-cycle"
 </tr>
 <tal:block repeat="group upward_groups">
 <tr class="focus"
@@ -262,7 +263,7 @@
       <option value="None">Select role...</option>
       <option value="role"
         tal:repeat="role model/sec_get_roles"
-        tal:attributes="value role"
+        tal:attributes="value role" define="lastclass string:focus-cycle"
         tal:content="role">Role name</option>
     </select>&nbsp;
     <input type="submit" class="button" name="access_assign_to_group:method" value="Assign local role"
@@ -286,7 +287,7 @@
   <td colspan="2" align="right">
     <input type="submit" class="button" name="tab_access_groups:method" value="Groups admin..."
     title="Go to Groups administration - alt-g" accesskey="g" />
-  </td>
+  </td> define="lastclass string:focus-cycle"
 </tr>
 <tr class="topcontrols">
   <td style="background:#b0cbd0;" align="right" colspan="3">
@@ -313,7 +314,7 @@
 <tr class="focus"
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
   <td align="left">
-    <input type="checkbox" name="groups:list" value="group"
+    <input type="checkbox" name="groups:list" value="group" define="lastclass string:focus-cycle"
       tal:attributes="value group" />
     <b tal:content="group" />
   </td>
@@ -346,7 +347,7 @@
   </td>
   <td align="right">
     <b tal:content="role" />
-  </td>
+  </td> define="lastclass string:focus-cycle"
   <td align="right" width="1%">
     <input type="checkbox" class="warningbox" name="revoke_roles:list" value=""
       tal:attributes="value python:'%s||%s' % (group, role);" />
@@ -518,6 +519,90 @@
 </tr>
 </table>
 </div>
+
+<!-- ____________________ PENDING REQUESTS ____________________ -->
+
+<span class="halfline"><br /></span>
+<h2><img src="%s" width="16" height="16" alt="%s"
+    tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    Pending Requests for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
+</h2>
+<div class="worksheet borders top bottom left right">
+
+<tal:block define="requested_roles model/requested_roles">
+
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+<tr align="left" valign="top">
+<td>
+<form action="." method="POST">
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+  <tr>
+    <td colspan="4">
+      <h3>Manage access requests for this object
+        <img src="pixel.gif" width="1px" height="14px"
+          tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+      </h3>
+    </td>
+  </tr>
+
+    <tr>
+      <td colspan="4" style="background:#c0dbe0;">
+        Select the users you want to grant or deny access to and click 'Grant Access' or 'Deny Access'.
+      </td>
+    </tr>
+
+    <tr>
+      <th width="1%">
+        &nbsp;
+      </th>
+      <th width="20%" align="left">
+        User:
+      </th>
+      <th width="20%" align="left">
+        Role:
+      </th>
+      <th align="left">
+        Is approved member:
+      </th>
+    </tr>
+
+  <tal:block repeat="request requested_roles">
+    <tr tal:attributes="class class" tal:define="class python: test(lastclass == 'focus', 'focus-cycle', 'focus'); global lastclass class;
+                                                    userid python: request[0]; role python: request[1]">
+      <td width="1%">
+        <input type="checkbox" name="requests:list" tal:attributes="value python: '|'.join(request)" />
+      </td>
+      <td valign="top" tal:content="userid" width="20%">
+      </td>
+      <td tal:content="role">
+      </td>
+      <td tal:content="python: test(view.service_members.get_member(userid).is_approved(), 'Yes', 'No')">
+      </td>
+    </tr>
+  </tal:block>
+
+  <tr tal:condition="python: len(requested_roles) == 0">
+    <td colspan="4">
+      No roles requested.
+    </td>
+  </tr>
+
+  <tr class="controls" align="right">
+    <td colspan="4">
+      <input class="warningbutton" type="submit" name="tab_access_deny_access:method" value=" Deny Access " />&nbsp;
+      <input class="button" type="submit" name="tab_access_allow_access:method" value=" Allow Access " />&nbsp;
+      <input class="button" type="submit" name="tab_access_allow_and_approve:method" value=" Allow and Approve " />
+    </td>
+  </tr>
+</table>
+</form>
+</tr>
+</table>
+
+</tal:block>
+
+</div>
+
 </tal:block>
 </div>
 </html>

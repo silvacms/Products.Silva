@@ -1,0 +1,108 @@
+from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
+from IAccessManager import IAccessManager
+import SilvaPermissions
+
+class AccessManager:
+    """Mixin class for objects to request local roles on the object"""
+
+    security = ClassSecurityInfo()
+    __implements__ = IAccessManager
+
+    # this method needs low permission settings because it should be useable by visitors
+    security.declareProtected(SilvaPermissions.ViewAuthenticated,
+                              'request_roles_for_user')
+    def request_roles_for_user(self, userid, roles):
+        """Request a role on the current object and send an e-mail to the nearest chiefeditor/manager"""
+        if not hasattr(self, '_requested_roles'):
+            self._requested_roles = []
+        for role in roles:
+            if not (userid, role) in self._requested_roles:
+                self._requested_roles.append((userid, role))
+                self._p_changed = 1
+        # search for the username of the first chief-editor for this object
+        ces = self.sec_get_nearest_of_role('ChiefEditor')
+        if not ces:
+            raise Exception, 'No ChiefEditors available!'
+        for role in roles:
+            for ce in ces:
+                message = 'User with id %s request the %s role on object %s' % (userid, role, self.aq_inner.absolute_url())
+                self.service_messages.send_message(userid, ce, 'Access request', message)
+        self.service_messages.send_pending_messages()
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'allow_role')
+    def allow_role(self, userid, role):
+        """Allows the role and send an e-mail to the user"""
+        member = self.service_members.get_member(userid)
+        if not member.is_approved():
+            raise Exception, 'Member is not approved'
+        self._allow_role_helper(userid, role)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'approve_and_allow')
+    def approve_and_allow(self, userid, role):
+        """Approves a member and then allows him the role"""
+        member = self.service_members.get_member(userid)
+        member.approve()
+        self._allow_role_helper(userid, role)
+
+    def _allow_role_helper(self, userid, role):
+        self.aq_inner.sec_assign(userid, role)
+        self._requested_roles.remove((userid, role))
+        ces = self.sec_get_nearest_of_role('ChiefEditor')
+        if not ces:
+            raise Exception, 'No ChiefEditors available!'
+        for ce in ces:
+            self.service_messages.send_message(ce, userid, 'Access granted', 'The role of %s has been assigned to you on object %s' % (role, self.aq_inner.absolute_url()))
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'deny_role')
+    def deny_role(self, userid, role):
+        """Denies the role and send an e-mail to the user"""
+        ces = self.sec_get_nearest_of_role('ChiefEditor')
+        if not ces:
+            raise Exception, 'No ChiefEditors available!'
+        for ce in ces:
+            self.service_messages.send_message(ce, userid, 'Access denied', 'The role of %s has been denied to you on object %s' % (role, self.aq_inner.absolute_url()))
+        self._requested_roles.remove((userid, role))
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'send_messages')
+    def send_messages(self):
+        """Should be called after approval or denial actions are finished. Will send pending e-mails"""
+        self.service_messages.send_pending_messages()
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_available_roles')
+    def get_available_roles(self):
+        ars = ['Viewer', 'Reader', 'Author', 'Editor']
+        userrs = self.sec_get_local_roles_for_userid(self.REQUEST.AUTHENTICATED_USER.getId())
+        for role in userrs:
+            ars.remove(role)
+        return ars
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'requested_roles')
+    def requested_roles(self):
+        """Returns a list of (userid, role) tuples of all requested roles on this object"""
+        if not hasattr(self, '_requested_roles'):
+            return []
+        return self._requested_roles
+
+    # note the low security restriction on this method, this allows unauthenticated users to add
+    #   themselves to acl_users
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'add_user')
+    def add_user(self, userid, password):
+        """Adds the user to the userfolder. Note that the user will not get a memberobject using this method"""
+        userfolder = self.acl_users.aq_inner
+        userfolder.userFolderAddUser(userid, password, [], [])
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'is_userid_available')
+    def is_userid_available(self, userid):
+        """Returns true if the userid is not yet in use"""
+        return userid not in self.get_valid_userids()
+
+InitializeClass(AccessManager)

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.52 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -11,6 +11,7 @@ from Products.Silva.ImporterRegistry import importer_registry
 from ExtensionRegistry import extensionRegistry
 import ExtensionService
 import SimpleMembership
+import ExtendedMembership
 import DocmaService
 import Group
 # enable Formulator support for FileSystemSite
@@ -41,7 +42,7 @@ def initialize(context):
                         MultiViewRegistry.manage_addMultiViewRegistry),
         icon = "www/silva_multi_view_registry.gif"
         )
-    
+
     context.registerClass(
         ExtensionService.ExtensionService,
         constructors = (ExtensionService.manage_addExtensionServiceForm,
@@ -51,21 +52,21 @@ def initialize(context):
 
     context.registerClass(
         File.FilesService,
-        constructors = (File.manage_addFilesServiceForm, 
+        constructors = (File.manage_addFilesServiceForm,
                         File.manage_addFilesService),
         icon = "www/files_service.gif"
         )
 
     context.registerClass(
-        SimpleMembership.SimpleMemberService,
-        constructors = (SimpleMembership.manage_addSimpleMemberServiceForm,
-                        SimpleMembership.manage_addSimpleMemberService),
+        ExtendedMembership.ExtendedMemberService,
+        constructors = (ExtendedMembership.manage_addExtendedMemberServiceForm,
+                        ExtendedMembership.manage_addExtendedMemberService),
         )
 
     context.registerClass(
-        SimpleMembership.SimpleMember,
-        constructors = (SimpleMembership.manage_addSimpleMemberForm,
-                        SimpleMembership.manage_addSimpleMember),
+        ExtendedMembership.ExtendedMember,
+        constructors = (ExtendedMembership.manage_addExtendedMemberForm,
+                        ExtendedMembership.manage_addExtendedMember),
         )
 
     context.registerClass(
@@ -73,7 +74,7 @@ def initialize(context):
         constructors = (SimpleMembership.manage_addEmailMessageServiceForm,
                         SimpleMembership.manage_addEmailMessageService),
         )
-    
+
     context.registerClass(
         DocmaService.DocmaService,
         constructors = (DocmaService.manage_addDocmaServiceForm,
