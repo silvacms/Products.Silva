@@ -91,7 +91,7 @@ contentTabBackgroundRecede:string=#8fb39e
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
-preBorder:string=1px solid #000
+preBorder:string=1px solid #000000
 preBackground:string=#eaf3f5
 
 messageFont:string=bold 100% Verdana, Helvetica, Arial, sans-serif
