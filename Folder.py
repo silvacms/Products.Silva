@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.90 $
+# $Revision: 1.91 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -547,14 +547,13 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         else:
             return 1
 
-    _id_re = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.]*$')
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_id_valid')
     def is_id_valid(self, id):
         """Check whether id is valid.
         """
-        return self._id_re.search(id) is not None
+        return helpers.check_valid_id(self, id) == helpers.IdCheckValues.ID_OK
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_default')
