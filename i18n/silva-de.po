@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-20 10:53+0100\n"
+"PO-Revision-Date: 2004-12-20 14:29+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -196,7 +196,7 @@ msgstr "Keine Bewilligte Version vorhend, deren Bewilligung aufgehoben werden ka
 
 #: /Versioning.py:163
 msgid "Should never happen: unapproved version ${unapproved} found while approved version ${approved} exists at the same time."
-msgstr ""
+msgstr "Solle nicht vorkommen: nicht genehmigte Version ${unapproved} gefunden während gleichzeitig eine genehmigte Version ${approved} exitsiert."
 
 #: /Versioning.py:190
 msgid "No public version to close."
@@ -341,7 +341,7 @@ msgstr "Benutzer der diesen Inhalt als letzter bearbeitet hat."
 
 #: /doc/silva-extra.xml:628
 msgid "Resource location of this content."
-msgstr ""
+msgstr "Ort des Inhaltes."
 
 #: /doc/silva-extra.xml:679
 msgid "Name of contact person."
@@ -852,7 +852,7 @@ msgstr "Den Ordner, auf den dieser Ghost verweisen soll, finden: alt-r"
 
 #: /views/add/GhostFolder/add_form.pt:82
 msgid "Location of originating folder. Depending on how much content there is, <span class=\"warning\">creation may take a while</span>."
-msgstr ""
+msgstr "Ort des ursprünglichen Ordners. Je nachdem wie groß der refernzierte Ordner ist, kann es etwas dauern."
 
 #: /views/add/GhostFolder/form.form:50
 msgid "Location of originating folder."
@@ -863,7 +863,7 @@ msgid ""
 "There's already a Group with the name ${id} in this Silva\n"
 "        site.<br />In contrast to other Silva objects, Group IDs must be\n"
 "        unique within a Silva instance."
-msgstr ""
+msgstr "Es existiert bereits eine Gruppe mit dem Namen ${id} in Silva-Site. <br />Im Gegensatz zu anderen Silvaobjekten müssen Gruppen in einer Silva-Site eindeutig sein."
 
 #: /views/add/Image/add_submit.py:33
 #: /views/edit/Asset/File/upload_submit.py:26
@@ -902,7 +902,7 @@ msgstr "Kurzwahl: alt-e"
 
 #: /views/add/add_form.pt:39
 msgid "create ${TOC_or_meta_type}"
-msgstr ""
+msgstr "Erstellen ${TOC_or_meta_type}"
 
 #: /views/add/add_form.pt:49
 msgid "aspect"
@@ -1029,7 +1029,7 @@ msgid ""
 "        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or \n"
 "        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, \n"
 "        and the id should start with a letter or digit."
-msgstr ""
+msgstr "Ungültige Zeichen in der Id. Die Id darf nur Buchstaben, Ziffern und &#8216;_&#8217; oder &#8216;-&#8217; oder &#8216;.&#8217; enthalten."
 
 #: /views/add/get_id_status_text.py:24
 msgid ""
@@ -4545,7 +4545,7 @@ msgstr ""
 
 #: /views/edit/tab_access.pt:336
 msgid "You are seeing this message because the Silva Groups extension is installed on the file system, but a Groups Service hasn't been added to this Silva instance. To install one, go to the ${silva_root_in_the_ZMI}, choose &#8220;Groups Service&#8221; from the add list and give it the id ${service_groups}. No further configuration is necessary."
-msgstr ""
+msgstr "Sie sehen diese Nachricht weil die Silva Groups Erweiterung im Dateisystem installiert ist aber kein Groups Service in dieser Silva-Site existiert.Um den Groups Service zu installieren, gehen Sie zu ${silva_root_in_the_ZMI}, wählen Sie &#8220;Groups Service&#8221; aus der Liste der verfügbaren Objekte und geben Sie dem Objekt die Id ${service_groups}.Eine weitere Konfiguration ist nicht notwendig."
 
 #: /views/edit/tab_access.pt:356
 msgid "group roles"
@@ -4671,11 +4671,11 @@ msgstr "Keine Requests ausgewählt"
 
 #: /views/edit/tab_access_allow_access.py:25
 msgid "&#xab;${user_id}&#xbb; allowed the ${role} role"
-msgstr ""
+msgstr "Dem Benutzer &#xab;${user_id}&#xbb; wurde die Rolle ${role} zuerkannt"
 
 #: /views/edit/tab_access_allow_and_approve.py:23
 msgid "&#xab;${user_id}&#xbb; approved and allowed the ${role} role"
-msgstr ""
+msgstr "Dem Benutzer &#xab;${user_id}&#xbb; wurde die Rolle ${role} zuerkannt."
 
 #: /views/edit/tab_access_authorized_below.pt:43
 msgid "email addresses for"
@@ -4687,11 +4687,11 @@ msgstr "Auflistung aller autorisierten Benutzer unterhalb dieser Ebene"
 
 #: /views/edit/tab_access_authorized_below.pt:63
 msgid "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; field of an email message."
-msgstr ""
+msgstr "Die Adressen sind für Copy & Paste in das &#8216;To:&#8217; Feld der Email formatiert."
 
 #: /views/edit/tab_access_deny_access.py:22
 msgid "&#xab;${user_id}&#xbb; has been denied the ${role} role"
-msgstr ""
+msgstr "Dem Benutzer &#xab;${user_id}&#xbb; wurde die Rolle ${role} verwehrt"
 
 #: /views/edit/tab_access_minimum_role_submit.py:17
 msgid "Minimum role to access has not changed"
@@ -4731,11 +4731,11 @@ msgstr "Abonnements verwalten: alt-m"
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:22
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "<u>m</u>anage subscriptions..."
-msgstr ""
+msgstr "Abonements verwalten..."
 
 #: /views/edit/tab_metadata.pt:86
 msgid "metadata ${for_approved_version_of_title}"
-msgstr ""
+msgstr "Metadaten für ${for_approved_version_of_title}"
 
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
@@ -4773,11 +4773,11 @@ msgstr "Jetzt veröffentlichen"
 #: /views/edit/tab_status_form.form:81
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:81
 msgid "clear expiration"
-msgstr ""
+msgstr "Verefalldatum löschen"
 
 #: /views/edit/tab_subscriptions.pt:110
 msgid "save subscription settings"
-msgstr ""
+msgstr "Abonnementeinstellungen speichern"
 
 #: /views/edit/tab_subscriptions.pt:124
 msgid "This object is not subscribable content."
@@ -4785,11 +4785,11 @@ msgstr "Dieses Objekt ist nicht abonierbar."
 
 #: /views/edit/tab_subscriptions.pt:141
 msgid "Subscriptions info"
-msgstr ""
+msgstr "Abonnementinfo"
 
 #: /views/edit/tab_subscriptions.pt:145
 msgid "Subscribability"
-msgstr ""
+msgstr "Abonnierbarkeit"
 
 #: /views/edit/tab_subscriptions.pt:151
 msgid "This object is currently ${not} subscribable."
@@ -4801,15 +4801,15 @@ msgstr ""
 
 #: /views/edit/tab_subscriptions.pt:168
 msgid "Other subscriptions"
-msgstr ""
+msgstr "Andere Abonnements"
 
 #: /views/edit/tab_subscriptions.pt:173
 msgid "${numberofsubscriptions} subscription(s) for this object defined above."
-msgstr ""
+msgstr "${numberofsubscriptions} Abonnements für dieses Objekt."
 
 #: /views/edit/tab_subscriptions.pt:179
 msgid "No other subscriptions for this object."
-msgstr ""
+msgstr "Keine weiteren Abonnements für dieses Objekt."
 
 #: /views/edit/tab_subscriptions.pt:66
 msgid "Manage subscriptions for &#xab;${title}&#xbb;"
@@ -4825,7 +4825,7 @@ msgstr "Die Abonnierbarkeit dieses Inhaltes einstellen (Ja oder Nein) oder von d
 
 #: /views/edit/tab_subscriptions_form.form:36
 msgid "subscribable"
-msgstr ""
+msgstr "Abonnierbar"
 
 #: /views/edit/tab_subscriptions_form.form:56
 msgid ""
@@ -4852,7 +4852,7 @@ msgstr "Kurzwahl: alt-${key}"
 
 #: /views/logout.pt:36
 msgid "To <strong>actually</strong> logout, wait 5 seconds or hit this"
-msgstr ""
+msgstr "Um sich <strong>wirklich</strong> abzumelden, warten Sie 5 Sekunden oder klicken Sie"
 
 #: /views/logout.pt:37
 msgid "logout link"
@@ -4915,7 +4915,7 @@ msgstr ""
 
 #: /views/macro_index.pt:143
 msgid "jump to silva root in zodb: alt-'"
-msgstr ""
+msgstr "Zum Silvastamm in der ZODB: alt-'"
 
 #: /views/macro_index.pt:152
 msgid "sservices..."
@@ -4935,7 +4935,7 @@ msgstr ""
 #: /views/macro_index.pt:195
 #: /views/macro_index.pt:200
 msgid "jump to top: alt-t"
-msgstr ""
+msgstr "Zur obersten Ebene springen: alt-j"
 
 # Default: "t"
 #: /views/macro_index.pt:195
@@ -5004,7 +5004,7 @@ msgstr ""
 
 #: /views/macro_index.pt:96
 msgid "Up to Silva top"
-msgstr ""
+msgstr "Zur obersten Silvaebene"
 
 #: /views/macro_index.pt:99
 msgid "Up one level"
@@ -5203,14 +5203,14 @@ msgid ""
 "              Select (multiple using ctrl-key) object type(s) to search in. \n"
 "              If none is selected, all types are searched.\n"
 "            "
-msgstr ""
+msgstr "Wählen Sie einen (oder mehrere mit der Strg-Taste) Objekttypen aus, die durchsucht werden sollen.Wenn nichts ausgewählt wird, wird in allen Objekttypen gesucht."
 
 #: /views/public/search_form.form:32
 msgid ""
 "\n"
 "              Use an asterix ('*') for wildcard.\n"
 "            "
-msgstr ""
+msgstr "Benutzen Sie den Stern ('*') als Jokerzeichen."
 
 #: /views/public/search_form.form:59
 msgid ""
@@ -5220,14 +5220,14 @@ msgstr ""
 
 #: /views/public/search_form.form:77
 msgid "subtree only"
-msgstr ""
+msgstr "Ausschliesslich Unterbereich"
 
 #: /views/public/search_form.form:80
 msgid ""
 "\n"
 "              Check to restrict search to this content's subtree.\n"
 "            "
-msgstr ""
+msgstr "Markieren um die Suche auf diesen (Unter-)Bereich einzuschränken."
 
 #: /views/public/search_results.pt:18
 msgid "Search results"
