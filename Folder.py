@@ -277,7 +277,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                               'is_approved')
     def is_approved(self):
         # Folder is approved if anything inside is published
-        if self.get_default().is_approved():
+        default = self.get_default()
+        if default and self.get_default().is_approved():
             return 1
         for object in self.get_ordered_publishables():        
             if object.is_approved():
