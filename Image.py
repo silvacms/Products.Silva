@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.42 2003/07/31 09:58:06 zagy Exp $
+# $Id: Image.py,v 1.43 2003/07/31 11:22:17 zagy Exp $
 
 # Python
 import re, string 
@@ -218,6 +218,17 @@ class Image(Asset):
         """returns if scaling/converting is possible"""
         return havePIL
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+        'getFileSystemPath')
+    def getFileSystemPath(self):
+        """return path on filesystem for containing image"""
+        image = self.hires_image
+        if isinstance(image, OFS.Image.Image):
+            return None
+        return image.get_filename()
+        return '/'.join(image.filename)
+
+    
     def _getPILImage(self, img):
         """return PIL of an image
 

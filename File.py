@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 
 # Python
 import os
@@ -136,6 +136,19 @@ class File(Asset):
         """
         self._set_file_data_helper(file)
         self._p_changed = 1
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+        'getFileSystemPath')
+    def getFileSystemPath(self):
+        """return path on filesystem for containing image"""
+        f = self._file
+        if isinstance(f, Image.File):
+            return None
+        # full path from /:
+        return f.get_filename()
+        # this would be relative to repository:
+        return '/'.join(f.filename)
+
 
     def manage_FTPget(self, *args, **kwargs):
         return self._file.manage_FTPget(*args, **kwargs)

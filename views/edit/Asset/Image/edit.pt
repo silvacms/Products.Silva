@@ -50,7 +50,13 @@
           title="see the original image"
           accesskey="v"
           tal:attributes="href string:${model/absolute_url}/hires_image">view unscaled image</a>
-    </tal:condition>        
+    </tal:condition>
+    <tal:block
+        tal:define="path model/getFileSystemPath"
+        tal:condition="path"><br />
+        <span class="subhead"><b>File system path</b><br /></span>
+        <span tal:replace="structure python: '/<wbr>'.join(path.split('/'))" />
+    </tal:block>
   </div>
   <div class="info"
     tal:condition="not: model/canScale">

@@ -9,6 +9,20 @@
 
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
 
+<metal:fill-slot fill-slot="info">
+  <div class="info">
+    <h3 class="info">
+      <img tal:replace="structure icon" /> File info
+    </h3>
+    <tal:block
+        tal:define="path model/getFileSystemPath"
+        tal:condition="path"><br />
+        <span class="subhead"><b>File system path</b><br /></span>
+        <span tal:replace="structure python: '/<wbr>'.join(path.split('/'))" />
+    </tal:block>
+  </div>
+</metal:fill-slot>
+
 <metal:fill-slot fill-slot="additional_tools">
   <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
