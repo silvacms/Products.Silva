@@ -52,8 +52,7 @@
 />
 <tal:block replace="nothing"> _______ hook for metatype stylesheet _______ </tal:block>
 <metal:block define-slot="metatype_css" />
-<link href="frontend.css"
-  rel="stylesheet"
+<link rel="stylesheet"
   tal:condition="python:template.id == 'tab_preview'"
   tal:attributes="href here/frontend.css/absolute_url | nothing"
 />
@@ -94,16 +93,16 @@ function handle_default_action(element, event, action)
 </head>
 
 <body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
-<!-- ___________________________ Start matrix nav ___________________________ -->
+<!-- __________________________ Start matrix tabs _________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   top navigation plugs in here....
 </metal:block>
-<!-- ____________________________ End matrix nav _____________________________ -->
-<!-- ____________________________ Start workspace ____________________________ -->
+<!-- ___________________________ End matrix tabs __________________________ -->
+<!-- ___________________________ Start workspace __________________________ -->
 <div class="workspace">
 
 <span tal:replace="nothing">
-<!-- ______________ Start feedback ______________ -->
+<!-- ______________ start feedback ______________ -->
 </span>
 <tal:block define="
   type options/message_type | request/message_type | nothing;
@@ -132,7 +131,7 @@ function handle_default_action(element, event, action)
 </div>
 <!-- _____________________ Main ends _____________________ -->
 
-<!-- ____________________________ Footer start _____________________________ -->
+<!-- ____________________________ Footer start ____________________________ -->
 <span tal:replace="nothing">
 <!-- _______ white space + jump to top _______ -->
 </span>
