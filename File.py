@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6.2.5 $
+# $Revision: 1.6.2.6 $
 
 # Python
 import os
@@ -142,6 +142,8 @@ class File(Asset):
     def content_type(self):
         return self._file.content_type
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'PUT')
     def PUT(self, REQUEST, RESPONSE):
         """Handle HTTP PUT requests"""
         return self._file.PUT(REQUEST, RESPONSE)
