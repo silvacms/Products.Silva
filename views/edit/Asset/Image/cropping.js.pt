@@ -74,7 +74,7 @@ function Draggable(draggable, dragbar) {
     this._startOffsetTop = 0;
 
     this.initialize = function() {
-        addEventHandler(this.dragbar, 'mousedown', this.startDrag, this);
+        addEventHandler(this.draggable, 'mousedown', this.startDrag, this);
         addEventHandler(document, 'mousemove', this.dragElement, this);
         addEventHandler(document, 'mouseup', this.endDrag, this);
     };
@@ -158,7 +158,7 @@ function Cropper(layer, dragbar, resizehandle, minwidth, minheight) {
     };
 
     this.height = function() {
-        return parseInt(this.layer.style.height) - parseInt(this.dragbar.style.height);
+        return parseInt(this.layer.style.height);
     };
 
     this.left = function() {
@@ -166,7 +166,7 @@ function Cropper(layer, dragbar, resizehandle, minwidth, minheight) {
     };
 
     this.top = function() {
-        return parseInt(this.layer.style.top) + parseInt(this.dragbar.style.height);
+        return parseInt(this.layer.style.top);
     };
 };
 

@@ -20,7 +20,6 @@
     }
 
     #dragbar {
-      display: block;
       background-color: #91989b;
       border: 1px solid black;
       color: white;
@@ -35,14 +34,11 @@
     }
 
     #handle {
-      position: absolute;
-      /*right: 2px;
-      bottom: 2px;*/
       cursor: se-resize;
       border-right: 2px solid black;
       border-bottom: 2px solid black;
     }
-
+    
     #handle:active {
       border-right: 2px solid red;
       border-bottom: 2px solid red;
@@ -56,22 +52,34 @@
       <script type="text/javascript"
           tal:attributes="src view/cropping.js/absolute_url">
       </script>
+      <script type="text/javascript">
+        //<!CDATA[[
+
+          function setDraggableSize(width, height) {
+            var draggable = document.getElementById('draggable');
+            draggable.style.width = width + 'px';
+            draggable.style.height = height + 'px'; // added the height of the dragbar
+          };
+        
+        //]]>
+      </script>
       <div style="position: absolute; top: 0px; left: 0px;">
-        <div id="draggable" style="min-width: 150px; width: 150px;
-          min-height: 100px; height: 100px; top: 10px;
-          left: 10px">
-          <!--
-          <div id="links" style="position: absolute; top: 1px; right: -100px;
-            border: 1px solid red;">
-            <ul>
-              <li><a href="#" title="foo">set to 50x50</a></li>
-              <li><a href="#" title="foo">set to 75x75</a></li>
-            </ul>
-          </div>-->
-          <div id="dragbar" style="height: 20px">
-              Drag the Window
-          </div>
-          <div id="handle" style="right: 2px; bottom: 2px; width: 10px; height: 10px;"></div>
+        <div id="draggable" style="position: absolute; min-width: 150px; width: 150px; min-height: 100px; height: 100px; top: 10px; left: 10px">
+          <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr><td colspan="2" id="dragbar" style="height: 20px; line-height: 20px;" onclick="this.blur()">Drag the window</td></tr>
+            <tr>
+              <td colspan="2" height="100%" valign="top">
+                  <ul>
+                    <li><a href="#" onclick="setDraggableSize(100, 150)" title="Resize to 150x150 pixels">set to 150x150</a></li>
+                    <li><a href="#" onclick="setDraggableSize(250, 250)" title="Resize to 250x250 pixels">set to 250x250</a></li>
+                  </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td width="14" height="14" style="line-height: 10px; padding: 0px"><div id="handle" style="width: 10px; height: 10px;">&nbsp;</div></td>
+            </tr>
+          </table>
         </div>
 
         <img tal:attributes="src string:${model/absolute_url}/hires_image;
@@ -82,12 +90,15 @@
       </div>
 
       <script type="text/javascript">
-        cropper = new Cropper(
-                                'draggable', 
-                                'dragbar', 
-                                'handle', 
-                                50, 
-                                10);
+        //<!CDATA[[
+        
+          cropper = new Cropper('draggable', 
+                                  'dragbar', 
+                                  'handle', 
+                                  50, 
+                                  10);
+
+        //]]>
       </script>
       
   </metal:block>
