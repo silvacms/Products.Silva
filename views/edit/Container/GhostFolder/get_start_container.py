@@ -14,6 +14,6 @@ status = model.get_link_status()
 if status == model.LINK_OK:
     content = model.get_content()
     if content is not None:
-        return content.get_container()
+        return content.aq_parent.get_container()
 return model.aq_parent.get_container()
 
