@@ -7,6 +7,7 @@
     title model/get_title_editable;
     vein string:editor;
     transf model/getTransformation;
+    is_cropped model/cropped;
     "
   i18n:domain="silva">
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
@@ -16,7 +17,7 @@
           tal:attributes="src view/cropping.js/absolute_url">
   </script>
   <div class="info">
-    <h3>
+    <h3 i18n:translate="image_info">
       <img tal:replace="structure icon" /> image info
     </h3>
     <img style="margin-top:0.3em;"
@@ -41,8 +42,9 @@
       </p>
 
       <p tal:condition="model/hires_image">
-        <span class="subhead">format</span><br />
-        <span tal:replace="python: model.web_format.lower()">format</span> image
+      <span class="subhead" i18n:translate="image_format">format</span><br />
+      <span tal:replace="python: model.web_format.lower()">format</span>
+      <span i18n:translate="">image</span>
       </p>
       <p tal:define="
         image_width python: model.getDimensions()[0];
@@ -51,9 +53,8 @@
         scale_height python: model.getCanonicalWebScale()[1];
         cropped_width python: model.getCroppedSize()[0];
         cropped_height python: model.getCroppedSize()[1];
-        is_cropped model/cropped;
         ">
-        <span class="subhead">dimensions</span><br />
+        <span class="subhead" i18n:translate="image_dimension">dimensions</span><br />
         <span tal:on-error="string: unknown"
           tal:replace="string:${image_width}x${image_height} pixels"
         />
@@ -62,8 +63,8 @@
           image_height != scale_height or
           image_width != cropped_width and
           image_height != cropped_height"><br />
-          <span tal:content="transf">scaled</span> to 
-            
+          <span tal:condition="not:is_cropped" i18n:translate="">scaled to </span>
+          <span tal:condition="is_cropped" i18n:translate="">cropped to</span>
           <span tal:condition="is_cropped" 
             tal:replace="string:${cropped_width}x${cropped_height} pixels"
           />
@@ -72,6 +73,13 @@
             tal:replace="string:${scale_width}x${scale_height} pixels"
           />
         </tal:condition>
+      </p>
+      <p tal:condition="model/hires_image" 
+        tal:define="orientation model/getOrientation">
+        <span class="subhead" i18n:translate="image_orientation">image orientation</span><br />
+        <span tal:content="orientation" 
+          i18n:attributes="orientation"
+          tal:attributes="class string:${orientation} orientation">Square</span>
       </p>
       <p>
         <span class="subhead">original</span><br />
@@ -109,7 +117,7 @@
           <span 
             tal:attributes="title string: ${scaled_size}"
             tal:content="python:mangle.Bytes(scaled_size)" /> 
-            <span tal:content="transf" i18n:translate="scaled">scaled</span>
+            <span tal:condition="not:is_cropped" i18n:translate="">scaled</span>
           </tal:condition>
       </tal:block>
     </p>
@@ -160,7 +168,7 @@
           <tal:define define="iterate repeat/field/odd">
             <tr tal:attributes="class python:iterate and 'odd' or 'even'">
               <td class="field-title">
-                <span tal:replace="python:field['title']">
+                <span tal:content="python:field['title']" i18n:translate="">
                   title</span><span class="warning"
                   tal:condition="python:field.is_required()">*</span>
               </td>
@@ -206,8 +214,8 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="3">
-          <h3 i18n:translate="thumbnailer">
-            thumbnailer
+          <h3 i18n:translate="image_thumbnailing">
+            thumbnailing 
           </h3>
         </td>
       </tr>
@@ -230,7 +238,7 @@
         <tal:define define="iterate repeat/field/odd">
           <tr tal:attributes="class python:iterate and 'odd' or 'even'">
             <td class="field-title">
-              <span tal:replace="python:field['title']">
+              <span tal:content="python:field['title']" i18n:translate="">
                 title</span><span class="warning"
                 tal:condition="python:field.is_required()">*</span>
             </td>
@@ -257,7 +265,9 @@
               title="specify the center of the area to crop by clicking in the image: alt-o"
               accesskey="o"
               tal:define="asset_context python:request.model"
-              tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))" />
+              tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+              i18n:attributes="title value"
+              />
           </td>
           <td class="align-right">
             <input class="button"
@@ -266,7 +276,7 @@
               value="crop image"
               title="access key: alt-r"
               accesskey="r"
-              i18n:attributes="title value"
+              i18n:attributes="value"
             />
           </td>
         </tr>

@@ -88,7 +88,8 @@
         <a class="normal"
           title="reload screen"
           tal:content="vein"
-          tal:attributes="href vein_id">
+          tal:attributes="href vein_id"
+          i18n:translate="">
           vein
         </a>
       </th>

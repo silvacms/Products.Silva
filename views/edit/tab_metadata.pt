@@ -41,7 +41,7 @@
             define="version python: model.implements_versioning() and model.get_viewable()"
             condition="version">
             <metal:block use-macro="here/macro_metadata/macros/view_table">
-              <h2 metal:fill-slot="table_title">
+            <h2 i18n:translate="metadata_label" metal:fill-slot="table_title">
                 <img tal:replace="structure python:view.render_icon(model)" />
                 metadata
                 <span tal:condition="not: model/implements_container">
