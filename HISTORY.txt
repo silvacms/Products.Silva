@@ -3,6 +3,19 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.0.2
+
+    Bugs fixed
+
+      - Fixed some bug to do with properties tab of Ghost Folders. (GuidoW)
+
+      - Fixed some imaged bug. (GuidoW?)
+
+      - Backport of Folder <-> Publication compatibility fix for Zope 2.7.
+
+      - Backport of fix in test_image.py so that unit tests now run
+        properly even without PIL being installed.
+
   1.0.1
 
     Bugs fixed
