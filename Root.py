@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.66 $
+# $Revision: 1.67 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -224,6 +224,22 @@ class Root(Publication):
             ob.object()._update_publication_status()
 
         return 'Status updated'
+
+    security.declarePublic('rollbackTransaction')
+    def recordError(self, message_type, message):
+        """record given error/feedback
+        
+            actual logging is not implemented, just an idea; what really 
+            happens is a ZODB transaction rollback if message_type == 'error'
+
+            message_type: either 'feedback' or 'error'
+            message: string containing user readable error
+            returns None
+        """
+        if message_type == 'error':
+            get_transaction().abort()
+        
+        
         
 InitializeClass(Root)
 

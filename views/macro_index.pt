@@ -123,7 +123,8 @@ function handle_default_action(element, event, action)
 </span>
 <tal:block define="
   type options/message_type | request/message_type | nothing;
-  notice options/message | request/message | nothing;"
+  notice options/message | request/message | nothing;
+  dummy python:here.recordError(type, notice);"
   condition="type">
   <div class="feedback"
     style="margin-bottom:0;"
