@@ -8,19 +8,19 @@
 <head metal:define-slot="head">
   <title metal:define-slot="title"
     tal:content="here/get_title">doc title</title>
-  <meta name="DC.subject" content="" 
-    tal:define="subject python: here.get_metadata_element('silva-extra', 'subject') or nothing"
-    tal:condition="subject"
-    tal:attributes="content subject" />
-  <meta name="DC.description" content="" 
-    tal:define="description python: here.get_metadata_element('silva-extra', 'comment') or nothing"
+  <meta name="keywords"
+    tal:define="keywords python: here.get_metadata_element('silva-extra', 'keywords') or nothing"
+    tal:condition="keywords"
+    tal:attributes="content keywords" />
+  <meta name="description"
+    tal:define="description python: here.get_metadata_element('silva-extra', 'content_description') or nothing"
     tal:condition="description"
     tal:attributes="content description" />
-  <meta name="contact.name" content="" 
+  <meta name="contact.name"
     tal:define="name python: here.get_metadata_element('silva-extra', 'contactname') or nothing"
     tal:condition="name"
     tal:attributes="content name" />
-  <meta name="contact.email" content="" 
+  <meta name="contact.email"
     tal:define="email python: here.get_metadata_element('silva-extra', 'contactemail') or nothing"
     tal:condition="email"
     tal:attributes="content email" />
@@ -38,8 +38,8 @@
 
 <metal:block define-slot="page_header">
   <!-- Start page_header slot -->
-<img height="32" width="32" alt="Silva logo"
-  tal:attributes="src here/globals/silva_icon_32.gif/absolute_url | nothing" />
+  <img height="32" width="32" alt="Silva logo"
+    tal:attributes="src here/globals/silva_icon_32.gif/absolute_url | nothing" />
   <metal:block define-slot="top_navigation">
     <!-- top_navigation slot -->
   </metal:block>
