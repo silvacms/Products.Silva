@@ -78,7 +78,7 @@
               <tr class="top-controls">
                 <td colspan="2">
                   <h3 i18n:translate="user_search">
-                    User search
+                    user search
                   </h3>
                 </td>
               </tr>
@@ -130,7 +130,7 @@
                     i18n:attributes="value title"
                     tal:condition="python:lookup_result and len(lookup_result) > 3" />
                   <h3 i18n:translate="search_results">
-                    Search results
+                    search results
                   </h3>
                 </td>
               </tr>

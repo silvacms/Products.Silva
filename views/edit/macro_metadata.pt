@@ -57,10 +57,10 @@
             <tr>
               <th class="align-right"
                 width="30%" i18n:translate="element">
-                Element
+                element
               </th>
               <th i18n:translate="content">
-                Content
+                content
               </th>
             </tr>
             <tal:block repeat="element_name binding/?set_name/elementNames">

@@ -85,7 +85,7 @@
               <th style="font-size:90%"
                 tal:condition="groups"
                 i18n:translate="ctrl_click_multi-select">
-                Ctrl-click to multi-select
+                ctrl-click to multi-select
               </th>
             </tr>
           </thead>

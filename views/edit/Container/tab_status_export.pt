@@ -99,7 +99,7 @@
                       <span i18n:translate="import">import</span>...
                     </a>
                   <h3 i18n:translate="export_to_silva_xml">
-                    Export to Silva XML (.slv)
+                    export to Silva XML (.slv)
 	                </h3>
                 </td>
               </tr>
@@ -108,13 +108,13 @@
             <tbody>
               <tr>
                 <th class="align-right"
-                   i18n:translate="options">
-                  Options
+                  i18n:translate="options">
+                  options
                 </th>
                 <th>
                 </th>
                 <th i18n:translate="note">
-                  Note
+                  note
                 </th>
               </tr>
 
@@ -244,7 +244,7 @@
       <tr class="top-controls">
         <td colspan="3">
           <h3 i18n:translate="export_to_docma">
-            Export to Docma (.doc)
+            export to Docma (.doc)
           </h3>
         </td>
       </tr>
@@ -253,15 +253,15 @@
     <tbody>
       <tr>
         <th class="align-right"
-           i18n:translate="options">
-          Options
+          i18n:translate="options">
+          options
         </th>
         <th i18n:translate="content">
-          Content
+          content
         </th>
         <th width="40%"
           i18n:translate="note">
-          Note
+          note
         </th>
       </tr>
 

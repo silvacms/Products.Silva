@@ -43,13 +43,13 @@
 <tbody>
   <tr>
     <th class="align-right" i18n:translate="attributes">
-      Attributes
+      attributes
     </th>
     <th style="width:50%;" i18n:translate="content">
-      Content
+      content
     </th>
     <th i18n:translate="notes">
-    Notes
+    notes
     </th>
   </tr>
   <tal:repeat repeat="field here/form/get_fields">

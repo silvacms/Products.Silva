@@ -296,7 +296,6 @@ table.listing tr.controls {
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
   text-align : right;
-  text-transform: &dtml-textTransform;;
   /* in case it's empty */
   height : 0.2em;
 }
@@ -308,7 +307,6 @@ table.listing tr.top-controls {
 table.listing tr.inter-controls {
   color: #c9dfe2;
   background: &dtml-listingInter-ControlsBackground;;
-  text-transform: &dtml-textTransform;;
 }
 
 tr.divider, th.divider, td.divider {
@@ -937,7 +935,6 @@ table.listing div.message {
   border-style: solid none solid none;
   border-collapse: collapse;
   text-transform : none;
-/*  white-space : pre; */
 }
 
 .highlight {

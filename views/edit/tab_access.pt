@@ -67,13 +67,13 @@
               <tr class="align-left"
                 tal:condition="members">
                 <th i18n:translate="username">
-                  Username
+                  username
                 </th>
                 <th class="align-right" i18n:translate="roles_defined_above">
-                  Roles defined above
+                  roles defined above
                 </th>
                 <th class="align-right" i18n:translate="roles_defined_here">
-                  Roles defined here
+                  roles defined here
                 </th>
               </tr>
               <tal:block repeat="member members">
@@ -187,13 +187,13 @@
               </tr>
               <tr>
                 <th i18n:translate="username">
-                  Username
+                  username
                 </th>
                 <th i18n:translate="requested role">
-                  Requested role
+                  requested role
                 </th>
                 <th i18n:translate="is_approved">
-                  Is approved
+                  is approved
                 </th>
               </tr>
               <tal:block repeat="req requested_roles">
@@ -350,13 +350,13 @@
                 </tr>
                 <tr tal:condition="groups">
                   <th i18n:translate="groupname">
-                    Groupname
+                    groupname
                   </th>
                   <th class="align-right" i18n:translate="roles_defined_above">
-                    Roles defined above
+                    roles defined above
                   </th>
                   <th class="align-right" i18n:translate="roles_defined_here">
-                    Roles defined here
+                    roles defined here
                   </th>
                 </tr>
                 <tal:block repeat="ugroup groups">

@@ -15,7 +15,7 @@
 <metal:fill-slot fill-slot="info">
   <div class="info">
     <h3 class="info">
-      <img tal:replace="structure icon" /> File info
+      <img tal:replace="structure icon" /> file info
     </h3>
     <p>
       <span class="subhead"><b>file size</b><br /></span>

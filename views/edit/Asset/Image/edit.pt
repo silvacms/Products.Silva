@@ -16,7 +16,7 @@
   <div class="info">
    
     <h3 class="info">
-      <img tal:replace="structure icon" /> Image info
+      <img tal:replace="structure icon" /> image info
     </h3>
     <tal:block tal:condition="model/canScale">
         <p tal:condition="not: model/hires_image">
@@ -114,7 +114,7 @@
         <tr class="top-controls">
           <td colspan="3">
             <h3 i18n:translate="format_and_scaling">
-              Format and Scaling
+              format and scaling
             </h3>
           </td>
         </tr>
@@ -123,13 +123,13 @@
         <tr>
           <th class="align-right"
             width="12%" i18n:translate="element">
-            Element
+            element
           </th>
           <th i18n:translate="content">
-            Content
+            content
           </th>
           <th width="40%" i18n:translate="note">
-            Note
+            note
           </th>
         </tr>
         <tal:repeat repeat="field fields">

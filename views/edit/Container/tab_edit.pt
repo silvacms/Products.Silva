@@ -447,7 +447,7 @@
                           name="new_position"
                           title="move selected items to"
                           tal:define="length python: len(publishables) - test(default_document, 1, 0)">
-                          <option value="Position">
+                          <option value="position">
                             <span i18n:translate="position">position</span>:
                           </option>
                           <tal:block repeat="item python:range(length)">
@@ -471,7 +471,7 @@
                         <input class="button"
                           name="tab_edit_move_to:method"
                           type="submit"
-                          value="Move"
+                          value="move"
                           title="move selected items into position: alt-m"
                           accesskey="m"
                           i18n:attributes="title"
@@ -481,7 +481,7 @@
                       <input class="button"
                         name="tab_edit_rename_start:method"
                         type="submit"
-                        value=" Rename..."
+                        value="rename..."
                         title="rename and retitle items: alt-r"
                         accesskey="r" 
                         i18n:attributes="value title"
@@ -489,7 +489,7 @@
                       <input class="button"
                         name="tab_edit_cut:method"
                         type="submit"
-                        value="Cut"
+                        value="cut"
                         title="cut items: alt-x"
                         accesskey="x" 
                         i18n:attributes="value title"
@@ -497,7 +497,7 @@
                       <input class="button"
                         name="tab_edit_copy:method"
                         type="submit"
-                        value="Copy"
+                        value="copy"
                         title="copy items: alt-c"
                         accesskey="c" 
                         i18n:attributes="value title"
@@ -512,7 +512,7 @@
                       <input class="button"
                         name="tab_edit_paste:method"
                         type="submit"
-                        value="Paste"
+                        value="paste"
                         title="paste items: alt-v" 
                         accesskey="v" 
                         i18n:attributes="value title"
@@ -520,7 +520,7 @@
                       <input class="button"
                         name="tab_edit_paste_to_ghost:method"
                         type="submit"
-                        value="Paste ghost"
+                        value="paste ghost"
                         title="paste (items on clipboard) as ghost objects: alt-g"
                         accesskey="g" 
                         i18n:attributes="value title"
@@ -530,7 +530,7 @@
                       <input class="warning"
                         name="tab_edit_delete:method"
                         type="submit"
-                        value="Delete"
+                        value="delete"
                         title="there's no undo: alt-d"
                         accesskey="d"
                         onclick="return confirm('Really delete?')"

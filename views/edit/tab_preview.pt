@@ -13,19 +13,19 @@
 <metal:block metal:use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main" tal:omit-tag="">
 
-    <span tal:replace="nothing"> _______ link to see page in public/local style _______ </span>
-    <span class="widebody"><a tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank" style="float:right; margin-right:2em;">Presentation&nbsp;preview</a></span>
-    <span tal:replace="nothing"> _______ closed message _______ </span>
-    <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
-      <b class="warning" i18n:translate="closed_message">This is a closed version. You see it, but the public won't!</b>
-    </div>
+  <span tal:replace="nothing"> _______ link to see page in public/local style _______ </span>
+  <span class="widebody"><a tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank" style="float:right; margin-right:2em;">Presentation&nbsp;preview</a></span>
+  <span tal:replace="nothing"> _______ closed message _______ </span>
+  <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
+    <b class="warning" i18n:translate="closed_message">This is a closed version. You see it, but the public won't!</b>
+  </div>
 
-    <span tal:replace="nothing"> _______ content cell, here the XML is rendered in HTML _______ </span>
-    <div class="public"
-      tal:content="structure model/preview">
-      <!-- this text is replaced by Silva content -->
-    </div>
-    <br />
+  <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
+  <div class="public"
+    tal:content="structure model/preview">
+    <!-- this text is replaced by Silva content -->
+  </div>
+  <br />
 
 </metal:block>
 </metal:block>

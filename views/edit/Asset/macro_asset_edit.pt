@@ -48,7 +48,7 @@
       <tr class="top-controls">
         <td colspan="2">
           <h3 i18n:translate="properties">
-            Properties
+            properties
           </h3>
         </td>
       </tr>
@@ -58,11 +58,11 @@
     <tbody tal:define="fields view/form/get_fields">
       <tr>
         <th class="align-right"
-           width="12%" i18n:translate="element">
-          Element
+          width="12%" i18n:translate="element">
+          element
         </th>
         <th i18n:translate="content">
-          Content
+          content
         </th>
       </tr>
 
@@ -134,7 +134,7 @@
       <tr class="top-controls">
         <td colspan="2">
           <h3 i18n:translate="upload">
-            Upload
+            upload
           </h3>
         </td>
       </tr>
@@ -142,10 +142,10 @@
     <tbody tal:define="fields python:view.upload_form.get_fields()">
       <tr>
         <th class="align-right"
-           width="12%">
+          width="12%">
         </th>
         <th colspan="2" i18n:translate="content">
-          Content
+          content
         </th>
       </tr>
 

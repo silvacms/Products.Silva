@@ -71,7 +71,7 @@
       <tr class="top-controls">
         <td colspan="5">
           <h3 i18n:translate="groups_located_in_folder">
-            Groups located in this folder
+            groups located in this folder
           </h3>
         </td>
       </tr>
@@ -190,7 +190,7 @@
       <tr class="top-controls">
         <td colspan="3">
           <h3 i18n:translate="add_group">
-            Add a group
+            add a group
           </h3>
         </td>
       </tr>

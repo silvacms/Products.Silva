@@ -66,7 +66,7 @@
     <tr class="top-controls">
       <td colspan="6" class="align-right">
         <h3 style="float:left;">
-          Publishing actions
+          publishing actions
         </h3>
         <input class="navigation"
           name="tab_status_export:method"
@@ -86,19 +86,19 @@
         &nbsp;
       </th>
       <th>
-        Edit / Preview
+        edit / preview
       </th>
       <th class="align-right">
-        Revision
+        revision
       </th>
       <th class="align-right">
-        Publication due
+        publication due
       </th>
       <th class="align-right">
-        Expiration due
+        expiration due
       </th>
       <th class="align-right">
-        Published
+        published
       </th>
     </tr>
     <tal:block replace="nothing">
@@ -334,7 +334,7 @@
           <label for="clear_expiration"
             title="access key: alt-p"
             accesskey="p">
-            Clear&nbsp;ex<u>p</u>iration
+            clear&nbsp;ex<u>p</u>iration
           </label>
           <field tal:replace="structure view/tab_status_form/clear_expiration/render" />        
         </tal:block>
@@ -350,7 +350,7 @@
         <input class="reject"
           type="submit"
           name="tab_status_reject:method"
-          value="Reject" 
+          value="reject" 
           title="reject pending request for approval of selected objects: alt-j"
           accesskey="j"
           tal:condition="rejectables"
@@ -358,7 +358,7 @@
         <input class="revoke"
           type="submit"
           name="tab_status_revoke:method"
-          value="Revoke"
+          value="revoke"
           title="withdraw approval of approved versions of selected objects: alt-v"
           accesskey="v"
           tal:condition="revokeables"
@@ -366,7 +366,7 @@
         <input class="close"
           type="submit"
           name="tab_status_close:method"
-          value="Close"
+          value="close"
           title="close published items: alt-c"
           accesskey="c"
           tal:condition="closeables"
@@ -374,7 +374,7 @@
         <input class="button" 
           type="submit" 
           name="tab_status_new_version:method" 
-          value="New version" 
+          value="new version" 
           title="create new versions of published docs of selected objects: alt-n" 
           accesskey="n"
           tal:condition="new_versionables"
@@ -385,18 +385,17 @@
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
-          value="Change timings"
+          value="change timings"
           title="change publish and expiration times for selected objects: alt-s"
           accesskey="s"
-          tal:condition="
-            python: approveables or closeables or revokeables or rejectables"
+          tal:condition="python: approveables or closeables or revokeables or rejectables"
         />
       </td>
       <td class="align-right">
         <input class="button"
           name="tab_status_approve:method"
           type="submit"
-          value="Approve"
+          value="approve"
           title="approve or publish new versions of selected objects: alt-o"
           accesskey="o"
           tal:condition="python: approveables or rejectables"
@@ -413,7 +412,7 @@
         <input class="reject"
           type="submit"
           name="tab_status_withdraw:method"
-          value="Withdraw"
+          value="withdraw"
           title="withdraw pending request for approval: alt-w"
           accesskey="w"
           tal:condition="rejectables"
@@ -423,13 +422,13 @@
           name="tab_status_revoke:method"
           title="revoke approval of approved versions: alt-v"
           type="submit"
-          value="Revoke"
+          value="revoke"
           tal:condition="revokeables"
         />
         <input class="button" 
           type="submit" 
           name="tab_status_new_version:method" 
-          value="New version" 
+          value="new version" 
           title="create new versions of published docs: alt-n" 
           accesskey="n"
           tal:condition="new_versionables"
@@ -440,7 +439,7 @@
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
-          value="Change timings"
+          value="change timings"
           title="change publish and expiration times for selected objects: alt-s"
           accesskey="s"
           tal:condition="python: approveables"
@@ -450,7 +449,7 @@
         <input class="button"
           type="submit"
           name="tab_status_request_approval:method"
-          value="Request approval"
+          value="request approval"
           title="request approval for new versions: alt-r"
           accesskey="r"
           tal:condition="approveables"
