@@ -55,7 +55,7 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="3">
-          <a class="navigation"
+          <a class="navigation"  tal:replace="nothing"
             style="float: right;"
             href="../../edit/tab_edit_import"
             title="import XML data - alt-i"
@@ -149,7 +149,7 @@
       <tr class="controls">
         <td class="align-right" 
           colspan="3">
-          <input class="button"
+          <input class="button"  tal:replace="nothing"
             type="submit"
             name="sync:method"
             value="resync ghost folder"
@@ -159,7 +159,7 @@
           <input class="button"
             type="submit"
             name="form_submitted"
-            value="Save ghost"
+            value="Save path"
             title="access key: alt-s"
             accesskey="s"
           />
@@ -169,6 +169,490 @@
   </table>
 </form>
        
+<tal:block replace="nothing">
+  ____________________________ temporary listing test ____________________________
+</tal:block>
+
+<table class="listing"
+  id="sortable"
+  tal:define="
+    default_document view/get_default;
+    default_doc_list python: test(default_document, [default_document], []);
+    publishables python: default_doc_list + model.get_ordered_publishables();
+    assets model/get_assets;
+    iterate python: 0;
+   " >
+  <thead>
+    <tal:block replace="nothing">
+      ______________ vein + title row ______________
+    </tal:block>
+    <tr>
+      <td class="top"
+        colspan="5">
+        <h2 tal:attributes="title string:id: ${model/id}">
+          <img tal:replace="structure python:view.render_icon(model)" />
+          <span i18n:translate="ghost_folder_contents">ghost folder contents</span>
+        </h2>
+      </td>
+    </tr>
+
+    <tal:block replace="nothing">
+      ______________ top controls row ______________
+    </tal:block>
+    <tr class="top-controls">
+      <td colspan="5">
+        <div style="float: left;">
+          <input class="button"
+            type="submit"
+            name="sync:method"
+            value="resync ghost folder"
+            title="re-synchronize with content from the source folder: alt-r"
+            accesskey="r"
+          />
+        </div>
+        <a class="navigation"
+          style="float: right;"
+          href="tab_edit_import"
+          title="import XML data - alt-i"
+          accesskey="i"
+          i18n:attributes="title"
+          >
+          <span i18n:translate="import">import</span>...
+        </a>
+      </td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tal:block replace="nothing">
+      ______________ listing header ______________
+    </tal:block>
+    <tr tal:condition="python:(default_document or publishables or assets)">
+      <th class="listing-right">
+        #&nbsp;
+      </th>
+      <th i18n:translate="edit">
+        edit
+      </th>
+      <th i18n:translate="preview">
+        preview
+      </th>
+      <th i18n:translate="modified">
+        modified
+      </th>
+      <th i18n:translate="author">
+        author
+      </th>
+      <th class="nosort listing-right" tal:replace="nothing">
+        &nbsp;&nbsp;Shift
+      </th>
+    </tr>
+
+    <tal:block replace="nothing">
+      ______________ if folder is empty (XXX: check for Zope level objects?) ______________
+    </tal:block>
+    <tr class="odd"
+      tal:condition="python: not(default_document or publishables or assets)">
+      <td colspan="5" i18n:translate="no_content_objects_in_folder">
+        There is no content here.
+      </td>
+    </tr>
+
+    <tal:block replace="nothing">
+      ______________ default + publishables ______________
+    </tal:block>
+    <tal:repeat
+      repeat="item publishables">
+      <tal:define define="
+        is_default python: item is default_document;
+        item_url item/absolute_url;
+        status_style python:item.get_object_status()[1];
+        global iterate repeat/item/odd">
+        <tr tal:attributes="class python: iterate and 'odd' or 'even'">
+          <tal:block replace="nothing">
+            _______ checkbox + position cell _______
+          </tal:block>
+          <td class="align-right">
+            <input name="ids:list"                        tal:replace="nothing"
+              type="checkbox"
+              value="value"
+              tal:attributes="
+                value item/id;
+                id item/id;"
+              onkeypress="handle_default_action(this, event, 'tab_edit_copy')"
+            />
+            <label 
+              tal:condition="default_document"
+              tal:content="repeat/item/index"
+              tal:attributes="for item/id">
+              # with default doc, starts at 0
+            </label>
+            <label 
+              tal:condition="not: default_document"
+              tal:content="repeat/item/number"
+              tal:attributes="for item/id">
+              # without default doc, starts at 1
+            </label>
+          </td>
+          <tal:block replace="nothing">
+            _______ id cell _______
+          </tal:block>
+          <td>
+            <a class="image"
+              tal:attributes="
+                href python:here.get_editor_link(item);
+                title item/meta_type;">
+              <img tal:replace="structure python:view.render_icon(item)" />
+            </a>
+            <a class="blacklink"
+              title="edit"
+              tal:content="item/id"
+              tal:attributes="
+                href python:here.get_editor_link(item);
+                class status_style;"
+              i18n:translate="id"
+              >
+              id
+            </a>
+            <img alt="content approved or published"
+              border="0"
+              height="10"
+              title="content is approved or published"
+              width="10"
+              tal:define="
+                is_published item/is_version_published | nothing;
+                is_approved item/is_version_approved | nothing"
+              tal:condition="python:is_published or is_approved"
+              tal:attributes="src string:${root_url}/globals/checkmark.gif" />
+
+          </td>
+          <tal:block replace="nothing">
+            _______ title cell _______
+          </tal:block>
+          <td>
+            <a class="blacklink"
+              title="preview"
+              tal:attributes="
+                href string:${item_url}/edit/tab_preview;
+                class status_style;"
+              tal:define="title python:(item.get_title_editable() or default)"
+              tal:content="title">
+              <i i18n:translate="no_title">no title</i>
+            </a>
+          </td>
+          <tal:block replace="nothing">
+            _______ modified date/metadata downlink cell _______
+          </tal:block>
+          <td tal:define="modification_time item/get_modification_datetime | nothing">
+            <a class="blacklink" title="metadata"
+              tal:condition="modification_time"
+              tal:attributes="href string:${item_url}/edit/tab_metadata"
+              tal:content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)"
+              >
+              date
+            </a>
+            <a class="closed" title="settings"
+              tal:condition="not:modification_time"
+              tal:attributes="href string:${item_url}/edit/tab_metadata"
+              i18n:translate="n/a"
+              >
+              <i>n/a</i>
+            </a>
+          </td>
+          <tal:block replace="nothing">
+            _______ author/tab_status downlink cell _______
+          </tal:block>
+          <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
+            <a class="blacklink" title="status"
+              tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
+              tal:attributes="href string:${item_url}/edit/tab_status"
+              tal:content="structure last_author"
+              >
+              authorname
+            </a>
+            <a class="closed" title="publish"
+              tal:condition="python:item.implements_container()"
+              tal:attributes="href string:${item_url}/edit/tab_status"
+              i18n:translate="n/a"
+              >
+              <i>n/a</i>
+            </a>
+            <span 
+              tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
+              tal:replace="last_author">
+              authorname
+            </span>
+          </td>
+          <tal:block replace="nothing">
+            _______ move symbols _______
+          </tal:block>
+          <td class="listing-right" tal:replace="nothing">
+            <tal:block replace="nothing">
+              <a class="image"
+                title="move down"
+                tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item/id}"
+                i18n:attributes="title"
+                >
+                <img alt="Move down"
+                  border="0"
+                  height="12"
+                  width="16"
+                  tal:attributes="src string:${root_url}/globals/down.gif" />
+              </a>
+              <a class="image"
+                title="move up"
+                tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item/id}"
+                i18n:attributes="title"
+                >
+                <img alt="Move up"
+                  border="0"
+                  height="12"
+                  width="16"
+                  tal:attributes="src string:${root_url}/globals/up.gif" />
+              </a>
+            </tal:block>
+          </td>
+        </tr>
+      </tal:define>
+    </tal:repeat>
+
+    <tal:block replace="nothing">
+      ______________ assets ______________
+    </tal:block>
+    <tal:block 
+      condition="python:len(assets)"
+      repeat="asset assets">
+
+      <tal:block define="
+        asset_url asset/absolute_url;
+        odd_even python: iterate == 'odd' and 'odd' or 'even';
+        iterate repeat/asset/?odd_even;
+        ">
+        <tr 
+          tal:define="
+            title python:(asset.get_title());
+            show_top_border repeat/asset/start;"
+          tal:attributes="
+            class python: iterate and 'odd' or 'even';
+            style python: show_top_border and 'border-top: 1px solid #77858c' or nothing">
+          <tal:block replace="nothing">
+            _______ checkbox + position cell _______
+          </tal:block>
+          <td class="listing-left">
+            <input name="ids:list"                        tal:replace="nothing"
+              type="checkbox"
+              tal:attributes="
+                value asset/id;
+                id asset/id;"
+            />
+            <label 
+              tal:condition="default_document"
+              tal:attributes="for asset/id">
+              &#8211;
+            </label>
+          </td>
+          <tal:block replace="nothing">
+            _______ icon + id cell _______
+          </tal:block>
+          <td>
+            <a class="image"
+              tal:attributes="
+                href string:${asset_url}/edit/tab_edit;
+                title asset/meta_type;">
+              <img tal:replace="structure python:view.render_icon(asset)" />
+            </a>
+            <a class="blacklink"
+              href="asset"
+              title="edit"
+              tal:attributes="href string:${asset_url}/edit/tab_edit"
+              tal:content="structure asset/id"
+              i18n:attributes="title"
+              >
+              id
+            </a>
+
+            <tal:block condition="python: hasattr(view, 'externalEditLink_')">
+              <span tal:replace="structure python: view.externalEditLink_(asset)" />
+            </tal:block>
+
+          </td>
+          <tal:block replace="nothing">
+            _______ title cell _______
+          </tal:block>
+          <td>
+            <a class="blacklink"
+              title="preview"
+              tal:content="python: asset.get_title() == '' and default or asset.get_title()"
+              tal:attributes="
+                href string:${asset_url}/edit/tab_preview;
+                class python: asset.get_title() == '' and 'closed' or 'blacklink'"
+              i18n:attributes="title"
+              >
+              <i>view</i>
+            </a>
+          </td>
+          <tal:block replace="nothing">
+            _______ modified date cell _______
+          </tal:block>
+          <td tal:define="modification_time asset/get_modification_datetime | nothing">
+            <a class="blacklink" title="metadata"
+              tal:condition="modification_time"
+              tal:attributes="href string:${asset_url}/edit/tab_metadata"
+              tal:content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)"
+              >
+              date
+            </a>
+            <tal:block condition="not:modification_time">
+              <i i18n:translate="unknown">
+                unknown
+              </i>
+            </tal:block>
+          </td>
+          <tal:block replace="nothing">
+            _______ author cell _______
+          </tal:block>
+          <td tal:content="structure last_author"
+            tal:define="last_author python:(asset.sec_get_last_author_info().fullname() or default)">
+            unknown
+          </td>
+          <tal:block replace="nothing">
+            _______ move symbols (none) _______
+          </tal:block>
+          <td tal:replace="nothing">
+            &nbsp;
+          </td>
+        </tr>
+      </tal:block>
+    </tal:block>
+  </tbody>
+
+  <tfoot>
+    <tr class="controls">
+      <td colspan="5">
+      </td>
+    </tr>
+  </tfoot>
+  
+  <tfoot tal:replace="nothing">
+    <tal:block replace="nothing">
+      ______________ select all row ______________
+    </tal:block>
+    <tr tal:condition="python:(default_document or publishables or assets)">
+      <th class="controls listing-left"
+        colspan="5">
+        <tal:block define="select_id string:ids">
+          <metal:block use-macro="view/macro_select_all/macros/select_all"/>
+        </tal:block>
+      </th>
+    </tr>
+    <tal:block replace="nothing">
+      ______________ controls ______________
+    </tal:block>
+    <tr class="controls">
+      <td colspan="5">
+        <tal:block condition="may_change_content">
+          <tal:block tal:condition="python:(default_document or publishables or assets)">
+            <div style="float: left; margin-left:0.2em;">
+              <select class="manipulator"
+                name="new_position"
+                title="move selected items to"
+                tal:define="length python: len(publishables) - test(default_document, 1, 0)">
+                <option value="Position">
+                  <span i18n:translate="position">position</span>:
+                </option>
+                <tal:block repeat="item python:range(length)">
+                  <option value="0"                              
+                    tal:content="repeat/item/number"
+                    tal:attributes="value repeat/item/number" />
+                </tal:block>
+                <option value="0"
+                  tal:attributes="value python:len(publishables) + 1"
+                  i18n:translate="end"
+                  >
+                  end
+                </option>
+              </select>
+              <label for="new_position"
+                title="access key: alt-p"
+                accesskey="p"
+                i18n:attributes="title"
+                >
+              </label>
+              <input class="button"
+                name="tab_edit_move_to:method"
+                type="submit"
+                value="Move"
+                title="move selected items into position: alt-m"
+                accesskey="m"
+                i18n:attributes="title"
+              />
+            </div>
+            &nbsp;
+            <input class="button"
+              name="tab_edit_rename_start:method"
+              type="submit"
+              value=" Rename..."
+              title="rename and retitle items: alt-r"
+              accesskey="r" 
+              i18n:attributes="value title"
+            />
+            <input class="button"
+              name="tab_edit_cut:method"
+              type="submit"
+              value="Cut"
+              title="cut items: alt-x"
+              accesskey="x" 
+              i18n:attributes="value title"
+            />                        
+            <input class="button"
+              name="tab_edit_copy:method"
+              type="submit"
+              value="Copy"
+              title="copy items: alt-c"
+              accesskey="c" 
+              i18n:attributes="value title"
+            />
+          </tal:block>
+          <tal:block replace="nothing">
+            ______________ paste (to ghost) controls exist even
+            if there's no content (there should be something on 
+            the clipboard though). ______________
+          </tal:block>
+          <tal:block condition="python:request.has_key('__cp')">
+            <input class="button"
+              name="tab_edit_paste:method"
+              type="submit"
+              value="Paste"
+              title="paste items: alt-v" 
+              accesskey="v" 
+              i18n:attributes="value title"
+            />
+            <input class="button"
+              name="tab_edit_paste_to_ghost:method"
+              type="submit"
+              value="Paste ghost"
+              title="paste (items on clipboard) as ghost objects: alt-g"
+              accesskey="g" 
+              i18n:attributes="value title"
+            />
+          </tal:block>
+          <tal:block tal:condition="python:(default_document or publishables or assets)">
+            <input class="warning"
+              name="tab_edit_delete:method"
+              type="submit"
+              value="Delete"
+              title="there's no undo: alt-d"
+              accesskey="d"
+              onclick="return confirm('Really delete?')"
+              i18n:attributes="onclick value title"
+            />
+          </tal:block>
+        </tal:block>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
       </td>
     </tr>
   </tbody>
