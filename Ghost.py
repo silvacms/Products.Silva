@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.43 $
+# $Revision: 1.44 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -29,7 +29,7 @@ class Ghost(VersionedContent):
     def __init__(self, id):
         Ghost.inheritedAttribute('__init__')(self, id, 'No title for ghost')
         
-    def set_title(self):
+    def set_title(self, title):
         # FIXME: what to do here?
         pass
     
@@ -71,7 +71,17 @@ class Ghost(VersionedContent):
         for object in self.objectValues():
             print object._content_url
             object.set_content_url(object._content_url)
-        
+
+    security.declarePrivate('get_indexables')
+    def get_indexables(self):
+        version = self.get_viewable()
+        if version is None:
+            return []
+        content = version._get_content()
+        if content is None:
+            return []
+        return content.get_indexables()
+
 InitializeClass(Ghost)
 
 class GhostVersion(SimpleItem.SimpleItem):
