@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.27 $
+$Revision: 1.28 $
 
 Silva changes
 
@@ -16,11 +16,13 @@ Silva changes
 
         - Implementation of DataSource/DataElement for testing.
 
-        - 'Code element' that can call arbitary code included.
+        - 'Code element' that can call arbitrary code included.
  
         - Access keys for common form buttons.
 
         - Integration of RealObjects editor (beta).
+
+        - XML can be exported and imported.
 
     Bugs Fixed
 
@@ -62,6 +64,9 @@ Silva changes
       
         - Tweaked LDAPUserFolder.py so it works with more recent versions
           of LDAPUserFolder.
+
+        - Fixed problem in Groups, where the user lookup sometimes lost
+          the selection.
 
   0.8.6.1
 
