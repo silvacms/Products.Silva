@@ -179,16 +179,17 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
             return
         self._startElement(reader, 'workflow', {})
         version = self.context.get_unapproved_version_data()
-        if version[0]:
+        if version[0] and settings.allVersions():
             self._workflow_version(version, 'unapproved', reader, settings)
         version = self.context.get_approved_version_data()
-        if version[0]:
+        if version[0] and settings.allVersions():
             self._workflow_version(version, 'approved', reader, settings)
         version = self.context.get_public_version_data()
         if version[0]:
             self._workflow_version(version, 'public', reader, settings)
-        for version in self.context.get_previous_versions_data():
-            self._workflow_version(version, 'closed', reader, settings)
+        if settings.allVersions():
+            for version in self.context.get_previous_versions_data():
+                self._workflow_version(version, 'closed', reader, settings)
         self._endElement(reader, 'workflow')
 
     def _workflow_version(self, version, status, reader, settings):
@@ -227,8 +228,9 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
             # XXX handle single version export. Is previewable right? Is
             # there a better method that is guaranteed to return a best
             # guess version?
-            getXMLSource(
-                self.context.get_previewable())._sax(reader, settings)
+            viewable = self.context.get_viewable()
+            if viewable is not None:
+                getXMLSource(viewable)._sax(reader, settings)
 
     def _metadata(self, reader, settings):
         """Versioned Content has no metadata, the metadata is all on the
@@ -415,6 +417,9 @@ class ExportSettings:
     def allVersions(self):
         return self._all_versions
 
+    def setOnlyPublished(self):
+        self._all_versions = 0
+        
     def setMappings(self, mappings):
         self._mappings = mappings
 
