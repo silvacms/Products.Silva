@@ -641,7 +641,7 @@ textarea.readable {
 
 select {
   color : &dtml-mainTabFontColorSelected;;
-  background : &dtml-controlBackground;;
+  background : &dtml-inputBackground;;
   margin: 0.1em;
   border : 1px solid &dtml-nightShade;;
     vertical-align: top;
