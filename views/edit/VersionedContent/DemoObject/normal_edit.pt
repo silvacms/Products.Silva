@@ -44,7 +44,7 @@ Note
 *
 </td>
 <td align="left">
-<input tal:replace="python:view.form.object_title.render(title)" />
+<input tal:replace="structure python:view.form.object_title.render(title)" />
 </td>
 <td>
 The title

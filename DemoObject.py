@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -9,12 +9,13 @@ from DateTime import DateTime
 from Globals import InitializeClass
 # Silva interfaces
 from Products.Silva.IVersionedContent import IVersionedContent
+from Products.Silva.IVersion import IVersion
 # Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva.VersionedContent import VersionedContent
+from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.helpers import add_and_edit, translateCdata
-from Products.Silva.Version import Version
+from Products.Silva.Version import CatalogedVersion
 # misc
 from cgi import escape
 
@@ -24,11 +25,9 @@ from Products.Silva.ImporterRegistry import importer_registry, \
 from Products.Silva.Metadata import export_metadata
 from Products.ParsedXML.ExtraDOM import writeStream
 
-
-
 icon="www/silvageneric.gif"
 
-class DemoObject(VersionedContent):
+class DemoObject(CatalogedVersionedContent):
     """Developers can create 'pluggable' Silva objects,
        new content types which can be plugged into Silva. They can be 
        turned on and off per publication (same as Silva core objects). 
@@ -64,24 +63,19 @@ class DemoObject(VersionedContent):
 
         version = getattr(self, version_id)
         f.write('<silva_demoobject id="%s">' % self.id)
-        f.write('<title>%s</title>' % translateCdata(self.get_title()))
-        f.write('<info>%s</info>' % version.info())
-        f.write('<number>%s</number>' % version.number())
-        f.write('<date>%s</date>' % version.date())
-        
-        version.content.documentElement.writeStream(f)
-        export_metadata(version, context)
-        
+        version.to_xml(context)
         f.write('</silva_demoobject>')
 
 InitializeClass(DemoObject)
 
-class DemoObjectVersion(Version):
+class DemoObjectVersion(CatalogedVersion):
     """Silva DemoObject version.
     """
     security = ClassSecurityInfo()
 
     meta_type = "Silva DemoObject Version"
+    
+    __implements__ = IVersion
 
     def __init__(self, id, title):
         """Set id and initialize the ParsedXML tree.
@@ -102,7 +96,6 @@ class DemoObjectVersion(Version):
         self._number = number
         self._date = date
 
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'info')
     def info(self):
@@ -119,7 +112,6 @@ class DemoObjectVersion(Version):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'number')
     def number(self):
-
         """Get the number for this version.
         """
         return self._number
@@ -144,6 +136,38 @@ class DemoObjectVersion(Version):
             value = DateTime(value)
         self._date = value
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'fulltext')
+    def fulltext(self):
+        """Return the content of this object without any xml"""
+        return '%s %s' % (self._flattenxml(self.content_xml()), self.info())
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'content_xml')
+    def content_xml(self):
+        """Returns the documentElement of the content's XML
+        """
+        s = StringIO()
+        self.content.documentElement.writeStream(s)
+        value = s.getvalue()
+        s.close()
+        return value
+
+    def to_xml(self, context):
+        f = context.f
+        f.write('<title>%s</title>' % translateCdata(self.get_title()))
+        self.content.documentElement.writeStream(f)
+        f.write('<info>%s</info>' % translateCdata(self.info()))
+        f.write('<number>%s</number>' % translateCdata(self.number()))
+        f.write('<date>%s</date>' % self.date())
+        export_metadata(self, context)
+
+    def _flattenxml(self, xmlinput):
+        """Cuts out all the XML-tags, helper for fulltext (for content-objects)
+        """
+        # XXX this need to be fixed by using ZCTextIndex or the like
+        return xmlinput
+        
 InitializeClass(DemoObjectVersion)
 
 manage_addDemoObjectForm = PageTemplateFile("www/demoObjectAdd", globals(),
@@ -162,8 +186,9 @@ def manage_addDemoObject(self, id, title, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
-manage_addDemoObjectVersionForm = PageTemplateFile("www/demoObjectVersionAdd", globals(),
-                                               __name__='manage_addDemoObjectVersionForm')
+manage_addDemoObjectVersionForm = PageTemplateFile("www/demoObjectVersionAdd",
+                                    globals(), 
+                                    __name__='manage_addDemoObjectVersionForm')
 
 def manage_addDemoObjectVersion(self, id, title, REQUEST=None):
     """Add a DemoObject version to the Silva-instance."""
