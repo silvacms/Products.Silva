@@ -35,7 +35,8 @@
           <items>[]</items>
           <default>[]</default>
           <title>Addables</title>
-          <description>If 'acquire addables' is not checked, these settings will determine the items allowed in this publication. Otherwise the addables are acquired from above.</description>
+          <extra>tal:attributes="id item"</extra>
+          <description>If 'acquire addables' is not checked, these settings will determine the items allowed in this publication. Otherwise the addables are acquired from the publication above.</description>
           <external_validator></external_validator>
           <css_class></css_class>
           <orientation>vertical</orientation>
