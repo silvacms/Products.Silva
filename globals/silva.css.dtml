@@ -422,6 +422,12 @@ table.listing tr.odd {
     background: &dtml-listingOddBackground;;
 }
 
+/* applies only to mozilla comp. browsers */
+td.main>table.listing tr.odd:hover td,
+td.main>table.listing tr.even:hover td {
+    background-color: #eef7ff;
+  }
+
 table.listing tr.inter-controls {
   color: #c9dfe2;
   background: &dtml-listingInterControlsBackground;;
