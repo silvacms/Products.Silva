@@ -24,6 +24,11 @@ class SilvaObjectTestCase(unittest.TestCase):
         self.document = self.sroot.document
         self.folder = self.sroot.folder
         self.publication = self.sroot.publication
+        # add some stuff to test breadcrumbs
+        self.folder.manage_addProduct['Silva'].manage_addFolder('subfolder', 'Subfolder')
+        self.subfolder = self.folder.subfolder
+        self.subfolder.manage_addProduct['Silva'].manage_addDocument('subsubdoc', 'Subsubdoc')
+        self.subsubdoc = self.subfolder.subsubdoc
         
     def tearDown(self):
         get_transaction().abort()
@@ -53,12 +58,26 @@ class SilvaObjectTestCase(unittest.TestCase):
         self.assertEquals(self.publication.get_title(), 'Publication')
         self.assertEquals(self.folder.default.get_title(), 'Folder')
         
-    def test_get_creation_datetime(self):
-        pass
+    #def test_get_creation_datetime(self):
+    #    pass
 
-    def test_get_modification_datetime(self):
-        pass
+    #def test_get_modification_datetime(self):
+    #    pass
 
+    def test_get_breadcrumbs(self):
+        self.assertEquals([self.sroot],
+                          self.sroot.get_breadcrumbs())
+        self.assertEquals([self.sroot, self.document],
+                          self.document.get_breadcrumbs())
+        self.assertEquals([self.sroot, self.publication],
+                          self.publication.get_breadcrumbs())
+        self.assertEquals([self.sroot, self.folder],
+                          self.folder.get_breadcrumbs())
+        self.assertEquals([self.sroot, self.folder, self.subfolder],
+                          self.subfolder.get_breadcrumbs())
+        self.assertEquals([self.sroot, self.folder,
+                           self.subfolder, self.subsubdoc],
+                          self.subsubdoc.get_breadcrumbs())
     
 def test_suite():
     suite = unittest.TestSuite()
