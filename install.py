@@ -277,6 +277,7 @@ def configureSecurity(root):
         'Add Silva DemoObject Versions',
         'Add Silva DemoObjects',
         'Add Silva Documents',
+        'Add Silva Document Versions',
         'Add Silva Folders',
         'Add Silva Ghost Versions',
         'Add Silva Ghosts',
