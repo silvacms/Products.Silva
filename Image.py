@@ -1,11 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.30 2003/05/23 14:15:17 jw Exp $
+# $Id: Image.py,v 1.31 2003/05/27 17:27:02 jw Exp $
 
 # Python
 import re
 from cStringIO import StringIO
 from types import StringType, IntType
+from zipfile import ZipFile
 # Zope
 import OFS
 from AccessControl import ClassSecurityInfo
@@ -270,24 +271,33 @@ class Image(Asset):
         return None
 
 
-
 InitializeClass(Image)
     
-manage_addImageForm = PageTemplateFile("www/imageAdd", globals(),
-                                       __name__='manage_addImageForm')
+manage_addImageForm = PageTemplateFile(
+    "www/imageAdd", globals(), __name__='manage_addImageForm')
 
-def manage_addImage(self, id, title, file=None, REQUEST=None):
+def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image."""
     if not self.is_id_valid(id):
         return
     object = Image(id, title)
-    self._setObject(id, object)
-    object = getattr(self, id)
+    context._setObject(id, object)
+    object = getattr(context, id)
     # FIXME: Ugh. I get unicode from formulator but this will not validate
     # when using the metadata system. So first make it into utf-8 again..
     object.set_title(title.encode('utf-8'))
     if file:
         object.set_image(file)
 
-    add_and_edit(self, id, REQUEST)
+    add_and_edit(context, id, REQUEST)
     return ''
+
+def manage_addImageBatch(context, title, file=None, REQUEST=None):
+    """Add Images in batch"""
+    zipfile = ZipFile(file)
+    namelist = zipfile.namelist()
+    for name in namelist:
+        img_file = zipfile.read(name)
+        context.manage_addProducts['Silva'].manage_addImage(
+            name, img_title, img_file)
+    return namelist
