@@ -12,5 +12,6 @@ session = request.SESSION
 
 referer = session.get('referer', 'tab_access')
 session['referer'] = None
+del session['referer']
 
 return getattr(context, referer)()
