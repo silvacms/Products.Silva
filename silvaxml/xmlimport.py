@@ -1,8 +1,8 @@
 import sys, string
 from StringIO import StringIO
 from sprout.saxext import xmlimport
-from Products.Silva.Ghost import Ghost
-from Products.Silva.GhostFolder import manage_addGhostFolder
+from Products.Silva.Ghost import Ghost, GhostVersion
+from Products.Silva.GhostFolder import manage_addGhostFolder, GhostFolder
 from Products.Silva.Folder import manage_addFolder
 from Products.Silva.Publication import manage_addPublication
 from Products.Silva.Link import Link, LinkVersion
@@ -21,7 +21,7 @@ def initializeXMLImportRegistry():
     importer.registerHandler((NS_URI, 'folder'), FolderHandler)
     importer.registerHandler((NS_URI, 'link'), LinkHandler)
     importer.registerHandler((NS_URI, 'ghost'), GhostHandler)
-    # importer.registerHandler((NS_URI, 'ghost_folder'), GhostFolderHandler)
+    importer.registerHandler((NS_URI, 'ghost_folder'), GhostFolderHandler)
     importer.registerHandler((NS_URI, 'publication'), PublicationHandler)
     importer.registerHandler((NS_URI, 'version'), VersionHandler)
     importer.registerHandler((NS_URI, 'set'), SetHandler)
@@ -102,19 +102,20 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         metadata_service = content.service_metadata
         metadata = {}
         binding = metadata_service.getMetadata(content)
-        for set_name in binding.collection.keys():
-            set = binding.collection[set_name]
-            element_names = self._metadata[set.id].keys()
-            # Set data
-            errors = binding._setData(
-                namespace_key=set.metadata_uri,
-                data=self._metadata[set.id],
-                reindex=1
-                )
+        if binding is not None:
+            for set_name in binding.collection.keys():
+                set = binding.collection[set_name]
+                element_names = self._metadata[set.id].keys()
+                # Set data
+                errors = binding._setData(
+                    namespace_key=set.metadata_uri,
+                    data=self._metadata[set.id],
+                    reindex=1
+                    )
 
-            if errors:
-                raise ValidationError(
-                    "%s %s" % (str(content.getPhysicalPath()),str(errors)))
+                if errors:
+                    raise ValidationError(
+                        "%s %s" % (str(content.getPhysicalPath()),str(errors)))
 
     def storeWorkflow(self):
         content = self._result
@@ -149,6 +150,11 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
             previous_versions.append(previous_version)
             self.parent()._previous_versions = previous_versions
                     
+    def set_maintitle(self):
+        main_title = self.getMetadata('silva-content', 'maintitle')
+        if main_title is not None:
+            self.result().set_title(main_title)
+
 class SilvaExportRootHandler(SilvaBaseHandler):
     pass
 
@@ -163,9 +169,8 @@ class FolderHandler(SilvaBaseHandler):
                 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
-            self.result().set_title(
-                self.getMetadata('silva-content', 'maintitle')
-                )
+
+            self.set_maintitle()
             self.storeMetadata()
 
 class PublicationHandler(SilvaBaseHandler):
@@ -179,9 +184,7 @@ class PublicationHandler(SilvaBaseHandler):
                 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'publication'):
-            self.result().set_title(
-                self.getMetadata('silva-content', 'maintitle')
-                )
+            self.set_maintitle()
             self.storeMetadata()
 
 class AutoTOCHandler(SilvaBaseHandler):
@@ -195,9 +198,7 @@ class AutoTOCHandler(SilvaBaseHandler):
             
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'auto_toc'):
-            self.result().set_title(
-                self.getMetadata('silva-content', 'maintitle')
-                )
+            self.set_maintitle()
             self.storeMetadata()
             
 class VersionHandler(SilvaBaseHandler):
@@ -229,18 +230,24 @@ class SetHandler(SilvaBaseHandler):
                 self.parentHandler().setMetadataType(attrs[(None, 'type')])
             else:
                 self.parentHandler().setMetadataType(None)
+        self.setResult(None)
             
     def characters(self, chrs):
-        if self.parentHandler().metadataKey() is not None:
-            self.parentHandler().setMetadata(
-                self.parentHandler().metadataSet(),
-                self.parentHandler().metadataKey(),
-                chrs,
-                self.parentHandler().metadataType())
-        
+        self._chars = chrs
+       
     def endElementNS(self, name, qname):
+        value = getattr(self, '_chars', None)
+
+        if self.parentHandler().metadataKey() is not None:
+             self.parentHandler().setMetadata(
+             self.parentHandler().metadataSet(),
+             self.parentHandler().metadataKey(),
+             value,
+             self.parentHandler().metadataType())
+
         self.parentHandler().setMetadataKey(None)
         self.parentHandler().setMetadataType(None)
+        self._chars = None
         
 class GhostHandler(SilvaBaseHandler):
     def getOverrides(self):
@@ -250,26 +257,54 @@ class GhostHandler(SilvaBaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'ghost'):
-            id = str(attrs[(None, 'id')])
+            id = attrs[(None, 'id')].encode('utf-8')
             uid = generateUniqueId(id, self.parent())
-            ghost_object = Ghost(uid)
-            self.parent().addItem(ghost_object)
-            self.setResult(ghost_object)
+            object = Ghost(uid)
+            self.parent()._setObject(id, object)
+            object = getattr(self.parent(), uid)
+            self.setResult(object)
 
 class GhostContentHandler(SilvaBaseHandler):
+    def getOverrides(self):
+        return {
+            (NS_URI, 'haunted_url'): HauntedUrlHandler,
+            (NS_URI, 'content'): NoopHandler,
+            }
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'content'):
             if attrs.has_key((None, 'version_id')):
-                id = attrs[(None, 'version_id')]
-                version = GhostContent(id)
-                self.parent()._setObject(id, version)
+                id = attrs[(None, 'version_id')].encode('utf8')
+                self.parent()._setObject(id, GhostVersion(id))
+                version = getattr(self.parent(), id)
                 self.setResult(version)
-                updateVersionCount(self)
 
     def endElementNS(self, name, qname):
-        if name == (NS_URI, 'ghost'):
-            self.storeMetadata()
+        if name == (NS_URI, 'content'):
             self.storeWorkflow()
+            updateVersionCount(self)
+
+class GhostFolderHandler(SilvaBaseHandler):
+    def getOverrides(self):
+        return {
+            (NS_URI, 'content'): GhostContentHandler
+            }
+
+    def startElementNS(self, name, qname, attrs):
+        if name == (NS_URI, 'ghost_folder'):
+            id = attrs[(None, 'id')].encode('utf-8')
+            uid = generateUniqueId(id, self.parent())
+            object = GhostFolder(uid)
+            self.parent()._setObject(id, object)
+            object = getattr(self.parent(), uid)
+            self.setResult(object)
+
+class HauntedUrlHandler(SilvaBaseHandler):
+    def characters(self, chars):
+        self.parent().set_haunted_url(chars)
+
+class NoopHandler(SilvaBaseHandler):
+    pass
 
 class LinkHandler(SilvaBaseHandler):
     def getOverrides(self):
@@ -304,8 +339,7 @@ class LinkContentHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
             self.result().set_url(self.getData('url'))
-            self.result().set_title(
-                self.getMetadata('silva-content', 'maintitle'))
+            self.set_maintitle()
             self.storeMetadata()
             self.storeWorkflow()
 
@@ -326,7 +360,7 @@ class ImageHandler(SilvaBaseHandler):
             file = StringIO(
                 info.ZipFile().read(
                     'assets/' + self.getData('zip_id')))
-            self.parent().manage_addImage(id, '', file)
+            self.parent().manage_addProduct['Silva'].manage_addImage(id, '', file)
             
 class FileHandler(SilvaBaseHandler):
     def getOverrides(self):
@@ -345,7 +379,7 @@ class FileHandler(SilvaBaseHandler):
             file = StringIO(
                 info.ZipFile().read(
                     'assets/' + self.getData('zip_id')))
-            self.parent().manage_addFile(id, '', file)
+            self.parent().manage_addProduct['Silva'].manage_addFile(id, '', file)
             
 class UnknownContentHandler(SilvaBaseHandler):
     def getOverrides(self):
