@@ -7,8 +7,6 @@ from Products.Silva import mangle, icon
 
 from Products.Silva.interfaces import IVersionedContent, IContent, IContainer
 
-from Products.Silva.i18n import translate as _
-
 class ViewCode:
     """A mixin to expose view specific code to the pagetemplates
 
