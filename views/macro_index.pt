@@ -125,13 +125,13 @@ function handle_default_action(element, event, action)
 <!-- ______________ end feedback ______________ -->
 </span>
 
-<!-- _____________________ Main start _____________________ -->
+<!-- _____________________ Start main _____________________ -->
 <div metal:define-slot="main">
   Here the local content (a.k.a. "model") is inserted (this text will be replaced).
 </div>
-<!-- _____________________ Main ends _____________________ -->
+<!-- _____________________ End main _____________________ -->
 
-<!-- ____________________________ Footer start ____________________________ -->
+<!-- ____________________________ Start footer ____________________________ -->
 <span tal:replace="nothing">
 <!-- _______ white space + jump to top _______ -->
 </span>

@@ -83,5 +83,12 @@
       </tr>
     </tbody>
 
+    <tfoot>
+      <tr class="controls">
+        <td colspan="3">
+        </td>
+      </tr>
+    </tfoot>
   </table>
+
 </html>

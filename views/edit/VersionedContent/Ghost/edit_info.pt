@@ -6,11 +6,12 @@
     title model/get_title;
     vein string:editor;
 ">
-<table class="columns columns3">
+<table class="columns columns3"
+  style="margin-top:1em;">
   <tbody>
     <tr>
       <tal:block replace="nothing">
-        _____________________ sidebar subtable _____________________
+        _____________________ sidebar _____________________
       </tal:block>
       <td class="left"
         tal:define="template_id string:tab_edit">
@@ -22,13 +23,16 @@
       </tal:block>
       <td class="main">
 
-  <tal:block
-    tal:repeat="version_rec here/edit_info_get_versions">
-    <div
-      tal:content="structure python:here.edit_info_showversion(**version_rec)"
-      >
-      version information
-    </div>
+<tal:block
+  tal:repeat="version_rec here/edit_info_get_versions">
+  <tal:block tal:content="structure python:here.edit_info_showversion(**version_rec)">
+    version information
   </tal:block>
+</tal:block>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
 </html>
 
