@@ -46,7 +46,7 @@ InitializeClass(Publication)
 manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),
                                              __name__='manage_addPublicationForm')
 
-def manage_addPublication(self, id, title, REQUEST=None):
+def manage_addPublication(self, id, title, create_default=1, REQUEST=None):
     """Add a Silva publication."""
     if not self.is_id_valid(id):
         return
