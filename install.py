@@ -189,7 +189,6 @@ def configureMetadata(root):
     mapping = root.service_metadata.getTypeMapping()
     default = ''
     tm = (
-        {'type':'Silva DemoObject Version', 'chain':'silva-content, silva-extra'},
         {'type':'Silva Ghost Version',      'chain':''},
         {'type':'Silva Folder',             'chain':'silva-extra'},
         {'type':'Silva File',               'chain':'silva-content, silva-extra'},
@@ -285,8 +284,6 @@ def configureSecurity(root):
     
     add_permissions = [
         'Add Documents, Images, and Files',
-        'Add Silva DemoObject Versions',
-        'Add Silva DemoObjects',
         'Add Silva Documents',
         'Add Silva Folders',
         'Add Silva Ghost Versions',
@@ -435,8 +432,6 @@ def registerViews(reg):
                  ['edit', 'VersionedContent', 'Ghost'])
     reg.register('edit', 'Silva Image',
                  ['edit', 'Asset', 'Image'])
-    reg.register('edit', 'Silva DemoObject',
-                 ['edit', 'VersionedContent', 'DemoObject'])
     reg.register('edit', 'Silva File',
                  ['edit', 'Asset', 'File'])
     reg.register('edit', 'Silva Indexer',
@@ -456,7 +451,6 @@ def registerViews(reg):
     reg.register('public', 'Silva Root', ['public', 'Folder'])
     reg.register('public', 'Silva Ghost', ['public', 'Ghost'])
     reg.register('public', 'Silva Image', ['public', 'Image'])
-    reg.register('public', 'Silva DemoObject', ['public', 'DemoObject'])
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
     reg.register('public', 'Silva Simple Content', ['public', 'SimpleContent'])
@@ -471,7 +465,6 @@ def registerViews(reg):
     reg.register('add', 'Silva Publication', ['add', 'Publication'])
     reg.register('add', 'Silva Ghost', ['add', 'Ghost'])
     reg.register('add', 'Silva Image', ['add', 'Image'])
-    reg.register('add', 'Silva DemoObject', ['add', 'DemoObject'])
     reg.register('add', 'Silva File', ['add', 'File'])
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
     reg.register('add', 'Silva Simple Content', ['add', 'SimpleContent'])

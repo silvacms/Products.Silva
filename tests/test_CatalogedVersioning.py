@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -11,8 +11,10 @@ from Testing import makerequest
 from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
 
-from Products.Silva.DemoObject import DemoObject, DemoObjectVersion
 from Products.Silva.Root import Root
+
+# XXX this test is broken because DemoObject does not exist
+# anymore.. What versioned content should this test use?
 
 def _getCopy(self, container):
     """A hack to make copy & paste work (used by create_copy())

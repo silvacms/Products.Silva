@@ -1,11 +1,11 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.103 $
+# $Revision: 1.104 $
 
 import Metadata
 import Folder, Root
 import Publication, Ghost, Image, File, SimpleContent
-import DemoObject, Indexer
+import Indexer
 import SQLDataSource
 import GhostFolder
 import SemiGhost
@@ -47,7 +47,7 @@ def initialize(context):
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
         Folder, Root, Publication, Ghost, Image, File, SimpleContent,
-        Indexer, SQLDataSource, DemoObject, Group, VirtualGroup, IPGroup,
+        Indexer, SQLDataSource, Group, VirtualGroup, IPGroup,
         GhostFolder, SemiGhost, AutoTOC],
         install, depends_on=None)
 
@@ -121,8 +121,6 @@ def initialize(context):
                                    Publication.xml_import_handler)
     importer_registry.register_tag('silva_folder',
                                    Folder.xml_import_handler)
-    importer_registry.register_tag('silva_demoobject',
-                                   DemoObject.xml_import_handler)
     importer_registry.register_tag('silva_ghostfolder',
                                    GhostFolder.xml_import_handler)
 

@@ -12,7 +12,7 @@
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      $Id: silva.xsd,v 1.20 2003/10/06 09:09:56 zagy Exp $
+      $Id: silva.xsd,v 1.21 2003/10/10 12:23:32 faassen Exp $
     
       Silva XML schema
       Copyright 2002 Infrae
@@ -50,7 +50,6 @@
         <xsd:element name="silva_folder" type="Folder" />
         <xsd:element name="silva_publication" type="Folder" />
         <xsd:element name="silva_document" type="Document" />
-        <xsd:element name="silva_demoobject" type="DemoObject" />
       </xsd:choice>
     </xsd:sequence>
     <xsd:attribute name="id" type="ID" minOccurs="1" />
@@ -503,38 +502,6 @@
       </xsd:extension>
      </xsd:complexContent>
   </xsd:complexType>
-
-
-
-  <!-- DemoObject -->
-  <xsd:complexType name="DemoObject">
-    <xsd:sequence>
-      <xsd:element name="title" type="xsd:string" />
-      <xsd:element name="info" type="xsd:string" />
-      <xsd:element name="number" type="xsd:integer" />
-      <xsd:element name="date" type="xsd:string" />
-      <xsd:element name="doc">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:choice maxOccurs="unbounded">
-              <xsd:element name="heading" type="Heading" />
-              <xsd:element name="p" type="Paragraph" />
-              <xsd:element name="list" type="List" />
-              <xsd:element name="nlist" type="NestedList" />
-              <xsd:element name="table" type="Table" />
-              <xsd:element name="image" type="Image" />
-              <xsd:element name="toc" type="TableOfContents" />
-              <xsd:element name="pre" type="xsd:string" />
-            </xsd:choice>
-          </xsd:sequence>
-        </xsd:complexType>  
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute name="id" type="ID" />
-  </xsd:complexType>
-
-
-
   
 </xsd:schema>
   

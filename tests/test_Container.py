@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.38 $
+# $Revision: 1.39 $
 import unittest
 from os.path import dirname, join
 import Zope
@@ -355,7 +355,7 @@ class ContainerTestCase(ContainerBaseTestCase):
     def test_import_xml(self):
         xml1 = """<?xml version="1.0" ?><silva><silva_publication id="test"><title>TestPub</title><silva_document id="index"><title>TestPub</title><doc><p>Content</p></doc></silva_document></silva_publication></silva>"""
 
-        xml2 = '<silva><silva_folder id="test2"><title>TestFolder</title><silva_demoobject id="do"><title>DemoObject</title><number>10</number><date>%s</date><info>Info</info><doc><p>Content</p></doc></silva_demoobject></silva_folder></silva>' % DateTime('2002/10/16')
+        xml2 = '<silva><silva_folder id="test2"><title>TestFolder</title></silva_folder></silva>' % DateTime('2002/10/16')
 
         self.sroot.xml_import(xml1)
 
@@ -370,13 +370,7 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assert_(hasattr(self.sroot, 'test2'))
         # XXX no title available as no index object in this import..
         #self.assertEquals(self.sroot.test2.get_title_editable(), 'TestFolder')
-        self.assert_(hasattr(self.sroot.test2, 'do'))
-        self.assertEquals(self.sroot.test2.do.get_title_editable(), 'DemoObject')
-        self.assertEquals(str(self.sroot.test2.do.get_editable().number()), '10')
-        self.assertEquals(self.sroot.test2.do.get_editable().date(), DateTime('2002/10/16'))
-        self.assertEquals(self.sroot.test2.do.get_editable().info(), 'Info')
-        self.assertEquals(str(self.sroot.test2.do.get_editable().content.documentElement), '<doc><p>Content</p></doc>')
-
+   
 class AddableTestCase(ContainerBaseTestCase):
 
     def setUp(self):

@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.15 2003/08/29 12:42:00 zagy Exp $    
+$Id: Metadata.py,v 1.16 2003/10/10 12:23:31 faassen Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
@@ -73,7 +73,6 @@ def register_core_types():
     """
     register the silva core content types with the metadata system
     """
-    from Products.Silva.DemoObject import DemoObjectVersion
     from Products.Silva.File import File
     from Products.Silva.Folder import Folder
     from Products.Silva.Ghost import GhostVersion
@@ -89,7 +88,6 @@ def register_core_types():
     from Products.Silva.VirtualGroup import VirtualGroup
     from Products.Silva.IPGroup import IPGroup
     
-    registerTypeForMetadata(DemoObjectVersion.meta_type)
     registerTypeForMetadata(GhostVersion.meta_type)
     registerTypeForMetadata(Folder.meta_type)
     registerTypeForMetadata(File.meta_type)
