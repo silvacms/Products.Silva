@@ -1,25 +1,24 @@
-## Script (Python) "tab_status_revoke"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
 ##parameters=refs=None
-##title=
-##
-model = context.REQUEST.model
+
+request = context.REQUEST
+model = request.model
 view = context
+
 from DateTime import DateTime
 from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(message_type='error', message='Nothing was selected, so no approval was revoked')
+    return view.tab_status(
+        message_type='error', 
+        message='Nothing was selected, so no approval was revoked',)
 
 try:
-    result = view.tab_status_form.validate_all(context.REQUEST)
+    result = view.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
-    return view.tab_status(message_type='error', message=view.render_form_errors(e))
+    return view.tab_status(
+        message_type='error', 
+        message=view.render_form_errors(e))
 
 revoked_ids = []
 not_revoked = []
@@ -41,12 +40,12 @@ for ref in refs:
     revoked_ids.append(get_name(obj))
 
 if revoked_ids:
+    request.set('refs', [])
+    request.set('redisplay_timing_form', 0)
     msg.append( 'Revoked approval of: %s' % view.quotify_list(revoked_ids) )
 
 if not_revoked:
     msg.append( '<span class="error">Could not revoke approval of: %s</span>' % view.quotify_list_ext(not_revoked) )
-
-context.REQUEST.set('refs', [])
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

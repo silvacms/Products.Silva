@@ -16,6 +16,10 @@
   name="silvaObjects"
   tal:define="
     objects model/get_processed_status_tree;
+    
+    refs request/refs | options/refs | python: [];
+    redisplay_timing_form request/redisplay_timing_form | options/redisplay_timing_form | python: 1;
+
     global approveables nothing;
     global rejectables nothing;
     global revokeables nothing;
@@ -120,7 +124,10 @@
             value="value"
             tal:define="ref obj/ref | nothing"
             tal:condition="ref"
-            tal:attributes="value ref;"
+            tal:attributes="
+              value ref;
+              checked python: ref in refs and 'checked' or nothing;
+              "
           />
         </td>
         <tal:block replace="nothing">
@@ -260,7 +267,14 @@
           accesskey="m">
           publish time:
         </label>
-        <tal:block tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
+        <tal:block
+          condition="redisplay_timing_form"
+          replace="structure python: view.tab_status_form.publish_datetime.render_from_request(request)" 
+        />
+        <tal:block
+          tal:condition="not: redisplay_timing_form"
+          tal:replace="structure python: view.tab_status_form.publish_datetime.render()" 
+        />
       </td>
       <td class="align-right"
         style="vertical-align:bottom; line-height:160%; padding-bottom:0.3em;">
@@ -271,7 +285,14 @@
             accesskey="u">
             p<u>u</u>blish&nbsp;now?
           </label>
-          <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+          <tal:block 
+            condition="redisplay_timing_form"
+            replace="structure python:view.tab_status_form.publish_now_flag.render_from_request(request)" 
+          />
+          <tal:block 
+            condition="not: redisplay_timing_form"
+            replace="structure python:view.tab_status_form.publish_now_flag.render()" 
+          />
         </tal:block>
       </td>
     </tr>
@@ -287,7 +308,14 @@
           accesskey="x">
           expiration time:
         </label>
-        <tal:block replace="structure view/tab_status_form/expiration_datetime/render" />      
+        <tal:block 
+          condition="redisplay_timing_form"
+          replace="structure python: view.tab_status_form.expiration_datetime.render_from_request(request)" 
+        />      
+        <tal:block 
+          condition="not: redisplay_timing_form"
+          replace="structure python: view.tab_status_form.expiration_datetime.render()" 
+        />      
       </td>
       <td class="align-right"
         style="vertical-align:bottom; line-height:160%; padding-bottom:0.3em;">

@@ -1,13 +1,7 @@
-## Script (Python) "tab_status_change_settings"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
 ##parameters=refs=None
-##title=
-##
-model = context.REQUEST.model
+
+request = context.REQUEST
+model = request.model
 view = context
 
 from DateTime import DateTime
@@ -15,10 +9,12 @@ from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(message_type='error', message='Nothing was selected, so no settings changed')
+    return view.tab_status(
+        message_type='error', 
+        message='Nothing was selected, so no settings changed')
 
 try:
-    result = view.tab_status_form.validate_all(context.REQUEST)
+    result = view.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
     return view.tab_status(
         message_type='error', 
@@ -84,12 +80,11 @@ for ref in refs:
         changed_ids.append(get_name(obj))
 
 if changed_ids:
+    request.set('refs', []) # explicit clear since it has value from the form
+    request.set('redisplay_timing_form', 0)
     msg.append( 'Changed settings on: %s' % view.quotify_list(changed_ids) )
 
 if not_changed:
     msg.append( '<span class="error">could not change settings on: %s</span>' % view.quotify_list_ext(not_changed) )
 
-context.REQUEST.set('refs', [])
-
-return view.tab_status(message_type='feedback', 
-  message=(', '.join(msg)) )
+return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

@@ -1,13 +1,7 @@
-## Script (Python) "tab_status_withdraw"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
 ##parameters=refs=None
-##title=
-##
-model = context.REQUEST.model
+
+request = context.REQUEST
+model = request.model
 view = context
 
 # Check whether there's any checkboxes checked at all...
@@ -15,7 +9,6 @@ if not refs:
     return view.tab_status(
         message_type='error',
         message='Nothing was selected, so no approval withdrawn')
-
 
 msg = []
 approved_ids = []
@@ -44,9 +37,9 @@ Request for approval was withdrawn via a bulk operation in the publish screen of
     obj.withdraw_version_approval(message)
     approved_ids.append(obj.id)
 
-context.REQUEST.set('refs', [])
-
 if approved_ids:
+    request.set('refs', [])
+    request.set('redisplay_timing_form', 0)
     msg.append( 'Withdrawn request for approval for: %s' % view.quotify_list(approved_ids))
 
 if not_approved:

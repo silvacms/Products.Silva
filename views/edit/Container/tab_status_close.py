@@ -1,25 +1,24 @@
-## Script (Python) "tab_status_close"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
 ##parameters=refs=None
-##title=
-##
-model = context.REQUEST.model
+
+request = context.REQUEST
+model = request.model
 view = context
+
 from DateTime import DateTime
 from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(message_type='error', message='Nothing selected, so nothing closed')
+    return view.tab_status(
+        message_type='error', 
+        message='Nothing selected, so nothing closed')
 
 try:
-    result = view.tab_status_form.validate_all(context.REQUEST)
+    result = view.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
-    return view.tab_status(message_type='error', message=view.render_form_errors(e))
+    return view.tab_status(
+        message_type='error', 
+        message=view.render_form_errors(e))
 
 closed_ids = []
 not_closed = []
@@ -42,11 +41,11 @@ for ref in refs:
     closed_ids.append(get_name(obj))
 
 if closed_ids:
+    request.set('refs', [])
+    request.set('redisplay_timing_form', 0)
     msg.append( 'Closed: %s' % view.quotify_list(closed_ids) )
 
 if not_closed:
     msg.append( '<span class="error">could not close: %s</span>' % view.quotify_list_ext(not_closed) )
-
-context.REQUEST.set('refs', [])
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )
