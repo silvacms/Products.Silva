@@ -1,33 +1,34 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.61 $
+# $Revision: 1.62 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
-from StringIO import StringIO
+from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 
 # Silva interfaces
 from IVersionedContent import IVersionedContent
 
 # Silva
 import SilvaPermissions
-from VersionedContent import VersionedContent
+from VersionedContent import CatalogedVersionedContent
 from helpers import add_and_edit, translateCdata, getNewId
+from Version import Version
 
 # For XML-Conversions for editors
 from transform.Transformer import EditorTransformer
-from transform.base import Context
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 from Products.ParsedXML.ExtraDOM import writeStream
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.PrettyPrinter import _translateCdata
+from Products.ParsedXML.ParsedXML import ParsedXML
 
 icon="www/silvadoc.gif"
 
-class Document(VersionedContent):
+class Document(CatalogedVersionedContent):
     """A Document is the basic unit of information in Silva. A document
         can -  much like word processor documents - contain text,
         lists, tables, headers, subheads, images, etc. Documents can have
@@ -41,7 +42,7 @@ class Document(VersionedContent):
     __implements__ = IVersionedContent
 
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
-    inherited_manage_options = VersionedContent.manage_options
+    inherited_manage_options = CatalogedVersionedContent.manage_options
     manage_options=(
         (inherited_manage_options[0],)+
         ({'label':'Silva /edit...', 'action':'edit'},)+
@@ -209,66 +210,32 @@ class Document(VersionedContent):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
                               'editor_storage')
-    def editor_storage(self, string=None, editor='eopro3_0', encoding='UTF-8'):
+    def editor_storage(self, string=None, editor='eopro2_11', encoding='UTF-8'):
         """provide xml/xhtml/html (GET requests) and (heuristic) 
            back-transforming to xml/xhtml/html (POST requests)
         """
         transformer = EditorTransformer(editor=editor)
 
-
         if string is None:
-            ctx = Context(url=self.absolute_url())
             string = self.get_xml(last_version=1, with_sub_publications=0)
-            htmlnode = transformer.to_target(sourceobj=string, context=ctx)
+            htmlnode = transformer.to_target(sourceobj=string)
             return htmlnode.asBytes(encoding=encoding)
         else:
             version = self.get_editable()
             if version is None:
                 raise "Hey, no version to store to!"
+            conv_context = {'id': self.id,
+                            'title': self.get_title()}
 
-            ctx = Context(id=self.id, 
-                          title=self.get_title(),
-                          url=self.absolute_url())
-
-            silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
+            silvanode = transformer.to_source(targetobj=string,
+                                              context=conv_context
+                                              )[0]
             title = silvanode.find('title')[0].content.asBytes(encoding='utf8')
             title = unicode(title, 'utf8')
-            docnode = silvanode.find_one('doc')
+            docnode = silvanode.find('doc')[0]
             content = docnode.asBytes(encoding="UTF8")
             version.manage_edit(content)  # needs utf8-encoded string
             self.set_title(title)         # needs unicode
-
-#    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-#                              'to_folder')
-#    def to_folder(self):
-#        """Convert this document to folder in same place.
-#        """
-#        # get id of document; this will be the id of the folder
-#        id = self.id
-#        # we will rename ourselves to a temporary id
-#        temp_id = 'silva_temp_%s' % id
-#        # get parent folder
-#        parent = self.get_container()
-#        # rename doc so we can create folder with the same name
-#        parent.manage_renameObject(id, temp_id)
-#        # create Silva Folder to hold self
-#        parent.manage_addProduct['Silva'].managre_addFolder(id, self.title(), 0)
-#        # get folder
-#        folder = getattr(parent, id)
-#        # now add self to folder
-#        cb = parent.manage_cutObjects([temp_id])
-#        folder.manage_pasteObjects(cb_copy_data=cb)
-#        # rename doc from temp_id to 'doc'
-#        folder.manage_renameObject(temp_id, 'doc')
-#        return folder
-
- #   def action_paste(self, REQUEST):
- #       """Convert this to Folder and paste objects on clipboard.
- #       """
- #       # convert myself to a folder
- #       folder = self.to_folder()
- #       # paste stuff into the folder
- #       folder.action_paste(REQUEST)
 
     security.declarePrivate('get_indexables')
     def get_indexables(self):
@@ -278,6 +245,17 @@ class Document(VersionedContent):
         return [version]
 
 InitializeClass(Document)
+
+class DocumentVersion(Version, CatalogPathAware):
+    """Silva Document version.
+    """
+    security = ClassSecurityInfo()
+
+    meta_type = "Silva Document Version"
+
+    default_catalog = 'service_catalog'
+
+InitializeClass(DocumentVersion)
 
 manage_addDocumentForm = PageTemplateFile("www/documentAdd", globals(),
                                           __name__='manage_addDocumentForm')
@@ -289,10 +267,21 @@ def manage_addDocument(self, id, title, REQUEST=None):
     object = Document(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
-    # add empty ParsedXML object
-    str = """<doc></doc>"""
-    object.manage_addProduct['ParsedXML'].manage_addParsedXML('0', '', str)
+    object.manage_addProduct['Silva'].manage_addDocumentVersion('0')
     object.create_version('0', None, None)
+    getattr(object, '0').index_object()
+    add_and_edit(self, id, REQUEST)
+    return ''
+
+manage_addDocumentVersionForm = PageTemplateFile(
+    "www/documentVersionAdd",
+    globals(),
+    __name__='manage_addDocumentVersionForm')
+
+def manage_addDocumentVersion(self, id, title=None, REQUEST=None):
+    """Add a Document version to the Silva-instance."""
+    object = DocumentVersion(id, title)
+    self._setObject(id, object)
     add_and_edit(self, id, REQUEST)
     return ''
 

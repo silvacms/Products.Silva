@@ -100,6 +100,9 @@ def install(root):
     # also register views
     registerViews(root.service_view_registry)
 
+    # add and/or update catalog
+    setup_catalog(root)
+
     # Try to see if the Groups Product is installed.
     # If so, register the views
     try:
@@ -660,6 +663,45 @@ def registerTableViewer(root):
     for name in ['row', 'row_heading']:
         wr.addWidget(name, ('service_widgets', 'element', 'table_elements',
                                  name, 'mode_view'))
+
+def setup_catalog(silva_root):
+    """Sets the ZCatalog up"""
+    if hasattr(silva_root, 'service_catalog'):
+        catalog = silva_root.service_catalog
+        if hasattr(catalog, 'UnicodeVocabulary'):
+            catalog.manage_delObjects(['UnicodeVocabulary'])
+    else:
+        silva_root.manage_addProduct['ZCatalog'].manage_addZCatalog('service_catalog', 'Silva Service Catalog')
+        catalog = silva_root.service_catalog
+
+    catalog.manage_addProduct['ZCatalog'].manage_addVocabulary('UnicodeVocabulary', 'UnicodeVocabulary', 1, 'UnicodeSplitter')
+
+    columns = ['contact_info', 'container_comment', 'expiration_datetime', 'get_title_html',
+            'id', 'meta_type', 'object_path', 'publication_datetime', 'source_path',
+            'last_author_fullname', 'start_datetime',
+            'title', 'version_status']
+
+    indexes = [('creation_datetime', 'FieldIndex'), ('fulltext', 'TextIndex'), ('id', 'FieldIndex'),
+            ('meta_type', 'FieldIndex'), ('object_path', 'KeywordIndex'),
+            ('parent_path', 'FieldIndex'), ('path', 'PathIndex'), ('publication_datetime', 'FieldIndex'),
+            ('source_path', 'FieldIndex'), ('version_status', 'FieldIndex')]
+
+    existing_columns = catalog.schema()
+    existing_indexes = catalog.indexes()
+
+    for column_name in columns:
+        if column_name in existing_columns:
+            continue
+        catalog.addColumn(column_name)
+
+    for field_name, field_type in indexes:
+        if field_name in existing_indexes:
+            continue
+        catalog.addIndex(field_name, field_type)
+
+    # set the vocabulary of the fulltext-index to some Unicode aware one
+    # (Should probably be ISO-8859-1, but that Splitter crashes Zope 2.5.1?!?)
+    catalog.Indexes['fulltext'].manage_setPreferences('UnicodeVocabulary')
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""

@@ -1,7 +1,10 @@
+from StringIO import StringIO
+
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass
 
+from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.IVersion import IVersion
 from Products.Silva import SilvaPermissions
 
@@ -10,6 +13,10 @@ class Version(SimpleItem):
     __implements__ = IVersion
 
     security = ClassSecurityInfo()
+
+    def __init__(self, id, title=None):
+        self.id = id
+        self.content = ParsedXML('content', '<doc></doc>')
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'version_status')
@@ -81,4 +88,37 @@ class Version(SimpleItem):
         else:
             return getattr(self, 'get_%s_version_expiration_datetime' % status)(0)
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'fulltext')
+    def fulltext(self):
+        """Return the content of this object without any xml"""
+        content = self._flattenxml(self.content_xml())
+        return content
+        
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'content_xml')
+    def content_xml(self):
+        """Returns the documentElement of the content's XML
+        """
+        s = StringIO()
+        self.content.documentElement.writeStream(s)
+        value = s.getvalue()
+        s.close()
+        return value
+
+    def _flattenxml(self, xmlinput):
+        """Cuts out all the XML-tags, helper for fulltext (for content-objects)
+        """
+        # FIXME: should take care of CDATA-chunks as well...
+        xmlinput = xmlinput.encode('cp1252')
+        while 1:
+            ltpos = xmlinput.find('<')
+            gtpos = xmlinput.find('>')
+            if ltpos > -1 and gtpos > -1:
+                xmlinput = xmlinput.replace(xmlinput[ltpos:gtpos + 1], ' ')
+            else:
+                break
+        return xmlinput
+
 InitializeClass(Version)
+

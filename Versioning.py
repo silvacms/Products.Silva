@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27 $
+# $Revision: 1.28 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -83,7 +83,7 @@ class Versioning:
                                     expiration_datetime)
         # overwrite possible previous info ...
         self._request_for_approval_info = RequestForApprovalInfo()
-        self._reindex_version(self._unapproved_version)
+        self._index_version(self._unapproved_version)
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'approve_version')
@@ -180,8 +180,11 @@ class Versioning:
         previous_versions.append(self._public_version)
         self._public_version = empty_version
         self._previous_versions = previous_versions
-        self._reindex_version(last_closed_version)
-        self._reindex_version(previous_versions[-1])
+
+        # remove it from the catalog (if required)
+        # this way the catalog only contains unapproved, approved 
+        # and public versions
+        self._unindex_version(last_closed_version)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'create_copy')
@@ -224,10 +227,12 @@ class Versioning:
         current_version_id = self.get_unapproved_version()
         if current_version_id is None:
             raise VersioningError, "No unapproved version available"
+        self._unindex_version((current_version_id,))
         # delete the current version
         self.manage_delObjects([current_version_id])
         # and copy the previous using the current id
         self.manage_clone(getattr(self, version_id_to_copy), current_version_id, self.REQUEST)
+        self._index_version((current_version_id,))
     
     def _get_editable_rfa_info(self):
         """ helper method: return the request for approval information,
@@ -473,17 +478,12 @@ class Versioning:
                 else:
                     last_closed_version = self._previous_versions[-1]
                 self._previous_versions.append(self._public_version)
-                # reindex version (now last closed)
-                self._reindex_version(self._public_version)
-                # reindex previously last_closed_version
-                if last_closed_version is not empty_version:
-                    self._reindex_version(last_closed_version)
+                # unindex version (now last closed)
+                self._unindex_version(self._public_version)
             self._public_version = self._approved_version
             self._approved_version = empty_version
             # reindex approved version that is now public
             self._reindex_version(self._public_version)
-            if self._previous_versions:
-                self._reindex_version(self._previous_versions[-1])
         # get expiration datetime of public version 
         expiration_datetime = self._public_version[2]
         # expire public version if expiration datetime reached
@@ -498,8 +498,7 @@ class Versioning:
             self._public_version = empty_version
             self._previous_versions = previous_versions
             # reindex last closed and now newly last closed version
-            self._reindex_version(last_closed_version)
-            self._reindex_version(self._previous_versions[-1])
+            self._unindex_version(last_closed_version)
             
     # ACCESSORS
 
@@ -706,9 +705,6 @@ class Versioning:
         """
         return self._request_for_approval_info.request_date
 
-    def _reindex_version(self, version):
-        pass
-
     def _send_message_to_editors(self, from_userid, subject, text):
         service_messages = getattr(self, 'service_messages', None)
         if service_messages is None:
@@ -737,6 +733,15 @@ class Versioning:
             self.get_title_editable(),
             self.absolute_url(), text)
         service_messages.send_message(from_userid, to_userid, subject, text)
+
+    def _index_version(self, version):
+        pass
+        
+    def _reindex_version(self, version):
+        pass
+
+    def _unindex_version(self, version):
+        pass
 
 
 def _format_date_helper(date):
