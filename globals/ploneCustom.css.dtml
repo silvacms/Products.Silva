@@ -576,6 +576,7 @@ select {
   font-size: 90% ! important;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
+  border : 5px solid &dtml-nightShade;;
   line-height : 96%;
 }
 
