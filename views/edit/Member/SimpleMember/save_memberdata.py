@@ -24,19 +24,19 @@ except FormValidationError, e:
 messages = []
 if model.fullname() != result['fullname']:
     model.set_fullname(result['fullname'])
-    messages.append(str(_('fullname updated')))
+    messages.append(unicode(_('fullname updated')))
 
 if model.email() != result['email']:
     model.set_email(result['email'])
-    messages.append(str(_('e-mail updated')))
+    messages.append(unicode(_('e-mail updated')))
 
 if result.has_key('editor'):
     if model.editor() != result['editor']:
         model.set_editor(result['editor'])
-        messages.append(str(_('editor updated')))
+        messages.append(unicode(_('editor updated')))
 
 if len(messages)==0:
-    messages.append(str(_('Nothing changed.')))
+    messages.append(unicode(_('Nothing changed.')))
 
 request.SESSION['message_type'] = 'feedback'
 request.SESSION['message'] = ', '.join(messages)
