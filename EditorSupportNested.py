@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.23 $
+# $Revision: 1.24 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -335,7 +335,9 @@ class EditorSupport(SimpleItem):
         doc = node.ownerDocument
         while node.hasChildNodes():
             node.removeChild(node.firstChild)
-        newNode = doc.createTextNode(text)
+        text = self.replace_xml_entities(text)
+        text = self._replace_silva_entities(text)
+        newNode = doc.createTextNode(self._replace_silva_entities(text))
         node.appendChild(newNode)
 
     security.declarePublic('replace_xml_entities')
