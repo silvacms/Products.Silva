@@ -172,7 +172,7 @@
         <th i18n:translate="">
           name
         </th>
-        <th tal:replace="nothing" i18n:translate="">
+        <th tal:replace="nothing">
           title
         </th>
         <th i18n:translate="">
