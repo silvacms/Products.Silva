@@ -1,1 +1,1 @@
-return context.REQUEST.model.image.tag()
+return context.REQUEST.model.tag()
