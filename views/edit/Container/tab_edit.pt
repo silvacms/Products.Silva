@@ -151,7 +151,7 @@
     <a class="blacklink" href="default" title="Edit"
       tal:attributes="href python:here.get_editor_link(default);
                       class python:view.get_status_style(default)"
-      tal:content="string: ${default/id} of...">
+      tal:content="structure string: ${default/id}&nbsp;of...">
       index
     </a><span tal:omit-tag=""
            tal:condition="python:default.is_version_published() or default.is_version_approved()"><img tal:attributes="src string:${silva_root}/globals/checkmark.gif" width="10" height="10" border="0" alt="Content approved or published" />

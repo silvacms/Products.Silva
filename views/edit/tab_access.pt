@@ -214,9 +214,9 @@
                   type="checkbox"
                   tal:attributes="
                     value python: '|'.join(req);
-                    id member/userid;" />
+                    id string:pending_${member/userid};" />
                 <b><label tal:content="member/userid" 
-                  tal:attributes="for member/userid">
+                  tal:attributes="for string:pending_${member/userid}">
                   name
                 </label></b>
               </td>
