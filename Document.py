@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.62 $
+# $Revision: 1.63 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -170,7 +170,7 @@ class Document(CatalogedVersionedContent):
         f.write('<title>%s</title>' % translateCdata(self.get_title()))
         #for key, value in self._metadata.items():
         #    f.write('<%s>%s</%s>' % (key, translateCdata(value), key))
-        version.documentElement.writeStream(f)
+        version.content.documentElement.writeStream(f)
         f.write('</silva_document>')
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -205,7 +205,7 @@ class Document(CatalogedVersionedContent):
             # XXX should put in nicer exceptions (or just return)
             raise "Hey, title or content was empty! %s %s" % (repr(title), repr(content))
 
-        version.manage_edit(content)  # needs utf8-encoded string
+        version.content.manage_edit(content)  # needs utf8-encoded string
         self.set_title(title)         # needs unicode
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
@@ -234,7 +234,7 @@ class Document(CatalogedVersionedContent):
             title = unicode(title, 'utf8')
             docnode = silvanode.find('doc')[0]
             content = docnode.asBytes(encoding="UTF8")
-            version.manage_edit(content)  # needs utf8-encoded string
+            version.content.manage_edit(content)  # needs utf8-encoded string
             self.set_title(title)         # needs unicode
 
     security.declarePrivate('get_indexables')
@@ -298,10 +298,9 @@ def xml_import_handler(object, node):
         if child.nodeName == u'doc':
             version = getattr(newdoc, '0')
             childxml = writeStream(child).getvalue().encode('utf8')
-            version.manage_edit(childxml) # expects utf8
+            version.content.manage_edit(childxml) # expects utf8
         elif hasattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252')) \
                 and child.nodeValue:
             getattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252'))(
                 child.nodeValue.encode('utf-8'))
 
-            
