@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.36.8.12.8.10 $
+CVS:        $Revision: 1.36.8.12.8.11 $
 
 Introduction
 ------------
@@ -87,8 +87,8 @@ of ExtFile is required.
 You need to update your layout templates. To see how, please read the
 section ``Layout templates``_ below.
 
-Note: upgrading from Silva 1.0b1 to Silva 1.0rc1 or Silva 1.0rc2
-requires a 'refresh all' in service extensions.
+Note: upgrading from Silva 1.0b1 to Silva 1.0 requires a 'refresh all'
+in service extensions.
 
 Upgrading from Silva 0.9.2 to Silva 0.9.3
 -----------------------------------------
