@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.71 $
+# $Revision: 1.72 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -171,7 +171,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 object.refresh_active_publishables()
         self._ordered_ids = ids
 
-    
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_rename')
     def action_rename(self, orig_id, new_id):
@@ -187,6 +187,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         # first change id if necessary
         if orig_id != new_id:
             self.manage_renameObject(orig_id, new_id)
+            return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_delete')
@@ -196,9 +197,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         # check whether deletion is allowed
         deletable_ids = [id for id in ids if self.is_delete_allowed(id)]
         self.manage_delObjects(deletable_ids)
-         
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_cut')      
+                              'action_cut')
     def action_cut(self, ids, REQUEST):
         """Cut objects.
         """
