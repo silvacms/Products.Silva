@@ -44,7 +44,7 @@
 
   <tal:repeat repeat="field fields">
   <tal:define define="oddrow repeat/field/odd">
-  <tr valign="top"
+  <tr
     tal:attributes="class python:oddrow and 'odd' or 'even'">
     <td class="align-right">
       <span tal:replace="structure python: field.title().lower()">Title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
@@ -79,97 +79,143 @@
 </tfoot>
 </table>
 
-<br />
-
 <span tal:replace="nothing"> ______________ metadata from system ______________ </span>
-<h3>
-  Automatically stored metadata
-</h3>
 
-<table>
-<tr valign="top">
-  <td align="right">
-    Creation date:
-  </td>
-  <td tal:content="python:view.service_utils.backend_datetime_to_str(model.get_creation_datetime())">
-    Creation datetime
-  </td>
-  <td>
-    &nbsp;
-  </td>
-</tr>
+<table class="listing">
+  <thead>
+    <tr tal:replace="nothing">
+      ______________ top controls row ______________
+    </tr>
+    <tr class="top-controls">
+      <td colspan="3">
+        <h3>
+          automatically stored metadata
+        </h3>
+      </td>
+    </tr>
+  </thead>
 
-<tr valign="top">
-  <td align="right">
-    Modification date:
-  </td>
-  <td tal:content="python:view.service_utils.backend_datetime_to_str(model.get_modification_datetime())">
-    11 oct 2001
-  </td>
-  <td>
-    &nbsp;
-  </td>
-</tr>
+  <tbody>
+    <tr>
+      <th class="align-right">
+        Element
+      </th>
+      <th>
+        Content
+      </th>
+      <th>
+        Note
+      </th>
+    </tr>
 
-<tr valign="top">
-  <td align="right">
-    Last author:
-  </td>
-  <td tal:define="author_info model/sec_get_last_author_info"
-    tal:condition="author_info">
-    <a tal:attributes="href author_info/email"><span tal:replace="author_info/fullname" /></a>
-  </td>
-  <td tal:condition="not:model/sec_get_last_author_info">&nbsp;</td>
-</tr>
+    <tr class="unselected">
+      <td class="align-right">
+        creation date
+      </td>
+      <td tal:content="python:view.service_utils.backend_datetime_to_str(model.get_creation_datetime())">
+        creation datetime
+      </td>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
 
-<tr valign="top">
-  <td align="right">
-    Chief Editor(s):
-  </td>
-  <td>
-    <span tal:replace="python:', '.join([ch.fullname() for ch in here.get_nearest_chiefeditors()])" />
-  </td>
-  <td>
-    &nbsp;
-  </td>
-</tr>
+    <tr class="unselected">
+      <td class="align-right">
+        modification date
+      </td>
+      <td tal:content="python:view.service_utils.backend_datetime_to_str(model.get_modification_datetime())">
+        11 oct 2001
+      </td>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
 
-<tr valign="top">
-  <td align="right">
-    Manager(s):
-  </td>
-  <td>
-    <span tal:replace="python:', '.join([m.fullname() for m in here.get_nearest_managers()])" /> <br />
-  </td>
-  <td>
-    Only in emergencies.
-  </td>
-</tr>
+    <tr class="unselected">
+      <td class="align-right">
+        last author
+      </td>
+      <td tal:define="author_info model/sec_get_last_author_info"
+        tal:condition="author_info">
+        <a tal:attributes="href author_info/email"><span tal:replace="author_info/fullname" /></a>
+      </td>
+      <td tal:condition="not:model/sec_get_last_author_info">&nbsp;</td>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
 
-<tr valign="top">
-  <td align="right">
-    Location:
-  </td>
-  <td colspan="2">
-    <a tal:attributes="href model/absolute_url" tal:content="model/absolute_url"></a>
-  </td>
-</tr>
+    <tr class="unselected">
+      <td class="align-right">
+        editors
+      </td>
+      <td>
+      <!-- XXX Fixme: need get_nearest_editors() method -->
+        <span tal:replace="python:', '.join([e.fullname() for e in here.get_nearest_chiefeditors()])" />
+      </td>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
 
-<tr tal:replace="nothing"> _______ XXX fixme: show Publisher after metadata refactoring _______ </tr>
-<tr valign="top" tal:replace="nothing">
-  <td align="right">
-    Publisher:
-  </td>
-  <td>
-    Publisher name
-  </td>
-  <td>
-    &nbsp;
-  </td>
-</tr>
+    <tr class="unselected">
+      <td class="align-right">
+        chief editors
+      </td>
+      <td>
+        <span tal:replace="python:', '.join([ch.fullname() for ch in here.get_nearest_chiefeditors()])" />
+      </td>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
+
+    <tr class="unselected">
+      <td class="align-right">
+        managers
+      </td>
+      <td>
+        <span tal:replace="python:', '.join([m.fullname() for m in here.get_nearest_managers()])" /> <br />
+      </td>
+      <td>
+        Only in emergencies.
+      </td>
+    </tr>
+
+    <tr class="unselected">
+      <td class="align-right">
+        location
+      </td>
+      <td>
+        <a tal:attributes="href model/absolute_url" tal:content="model/absolute_url"></a>
+      </td>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
+
+    <tr tal:replace="nothing"> _______ XXX fixme: show Publisher after metadata refactoring _______ </tr>
+    <tr class="unselected" tal:replace="nothing">
+      <td class="align-right">
+        publisher
+      </td>
+      <td>
+        Publisher name
+      </td>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
+  </tbody>
+
+  <tfoot>
+    <tr class="divider">
+      <td colspan="2">
+      </td>
+    </tr>
+  </tfoot>
 </table>
-</form>
-</div>
 
 </metal:block>
 </metal:block>

@@ -24,7 +24,8 @@
           tal:condition="model_is_container">
           <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
         </td>
-        <td class="main">
+        <td class="main"
+          tal:attributes="style python: test(model_is_container, None, 'padding-left:8px')">
           <!-- Role assignment table -->
           <form action="."
             method="POST">
@@ -204,9 +205,7 @@
                 <tr class="odd"
                   tal:condition="not:requested_roles">
                   <td colspan="3">
-                    <i>
-                      No roles requested
-                    </i>
+                    No roles requested
                   </td>
                 </tr>
                 <tr class="controls align-right">
@@ -265,7 +264,8 @@
         ________________ group roles management ________________
       </tal:block>
       <tr>
-        <td class="main">
+        <td class="main"
+          tal:attributes="style python: test(model_is_container, None, 'padding-left:8px')">
           <tal:block condition="python:model.sec_groups_enabled()">
             <div class="hilight borders top right bottom left"
               style="padding: 0.5em;"
@@ -384,9 +384,7 @@
                   <tr class="odd"
                     tal:condition="not:groups">
                     <td colspan="3">
-                      <i>
-                        No groups with (local) roles
-                      </i>
+                      No groups with (local) roles
                     </td>
                   </tr>
                   <tr class="controls"

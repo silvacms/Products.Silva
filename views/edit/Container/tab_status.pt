@@ -182,9 +182,9 @@
                         tal:attributes="href obj_url;"
                         tal:omit-tag="python: public_status == 'closed'">
                         <tal:block replace="public_status" />                                                
-                      </a>                                            
-                      <i tal:condition="start_time" 
-                        tal:content="python: '(%s%s)' % (start_time, test(end_time, ' - %s' % end_time, ''))"
+                      </a>
+                      <span tal:condition="start_time" 
+                        tal:content="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))"
                       />
                     </td>
                   </tr>
