@@ -6,7 +6,7 @@ Content object issue.
     Valid for:  Silva development version
     Author:     Jan-Wijbrand Kolman
     Email:      jw@infrae.com
-    CVS:        $Revision: 1.1 $ $Date: 2003/09/30 16:12:30 $
+    CVS:        $Revision: 1.2 $ $Date: 2003/10/03 07:10:33 $
 
 Problem :
 ---------
@@ -68,8 +68,8 @@ Consequences / Implications:
       Question:
 
         How will Docma handle this? Since it expects, currently, to place
-        the content of the current "index" Content object, just after the heading
-        denoting a chapter.
+        the content of the current "index" Content object, just after the
+        heading denoting a chapter.
 
       Solution 1:
 
@@ -82,14 +82,24 @@ Consequences / Implications:
         to know/learn some special rules, we add one rule:
 
         "If the Author wants content just after the chapter's heading, he
-        has to give the publically viewable Content object the id 'index'. Docma
-        then, will suppress the title of this Content object."
+        has to give the publically viewable Content object the id 'index'.
+        Docma then, will suppress the title of this Content object."
 
       Solution 3:
 
         Provide an option at Silva-to-Docma-export-time to suppress the
         titles for the first publically viewable Content objects. Maybe
         even per Publication.
+
+      Question:
+
+        How will the import of a Word document be handled, if there's
+        content just after the chapter's heading?
+
+      Solution:
+
+        This content will be a Content object where its title will be the
+        same title as its Container will get.
 
   o In a TOC rendering, both the title of the Containers and the titles of
     the contained Content objects are shown.
@@ -107,4 +117,4 @@ Consequences / Implications:
   o Misc.
 
     o No change in the Silva XML export schema; "silva_folder" elements
-      already have a "title" child element.
+    already have a "title" child element.
