@@ -3,12 +3,12 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.8.5
+  Valid for:  Silva 0.8.6
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.17 $
+  CVS:        $Revision: 1.18 $
 
-Upgrading Silva 0.8.4 to 0.8.5
+Upgrading Silva 0.8.5 to 0.8.6
 
   This document applies to upgrading Silva only; if you are newly
   installing Silva please look at 'INSTALL.txt'.
@@ -16,161 +16,87 @@ Upgrading Silva 0.8.4 to 0.8.5
   NOTE: It makes of course sense to make a backup of Silva before
   trying to upgrade!
 
-  NOTE: We have not tested an upgrade from versions before 0.8.4 to 0.8.5
-  directly; things may break if you try. To be safe you could first
-  upgrade 0.8 to 0.8.3 to 0.8.4 before upgrading to 0.8.5 (see the
-  instructions in Silva 0.8.4 for more information).
-
-  NOTE: The upgrade scripts from 0.8.4 to 0.8.5 will upgrade all content
-  containing lists to the new XML format where the title attribute is
-  changed to a title element.
+  NOTE: We have not tested an upgrade from versions before 0.8.5 to
+  0.8.6 directly; things will likely break if you try. To be safe you
+  could first upgrade to 0.8.5 before upgrading to 0.8.6 (see the
+  instructions in Silva 0.8.5 for more information).
 
   Silva Filesystem Products
 
-    First you need to upgrade the underlying Silva product. Download
-    the new version here:
+    In order to upgrade to 0.8.6 you need a new version of Silva
+    (0.8.6), Formulator (1.3.0) and XMLWidgets (0.8.3). Download the
+    new versions here:
 
-      * "Silva-0.8.5.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.5.tgz
+      * "Silva-0.8.6.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.6.tgz
   
-    The other required products (XMLWidgets, Formulator and ParsedXML)
-    do not have to be updated.
+      * "Formulator-1.3.0.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.3.0.tgz
 
-    To upgrade the Silva product, first remove the 'Silva' and
-    directory in your Zope's Products directory (usually this is
-    'lib/python/Products' in your Zope install). Now unpack
-    'Silva-0.8.5.tgz'.
+      * "XMLWidgets-0.8.3.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.3.tgz
+    
+    To upgrade, remove the Silva, Formulator and XMLWidgets
+    directories from your 'Products' directory first. Then unpack the
+    new files you downloaded.
+
+    There is also a *new* requirement for Silva, called FileSystemSite. This
+    product will help making installation and upgrades of Silva easier:
+
+     * "FileSystemSite-1.1.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite/FileSystemSite-1.1.tgz
+
+    To install it, just unpack the 'FileSystemSite-1.1.tgz' file into
+    your 'Products' directory.
+
+    ParsedXML does not have to be updated for this upgrade. Groups
+    also does not require an upgrade.
 
     If you are using Silva's LDAP support (turned off by default), you
     should consult the section in 'INSTALL.txt' to see how to
     configure the newly Silva product to use this again.
 
-    Restart Zope to make the new product code to take effect.
+    Restart Zope to make the new product code take effect. Now go on
+    to the next step.
 
-  Groups support
+  Upgrading Silva
 
-    If you want to take advantage of Groups support, please download and
-    install the Groups product, here:
-  
-       * "Groups-0.2.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.2.tgz
+    Since version 0.8.6, Silva does not need a seperate installation
+    of a .zexp file. All Silva code is now distributed in the main
+    Silva product. Upgrade code is also included. To trigger this
+    upgrade, please type a URL like this into the location bar of your
+    browser:
 
-    Groups support is optional; Silva should run without the Groups
-    product installed. Groups use a rather hackish technique called
-    'monkey patching' to hook groups support into the Silva core, and
-    this may conflict with other products that do the same. If you get
-    strange behavior, removing the Groups product and restarting Zope
-    will safely remove it.
+       http://path/to/silva/upgrade_silva
 
-    To start using the Groups definitions, a "Groups Service" is needed.
-    Once the Groups Filesystem Product is installed, such a service can be
-    added to the Silva Root via the ZMI. This service should have
-    'service_groups' for its id.
+    This will call 'upgrade_silva' in your Silva root. This should
+    take care of the upgrade. Your old Silva root will still be
+    retained with '_085' added to its id. If you are satisfied there
+    is nothing from it that you want to retain you can safely remove
+    it.
 
-  Silva services (ZODB)
-    
-    Next, you need 'silva_upgrade_0.8.5.zexp.gz', which can be found
-    here:
-
-      * "silva_upgrade_0.8.5.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva_upgrade_0.8.5.zexp.gz
-
-    You do not need 'silva-0.8.5.zexp.gz', as you are upgrading, not
-    installing from scratch.
-
-    Unpack 'silva_upgrade_0.8.5.zexp.gz' and place it in your Zope's
-    'import' directory. Now import it into the same folder where you
-    installed silva previously (i.e as a sibling to the silva root,
-    not into the silva root itself). Usually this means importing it
-    into your Zope's root, if you installed silva there.
-
-    You should now have a folder 'silva_upgrade_0.8.5'. This folder
-    contains a script to upgrade your Silva install, called
-    'upgrade_from_0.8.4_to_0.8.5'. If you want to know in detail what
-    it does before executing it, see the section below.
-
-    Enter the 'silva_upgrade_0.8.5' folder and execute the script
-    'upgrade_from_0.8.4_to_0.8.5', by going to its 'Test' tab. It will
-    ask for a 'silva_root_id'; fill in the name of your silva root --
-    usually this is just 'silva'. Then click on 'Run
-    script'. Upgrading should now proceed. This will take a while.
-
-    After it is done, your Silva install should be updated, except the
-    page templates in the Silva Root dealing with the public layout
-    (as you may have changed them). See the next section for more
-    information on this.
-    
   Page templates for presentation of public views
     
-    The upgrade will have installed new default versions of the page
-    templates used for presentation of the public website, prefixed
-    with 'default_', i.e. 'default_content.html',
-    'default_layout_macro.html', 'default_standard_error_message' and
-    'default_frontend.css'. You may want to replace your own versions
-    with these, if you haven't modified them. Note that these default
-    versions may contain some fixes compared to the versions delivered
-    with the previous release, so it may be advisable to review them
-    in any case.
+    The upgrade will likely carry new default versions of the page
+    templates and style sheets used for presentation of the public
+    website. You can install these examples in your Silva root by
+    going to 'service_extensions' in the Silva Root and pressing the
+    'install default layout' button.
 
-  What the upgrade script does.
+    Doing this won't overwrite your public layout code; the only thing
+    overwritten will be whatever in the current 'default_' objects, if
+    any exist. You can then look at this code for examples. If you're
+    satisfied with their contents you can also rename them to versions
+    without the 'default_' prefix and start using them.
+ 
+  What the upgrade code does.
 
-    The upgrade will automatically replace the installed services (non
-    Silva content) with new versions. The upgrade script will keep a
-    backup of the previous components in the 'backup' folder in the
-    upgrade folder. If you suddenly miss some changes you made in the
-    'service_view_registry' for instance, you should be able to find
-    them in there.
+    'upgrade_silva' will:
 
-    The upgrade will also install new default versions of the page
-    templates used for presentation of the public website (see
-    previous section).
+      * rename your old silva root, adding'_085' to its id
+        (i.e. 'silva_085' if you installed it as 'silva').
 
-    Additionally the upgrade script will patch all content objects of type
-    'Silva Document' to work with the upgraded widgets just installed by
-    the script. If you have defined your own content types you may want to
-    check the next section, too.
+      * create a new silva root with the original id (i.e. 'silva').
+        Services etc will be automatically installed, just like 
+        what would happen if you install a silva root by hand.
 
+      * Copy over all the content from the old root into the new 
+        version.
 
-  Upgrading your custom content types
-
-    If you do not use any other content types but the ones delivered 
-    with Silva, you can safely skip this section.
-
-    As noted at the top of this text, the upgrade changes the rendering 
-    of list titles; previously these have been stored in the 'title'
-    attribute of the 'list' tag while they are now stored in a separate
-    'title' element nested inside the 'list' tag.
-    
-    If you have defined some custom content types by yourself, which
-    make use of the list rendering widgets in:
-   
-      - '/silva/service_widgets/top/nlist'
-
-      - '/silva/service_widgets/element/doc_elements/list'
-
-      - '/silva/service_widgets/element/nlist_elements/li'
-
-    you may want to upgrade the content objects of your custom content 
-    types, too.
-
-    Most probably this will be the case if your content types inherit from
-    the Silva 'Document.py'. Please check your content types XML Widgets
-    Registry setup scripts.
-
-    To upgrade your content types please edit the file 
-    /silva_upgrade_0.8.5/utils/upgrade_list_title, around line 32.
-    This should read::
-
-      elif obj.meta_type in ['Silva Document']:
-
-    Please change this by listing the custom content types which need
-    to be upgraded, e.g.::
-
-      elif obj.meta_type in ['Silva Document', 'My Content Type']:
-
-    If your custom content types do bind other tags but the 'list' and
-    'nlist' tags to the widgets in the folders listed above, please
-    do add them in line 3, too.
-
-    If you forgot to migrate your content types, the list titles of the
-    corresponding contents will not be rendered. If this happens
-    you can list the affected content types as indicated above and rerun
-    the upgrade. It does not hurt if the script tries to upgrade
-    content types twice, as it recognizes already upgraded contents.
+      * Copy over some other configuration details.
