@@ -22,7 +22,7 @@
 Attributes
 </th>
 <th align="left">
-Content
+        <div class="fixIE6widget">Content</div>
 </th>
 <th align="left">
 Notes

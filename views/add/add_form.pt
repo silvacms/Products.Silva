@@ -40,7 +40,7 @@
       Attributes
     </th>
     <th style="width:50%;">
-      Content
+        <div class="fixIE6widget">Content</div>
     </th>
     <th>
     Notes
