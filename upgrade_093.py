@@ -254,6 +254,10 @@ class UpgradeTime:
     def upgrade(self, obj):
         try:
             binding = obj.service_metadata.getMetadata(obj)
+        except AttributeError:
+            zLOG.LOG('Silva', zLOG.WARNING, "UpgradeTime failed on %r. "
+                "Maybe a broken product?" % (obj, ))
+            return obj
         except BindingError:
             return obj
         if binding is None:
@@ -383,6 +387,7 @@ class GroupsService:
             obj._ip_groups = {}
         if not hasattr(obj, '_iprange_to_group'):
             obj._iprange_to_group = {}
+        return obj
 
 
 class BuryDemoObjectCorpses:

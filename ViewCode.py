@@ -37,7 +37,9 @@ class ViewCode:
             try:
                 icon_path = icon.registry.getIcon(obj)
             except icon.RegistryError:
-                icon_path = getattr(aq_base(obj), 'icon', icon_path)
+                object_icon_path = getattr(aq_base(obj), 'icon', icon_path)
+                if object_icon_path:
+                    icon_path = object_icon_path
             meta_type = getattr(obj, 'meta_type')
         return tag % {'icon_path': icon_path, 'alt': meta_type}
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.8.6.1 $
 # Python
 from bisect import insort_right
 
@@ -60,7 +60,9 @@ class ContainerPolicyRegistry(SimpleItem):
     
     def register(self, name, policy, priority=0.0):
         """register policy"""
-        assert IContainerPolicy.isImplementedBy(policy)
+        assert IContainerPolicy.isImplementedBy(policy), "The object %r " \
+            "does not implement IContainerPolicy, try restarting Zope." % (
+                policy, )
         self._policies[name] = (policy, priority)
         self._p_changed = 1
 
