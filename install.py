@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.7 2004/04/22 11:39:12 philikon Exp $
+# $Id: install.py,v 1.97.4.9.4.8 2004/04/29 11:40:59 faassen Exp $
 """Install for Silva Core
 """
 # Python
@@ -310,7 +310,8 @@ def configureSecurity(root):
         'Add Silva Links',
         'Add Silva Link Versions',
         'Add Silva Images',
-        'Add Silva Files',        
+        'Add Silva Files',
+        'Add Silva AutoTOCs',
         ]
     
     for add_permission in add_permissions:
@@ -342,7 +343,6 @@ def configureSecurity(root):
     root.manage_permission('Change Silva access', roleinfo.CHIEF_ROLES)
     root.manage_permission('Change Silva content', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Manage properties', roleinfo.AUTHOR_ROLES)
-    root.manage_permission('Add Silva AutoTOCs', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Read Silva content', roleinfo.READER_ROLES)
     # authenticated needs this permission as we are not
     # allowed to use service_editor otherwise
