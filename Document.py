@@ -160,7 +160,42 @@ class Document(VersionedContent, EditorSupport):
                 continue
             doc = getattr(self, version)
             self._upgrade_xml_helper(doc.documentElement)                
-        
+            # also upgrade table
+            self._upgrade_table_helper(doc.documentElement)
+
+    def _upgrade_table_helper(self, node):
+        doc = node.ownerDocument
+        for element in node.childNodes:
+            if element.nodeName != 'table':
+                continue
+            print doc.absolute_url()
+            print "upgrading table"
+            for row in element.childNodes:
+                if row.nodeName != 'row':
+                    continue
+                print "upgrading row"
+                for field in tuple(row.childNodes):
+                    if field.nodeName not in ('field', 'column_heading'):
+                        continue
+                    if self.is_old_field(field):
+                        print "upgrading field"
+                        p = doc.createElement('p')
+                        for stuff in tuple(field.childNodes):
+                            p.appendChild(stuff)
+                            #field.removeChild(stuff)
+                        field.appendChild(p)
+                    if field.nodeName == 'column_heading':
+                        new_field = doc.createElement('field')
+                        for stuff in tuple(field.childNodes):
+                            new_field.appendChild(stuff)
+                        row.replaceChild(new_field, field)
+                        
+    def is_old_field(self, node):
+        for sub in node.childNodes:
+            if sub.nodeName in ('p', 'section', 'list', 'nlist', 'image'):
+                return 0
+        return 1                 
+                    
 #    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
 #                              'to_folder')
 #    def to_folder(self):

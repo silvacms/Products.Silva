@@ -201,7 +201,7 @@ class SilvaObject(Security):
     def get_xml(self):
         """Get XML for object and everything under it.
         """
-        f = StringIO(u'')
+        f = StringIO(u'<?xml version="1.0" ?>\n')
         self.to_xml(f)
         # XXX HACK
         result = ''.join(map(str, f.buflist))
@@ -251,25 +251,37 @@ class SilvaObject(Security):
             s = s.replace(c, '')
         return unicode(' '.join(s.split()), 'cp1252')
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'input_convert2')
+    def input_convert2(self, s):
+        """Turn input to unicode.
+        """
+        # input will be from windows normally, so use that code page
+        # FIXME: Is this right?
+        # get rid of any weird characters, such as bullets
+        for c in ['\237', '\247', '\267']:
+            s = s.replace(c, '')
+        return unicode(s, 'cp1252')
+    
     def _upgrade_xml_helper(self, node):
         nodeType = node.nodeType
         if nodeType == node.TEXT_NODE:
             data = node.data
             if type(data) != type(u''):
-                print "text replacing:", repr(data)
-                node.replaceData(0, len(data), self.input_convert(data))
+                #print "text replacing:", repr(data)
+                node.replaceData(0, len(data), self.input_convert2(data))
             else:
-                print "text already unicode:", node.nodeName, repr(data)
+                pass #print "text already unicode:", node.nodeName, repr(data)
         elif nodeType == node.ELEMENT_NODE:
             attribute_names = node.attributes.keys()
             for name in attribute_names:
                 data = node.getAttribute(name)
                 if type(data) == type(u''):
-                    print "attr already unicode:", name, repr(data)
+                    pass # print "attr already unicode:", name, repr(data)
                 else:
-                    print "attr replacing:", repr(data)
+                    pass #print "attr replacing:", repr(data)
                     node.removeAttribute(name)
-                    node.setAttribute(name, self.input_convert(data))
+                    node.setAttribute(name, self.input_convert2(data))
             for child in node.childNodes:
                 self._upgrade_xml_helper(child)
     

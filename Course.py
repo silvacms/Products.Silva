@@ -90,7 +90,7 @@ class Course(VersionedContent, EditorSupport):
         """
         title = self.get_title()
         if type(title) != type(u''):
-            self.set_title(self.input_convert(title))
+            self.set_title(self.input_convert2(title))
         # upgrade the public version, the last closed version, and the
         # next version, if they exist
         versions = [self.get_last_closed_version(),
@@ -105,7 +105,7 @@ class Course(VersionedContent, EditorSupport):
             data = course.get_data()
             for key, value in data.items():
                 if type(value) != type(u''):
-                    data[key] = self.input_convert(value)
+                    data[key] = self.input_convert2(value)
             course.set_data(data)
             
 InitializeClass(Course)
