@@ -15,7 +15,11 @@
         <tal:block replace="nothing">
           _____________________ sidebar subtable _____________________
         </tal:block>
-        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', breadcrumb_vein)" />
+            </metal:fill-slot>
+          </metal:use-macro>
       </td>
 
       <tal:block replace="nothing">
@@ -142,18 +146,8 @@
 
     <tfoot>
       <tr class="controls">
-        <td>
-          <input class="cancel"
-            type="button"
-            name="edit_cancel" 
-            value=" Cancel " 
-            title="Access key: alt-c" 
-            accesskey="c" 
-            onClick="history.back()" 
-          />
-        </td>
         <td class="align-right" 
-          colspan="2">
+          colspan="3">
           <input class="button"
             type="submit"
             name="sync:method"

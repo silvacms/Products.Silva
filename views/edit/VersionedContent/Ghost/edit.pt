@@ -121,7 +121,8 @@
             value=" Cancel " 
             title="Access key: alt-c" 
             accesskey="c" 
-            onClick="history.back()" 
+            onClick="history.back()"
+            tal:condition="python: template.id == 'edit'"
           />
         </td>
         <td class="align-right" 
