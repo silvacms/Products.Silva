@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.58 $
+# $Revision: 1.59 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -31,7 +31,7 @@ class Root(Publication):
 
     inherited_manage_options = Publication.manage_options
     manage_options= (
-        ({'label':'Contents', 'action':'manage_contents'},) +
+        (inherited_manage_options[0],) + # ({'label':'Contents', 'action':'manage_contents'},) +
         ({'label':'Services', 'action':'manage_services'},) +
         inherited_manage_options[1:]
         )
@@ -54,8 +54,8 @@ class Root(Publication):
         self.index_object()
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'manage_contents')
-    manage_contents = DTMLFile(
+                              'manage_main')
+    manage_main = DTMLFile(
         'www/folderContents', globals())
     
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
