@@ -15,7 +15,15 @@
 
 <form action="."
   method="POST"
-  name="silvaObjects">
+  name="silvaObjects"
+  tal:define="
+    members view/get_members;
+    global rejectables python:None;
+    global revokeables python:None;
+    global closeables python:None;
+    global new_versionables python:None;
+    global expireables python:None;
+  ">
   <table class="columns columns2">
     <tbody>
       <tr>
@@ -65,7 +73,7 @@
           tal:attributes="
             value string: Export...;
             title string:export this ${type}: alt-e;"
-	  />
+	       />
       </td>
     </tr>
   </thead>
@@ -108,7 +116,8 @@
             value="value"
             tal:define="ref obj/ref | nothing"
             tal:condition="ref"
-            tal:attributes="value ref;" />
+            tal:attributes="value ref;"
+          />
         </td>
         <tal:block replace="nothing">
           _______ title cell _______
@@ -183,14 +192,19 @@
             title="public version"
             tal:attributes="href obj_url;"
             tal:condition="python: public_status == 'published'">
-          <span tal:condition="start_time" 
-            tal:replace="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
-          </span>
+            <span tal:condition="start_time"
+              tal:define="
+                global closeables string:1;
+                global new_versionables string:1"
+              tal:replace="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
+            </span>
           </a>
-          <span tal:condition="python: public_status == 'closed'"
-            tal:omit-tag=""> 
-            closed
-          </span>
+          <tal:block condition="python: public_status == 'closed'"> 
+            <span i18n:translate="closed"
+              tal:define="global new_versionables string:1">
+              closed
+            </span>
+          </tal:block>
         </td>
       </tr>
     </tal:block>
@@ -288,6 +302,7 @@
           value="Close"
           title="close published items: alt-c"
           accesskey="c"
+          tal:condition="closeables"
         />
         <input class="button" 
           type="submit" 
@@ -295,6 +310,7 @@
           value="New version" 
           title="create new versions of published docs of selected objects: alt-n" 
           accesskey="n"
+          tal:condition="new_versionables"
         />
       </td>
       <td class="align-right"
@@ -343,6 +359,7 @@
           value="New version" 
           title="create new versions of published docs: alt-n" 
           accesskey="n"
+          tal:condition="new_versionables"
         />
       </td>
       <td class="align-right"

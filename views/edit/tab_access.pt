@@ -36,15 +36,12 @@
             ________________ user roles management ________________ 
           </tal:block>
           <form action="."
-            method="POST">
-            <table class="listing"
-              border="0"
-              cellpadding="5"
-              cellspacing="0"
-              tal:define="
-                members view/get_members;
-                global revokeable_roles python:None;
-                global revokeable_groups python:None">
+            method="POST"
+            tal:define="
+              members view/get_members;
+              global revokeable_roles python:None;
+              global revokeable_groups python:None">
+            <table class="listing">
               <thead>
                 <tr>
                   <td class="top"
@@ -157,7 +154,7 @@
                     name="access_revoke_from_user:method"
                     title="revoke selected role(s) from selected user(s)"
                     type="submit"
-                    value="Revoke role" 
+                    value="Revoke role"
                     tal:condition="revokeable_roles"
                   />
                 </td>

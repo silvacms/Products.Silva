@@ -145,11 +145,6 @@ _______ application specific stylesheet extension _______
   tal:condition="view/extension_style_url | nothing"
   tal:attributes="href view/extension_style_url"
 />
-<style type="text/css"
-  xml:space="preserve"
-  tal:condition="python: template.id == 'tab_preview'">
-div.workspace {background: #e6e6ee;}
-</style>
 <script tal:replace="nothing">
 _______ editor hooks _______
 </script>
