@@ -4,13 +4,22 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=datasource=None
+##parameters=
 ##title=
 ##
-#if not data:
-#    return "No resulting data for SQl Data Source &laquo;%s&raquo." % title
+request = context.REQUEST
+datasource = request.model
+title = datasource.get_title_or_id()
+parameters = {}
 
-data = datasource.get_data()
+p = datasource.parameters()
+if p:
+    for name, (type, default, description) in p.items():
+        if not default:
+            return "SQL Data Source &laquo;%s&raquo; needs parameter &laquo;%s&raquo; to have a default value." % (title, name)
+        parameters[name] = default
+
+data = datasource.get_data(parameters)
 output_convert = context.output_convert_html
 
 # FIXME: Using CSS this hairball is slightly less hairy

@@ -8,5 +8,6 @@
 ##title=
 ##
 # define name, id, up_id
-return [('Edit', 'tab_edit', 'tab_edit'),        
+return [('Edit', 'tab_edit', 'tab_edit'),
+        ('Preview', 'tab_preview', 'tab_preview'),
         ('Access', 'tab_access', 'tab_access')]

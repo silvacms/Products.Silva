@@ -7,11 +7,4 @@
 ##parameters=
 ##title=
 ##
-request = context.REQUEST
-datasource = request.model
-title = datasource.get_title_or_id()
-
-if datasource.parameters():
-    return "SQL Data Source &laquo;%s&raquo; needs parameter values to be set." % title
-else:
-    return context.render_data(datasource)
+return context.render_data()
