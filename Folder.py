@@ -314,10 +314,10 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def get_default(self):
         """Get the default content object of the folder.
         """
-        if not hasattr(self.aq_base, 'default'):
+        if not hasattr(self.aq_base, 'index'):
             return None
         else:
-            return getattr(self, 'default')
+            return getattr(self, 'index')
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
@@ -458,7 +458,7 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     object = getattr(self, id)
     # add doc
     if create_default:
-        object.manage_addProduct['Silva'].manage_addDocument('default', '')
+        object.manage_addProduct['Silva'].manage_addDocument('index', '')
     helpers.add_and_edit(self, id, REQUEST)
     return ''
 

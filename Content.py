@@ -17,7 +17,7 @@ class Content(SilvaObject, Publishable):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                              'is_default')
     def is_default(self):
-        return self.id == 'default'
+        return self.id == 'index'
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_content')
