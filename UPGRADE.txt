@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.3
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.7 $
+  CVS:        $Revision: 1.8 $
 
 Upgrading Silva 0.8 to 0.8.3
 
@@ -79,8 +79,8 @@ Upgrading Silva 0.8 to 0.8.3
     (as you may have changed them). See the next section for more
     information on this.
     
-    After the upgrade, you can safely remove 'silva_course_editor' and
-    'silva_course_viewer', as they are not in use anymore.
+    After the upgrade, you can safely remove 'service_course_editor' and
+    'service_course_viewer', as they are not in use anymore.
 
   Page templates for presentation of public views
     
