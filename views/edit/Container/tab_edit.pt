@@ -116,7 +116,7 @@
     Edit
   </th>
   <th align="left">
-    Preview<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="13" />
+    Preview
   </th>
   <th align="left" width="15%">
     Modified&nbsp;date
