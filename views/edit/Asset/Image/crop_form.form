@@ -75,7 +75,7 @@
           <default>0</default>
           <description>The x coordinate of the center of the area to crop.</description>
           <display_maxwidth></display_maxwidth>
-          <display_width type="int">20</display_width>
+          <display_width type="int">12</display_width>
           <enabled type="int">1</enabled>
           <end></end>
           <external_validator></external_validator>
@@ -102,7 +102,7 @@
           <default>0</default>
           <description>The y coordinate for cropping.</description>
           <display_maxwidth></display_maxwidth>
-          <display_width type="int">20</display_width>
+          <display_width type="int">12</display_width>
           <enabled type="int">1</enabled>
           <end></end>
           <external_validator></external_validator>
