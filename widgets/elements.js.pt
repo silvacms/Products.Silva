@@ -62,9 +62,9 @@ function updateSelectionOptions () {
 
     /*clear current list..*/    
     l = sel_listtypeform.options.length;
-    for (i=0; i<l; i++) { 
-        sel_listtypeform.options[i] = null; 
-        sel_listtypeform.remove(i);
+    for (i=0; i<l; i++) {
+        sel_listtypeform.options[0] = null;
+        sel_listtypeform.remove(0);
     }
     /*write new list*/
     l = e[sel_item].length
