@@ -224,8 +224,8 @@ function handle_default_action(element, event, action)
     >
       <img border="0"
         height="9"
-        width="8"
-        tal:attributes="src string:${root_url}/globals/user.gif"
+        width="9"
+        tal:attributes="src string:${root_url}/globals/user.png"
       />
       user settings
     </a>
