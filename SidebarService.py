@@ -116,8 +116,12 @@ class SidebarService(SimpleItem):
 
         Mind that some elements will be put in later on (e.g., tab_name, focus class)
         """
-        self.REQUEST['model'] = pub
-        return self.aq_inner.service_resources.Silva.sidebar_template()
+        request = self.REQUEST
+        model = request.get('model')
+        request.set('model', pub)
+        rendered = self.aq_inner.service_resources.Silva.sidebar_template()
+        request.set('model', model)
+        return rendered
 
     def _finalize_template(self, template, obj, tab_name, breadcrumb_vein):
         """Add the tab_name and the focus class to the template
