@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.24 $
+$Revision: 1.25 $
 
 Silva changes
 
@@ -53,6 +53,9 @@ Silva changes
         - 'Authorized users below this level' moved to sub screen of
           access, to make container tab_metadata scale better (this
           could be very slow on large sites).
+      
+        - Tweaked LDAPUserFolder.py so it works with more recent versions
+          of LDAPUserFolder.
 
   0.8.6.1
 

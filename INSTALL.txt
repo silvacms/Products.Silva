@@ -3,17 +3,15 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.8.6
+  Valid for:  Silva 0.9
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.23 $
+  CVS:        $Revision: 1.24 $
 
 Installing Silva
 
-  NOTE: If you are upgrading to Silva 0.8.6 from Silva 0.8.5 or
-  earlier, please consult
+  NOTE: If you are upgrading from a previous version of Silva, please see
   "UPGRADE.txt":http://www.zope.org/Members/faassen/Silva/UPGRADE.txt
-  instead for instructions.
 
   IMPORTANT: If you have problems installing Silva and your zope start
   fails somewhere due to ParsedXML (PrettyPrint module for instance),
@@ -43,12 +41,12 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.8.6)
+    Silva (0.9)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some basic
       functionality for the editing of Silva documents. Since version
-      0.8.6 is also contains the views and widgets in separate
+      0.8.6 this also contains the views and widgets in separate
       subdirectories.
   
       The Silva product can be found here:
@@ -57,9 +55,9 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.8.6.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.6.tgz
+        "Silva-0.9.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.tgz
   
-    XMLWidgets (0.8.3)
+    XMLWidgets (0.8.4)
 
       A system that builds on top of ParsedXML to assist in the
       rendering of editor, as well as in the generation of the HTML
@@ -71,9 +69,9 @@ Installing Silva
 
       or just download:
 
-        "XMLWidgets-0.8.3.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.3.tgz
+        "XMLWidgets-0.8.4.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.4.tgz
 
-    ParsedXML (1.3.0)
+    ParsedXML (1.3.1)
 
       A system that allows the storage of XML documents in the Zope
       Object Database. Allows DOM access as well as ways to construct
@@ -82,9 +80,8 @@ Installing Silva
 
       ParsedXML depends on the PyXML library for some of its
       operation; the Python interpreter that is used to run Zope must
-      have access to a recent version of PyXML (0.7 should work. We
-      have heard some reports about later versions not working
-      correctly, and are still investigating this. Let us know!).
+      have access to a recent version of PyXML (0.7 works. 0.8.1
+      should also work, but let us know!).
 
       ParsedXML can be found here:
  
@@ -92,9 +89,9 @@ Installing Silva
 
       or just download:
 
-        "ParsedXML-1.3.0.tgz":http://www.zope.org/Members/faassen/ParsedXML/ParsedXML-1.3.0.tgz
+        "ParsedXML-1.3.1.tgz":http://www.zope.org/Members/faassen/ParsedXML/ParsedXML-1.3.1.tgz
    
-    Formulator (1.3.0)
+    Formulator (1.3.1)
 
       A system for the construction and validation of web forms, used
       by Silva's views.
@@ -105,7 +102,7 @@ Installing Silva
 
       or just download:
 
-        "Formulator-1.3.0.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.3.0.tgz
+        "Formulator-1.3.1.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.3.1.tgz
 
     FileSystemSite (1.1)
 

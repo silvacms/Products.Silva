@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
   
-  Valid for:  Silva 0.8.x
+  Valid for:  Silva 0.9.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.8 $
+  CVS:        $Revision: 1.9 $
 
 Silva
 
@@ -25,7 +25,7 @@ Silva
       also has export filters to PDF and MS Word, and more can be
       built when the demand arises. Note: these export filters are not
       included in this release. They will be released as separate
-      applications.
+      applications (Docma).
 
     * The content is future proofed and not out of date as soon as
       you want to use a new system or present it in a different way.

@@ -3,34 +3,19 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.8.6
+  Valid for:  Silva 0.9
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.20 $
+  CVS:        $Revision: 1.21 $
  
-Upgrading to 0.8.6.1
+Upgrading from 0.8.5 and below
 
-  Silva version 0.8.6.1 contains a change to the way FileSystemSite is
-  used. If you are upgrading 0.8.5 to 0.8.6.1 then this is not a problem;
-  just follow the instructions in the next section (Upgrading Silva 0.8.5
-  to 0.8.6).
+  Please upgrade your Silva to 0.8.6.1 first. Be careful to read its
+  upgrade instructions! You can find Silva 0.8.6.1 here:
 
-  In case of an upgrade from 0.8.6, you need to perform the following
-  steps:
+  "Silva 0.8.6.1":http://www.zope.org/Members/faassen/Silva/Silva-0.8.6.1.tgz
 
-    * Look for the silva backup with the '_085' suffix. You need to 
-      rename this to something else, otherwise the upgrade script
-      will have a name clash.
-
-    * Then run the silva upgrade method: please type a URL like this into
-      the location bar of your browser:
-
-      http://path/to/silva/upgrade_silva
-
-      This should take care of the upgrade. This upgrade will create
-      a new backup copy of the silva root suffixed by '_085'.
-
-Upgrading Silva 0.8.5 to 0.8.6
+Upgrading Silva 0.8.6.x to 0.9
 
   This document applies to upgrading Silva only; if you are newly
   installing Silva please look at 'INSTALL.txt'.
@@ -38,61 +23,47 @@ Upgrading Silva 0.8.5 to 0.8.6
   NOTE: It makes of course sense to make a backup of Silva before
   trying to upgrade!
 
-  NOTE: We have not tested an upgrade from versions before 0.8.5 to
-  0.8.6 directly; things will likely break if you try. To be safe you
-  could first upgrade to 0.8.5 before upgrading to 0.8.6 (see the
-  instructions in Silva 0.8.5 for more information).
-
   Silva Filesystem Products
 
-    In order to upgrade to 0.8.6 you need a new version of Silva
-    (0.8.6), Formulator (1.3.0) and XMLWidgets (0.8.3). Download the
-    new versions here:
+    In order to upgrade to 0.9 you need a new version of Silva (0.9),
+    Formulator (1.3.1), ParsedXML (1.3.1) and XMLWidgets
+    (0.8.4). Download the new versions here:
 
-      * "Silva-0.8.6.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.6.tgz
+      * "Silva-0.9.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.tgz
   
-      * "Formulator-1.3.0.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.3.0.tgz
+      * "Formulator-1.3.1.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.3.1.tgz
 
-      * "XMLWidgets-0.8.3.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.3.tgz
+      * "ParsedXML-1.3.1.tgz":http://www.zope.org/Members/faassen/ParsedXML/ParsedXML-1.3.1.tgz
+
+      * "XMLWidgets-0.8.4.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.4.tgz
     
-    To upgrade, remove the Silva, Formulator and XMLWidgets
+    To upgrade, remove the Silva, Formulator, ParsedXML and XMLWidgets
     directories from your 'Products' directory first. Then unpack the
     new files you downloaded.
 
-    There is also a *new* requirement for Silva, called FileSystemSite. This
-    product will help making installation and upgrades of Silva easier:
-
-     * "FileSystemSite-1.1.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite/FileSystemSite-1.1.tgz
-
-    To install it, just unpack the 'FileSystemSite-1.1.tgz' file into
-    your 'Products' directory.
-
-    ParsedXML does not have to be updated for this upgrade. Groups
+    FileSystemSite does not have to be upgraded for this upgrade. Groups
     also does not require an upgrade.
 
     If you are using Silva's LDAP support (turned off by default), you
     should consult the section in 'INSTALL.txt' to see how to
-    configure the newly Silva product to use this again.
+    configure the newly installed Silva product to use this again.
+
+    If you are using Silva's ExtFile support (turned off by default),
+    you should consult the section in 'INSTALL.txt' to see how to
+    configure the newly installed Silva product to use this again.
 
     Restart Zope to make the new product code take effect. Now go on
     to the next step.
 
-  Upgrading Silva
+  Refreshing the Silva product
 
-    Since version 0.8.6, Silva does not need a separate installation
-    of a .zexp file. All Silva code is now distributed in the main
-    Silva product. Upgrade code is also included. To trigger this
-    upgrade, please type a URL like this into the location bar of your
-    browser:
+    After the restart, go to 'service_extensions' in the Silva Root as
+    Zope manager and click the 'refresh' button for the 'Silva'
+    product. This lets Silva update various configurations in the Zope
+    object database. 
 
-       http://path/to/silva/upgrade_silva
-
-    This will call 'upgrade_silva' in your Silva root. This should
-    take care of the upgrade. Your old Silva root will still be
-    retained with '_085' added to its id. If you are satisfied there
-    is nothing from it that you want to retain you can safely remove
-    it.
-
+    You should be done upgrading now!
+ 
   Page templates for presentation of public views
     
     The upgrade will likely carry new default versions of the page
@@ -107,23 +78,6 @@ Upgrading Silva 0.8.5 to 0.8.6
     satisfied with their contents you can also rename them to versions
     without the 'default_' prefix and start using them.
  
-  What the upgrade code does.
-
-    'upgrade_silva' will:
-
-      * rename your old silva root, adding'_085' to its id
-        (i.e. 'silva_085' if you installed it as 'silva').
-
-      * create a new silva root with the original id (i.e. 'silva').
-        Services etc will be automatically installed, just like 
-        what would happen if you install a silva root by hand.
-
-      * Copy over all the content from the old root into the new 
-        version.
-
-      * Copy over some other configuration details.
-
-
   Upgrading Custom Content Types.
 
     If you have custom content types in a separate Zope Product,
@@ -131,5 +85,3 @@ Upgrading Silva 0.8.5 to 0.8.6
     the file system and register them with the new views structure.
     There is detailed information about how to achieve this
     in the docs/Filesystem.stx
-
-    
