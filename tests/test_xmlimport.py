@@ -11,6 +11,23 @@ from Products.Silva import mangle
 from Products.Silva.silvaxml import xmlimport 
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
+    
+    def test_publication_import(self):
+        importer = xmlimport.theXMLImporter
+        source_file = open('data/test_publication.xml', 'r')
+        test_settings = xmlimport.ImportSettings()
+        test_info = xmlimport.ImportInfo()
+        importer.importFromFile(
+            source_file,
+            result=self.root,
+            settings=test_settings,
+            info=test_info)
+        source_file.close()
+        publication = self.root.testpublication
+        self.assertEquals(
+            u'Publication',
+            publication.get_title())
+
     def test_folder_import(self):
         importfolder = self.add_folder(
             self.root,

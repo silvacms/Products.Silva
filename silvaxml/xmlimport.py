@@ -196,7 +196,7 @@ class PublicationHandler(SilvaBaseHandler):
         if name == (NS_URI, 'publication'):
             self.setMaintitle()
             self.storeMetadata()
-            self.sync_ghostfolders()
+            self.syncGhostfolders()
 
 class AutoTOCHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
