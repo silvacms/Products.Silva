@@ -47,6 +47,7 @@
           <css_class></css_class>
           <title>Publish time</title>
           <description></description>
+          <allow_empty_time type="int">1</allow_empty_time>
         </values>
         <tales>
           <time_separator>python:form.get_time_punctuation()</time_separator>
@@ -68,25 +69,11 @@
           <default_now type="int">0</default_now>
           <title>Expiration time</title>
           <description>If this document should expire, set the time.</description>
+          <allow_empty_time type="int">1</allow_empty_time>
         </values>
         <tales>
           <time_separator>python:form.get_time_punctuation()</time_separator>
           <date_separator>python:form.get_date_punctuation()</date_separator>
-        </tales>
-      </field>
-      <field><id>expires_flag</id> <type>CheckBoxField</type>
-        <values>
-          <alternate_name></alternate_name>
-          <hidden type="int">0</hidden>
-          <css_class></css_class>
-          <default type="int">0</default>
-          <title>Expire flag</title>
-          <description>Turn on expiration time?</description>
-          <external_validator></external_validator>
-          <extra>id="expires_flag"</extra>
-        </values>
-        <tales>
-          <default>python:field.REQUEST.model.get_unapproved_version_expiration_datetime() and 1 or 0</default> 
         </tales>
       </field>
       </fields>

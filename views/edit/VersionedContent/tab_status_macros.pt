@@ -188,6 +188,13 @@ If this content should expire, set the time.&nbsp;
 <field tal:replace="structure python:view.tab_status_form_change_settings.publish_now_flag.render()" />
 </th>
 </tr>
+<tr>
+  <th class="align-right"
+    colspan="2">
+    <span class="widebody"><label for="publish_now_flag" title="access key: alt-u" accesskey="u">Clear ex<u>p</u>iration?</label></span>
+    <field tal:replace="structure python:view.tab_status_form_change_settings.clear_expiration.render()" />
+  </th>
+</tr>
 
 <tr class="inter-controls">
 <td class="align-right"

@@ -10,17 +10,16 @@
     global breadcrumb_vein string:Status;
   ">
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
-
-<tal:block define="
-  global view here;
-  global unapproved python:model.get_unapproved_version() is not None;
-  global request_pending python:unapproved and model.is_version_approval_requested();
-  global approved python:model.get_approved_version() is not None;
-  global published python:model.get_public_version() is not None;
-  global closed python:model.get_public_version_status() == 'closed';
-  global next python:model.get_next_version() is not None;
-" />
+<metal:block fill-slot="main"
+  tal:define="
+    view here;
+    unapproved python:model.get_unapproved_version() is not None;
+    request_pending python:unapproved and model.is_version_approval_requested();
+    approved python:model.get_approved_version() is not None;
+    published python:model.get_public_version() is not None;
+    closed python:model.get_public_version_status() == 'closed';
+    next python:model.get_next_version() is not None;
+    " >
 
 <table class="columns columns2">
   <tbody>
