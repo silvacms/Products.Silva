@@ -511,13 +511,15 @@ td.selected {
 
 td.unselected {
   background: &dtml-evenRowBackground;;
-  border-top: 1px solid &dtml-shade74;;
-  border-bottom: none;
+  border-top: 1px solid &dtml-evenRowBackground;;
+  border-bottom:  1px solid &dtml-evenRowBackground;;
 }
 
 td.unselected:hover { 
   color: &dtml-mainTabFontColorSelected;;
   background: #d2e6f8;
+  border-top: &dtml-listingBorder;;
+  border-bottom: &dtml-listingBorder;;
   cursor : pointer;
 } 
 

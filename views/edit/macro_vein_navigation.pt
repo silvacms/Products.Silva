@@ -45,7 +45,8 @@
   _______ only containers have a slot for vein navigation thru the content tree_______
 </tal:block>
 <metal:define-macro define-macro="vein">
-<table class="listing">
+<table class="listing"
+  style="border-collapse:separate; border-spacing:0;">
   <thead>
     <tr>
       <th class="top"
