@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import unittest
 import Zope
 
@@ -27,7 +27,7 @@ def test_suite():
     suite.addTest(test_Copy.test_suite())
     suite.addTest(test_Security.test_suite()) 
     suite.addTest(test_BasicTransformations.test_suite()) 
-    suite.addTest(test_EoproTransformations.test_suite()) 
+    #suite.addTest(test_EoproTransformations.test_suite()) 
     #suite.addTest(test_CatalogedVersioning.test_suite()) 
     return suite
 
