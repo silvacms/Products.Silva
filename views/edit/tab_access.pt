@@ -495,7 +495,7 @@
                 <input class="button"
                   type="submit"
                   name="access_assign_to_group:method"
-                  value="Assign"
+                  value="assign"
                   title="assign selected role to selected group(s)"
                   i18n:attributes="title value"
                 />
