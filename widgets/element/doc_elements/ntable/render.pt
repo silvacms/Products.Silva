@@ -1,5 +1,0 @@
-<div metal:use-macro="container/macro_normal_view/macros/normal_view">
-<div metal:fill-slot="node_content" tal:omit-tag="">
-<content tal:replace="structure here/content" />
-</div>
-</div>

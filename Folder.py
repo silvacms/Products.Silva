@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.114 $
+# $Revision: 1.115 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -938,8 +938,9 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     self._setObject(id, object)
     object = getattr(self, id)
     # add doc
-    if create_default:
-        object.manage_addProduct['Silva'].manage_addDocument('index', title)
+    if create_default and self.service_extensions.is_installed('SilvaDocument'):
+        object.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'index', title)
     if hasattr(object,'index'):
         object.index.sec_update_last_author_info()
     helpers.add_and_edit(self, id, REQUEST)
@@ -953,7 +954,7 @@ def xml_import_handler(object, node):
     used_ids = object.objectIds()
     while id in used_ids:
         id = helpers.getNewId(id)
-    
+
     object.manage_addProduct['Silva'].manage_addFolder(id, title, 0)
     newfolder = getattr(object, id)
     for child in node.childNodes:

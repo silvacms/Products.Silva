@@ -1,9 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.72 $
+# $Revision: 1.73 $
 import Metadata
 import ViewRegistry, MultiViewRegistry
-import Document, Folder, Root
+import Folder, Root
 import Publication, Ghost, Image, File
 import DemoObject, Indexer
 import SQLDataSource
@@ -17,7 +17,6 @@ import EmailMessageService
 import DocmaService
 import Group
 import VirtualGroup
-import EditorSupportNested
 import SidebarCache
 import SidebarService
 import UnicodeSplitter # To make the splitter register itself
@@ -34,7 +33,7 @@ registerFileExtension('ico', FSImage)
 def initialize(context):
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
-        Document, Folder, Root, Publication, Ghost, Image, File,
+        Folder, Root, Publication, Ghost, Image, File,
         Indexer, SQLDataSource, DemoObject, Group, VirtualGroup],
         install, depends_on=None)
 
@@ -95,12 +94,6 @@ def initialize(context):
         )
 
     context.registerClass(
-        EditorSupportNested.EditorSupport,
-        constructors = (EditorSupportNested.manage_addEditorSupport, ),
-        icon = "www/editorservice.gif"
-        )
-
-    context.registerClass(
         SidebarService.SidebarService,
         constructors = (SidebarService.manage_addSidebarServiceForm, 
                         SidebarService.manage_addSidebarService),
@@ -112,13 +105,11 @@ def initialize(context):
     importer_registry.register_tag('silva_root', Publication.xml_import_handler)
     importer_registry.register_tag('silva_publication', Publication.xml_import_handler)
     importer_registry.register_tag('silva_folder', Folder.xml_import_handler)
-    importer_registry.register_tag('silva_document', Document.xml_import_handler)
     importer_registry.register_tag('silva_demoobject', DemoObject.xml_import_handler)
 
     # register the FileSystemSite directories
     registerDirectory('views', globals())
     registerDirectory('resources', globals())
-    registerDirectory('widgets', globals())
     registerDirectory('globals', globals())
     registerDirectory('service_utils', globals())
 

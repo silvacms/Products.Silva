@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 class ExtensionRegistry:
 
@@ -78,6 +78,8 @@ class ExtensionRegistry:
         return self._extensions[name][0]
 
     def is_installed(self, name, root):
+        if not self._extensions.has_key(name):
+            return 0
         return self._extensions[name][1].is_installed(root)
 
     def get_depends_on(self, name):

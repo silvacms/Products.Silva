@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.39 $
+# $Revision: 1.40 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -101,8 +101,9 @@ def manage_addPublication(self, id, title, create_default=1, REQUEST=None):
     self._setObject(id, object)
     object = getattr(self, id)
     # add doc
-    if create_default:
-        object.manage_addProduct['Silva'].manage_addDocument('index', title)
+    if create_default and self.service_extensions.is_installed('SilvaDocument'):
+        object.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'index', title)
     if hasattr(object,'index'):
         object.index.sec_update_last_author_info()
     add_and_edit(self, id, REQUEST)

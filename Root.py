@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.64 $
+# $Revision: 1.65 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -10,7 +10,6 @@ from DateTime import DateTime
 from IRoot import IRoot
 # Silva
 from Publication import Publication
-import EditorSupportNested
 import SilvaPermissions
 import install
 # misc
@@ -252,7 +251,9 @@ def manage_addRoot(self, id, title, REQUEST=None):
     # now set it all up
     install.installFromScratch(object)
 
-    create_published_demo_index(object, title, REQUEST)
+    # XXX no sample content this way as SilvaDocument is a separate
+    # product now..needs to be fixed
+    #create_published_demo_index(object, title, REQUEST)
 
     add_and_edit(self, id, REQUEST)
     return ''
