@@ -270,7 +270,7 @@
         title="Groups administration... - alt-g"
         style="float: right;"
         href="tab_access_groups"
-        tal:condition="exists:view/tab_access_groups">
+        tal:condition="python:getattr(view, 'tab_access_groups', None) and getattr(here, 'service_groups', None)">
         Groups administration
       </a>
       <h4>
