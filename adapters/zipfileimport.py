@@ -40,17 +40,13 @@ class ZipfileImportAdapter(adapter.Adapter):
         from Products.Silva.silvaxml import xmlimport
 
         existing_objects = container.objectIds()
-        importer = xmlimport.theXMLImporter
         archive = ZipFile(zipfile, 'r')
-        settings = xmlimport.ImportSettings()
         info = xmlimport.ImportInfo()
         info.setZipFile(archive)
-        bytes = archive.read('silva.xml')
-        source_file = StringIO(bytes)
-        result = importer.importFromFile(
+        source_file = StringIO(archive.read('silva.xml'))
+        result = xmlimport.importFromFile(
             source_file,
-            result=container,
-            settings=settings,
+            container,
             info=info)
         source_file.close()
         archive.close()

@@ -9,19 +9,14 @@ import SilvaTestCase
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
 from Products.Silva.silvaxml import xmlimport 
+from Products.Silva.interfaces import IGhost, IContainer
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     
     def test_publication_import(self):
-        importer = xmlimport.theXMLImporter
         source_file = open('data/test_publication.xml', 'r')
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
-        importer.importFromFile(
-            source_file,
-            result=self.root,
-            settings=test_settings,
-            info=test_info)
+        xmlimport.importFromFile(
+            source_file, self.root)
         source_file.close()
         publication = self.root.testpublication
         self.assertEquals(
@@ -34,15 +29,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        importer = xmlimport.theXMLImporter
         source_file = open('data/test_folder.xml', 'r')
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
-        importer.importFromFile(
-            source_file,
-            result=importfolder,
-            settings=test_settings,
-            info=test_info)
+        xmlimport.importFromFile(
+            source_file, importfolder)
         source_file.close()
         folder = importfolder.testfolder.testfolder2
         self.assertEquals(
@@ -55,15 +44,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        importer = xmlimport.theXMLImporter
         source_file = open('data/test_link.xml', 'r')
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
-        importer.importFromFile(
-            source_file,
-            result=importfolder,
-            settings=test_settings,
-            info=test_info)
+        xmlimport.importFromFile(
+            source_file, importfolder)
         source_file.close()
         linkversion = importfolder.testfolder.testfolder2.test_link.get_editable()
         linkversion2 = importfolder.testfolder.testfolder2.test_link.get_previewable()
@@ -83,16 +66,11 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'testfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        importer = xmlimport.theXMLImporter
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
         # import the ghost
         source_file = open('data/test_autotoc.xml', 'r')
-        importer.importFromFile(
+        xmlimport.importFromFile(
             source_file,
-            result=self.root,
-            settings=test_settings,
-            info=test_info)
+            self.root)
         source_file.close()
 
         autotoc = self.root.autotokkies
@@ -104,24 +82,17 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             autotoc.meta_type)
 
     def test_ghost_import(self):
-        importer = xmlimport.theXMLImporter
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
         # import the ghost
         source_file = open('data/test_link.xml', 'r')
-        importer.importFromFile(
+        xmlimport.importFromFile(
             source_file,
-            result=self.root,
-            settings=test_settings,
-            info=test_info)
+            self.root)
         source_file.close()
 
         source_file = open('data/test_ghost.xml', 'r')
-        importer.importFromFile(
+        xmlimport.importFromFile(
             source_file,
-            result=self.root,
-            settings=test_settings,
-            info=test_info)
+            self.root)
         source_file.close()
         version = self.root.testfolder3.caspar.get_editable()
         version2 = self.root.testfolder3.caspar.get_previewable()
@@ -146,19 +117,19 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'testfolder2',
             'This is <boo>a</boo> haunted testfolder',
             policy_name='Auto TOC')
+        # add some content.
+        haunted_folder.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'foo', 'Foo')
+
+        
         metadata_service = haunted_folder.service_metadata
         binding = metadata_service.getMetadata(haunted_folder)
         binding._setData({'creator': 'ghost dog'}, 'silva-extra')
-        importer = xmlimport.theXMLImporter
         # import the ghost folder
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
         source_file = open('data/test_ghost_folder.xml', 'r')
-        importer.importFromFile(
+        xmlimport.importFromFile(
             source_file,
-            result=self.root,
-            settings=test_settings,
-            info=test_info)
+            self.root)
         source_file.close()
         version = self.root.testfolder3.caspar.get_editable()
         version2 = self.root.testfolder3.caspar.get_previewable()
@@ -187,7 +158,11 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
            'ghost dog',
             binding._getData(
                 'silva-extra').data['creator'])
-
+        # check whether we got ghosts (or subcontainers)
+        for obj in version.objectValues():            
+            self.assert_(
+                IGhost.isImplementedBy(obj) or
+                IContainer.isImplementedBy(obj))
 
     def test_zip_import(self):
         from StringIO import StringIO
@@ -197,17 +172,14 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        importer = xmlimport.theXMLImporter
         zip_file = ZipFile('data/test_export.zip', 'r')
-        test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
         test_info.setZipFile(zip_file)
         bytes = zip_file.read('silva.xml')
         source_file = StringIO(bytes)
-        importer.importFromFile(
+        xmlimport.importFromFile(
             source_file,
-            result=importfolder,
-            settings=test_settings,
+            importfolder,
             info=test_info)
         source_file.close()
         zip_file.close()

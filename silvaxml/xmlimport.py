@@ -156,14 +156,6 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         if main_title is not None:
             self.result().set_title(main_title)
 
-    def syncGhostfolders(self):
-        syncTargets = self._info.getSyncTargets()
-        if syncTargets:
-            # pop() doesn't seem to work here
-            for folder in syncTargets:
-                folder.haunt()
-                syncTargets.remove(folder)
-
 class SilvaExportRootHandler(SilvaBaseHandler):
     pass
 
@@ -181,7 +173,6 @@ class FolderHandler(SilvaBaseHandler):
 
             self.setMaintitle()
             self.storeMetadata()
-            self.syncGhostfolders()
 
 class PublicationHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
@@ -196,7 +187,6 @@ class PublicationHandler(SilvaBaseHandler):
         if name == (NS_URI, 'publication'):
             self.setMaintitle()
             self.storeMetadata()
-            self.syncGhostfolders()
 
 class AutoTOCHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
@@ -298,8 +288,8 @@ class GhostContentHandler(SilvaBaseHandler):
 class GhostFolderHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
-            (NS_URI, 'haunted_url'): HauntedUrlHandler,
-            (NS_URI, 'content'): NoopHandler,
+            (NS_URI, 'content'): GhostFolderContentHandler,
+            (NS_URI, 'metadata'): NoopHandler,
             }
 
     def startElementNS(self, name, qname, attrs):
@@ -307,26 +297,25 @@ class GhostFolderHandler(SilvaBaseHandler):
             id = attrs[(None, 'id')].encode('utf-8')
             uid = generateUniqueId(id, self.parent())
             object = GhostFolder(uid)
-            self.parent()._setObject(id, object)
+            self.parent()._setObject(uid, object)
             object = getattr(self.parent(), uid)
             self.setResult(object)
             self._info.addSyncTarget(object)
+        
+class GhostFolderContentHandler(SilvaBaseHandler):
+    def getOverrides(self):
+        return {
+            (NS_URI, 'haunted_url'): HauntedUrlHandler,
+            (NS_URI, 'content'): NoopHandler,
+            }
 
-    def endElementNS(self, name, qname):
-        if name == (NS_URI, 'content'):
-            self.storeWorkflow()
-            updateVersionCount(self)
-
+class NoopHandler(SilvaBaseHandler):
+    def isElementAllowed(self, name):
+        return False
+    
 class HauntedUrlHandler(SilvaBaseHandler):
     def characters(self, chars):
         self.parent().set_haunted_url(chars)
-
-class NoopHandler(SilvaBaseHandler):
-    def startElementNS(self, name, qname, attrs):
-        pass
-
-    def endElementNS(self, name, qname):
-        pass
 
 class LinkHandler(SilvaBaseHandler):
     def getOverrides(self):
@@ -445,7 +434,8 @@ class URLHandler(SilvaBaseHandler):
         self.parentHandler().setData('url', chrs)
 
 class ImportSettings(xmlimport.BaseSettings):
-    pass
+    def __init__(self):
+        xmlimport.BaseSettings.__init__(self, ignore_not_allowed=True)
 
 class ImportInfo:
     def __init__(self):
@@ -483,7 +473,11 @@ class ImportInfo:
 
     def getSyncTargets(self):
         return self._ghostfolders
-    
+
+    def syncGhostFolders(self):
+        for folder in self.getSyncTargets():
+            folder.haunt()
+            
 def generateUniqueId(org_id, context):
         i = 0
         id = org_id
@@ -514,3 +508,15 @@ def updateVersionCount(versionhandler):
         return 
     vc = max(parent._version_count, (id + 1))
     parent._version_count = vc
+
+def importFromFile(source_file, import_container, info=None):
+    settings = ImportSettings()
+    info = info or ImportInfo()
+    theXMLImporter.importFromFile(
+        source_file,
+        result=import_container,
+        settings=settings,
+        info=info)
+    # sync all ghost folders after all is imported
+    info.syncGhostFolders()
+    return import_container
