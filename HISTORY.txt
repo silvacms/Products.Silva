@@ -18,6 +18,9 @@ Silva changes
       - Another problem with the upgrade code for handling index elements,
         which causes a few of them to be missed, has been repaired.
 
+      - Ghost Folders now can be added by Editors (required Manager role
+        previously)
+
   0.9.3.4
   
     Bugs fixed
