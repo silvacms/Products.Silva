@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Revision: 1.29 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -286,10 +286,9 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assertRaises(AttributeError, self.sroot.folder6.is_published)
 
     def test_import_xml(self):
-        xml1 = """<?xml version="1.0" ?>
-                <silva_publication id="test"><title>TestPub</title><silva_document id="index"><title>TestPub</title><doc><p>Content</p></doc></silva_document></silva_publication>"""
+        xml1 = """<?xml version="1.0" ?><silva><silva_publication id="test"><title>TestPub</title><silva_document id="index"><title>TestPub</title><doc><p>Content</p></doc></silva_document></silva_publication></silva>"""
 
-        xml2 = '<silva_folder id="test2"><title>TestFolder</title><silva_demoobject id="do"><title>DemoObject</title><number>10</number><date>%s</date><info>Info</info><doc><p>Content</p></doc></silva_demoobject></silva_folder>' % DateTime('2002/10/16')
+        xml2 = '<silva><silva_folder id="test2"><title>TestFolder</title><silva_demoobject id="do"><title>DemoObject</title><number>10</number><date>%s</date><info>Info</info><doc><p>Content</p></doc></silva_demoobject></silva_folder></silva>' % DateTime('2002/10/16')
 
         self.sroot.xml_import(xml1)
 
