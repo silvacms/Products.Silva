@@ -1,12 +1,12 @@
-Copyright (c) 2002, 2003 Infrae. All rights reserved.
+Copyright (c) 2002, 2003, 2004 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.3.x
+  Valid for:  Silva 1.0.x
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.40.8.8 $
+  CVS:        $Revision: 1.40.8.8.8.1 $
 
 Installing Silva
 
@@ -40,7 +40,7 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.9.3.5)
+    Silva (1.0)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some
@@ -83,7 +83,7 @@ Installing Silva
 
         "FileSystemSite":http://www.zope.org/Members/philikon/FileSystemSite
 
-    SilvaMetadata (0.7.5)
+    SilvaMetadata (0.7.6)
 
       Silva Metadata can be used to create metadata sets and
       associate these with Zope object types. The metadata can be
@@ -114,7 +114,7 @@ Installing Silva
 
         "Annotations":http://www.zope.org/Members/infrae/Annotations
 
-    SilvaDocument (0.9.3.5)
+    SilvaDocument (1.0)
 
       Silva Document contains the functionality implementing the Silva
       Document object and editor. It is optional, but in order to do

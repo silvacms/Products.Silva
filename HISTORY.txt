@@ -3,17 +3,25 @@ See also LICENSE.txt
 
 Silva changes
 
-  0.1 alpha 1
-   
-    Bugs fixed
 
-      - Some small usability and bug fixes in Kupu
-
-  0.9.3 kupu 1 beta
+  1.0a2
 
     Features added
 
-      - Kupu
+      - Kupu, a WYSIWYG editor for Silva Document. This editor offers
+        a load of new features:
+
+          - full Silva integration; Kupu knows about special Silva
+            elements and saves Silva XML
+
+          - Copy and paste HTML from any source into Kupu.
+
+          - works in Internet Explorer and Mozilla
+
+        Kupu was formerly known as Epoz 1.0.
+
+      - Performance improvements in contents screen for folders, icon
+        presentation, and metadata system.
 
     Bugs fixed
 
@@ -26,6 +34,12 @@ Silva changes
 
       - Ghost Folders now can be added by Editors (required Manager role
         previously)
+
+      - Some small usability and bug fixes in Kupu
+
+  1.0a1
+
+    Was not a public release.
 
   0.9.3.4
   
