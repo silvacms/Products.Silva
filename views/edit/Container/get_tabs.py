@@ -8,10 +8,16 @@
 ##title=
 ##
 # define name, id, up_id
-return [('Edit', 'tab_edit', 'tab_edit'),
+tabs = [('Edit', 'tab_edit', 'tab_edit'),
         ('Preview', 'tab_preview', 'tab_preview'),
-        ('Docma', 'tab_docma', 'tab_docma'),
-        ('Metadata', 'tab_metadata', 'tab_metadata'),
-        ('Access', 'tab_access', 'tab_access'),
-        ('Publish', 'tab_status', 'tab_status'),
        ]
+
+if hasattr(context, 'service_docma'):
+    tabs.append(('Docma', 'tab_docma', 'tab_docma'))
+
+tabs += [('Metadata', 'tab_metadata', 'tab_metadata'),
+         ('Access', 'tab_access', 'tab_access'),
+         ('Publish', 'tab_status', 'tab_status'),
+        ]
+
+return tabs
