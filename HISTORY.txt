@@ -5,6 +5,11 @@ Silva changes
   
   1.0 (release candidate 2)
 
+    Features added
+
+      - Silva picks up version from version.txt in more places so that
+        less code needs to be updated before each release.
+
     Bugs fixed
 
       - Empty index elements [[]] are now longer accepted.
