@@ -122,10 +122,10 @@
     Preview
   </th>
   <th align="left" width="15%">
-    Modified&nbsp;date
+    Last&nbsp;modified
   </th>
   <th align="left" width="15%">
-    Author
+    Last&nbsp;status
   </th>
   <th align="right" width="2%">
     &nbsp;&nbsp;&nbsp;&nbsp;Shift&nbsp;
@@ -173,8 +173,10 @@
     <span tal:condition="python:default.get_modification_datetime() == None">&nbsp;</span>
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
-  <td tal:content="python:default.sec_get_last_author_info().fullname()">
-    Author
+  <td> 
+    <a class="blacklink" title="Down to Publish tab of item"
+      tal:attributes="href string:${default/absolute_url}/edit/tab_status"><span tal:replace="python:default.sec_get_last_author_info().fullname()">
+    Author</span></a>
   </td>
   <span tal:replace="nothing"> _______ shift _______ </span>
   <td>
@@ -233,8 +235,9 @@
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
   <td>
-    <span tal:content="python:item.sec_get_last_author_info().fullname()">
-    author&nbsp;name</span>
+    <a class="blacklink" title="Down to Publish tab of item"
+      tal:attributes="href string:${item/absolute_url}/edit/tab_status"><span tal:replace="python:item.sec_get_last_author_info().fullname()">
+    author&nbsp;name</span></a>
   </td>
   <span tal:replace="nothing"> _______ shift _______ </span>
   <td width="36px" align="right" tal:condition="silva_permissions/ApproveSilvaContent">
