@@ -96,6 +96,8 @@ class AccessManager:
                               'add_user')
     def add_user(self, userid, password):
         """Adds the user to the userfolder. Note that the user will not get a memberobject using this method"""
+        if not hasattr(self, 'service_members') or not self.service_members.allow_subscription():
+            raise Exception, 'Subscription to the site not allowed!'
         userfolder = self.acl_users.aq_inner
         userfolder.userFolderAddUser(userid, password, [], [])
 
