@@ -15,7 +15,7 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
         registry_service = self.root.service_renderer_registry
         doc_version_renderers = registry_service.getRendererNamesForMetaType(
             "Silva Document")
-        self.assertEquals(3, len(doc_version_renderers))
+        self.assertEquals(4, len(doc_version_renderers))
         self.assertEquals(
             [],
             registry_service.getRendererNamesForMetaType("NotReal"))
@@ -58,6 +58,7 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
             ['(Default)',
              OLD_STYLE_RENDERER,
              'Basic XSLT Renderer',
+             'Basic XSLT Renderer (No Title)',
              'Images on Right'],
             reg.getFormRenderersList('Silva Document'))
 
@@ -66,6 +67,7 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             [OLD_STYLE_RENDERER,
              'Basic XSLT Renderer',
+             'Basic XSLT Renderer (No Title)',
              'Images on Right'],
             reg.getRendererNamesForMetaType('Silva Document'))
         
