@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3b1
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.38 $
+  CVS:        $Revision: 1.39 $
 
 Installing Silva
 
@@ -86,7 +86,7 @@ Installing Silva
 
         "FileSystemSite":http://www.zope.org/Members/philikon/FileSystemSite
 
-    SilvaMetadata (0.9)
+    SilvaMetadata (0.7.4)
 
       Silva Metadata can be used to create metadata sets and
       associate these with Zope object types. The metadata can be
@@ -123,6 +123,10 @@ Installing Silva
       Document object and editor. It is optional, but in order to do
       something useful with Silva out of the box, this needs to be
       installed.
+
+      SilvaDocument can be found here:
+
+        "SilvaDocument":http://www.zope.org/Members/infrae/SilvaDocument
 
     XMLWidgets (0.10.2)
 
