@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78 $
+# $Revision: 1.79 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -437,8 +437,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """
         return (
             addable_dict.has_key('instance') and
-            ISilvaObject.isImplementedByInstancesOf(
-            addable_dict['instance']))
+            ISilvaObject.isImplementedByInstancesOf(addable_dict['instance'])
+            and self.service_view_registry.has_view('add', addable_dict['name'])
+            )
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed')
@@ -712,7 +713,6 @@ manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
 
 def manage_addIndex(folder):
     folder.manage_addProduct['Silva'].manage_addDocument('index', '')
-
 
 
 manage_addIndexHook = manage_addIndex
