@@ -959,7 +959,7 @@ div.info {
 
 div.info h3 {
   color: &dtml-inputFontColor;;
-  margin-top : 0em;
+  margin-top : 0.4em;
   margin-bottom : 0.2em;  
 }
 
