@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.83.2.1 2003/08/01 13:55:10 faassen Exp $
+# $Id: SilvaObject.py,v 1.83.2.2 2003/09/01 14:37:44 guido Exp $
 
 # python
 from types import StringType
@@ -15,7 +15,7 @@ from IContent import IContent
 from IPublishable import IPublishable
 from IAsset import IAsset
 from IContent import IContent
-from IContainer import IContainer
+from Products.Silva.IContainer import IContainer
 from IPublication import IPublication
 from IVersioning import IVersioning
 from IVersionedContent import IVersionedContent
