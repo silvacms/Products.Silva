@@ -1,13 +1,12 @@
 <!-- ___________________________ start index_html ___________________________ -->
 <html metal:use-macro="here/macro_index/macros/master">
-<div metal:fill-slot="main" tal:omit-tag="">
+<metal:block fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
 <tal:block tal:define="dummy python:model.security_trigger();
                        global could_lock model/sec_create_lock;
                        global unapproved_version model/get_unapproved_version;
-                       global request_pending python:model.is_version_approval_requested();
-" />
+                       global request_pending python:model.is_version_approval_requested();" />
 
 <model tal:condition="python:unapproved_version and not request_pending and could_lock" 
          tal:replace="structure view/edit">Content</model>
@@ -60,8 +59,7 @@
 </div>
 
 <!-- ___________________________ end index_html/slot main ___________________________ -->
-</div>
-
+</metal:block>
 </html>
 <!-- ___________________________ end index_html ___________________________ -->
 
