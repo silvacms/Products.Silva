@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.132 $
+# $Revision: 1.133 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -887,13 +887,42 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """A wrapper for the urllib.quote function to be used in Python scripts and PT's"""
         return urllib.quote(string)
 
+    def get_all_descendants(self):
+        """Returns a list of all descendants"""
+        obj = self
+        descendants = []
+        self._get_descendants_helper(obj, descendants)
+        
+        return descendants
+        
+    def _get_descendants_helper(self, obj, descendants):
+        for i in obj.objectValues():
+            descendants.append(i)
+            if IContainer.isImplementedBy(i):
+                self._get_descendants_helper(i, descendants)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'delete_old_versions')
+    def delete_old_versions(self):
+        """Delete all versions from the current location downward"""
+        items = self.get_all_descendants()
+        for item in items:
+            if IVersionedContent.isImplementedBy(item):
+                pvs = item._previous_versions
+                if not pvs is None:
+                    while len(pvs) > 1:
+                        # remove from list of previous versions and 
+                        # from container (Document)
+                        v = str(pvs.pop(0)[0])
+                        if v in item.objectIds():
+                            item.manage_delObjects([v])
+                            print 'Removed old version %s/%s' % (item.absolute_url(), v)
+        return 'Done!'
+        
 InitializeClass(Folder)
-
-
 
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
                                         __name__='manage_addFolderForm')
-
 
 def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     """Add a Folder."""

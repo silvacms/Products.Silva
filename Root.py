@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.70 $
+# $Revision: 1.71 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -240,27 +240,6 @@ class Root(Publication):
         if message_type == 'error':
             get_transaction().abort()
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'delete_old_versions')
-    def delete_old_versions(self, obj=None):
-        """Delete all versions from the current location downward"""
-        if obj is None:
-            obj = self # Silva Root
-        for item in obj.aq_inner.objectValues():
-            if IVersionedContent.isImplementedBy(item):
-                pvs = item._previous_versions
-                if not pvs is None:
-                    while len(pvs) > 1:
-                        # remove from list of previous versions and 
-                        # from container (Document)
-                        v = str(pvs.pop(0)[0])
-                        if v in item.objectIds():
-                            item.manage_delObjects([v])
-                            print 'Removed old version %s/%s' % (item.absolute_url(), v)
-            elif IContainer.isImplementedBy(item):
-                self.delete_old_versions(item)
-        return 'Done!'
-        
 InitializeClass(Root)
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
