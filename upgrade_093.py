@@ -444,8 +444,28 @@ class ClearEditorCache:
             zLOG.LOG(
                 'Silva', zLOG.INFO, 
                 'No Editor Service found to clear the cache of')        
-        return root   
+        return root
 
+class CheckServiceMembers:
+    """ Set the '_allow_authentication_requests' attribute 
+    on service_members if it isn't there yet.
+    
+    Copied from the upgrade_092 module
+    """
+    
+    __implements__ = IUpgrader
+
+    def upgrade(self, root):        
+        sm = getattr(root, 'service_members', None)
+        if sm is not None:
+            zLOG.LOG('Silva', zLOG.INFO, 'Service Members checkup')
+            if hasattr(sm, '_allow_subscription'):
+                sm._allow_authentication_requests = sm._allow_subscription
+                del sm._allow_subscription
+            elif not hasattr(sm, '_allow_authentication_requests'):
+                sm._allow_authentication_requests = 0
+        return root
+    
 def initialize():
     home = package_home(globals())
     xml_home = os.path.join(home, 'doc')
@@ -474,6 +494,11 @@ def initialize():
         'Groups Service')
         
     # On the root, do an "all product refresh"
-    upgrade.registry.registerUpgrader(RefreshAll(), '0.9.3', 'Silva Root')
+    upgrade.registry.registerUpgrader(
+        RefreshAll(), '0.9.3', 'Silva Root')
     # On the root, clear caches
-    upgrade.registry.registerUpgrader(ClearEditorCache(), '0.9.3', 'Silva Root')
+    upgrade.registry.registerUpgrader(
+        ClearEditorCache(), '0.9.3', 'Silva Root')
+    # On the service_members double check the _allow_authentication_requests attrs.
+    upgrade.registry.registerUpgrader(
+        CheckServiceMembers(), '0.9.3', 'Silva Root')
