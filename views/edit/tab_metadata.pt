@@ -38,11 +38,10 @@
               </tr>
               <tr>
                 <td class="top">
-                  <h2 tal:attributes="title string:id: ${model/id}" 
-                    i18n:translate="">
-                    <img tal:replace="structure python:view.render_icon(model)" />                      
-                    properties of &#xab;<tal:block content="title"
-                    i18n:name="title" />&#xbb;
+                  <h2 tal:attributes="title string:id: ${model/id}">
+                    <img tal:replace="structure python:view.render_icon(model)" />
+                    <span i18n:translate=""> properties of &#xab;<tal:block content="title"
+                    i18n:name="title" />&#xbb;</span>
                   </h2>
                 </td>
               </tr>

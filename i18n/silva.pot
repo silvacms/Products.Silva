@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Dec 20 16:39:05 2004\n"
+"POT-Creation-Date: Tue Dec 21 14:47:09 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -915,7 +915,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit_import.pt:298
 #: /views/edit/Container/tab_status_export.pt:325
 #: /views/edit/Container/GhostFolder/tab_edit.pt:71
-#: /views/edit/Container/Publication/settings_addables.pt:74
+#: /views/edit/Container/Publication/settings_addables.pt:75
 #: /views/edit/Container/Publication/tab_metadata.pt:86
 #: /views/edit/Member/SimpleMember/tab_edit.pt:68
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
@@ -1763,15 +1763,15 @@ msgstr ""
 msgid "Layout has been removed."
 msgstr ""
 
-#: /views/edit/Container/Publication/settings_addables.pt:106
+#: /views/edit/Container/Publication/settings_addables.pt:107
 msgid "save addables settings"
 msgstr ""
 
-#: /views/edit/Container/Publication/settings_addables.pt:106
+#: /views/edit/Container/Publication/settings_addables.pt:107
 msgid "save addable settings for this publication: alt-a"
 msgstr ""
 
-#: /views/edit/Container/Publication/settings_addables.pt:106
+#: /views/edit/Container/Publication/settings_addables.pt:107
 # Default: "a"
 msgid "save_addables_settings_accesskey"
 msgstr ""
@@ -4058,7 +4058,7 @@ msgid "The ghost is in an undefined state."
 msgstr ""
 
 #: /views/edit/hyperlink_lookup.pt:215
-#: /views/edit/tab_metadata.pt:104
+#: /views/edit/tab_metadata.pt:103
 #: /views/edit/Container/GhostFolder/tab_edit.pt:443
 msgid "metadata"
 msgstr ""
@@ -4311,7 +4311,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit_import.pt:86
 #: /views/edit/Container/tab_edit_import.pt:155
 #: /views/edit/Container/tab_edit_import.pt:293
-#: /views/edit/Container/Publication/settings_addables.pt:69
+#: /views/edit/Container/Publication/settings_addables.pt:70
 #: /views/edit/Container/Publication/tab_metadata.pt:81
 msgid "element"
 msgstr ""
@@ -4332,7 +4332,7 @@ msgstr ""
 #: /views/edit/Container/tab_status_export.pt:213
 #: /views/edit/Container/tab_status_export.pt:328
 #: /views/edit/Container/GhostFolder/tab_edit.pt:74
-#: /views/edit/Container/Publication/settings_addables.pt:77
+#: /views/edit/Container/Publication/settings_addables.pt:78
 #: /views/edit/Container/Publication/tab_metadata.pt:92
 #: /views/edit/VersionedContent/Ghost/edit.pt:65
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:45
@@ -4691,17 +4691,17 @@ msgstr ""
 msgid "Minimum role to access is now set to ${role}"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:107
+#: /views/edit/tab_metadata.pt:106
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:44
+#: /views/edit/tab_metadata.pt:43
 #: /views/edit/Container/tab_metadata.pt:50
 msgid "properties of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:56
+#: /views/edit/tab_metadata.pt:55
 #: /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:22
 #: /views/edit/Container/Publication/tab_metadata.pt:48
@@ -4709,21 +4709,21 @@ msgstr ""
 msgid "manage_subscriptions_accesskey"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:56
+#: /views/edit/tab_metadata.pt:55
 #: /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:22
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions: alt-m"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:56
+#: /views/edit/tab_metadata.pt:55
 #: /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:22
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "<u>m</u>anage subscriptions..."
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:86
+#: /views/edit/tab_metadata.pt:85
 msgid "metadata ${for_approved_version_of_title}"
 msgstr ""
 
