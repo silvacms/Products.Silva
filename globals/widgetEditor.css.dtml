@@ -166,7 +166,7 @@ ol.lower-alpha {
 /* _______________________________________ focus box rendering styles _____ */
 
 .post-focus {
-  background: #dbe6e5;
+  background: #d6e0df;
   border: none ! important;
   border-right: none ! important;
 }
