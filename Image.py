@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -39,7 +39,9 @@ class Image(Asset):
         """
         self._title = title
         if self.image:
-            self.image.title = title
+            # have to encode as otherwise unicode will blow up image rendering
+            # code
+            self.image.title = title.encode('cp1252')
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
