@@ -406,11 +406,18 @@ class ExportSettings:
         self._all_versions = 1
         self._mappings = {}
         self._prolog = 1
+        #         self._fullmedia = 0
         
     def setOnlyPublishedNoWorkflow(self):
         self._workflow = 0
         self._all_versions = 0
 
+        #     def setFullMedia():
+        #         self._fullmedia = 1
+        
+        #     def fullMediaExport():
+        #         return self._fullmedia
+        
     def workflow(self):
         return self._workflow
 
