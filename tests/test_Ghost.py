@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 import unittest
 import Zope
 from Products.Silva.SilvaObject import SilvaObject
@@ -180,17 +180,23 @@ class GhostTestCase(unittest.TestCase):
     def test_broken_link1(self):
         # add a ghost
         self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
-                                                              '/root/doc1')
+                                                              '/root/doc1/')
         ghost = getattr(self.sroot, 'ghost1')
         
         # issue 41: test if get_content_url works now
         self.assertEquals('/root/doc1', ghost.get_editable().get_content_url())
+        self.assertEquals(None, ghost.get_editable().get_link_status())
+
         # now delete doc1
         self.sroot.action_delete(['doc1'])
         # ghost should say 'This ghost is broken'
         self.assertEquals('Ghost is broken', ghost.preview())
-        # issue 41: test get_content_url; should catch KeyError and return None
-        self.assertEquals(None, ghost.get_previewable().get_content_url())
+        # issue 41: test get_content_url; should catch KeyError
+        # and return original inserted url
+        self.assertEquals('/root/doc1',
+                          ghost.get_previewable().get_content_url())
+        self.assertEqual(GhostVersion.LINK_VOID,
+                         ghost.get_editable().get_link_status())
         
         # now make ghost point to doc2, and publish ghost and doc2
         self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
@@ -203,8 +209,12 @@ class GhostTestCase(unittest.TestCase):
         self.doc2.close_version()
         self.sroot.action_delete(['doc2'])
         self.assertEquals('Ghost is broken', ghost.view())
-        # issue 41: test get_content_url; should catch KeyError and return None
-        self.assertEquals(None, ghost.get_previewable().get_content_url())
+        # issue 41: test get_content_url; should catch KeyError
+        # and return original inserted url
+        self.assertEquals('/root/doc2',
+                          ghost.get_previewable().get_content_url())
+        self.assertEquals(GhostVersion.LINK_VOID,
+                          ghost.get_previewable().get_link_status())
 
 
     def test_ghost_title(self):
@@ -227,12 +237,27 @@ class GhostTestCase(unittest.TestCase):
     def test_ghost_points(self):
         # test that the ghost cannot point to the wrong thing;
         # only non-ghost versioned content
-        self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
-                                                              '/root/folder4')
+        self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1', '/root/does_not_exist')
+        self.sroot.manage_addProduct['Silva'].manage_addImage('image6',
+                                                              'Test image')
         ghost = getattr(self.sroot, 'ghost1')
         self.assertEquals('Ghost is broken', ghost.preview())
+        self.assertEquals(GhostVersion.LINK_VOID,
+                          ghost.get_editable().get_link_status())        
+        ghost.get_editable().set_content_url('/root/folder4')
+        self.assertEquals('Ghost is broken', ghost.preview())
+        self.assertEquals(GhostVersion.LINK_FOLDER,
+                          ghost.get_editable().get_link_status())
         ghost.get_editable().set_content_url('/root/ghost1')
         self.assertEquals('Ghost is broken', ghost.preview())
+        self.assertEquals(GhostVersion.LINK_GHOST,
+                          ghost.get_editable().get_link_status())
+        ghost.get_editable().set_content_url('/root/image6')
+        self.assertEquals('Ghost is broken', ghost.preview())
+        self.assertEquals(GhostVersion.LINK_NO_CONTENT,
+                          ghost.get_editable().get_link_status())
+
+
         
 def test_suite():
     suite = unittest.TestSuite()
