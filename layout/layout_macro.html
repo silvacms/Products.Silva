@@ -19,9 +19,14 @@
 </head>
 
 <body metal:define-slot="body" leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<span tal:replace="nothing"> _______ this macro inserts the public view in the preview tab _______ </span>
+<metal:block define-macro="previewer">
+
 <metal:block define-slot="page_header">
   <!-- page_header slot -->
 </metal:block>
+
 <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
 <tr valign="top" height="1%">
   <td width="1%" bgcolor="#d1d4d8">
@@ -66,8 +71,11 @@
   </td>
 </tr>
 </table>
+
 <metal:block define-slot="page_footer">
   <!-- page_footer slot -->
+</metal:block>
+
 </metal:block>
 </body>
 </html>

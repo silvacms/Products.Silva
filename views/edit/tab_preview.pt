@@ -4,7 +4,8 @@
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<tal:block condition="exists: model/layout_macro.html/macros/previewer">
+<tal:block condition="exists: model/layout_macro.html/macros/previewer"
+  tal:on-error="structure string:<div class='alert'>There is a problem in layout_macro.html, or in a script that's called in it.</div>">
 <metal:preview use-macro="model/layout_macro.html/macros/previewer">
 
 <!-- start Silva content -->
