@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -22,13 +22,43 @@ _id_re = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.-]*$')
 p_ID = re.compile(r'^(.*?)([0-9]+)$')
 
 # sequence of all reserved prefixes (before the first '_')
-_reserved_prefixes = ('service', 'manage', 'aq');
+_reserved_prefixes = (
+    'aq',
+    'get',
+    'manage', 
+    'service', 
+    'set',
+    );
 
 # all reserved/internally used ids. (This list is most probably incomplete)
-_reserved_ids = ( 'index_html', 'preview_html', 'REQUEST',
-                 'standard_error_message', 'standard_unauthorized_message',
-                 'content.html', 'override.html', 'layout_macro.html',
-                 'acl_users', 'code_source', 'Members', 'globals', 'fulltext');
+_reserved_ids = (
+    'Members', 
+    'REQUEST',
+    'acl_users',
+    'code_source', 
+    'content.html', 
+    'edit',
+    'form',
+    'fulltext',
+    'getBatch',
+    'getDocmaFormatName',
+    'globals',
+    'index_html', 
+    'layout_macro.html',
+    'logout',
+    'lookup',
+    'memberform',
+    'override.html', 
+    'placeholder',
+    'preview_html', 
+    'promptWindow',
+    'quotify',
+    'redirect',
+    'search',
+    'standard_error_message', 
+    'standard_unauthorized_message',
+    'submit',
+     );
 
 module_security.declarePublic('escape_entities')
 def escape_entities(text):
