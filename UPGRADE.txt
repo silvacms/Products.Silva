@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.5
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.15 $
+  CVS:        $Revision: 1.16 $
 
 Upgrading Silva 0.8.4 to 0.8.5
 
@@ -123,9 +123,9 @@ Upgrading Silva 0.8.4 to 0.8.5
     previous section).
 
     Additionally the upgrade script will patch all content objects of type
-    'Silva Document' to work with the upgraded widgets just installed by the
-    script. If you have defined your own content types you may want to check
-    the next section, too.
+    'Silva Document' to work with the upgraded widgets just installed by
+    the script. If you have defined your own content types you may want to
+    check the next section, too.
 
 
   Upgrading your custom content types
@@ -150,8 +150,8 @@ Upgrading Silva 0.8.4 to 0.8.5
     you may want to upgrade the content objects of your custom content 
     types, too.
 
-    Most probably this will be the case if your content types inherit
-    from the Silva 'Document.py'. Please check your content types XML Widgets
+    Most probably this will be the case if your content types inherit from
+    the Silva 'Document.py'. Please check your content types XML Widgets
     Registry setup scripts.
 
     To upgrade your content types please edit the file 
