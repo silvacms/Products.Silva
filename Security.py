@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74.4.3 $
+# $Revision: 1.74.4.4 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -234,26 +234,14 @@ class Security(AccessManager):
         # containers have no author
         if IContainer.isImplementedBy(self):
             return noneMember.__of__(self)
-        version = self.get_previewable()
-        if version is None:
-            # version can be None if this method is called from manage_afterAdd
-            return noneMember.__of__(self)
-        binding = self.service_metadata.getMetadata(version)
-        if binding is None:
-            return noneMember.__of__(self)
-        userid = self._last_author_userid
-        # XXX: the userid comes back as unicode which zope doesn't
-        # like as id. Just using str might not be a good idea, but
-        # weird characters are not allowed in userids anyway, so that
-        # would be an error anyway.
-        userid = str(userid)
+        
         # get cached author info (may be None)
-        info = self.sec_get_member(userid).aq_base
+        info = self._last_author_info
         if info is None:
             return noneMember.__of__(self)
         else:
             return info.__of__(self)
-
+            
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_update_last_author_info')
     def sec_update_last_author_info(self):
@@ -262,19 +250,7 @@ class Security(AccessManager):
         from AccessControl import getSecurityManager
         security = getSecurityManager()
         self._last_author_userid = userid = security.getUser().getUserName()
-        version = self.get_previewable()
-        assert version is not None
-        try:
-            binding = self.service_metadata.getMetadata(version)
-        except BindingError:
-            binding = None
-        if binding is None:
-            return
-        binding.setValues(
-            'silva-extra', {
-                'lastauthor': userid,
-                'modificationtime': DateTime(),
-            })
+        self._last_author_info = author_info = self.sec_get_member(userid).aq_base
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_userids')

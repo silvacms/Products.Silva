@@ -277,65 +277,6 @@ class UpgradeTime:
         binding.setValues('silva-extra', timings)
         return obj
 
-class UpgradeLastAuthor:
-    """
-    moves the information about the last author form
-    a plain attribute to a meta data value
-    """
-
-    __implements__ = IUpgrader
-
-    def upgrade(self, obj):
-
-        if IContainer.isImplementedBy(obj):
-            # no last author etc. for containers
-            return obj
-        
-        try:
-            binding = obj.service_metadata.getMetadata(obj)
-        except AttributeError:
-            zLOG.LOG('Silva', zLOG.WARNING, "UpgradeTime failed on %r. "
-                "Maybe a broken product?" % (obj, ))
-            return obj
-        except BindingError:
-            return obj
-        if binding is None:
-            return obj
-
-        content = obj
-        if IVersion.isImplementedBy(obj):
-            # XXX all versions will have tha same last user
-            # maybe only upgrade, if this is the last version?
-            content = obj.get_content()
-
-        author_id = getattr(content, '_last_author_userid', None)
-
-        # XXX hm, creator: try to use the owner, if this exist
-        creator_id = None
-        # ... but no yet, as this has not been decided on
-        #if Owned.ownableFilter(obj):
-        #        owner_info = obj.owner_info()
-        #        if owner_info is not None:
-        #            creator_id = owner_info['id']
-        
-        author_data = {}
-        if author_id is not None and \
-           binding.get('silva-extra', 'lastauthor',
-                       acquire=0, no_defaults=1) is None:
-            author_data['lastauthor'] = author_id
-        if creator_id is not None and \
-           binding.get('silva-extra', 'creator',
-                       acquire=0, no_defaults=1) is None:
-            author_data['creator'] = creator_id
-
-        if author_data:
-            err = binding.setValues('silva-extra', author_data)
-            zLOG.LOG('Silva', zLOG.BLATHER,
-                     'updating author of %s to %s results in error: %s'%\
-                     ( obj.absolute_url(), author_data, err) )
-
-        return obj
-
 class SimpleMetadataUpgrade:
     """simple metadata upgrade, meaning: remove old set, add new set
 
@@ -475,8 +416,6 @@ def initialize():
         upgrade.registry.registerUpgrader(up, '0.9.3',
             'Advanced Metadata Tool')
     upgrade.registry.registerUpgrader(UpgradeTime(), '0.9.3',
-        upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(UpgradeLastAuthor(), '0.9.3',
         upgrade.AnyMetaType)
     upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.3',
         upgrade.AnyMetaType)
