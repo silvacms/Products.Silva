@@ -86,8 +86,9 @@
             </table>
           </form>
 
-          <metal:block use-macro="here/macro_metadata/macros/edit_table" />
-          
+          <tal:block define="version model">
+            <metal:block use-macro="here/macro_metadata/macros/edit_table" />
+          </tal:block>
         </td>
       </tr>
     </tbody>
