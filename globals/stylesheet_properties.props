@@ -110,17 +110,17 @@ inputBorder:string=1px solid #797f7f
 buttonWeight:string=normal
 controlBackground:string=#b8c9da
 
-standaloneButtonBackground:string=#555D82
+standaloneButtonBackground:string=#283365
 standaloneButtonPadding:string=0em
 standaloneButtonBorder:string=1px solid #8faecf
 standaloneButtonFontColor:string=#d9f3f1
 
-contextButtonBackground:string=#46755e
+contextButtonBackground:string=#105934
 contextButtonPadding:string=0em
 contextButtonBorder:string=1px solid #6bb591
 contextButtonFontColor:string=#d9f3da
 
-destructiveButtonBackground:string=#755c5c
+destructiveButtonBackground:string=#752e2f
 destructiveButtonPadding:string=0em
 destructiveButtonBorder:string=1px solid #b48f8f
 destructiveButtonFontColor:string=#fdeaea
