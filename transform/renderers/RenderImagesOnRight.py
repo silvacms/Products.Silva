@@ -9,6 +9,8 @@ from Products.Silva.transform.renderers.XSLTRendererBase import XSLTRendererBase
 
 class RenderImagesOnRight(XSLTRendererBase):
     def __init__(self):
+        XSLTRendererBase.__init__(self)
+
         self._name = 'Images on Right'
         self._stylesheet_path = os.path.join(
             os.path.dirname(os.path.abspath(__file__)),
