@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -190,8 +190,8 @@ class EditorSupport:
         #st = st.replace('\n\n', ' ')
         tags = {'__': 'underline', '**': 'strong', '++': 'em', '^^': 'super', '~~': 'sub'}
         reg = re.compile(r"(_{2}|\*{2}|\+{2}|\^{2}|~{2})(.*?)\1", re.S)
-        reg_a = re.compile(r"\({2}(.*?)\|([^|]*?)(\|(.*?))?\){2}", re.S)
-        reg_i = re.compile(r"\[{2}(.*?)\|(.*?)\]{2}", re.S)
+        reg_a = re.compile(r"^([^<]*|.*>[^\"]*)\({2}(.*?)\|([^|]*?)(\|(.*?))?\){2}", re.S)
+        reg_i = re.compile(r"^([^<]*|.*>[^\"]*)\[{2}(.*?)\|(.*?)\]{2}", re.S)
         while 1:
             match = reg.search(st)
             if not match:
@@ -201,18 +201,18 @@ class EditorSupport:
             match = reg_a.search(st)
             if not match:
                 break
-            if match.group(3):
-                target = match.group(4)
+            if match.group(4):
+                target = match.group(5)
                 if not target:
                     target = '_blank'
-                st = st.replace(match.group(0), '<link url="%s" target="%s">%s</link>' % (match.group(2), target, match.group(1)))
+                st = st.replace(match.group(0), '%s<link url="%s" target="%s">%s</link>' % (match.group(1), self.replace_xml_entities(match.group(3)), self.replace_xml_entities(target), match.group(2)))
             else:
-                st = st.replace(match.group(0), '<link url="%s">%s</link>' % (match.group(2), match.group(1)))
+                st = st.replace(match.group(0), '%s<link url="%s">%s</link>' % (match.group(1), self.replace_xml_entities(match.group(3)), match.group(2)))
         while 1:
             match = reg_i.search(st)
             if not match:
                 break
-            st = st.replace(match.group(0), '<index name="%s">%s</index>' % (match.group(2), match.group(1)))
+            st = st.replace(match.group(0), '%s<index name="%s">%s</index>' % (match.group(1), self.replace_xml_entities(match.group(3)), match.group(2)))
 
         st = self.input_convert(st).encode('UTF8')
         node = node._node
@@ -330,9 +330,8 @@ class EditorSupport:
             try:
                 dom = ParsedXML(doc, '<p>%s</p>' % st)
                 return dom
-            except ExpatError:
-                # catch the errormessage and parse it
-                message = str(exc_info()[1])
+            except ExpatError, message:
+                message = str(message)
                 text = st
                 match = re.search('line [0-9]+, column ([0-9]+)', message)
                 # the line number always seems to be 1
