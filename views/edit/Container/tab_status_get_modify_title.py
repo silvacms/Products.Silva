@@ -10,5 +10,5 @@
 from Products.Silva.i18n import translate as _
 
 msg = _('modify ${meta_type}')
-msg.set_mapping({'id': id})
+msg.set_mapping({'meta_type': meta_type})
 return msg
