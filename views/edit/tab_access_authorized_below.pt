@@ -29,7 +29,7 @@
         <textarea name="data" cols="65" rows="5" wrap="soft"><tal:block repeat="userid model/sec_get_userids_deep"><span tal:define="member python:model.sec_get_member(userid)"
           tal:condition="member/email | nothing" tal:replace="member/email">
           userid</span>
-        <span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></repeat></textarea>
+        <span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></tal:block></textarea>
       </span>
     </td>
   </tr>
