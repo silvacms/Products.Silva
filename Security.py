@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.34 $
+# $Revision: 1.35 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -183,7 +183,6 @@ class Security:
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_userids_deep')
-    #DEPRECATED
     def sec_get_userids_deep(self):
         """Get all userids that have local roles in anything under this
         object.
@@ -196,7 +195,6 @@ class Security:
             dict[userid] = 0
         return dict.keys()
 
-    #DEPRECATED
     def _sec_get_userids_deep_helper(self, l):
         for userid in self.sec_get_userids():
             l.append(userid)
@@ -236,14 +234,12 @@ class Security:
                               'sec_get_roles_for_userid')
     def sec_get_roles_for_userid(self, userid):
         """Get the local roles that a userid has here.
-        DEPRECATED
         """
         return [role for role in self.get_local_roles_for_userid(userid)
                 if role in interesting_roles]
     
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_roles')
-    #DEPRECATED
     def sec_get_roles(self):
         """Get all roles defined here that we can manage, given the
         roles of this user.
