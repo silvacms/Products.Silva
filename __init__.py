@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.67 $
+# $Revision: 1.67.2.1 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -108,3 +108,15 @@ def initialize(context):
     registerDirectory('globals', globals())
     registerDirectory('service_utils', globals())
 
+#------------------------------------------------------------------------------
+# External Editor support
+#------------------------------------------------------------------------------
+
+# check if ExternalEditor is available
+import os
+from Globals import DTMLFile
+
+# XXX this check is a little crude...
+if os.path.isfile('../ExternalEditor/manage_main.dtml'):
+   Folder.manage_main = DTMLFile('../ExternalEditor/manage_main', globals())
+   Root.manage_main = DTMLFile('../ExternalEditor/manage_main', globals())

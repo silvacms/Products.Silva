@@ -236,6 +236,12 @@ def configureSecurity(root):
     # allowed to use service_editor otherwise
     root.manage_permission('Use XMLWidgets Editor Service',
                            all_reader + ['Authenticated'])
+    # this is necessary to let authors use external editor
+    try:
+        root.manage_permission('Use external editor', all_author)
+    # hail to Zope and its string exceptions!!
+    except:
+        pass
 
     # Set permissions/roles for Groups Service
     # XXX this is a bit of a hack, as Groups may not be installed we
