@@ -197,11 +197,17 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
         self._endElement(reader, 'status')
         self._startElement(reader, 'publication_datetime', {})
         if publication_datetime:
-            reader.characters(publication_datetime)
+            if type(publication_datetime) == type(DateTime()):
+                reader.characters(str(publication_datetime.HTML4()))
+            else:
+                reader.characters(unicode(str(publication_datetime)))
         self._endElement(reader, 'publication_datetime')
         self._startElement(reader, 'expiration_datetime', {})
         if expiration_datetime:
-            reader.characters(expiration_datetime)
+            if type(expiration_datetime) == type(DateTime()):
+                reader.characters(str(expiration_datetime.HTML4()))
+            else:
+                reader.characters(unicode(str(expiration_datetime)))
         self._endElement(reader, 'expiration_datetime')
         self._endElement(reader, 'version')
         
