@@ -190,6 +190,7 @@ def configureMetadata(root):
     default = ''
     tm = (
         {'type':'Silva Ghost Version',      'chain':''},
+        {'type':'Silva Ghost Folder',       'chain':''},
         {'type':'Silva Link Version',       'chain':'silva-content, silva-extra'},
         {'type':'Silva Folder',             'chain':'silva-content, silva-extra'},
         {'type':'Silva File',               'chain':'silva-content, silva-extra'},

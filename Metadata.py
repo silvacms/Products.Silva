@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.20 2003/10/31 19:26:09 faassen Exp $    
+$Id: Metadata.py,v 1.21 2003/11/11 09:57:07 jw Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
@@ -54,11 +54,13 @@ def ghost_access_handler(tool, content_type, content):
     target_content = target_content.get_viewable()
     if target_content is None:
         return None
-
-    return invokeAccessHandler(
-        tool,
-        target_content,
-        )
+    return invokeAccessHandler(tool, target_content)
+        
+def ghostfolder_access_handler(tool, content_type, content):
+    haunted_folder = content.get_haunted_unrestricted()
+    if haunted_folder is None:
+        return None
+    return invokeAccessHandler(tool, haunted_folder)
 
 #################################
 ### registration
@@ -76,6 +78,7 @@ def register_core_types():
     from Products.Silva.File import File
     from Products.Silva.Folder import Folder
     from Products.Silva.Ghost import GhostVersion
+    from Products.Silva.GhostFolder import GhostFolder
     from Products.Silva.Link import LinkVersion
     from Products.Silva.Image import Image
     from Products.Silva.Indexer import Indexer
@@ -91,6 +94,7 @@ def register_core_types():
     registerTypeForMetadata(GhostVersion.meta_type)
     registerTypeForMetadata(LinkVersion.meta_type)
     registerTypeForMetadata(Folder.meta_type)
+    registerTypeForMetadata(GhostFolder.meta_type)
     registerTypeForMetadata(File.meta_type)
     registerTypeForMetadata(Image.meta_type)
     registerTypeForMetadata(Indexer.meta_type)
@@ -125,8 +129,10 @@ def register_access_handlers():
     deal with special silva content types that need specialized
     metadata handling
     """
-    from Products.Silva.Ghost import GhostVersion    
+    from Products.Silva.Ghost import GhostVersion
+    from Products.Silva.GhostFolder import GhostFolder
     registerAccessHandler(GhostVersion.meta_type, ghost_access_handler)
+    registerAccessHandler(GhostFolder.meta_type, ghostfolder_access_handler)
 
 def register_initialize_handlers():
     """Set initialize handlers which set mutation triggers on everything

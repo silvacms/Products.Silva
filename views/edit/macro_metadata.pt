@@ -8,6 +8,52 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   i18n:domain="silva">
 
+<!-- main template (for "view' and "edit" tables see below... -->
+<metal:block define-macro="main">
+  <table class="columns columns2">
+    <tbody>
+      <tr>
+        <tal:block replace="nothing">
+          _____________________ sidebar _____________________
+        </tal:block>
+        <td class="left" metal>
+          <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+        </td>
+
+        <tal:block replace="nothing">
+          _____________________ main _____________________
+        </tal:block>
+        <td class="main">
+          <tal:block 
+            define="
+              editable python: model.get_editable();
+              version python: editable or model.get_previewable();
+              macro python: editable and 'edit_table' or 'view_table';
+              ">
+            <metal:block use-macro="here/macro_metadata/macros/?macro" />
+          </tal:block>
+
+          <tal:block 
+            define="version python: model.implements_versioning() and model.get_viewable()"
+            condition="version">
+            <metal:block use-macro="here/macro_metadata/macros/view_table">
+              <h2 metal:fill-slot="table_title">
+                <img tal:replace="structure python:view.render_icon(model)" />
+                metadata
+                <span tal:condition="not: model/implements_container">
+                  <span i18n:translate="for_public_version_of">for public version of</span>
+                  &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                </span>
+              </h2>
+            </metal:block>
+          </tal:block>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>  
+</metal:block>
+
 <!-- Edit table -->
 <metal:block define-macro="edit_table">
   <tal:block define="

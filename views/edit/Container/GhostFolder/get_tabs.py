@@ -15,6 +15,7 @@
 
 tabs = [('contents', 'tab_edit', 'tab_edit', '!', '1', '6'),
         ('preview', 'tab_preview', 'tab_preview', '@', '2', '7'),
+        ('properties', 'tab_metadata', 'tab_metadata', '#', '3', '8'),
         ('access', 'tab_access', 'tab_access', '#', '3', '8'),
         ('publish', 'tab_status', 'tab_status', '$', '4', '9'),
        ]

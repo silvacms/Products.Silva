@@ -88,11 +88,13 @@
             </table>
           </form>
 
-          <metal:headslot define-slot="more_control" />
-
-          <tal:block define="version model">
-            <metal:block use-macro="here/macro_metadata/macros/edit_table" />
-          </tal:block>
+          <metal:block define-slot="more_control" />
+          
+          <metal:block define-slot="actual_table">
+            <tal:block define="version model">
+              <metal:block use-macro="here/macro_metadata/macros/edit_table" />
+            </tal:block>
+          </metal:block>
         </td>
       </tr>
     </tbody>
