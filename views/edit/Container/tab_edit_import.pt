@@ -144,6 +144,7 @@
          </table>
         </form>
 
+        <tal:block condition="docma_running">
         <div class="feedback"
          tal:define="
            global queue view/service_docma/get_queue;
@@ -156,8 +157,7 @@
         </div>
 
         <form action="." enctype="multipart/form-data" method="POST">
-          <table class="listing sublisting"
-            tal:condition="docma_running">
+          <table class="listing sublisting">
             <thead>
               <tr tal:replace="nothing">
                 ______________ vein + title row ______________
@@ -252,6 +252,8 @@
             </tbody>
           </table>
         </form>
+
+        </tal:block>
 
 
     <span tal:replace="nothing">
