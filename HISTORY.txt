@@ -15,6 +15,10 @@ Silva changes
       - Updated footer of the Silva documentation template, used to mention
         incorrect Silva and Zope versions.
 
+      - Fixed bug with metadata sets with restricted access, they were not
+        accessible with people who did have the required role(s) but didn't
+        have them defined on the root.
+
       - Headings are no longer incorrectly discarded by the xslt renderer.
 
       - Code and data sources no longer incorrectly copy their parameters 
