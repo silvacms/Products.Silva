@@ -110,11 +110,11 @@ class UpgradeRegistry:
             while object_list:
                 o = object_list[-1]
                 del object_list[-1]
-                print 'Upgrading object', o.absolute_url(), '(still %s objects to go)' % len(object_list)
+                #print 'Upgrading object', o.absolute_url(), '(still %s objects to go)' % len(object_list)
                 self.upgradeObject(o, version)
                 if hasattr(o.aq_base, 'objectValues'):
                     if o.meta_type == "Parsed XML":
-                        print '#### Skip the Parsed XML object'
+                        #print '#### Skip the Parsed XML object'
                     else:
                         object_list.extend(o.objectValues())
                         stats['maxqueue'] = max(stats['maxqueue'],
@@ -122,17 +122,18 @@ class UpgradeRegistry:
                 stats['total'] += 1
                 stats['threshold'] += 1                
                 if stats['threshold'] > threshold:
-                    print '#### Commit sub transaction ####'
+                    #print '#### Commit sub transaction ####'
                     get_transaction().commit(1)
                     if hasattr(o, '_p_jar') and o._p_jar is not None:
                         o._p_jar.cacheGC()
                     else:
-                        print 'No _p_jar, or it is None for', repr(o)
+                        #print 'No _p_jar, or it is None for', repr(o)
                     stats['threshold'] = 0
             stats['endtime'] = DateTime.DateTime()
             self.tearDown(root, version)
         finally:
-            print repr(stats)
+            #print repr(stats)
+            pass
 
     def upgrade(self, root, from_version, to_version):
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrading content from %s to %s.' % (
@@ -143,11 +144,12 @@ class UpgradeRegistry:
         try:
             version_index = versions.index(from_version)
         except ValueError:
-            version_index = 0
-        upgrade_chain = [ v
-            for (v, i) in zip(versions, range(len(versions)))
-            if i > version_index
-            ]
+            upgrade_chain = versions[:]
+        else:
+            upgrade_chain = [ v
+                for (v, i) in zip(versions, range(len(versions)))
+                if i > version_index
+                ]
         if not upgrade_chain:
             zLOG.LOG('Silva', zLOG.INFO, 'Nothing needs to be done.')
         for version in upgrade_chain:
@@ -175,7 +177,7 @@ def check_reserved_ids(obj):
     """Walk through the entire tree to find objects of which the id is not
     allowed, and return a list of the urls of those objects
     """
-    print 'checking for reserved ids on', repr(obj)
+    #print 'checking for reserved ids on', repr(obj)
     object_list = obj.objectValues()
     while object_list:
         o = object_list[0]
@@ -192,6 +194,7 @@ def check_reserved_ids(obj):
         while not id.isValid():
             id = mangle.Id(o.aq_parent, 'renamed_%s' % id, allow_dup=0)
         o.aq_parent.manage_renameObject(old_id, str(id))
-        #zLOG.LOG("Silva", zLOG.INFO,
-        print 'Invalid id %s found. Renamed to %s' % (repr(old_id), repr(id)), 'Location: %s' % o.absolute_url()
+        zLOG.LOG("Silva", zLOG.INFO,
+            'Invalid id %s found. Renamed to %s' % (repr(old_id), repr(id)),
+            'Location: %s' % o.absolute_url()
 
