@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36.8.5 $
+  CVS:        $Revision: 1.36.8.6 $
 
 Upgrading from 0.9.1 and below
 
@@ -205,7 +205,6 @@ Upgrading Silva 0.9.2.x to 0.9.3
     something along the lines of the following code in the
     '__init__.py' of your product::
 
-       # XXX maybe add custom metadata ?
        from Products.Silva.upgrade import upgrade_registry, upgrade_list_titles_in_parsed_xml
 
        def upgrade_sampledoc(obj):
@@ -225,8 +224,3 @@ Upgrading Silva 0.9.2.x to 0.9.3
     the "SilvaDemoExtension
     Product":http://cvs.infrae.com/SilvaDemoExtension/ for an example
     of upgrading a custom content type.
-
-    Note that if You have a customization of the Silva Root You should
-    register those upgraders for your root which are also registered
-    for the Silva Root; see the file 'upgrade_093.py' for the Upgraders
-    registered for the Silva core content types.
