@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
+# $Revision: 1.32 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -41,29 +41,7 @@ class Publication(Folder):
     def to_folder(self):
         """Publication becomes a folder instead.
         """
-        # first create new folder
-        container = self.get_container()
-        orig_id = self.id
-        convert_id = 'convert__%s' % orig_id
-        container.manage_addProduct['Silva'].manage_addFolder(
-            convert_id, self.get_title(), create_default=0)
-        publication = getattr(container, convert_id)
-        # copy all contents into new folder
-        cb = self.manage_copyObjects(self.objectIds())
-        publication.manage_pasteObjects(cb)
-        # copy over all properties
-        for key, value in self.propertyItems():
-            publication.manage_addProperty(
-                key, value, self.getPropertyKey(key))
-        # copy over authorization info
-        for userid in self.sec_get_userids():
-            roles = self.sec_get_roles_for_userid(userid)
-            for role in roles:
-                publication.sec_assign(userid, role)
-        # now remove this object from the container
-        container.manage_delObjects([self.id])
-        # and rename the copy
-        container.manage_renameObject(convert_id, orig_id)
+        self._to_folder_or_publication_helper(to_folder=1)
         
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

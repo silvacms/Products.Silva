@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74 $
+# $Revision: 1.75 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -346,6 +346,48 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def action_import_xml(self, f):
         XMLImporter.importFile(self, f)
 
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_publication')
+    def to_publication(self):
+        """Turn this folder into a publication.
+        """
+        self._to_folder_or_publication_helper(to_folder=0)
+
+    def _to_folder_or_publication_helper(self, to_folder):
+        container = self.aq_parent
+        orig_id = self.id
+        convert_id = 'convert__%s' % orig_id
+        if to_folder:
+            container.manage_addProduct['Silva'].manage_addFolder(
+                convert_id, self.get_title(), create_default=0)
+        else:
+            # to publication
+            container.manage_addProduct['Silva'].manage_addPublication(
+                convert_id, self.get_title(), create_default=0)
+        folder = getattr(container, convert_id)
+        # copy all contents into new folder
+        cb = self.manage_copyObjects(self.objectIds())
+        folder.manage_pasteObjects(cb)
+        folder._ordered_ids = self._ordered_ids
+        # copy over all properties
+        for id, value in self.propertyItems():
+            type = self.getPropertyType(id)
+            if folder.hasProperty(id):
+                folder.manage_delProperties([id])
+            # if we still have property it must be required, change it
+            if folder.hasProperty(id):
+                folder.manage_changeProperties({id:value})
+            else:
+                # add it
+                folder.manage_addProperty(id, value, type)
+        # copy over authorization info
+        folder.__ac_local_roles__ = self.__ac_local_roles__
+        folder.__ac_local_groups__ = self.__ac_local_groups__
+        # now remove this object from the container
+        container.manage_delObjects([self.id])
+        # and rename the copy
+        container.manage_renameObject(convert_id, orig_id)
+        
     # ACCESSORS
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
