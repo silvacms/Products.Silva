@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.69 $
+# $Revision: 1.70 $
 
 # Zope
 from OFS import SimpleItem
@@ -179,6 +179,20 @@ class GhostBase:
         path = self._content_path
         return self._get_content_object(path, check)
 
+    security.declareProtected(SilvaPermissions.View,'get_content')
+    def get_content(self):
+        """get the real content object; using restrictedTraverse
+        
+            returns content object, or None on traversal failure.
+        """
+        path = self._content_path
+        try:
+            content = self.restrictedTraverse(path)
+        except:
+            # catch all traversal failures
+            return None
+        return content
+        
     def render_preview(self):
         """Render preview of this version (which is what we point at)
         """
