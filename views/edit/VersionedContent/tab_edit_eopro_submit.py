@@ -8,6 +8,8 @@
 ##title=
 ##
 from Products.PythonScripts.standard import html_quote
+import DateTime
+
 error = None
 
 try:
@@ -44,8 +46,10 @@ window.parent.handleError("ServerError: %s");
 </script>
 """ % str(error).replace('"', '\\')
 
+t = DateTime.DateTime("UTC").Time()
+
 return """
 <script type="text/javascript">
-  window.parent.handleResponse('%s successfully saved');
+  window.parent.handleResponse("%s GMT saved %s");
 </script>
-""" % str(model.id)
+""" % (t, str(model.id))

@@ -13,7 +13,10 @@ js = []
 
 js.append("""
     function handleResponse(msg) {
-      alert(msg);
+      frames.logframe.document.write("<p>");
+      frames.logframe.document.write(msg);
+      frames.logframe.document.write("</p>");
+      //alert(msg);
     }
     """)
 

@@ -80,6 +80,10 @@
 	   >
 <br><br><small>(buttons require LiveConnect)</small>
 </form>
+
+<iframe id="logframe" name="logframe"
+  style="border:0;height:400;"></iframe>
+
 </td>
 </tr>
 </table>
