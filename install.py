@@ -181,12 +181,12 @@ def configureMetadata(root):
         {'type':'Silva DemoObject Version', 'chain':'silva-content, silva-extra'},
         {'type':'Silva Ghost Version',      'chain':''},
         {'type':'Silva Folder',             'chain':'silva-extra'},
-        {'type':'Silva File',               'chain':'silva-content'},
-        {'type':'Silva Image',              'chain':'silva-content'},
-        {'type':'Silva Indexer',            'chain':'silva-content'},
+        {'type':'Silva File',               'chain':'silva-content', 'silva-extra'},
+        {'type':'Silva Image',              'chain':'silva-content', 'silva-extra'},
+        {'type':'Silva Indexer',            'chain':'silva-content', 'silva-extra'},
         {'type':'Silva Publication',        'chain':'silva-extra'},
         {'type':'Silva Root',               'chain':'silva-extra'},
-        {'type':'Silva SQL Data Source',    'chain':'silva-content'},
+        {'type':'Silva SQL Data Source',    'chain':'silva-content', 'silva-extra'},
         )
 
     mapping.editMappings(default, tm)
