@@ -34,12 +34,34 @@ body {
     margin-bottom: 2%;
 }
 
+/* _________________________________________________________ float definitions _____ */
+
+.image-left {
+    text-align: left;
+}
+
+.image-center {
+    text-align: center;
+}
+
+.image-right {
+    text-align: right;
+}
+
+.float-left {
+    float: left;
+    clear: none;
+}
+.float-right {
+    float: right;
+    clear: none;
+}
 
 /* _________________________________________________________ element typography _____ */
 
 p {
     font-size : 11px;
-    font-family : verdana, arial, helvetica, sans-serif; 
+    font-family : verdana, arial, helvetica, sans-serif;
     color : #003333;
 }
 

@@ -8,16 +8,16 @@
 ##title=
 ##
 node = context.REQUEST.node
-image_path = node.output_convert_html(node.getAttribute('image_path'))
-if not image_path:
-    # Backwards compatibility for image_id attribute...
-    image_id = node.output_convert_html(node.getAttribute('image_id'))
-    if not image_id:
-        return '<div class="error">[No image selected]</div>'
-    image = getattr(node.get_content().get_container(), image_id, None)
-else:
-    image = node.restrictedTraverse(image_path)
+image = context.content()
 
 if not image:
-    return '<div class="error">[Image element broken]</div>'
-return '%s' % image.view()
+    return '<div class="error">[image element is broken]</div>'
+
+alignment = node.getAttribute('alignment')
+if alignment == 'none':    
+    return image.image.tag()
+elif alignment.startswith('image-'):
+    # I don't want to do this... Oh well, long live CSS...
+    return '<div class="%s">%s</div>' % (alignment, image.image.tag(css_class=alignment))
+
+return image.image.tag(css_class=alignment)
