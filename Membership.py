@@ -52,6 +52,12 @@ class Member(Persistent, Acquisition.Implicit):
         """
         return None
     
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'editor')
+    def editor(self):
+        """Return the preferred editor"""
+        return 'field_editor'
+    
 Globals.InitializeClass(Member)
 
 class CachedMember(Persistent, Acquisition.Implicit):
@@ -62,11 +68,12 @@ class CachedMember(Persistent, Acquisition.Implicit):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, userid, fullname, email, is_approved):
+    def __init__(self, userid, fullname, email, is_approved, editor):
         self.id = userid
         self._fullname = fullname
         self._email = email
         self._is_approved = is_approved
+        self._editor = editor
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation, 
                               'userid')
@@ -103,6 +110,12 @@ class CachedMember(Persistent, Acquisition.Implicit):
         """
         # fall back on actual member object, don't cache
         return self.service_members.get_member(self.id).extra(name)
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'editor')
+    def editor(self):
+        """Return the preferred editor"""
+        return self._editor
     
 class NoneMember(Persistent, Acquisition.Implicit):
     __implements__ = IMember
@@ -143,6 +156,12 @@ class NoneMember(Persistent, Acquisition.Implicit):
         """Extra information.
         """
         return None
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'editor')
+    def editor(self):
+        """Return the preferred editor"""
+        return 'field_editor'
     
 Globals.InitializeClass(NoneMember)
 
@@ -154,4 +173,5 @@ def cloneMember(member):
     return CachedMember(userid=member.userid(),
                         fullname=member.fullname(),
                         email=member.email(),
-                        is_approved=member.is_approved())
+                        is_approved=member.is_approved(),
+                        editor=member.editor())
