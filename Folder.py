@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.80 $
+# $Revision: 1.81 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -417,7 +417,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             meta_type = addable_dict['name']
             if allowed and meta_type not in allowed:
                 continue
-            if self._is_silva_addable(addable_dict) and addable_dict.has_key('instance') and addable_dict['instance']._is_allowed_in_publication:
+            if (self._is_silva_addable(addable_dict) and
+                addable_dict.has_key('instance') and
+                addable_dict['instance']._is_allowed_in_publication):
                 result.append(addable_dict)
         result.sort(lambda x, y: cmp(x['name'], y['name']))
         return result
@@ -438,7 +440,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         return (
             addable_dict.has_key('instance') and
             ISilvaObject.isImplementedByInstancesOf(addable_dict['instance'])
-            and self.service_view_registry.has_view('add', addable_dict['name'])
+            and self.service_view_registry.has_view('add',
+                                                    addable_dict['name'])
             )
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
