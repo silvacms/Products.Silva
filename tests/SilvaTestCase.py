@@ -25,8 +25,20 @@ ZopeTestCase.installProduct('Silva')
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 from AccessControl.User import User
 
+# some stuff to get the REQUEST object available to the PlacelessTranslationService
+from ZPublisher import Publish
+from thread import get_ident
+
 from Acquisition import aq_base
 import time
+
+# i18n stuff
+try:
+    from Products import PlacelessTranslationService
+except ImportError:
+    make_translation_service = lambda x: None
+else:
+    make_translation_service = PlacelessTranslationService.make_translation_service
 
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
@@ -80,11 +92,15 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         self.beforeSetUp()
         self.app = self._app()
         self.silva = self.root = self.getRoot()
+        make_translation_service(self.app)
         self.catalog = self.silva.service_catalog
         if self._configure_root:
             self._setupRootUser()
             self.login()
             self.app.REQUEST.AUTHENTICATED_USER=self.app.acl_users.getUser(ZopeTestCase._user_name)
+        if hasattr(Publish, '_requests'):
+            # PlacelessTranslationService stores a list of requests on Publish
+            Publish._requests[get_ident()] = self.app.REQUEST
         self.afterSetUp()
 
     def tearDown(self):
