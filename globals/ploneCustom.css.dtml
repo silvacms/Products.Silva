@@ -823,14 +823,21 @@ div.feedback a {
     text-decoration: underline;
 }
 
-table.listing td.feedback {
+table.listing .feedback {
   color: #555555;
   background: #f3f3d9;
   padding-top : 0.1em;
   padding-bottom : 0.2em;
 }
 
-table.listing td.message {
+table.listing .alert {
+  color: #3c2d50;
+  background: #f7d1d1;
+  padding-top : 0.1em;
+  padding-bottom : 0.2em;
+}
+
+table.listing .message {
   padding : 0 ! important;
   border-collapse: collapse;
 }
