@@ -53,6 +53,39 @@ msgstr "Verfallsdatum"
 msgid "publish_published"
 msgstr "publiziert"
 
+msgid "unapproved"
+msgstr "nicht genehmigt"
+
+msgid "draft"
+msgstr "skizze"
+
+msgid "approved"
+msgstr "genehmigt"
+
+msgid "pending"
+msgstr "ausstehend"
+
+msgid "published"
+msgstr "publiziert"
+
+msgid "last_closed"
+msgstr "zuletzt geschlossen"
+
+msgid "closed"
+msgstr "geschlossen"
+
+msgid "copy for editing"
+msgstr "kopieren zum bearbeiten"
+
+msgid "Content is approved, not published"
+msgstr "Inhalt ist genehmigt, nicht veröffentlicht."
+
+msgid "Publication settings can be changed."
+msgstr "Publikationseinstellungen können geändert werden."
+
+msgid "manage_document_versions"
+msgstr "Versionen für &#xab;${export_id}&#xbb; verwalten"
+
 msgid "publish_dateformat"
 msgstr "Tag / Monat / Jahr &nbsp; 23:59" 
 
@@ -1191,6 +1224,9 @@ msgstr "Benutzer, welcher zuletzt diesen Inhalt bearbeitete."
 
 msgid "last author"
 msgstr "letzter Autor"
+
+msgid "version status"
+msgstr "Versionsstatus"
 
 msgid "Resource location of this content."
 msgstr "Referenzierender Ort dieses Inhalts."
@@ -2390,7 +2426,6 @@ msgstr "neues Objekt hinzufügen: alt-s"
 
 #~ msgid "status"
 #~ msgstr "Status"
-
 
 
 

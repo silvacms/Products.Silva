@@ -56,7 +56,7 @@
   <span tal:replace="nothing"> _______ status: content is approved, not published _______ </span>
   <tr tal:condition="python:may_change_content and approved">
     <td class="feedback" colspan="3">
-      <span class="subhead" style="color:ForestGreen;">Content is approved, not published</span><br />
+      <span class="subhead" style="color:ForestGreen;" i18n:translate="">Content is approved, not published</span><br />
       <span tal:condition="may_approve_content"
         tal:omit-tag="">Publication settings can be changed.</span>
         <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
@@ -249,12 +249,12 @@ _______ manual close section here _______
           <tbody>
             <tr>
               <th width="1%">&#xa0;</th>
-              <th width="25%">modification time</th>
-              <th width="25%">publication time</th>
-              <th width="25%">expiration time</th>
-              <th width="1%">last author</th>
-              <th width="1%">creator</th>
-              <th>version status</th>
+              <th width="25%" i18n:translate="">modification time</th>
+              <th width="25%" i18n:translate="">publication time</th>
+              <th width="25%" i18n:translate="">expiration time</th>
+              <th width="1%" i18n:translate="">last author</th>
+              <th width="1%" i18n:translate="">creator</th>
+              <th i18n:translate="">version status</th>
             </tr>
             <tr tal:repeat="version versions"
                 tal:attributes="class python: test(repeat['version'].odd(), 'odd', 'even')">
@@ -298,8 +298,9 @@ _______ manual close section here _______
                   <a tal:content="version_status"
                       tal:attributes="href python:('%s/edit/tab_status_view_version?version=%s' % 
                                                     (model.absolute_url(), version.id));
-                                      title python:u'view \xab%s\xbb' % version.get_title();
-                                      class style">
+                                     	title python:u'view \xab%s\xbb' % version.get_title();
+                                     	class style"
+				     	i18n:translate="">
                     version_status
                   </a>
                 </td>
