@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.x (under development)
+
+    Bugs fixed
+
+      - Do not copy over properties anymore when changing a folder to
+        publication or back. Silva does not use properties anymore.
+
   1.0 final
   
     Bugs fixed
