@@ -100,7 +100,7 @@
                   <a class="transport"
                     style="float: right;"
                     href="tab_edit_import"
-                    title="import XML data - alt-i"
+                    title="import XML/ZIP data - alt-i"
                     accesskey="i"
                     i18n:attributes="title"
                     tal:condition="may_change_content"
