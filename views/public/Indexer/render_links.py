@@ -10,5 +10,5 @@ for name, path in links:
         url = obj.absolute_url()
     else:
         url = '#'
-    result.append('<a class="indexer" href="%s">%s</a>' % (url, output_convert_html(name)))
+    result.append('<a class="indexer" href="%s">%s</a>' % (url, output_convert_html(name) ))
 return '<br />'.join(result)
