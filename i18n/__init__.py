@@ -13,8 +13,6 @@
 """
 
 import re
-from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
 
 class DummyMessageID:
     """Dummy MessageID object
@@ -24,16 +22,20 @@ class DummyMessageID:
     """
     mapping = None
     reg_interpolation = re.compile('${([a-zA-Z0-9_]*)}')
-    security = ClassSecurityInfo()
+    __allow_access_to_unprotected_subobjects__ = 1
 
     def __init__(self, input):
         """store the input to return (untranslated) later on __str__()"""
-	if not isinstance(input, basestring):
-	    input = str(input)
+        if not isinstance(input, basestring):
+            input = str(input)
         self.__str = input
         self.__parsed = None
     
-    security.declarePublic('translate')
+    def set_mapping(self, mapping):
+        """Set a mapping for message interpolation
+        """
+        self.mapping = mapping
+
     def translate(self):
         """Return a stringified version of the input
 
@@ -65,13 +67,26 @@ class DummyMessageID:
         return getattr(self.__str, name)
 """
 
-InitializeClass(DummyMessageID)
 
-def DummyMessageIDFactory(input):
+def DummyMessageIDFactory(input, default=None):
     return DummyMessageID(input)
 
 try:
     from Products.PlacelessTranslationService.MessageID import MessageIDFactory
-    translate = MessageIDFactory('silva', True)
+    from Products.PlacelessTranslationService.MessageID import MessageIDUnicode
 except ImportError:
     translate = DummyMessageIDFactory
+else:
+    class SilvaMessageIDUnicode(MessageIDUnicode):
+        """
+        """
+        __allow_access_to_unprotected_subobjects__ = 1
+        def set_mapping(self, mapping):
+            """Set a mapping for message interpolation
+            """
+            self.mapping = mapping
+
+    def SilvaMessageIDFactory(ustr, default=None):
+        return SilvaMessageIDUnicode(ustr, domain='silva')
+        
+    translate = SilvaMessageIDFactory
