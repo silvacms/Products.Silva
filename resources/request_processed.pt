@@ -6,7 +6,8 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  metal:use-macro="here/layout_macro.html/macros/layout">
+  metal:use-macro="here/layout_macro.html/macros/layout"
+  i18n:domain="silva">
   <head>
     <title tal:content="template/title">The title</title>
   </head>

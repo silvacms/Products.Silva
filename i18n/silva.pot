@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 29 17:39:26 2004\n"
+"POT-Creation-Date: Mon Nov 29 18:23:12 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -252,6 +252,14 @@ msgstr ""
 msgid "Default Document Policy"
 msgstr ""
 
+#: /resources/request_processed.pt:18
+msgid "Request processed"
+msgstr ""
+
+#: /resources/request_processed.pt:26
+msgid "Return to where you came from..."
+msgstr ""
+
 #: /resources/sidebar_template.pt:25
 #: /resources/sidebar_template.pt:62
 msgid "slide to the publish screen"
@@ -389,6 +397,8 @@ msgstr ""
 #: /views/add/GhostFolder/add_form.pt:40
 #: /views/edit/Container/GhostFolder/tab_edit.pt:67
 #: /views/edit/VersionedContent/Ghost/edit.pt:57
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:38
+#: /views/edit/VersionedContent/Link/edit.pt:61
 msgid "attributes"
 msgstr ""
 
@@ -611,6 +621,8 @@ msgstr ""
 #: /views/edit/Container/Publication/tab_metadata.pt:88
 #: /views/edit/Member/SimpleMember/tab_edit.pt:68
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:42
+#: /views/edit/VersionedContent/Link/edit.pt:66
 msgid "content"
 msgstr ""
 
@@ -632,6 +644,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit_rename.pt:127
 #: /views/edit/VersionedContent/tab_status_macros.pt:276
 #: /views/edit/VersionedContent/tab_status_macros.pt:551
+#: /views/edit/VersionedContent/Link/edit.pt:89
 msgid "access key: alt-c"
 msgstr ""
 
@@ -1287,6 +1300,7 @@ msgstr ""
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:109
 #: /views/edit/VersionedContent/Ghost/edit.pt:100
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:64
 msgid "link"
 msgstr ""
 
@@ -1296,6 +1310,7 @@ msgstr ""
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:126
 #: /views/edit/VersionedContent/Ghost/edit.pt:117
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:81
 msgid "problem"
 msgstr ""
 
@@ -1323,6 +1338,23 @@ msgstr ""
 #: /views/edit/Container/GhostFolder/tab_edit.pt:83
 #: /views/edit/VersionedContent/Ghost/edit.pt:74
 msgid "Locate item to refer to: alt-r"
+msgstr ""
+
+#: /views/edit/Container/GhostFolder/tab_metadata.pt:27
+msgid "convert this ghost folder to a normal folder: alt-c"
+msgstr ""
+
+#: /views/edit/Container/GhostFolder/tab_metadata.pt:27
+#: /views/edit/Container/Publication/tab_metadata.pt:27
+msgid "convert to folder"
+msgstr ""
+
+#: /views/edit/Container/GhostFolder/tab_metadata.pt:36
+msgid "convert this ghost folder to a normal publication: alt-p"
+msgstr ""
+
+#: /views/edit/Container/GhostFolder/tab_metadata.pt:51
+msgid "metadata of &#8216;original&#8217;"
 msgstr ""
 
 #: /views/edit/Container/Publication/copy_layout_submit.py:12
@@ -1409,10 +1441,6 @@ msgstr ""
 
 #: /views/edit/Container/Publication/tab_metadata.pt:27
 msgid "change Publication into Folder: alt-c"
-msgstr ""
-
-#: /views/edit/Container/Publication/tab_metadata.pt:27
-msgid "convert to folder"
 msgstr ""
 
 #: /views/edit/Container/Publication/tab_metadata.pt:40
@@ -2137,6 +2165,15 @@ msgstr ""
 msgid "Changed into publication"
 msgstr ""
 
+#: /views/edit/Container/tab_metadata.pt:81
+msgid "change Folder into Publication: alt-c"
+msgstr ""
+
+#: /views/edit/Container/tab_metadata.pt:81
+#: /views/edit/Container/GhostFolder/tab_metadata.pt:36
+msgid "convert to publication"
+msgstr ""
+
 #: /views/edit/Container/tab_status.pt:101
 msgid "published"
 msgstr ""
@@ -2683,11 +2720,24 @@ msgid "characteristic"
 msgstr ""
 
 #: /views/edit/VersionedContent/Ghost/edit.pt:110
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:74
 msgid "Link to editor screen of original."
 msgstr ""
 
 #: /views/edit/VersionedContent/Ghost/edit.pt:49
 msgid "ghost of &#xab;${name}&#xbb;"
+msgstr ""
+
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:30
+msgid "ghost of &#xab;${title}&#xbb; (${version_name} version)"
+msgstr ""
+
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:51
+msgid "reference"
+msgstr ""
+
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:57
+msgid "path to original (begins with &#8216;/&#8217;)."
 msgstr ""
 
 #: /views/edit/VersionedContent/Ghost/submit.py:18
@@ -2696,6 +2746,14 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:40
 msgid "metadata ${for_public_version_of}"
+msgstr ""
+
+#: /views/edit/VersionedContent/Link/edit.pt:72
+msgid "link url"
+msgstr ""
+
+#: /views/edit/VersionedContent/Link/edit.pt:89
+msgid "change link"
 msgstr ""
 
 #: /views/edit/VersionedContent/Link/submit.py:11
@@ -3520,6 +3578,33 @@ msgstr ""
 msgid "name (or part of name)"
 msgstr ""
 
+#: /views/edit/macro_groups_listing.pt:106
+# Default: "select groups:"
+msgid "select_groups"
+msgstr ""
+
+#: /views/edit/macro_groups_listing.pt:119
+# Default: "No groups available"
+msgid "no_groups_available"
+msgstr ""
+
+#: /views/edit/macro_groups_listing.pt:66
+msgid "existing ${type} groups"
+msgstr ""
+
+#: /views/edit/macro_groups_listing.pt:78
+msgid "groups administration: alt-g"
+msgstr ""
+
+#: /views/edit/macro_groups_listing.pt:78
+msgid "<u>g</u>roups admin..."
+msgstr ""
+
+#: /views/edit/macro_groups_listing.pt:91
+#: /views/edit/macro_user_lookup_clipboard.pt:45
+msgid "ctrl-click to multi-select"
+msgstr ""
+
 #: /views/edit/macro_metadata.pt:132
 msgid "&#134;"
 msgstr ""
@@ -3608,6 +3693,7 @@ msgstr ""
 #: /views/edit/Container/Publication/settings_addables.pt:81
 #: /views/edit/Container/Publication/tab_metadata.pt:94
 #: /views/edit/VersionedContent/Ghost/edit.pt:65
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:45
 msgid "note"
 msgstr ""
 
@@ -3629,10 +3715,6 @@ msgstr ""
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup users: alt-l"
-msgstr ""
-
-#: /views/edit/macro_user_lookup_clipboard.pt:45
-msgid "ctrl-click to multi-select"
 msgstr ""
 
 #: /views/edit/macro_user_lookup_clipboard.pt:60
@@ -3943,15 +4025,18 @@ msgid "for public version of &#xab;${title}&#xbb;"
 msgstr ""
 
 #: /views/edit/tab_metadata.pt:42
+#: /views/edit/Container/tab_metadata.pt:48
 msgid "properties of &#xab;${title}&#xbb;"
 msgstr ""
 
 #: /views/edit/tab_metadata.pt:54
+#: /views/edit/Container/tab_metadata.pt:67
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions: alt-m"
 msgstr ""
 
 #: /views/edit/tab_metadata.pt:54
+#: /views/edit/Container/tab_metadata.pt:67
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions..."
 msgstr ""
@@ -4067,11 +4152,11 @@ msgid "jump to silva root in zodb: alt-'"
 msgstr ""
 
 #: /views/macro_index.pt:150
-msgid "sservices..."
+msgid "jump to silva services: alt-`"
 msgstr ""
 
 #: /views/macro_index.pt:150
-msgid "jump to silva services: alt-`"
+msgid "sservices..."
 msgstr ""
 
 #: /views/macro_index.pt:180
@@ -4157,6 +4242,47 @@ msgstr ""
 msgid "This 'ghost' document is broken. Please inform the site administrator."
 msgstr ""
 
+#: /views/public/Indexer/render_helper.pt:1
+msgid "Index"
+msgstr ""
+
+#: /views/public/request_roles.pt:12
+#: /views/public/request_roles.pt:20
+msgid "membership"
+msgstr ""
+
+#: /views/public/request_roles.pt:31
+msgid "Request roles at this location"
+msgstr ""
+
+#: /views/public/request_roles.pt:43
+msgid "Please fill in the following fields. <br /><br />"
+msgstr ""
+
+#: /views/public/request_roles.pt:48
+msgid "full name"
+msgstr ""
+
+#: /views/public/request_roles.pt:51
+msgid "e-mail address"
+msgstr ""
+
+#: /views/public/request_roles.pt:58
+msgid "Choose role(s) to request"
+msgstr ""
+
+#: /views/public/request_roles.pt:71
+msgid "Send request for role: alt-s"
+msgstr ""
+
+#: /views/public/request_roles.pt:71
+msgid " Send request "
+msgstr ""
+
+#: /views/public/request_roles.pt:85
+msgid "This site does not allow requests for roles"
+msgstr ""
+
 #: /views/public/request_roles_submit.py:14
 msgid "You must enter your full name and your e-mail address"
 msgstr ""
@@ -4171,6 +4297,38 @@ msgstr ""
 
 #: /views/public/request_roles_submit.py:9
 msgid "No roles were selected."
+msgstr ""
+
+#: /views/public/search.pt:18
+msgid "Search"
+msgstr ""
+
+#: /views/public/search.pt:43
+msgid "Search in ${meta_type} &#xAB;${title_or_id}&#xbb;"
+msgstr ""
+
+#: /views/public/search.pt:52
+msgid "Search interface"
+msgstr ""
+
+#: /views/public/search.pt:61
+msgid "Element"
+msgstr ""
+
+#: /views/public/search.pt:65
+msgid "Content"
+msgstr ""
+
+#: /views/public/search.pt:68
+msgid "Note"
+msgstr ""
+
+#: /views/public/search.pt:98
+msgid "Find"
+msgstr ""
+
+#: /views/public/search.pt:98
+msgid "access key: alt-f"
 msgstr ""
 
 #: /views/public/search_form.form:100
@@ -4203,6 +4361,24 @@ msgstr ""
 
 #: /views/public/search_form.form:78
 msgid "public_search_form_search_subtree_description"
+msgstr ""
+
+#: /views/public/search_results.pt:18
+msgid "Search results"
+msgstr ""
+
+#: /views/public/search_results.pt:41
+#: /views/public/search_results.pt:88
+msgid "&lt;&lt; Previous"
+msgstr ""
+
+#: /views/public/search_results.pt:50
+msgid "Showing results ${batch_start} to ${batch_end}."
+msgstr ""
+
+#: /views/public/search_results.pt:54
+#: /views/public/search_results.pt:97
+msgid "Next &gt;&gt;"
 msgstr ""
 
 #: /views/render_form_errors.py:16

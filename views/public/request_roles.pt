@@ -1,4 +1,13 @@
-<html metal:use-macro="here/layout_macro.html/macros/layout">
+<html metal:use-macro="here/layout_macro.html/macros/layout"
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  >
 <head>
   <title i18n:translate="">membership</title>
 </head>
