@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.43 $
+# $Revision: 1.44 $
 
 # Python
 from StringIO import StringIO
@@ -15,6 +15,7 @@ from DateTime import DateTime
 import SilvaPermissions
 from Versioning import Versioning
 from Content import Content
+from Versioning import VersioningError
 
 from interfaces import IVersionedContent
 
