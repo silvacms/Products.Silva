@@ -1,10 +1,10 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.41 $
+$Revision: 1.42 $
 
 Silva changes
 
-  0.9.1
+  0.9.1beta
 
     Features Added
 
