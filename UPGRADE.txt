@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.35 $
+  CVS:        $Revision: 1.36 $
 
 Upgrading from 0.9.1 and below
 
@@ -79,11 +79,27 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
     In Silva 0.9.3, several reserved ids are added. When the upgrade
     script encounters an object with a reserved id, the object is
-    renamed and the id is added to a list, which is shown after the
-    upgrade has finished. Copy this list somewhere and make sure all
-    the links and references to those objects are manually modified,
-    since the upgrade script doesn't update those!
+    renamed. The renaming is logged to Zope's event log on the file system.
+    You need to manually fix all links and references to those object,
+    since the upgrade script doesn't upgrade those!
+   
+    If you were using the `access restriction by ip address' feature of
+    Silva 0.9.2 you need to install Groups before upgrading. During upgrade
+    the access restriction properties will be replaced by IP Groups as
+    follows:
+
+      If an object has such an access_restriction (AR):
+
+        If the AR is ``allow all'' the role required to view that object is
+        set to ``Anonymous'', to ``Viewer'' otherwise.
+
+        If specific IP addresses are given in the AR an IP Group is created.
+        All IPs given are added to the newly created IP Group and the 
+        ``Viewer''  role is assinged to that group.
     
+    Please note that this conversion *is* a change in semantics, so double
+    check your security declarations.
+  
     You should be done upgrading now.
  
   Page templates for presentation of public views
