@@ -14,7 +14,7 @@ from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(message_type='error', message='Nothing selected, so no approval requested')
+    return view.tab_status(message_type='error', message='Nothing was selected, so no approval requested')
 
 try:
     result = view.tab_status_form.validate_all(context.REQUEST)
@@ -52,9 +52,9 @@ Withdraw request for approval via bulk request in the publish tab of /%s
 context.REQUEST.set('refs', [])
 
 if approved_ids:
-    msg.append( 'Withdraw approval request for: %s' % view.quotify_list(approved_ids))
+    msg.append( 'Rejected approval request for: %s' % view.quotify_list(approved_ids))
 
 if not_approved:
-    msg.append( '<span class="error">No withdraw for: %s</span>' % view.quotify_list_ext(not_approved))
+    msg.append( '<span class="error">No rejection of: %s</span>' % view.quotify_list_ext(not_approved))
 
 return view.tab_status(message_type='feedback', message=('<br />'.join(msg)) )

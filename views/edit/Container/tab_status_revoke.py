@@ -14,7 +14,7 @@ from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(message_type='error', message='Nothing selected, so no approval revoked')
+    return view.tab_status(message_type='error', message='Nothing was selected, so no approval was revoked')
 
 try:
     result = view.tab_status_form.validate_all(context.REQUEST)
@@ -35,16 +35,16 @@ for ref in refs:
         not_revoked.append((get_name(obj), 'not a versionable object'))
         continue
     if not obj.is_version_approved():
-        not_revoked.append((get_name(obj), 'is not approved, or is already published'))
+        not_revoked.append((get_name(obj), 'it\'s not approved, or it\'s already published'))
         continue
     obj.unapprove_version()
     revoked_ids.append(get_name(obj))
 
 if revoked_ids:
-    msg.append( 'Revoked: %s' % view.quotify_list(revoked_ids) )
+    msg.append( 'Revoked approval of: %s' % view.quotify_list(revoked_ids) )
 
 if not_revoked:
-    msg.append( '<span class="error">could not revoke: %s</span>' % view.quotify_list_ext(not_revoked) )
+    msg.append( '<span class="error">Could not revoke approval of: %s</span>' % view.quotify_list_ext(not_revoked) )
 
 context.REQUEST.set('refs', [])
 
