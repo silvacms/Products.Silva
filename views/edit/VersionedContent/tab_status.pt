@@ -108,8 +108,43 @@ _______ manual close section here _______
 </div>
 </check>
 
-<br /><br />
 <form action="." method="POST">
+  <table width="96%" cellspacing="0" cellpadding="3" border="0">
+    <tr>
+      <td colspan="3">
+        <h3>Export document</h3>
+      </td>
+    </tr>
+
+    <tr>
+      <th align="left">
+        Notes
+      </th>
+    </tr>
+
+    <tr class="focus-cycle" valign="top">
+      <td>
+         Export this document as Silva XML, 
+         or - if the <a href="http://www.infrae.com/products/docma">DocmaServer</a>
+         is installed - convert it to a Word document.
+      </td>
+    </tr>
+
+    <tr class="controls">
+      <td align="right">
+        <input class="button" type="submit" name="download_xml:method" value=" Export..." title="Access key: alt-e" accesskey="e" />
+      </td>
+    </tr>
+  </table>
+
+</form>
+
+<br /><br />
+
+
+<form action="." method="POST"  tal:replace="nothing">
+
+
   <table width="96%" cellspacing="0" cellpadding="3" border="0">
 
     <tr>
@@ -160,7 +195,8 @@ _______ manual close section here _______
 
 </form>
 
-<div tal:condition="docma_running">
+<div tal:replace="nothing"
+  tal:condition="docma_running">
 
 <init tal:define="global userid view/REQUEST/AUTHENTICATED_USER;
                   global queue view/service_docma/get_queue;
