@@ -45,7 +45,7 @@
         i18n:translate=""
         i18n:attributes="title;accesskey open_to_public_accesskey"
         tal:condition="python: unapproved_version and have_approve_permission">
-        open&nbsp;to&nbsp;public&nbsp;now...
+        open&nbsp;to&nbsp;public&nbsp;now
       </a>
     </tal:block>
 
