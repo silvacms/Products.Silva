@@ -8,7 +8,6 @@ from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
 from Products.Silva.IRoot import IRoot
 from Products.Silva.adapters import adapter
-from Products.Silva.adapters import interfaces
 
 from DateTime import DateTime
 from types import ListType
@@ -16,7 +15,6 @@ from types import ListType
 module_security = ModuleSecurityInfo('Products.Silva.adapters.security')
 
 class ViewerSecurityAdapter(adapter.Adapter):
-    __implements__ = interfaces.IViewerSecurity
 
     security = ClassSecurityInfo()
 
@@ -91,8 +89,7 @@ LOCK_DURATION = (1./24./60.)*20.
 # on the Security mixin.
 
 class LockAdapter(adapter.Adapter):
-    __implements__ = interfaces.ILockable
-        
+    
     security = ClassSecurityInfo()
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
