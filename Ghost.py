@@ -30,6 +30,7 @@ class Ghost(VersionedContent):
     def get_title(self):
         """Get title.
         """
+        return "Dummy ghost title" 
         ghost_version = self.get_viewable()
         if ghost_version is None:
             return 'Ghost is unpublished'
