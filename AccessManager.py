@@ -43,7 +43,7 @@ class AccessManager:
                               'approve_and_allow')
     def approve_and_allow(self, userid, role):
         """Approves a member and then allows him the role"""
-        member = self.service_members.get_member(userid)
+        member = self.service_members.get_member_object(userid)
         member.approve()
         self._allow_role_helper(userid, role)
 
