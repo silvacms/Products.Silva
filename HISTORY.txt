@@ -7,6 +7,8 @@ Silva changes
 
     Bugs fixed
 
+      - Protect methods on the service_files.
+
       - Content publication state is now not touched anymore when imported
         using *.zexp files in the ZMI.
 
