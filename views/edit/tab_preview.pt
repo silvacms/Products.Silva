@@ -12,31 +12,7 @@
 <metal:block metal:use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main" tal:omit-tag="">
 
-<tal:block condition="exists: model/layout_macro.html/macros/previewer"
-  tal:on-error="structure string: XXX Fixme so this is xml compliant, should
-  be an alert.
-  There is a problem in layout_macro.html, or in a script that's called in it. 
-  Use the 'Presentation preview' link to see what's wrong.">
-<metal:preview use-macro="model/layout_macro.html/macros/previewer">
-
-<span tal:replace="nothing"> _______ closed message _______ </span>
-<div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
-  <b class="warning">This is a closed version. You see it, but the public won't!</b>
-</div>
-
-<!-- start Silva content -->
-<div metal:fill-slot="main" tal:omit-tag="" 
-  tal:content="structure model/preview">
-  <!-- this comment gets replaced by the Silva document content -->
-</div>
-<!-- end Silva content -->
-
-</metal:preview>
-
-</tal:block>
-
-<table border="0" width="100%" cellspacing="0" cellpadding="0"
-  tal:condition="not: exists: model/layout_macro.html/macros/previewer">
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
 
 <tr valign="top">
   <td width="32" bgcolor="#d1d4d8">
