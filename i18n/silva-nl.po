@@ -1069,7 +1069,7 @@ msgstr "omzetten naar folder"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:40
 msgid "configure <u>a</u>ddables..."
-msgstr "<u>a</u>ddables configureren..."
+msgstr "toevoeg-instellingen configureren (<u>a</u>)..."
 
 #: /views/edit/Container/Publication/tab_metadata.pt:40
 msgid "change the addables allowed in this publication: alt-a"

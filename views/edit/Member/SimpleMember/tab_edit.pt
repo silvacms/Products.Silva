@@ -74,7 +74,7 @@ function focus_editor() {
       <tal:define define="iterate repeat/field/odd">
       <tr tal:attributes="class python:iterate and 'even' or 'odd'" tal:condition="python:field.id != 'editor' or len(field['items']) > 1">
       <td class="field-title">
-        <span tal:content="python:field['title']" i18n:translate="">
+        <span tal:content="python:field['title']">
           Title</span><span class="warning"
           tal:condition="python:field.is_required()">*</span>
       </td>
