@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.31 2004/07/19 09:46:28 faassen Exp $
+# $Id: Image.py,v 1.50.4.1.6.32 2004/07/21 09:22:35 jw Exp $
 
 # Python
 import re, string
@@ -274,7 +274,7 @@ class Image(Asset):
         if y2 > bbox[3]:
             y2 = bbox[3]
         if x1 >= x2 or y1 >= y2:
-            raise ValueError, "'%s' defines an impossible cropping" % (crop, )
+            raise ValueError, "'%s' defines an impossible croping" % (crop, )
         return (x1, y1, x2, y2)
 
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
@@ -651,7 +651,7 @@ manage_addImageForm = PageTemplateFile(
 # some functionality which can be generalized.
 #
 # Copy code from ExtFile, but we don't want a dependency per se:
-bad_chars =  r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?Ã„Ã…ÃÃ€Ã‚ÃƒÃ¤Ã¥Ã¡Ã Ã¢Ã£Ã‡Ã§Ã‰ÃˆÃŠÃ‹Ã†Ã©Ã¨ÃªÃ«Ã¦ÃÃŒÃŽÃÃ­Ã¬Ã®Ã¯Ã‘Ã±Ã–Ã“Ã’Ã”Ã•Ã˜Ã¶Ã³Ã²Ã´ÃµÃ¸ÂŠÂšÃŸÃœÃšÃ™Ã›Ã¼ÃºÃ¹Ã»ÃÂŸÃ½Ã¿ÂŽÂž"""
+bad_chars =  r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?ÄÅÁÀÂÃäåáàâãÇçÉÈÊËÆéèêëæÍÌÎÏíìîïÑñÖÓÒÔÕØöóòôõøŠšßÜÚÙÛüúùûÝŸýÿŽž"""
 good_chars = r"""_____________________________AAAAAAaaaaaaCcEEEEEeeeeeIIIIiiiiNnOOOOOOooooooSssUUUUuuuuYYyyZz"""
 TRANSMAP = string.maketrans(bad_chars, good_chars)
 
