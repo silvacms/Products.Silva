@@ -87,12 +87,13 @@
 
             <tbody>
               <tr class="odd">
-                <td i18n:translate="name_or_part_of">
+                <td class="align-right"
+                  i18n:translate="name_or_part_of">
                   name (or part of name)
                 </td>
                 <td class="align-right"
-                  style="width:60%;">
-                  <input class="textarea"
+                  style="width:70%;">
+                  <input class="inputter"
                     name="name"
                     style="width:100%;"
                     type="text"
