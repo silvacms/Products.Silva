@@ -247,37 +247,55 @@ class Container(SilvaObject, Publishable):
 class Security(Interface.Base):
     """Can be mixed in with an object to support Silva security.
     (built on top of Zope security)
-    """
-    def get_users(self):
-        """Get the users that have local roles here.
+    Methods prefixed with sec_ so as not to disrupt similarly named
+    Zope's security methods. (ugly..)
+    """ 
+    # MANIPULATORS
+    def sec_assign(self, userid, role):
+        """Assign role to userid for this object.
         """
         pass
 
-    def get_groups(self):
-        """Get the groups that have local roles here.
+    def sec_remove(self, userid):
+        """Remove a user completely from this object.
         """
         pass
 
-    def get_roles_for_user(self, userid):
-        """Get the local roles that a silva user has here.
+    def sec_revoke(self, userid, revoke_roles):
+        """Remove roles from user in this object.
+        """
+        pass
+    
+    # ACCESSORS
+    def sec_get_userid(self):
+        """Get the userids that have local roles here.
+        """
+        pass
+
+    def sec_get_roles_for_userid(self, userid):
+        """Get the local roles that a userid has here.
+        """
+        pass
+
+    def sec_get_roles(self):
+        """Get all roles defined here that we're interested in managing.
+        """
+        pass
+
+    def sec_get_current_userids_on_clipboard(self):
+        """Get list of users on the clipboard.
+        """
+        pass
+    
+    def sec_get_user_info(self, userid):
+        """Get information for userid. FIXME: describe which info fields
+        exist.
         """
         pass
 
     def get_roles_for_group(self, groupid):
         """Get the local roles that a silva group has here.
         """
-        pass
-
-    def set_roles_for_user(self, userid, roles):
-        pass
-
-    def add_role_to_user(self, userid, role):
-        pass
-
-    def set_roles_for_group(self, userid, roles):
-        pass
-
-    def add_role_to_group(self, userid, role):
         pass
     
 class Versioning(Interface.Base):
