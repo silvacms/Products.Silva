@@ -298,9 +298,9 @@
               tal:condition="not:group_service">
               <p>
               <span class="subhead">
-                <span class="warning">Groups Service not installed</span>
+                <span class="warning">A Groups Service is not installed</span>
               </span><br />
-                You are seeing this message because the Silva Groups extension is installed on the file system, but a Groups Service hasn't been added to this Silva instance. To install one, go to the <a href="" class="underline" tal:attributes="href string:${root_url}/manage_main">Silva Root in the ZMI</a>, choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>. No further configuration is necessary.
+                You are seeing this message because the Silva Groups extension is installed on the file system, but a Groups Service hasn't been added to this Silva instance. To install one, go to the <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services">Silva Root in the ZMI</a>, choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>. No further configuration is necessary.
               </p>
             </div>
             <tal:block condition="group_service">
@@ -441,33 +441,38 @@
             </tal:block>
           </tal:block>
         </td>
+        <tal:block replace="nothing"> 
+          _______________ groups clipboard ________________
+        </tal:block>
         <td class="right"
           style="padding-top:2em ! important;">
-          <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
-            <div style="text-align:right;"
-              metal:fill-slot="listing_actions">
-              <select class="manipulator"
-                name="assign_role"
-                style="float:left;"
-                title="select a role to assign">
-                <option value="None">
-                  select role:
-                </option>
-                <option value="role"
-                  tal:repeat="role model/sec_get_roles"
-                  tal:content="role"
-                  tal:attributes="value role">
-                  Role
-                </option>
-              </select>
-              <input class="button"
-                type="submit"
-                name="access_assign_to_group:method"
-                value="Assign"
-                title="assign selected role to selected group(s)"
-              />
-          </div>
-        </metal:block>        
+          <tal:condition condition="group_service">
+            <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
+              <div style="text-align:right;"
+                metal:fill-slot="listing_actions">
+                <select class="manipulator"
+                  name="assign_role"
+                  style="float:left;"
+                  title="select a role to assign">
+                  <option value="None">
+                    select role:
+                  </option>
+                  <option value="role"
+                    tal:repeat="role model/sec_get_roles"
+                    tal:content="role"
+                    tal:attributes="value role">
+                    Role
+                  </option>
+                </select>
+                <input class="button"
+                  type="submit"
+                  name="access_assign_to_group:method"
+                  value="Assign"
+                  title="assign selected role to selected group(s)"
+                />
+              </div>
+            </metal:block>
+          </tal:condition>
         </td>
       </tr>
       <tal:block replace="nothing"> 
