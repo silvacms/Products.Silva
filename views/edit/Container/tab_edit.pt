@@ -44,8 +44,7 @@
       <select name="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();"  title="Select a new item: alt-s" accesskey="s">
         <option value="None" disabled="disabled">Select...</option>
         <tal:block tal:repeat="addable model/get_silva_addables">
-        <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
-                tal:attributes="value addable/name" tal:content="addable/name"></option>
+        <option tal:attributes="value addable/name" tal:content="addable/name"></option>
         </tal:block>
       </select>
       &nbsp;&nbsp;
