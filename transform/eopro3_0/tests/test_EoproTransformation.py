@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 import unittest
 
 # 
@@ -304,6 +304,10 @@ class RoundtripWithTidy(Base):
         frag='<externaldata></externaldata>'
         self._check_string(frag)
 
+    def test_index_element(self):
+        frag='<p type="normal"><index name="me">text</index></p>'
+        self._check_string(frag)
+
     def test_workaround_eonpro_corrupt_document(self):
         doc = """
            <html>
@@ -543,6 +547,7 @@ class RoundtripWithTidy(Base):
     def test_modifier_super(self):
         self._check_modifier('sup','super')
 
+
     def test_underline(self):
         frag = '<p type="normal"><underline>under</underline></p>'
         silvanode = self.parse_silvafrag(frag)
@@ -647,7 +652,8 @@ class RoundtripWithTidy(Base):
                           ('<desc>','<p>'),
                           ('<toc', '<h6'),
                           ('<codeelement','<h6'),
-                          ('<externaldata','<h6')]:
+                          ('<externaldata','<h6'),
+                          ('<index','<b')]:
             html = html.replace(this,that)
 
         cmd = 'tidy -eq -utf8'

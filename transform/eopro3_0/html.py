@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.9 $'
+__version__='$Revision: 1.10 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -457,6 +457,13 @@ class toc(Element):
 class externaldata(Element):
     def convert(self, context):
         return silva.externaldata(self.convert_inner(context))
+
+class index(Element):
+    def convert(self, context):
+        return silva.index(
+            self.extract_text(),
+            name=self.attrs.get('name','')
+            )
 
 class Text(base.Text):
     def convert(self, context):
