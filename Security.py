@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74.4.5 $
+# $Revision: 1.74.4.6 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -236,7 +236,11 @@ class Security(AccessManager):
             return noneMember.__of__(self)
         
         # get cached author info (may be None)
-        info = self._last_author_info
+        version = self.get_previewable()
+        if version is None:
+            return noneMember.__of__(self)
+        
+        info = getattr(version, '_last_author_info', None)
         if info is None:
             return noneMember.__of__(self)
         else:
@@ -249,8 +253,11 @@ class Security(AccessManager):
         """
         from AccessControl import getSecurityManager
         security = getSecurityManager()
-        self._last_author_userid = userid = security.getUser().getUserName()
-        self._last_author_info = author_info = self.sec_get_member(userid).aq_base
+        version = self.get_editable()
+        if version is not None:
+            userid = security.getUser().getUserName()
+            version._last_author_userid = userid
+            version._last_author_info = self.sec_get_member(userid).aq_base
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_get_creator_info')

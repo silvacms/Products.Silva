@@ -10,7 +10,7 @@ from Globals import package_home
 from AccessControl import Owned
 
 # silva imports
-from Products.Silva.interfaces import IUpgrader, IContainer, IContent, IVersion
+from Products.Silva.interfaces import IUpgrader, IContainer, IContent, IVersion, IVersionedContent
 from Products.Silva import upgrade
 from Products.Silva.adapters import security
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -406,6 +406,30 @@ class CheckServiceMembers:
             elif not hasattr(sm, '_allow_authentication_requests'):
                 sm._allow_authentication_requests = 0
         return root
+
+class SetAuthorInfoOnVersion:
+    """ Reset author info to version object for VersionedContent objects
+    """
+    
+    __implements__ = IUpgrader
+    
+    def upgrade(self, obj):
+        if IVersionedContent.isImplementedBy(obj):
+            versions = []
+            versions.append(obj.get_viewable())
+            versions.append(obj.get_previewable())
+            versions.append(obj.get_editable())
+            
+            if obj._previous_versions:
+                oldversions = [
+                    getattr(obj, str(oldversion[0])) for oldversion in obj._previous_versions]
+                versions += oldversions
+                
+            for version in versions:
+                if version is not None:
+                    version._last_author_info = getattr(obj, '_last_author_info', None)
+                    version._last_author_userid = getattr(obj, '_last_author_userid', None)
+        return obj
     
 def initialize():
     home = package_home(globals())
@@ -415,6 +439,8 @@ def initialize():
         up = SimpleMetadataUpgrade(set, os.path.join(xml_home, '%s.xml' % set))
         upgrade.registry.registerUpgrader(up, '0.9.3',
             'Advanced Metadata Tool')
+    upgrade.registry.registerUpgrader(
+        SetAuthorInfoOnVersion(), '0.9.3', upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(UpgradeTime(), '0.9.3',
         upgrade.AnyMetaType)
     upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.3',
