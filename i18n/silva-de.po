@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Thu Dec  2 14:38:35 2004\n"
+"POT-Creation-Date: Tue Dec  7 13:08:53 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -287,48 +287,45 @@ msgstr ""
 msgid "no such version ${version}"
 msgstr ""
 
-#: /default/layout_macro.html.pt:55
-msgid "Silva info on the Infrae site: alt-i"
-msgstr ""
-
 # Default: "i"
 #: /default/layout_macro.html.pt:55 /globals/accesskeys.pt:26
+#: /layout/layout_macro.html:100
 msgid "info_accesskey"
+msgstr ""
+
+#: /default/layout_macro.html.pt:55 /layout/layout_macro.html:100
+msgid "Silva info on the Infrae site: alt-i"
 msgstr ""
 
 #: /doc/silva-content.xml:31
 msgid "Title of content."
 msgstr ""
 
-#: /doc/silva-content.xml:92
+#: /doc/silva-content.xml:89
 msgid "a.k.a. &#8216;navigation title&#8217;."
 msgstr ""
 
-#: /doc/silva-content.xml:95
+#: /doc/silva-content.xml:92
 msgid "short title"
 msgstr ""
 
-#: /doc/silva-extra.xml:100
-msgid "Keywords relating to content."
-msgstr ""
-
-#: /doc/silva-extra.xml:165
+#: /doc/silva-extra.xml:155
 msgid "Description of content in this area."
 msgstr ""
 
-#: /doc/silva-extra.xml:229
+#: /doc/silva-extra.xml:214
 msgid "comment"
 msgstr ""
 
-#: /doc/silva-extra.xml:230
+#: /doc/silva-extra.xml:215
 msgid "Internal comments."
 msgstr ""
 
-#: /doc/silva-extra.xml:296
+#: /doc/silva-extra.xml:276
 msgid "creation time"
 msgstr ""
 
-#: /doc/silva-extra.xml:297 /doc/silva-extra.xml:360 /doc/silva-extra.xml:547
+#: /doc/silva-extra.xml:277 /doc/silva-extra.xml:336 /doc/silva-extra.xml:511
 msgid "Automatically set."
 msgstr ""
 
@@ -340,32 +337,36 @@ msgstr ""
 msgid "Subject of content in this area."
 msgstr ""
 
-#: /doc/silva-extra.xml:608
+#: /doc/silva-extra.xml:569
 msgid "User who last edited this content."
 msgstr ""
 
-#: /doc/silva-extra.xml:670
+#: /doc/silva-extra.xml:628
 msgid "Resource location of this content."
 msgstr ""
 
-#: /doc/silva-extra.xml:724
+#: /doc/silva-extra.xml:679
 msgid "Name of contact person."
 msgstr ""
 
-#: /doc/silva-extra.xml:727
+#: /doc/silva-extra.xml:682
 msgid "contact name"
 msgstr ""
 
-#: /doc/silva-extra.xml:785
+#: /doc/silva-extra.xml:737
 msgid "Email address of contact person."
 msgstr ""
 
-#: /doc/silva-extra.xml:788
+#: /doc/silva-extra.xml:740
 msgid "contact email"
 msgstr ""
 
-#: /doc/silva-extra.xml:99
+#: /doc/silva-extra.xml:94
 msgid "keywords"
+msgstr ""
+
+#: /doc/silva-extra.xml:95
+msgid "Keywords relating to content."
 msgstr ""
 
 #: /doc/silva-publication.xml:21
@@ -902,7 +903,7 @@ msgid "reference..."
 msgstr "Verweis..."
 
 #: /views/add/Ghost/form.form:48 /views/add/GhostFolder/form.form:48
-#: /views/add/Link/form.form:71 /doc/silva-extra.xml:668
+#: /views/add/Link/form.form:71 /doc/silva-extra.xml:626
 msgid "url"
 msgstr ""
 
@@ -974,7 +975,8 @@ msgstr "Aspekt"
 
 #: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:43
 #: /views/add/GhostFolder/add_form.pt:45 /views/edit/macro_metadata.pt:78
-#: /views/edit/macro_metadata.pt:312 /views/edit/Asset/macro_asset_edit.pt:69
+#: /views/edit/macro_metadata.pt:312 /views/edit/tab_subscriptions.pt:66
+#: /views/edit/Asset/macro_asset_edit.pt:69
 #: /views/edit/Asset/macro_asset_edit.pt:153
 #: /views/edit/Asset/Image/edit.pt:145
 #: /views/edit/Container/tab_edit_import.pt:95
@@ -1002,15 +1004,6 @@ msgstr "Inhalt"
 msgid "notes"
 msgstr "Anmerkungen"
 
-#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:88
-#: /views/add/GhostFolder/add_form.pt:96 /views/edit/Asset/Image/edit.pt:187
-#: /views/edit/Container/tab_edit_rename.pt:127
-#: /views/edit/VersionedContent/tab_status_macros.pt:292
-#: /views/edit/VersionedContent/tab_status_macros.pt:592
-#: /views/edit/VersionedContent/Link/edit.pt:89
-msgid "access key: alt-c"
-msgstr "Kurzwahl: alt-c"
-
 # Default: "c"
 #: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:88
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/asset_lookup.pt:234
@@ -1025,6 +1018,16 @@ msgstr ""
 #: /views/edit/Container/tab_edit_rename.pt:127
 msgid "cancel"
 msgstr "Abbrechen"
+
+#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:88
+#: /views/add/GhostFolder/add_form.pt:96 /views/edit/tab_subscriptions.pt:98
+#: /views/edit/Asset/Image/edit.pt:187
+#: /views/edit/Container/tab_edit_rename.pt:127
+#: /views/edit/VersionedContent/tab_status_macros.pt:292
+#: /views/edit/VersionedContent/tab_status_macros.pt:592
+#: /views/edit/VersionedContent/Link/edit.pt:89
+msgid "access key: alt-c"
+msgstr "Kurzwahl: alt-c"
 
 #: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:97
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/lookup_ui.pt:110
@@ -1985,7 +1988,7 @@ msgstr "Importieren und entfernen"
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:164
 #: /views/edit/Container/tab_edit_import.pt:341
-#: /views/edit/Container/tab_status_export.pt:433 /doc/silva-extra.xml:164
+#: /views/edit/Container/tab_status_export.pt:433 /doc/silva-extra.xml:154
 msgid "description"
 msgstr "Bezeichnung"
 
@@ -2137,13 +2140,13 @@ msgstr ""
 # Default: "d"
 #: /views/edit/Container/tab_access_groups.pt:254
 #: /views/edit/Container/tab_edit.pt:549
-#: /views/edit/VersionedContent/tab_status.pt:326
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "delete_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:254
 #: /views/edit/Container/tab_edit.pt:549
-#: /views/edit/VersionedContent/tab_status.pt:326
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "delete"
 msgstr "Löschen"
 
@@ -2333,7 +2336,7 @@ msgid "paste_ghost_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:549
-#: /views/edit/VersionedContent/tab_status.pt:326
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "there's no undo: alt-d"
 msgstr "es gibt kein Undo: alt-d"
 
@@ -2754,16 +2757,16 @@ msgstr "Es können nur Ordner in Publikationen umgewandelt werden"
 msgid "Changed into publication"
 msgstr "In Publikation umgewandelt"
 
-#: /views/edit/Container/tab_metadata.pt:81
+#: /views/edit/Container/tab_metadata.pt:82
 msgid "change Folder into Publication: alt-c"
 msgstr ""
 
 # Default: "c"
-#: /views/edit/Container/tab_metadata.pt:81
+#: /views/edit/Container/tab_metadata.pt:82
 msgid "covert_to_publication_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_metadata.pt:81
+#: /views/edit/Container/tab_metadata.pt:82
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:36
 msgid "convert to publication"
 msgstr ""
@@ -2825,7 +2828,7 @@ msgstr "Kurzwahl: alt-x"
 #: /views/edit/VersionedContent/tab_status_form_author.form:72
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
 #: /views/edit/VersionedContent/tab_status_form_editor.form:53
-#: /doc/silva-extra.xml:485
+#: /doc/silva-extra.xml:453
 msgid "expiration time"
 msgstr "Verfallsdatum"
 
@@ -3539,19 +3542,19 @@ msgstr ""
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:359
+#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:335
 msgid "modification time"
 msgstr "Änderungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:422
+#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:394
 msgid "publication time"
 msgstr "Veröffentlichungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:257 /doc/silva-extra.xml:606
+#: /views/edit/VersionedContent/tab_status.pt:257 /doc/silva-extra.xml:567
 msgid "last author"
 msgstr "letzter Autor"
 
-#: /views/edit/VersionedContent/tab_status.pt:258 /doc/silva-extra.xml:545
+#: /views/edit/VersionedContent/tab_status.pt:258 /doc/silva-extra.xml:509
 msgid "creator"
 msgstr "Urheber"
 
@@ -3560,20 +3563,33 @@ msgid "version status"
 msgstr "Versionsstatus"
 
 #: /views/edit/VersionedContent/tab_status.pt:326
+msgid "compare"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:326
+msgid "view the selected versions next to each other"
+msgstr ""
+
+# Default: "c"
+#: /views/edit/VersionedContent/tab_status.pt:326
+msgid "compare_accesskey"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "if (!confirm('Are you sure?')) return false"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:335
+#: /views/edit/VersionedContent/tab_status.pt:343
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr ""
 "Neue editierbare Version der ausgewählten alten Version erzeugen: alt-f"
 
 # Default: "f"
-#: /views/edit/VersionedContent/tab_status.pt:335
+#: /views/edit/VersionedContent/tab_status.pt:343
 msgid "copy_for_editing_accesskey"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:335
+#: /views/edit/VersionedContent/tab_status.pt:343
 msgid "copy for editing"
 msgstr "kopieren zum bearbeiten"
 
@@ -3915,6 +3931,14 @@ msgstr ""
 msgid "This content is not approved."
 msgstr ""
 
+#: /views/edit/VersionedContent/tab_status_view_versions_start.py:18
+msgid "You didn't select any versions."
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_view_versions_start.py:23
+msgid "Please select exactly two versions."
+msgstr ""
+
 #: /views/edit/VersionedContent/tab_status_withdraw.py:42
 msgid ""
 "This content is already public. You can close the current public version."
@@ -4118,7 +4142,7 @@ msgstr ""
 msgid "The ghost is in an undefined state."
 msgstr ""
 
-#: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:105
+#: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:106
 #: /views/edit/Container/GhostFolder/tab_edit.pt:443
 msgid "metadata"
 msgstr "Metadaten"
@@ -4355,6 +4379,7 @@ msgid "metadata set"
 msgstr "Metadatensatz"
 
 #: /views/edit/macro_metadata.pt:73 /views/edit/macro_metadata.pt:308
+#: /views/edit/tab_subscriptions.pt:61
 #: /views/edit/Asset/macro_asset_edit.pt:64
 #: /views/edit/Asset/Image/edit.pt:140
 #: /views/edit/Container/tab_edit_import.pt:90
@@ -4370,7 +4395,8 @@ msgid "acquired content"
 msgstr "Erworbener Inhalt"
 
 #: /views/edit/macro_metadata.pt:84 /views/edit/tab_access.pt:569
-#: /views/edit/tab_access.pt:742 /views/edit/Asset/Image/edit.pt:148
+#: /views/edit/tab_access.pt:742 /views/edit/tab_subscriptions.pt:69
+#: /views/edit/Asset/Image/edit.pt:148
 #: /views/edit/Container/tab_edit_import.pt:98
 #: /views/edit/Container/tab_edit_import.pt:167
 #: /views/edit/Container/tab_edit_import.pt:305
@@ -4744,7 +4770,7 @@ msgstr ""
 msgid "Minimum role to access is now set to ${role}"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:108
+#: /views/edit/tab_metadata.pt:109
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr "für die öffentliche Version von &#xab;${title}&#xbb;"
@@ -4754,22 +4780,22 @@ msgid "properties of &#xab;${title}&#xbb;"
 msgstr ""
 
 # Default: "m"
-#: /views/edit/tab_metadata.pt:54 /views/edit/Container/tab_metadata.pt:67
+#: /views/edit/tab_metadata.pt:55 /views/edit/Container/tab_metadata.pt:68
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage_subscriptions_accesskey"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:54 /views/edit/Container/tab_metadata.pt:67
+#: /views/edit/tab_metadata.pt:55 /views/edit/Container/tab_metadata.pt:68
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions: alt-m"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:54 /views/edit/Container/tab_metadata.pt:67
+#: /views/edit/tab_metadata.pt:55 /views/edit/Container/tab_metadata.pt:68
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions..."
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:87
+#: /views/edit/tab_metadata.pt:88
 msgid "metadata ${for_approved_version_of_title}"
 msgstr ""
 
@@ -4790,6 +4816,7 @@ msgid "public&nbsp;preview..."
 msgstr "Vorschau der öffentlichen Version"
 
 #: /views/edit/tab_preview.pt:45
+#: /views/edit/VersionedContent/tab_status_view_versions.pt:51
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr ""
 "Dies ist eine geschloßene Version. Sie können sie siehen, aber die "
@@ -4811,6 +4838,33 @@ msgstr ""
 #: /views/edit/tab_status_form.form:81
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:81
 msgid "clear expiration"
+msgstr ""
+
+# Default: "This object is not subscribable content."
+#: /views/edit/tab_subscriptions.pt:114
+msgid "not_subscribable"
+msgstr ""
+
+# Default: "Subscriptions edit for"
+#: /views/edit/tab_subscriptions.pt:54
+msgid "subscription_settings"
+msgstr ""
+
+#: /views/edit/tab_subscriptions.pt:98
+msgid "Save"
+msgstr ""
+
+#: /views/edit/tab_subscriptions_form.form:33
+msgid "Subscribable"
+msgstr ""
+
+#: /views/edit/tab_subscriptions_form.form:51
+msgid ""
+"List of email addresses (one per line) currently subscribed to this content."
+msgstr ""
+
+#: /views/edit/tab_subscriptions_form.form:61
+msgid "Subscriptions"
 msgstr ""
 
 #: /views/get_tab_info.py:25
@@ -4858,130 +4912,130 @@ msgstr ""
 msgid "Next ${n} items &raquo;"
 msgstr ""
 
-#: /views/macro_index.pt:100
+#: /views/macro_index.pt:101
+msgid "Help with access keys"
+msgstr "Hilfe zu Kurzwahlen"
+
+#: /views/macro_index.pt:102
 msgid "Silva copyright info"
 msgstr "Silva Copyrightinformationen"
 
 # Default: "z"
-#: /views/macro_index.pt:132
+#: /views/macro_index.pt:134
 msgid "zroot_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:132
+#: /views/macro_index.pt:134
 msgid "jump to zope root: alt-z"
 msgstr "Gehe zu Zope-Root: alt-z"
 
-#: /views/macro_index.pt:132
+#: /views/macro_index.pt:134
 msgid "zroot..."
 msgstr ""
 
 # Default: "'"
-#: /views/macro_index.pt:141
+#: /views/macro_index.pt:143
 msgid "sroot_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:141
+#: /views/macro_index.pt:143
 msgid "sroot..."
 msgstr ""
 
-#: /views/macro_index.pt:141
+#: /views/macro_index.pt:143
 msgid "jump to silva root in zodb: alt-'"
 msgstr ""
 
-#: /views/macro_index.pt:150
+#: /views/macro_index.pt:152
 msgid "sservices..."
 msgstr ""
 
-#: /views/macro_index.pt:150
+#: /views/macro_index.pt:152
 msgid "jump to silva services: alt-`"
 msgstr "Gehe zu Silva-Services: alt-`"
 
 # Default: "`"
-#: /views/macro_index.pt:150
+#: /views/macro_index.pt:152
 msgid "sservices_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:180 /views/macro_index.pt:183
-#: /views/macro_index.pt:193 /views/macro_index.pt:198
+#: /views/macro_index.pt:182 /views/macro_index.pt:185
+#: /views/macro_index.pt:195 /views/macro_index.pt:200
 msgid "jump to top: alt-t"
 msgstr ""
 
 # Default: "t"
-#: /views/macro_index.pt:193
+#: /views/macro_index.pt:195
 msgid "jump_to_top_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:219
+#: /views/macro_index.pt:221
 msgid "contact:"
 msgstr "Kontakt:"
 
-#: /views/macro_index.pt:227
+#: /views/macro_index.pt:229
 msgid "no name"
 msgstr ""
 
-#: /views/macro_index.pt:234
+#: /views/macro_index.pt:236
 msgid "Leave Silva and view the public page: alt-:"
 msgstr "Silva verlassen und veröffentlichte Seite sehen: alt-:"
 
-#: /views/macro_index.pt:234
+#: /views/macro_index.pt:236
 msgid "view public version"
 msgstr ""
 
 # Default: ":"
-#: /views/macro_index.pt:234
+#: /views/macro_index.pt:236
 msgid "view_public_version_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:253
+#: /views/macro_index.pt:255
 msgid "Change your settings: alt-~"
 msgstr "Benutzereinstellungen ändern: alt-~"
 
 # Default: "~"
-#: /views/macro_index.pt:253
+#: /views/macro_index.pt:255
 msgid "user_settings_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:266
+#: /views/macro_index.pt:268
 msgid "user settings"
 msgstr "Benutzereinstellungen"
 
 # Default: "q"
-#: /views/macro_index.pt:270
+#: /views/macro_index.pt:272
 msgid "logout_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:270
+#: /views/macro_index.pt:272
 msgid "Logout of Silva: alt-q"
 msgstr "aus Silva abmelden: alt-q"
 
-#: /views/macro_index.pt:279
+#: /views/macro_index.pt:281
 msgid "logout ${role} ${userid}"
 msgstr "Logout ${role} ${userid}"
 
-#: /views/macro_index.pt:285
+#: /views/macro_index.pt:287
 msgid "Request an additional role in this location: alt-,"
 msgstr ""
 
-#: /views/macro_index.pt:285
+#: /views/macro_index.pt:287
 msgid "request access"
 msgstr "Zugang beantragen"
 
 # Default: ","
-#: /views/macro_index.pt:285
+#: /views/macro_index.pt:287
 msgid "request_access_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:94
+#: /views/macro_index.pt:96
 msgid "Up to Silva top"
 msgstr ""
 
-#: /views/macro_index.pt:97
+#: /views/macro_index.pt:99
 msgid "Up one level"
 msgstr "eine Ebene nach oben"
-
-#: /views/macro_index.pt:99
-msgid "Help with access keys"
-msgstr "Hilfe zu Kurzwahlen"
 
 #: /views/macro_tabs.pt:21
 msgid "Silva info: alt-|"
