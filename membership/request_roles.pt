@@ -6,7 +6,7 @@
 
 <div metal:fill-slot="main" tal:define="dummy here/security_trigger">
 
-<tal:block condition="python: hasattr(here, 'service_members') and here.service_memebers.allow_subscription()">
+<tal:block condition="python: hasattr(here, 'service_members') and here.service_members.allow_subscription()">
 <h2>Request roles</h2>
 
 <!-- __________________________ start feedback _________________________ -->

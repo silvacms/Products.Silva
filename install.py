@@ -218,7 +218,7 @@ def configureMembership(root):
     """Install membership code into root.
     """
     for id in ['become_visitor.pt', 'request_processed.pt', 'request_roles.pt']:
-        add_helper(root, id, globals(), zpt_add_helper, 0, 'membership')
+        add_helper(root, id, globals(), pt_add_helper, 0, 'membership')
 
     for id in ['add_visitor.py', 'request_roles_submit.py']:
         add_helper(root, id, globals(), py_add_helper, 0, 'membership')
