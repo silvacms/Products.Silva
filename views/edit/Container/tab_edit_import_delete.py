@@ -20,4 +20,4 @@ for item in request['storageids']:
     sid, doctype = item.split('|')
     model.service_docma.delete_finished_job(str(request['AUTHENTICATED_USER']), int(sid))
 
-return view.tab_docma(message_type='feedback', message='Deletion successful')
+return view.tab_edit_import(message_type='feedback', message='Deletion successful')
