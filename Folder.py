@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.87 $
+# $Revision: 1.87.2.1 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -237,14 +237,18 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         # only the *copies*
         # (actually in case of a cut-paste the original
         # should not be approved, too)
+        messages = []
         ids = []
         for item in self.cb_dataItems():
             #item.set_title(item.get_title())
-            if op == 0 or item.get_container().is_delete_allowed(item.id):
+            if ((op == 0 or item.get_container().is_delete_allowed(item.id)) and 
+                    item.meta_type in [addable['name'] for addable in self.get_silva_addables()]):
                 ids.append(item.id)
+            elif item.meta_type not in [addable['name'] for addable in self.get_silva_addables()]:
+                messages.append('pasting &#xab;%s&#xbb; is not allowed in this type of container' % item.id)
 
         if len(ids) == 0:
-            return
+            return ', '.join(messages).capitalize()
         
         if op == 0:
             # also update title of index documents
@@ -253,12 +257,16 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             paste_ids = []
             ids = self.objectIds()
             for copy_id in copy_ids:
-                if copy_id in ids:
-                    # FIXME: actually this does not reflect Zope's behavior,
-                    # it has copy2_of, so we need to handle that..
-                    paste_ids.append('copy_of_%s' % copy_id)
-                else:
-                    paste_ids.append(copy_id)
+                # keep renaming until we have a unique id (like Zope does, so copy_of_x and copy2_of_x)
+                i = 0
+                org_copy_id = copy_id
+                while copy_id in ids:
+                    i += 1
+                    add = ''
+                    if i > 1:
+                        add = str(i)
+                    copy_id = 'copy%s_of_%s' % (add, org_copy_id)
+                paste_ids.append(copy_id)
         else:
             # cut-paste operation
             cut_ids = ids
@@ -270,10 +278,16 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 paste_ids = []
                 ids = self.objectIds()
                 for cut_id in cut_ids:
-                    if cut_id in ids:
-                        paste_ids.append('copy_of_%s' % cut_id)
-                    else:
-                        paste_ids.append(cut_id)
+                    # keep renaming until we have a unique id (like Zope does, so copy_of_x and copy2_of_x)
+                    i = 0
+                    org_cut_id = cut_id
+                    while cut_id in ids:
+                        i += 1
+                        add = ''
+                        if i > 1:
+                            add = str(i)
+                        cut_id = 'copy%s_of_%s' % (add, cut_id)
+                    paste_ids.append(cut_id)
             else:
                 # no changes to cut_ids
                 paste_ids = cut_ids
@@ -284,7 +298,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             object = getattr(self, paste_id)
             helpers.unapprove_close_helper(object)
             object.sec_update_last_author_info()
-            
+            messages.append('pasted &#xab;%s&#xbb;' % paste_id)
+        
+        return ', '.join(messages).capitalize()
             
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_paste')
@@ -293,14 +309,28 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """
         # create ghosts for each item on clipboard
         ids = self.objectIds()
+        allowed_meta_types = [addable['name'] for addable in self.get_silva_addables()]
+        messages = []
         for item in self.cb_dataItems():
-            paste_id = item.id
-            while paste_id in ids:
-                if IVersionedContent.isImplementedBy(item):
-                    paste_id = 'ghost_of_%s' % paste_id
-                else:
-                    paste_id = 'copy_of_%s' % paste_id
-            self._ghost_paste(paste_id, item, REQUEST)
+            if item.meta_type in allowed_meta_types:
+                paste_id = item.id
+                # keep renaming them until they have a unique id, the Zope way
+                i = 0
+                org_paste_id = paste_id
+                while paste_id in ids:
+                    i += 1
+                    add = ''
+                    if i > 1:
+                        add = str(i)
+                    if IVersionedContent.isImplementedBy(item):
+                        paste_id = 'ghost%s_of_%s' % (add, org_paste_id)
+                    else:
+                        paste_id = 'copy%s_of_%s' % (add, org_paste_id)
+                self._ghost_paste(paste_id, item, REQUEST)
+                messages.append('pasted &#xab;%s&#xbb;' % paste_id)
+            else:
+                messages.append('pasting &#xab;%s&#xbb; is not allowed in this type of container' % item.id)
+        return ', '.join(messages).capitalize()
 
     def _ghost_paste(self, paste_id, item, REQUEST):
         if IContainer.isImplementedBy(item):

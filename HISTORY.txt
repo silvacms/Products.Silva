@@ -1,8 +1,18 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.20 $
+$Revision: 1.47.2.21 $
 
 Silva changes
+
+  0.9.1.2
+
+    Bugs Fixed
+
+        - Fixed some bugs with copy/cut and paste: when an object is not
+          allowed somewhere, it's now not possible to paste it there
+          anymore, and also the id of the object to be pasted is now
+          changed until it's unique (in the past, a bug in creating a
+          unique id kept the status of a document 'public' in some cases).
 
   0.9.1.1
 
@@ -12,9 +22,8 @@ Silva changes
           hoovering buttons and buttonlinks.
 
         - Membership now supports member objects that have different ids
-	  than the userids. This is useful in LDAP setups where the
-	  userid may contain characters illegal in URLs, such as the @
-	  sign.
+          than the userids. This is useful in LDAP setups where the userid
+          may contain characters illegal in URLs, such as the @ sign.
 
         - Edit on pro transformations up to date.
 	  
