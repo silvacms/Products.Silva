@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.87.2.8 $
+# $Revision: 1.87.2.9 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -9,6 +9,7 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode # HACK
+from DateTime import DateTime
 # Silva interfaces
 from IContainer import IContainer
 from IPublishable import IPublishable
@@ -43,6 +44,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
        hierarchy that a Visitor sees as well. Folders on the top level
        define sections of a publication, subfolders define chapters, etc.
     """
+
     security = ClassSecurityInfo()
 
     meta_type = "Silva Folder"
@@ -763,27 +765,35 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'delete_old_versions')
-    def delete_old_versions(self):
-        """Delete all versions from the current location downward"""
-        for descendant in self.get_all_descendants():
-            pvs = descendant._previous_versions
-            if pvs is None:
-                continue
+    def delete_old_versions(self, statistics=None):
+        """ Delete all versions from the current location downward
+        """
+        threshold = 500
+        if statistics is None:
+            statistics = {
+                'total': 0,
+                'total_versions': 0,
+                'total_cleaned': 0,
+                'subtotal': 0,
+                'max_versions': 0,
+                'starttime': DateTime(),
+                'endtime': None,
+                }
+        
+        for obj in self.objectValues():
+            if IVersionedContent.isImplementedBy(obj):
+                obj.cleanup_versions(statistics)
+            if IContainer.isImplementedBy(obj):
+                obj.delete_old_versions(statistics)
                 
-            removable_versions = pvs[:-1] # get older versions
-            descendant._previous_versions = pvs[-1:] # keep the last one
-            
-            contained_ids = descendant.objectIds()            
-            removable_version_ids = [
-                str(version[0]) for version in removable_versions
-                if version[0] in contained_ids]
+            if statistics['subtotal'] > threshold:
+                print 'commit sub transaction'
+                get_transaction().commit(1)
+                self._p_jar.cacheGC()
+                statistics['subtotal'] = 0                
                 
-            if removable_version_ids:
-                print 'Removed old versions %s %s' %  (
-                    descendant.absolute_url(), removable_versions)
-                descendant.manage_delObjects(removable_version_ids)                        
-                
-        return 'Done!'
+        statistics['endtime'] = DateTime()
+        return statistics
 
     def get_all_descendants(self):
         """Returns a list of all descendants"""
