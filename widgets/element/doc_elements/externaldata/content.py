@@ -24,6 +24,16 @@ except:
 # and decode the external data into unicode too.
 caption = escape_entities(datasource.get_title())
 data_encoding = datasource.get_data_encoding()
+def decode(data, enc):
+    if data is None:
+        return u''
+    elif same_type(data, ''):
+        return unicode(data, enc, 'replace')
+    elif same_type(data, u''):
+        return data
+    else:
+        return unicode(str(data), enc, 'replace')
+
 type = node.getAttribute('type') or u'list'
 show_headings = node.getAttribute('show_headings') or u'true'
 show_caption = node.getAttribute('show_caption') or u'true'
@@ -32,7 +42,7 @@ table_data = []
 if show_headings == 'true':
     table_data.append(u"""<tr class="rowheading">""")
     for name in data.names():
-        table_data.append(u"""<td align="%s">\n  %s\n</td>""" % (u'left', unicode(name, data_encoding, 'replace') ))
+        table_data.append(u"""<td align="%s">\n  %s\n</td>""" % (u'left', decode(name, data_encoding) ))
     table_data.append(u"""</tr>""")
 
 rownr = 0
@@ -44,7 +54,7 @@ for row in data:
             field = ''
         col += 1
         row_data.append(
-            u"""<td align="%s">\n  %s\n</td>""" % (u'left', unicode(field, data_encoding, 'replace') ))
+            u"""<td align="%s">\n  %s\n</td>""" % (u'left', decode(field, data_encoding) ))
     rownr += 1
     if rownr % 2: cssclass = u"odd"
     else: cssclass = u"even"
