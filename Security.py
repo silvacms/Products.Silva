@@ -48,12 +48,12 @@ class Security:
     def sec_get_current_userids_on_clipboard(self):
         """Get list of users on the clipboard.
         """
-        pass
+        return []
     
     def sec_get_user_info(self, userid):
         """Get information for userid. FIXME: describe which info fields
         exist.
         """
-        pass
+        return {}
 
 InitializeClass(Security)
