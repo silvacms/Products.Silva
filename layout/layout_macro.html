@@ -9,14 +9,18 @@
   <title metal:define-slot="title"
     tal:content="here/get_title">doc title</title>
   <!-- Begin metatags -->
-  <meta name="keywords"
-    tal:define="keywords python: here.get_metadata_element('silva-extra', 'keywords') or nothing"
-    tal:condition="keywords"
-    tal:attributes="content keywords" />
+  <meta name="subject"
+    tal:define="subject python: here.get_metadata_element('silva-extra', 'subject') or nothing"
+    tal:condition="subject"
+    tal:attributes="content subject" />
   <meta name="description"
     tal:define="description python: here.get_metadata_element('silva-extra', 'content_description') or nothing"
     tal:condition="description"
     tal:attributes="content description" />
+  <meta name="keywords"
+    tal:define="keywords python: here.get_metadata_element('silva-extra', 'keywords') or nothing"
+    tal:condition="keywords"
+    tal:attributes="content keywords" />
   <meta name="contact.name"
     tal:define="name python: here.get_metadata_element('silva-extra', 'contactname') or nothing"
     tal:condition="name"
