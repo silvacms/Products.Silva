@@ -31,7 +31,6 @@ class XMLSourceRegistry:
 
     def getXMLSource(self, context):
         xmlsource = self._mapping.get(context.__class__, None)
-        print context.__class__, xmlsource
         if xmlsource is None:
             if self._fallback is not None:
                 return self._fallback(context)
