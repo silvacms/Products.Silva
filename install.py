@@ -90,9 +90,6 @@ def install(root):
     if not hasattr(root, 'service_resources'):
         # folder containing some extra views and resources
         root.manage_addFolder('service_resources')
-    # do the same for the sidebar service
-    if not hasattr(root, 'service_sidebar'):
-        root.manage_addProduct['Silva'].manage_addSidebarService('service_sidebar', '')
         
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
@@ -120,12 +117,10 @@ def install(root):
     # FIXME: should we check if the registries exist?
     # (for upgrading, and maybe to handle accidential deletion)
     registerCoreWidgets(root)
-    # add editor support service
-    EditorSupportNested.manage_addEditorSupport(root)
-    # add service_files if it doesn't exist
-    if not hasattr(root, 'service_files'):
-        File.manage_addFilesService(root, 'service_files', 
-            'Silva Files Service', filesystem_path='var/repository')
+
+    # set up/refresh some mandatory services
+    configureMiscServices(root)
+    
     # forbid adding group & virtualgroup from the SMI
     root.add_silva_addable_forbidden('Silva Group')
     root.add_silva_addable_forbidden('Silva Virtual Group')
@@ -212,7 +207,7 @@ def configureProperties(root):
         ('table_cellspacing', '0', 'string'),
         ('table_cellpadding', '3', 'string'),
         ('table_border', '0', 'string'),
-        ('help_url', '/silva/globals/help', 'string'),
+        ('help_url', '/%s/globals/help' % root.absolute_url(1), 'string'),
         ('comment', "This is just a place for local notes.", 'string'),
         ('access_restriction', 'allowed_ip_addresses: ALL', 'string'),
         ]
@@ -227,6 +222,9 @@ def configureCoreFolders(root):
     # commonly used python scripts (XXX probably should go away)
     add_fss_directory_view(root, 'service_utils', __file__, 'service_utils')
 
+    # folder containing some extra views and resources
+    root.manage_addFolder('service_resources')
+
 def configureViews(root):
     """The view infrastructure for Silva.
     """
@@ -237,8 +235,24 @@ def configureViews(root):
         'service_extensions')
     # folder contains the various view trees
     root.manage_addFolder('service_views')
-    # and set Silva tree XXX should be more polite to extension packages
+    # and set Silva tree
+    # (does not need to be more polite to extension packages;
+    #  they will be installed later on)
     root.service_view_registry.set_trees(['Silva'])
+
+def configureMiscServices(root):
+    """Set up some services which did not fit elsewhere """
+    # add editor support service
+    EditorSupportNested.manage_addEditorSupport(root)
+    # add service_files if it doesn't exist
+    if not hasattr(root, 'service_files'):
+        File.manage_addFilesService(root, 'service_files', 
+            'Silva Files Service', filesystem_path='var/repository')    
+    # do the same for the sidebar service
+    if not hasattr(root, 'service_sidebar'):
+        root.manage_addProduct['Silva'] \
+            .manage_addSidebarService('service_sidebar', '')
+
 
 def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.
@@ -485,6 +499,7 @@ def configureXMLWidgets(root):
         root.manage_addProduct['XMLWidgets'].manage_addWidgetRegistry(name)
 
     # now register all widgets
+    # XXX not really necessary; the "install" should take case of this
     registerCoreWidgets(root)
     
     
@@ -604,12 +619,6 @@ def registerNListEditor(root):
                      ('service_widgets', 'element', 'nlist_elements',
                            nodeName, 'mode_normal'))
         
-    # XXX title needs a dummy treatment;
-    # otherwise the top/invalidate_cache_helper barfs
-    # when trying to invalidate the cache for the list <title> tag.
-    # the referenced widget does not need to exist as it is _never_ used
-    wr.addWidget('title',  ('service_widgets', 'dummy') )
-
     wr.setDisplayName('nlist', 'Complex list')
     wr.setDisplayName('li', 'List item')
     wr.setDisplayName('title', 'List title')
