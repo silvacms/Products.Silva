@@ -13,23 +13,76 @@
     tal:omit-tag=""
   i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
+
+<metal:block metal:fill-slot="subtabs">
+<style type="text/css">
+div.flowBar {
+  border-bottom: none;
+}
+</style>
+
+      <div class="subtabs">
+      <a class="left"
+        title="up to top of publication: alt-!"
+        href="http://reddwarf.infrae:9300/sylph/2ch/edit/tab_edit_new"
+        accesskey="!">
+        <img src="http://reddwarf.infrae:9300/sylph/globals/up_tree.gif" />
+      </a>
+      <a class="selected"
+        href="http://reddwarf.infrae:9300/sylph/2ch/d1/d2/edit/tab_edit_new"
+        title="access key: alt-1" accesskey="1">new</a>
+        <a class="right" title="up a level: alt-6"
+          href="http://reddwarf.infrae:9300/sylph/2ch/d1/edit/tab_edit_new"
+          accesskey="6">
+          <img src="http://reddwarf.infrae:9300/sylph/globals/up_level.gif" alt="" title="" height="9" width="9" border="0" />
+        </a>
+        <div class="air"> </div>
+        <a class="left"
+          title="up to top of publication: alt-@"
+          href="http://reddwarf.infrae:9300/sylph/2ch/edit/tab_edit_import"
+          accesskey="@">
+          <img src="http://reddwarf.infrae:9300/sylph/globals/up_tree.gif" />
+        </a>
+        <a class=""
+          href="http://reddwarf.infrae:9300/sylph/2ch/d1/d2/edit/tab_edit_import"
+          title="access key: alt-2" accesskey="2">import</a>
+          <a class="right" title="up a level: alt-7"
+            href="http://reddwarf.infrae:9300/sylph/2ch/d1/edit/tab_edit_import"
+            accesskey="7">
+            <img src="http://reddwarf.infrae:9300/sylph/globals/up_level.gif" alt="" title="" height="9" width="9" border="0" />
+          </a>
+        <div class="air"> </div>
+          <a class="left"
+            title="up to top of publication: alt-#"
+            href="http://reddwarf.infrae:9300/sylph/2ch/edit/tab_status_export"
+            accesskey="#">
+            <img src="http://reddwarf.infrae:9300/sylph/globals/up_tree.gif" />
+          </a>
+          <a class=""
+            href="http://reddwarf.infrae:9300/sylph/2ch/d1/d2/edit/tab_status_export"
+            title="access key: alt-3" accesskey="3">export</a>
+            <a class="right" title="up a level: alt-8"
+              href="http://reddwarf.infrae:9300/sylph/2ch/d1/edit/tab_status_export"
+              accesskey="8">
+              <img src="http://reddwarf.infrae:9300/sylph/globals/up_level.gif" alt="" title="" height="9" width="9" border="0" />
+            </a>
+    </div>
+    <div class="subBar"></div>
+  </metal:block>
+
+  <metal:block fill-slot="main">
 
 <tal:block define="
   global objects python:model.get_tree();
   dummy model/security_trigger;" />
 
-<table class="columns columns2">
+  <table class="columns columns2">
   <tbody>
     <tr>
       <tal:block replace="nothing">
         _____________________ sidebar _____________________
       </tal:block>
       <td class="left">
-        <tal:block replace="nothing">
-          ______________ parent screen link ______________
-        </tal:block >
-        <metal:block use-macro="view/macro_vein_navigation/macros/parent" />
         <tal:block replace="nothing">
           ______________ vein navigation ______________
         </tal:block >

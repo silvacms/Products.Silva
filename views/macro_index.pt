@@ -108,7 +108,8 @@ function handle_default_action(element, event, action)
 <!-- ____________________________ start workspace ____________________________ -->
 </span>
 <div class="workspace">
-
+  <metal:block define-slot="subtabs" />
+  
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>

@@ -17,6 +17,63 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
+
+<metal:block metal:fill-slot="subtabs">
+<style type="text/css">
+div.flowBar {
+  border-bottom: none;
+}
+</style>
+
+      <div class="subtabs">
+      <a class="left"
+        title="up to top of publication: alt-!"
+        href="http://reddwarf.infrae:9300/sylph/2ch/edit/tab_edit_new"
+        accesskey="!">
+        <img src="http://reddwarf.infrae:9300/sylph/globals/up_tree.gif" />
+      </a>
+      <a class=""
+        href="http://reddwarf.infrae:9300/sylph/2ch/d1/d2/edit/tab_edit_new"
+        title="access key: alt-1" accesskey="1">new</a>
+        <a class="right" title="up a level: alt-6"
+          href="http://reddwarf.infrae:9300/sylph/2ch/d1/edit/tab_edit_new"
+          accesskey="6">
+          <img src="http://reddwarf.infrae:9300/sylph/globals/up_level.gif" alt="" title="" height="9" width="9" border="0" />
+        </a>
+        <div class="air"> </div>
+        <a class="left"
+          title="up to top of publication: alt-@"
+          href="http://reddwarf.infrae:9300/sylph/2ch/edit/tab_edit_import"
+          accesskey="@">
+          <img src="http://reddwarf.infrae:9300/sylph/globals/up_tree.gif" />
+        </a>
+        <a class=""
+          href="http://reddwarf.infrae:9300/sylph/2ch/d1/d2/edit/tab_edit_import"
+          title="access key: alt-2" accesskey="2">import</a>
+          <a class="right" title="up a level: alt-7"
+            href="http://reddwarf.infrae:9300/sylph/2ch/d1/edit/tab_edit_import"
+            accesskey="7">
+            <img src="http://reddwarf.infrae:9300/sylph/globals/up_level.gif" alt="" title="" height="9" width="9" border="0" />
+          </a>
+        <div class="air"> </div>
+          <a class="left"
+            title="up to top of publication: alt-#"
+            href="http://reddwarf.infrae:9300/sylph/2ch/edit/tab_status_export"
+            accesskey="#">
+            <img src="http://reddwarf.infrae:9300/sylph/globals/up_tree.gif" />
+          </a>
+          <a class="selected"
+            href="http://reddwarf.infrae:9300/sylph/2ch/d1/d2/edit/tab_status_export"
+            title="access key: alt-3" accesskey="3">export</a>
+            <a class="right" title="up a level: alt-8"
+              href="http://reddwarf.infrae:9300/sylph/2ch/d1/edit/tab_status_export"
+              accesskey="8">
+              <img src="http://reddwarf.infrae:9300/sylph/globals/up_level.gif" alt="" title="" height="9" width="9" border="0" />
+            </a>
+    </div>
+    <div class="subBar"></div>
+  </metal:block>
+
 <metal:block fill-slot="main">
 
 <table class="columns columns2">
@@ -26,11 +83,6 @@
         _____________________ sidebar _____________________
       </tal:block>
       <td class="left">
-        <tal:block replace="nothing">
-          ______________ parent screen link ______________
-        </tal:block>
-        <metal:block use-macro="view/macro_vein_navigation/macros/parent" />
-
         <tal:block replace="nothing">
           ______________ vein navigation ______________
         </tal:block>
@@ -48,7 +100,8 @@
         <span tal:replace="nothing">
           ______________ export feedback ______________
         </span>
-        <div class="feedback">
+        <div class="feedback"
+          style="margin-bottom:1em;">
           <span class="subhead"
             i18n:translate="items_selected_for_export">items to export:</span><br />
           <table width="100%" border="0">
@@ -90,14 +143,6 @@
               </tr>
               <tr class="top-controls">
                 <td colspan="3">
-                    <a class="navigation"
-                      style="float: right;"
-                      href="tab_edit_import"
-                      title="over to the import screen: alt-i"
-                      accesskey="i"
-                      i18n:attributes="title">
-                      <span i18n:translate="import">import</span>...
-                    </a>
                   <h3 i18n:translate="export_to_silva_xml">
                     export to Silva XML (.slv)
 	                </h3>
@@ -174,24 +219,12 @@
 
             <tfoot>
               <tr class="controls">
-                <td>
-                  <input
-                    class="cancel"
-                    type="button"
-                    name="edit_cancel"
-                    value=" Cancel "
-                    onClick="history.back()"
-                    title="access key: alt-c"
-                    accesskey="c"
-                    i18n:attributes="value title"
-                  />
-                </td>
                 <td class="align-right"
-                  colspan="2">
+                  colspan="3">
                   <input class="button"
                     type="submit"
                     name="download_xml_selected:method"
-                    value=" Export "
+                    value="export"
                     title="access key: alt-e"
                     accesskey="e"
                     i18n:attributes="value title"
@@ -233,7 +266,7 @@
               width="16"
               height="16"
               alt="docma icon" 
-              tal:attributes="src string:${root_url}/globals/docma.gif"
+              tal:attributes="src string:${root_url}/globals/docma.png"
               i18n:attributes="alt"
             />
             <span i18n:translate="docma_facilities">docma facilities</span>
