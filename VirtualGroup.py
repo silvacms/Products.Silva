@@ -1,7 +1,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.1 2003/01/20 11:24:29 zagy Exp $
-from AccessControl import ClassSecurityInfo
+# $Id: VirtualGroup.py,v 1.2 2003/01/21 16:51:01 zagy Exp $
+from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # Silva interfaces
@@ -31,18 +31,32 @@ class VirtualGroup(Asset):
 
     def manage_beforeDelete(self, item, container):
         VirtualGroup.inheritedAttribute('manage_beforeDelete')(self, item, container)
-        self.service_groups.removeVirtualGroup(self._group_name)
+        if self.isValid():
+            self.service_groups.removeVirtualGroup(self._group_name)
 
+    def isValid(self):
+        """returns whether the group asset is valid
+
+            A group asset becomes invalid if it gets moved around ...
+        """
+        return (self.valid_path == self.getPhysicalPath())
 
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'addGroup')
     def addGroup(self, group):
+        """add a group to the virtual group"""
+        if not self.isValid():
+            raise Unauthorized, "Zombie group asset"
+        
         self.service_groups.addGroupToVirtualGroup(group, self._group_name)
         
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'removeGroup')
     def removeGroup(self, group):
+        """removes a group from the vgroup"""
+        if not self.isValid():
+            raise Unauthorized, "Zombie group asset"
         self.service_groups.removeGroupFromVirtualGroup(
             group, self._group_name)
     
@@ -50,6 +64,9 @@ class VirtualGroup(Asset):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'listGroups')
     def listGroups(self):
+        """list groups in this vgroup"""
+        if not self.isValid():
+            raise Unauthorized, "Zombie group asset"
         result = self.service_groups.listGroupsInVirtualGroup(self._group_name)
         result.sort()
         return result
@@ -65,12 +82,15 @@ def manage_addVirtualGroup(self, id, title, group_name, REQUEST=None):
     if not self.is_id_valid(id):
         return
     if not hasattr(self, 'service_groups'):
-        return  
+        raise AttributeError, "There is no service_groups"
     if self.service_groups.isGroup(group_name):
-        return
+        raise ValueError, "There is already a group of that name."
     object = VirtualGroup(id, title, group_name)
     self._setObject(id, object)
     object = getattr(self, id)
+    # set the valid_path, this cannot be done in the constructor because the context
+    # is not known as the object is not inserted into the container.
+    object.valid_path = object.getPhysicalPath()
     self.service_groups.addVirtualGroup(group_name)
     add_and_edit(self, id, REQUEST)
     return ''
