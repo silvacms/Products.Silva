@@ -69,7 +69,7 @@
           <img width="9"
             height="9"
             border="0"
-            alt="up one level"
+            alt="up one level: alt-]"
             i18n:attributes="alt"
             tal:attributes="src string:${root_url}/globals/up_level.gif" />
         </a>
@@ -82,7 +82,7 @@
           <img width="9"
             height="9"
             border="0"
-            alt="up to containing publication"
+            alt="up to containing publication: alt-["
             i18n:attributes="alt"
             tal:attributes="src python: model_is_publication and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
         </a>
