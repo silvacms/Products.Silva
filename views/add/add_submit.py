@@ -13,7 +13,7 @@ REQUEST = context.REQUEST
 
 # if we cancelled, then go back to edit tab
 if REQUEST.has_key('add_cancel'):
-    return view.tab_edit()
+    return model.edit['tab_edit']()
 
 # validate form
 from Products.Formulator.Errors import ValidationError, FormValidationError
