@@ -20,22 +20,22 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="hidden" type="int" value="0" />
-        <value key="unicode" type="int" value="1" />
-        <value key="max_linelength" type="str" value="" />
-        <value key="max_lines" type="str" value="" />
-        <value key="width" type="int" value="40" />
-        <value key="external_validator" type="str" value="" />
-        <value key="height" type="int" value="2" />
-        <value key="required" type="int" value="0" />
-        <value key="css_class" type="str" value="inputter" />
-        <value key="default" type="str" value="" />
-        <value key="title" type="str" value="subject" />
-        <value key="description" type="str" value="Subject of content in this area." />
-        <value key="max_length" type="str" value="" />
-        <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+      <value key="alternate_name" type="str" value="" />
+      <value key="hidden" type="int" value="0" />
+      <value key="unicode" type="int" value="1" />
+      <value key="max_linelength" type="str" value="" />
+      <value key="max_lines" type="str" value="" />
+      <value key="width" type="int" value="40" />
+      <value key="external_validator" type="str" value="" />
+      <value key="height" type="int" value="2" />
+      <value key="required" type="int" value="0" />
+      <value key="css_class" type="str" value="store" />
+      <value key="default" type="str" value="" />
+      <value key="title" type="str" value="subject" />
+      <value key="description" type="str" value="Subject of content in this area." />
+      <value key="max_length" type="str" value="" />
+      <value key="whitespace_preserve" type="int" value="0" />
+      <value key="extra" type="str" value="" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -94,13 +94,13 @@
      <value key="external_validator" type="str" value="" />
      <value key="height" type="int" value="3" />
      <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="inputter" />
+     <value key="css_class" type="str" value="store" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="keywords" />
      <value key="description" type="str" value="Keywords relating to content." />
      <value key="max_length" type="str" value="" />
      <value key="whitespace_preserve" type="int" value="0" />
-     <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+     <value key="extra" type="str" value="" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -159,13 +159,13 @@
      <value key="external_validator" type="str" value="" />
      <value key="height" type="int" value="3" />
      <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="inputter" />
+     <value key="css_class" type="str" value="store" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="description" />
      <value key="description" type="str" value="Description of content in this area." />
      <value key="max_length" type="str" value="" />
      <value key="whitespace_preserve" type="int" value="0" />
-     <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+     <value key="extra" type="str" value="" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -215,22 +215,22 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="hidden" type="int" value="0" />
-        <value key="unicode" type="int" value="1" />
-        <value key="max_linelength" type="str" value="" />
-        <value key="max_lines" type="str" value="" />
-        <value key="width" type="int" value="40" />
-        <value key="external_validator" type="str" value="" />
-        <value key="height" type="int" value="3" />
-        <value key="required" type="int" value="0" />
-        <value key="css_class" type="str" value="inputter" />
-        <value key="default" type="str" value="" />
-        <value key="title" type="str" value="comment" />
-        <value key="description" type="str" value="Internal comments." />
-        <value key="max_length" type="str" value="" />
-        <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+     <value key="alternate_name" type="str" value="" />
+     <value key="hidden" type="int" value="0" />
+     <value key="unicode" type="int" value="1" />
+     <value key="max_linelength" type="str" value="" />
+     <value key="max_lines" type="str" value="" />
+     <value key="width" type="int" value="40" />
+     <value key="external_validator" type="str" value="" />
+     <value key="height" type="int" value="3" />
+     <value key="required" type="int" value="0" />
+     <value key="css_class" type="str" value="store" />
+     <value key="default" type="str" value="" />
+     <value key="title" type="str" value="comment" />
+     <value key="description" type="str" value="Internal comments." />
+     <value key="max_length" type="str" value="" />
+     <value key="whitespace_preserve" type="int" value="0" />
+     <value key="extra" type="str" value="" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -712,21 +712,21 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="hidden" type="int" value="0" />
-        <value key="unicode" type="int" value="1" />
-        <value key="max_length" type="str" value="" />
-        <value key="external_validator" type="str" value="" />
-        <value key="display_maxwidth" type="str" value="" />
-        <value key="display_width" type="int" value="20" />
-        <value key="required" type="int" value="0" />
-        <value key="description" type="str" value="Name of contact person." />
-        s<value key="css_class" type="str" value="inputter" />
-        <value key="default" type="str" value="" />
-        <value key="title" type="str" value="contact name" />
-        <value key="truncate" type="int" value="0" />
-        <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+     <value key="alternate_name" type="str" value="" />
+     <value key="hidden" type="int" value="0" />
+     <value key="unicode" type="int" value="1" />
+     <value key="max_length" type="str" value="" />
+     <value key="external_validator" type="str" value="" />
+     <value key="display_maxwidth" type="str" value="" />
+     <value key="display_width" type="int" value="20" />
+     <value key="required" type="int" value="0" />
+     <value key="description" type="str" value="Name of contact person." />
+     <value key="css_class" type="str" value="store" />
+     <value key="default" type="str" value="" />
+     <value key="title" type="str" value="contact name" />
+     <value key="truncate" type="int" value="0" />
+     <value key="whitespace_preserve" type="int" value="0" />
+     <value key="extra" type="str" value="" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -773,21 +773,21 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="hidden" type="int" value="0" />
-        <value key="unicode" type="int" value="1" />
-        <value key="max_length" type="str" value="" />
-        <value key="external_validator" type="str" value="" />
-        <value key="display_maxwidth" type="str" value="" />
-        <value key="display_width" type="int" value="20" />
-        <value key="required" type="int" value="0" />
-        <value key="description" type="str" value="Email address of contact person." />
-        <value key="css_class" type="str" value="inputter" />
-        <value key="default" type="str" value="" />
-        <value key="title" type="str" value="contact email" />
-        <value key="truncate" type="int" value="0" />
-        <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+     <value key="alternate_name" type="str" value="" />
+     <value key="hidden" type="int" value="0" />
+     <value key="unicode" type="int" value="1" />
+     <value key="max_length" type="str" value="" />
+     <value key="external_validator" type="str" value="" />
+     <value key="display_maxwidth" type="str" value="" />
+     <value key="display_width" type="int" value="20" />
+     <value key="required" type="int" value="0" />
+     <value key="description" type="str" value="Email address of contact person." />
+     <value key="css_class" type="str" value="store" />
+     <value key="default" type="str" value="" />
+     <value key="title" type="str" value="contact email" />
+     <value key="truncate" type="int" value="0" />
+     <value key="whitespace_preserve" type="int" value="0" />
+     <value key="extra" type="str" value="" />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
