@@ -6,7 +6,7 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
-/* _____________________ style sheet voor Silva backend ______________________ */
+/* _____________________ style sheet voor Silva backend _____________________ */
 
 /* ----- for debugging ------ */
 /* {border: 1px dotted red; } */
@@ -16,7 +16,7 @@ body {
   font-family : verdana, arial, helvetica, sans-serif; 
   font-size : 11px;
   color : #003333;
-  background : #e2e9eb;
+  background : #e3e5eb;
 }
 
 /* set margins on body content and focus tables with a div */
@@ -27,7 +27,7 @@ body {
 }
 
 
-/* __________________________________________________ element typography _____ */
+/* _________________________________________________ element typography _____ */
 
 p {
   font-size : 11px;
@@ -111,42 +111,41 @@ h7 {
 }
 
 
-/* _____________________________________________ table style definitions _____ */
+/* ____________________________________________ table style definitions _____ */
 
 tr.focus, th.focus, td.focus {
-  background : #d0d0d0;
+  background : #d3d4da;
 }
 
 tr.focus-cycle, th.focus-cycle, td.focus-cycle {
-  background : #dedede;
+  background : #e0e2e7;
 }
 
-/* was b0b0b0 */
 tr.focus-fixed, td.focus-fixed {
-    background : #c0c0c0;
+    background : #c1c2c8;
 }
 
 tr.focus-light, th.focus-light, td.focus-light {
-  background : #dedede;
+  background : #e5e6ec;
 }
 
 tr.focus-light-cycle, td.focus-light-cycle {
-  background : #dedede;
+  background : #eaecf1;
 }
 
 tr.controls, td.controls {
-  color : #e2e9eb;
-  background : #909090;
+  color : #e3e4eb;
+  background : #7c7d80;
 }
 
 tr.controls-cycle, th.controls-cycle, td.controls-cycle {
   color : #e2e9eb;
-  background : #999999;
+  background : #88898e;
 }
 
 tr.topcontrols, td.topcontrols {
   color : #d0d4d8;
-  background : #666666;
+  background : #58595b;
 }
 
 tr.border, td.border {
@@ -155,7 +154,7 @@ tr.border, td.border {
 
 tr.divider, th.divider, td.divider {
   font-size : 4px; 
-  background : #666666;
+  background : #646568;
 }
 
 th {
@@ -163,7 +162,7 @@ th {
   font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif; 
   color : #e2e9eb;
-  background : #808080;
+  background : #6f7073;
 }
 
 /* for N4 compatibility, make this match the page bgcolor (don't use 'transparent') */ 
@@ -182,8 +181,9 @@ td.rowhead {
   color : #555555; 
 }
 
+/* was ebebeb e9e5ec */
 .hilight {
-  background : #ebebeb;
+  background : #ebecef;
 }
 
 .tablehead3 {
@@ -203,7 +203,7 @@ td.rowhead {
 } 
 
 
-/* _________________________________________________________ list styles _____ */
+/* ________________________________________________________ list styles _____ */
 
 
 ul {
@@ -272,7 +272,7 @@ ul.tips-nested {
 }
 
 
-/* ______________________________________________ form style definitions _____ */
+/* _____________________________________________ form style definitions _____ */
 
 form {
   margin : 0px;
@@ -616,7 +616,7 @@ a.footer:hover {
 }
 
 
-/* ____________________________________________________ link definitions _____ */
+/* ___________________________________________________ link definitions _____ */
 
 a:link {
   color : #000080;
@@ -691,7 +691,7 @@ a.idea:link,a.idea:visited {
 }
 
 
-/* ________________________________________________________ nomenclature _____ */
+/* _______________________________________________________ nomenclature _____ */
 /* Selectors have names spelled as a single word, even if two words are used, such  */
 /* as 'blacklink'. When a variation is created, the variation name is separated by  */
 /* a dash, such as 'blacklink-underline'. Do NOT use underscores, for some reason   */
@@ -700,7 +700,7 @@ a.idea:link,a.idea:visited {
 /* want to puzzle over what something like 'undln' means (don't use UNIX mumble :)  */
 
 
-/* ________________________________________________________ local styles _____ */
+/* _______________________________________________________ local styles _____ */
 
 /* hard rule */
 div.rule {
