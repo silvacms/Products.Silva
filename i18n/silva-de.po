@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Wed Dec  8 18:26:36 2004\n"
-"PO-Revision-Date: 2004-12-15 14:33+0100\n"
+"PO-Revision-Date: 2004-12-15 15:57+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -801,7 +801,7 @@ msgstr "Datei"
 #: /views/add/File/form.form:68
 #: /views/add/Image/form.form:67
 msgid "<b>Tip:</b> You don't have to fill in the id and title."
-msgstr ""
+msgstr "<b>Tipp:</b> Id und Titel brauchen nicht ausgefüllt zu werden."
 
 #: /views/add/Folder/form.form:62
 msgid "Choose an item to be created within the folder."
@@ -809,12 +809,12 @@ msgstr "Einen Eintrag "
 
 #: /views/add/Folder/form.form:70
 msgid "first item"
-msgstr ""
+msgstr "Erster Eintrag"
 
 #: /views/add/Ghost/add_form.pt:32
 #: /views/add/GhostFolder/add_form.pt:32
 msgid "create ${meta_type}"
-msgstr ""
+msgstr "Erzeuge ${meta_type}"
 
 #: /views/add/Ghost/add_form.pt:40
 #: /views/add/GhostFolder/add_form.pt:40
@@ -1432,7 +1432,7 @@ msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:81
 msgid "orientation"
-msgstr ""
+msgstr "Ausrichtung"
 
 #: /views/edit/Asset/Image/edit.pt:88
 msgid "Note: Silva can provide image scaling and conversion with the help of PIL"
@@ -1440,11 +1440,11 @@ msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:90
 msgid "PIL doesn't seem to be installed."
-msgstr ""
+msgstr "PIL ist nicht installiert."
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:124
 msgid "instructions"
-msgstr ""
+msgstr "Anweisungen"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:125
 msgid "Drag the window below to the image region which should be cropped. You can resize the window with the handle on the lower right corner. If you're done, you can click the submit button below or double click in the window to set your coordinates and close the cropping tool."
@@ -1452,7 +1452,7 @@ msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:133
 msgid "predefined sizes"
-msgstr ""
+msgstr "Vordefinierte Größen"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:136
 msgid "50x50 pixel"
@@ -1513,7 +1513,7 @@ msgstr ""
 
 #: /views/edit/Asset/Image/scale_form.form:49
 msgid "scaling"
-msgstr ""
+msgstr "Skalieren"
 
 #: /views/edit/Asset/Image/scale_form.form:57
 msgid ""
@@ -1523,7 +1523,7 @@ msgstr ""
 
 #: /views/edit/Asset/Image/scale_form.form:77
 msgid "cropping"
-msgstr ""
+msgstr "Abschneiden"
 
 #: /views/edit/Asset/Image/scale_form.form:86
 msgid ""
@@ -1624,7 +1624,7 @@ msgstr "Kurzwahl: alt-u"
 
 #: /views/edit/Asset/macro_asset_edit.pt:53
 msgid "characterization"
-msgstr ""
+msgstr "Charakterisierung"
 
 #: /views/edit/Asset/upload_form.form:26
 msgid "Locate a file."
@@ -1761,23 +1761,23 @@ msgstr ""
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:51
 msgid "metadata of &#8216;original&#8217;"
-msgstr ""
+msgstr "Metadaten von &#8216;original&#8217;"
 
 #: /views/edit/Container/Publication/copy_layout_submit.py:12
 msgid "Layout copied"
-msgstr ""
+msgstr "Layout kopiert"
 
 #: /views/edit/Container/Publication/layout_form.form:31
 msgid "Choose among the installed layout templates."
-msgstr ""
+msgstr "Aus den installierten Layoutvorlagen auswählen."
 
 #: /views/edit/Container/Publication/layout_submit.py:19
 msgid "Layout saved."
-msgstr ""
+msgstr "Layout gespeichert."
 
 #: /views/edit/Container/Publication/layout_submit.py:21
 msgid "Layout has been removed."
-msgstr ""
+msgstr "Das Layout wurde entfernt."
 
 #: /views/edit/Container/Publication/settings_addables.pt:110
 msgid "save addables settings"
@@ -1798,7 +1798,7 @@ msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables_form.form:23
 msgid "acquire"
-msgstr ""
+msgstr "Erwerben"
 
 #: /views/edit/Container/Publication/settings_addables_form.form:25
 msgid "If checked, inherit the addables from above. Uncheck this to change the allowed addables below."
@@ -1822,7 +1822,7 @@ msgstr ""
 
 #: /views/edit/Container/Publication/tab_metadata.pt:107
 msgid "Layout has been copied for customization."
-msgstr ""
+msgstr "Das Layout wurde für Anpassungen kopiert."
 
 #: /views/edit/Container/Publication/tab_metadata.pt:123
 msgid "copy the layout into the Publication in order to customize it"
@@ -1830,7 +1830,7 @@ msgstr "Das Layout in eine Publikation kopieren, um es anzupassen."
 
 #: /views/edit/Container/Publication/tab_metadata.pt:123
 msgid "customize layout"
-msgstr ""
+msgstr "Layout anpassen"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:133
 msgid "return confirm('Really remove copied layout?')"
@@ -2150,7 +2150,7 @@ msgstr "Id"
 #: /views/add/Publication/form.form:30
 #: /views/add/SimpleContent/form.form:30
 msgid "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;"
-msgstr ""
+msgstr "Keine Leer- oder Sonderzeichen ausser &#8216;_&#8217; oder &#8216;-&#8217; oder &#8216;.&#8217;"
 
 #: /views/edit/Container/tab_access_groups_delete.py:11
 #: /views/edit/Container/tab_edit_delete.py:19
@@ -2164,7 +2164,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups_delete.py:28
 #: /views/edit/Container/tab_edit_delete.py:37
 msgid "Deleted ${deleted_ids}."
-msgstr ""
+msgstr "${deleted_ids} gelöscht."
 
 #: /views/edit/Container/tab_access_groups_delete.py:31
 msgid "Could not delete ${not_deleted_ids}."
@@ -2286,11 +2286,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:531
 msgid "paste items: alt-v"
-msgstr ""
+msgstr "Einträge einfügen.: alt-v"
 
 #: /views/edit/Container/tab_edit.pt:531
 msgid "paste"
-msgstr ""
+msgstr "Einfügen"
 
 #: /views/edit/Container/tab_edit.pt:539
 msgid "paste (items on clipboard) as ghost objects: alt-g"
@@ -2553,12 +2553,12 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import_import_and_delete.py:39
 msgid "Could not import ${newid}"
-msgstr ""
+msgstr "Konnte nicht importiert werden ${newid}"
 
 #: /views/edit/Container/tab_edit_import_import_and_delete.py:50
 #: /views/edit/Container/tab_edit_import_w2s.py:40
 msgid "Finished importing"
-msgstr ""
+msgstr "Import beendet"
 
 #: /views/edit/Container/tab_edit_import_xml.py:26
 msgid "Data is not valid Silva XML"
@@ -2566,7 +2566,7 @@ msgstr "Die Daten sind kein gültiges Silva-XML"
 
 #: /views/edit/Container/tab_edit_import_xml.py:30
 msgid "Finished importing."
-msgstr ""
+msgstr "Import beendet."
 
 #: /views/edit/Container/tab_edit_move_down.py:16
 msgid "Moved ${id} down."
@@ -2574,23 +2574,23 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_move_down.py:20
 msgid "Could not move ${id} down."
-msgstr ""
+msgstr "${id} konnte nicht verschoben werden."
 
 #: /views/edit/Container/tab_edit_move_to.py:18
 msgid "Nothing was selected, so nothing was moved."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts verschoben."
 
 #: /views/edit/Container/tab_edit_move_to.py:24
 msgid "First choose a position number."
-msgstr ""
+msgstr "Erst eine Positionsnummer wählen."
 
 #: /views/edit/Container/tab_edit_move_to.py:40
 msgid "Object(s) ${ids} moved"
-msgstr ""
+msgstr "Objekt(e) ${ids} verschoben"
 
 #: /views/edit/Container/tab_edit_move_to.py:44
 msgid ", <span class=\"error\">but could not move ${ids}</span>"
-msgstr ""
+msgstr ", <span class=\"error\">nicht verschoben ${ids}</span>"
 
 #: /views/edit/Container/tab_edit_move_to.py:49
 msgid "Could not move ${ids}."
@@ -2606,11 +2606,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_new.pt:123
 msgid "Sorry, you're not authorized to add anything in this location."
-msgstr ""
+msgstr "Sie sind nicht befugt hier etwas hinzuzufügen."
 
 #: /views/edit/Container/tab_edit_new.pt:68
 msgid "create an object"
-msgstr ""
+msgstr "Ein Objekt erzeugen"
 
 #: /views/edit/Container/tab_edit_new.pt:80
 msgid "Click a name to create an item. Note that this screen only lists descriptions of objects that are available at this location. For additional information about an item see the ${silva_documentation}. <br />"
@@ -2618,11 +2618,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_new_link_title.py:11
 msgid "Create a ${addable_name}"
-msgstr ""
+msgstr "Ein ${addable_name} erzeugen"
 
 #: /views/edit/Container/tab_edit_paste.py:16
 msgid "No content available to paste."
-msgstr ""
+msgstr "Kein Inhalt zum Einfügen vorhanden."
 
 #: /views/edit/Container/tab_edit_rename.pt:119
 msgid "rename"
@@ -2693,7 +2693,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_to_folder.py:17
 msgid "Can only change Publications into Folders"
-msgstr ""
+msgstr "Es können nur Publikationen in Ordner umgewandelt werden"
 
 #: /views/edit/Container/tab_edit_to_folder.py:24
 msgid "Changed into folder"
@@ -2719,7 +2719,7 @@ msgstr ""
 #: /views/edit/Container/tab_metadata.pt:83
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:36
 msgid "convert to publication"
-msgstr ""
+msgstr "In Publikation umwandeln"
 
 #: /views/edit/Container/tab_status.pt:102
 msgid "published"
@@ -2750,7 +2750,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
 #: /views/edit/VersionedContent/tab_status_macros.pt:335
 msgid "access key: alt-m"
-msgstr ""
+msgstr "Kurzwahl: alt-m"
 
 #: /views/edit/Container/tab_status.pt:285
 #: /views/edit/tab_status_form.form:30
@@ -2758,7 +2758,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
 #: /views/edit/VersionedContent/tab_status_form_editor.form:30
 msgid "publish time"
-msgstr ""
+msgstr "Veröffentlichungsdatum"
 
 #: /views/edit/Container/tab_status.pt:305
 msgid "p<u>u</u>blish&nbsp;now?"
