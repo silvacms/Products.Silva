@@ -15,13 +15,14 @@ if request.has_key('path'):
     new_path = request['path']
 
 def removeParameterElements(node):
-    for child in node.childNodes:
-        if child.nodeType == child.ELEMENT_NODE:
-            if child.nodeName == 'parameter':
-                try:
-                    node.removeChild(child)
-                except ValueError:
-                    pass
+    removeChilds = [child for child in node.childNodes if 
+                       child.nodeType == node.ELEMENT_NODE and 
+                           child.nodeName == 'parameter']
+    for child in removeChilds:
+        try:
+            node.removeChild(child)
+        except ValueError:
+            pass
 
 if not new_path:
     # no path set.
@@ -37,7 +38,6 @@ datasource_parameters = datasource.parameters()
 
 if current_path == new_path:
     # same datasource path:
-    # set parameter data from form.
     form = datasource.parameter_values_as_form({})
     # validate form
     from Products.Formulator.Errors import FormValidationError
@@ -47,6 +47,7 @@ if current_path == new_path:
         err = e.errors[0]
         raise str(err.error_text)
     removeParameterElements(node)
+    # set parameter data from form.
     for name in datasource_parameters.keys():
         child = node.createElement('parameter')
         child.setAttribute('key', name)
@@ -54,11 +55,11 @@ if current_path == new_path:
         node.appendChild(child)
 else:
     # different datasource path:
-    # get parameter defs.
-    # throw away old param elements.
-    # set new defaults.
     removeParameterElements(node)
     for name, (type, default_value, description) in datasource_parameters.items():
+        # get parameter defs.
+        # throw away old param elements.
+        # set new defaults.
         child = node.createElement('parameter')
         child.setAttribute('key', name)
         child.setAttribute('value', default_value)
