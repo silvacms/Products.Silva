@@ -92,6 +92,11 @@ div.citation p.source {
   margin-bottom : 0;
 }
 
+citation {
+  diplay: block;
+  background-color: white;
+}
+
 /* _________________________________________________ silva table styles _____ */
 
 table {
@@ -169,6 +174,30 @@ a.index {
 
 div.toc {
   background-color: yellow;
+}
+
+.image-left {
+  text-align: left;
+}
+
+.image-center {
+  text-align: center;
+}
+
+.image-right {
+  text-align: right;
+}
+
+.float-left {
+  float: left;
+  margin-right: 1em;
+  clear: none;
+}
+
+.float-right {
+  float: right;
+  margin-left: 1em;
+  clear: none;
 }
 
 </dtml-let>
