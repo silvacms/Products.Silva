@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.72.2.1 $
+# $Revision: 1.72.2.2 $
 import Metadata
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
@@ -136,7 +136,12 @@ def initialize(context):
 import os
 from Globals import DTMLFile
 
-# XXX this check is a little crude...
-if os.path.isfile('../ExternalEditor/manage_main.dtml'):
-   Folder.manage_main = DTMLFile('../ExternalEditor/manage_main', globals())
+try:
+    import Product.ExternalEditor as ee
+except ImportError:
+    pass
+else:
+    dirpath = os.path.dirname(ee.__file__)
+    dtmlpath = '%s/manage_main' % dirpath
+    Folder.manage_main = DTMLFile(dtmlpath, globals())
 
