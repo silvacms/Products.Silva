@@ -6,8 +6,6 @@ import Interfaces
 
 interesting_roles = ['Author', 'Editor', 'ChiefEditor', 'Manager']
 
-def are_we_manager(user):
-    f.REQUEST.AUTHENTICATED_USER.has_roles(['Manager'], self)
 class Security:
     """Can be mixed in with an object to support Silva security.
     (built on top of Zope security)
@@ -88,6 +86,31 @@ class Security:
         return result
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'sec_get_userids_deep')
+    def sec_get_userids_deep(self):
+        """Get all userids that have local roles in anything under this
+        object.
+        """
+        l = []
+        self._sec_get_userids_deep_helper(l)
+        # now make sure we have only one of each userid
+        dict = {}
+        for userid in l:
+            dict[userid] = 0
+        return dict.keys()
+        
+    def _sec_get_userids_deep_helper(self, l):
+        for userid in self.sec_get_userids():
+            l.append(userid)
+        if Interfaces.Container.isImplementedBy(self):
+            for item in self.get_ordered_publishables():
+                item._sec_get_userids_deep_helper(l)
+            for item in self.get_nonactive_publishables():
+                item._sec_get_userids_deep_helper(l)
+            for item in self.get_assets():
+                item._sec_get_userids_deep_helper(l)
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_get_roles_for_userid')
     def sec_get_roles_for_userid(self, userid):
         """Get the local roles that a userid has here.
@@ -109,7 +132,7 @@ class Security:
         """Find users in user database.
         """
         return user_management.find_users(self, userid)
-    
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_get_user_info')  
     def sec_get_user_info(self, userid):

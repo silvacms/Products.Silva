@@ -40,7 +40,7 @@ class Publication(Folder):
         f.write('<silva_publication>')
         self._to_xml_helper(f)
         f.write('</silva_publication>')
-
+        
 InitializeClass(Publication)
 
 manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),
