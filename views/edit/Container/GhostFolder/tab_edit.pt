@@ -284,7 +284,7 @@
             _______ id cell _______
           </tal:block>
           <td>
-            <a class="image"
+            <a class="icon"
               tal:attributes="
                 href python:here.get_editor_link(item);
                 title item/meta_type;">
@@ -407,7 +407,7 @@
             _______ icon + id cell _______
           </tal:block>
           <td>
-            <a class="image"
+            <a class="icon"
               tal:attributes="
                 href string:${asset_url}/edit/tab_edit;
                 title asset/meta_type;">

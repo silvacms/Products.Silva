@@ -19,7 +19,7 @@
   <td class="{__class__}"
     style="padding-left: 0;"
     tal:attributes="onclick string:javascript:window.location='${publication/absolute_url}/edit'">
-    <a href="top"
+    <a class="icon"
       title="up to top contents of publication"
       tal:attributes="href string:${publication/absolute_url}/edit;"
       i18n:attributes="title">
@@ -51,9 +51,9 @@
         title item/get_short_title_editable">
       <div tal:attributes="
           style python:'margin-left:'+str(indent * 10)+'px';
-          onclick string:javascript:window.location='${item_url}/edit/{__vein_id__}'
-          ">
-        <a title="contents"
+          onclick string:javascript:window.location='${item_url}/edit/{__vein_id__}'">
+        <a class="icon"
+          title="contents"
           tal:attributes="href string:${item_url}/edit/tab_edit">
           <img tal:replace="structure python:here.render_icon(item)" />
         </a>

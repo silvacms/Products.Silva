@@ -107,7 +107,7 @@
                 value=""
                 tal:attributes="value group/id;"
               />
-              <a class="published"
+              <a class="icon"
                 title="Edit"
                 tal:attributes="
                   href string:${group/absolute_url}/edit;

@@ -136,7 +136,7 @@
         <td>
           <div tal:attributes="style string:margin-left:${indent_depth}">
             <div style="float: left;">
-              <a 
+              <a class="icon"
                 tal:attributes="href string:${obj_url}/edit/tab_edit;
                 title string:edit: ${obj/id};
                 ">

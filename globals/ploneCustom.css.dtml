@@ -334,12 +334,16 @@ img.icon {
     margin-right: 0em;
 }
 
+a.icon:hover {
+  text-decoration: none;
+}
+
 
 /* _____________________________________________________ personal bar _____ */
 
 div.personalBar {
   text-align: center;
-  background: &dtml-listingTopControlsBackground;;
+  background: #505e65;
   margin: 0em 0em 0em 0em;
   padding: 0.1em 16px 0.2em 16px;
   border-collapse: collapse;
@@ -612,7 +616,7 @@ td.unselected {
 
 td.unselected:hover { 
   color: &dtml-mainTabFontColorSelected;;
-  background: #cde0f2;
+  background: #d2e6f8;
   cursor : pointer;
 } 
 

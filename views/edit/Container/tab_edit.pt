@@ -185,7 +185,7 @@
                       _______ id cell _______
                     </tal:block>
                     <td>
-                      <a class="image"
+                      <a class="icon"
                         tal:attributes="
                           href python:here.get_editor_link(item);
                           title item/meta_type;">
@@ -274,7 +274,7 @@
                     </tal:block>
                     <td class="listing-right">
                       <tal:block condition="python:may_change_content and not is_default">
-                        <a class="image"
+                        <a class="icon"
                           title="move down"
                           tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item/id}"
                           i18n:attributes="title"
@@ -285,7 +285,7 @@
                             width="16"
                             tal:attributes="src string:${root_url}/globals/down.gif" />
                         </a>
-                        <a class="image"
+                        <a class="icon"
                           title="move up"
                           tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item/id}"
                           i18n:attributes="title"
@@ -348,7 +348,7 @@
                       _______ icon + id cell _______
                     </tal:block>
                     <td>
-                      <a class="image"
+                      <a class="icon"
                         tal:attributes="
                           href string:${asset_url}/edit/tab_edit;
                           title asset/meta_type;">
