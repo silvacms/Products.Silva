@@ -19,8 +19,13 @@
 <dtml-with stylesheet_properties>
 
 body {
+    background: &dtml-mainBackground;;
   background-image: url(<dtml-var root>/globals/skyrise.gif);
   background-repeat: repeat-x;
+    font: &dtml-mainFont;;
+    color: &dtml-mainFontColor;;
+    margin: 0;
+    padding: 0;
 }
 
 div.workspace {
@@ -28,13 +33,10 @@ div.workspace {
   margin: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: bold;
-  margin: 0em 0em 1em 0em;
-    padding: 0;
-  border: none;
+img {
+    border: none;
+	vertical-align: middle;
 }
-
 
 /* _________________________________________________________ path bar _____ */
 
@@ -106,12 +108,14 @@ div.tabs a {
   display : block;
   width : 7.5em;
   height : 1.1em;
-  text-align : center;
+    color: &dtml-mainTabFontColor;;
     background: &dtml-mainTabBackground;;
   border : &dtml-mainTabBorderColor; 1px solid;
     border-bottom-color: #8b939b;
     margin: 0;
     padding: 0 ! important;
+  text-align : center;
+    font-weight: &dtml-mainTabFontWeight;;
 }
 
 div.tabs a:visited {
@@ -193,6 +197,7 @@ div.tabs a.normal:hover {
 
 div.tabs img {
     margin: 0.3em 0 0 0;
+  border: none;
   vertical-align : bottom;
 }
 
@@ -275,7 +280,12 @@ div.personalBar img {
 
 /* ____________________________________________________ columns table _____ */
 
+table {
+    font-size: 100%;
+}
+
 table.columns {
+	width: 100%;
   border-collapse: collapse;
 }
 
@@ -283,10 +293,12 @@ table.columns {
 table.columns td.left {
     width: 20%;
     padding: 0px 8px 0 8px;
+    vertical-align: top;
 }
 table.columns td.main {
     width: 60%;
     padding: 0px 8px 0 0;
+    vertical-align: top;
 }
 table.columns td.right {
     width: 20%;
@@ -297,15 +309,19 @@ table.columns td.right {
 table.columns2 td.left {
     width: 20%;
     padding: 0px 0 0 8px;
+    vertical-align: top;
 }
 table.columns2 td.main {
     width: 80%;
     padding: 0px 8px 0 8px;
+    vertical-align: top;
 }
 
+/* 1 column */
 table.columns1 td.main {
     width: 100%;
     padding: 0px 8px 0 8px;
+    vertical-align: top;
 }
 
 
@@ -315,16 +331,14 @@ table.listing {
     color: #444444;
     width: 100%;
     margin: 0em 0em 2em 0em;    
-  border-collapse: collapse;
+    border-left: &dtml-listingBorder;;
+    border-bottom: &dtml-listingBorder;;
+    border-collapse: collapse;
+    clear: both;
 }
 
-table.listing thead {
-}
-
-table.listing tbody {
-}
-
-table.listing tfoot {
+table.listing img {
+	vertical-align: middle;
 }
 
 /* _____________________ rows ______________________ */
@@ -339,6 +353,15 @@ table.listing tr.controls {
 
 table.listing tr.top-controls {
   background: &dtml-listingTopControlsBackground;;
+}
+
+table.listing tr.even {
+    /* cycling starts darker (count begins at 0) */
+    background: &dtml-listingEvenBackground;;
+}
+
+table.listing tr.odd {
+    background: &dtml-listingOddBackground;;
 }
 
 table.listing tr.inter-controls {
@@ -356,10 +379,14 @@ tr.divider, th.divider, td.divider {
 table.listing th {
     color: &dtml-listingHeaderFontColor;;
     background: &dtml-listingHeaderBackground;; 
-    padding-left: 0.6em;
-    padding-right: 0.6em;
+    padding: 0em 0.6em 0em 0.6em;
   border-top: none;
+    border-bottom: &dtml-listingBorder;;
+    border-right: &dtml-listingBorder;;
+    font-weight: normal;
     text-align: left;
+    text-transform: &dtml-textTransform;;
+    white-space: nowrap;
 }
 
 table.listing th.listing-left {
@@ -385,30 +412,27 @@ table.listing th.align-right, table.listing td.align-right {
 }
 
 table.listing td {
-    padding-left: 0.6em;
-    padding-right: 0.6em;
-    vertical-align: top;
+    border-right: &dtml-listingBorder;;
+    padding: 0em 0.6em;
+  vertical-align: top;
+  text-align: left;
 }
 
 /* _______ title cell _______ */
-
 table.listing td.top {
   color: &dtml-shade40;;
   background: &dtml-listingTopBackground;;
   border: &dtml-listingBorder;;
   border-style: solid solid solid solid;
-  padding-top: 0em;
-  padding-bottom: 0em;
-  vertical-align: bottom;
+  padding: 0em;
+    text-align: right;
 }
-
 table.listing td.top h2 {
   color: &dtml-listingTopHeadingColor;;
     text-align: left;
     margin: 0.1em 0.4em 0.1em 0.4em;
     border: none;
 }
-
 table.listing td.top img {
     vertical-align: top;
 }
@@ -582,21 +606,35 @@ table.sublisting {
 
 /* _______________________________________________________ form stuff _____ */
 
+form {
+    border: none;
+    margin: 0;
+}
+
+/* in use? */
 form.compact {
     margin: 0;
     padding: 0;
 }
 
 input {
-  color : $dtml-inputFontColor;;
+    color : $dtml-inputFontColor;;
   background : &dtml-inputBackground;;
   margin-top: 1px;
+    margin-bottom: 1px; /* IE bug fix */
+    padding: 0.1em;
+    border: &dtml-inputBorder;;
+    vertical-align: middle;
+    font: &dtml-inputFont;;
 }
  
 textarea {
-  font: &dtml-inputFont;;
-  color : &dtml-inputFontColor;;
+    width: 93%;
+    color : &dtml-inputFontColor;;
   background : &dtml-inputBackground;;
+    padding: 0.1em;
+    border: &dtml-inputBorder;;  
+    font: &dtml-inputFont;;
   text-transform: none;
 }
 
@@ -605,11 +643,17 @@ textarea.readable {
 }
 
 select {
+}
+
+select {
   color : &dtml-mainTabFontColorSelected;;
   background : &dtml-controlBackground;;
-  font-size: 90% ! important;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
+    border: &dtml-inputBorder;;  
+    vertical-align: top;
+    font: &dtml-inputFont;;
+  font-size: 90% ! important;
   line-height : 96%;
 }
 
@@ -953,11 +997,51 @@ table.listing div.message {
   background-color: #b8ccce;
 }
 
+
+/* _______________________________________________________ typography _____ */
+
+h1 {
+    font-size: &dtml-headingSize1;;
+}
+
+h2 {
+    font-size: &dtml-headingSize2;;
+}
+
+h3 {
+    font-size: &dtml-headingSize3;;
+}
+
+h4 {
+    font-size: &dtml-headingSize4;;
+}
+
+h5 {
+    font-size: &dtml-headingSize5;;
+}
+
+h6 {
+    font-size: &dtml-headingSize6;;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  margin: 0em 0em 1em 0em;
+    padding: 0;
+  border: none;
+}
+
+a {
+	text-decoration: none;
+    color: &dtml-mainLinkColor;;
+    background-color: transparent;
+}
+
 </dtml-with>
 </dtml-let>
 
 
-/* _____________________________ Silva specific styles and typography _____ */
+/* ____________________________________________ Silva specific styles _____ */
 
 /* ______________________________________________________ align/float _____ */
 

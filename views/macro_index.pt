@@ -38,11 +38,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   
 <metal:block define-slot="meta" />
-<tal:block replace="nothing"> <!-- Plone Stylesheets --> </tal:block>
 <style media="all"
   type="text/css"
   xml:space="preserve"
-  tal:define="imports python: ['plone.css', 'silva.css',]"
+  tal:define="imports python: ['silva.css',]"
   tal:content="structure python: view.css_imports(imports)"
 >
 @imports
