@@ -25,7 +25,7 @@ addables = result['addables']
 
 # if nothing changes, we're done
 if will_be_acquired and currently_acquired:
-    return context.settings_addables(message_type="alert", message="Addable settings have not changed and remain acquired.")
+    return context.settings_addables(message_type="error", message="Addable settings have not changed and remain acquired.")
 
 # now update the settings (if we have to)
 if will_be_acquired:
