@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Fri Nov 19 18:31:18 2004\n"
-"PO-Revision-Date: 2004-11-23 12:26+0100\n"
+"PO-Revision-Date: 2004-11-23 12:46+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -424,23 +424,23 @@ msgstr "Keine Benutzer ausgewählt, keine gelöscht."
 
 #: /views/edit/Asset/Groups/Group/remove_users_from_group.py:19
 msgid "User(s) ${removed} removed from group."
-msgstr ""
+msgstr "Benutzer ${removed} aus Gruppe entfernt."
 
 #: /views/edit/Asset/Groups/IPGroup/add_iprange_to_ipgroup.py:11
 msgid "No ip range was provided, so nothing was added."
-msgstr ""
+msgstr "Kein IP-Bereich angegeben, folglich wurde nichts entfernt."
 
 #: /views/edit/Asset/Groups/IPGroup/add_iprange_to_ipgroup.py:20
 msgid "Range ${iprange} added to the IP Group"
-msgstr ""
+msgstr "Bereich ${iprange} zu IP-Gruppe hinzugefügt"
 
 #: /views/edit/Asset/Groups/IPGroup/copy_ipranges_from_ipgroups.py:11
 msgid "No group selected, so nothing copied."
-msgstr ""
+msgstr "Keine Gruppe ausgewählt, folglich wurde nichts kopiert."
 
 #: /views/edit/Asset/Groups/IPGroup/copy_ipranges_from_ipgroups.py:15
 msgid "Range(s) ${copied} added."
-msgstr ""
+msgstr "Bereich(e) ${copied} hinzugefügt."
 
 #: /views/edit/Asset/Groups/IPGroup/copy_ipranges_from_ipgroups.py:19
 msgid "Nothing copied."
