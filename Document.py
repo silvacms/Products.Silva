@@ -97,8 +97,10 @@ class Document(VersionedContent, EditorSupport):
         if name == 'document_title':
             self.set_title(value)
             return
-        if not self._metadata.has_key(name):
-            return
+        # FIXME perhaps should put this in again for security, but
+        # leaving it out makes it nice for extensibility
+        #if not self._metadata.has_key(name):
+        #    return
         self._metadata[name] = value
         self._metadata = self._metadata
 
