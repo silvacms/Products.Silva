@@ -5,6 +5,13 @@ Silva changes
 
   0.9.2.1
 
+    Bugs Fixed
+                                                                                                    
+        - The metadata tab wouldn't show the metadata set's title when it
+          was available.
+
+  0.9.2.1
+
     Features added
 
         - Added support for ExternalEditor, Silva Files and Images can now be
