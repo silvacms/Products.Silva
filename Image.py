@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.14.2.5 2003/07/03 12:50:57 guido Exp $
+# $Id: Image.py,v 1.14.2.6 2003/11/17 07:46:42 jw Exp $
 
 # Python
 import re
@@ -299,4 +299,4 @@ def manage_addImage(self, id, title, file=None, REQUEST=None):
         object.set_image(file)
 
     add_and_edit(self, id, REQUEST)
-    return ''
+    return object

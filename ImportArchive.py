@@ -60,7 +60,9 @@ def import_archive_helper(context, file, title, recreate_dirs=1):
         asset_id = str(assetId)
         added_object = factory(asset_id, title, extracted_file)
         # ...successfully?
-        if added_object is not None:
+        # XXX: do not just check for None, since the
+        # factory may return an empty string!        
+        if added_object:
             added_object.sec_update_last_author_info()
             succeeded_list.append(name)
         else:
