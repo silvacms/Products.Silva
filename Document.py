@@ -4,7 +4,7 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
 import DateTime
-# XA
+# Silva
 from ViewRegistry import ViewAttribute
 from TocSupport import TocSupport
 from Versioning import Versioning
@@ -14,9 +14,9 @@ from helpers import add_and_edit
 from cgi import escape
 
 class Document(TocSupport, Folder.Folder, Versioning):
-    """XA Document.
+    """Silva Document.
     """
-    meta_type = "XA Document"
+    meta_type = "Silva Document"
 
     security = ClassSecurityInfo()
    
@@ -75,14 +75,14 @@ class Document(TocSupport, Folder.Folder, Versioning):
             }
         
     def __repr__(self):
-        return "<XA Document instance at %s>" % self.id
+        return "<Silva Document instance at %s>" % self.id
 
     def title(self):
         """Get title. If we're 'doc', we get title from our folder.
         """
         if self.id == 'doc':
             folder = self.get_folder()
-            if folder.meta_type in ['XA Folder', 'XA Root']:
+            if folder.meta_type in ['Silva Folder', 'Silva Root']:
                 return folder.title()
             else:
                 return "(Default)"
@@ -220,7 +220,7 @@ class Document(TocSupport, Folder.Folder, Versioning):
         """
         return self._metadata.get(name, None)
     
-    security.declareProtected('Change XA Documents',
+    security.declareProtected('Change Silva Documents',
                               'set_metadata')
     def set_metadata(self, name, value):
         """Set meta data.
@@ -241,8 +241,8 @@ class Document(TocSupport, Folder.Folder, Versioning):
         parent = self.get_folder()
         # rename doc so we can create folder with the same name
         parent.manage_renameObject(id, temp_id)
-        # create XA Folder to hold self
-        parent.manage_addProduct['XA'].manage_addFolder(id, self.title(), 0)
+        # create Silva Folder to hold self
+        parent.manage_addProduct['Silva'].manage_addFolder(id, self.title(), 0)
         # get folder
         folder = getattr(parent, id)
         # now add self to folder

@@ -5,7 +5,7 @@ from OFS import Folder, SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
-# XA
+# Silva
 from ViewRegistry import ViewAttribute
 from TocSupport import TocSupport
 import Copying
@@ -13,9 +13,9 @@ import Copying
 from helpers import add_and_edit
 
 class Folder(TocSupport, Folder.Folder):
-    """XA Folder.
+    """Silva Folder.
     """
-    meta_type = "XA Folder"
+    meta_type = "Silva Folder"
 
     security = ClassSecurityInfo()
 
@@ -28,7 +28,7 @@ class Folder(TocSupport, Folder.Folder):
         self._toc_ids = []
         
     def __repr__(self):
-        return "<XA Folder instance at %s>" % self.id
+        return "<Silva Folder instance at %s>" % self.id
     
     def title(self):
         """Get the title.
@@ -45,7 +45,7 @@ class Folder(TocSupport, Folder.Folder):
 
     def is_published(self):
         """Return true if this is published."""
-        for item in self.objectValues(['XA Folder', 'XA Document']):
+        for item in self.objectValues(['Silva Folder', 'Silva Document']):
             if item.is_published():
                 return 1            
         return 0
@@ -126,7 +126,7 @@ class Folder(TocSupport, Folder.Folder):
         #toc_ids = None
         if toc_ids is None:
             toc_ids = []
-            for item in self.objectValues(['XA Folder', 'XA Document']):
+            for item in self.objectValues(['Silva Folder', 'Silva Document']):
                 toc_ids.append(item.id)
             self._toc_ids = toc_ids
             
@@ -139,7 +139,7 @@ class Folder(TocSupport, Folder.Folder):
             item = getattr(self, id, None)
             if item is None:
                 continue
-            if id == 'doc' and item.meta_type == 'XA Document':
+            if id == 'doc' and item.meta_type == 'Silva Document':
                 first_item = item
             else:
                 items.append(item)
@@ -147,7 +147,7 @@ class Folder(TocSupport, Folder.Folder):
             items.insert(0, first_item)
         # now add them to the main toc list
         for item in items:
-            if item.meta_type == 'XA Folder':
+            if item.meta_type == 'Silva Folder':
                 l.append((indent, item))
                 item._get_toc_helper(l, indent + 1)
             else:
@@ -212,7 +212,7 @@ class Folder(TocSupport, Folder.Folder):
         # folder we're dedenting to
         to_folder = from_folder.aq_parent
         # can't move to something that is not a normal folder
-        if to_folder.meta_type not in ['XA Folder', 'XA Root']:
+        if to_folder.meta_type not in ['Silva Folder', 'Silva Root']:
             return None
         # can't dedent anything not in _toc_ids
         toc_ids = from_folder._toc_ids
@@ -250,7 +250,7 @@ def manage_addFolder(self, id, title, create_doc=1, REQUEST=None):
     object = getattr(self, id)
     # add doc
     if create_doc:
-        object.manage_addProduct['XA'].manage_addDocument('doc', '')
+        object.manage_addProduct['Silva'].manage_addDocument('doc', '')
     add_and_edit(self, id, REQUEST)
     return ''
 

@@ -29,7 +29,7 @@ class TocSupport:
         """
         numbers = []
         section = self
-        while section.meta_type != 'XA Root':
+        while section.meta_type != 'Silva Root':
             number = section.get_section_number()
             if number is None:
                 return None
@@ -44,7 +44,7 @@ class TocSupport:
         """
         folder = self.aq_parent
         # get all entries in the parent folder that could be part of toc
-        ids = folder.objectIds(['XA Folder', 'XA Document'])
+        ids = folder.objectIds(['Silva Folder', 'Silva Document'])
         # if we're 'doc' return None
         if self.id == 'doc':
             return None

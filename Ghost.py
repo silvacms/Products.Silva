@@ -1,7 +1,7 @@
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
-# XA
+# Silva
 from TocSupport import TocSupport
 # misc
 from helpers import add_and_edit
@@ -9,6 +9,8 @@ from helpers import add_and_edit
 class Ghost(TocSupport, SimpleItem.Item):
     security = ClassSecurityInfo()
 
+    meta_type = "Silva Ghost"
+    
     def __init__(self, id, title):
         self.id = id
         self._title = title
