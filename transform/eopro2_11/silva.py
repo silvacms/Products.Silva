@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.5 $'
+__version__='$Revision: 1.6 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -154,6 +154,16 @@ class image(SilvaElement):
             self.content.convert(context),
             src=self.attrs['image_path']
             )
+
+class pre(SilvaElement):
+    def compact(self):
+        return self
+
+    def convert(self, context):
+        return html.pre(
+            self.content.convert(context),
+        )
+
 
 
 """ current mapping of silva

@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.6 $'
+__version__='$Revision: 1.7 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -224,6 +224,15 @@ class br(Element):
             "",
             type='normal'
             )
+
+class pre(Element):
+    def compact(self):
+        return self
+
+    def convert(self, *args, **kwargs):
+        return silva.pre(
+            self.content.convert(*args, **kwargs)
+        )
 
 
 

@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import unittest
 
 # 
@@ -376,6 +376,21 @@ class RoundtripWithTidy(unittest.TestCase):
         self.assert_(len(img)==1)
         img = img[0]
         self.assert_(img.attrs.get('src')=='/path/to/image')
+
+    def test_preformatted(self):
+        """ check that 'pre' (preformatted text) works """
+        silvadoc = '''<silva_document id="test"><title>title</title>
+                        <doc><pre>\n  &quot;&gt;&lt;dies\n</pre>
+                        </doc>
+                      </silva_document>''' 
+        htmlnode = self._check(silvadoc)
+        body = htmlnode.find('body')[0]
+        pre = body.find('pre')
+        self.assert_(len(pre)==1)
+        pre = pre[0]
+        self.assert_(pre.content.asBytes()=='\n  &quot;&gt;&lt;dies\n')
+
+        self.assert_(pre.compact()==pre)
 
     def _checkhtml(self, html):
         cmd = 'tidy -eq -utf8'
