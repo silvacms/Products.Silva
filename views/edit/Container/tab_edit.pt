@@ -124,7 +124,7 @@
     Last&nbsp;modified
   </th>
   <th align="left" width="15%">
-    Last&nbsp;status
+    Author
   </th>
   <th align="right" width="2%">
     &nbsp;&nbsp;&nbsp;&nbsp;Shift&nbsp;
@@ -243,7 +243,7 @@
     <a class="graylink" title="Down to Publish tab of item"
       tal:condition="python:item.implements_container()"
       tal:attributes="href string:${item/absolute_url}/edit/tab_status">
-      See&nbsp;status
+      n/a
     </a>
   </td>
   <span tal:replace="nothing"> _______ shift _______ </span>
