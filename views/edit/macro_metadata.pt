@@ -145,6 +145,7 @@
                     </tal:block>
                     <span class="error"
                       tal:condition="element_error"
+                      i18n:domain="formulator" i18n:translate=""
                       tal:content="element_error">
                     </span>
                   </td>

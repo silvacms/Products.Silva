@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Tue Nov 30 13:19:34 2004\n"
+"POT-Creation-Date: Tue Nov 30 16:36:46 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -186,7 +186,7 @@ msgstr ""
 msgid "Can not delete all versions"
 msgstr ""
 
-#: /adapters/version_management.py:257
+#: /adapters/version_management.py:259
 msgid "no such version ${version}"
 msgstr ""
 
@@ -236,10 +236,6 @@ msgstr ""
 
 #: /doc/silva-extra.xml:608
 msgid "User who last edited this content."
-msgstr ""
-
-#: /doc/silva-extra.xml:668
-msgid "url"
 msgstr ""
 
 #: /doc/silva-extra.xml:670
@@ -355,52 +351,20 @@ msgstr ""
 msgid "Added ${meta_type} ${id}."
 msgstr "Hinzugefügt ${meta_type} ${id}."
 
-#: /views/add/File/form.form:28
-msgid "form_add_file_object_id_title"
+#: /views/add/File/form.form:66 /views/edit/Asset/upload_form.form:25
+msgid "file"
 msgstr ""
 
-#: /views/add/File/form.form:30
-msgid "form_add_file_object_id_description"
-msgstr ""
-
-#: /views/add/File/form.form:50
-msgid "form_add_file_object_title_title"
-msgstr ""
-
-#: /views/add/File/form.form:51
-msgid "form_add_file_object_title_description"
-msgstr ""
-
-#: /views/add/File/form.form:66
-msgid "form_add_file_file_title"
-msgstr ""
-
-#: /views/add/File/form.form:68
-msgid "form_add_file_file_description"
-msgstr ""
-
-#: /views/add/Folder/form.form:28
-msgid "form_add_folder_object_id_title"
-msgstr ""
-
-#: /views/add/Folder/form.form:30
-msgid "form_add_folder_object_id_description"
-msgstr ""
-
-#: /views/add/Folder/form.form:50
-msgid "form_add_folder_object_title_title"
-msgstr ""
-
-#: /views/add/Folder/form.form:51
-msgid "form_add_folder_object_title_description"
+#: /views/add/File/form.form:68 /views/add/Image/form.form:67
+msgid "<b>Tip:</b> You don't have to fill in the id and title."
 msgstr ""
 
 #: /views/add/Folder/form.form:62
-msgid "form_add_folder_policy_name_description"
+msgid "Choose an item to be created within the folder."
 msgstr ""
 
 #: /views/add/Folder/form.form:70
-msgid "form_add_folder_policy_name_title"
+msgid "first item"
 msgstr ""
 
 #: /views/add/Ghost/add_form.pt:32 /views/add/GhostFolder/add_form.pt:32
@@ -426,20 +390,13 @@ msgstr ""
 msgid "reference..."
 msgstr "Verweis..."
 
-#: /views/add/Ghost/form.form:28
-msgid "form_add_ghost_object_id_title"
-msgstr ""
-
-#: /views/add/Ghost/form.form:30
-msgid "form_add_ghost_object_id_description"
-msgstr ""
-
-#: /views/add/Ghost/form.form:48
-msgid "form_add_ghost_content_url_title"
+#: /views/add/Ghost/form.form:48 /views/add/GhostFolder/form.form:48
+#: /views/add/Link/form.form:71 /doc/silva-extra.xml:668
+msgid "url"
 msgstr ""
 
 #: /views/add/Ghost/form.form:50
-msgid "form_add_ghost_content_url_description"
+msgid "Location of originating document."
 msgstr ""
 
 #: /views/add/GhostFolder/add_form.pt:63
@@ -452,20 +409,8 @@ msgid ""
 "<span class=\"warning\">creation may take a while</span>."
 msgstr ""
 
-#: /views/add/GhostFolder/form.form:28
-msgid "form_add_ghostfolder_object_id_title"
-msgstr ""
-
-#: /views/add/GhostFolder/form.form:30
-msgid "form_add_ghostfolder_object_id_description"
-msgstr ""
-
-#: /views/add/GhostFolder/form.form:48
-msgid "form_add_ghostfolder_content_url_title"
-msgstr ""
-
 #: /views/add/GhostFolder/form.form:50
-msgid "form_add_ghostfolder_content_url_description"
+msgid "Location of originating folder."
 msgstr ""
 
 #: /views/add/Groups/add_submit.py:39
@@ -475,135 +420,27 @@ msgid ""
 "        unique within a Silva instance."
 msgstr ""
 
-#: /views/add/Groups/form.form:28
-msgid "form_add_groups_object_id_title"
-msgstr ""
-
-#: /views/add/Groups/form.form:30
-msgid "form_add_groups_object_id_description"
-msgstr ""
-
-#: /views/add/Groups/form.form:48
-msgid "form_add_groups_object_title_title"
-msgstr ""
-
-#: /views/add/Groups/form.form:50
-msgid "form_add_groups_object_title_description"
-msgstr ""
-
 #: /views/add/Image/add_submit.py:33
 #: /views/edit/Asset/File/upload_submit.py:26
 #: /views/edit/Container/tab_edit_import_xml.py:20
 msgid "Empty or invalid file."
 msgstr "Leere oder ungültige Datei."
 
-#: /views/add/Image/form.form:28
-msgid "form_add_image_object_id_title"
-msgstr ""
-
-#: /views/add/Image/form.form:30
-msgid "form_add_image_object_id_description"
-msgstr ""
-
-#: /views/add/Image/form.form:50
-msgid "form_add_image_object_title_title"
-msgstr ""
-
-#: /views/add/Image/form.form:51
-msgid "form_add_image_object_title_description"
-msgstr ""
-
-#: /views/add/Image/form.form:66
-msgid "form_add_image_file_title"
-msgstr ""
-
-#: /views/add/Image/form.form:67
-msgid "form_add_image_file_description"
-msgstr ""
-
-#: /views/add/Indexer/form.form:28
-msgid "form_add_indexer_object_id_title"
-msgstr ""
-
-#: /views/add/Indexer/form.form:30
-msgid "form_add_indexer_object_id_description"
-msgstr ""
-
-#: /views/add/Indexer/form.form:50
-msgid "form_add_indexer_object_title_title"
-msgstr ""
-
-#: /views/add/Indexer/form.form:51
-msgid "form_add_indexer_object_title_description"
-msgstr ""
-
-#: /views/add/Link/form.form:28
-msgid "form_add_link_object_id_title"
-msgstr ""
-
-#: /views/add/Link/form.form:30
-msgid "form_add_link_object_id_description"
-msgstr ""
-
-#: /views/add/Link/form.form:51
-msgid "form_add_link_object_title_title"
-msgstr ""
-
-#: /views/add/Link/form.form:52
-msgid "form_add_link_object_title_description"
-msgstr ""
-
-#: /views/add/Link/form.form:71
-msgid "form_add_link_url_title"
-msgstr ""
-
 #: /views/add/Link/form.form:73
-msgid "form_add_link_url_description"
-msgstr ""
-
-#: /views/add/Publication/form.form:28
-msgid "form_add_publication_object_id_title"
-msgstr ""
-
-#: /views/add/Publication/form.form:30
-msgid "form_add_publication_object_id_description"
-msgstr ""
-
-#: /views/add/Publication/form.form:50
-msgid "form_add_publication_object_title_title"
-msgstr ""
-
-#: /views/add/Publication/form.form:51
-msgid "form_add_publication_object_title_description"
+msgid "Link url."
 msgstr ""
 
 #: /views/add/Publication/form.form:62
-msgid "form_add_publication_policy_name_description"
+msgid "What type of object should be added after creating the folder."
 msgstr ""
 
 #: /views/add/Publication/form.form:70
-msgid "form_add_publication_policy_name_title"
-msgstr ""
-
-#: /views/add/SimpleContent/form.form:28
-msgid "form_add_simplecontent_object_id_title"
-msgstr ""
-
-#: /views/add/SimpleContent/form.form:30
-msgid "form_add_simplecontent_object_id_description"
-msgstr ""
-
-#: /views/add/SimpleContent/form.form:50
-msgid "form_add_simplecontent_object_title_title"
-msgstr ""
-
-#: /views/add/SimpleContent/form.form:51
-msgid "form_add_simplecontent_object_title_description"
+msgid "First item"
 msgstr ""
 
 #: /views/add/add_form.pt:102 /views/add/Ghost/add_form.pt:106
 #: /views/add/GhostFolder/add_form.pt:114
-#: /views/edit/Container/tab_access_groups.pt:138
+#: /views/edit/Container/tab_access_groups.pt:140
 #: /views/edit/Container/tab_status_export.pt:171
 #: /views/edit/Container/tab_status_export.pt:180
 #: /views/edit/VersionedContent/tab_status.pt:239
@@ -620,7 +457,7 @@ msgstr "Aspekt"
 
 #: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:43
 #: /views/add/GhostFolder/add_form.pt:45 /views/edit/macro_metadata.pt:78
-#: /views/edit/macro_metadata.pt:311 /views/edit/Asset/macro_asset_edit.pt:69
+#: /views/edit/macro_metadata.pt:312 /views/edit/Asset/macro_asset_edit.pt:69
 #: /views/edit/Asset/macro_asset_edit.pt:153
 #: /views/edit/Asset/Image/edit.pt:145
 #: /views/edit/Container/tab_edit_import.pt:95
@@ -634,6 +471,7 @@ msgstr "Aspekt"
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:42
 #: /views/edit/VersionedContent/Link/edit.pt:66
+#: /views/public/search_form.form:28
 msgid "content"
 msgstr "Inhalt"
 
@@ -664,10 +502,10 @@ msgid "cancel"
 msgstr "Abbrechen"
 
 #: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
-#: /views/add/GhostFolder/add_form.pt:105 /views/edit/lookup_ui.pt:107
-#: /views/edit/macro_metadata.pt:169 /views/edit/macro_metadata.pt:242
+#: /views/add/GhostFolder/add_form.pt:105 /views/edit/lookup_ui.pt:109
+#: /views/edit/macro_metadata.pt:170 /views/edit/macro_metadata.pt:243
 #: /views/edit/Asset/macro_asset_edit.pt:94
-#: /views/edit/Container/tab_access_groups.pt:130
+#: /views/edit/Container/tab_access_groups.pt:132
 #: /views/edit/Container/tab_edit.pt:78
 #: /views/edit/Container/GhostFolder/tab_edit.pt:143
 #: /views/edit/VersionedContent/Ghost/edit.pt:134
@@ -675,27 +513,18 @@ msgid "access key: alt-s"
 msgstr "Kurzwahl: alt-s"
 
 #: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
-#: /views/add/GhostFolder/add_form.pt:105 /views/edit/macro_metadata.pt:169
-#: /views/edit/macro_metadata.pt:242 /views/edit/Asset/macro_asset_edit.pt:94
-#: /views/edit/Container/tab_access_groups.pt:130
+#: /views/add/GhostFolder/add_form.pt:105 /views/edit/macro_metadata.pt:170
+#: /views/edit/macro_metadata.pt:243 /views/edit/Asset/macro_asset_edit.pt:94
+#: /views/edit/Container/tab_access_groups.pt:132
 #: /views/edit/Member/SimpleMember/tab_edit.pt:122
 msgid "save"
 msgstr "Speichern"
 
-#: /views/add/form.form:28
-msgid "default_form_add_object_id_title"
-msgstr ""
-
-#: /views/add/form.form:30
-msgid "default_form_add_object_id_description"
-msgstr ""
-
-#: /views/add/form.form:50
-msgid "default_form_add_object_title_title"
-msgstr ""
-
-#: /views/add/form.form:51
-msgid "default_form_add_object_title_description"
+#: /views/add/form.form:51 /views/add/Folder/form.form:51
+#: /views/add/Indexer/form.form:51 /views/add/Link/form.form:52
+#: /views/add/Publication/form.form:51 /views/add/SimpleContent/form.form:51
+msgid ""
+"The title will be publicly visible, and is used for the link in indexes."
 msgstr ""
 
 #: /views/add/get_id_status_text.py:17
@@ -764,12 +593,8 @@ msgstr "Dateipfad"
 msgid "file mime type"
 msgstr "Datei-Mimetyp"
 
-#: /views/edit/Asset/File/form.form:28
-msgid "file_asset_form_file_title_title"
-msgstr ""
-
-#: /views/edit/Asset/File/form.form:30
-msgid "file_asset_form_file_title_description"
+#: /views/edit/Asset/File/form.form:30 /views/edit/Asset/Image/form.form:31
+msgid "Optional, but useful."
 msgstr ""
 
 #: /views/edit/Asset/File/submit.py:20
@@ -1043,7 +868,7 @@ msgstr ""
 msgid "dimensions"
 msgstr ""
 
-#: /views/edit/Asset/Image/edit.pt:40
+#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:66
 msgid "image"
 msgstr " "
 
@@ -1074,14 +899,6 @@ msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:90
 msgid "PIL doesn't seem to be installed."
-msgstr ""
-
-#: /views/edit/Asset/Image/form.form:29
-msgid "form_image_title_title"
-msgstr ""
-
-#: /views/edit/Asset/Image/form.form:31
-msgid "form_image_title_description"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:124
@@ -1145,27 +962,34 @@ msgid "drag window"
 msgstr ""
 
 #: /views/edit/Asset/Image/scale_form.form:25
-msgid "scale_web_format_title"
+msgid "web format"
 msgstr ""
 
 #: /views/edit/Asset/Image/scale_form.form:29
-msgid "scale_web_format_description"
+msgid "Image format for web."
 msgstr ""
 
 #: /views/edit/Asset/Image/scale_form.form:49
-msgid "scale_web_scaling_title"
+msgid "scaling"
 msgstr ""
 
-#: /views/edit/Asset/Image/scale_form.form:56
-msgid "scale_web_scaling_description"
+#: /views/edit/Asset/Image/scale_form.form:57
+msgid ""
+"\n"
+"\t  Image scaling for web: use width x height in pixels, or one axis length, "
+"or a percentage (100x200, 100x*, *x200, 40%)."
 msgstr ""
 
 #: /views/edit/Asset/Image/scale_form.form:77
-msgid "scale_web_crop_title"
+msgid "cropping"
 msgstr ""
 
-#: /views/edit/Asset/Image/scale_form.form:84
-msgid "scale_web_crop_description"
+#: /views/edit/Asset/Image/scale_form.form:86
+msgid ""
+"\n"
+"              Image cropping for web: use the &#8216;set crop "
+"coordinates&#8217; button, or enter X1xY1-X2xY2 to define the cropping box.\n"
+"          "
 msgstr ""
 
 #: /views/edit/Asset/Image/scale_submit.py:12
@@ -1242,12 +1066,8 @@ msgstr ""
 msgid "characterization"
 msgstr ""
 
-#: /views/edit/Asset/upload_form.form:25
-msgid "form_file_title"
-msgstr ""
-
 #: /views/edit/Asset/upload_form.form:26
-msgid "form_file_description"
+msgid "Locate a file."
 msgstr ""
 
 #: /views/edit/Container/Folder/placeholder.py:3
@@ -1364,12 +1184,8 @@ msgstr ""
 msgid "Layout copied"
 msgstr ""
 
-#: /views/edit/Container/Publication/layout_form.form:29
-msgid "layout_layout_title"
-msgstr ""
-
 #: /views/edit/Container/Publication/layout_form.form:31
-msgid "layout_layout_description"
+msgid "Choose among the installed layout templates."
 msgstr ""
 
 #: /views/edit/Container/Publication/layout_submit.py:19
@@ -1394,19 +1210,24 @@ msgid "addable settings for &#xab;${title}&#xbb;"
 msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables_form.form:23
-msgid "addables_acquire_addables_title"
+msgid "acquire"
 msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables_form.form:25
-msgid "addables_acquire_addables_description"
+msgid ""
+"If checked, inherit the addables from above. Uncheck this to change the "
+"allowed addables below."
 msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables_form.form:39
-msgid "addables_addables_title"
+msgid "addables"
 msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables_form.form:41
-msgid "addables_addables_description"
+msgid ""
+"If 'acquire' is not checked, these settings will determine the items allowed "
+"in this publication. Otherwise the addables are acquired from the "
+"publication above."
 msgstr ""
 
 #: /views/edit/Container/Publication/settings_addables_submit.py:34
@@ -1456,6 +1277,7 @@ msgid "change the addables allowed in this publication: alt-a"
 msgstr "erlaubten Erweiterungen für diese Publikation konfigurieren: alt-a"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:75
+#: /views/edit/Container/Publication/layout_form.form:29
 msgid "layout"
 msgstr "Layout"
 
@@ -1476,8 +1298,8 @@ msgid "list of processed items ${format}"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:160
-#: /views/edit/Container/tab_access_groups.pt:103
-#: /views/edit/Container/tab_access_groups.pt:178
+#: /views/edit/Container/tab_access_groups.pt:105
+#: /views/edit/Container/tab_access_groups.pt:180
 msgid "type"
 msgstr "Typ"
 
@@ -1611,71 +1433,85 @@ msgstr ""
 msgid "Finished importing: ${msg}"
 msgstr "Import beendet: ${msg}"
 
-#: /views/edit/Container/tab_access_groups.pt:109
+#: /views/edit/Container/tab_access_groups.pt:111
 msgid "Group: a group defined by a list of users"
 msgstr "Gruppe: Eine definiert als Liste von Benutzern"
 
-#: /views/edit/Container/tab_access_groups.pt:112
+#: /views/edit/Container/tab_access_groups.pt:114
 msgid "Virtual Group: a group defined by a list of normal groups"
 msgstr ""
 
-#: /views/edit/Container/tab_access_groups.pt:116
+#: /views/edit/Container/tab_access_groups.pt:118
 msgid "IP Group: a group based on ip addresses"
 msgstr "IP-Gruppe: Eine Gruppe basierend auf IP-Adressen"
 
-#: /views/edit/Container/tab_access_groups.pt:138
+#: /views/edit/Container/tab_access_groups.pt:140
 msgid "save + edit"
 msgstr "Speichern + Bearbeiten"
 
-#: /views/edit/Container/tab_access_groups.pt:161
+#: /views/edit/Container/tab_access_groups.pt:163
 msgid "groups located in this folder"
 msgstr "Gruppen in diesem Ordner"
 
-#: /views/edit/Container/tab_access_groups.pt:172
+#: /views/edit/Container/tab_access_groups.pt:174
 msgid "name"
 msgstr "Name"
 
-#: /views/edit/Container/tab_access_groups.pt:184
+#: /views/edit/Container/tab_access_groups.pt:186
 msgid "modifier"
 msgstr "Modifikator"
 
-#: /views/edit/Container/tab_access_groups.pt:207
+#: /views/edit/Container/tab_access_groups.pt:209
 msgid "edit this group"
 msgstr "Diese Gruppe bearbeiten"
 
-#: /views/edit/Container/tab_access_groups.pt:243
+#: /views/edit/Container/tab_access_groups.pt:245
 msgid "No groups have been defined in this location."
 msgstr "An dieser Stelle sind keine Gruppen definiert."
 
-#: /views/edit/Container/tab_access_groups.pt:252
+#: /views/edit/Container/tab_access_groups.pt:254
 msgid "delete selected groups: alt-d"
 msgstr "Ausgewählte Gruppen löschen: alt-d"
 
-#: /views/edit/Container/tab_access_groups.pt:252
+#: /views/edit/Container/tab_access_groups.pt:254
 #: /views/edit/Container/tab_edit.pt:548
 msgid "return confirm('Really delete?')"
 msgstr ""
 
-#: /views/edit/Container/tab_access_groups.pt:252
+#: /views/edit/Container/tab_access_groups.pt:254
 #: /views/edit/Container/tab_edit.pt:548
 #: /views/edit/VersionedContent/tab_status.pt:326
 msgid "delete"
 msgstr "Löschen"
 
-#: /views/edit/Container/tab_access_groups.pt:70
+#: /views/edit/Container/tab_access_groups.pt:71
 msgid "groups in &#xab;${title}&#xbb;"
 msgstr "Gruppen in &#xab;${title}&#xbb;"
 
-#: /views/edit/Container/tab_access_groups.pt:76
+#: /views/edit/Container/tab_access_groups.pt:71
+msgid "x"
+msgstr ""
+
+#: /views/edit/Container/tab_access_groups.pt:78
 msgid "create a group"
 msgstr "Gruppe anlegen"
 
-#: /views/edit/Container/tab_access_groups.pt:86
-#: /views/edit/Container/tab_edit_rename.pt:54
+#: /views/edit/Container/tab_access_groups.pt:88
+#: /views/edit/Container/tab_edit_rename.pt:54 /views/add/form.form:28
+#: /views/add/File/form.form:28 /views/add/Folder/form.form:28
+#: /views/add/Ghost/form.form:28 /views/add/GhostFolder/form.form:28
+#: /views/add/Groups/form.form:28 /views/add/Image/form.form:28
+#: /views/add/Indexer/form.form:28 /views/add/Link/form.form:28
+#: /views/add/Publication/form.form:28 /views/add/SimpleContent/form.form:28
 msgid "id"
 msgstr "Id"
 
-#: /views/edit/Container/tab_access_groups.pt:97
+#: /views/edit/Container/tab_access_groups.pt:99 /views/add/form.form:30
+#: /views/add/File/form.form:30 /views/add/Folder/form.form:30
+#: /views/add/Ghost/form.form:30 /views/add/GhostFolder/form.form:30
+#: /views/add/Groups/form.form:30 /views/add/Image/form.form:30
+#: /views/add/Indexer/form.form:30 /views/add/Link/form.form:30
+#: /views/add/Publication/form.form:30 /views/add/SimpleContent/form.form:30
 msgid ""
 "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
 "or &#8216;.&#8217;"
@@ -1980,6 +1816,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:325
 #: /views/edit/Container/tab_status_export.pt:394
+#: /views/edit/Member/SimpleMember/memberform.form:49
 msgid "email address"
 msgstr "E-Mail Adresse"
 
@@ -2144,7 +1981,13 @@ msgstr "alt"
 msgid "new"
 msgstr "neu"
 
-#: /views/edit/Container/tab_edit_rename.pt:72 /doc/silva-content.xml:34
+#: /views/edit/Container/tab_edit_rename.pt:72 /views/add/form.form:50
+#: /views/add/File/form.form:50 /views/add/Folder/form.form:50
+#: /views/add/Groups/form.form:48 /views/add/Image/form.form:50
+#: /views/add/Indexer/form.form:50 /views/add/Link/form.form:51
+#: /views/add/Publication/form.form:50 /views/add/SimpleContent/form.form:50
+#: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
+#: /views/public/search_form.form:56 /doc/silva-content.xml:34
 msgid "title"
 msgstr "Titel"
 
@@ -2224,7 +2067,10 @@ msgstr "Es sind hier keine veröffentlichbaren Dinge."
 msgid "day / month / year"
 msgstr "Tag / Monat / Jahr"
 
-#: /views/edit/Container/tab_status.pt:284
+#: /views/edit/Container/tab_status.pt:284 /views/edit/tab_status_form.form:30
+#: /views/edit/VersionedContent/tab_status_form_author.form:50
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
+#: /views/edit/VersionedContent/tab_status_form_editor.form:30
 msgid "publish time"
 msgstr ""
 
@@ -2245,7 +2091,12 @@ msgid "access key: alt-x"
 msgstr "Kurzwahl: alt-x"
 
 #: /views/edit/Container/tab_status.pt:328
-#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:485
+#: /views/edit/VersionedContent/tab_status.pt:256
+#: /views/edit/tab_status_form.form:52
+#: /views/edit/VersionedContent/tab_status_form_author.form:72
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
+#: /views/edit/VersionedContent/tab_status_form_editor.form:53
+#: /doc/silva-extra.xml:485
 msgid "expiration time"
 msgstr "Verfallsdatum"
 
@@ -2602,6 +2453,11 @@ msgstr ""
 msgid "You have not entered your e-mail address"
 msgstr ""
 
+#: /views/edit/Container/tab_status_silva2word.py:46
+#: /views/edit/VersionedContent/tab_status_silva2word.py:36
+msgid "Your job is ${status}. The id of your job is ${job_id}."
+msgstr ""
+
 #: /views/edit/Container/tab_status_withdraw.py:12
 msgid "Nothing was selected, so no approval was withdrawn."
 msgstr ""
@@ -2676,28 +2532,15 @@ msgstr ""
 msgid "Member is approved"
 msgstr ""
 
-#: /views/edit/Member/SimpleMember/memberform.form:28
-msgid "simplemember_form_fullname_title"
-msgstr ""
-
-#: /views/edit/Member/SimpleMember/memberform.form:30
-msgid "simplemember_form_fullname_description"
-msgstr ""
-
-#: /views/edit/Member/SimpleMember/memberform.form:49
-msgid "simplemember_form_email_title"
-msgstr ""
-
-#: /views/edit/Member/SimpleMember/memberform.form:51
-msgid "simplemember_form_email_description"
-msgstr ""
-
 #: /views/edit/Member/SimpleMember/memberform.form:69
-msgid "simplemember_form_editor_title"
+msgid "preferred editor"
 msgstr ""
 
 #: /views/edit/Member/SimpleMember/memberform.form:71
-msgid "simplemember_form_editor_description"
+msgid ""
+"Choose 'forms editor' for the forms-based editor, or 'kupu' for the Kupu "
+"WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1"
+"+)"
 msgstr ""
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:27
@@ -2977,91 +2820,8 @@ msgid "deleted ${id}"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_author.form:28
-msgid "tab_status_form_author_message_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_author.form:30
-msgid "tab_status_form_author_message_description"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_author.form:50
-msgid "tab_status_form_author_publish_datetime_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_author.form:51
-msgid "tab_status_form_author_publish_datetime_description"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_author.form:72
-msgid "tab_status_form_author_expiration_datetime_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_author.form:73
-msgid "tab_status_form_author_expiration_datetime_description"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
-msgid "tab_status_form_change_settings_publish_datetime_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:31
-msgid "tab_status_form_change_settings_publish_datetime_description"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
-msgid "tab_status_form_change_settings_expiration_datetime_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:53
-msgid "tab_status_form_change_settings_expiration_datetime_description"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:67
-msgid "tab_status_form_change_settings_publish_now_flag_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:68
-msgid "tab_status_form_change_settings_publish_now_flag_description"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:81
-msgid "tab_status_form_change_settings_clear_expiration_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:82
-msgid "tab_status_form_change_settings_clear_expiration_description"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_editor.form:30
-msgid "tab_status_form_editor_publish_datetime_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_editor.form:31
-msgid "tab_status_form_editor_publish_datetime_description"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_editor.form:53
-msgid "tab_status_form_editor_expiration_datetime_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_editor.form:54
-msgid "tab_status_form_editor_expiration_datetime_description"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_editor.form:69
-msgid "tab_status_form_editor_publish_now_flag_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_editor.form:71
-msgid "tab_status_form_editor_publish_now_flag_description"
-msgstr ""
-
 #: /views/edit/VersionedContent/tab_status_form_editor.form:88
-msgid "tab_status_form_editor_message_title"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_form_editor.form:90
-msgid "tab_status_form_editor_message_description"
+msgid "message"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_get_status_link_title.py:37
@@ -3289,10 +3049,6 @@ msgstr ""
 msgid "This content is not approved."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_silva2word.py:36
-msgid "Your job is ${status}. The id of your job is ${job_id}."
-msgstr ""
-
 #: /views/edit/VersionedContent/tab_status_view_version.pt:52
 msgid "back"
 msgstr "zurück"
@@ -3365,7 +3121,7 @@ msgstr "Vorschau"
 
 #: /views/edit/asset_lookup.pt:153 /views/edit/document_lookup.pt:156
 #: /views/edit/hyperlink_lookup.pt:115
-#: /views/edit/Container/tab_access_groups.pt:181
+#: /views/edit/Container/tab_access_groups.pt:183
 #: /views/edit/Container/tab_edit.pt:131
 #: /views/edit/Container/GhostFolder/tab_edit.pt:226
 msgid "modified"
@@ -3542,47 +3298,47 @@ msgstr "Keine Benutzer gefunden bei Suche nach '${string}'."
 msgid "Searched for '${string}'."
 msgstr "Suche nach '${string}'."
 
-#: /views/edit/lookup_ui.pt:107
+#: /views/edit/lookup_ui.pt:109
 msgid "search"
 msgstr "Suche"
 
-#: /views/edit/lookup_ui.pt:127 /views/edit/lookup_ui.pt:196
+#: /views/edit/lookup_ui.pt:129 /views/edit/lookup_ui.pt:198
 msgid "add checked users to clipboard: alt-a"
 msgstr "ausgewählte Benutzer zum Clipbord hinzufügen: alt-a"
 
-#: /views/edit/lookup_ui.pt:127 /views/edit/lookup_ui.pt:196
+#: /views/edit/lookup_ui.pt:129 /views/edit/lookup_ui.pt:198
 msgid "add to clipboard"
 msgstr "Benutzer zur Zwischenablage hinzufügen"
 
-#: /views/edit/lookup_ui.pt:135
+#: /views/edit/lookup_ui.pt:137
 msgid "search results"
 msgstr "Suchergebnisse"
 
-#: /views/edit/lookup_ui.pt:144
+#: /views/edit/lookup_ui.pt:146
 msgid "user"
 msgstr "Benutzer"
 
-#: /views/edit/lookup_ui.pt:147
+#: /views/edit/lookup_ui.pt:149
 msgid "email"
 msgstr "E-Mail"
 
-#: /views/edit/lookup_ui.pt:185
+#: /views/edit/lookup_ui.pt:187
 msgid "No search results."
 msgstr "Keine Suchergebnisse."
 
-#: /views/edit/lookup_ui.pt:215
+#: /views/edit/lookup_ui.pt:217
 msgid "return to the access screen with this clipboard: alt-u"
 msgstr ""
 
-#: /views/edit/lookup_ui.pt:215
+#: /views/edit/lookup_ui.pt:217
 msgid "<u>u</u>se clipboard..."
 msgstr ""
 
-#: /views/edit/lookup_ui.pt:227
+#: /views/edit/lookup_ui.pt:229
 msgid "remove user"
 msgstr "Benutzer entfernen"
 
-#: /views/edit/lookup_ui.pt:227
+#: /views/edit/lookup_ui.pt:229
 msgid "remove users from the clipboard: alt-r"
 msgstr "Benutzer vom Clipbord entfernen: alt-r"
 
@@ -3594,15 +3350,15 @@ msgstr "zurück zum vorherigen Bildschirm"
 msgid "bac<u>k</u>..."
 msgstr ""
 
-#: /views/edit/lookup_ui.pt:76
+#: /views/edit/lookup_ui.pt:77
 msgid "user lookup at &#xab;${title_or_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/lookup_ui.pt:82
+#: /views/edit/lookup_ui.pt:84
 msgid "user search"
 msgstr "Benutzersuche"
 
-#: /views/edit/lookup_ui.pt:91
+#: /views/edit/lookup_ui.pt:93
 msgid "name (or part of name)"
 msgstr "Name (oder Teil des Namens)"
 
@@ -3637,56 +3393,56 @@ msgstr "Strg-Klick für Mehrfachauswahl"
 msgid "&#134;"
 msgstr ""
 
-#: /views/edit/macro_metadata.pt:157
+#: /views/edit/macro_metadata.pt:158
 msgid "date format: day / month / year &nbsp;23:59"
 msgstr "Datumsformat: Tag / Monat / Jahr &nbsp; 23:59"
 
-#: /views/edit/macro_metadata.pt:160
+#: /views/edit/macro_metadata.pt:161
 msgid "&#134; acquireable"
 msgstr "&#134; erwerbbar"
 
-#: /views/edit/macro_metadata.pt:195 /views/edit/macro_metadata.pt:354
+#: /views/edit/macro_metadata.pt:196 /views/edit/macro_metadata.pt:355
 msgid "content renderer"
 msgstr ""
 
-#: /views/edit/macro_metadata.pt:204 /views/edit/macro_metadata.pt:363
+#: /views/edit/macro_metadata.pt:205 /views/edit/macro_metadata.pt:364
 msgid "renderer"
 msgstr ""
 
-#: /views/edit/macro_metadata.pt:233
+#: /views/edit/macro_metadata.pt:234
 msgid "Select a renderer that will be used to render this object."
 msgstr ""
 
-#: /views/edit/macro_metadata.pt:385
+#: /views/edit/macro_metadata.pt:386
 msgid "first 'un-approve' this item in order to edit: alt-r"
 msgstr ""
 
-#: /views/edit/macro_metadata.pt:385
+#: /views/edit/macro_metadata.pt:386
 #: /views/edit/VersionedContent/macro_tab_edit.pt:117
 #: /views/edit/VersionedContent/tab_status_macros.pt:462
 #: /views/edit/VersionedContent/tab_status_macros.pt:480
 msgid "revoke approval"
 msgstr "Genehmigung widerrufen"
 
-#: /views/edit/macro_metadata.pt:399
+#: /views/edit/macro_metadata.pt:400
 msgid "create a new version of this content: alt-n"
 msgstr "Neue Version dieses Inhalts erzeugen: alt-n"
 
-#: /views/edit/macro_metadata.pt:399 /views/edit/Container/tab_status.pt:392
+#: /views/edit/macro_metadata.pt:400 /views/edit/Container/tab_status.pt:392
 #: /views/edit/Container/tab_status.pt:451
 #: /views/edit/VersionedContent/macro_tab_edit.pt:96
 msgid "new version"
 msgstr "Neue Version"
 
-#: /views/edit/macro_metadata.pt:42 /views/edit/macro_metadata.pt:287
+#: /views/edit/macro_metadata.pt:42 /views/edit/macro_metadata.pt:288
 msgid "metadata ${for_title}"
 msgstr "metadaten ${for_title}"
 
-#: /views/edit/macro_metadata.pt:68 /views/edit/macro_metadata.pt:302
+#: /views/edit/macro_metadata.pt:68 /views/edit/macro_metadata.pt:303
 msgid "metadata set"
 msgstr "Metadatensatz"
 
-#: /views/edit/macro_metadata.pt:73 /views/edit/macro_metadata.pt:307
+#: /views/edit/macro_metadata.pt:73 /views/edit/macro_metadata.pt:308
 #: /views/edit/Asset/macro_asset_edit.pt:64
 #: /views/edit/Asset/Image/edit.pt:140
 #: /views/edit/Container/tab_edit_import.pt:90
@@ -4085,36 +3841,22 @@ msgstr ""
 "Dies ist eine geschloßene Version. Sie können sie siehen, aber die "
 "Öffentlichkeit nicht."
 
-#: /views/edit/tab_status_form.form:30
-msgid "tab_status_form_publish_datetime_title"
-msgstr ""
-
-#: /views/edit/tab_status_form.form:31
-msgid "tab_status_form_publish_datetime_description"
-msgstr ""
-
-#: /views/edit/tab_status_form.form:52
-msgid "tab_status_form_expiration_datetime_title"
-msgstr ""
-
 #: /views/edit/tab_status_form.form:53
-msgid "tab_status_form_expiration_datetime_description"
+#: /views/edit/VersionedContent/tab_status_form_author.form:73
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:53
+#: /views/edit/VersionedContent/tab_status_form_editor.form:54
+msgid "If this document should expire, set the time."
 msgstr ""
 
 #: /views/edit/tab_status_form.form:67
-msgid "tab_status_form_publish_now_flag_title"
-msgstr ""
-
-#: /views/edit/tab_status_form.form:68
-msgid "tab_status_form_publish_now_flag_description"
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:67
+#: /views/edit/VersionedContent/tab_status_form_editor.form:69
+msgid "publish now"
 msgstr ""
 
 #: /views/edit/tab_status_form.form:81
-msgid "tab_status_form_clear_expiration_title"
-msgstr ""
-
-#: /views/edit/tab_status_form.form:82
-msgid "tab_status_form_clear_expiration_description"
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:81
+msgid "clear expiration"
 msgstr ""
 
 #: /views/get_tab_info.py:25
@@ -4285,6 +4027,7 @@ msgid "Please fill in the following fields. <br /><br />"
 msgstr ""
 
 #: /views/public/request_roles.pt:48
+#: /views/edit/Member/SimpleMember/memberform.form:28
 msgid "full name"
 msgstr ""
 
@@ -4361,35 +4104,40 @@ msgid "access key: alt-f"
 msgstr ""
 
 #: /views/public/search_form.form:100
-msgid "public_search_form_metatype_title"
+msgid "content type"
 msgstr ""
 
-#: /views/public/search_form.form:101
-msgid "public_search_form_metatype_description"
+#: /views/public/search_form.form:104
+msgid ""
+"\n"
+"              Select (multiple using ctrl-key) object type(s) to search "
+"in. \n"
+"              If none is selected, all types are searched.\n"
+"            "
 msgstr ""
 
-#: /views/public/search_form.form:28
-msgid "public_search_form_fulltext_title"
+#: /views/public/search_form.form:32
+msgid ""
+"\n"
+"              Use an asterix ('*') for wildcard.\n"
+"            "
 msgstr ""
 
-#: /views/public/search_form.form:30
-msgid "public_search_form_fulltext_description"
-msgstr ""
-
-#: /views/public/search_form.form:56
-msgid "public_search_form_maintitle_title"
-msgstr ""
-
-#: /views/public/search_form.form:58
-msgid "public_search_form_maintitle_description"
+#: /views/public/search_form.form:59
+msgid ""
+"\n"
+"            "
 msgstr ""
 
 #: /views/public/search_form.form:77
-msgid "public_search_form_search_subtree_title"
+msgid "subtree only"
 msgstr ""
 
-#: /views/public/search_form.form:78
-msgid "public_search_form_search_subtree_description"
+#: /views/public/search_form.form:80
+msgid ""
+"\n"
+"              Check to restrict search to this content's subtree.\n"
+"            "
 msgstr ""
 
 #: /views/public/search_results.pt:18
