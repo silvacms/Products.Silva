@@ -80,7 +80,7 @@
     </tbody>
 
     <tfoot>
-      <tr class="inter-controls">
+      <tr class="inter-controls" tal:replace="nothing">
         <td>
           &nbsp;
         </td>

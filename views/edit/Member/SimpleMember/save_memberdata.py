@@ -28,6 +28,10 @@ if model.email() != result['email']:
     model.set_email(result['email'])
     messages.append('e-mail updated')
 
+if model.editor() != result['editor']:
+    model.set_editor(result['editor'])
+    messages.append('editor updated')
+
 if len(messages)==0:
     messages.append('Nothing changed.')
 

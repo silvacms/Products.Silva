@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.5 2004/01/26 15:50:44 guido Exp $
+# $Id: install.py,v 1.97.4.6 2004/02/26 17:17:31 guido Exp $
 """Install for Silva Core
 """
 # Python
@@ -157,6 +157,9 @@ def install(root):
         configure_default_layout_package(root)
     from LayoutRegistry import DEFAULT_LAYOUT
     root.set_layout(DEFAULT_LAYOUT)
+
+    # try to install Epoz
+    installEpoz(root)
 
 def configure_default_layout_package(root):
     from LayoutRegistry import DEFAULT_LAYOUT
@@ -628,6 +631,14 @@ def installSilvaDocument(root):
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
 
+def installEpoz(root):
+    try:
+        from Products import epoz
+    except:
+        pass
+    else:
+        add_fss_directory_view(root, 'epoz', epoz.__file__, 'common')
+        add_fss_directory_view(root, 'epoz_silva', epoz.__file__, 'silva')
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""

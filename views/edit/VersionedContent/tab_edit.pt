@@ -9,12 +9,18 @@
   tal:define="
     global vein string:editor;
     refresh_time python:19 * 60;
+    editor python:here.service_members.get_member(here.REQUEST.AUTHENTICATED_USER.getUserName()).editor();
   ">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="metatype_css">
 <link href="globals/widgetEditor.css"
   rel="stylesheet"
   tal:attributes="href string:${root_url}/globals/widgetEditor.css"
+/>
+<link href="epozstyles.css"
+      type="text/css"
+      rel="stylesheet"
+      tal:condition="python:editor == 'epoz'"
 />
 </metal:block>
 <metal:block fill-slot="refresher">
@@ -33,7 +39,7 @@
   document.prompt_url = '${destination_path}promptWindow';
 
 " />
-<script language="JavaScript">
+<script language="JavaScript" tal:condition="python:editor != 'epoz'">
 
   function handleTimeout()
   {
@@ -83,8 +89,265 @@
     unapproved_version model/get_unapproved_version;
     request_pending python:model.is_version_approval_requested();
 ">
-<model tal:condition="python:unapproved_version and not request_pending and not is_locked"
-         tal:replace="structure view/edit">Content</model>
+
+<model tal:condition="python:editor != 'epoz' and unapproved_version and not request_pending and not is_locked">
+  <div style="width: 100%; text-align: right;"><a tal:attributes="href python: '%s/edit?editor=epoz' % model.absolute_url()">Edit with the Epoz editor (experimental)</a>&nbsp;</div>
+  <tal:block tal:replace="structure view/edit">Content</tal:block>
+</model>
+
+<span tal:replace="nothing"> ______ epoz ______ </span>
+<tal:block condition="python:editor == 'epoz' and unapproved_version and not request_pending and not is_locked"
+    define="epozmacros view/epoz/epozmacros/macros">
+
+  <div style="width: 100%; text-align: right"><a tal:attributes="href python: '%s/edit?editor=field_editor' % model.absolute_url()">Edit with the builtin editor</a>&nbsp;</div>
+
+  <script type="text/javascript" src="epoz/dom2_events"></script>
+  <script type="text/javascript" src="epoz/sarissa"></script>
+  <script type="text/javascript" src="epoz/epozhelpers"></script>
+  <script type="text/javascript" src="epoz/epozeditor"></script>
+  <script type="text/javascript" src="epoz/epozbasetools"></script>
+  <script type="text/javascript" src="epoz/epozloggers"></script>
+  <script type="text/javascript" src="epoz/epozcontentfilters"></script>
+  <script type="text/javascript" src="epoz/epozcontextmenu"></script>
+  <script type="text/javascript" src="epoz_silva/silva_epoz.js"></script>
+
+  <table width="100%" border="0">
+  
+  <tr>
+  <td colspan="2">
+    <div class="epoz-toolbar" id="toolbar" metal:use-macro="epozmacros/epoz_toolbar"></div>
+  </td>
+  </tr>
+
+  <tr>
+  <td width="100%" valign="top">
+  <table metal:use-macro="epozmacros/epoz_colorchoosertable" />
+
+  <div class="epoz-editorframe">
+    <iframe id="epoz-editor" 
+            frameborder="0" 
+            src="epoz_content"
+            dst=".."
+            reloadsrc="1" usecss="0"
+            charset="UTF-8"
+            >
+    </iframe>
+  </div>
+  </td>
+  
+  <td width="100%" valign="top">
+  <metal:block use-macro="epozmacros/epoz_toolboxes">
+
+    <div class="epoz-toolbox" id="epoz-toolbox-links" metal:fill-slot="epoz_toolbox_links">
+
+      <script type="text/javascript">
+
+        objLookupWindow = null;
+        objTextArea = null;
+        objReferenceFormat = null;
+        objAppendValue = false;
+
+        function openObjectLookupWindow(url_to_open) {
+          // open the lookup window, will be called by getObjectReference
+
+          width = 585;
+          height = 300;
+          leftPos = (screen.width - width) / 2;
+          topPos = (screen.height - height) / 2;
+          aspects = 'toolbar=yes,status=yes,scrollbars=yes,resizable=yes,width=' + width + ',height=' + height + ',left=' + leftPos + ',top=' + topPos;
+          objLookupWindow = window.open(url_to_open, 'ObjectLookupWindow', aspects);
+          objLookupWindow.focus();
+        }
+
+        function getObjectReference(url, format) {
+          // should be called by pagetemplate
+          referenceFormat = format;
+          openObjectLookupWindow(url);
+        }
+
+        function insertObjectReference(id, reference, wndw) {
+          // Is called by the window if the user selected an object
+          var text = referenceFormat.replace('_id_', id).replace('_reference_', reference);
+          var linktool = epoz.getTool('linktool');
+          linktool.createLink(text);
+          wndw.close();
+        }
+
+      </script>
+      <script type="text/javascript" tal:define="container model/get_container" tal:content="string:
+        function getLink() {
+          getObjectReference('${container/absolute_url}/edit/document_lookup', '_reference_');
+        }
+      "></script>
+
+      <h1>Links</h1>
+
+      <div id="epoz-toolbox-addlink"></div>
+      <div id="epoz-toolbox-editlink"></div>
+      <div style="text-align: center">
+
+        <form name="epoz_link_form" onsubmit="return false;">
+        <input type="text" id="epoz-link-input" name="epoz_link_href" style="width: 96%" />
+        <input type="button" class="button" value="Use link from input" id="epoz-link-button" />
+        <input type="button" class="button" onclick="getLink(); return false;" value="Find link" />
+        </form><br />
+
+      </div>
+
+
+      <h1>Indexes</h1>
+
+      <div style="text-align: center">
+
+        <form name="epoz_index_form" onsubmit="return false;">
+        <input type="text" id="epoz-index-input" name="epoz_index_href" style="width: 96%" />
+        <input type="button" class="button" value="Use index" id="epoz-index-button" />
+        </form>
+
+      </div>
+
+    </div>
+
+    <div class="epoz-toolbox" id="epoz-toolbox-images" metal:fill-slot="epoz_toolbox_images">
+
+      <script language="JavaScript">
+      <!-- Asset Reference Lookup Window Opener
+
+      lookupWindow = null;
+      textArea = null;
+      referenceFormat = null;
+      appendValue = false;
+      // Called from getAssetReference
+      function openAssetLookupWindow(url_to_open) {
+        // Do the opening
+        width = 585;
+        height = 300;
+        leftPos = (screen.width - width) / 2;
+        topPos = (screen.height - height) / 2;
+        aspects = 'toolbar=yes,status=yes,scrollbars=yes,resizable=yes,width='+width+',height='+height+',left='+leftPos+',top='+topPos;
+        lookupWindow = window.open(
+          url_to_open, 'AssetLookupWindow', aspects);
+        lookupWindow.focus();
+      }
+      // Called from "asset lookup window"
+      function insertAssetReference(id, reference, wndw) {
+        // for Epoz we need to place the image as well
+        var imagetool = epoz.getTool('imagetool');
+      
+        imagetool.createImage(reference + '/image');
+        // Close LookupWindow
+        wndw.close();
+      }
+      //-->
+      </script>
+      <script type="text/javascript" tal:define="container model/get_container" tal:content="string:
+        function getImage() {
+          openAssetLookupWindow('${container/absolute_url}/edit/asset_lookup?filter=Silva+Image');
+        }
+      "></script>
+
+
+      <h1>Images</h1>
+
+      <div style="text-align: center">
+      
+        <form name="epoz_image_form">
+          <input type="button" class="button" onclick="getImage()" value="Find image" />
+        </form>
+
+      </div>
+
+    </div>
+
+    <div class="epoz-toolbox" id="epoz-toolbox-tables" metal:fill-slot="epoz_toolbox_tables">
+      <!-- start epoz toolbox tables -->
+      
+      <h1 i18n:translate="table-inspector">Tables</h1>
+
+      <table width="100%" style="color: black">
+        <tbody>
+          <tr>
+            <td>Table Class</td>
+            <td>
+              <select id="epoz-table-classchooser">
+                <option value="plain">Plain</option>
+                <option value="list">List</option>
+                <option value="grid">Grid</option>
+                <option value="datagrid">Datagrid</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div id="epoz-toolbox-addtable">
+                <table width="100%" style="color: black">
+                  <tr>
+                    <td>Rows</td>
+                    <td><input id="epoz-table-newrows"/></td>
+                  </tr>
+                  <tr>
+                    <td>Columns</td>
+                    <td><input id="epoz-table-newcols"/></td>
+                  </tr>
+                  <tr>
+                    <td>Headings</td>
+                    <td>
+                      <input id="epoz-table-makeheader" type="checkbox"/> Create
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><button id="epoz-table-addtable-button">Add</button></td>
+                  </tr>
+                </table>
+              </div>
+              <div id="epoz-toolbox-edittable">
+                <table width="100%" style="color: black">
+                  <tr>
+                    <td>Col Align</td>
+                    <td>
+                      <select id="epoz-table-alignchooser">
+                        <option value="left">Left</option>
+                        <option value="center">Center</option>
+                        <option value="right">Right</option>
+                        </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Column</td>
+                    <td>
+                        <button id="epoz-table-addcolumn-button">Add</button>
+                        <button id="epoz-table-delcolumn-button">Remove</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Row</td>
+                    <td>
+                      <button id="epoz-table-addrow-button">Add</button> 
+                      <button id="epoz-table-delrow-button">Remove</button></td>
+                  </tr>
+                  <tr>
+                    <td>Cleanup</td>
+                    <td>
+                      <button id="epoz-table-fix-button">Fix</button>
+                    </td>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- end epoz toolbox tables -->
+    </div>
+
+  </metal:block>
+  </td>
+  </tr>
+
+  </table>
+
+</tal:block>
 
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
 <tal:condition condition="python:unapproved_version and is_locked">
