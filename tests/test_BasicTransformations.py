@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import unittest
 
 # 
@@ -29,6 +29,7 @@ try:
     from transform.eopro2_11 import silva
     from transform import base
 except ImportError:
+    import Zope
     from Products.Silva.transform.ObjectParser import ObjectParser
     from Products.Silva.transform.eopro2_11 import silva
     from Products.Silva.transform import base

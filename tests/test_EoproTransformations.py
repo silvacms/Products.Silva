@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 import unittest
 
 # 
@@ -30,6 +30,7 @@ try:
     from transform.eopro2_11 import silva, html
     from transform.Transformer import Transformer, EditorTransformer
 except ImportError:
+    import Zope
     from Products.Silva.transform.eopro2_11 import silva, html
     from Products.Silva.transform.Transformer import Transformer, EditorTransformer
 
