@@ -108,8 +108,8 @@ class UpgradeRegistry:
         object_list = [root]
         try:
             while object_list:
-                o = object_list[0]
-                del object_list[0]
+                o = object_list[-1]
+                del object_list[-1]
                 print 'Upgrading object', o.absolute_url(), '(still %s objects to go)' % len(object_list)
                 self.upgradeObject(o, version)
                 if hasattr(o.aq_base, 'objectValues'):
@@ -175,6 +175,7 @@ def check_reserved_ids(obj):
     """Walk through the entire tree to find objects of which the id is not
     allowed, and return a list of the urls of those objects
     """
+    print 'checking for reserved ids on', repr(obj)
     object_list = obj.objectValues()
     while object_list:
         o = object_list[0]
@@ -190,8 +191,7 @@ def check_reserved_ids(obj):
         id.cook()
         while not id.isValid():
             id = mangle.Id(o.aq_parent, 'renamed_%s' % id, allow_dup=0)
-            o.aq_prent.manage_renameObject(old_id, str(id))
-            zLOG.LOG("Silva", zLOG.INFO,
-                'Invalid id %s found. Renamed to %s' % (old_id, str(id)),
-                'Location: %s' % o.absolute_url())
+        o.aq_parent.manage_renameObject(old_id, str(id))
+        #zLOG.LOG("Silva", zLOG.INFO,
+        print 'Invalid id %s found. Renamed to %s' % (repr(old_id), repr(id)), 'Location: %s' % o.absolute_url()
 

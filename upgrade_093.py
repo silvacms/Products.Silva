@@ -420,9 +420,13 @@ class SetAuthorInfoOnVersion:
             versions.append(obj.get_editable())
             
             if obj._previous_versions:
-                oldversions = [
-                    getattr(obj, str(oldversion[0])) for oldversion in obj._previous_versions]
-                versions += oldversions
+                old_versions = []
+                for version in obj._previous_versions:
+                    id = str(version[0])
+                    v = getattr(obj.aq_base, id, None)
+                    versions.append(v)
+                    #if hasattr(obj.aq_base, id):
+                    #    versions.append(version)
                 
             for version in versions:
                 if version is not None:
@@ -463,19 +467,17 @@ class SetTitleFromIndexOnContainer:
 
     def upgrade(self, container):
         if not IContainer.isImplementedBy(container):
-            zLOG.LOG(
-                'Silva', zLOG.WARNING, 
-                'This container object does not implement IContainer! (%s)' % repr(container))
+            print 'This container object does not implement IContainer! (%s)' % repr(container)
             return container
-        index = getattr(container, 'index', None)
+        index = container.get_default() #getattr(container.aq_base, 'index', None)
         if index is None:
             return container
         try:
-            title = index.get_title()
+            title = index.get_title_editable()
+            print 'Setting title to:', repr(title)
             container.set_title(title)
         except Exception, e:
-            zLOG.LOG(
-                'Silva', zLOG.WARNING, 'Cannot set title due to: %s' % e)
+            print 'Cannot set title on %s due to: %s' % (repr(container), e)
         return container
     
 def initialize():
@@ -493,7 +495,7 @@ def initialize():
     upgrade.registry.registerUpgrader(UpgradeTime(), '0.9.3',
         upgrade.AnyMetaType)
     upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.3',
-        upgrade.AnyMetaType)
+        'Silva Root') #upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(MovedViewRegistry(), '0.9.3',
         'Silva Root')
     upgrade.registry.registerUpgrader(UpgradeAccessRestriction(), '0.9.3',
@@ -507,15 +509,19 @@ def initialize():
     upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
         'Groups Service')
 
+    # On the root, do an "all product refresh"
+    upgrade.registry.registerUpgrader(RefreshAll(), '0.9.3', 'Silva Root')
+
     # On the root, clear caches
     upgrade.registry.registerUpgrader(
         ClearEditorCache(), '0.9.3', 'Silva Root')
+
     # On the service_members double check the _allow_authentication_requests attrs.
     upgrade.registry.registerUpgrader(
         CheckServiceMembers(), '0.9.3', 'Silva Root')
+
     for metatype in ['Silva Root', 'Silva Publication', 'Silva Folder']:
         upgrade.registry.registerUpgrader(
             SetTitleFromIndexOnContainer(), '0.9.3', metatype)
 
     # as last action on the root, do an "all product refresh"
-    upgrade.registry.registerTearDown(RefreshAll().upgrade, '0.9.3')
