@@ -8,4 +8,7 @@
 ##title=
 ##
 wr = getattr(context, wr_name)
-return wr.getDisplayName(node.nodeName)
+name = wr.getDisplayName(node.nodeName)
+if same_type(name, u' '):
+  name = node.output_convert_editable(name)
+return name
