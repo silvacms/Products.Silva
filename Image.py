@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.56 2004/09/30 13:46:43 jw Exp $
+# $Id: Image.py,v 1.57 2004/11/25 15:33:26 guido Exp $
 
 # Python
 import re, string
@@ -38,6 +38,8 @@ except ImportError:
     pass
 
 from interfaces import IAsset, IUpgrader
+
+from Products.Silva.i18n import translate as _
 
 icon = "www/silvaimage.gif"
 addable_priority = -0.4
@@ -210,8 +212,10 @@ class Image(Asset):
         if m is None:
             m = self.re_percentage.match(scale)
             if m is None:
-                raise ValueError, ("'%s' is not a valid scale identifier. "
-                    "Probably a percent symbol is missing.") % (scale, )
+                msg = _(("'${scale}' is not a valid scale identifier. "
+                            "Probably a percent symbol is missing."))
+                msg.set_mapping({'scale': scale})
+                raise ValueError, msg
             cropbox = self.getCropBox()
             if cropbox:
                 x1, y1, x2, y2 = cropbox
@@ -227,8 +231,10 @@ class Image(Asset):
             width = m.group(1)
             height = m.group(2)
             if width == height == '*':
-                raise ValueError, ("'%s' is not a valid scale identifier. "
-                    "At least one number is required.") % (scale, )
+                msg = _(("'${scale} is not a valid scale identifier. "
+                            "At least one number is required."))
+                msg.set_mapping({'scale': scale})
+                raise ValueError, msg
             if width == '*':
                 height = int(height)
                 width = img_w * height / img_h
@@ -250,7 +256,9 @@ class Image(Asset):
             return None
         m = self.re_box.match(crop)
         if m is None:
-            raise ValueError, "'%s' is not a valid crop identifier" % (crop, )
+            msg = _("'${crop} is not a valid crop identifier")
+            msg.set_mapping({'crop': crop})
+            raise ValueError, msg
         x1 = int(m.group(1))
         y1 = int(m.group(2))
         x2 = int(m.group(3))
@@ -274,8 +282,10 @@ class Image(Asset):
         if y2 > bbox[3]:
             y2 = bbox[3]
         if x1 >= x2 or y1 >= y2:
-            raise ValueError, "'%s' defines an impossible cropping" % (crop, )
-        return (x1, y1, x2, y2)
+            msg = _("'${crop}' defines an impossible cropping")
+            msg.set_mapping({'crop': crop})
+            raise ValueError, msg
+            return (x1, y1, x2, y2)
 
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
     def getDimensions(self, img=None):
@@ -312,6 +322,7 @@ class Image(Asset):
         try:
             return self._getPILImage(self.hires_image).format
         except ValueError:
+            # XXX i18n - should this be translated?
             return 'unknown'
 
     security.declareProtected(SilvaPermissions.View, 'getImage')
@@ -330,8 +341,8 @@ class Image(Asset):
             image = OFS.Image.Image(
                 'custom_image', self.get_title(), image_data)
         elif not hires and not webformat:
-            raise ValueError, "Low resolution image in original format is " \
-                "not supported"
+            raise ValueError, _(("Low resolution image in original format is "
+                                    "not supported"))
         if REQUEST is not None:
             return self._image_index_html(image, REQUEST, REQUEST.RESPONSE)
         else:
@@ -375,19 +386,20 @@ class Image(Asset):
         try:
             return self._getPILImage(self.image).format
         except ValueError:
+            # XXX i18n - should we translate this?
             return 'unknown'
 
     security.declareProtected(SilvaPermissions.View, 'getWebScale')
     def getWebScale(self):
         """Return scale percentage / WxH of web presentation image
         """
-        return '%s' % self.web_scale
+        return str(self.web_scale)
 
     security.declareProtected(SilvaPermissions.View, 'getWebCrop')
     def getWebCrop(self):
         """Return crop identifier
         """
-        return '%s' % self.web_crop
+        return str(self.web_crop)
 
     security.declareProtected(SilvaPermissions.View, 'canScale')
     def canScale(self):
@@ -408,10 +420,10 @@ class Image(Asset):
         """ returns Image orientation (string) """
         width, height = self.getDimensions()
         if width == height:
-            return "square"
+            return _("square")
         elif width > height:
-            return "landscape"
-        return "portrait"
+            return _("landscape")
+        return _("portrait")
 
     def manage_FTPget(self, *args, **kwargs):
         return self.image.manage_FTPget(*args, **kwargs)
@@ -454,7 +466,7 @@ class Image(Asset):
             raise ValueError if image could not be identified
         """
         if not havePIL:
-            raise ValueError, "No PIL installed."""
+            raise ValueError, _("No PIL installed.")
         if img is None:
             img = self.image
         image_reference = self._get_image_data(img)
@@ -564,8 +576,8 @@ class Image(Asset):
     def _useFSStorage(self):
         """return true if we should store images on the filesystem"""
         service_files = getattr(self, 'service_files', None)
-        assert service_files is not None, "There is no service_files. " \
-            "Refresh your silva root."
+        msg = _('There is no service_files. Refresh your Silva root.')
+        assert service_files is not None, msg
         if service_files.useFSStorage():
             return service_files.cookPath(service_files.filesystem_path())
         return None
@@ -621,7 +633,7 @@ class Image(Asset):
             data_handle.close()
             ct, w, h = OFS.Image.getImageInfo(data)
             if w <= 0 or h <= 0:
-                raise ValueError, "Could not identify image type."
+                raise ValueError, _("Could not identify image type.")
         return w, h
 
     def _get_image_data(self, img):
@@ -693,8 +705,10 @@ class ImageStorageConverter:
         elif image.meta_type == 'ExtImage':
             data = open(image.get_fsname(), 'rb')
         else:
-            raise RuntimeError, "Invalid asset at %s" % asset.absolute_url()
-        ct = image.getContentType()
+            msg = _('Invalid asset at ${url}')
+            msg.set_mapping({'url': asset.absolute_url()})
+            raise RuntimeError, msg
+            ct = image.getContentType()
         asset._image_factory(id, data, ct)
 
 # Register Image factory for image mimetypes

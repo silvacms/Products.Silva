@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 """
 This module defines a class and an instance of the importer_registry,
 a place to register xml_import_handlers. The handlers should be
@@ -18,6 +18,8 @@ from.  the function should return the new object created.
 ??? why are the registry keys encoded by cp1252 instead of unicode strings
 """
 from types import UnicodeType
+
+from Products.Silva.i18n import translate as _
 
 DEFAULT_ENCODING = None
 
@@ -65,9 +67,9 @@ class ImporterRegistry:
                 encode_key(tag_name), [])
             initializers.insert(priority, initialization_func)
         else:
-            raise Error(
-                "can't only register initializer for tag_name "
-                "*or* as a default")
+            msg = _(("can't only register initializer for tag_name "
+                        "*or* as a default"))
+            raise Error(msg)
         
     def get_initializer(self, tag_name):
         initializers =  self._object_initializers.get( encode_key( tag_name ) )
@@ -120,7 +122,7 @@ def get_xml_id(node):
             # the id MUST be ASCII
             id = attr[4].encode('ascii')
     if not id:
-        raise Error, 'No id found'
+        raise Error, _('No id found')
     return id
 
 def get_xml_title(node):
