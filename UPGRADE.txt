@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.36.8.12.8.14 $
+CVS:        $Revision: 1.36.8.12.8.15 $
 
 Introduction
 ------------
@@ -31,7 +31,7 @@ Minor upgrades
 If you are upgrading Silva minor versions (1.0.1 to 1.0.2 for
 instance), you shouldn't need to do anything special; just install the
 updated Silva Products (the ``-all`` distribution) and restart
-Zope. 
+Zope.
 
 Note that it is a good idea to remove the previous versions of the
 Products before you install the new ones, even for small upgrades.
