@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.7 2004/04/09 14:08:53 roman Exp $
+# $Id: Image.py,v 1.50.4.1.6.8 2004/04/09 15:06:10 roman Exp $
 
 # Python
 import re, string 
@@ -59,7 +59,7 @@ class Image(Asset):
     web_scale = '100%'
     web_format = 'JPEG'
     web_formats = ('JPEG', 'GIF', 'PNG')
-    cropped = False
+    cropped = 0 
     
     def __init__(self, id, title):
         Image.inheritedAttribute('__init__')(self, id, title)
@@ -127,7 +127,7 @@ class Image(Asset):
             self.web_scale = web_scale
         if self.hires_image is not None and update_cache:
             self._createWebPresentation()
-    
+   
     def cropImage(self, size, x, y):
         """crops the image
 
@@ -146,10 +146,10 @@ class Image(Asset):
         web_image = image.crop(cropbbox)
         web_image = self._prepareWebFormat(web_image)
         web_image.save(web_image_data, self.web_format)
-        self.cropped = True
+        self.cropped = 1 
         self.image = OFS.Image.Image(
             'image', self.get_title(), web_image_data)
-    
+   
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
     def set_image(self, file):
@@ -309,7 +309,7 @@ class Image(Asset):
     def canScale(self):
         """returns if scaling/converting is possible"""
         return havePIL
-   
+
     security.declareProtected(SilvaPermissions.View, 'canCrop')
     def canCrop(self, size, x, y):
         """ returns True if cropping is possible """
@@ -320,10 +320,9 @@ class Image(Asset):
 
         if cropbbox[0] >= bbox[0] and cropbbox[1] >= bbox[1]\
         and cropbbox[2] <= bbox[2] and cropbbox[3] <= bbox[3]:
-           return True 
-
-        return False
-      
+           return 1
+        return 0 
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'getFileSystemPath')
     def getFileSystemPath(self):
@@ -365,7 +364,7 @@ class Image(Asset):
         if self.web_scale == '100%' and image.format == self.web_format:
             self.image = self.hires_image
             return
-        self.cropped = False
+        self.cropped = 0 
         web_image_data = StringIO()
         web_image = image.resize((width, height), PIL.Image.BICUBIC)
         web_image = self._prepareWebFormat(web_image)
