@@ -119,16 +119,16 @@
                   #&nbsp;
                 </th>
                 <th i18n:translate="edit">
-                  Edit
+                  edit
                 </th>
                 <th i18n:translate="preview">
-                  Preview
+                  preview
                 </th>
                 <th i18n:translate="modified">
-                  Modified
+                  modified
                 </th>
                 <th i18n:translate="author">
-                  Author
+                  author
                 </th>
                 <th class="nosort listing-right">
                   &nbsp;&nbsp;Shift

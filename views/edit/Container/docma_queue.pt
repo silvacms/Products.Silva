@@ -16,11 +16,11 @@
 </span>
 <tal:condition condition="python: processingident != 0">
   <div class="feedback">
-        <span i18n:translate="current_job">Current job</span>:
+        <span i18n:translate="current_job">current job</span>:
         <span tal:replace="processingident">#</span><br />
-        <span i18n:translate="owner">Owner</span>:
+        <span i18n:translate="owner">owner</span>:
         <span tal:replace="python: view.service_docma.get_ident_owner(processingident)">owner</span><br />
-        <span i18n:translate="description">Description</span>:
+        <span i18n:translate="description">description</span>:
         <span tal:replace="python: view.service_docma.get_ident_description(processingident)">desc</span>
   </div>
 </tal:condition>
@@ -61,7 +61,7 @@
         <th class="align-right"
           width="4%"
           i18n:translate="job_id">
-          Job id
+          job id
         </th>
         <th width="15%"
           i18n:translate="job_owner">
@@ -156,19 +156,19 @@
         <th class="align-right"
           width="4%" 
           i18n:translate="job_id">
-          Job id
+          job id
         </th>
         <th width="15%"
           i18n:translate="type">
-          Type
+          type
         </th>
         <th i18n:translate="description">
-          Description
+          description
         </th>
         <th class="align-right" 
           width="10%" 
           i18n:translate="download">
-          Download
+          download
         </th>
       </tr>
 
