@@ -34,14 +34,13 @@ File to upload:
 <input type="file" name="importfile" />
 </td>
 <td align="right">
-This should either be an MS Word file for the Docma import or an XML file for plain import.
+Choose an XML file to import (must be valid Silva XML)
 </td>
 </tr>
 
 <tr class="controls">
 <td colspan="3" align="right">
-<input class="button" type="submit" name="tab_edit_import_xml:method" value=" XML import " />
-<input class="button" type="submit" name="tab_edit_import_docma:method" value=" Docma-import from Word " />
+<input class="button" type="submit" name="tab_edit_import_xml:method" value=" Import " />
 </td>
 </tr>
 </table>

@@ -1,0 +1,158 @@
+<!-- ___________________________ start index_html ______________________ -->
+<tal:block define="global breadcrumb_vein string:Contents;" />
+<html metal:use-macro="here/macro_index/macros/master">
+<div metal:fill-slot="main" tal:omit-tag="">
+<!-- ___________________________ start index_html/slot main ____________________________ -->
+
+<tal:block define="
+  global objects python:model.get_tree();
+  global silva_permissions here/get_silva_permissions;
+  global docma_enabled python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
+  " />
+
+<div class="margins">
+  <h2><img src="%s" width="16" height="16" alt="%s"
+        tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    Docma import/export for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
+  </h2>
+
+  <tal:block condition="not: docma_enabled">
+    Docma support is not enabled.
+  </tal:block>
+
+  <tal:block condition="docma_enabled">
+
+    <tal:block define="global userid view/REQUEST/AUTHENTICATED_USER;
+                       global queue view/service_docma/get_queue;
+                       global processingident view/service_docma/get_processing_ident;
+                       global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(userid);
+                       global lastclass string:focus-cycle" />
+
+    <tal:block tal:condition="python: processingident != 0">
+      <table width="100%" cellspacing="0" cellpadding="0" class="feedback">
+        <tr>
+            <td>Current job: <span tal:replace="processingident" /></td>
+        </tr>
+        <tr>
+            <td>Owner: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /></td>
+        </tr>
+      </table>
+    </tal:block>
+
+    <h2>Process-queue:</h2>
+
+    <table width="100%" cellpadding="3" cellspacing="0">
+
+      <tal:block condition="nothing"> ________ Docma Queue ________ </tal:block>
+
+      <tr>
+        <th align="left" width="8%">Job Id:</th>
+        <th align="left" width="15%">Job Owner:</th>
+        <th align="left">Description:</th>
+        <th align="left" width="15%">Status:</th>
+        <th align="left" width="10%">Estimated Time:</th>
+      </tr>
+
+      <tr tal:repeat="job queue" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
+        <td align="left" tal:content="job">JobId</td>
+        <td align="left" tal:content="python: view.service_docma.get_ident_owner(job)">Owner</td>
+        <td align="left" tal:content="python: view.service_docma.get_ident_description(job)">Description</td>
+        <td align="left" tal:content="python: view.service_docma.get_status(job)">Status</td>
+        <td align="left" tal:content="python: '%s seconds' % 1">Estimated time</td>
+      </tr>
+
+      <tr class="focus" tal:condition="python: len(queue) == 0">
+        <td align="left" colspan="5">There are no jobs in the queue</td>
+      </tr>
+
+      <tr>
+        <td class="divider" colspan="5"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="3" /></td>
+      </tr>
+
+    </table>
+
+    <h2>Processed items for user <span tal:replace="userid"/>:</h2>
+
+    <form name="finishedJobQueue" action="." method="POST">
+
+    <table width="100%" cellpadding="3" cellspacing="0">
+
+      <tal:block condition="nothing"> ________ Finished Queue ________ </tal:block>
+
+      <tr>
+        <th align="left" colspan="2" width="8%">Job Id:</th>
+        <th align="left">Description:</th>
+      </tr>
+
+      <tr tal:repeat="job finished_jobs" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
+        <td align="left" width="1%"><input type="checkbox" tal:attributes="name python: 'job_%s' % job"/></td>
+        <td align="left" tal:content="job">JobId</td>
+        <td align="left" tal:content="python: view.service_docma.get_ident_description(job)">Owner</td>
+      </tr>
+
+      <tr class="focus" tal:condition="python: len(finished_jobs) == 0">
+        <td align="left" colspan="4">There are no processed jobs</td>
+      </tr>
+
+      <tr class="controls">
+        <td colspan="2" align="left">
+          <script type="text/javascript">
+          <!--
+            if (document.forms[0])
+            {
+              document.write('<input class="button" type="button" name="selectButton" value="Select all" title="Select all items in this folder" onClick="toggleSelect(); return false">');
+            }
+          //-->
+          </script>
+        </td>
+        <td align="right">
+          <tal:block condition="silva_permissions/ChangeSilvaContent">
+            &nbsp;&nbsp;<input class="button" type="submit" name="tab_docma_import:method" value="Import" title="Import to the current location" />
+            &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_docma_delete:method" value="Delete" title="There's no undo" onClick="return confirm('Really delete?')" />
+          </tal:block>
+        </td>
+      </tr>
+
+    </table>
+
+    </form>
+
+    <script type="text/javascript">
+    <!--
+      isSelected = false;
+
+      function toggleSelect()
+      {
+        if (isSelected == false)
+        {
+          for (i = 0; i < document.finishedJobQueue.length; i++)
+          {
+            document.finishedJobQueue.elements[i].checked = true;
+          }
+          isSelected = true;
+          document.finishedJobQueue.selectButton.value = "Deselect all";
+          return isSelected;
+        }
+        else
+        {
+          for (i = 0; i < document.finishedJobQueue.length; i++)
+          {
+            document.finishedJobQueue.elements[i].checked = false;
+          }
+          isSelected = false;
+          document.finishedJobQueue.selectButton.value = "Select all";
+          return isSelected;
+        }
+      }
+    //-->
+    </script>
+
+  </tal:block>
+
+</div>
+
+
+<!-- ___________________________ end index_html/slot main ____________________________ -->
+</div>
+</html>
+<!-- ___________________________ end index_html ______________________________________ -->
