@@ -430,7 +430,7 @@
 <td>
 <form action="minimal_access_role_submit" method="POST">
 <table width="100%" cellspacing="0" cellpadding="3" border="0"
-  tal:define="is_closed model/sec_is_closed_to_public">
+  tal:define="is_closed model/sec_is_closed_to_public; minimal_role model/sec_minimal_view_role">
   <tr>
     <td colspan="3">
       <h3>Access restriction by Role
@@ -449,9 +449,11 @@
     <td valign="top">
         <p>
         Minimal role for viewing this object (and all children):
+        <span tal:content="minimal_role" style="color:red"></span>
         <select name="role" tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', nothing)">
-          <option value="None" tal:attributes="selected python:test(not is_closed, 'SELECTED', nothing)">Unauthenticated</option>
-          <option value="Viewer" tal:attributes="selected python:test(is_closed, 'SELECTED', nothing)">Viewer</option>
+          <option value="Anonymous" tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">Anonymous</option>
+          <option value="Viewer" tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">Viewer</option>
+          <option value="Authenticated" tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">Authenticated</option>
         </select>
         </p>
         <p tal:condition="python: is_closed > 1">

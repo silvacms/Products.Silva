@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.45 $
+# $Revision: 1.46 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -93,20 +93,27 @@ class Security:
         #self.manage_permission('Access contents information',
         #                       roles=[],
         #                       acquire=1)
+        print "Role info:", self.rolesOfPermission('View')
+        print "Going to open to public"
+        allowed_roles = ['Anonymous', 'Authenticated', 'Viewer', 'Reader', 'Author', 'Editor',
+                         'ChiefEditor', 'Manager']
         self.manage_permission('View',
-                               roles=[],
+                               roles=allowed_roles,
                                acquire=1)
+        print "Role info:", self.rolesOfPermission('View')
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_close_to_public')
-    def sec_close_to_public(self):
+    def sec_close_to_public(self, allow_authenticated=0):
         """Close this object to the public; only accessible to people
         with Viewer role here.
         """
         # XXX should change this on dependencies on permissions somehow, not
         # hard coded roles
-        allowed_roles = ['Viewer', 'Reader', 'Author', 'Editor', 
+        allowed_roles = ['Viewer', 'Reader', 'Author', 'Editor',
                          'ChiefEditor', 'Manager']
+        if allow_authenticated:
+            allowed_roles += ['Authenticated']
         #self.manage_permission('Access contents information',
         #                       roles=allowed_roles,
         #                       acquire=0)
@@ -134,6 +141,7 @@ class Security:
         self._lock_info = None
 
     # ACCESSORS
+    # deprecated, use 'sec_is_closed_to_public' instead
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_is_open_to_public')
     def sec_is_open_to_public(self):
@@ -174,6 +182,18 @@ class Security:
                 return 0
             curobj = curobj.aq_parent
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'sec_minimal_view_role')
+    def sec_minimal_view_role(self):
+        """Returns the minimal role required for viewing"""
+        rop = self.rolesOfPermission('View')
+        if {'selected': 'SELECTED', 'name': 'Anonymous'} in rop:
+            return 'Anonymous'
+        elif {'selected': 'SELECTED', 'name': 'Authenticated'} in rop:
+            return 'Authenticated'
+        else:
+            return 'Viewer'
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_is_locked')
     def sec_is_locked(self):
@@ -188,14 +208,14 @@ class Security:
             return 0
         current_username = self.REQUEST.AUTHENTICATED_USER.getUserName()
         return username != current_username
-        
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_have_management_rights')
     def sec_have_management_rights(self):
         """Check whether we have management rights here.
         """
         return self.REQUEST.AUTHENTICATED_USER.has_role(['Manager'], self)
-    
+
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_get_user_ids')
     def sec_get_userids(self):
