@@ -1001,6 +1001,9 @@ class IContainerPolicy(Interface):
 class IGhost(Interface):
     """Interface for ghosts (and ghost folders)"""
 
+    def haunted_path():
+        """return path to haunted objecy"""
+    
     def get_haunted_url():
         """return haunted object's url"""
 
