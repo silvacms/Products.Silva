@@ -9,53 +9,61 @@
 
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
 <metal:fill-slot fill-slot="info">
-  <div class="info"
-    tal:condition="model/canScale">
+  <div class="info">
+   
     <h3 class="info">
       <img tal:replace="structure icon" /> Image info
     </h3>
-    <p tal:condition="not: model/hires_image">
-      <span class="subhead">format</span><br />
-      <span tal:replace="model/getFormat" /> image<br />
-      <span class="subhead">dimensions</span><br />
-      <span 
-        tal:define="
-          img_width python: model.getDimensions()[0];
-          img_height python: model.getDimensions()[1];
-          "
-        tal:on-error="string: unknown"
-        tal:replace="string:${img_width}x${img_height}"
-      />
-    </p> 
-    <p tal:condition="model/hires_image">
-      <span class="subhead">format</span><br />
-      <span tal:replace="model/web_format">format</span> image
-    </p>
-    <p>
-      <span class="subhead">dimensions</span><br />
-      <span tal:define="
-        img_width python: model.getDimensions()[0];
-        img_height python: model.getDimensions()[1];
-        "
-        tal:on-error="string: unknown"
-        tal:replace="string:${img_width}x${img_height}"
-        />, scaled to 
-        <span tal:define="
-          img_width python: model.getCanonicalWebScale()[0];
-          img_height python: model.getCanonicalWebScale()[1];
-          "
-          tal:on-error="string: unknown"
-          tal:replace="string:${img_width}x${img_height}"
-        />
-    </p>
-    <p>
-      <span class="subhead">original</span><br />
-      <a href="" class="underline"
-        title="see the original image"
-        accesskey="v"
-        tal:attributes="href string:${model/absolute_url}/hires_image">
-          view unscaled image
-      </a>
+    <tal:block tal:condition="model/canScale">
+        <p tal:condition="not: model/hires_image">
+          <span class="subhead">format</span><br />
+          <span tal:replace="model/getFormat" /> image<br />
+          <span class="subhead">dimensions</span><br />
+          <span 
+            tal:define="
+              img_width python: model.getDimensions()[0];
+              img_height python: model.getDimensions()[1];
+              "
+            tal:on-error="string: unknown"
+            tal:replace="string:${img_width}x${img_height}"
+          />
+        </p> 
+        <p tal:condition="model/hires_image">
+          <span class="subhead">format</span><br />
+          <span tal:replace="model/web_format">format</span> image
+        </p>
+        <p>
+          <span class="subhead">dimensions</span><br />
+          <span tal:define="
+            img_width python: model.getDimensions()[0];
+            img_height python: model.getDimensions()[1];
+            "
+            tal:on-error="string: unknown"
+            tal:replace="string:${img_width}x${img_height}"
+            />, scaled to 
+            <span tal:define="
+              img_width python: model.getCanonicalWebScale()[0];
+              img_height python: model.getCanonicalWebScale()[1];
+              "
+              tal:on-error="string: unknown"
+              tal:replace="string:${img_width}x${img_height}"
+            />
+        </p>
+        <p>
+          <span class="subhead">original</span><br />
+          <a href="" class="underline"
+            title="see the original image"
+            accesskey="v"
+            tal:attributes="href string:${model/absolute_url}/hires_image">
+              view unscaled image
+          </a>
+        </p>
+    </tal:block>
+    <p
+      tal:condition="not: model/canScale">
+      Note: Silva can provide image scaling and conversion with the help of PIL 
+      (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
+      PIL doesn't seem to be installed.
     </p>
     <p
       tal:define="
@@ -66,11 +74,13 @@
       <span 
         tal:attributes="title string: ${size} Bytes"
         tal:content="python:view.convertBytesToHumanReadable(size)" /> Bytes
-        <br />
-      (<span 
-        tal:attributes="title string: ${scaled_size} Bytes"
-        tal:content="python:view.convertBytesToHumanReadable(scaled_size)" /> 
-      Bytes scaled)
+      <tal:block tal:condition="model/canScale">
+         <br />
+        (<span 
+          tal:attributes="title string: ${scaled_size} Bytes"
+          tal:content="python:view.convertBytesToHumanReadable(scaled_size)" /> 
+        Bytes scaled)
+      </tal:block>
     </p>
     <tal:block tal:condition="python:user.has_role(['Manager'], model)">
       <p tal:define="path model/getFileSystemPath"
@@ -79,12 +89,6 @@
         <span tal:replace="structure python:  ' / '.join(path.split('/'))" />
       </p>
     </tal:block>
-  </div>
-  <div class="info"
-    tal:condition="not: model/canScale">
-    Note: Silva can provide image scaling and conversion with the help of PIL 
-    (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
-    PIL doesn't seem to be installed.
   </div>
 </metal:fill-slot>
 
