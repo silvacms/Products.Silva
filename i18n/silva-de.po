@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-20 15:53+0100\n"
+"PO-Revision-Date: 2004-12-20 16:23+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -3242,11 +3242,11 @@ msgstr "Ein Index kann nicht bearbeitet werden. Um den Index anzusehen, gehen Si
 
 #: /views/edit/Content/Indexer/edit.pt:64
 msgid "Note that <span class=\"warning\">the index only displays links to published content</span>, so the list may be empty if nothing is published."
-msgstr ""
+msgstr "Beachten Sie, daß <span class=\"warning\">der Index nur Links beinhaltet, die auf publizierten Inhalt verweisen.</span>Die Liste kann also leer sein, wenn nichts publiziert wurde."
 
 #: /views/edit/Content/Indexer/edit.pt:65
 msgid "If new content has been added, click &#8220;update index&#8221; (in large publications this may take a while)."
-msgstr ""
+msgstr "Wenn neue Inhalte hinzugefügt wurden, drücken Sie &#8220;Index auffrischen&#8221; (in großen Publikationen kann das eine Zeit dauern)."
 
 #: /views/edit/Content/Indexer/edit.pt:75
 msgid "update index"
@@ -3319,7 +3319,7 @@ msgstr ""
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:141
 msgid "Add read only view here?"
-msgstr ""
+msgstr "Nur Lesen Ansicht hier hinzufügen?"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:57
 msgid "member data of &#xab;${title}&#xbb;"
@@ -3332,7 +3332,7 @@ msgstr "Merkmal"
 #: /views/edit/VersionedContent/Ghost/edit.pt:110
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:74
 msgid "Link to editor screen of original."
-msgstr ""
+msgstr "Link zum Bearbeiten des Originals."
 
 #: /views/edit/VersionedContent/Ghost/edit.pt:49
 msgid "ghost of &#xab;${name}&#xbb;"
@@ -4731,7 +4731,7 @@ msgstr "Abonnements verwalten: alt-m"
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:22
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "<u>m</u>anage subscriptions..."
-msgstr "Abonements verwalten..."
+msgstr "Abonnements verwalten..."
 
 #: /views/edit/tab_metadata.pt:86
 msgid "metadata ${for_approved_version_of_title}"
@@ -4844,7 +4844,7 @@ msgstr "Eine Ebene aufwärts: alt-${key}"
 
 #: /views/get_tab_info.py:27
 msgid "up to top of publication: alt-${key}"
-msgstr ""
+msgstr "Zum Anfang der Publikation: alt-${key}"
 
 #: /views/get_tab_info.py:29
 msgid "access key: alt-${key}"
