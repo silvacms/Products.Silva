@@ -5,7 +5,9 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    breadcrumb_vein string:Publish;">
+  breadcrumb_vein string:Publish;
+  "
+  i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block tal:define="
   default_doc model/get_default;
@@ -109,9 +111,10 @@
           indent_depth python: '%spx' % str(obj['indent'] * 10);
           obj_url obj/absolute_url;
           state obj/status_style | nothing;
-          global approveables python: test(state == 'draft' or state == 'closed', 1, approveables);
+          global rejectables python: test(state == 'pending', 1, rejectables);
           global revokeables python: test(state == 'approved', 1, revokeables);
-          global rejectables python: test(state == 'pending', 1, rejectables)"
+          global approveables python: test(state == 'draft' or state == 'closed', 1, approveables);
+          global new_versionables python: test(state == 'closed', 1, new_versionables);"
         tal:attributes="
           class python: iterate and 'odd' or 'even';">
         <td class="listing-left">
@@ -201,20 +204,18 @@
             tal:attributes="href obj_url;"
             tal:condition="python: public_status == 'published'">
             <tal:block
-              condition="start_time"
               define="
                 global closeables python: 1;
                 global new_versionables python: 1"
+              condition="start_time"
               replace="
                 python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
             </tal:block>
           </a>
           <tal:block 
-            define="
-              closed python: public_status == 'closed';
-              global new_versionables python: closed and 1 or new_versionables;"
-            condition="closed"> 
-            <span i18n:translate="closed">
+            condition="python: public_status == 'closed'"> 
+            <span i18n:translate="closed"
+              define="global new_versionables python: closed and 1 or new_versionables;">
               closed
             </span>
           </tal:block>
@@ -355,7 +356,7 @@
           value="Approve"
           title="approve or publish new versions of selected objects: alt-o"
           accesskey="o"
-          tal:condition="approveables"
+          tal:condition="python: approveables or rejectables"
         />
       </td>
     </tr>
@@ -399,6 +400,7 @@
           value="Request approval"
           title="request approval for new versions: alt-r"
           accesskey="r"
+          tal:condition="approveables"
         />
       </td>
     </tr>
