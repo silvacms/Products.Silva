@@ -276,7 +276,7 @@
       </div>
       <tal:block condition="python:getattr(here, 'service_groups', None)">
       <!-- Defind groups listing -->
-        <metal:block use-macro="view/macro_groups_listing/macros/listing">
+        <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
           <metal:block fill-slot="listing_actions">
             <select name="assign_role">
               <option value="None">

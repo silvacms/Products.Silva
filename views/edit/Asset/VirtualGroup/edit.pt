@@ -26,7 +26,7 @@
             name="add_groups_from_virtualgroup_to_virtualgroup:method"
             title="Copy groups as defined on selected virtual group(s)."
             type="submit"
-            value="Copy groups from virtual group(s)" />
+            value="Copy from virtual group(s)" />
         </metal:block>
       </metal:block>
       <!-- Defined groups listing -->
