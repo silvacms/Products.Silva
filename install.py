@@ -8,7 +8,7 @@ from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
 
 def add_fss_directory_view(obj, name, base, *args):
-    """ add a FSS-DirectoryView object.
+    """ add a FSS-DirectoryView object with lots of sanity checks.
     
     obj         where the new directory-object will be accessible
     name        name of the new zope object
@@ -24,7 +24,7 @@ def add_fss_directory_view(obj, name, base, *args):
     of its parents). 
 
     """
-    from os.path import isdir, dirname, join, samefile
+    from os.path import isdir, dirname, join, normpath, normcase
 
     base = dirname(base)
 
@@ -42,11 +42,24 @@ def add_fss_directory_view(obj, name, base, *args):
 
     # -- sanity check --
     exp_path = expandpath(path)
-    if not samefile(exp_path, abs_path):
-        raise ValueError, "detected FSS error, real path: %s, FSS path: %s" % (
-            abs_path, exp_path )
+        
+    if normcase(normpath(exp_path)) != normcase(normpath(abs_path)):
+        raise ValueError("detected FSS minimalpath/expandpath error, "+
+                         "path: %s, FSS path: %s" % ( abs_path, exp_path ))
     # -- end sanity check --
 
+    # -- sanity check because of FSS 1.1 createDirectoryView bug --
+    try:
+        from Products.FileSystemSite.DirectoryView import _dirreg
+        info = _dirreg.getDirectoryInfo(path)
+    except:
+        pass
+    else:
+        if info is None:
+            raise ValueError('Not a FSS registered directory: %s' % path)
+    
+    # -- end sanity check because of FSS 1.1 bug --
+    
     # FSS should eat the path now and work correctly with it
     manage_addDirectoryView(obj, path, name)
 
