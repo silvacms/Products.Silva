@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 import os, sys, time
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -101,6 +101,30 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals('last_closed', new_version.version_status())
         self.assertEquals('closed', version.version_status())
         self.assertNotInCatalog([version], version_status='closed')     
+
+    def test_periodic_workflow_update(self):
+        version = self.test.get_editable()
+        now = DateTime()
+        # There's probably a better way: I set the publication time to 
+        # approx. 5 seconds from now...
+        self.test.set_unapproved_version_publication_datetime(now + 0.00005)
+        self.test.set_unapproved_version_expiration_datetime(now + 0.00010)
+        self.test.approve_version()
+        self.assertEquals(1, not not version.is_version_approved())
+        self.assertEquals(0, not not version.is_version_published())
+        # ..after 5 seconds the version should be published.
+        time.sleep(5)
+        self.root.status_update()        
+        self.assertEquals(0, not not version.is_version_approved())
+        self.assertEquals(1, not not version.is_version_published())
+        # ..after 10 seconds the version should be closed again.
+        time.sleep(5)
+        self.root.status_update()
+        self.assertEquals(0, not not version.is_version_approved())
+        self.assertEquals(0, not not version.is_version_published())
+        self.assertEquals(version.id, self.test.get_last_closed_version())
+        self.assertNotInCatalog([version], version_status='approved')
+        self.assertNotInCatalog([version], version_status='public')        
         
     def test_move(self):
         version = self.test.get_editable()
