@@ -17,7 +17,7 @@ class RenderableAdapter(adapter.Adapter):
             self.context.get_silva_object().meta_type, renderer_name)
         if renderer is None:
             return None
-        return renderer.render(self.context)
+        return unicode(renderer.render(self.context), 'UTF-8')
             
 Globals.InitializeClass(RenderableAdapter)
 
