@@ -155,6 +155,10 @@
 <super>xsl:apply-templates mode="text-content" /></super>
 </xsl:template>
 
+<xsl:template match="link" mode="text-content">
+<a href="{url}"><xsl:apply-templates mode="text-content" /></a>
+</xsl:template>
+
 <xsl:template match="text()" mode="images">
 </xsl:template>
 
