@@ -46,9 +46,9 @@
         <PARAM NAME="configurl" tal:attributes="VALUE python: model.absolute_url() + '/edit/tab_edit_eopro_config'"/>
 
         <PARAM NAME="encoding" VALUE="UTF-8"/>
-            <PARAM NAME="startupscreenbackgroundcolor" value="#e2e9eb"/>
+            <PARAM NAME="startupscreenbackgroundcolor" value="#e5eeea"/>
             <PARAM NAME="defaultfontcolor" VALUE="black"/>
-            <PARAM NAME="defaultbackgroundcolor" VALUE="#e2e9eb"/>
+            <PARAM NAME="defaultbackgroundcolor" VALUE="#e4eeea"/>
             <PARAM NAME="defaultlinkcolor" VALUE="blue"/>
             <PARAM NAME="defaultfontsize" VALUE="12"/>
             <PARAM NAME="defaultfontface" VALUE="Serif"/>
@@ -65,13 +65,16 @@
         <param name="tablenbspfill" value="false" />
         <param name="inserttext_html" value="true" />
         <param name="standalonemode" value="false" />
+        <param name="stylesheeturl" tal:attributes="value python: getattr(model.globals, 'silva-eopro.css').absolute_url()" /> 
+        
       </applet>
 
 </td>
 <td valign="top" align="left">
-<form name="myForm" target="RSIFrame" method="POST" tal:attributes="action python: 'tab_edit_eopro_submit'">
+<form name="myForm" target="resultframe" method="POST" tal:attributes="action python: 'tab_edit_eopro_submit'">
     <input type="button" name="save" value="Save Document" onClick="functSave();">
-			<br/><br/>
+
+				<br/><br/>
     <input type="button" name="reload" value="Reset" onClick="functReload();">
     <input type="hidden" name="HTMLDATA"
             tal:attributes="value python: model.editor_storage(encoding=None)"
@@ -79,8 +82,8 @@
 <br><br><small>(buttons require LiveConnect)</small>
 </form>
 
-<iframe id="logframe" name="logframe"
-  style="border:0;height:400;"></iframe>
+<iframe id="resultframe" name="resultframe"
+  style="padding:0;color:#e5fffe;border:0;width=120;height=20;"></iframe>
 
 </td>
 </tr>

@@ -30,6 +30,7 @@ js.append("""
     function functSave() {
       mydoc = document.editor.getHTMLData('http://');
       document.myForm.HTMLDATA.value = mydoc;
+      frames.resultframe.document.write('<div style="width: 150;color: #555555;background: #f3f3d9;border: 1;border-width: 0.5;border-style: solid solid solid solid;margin: 0 0 1em 0;">Saving ...</div>');
       document.myForm.submit();
       document.myForm.save.blur();
     }
