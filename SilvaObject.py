@@ -44,7 +44,7 @@ class SilvaObject(Security):
     # whether the object should be shown in the addables-pulldown
     _is_allowed_in_publication = 1
 
-    # locateion of the xml schema
+    # location of the xml schema
     _xml_namespace = "http://www.infrae.com/xml"
     _xml_schema = "silva-0.9.1.xsd"
 
