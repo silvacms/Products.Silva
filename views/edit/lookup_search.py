@@ -33,3 +33,4 @@ if len(session[key2]) == 0:
     return view.tab_access_lookup(message_type="feedback", message="No users found for search string '%s'." % name)
 
 return view.tab_access_lookup(message_type="feedback", message="Searched for '%s'." % name)
+

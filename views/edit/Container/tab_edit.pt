@@ -33,7 +33,7 @@
   <td>
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    <span class="tablehead3"><span tal:replace="model/id">id</span>
+    <span class="tablehead3"><span tal:replace="model/id">id</span></span>
   </td>
   <td align="right">
     <tal:block condition="not:silva_permissions/ChangeSilvaContent">
@@ -288,7 +288,7 @@ There are no active content objects in this folder.
     <input tal:condition="silva_permissions/ApproveSilvaContent" class="button" type="submit" 
       name="tab_edit_move_to:method" value=" Move " title="Move items into selected position: alt-m" accesskey="m" />&nbsp;
     </tal:block>
-    <span tal:condition="python:len(publishables) <= 1">&nbsp;</span>
+    <span tal:condition="python:not(len(publishables) > 1)">&nbsp;</span>
   </td>
 </tr>
 

@@ -3,6 +3,7 @@
   <div class="hilight borders top bottom left right"
     style="padding: 0.5em; width: 30%; float: right; margin: 0em 0em 2em 1em;">
     <metal:block define-macro="listing_no_style">
+      <!-- this form deliberately has no submit buttons; filled in in slots -->
       <form action="."
         method="POST">
         <table border="0"

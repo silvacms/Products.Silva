@@ -18,7 +18,7 @@
 <tr>
 <td width="810" >
         <APPLET code="EditorApplet" id="myEditor" name="myEditor"
-                archive="edit-on-pro-signed.jar,ssce.jar" width="800"  height="500" VIEWASTEXT MAYSCRIPT
+                archive="edit-on-pro-signed.jar,ssce.jar" width="800"  height="500" VIEWASTEXT="VIEWASTEXT" MAYSCRIPT="MAYSCRIPT"
                 tal:attributes="codeBase template/eopro/absolute_url"
         >
 <!--

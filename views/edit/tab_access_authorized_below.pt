@@ -18,6 +18,7 @@
           condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
           <tal:trigger
             define="dummy python:model.security_trigger()" />
+          <!-- this form deliberately has no submit button -->
           <form action="." method="POST">
             <table cellspacing="0" cellpadding="3" border="0">
               <tr>

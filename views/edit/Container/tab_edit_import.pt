@@ -72,7 +72,7 @@
 
           <tr class="controls">
             <td>
-                <input class="cancelbutton" type="submit" value=" Cancel " name="edit_cancel" onClick="history.back()" title="Access key: alt-c" accesskey="c" />
+                <input class="cancelbutton" type="button" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
             </td>
             <td colspan="3" align="right">
                 <input class="button" type="submit" value=" Import " name="tab_edit_import_xml:method" title="Access key: alt-i" accesskey="i" />

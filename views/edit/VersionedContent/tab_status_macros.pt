@@ -213,32 +213,10 @@ Publish right now?&nbsp;<field
 
 <tr class="controls">
 <td colspan="2" align="right">
-<input class="button" type="submit" value="Approve content" class="button" title="Access key: alt-a" accesskey="a" />
+<input class="button" type="submit" value="Approve content" title="Access key: alt-a" accesskey="a" />
 </td> 
 </tr>
 
-<tr tal:replace="nothing">
-<th align="left" colspan="2">
-Message to author
-</th>
-</tr>
-
-<tr class="focus" valign="top" tal:replace="nothing">
-<td align="right">
-<span class="textarea">
-<field tal:replace="structure python:view.tab_status_form_editor.message.render()" />
-</span>
-</td>
-<td width="30%">
-This message will be sent to <a href="mailto:fritz@web.eur.nl">fritz@web.eur.nl</a>.
-</td>
-</tr>
-
-<tr class="controls" tal:replace="nothing">
-<td colspan="2" align="right">
-<input type="submit" name="tab_status_approve_email:method" value="Approve content + send email" class="button" title="Access key: alt-s" accesskey="s" />
-</td>
-</tr>
 </table>
 </form>
 
@@ -346,7 +324,7 @@ _____________________ /revoke approval _________________________________________
 
 _____________________ manual close ___________________________________________
 <div metal:define-macro="manual_close" tal:omit-tag="">
-<form action="tab_status_close" method="ST">
+<form action="tab_status_close" method="POST">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">

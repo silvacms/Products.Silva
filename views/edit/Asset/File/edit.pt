@@ -7,7 +7,7 @@
 
 <h3>Property</h3>
 
-<form method="POST" name="form" action="properties_submit">
+<form method="POST" name="form" action=".">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">
@@ -80,7 +80,7 @@ comments here (field description)
 <init tal:omit-tag=""
   tal:define="global fields python:view.upload_form.get_fields()" />
 
-<form method="POST" name="form" action="upload_submit" enctype="multipart/form-data">
+<form method="POST" name="form" action="." enctype="multipart/form-data">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">

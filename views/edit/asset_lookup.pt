@@ -30,7 +30,7 @@
   <td>
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s" 
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    <span class="tablehead3"><span tal:replace="model/id">id</span>
+    <span class="tablehead3"><span tal:replace="model/id">id</span></span>
   </td>
   <td align="right">
   </td>

@@ -9,6 +9,7 @@
 
 <h3>Authorized users below this level</h3>
 
+<!-- This form has no action on purpose -->
 <form>
 <span class="textarea">
 <textarea name="data" cols="65" rows="12" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="member python:model.sec_get_member(userid)"

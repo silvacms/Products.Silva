@@ -21,8 +21,6 @@
     <a tal:condition="python: request.HTTP_REFERER or nothing"
       tal:attributes="href request/HTTP_REFERER">Back</a>
 
-      </div>
-
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
 <tal:block tal:condition="python:unapproved_version and not could_lock">
 <div class="feedback"><span class="warning">
@@ -30,7 +28,7 @@
 </span>
 </div>
 <div class="margins">
-<form action="tab_edit_break_lock" action="POST"><input class="warningbutton" type="submit" value="Break lock" /></form>
+<form action="tab_edit_break_lock" method="POST"><input class="warningbutton" type="submit" value="Break lock" /></form>
 </div>
 </tal:block>
 

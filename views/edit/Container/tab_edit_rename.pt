@@ -12,7 +12,7 @@
 
 <h3>Rename objects</h3>
 
-<form action="tab_edit_rename_submit" method="post">
+<form action="tab_edit_rename_submit" method="POST">
 
 <table width="96%" cellspacing="0" cellpadding="5" border="0"
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;

@@ -6,7 +6,7 @@
 
 <h3>Properties</h3>
 
-<form method="POST" name="form" action="submit">
+<form method="POST" name="form" action=".">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">

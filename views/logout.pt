@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Logout</title>
-<meta http-equiv=refresh content="5; url=/manage_zmi_logout">
+<meta http-equiv="refresh" content="5; url=/manage_zmi_logout" />
 <link rel="shortcut icon" href="globals/favicon.ico" />
 <link rel="stylesheet" href="globals/base.css" />
 <link rel="stylesheet" href="globals/silva.css" />

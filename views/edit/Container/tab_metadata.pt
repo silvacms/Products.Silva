@@ -22,6 +22,7 @@
 <tr class="topcontrols" valign="bottom">
   <td colspan="3">
     <span class="tablehead3">Container metadata</span>
+  </td>
   <td align="right">
     <tal:block condition="python:silva_permissions['ApproveSilvaContent']">
       <tal:block condition="python:model.meta_type == 'Silva Folder'">
@@ -31,6 +32,7 @@
       &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_to_folder:method" value="Convert to folder" title="Change Publication into Folder - alt-c" accesskey="c" />
       </tal:block>
     </tal:block>
+  </td>
 </tr>
 
 <tr>

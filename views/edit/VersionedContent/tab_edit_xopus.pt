@@ -34,7 +34,7 @@
 </span>
 </div>
 <div class="margins">
-<form action="tab_edit_break_lock" action="POST"><input class="warningbutton" type="submit" value="Break lock" /></form>
+<form action="tab_edit_break_lock" method="POST"><input class="warningbutton" type="submit" value="Break lock" /></form>
 </div>
 </tal:block>
 
