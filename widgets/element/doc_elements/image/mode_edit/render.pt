@@ -27,10 +27,10 @@
         <label for="float-left">Float left</label><br />
       </td>
       <td>
-        <input type="radio" name="alignment" value="none" id="none" checked="checked"
-          tal:condition="python:alignment != 'none'" />
+        <input type="radio" name="alignment" value="none" id="none"
+          tal:condition="python:alignment != ''" />
         <input type="radio" name="alignment" value="none" id="none" checked=""
-          tal:condition="python:alignment == 'none'" />
+          tal:condition="python:alignment == ''" />
         <label for="none">Default</label><br />
       </td>
       <td>
