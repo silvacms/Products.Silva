@@ -72,6 +72,18 @@ table.datagrid tr.rowheading td {
   border-right-style: none;  
 } 
 
+table.silvatable th.align-left, td.align-left {
+  text-align: left;
+}
+
+table.silvatable th.align-center, td.align-center {
+  text-align: center;
+}
+
+table.silvatable th.align-right, td.align-right {
+  text-align: right;
+}
+
 
 /* __________________________________________________ silva list styles _____ */
 
