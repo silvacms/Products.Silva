@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.6
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.21 $
+  CVS:        $Revision: 1.22 $
 
 Installing Silva
 
@@ -14,6 +14,11 @@ Installing Silva
   earlier, please consult
   "UPGRADE.txt":http://www.zope.org/Members/faassen/Silva/UPGRADE.txt
   instead for instructions.
+
+  IMPORTANT: If you have problems installing Silva and your zope start
+  fails somewhere due to ParsedXML (PrettyPrint module for instance),
+  check whether you have PyXML installed. ParsedXML depends on PyXML
+  for operations.
 
   Silva depends on a set of file-system Python products for Zope for
   its core functionality, as well as a set of services which are
