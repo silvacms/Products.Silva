@@ -5,6 +5,7 @@ from Products.Silva.adapters.interfaces import IVersionManagement
 from Products.Silva.interfaces import IVersion
 from Products.Silva.Versioning import VersioningError
 from Products.Silva import SilvaPermissions
+from Products.Silva.Membership import noneMember
 
 module_security = ModuleSecurityInfo('Products.Silva.adapters.version_management')
 
@@ -168,6 +169,22 @@ class VersionManagementAdapter(adapter.Adapter):
                 for verid, pubtime, exptime in self.context._previous_versions:
                     if verid == versionid:
                         return exptime
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'getVersionLastAuthorInfo')
+    def getVersionLastAuthorInfo(self, versionid):
+        version = self.getVersionById(versionid)
+        info = version._last_author_info
+        if info is None:
+            return noneMember.__of__(self.context)
+        else:
+            return info.__of__(self.context)
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'getVersionCreatorInfo')
+    def getVersionCreatorInfo(self, versionid):
+        version = self.getVersionById(versionid)
+        return self.context.sec_get_member(version.getOwner().getUserName())
 
     def _createUniqueId(self):
         # for now we use self.context._version_count, we may

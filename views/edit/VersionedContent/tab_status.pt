@@ -220,7 +220,7 @@ _______ manual close section here _______
         <table class="listing" id="sortable" tal:condition="may_change_content">
           <thead>
             <tr>
-              <td class="top" colspan="6">
+              <td class="top" colspan="7">
                  <h2 tal:attributes="title string:id: ${model/id}">
                    <img tal:replace="structure python:view.render_icon(model)" />
                    <tal:block i18n:translate="manage_document_versions">
@@ -232,7 +232,7 @@ _______ manual close section here _______
               </td>
             </tr>
             <tr class="top-controls">
-              <td colspan="6" class="align-right">
+              <td colspan="7" class="align-right">
                 <h3 style="float:left;" i18n:translate="">
                   publishing actions
                 </h3>
@@ -254,6 +254,8 @@ _______ manual close section here _______
               <th width="25%">modification time</th>
               <th width="25%">publication time</th>
               <th width="25%">expiration time</th>
+              <th>last author</th>
+              <th>creator</th>
               <th>version status</th>
             </tr>
             <tr  tal:repeat="version versions">
@@ -262,6 +264,9 @@ _______ manual close section here _______
                                   modificationtime python: times[0];
                                   publicationtime python:times[1];
                                   expirationtime python: times[2];
+                                  userinfos python: here.tab_status_version_user_infos(version);
+                                  lastauthor python: userinfos[0].fullname();
+                                  creator python: userinfos[1].fullname();
               ">
                 <td style="white-space: nowrap">
                   <input type="checkbox" 
@@ -285,6 +290,12 @@ _______ manual close section here _______
                 <td style="white-space: nowrap" tal:content="expirationtime">
                   expirationtime
                 </td>
+                <td style="white-space: nowrap" tal:content="lastauthor">
+                  last author
+                </td>
+                <td style="white-space: nowrap" tal:content="creator">
+                  creator
+                </td>
                 <td tal:define="version_status version/version_status;
                                 color python: ((version_status == 'unapproved' and 'red') or 
                                                 (version_status == 'approved' and 'green') or 
@@ -303,17 +314,17 @@ _______ manual close section here _______
           <tfoot>
             <tr tal:condition="versions">
               <th class="listing-left"
-                colspan="2">
+                colspan="3">
                 <tal:define define="select_id string:versions">
                   <metal:block use-macro="view/macro_select_all/macros/select_all" />
                 </tal:define>
               </th>
-              <th colspan="3">
+              <th colspan="4">
                 &#xa0;
               </th>
             </tr>
             <tr class="controls">
-              <td class="align-right" colspan="5">
+              <td class="align-right" colspan="7">
                 <input class="warning"
                   type="submit"
                   name="tab_status_delete_versions:method"
