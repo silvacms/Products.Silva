@@ -17,6 +17,8 @@ def initializeElementRegistry():
     their product __init__.pies
     """
     handler_map = {
+        ('http://www.infrae.com/xml', 'silva_container'): SilvaHandler,
+        ('http://www.infrae.com/xml', 'silva'): SilvaHandler,
         (NS_URI, 'silva'): SilvaHandler,
         (NS_URI, 'folder'): FolderHandler,
         (NS_URI, 'ghost'): GhostHandler,

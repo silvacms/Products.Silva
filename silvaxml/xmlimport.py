@@ -74,7 +74,7 @@ class SaxImportHandler(ContentHandler):
             else:
                 parent_handler = None
                 object = self._object
-            handler = factory(object, parent_handler, self._settings)   
+            handler = factory(object, parent_handler, self._settings)
             self._registry.pushOverrides(handler.getOverrides())
             self._handler_stack.append(handler)
             self._depth_stack.append(self._depth)

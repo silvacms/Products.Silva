@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, sys, re
+import os, sys
 import xml.sax
 from xml.sax.handler import feature_namespaces
 if __name__ == '__main__':
