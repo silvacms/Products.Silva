@@ -12,6 +12,8 @@
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
+      $Id: silva.xsd,v 1.7 2002/12/30 10:42:01 zagy Exp $
+    
       Silva XML schema
       Copyright 2002 Infrae
       Author: Christian Zagrodnick, cz@gocept.com
@@ -325,6 +327,30 @@
     </xsd:attribute>
   </xsd:complexType>
 
+
+  <xsd:complexType name="DefinitionList">
+    <xsd:sequence>
+      <xsd:element name="title" type="xsd:string" minOccurs="1" />
+      <xsd:choice maxOccurs="unbounded">
+        <xsd:sequence>
+          <xsd:element name="dt" type="Markup" minOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                Definition Term
+              </xsd:documentation>
+            </xsd:annotation>  
+          </xsd:element> 
+          <xsd:element name="dd" type="Markup" minOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                Definition Description
+              </xsd:documentation>
+            </xsd:annotation>  
+          </xsd:element> 
+        </xsd:sequence>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
 
 
   <!-- NewsItem -->
