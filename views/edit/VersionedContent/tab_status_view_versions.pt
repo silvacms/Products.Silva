@@ -46,28 +46,23 @@
       i18n:translate="" 
       >Presentation&nbsp;preview</a></span>
 
-  <span tal:replace="nothing"> _______ closed message _______ </span>
-  <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
-    <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
-  </div>
-
   <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
-<style type="text/css">
-.public {
-  margin-left : 1.5em;
-  padding-top : 0.3em;
-}
-</style>
-
-  <div class="public" style="float: left"
-    tal:content="structure python: model.view_version('preview', version1)">
-    <!-- this text is replaced by Silva content -->
+  <div class="preview_compare">
+    <table>
+      <tbody>
+        <tr>
+          <td class="preview_compare_left">
+            <h3 i18n:translate="">Older version (<tal:block i18n:name="version_id" tal:content="version2/id" />)</h3>
+            <tal:block content="structure python: model.view_version('preview', version2)" />
+          </td>
+          <td class="preview_compare_right">
+            <h3 i18n:translate="">Newer version (<tal:block i18n:name="version_id" tal:content="version1/id" />)</h3>
+            <tal:block content="structure python: model.view_version('preview', version1)" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <div class="public" style="float: left"
-    tal:content="structure python: model.view_version('preview', version2)">
-    <!-- this text is replaced by Silva content -->
-  </div>
-  <br />
 
 </metal:block>
 </metal:block>

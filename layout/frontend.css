@@ -1,4 +1,4 @@
-/* _________ Stylesheet for {__silva_version__} frontend _______________ */
+/* _________ Stylesheet for Silva 1.1 frontend _______________ */
 /* _________ Silva users can insert their own frontend styles _________ */
 /* _________ Styles modified here will affect the Silva preview  ______ */
 /*
@@ -371,6 +371,27 @@ div.header a.icon {
   max-width : 44em;
   /* for IE5 */
   width : 512px;
+}
+
+.preview_compare {
+  margin-left : 7em;
+  padding-top : 2.3em;
+  margin-right: 7em;
+}
+
+.preview_compare_left, .preview_compare_right {
+  width: 49%;
+}
+
+.preview_compare_left {
+  border-width: 0px;
+  border-color: black;
+  border-style: solid;
+  border-right-width: 1px;
+}
+
+.preview_compare_right {
+  padding-left: 2.3em;
 }
 
 /* this selector works only for standards compatible browsers like mozilla */
