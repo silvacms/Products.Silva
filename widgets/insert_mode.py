@@ -7,6 +7,7 @@
 ##parameters=
 ##title=
 ##
+context.get_root().security_trigger()
 node = context.REQUEST.node
 node.get_content().sec_update_last_author_info()
 allowed_types = context.get_allowed_info(context.REQUEST.wr_name,node)

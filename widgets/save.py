@@ -7,7 +7,7 @@
 ##parameters=
 ##title=
 ##
-context.get_root().security_trigger()
 context.save_helper()
+context.REQUEST.node.get_content().sec_update_last_author_info()
 context.invalidate_cache_helper()
 return context.redirect()

@@ -7,9 +7,9 @@
 ##parameters=
 ##title=
 ##
-context.get_root().security_trigger()
 request = context.REQUEST
 node = request.node
+node.get_content().sec_update_last_author_info()
 context.save_helper()
 context.invalidate_cache_helper()
 if not request.has_key('element_switched'):
