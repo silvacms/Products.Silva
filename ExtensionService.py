@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
@@ -58,6 +58,21 @@ class ExtensionService(SimpleItem.SimpleItem):
         self.uninstall(name)
         self.install(name)
         return self.manage_main(manage_tabs_message='%s refreshed' % name)
+
+    security.declareProtected('View management screens', 'refresh_all')
+    def refresh_all(self):
+        """Refreshes all extensions
+        """
+        for name in self.get_installed_names():
+            self.refresh(name)
+        return self.manage_main(manage_tabs_message='Silva and all installed extensions have been refreshed')
+
+    security.declareProtected('View management screens', 'upgrade_all')
+    def upgrade_all(self):
+        """Upgrades all content
+        """
+        self.get_root().upgrade_silva()
+        return self.manage_main(manage_tabs_message='All Silva content objects have been upgraded')
     
     security.declareProtected('View management screens', 'install_layout')
     def install_layout(self):
