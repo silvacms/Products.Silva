@@ -30,10 +30,10 @@
             <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_edit', breadcrumb_vein)" />
           </td>
           <td class="main">
-
             <tal:block replace="nothing">
-              _____________________ inner table with folder view _____________________
+              _____________________ main subtable _____________________
             </tal:block>
+
             <table class="listing"
               id="sortable">
               <thead>
@@ -106,7 +106,7 @@
                     Preview
                   </th>
                   <th>
-                    Modified&nbsp;date
+                    Modified
                   </th>
                   <th>
                     Author

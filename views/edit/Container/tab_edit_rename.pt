@@ -98,7 +98,6 @@
   <tr class="divider"
     tal:condition="not: repeat/objectid/end">
     <td colspan="5">
-      &nbsp;
    </td>
   </tr>
   </tal:cycle>

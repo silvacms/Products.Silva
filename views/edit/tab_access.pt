@@ -18,12 +18,16 @@
     <tbody>
       <tal:block replace="nothing"> ________________ user roles management ________________ </tal:block>
       <tr>
-        <td class="left" rowspan="99"
-          tal:condition="model_is_container">
+        <tal:block replace="nothing">
+          _____________________ sidebar subtable _____________________
+        </tal:block>
+        <td class="left" rowspan="99">
           <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
         </td>
-        <td class="main"
-          tal:attributes="style python: test(model_is_container, None, 'padding-left:8px')">
+        <td class="main">
+          <tal:block replace="nothing">
+            _____________________ main subtable _____________________
+          </tal:block>
           <!-- Role assignment table -->
           <form action="."
             method="POST">
@@ -59,7 +63,7 @@
                   Username
                 </th>
                 <th class="align-right">
-                  Upward defined roles
+                  Roles defined above
                 </th>
                 <th class="align-right">
                   Local roles
@@ -136,7 +140,7 @@
                       name="access_assign_to_user:method"
                       title="assign a local role to selected user(s)"
                       type="submit"
-                      value="Assign role to user" />
+                      value="Assign role" />
                   </tal:block>
                 </td>
                 <td class="align-right">
@@ -144,12 +148,13 @@
                     name="access_revoke_from_user:method"
                     title="revoke selected role(s) from selected user(s)"
                     type="submit"
-                    value="Revoke role from user" 
+                    value="Revoke role" 
                     tal:condition="members" />
                 </td>
               </tr>
             </table>
           </form>
+        <tal:block replace="nothing"> _________ pending roles management _________ </tal:block>
           <!-- Pending role requests -->
           <tal:block condition="allow_subscription">
             <form action="."
@@ -165,7 +170,7 @@
                     <h3>Pending requests for roles</h3>
                   </td>
                 </tr>
-                <tr>
+                <tr tal:condition="requested_roles">
                   <th class="align-left">
                     Username
                   </th>
@@ -232,17 +237,13 @@
             </form>
           </tal:block>
         </td>
-        <td class="right">
+        <td class="right">        
           <!-- Clipboard -->
           <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
-            <metal:block fill-slot="clipboard_actions">
-              <input class="button"
-                style="float:right;"
-                name="access_assign_to_user:method"
-                title="assign a local role to selected user(s)"
-                type="submit"
-                value="Assign" />
-              <select name="assign_role">
+            <div style="text-align:right;"
+              metal:fill-slot="clipboard_actions">
+              <select name="assign_role"
+                style="float:left;">
                 <option value="None">
                   select role:
                 </option>
@@ -253,15 +254,18 @@
                   Role name
                 </option>
               </select>
-              &nbsp;
-            </metal:block>
+              <input class="button"
+                name="access_assign_to_user:method"
+                title="assign a local role to selected user(s)"
+                type="submit"
+                value="Assign" />
+            </div>
           </metal:block>          
         </td>
       </tr>
       <tal:block replace="nothing"> ________________ group roles management ________________ </tal:block>
       <tr>
-        <td class="main"
-          tal:attributes="style python: test(model_is_container, None, 'padding-left:8px')">
+        <td class="main">
           <tal:block condition="python:model.sec_groups_enabled()">
             <div class="hilight borders top right bottom left"
               style="padding: 0.5em;"
@@ -316,13 +320,12 @@
                       </h3>
                     </td>
                   </tr>
-                  <tr class="align-left"
-                   >
+                  <tr tal:condition="groups">
                     <th>
                       Groupname
                     </th>
                     <th class="align-right">
-                      Upward defined roles
+                      Roles defined above
                     </th>
                     <th class="align-right">
                       Local roles
@@ -383,8 +386,7 @@
                       No groups with (local) roles
                     </td>
                   </tr>
-                  <tr class="controls"
-                   >
+                  <tr class="controls">
                     <td class="align-left"
                       colspan="2">
                       <tal:block tal:condition="groups">
@@ -420,36 +422,35 @@
             </tal:block>
           </tal:block>
         </td>
-        <td class="right">        
+        <td class="right">
           <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
-          <metal:block fill-slot="listing_actions">
-            <input class="button"
-              style="float:right;"
-              name="access_assign_to_group:method"
-              title="assign selected role to selected group(s)"
-              type="submit"
-              value="Assign" />
-            <select name="assign_role">
-              <option value="None">
-                select role:
-              </option>
-              <option define="lastclass string:focus-cycle"
-                value="role"
-                tal:repeat="role model/sec_get_roles"
-                tal:content="role"
-                tal:attributes="value role">
-                Role name
-              </option>
-            </select>
-            &nbsp;
-          </metal:block>
+            <div style="text-align:right;"
+              metal:fill-slot="listing_actions">
+              <select name="assign_role"
+                style="float:left;">
+                <option value="None">
+                  select role:
+                </option>
+                <option define="lastclass string:focus-cycle"
+                  value="role"
+                  tal:repeat="role model/sec_get_roles"
+                  tal:content="role"
+                  tal:attributes="value role">
+                  Role name
+                </option>
+              </select>
+              <input class="button"
+                name="access_assign_to_group:method"
+                title="assign selected role to selected group(s)"
+                type="submit"
+                value="Assign" />
+          </div>
         </metal:block>        
         </td>
       </tr>
       <tal:block replace="nothing"> _______________________ misc tools _______________________ </tal:block>
       <tr>
-        <td class="main"
-          tal:attributes="style python: test(model_is_container, None, 'padding-left:8px')">
+        <td class="main">
             <tal:block replace="nothing"> _____________________ access restriction by role _____________________  </tal:block>
             <form action="minimal_access_role_submit"
               method="POST"

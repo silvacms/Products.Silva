@@ -42,10 +42,10 @@
       </td>
 
     <td class="main">
+      <tal:block replace="nothing">
+        _____________________ main subtable _____________________
+      </tal:block>
 
-<span tal:replace="nothing">
-  _____________________ inner import table  _____________________
-</span>
 <form action="." enctype="multipart/form-data" method="POST">
   <table class="listing">
     <thead>
@@ -237,7 +237,7 @@
         </td>
       </tr>
 
-      <tr class="controls-1">
+      <tr class="inter-controls">
         <td class="align-right"
           colspan="3">
           <input class="button" 

@@ -21,14 +21,9 @@
                   title="up to parent screen: alt-u"
                   accesskey="u"
                   tal:attributes="href active_tab">
-                  <div class="navigation-border">
-                    <img alt="Return to previous screen"
-                      height="9"
-                      width="9"
-                      tal:attributes="src string:${root_url}/globals/ascending.gif" />
-                    <span tal:replace="structure string:<u>u</u>p to ${parent_screen_name}...">
-                      parent screen
-                    </span>
+                  <div class="navigation-border"
+                    tal:content="structure string:<u>u</u>p to ${parent_screen_name}...">
+                    parent screen
                   </div>
                 </a>
               </td>
@@ -36,4 +31,46 @@
           </thead>
         </table>
 </metal:block>
+
+<span tal:replace="nothing"> ______________ not in use ______________ </span>
+<metal:block define-macro="content_sidebar">
+  <table class="listing"
+    tal:define="containing_publication model/../get_publication | publication;">
+    <thead>
+      <tr>
+        <th class="top">
+          <a class="up"
+            href="../../edit/tab_edit"
+            title="up one level: alt-]"
+            accesskey="]"
+            tal:attributes="href string:../../edit/${template/id}">
+            <img width="9"
+              height="9"
+              border="0"
+              alt="Up one level"
+              tal:attributes="src string:${root_url}/globals/up_level.gif" />
+          </a>
+          <a class="top"
+            title="up to containing publication: alt-["
+            accesskey="["
+            tal:attributes="href string:${containing_publication/absolute_url}/edit/${template/id}">
+            <img width="9"
+            height="9"
+            border="0"
+            alt="Up to containing Publication"
+            tal:attributes="src string:${root_url}/globals/up_tree.gif" />
+          </a>
+          <a class="normal"
+            style="padding: 0 1em;"
+            title="reload screen"
+            tal:attributes="href template/id"
+            tal:content="string:${breadcrumb_vein}">
+            vein
+          </a>
+        </th>
+      </tr>
+    </thead>
+  </table>
+</metal:block>
+
 </html>

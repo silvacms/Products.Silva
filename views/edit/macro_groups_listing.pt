@@ -79,8 +79,8 @@
             </td>
           </tr>
           <tr>
-            <th>
-              Control-click to multi-select
+            <th style="font-size:90%">
+              Ctrl-click to multi-select
             </th>
           </tr>
           <tr valign="top"
@@ -110,7 +110,7 @@
               </select>
             </td>
           </tr>
-          <!-- tr class="controls controls-1 align-left">
+          <!-- tr class="controls inter-controls align-left">
             <td>
               <span class="widebody"
                 tal:condition="groups">

@@ -89,7 +89,6 @@ setTimeout('handleTimeout()', document.timeout * 1000, '');
   tal:attributes="href string:${root_url}/globals/favicon.ico"
 />
 <!-- Plone Stylesheets -->
-<span tal:replace="nothing"> _______ XXX Fixme: these need to be absoluted _______ </span>
 <style media="all"
   type="text/css"
   xml:space="preserve"
@@ -264,7 +263,7 @@ _______ editor hooks _______
 </span>
 <div class="footer">
   <div style="float: left;">
-    contact person:
+    contact:
     <a shape="rect"
       tal:attributes="href python:'mailto:%s' % getattr(model, 'contact_email', None)"
     >

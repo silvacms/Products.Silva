@@ -37,10 +37,6 @@
                   accesskey="k"
                   tal:attributes="href here/lookup_back_link">
                   <div class="navigation-border">
-                    <img alt="Return to previous screen"
-                      height="9"
-                      width="9"
-                      tal:attributes="src string:${root_url}/globals/ascending.gif" />
                     bac<u>k</u>...
                   </div>
                 </a>
@@ -52,9 +48,9 @@
 
       </td>
       <td class="main">
-        <span tal:replace="nothing">
-          _____________________ inner table  _____________________
-        </span>
+        <tal:block replace="nothing">
+          _____________________ main subtable _____________________
+        </tal:block>
 
         <form action="lookup_search"
           method="POST">

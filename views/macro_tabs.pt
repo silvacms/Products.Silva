@@ -60,7 +60,7 @@
         accesskey="."
         tal:attributes="href python:'%s/manage_main' % url"
       >
-        /manage...
+        &middot; manage...
       </a>
     <!-- ____________ Start hook for the EditOnPro Integration ____________ -->
 

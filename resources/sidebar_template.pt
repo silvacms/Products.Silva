@@ -104,10 +104,9 @@
             </div>
           </td>
         </tr>
-        <tr tal:condition="repeat/indent_item/end">
-          <td class="even"
-            style="font-size: 0.2em;">
-            &nbsp;
+        <tr class="controls"
+          tal:condition="repeat/indent_item/end">
+          <td>
           </td>
         </tr>
       </tal:block>

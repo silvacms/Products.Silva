@@ -32,9 +32,9 @@
       </td>
       <td class="main">
 
-<span tal:replace="nothing">
-  _____________________ inner table  _____________________
-</span>
+<tal:block replace="nothing">
+  _____________________ main subtable _____________________
+</tal:block>
 
 <table class="listing">
   <thead>

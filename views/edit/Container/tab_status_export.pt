@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    breadcrumb_vein string:Status;
+    breadcrumb_vein string:Publish;
     active_tab string:tab_status;
     parent_screen_name string:Publish;
     view here;
@@ -34,6 +34,9 @@
       </td>
 
       <td class="main">
+        <tal:block replace="nothing">
+          _____________________ main subtable _____________________
+        </tal:block>
         
         <div class="feedback">
           <b>Items selected for export:</b><br />

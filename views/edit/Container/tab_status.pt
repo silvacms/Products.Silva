@@ -222,7 +222,7 @@
                   <th class="controls listing-left">
                   </th>
                 </tr>
-                <tr class="controls controls-1">
+                <tr class="controls inter-controls">
                   <tal:block replace="nothing">
                     ______________ publication time controls ______________
                   </tal:block>
@@ -258,7 +258,7 @@
                       </label>
                   </td>
                 </tr>
-                <tr class="controls controls-1">
+                <tr class="controls inter-controls">
                   <tal:block replace="nothing">
                     ______________ expiration time controls ______________
                   </tal:block>

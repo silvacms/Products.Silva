@@ -22,13 +22,6 @@
       title="up to top of Access tab"
       i18n:attributes="title"
       i18n:translate="back">          
-      <img alt="up to top of Access tab"
-        border="0"
-        height="16"
-        width="16"
-        tal:attributes="src string:${root_url}/globals/left.gif"
-	i18n:attributes="alt"
-      />
       Back
     </a>
   </h3>
@@ -36,8 +29,7 @@
   <h2>
      <img tal:replace="structure python:view.render_icon(model)" />
      &nbsp; Group definitions for
-     <span class="folder-title"
-       tal:content="structure string:&amp;#xab;${model/get_title_or_id_html}&amp;#xbb;">
+     <span tal:content="structure string:&amp;#xab;${model/get_title_or_id_html}&amp;#xbb;">
        title
      </span>
    </h2>
