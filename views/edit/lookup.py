@@ -1,16 +1,11 @@
-## Script (Python) "lookup"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
 request = context.REQUEST
 session = request.SESSION
+model = request.model
 
-referer = request.form.get('referer', 'tab_access')
-session['referer'] = referer
+key = ('silva_lookup_referer', context.silva_root())
+default_referer = context.tab_access.absolute_url()
+referer = request.get('HTTP_REFERER', default_referer)
 
-return context.tab_access_lookup()
+session[key] = referer
+
+request.RESPONSE.redirect('%s/edit/tab_access_lookup' % model.absolute_url())

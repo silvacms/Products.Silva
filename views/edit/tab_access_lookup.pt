@@ -6,8 +6,9 @@
   <div class="margins"
     metal:fill-slot="main">
     <h3>
-      <a tal:attributes="href view/lookup_get_referer"
-        title="Up to top of Access tab">
+      <a href="lookup_back_link"
+        title="Up to top of Access tab"
+        tal:attributes="href here/lookup_back_link">
         Back
         <img alt="Up to top of Access tab"
           border="0"
@@ -70,8 +71,7 @@
                 <tr class="controls">
                   <td colspan="2" align="right">
                     <input class="button"
-                      accesskey="s"
-                      name="lookup_search:method"
+                      accesskey="s"                      
                       title="Search - alt-s"
                       type="submit"
                       value="Search" />
@@ -99,11 +99,11 @@
                     </span>
                   </th>
                 </tr>
-                <tal:block define="global lookup_result python:view.lookup_get_search_result()" />
+                <tal:block define="global lookup_result options/results | nothing" />
               <!-- If many items in result; put a second button on top as well. 
                 Is this UI-wise "done" or "not done"? -->
                 <tr class="topcontrols"
-                  tal:condition="python:len(lookup_result) > 3">
+                  tal:condition="python:lookup_result and len(lookup_result) > 3">
                   <td align="right"
                     colspan="2">
                     <img height="18px"
@@ -111,8 +111,7 @@
                       width="1px"
                       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
                     <input class="button"
-                      accesskey="a"
-                      name="lookup_add_to_selection:method"
+                      accesskey="a"                      
                       title="Add checked users to your selection list on the right - ctrl-a"
                       type="submit"
                       value="Add to selection" />
@@ -158,8 +157,7 @@
                   <td align="right"
                     colspan="2">
                     <input class="button"
-                      accesskey="a"
-                      name="lookup_add_to_selection:method"
+                      accesskey="a"                      
                       title="Add checked users to your selection list on the right - ctrl-a"
                       type="submit"
                       value="Add to selection" />
@@ -179,13 +177,14 @@
                 </metal:block>
                 <metal:block fill-slot="clipboard_actions">
                   &nbsp;
-                  <input class="button"
+                  <a class="buttonlink" 
                     accesskey="u"
-                    name="lookup_use_selection:method"
-                    style="float: right;"
                     title="Return to the top of the access tab with this selection - ctrl-u"
-                    type="submit"
-                    value="Use selection..." />
+                    style="float: right;"
+                    href="lookup_back_link"
+                    tal:attributes="href here/lookup_back_link">
+                    Use selection...
+                  </a>
                   <input class="warningbutton"
                     accesskey="d"
                     name="lookup_remove_from_selection:method"

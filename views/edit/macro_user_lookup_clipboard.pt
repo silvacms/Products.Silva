@@ -14,15 +14,13 @@
             <td colspan="2">
               <div style="float: right;">
                 <metal:block define-slot="clipboard_lookup_action">
-                  <input name="referer"
-                    type="hidden"
-                    value="tab_access" />
-                  <input class="button"
+                  <a class="buttonlink" 
                     accesskey="l"
-                    name="lookup:method"
                     title="Lookup users... - alt-l"
-                    type="submit"
-                    value="Lookup..." />
+                    style="float: right;"
+                    href="lookup">
+                    Lookup users...
+                  </a>
                 </metal:block>
               </div>
               <div>
