@@ -31,6 +31,12 @@ class IRenderer(Interface):
     def getName():
         """Return the human-readable name of this renderer."""
 
+    def getId():
+        """Get the ID of the object."""
+
+    def setId(renderer_id):
+        """Set the ID of the object."""
+
     def supportsMetaType(meta_type):
         """Is this meta type supported by this renderer?"""
 
@@ -40,3 +46,14 @@ class IRenderer(Interface):
 
     def setSupportedMetaTypes(meta_types):
         """Takes a list of meta types that this renderer supports."""
+
+class IRendererRegistry(Interface):
+    """I'm implemented by something that tracks the existence of
+    renderers, and the meta types to which they can be applied."""
+
+    def getRenderersForMetaType(meta_type):
+        """Return a list of objects, each representing a factory
+        that can create an object to render the give meta_type."""
+
+    def getRendererById(renderer_id, meta_type):
+        """Return a renderer factory by its string ID."""
