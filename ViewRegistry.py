@@ -118,7 +118,12 @@ def manage_addViewRegistry(self, id, REQUEST=None):
 class ViewAttribute(Acquisition.Implicit):
     def __init__(self, view_type):
         self._view_type = view_type
-            
+
+    def index_html(self):
+        """
+        """
+        return self['tab_edit']()
+    
     def __getitem__(self, name):
         """
         """

@@ -37,7 +37,7 @@ class EditorSupport:
                 for subchild in child.childNodes:
                     result.append(escape(subchild.data, 1))
                 result.append('</a>')
-            elif child.nodeName == 'ref':
+            elif child.nodeName == 'index':
                 result.append('<a name="%s">' %
                               escape(child.getAttribute('name'), 1))
                 for subchild in child.childNodes:
@@ -76,7 +76,7 @@ class EditorSupport:
                 result.append('|')
                 result.append(child.getAttribute('url'))
                 result.append('__')
-            elif child.nodeName == 'ref':
+            elif child.nodeName == 'index':
                 result.append('[[')
                 for subchild in child.childNodes:
                     result.append(subchild.data)
@@ -91,13 +91,13 @@ class EditorSupport:
     _strongStructure = ForgivingParser.Structure(['**', '**'])
     _emStructure = ForgivingParser.Structure(['++', '++'])
     _linkStructure = ForgivingParser.Structure(['__', '|', '__'])
-    _refStructure = ForgivingParser.Structure(['[[', '|', ']]'])
+    _indexStructure = ForgivingParser.Structure(['[[', '|', ']]'])
     
     _parser = ForgivingParser.ForgivingParser([
         _strongStructure,
         _emStructure,
         _linkStructure,
-        _refStructure])
+        _indexStructure])
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_text')
@@ -140,11 +140,11 @@ class EditorSupport:
                 newnode.appendChild(doc.createTextNode(link_text))
                 newnode.setAttribute('url', link_url)
                 node.appendChild(newnode) 
-            elif structure is self._refStructure:
-                ref_text, ref_name = data
-                newnode = doc.createElement('ref')
-                newnode.appendChild(doc.createTextNode(ref_text))
-                newnode.setAttribute('name', ref_name)
+            elif structure is self._indexStructure:
+                index_text, index_name = data
+                newnode = doc.createElement('index')
+                newnode.appendChild(doc.createTextNode(index_text))
+                newnode.setAttribute('name', index_name)
                 node.appendChild(newnode) 
             else:
                 raise "Unknown structure: %s" % structure
