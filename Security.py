@@ -55,7 +55,7 @@ class Security:
     def sec_get_current_userids_on_clipboard(self):
         """Get list of users on the clipboard.
         """
-        return []
+        return ['foo', 'bar']
     
     def sec_get_user_info(self, userid):
         """Get information for userid. FIXME: describe which info fields
