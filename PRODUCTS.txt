@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.1.2.1 $
+CVS:        $Revision: 1.1.2.2 $
 
 Introduction
 ------------
@@ -29,19 +29,26 @@ E - Silva extension.
 Silva (DC)
 ----------
 
-The Silva core. This contains the core Silva objects (Folders,
-Publications, Ghosts, etc) and the core UI.
+The Silva core. Silva implements the behavior for the Silva objects,
+such as Folders, Publications, and Ghosts.
 
 http://www.zope.org/Members/infrae/Silva
 
 http://www.zope.org/Members/infrae/SilvaWindowsInstaller
+
+SilvaViews (DCI)
+----------------
+
+The infrastructure used by Silva to attach views to content objects.
+
+http://www.zope.org/Members/infrae/SilvaViews
 
 FileSystemSite (DCI)
 --------------------
 
 FileSystemSite is a Zope extension extracted from the CMF Core. It can
 be used to maintain page templates, python scripts and the like on the
-filesystem, which makes for easier distribution and
+filesystem, which makes for easier development, distribution and
 installation. Silva and extensions use this for the view
 system. SilvaDocument also uses it for the forms-based editor.
 
@@ -59,15 +66,18 @@ http://www.zope.org/Members/infrae/Formulator
 SilvaMetadata (DCI)
 -------------------
 
-Creation of metadata sets that can be associated with Silva content
-objects. Uses Formulator, Annotation and ProxyIndex.
+Silva Metadata can be used to create metadata sets and associate these
+with Zope object types. The metadata can be configured to be cataloged
+automatically.
+
+Uses Formulator, Annotation and ProxyIndex.
 
 http://www.zope.org/Members/infrae/SilvaMetadata
 
 Annotations (DCI)
 -----------------
 
-A system for attaching information to objects without changing
+A system for attaching information to Zope objects without changing
 them. Used by SilvaMetadata.
 
 http://www.zope.org/Members/infrae/Annotations
@@ -75,8 +85,10 @@ http://www.zope.org/Members/infrae/Annotations
 ProxyIndex (DCI)
 ----------------
 
-A system for indexing the result of a TALES expression instead of just
-object attributes. Used by SilvaMetadata.
+ProxyIndex is a plugin catalog index. It uses a TALES expression
+instead of an attribute lookup/call to retrieve the value to index
+from an object. The value retrieved can then be indexed by any
+available plugin index. Used by SilvaMetadata.
 
 http://www.zope.org/Members/infrae/ProxyIndex
 
@@ -84,9 +96,9 @@ SilvaDocument (DE)
 ------------------
 
 Silva extension for XML-based documents. Contains a through the web
-editing system for them. This is shipped along with the core. Uses
-XMLWidgets and ParsedXML. Can optionally be extended with
-SilvaExternalSources.
+editing system for them. This is shipped along with the core, though
+strictly speaking it is optional. Uses XMLWidgets and ParsedXML. Can
+optionally be extended with SilvaExternalSources.
 
 http://www.zope.org/Members/infrae/SilvaDocument
 
@@ -105,6 +117,35 @@ A DOM-compliant storage for XML documents. Used by
 SilvaDocument. XMLWidgets integrates with it.
 
 http://www.zope.org/Members/faassen/ParsedXML
+
+Groups (I)
+----------
+
+Groups support is optional; Silva should run without the Groups
+product installed. Groups use a rather hackish technique called
+'monkey patching' to hook groups support into the Silva core, and this
+may conflict with other products that do the same. If you get strange
+behavior, removing the Groups product and restarting Zope will safely
+remove it.
+
+See INSTALL.txt for details on how to install Groups.
+
+To start using the Groups definitions, a "Groups Service" is
+needed. Once the Groups Filesystem Product is installed, such a
+service can be added to the Silva Root via the ZMI. This service
+should have ``service_groups`` for its id.
+
+http://www.zope.org/Members/infrae/Groups
+
+ExtFile (I)
+-----------
+
+If you plan to manage large upload files with Silva, you may want to
+avoid storing them in the ZODB, instead putting them in the filesystem
+of your server. You can do this by install ExtFile (see INSTALL.txt
+for more details).
+
+http://www.zope.org/Members/shh/ExtFile
 
 SilvaExternalSources (E)
 ------------------------
