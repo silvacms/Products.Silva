@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.13 2003/08/15 08:59:49 zagy Exp $
+# $Id: GhostFolder.py,v 1.14 2003/08/22 08:36:00 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -32,7 +32,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     """GhostFolders are used to haunt folders."""
 
     meta_type = 'Silva Ghost Folder'
-    __implements__ = IContainer, IGhost, IPublishable
+    __implements__ = IContainer, IGhost
     security = ClassSecurityInfo()
 
     _active_flag = 1
@@ -95,6 +95,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                     ghost.manage_delObjects([haunted.id])
                 new_ghost = haunted._getCopy(ghost)
                 ghost._setObject(haunted.id, new_ghost)
+        self._publish_ghosts()
         self._invalidate_sidebar(self)
                 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
@@ -180,31 +181,16 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
             return content.implements_publication()
         return 0
 
-    # Publishable 
-    
-    def activate(self):
-        """activate self and publish containing objects"""
-        self._activate_helper(activate=1)
-        GhostFolder.inheritedAttribute('activate')(self)
-    
-    def deactivate(self):
-        """deactivate self and close containing objects"""
-        self._activate_helper(activate=0)
-        GhostFolder.inheritedAttribute('deactivate')(self)
+    def is_deletable(self):
+        return 1
 
-    
-    def _activate_helper(self, activate=1):
+    def _publish_ghosts(self, activate=1):
         activate_list = self.get_ordered_publishables()
         # ativate all containing objects, depth first
         while activate_list:
             object = activate_list.pop()
             if IContainer.isImplementedBy(object):
                 activate_list += object.get_ordered_publishables()
-            if IPublishable.isImplementedBy(object):
-                if activate:
-                    object.activate()
-                else:
-                    object.deactivate()
             if IVersionedContent.isImplementedBy(object):
                 if activate:
                     object.create_copy()
