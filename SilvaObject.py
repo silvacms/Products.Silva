@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.40 $
+# $Revision: 1.41 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -220,6 +220,8 @@ class SilvaObject(Security):
     def get_xml(self, with_sub_publications=0, last_version=0):
         """Get XML for object and everything under it.
         """
+        # FIXME: Where is the starttag gone i  the output? Seems to work better with 'getvalue' instead of
+        # 'buflist' to retrieve the output, but didn't want to ruin someone else's code... G
         context = XMLExportContext()
         context.f = StringIO(u'<?xml version="1.0" ?>\n')
         context.with_sub_publications = with_sub_publications
