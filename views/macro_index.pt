@@ -37,11 +37,13 @@
 <noscript>
   <meta http-equiv="refresh" tal:attributes="content python:'%s, %s/edit/tab_preview' % (rft, request['model'].absolute_url())" />
 </noscript>
-<script language="JavaScript" tal:content="string:
+<script language="JavaScript" 
+  tal:define="destination_path string:${request/model/absolute_url}/edit/"
+  tal:content="string:
 
   document.timeout = '${rft}'; 
-  document.refresh_url = '${request/model/absolute_url}/edit/tab_preview';
-  document.prompt_url = '${view/get_root_url}/service_resources/Silva/promptwindow';
+  document.refresh_url = '${destination_path}tab_preview';
+  document.prompt_url = '${destination_path}promptwindow';
 
 " />
 <script language="JavaScript">
