@@ -110,7 +110,7 @@ _______ manual close section here _______
 
 <br />
 
-<form action="." method="POST">
+<form action="." tal:attributes="action python:'%s/edit/tab_status_export_selected_start' % model.get_container().absolute_url()" method="POST">
   <table width="96%" cellspacing="0" cellpadding="3" border="0">
     <tr>
       <td colspan="3">
@@ -134,7 +134,8 @@ _______ manual close section here _______
 
     <tr class="controls">
       <td align="right">
-        <input class="button" type="submit" name="download_xml:method" value=" Export..." title="Access key: alt-e" accesskey="e" />
+        <input type="hidden" name="refs:list" tal:attributes="value python:model.create_ref(model)" />
+        <input class="button" type="submit" value=" Export..." title="Access key: alt-e" accesskey="e" />
       </td>
     </tr>
   </table>
