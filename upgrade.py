@@ -178,15 +178,37 @@ def upgrade_list_titles_in_parsed_xml(top):
         
 def find_parsed_xmls(obj):
     meta_type = obj.meta_type
-    if meta_type == 'Silva Document':
-        return obj.objectValues()
-    elif meta_type == 'Silva DemoObject':
-        return [version.content for version in obj.objectValues()]
-    else:
+    if not xml_upgrade_registry.is_registered(meta_type):
         return []
-    # XXX should upgrade extension products if they use Silva XML stuff?
+    elif not xml_upgrade_registry.get_meta_type(meta_type):
+        return obj.objectValues()
+    else:
+        attrname = xml_upgrade_registry.get_meta_type(meta_type)
+        return [getattr(version, attrname) for version in obj.objectValues()]
     
+class XMLUpgradeRegistry:
+    """Here people can register ParsedXML object for XML upgrade
+    """
+    def __init__(self):
+        self.__registry = {}
     
-        
+    def register(self, meta_type, content_var):
+        """Register a meta_type for upgrade.
 
-        
+        If the type's versions ARE ParsedXML instances, set content_var
+        to None (or some other false-returning value) and if the versions
+        CONTAIN ParsedXML instances, the content_var variable should be a
+        string containing the name of the version's ParsedXML element.
+        """
+        self.__registry[meta_type] = content_var
+
+    def get_meta_type(self, meta_type):
+        """Return the registered value of meta_type
+        """
+        return self.__registry[meta_type]
+
+    def is_registered(self, meta_type):
+        """Returns whether the meta_type is registered"""
+        return self.__registry.has_key(meta_type)
+
+xml_upgrade_registry = XMLUpgradeRegistry()
