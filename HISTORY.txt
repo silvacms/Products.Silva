@@ -41,6 +41,10 @@ Silva changes
 
     Bugs Fixed
 
+        - The UI for 'Access Restriction by Role' did not properly expose
+          the possibility to set this role more restrictive on a lower
+          level. (the pull down menu and button would have been disabled).
+
         - get_public_tree() would not do the right thing with the depth-
           level control argument.
 
@@ -60,7 +64,7 @@ Silva changes
           it's unique (in the past, a bug in creating a unique id kept the
           status of a document 'public' in some cases).
         
-	    - Fixed problems arising from allowing to create content objects
+        - Fixed problems arising from allowing to create content objects
           which may shadow important internal objects (issue321) or 
           cause unfriendly Zope error messages (issue189)
 
