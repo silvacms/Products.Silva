@@ -92,7 +92,8 @@ class BaseXMLSource:
         for set in self.context.service_metadata.collection.getMetadataSets():
             reader.startPrefixMapping(set.id, set.metadata_uri)
         # XXX start all registered prefixmappings here
-        reader.startDocument()
+        if settings.prolog():
+            reader.startDocument()
         self._startElement(
             reader,
             'silva',
@@ -404,7 +405,8 @@ class ExportSettings:
         self._workflow = 1
         self._all_versions = 1
         self._mappings = {}
-
+        self._prolog = 1
+        
     def setOnlyPublishedNoWorkflow(self):
         self._workflow = 0
         self._all_versions = 0
@@ -420,3 +422,12 @@ class ExportSettings:
 
     def getMappings(self):
         return self._mappings
+
+    def setNoProlog(self):
+        self._prolog = 0
+
+    def setProlog(self):
+        self._prolog = 1
+        
+    def prolog(self):
+        return self._prolog
