@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global breadcrumb_vein string:Metadata;
+    ">
+
+<!-- tab_metadata for Ghost objects -->
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
+
+  <table class="columns columns2">
+    <tbody>
+      <tr>
+        <tal:block replace="nothing">
+          _____________________ sidebar _____________________
+        </tal:block>
+        <td class="left">
+          <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+        </td>
+
+        <tal:block replace="nothing">
+          _____________________ main _____________________
+        </tal:block>
+        <td class="main">
+          <tal:block 
+            define="version python: model.get_viewable() or model.get_previewable()"
+            condition="version">
+            <metal:block use-macro="here/macro_metadata/macros/view_table">
+              <h2 metal:fill-slot="table_title">
+                <img tal:replace="structure python:view.render_icon(model)" />
+                metadata
+                <span tal:condition="not: model/implements_container">
+                  for public version of
+                  &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                </span>
+              </h2>
+            </metal:block>
+          </tal:block>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</metal:block>
+</metal:block>
+</html>
