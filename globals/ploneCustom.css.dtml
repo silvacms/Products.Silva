@@ -417,7 +417,6 @@ table.listing tr.top-controls h3 {
   margin: 0.1em 0.2em 0.2em 0.2em;
   padding: 0em;
   border: none;
-  text-transform: &dtml-textTransform;;
   line-height : 100%;
 }
 
@@ -487,16 +486,15 @@ table.listing th.top a.normal:hover {
 
 td.unselected {
   background: &dtml-evenRowBackground;;
-  border-top: none ! important;
-  border-bottom: none ! important;
+  border-top: &dtml-evenRowBackground;;
+  border-bottom: &dtml-evenRowBackground;;
   border-collapse: collapse;
 }
 
 td.selected {
-  background: &dtml-listingTopBackground;;
-  border-top: &dtml-shade50; 1px solid;
-  border-bottom: &dtml-shade50; 1px solid;
-  border-collapse: collapse;
+  background: #cde0f2;
+  border-top: &dtml-listingBorder;;
+  border-bottom: &dtml-listingBorder;;
 }
 
 /* bad idea
@@ -838,7 +836,7 @@ table.listing div.navigation-border:hover {
 div.info {
   color: &dtml-inputFontColor;;
   background: &dtml-evenRowBackground;;
-  margin: 0;
+  margin: -1px 0 0 0;
   padding: 0 0.5em 0.5em 0.5em; 
   border: &dtml-listingBorder;;
   border-collapse: collapse;
@@ -849,14 +847,12 @@ h2.info {
   color: &dtml-inputFontColor;;
   margin-top : 0em;
   margin-bottom : 0.2em;  
-  text-transform: &dtml-textTransform;;
 }
 
 h3.info {
   color: &dtml-inputFontColor;;
   margin-top : 0em;
   margin-bottom : 0.2em;  
-  text-transform: &dtml-textTransform;;
 }
 
 div.info p {
