@@ -237,17 +237,16 @@ table.columns {
   border-collapse: collapse;
 }
 
-/* 3 column table (defat) */
+/* 3 column table (default) */
 table.columns td.left {
     width: 20%;
-    padding: 8px 0.8em 0 8px;
+    padding: 8px 8px 0 8px;
 }
 table.columns td.main {
     width: 60%;
-    padding: 8px 0.6em 0 0;
+    padding: 8px 8px 0 0;
 }
 table.columns td.right {
-    /* background: red; fkg IE */
     width: 20%;
     padding: 8px 8px 0 0 ! important;
 }
@@ -259,7 +258,7 @@ table.columns2 td.left {
 }
 table.columns2 td.main {
     width: 80%;
-    padding: 8px 8px 0 0.8em;
+    padding: 8px 8px 0 8px;
 }
 
 /* 1 column table, not in use */
@@ -395,7 +394,7 @@ table.listing td.top div.addMenu {
     float: left;
 }
 
-table.listing td.top h2 img {
+table.listing td.top img {
     vertical-align: top;
 }
 
@@ -414,6 +413,8 @@ table.listing tr.top-controls h3 {
   line-height : 100%;
 }
 
+/* use for forcing button floats in table cells 
+   without text to line up properly */
 table.listing tr.top-controls div.buttons {
     padding: 0.2em 0;
 }
@@ -449,16 +450,15 @@ table.listing td.field-title {
 
 table.listing th.top {
   color: #e3eef0;
-  background: #71969a;
-    background: &dtml-listingHeaderBackground;; 
-  padding: 0 0 0 0;
+  background: &dtml-listingHeaderBackground;; 
+  padding: 0;
   vertical-align: bottom;
   text-align: center;
 }
 
 table.listing th.top img {
-    vertical-align: bottom;
-    padding: 0;
+  vertical-align: bottom;
+  padding: 0.5em 0 0 0;
 }
 
 table.listing th.top a.normal:link {
@@ -490,10 +490,11 @@ td.selected {
   border-collapse: collapse;
 }
 
-/*table.listing div.vein:hover { 
+/* bad idea
+table.listing div.vein:hover { 
     color: &dtml-mainTabFontColorSelected;;
     background: &dtml-mainTabBackgroundSelected;;
-}*/
+} */
 
 /* _______ uplinks _______ */
 table.listing a.top {
@@ -618,42 +619,43 @@ input[type="checkbox"] {
 /* Plone buttons, "ported" to Silva class names */
 
 input.navigation {
+  font-size: 95%;
     font-weight: &dtml-buttonWeight;;
   color: &dtml-standaloneButtonFontColor;;
   background: &dtml-standaloneButtonBackground;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
   border: &dtml-standaloneButtonBorder;;
-  line-height : 90%;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
 }
 
 input.button {
+  font-size: 95%;
     font-weight: &dtml-buttonWeight;;
     color: &dtml-contextButtonFontColor;;
   background : &dtml-contextButtonBackground;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
   border: &dtml-contextButtonBorder;;
-  line-height : 90%;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
 }
 
 input.warning {
+  font-size: 95%;
     font-weight: &dtml-buttonWeight;;
   color : &dtml-destructiveButtonFontColor;; 
   background : &dtml-destructiveButtonBackground;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
   border: &dtml-destructiveButtonBorder;;
-  line-height : 90%;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
 }
 
 input.cancel {
+  font-size: 95%;
     font-weight: &dtml-buttonWeight;;
   color : &dtml-cancelButtonFontColor;;
   background : #666668;
@@ -661,7 +663,7 @@ input.cancel {
   border : &dtml-cancelButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
-  line-height : 90%;
+  line-height : 80%;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
 }
@@ -689,26 +691,24 @@ label.default {
 /* _______ pseudo form button selectors, matches button style _______ */
 
 table.listing a.button:link {
-  font-size: 95%;
+  font-size: 100%;
   font-weight: &dtml-buttonWeight;;
   color: &dtml-contextButtonFontColor;;
   background: &dtml-contextButtonBackground;;
   border: &dtml-contextButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: 0.1em 1em 0.1em 1em;
-  line-height : 90%;
+  padding: 0em 1em 0.1em 1em;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
 }
 table.listing a.button:visited {
-  font-size: 95%;
+  font-size: 100%;
   font-weight: &dtml-buttonWeight;;
   color: &dtml-contextButtonFontColor;;
   background: &dtml-contextButtonBackground;;
   border: &dtml-contextButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: 0.1em 1em 0.1em 1em;
-  line-height : 90%;
+  padding: 0em 1em 0.1em 1em;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
 }
