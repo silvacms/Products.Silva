@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.89 $
+# $Revision: 1.90 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -340,13 +340,14 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                     paste_id, item.get_title(), 0)
             elif item.meta_type == 'Silva Publication':
                 self.manage_addProduct['Silva'].manage_addPublication(
-                    paste_id, item.get_title())
+                    paste_id, item.get_title(), 0)
             else:
                 raise NotImplementedError,\
                       "Unknown container ghost copy (%s)." % item.meta_type
             container = getattr(self, paste_id)
             default = item.get_default()
-            container._ghost_paste(default.id, default, REQUEST)
+            if default is not None:
+                container._ghost_paste(default.id, default, REQUEST)
             for object in item.get_ordered_publishables():
                 container._ghost_paste(object.id, object, REQUEST)
             # FIXME: ghost copy nonactives as well?

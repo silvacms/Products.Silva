@@ -26,6 +26,8 @@ Silva changes
 
         - Export screen prefills email address and description.
 
+        - Single Document import/export
+
     Bugs Fixed
 
         - Fixed some bugs with copy/cut and paste: when an object is not
@@ -34,9 +36,10 @@ Silva changes
           it's unique (in the past, a bug in creating a unique id kept the
           status of a document 'public' in some cases).
 
-  0.9.1
+        - Intermediate fix where an local roles mapping for an non-existing
+          userid would display "Unknown User" and could not be deleted.
 
-    Bugs Fixed
+        - Past to ghost of Publications exposed two bugs. Fixed now.
 
         - The "use selection" button would not return to tab_access 
           just after assigning a role to a user.
