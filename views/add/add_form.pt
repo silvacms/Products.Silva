@@ -28,7 +28,7 @@
   <tr>
     <td class="top location" colspan="3">
     <h2>
-      <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />&nbsp;
+      <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />
         create <span tal:replace="python: request.meta_type.lower()" />
     </h2>
     </td>
