@@ -11,13 +11,11 @@
   directly. See images_to_the_right.xslt for a documented example.
   -->
   
-  <xsl:preserve-space elements="heading p pre li em strong super sub underline link" />
-  
   <xsl:template match="doc:heading[@type='normal']">
     <xsl:choose>
       <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
-        <h3 class="heading"> <xsl:apply-templates /></h3>
+        <h3 class="heading"><xsl:apply-templates /></h3>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -26,7 +24,7 @@
     <xsl:choose>
       <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
-        <h4 class="heading"> <xsl:apply-templates mode="text-content" /></h4>
+        <h4 class="heading"><xsl:apply-templates mode="text-content" /></h4>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -252,16 +250,22 @@
   </xsl:template>
   
   <xsl:template match="doc:external_data">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:apply-templates />
   </xsl:template>
   
   <xsl:template match="doc:code">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:apply-templates />
   </xsl:template>
 
   <xsl:template match="doc:source">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:apply-templates />
   </xsl:template>
+  
+  <xsl:template match="doc:rendered_html">
+    <xsl:copy-of select="./@*|node()" />
+  </xsl:template>
+  
+  <xsl:template match="doc:parameter" />
   
   <xsl:template match="doc:br" mode="text-content">
     <br />

@@ -14,6 +14,9 @@ Silva changes
 
       - Headings are no longer incorrectly discarded by the xslt renderer.
 
+      - Code and data sources no longer incorrectly copy their parameters 
+        into the result html.
+
   1.1
 
     Features added
