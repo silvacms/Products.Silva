@@ -2,6 +2,32 @@
 Developer level changes in Silva
 ================================
 
+From 1.1 to 1.2:
+
+* tab_edit for VersionedContent views has changed to make use of a new
+  macro, ``macro_tab_edit/macros/editor``, instead of
+  ``macro_index/macros/master`` directly. ``macro_tab_edit`` does use
+  ``macro_index`` indirectly.
+
+  A default tab_edit is supplied in VersionedContent
+  views. SilvaDocument however overrides this with its own tab_edit.
+  You can also do in your own product.
+
+  The following slots are available in ``macro_tab_edit/macros/editor``:
+
+    * editor_css - add in editor-specific CSS stylesheets.
+
+    * editor_refresher - a slot to put in special refreshing code for
+      editors that are sensitive to Zope session timeouts, such as the
+      forms editor.
+
+    * editor_selection - add extra fields above the main editor content area
+      to allow the user to switch editors, such as between kupu and the
+      forms editor.
+
+    * editor_content - the main editor content area, showing for instance
+      the forms editor or kupu.
+
 From 1.0 to 1.1:
 
 * The previously deprecated method 'archive_file_import' on Folder.py and
