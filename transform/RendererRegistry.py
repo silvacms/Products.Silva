@@ -1,6 +1,6 @@
 from Products.Silva.transform.interfaces import IRendererRegistry
-from Products.Silva.transform.renderers.imagesonrightrenderer import ImagesOnRightRenderer
-from Products.Silva.transform.renderers.basicxsltrenderer import BasicXSLTRenderer
+from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+from Products.Silva.transform.renderer.basicxsltrenderer import BasicXSLTRenderer
 
 _REGISTRY = {'Silva Document Version' : [ImagesOnRightRenderer(), BasicXSLTRenderer()]}
 
