@@ -178,19 +178,19 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
         Published, Approved, Unapproved, and Closed, but to the XML these
         are arbitrary)
         """
-        id, publication_date, expiration_date = version
+        id, publication_datetime, expiration_datetime = version
         self._startElement(reader, 'version', {'id':id})
         self._startElement(reader, 'status', {})
         reader.characters(status)
         self._endElement(reader, 'status')
-        self._startElement(reader, 'publication_date', {})
-        if publication_date:
-            reader.characters(publication_date)
-        self._endElement(reader, 'publication_date')
-        self._startElement(reader, 'expiration_date', {})
-        if expiration_date:
-            reader.characters(expiration_date)
-        self._endElement(reader, 'expiration_date')
+        self._startElement(reader, 'publication_datetime', {})
+        if publication_datetime:
+            reader.characters(publication_datetime)
+        self._endElement(reader, 'publication_datetime')
+        self._startElement(reader, 'expiration_datetime', {})
+        if expiration_datetime:
+            reader.characters(expiration_datetime)
+        self._endElement(reader, 'expiration_datetime')
         self._endElement(reader, 'version')
         
     def _versions(self, reader, settings):
