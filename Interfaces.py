@@ -311,6 +311,12 @@ class Container(SilvaObject, Publishable):
         """Get tree of all publishables that are public.
         """
         pass
+
+    def get_status_tree(self):
+        """Get tree of all active content objects. For containers,
+        show the default object if available.
+        """
+        pass
     
 class Versioning(Interface.Base):
     """Can be mixed in with an object to support simple versioning.

@@ -90,7 +90,14 @@ class ContainerTestCase(unittest.TestCase):
              (0, self.publication5)]
         self.assertEquals(self.sroot.get_container_tree(),
                           l)
-
+        
+    def test_get_status_tree(self):
+        l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
+             (0, self.folder4.default), (1, self.subdoc),
+             (1, self.subfolder.default), (2, self.subfolder.subsubdoc)]
+        self.assertEquals(self.sroot.get_status_tree(),
+                          l)
+        
     def test_move_object_up(self):
         r = self.sroot.move_object_up('doc2')
         l = [self.doc2, self.doc1, self.doc3, self.folder4, self.publication5]
