@@ -8,6 +8,11 @@
     append_to_url options/append_to_url | string:edit/tab_edit;
     " >
 
+    <h2 class="heading"
+      tal:content="model/get_title">
+        Title
+    </h2>
+    
   <p class="toc">
     <tal:block repeat="obj tree">
       <tal:block
