@@ -1,5 +1,6 @@
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
+from Acquisition import aq_base
 
 import SilvaPermissions
 
@@ -29,14 +30,16 @@ class ViewCode:
         """Gets the icon for the object and wraps that in an image tag"""
         tag = ('<img src="%(icon_path)s" width="16" height="16" border="0" '
                 'alt="%(alt)s" />')
-        if obj is None:
-            return tag % {'icon_path': ('%s/globals/silvageneric.gif' % 
-                                            self.get_root_url()),
-                            'alt': meta_type}
-        icon_path = getattr(obj, 'icon', 
-                        '%s/globals/silvageneric.gif' % self.get_root_url())
-        mt = getattr(obj, 'meta_type', meta_type)
-        return tag % {'icon_path': icon_path, 'alt': mt}
+
+        if obj is None or not hasattr(aq_base(obj), 'icon'):
+            icon_path = '%s/globals/silvageneric.gif' % self.get_root_url()
+        else:
+            icon_path = '%s/%s' % (self.REQUEST['BASE1'], getattr(obj, 'icon'))
+    
+        if obj is not None:
+            meta_type = getattr(obj, 'meta_type')
+
+        return tag % {'icon_path': icon_path, 'alt': meta_type}
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_icon_by_meta_type')

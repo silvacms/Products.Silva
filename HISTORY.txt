@@ -40,6 +40,9 @@ Silva changes
 
             * Old versions should now not show up in the catalog anymore.
 
+        - Fix icon rendering. It should now be faster and more
+          browser-cache friendly.
+ 
           XXX put in the right versions
           XXX upgrade script to fix existing catalogs?
           XXX upgrade script from 0.9.1 needs to be re-tested
