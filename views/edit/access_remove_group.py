@@ -4,12 +4,16 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=groups
+##parameters=groups=None
 ##title=
 ##
 view = context
 model = context.REQUEST.model
 map = model.sec_get_groupsmapping()
+
+if not groups:
+    return view.tab_access(
+        message_type="error", message="No groups(s) selected, so none removed")
 
 removed = []
 if map:

@@ -4,11 +4,15 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=userids
+##parameters=userids=None
 ##title=
 ##
 view = context
 model = context.REQUEST.model
+
+if not userids:
+    return view.tab_access(
+        message_type="error", message="No user(s) selected, so none removed")
 
 for id in userids:
     model.sec_remove(id)
