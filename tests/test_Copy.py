@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import unittest
 import Zope
 from Products.Silva import Document, Folder
@@ -8,6 +8,7 @@ from Testing import makerequest
 from DateTime import DateTime
 from Products.ParsedXML.ParsedXML import ParsedXML
 import ZPublisher
+from test_SilvaObject import hack_add_user
 
 def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
@@ -53,6 +54,8 @@ class CopyTestCase(unittest.TestCase):
         self.connection = Zope.DB.open()
         self.root = makerequest.makerequest(self.connection.root()['Application'])
         self.REQUEST = self.root.REQUEST
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_add_user(self.REQUEST)
         self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
         # dummy manage_main so that copy succeeds
         self.sroot.manage_main = lambda *foo, **bar: None

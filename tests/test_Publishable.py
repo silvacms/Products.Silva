@@ -1,16 +1,20 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 import unittest
 import Zope
 from DateTime import DateTime
+from Testing import makerequest
 from Products.Silva.Versioning import VersioningError
+from test_SilvaObject import hack_add_user
 
 class PublishableTestCase(unittest.TestCase):
     def setUp(self):
         get_transaction().begin()
         self.connection = Zope.DB.open()
-        self.root = self.connection.root()['Application']
+        self.root = makerequest.makerequest(self.connection.root()['Application'])
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_add_user(self.root.REQUEST)
         self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
         self.sroot = self.root.root
         add = self.sroot.manage_addProduct['Silva']

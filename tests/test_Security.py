@@ -1,10 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import unittest
 import Zope
 from DateTime import DateTime
+from Testing import makerequest
 from Products.Silva import Document, Folder
+from test_SilvaObject import hack_add_user
 
 def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(
@@ -17,7 +19,9 @@ class SecurityTestCase(unittest.TestCase):
     def setUp(self):
         get_transaction().begin()
         self.connection = Zope.DB.open()
-        self.root = self.connection.root()['Application']
+        self.root = makerequest.makerequest(self.connection.root()['Application'])
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_add_user(self.root.REQUEST)
         self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
         self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
         self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
