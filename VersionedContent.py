@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 from Content import Content
 from Versioning import Versioning, VersioningError
 from OFS import Folder
@@ -111,7 +111,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         
 InitializeClass(VersionedContent)
 
-class CatalogedVersionedContent(Versioning, VersionedContent):
+class CatalogedVersionedContent(VersionedContent):
     """This class merely exists to mix VersionedContent with CatalogedVersioning
     """
 
