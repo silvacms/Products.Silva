@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+\<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html tal:omit-tag=""
   lang="en"
   xml:lang="en"
@@ -63,7 +63,7 @@
           title="find the content this ghost should refer to: alt-r"
           accesskey="r"
           tal:define="asset_context model"
-          tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Content&asset_context=%s\', \'_reference_\', \'focusbox\', \'field_content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+          tal:attributes="onclick python:here.reference_js(); url python:here.reference_url(asset_context)"
           i18n:attributes="value title"
         />
       </tal:block>
