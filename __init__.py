@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.122 $
+# $Revision: 1.123 $
 
 import ContainerPolicy
 
@@ -32,7 +32,6 @@ def initialize(context):
     import Folder, Root
     import Publication, Ghost, Image, File, SimpleContent, Link
     import Indexer
-    import SQLDataSource
     import GhostFolder
     import AutoTOC
     import install
@@ -66,7 +65,7 @@ def initialize(context):
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
         Folder, Root, Publication, Ghost, Image, File, Link, 
-        Indexer, SQLDataSource, Group, VirtualGroup, IPGroup,
+        Indexer, Group, VirtualGroup, IPGroup,
         GhostFolder, AutoTOC],
         install, depends_on=None)
 

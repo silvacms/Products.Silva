@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.102 2004/08/09 17:40:18 bradb Exp $
+# $Id: install.py,v 1.103 2004/09/30 13:05:15 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -136,9 +136,6 @@ def install(root):
     root.add_silva_addable_forbidden('Silva Virtual Group')
     root.add_silva_addable_forbidden('Silva IP Group')
     
-    # forbid adding sqldatasources - being replaced with SilvaExternalSources
-    root.add_silva_addable_forbidden('Silva SQL Data Source')
-
     # add or update service metadata
     configureMetadata(root)
     
@@ -225,7 +222,6 @@ def configureMetadata(root):
         {'type':'Silva Indexer',            'chain':'silva-content, silva-extra'},
         {'type':'Silva Publication',        'chain':'silva-content, silva-extra'},
         {'type':'Silva Root',               'chain':'silva-content, silva-extra'},
-        {'type':'Silva SQL Data Source',    'chain':'silva-content, silva-extra'},
         {'type': 'Silva AutoTOC',           'chain':'silva-content, silva-extra'},
         {'type':'Silva Group',              'chain':'silva-content, silva-extra'},
         {'type':'Silva Virtual Group',      'chain':'silva-content, silva-extra'},
@@ -319,11 +315,10 @@ def configureSecurity(root):
     root.manage_permission('Add Page Templates', roleinfo.CHIEF_ROLES)
     root.manage_permission('Add Folders', roleinfo.CHIEF_ROLES)
 
-    # chief editors and up may also place groups and Datasources.
+    # chief editors and up may also place groups.
     root.manage_permission('Add Silva Groups', roleinfo.CHIEF_ROLES)
     root.manage_permission('Add Silva Virtual Groups', roleinfo.CHIEF_ROLES)
     root.manage_permission('Add Silva IP Groups', roleinfo.CHIEF_ROLES)
-    root.manage_permission('Add Silva SQL Data Sources', roleinfo.CHIEF_ROLES)
     
     # everybody may view root by default XXX
     # (is this bad in case of upgrade/refresh)
@@ -468,8 +463,6 @@ def registerViews(reg):
                  ['edit', 'Asset', 'File'])
     reg.register('edit', 'Silva Indexer',
                  ['edit', 'Content', 'Indexer'])
-    reg.register('edit', 'Silva SQL Data Source',
-                 ['edit', 'Asset', 'SQLDataSource'])
     reg.register('edit', 'Silva Simple Member',
                  ['edit', 'Member', 'SimpleMember'])
     reg.register('edit', 'Silva Ghost Folder',
@@ -486,8 +479,6 @@ def registerViews(reg):
     reg.register('public', 'Silva Image', ['public', 'Image'])
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
-    reg.register('public', 'Silva SQL Data Source',
-                 ['public', 'SQLDataSource'])
     reg.register('public', 'Silva Ghost Folder', ['public', 'Folder'])
     reg.register('public', 'Silva AutoTOC', ['public', 'AutoTOC'])
 
@@ -499,7 +490,6 @@ def registerViews(reg):
     reg.register('add', 'Silva Image', ['add', 'Image'])
     reg.register('add', 'Silva File', ['add', 'File'])
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
-    reg.register('add', 'Silva SQL Data Source', ['add', 'SQLDataSource'])
     reg.register('add', 'Silva Ghost Folder', ['add', 'GhostFolder'])
     reg.register('add', 'Silva AutoTOC', ['add', 'AutoTOC'])
 
@@ -524,7 +514,6 @@ def unregisterViews(reg):
                       'Silva DemoObject',
                       'Silva File',
                       'Silva Indexer',
-                      'Silva SQL Data Source',
                       'Silva Group',
                       'Silva Virtual Group',
                       'Silva IP Group',

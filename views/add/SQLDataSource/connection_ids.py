@@ -1,2 +1,0 @@
-from Products.Silva.SQLDataSource import available_connection_ids
-return available_connection_ids(context)

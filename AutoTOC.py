@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.7 2004/07/22 15:44:44 eric Exp $
+# $Id: AutoTOC.py,v 1.8 2004/09/30 13:05:15 jw Exp $
 
 # Zope
 from Globals import InitializeClass
@@ -39,7 +39,7 @@ class AutoTOC(Content, SimpleItem):
     def is_cacheable(self):
         """Return true if this document is cacheable.
         That means the document contains no dynamic elements like
-        code, datasource or toc.
+        code, toc, etc.
         """
         return 0
 
