@@ -1,4 +1,7 @@
 from ISilvaObject import ISilvaObject
+from IContainer import IContainer
+form IPublication import IPublication
+from Membership import NoneMember
 
 def from086to09(self, root):
     """Upgrade Silva from 0.8.6(.1) to 0.9 as a simple matter of programming.
@@ -100,3 +103,16 @@ def from085to086(self, root):
     # should advise the upgrader to copy over the rest by hand
     
     return other_ids
+
+def upgrade_memberobjects(self, obj):
+    for o in obj.aq_explicit.objectValues():
+        if hasattr(o, 'sec_get_last_author_info'):
+            try:
+                ai = o.sec_get_last_author_info()
+            except AttributeError, e:
+                nonemem = NoneMember() 
+                o._last_author_info = nonemem
+            
+        if IContainer.isImplementedBy(o) or IPublication.isImplementedBy(o):
+            replace_memberobjects(self, o)
+
