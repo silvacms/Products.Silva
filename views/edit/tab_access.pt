@@ -227,7 +227,7 @@
                   </td>
                   <td tal:content="requested_role">
                   </td>
-                  <td tal:content="python: test(member.is_approved(), here.gettext('Yes'),here.gettext('No'))">
+                  <td>
                     yes or no
                   </td>
                 </tr>
