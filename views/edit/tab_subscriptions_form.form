@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <form>
-  <title>Subscription Form</title>
+  <title>subscription Form</title>
   <row_length>4</row_length>
   <name>subscriptionform</name>
   <action></action>
@@ -19,7 +19,7 @@
         <field><id>subscribable</id> <type>ListField</type>
           <values>
             <alternate_name></alternate_name>
-            <css_class></css_class>
+            <css_class>store</css_class>
             <default></default>
             <description></description>
             <enabled type="int">1</enabled>
@@ -28,9 +28,9 @@
             <extra_item></extra_item>
             <first_item type="int">1</first_item>
             <hidden type="int">0</hidden>
-            <items type="list">[(u'Acquire setting', u'2'), (u'Yes', u'1'), (u'No', u'0')]</items>            <required type="int">1</required>
+            <items type="list">[(u'Acquire setting from above', u'2'), (u'Yes', u'1'), (u'No', u'0')]</items>            <required type="int">1</required>
             <size type="int">5</size>
-            <title>Subscribable</title>
+            <title>subscribable</title>
             <unicode type="int">0</unicode>
             <whitespace_preserve type="int">0</whitespace_preserve>
           </values>
@@ -46,7 +46,7 @@
         <field><id>subscriptions</id> <type>EmailLinesField</type>
           <values>
             <alternate_name></alternate_name>
-            <css_class></css_class>
+            <css_class>store</css_class>
             <default type="list">[]</default>
             <description>List of email addresses (one per line) currently subscribed to this content.</description>
             <enabled type="int">1</enabled>
@@ -58,7 +58,7 @@
             <max_linelength></max_linelength>
             <max_lines></max_lines>
             <required type="int">0</required>
-            <title>Subscriptions</title>
+            <title>subscribed email addresses</title>
             <unicode type="int">0</unicode>
             <view_separator><br /></view_separator>
             <whitespace_preserve type="int">0</whitespace_preserve>
