@@ -30,5 +30,5 @@ data = request['importfile'].read()
 ident, status = model.service_docma.word2silva(data, str(request.AUTHENTICATED_USER), request['email'], description)
 
 message = _('Your job is ${status}. The id of your job is ${id}.')
-message.mapping = {'status': status, 'id': ident}
+message.set_mapping({'status': status, 'id': ident})
 return view.tab_edit_import(message_type='feedback', message=message)

@@ -27,7 +27,7 @@ for group in groups:
     assigned.append((group, assign_role))
 
 msg = _("Role(s) assigned for ${list}")
-msg.mapping = {'list': view.quotify_list_ext(assigned)}
+msg.set_mapping({'list': view.quotify_list_ext(assigned)})
 return view.tab_access(
     message_type="feedback", 
     message=msg)

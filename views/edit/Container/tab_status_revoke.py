@@ -44,12 +44,12 @@ for ref in refs:
 if revoked_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Revoked approval of: ${ids}')
-    message.mapping = {'ids': view.quotify_list(revoked_ids)}
+    message.set_mapping({'ids': view.quotify_list(revoked_ids)})
     msg.append(unicode(message))
 
 if not_revoked:
     message = _('<span class="error">Could not revoke approval of: ${ids}</span>')
-    message.mapping = {'ids': view.quotify_list_ext(not_revoked)}
+    message.set_mapping({'ids': view.quotify_list_ext(not_revoked)})
     msg.append(unicode(message))
 
 if hasattr(context, 'service_messages'):

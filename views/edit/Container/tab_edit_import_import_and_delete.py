@@ -37,14 +37,14 @@ for item in request['storageids']:
             model.manage_addProduct['Silva'].manage_addFile(newid, 'Docma Word Document %s' % sid, data)
         except:
             message = _('Could not import ${newid}')
-            message.mapping = {'newid': newid}
+            message.set_mapping({'newid': newid})
             return view.tab_edit_import(message_type='error', message=message)
         else:
             model.service_docma.delete_finished_job(str(request['AUTHENTICATED_USER']), int(sid))
 
 if errors:
     message = 'The following errors have occured during import: ${errors}'
-    message.mapping = {'errors': ', '.join(errors)}
+    message.set_mapping({'errors': ', '.join(errors)})
     return view.tab_edit_import(message_type='error', message=message)
 else:
     return view.tab_edit_import(message_type='feedback', message=_('Finished importing'))

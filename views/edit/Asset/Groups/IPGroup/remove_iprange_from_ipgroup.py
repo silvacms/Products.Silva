@@ -15,6 +15,6 @@ for iprange in ipranges:
     removed.append(iprange)
 removed = view.quotify_list(removed)
 message = _("Range(s) ${removed} removed from the group.")
-message.mapping = {'removed': removed}
+message.set_mapping({'removed': removed})
 return view.tab_edit(message_type="feedback", message=message)
 

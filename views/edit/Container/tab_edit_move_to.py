@@ -38,16 +38,16 @@ result = model.move_to(actives, int(new_position)-1)
 
 if result:
     message = _('Object(s) ${ids} moved')
-    message.mapping = {'ids': view.quotify_list(actives)}
+    message.set_mapping({'ids': view.quotify_list(actives)})
     message = unicode(message)
     if inactives:
         message2 = _(', <span class="error">but could not move ${ids}</span>')
-        message2.mapping = {'ids': view.quotify_list(inactives)}
+        message2.set_mapping({'ids': view.quotify_list(inactives)})
         message += unicode(message2)
     return view.tab_edit(message_type="feedback", message=message)
 else:
     message = _("Could not move ${ids}.")
-    message.mapping = {'ids': view.quotify_list(ids)}
+    message.set_mapping({'ids': view.quotify_list(ids)})
     return view.tab_edit(
         message_type="error", 
         message=message)

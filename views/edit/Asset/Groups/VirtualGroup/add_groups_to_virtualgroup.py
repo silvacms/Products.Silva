@@ -20,7 +20,7 @@ for groupid in groups:
 
 if added:
     message = _("Group(s) ${added} added to group.")
-    message.mapping = {'added': view.quotify_list(added)}
+    message.set_mapping({'added': view.quotify_list(added)})
 else:
     message = _(
         "No other groups added (were they already in this virtual group?)"

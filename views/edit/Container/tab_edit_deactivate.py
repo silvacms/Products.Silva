@@ -28,16 +28,16 @@ for id in ids:
 if deactivated:
    if not_deactivated:
       message = _('Content ${deactivated} deactivated, <span class="error">but could not deactivate ${not_deactivated}.</span>')
-      message.mapping = {
+      message.set_mapping({
           'deactivated': view.quotify_list(deactivated),
           'not_deactivated': view.quotify_list(not_deactivated)
-          }
+          })
    else:
       message = _('Content ${deactivated} deactivated.')
-      message.mapping ={'deactivated': view.quotify_list(deactivated)}
+      message.set_mapping({'deactivated': view.quotify_list(deactivated)})
 else:
    message = _('Could not deactivate ${not_deactivated}.')
-   message.mapping = {'not_deactivated': view.quotify_list(not_deactivated)}
+   message.set_mapping({'not_deactivated': view.quotify_list(not_deactivated)})
    message_type = 'error'
    
 return view.tab_edit(message_type=message_type, message=message)

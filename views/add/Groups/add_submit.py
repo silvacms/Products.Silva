@@ -39,7 +39,7 @@ if groups_service.isGroup(str(id)):
     message=_("""There's already a Group with the name ${id} in this Silva
         site.<br />In contrast to other Silva objects, Group IDs must be
         unique within a Silva instance.""")
-    message.mapping = {'id': view.quotify(id)}
+    message.set_mapping({'id': view.quotify(id)})
     return model.edit['tab_access_groups'](
         message_type="error", 
         message=message
@@ -58,9 +58,9 @@ if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
     message = _("Added ${meta_type} ${id}.")
-    message.mapping = {
+    message.set_mapping({
         'meta_type': object.meta_type,
-        'id': view.quotify(id)}
+        'id': view.quotify(id)})
     return model.edit['tab_access_groups'](
         message_type="feedback", 
         message=message

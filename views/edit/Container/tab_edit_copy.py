@@ -17,5 +17,5 @@ if ids is None:
 
 model.action_copy(ids, context.REQUEST)
 message = _("Placed ${ids} on the clipboard for copying.")
-message.mapping = {'ids': view.quotify_list(ids)}
+message.set_mapping({'ids': view.quotify_list(ids)})
 return view.tab_edit(message_type="feedback", message=message)

@@ -37,7 +37,7 @@ if map:
 model.sec_cleanup_groupsmapping()
 
 msg = _("Role(s) revoked for ${list}")
-msg.mapping = {'list': context.quotify_list_ext(revoked)}
+msg.set_mapping({'list': context.quotify_list_ext(revoked)})
 return view.tab_access(
     message_type="feedback", 
     message=msg)

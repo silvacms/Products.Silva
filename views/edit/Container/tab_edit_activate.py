@@ -28,16 +28,16 @@ for id in ids:
 if activated:
    if not_activated:
       message = _('Content ${activated} activated, <span class="error">but could not activate ${not_activated}.</span>')
-      message.mapping = {
+      message.set_mapping({
           'activated': view.quotify_list(activated),
           'not_activated': view.quotify_list(not_activated)
-          }
+          })
    else:
       message = _('Content ${activated} activated.')
-      message.mapping = {'activated': view.quotify_list(activated)}
+      message.set_mapping({'activated': view.quotify_list(activated)})
 else:
    message = _('Could not activate ${not_activated}.')
-   message.mapping = {'not_activated': view.quotify_list(not_activated)}
+   message.set_mapping({'not_activated': view.quotify_list(not_activated)})
    message_type = 'error'
 
 return view.tab_edit(message_type=message_type, message=message)

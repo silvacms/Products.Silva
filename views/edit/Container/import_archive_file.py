@@ -30,18 +30,18 @@ else:
     message_type='feedback'
     if succeeded:  
         message = _('added ${succeeded}')
-        message.mapping = {'succeeded': view.quotify_list(succeeded)}
+        message.set_mapping({'succeeded': view.quotify_list(succeeded)})
         msg.append(unicode(message))
     else:
         message_type='alert'
 
     if failed:
         message = _('<span class="warning">could not add: ${failed}</span>')
-        message.mapping = {'failed': view.quotify_list(failed)}
+        message.set_mapping({'failed': view.quotify_list(failed)})
         msg.append(unicode(message))
     msg = ' '.join(msg)
 
 return view.tab_edit(
     message = _('Finished importing: ${msg}')
-    message.mapping = {'msg': msg}
+    message.set_mapping({'msg': msg})
     message_type=message_type, message=message)

@@ -20,7 +20,7 @@ try:
     model.request_roles_for_user(request.AUTHENTICATED_USER.getId(), request['roles'])
 except Exception, e:
     msg = _('Error: ${error}')
-    msg.mapping = {'error': e}
+    msg.set_mapping({'error': e})
     return view.request_roles(message=msg)
 else:
     return view.service_resources.Silva.request_processed(message=_('Roles requested. You will receive an e-mail from the Chief Editor or Manager as soon as your request is processed.'), last_url=request['last_url'])

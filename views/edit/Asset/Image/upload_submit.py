@@ -20,7 +20,7 @@ try:
     model.set_image(file)
 except ValueError, e:
     message = _('Problem: ${errors}')
-    message.mapping = {'errors': e}
+    message.set_mapping({'errors': e})
     return view.tab_edit(message_type="error", message=message)
 
 model.sec_update_last_author_info()

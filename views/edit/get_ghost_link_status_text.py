@@ -37,6 +37,6 @@ elif status == ghost_version.LINK_CIRC:
         either the ghost itself or an ancestor of the ghost.')
 else:
     return _('The ghost is in an undefined state.')
-msg.mapping = {'haunted_url': ghost_version.get_haunted_url()}
+msg.set_mapping({'haunted_url': ghost_version.get_haunted_url()})
 return msg
 

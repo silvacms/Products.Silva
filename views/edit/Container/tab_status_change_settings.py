@@ -101,12 +101,12 @@ for ref in refs:
 if changed_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Changed settings on: ${ids}')
-    message.mapping = {'ids': view.quotify_list(changed_ids)}
+    message.set_mapping({'ids': view.quotify_list(changed_ids)})
     msg.append(unicode(message))
 
 if not_changed:
     message = _('<span class="error">could not change settings on: ${ids}</span>')
-    message.mapping = {'ids': view.quotify_list_ext(not_changed)}
+    message.set_mapping({'ids': view.quotify_list_ext(not_changed)})
     msg.append(unicode(message))
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

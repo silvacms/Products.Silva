@@ -23,6 +23,6 @@ ${tips}
 </dl>
 """)
 
-msg.mapping = {'tips': ' '.join(result)}
+msg.set_mapping({'tips': ' '.join(result)})
 
 return msg

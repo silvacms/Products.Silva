@@ -35,19 +35,19 @@ for ref in refs:
     message = _('''\
 Request for approval was withdrawn via a bulk operation in the publish screen of /${url}
 (automatically generated message)''')
-    message.mapping = {'url': model.absolute_url(1)}
+    message.set_mapping({'url': model.absolute_url(1)})
     obj.withdraw_version_approval(message)
     approved_ids.append(obj.id)
 
 if approved_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Withdrawn request for approval for: ${list}')
-    message.mapping = {'list': view.quotify_list(approved_ids)}
+    message.set_mapping({'list': view.quotify_list(approved_ids)})
     msg.append(unicode(message))
 
 if not_approved:
     message = _('<span class="error">Not withdrawn: ${list}</span>')
-    message.mapping = {'list': view.quotify_list_ext(not_approved)}
+    message.set_mapping({'list': view.quotify_list_ext(not_approved)})
     msg.append(unicode(message))
 
 if hasattr(context, 'service_messages'):

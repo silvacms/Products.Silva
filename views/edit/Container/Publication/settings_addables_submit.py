@@ -43,7 +43,7 @@ else:
     model.set_silva_addables_allowed_in_publication(addables)
 
 message = _("Addable settings changed for: ${changed_metadata}")
-message.mapping = {
+message.set_mapping({
     'changed_metadata': context.quotify_list(changed_metadata)
-    }
+    })
 return context.settings_addables(message_type="feedback", message=message)

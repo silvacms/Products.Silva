@@ -44,12 +44,12 @@ for ref in refs:
 if copied_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Created a new version for: ${ids}')
-    message.mapping = {'ids': view.quotify_list(copied_ids)}
+    message.set_mapping({'ids': view.quotify_list(copied_ids)})
     msg.append(unicode(message))
 
 if not_copied:
     message = _('<span class="error">could not create a new version for: ${ids}</span>')
-    message.mapping = {'ids': view.quotify_list_ext(not_copied)}
+    message.set_mapping({'ids': view.quotify_list_ext(not_copied)})
     msg.append(unicode(message))
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

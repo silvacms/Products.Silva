@@ -21,15 +21,15 @@ model.action_delete(groupids)
 if deleted_ids:
     if not_deleted_ids:
         message = _('Deleted ${deleted_ids}, <span class="error">but could not delete ${not_deleted_ids}.</span>')
-        message.mapping = {
+        message.set_mapping({
             'deleted_ids': view.quotify_list(deleted_ids),
-            'not_deleted_ids': view.quotify_list(not_deleted_ids)}
+            'not_deleted_ids': view.quotify_list(not_deleted_ids)})
     else:
         message = _('Deleted ${deleted_ids}.')
-        message.mapping = {'deleted_ids': view.quotify_list(deleted_ids)}
+        message.set_mapping({'deleted_ids': view.quotify_list(deleted_ids)})
 else:
     message = _('Could not delete ${not_deleted_ids}.')
-    message.mapping = {'not_deleted_ids': view.quotify_list(not_deleted_ids)}
+    message.set_mapping({'not_deleted_ids': view.quotify_list(not_deleted_ids)})
     message_type = 'error'
 
 return view.tab_access_groups(message_type=message_type, message=message)

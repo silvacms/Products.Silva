@@ -28,7 +28,7 @@ else:
     else:
         message = _("""Approval was withdrawn via the ${tab_name} screen.
             (automatically generated message)""") 
-    message.mapping = {'tab_name': tab_name}
+    message.set_mapping({'tab_name': tab_name})
     # next fish
     if tab_name == 'edit':
         view = context.tab_edit
