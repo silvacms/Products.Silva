@@ -9,5 +9,5 @@
 ##
 model = context.REQUEST.model
 view = context
-model.action_paste_to_ghost(context.REQUEST)
-return view.tab_edit(message_type="feedback", message="Content pasted to ghost.")
+message = model.action_paste_to_ghost(context.REQUEST)
+return view.tab_edit(message_type="feedback", message=message)
