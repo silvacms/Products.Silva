@@ -31,7 +31,7 @@
   &nbsp;Silva &#8211; medium independent publishing<br />
 </h2>
 
-<div style="float:left; color:#274b4c; background:#eceeee; margin:2em 0; padding:0 1em 0.3em 1em; border:1px solid #666677;">
+<div style="float:left; color:#274b4c; background:#ede6eb; margin:2em 0; padding:0 1em 0.3em 1em; border:1px solid #666677;">
   <dl>
     <dt>
       From WordNet (r) 1.6 [wn]:
@@ -53,24 +53,24 @@
 
 <h3>Credits</h3>
 
-<p>
+<p style="line-height:1.5em;">
   Silva is developed by <a href="http://www.infrae.com/">Infrae</a>. <br />
   Initial (and continued) development was for <a href="http://www.eur.nl/">Erasmus University Rotterdam</a>.
 </p>
 
 <h4>Infrae Silva team</h4>
 
-<p>
+<p style="line-height:1.5em;">
   <a href="mailto:kitblake@infrae.com">Kit Blake</a><br />
   <a href="mailto:faassen@infrae.com">Martijn Faassen</a><br />
   <a href="mailto:jw@infrae.com">Jan-Wijbrand Kolman</a><br />
   <a href="mailto:guido@infrae.com">Guido Wesdorp</a><br />
-  <a href="mailto:info@infrae.com">Torvald de Boskat</a><br />
+  <a href="mailto:torvald@infrae.com">Torvald de Boskat</a><br />
 </p>
 
 <h4>External developers</h4>
 
-<p>
+<p style="line-height:1.5em;">
   <a href="mailto:gotcha@swing.be">Godefroid Chapelle</a> from <a href="http://www.bubblenet.be/">BubbleNet.be</a><br />
   <!--<a href="mailto:jose.chaso@zeux.info">Jos Chaso</a><br />-->
   <a href="mailto:robbenhaar@espresto.com">Clemens Klein-Robbenhaar</a><br />
@@ -85,10 +85,10 @@
 <h4>Thanks to....</h4>
 
 <p>
-  The people at <a href="http://www.id.ethz.ch/">ETH in Zürich</a> for their feedback, examples and support.
+  The people at <a href="http://www.ethz.ch/">ETH in Zürich</a> for their feedback, contributions, and innovation.
 </p>
 <p>
-  <a href="mailto:jan@curpheymedia.com">Jan Smith</a> at <a href="http://ozzope.org">ozzope.org</a> for advice, hosting the docs wiki, and her tutorials.
+  <a href="mailto:jan@curpheymedia.com">Jan Smith</a> at <a href="http://ozzope.org">ozzope.org</a> for advice, hosting the documentation wiki, and her tutorials.
 </p>
 <p>
   Many thanks go to <a href="mailto:verster@daz.eur.nl">Hans Verster</a> at the Erasmus University Rotterdam for his vision and support.
