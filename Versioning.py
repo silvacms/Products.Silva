@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -115,7 +115,7 @@ class Versioning:
         if info.requester is None:
             return # no requester found, so don't send messages
         editor = self.REQUEST.AUTHENTICATED_USER.getUserName()
-        text = "Version was approved for publication by %s." % (editor)
+        text = "\nVersion was approved for publication by %s." % (editor)
         self._send_message(editor, info.requester,
                            "Version approved", text)
         
@@ -141,7 +141,7 @@ class Versioning:
         # XXX what if editors themselves withdraw approval?
         # what if author should be informed?
         author = self.REQUEST.AUTHENTICATED_USER.getUserName()
-        text = "Version was unapproved by %s." % author
+        text = "\nVersion was unapproved by %s." % author
         self._send_message_to_editors(author, 'Unapproved', text)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -200,7 +200,7 @@ class Versioning:
         info.request_pending=1
         self.set_approval_request_message(message)
         # send messages
-        text = "Approval was requested by %s.\nMessage:\n%s" % (info.requester, message)
+        text = "\nApproval was requested by %s.\nMessage:\n%s" % (info.requester, message)
         self._send_message_to_editors(info.requester, 'Approval requested', text)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -225,7 +225,7 @@ class Versioning:
         info.request_pending=None
         self.set_approval_request_message(message)
         # send messages
-        text = "Request for approval was withdrawn by %s.\nMessage:\n%s" % (info.requester, message)
+        text = "\nRequest for approval was withdrawn by %s.\nMessage:\n%s" % (info.requester, message)
         self._send_message_to_editors(info.requester,
                                       'Approval withdrawn by author', text)
 
@@ -615,7 +615,7 @@ class Versioning:
             return
         # find out some information about the object and add it to the
         # message
-        text = "Object: %s %s\n%s" % (
+        text = "Object: %s\n%s\n%s" % (
             self.get_title_editable(),
             self.absolute_url(), text)
         # XXX this may not get the right people, but what does?
@@ -629,7 +629,7 @@ class Versioning:
             return
         # find out some information about the object and add it to the
         # message
-        text = "Object: %s %s\n%s" % (
+        text = "Object: %s\n%s\n%s" % (
             self.get_title_editable(),
             self.absolute_url(), text)
         service_messages.send_message(from_userid, to_userid, subject, text)
