@@ -676,15 +676,13 @@ def setup_catalog(silva_root):
 
     catalog.manage_addProduct['ZCatalog'].manage_addVocabulary('UnicodeVocabulary', 'UnicodeVocabulary', 1, 'UnicodeSplitter')
 
-    columns = ['contact_info', 'container_comment', 'expiration_datetime', 'get_title_html',
-            'id', 'meta_type', 'object_path', 'publication_datetime', 'source_path',
-            'last_author_fullname', 'start_datetime',
-            'title', 'version_status']
+    columns = ['expiration_datetime', 'id', 'meta_type', 'object_path', 'publication_datetime',
+                'title', 'version_status', 'object_type']
 
     indexes = [('creation_datetime', 'FieldIndex'), ('fulltext', 'TextIndex'), ('id', 'FieldIndex'),
-            ('meta_type', 'FieldIndex'), ('object_path', 'KeywordIndex'),
-            ('parent_path', 'FieldIndex'), ('path', 'PathIndex'), ('publication_datetime', 'FieldIndex'),
-            ('source_path', 'FieldIndex'), ('version_status', 'FieldIndex')]
+                ('meta_type', 'FieldIndex'), ('object_path', 'KeywordIndex'), ('path', 'PathIndex'), 
+                ('publication_datetime', 'FieldIndex'), ('version_status', 'FieldIndex'),
+                ('object_type', 'FieldIndex')]
 
     existing_columns = catalog.schema()
     existing_indexes = catalog.indexes()
@@ -702,6 +700,10 @@ def setup_catalog(silva_root):
     # set the vocabulary of the fulltext-index to some Unicode aware one
     # (Should probably be ISO-8859-1, but that Splitter crashes Zope 2.5.1?!?)
     catalog.Indexes['fulltext'].manage_setPreferences('UnicodeVocabulary')
+
+    # if the silva root has an index_object attribute, add it to the catalog
+    if hasattr(silva_root, 'index_object'):
+        silva_root.index_object()
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
