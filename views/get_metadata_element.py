@@ -6,7 +6,7 @@ from Products.SilvaMetadata.Exceptions import BindingError
 
 request = context.REQUEST
 model = request.model
-content = model.get_editable()
+content = model.get_previewable()
 
 if content is None:
     return None
