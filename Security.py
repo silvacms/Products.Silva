@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74.4.2 $
+# $Revision: 1.74.4.3 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -262,7 +262,6 @@ class Security(AccessManager):
         from AccessControl import getSecurityManager
         security = getSecurityManager()
         self._last_author_userid = userid = security.getUser().getUserName()
-        username = self.service_members.get_member(userid).fullname()
         version = self.get_previewable()
         assert version is not None
         try:
@@ -273,7 +272,7 @@ class Security(AccessManager):
             return
         binding.setValues(
             'silva-extra', {
-                'lastauthor': username.encode('UTF-8'),
+                'lastauthor': userid,
                 'modificationtime': DateTime(),
             })
 
