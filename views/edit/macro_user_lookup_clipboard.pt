@@ -36,10 +36,15 @@
               <input name="userids:list"
                 type="checkbox"
                 value="userid"
-                tal:attributes="value member/userid" />
+                tal:attributes="
+                  value member/userid;
+                  id member/userid" />
             </td>
-            <td tal:content="member/fullname">
-              Name
+            <td>
+              <b><label tal:content="member/fullname"
+                tal:attributes="for member/userid">
+                Name
+              </label></b>
             </td>
             </tal:block>
           </tr>
