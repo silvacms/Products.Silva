@@ -172,7 +172,6 @@ a.redlink:hover {
 }
 
 /* yellow selectors */
-.yellowish { color: #eeee88; }
 a.yellowlink:link {
   color : #8f7f01;
   text-decoration : none;
@@ -187,7 +186,6 @@ a.yellowlink:hover {
 }
 
 /* greenlink selectors */
-.greenish { color : #007746; }
 a.greenlink:link {
   color : #007746;
   text-decoration : none;
@@ -202,7 +200,6 @@ a.greenlink:hover {
 }
 
 /* bluelink selectors */
-.blueish { color : #000080; }
 a.bluelink:link {
   color : #000080;
   text-decoration : none;
@@ -242,20 +239,6 @@ a.graylink:visited {
 a.graylink:hover {
   color : #777777;
   text-decoration : underline;
-}
-
-/* blacklink-underline selectors */
-a.blacklink-underline:link {
-  color : #444444;
-  text-decoration : underline;
-}
-a.blacklink-underline:visited {
-  color : #444444;
-  text-decoration : underline;
-}
-a.blacklink-underline:hover {
-  color : #444444;
-  text-decoration : none;
 }
 
 /* underlinelink (blue) selectors */
