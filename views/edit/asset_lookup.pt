@@ -50,8 +50,10 @@
           id="sortable"
           tal:define="
             global assets python:here.asset_lookup_get_objects(filter);
-            empty python:len(assets) == 0">
-          <thead>
+            empty python:len(assets) == 0;
+            base_type python: filter == 'Silva Image' and 'image' or filter.lower;
+            ">
+              <thead>
             <tal:block replace="nothing">
               ______________ vein + title row ______________
             </tal:block>
@@ -73,7 +75,7 @@
                 colspan="5">
                 <form action="." name="silvaObjects" method="POST">
                   <h3 style="float:left;">
-                    <tal:block content="string:${filter}s" />
+                    <tal:block content="string:${base_type}s" />
                   </h3>
                   <tal:block condition="python:silva_permissions['ChangeSilvaContent'] and isMetaType">
                     <input class="navigation"
@@ -81,7 +83,7 @@
                       name="add_object:method" 
                       title="add a new item: alt-n"
                       accesskey="n" 
-                      tal:attributes="value string: new ${filter} "
+                      tal:attributes="value string: new ${base_type} "
                       i18n:attributes="title"
                       />
                     <input type="hidden"

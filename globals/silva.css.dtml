@@ -1467,7 +1467,7 @@ a.closed:hover {
 /* defines the width of the text in the preview/public layout */
 /* duplicated in frontend.css */
 .public {
-  margin-left : 5em;
+  margin-left : 7em;
   padding-top : 2em;
   max-width : 40em;
   /* for IE5 */
