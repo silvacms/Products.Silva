@@ -1,4 +1,4 @@
-## Script (Python) "add_submit"
+## Script (Python) "add_submite
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -11,8 +11,12 @@ model = context.REQUEST.model
 view = context
 REQUEST = context.REQUEST
 
+mode_asset = REQUEST.get('mode_asset', 0)
+
 # if we cancelled, then go back to edit tab
 if REQUEST.has_key('add_cancel'):
+    if mode_asset:
+        return view.asset_lookup()
     return view.tab_edit()
 
 # validate form
@@ -52,6 +56,9 @@ object = getattr(model, id)
 
 # update last author info in new object
 object.sec_update_last_author_info()
+
+if mode_asset:
+    return view.asset_lookup()
 
 # now go to tab_edit in case of add and edit, back to container if not.
 if REQUEST.has_key('add_edit_submit'):

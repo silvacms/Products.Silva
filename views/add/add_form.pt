@@ -1,10 +1,13 @@
 <tal:block define="
   global active_tab string:tab_edit;
   global breadcrumb_vein string:Add;
+  global mode_asset request/mode_asset | nothing;
+  global use_macro python: (mode_asset and [here.macro_no_tabs] or 
+    [here.macro_index])[0]
   " />
 
 <!-- ___________________________ start index_html ___________________________ -->
-<html metal:use-macro="here/macro_index/macros/master">
+<html metal:use-macro="use_macro/macros/master">
 
 <div class="margins" metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
@@ -17,6 +20,8 @@
   tal:content="structure python:here.focus_editor('field_object_id')" />
 <form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
+<input type="hidden" name="mode_asset:int" value="0"
+  tal:attributes="value mode_asset" />
 <table width="96%" cellspacing="0" cellpadding="5" border="0"
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">
@@ -69,8 +74,10 @@ id: no spaces or special characters besides an underscore (_).
 </td>
 <td colspan="2" align="right">
 <input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
-&nbsp;&nbsp;<input class="button" type="submit" name="add_edit_submit" value="Add and edit" title="Access key: Alt-e" accesskey="e"
-  tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Add and enter ', ' Add and edit ')" />
+<tal:block condition="not: mode_asset" >
+  &nbsp;&nbsp;<input class="button" type="submit" name="add_edit_submit" value="Add and edit" title="Access key: Alt-e" accesskey="e"
+    tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Add and enter ', ' Add and edit ')" />
+</tal:block>
 </td>
 </tr>
 </table>
