@@ -43,6 +43,9 @@ Silva changes
           the Ghost's container context and not with the container context
           of the target Document.
 
+        - Fixed unwanted aquisition behaviour of Ghost paths and other
+          improvements in the Ghost code.
+
         - Fixed some bugs with copy/cut and paste: when an object is not
           allowed somewhere, it's now not possible to paste it there anymore,
           and also the id of the object to be pasted is now changed until
