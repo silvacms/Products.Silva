@@ -268,7 +268,7 @@ def upgrade_using_registry(obj, version):
         mt = o.meta_type
         if upgrade_registry.is_registered(mt, version):
             for upgrade in upgrade_registry.get_meta_type(mt, version):
-                print 'Going to run %s on %s' % (upgrade, obj.absolute_url())
+                print 'Going to run %s on %s' % (upgrade, o.absolute_url())
                 res = upgrade(o)
                 # sometimes upgrade methods will replace objects, if so the
                 # new object should be returned so that can be used for the rest
@@ -375,7 +375,7 @@ def convert_document_092(obj):
         setattr(doc, version, newver)
         doc._update_publication_status()
             
-    for version in ['unapproved', 'approved', 'public', 'last_closed']:
+    for version in ['unapproved', 'approved', 'public']:
         v = getattr(obj, 'get_%s_version' % version)()
         if v is not None:
             upgrade_doc_version(obj, v)
@@ -388,7 +388,7 @@ def convert_document_092(obj):
         # way to do that from the SMI, which corrupts the previous versions 
         # list
         new_previous_versions = []
-        for versionid, pdt, edt in obj._previous_versions[:-1]:
+        for versionid, pdt, edt in obj._previous_versions:
             if not hasattr(obj, versionid):
                 continue
             upgrade_doc_version(obj, versionid)
