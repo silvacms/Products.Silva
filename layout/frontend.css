@@ -366,6 +366,19 @@ table.green td {
 table.green tr.odd td {
   background-color: #b3c99c;
 }
+
+/* definitions for batching */
+div.listingBar {
+  margin-bottom: 2em;
+}
+
+div.listingBar .next {
+  padding-left: 5em;
+} 
+
+div.listingBar .previous {
+  padding-right: 5em;
+}
 </dtml-let>
 
 /* end cascade */
