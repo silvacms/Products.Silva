@@ -1,7 +1,8 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.71 $
+# $Revision: 1.72 $
 # Zope
+
 from StringIO import StringIO
 
 from AccessControl import ClassSecurityInfo
@@ -93,45 +94,11 @@ class Document(CatalogedVersionedContent):
 
         if version_id is None:
             return
-        f.write('<silva_document>') 
+        f.write('<silva_document id="%s">' % self.id) 
         version = getattr(self, version_id)
         version.to_xml(context)        
         f.write('</silva_document>')
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'store_xml')
-    def store_xml(self, xml):
-        """Store the Document from the xml-string in this object.
-
-           the xml string is usually utf-8 encoded. Make sure
-           that the "encoding" in any xml-processing instruction
-           really matches the encoding of the string.
-           Weird Errors can occur if they differ!
-
-        """
-        version = self.get_editable()
-        if version is None:
-            # XXX should put in nicer exceptions (or just return)
-            raise "Hey, no version to edit!"
-
-        dom = createDOMDocument(xml)
-
-        title = content = None
-        # hackish way to do this..
-
-        for node in dom.documentElement.childNodes:
-            if node.nodeType == node.ELEMENT_NODE:
-                if node.nodeName == 'title':
-                    title = node.childNodes[0].nodeValue
-                if node.nodeName == 'doc':
-                    content = writeStream(node).getvalue().encode('utf8')
-
-        if title is None or content is None:
-            # XXX should put in nicer exceptions (or just return)
-            raise "Hey, title or content was empty! %s %s" % (repr(title), repr(content))
-
-        version.content.manage_edit(content)  # needs utf8-encoded string
-        self.set_title(title) 
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
                               'editor_storage')
@@ -139,14 +106,16 @@ class Document(CatalogedVersionedContent):
         """provide xml/xhtml/html (GET requests) and (heuristic) 
            back-transforming to xml/xhtml/html (POST requests)
         """
-        from cStringIO import StringIO
         transformer = EditorTransformer(editor=editor)
 
         if string is None:
             ctx = Context(f=StringIO(), last_version=1, url=self.absolute_url())
             self.to_xml(ctx)
             htmlnode = transformer.to_target(sourceobj=ctx.f.getvalue(), context=ctx)
-            return htmlnode.asBytes(encoding=encoding)
+            if encoding:
+                return htmlnode.asBytes(encoding=encoding)
+            else:
+                return unicode(htmlnode.asBytes('utf8'),'utf8')
         else:
             version = self.get_editable()
             if version is None:
