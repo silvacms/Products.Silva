@@ -174,7 +174,11 @@ class DocmaService(SimpleItem):
     def get_finished_job(self, userid, storageid):
         """Returns the XML for a finished job"""
         server = xmlrpclib.Server("http://%s:%s" % (self._host, self._port))
-        return server.getResult(userid, self._password, storageid).data
+        retval = server.getResult(userid, self._password, storageid)
+        if type(retval) != xmlrpclib.Binary:
+            raise Exception, 'Job %s is not in the queue. This job may have been expired.' % storageid
+        else:
+            return retval.data
 
     security.declareProtected(Permissions.access_contents_information, 'delete_finished_job')
     def delete_finished_job(self, userid, storageid):
