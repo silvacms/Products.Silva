@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -145,7 +145,7 @@ class Security:
         for userid in l:
             dict[userid] = 0
         return dict.keys()
-        
+
     def _sec_get_userids_deep_helper(self, l):
         for userid in self.sec_get_userids():
             l.append(userid)
@@ -185,6 +185,7 @@ class Security:
                               'sec_get_roles_for_userid')
     def sec_get_roles_for_userid(self, userid):
         """Get the local roles that a userid has here.
+        DEPRECATED
         """
         return [role for role in self.get_local_roles_for_userid(userid)
                 if role in interesting_roles]
@@ -236,18 +237,111 @@ class Security:
         self._last_author_userid = self.REQUEST.AUTHENTICATED_USER.getUserName()
         self._last_author_info = self.sec_get_user_info(self._last_author_userid)
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_userids')
+    def sec_get_local_defined_userids(self):
+        """Get the list of userids with locally defined roles
+        """
+        result = []
+        for userid, roles in self.get_local_roles():
+            for role in roles:
+                if role in interesting_roles:
+                    result.append(userid)
+                    break
+        return result
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_roles_for_userid')
+    def sec_get_local_roles_for_userid(self, userid):
+        """Get a list of local roles that a userid has here
+        """
+        return [role for role in self.get_local_roles_for_userid(userid)
+                if role in interesting_roles]
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_defined_userids')
+    def sec_get_upward_defined_userids(self):
+        """Get the list of userids with roles defined in a higer
+        level of the tree
+        """
+        userids = {}
+        parent = self.aq_inner.aq_parent
+        while Interfaces.Container.isImplementedBy(parent):
+            for userid in parent.sec_get_local_defined_userids():
+                userids[userid] = 1
+            parent = parent.aq_parent
+        return userids.keys()
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_roles_for_userid')
+    def sec_get_upward_roles_for_userid(self, userid):
+        """Get the roles that a userid has here, defined in a higer
+        level of the tree
+        """
+        roles = {}
+        parent = self.aq_inner.aq_parent
+        while Interfaces.Container.isImplementedBy(parent):
+            for role in parent.sec_get_local_roles_for_userid(userid):
+                roles[role] = 1
+            parent = parent.aq_parent
+        return roles.keys()
+        
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_downward_defined_userids')
+    def sec_get_downward_defined_userids(self):
+        """Get the list of userids with roles defined in a lower
+        level of the tree (these users do not have rights on this
+        local level)
+        """
+        d = {}
+        self._sec_get_userids_deep_helper(d)
+        return d.keys()
+
+    def _sec_get_downward_defined_userids_helper(self, d):
+        for userid in self.sec_get_userids():
+            d[userid] = 1
+        if Interfaces.Container.isImplementedBy(self):
+            for item in self.get_ordered_publishables():
+                item._sec_get_downward_defined_userids_helper(d)
+            for item in self.get_nonactive_publishables():
+                item._sec_get_downward_defined_userids_helper(d)
+            for item in self.get_assets():
+                item._sec_get_downward_defined_userids_helper(d)
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_userinfos_for_userids')
+    def sec_get_userinfos_for_userids(self, userids):
+        d = {}
+        for userid in userids:
+            d[userid] = self.sec_get_user_info(userid)
+        return d
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_group_info')
+    def sec_get_group_info(self, userid):
+        """Get information for group.
+        FIXME: describe which info fields exist.
+        """
+        pass
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_groups')
     def sec_get_local_defined_groups(self):
         local_groups = self.__ac_local_groups__
         if local_groups is None:
             return []
         return local_groups.getMappings().keys()
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_roles_for_group')
     def sec_get_local_roles_for_group(self, group):
         local_gropus = self.__ac_local_groups__
         if local_groups is None:
             return []
         return local_groups.getMappings().get(group, [])
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_defined_groups')
     def sec_get_upward_defined_groups(self):
         parent = self.aq_inner.aq_parent
         groups = {}
@@ -256,7 +350,9 @@ class Security:
                 groups[group] = 1
             parent = parent.aq_parent
         return groups.keys()
-    
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_roles_for_group')
     def sec_get_upward_roles_for_group(self, group):
         parent = self.aq_inner.aq_parent
         if not Interfaces.Container.isImplementedBy(parent):
@@ -264,6 +360,8 @@ class Security:
         # XXX incorrect, should loop
         return parent.sec_get_local_roles_for_group(group)
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_downward_defined_groups')
     def sec_get_downward_defined_groups(self):
         d = {}
         self._sec_get_downward_defined_groups_helper(d)
