@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.71 $
+# $Revision: 1.72 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -87,40 +87,6 @@ class Security(AccessManager):
             # if no more roles, remove user completely
             self.sec_remove(userid)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'sec_open_to_public')
-    def sec_open_to_public(self):
-        """Open this object to the public; accessible to everybody (if
-        at least container is accessible).
-        """
-        #self.manage_permission('Access contents information',
-        #                       roles=[],
-        #                       acquire=1)
-        allowed_roles = ['Anonymous', 'Authenticated', 'Viewer', 'Reader', 'Author', 'Editor',
-                         'ChiefEditor', 'Manager']
-        self.manage_permission('View',
-                               roles=allowed_roles,
-                               acquire=1)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'sec_close_to_public')
-    def sec_close_to_public(self, allow_authenticated=0):
-        """Close this object to the public; only accessible to people
-        with Viewer role here.
-        """
-        # XXX should change this on dependencies on permissions somehow, not
-        # hard coded roles
-        allowed_roles = ['Viewer', 'Reader', 'Author', 'Editor',
-                         'ChiefEditor', 'Manager']
-        if allow_authenticated:
-            allowed_roles += ['Authenticated']
-        #self.manage_permission('Access contents information',
-        #                       roles=allowed_roles,
-        #                       acquire=0)
-        self.manage_permission('View',
-                               roles=allowed_roles,
-                               acquire=0)
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_create_lock')
     def sec_create_lock(self):
@@ -139,44 +105,6 @@ class Security(AccessManager):
         """Breaks the lock.
         """
         self._lock_info = None
-
-    # ACCESSORS
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'sec_is_closed_to_public')
-    def sec_is_closed_to_public(self):
-        """Check whether this is closed. This method returns 0 if the object is open to public,
-        1 if the object itself is set to closed and a 1+<number of parents up> if the some parent
-        object is closed (so if the effect is acquired).
-        """
-        # XXX ugh
-        i = 0
-        curobj = self
-        while 1:
-            i += 1
-            rop = curobj.rolesOfPermission('View')
-            if {'selected': 'SELECTED', 'name': 'Viewer'} in rop and not {'selected': 'SELECTED', 'name': 'Anonymous'} in rop:
-                return i
-            # we know now that on this particular object the viewer role is not set as a minimum,
-            # but need to also know if that behaviour isn't acquired at this point. So let's walk through
-            # all parents
-            if IRoot.isImplementedBy(curobj):
-                return 0
-            curobj = curobj.aq_parent
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'sec_minimal_view_role')
-    def sec_minimal_view_role(self):
-        """Returns the minimal role required for viewing"""
-        rop = self.rolesOfPermission('View')
-        if ((not {'selected': 'SELECTED', 'name': 'Viewer'} in rop and 
-                not {'selected': 'SELECTED', 'name': 'Authenticated'} in rop) or 
-                {'selected': 'SELECTED', 'name': 'Anonymous'} in rop):
-            return 'Anonymous'
-        elif (not {'selected': 'SELECTED', 'name': 'Viewer'} in rop or 
-            {'selected': 'SELECTED', 'name': 'Authenticated'} in rop):
-            return 'Authenticated'
-        else:
-            return 'Viewer'
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_is_locked')

@@ -16,7 +16,7 @@ class IAccessManager(Interface):
 
     def deny_role(self, userid, role):
         """Denies the role and send an e-mail to the user"""
-
+    
 class ISecurity(Interface):
     """Can be mixed in with an object to support Silva security.
     (built on top of Zope security)
@@ -39,31 +39,11 @@ class ISecurity(Interface):
         """
         pass
 
-    def sec_open_to_public():
-        """Open this object to the public; accessible to everybody (if
-        at least container is accessible).
-        """
-
-    def sec_close_to_public():
-        """Close this object to the public; only accessible to people
-        with Viewer role here.
-        """
-
     def sec_create_lock():
         """Create lock for this object. Return true if successful.
         """
     
     # ACCESSORS
-
-    def sec_is_open_to_public():
-        """Check whether this is viewable by the public.
-        PUBLIC
-        """
-
-    def sec_is_closed_to_public():
-        """Check whether this is closed to the public.
-        PUBLIC
-        """
         
     def sec_is_locked():
         """Check whether this object is locked by a user currently
@@ -1114,4 +1094,3 @@ class IUpgrader(Interface):
 
             returns object
         """
-        

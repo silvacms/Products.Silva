@@ -11,7 +11,7 @@ from Globals import package_home
 # silva imports
 from Products.Silva.interfaces import IUpgrader, IContainer, IContent
 from Products.Silva import upgrade
-
+from Products.Silva.adapters import security
 from Products.SilvaMetadata.Exceptions import BindingError
 
 #-----------------------------------------------------------------------------
@@ -116,8 +116,9 @@ class UpgradeAccessRestriction:
                 obj.absolute_url(), ))
                 
     def _none_allowed(self, obj, ar):
-        if not obj.sec_is_closed_to_public():
-            obj.sec_close_to_public()
+        adapter = security.getViewerSecurityAdapter(obj)
+        if adapter.getMinimumRole() == 'Anonymous':
+            adapter.setMinimumRole('Viewer')
             zLOG.LOG('Silva', 'Access restriction removed',
                 "The access restriction of the object located at %s "
                 "has been removed. The object's 'access restriction by role' "
@@ -125,8 +126,9 @@ class UpgradeAccessRestriction:
                 "any ip addresses access.\n" % obj.absolute_url())
 
     def _restrict(self, obj, ar):
-        if not obj.sec_is_closed_to_public():
-            obj.sec_close_to_public()
+        adapter = security.getViewerSecurityAdapter(obj)
+        if adapter.getMinimumRole() == 'Anonymous':
+            adapter.setMinimumRole('Viewer')
         ipg = self._createIPGroup(obj)
         for ip in ar:
             ipg.addIPRange(ip)

@@ -79,7 +79,7 @@
 
 <metal:block fill-slot="main"
   tal:define="
-    is_locked model/sec_is_locked;
+    is_locked view/is_locked;
     unapproved_version model/get_unapproved_version;
     request_pending python:model.is_version_approval_requested();
 ">

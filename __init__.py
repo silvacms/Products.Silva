@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.106 $
+# $Revision: 1.107 $
 
 import ContainerPolicy
 
@@ -156,10 +156,12 @@ else:
 
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
-    if name in ('mangle', 'batch', ):
-        return 1
-    return 0
+    return name in ('mangle', 'batch')
 
+from Products.PythonScripts.Utility import allow_module
+
+allow_module('Products.Silva.adapters.security')
+allow_module('Products.Silva.roleinfo')
 
 def initialize_icons():
     icon.registry.registerAdapter(icon.MetaTypeClassAdapter, 0)

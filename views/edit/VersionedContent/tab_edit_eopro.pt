@@ -16,7 +16,7 @@
 <metal:block fill-slot="main">
 
   <tal:block tal:define="
-    global is_locked model/sec_is_locked;
+    global is_locked view/is_locked;
     global unapproved_version model/get_unapproved_version;
     global request_pending python:model.is_version_approval_requested();" />
 

@@ -6,6 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="global vein string:access;"
   i18n:domain="silva">
 
@@ -510,10 +511,8 @@
         ___________ access restriction by role __________
       </tal:block>
       <td class="main">
-        <form action="minimal_access_role_submit"
-          method="POST"
-          tal:define="
-            minimal_role model/sec_minimal_view_role;">
+        <form action="."
+          method="POST">
           <table class="listing sublisting">
             <thead>
               <tal:block replace="nothing"> 
@@ -541,7 +540,7 @@
             <tbody>
               <tr class="odd">
                 <td i18n:translate="setting_an_access_restriction">
-                  Setting an access restriction here affects all objects on this and lower levels.
+                  Setting an access restriction here affects objects on this and lower levels.
                 </td>
               </tr>
             </tbody>
@@ -550,29 +549,37 @@
             </tal:block>
             <tfoot>
               <tr class="controls">
-                <td>
-                  <select class="manipulator"
+                <td tal:define="info view/get_viewer_role_info; acquired info/acquired">
+                  <select 
+                    class="manipulator"
                     name="role"
-                    title="select a role to assign" i18n:attributes="title">
-                    <option value="Anonymous" i18n:translate="anonymous"
-                      tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
-                      Anonymous
-                    </option>
-                    <option value="Viewer" i18n:translate="viewer"
-                      tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">
-                      Viewer
-                    </option>
-                    <option value="Authenticated" i18n:translate="authenticated"
-                      tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">
-                      Authenticated
+                    title="select a role to assign" i18n:attributes="title"
+                    tal:define="selected_role info/selected_role">
+                    <option
+                      tal:repeat="role info/viewer_roles"
+                      tal:attributes="value role; selected python:test(role == selected_role, 'SELECTED', nothing)"
+                      tal:content="role">
                     </option>
                   </select>
-                  <input class="button"
+                  <input 
+                    class="button"
                     type="submit"
+                    name="tab_access_minimum_role_submit:method"
                     value="set restriction"
-                    title="restrict access to users with a specific role"      
+                    title="restrict access to users with a specific role"
                     i18n:attributes="title value"
-                  />
+                    />
+                  <input
+                    class="button"
+                    type="submit"
+                    name="tab_access_acquire_minimum_role_submit:method"
+                    value="acquire restriction"
+                    title="make access restriction be inherited from above"
+                    i18n:attributes="title value"
+                    tal:condition="not:acquired"
+                    />
+                   <tal:block condition="info/is_public">Open to the public</tal:block>
+                   <tal:block condition="info/acquired">(acquired)</tal:block>
                 </td>
               </tr>
             </tfoot>
@@ -642,64 +649,58 @@
         <tal:block replace="nothing"> 
           ____________________ utilities ____________________
         </tal:block>
-        <form action="minimal_access_role_submit"
-          method="POST"
-          tal:define="
-            is_closed model/sec_is_closed_to_public;
-            minimal_role model/sec_minimal_view_role;">
-          <table class="listing sublisting">
-            <thead>
-              <tal:block replace="nothing">
-                ______________ vein + title row _______________
-              </tal:block>
-              <tr>
-                <td class="top">
-                  <h2 tal:attributes="title string:id: ${model/id}">
-                    <img tal:replace="structure python:view.render_icon(model)" />
-                    <span i18n:translate="utilities" tal:omit-tag="">utilities</span>
-                  </h2>
-                </td>
-              </tr>
-              <tal:block replace="nothing">
-                ______________ top controls row _______________
-              </tal:block>
-              <tr class="top-controls">
-                <td>
-                  <h3 i18n:translate="list_user_email_addresses">
-                    list user email addresses
-                  </h3>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="odd">
-                <td i18n:translate="list_all_email_addresses_from_level_down">
-                  List email addresses of all users from this level down.
-                </td>
-              </tr>
-            </tbody>
-
+        <table class="listing sublisting">
+	  <thead>
             <tal:block replace="nothing">
-              ___________________ controls ____________________
+              ______________ vein + title row _______________
             </tal:block>
-            <tfoot>
-              <tr class="controls">
-                <td class="align-right"
-                  style="padding-top:0.3em;padding-bottom:0.3em;">
-                  <a class="navigation"
-                    href="tab_access_authorized_below"
-                    title="retrieve a comma separated list of user email addresses"
-                    accesskey="e"
-                    i18n:attributes="title"
-                    i18n:translate="list_email_addresses"
-                    >
-                    &nbsp;list <u>e</u>mail addresses...
-                  </a>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </form>
+            <tr>
+              <td class="top">
+                <h2 tal:attributes="title string:id: ${model/id}">
+                  <img tal:replace="structure python:view.render_icon(model)" />
+                  <span i18n:translate="utilities" tal:omit-tag="">utilities</span>
+                </h2>
+              </td>
+            </tr>
+            <tal:block replace="nothing">
+              ______________ top controls row _______________
+            </tal:block>
+            <tr class="top-controls">
+              <td>
+                <h3 i18n:translate="list_user_email_addresses">
+                  list user email addresses
+                </h3>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="odd">
+              <td i18n:translate="list_all_email_addresses_from_level_down">
+                List email addresses of all users from this level down.
+              </td>
+            </tr>
+          </tbody>
+
+          <tal:block replace="nothing">
+            ___________________ controls ____________________
+          </tal:block>
+          <tfoot>
+            <tr class="controls">
+              <td class="align-right"
+                style="padding-top:0.3em;padding-bottom:0.3em;">
+                <a class="navigation"
+                  href="tab_access_authorized_below"
+                  title="retrieve a comma separated list of user email addresses"
+                  accesskey="e"
+                  i18n:attributes="title"
+                  i18n:translate="list_email_addresses"
+                  >
+                  &nbsp;list <u>e</u>mail addresses...
+                </a>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
       </td>
       <td class="right">
       </td>
