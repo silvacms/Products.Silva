@@ -141,6 +141,10 @@ ul.circle {
   list-style-type : circle;
 } 
   
+ul.nobullet {
+  list-style-type: none;
+}
+
 ol.decimal {
   list-style-type : decimal;
 } 
