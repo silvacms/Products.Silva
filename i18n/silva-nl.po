@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Mon Nov 29 16:37:30 2004\n"
-"PO-Revision-Date: 2004-11-29 16:40+0100\n"
+"POT-Creation-Date: Mon Nov 29 17:24:17 2004\n"
+"PO-Revision-Date: 2004-11-29 17:28+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -651,6 +651,7 @@ msgstr "inhoud"
 
 #: /views/add/add_form.pt:57 /views/add/Ghost/add_form.pt:46
 #: /views/add/GhostFolder/add_form.pt:48
+#: /views/edit/Content/Indexer/edit.pt:55
 #: /views/edit/VersionedContent/tab_status_macros.pt:115
 #: /views/edit/VersionedContent/tab_status_macros.pt:196
 #: /views/edit/VersionedContent/tab_status_macros.pt:311
@@ -2270,6 +2271,7 @@ msgid "p<u>u</u>blish&nbsp;now?"
 msgstr "nu&nbsp;p<u>u</u>bliceren?"
 
 #: /views/edit/Container/tab_status.pt:300
+#: /views/edit/Content/Indexer/edit.pt:75
 #: /views/edit/VersionedContent/tab_status_macros.pt:240
 #: /views/edit/VersionedContent/tab_status_macros.pt:257
 #: /views/edit/VersionedContent/tab_status_macros.pt:356
@@ -2676,6 +2678,35 @@ msgstr "Niet ingetrokken: ${list}"
 #: /views/edit/Container/transform_folder_to_pub.py:12
 msgid "Not yet :)"
 msgstr "Nog niet"
+
+#: /views/edit/Content/Indexer/edit.pt:63
+msgid "preview screen"
+msgstr "voorbeeld scherm"
+
+#: /views/edit/Content/Indexer/edit.pt:63
+msgid ""
+"An index is not editable. To view the index go to the ${preview_screen}."
+msgstr "Een index kun je niet wijzigen. Om de index te bekijken, ga naar ${preview_screen}"
+
+#: /views/edit/Content/Indexer/edit.pt:64
+msgid ""
+"Note that <span class=\"warning\">the index only displays links to published "
+"content</span>, so the list may be empty if nothing is published."
+msgstr ""
+"Let op: <span class=\"warning\">de index toont alleen links naar "
+"gepubliceerde inhoud</span>, dus de lijst kan leef zijn als er niets is gepubliceerd."
+
+#: /views/edit/Content/Indexer/edit.pt:65
+msgid ""
+"If new content has been added, click &#8220;update index&#8221; (in large "
+"publications this may take a while)."
+msgstr ""
+"Als nieuwe inhoud is toegevoegd, klik &#8220;index bijwerken&#8221; (in grote "
+"publicaties kan dit enige tijd duren)."
+
+#: /views/edit/Content/Indexer/edit.pt:75
+msgid "update index"
+msgstr "index bijwerken"
 
 #: /views/edit/Content/Indexer/tab_edit_update_index.py:15
 msgid "Index updated"

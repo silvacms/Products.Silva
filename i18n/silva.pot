@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 29 16:37:30 2004\n"
+"POT-Creation-Date: Mon Nov 29 17:24:17 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -617,6 +617,7 @@ msgstr ""
 #: /views/add/add_form.pt:57
 #: /views/add/Ghost/add_form.pt:46
 #: /views/add/GhostFolder/add_form.pt:48
+#: /views/edit/Content/Indexer/edit.pt:55
 #: /views/edit/VersionedContent/tab_status_macros.pt:115
 #: /views/edit/VersionedContent/tab_status_macros.pt:196
 #: /views/edit/VersionedContent/tab_status_macros.pt:311
@@ -2139,6 +2140,7 @@ msgid "p<u>u</u>blish&nbsp;now?"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:300
+#: /views/edit/Content/Indexer/edit.pt:75
 #: /views/edit/VersionedContent/tab_status_macros.pt:240
 #: /views/edit/VersionedContent/tab_status_macros.pt:257
 #: /views/edit/VersionedContent/tab_status_macros.pt:356
@@ -2532,6 +2534,26 @@ msgstr ""
 
 #: /views/edit/Container/transform_folder_to_pub.py:12
 msgid "Not yet :)"
+msgstr ""
+
+#: /views/edit/Content/Indexer/edit.pt:63
+msgid "preview screen"
+msgstr ""
+
+#: /views/edit/Content/Indexer/edit.pt:63
+msgid "An index is not editable. To view the index go to the ${preview_screen}."
+msgstr ""
+
+#: /views/edit/Content/Indexer/edit.pt:64
+msgid "Note that <span class=\"warning\">the index only displays links to published content</span>, so the list may be empty if nothing is published."
+msgstr ""
+
+#: /views/edit/Content/Indexer/edit.pt:65
+msgid "If new content has been added, click &#8220;update index&#8221; (in large publications this may take a while)."
+msgstr ""
+
+#: /views/edit/Content/Indexer/edit.pt:75
+msgid "update index"
 msgstr ""
 
 #: /views/edit/Content/Indexer/tab_edit_update_index.py:15
