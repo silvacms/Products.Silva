@@ -67,118 +67,119 @@
 </metal:block>
   
 <metal:block fill-slot="main">
-  <table class="columns columns3"
-    tal:define="icon python:view.render_icon(model)">
-    <tbody>
-      <tr>
-        <tal:block replace="nothing">_____________________ sidebar _____________________</tal:block>
-        <td class="left" rowspan="99">
-          <metal:block use-macro="view/macro_vein_navigation/macros/vein">
-            <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_settings', vein)" />
-            </metal:fill-slot>
-          </metal:block>
-        </td>
-        <tal:block replace="nothing">_____________________ main _____________________</tal:block>
-        <td class="main">
-          <table class="listing"
-            tal:define="
-              editable model/get_editable;
-              rendererservice context/service_renderer_registry;
-              renderers python: rendererservice.getFormRenderersList(type);"
-            tal:condition="
-              python: editable"
-            >
-            <thead>
-              <tr>
-                <td class="top" colspan="3">
-                  <h2 tal:attributes="title string:id: ${model/id}">
-                    <img tal:replace="structure icon" />
-                    <span i18n:translate=""> settings and properties for &#xab;<tal:block 
-                      content="title"
-                      i18n:name="title" />&#xbb;</span>
-                  </h2>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="top-controls">
-                <td colspan="3">
-                  <h3>
-                    <span i18n:translate="">content renderer</span>
-                  </h3>
-                </td>
-              </tr>
-              <tr>
-                <th class="align-right"
-                  width="12%"
-                  i18n:translate="">
-                  element
-                </th>
-                <th i18n:translate="">
-                  content
-                </th>
-                <th width="25%"
-                  i18n:translate="">
-                  note
-                </th>
-              </tr>
-              <tr>
-                <td class="align-right">
-                  <tal:block i18n:translate="">
-                    renderer
-                  </tal:block>
-                </td>
-                <td>
-                  <select name="renderer_name_select">
-                    <tal:block 
-                      define="selected_renderer_name python: editable.get_renderer_name()" 
-                      repeat="renderer_name renderers">
-                      <option
-                        tal:content="renderer_name" 
-                        tal:attributes="
-                          value python:renderer_name;
-                          selected python: selected_renderer_name == renderer_name and 'selected' or None;">
-                      </option>
+    <table class="columns columns3"
+      tal:define="icon python:view.render_icon(model)">
+      <tbody>
+        <tr>
+          <tal:block replace="nothing">_____________________ sidebar _____________________</tal:block>
+          <td class="left" rowspan="99">
+            <metal:block use-macro="view/macro_vein_navigation/macros/vein">
+              <metal:fill-slot fill-slot="sidebar">
+                <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_settings', vein)" />
+              </metal:fill-slot>
+            </metal:block>
+          </td>
+          <tal:block replace="nothing">_____________________ main _____________________</tal:block>
+          <td class="main">
+            <form action="tab_settings_save_renderer" method="POST">
+            <table class="listing"
+              tal:define="
+                editable model/get_editable;
+                rendererservice context/service_renderer_registry;
+                renderers python: rendererservice.getFormRenderersList(type);"
+              tal:condition="
+                python: editable"
+              >
+              <thead>
+                <tr>
+                  <td class="top" colspan="3">
+                    <h2 tal:attributes="title string:id: ${model/id}">
+                      <img tal:replace="structure icon" />
+                      <span i18n:translate=""> settings and properties for &#xab;<tal:block 
+                        content="title"
+                        i18n:name="title" />&#xbb;</span>
+                    </h2>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="top-controls">
+                  <td colspan="3">
+                    <h3>
+                      <span i18n:translate="">content renderer</span>
+                    </h3>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="align-right"
+                    width="12%"
+                    i18n:translate="">
+                    element
+                  </th>
+                  <th i18n:translate="">
+                    content
+                  </th>
+                  <th width="25%"
+                    i18n:translate="">
+                    note
+                  </th>
+                </tr>
+                <tr>
+                  <td class="align-right">
+                    <tal:block i18n:translate="">
+                      renderer
                     </tal:block>
-                  </select>
-                </td>
-                <td>
-                  <tal:block i18n:translate="">
-                    Select a renderer that will be used to render 
-                    this object.
-                  </tal:block>
-                </td>
-              </tr>
-              <tr class="controls">
-                <td class="align-right" colspan="3">
-                  <input class="button" 
-                    type="submit"
-                    name="save_metadata:method"
-                    value="save"
-                    title="access key: alt-s"
-                    accesskey="s"
-                    i18n:attributes="value;title;accesskey save_accesskey"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td>
+                    <select name="renderer_name_select">
+                      <tal:block 
+                        define="selected_renderer_name python: editable.get_renderer_name()" 
+                        repeat="renderer_name renderers">
+                        <option
+                          tal:content="renderer_name" 
+                          tal:attributes="
+                            value python:renderer_name;
+                            selected python: selected_renderer_name == renderer_name and 'selected' or None;">
+                        </option>
+                      </tal:block>
+                    </select>
+                  </td>
+                  <td>
+                    <tal:block i18n:translate="">
+                      Select a renderer that will be used to render 
+                      this object.
+                    </tal:block>
+                  </td>
+                </tr>
+                <tr class="controls">
+                  <td class="align-right" colspan="3">
+                    <input class="button" 
+                      type="submit"
+                      value="save"
+                      title="access key: alt-s"
+                      accesskey="s"
+                      i18n:attributes="value;title;accesskey save_accesskey"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </form>
         </td>            
         <td class="right">
         </td>
       </tr>
 
-      <!--layout metadata section-->
+      <tal:block replace="nothing">layout settings</tal:block>
       <tr>
         <td class="main">
           <tal:block 
             define="category python: 'layout';"
             condition="model/implements_versioning">
+            <tal:block replace="nothing">edit editable version metadata</tal:block>
             <tal:block 
               define="content model/get_editable | nothing;"
-              condition="model/get_unapproved_version"
-              >
+              condition="model/get_unapproved_version">
               <!-- editable version metadata table, thus editable -->
               <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
@@ -187,6 +188,7 @@
               </metal:block>
             </tal:block>
             
+            <tal:block replace="nothing">view previewable version metadata</tal:block>
             <tal:block 
               define="content model/get_previewable | nothing;"
               condition="model/get_approved_version">
@@ -197,6 +199,7 @@
               </metal:block>
             </tal:block>
             
+            <tal:block replace="nothing">view public version metadata</tal:block>
             <tal:block 
               define="
                 content model/get_viewable | nothing;
@@ -210,6 +213,7 @@
             </tal:block>
           </tal:block>
           
+          <tal:block replace="nothing">edit single version metadata</tal:block>
           <tal:block 
             define="category python: 'layout';"
             condition="not: model/implements_versioning">
@@ -225,7 +229,6 @@
         <td class="right">
         </td>
       </tr>
-      <!--end of layout metadata section-->
       
     </tbody>
   </table>

@@ -25,6 +25,7 @@
       form_errors options/form_errors | nothing;"
     tal:condition="python: content and setnames"
     >
+    <input type="hidden" name="returntotab" tal:attributes="value template/id"/>    
     <table class="listing"
       tal:condition="binding">
       <thead>
@@ -163,8 +164,7 @@
             </th>
           </tr>
           <tr class="controls">
-            <td class="align-right"
-              colspan="4">
+            <td class="align-right" colspan="4">
               <input class="button" 
                 type="submit"
                 name="save_metadata:method"

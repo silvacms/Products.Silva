@@ -9,9 +9,6 @@ editable = model.get_editable()
 binding = ms.getMetadata(editable)
 all_errors = binding.setValuesFromRequest(request)
 
-if request.form.has_key('renderer_name_select'):
-    model.set_renderer_name(request.form['renderer_name_select'])
-
 if all_errors:
     # There were errors...
     type = 'error'
@@ -24,5 +21,7 @@ else:
     msg = _('Metadata saved.')
     model.sec_update_last_author_info()
 
-return view.tab_metadata(
+templateid = request.form.get('returntotab', 'tab_metadata')
+method = getattr(view, templateid)
+return method(
     form_errors=all_errors, message_type=type, message=msg)
