@@ -122,8 +122,6 @@ class GhostContentHandler(BaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'ghost'):
-            if self._data.has_key('title'):
-                self._result.setTitle(self.getData('title'))
             for key in self._metadata.keys():
                 self._result.addMetadata(key, self.getMetadata(key))
 
@@ -173,10 +171,6 @@ class ExpirationDateTimeHandler(BaseHandler):
     def characters(self, chrs):
         self._parent_handler.setData('expiration_datetime', chrs)
 
-class TitleHandler(BaseHandler):
-    def characters(self, chrs):
-        self._parent_handler.setData('title', chrs)
-
 class URLHandler(BaseHandler):
     def characters(self, chrs):
         self._parent_handler.setData('url', chrs)
@@ -192,7 +186,6 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             (NS_URI, 'silva'): SilvaHandler,
             (NS_URI, 'folder'): FolderHandler,
             (NS_URI, 'ghost'): GhostHandler,
-            (NS_URI, 'title'): TitleHandler,
             (NS_URI, 'version'): VersionHandler,
             (NS_URI, 'link'): LinkHandler,
             (NS_URI, 'set'): SetHandler,
@@ -204,10 +197,16 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         parser.setContentHandler(handler)
         parser.parse(source_file)
         source_file.close()
-        print dir(importfolder.testfolder.link.get_editable())
-        metadata_service = getToolByName(importfolder.testfolder.link.get_editable(), 'portal_metadata')
-        binding = metadata_service.getMetadata(importfolder.testfolder.link.get_editable())
-        print binding.collection['silva-content'], dir(binding.collection['silva-content'])
+        linkversion = importfolder.testfolder.link.get_editable()
+        self.assertEquals(
+            linkversion.get_title(),
+            'linktitle'
+            )
+        metadata_service = getToolByName(linkversion, 'portal_metadata')
+        binding = metadata_service.getMetadata(linkversion)
+        self.assertEquals(
+            binding._getData('silva-extra').data['creator'],
+            'test_user_1_')
         
 if __name__ == '__main__':
     framework()
