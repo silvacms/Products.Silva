@@ -1,7 +1,7 @@
 <html>
   <head>
-    <link rel="stylesheet" href="globals/basic.css"
-      tal:attributes="href here/globals/basic.css/absolute_url | nothing" />
+    <link rel="stylesheet" href="globals/base.css"
+      tal:attributes="href here/globals/base.css/absolute_url | nothing" />
     <title>Message from server</title>
   </head>
   <body>
@@ -34,7 +34,7 @@
           As a visitor, you can view certain items that anonymous users are not allowed to see.<br /><br />
       </div>
       <h3>Visitor options</h3>
-      <span class="subhead"><a tal:attributes="href string:public/request_roles?last_url=${here/absolute_url}">Request a role which allows access to this location</a>
+      <span class="subhead"><a tal:attributes="href string:${here/REQUEST/model/absolute_url}/public/request_roles?last_url=${here/absolute_url}">Request a role which allows access to this location</a>
       <br /></span>
       Note that you must first have visitor rights to apply for roles.
       <br /><br />
