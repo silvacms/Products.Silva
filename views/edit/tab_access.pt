@@ -449,7 +449,6 @@
     <td valign="top">
         <p>
         Minimal role for viewing this object (and all children):
-        <span tal:content="minimal_role" style="color:red"></span>
         <select name="role" tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', nothing)">
           <option value="Anonymous" tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">Anonymous</option>
           <option value="Viewer" tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">Viewer</option>
