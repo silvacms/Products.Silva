@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Wed Dec  8 18:26:36 2004\n"
-"PO-Revision-Date: 2004-12-15 10:25+0100\n"
+"PO-Revision-Date: 2004-12-15 14:33+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -212,16 +212,16 @@ msgstr "Keine nicht genehmigte Version verfügbar"
 #: /Versioning.py:324
 #: /Versioning.py:354
 msgid "There is no unapproved version to request approval for."
-msgstr ""
+msgstr "Keine Version für Bewilligungsanfrage vorhanden."
 
 #: /Versioning.py:279
 msgid "The version is already requested for approval."
-msgstr ""
+msgstr "Für diese Version liegt bereits eine Bewilligingsanfrage vor."
 
 #: /Versioning.py:328
 #: /Versioning.py:358
 msgid "The version is not requested for approval."
-msgstr ""
+msgstr "Für diese Version liegt keine Bewilligungsanfrage vor."
 
 #: /Versioning.py:378
 #: /Versioning.py:391
@@ -248,23 +248,23 @@ msgstr "Nächste Version nicht vorhanden."
 
 #: /Versioning.py:498
 msgid "There is no version to add messages for."
-msgstr ""
+msgstr "Keine Version zu der Nachrichten hinzugefügt werden können vorhanden."
 
 #: /Versioning.py:59
 msgid "There is an approved version already; unapprove it. (${id})"
-msgstr ""
+msgstr "Es existiert bereits eine bewilligte Version; Bewilligung entziehen. (${id})"
 
 #: /Versioning.py:63
 msgid "There already is an unapproved version (${id})."
-msgstr ""
+msgstr "Es liegt bereits eine nicht bewilligte Version for (${id})."
 
 #: /Versioning.py:69
 msgid "The public version has that id already (${id})."
-msgstr ""
+msgstr "Die öffentliche Version hat bereits diese Id (${id})."
 
 #: /Versioning.py:75
 msgid "A previous version has that id already (${id})."
-msgstr ""
+msgstr "Eine vorhergehende Version hat breits diese Id (${id})."
 
 #: /Versioning.py:94
 #: /views/edit/VersionedContent/tab_edit_publish.py:12
@@ -273,7 +273,7 @@ msgstr ""
 
 #: /Versioning.py:97
 msgid "There already is an approved version."
-msgstr ""
+msgstr "Bewilligte Version breits vorhanden."
 
 #: /adapters/version_management.py:113
 msgid "Can not delete all versions"
@@ -295,7 +295,7 @@ msgstr ""
 
 #: /doc/silva-content.xml:31
 msgid "Title of content."
-msgstr ""
+msgstr "Titel des Inhalts."
 
 #: /doc/silva-content.xml:89
 msgid "a.k.a. &#8216;navigation title&#8217;."
@@ -307,7 +307,7 @@ msgstr "Kurztitel"
 
 #: /doc/silva-extra.xml:155
 msgid "Description of content in this area."
-msgstr ""
+msgstr "Beschreibung des Inhaltes."
 
 #: /doc/silva-extra.xml:214
 msgid "comment"
@@ -315,7 +315,7 @@ msgstr "Kommentar"
 
 #: /doc/silva-extra.xml:215
 msgid "Internal comments."
-msgstr ""
+msgstr "Interner Kommentar."
 
 #: /doc/silva-extra.xml:276
 msgid "creation time"
@@ -410,7 +410,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:147
 msgid "Silva forms editor"
-msgstr ""
+msgstr "Silva Formulareditor"
 
 #: /globals/accesskeys.pt:149
 msgid "s &nbsp; Save<br /> e &nbsp; Save and exit<br /> i &nbsp; Save and insert<br /> tab Use your tab key to edit without using the mouse. Shift-tab goes backwards."
@@ -512,11 +512,11 @@ msgstr ""
 
 #: /globals/accesskeys.pt:223
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #: /globals/accesskeys.pt:224
 msgid "Feedback"
-msgstr ""
+msgstr "Rückmeldung"
 
 #: /globals/accesskeys.pt:224
 msgid "<br /> ${contact}<br /> ${feedback} is welcome."
@@ -544,7 +544,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:47
 msgid "see below"
-msgstr ""
+msgstr "siehe unten"
 
 #: /globals/accesskeys.pt:47
 msgid "The most useful access keys are for screen navigation, <a title=\"x\" href=\"#nav\">x</a>."
@@ -600,7 +600,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:9
 msgid "Silva help"
-msgstr ""
+msgstr "Silva Hilfe"
 
 #: /globals/accesskeys.pt:90
 msgid "${listing_header}<br /> n &nbsp; New<br /> s &nbsp; Select list for a new object<br /> i &nbsp; Import"
@@ -622,7 +622,7 @@ msgstr ""
 #: /globals/copyright.pt:17
 #: /globals/reference.pt:21
 msgid "access key: alt-b"
-msgstr ""
+msgstr "Kurzwahl: alt-b"
 
 #: /globals/copyright.pt:17
 #: /globals/reference.pt:21
@@ -640,7 +640,7 @@ msgstr ""
 #: /globals/copyright.pt:28
 #: /globals/reference.pt:32
 msgid "Silva info: alt-s"
-msgstr ""
+msgstr "Silvainfo: alt-s"
 
 # Default: "s"
 #: /globals/copyright.pt:28
@@ -728,23 +728,23 @@ msgstr "Behälter"
 
 #: /roleinfo.py:16
 msgid "zope roles"
-msgstr ""
+msgstr "Zoperollen"
 
 #: /roleinfo.py:17
 msgid "silva roles"
-msgstr ""
+msgstr "Silvarollen"
 
 #: /roleinfo.py:18
 msgid "public silva roles"
-msgstr ""
+msgstr "öffentliche Silvarollen"
 
 #: /roleinfo.py:19
 msgid "Anonymous"
-msgstr ""
+msgstr "Anonym"
 
 #: /roleinfo.py:20
 msgid "Authenticated"
-msgstr ""
+msgstr "Beglaubigt"
 
 #: /roleinfo.py:21
 msgid "Manager"
@@ -752,31 +752,31 @@ msgstr ""
 
 #: /roleinfo.py:22
 msgid "Viewer"
-msgstr ""
+msgstr "Betrachter"
 
 #: /roleinfo.py:23
 msgid "Viewer +"
-msgstr ""
+msgstr "Betrachter +"
 
 #: /roleinfo.py:24
 msgid "Viewer ++"
-msgstr ""
+msgstr "Betrachter ++"
 
 #: /roleinfo.py:25
 msgid "Reader"
-msgstr ""
+msgstr "Leser"
 
 #: /roleinfo.py:26
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: /roleinfo.py:27
 msgid "Editor"
-msgstr ""
+msgstr "Redakteur"
 
 #: /roleinfo.py:28
 msgid "ChiefEditor"
-msgstr ""
+msgstr "Chefredakteur"
 
 #: /subscriptionservice.py:106
 msgid "content is not subscribable"
@@ -784,7 +784,7 @@ msgstr ""
 
 #: /subscriptionservice.py:109
 msgid "emailaddress not valid"
-msgstr ""
+msgstr "Emailadresse nicht gültig"
 
 #: /views/add/File/add_submit.py:68
 #: /views/add/Groups/add_submit.py:60
@@ -796,7 +796,7 @@ msgstr "Hinzugefügt ${meta_type} ${id}."
 #: /views/add/File/form.form:66
 #: /views/edit/Asset/upload_form.form:25
 msgid "file"
-msgstr ""
+msgstr "Datei"
 
 #: /views/add/File/form.form:68
 #: /views/add/Image/form.form:67
@@ -805,7 +805,7 @@ msgstr ""
 
 #: /views/add/Folder/form.form:62
 msgid "Choose an item to be created within the folder."
-msgstr ""
+msgstr "Einen Eintrag "
 
 #: /views/add/Folder/form.form:70
 msgid "first item"
@@ -3676,7 +3676,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:24
 msgid "Publication time of public version"
-msgstr ""
+msgstr "Veröffentlichungszeitpunkt der öffentlichen Version"
 
 # Default: "u"
 #: /views/edit/VersionedContent/tab_status_macros.pt:254
@@ -3691,7 +3691,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:27
 msgid "Publication and expiration time of public version"
-msgstr ""
+msgstr "Veröffentlichungs- und Verfallszeitpunkt der öffentlichen Version"
 
 # Default: "u"
 #: /views/edit/VersionedContent/tab_status_macros.pt:273
@@ -3716,7 +3716,7 @@ msgstr "Geschlossene Version publizieren"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:366
 msgid "Empty indicates no expiration."
-msgstr ""
+msgstr "Leer zeigt keinen Verfallszeitpunkt an."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:394
 msgid "access key: alt-o"
@@ -3724,7 +3724,7 @@ msgstr "Kurzwahl: alt-o"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:419
 msgid "request"
-msgstr ""
+msgstr "Anfrage"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:428
 msgid "add message on"
@@ -3732,23 +3732,23 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:431
 msgid "rejection"
-msgstr ""
+msgstr "Ablehnung"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:434
 msgid "withdrawal"
-msgstr ""
+msgstr "Rücknahme"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:44
 msgid "messages"
-msgstr ""
+msgstr "Nachrichten"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:452
 msgid "The message may be viewed by local users."
-msgstr ""
+msgstr "Die nachricht kann von lokalen Benutzern eingesehen werden."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:463
 msgid " Reject approval request "
-msgstr ""
+msgstr "Bewilligungsanfrage ablehnen"
 
 # Default: "r"
 #: /views/edit/VersionedContent/tab_status_macros.pt:463
@@ -3757,7 +3757,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:472
 msgid " Withdraw approval request "
-msgstr ""
+msgstr "Bewilligungsanfrage zurücknehmen"
 
 # Default: "r"
 #: /views/edit/VersionedContent/tab_status_macros.pt:472
@@ -3766,11 +3766,11 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:506
 msgid "If further editing is required, first revoke the approval."
-msgstr ""
+msgstr "Falls weitere Bearbeitung nötig ist, zuerst die Bewilligung zurücknehmen."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:538
 msgid "revert to previous version"
-msgstr ""
+msgstr "Zur vorherigen Version zurückkehren"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:544
 msgid "The current editable version can be replaced with the previous (published) version. This can not be undone afterwards and will discard all changes made to the current version."
@@ -3778,7 +3778,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:552
 msgid "revert to previous"
-msgstr ""
+msgstr "Zur vorherigen Version zurückkehren"
 
 # Default: "p"
 #: /views/edit/VersionedContent/tab_status_macros.pt:552
@@ -3791,7 +3791,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:56
 msgid "${author_id} sent a message on ${some_date} ${with_comments}"
-msgstr ""
+msgstr "${author_id} sandt eine Nachricht am ${some_date} ${with_comments}"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:576
 msgid "manual close"
@@ -3799,7 +3799,7 @@ msgstr "Manuelles schliessen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:583
 msgid "If necessary, the published version of this content can be manually closed (taken offline). It will also be removed from the public index."
-msgstr ""
+msgstr "Falls nötig, kann die publizierte Version manuell geschlossen (offline genommen) werden. Sie wird dann auch aus dem öffentlichen Index entfernt."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:592
 msgid "close published version"
@@ -3816,7 +3816,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:85
 msgid "A previous request for approval has been rejected / withdrawn by ${requester} on ${some_date}. ${comment} The last message regarding this issue is:"
-msgstr ""
+msgstr "Eine vorherige Anfrage auf Bewilligung wurde abgelehnt bzw. zurückgenommen von ${requester} am ${some_date}. ${comment} Die letzte Nachricht zu diesem Thema ist:"
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
 msgid "There is no unapproved version."
@@ -3950,11 +3950,11 @@ msgstr "Autor"
 
 #: /views/edit/asset_lookup.pt:192
 msgid "view this asset"
-msgstr ""
+msgstr "Anlage ansehen"
 
 #: /views/edit/asset_lookup.pt:219
 msgid "No ${asset} in this folder."
-msgstr ""
+msgstr "Kein ${asset} in diesem Ordner."
 
 #: /views/edit/asset_lookup.pt:234
 #: /views/edit/hyperlink_lookup.pt:359
@@ -3981,7 +3981,7 @@ msgstr "Verweis auf diese Anlage setzen: alt-p"
 
 #: /views/edit/asset_lookup.pt:84
 msgid "add a new item: alt-n"
-msgstr ""
+msgstr "Neuen Eintrag hinzufügen: alt-n"
 
 # Default: "n"
 #: /views/edit/asset_lookup.pt:84
@@ -4002,13 +4002,13 @@ msgstr "Kein Inhalt vorhanden."
 #: /views/edit/document_lookup.pt:212
 #: /views/edit/Container/GhostFolder/tab_edit.pt:293
 msgid "content is approved or published"
-msgstr ""
+msgstr "Inhalt ist bewilligt oder veröffentlicht"
 
 #: /views/edit/document_lookup.pt:212
 #: /views/edit/hyperlink_lookup.pt:182
 #: /views/edit/Container/tab_edit.pt:247
 msgid "content approved or published"
-msgstr ""
+msgstr "Inhalt ist bewilligt oder veröffentlicht"
 
 #: /views/edit/document_lookup.pt:239
 #: /views/edit/document_lookup.pt:250
@@ -4168,11 +4168,11 @@ msgstr "Keine Suchergebnisse."
 
 #: /views/edit/lookup_ui.pt:218
 msgid "return to the access screen with this clipboard: alt-u"
-msgstr ""
+msgstr "Mit dieser Zwischenablage zum Zugriffsschirm zurückkehren: alt-u"
 
 #: /views/edit/lookup_ui.pt:218
 msgid "<u>u</u>se clipboard..."
-msgstr ""
+msgstr "Zwischenablage verwenden..."
 
 # Default: "u"
 #: /views/edit/lookup_ui.pt:218
@@ -4198,11 +4198,11 @@ msgstr "zurück zum vorherigen Bildschirm"
 
 #: /views/edit/lookup_ui.pt:51
 msgid "bac<u>k</u>..."
-msgstr ""
+msgstr "Zurück..."
 
 #: /views/edit/lookup_ui.pt:78
 msgid "user lookup at &#xab;${title_or_id}&#xbb;"
-msgstr ""
+msgstr "Benutzer nachschlagen in &#xab;${title_or_id}&#xbb;"
 
 #: /views/edit/lookup_ui.pt:85
 msgid "user search"
@@ -4272,7 +4272,7 @@ msgstr ""
 
 #: /views/edit/macro_metadata.pt:386
 msgid "first 'un-approve' this item in order to edit: alt-r"
-msgstr ""
+msgstr "Zum Bearbeiten zuerst die Bewiiligung für diesen Eintrag zurücknehmen: alt-r"
 
 #: /views/edit/macro_metadata.pt:386
 #: /views/edit/VersionedContent/macro_tab_edit.pt:117
@@ -4715,7 +4715,7 @@ msgstr "für die öffentliche Version von &#xab;${title}&#xbb;"
 #: /views/edit/tab_metadata.pt:44
 #: /views/edit/Container/tab_metadata.pt:50
 msgid "properties of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Eigenschaften von &#xab;${title}&#xbb;"
 
 # Default: "m"
 #: /views/edit/tab_metadata.pt:56
@@ -4728,13 +4728,13 @@ msgstr ""
 #: /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions: alt-m"
-msgstr ""
+msgstr "Abonnements verwalten: alt-m"
 
 #: /views/edit/tab_metadata.pt:56
 #: /views/edit/Container/tab_metadata.pt:70
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions..."
-msgstr ""
+msgstr "Abonnements verwalten..."
 
 #: /views/edit/tab_metadata.pt:88
 msgid "metadata ${for_approved_version_of_title}"
@@ -4784,23 +4784,23 @@ msgstr "Speichern"
 
 #: /views/edit/tab_subscriptions.pt:116
 msgid "This object is not subscribable content."
-msgstr ""
+msgstr "Dieses Objekt ist nicht abonierbar."
 
 #: /views/edit/tab_subscriptions.pt:56
 msgid "Subscriptions edit for ${title}"
-msgstr ""
+msgstr "Abonnements bearbeiten für ${title}"
 
 #: /views/edit/tab_subscriptions_form.form:33
 msgid "Subscribable"
-msgstr ""
+msgstr "Abonierbar"
 
 #: /views/edit/tab_subscriptions_form.form:51
 msgid "List of email addresses (one per line) currently subscribed to this content."
-msgstr ""
+msgstr "Liste der Emailadressen (eine pro Zeile), die diesen Inhalt zur Zeit aboniert haben."
 
 #: /views/edit/tab_subscriptions_form.form:61
 msgid "Subscriptions"
-msgstr ""
+msgstr "Abonnements"
 
 #: /views/get_tab_info.py:25
 msgid "up a level: alt-${key}"
@@ -4841,11 +4841,11 @@ msgstr "Logout"
 
 #: /views/macro_batch.pt:29
 msgid "&laquo; Previous ${n} items"
-msgstr ""
+msgstr "&laquo; Vorherige ${n} Einträge"
 
 #: /views/macro_batch.pt:40
 msgid "Next ${n} items &raquo;"
-msgstr ""
+msgstr "Nächsten ${n} Einträge &raquo;"
 
 #: /views/macro_index.pt:101
 msgid "Help with access keys"
@@ -4920,7 +4920,7 @@ msgstr "Silva verlassen und veröffentlichte Seite sehen: alt-:"
 
 #: /views/macro_index.pt:236
 msgid "view public version"
-msgstr ""
+msgstr "öffentliche Version ansehen"
 
 # Default: ":"
 #: /views/macro_index.pt:236
@@ -4955,7 +4955,7 @@ msgstr "Logout ${role} ${userid}"
 
 #: /views/macro_index.pt:287
 msgid "Request an additional role in this location: alt-,"
-msgstr ""
+msgstr "Eine zusätzliche Rolle beantragen: alt-,"
 
 #: /views/macro_index.pt:287
 msgid "request access"
@@ -5029,7 +5029,7 @@ msgstr ""
 #: /views/public/cancellation_request.py:10
 #: /views/public/subscription_request.py:10
 msgid "Path does not lead to a content object"
-msgstr ""
+msgstr "Der Pfad führt nicht zu einem Inhaltsobjekt"
 
 #: /views/public/cancellation_request.py:23
 msgid "Confirmation request for cancellation has been emailed"
@@ -5067,23 +5067,23 @@ msgstr ""
 #: /views/public/request_roles.pt:48
 #: /views/edit/Member/SimpleMember/memberform.form:28
 msgid "full name"
-msgstr ""
+msgstr "Vollständiger Name"
 
 #: /views/public/request_roles.pt:51
 msgid "e-mail address"
-msgstr ""
+msgstr "Emailadresse"
 
 #: /views/public/request_roles.pt:58
 msgid "Choose role(s) to request"
-msgstr ""
+msgstr "zu beantragende Rollen auswählen"
 
 #: /views/public/request_roles.pt:71
 msgid " Send request "
-msgstr ""
+msgstr "Anfrage senden"
 
 #: /views/public/request_roles.pt:71
 msgid "Send request for role: alt-s"
-msgstr ""
+msgstr "Rollenanfrage senden: alt-s"
 
 # Default: "s"
 #: /views/public/request_roles.pt:71
@@ -5112,7 +5112,7 @@ msgstr "Keine Rollen ausgewählt."
 
 #: /views/public/search.pt:18
 msgid "Search"
-msgstr ""
+msgstr "Suche"
 
 #: /views/public/search.pt:43
 msgid "Search in ${meta_type} &#xAB;${title_or_id}&#xbb;"
@@ -5128,11 +5128,11 @@ msgstr ""
 
 #: /views/public/search.pt:65
 msgid "Content"
-msgstr ""
+msgstr "Inhalt"
 
 #: /views/public/search.pt:68
 msgid "Note"
-msgstr ""
+msgstr "Anmerkung"
 
 # Default: "f"
 #: /views/public/search.pt:98
@@ -5141,15 +5141,15 @@ msgstr ""
 
 #: /views/public/search.pt:98
 msgid "Find"
-msgstr ""
+msgstr "Suche"
 
 #: /views/public/search.pt:98
 msgid "access key: alt-f"
-msgstr ""
+msgstr "Kurzwahl: alt-f"
 
 #: /views/public/search_form.form:100
 msgid "content type"
-msgstr ""
+msgstr "Inhaltsart"
 
 #: /views/public/search_form.form:104
 msgid ""
@@ -5185,21 +5185,21 @@ msgstr ""
 
 #: /views/public/search_results.pt:18
 msgid "Search results"
-msgstr ""
+msgstr "Suchergebnisse"
 
 #: /views/public/search_results.pt:41
 #: /views/public/search_results.pt:88
 msgid "&lt;&lt; Previous"
-msgstr ""
+msgstr "&lt;&lt; Vorherige"
 
 #: /views/public/search_results.pt:50
 msgid "Showing results ${batch_start} to ${batch_end}."
-msgstr ""
+msgstr "Ergebnisse von ${batch_start} bis ${batch_end}."
 
 #: /views/public/search_results.pt:54
 #: /views/public/search_results.pt:97
 msgid "Next &gt;&gt;"
-msgstr ""
+msgstr "Nächste &gt;&gt;"
 
 #: /views/public/subscription_request.py:23
 msgid "Confirmation request for subscription has been emailed"
@@ -5207,11 +5207,11 @@ msgstr ""
 
 #: /views/public/subscriptions.pt:118
 msgid "unsubscribe"
-msgstr ""
+msgstr "Abonnement beenden"
 
 #: /views/public/subscriptions.pt:40
 msgid "Subscribe to &#xab;${title_or_id}&#xbb;"
-msgstr ""
+msgstr "&#xab;${title_or_id}&#xbb; abonnieren"
 
 #: /views/public/subscriptions.pt:42
 msgid "Fill in your email address if you want to receive email notifications whenever a new version of this page or its subsections becomes available."
