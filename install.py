@@ -204,6 +204,7 @@ def configureSecurity(root):
         'Add Silva Ghost Versions',
         'Add Silva Ghosts',
         'Add Silva Images',
+        'Add Silva Files',
         'Add Silva SQL Data Sources',
         ]
     
