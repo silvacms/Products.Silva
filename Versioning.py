@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -99,6 +99,13 @@ class Versioning:
             if not self.can_approve():
                 raise VersioningError,\
                       'Cannot approve version; not allowed.'
+        # turn any publication dates in the future into now
+        # this is to avoid odd caching behavior
+        if not self._unapproved_version[1].isFuture():
+            self._unapproved_version = (self._unapproved_version[0],
+                                        DateTime(),
+                                        self._unapproved_version[2])
+    
         self._approved_version = self._unapproved_version
         self._unapproved_version = empty_version
         if self._request_for_approval_info != empty_request_for_approval_info:
@@ -106,18 +113,6 @@ class Versioning:
             self._request_for_approval_info = self._request_for_approval_info
         self._reindex_version(self._approved_version)
 
-        # fix publication time settings; publication times in the past
-        # are moved to the present to avoid strance cache behaviour.
-        # XXX this is actually needed by VersionedContent
-        publication_datetime = self._approved_version[1]
-        publish_now = 0
-        if publication_datetime is not None:
-            publish_now = not (publication_datetime.isFuture())
-        if publish_now:
-            self._approved_version = \
-                                   (self._approved_version[0],
-                                    DateTime(),
-                                    self._approved_version[2])
         # send messages
         info = self._get_editable_rfa_info()
         if info.requester is None:
