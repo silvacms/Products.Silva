@@ -26,7 +26,7 @@
             colspan="99">
             <h2>
               <img tal:replace="structure python:view.render_icon(model)" />
-              metadata
+              metadata for &#xab;<span tal:replace="structure string:${model/get_title_html}">title</span>&#xbb;
             </h2>
           </td>
         </tr>

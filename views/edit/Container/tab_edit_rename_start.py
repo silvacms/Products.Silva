@@ -8,6 +8,6 @@
 ##title=
 ##
 if not context.REQUEST.has_key('ids') or not context.REQUEST['ids']:
-    return context.tab_edit(message_type='error', message='No items selected to rename!')
+    return context.tab_edit(message_type='error', message='Nothing was selected, so nothing can be renamed.')
 else:
     return context.tab_edit_rename()

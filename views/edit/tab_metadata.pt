@@ -7,19 +7,32 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    global breadcrumb_vein string:Settings;
+    global breadcrumb_vein string:Metadata;
     ">
 
-<!-- tab_metadata for non-Container objects -->
+<!-- tab_metadata for content (non-Container) objects -->
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 
-<div class="focus-box"
-  tal:define="
-    macro python: model.get_editable() and 'edit_table' or 'view_table';
-    ">
-  <metal:block use-macro="here/macro_metadata/macros/?macro" />
-</div>
+  <table class="columns columns2">
+    <tbody>
+      <tr>
+        <td class="left">
+          <span tal:replace="nothing">
+            _____________________ sidebar subtable _____________________
+          </span>
+          <metal:block use-macro="view/macro_parent_screen_navigation/macros/content_sidebar" />
+        </td>
+        <td class="main">
+
+          <tal:block define="macro python: model.get_editable() and 'edit_table' or 'view_table';">
+            <metal:block use-macro="here/macro_metadata/macros/?macro" />
+          </tal:block>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 </metal:block>
 </metal:block>

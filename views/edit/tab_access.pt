@@ -23,7 +23,11 @@
           _____________________ sidebar subtable _____________________
         </tal:block>
         <td class="left" rowspan="99">
-          <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
+          <tal:block condition="model_is_container"
+            replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
+          <tal:block condition="not: model_is_container">
+            <metal:block use-macro="view/macro_parent_screen_navigation/macros/content_sidebar" />
+          </tal:block>
         </td>
         <td class="main">
           <tal:block replace="nothing">

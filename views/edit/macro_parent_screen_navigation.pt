@@ -32,7 +32,6 @@
         </table>
 </metal:block>
 
-<span tal:replace="nothing"> ______________ not in use ______________ </span>
 <metal:block define-macro="content_sidebar">
   <table class="listing"
     tal:define="containing_publication model/../get_publication | publication;">

@@ -10,7 +10,7 @@
     global breadcrumb_vein string:Settings;
     ">
 
-<!-- tab_metadata for Container objects -->
+<!-- settings (aka tab_metadata) for Container objects -->
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 
