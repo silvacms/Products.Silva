@@ -1,12 +1,3 @@
-## Script (Python) "tab_status_change_settings"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
 from Products.Formulator.Errors import ValidationError, FormValidationError
 import DateTime
 
