@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.8 2004/04/09 15:06:10 roman Exp $
+# $Id: Image.py,v 1.50.4.1.6.9 2004/04/09 15:10:28 roman Exp $
 
 # Python
 import re, string 
@@ -260,6 +260,8 @@ class Image(Asset):
         title = self.get_title()
         if hires:
             width, height = self.getDimensions()
+        elif self.cropped:
+            width, height = self.getCroppedSize()
         else:
             width, height = self.getCanonicalWebScale()
         named = []
