@@ -79,7 +79,8 @@ class AccessManager:
         ars = ['Viewer', 'Reader', 'Author', 'Editor']
         userrs = self.sec_get_local_roles_for_userid(self.REQUEST.AUTHENTICATED_USER.getId())
         for role in userrs:
-            ars.remove(role)
+            if role in ars:
+                ars.remove(role)
         return ars
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
