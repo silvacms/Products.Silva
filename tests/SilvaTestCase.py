@@ -102,7 +102,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def _setupRootUser(self):
         '''Creates the root user.'''
         uf = self.root.acl_users
-        uf._doAddUser(_user_name, 'secret', ['Member'], [])
+        uf._doAddUser(_user_name, 'secret', ['ChiefEditor'], [])
 
 
     def _clear(self, call_close_hook=0):
