@@ -976,6 +976,7 @@ div.info p span.orientation {
   display: block;
   text-align: center;
   border: 1px dotted black;
+  margin-top: 0.3em;
 }
 
 div.info p span.Portrait {

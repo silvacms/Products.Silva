@@ -73,13 +73,6 @@
           />
         </tal:condition>
       </p>
-      <p tal:replace="nothing" comment="______ probably don't need this now _______"
-        tal:condition="model/hires_image" 
-        tal:define="orientation model/getOrientation">
-        <span class="subhead">image orientation</span><br />
-        <span tal:content="orientation" 
-          tal:attributes="class string:${orientation} orientation">Square</span>
-      </p>
       <p>
         <span class="subhead">original</span><br />
         <a href="" class="underline"
@@ -90,6 +83,12 @@
           i18n:translate="view_unscaled_image">
           view un<span tal:content="transf">scaled</span> image
         </a>
+      </p>
+      <p tal:condition="model/hires_image" 
+        tal:define="orientation model/getOrientation">
+        <span class="subhead">orientation</span><br />
+        <span tal:content="orientation" 
+          tal:attributes="class string:${orientation} orientation">Square</span>
       </p>
     </tal:block>
     <p tal:condition="not: model/canScale" i18n:translate="note_silva_can_provide_image_scaling">

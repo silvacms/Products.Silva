@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.12 2004/04/14 16:28:24 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.13 2004/04/16 09:00:24 kitblake Exp $
 
 # Python
 import re, string 
@@ -452,11 +452,7 @@ class Image(Asset):
 
     def getOrientation(self):
         """ returns Image orientation (string) """
-
-        if self.cropped:
-            width, height = self.getCroppedSize()
-        else:
-            width, height = self.getDimensions()
+        width, height = self.getDimensions()
         if width == height:
             return "Square"
         elif width > height:
