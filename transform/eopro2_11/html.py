@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.16 $'
+__version__='$Revision: 1.17 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -346,7 +346,7 @@ class a(Element):
 class img(Element):
     def convert(self, context):
         from urlparse import urlparse
-        src = self.attrs['src'].content
+        src = self.attrs['src']
         src = urlparse(src)[2]
         link = self.attrs.get('link')
         if src.endswith('/image'):
