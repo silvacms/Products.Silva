@@ -32,7 +32,7 @@
         </tales>
       </field>
 
-      <field><id>email</id> <type>StringField</type>
+      <field><id>email</id> <type>EmailField</type>
         <values>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
