@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <tal:block condition="python: here.REQUEST.has_key('model')">
-  <html tal:define="dummy python:here.REQUEST.RESPONSE.setHeader('Refresh', '0,%s/edit/show_error?error_type=%s&error_message=%s' % (here.REQUEST.model.absolute_url(), options.get('error_type'), options.get('error_message')))">
+  <html tal:define="dummy python:here.REQUEST.RESPONSE.setHeader('Refresh', '0,%s/edit/show_error?error_type=%s&error_message=%s' % (here.REQUEST.model.absolute_url(), options.get('error_type'), '%s %s' % (options.get('error_value') or '', options.get('message') or '')))">
     <head><title>Redirecting to errorpage, please wait</title></head>
     <body>&nbsp;</body>
   </html>
