@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 import unittest
 
 # 
@@ -304,7 +304,14 @@ class HTML2XML(Base):
         p = node.find('p')
         self.assert_(len(p)==1)
 
+    def test_image_URL_stripping(self):
+        frag="""<img src="http://asd:123/silva/path/image"/>"""
+        node = self.transformer.target_parser.parse(frag)
 
+        img = node.conv()
+        self.assertEquals(len(img),1)
+        img = img[0]
+        self.assertEquals(img.attrs.get('image_path'), '/silva/path')
 
     def test_nested_list_conversion_works_with_titles(self):
         frag="""<ul><li>one</li><li><h5>title of sub list</h5></li>
@@ -612,21 +619,6 @@ class RoundtripWithTidy(unittest.TestCase):
         self.assert_(a.attrs.get('href')=='http://www.heise.de')
         self.assert_(a.content.asBytes()=='linktext')
 
-    def test_image(self):
-        """ check that 'image' works"""
-        silvadoc = '''<silva_document id="test"><title>title</title>
-                        <doc><p type="normal">text</p>
-                             <image image_path="/path/to/image"></image>
-                        </doc>
-                      </silva_document>''' 
-        htmlnode = self._check_doc(silvadoc)
-        body = htmlnode.find('body')[0]
-        p = body.find('p')[0]
-        img = body.find('img')
-        self.assert_(len(img)==1)
-        img = img[0]
-        self.assert_(img.attrs.get('src')=='/path/to/image')
-
     def test_table1(self):
         tabledoc = '''<table columns="3">
                           <row>
@@ -663,6 +655,17 @@ class RoundtripWithTidy(unittest.TestCase):
 
     def test_table_data_grid(self):
         self._check_table(columns="3", type='datagrid', column_info="L:1 L:1 L:1")
+
+    def test_image(self):
+        silvadoc = '''<silva_document id="test"><title>title</title>
+                        <doc><image image_path="path/file"/></doc>
+                      </silva_document>'''
+        htmlnode = self._check_doc(silvadoc)
+        body = htmlnode.find('body')[0]
+        img = body.find('img')
+        self.assertEquals(len(img),1)
+        img = img[0]
+        self.assertEquals(img.attrs.get('src'), 'path/file/image')
 
     def test_preformatted(self):
         """ check that 'pre' (preformatted text) works """

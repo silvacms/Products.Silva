@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 import unittest
 
 # 
@@ -226,6 +226,19 @@ class SilvaXMLObjectParser(unittest.TestCase):
         node= self.parser.parse(self.basicdoc)
         self.assert_(node.compact())
         # should traverse the tree
+
+    def test_method_compact(self):
+        node= self.parser.parse(self.basicdoc)
+        self.assert_(node.compact())
+        # should traverse the tree
+
+    def test_equality_text(self):
+        s = base.Text('hello')
+        self.assert_(s != '')
+        self.assert_(s != 'hell')
+        self.assert_(s != 'hello1')
+        self.assert_(s == s)
+        self.assert_(s == 'hello')
 
     def test_text_nodes_with_control_characters(self):
         ustring = u'''\x22\x27&<>'''

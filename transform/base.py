@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.7 $'
+__version__='$Revision: 1.8 $'
 
 # look ma, i only have these dependencies 
 # and with python2.2 even they would vanish
@@ -301,7 +301,7 @@ class CharacterData(Node):
             return self.content == other
     
     def __ne__(self, other):
-        return self==other
+        return not self==other
 
     def __hash__(self):
         return hash(self.content)
