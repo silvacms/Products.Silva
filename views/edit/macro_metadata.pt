@@ -50,7 +50,7 @@
             <tr class="top-controls">
               <td colspan="4">
                 <h3>
-		<span i18n:translate="metadata_set">Metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
+                <span i18n:translate="metadata_set">Metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
                 </h3>
               </td>
             </tr>
@@ -115,7 +115,7 @@
               colspan="4">
               <h2>
                 <img tal:replace="structure python:view.render_icon(model)" />
-	  metadata <span tal:condition="not: model/implements_container"><span i18n:translate="for">for</span> &#xab;<span tal:replace="string:${title}">title</span>&#xbb;</span>
+          metadata <span tal:condition="not: model/implements_container"><span i18n:translate="for">for</span> &#xab;<span tal:replace="string:${title}">title</span>&#xbb;</span>
               </h2>
             </td>
           </tr>
@@ -134,7 +134,7 @@
               <tr class="top-controls">
                 <td colspan="4">
                   <h3>
-	      <span i18n:translate="metadata_set">Metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
+              <span i18n:translate="metadata_set">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
                   </h3>
                 </td>
               </tr>
@@ -230,7 +230,7 @@
                   value=" Save metadata "
                   title="access key: alt-s"
                   accesskey="s"
-		  i18n:attributes="value title"
+                  i18n:attributes="value title"
                 />
               </td>
             </tr>
