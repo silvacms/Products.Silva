@@ -24,13 +24,13 @@
 <td align="left" width="30%">
 <table width="100%" cellspacing="0" cellpadding="3" border="0">
 <tr class="topcontrols">
-  <td align="left" colspan="2">
+  <th align="left" colspan="2">
     <img src="pixel.gif" width="1px" height="18px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />        
     <input type="submit" class="button" name="lookup:method" value="Users lookup..." 
       title="Go to: Lookup and select users to add to groups..." />
     <input type="hidden" name="referer" value="tab_access_groups"/>
-  </td>
+  </th>
 </tr>
 <tal:block define="selected_users python:here.lookup_get_selection().values()">
 <tal:block 
@@ -53,7 +53,7 @@
 <tr class="focus"
   tal:condition="not:selected_users">
   <td colspan="2">
-    <i>(no users selected)</i>&nbsp;
+    <i>No users selected</i>&nbsp;
   </td>
 </tr>
 </tal:block>
@@ -76,14 +76,14 @@
 <td align="left" width="50%">
 <table width="100%" cellspacing="0" cellpadding="3" border="0">
 <tr class="topcontrols">
-  <td align="right" colspan="3">
+  <th align="right" colspan="3">
     <img src="pixel.gif" width="1px" height="18px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     <input type="text" name="group" value="" size="20"
       title="Define a new group." />&nbsp;
     <input type="submit" class="button" name="add_locally_managed_group:method" value="Add new group"
       title="Define and add a new group." />
-  </td>
+  </th>
 </tr>
 <tal:block define="groups view/list_locally_managed_groups">
 <tal:block repeat="group groups">
@@ -121,7 +121,7 @@
 </tal:block>
 <tr class="controls-cycle">  
   <td colspan="3" align="right">
-    <i tal:condition="not:groups">(no groups to manage defined)</i>&nbsp;
+    <i tal:condition="not:groups">No groups to manage defined</i>&nbsp;
     <input type="submit" class="warningbutton" name="remove_users_from_groups:method" value="Remove users"
       title="Remove selected user(s) from their group(s)."
       tal:condition="groups" />
@@ -176,14 +176,14 @@
 <td align="left" width="50%">
 <table width="100%" cellspacing="0" cellpadding="3" border="0">
 <tr class="topcontrols">
-  <td align="right" colspan="3">
+  <th align="right" colspan="3">
     <img src="pixel.gif" width="1px" height="18px"
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     <input type="text" name="virtual_group" value="" size="20"
       title="Define a new virtual group." />&nbsp;
     <input type="submit" class="button" name="add_locally_managed_virtual_group:method" value="Add new group"
       title="Define and add a new virtual group." />
-  </td>
+  </th>
 </tr>
 <tal:block define="virtual_groups view/list_locally_managed_virtual_groups">
 <tal:block repeat="virtual_group virtual_groups">
@@ -219,9 +219,9 @@
 </tr>
 </tal:block>
 </tal:block>
-<tr class="controls-cycle">  
+<tr class="focus">  
   <td colspan="3" align="right">
-    <i tal:condition="not:virtual_groups">(no virtual groups to manage defined)</i>&nbsp;
+    <i tal:condition="not:virtual_groups">No virtual groups to manage defined</i>&nbsp;
     <input type="submit" class="warningbutton" name="remove_groups_from_virtual_groups:method" value="Remove groups"
       title="Remove selected group(s) from their virtual group(s)."
       tal:condition="virtual_groups" />

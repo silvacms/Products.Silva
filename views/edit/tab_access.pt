@@ -221,7 +221,7 @@
 <table width="100%" cellspacing="0" cellpadding="3" border="0">
 <tr>
   <td colspan="2">
-    <h3>GroupRoles from a higher level down
+    <h3>Groups with roles assigned on a higher level
       <img src="pixel.gif" width="1px" height="14px"
         tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     </h3>
@@ -278,14 +278,14 @@
 <table width="100%" cellspacing="0" cellpadding="3" border="0">
 <tr>
   <td>
-    <h3>Local GroupRoles
+    <h3>Local groups and roles
       <img src="pixel.gif" width="1px" height="14px"
         tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     </h3>
   </td>
   <td colspan="2" align="right">
-    <input type="submit" class="button" name="tab_access_groups:method" value="Groups Admin..."
-    title="Go to: Groups administration..." />
+    <input type="submit" class="button" name="tab_access_groups:method" value="Groups admin..."
+    title="Go to Groups administration - alt-g" accesskey="g" />
   </td>
 </tr>
 <tr class="topcontrols">
@@ -359,7 +359,7 @@
     <i tal:condition="not:local_groups">No local group access defined</i>&nbsp;
   </td>
   <td align="right" colspan="2">
-    <input type="submit" class="warningbutton" name="access_revoke_from_group:method" value="revoke"
+    <input type="submit" class="warningbutton" name="access_revoke_from_group:method" value="Revoke"
       title="Revoke selected role(s) from selected group(s)."
       tal:condition="local_groups" />
   </td>
