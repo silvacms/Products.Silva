@@ -80,7 +80,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             return None # there is no editable version
         return getattr(self, version_id)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_previewable')
     def get_previewable(self):
         """Get the previewable version (may be the object itself if no

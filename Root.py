@@ -62,7 +62,7 @@ class Root(Publication):
         self._to_xml_helper(f)
         f.write('</silva_root>')
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed_in_publication')
     def get_silva_addables_allowed_in_publication(self):
         # allow everything in silva by default, unless things are restricted

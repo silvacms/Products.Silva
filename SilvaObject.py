@@ -120,7 +120,7 @@ class SilvaObject(Security):
         """
         return self
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_previewable')
     def get_previewable(self):
         """Get the previewable version (may be the object itself if no
@@ -135,7 +135,7 @@ class SilvaObject(Security):
         """
         return self
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'preview')
+    security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
     def preview(self):
         """Render this with the public view. If this is no previewable,
         should return something indicating this.

@@ -181,7 +181,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         # FIXME: would this lead to a sensible user interface?
         self.manage_cutObjects(deletable_ids, REQUEST)
         
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'action_copy')
     def action_copy(self, ids, REQUEST):
         """Copy objects.
@@ -305,7 +305,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         
     # ACCESSORS
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables')
     def get_silva_addables(self):
         """Get a list of addable Silva objects.
@@ -320,7 +320,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 result.append(addable_dict)
         return result
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_all')
     def get_silva_addables_all(self):
         return [addable_dict['name']
@@ -336,7 +336,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             Interfaces.SilvaObject.isImplementedByInstancesOf(
             addable_dict['instance']))
     
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed')
     def get_silva_addables_allowed(self):
         return self.get_silva_addables_allowed_in_publication()
@@ -358,7 +358,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """
         return self.absolute_url()
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_transparent')
     def is_transparent(self):
         return 1
@@ -376,7 +376,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 return 1
         return 0
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_approved')
     def is_approved(self):
         # Folder is approved if anything inside is published
@@ -388,7 +388,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 return 1
         return 0
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_delete_allowed')
     def is_delete_allowed(self, id):
         """Delete is only allowed if the object with id:
@@ -405,7 +405,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 
     _id_re = re.compile(r'^[a-zA-Z]\w*[a-zA-Z0-9]+$')
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_id_valid')
     def is_id_valid(self, id):
         """Check whether id is valid.
@@ -434,7 +434,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def get_ordered_publishables(self):
         return map(self._getOb, self._ordered_ids)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_nonactive_publishables')
     def get_nonactive_publishables(self):
         result = []

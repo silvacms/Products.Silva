@@ -4,7 +4,7 @@ import SilvaPermissions
 from UserManagement import user_management
 import Interfaces
 
-interesting_roles = ['Author', 'Editor', 'ChiefEditor', 'Manager']
+interesting_roles = ['Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager']
 
 class Security:
     """Can be mixed in with an object to support Silva security.
@@ -110,7 +110,7 @@ class Security:
             for item in self.get_assets():
                 item._sec_get_userids_deep_helper(l)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'sec_get_nearest_of_role')
     def sec_get_nearest_of_role(self, role):
         """Get a list of userids that have a role in this context. This
@@ -157,7 +157,7 @@ class Security:
         """
         return user_management.find_users(self, userid)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'sec_get_user_info')  
     def sec_get_user_info(self, userid):
         """Get information for userid. FIXME: describe which info fields
@@ -165,7 +165,7 @@ class Security:
         """
         return user_management.get_user_info(self, userid)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'sec_get_last_author_info')
     def sec_get_last_author_info(self):
         """Get the info of the last author (provide at least cn and

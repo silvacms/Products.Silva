@@ -38,7 +38,7 @@ class ContactInfo(Asset):
         # name of a contact info that can be used in quite a few places
         pass
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_title')
     def get_title(self):
         return self._data['contact_name']

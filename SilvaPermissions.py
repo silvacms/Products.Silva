@@ -24,6 +24,10 @@ def setDefaultRoles(permission, roles):
         setattr(Globals.ApplicationDefaultPermissions, mangled, roles)
 
 # Silva permissions
+ReadSilvaContent = 'Read Silva content'
+setDefaultRoles(ReadSilvaContent, ('Manager', 'ChiefEditor',
+                                   'Editor', 'Author', 'Reader'))
+
 ChangeSilvaContent = 'Change Silva content'
 setDefaultRoles(ChangeSilvaContent, ('Manager', 'ChiefEditor',
                                      'Editor', 'Author'))

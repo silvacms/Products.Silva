@@ -66,7 +66,7 @@ class Publication(Folder):
         """
         return self.aq_inner
     
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_transparent')
     def is_transparent(self):
         return 0
@@ -80,7 +80,7 @@ class Publication(Folder):
         self._to_xml_helper(f)
         f.write('</silva_publication>')
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed_in_publication')
     def get_silva_addables_allowed_in_publication(self):
         addables = self._addables_allowed_in_publication
@@ -90,7 +90,7 @@ class Publication(Folder):
         else:
             return addables
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_silva_addables_acquired')
     def is_silva_addables_acquired(self):
         return self._addables_allowed_in_publication is None
