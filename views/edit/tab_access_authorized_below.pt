@@ -2,45 +2,41 @@
   global active_tab string:tab_access;
   global breadcrumb_vein string:Emails;
   " />
-<html metal:use-macro="here/macro_index/macros/master">
-<div class="margins" metal:fill-slot="main">
-<p class="halfline">&nbsp;</p>
+  <html metal:use-macro="here/macro_index/macros/master">
+    <div class="margins" metal:fill-slot="main">
 
-<h3><a href="tab_access" title="Up to top of Access tab">Access
-  <img tal:attributes="src string:${silva_root}/globals/up_gray.gif" width="16" height="11" border="0" alt="Up to top of Access tab" /></a></h3>
-<h2 class="worksheet">
-  Authorized users below this level
-</h2>
-<div class="worksheet">
-<tal:check
-   condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
-<tal:trigger
-   define="dummy python:model.security_trigger()" />
-<form action="." method="POST">
-<table width="100%" cellspacing="0" cellpadding="3" border="0">
-  <tr>
-    <th colspan="2" align="left">
-      <span class="tablehead4">Email addresses</span>
-    </th>
-  </tr>
-  <tr>
-    <td class="focus">
-      Addresses are formatted for copying and pasting in the &#8216;To:&#8217; field of a message.<br />
-      <span class="textarea">
-        <textarea name="data" cols="65" rows="5" wrap="soft" 
-           tal:content="view/tab_access_get_emails" />
-      </span>
-    </td>
-  </tr>
-  <tr class="controls">
-    <td>
-      <input class="cancelbutton" type="submit" name="tab_access:method" value="Cancel" title="Cancel - ctrl-c" accesskey="c" />
-    </td>
-  </tr>
-</table>
-</form>
-
-</tal:check>
-</div>
-</div>
-</html>
+      <h3><a href="tab_access" title="Up to top of Access tab">Access
+        <img width="16" height="11" border="0" alt="Up to top of Access tab"
+          tal:attributes="src string:${silva_root}/globals/up_gray.gif" /></a>
+      </h3>
+      <h2>
+        Authorized users below this level
+      </h2>
+      <div class="hilight borders top bottom left right"
+        style="padding: 0.5em; margin: 0em 0em 2em 1em;">
+        <tal:check
+          condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
+          <tal:trigger
+            define="dummy python:model.security_trigger()" />
+          <form action="." method="POST">
+            <table cellspacing="0" cellpadding="3" border="0">
+              <tr>
+                <td colspan="2" align="left">
+                  <b>Email addresses</b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Addresses are formatted for copying and pasting 
+                  in the &#8216;To:&#8217; field of an email message.
+                  <br />
+                  <textarea name="data" cols="78" rows="5" wrap="soft" 
+                    tal:content="view/tab_access_get_emails" />
+                </td>
+              </tr>
+            </table>
+          </form>
+        </tal:check>
+      </div>
+    </div>
+  </html>

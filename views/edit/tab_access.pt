@@ -25,7 +25,11 @@
   </h2>
 <!-- ++++++++++++++++++++++++++USERS++++++++++++++++++++++++++++++++ -->
   <h3>
-    User Management
+    User Management &nbsp;
+    <span style="font-size: 75%;">
+      (<a href="tab_access_authorized_below">here's a list</a> of all users 
+      working in this area)
+    </span>
   </h3>
   <h4 tal:condition="allow_subscription">
     Grant or revoke local roles for users
