@@ -348,8 +348,17 @@ def convert_document_092(obj):
     if obj._previous_versions is not None:
         # the last element of previous versions is last_closed,
         # so that's done already
+        # Make sure the versions all exist, users sometimes tend
+        # to delete versions manually from the ZMI, since there's no
+        # way to do that from the SMI, which corrupts the previous versions 
+        # list
+        new_previous_list = []
         for versionid, pdt, edt in obj._previous_versions[:-1]:
+            if not hasattr(obj, versionid):
+                continue
             upgrade_doc_version(obj, versionid)
+            new_previous_list.append((versionid, pdt, edt))
+        obj._previous_versions = new_previous_versions
             
     # remove all the unconverted versions
     for o in obj.objectValues('Silva Document Version'):
