@@ -83,6 +83,12 @@ def installFromScratch(root):
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
+    # if necessary, create service_resources
+    # XXX this could move to installFromScratch later once all installs
+    # have been upgraded
+    if not hasattr(root, 'service_resources'):
+        # folder containing some extra views and resources
+        root.manage_addFolder('service_resources')
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     add_fss_directory_view(root.service_resources, 'Silva', __file__, 'resources')
@@ -112,7 +118,10 @@ def install(root):
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     root.service_views.manage_delObjects(['Silva'])
-    root.service_resources.manage_delObjects(['Silva'])
+    if hasattr(root, 'service_resources'):
+        # XXX this can happen always if service_resources is
+        # assumed to be just there in the future (like service_views)
+        root.service_resources.manage_delObjects(['Silva'])
     try:
         root.manage_delObjects(['service_editorsupport'])
     except 'BadRequest':
@@ -158,9 +167,6 @@ def configureViews(root):
     root.manage_addFolder('service_views')
     # and set Silva tree XXX should be more polite to extension packages
     root.service_view_registry.set_trees(['Silva'])
-
-    # folder containing some extra views and resources
-    root.manage_addFolder('service_resources')
 
 def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.
