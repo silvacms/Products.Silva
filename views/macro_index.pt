@@ -76,7 +76,7 @@
 <td colspan="3">
 </td>
 <td width="2%">
-<br /><a href="#top" title="jump to top"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
+<br /><a href="#top" title="jump to top - alt-t" accesskey="t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
 </td>
 </tr>
 <tr>
