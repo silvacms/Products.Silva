@@ -6,9 +6,15 @@ ms = context.service_metadata
 editable = model.get_editable()
 binding = ms.getMetadata(editable)
 
+values = {}
+for set_name in binding.getSetNames():
+    values[set_name] = {}
+    for key, value in request.form[set_name].items():
+        values[set_name][key] = value
+
 all_errors = {}
 for set_name in binding.getSetNames():
-    errors = binding.setValuesFromRequest(set_name, request, reindex=1)
+    errors = binding.setValues(set_name, values[set_name], reindex=1)
     if errors:
         all_errors[set_name] = errors
 
