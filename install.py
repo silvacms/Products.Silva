@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.6 2004/04/21 09:22:21 guido Exp $
+# $Id: install.py,v 1.97.4.9.4.7 2004/04/22 11:39:12 philikon Exp $
 """Install for Silva Core
 """
 # Python
@@ -643,7 +643,7 @@ def installKupu(root):
         pass
     else:
         if not hasattr(root, 'kupu'):
-            add_fss_directory_view(root, 'kupu', kupu.__file__, 'default')
+            add_fss_directory_view(root, 'kupu', kupu.__file__, 'common')
         if not hasattr(root, 'kupu_silva'):
             add_fss_directory_view(root, 'kupu_silva', kupu.__file__, 'silva')
 
