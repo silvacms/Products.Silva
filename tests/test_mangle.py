@@ -1,23 +1,21 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.3 2003/08/27 12:45:12 zagy Exp $
+# $Id: test_mangle.py,v 1.4 2003/10/10 15:19:51 gotcha Exp $
 
-import Zope
-Zope.startup()
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
 
-import unittest
-from StringIO import StringIO
+from Testing import ZopeTestCase
+import SilvaTestCase
 
 from Products.Silva import mangle
 from Products.Silva.interfaces import IAsset
-from Products.Silva.tests.base import SilvaTestCase
+from StringIO import StringIO
 
+class MangleIdTest(SilvaTestCase.SilvaTestCase):
 
-
-class MangleIdTest(SilvaTestCase):
-
-    def setUp(self):
-        SilvaTestCase.setUp(self)
+    def afterSetUp(self):
         self.folder = folder = self.addObject(self.silva, 'Folder', 'fold',
             title='fold', create_default=0)
         self.addObject(folder, 'SimpleContent', 'a_content',
@@ -61,7 +59,7 @@ class MangleIdTest(SilvaTestCase):
         self.assertEqual(id.validate(), id.RESERVED)
     
 
-class MangleTest(SilvaTestCase):
+class MangleTest(SilvaTestCase.SilvaTestCase):
 
     def test_path(self):
         test_cases = [
@@ -86,15 +84,15 @@ class MangleTest(SilvaTestCase):
             'foo, bar and baz')
    
    
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(MangleIdTest))
-    suite.addTest(unittest.makeSuite(MangleTest))
-    return suite
-
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
 if __name__ == '__main__':
-    main()
+    framework()
+else:
+    # While framework.py provides its own test_suite()
+    # method the testrunner utility does not.
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(MangleIdTest))
+        suite.addTest(unittest.makeSuite(MangleTest))
+        return suite
     

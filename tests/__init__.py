@@ -1,3 +1,5 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+"""\
+Unit test package for Silva
 
-
+To run all tests type 'python runalltests.py'
+"""

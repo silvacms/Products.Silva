@@ -270,6 +270,7 @@ def configureSecurity(root):
     roles = ['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor']
     userdefined_roles = root.userdefined_roles()
     request = root.REQUEST
+    request.set('URL1', '')
     for role in roles:
         if role not in userdefined_roles:
             request.set('role', role)

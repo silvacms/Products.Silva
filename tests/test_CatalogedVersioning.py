@@ -1,10 +1,10 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import unittest
 import Zope
-from Products.Silva.IContent import IContent
-from Products.Silva.ISilvaObject import ISilvaObject
+from Products.Silva.interfaces import IContent
+from Products.Silva.interfaces import ISilvaObject
 from Products.Silva.Folder import Folder
 from Products.Silva.SilvaObject import SilvaObject
 from Testing import makerequest
@@ -196,7 +196,7 @@ class CatalogedVersioningTestCase(unittest.TestCase):
         
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(VersioningTestCase, 'test'))
+    suite.addTest(unittest.makeSuite(CatalogedVersioningTestCase, 'test'))
     return suite
     
 def main():

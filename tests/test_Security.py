@@ -1,65 +1,44 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
-import unittest
-import Zope
-Zope.startup()
+# $Revision: 1.17 $
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
 
-from DateTime import DateTime
-from Testing import makerequest
-from Products.Silva import Document, Folder
-from test_SilvaObject import hack_create_user
+from Testing import ZopeTestCase
+from Products.Silva.tests import SilvaTestCase
 
-def add_helper(object, typename, id, title):
-    getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(
-        id, title)
-    return getattr(object, id)
-       
-class SecurityTestCase(unittest.TestCase):
+from Products.Silva import Folder
+from Products.SilvaDocument import Document
+
+class SecurityTestCase(SilvaTestCase.SilvaTestCase):
     """Test the Security interface.
     """
-    def setUp(self):
-        get_transaction().begin()
-        self.connection = Zope.DB.open()
-        try:
-            self.root = makerequest.makerequest(self.connection.root()
-                                                ['Application'])
-            self.root.REQUEST['URL1'] = ''
-            # awful hack: add a user who may own the 'index'
-            # of the test containers
-            hack_create_user(self.root)
-            self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
-            self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
-            self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
-            self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
-            self.folder4 = folder4 = add_helper(sroot,
-                             'Folder', 'folder4', 'Folder4')
-            self.publication5 = publication5 = add_helper(sroot,
-                             'Publication','publication5', 'Publication5')
-            self.subdoc = subdoc = add_helper(folder4,
-                             'Document', 'subdoc', 'Subdoc')
-            self.subfolder = subfolder = add_helper(folder4,
-                             'Folder', 'subfolder', 'Subfolder')
-            self.subsubdoc = subsubdoc = add_helper(subfolder,
-                             'Document', 'subsubdoc', 'Subsubdoc')
-            # add a user folder
-            self.sroot.manage_addUserFolder()
-            # add some users
-            self.sroot.acl_users.userFolderAddUser(
-                'foo', 'silly', 'Anonymous', [])
-            self.sroot.acl_users.userFolderAddUser(
-                'bar', 'sillytoo', 'Anonymous', [])
-            # we are assuming 'author' and 'editor' are the only two 
-            # interesting roles that will be returned by sec_get_roles()
-            self.sroot._addRole('Author')
-            self.sroot._addRole('Editor')
-        except:
-            self.tearDown()
-            raise
 
-    def tearDown(self):
-        get_transaction().abort()
-        self.connection.close()
+    
+    def afterSetUp(self):
+        self.doc1 = doc1 = self.add_document(self.root, 'doc1', 'Doc1')
+        self.doc2 = doc2 = self.add_document(self.root, 'doc2', 'Doc2')
+        self.doc3 = doc3 = self.add_document(self.root, 'doc3', 'Doc3')
+        self.folder4 = folder4 = self.add_folder(self.root,
+                         'folder4', 'Folder4')
+        self.publication5 = publication5 = self.add_publication(self.root,
+                         'publication5', 'Publication5')
+        self.subdoc = subdoc = self.add_folder(folder4,
+                         'subdoc', 'Subdoc')
+        self.subfolder = subfolder = self.add_folder(folder4,
+                         'subfolder', 'Subfolder')
+        self.subsubdoc = subsubdoc = self.add_document(subfolder,
+                         'subsubdoc', 'Subsubdoc')
+        # add some users
+        self.root.acl_users._doAddUser(
+            'foo', 'silly', 'Anonymous', [])
+        self.root.acl_users._doAddUser(
+            'bar', 'sillytoo', 'Anonymous', [])
+        # we are assuming 'author' and 'editor' are the only two 
+        # interesting roles that will be returned by sec_get_roles()
+        #self.root._addRole('Author')
+        #self.root._addRole('Editor')
 
     def assertSameEntries(self, list1, list2, msg=''):
         # FIXME: should we check for duplicates? not necessary for
@@ -78,7 +57,7 @@ class SecurityTestCase(unittest.TestCase):
         self.assertSameEntries([],
                                self.doc1.sec_get_roles_for_userid('bar'))
 
-        self.assertSameEntries([], self.sroot.sec_get_userids())
+        self.assertSameEntries([], self.root.sec_get_userids())
         
     def test_sec_assign(self):
         self.doc1.sec_assign('foo', 'Author')
@@ -120,7 +99,7 @@ class SecurityTestCase(unittest.TestCase):
         self.assertSameEntries(['foo','bar'],
                                self.folder4.sec_get_userids())
 
-        self.sroot.acl_users.userFolderDelUsers(['foo'])
+        self.root.acl_users.userFolderDelUsers(['foo'])
         # XXX it would not be critical if this assertion would fail
         self.assertSameEntries(['foo','bar'],
                                self.folder4.sec_get_userids())
@@ -131,15 +110,16 @@ class SecurityTestCase(unittest.TestCase):
 
     def test_sec_get_roles(self):
         self.assertSameEntries(['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager'],
-                               self.sroot.sec_get_roles())
+                               self.root.sec_get_roles())
         
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(SecurityTestCase, 'test'))
-    return suite
-    
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
 if __name__ == '__main__':
-    main()
+    framework()
+else:
+    # While framework.py provides its own test_suite()
+    # method the testrunner utility does not.
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(SecurityTestCase))
+        return suite
+

@@ -1,17 +1,16 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
-import unittest
-import Zope
-Zope.startup()
+# $Id $
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
 
-#import ZODB
-#import OFS.Application
+import SilvaTestCase
+from Testing import ZopeTestCase
+
 from DateTime import DateTime
 from Products.Silva import Versioning
 from OFS import SimpleItem
-from Testing import makerequest
-from test_SilvaObject import hack_create_user
 
 class ZODBVersioning(Versioning.Versioning,  SimpleItem.SimpleItem):
     # awful hack a versioning implementation which also may have a REQUEST associated
@@ -31,32 +30,13 @@ def manage_addZODBVersioning(self, id):
     return ''
     
 
-class VersioningTestCase(unittest.TestCase):
-    def setUp(self):
-       get_transaction().begin()
-       self.connection = Zope.DB.open()
-       try:
-           self.root = makerequest.makerequest(self.connection.root()
-                                               ['Application'])
-           self.root.REQUEST['URL1'] = ''
-           self.REQUEST = self.root.REQUEST
-           # awful hack: add a user who may own the 'index'
-           # of the test containers
-           hack_create_user(self.root)
-           self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
-           self.sroot = self.root.root
-           manage_addZODBVersioning(self.sroot, 'versioning')
-        
-       except:
-           self.tearDown()
-           raise
-
-    def tearDown(self):
-        get_transaction().abort()
-        self.connection.close()
+class VersioningTestCase(SilvaTestCase.SilvaTestCase):
+    def afterSetUp(self):
+       self.REQUEST = self.root.REQUEST
+       manage_addZODBVersioning(self.root, 'versioning')
 
     def test_workflow1(self):
-        versioning = self.sroot.versioning
+        versioning = self.root.versioning
         # no public version yet
         self.assertEqual(versioning.get_public_version(),
                          None)
@@ -105,7 +85,7 @@ class VersioningTestCase(unittest.TestCase):
                          None)
 
     def test_workflow2(self):
-        versioning = self.sroot.versioning
+        versioning = self.root.versioning
         # versioning = Versioning.Versioning()
         # no public version yet
         self.assertEqual(versioning.get_public_version(),
@@ -159,7 +139,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_unapproved_version(), 'second')
 
     def test_workflow4(self):
-        versioning = self.sroot.versioning
+        versioning = self.root.versioning
         #versioning = Versioning.Versioning()
  
         # create new version
@@ -223,14 +203,14 @@ class VersioningTestCase(unittest.TestCase):
 
     def test_workflow6(self):
         true=1
-        self.versioning = self.sroot.versioning        
+        self.versioning = self.root.versioning        
         # test request for approval
         self._check_version_state()
         self.versioning.create_version('0', DateTime() + 10, None)
         self._check_version_state()
         self.versioning.request_version_approval('foo')
         self._check_version_state(approval_requested=true)
-        self.assertEquals('TestUser',self.versioning.get_approval_requester())
+        self.assertEquals(ZopeTestCase._user_name, self.versioning.get_approval_requester())
         self.assertEquals('foo',
                           self.versioning.get_approval_request_message())
         self.versioning.withdraw_version_approval('Withdraw message')
@@ -257,7 +237,7 @@ class VersioningTestCase(unittest.TestCase):
 
     def test_illegal_request_approval(self):
         # test if all kind of VersioningError are actually raised
-        self.versioning = self.sroot.versioning
+        self.versioning = self.root.versioning
 
         try:
             self.versioning.request_version_approval('Request message')
@@ -342,9 +322,14 @@ def test_suite():
     suite.addTest(unittest.makeSuite(VersioningTestCase, 'test'))
     return suite
     
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
 if __name__ == '__main__':
-    main()
+    framework()
+else:
+    # While framework.py provides its own test_suite()
+    # method the testrunner utility does not.
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(VersioningTestCase))
+        return suite
 

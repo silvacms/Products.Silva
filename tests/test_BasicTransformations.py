@@ -1,13 +1,17 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
 #
 # Testing of xml<->xhtml bidrectional conversions.
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.12 $
-import unittest
+# $Id $
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
 
+from Testing import ZopeTestCase
+import unittest
 # 
 # module setup
 #
@@ -23,16 +27,9 @@ except ImportError:
 
 import sys,os
 
-try:
-    sys.path.insert(0, '..')
-    from transform.ObjectParser import ObjectParser
-    from transform.eopro2_11 import silva, html
-    from transform import base
-except ImportError:
-    import Zope
-    from Products.Silva.transform.ObjectParser import ObjectParser
-    from Products.Silva.transform.eopro2_11 import silva, html
-    from Products.Silva.transform import base
+from Products.SilvaDocument.transform.ObjectParser import ObjectParser
+from Products.SilvaDocument.transform.eopro2_11 import silva, html
+from Products.SilvaDocument.transform import base
 
 # lazy, but in the end we want to test everything anyway
 
@@ -333,13 +330,14 @@ class SilvaXMLObjectParser(unittest.TestCase):
 # invocation of test suite
 #
         
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(SilvaXMLObjectParser))
-    return suite
-    
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
 if __name__ == '__main__':
-    main()
+    framework()
+else:
+    # While framework.py provides its own test_suite()
+    # method the testrunner utility does not.
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(SilvaXMLObjectParser))
+        return suite
+

@@ -5,8 +5,12 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
+# $Revision: 1.21 $
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
 
-# $Revision: 1.20 $
+from Testing import ZopeTestCase
 import unittest
 
 # 
@@ -25,16 +29,9 @@ except ImportError:
 import sys,os
 
 
-try:
-    sys.path.insert(0, '..')
-    from transform import base
-    from transform.eopro2_11 import silva, html
-    from transform.Transformer import Transformer, EditorTransformer
-except ImportError:
-    import Zope
-    from Products.Silva.transform import base
-    from Products.Silva.transform.eopro2_11 import silva, html
-    from Products.Silva.transform.Transformer import Transformer, EditorTransformer
+from Products.SilvaDocument.transform import base
+from Products.SilvaDocument.transform.eopro2_11 import silva, html
+from Products.SilvaDocument.transform.Transformer import Transformer, EditorTransformer
 
 # lazy, but in the end we want to test everything anyway
 

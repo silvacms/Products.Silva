@@ -1,49 +1,48 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.104 $
+# $Revision: 1.105 $
 
-import Metadata
-import Folder, Root
-import Publication, Ghost, Image, File, SimpleContent
-import Indexer
-import SQLDataSource
-import GhostFolder
-import SemiGhost
-import AutoTOC
-import install
-import helpers # to execute the module_permission statements
-import mangle, batch
-from Products.Silva.ImporterRegistry import importer_registry
-from Products.Silva.ExtensionRegistry import extensionRegistry
-import ExtensionService
-from LayoutRegistry import layoutRegistry
-import LayoutService
-import SimpleMembership
-import EmailMessageService
-import DocmaService
-import Group
-import VirtualGroup
-import IPGroup
-import SidebarCache
-import SidebarService
-import UnicodeSplitter # To make the splitter register itself
 import ContainerPolicy
 
-from Products.Silva import icon
+
+def initialize(context):
+    from Products.Silva import icon
 
 # enable Formulator support for FileSystemSite/CMFCore
 # XXX shouldn't be necessary anymore with CVS Formulator
-from Products.Formulator import FSForm
+    from Products.Formulator import FSForm
 
 # import FileSystemSite functionality
 # (use CMFCore if FileSystemSite is not installed)
-from Products.Silva.fssite import registerDirectory, registerFileExtension
-from Products.Silva.fssite import FSImage
-    
+    from Products.Silva.fssite import registerDirectory, registerFileExtension
+    from Products.Silva.fssite import FSImage
 # enable .ico support for FileSystemSite
-registerFileExtension('ico', FSImage)
-
-def initialize(context):
+    registerFileExtension('ico', FSImage)
+    import Folder, Root
+    import Publication, Ghost, Image, File, SimpleContent
+    import Indexer
+    import SQLDataSource
+    import GhostFolder
+    import SemiGhost
+    import AutoTOC
+    import install
+    import helpers # to execute the module_permission statements
+    import mangle, batch
+    from Products.Silva.ImporterRegistry import importer_registry
+    from Products.Silva.ExtensionRegistry import extensionRegistry
+    import ExtensionService
+    from LayoutRegistry import layoutRegistry
+    import LayoutService
+    import SimpleMembership
+    import EmailMessageService
+    import DocmaService
+    import Group
+    import VirtualGroup
+    import IPGroup
+    import SidebarCache
+    import SidebarService
+    import UnicodeSplitter # To make the splitter register itself
+    import Metadata
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
         Folder, Root, Publication, Ghost, Image, File, SimpleContent,

@@ -1,23 +1,22 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_icon.py,v 1.3 2003/08/21 11:24:59 zagy Exp $
+# $Id: test_icon.py,v 1.4 2003/10/10 15:19:51 gotcha Exp $
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
 
-import Zope
-Zope.startup()
-
+import SilvaTestCase
 from ZPublisher.HTTPRequest import FileUpload
 from Globals import ImageFile
 
-import unittest
 from StringIO import StringIO
 
 from Products.Silva import Root
 from Products.Silva.icon import *
 from Products.Silva.interfaces import IAsset
-from Products.Silva.tests.base import SilvaTestCase
 
 
-class AdapterTest(SilvaTestCase):
+class AdapterTest(SilvaTestCase.SilvaTestCase):
 
     def test_MetaTypeAdapter(self):
         a = MetaTypeAdapter(self.silva)
@@ -28,13 +27,12 @@ class AdapterTest(SilvaTestCase):
 class R:
     pass
     
-class RegistryTest(SilvaTestCase):
+class RegistryTest(SilvaTestCase.SilvaTestCase):
 
-    def setUp(self):
-        SilvaTestCase.setUp(self)
+    def afterSetUp(self):
         fields = R()
         fields.filename = 'afilename'
-        fields.headers = {'content-type': 'application/pdf'}
+        fields.headers = {'content-type': 'application/mytype'}
         fields.file = StringIO("a nice pdf ;)")
         upload = FileUpload(fields)
         self.silva.manage_addProduct['Silva'].manage_addFile('fileasset',
@@ -49,25 +47,27 @@ class RegistryTest(SilvaTestCase):
     
     def test_registry(self):
         self.assertEquals(self.silva.fileasset.get_mime_type(),
-            'application/pdf')
+            'application/mytype')
         r = registry
-        self.assertEquals(r._get_module_from_context(Root.__dict__), 'Silva')
-        self.assertEquals(r._get_module_from_context(Zope.__dict__), 'Zope')
+        #should not test internals but interface
+        #self.assertEquals(r._get_module_from_context(Root.__dict__), 'Silva')
+        #self.assertEquals(r._get_module_from_context(Zope.__dict__), 'Zope')
         r.registerAdapter(MetaTypeAdapter, 0)
         r.registerAdapter(SilvaFileAdapter, 10)
-        self.assertEquals(len(r._adapters), 2)
-        self.assertEquals(r._adapters[0].priority, 10)
-        self.assertEquals(r._adapters[1].priority, 0)
+        #should not test internals but interface
+        #self.assertEquals(len(r._adapters), 2)
+        #self.assertEquals(r._adapters[0].priority, 10)
+        #self.assertEquals(r._adapters[1].priority, 0)
         adapter = r.getAdapter(self.silva.fileasset)
-        self.assert_(isinstance(adapter, SilvaFileAdapter))
+        self.failUnless(isinstance(adapter, SilvaFileAdapter))
         adapter = r.getAdapter(self.silva)
-        self.assert_(isinstance(adapter, MetaTypeAdapter))
+        self.failUnless(isinstance(adapter, MetaTypeAdapter))
         
         r.registerIcon(('meta_type', 'Silva Root'),
             'www/members.png', Root.__dict__)
-        r.registerIcon(('meta_type', 'Silva File'),
+        r.registerIcon(('mime_type', 'application/octet-stream'),
             'www/silvafile.png', Root.__dict__)
-        r.registerIcon(('mime_type', 'application/pdf'),
+        r.registerIcon(('mime_type', 'application/mytype'),
             'www/user.png', Root.__dict__)
             
         icon = r.getIcon(self.silva)
@@ -77,16 +77,15 @@ class RegistryTest(SilvaTestCase):
         icon = r.getIcon(self.silva.datafile)
         self.assertEquals(icon, 'misc_/Silva/silvafile.png')
         
-
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(AdapterTest))
-    suite.addTest(unittest.makeSuite(RegistryTest))
-    return suite
-
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
 if __name__ == '__main__':
-    main()
+    framework()
+else:
+    # While framework.py provides its own test_suite()
+    # method the testrunner utility does not.
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(AdapterTest))
+        suite.addTest(unittest.makeSuite(RegistryTest))
+        return suite
     
