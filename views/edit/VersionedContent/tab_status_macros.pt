@@ -59,7 +59,8 @@ with the following comments:
 <tr class="controls"
   tal:condition="python:model.get_approval_request_message()">
 <td class="message"
-  colspan="2">
+  colspan="2"
+  style="padding:0">
 <div class="message"
   tal:content="python:model.get_approval_request_message() or 'whatever'">
 message text
