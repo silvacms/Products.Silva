@@ -32,7 +32,7 @@
 </div>
 
   <!-- this breadcrumb trail could be moved to layout_macro.html if it's always in use -->
-<div metal:fill-slot="navigation" class="margins">
+<div metal:fill-slot="navigation">
   <!-- Start navigation slot -->
   <span class="breadcrumb"><span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
     <a tal:attributes="href item/absolute_url" tal:content="structure item/get_title_html">Name</a>
@@ -46,9 +46,10 @@
 </div>
 
 <!-- start Silva content -->
-<div metal:fill-slot="main" class="margins" 
+<div metal:fill-slot="main" 
   tal:define="view_method options/view_method"
-  tal:content="structure python:getattr(here, view_method)()">
+  tal:content="structure python:getattr(here, view_method)()"
+  tal:omit-tag="">
   <!-- this comment gets replaced by the Silva document content -->
 </div>
 <!-- end Silva content -->
