@@ -1,12 +1,12 @@
-Copyright (c) 2002 Infrae. All rights reserved.
+Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9
+  Valid for:  Silva 0.9.1 beta
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.25 $
+  CVS:        $Revision: 1.26 $
 
 Installing Silva
 
@@ -41,7 +41,7 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.9)
+    Silva (0.9.1b)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some basic
@@ -55,7 +55,7 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.9.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.tgz
+        "Silva-0.9.1.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1b.tgz
   
     XMLWidgets (0.8.4)
 
@@ -104,7 +104,7 @@ Installing Silva
 
         "Formulator-1.3.1.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.3.1.tgz
 
-    FileSystemSite (1.1)
+    FileSystemSite (1.2)
 
       A system for keeping PageTemplates, PythonScripts and so on on
       the filesystem. This allows us to maintain the view code for
@@ -117,14 +117,14 @@ Installing Silva
 
       or just download:
   
-        "FileSystemSite-1.1.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite/FileSystemSite-1.1.tgz
+        "FileSystemSite-1.2.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite/FileSystemSite-1.2.tgz
 
-    Groups (0.2)
+    Groups (0.3)
 
       If you want to take advantage of Groups support, please download and
       install the Groups product, here:
   
-       "Groups-0.2.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.2.tgz
+       "Groups-0.3.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.tgz
 
       Groups support is optional; Silva should run without the Groups
       product installed. Groups use a rather hackish technique called
@@ -155,19 +155,13 @@ Installing Silva
 
     Silva can work together with LDAPUserFolder (1.2 at this point in
     time has been tested) so that users in an LDAP database can be
-    looked up and authorized as Silva authors and editors. In order to
-    do enable this, add and configure a LDAPUserFolder in your Silva
-    root (as acl_users). Then go to the file UserManagement.py in the
-    lib/python/Products/Silva directory, and change UserManagement.py
-    to contain the line::
+    looked up and authorized as Silva authors and editors.
 
-      from LDAPUserManagement import user_management
-
-    and comment out this line::
-
-      from SimpleUserManagement import user_management
-
-    and then restarting Zope to make these changes take effect.
+    To make Silva integrate well with a particular LDAP server with a
+    particular schema, a separate Member extension product must be
+    created for your site that pulls its information from LDAP.  At
+    the moment we don't have a demo of this available yet, but we will
+    try to put one online soon.
  
   Installing Silva with ExtFile support.
 

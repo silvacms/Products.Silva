@@ -1,21 +1,23 @@
-Copyright (c) 2002 Infrae. All rights reserved.
+Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9
+  Valid for:  Silva 0.9.1 beta
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.23 $
+  CVS:        $Revision: 1.24 $
  
-Upgrading from 0.8.5 and below
+Upgrading from 0.8.6 and below
 
-  Please upgrade your Silva to 0.8.6.1 first. Be careful to read its
-  upgrade instructions! You can find Silva 0.8.6.1 here:
+  Please upgrade your Silva to 0.9 first. Be careful to read its
+  upgrade instructions! You can find Silva 0.9 here:
 
-  "Silva 0.8.6.1":http://www.zope.org/Members/faassen/Silva/Silva-0.8.6.1.tgz
+  "Silva 0.9.0.4":http://www.zope.org/Members/faassen/Silva/Silva-0.9.0.4.tgz
 
-Upgrading Silva 0.8.6.x to 0.9
+  Please read the UPGRADE.txt included with that release.
+
+Upgrading Silva 0.9.0.x to 0.9.1
 
   This document applies to upgrading Silva only; if you are newly
   installing Silva please look at 'INSTALL.txt'.
@@ -25,28 +27,37 @@ Upgrading Silva 0.8.6.x to 0.9
 
   Silva Filesystem Products
 
-    In order to upgrade to 0.9 you need a new version of Silva (0.9),
-    Formulator (1.3.1), ParsedXML (1.3.1) and XMLWidgets
-    (0.8.4). Download the new versions here:
+    In order to upgrade to 0.9.1 you need a new version of Silva
+    (0.9.1) and FileSystemSite (1.2). Download them here:
 
-      * "Silva-0.9.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.tgz
+      * "Silva-0.9.1b.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1b.tgz
   
-      * "Formulator-1.3.1.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.3.1.tgz
+      * "FileSystemSite-1.2.tgz":http://www.zope.org/Members/faassen/Silva/FileSystemSite-1.2.tgz
 
-      * "ParsedXML-1.3.1.tgz":http://www.zope.org/Members/faassen/ParsedXML/ParsedXML-1.3.1.tgz
+    The latter is a temporary location, it should be downloadable here
+    soon:
 
-      * "XMLWidgets-0.8.4.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.4.tgz
-    
-    To upgrade, remove the Silva, Formulator, ParsedXML and XMLWidgets
-    directories from your 'Products' directory first. Then unpack the
-    new files you downloaded.
+      * "FileSystemSite-1.2.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite
 
-    FileSystemSite does not have to be upgraded for this upgrade. Groups
-    also does not require an upgrade.
+    If you are using Groups, you also need to download and install the
+    new Groups 0.3. Find it here:
 
-    If you are using Silva's LDAP support (turned off by default), you
-    should consult the section in 'INSTALL.txt' to see how to
-    configure the newly installed Silva product to use this again.
+      * "Groups-0.3.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.tgz
+
+    To upgrade, remove the Silva, FileSystemSite and (if you have it)
+    Groups directories from your 'Products' directory first. Then
+    unpack the new files you downloaded.
+
+    Formulator, XMLWidgets and ParsedXML do not require an upgrade in
+    this release.
+
+    Note that LDAP integration of Silva has changed with the new
+    membership system. If you are using LDAP integration with your
+    Silva, you will notice that the old system has disappeared. In its
+    stead we have a new member extension mechanism that takes it
+    place. If you need help enabling membership please contact
+    Infrae. We will place a demo membership extension that uses LDAP
+    online soon.
 
     If you are using Silva's ExtFile support (turned off by default),
     you should consult the section in 'INSTALL.txt' to see how to
@@ -55,17 +66,19 @@ Upgrading Silva 0.8.6.x to 0.9
     Restart Zope to make the new product code take effect. Now go on
     to the next step.
 
-  Refreshing the Silva product
+  Refreshing and upgrading the Silva product
 
-    NOTE: If you're upgrading from 0.8.6 (so this note does not apply for
-    0.8.6.1), you need to run an upgrade script after the restart.
-    To invoke this script you need to go with a web browser to 
-    http://path/to/silva/upgrade_silva.
+    If you are upgrading from 0.9 to 0.9.1, you need to upgrade the
+    content of Silva, as some of the structures have changed. After
+    the restart, go to 'service_extensions' in the Silva Root as Zope
+    manager and click the 'upgrade' button. This will automatically
+    refresh all installed Silva extensions as well as upgrade the
+    Silva content that needs upgrading.
 
-    After the restart, go to 'service_extensions' in the Silva Root as
-    Zope manager and click the 'refresh' button for the 'Silva'
-    product. This lets Silva update various configurations in the Zope
-    object database. 
+    If you are upgrading a minor version (beta to final, for instance)
+    it should be enough to just press the 'Refresh all' button to
+    upgrade. This lets Silva update various configurations in the Zope
+    object database.
 
     You should be done upgrading now!
  
