@@ -451,7 +451,7 @@ upgrade_registry.register('Silva Publication', unicode_and_metadata_092, '0.9.2'
 upgrade_registry.register('Silva Document', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva DemoObject', unicode_and_metadata_092, '0.9.2')
 # FIXME: upgrade metadata for Ghosts and Assets? The title?
-upgrade_registry.register('Silva Ghost', unicode_and_metadata_092, '0.9.2')
+#upgrade_registry.register('Silva Ghost', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva Image', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva File', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva SQL Data Source', unicode_and_metadata_092, '0.9.2')
@@ -501,6 +501,8 @@ def replace_container_title_092(obj):
         # have to go through all kinds of trouble to get all the versions
         # for those kind of objects
         default._title = title
+    else:
+        obj.manage_addProduct['Silva'].manage_addDocument('index', title)
 
 def replace_object_title_092(obj):
     """Move the title to the metadata
