@@ -115,15 +115,6 @@ td.even table td {
   border-right: none ! important;
 }
 
-table.csvtable {
-  border: 1px solid #77858c;
-  border-right: 0;
-}
-
-table.csvtable td {
-  border-right: 1px solid #77858c;
-}
-
 /* ________________________________________________________ list styles _____ */
 /* _______ these are duplicated in frontend.css for overriding ______ */
 
@@ -231,5 +222,25 @@ ol.lower-alpha {
   margin-bottom : 2px;
 }
 
+/* make a yellow background to seperate it from the content */
+.csvsource {
+  background-color: #f3f3d9;
+}
 
+.csvsource table.csvtable {
+  background-color: #f3f3d9;
+  border: 1px solid #f3f3d9;
+}
+
+.csvsource table.csvtable tr.even td, .csvsource table.csvtable tr.odd td {
+  background-color: #f3f3d9;
+  border: none;
+}
+
+.csvsource table.csvtable th {
+  color: black;
+  background-color: #f3f3d9;
+  border: none;
+}
+  
 /* cascading makes you dizzy */
