@@ -4,15 +4,14 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
-import SilvaPermissions
 # Silva
-from EditorSupport import EditorSupport
-from VersionedContent import VersionedContent
-import Interfaces
+from Products.Silva import SilvaPermissions
+from Products.Silva.EditorSupport import EditorSupport
+from Products.Silva.VersionedContent import VersionedContent
+from Products.Silva import Interfaces
 from Products.ParsedXML.ParsedXML import ParsedXML
-
+from Products.Silva.helpers import add_and_edit, translateCdata
 # misc
-from helpers import add_and_edit, translateCdata
 from cgi import escape
 
 class Course(VersionedContent, EditorSupport):
@@ -82,31 +81,6 @@ class Course(VersionedContent, EditorSupport):
         version.goal.documentElement.writeStream(f)
         f.write('</goal>')
         f.write('</silva_course>')
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'upgrade_xml')
-    def upgrade_xml(self):
-        """Upgrade xml.
-        """
-        title = self.get_title()
-        if type(title) != type(u''):
-            self.set_title(self.input_convert2(title))
-        # upgrade the public version, the last closed version, and the
-        # next version, if they exist
-        versions = [self.get_last_closed_version(),
-                    self.get_public_version(),
-                    self.get_next_version()]
-        for version in versions:
-            if version is None:
-                continue
-            course = getattr(self, version)
-            self._upgrade_xml_helper(course.goal.documentElement)   
-            self._upgrade_xml_helper(course.content.documentElement)
-            data = course.get_data()
-            for key, value in data.items():
-                if type(value) != type(u''):
-                    data[key] = self.input_convert2(value)
-            course.set_data(data)
             
 InitializeClass(Course)
 

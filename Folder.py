@@ -305,6 +305,18 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         
     # ACCESSORS
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_addables')
+    def get_silva_addables(self):
+        """Get a list of addable Silva objects.
+        """
+        result = []
+        for meta_type in self.filtered_meta_types():
+            if (meta_type.has_key('instance') and
+                Interfaces.SilvaObject.isImplementedByInstancesOf(meta_type['instance'])):
+                result.append(meta_type)
+        return result
+            
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_container')
     def get_container(self):
@@ -530,23 +542,6 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             object.to_xml(f)
         #for object in self.get_assets():
         #    pass
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'upgrade_xml')
-    def upgrade_xml(self):
-        """Upgrade xml.
-        """
-        title = self.get_title()
-        if type(title) != type(u''):
-            self.set_title(self.input_convert(title))    
-        # upgrade everything in the folder
-        default = self.get_default()
-        if default is not None:
-            default.upgrade_xml()
-        for obj in self.get_ordered_publishables():
-            obj.upgrade_xml()
-        for obj in self.get_nonactive_publishables():
-            obj.upgrade_xml()
             
 InitializeClass(Folder)
 

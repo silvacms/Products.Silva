@@ -254,26 +254,4 @@ class SilvaObject(Security):
             s = s.replace(c, '')
         return unicode(s, 'cp1252')
     
-    def _upgrade_xml_helper(self, node):
-        nodeType = node.nodeType
-        if nodeType == node.TEXT_NODE:
-            data = node.data
-            if type(data) != type(u''):
-                #print "text replacing:", repr(data)
-                node.replaceData(0, len(data), self.input_convert2(data))
-            else:
-                pass #print "text already unicode:", node.nodeName, repr(data)
-        elif nodeType == node.ELEMENT_NODE:
-            attribute_names = node.attributes.keys()
-            for name in attribute_names:
-                data = node.getAttribute(name)
-                if type(data) == type(u''):
-                    pass # print "attr already unicode:", name, repr(data)
-                else:
-                    pass #print "attr replacing:", repr(data)
-                    node.removeAttribute(name)
-                    node.setAttribute(name, self.input_convert2(data))
-            for child in node.childNodes:
-                self._upgrade_xml_helper(child)
-    
 InitializeClass(SilvaObject)

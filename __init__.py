@@ -1,5 +1,5 @@
 import Document, Folder, Root, ViewRegistry,\
-       Publication, Ghost, ContactInfo, Image, Course
+       Publication, Ghost, Image, Course
 
 def initialize(context):
      context.registerClass(
@@ -35,27 +35,13 @@ def initialize(context):
                           Ghost.manage_addGhost),
 	  icon="www/silvaghost.gif"
           )
-
-     context.registerClass(
-          Course.Course,
-          constructors = (Course.manage_addCourseForm,
-                          Course.manage_addCourse),
-	  icon="www/silvacourse.gif"
-          )
      
      context.registerClass(
           ViewRegistry.ViewRegistry,
           constructors = (ViewRegistry.manage_addViewRegistryForm,
                           ViewRegistry.manage_addViewRegistry)
           )
-     
-     context.registerClass(
-          ContactInfo.ContactInfo,
-          constructors = (ContactInfo.manage_addContactInfoForm,
-                          ContactInfo.manage_addContactInfo),
-	  icon="www/silvacontactinfo.gif"
-          )
-     
+          
      context.registerClass(
           Image.Image,
           constructors = (Image.manage_addImageForm,
@@ -68,10 +54,16 @@ def initialize(context):
           constructors = (Ghost.manage_addGhostVersionForm,
                           Ghost.manage_addGhostVersion)
           )
-
+     
+     context.registerClass(
+          Course.Course,
+          constructors = (Course.manage_addCourseForm,
+                          Course.manage_addCourse),
+          icon="www/silvacourse.gif"
+          )
+     
      context.registerClass(
           Course.CourseVersion,
           constructors = (Course.manage_addCourseVersionForm,
                           Course.manage_addCourseVersion)
           )
-     
