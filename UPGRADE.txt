@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.1.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26.2.11 $
+  CVS:        $Revision: 1.26.2.12 $
 
 Upgrading from 0.8.6 and below
 
@@ -52,10 +52,10 @@ Upgrading Silva 0.9.0.x to 0.9.1.x
 
   Silva Filesystem Products
 
-    In order to upgrade to 0.9.1.4 you need a new version of Silva
-    (0.9.1.4) and FileSystemSite (1.2). Download them here:
+    In order to upgrade to 0.9.1.5 you need a new version of Silva
+    (0.9.1.5) and FileSystemSite (1.2). Download them here:
 
-      * "Silva-0.9.1.4.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.4.tgz
+      * "Silva-0.9.1.5.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.5.tgz
   
       * "FileSystemSite-1.2.tgz":http://www.zope.org/Members/faassen/Silva/FileSystemSite-1.2.tgz
 
@@ -93,7 +93,7 @@ Upgrading Silva 0.9.0.x to 0.9.1.x
 
   Refreshing and upgrading the Silva product
 
-    If you are upgrading from 0.9 to 0.9.1.4, you need to upgrade the
+    If you are upgrading from 0.9 to 0.9.1.5, you need to upgrade the
     content of Silva, as some of the structures have changed. After
     the restart, go to 'service_extensions' in the Silva Root as Zope
     manager and click the 'upgrade content' button. This will
@@ -101,7 +101,7 @@ Upgrading Silva 0.9.0.x to 0.9.1.x
     upgrade the Silva content that needs upgrading. Note that this
     will take a while if your site is large.
 
-    Upgrading the content from 0.9 to 0.9.1.4 will change the following
+    Upgrading the content from 0.9 to 0.9.1.5 will change the following
     things:
   
       * List titles are changed to headings. The list title option is
