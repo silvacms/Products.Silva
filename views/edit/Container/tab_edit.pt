@@ -171,16 +171,9 @@
                         onkeypress="handle_default_action(this, event, 'tab_edit_copy')"
                       />
                       <label 
-                        tal:condition="python: publishables[0]['item_id'] == 'index'"
-                        tal:content="repeat/listing/index"
+                        tal:content="listing/number"
                         tal:attributes="for listing/item_id">
-                        # with index doc, starts at 0
-                      </label>
-                      <label 
-                        tal:condition="python: not publishables[0]['item_id'] == 'index'"
-                        tal:content="repeat/listing/number"
-                        tal:attributes="for listing/item_id">
-                        # without index doc, starts at 1
+                        # with index doc, starts at 0, else starts at 1
                       </label>
                     </td>
                     <tal:block replace="nothing">

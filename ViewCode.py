@@ -101,8 +101,10 @@ class ViewCode:
         default = self.get_default()
         if default is not None:
             publishables = [default]
+            i = 0
         else:
             publishables = []
+            i = 1
         publishables.extend(self.get_ordered_publishables())
 
         result = []
@@ -114,6 +116,7 @@ class ViewCode:
             is_approved = status[0] == 'approved'
             is_versioned_content = IVersionedContent.isImplementedBy(item)
             d = {
+                'number': i,
                 'item': item,
                 'item_id': item.id,
                 'title_editable': item.get_title_editable(),
@@ -124,7 +127,6 @@ class ViewCode:
                 'has_modification_time': modification_datetime,
                 'modification_time': mangle.DateTime(modification_datetime).toShortStr(),
                 'last_author': item.sec_get_last_author_info().fullname(),
-              
                 'is_default': item is default,
                 'is_container': IContainer.isImplementedBy(item),
                 'is_versioned_content': is_versioned_content,
@@ -135,6 +137,7 @@ class ViewCode:
                 'rendered_icon': render_icon(item),
                 }
             result.append(d)
+            i += 1
         return result
     
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
