@@ -116,7 +116,8 @@
               colspan="4">
               <h2>
                 <img tal:replace="structure python:view.render_icon(model)" />
-                metadata <span tal:condition="not: model/implements_container"><span i18n:translate="for">for</span> &#xab;<span tal:replace="string:${title}">title</span>&#xbb;</span>
+                <span i18n:translate="properties_of">properties of</span>
+                &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
               </h2>
             </td>
           </tr>
