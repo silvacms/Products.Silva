@@ -18,7 +18,7 @@
 </tal:block>
 
 <div class="margins">
-<h3><a href="tab_edit" title="Up to top of Edit tab">Contents
+<h3><a href="tab_edit" title="Up to Contents">Contents
   <img tal:attributes="src string:${silva_root}/globals/up_gray.gif" width="16" height="11" border="0" alt="Up to top of Edit tab" /></a></h3>
 <h2 class="worksheet">Import options for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
 

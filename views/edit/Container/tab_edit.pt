@@ -41,7 +41,7 @@
     <tal:block condition="silva_permissions/ChangeSilvaContent">
     &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data - alt-i" accesskey="i" />&nbsp;&nbsp;&nbsp;
       <input class="button" type="submit" name="add_object:method" value=" New:" title="Add a new item - alt-n" accesskey="n" />
-      <select name="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();">
+      <select name="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();"  title="Select a new item - alt-s" accesskey="s">
       <option value="None" disabled="disabled">Select...</option>
       <tal:block tal:repeat="addable model/get_silva_addables">
         <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
