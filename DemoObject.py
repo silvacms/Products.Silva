@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 # Python
 from StringIO import StringIO
 # Zope
@@ -12,6 +12,7 @@ from Globals import InitializeClass
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
+from Products.Silva import mangle
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.helpers import add_and_edit, translateCdata
 from Products.Silva.Version import CatalogedVersion
@@ -171,7 +172,7 @@ manage_addDemoObjectForm = PageTemplateFile("www/demoObjectAdd", globals(),
 
 def manage_addDemoObject(self, id, title, REQUEST=None):
     """Add a DemoObject to the Silva-instance."""
-    if not self.is_id_valid(id):
+    if not mangle.Id(self, id).isValid():
         return
     object = DemoObject(id)
     self._setObject(id, object)

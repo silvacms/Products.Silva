@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 
 # Python
 import os
@@ -15,6 +15,7 @@ from helpers import add_and_edit
 from webdav.WriteLockInterface import WriteLockInterface
 # Silva
 from Asset import Asset
+from Products.Silva import mangle
 import SilvaPermissions
 # Storages
 from OFS import Image                            # For ZODB storage
@@ -212,7 +213,7 @@ def manage_addFile(self, id, title, file):
     # Copy code from ExtFile, but we don't want a dependency per se:
     id, _title = Image.cookId(id, title, file)
     id = string.translate(id.encode('ascii', 'replace'), TRANSMAP)
-    if not self.is_id_valid(id):
+    if not mangle.Id(self, id).isValid():
         return 
 
     # Switch storage type:

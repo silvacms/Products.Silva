@@ -1,4 +1,4 @@
-from Products.Silva.helpers import check_valid_id, check_valid_id_file, IdCheckValues
+from Products.Silva import mangle
 
 model = context.REQUEST.model
 view = context
@@ -18,21 +18,23 @@ try:
     result = view.form.validate_all(REQUEST)
 except FormValidationError, e:
     # in case of errors go back to add page and re-render form
-    return view.add_form(message_type="error", 
+    return view.add_form(message_type="error",
         message=view.render_form_errors(e))
 
-id = result['object_id'].encode('ascii', 'replace')
+id = mangle.Id(model, result['object_id'], file=result['file'])
 file = result['file']
 
 # do some additional validation
 if not file or not getattr(file, 'filename', None):
-    return view.add_form(message_type="error", message="Empty or invalid file.")
+    return view.add_form(message_type="error",
+        message="Empty or invalid file.")
 
 # if we don't have the right id, reject adding
-id, id_check = check_valid_id_file(model, id, file)
-if id_check != IdCheckValues.ID_OK:
-    return view.add_form(
-        message_type="error", message=view.get_id_status_text(id, id_check))
+id_check = id.cook().validate()
+if id_check != id.OK:
+    return view.add_form(message_type="error",
+        message=view.get_id_status_text(id))
+id = str(id)
 
 # try to cope with absence of title in form
 if result.has_key('object_title'):
@@ -61,5 +63,5 @@ if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
     return view.tab_edit(
-        message_type="feedback", 
+        message_type="feedback",
         message="Added %s %s." % (object.meta_type, view.quotify(id)))

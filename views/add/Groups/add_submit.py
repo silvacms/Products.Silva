@@ -1,7 +1,7 @@
 #Almost identical to add_submit in the add views,
 # but no other way to override then to copy code *ugh*.
 
-from Products.Silva.helpers import check_valid_id, IdCheckValues
+from Products.Silva import mangle
 
 model = context.REQUEST.model
 view = context
@@ -21,7 +21,7 @@ except FormValidationError, e:
     return view.add_form(message_type="error", message=view.render_form_errors(e))
 
 # get id and title from form, convert title to unicode
-id = result['object_id'].encode('ascii', 'replace')
+id = mangle.Id(model, result['object_id'])
 # remove them from result dictionary
 del result['object_id']
 
@@ -33,9 +33,10 @@ else:
     title = ""
 
 # if we don't have the right id, reject adding
-id_check = check_valid_id(model, id)
-if not id_check == IdCheckValues.ID_OK:
-    return view.add_form(message_type="error", message=view.get_id_status_text(id, id_check))
+id_check = id.validate()
+if not id_check == id.OK:
+    return view.add_form(message_type="error",
+        message=view.get_id_status_text(id))
 
 if groups_service.isGroup(id):
     return view.add_form(

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.42 $
+# $Revision: 1.43 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -10,10 +10,11 @@ from Folder import Folder
 import SilvaPermissions
 import ContainerPolicy
 # misc
-from helpers import add_and_edit, getNewId
+from helpers import add_and_edit
 
 from Products.Silva.ImporterRegistry import get_importer, xml_import_helper, get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
+from Products.Silva import mangle
 
 from interfaces import IPublication
 
@@ -96,7 +97,7 @@ manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),
 
 def manage_addPublication(self, id, title, create_default=1, REQUEST=None):
     """Add a Silva publication."""
-    if not self.is_id_valid(id):
+    if not mangle.Id(self, id).isValid():
         return
     object = Publication(id)
     self._setObject(id, object)
@@ -110,9 +111,7 @@ def xml_import_handler(object, node):
     id = get_xml_id(node)
     title = get_xml_title(node)
     
-    used_ids = object.objectIds()
-    while id in used_ids:
-        id = getNewId(id)
+    id = str(mangle.Id(object, id).unique())
         
     object.manage_addProduct['Silva'].manage_addPublication(id, title, 0)
     

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva 
@@ -13,155 +13,11 @@ from interfaces import ISilvaObject, IVersioning, IContainer, IAsset
 
 module_security =  ModuleSecurityInfo('Products.Silva.helpers')
 
-_id_re = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.-]*$')
-p_ID = re.compile(r'^(.*?)([0-9]+)$')
-
-# sequence of all reserved prefixes (before the first '_')
-_reserved_prefixes = (
-    'aq',
-    'get',
-    'manage', 
-    'service', 
-    'set',
-    )
-
-# all reserved/internally used ids. (This list is most probably incomplete)
-_reserved_ids = (
-    'Members', 
-    'REQUEST',
-    'acl_users',
-    'cached',
-    'cancel',
-    'code_source', 
-    'content',
-    'content.html', 
-    'delete',
-    'edit',
-    'elements',
-    'form',
-    'fulltext',
-    'getBatch',
-    'getDocmaFormatName',
-    'globals',
-    'index_html', 
-    'insert',
-    'layout_macro.html',
-    'logout',
-    'lookup',
-    'memberform',
-    'override.html', 
-    'placeholder',
-    'preview_html', 
-    'promptWindow',
-    'quotify',
-    'redirect',
-    'render',
-    'save',
-    'search',
-    'standard_error_message', 
-    'standard_unauthorized_message',
-    'submit',
-    'up',
-     )
-
 module_security.declarePublic('escape_entities')
 def escape_entities(text):
     """Escape entities.
     """
     return escape(text, 1)
-
-module_security.declarePublic('IdCheckValues')
-class IdCheckValues:
-    """ actually only a record of values returned by the check_valid_id method """
-
-    # hack to allow to access the values by python scripts
-    # this does allow to write to there values ...
-    __allow_access_to_unprotected_subobjects__ = 1
-
-    ID_OK = 0
-    ID_CONTAINS_BAD_CHARS = 1
-    # id has a reserved prefix
-    ID_RESERVED_PREFIX = 2
-    # id is "used internally" which either means this id would 
-    # shadowing some non-silva attribute, or is in the list of disallowed ids anyway
-    ID_RESERVED = 3
-    ID_IN_USE_CONTENT = 4
-    ID_IN_USE_ASSET = 5
-    
-
-
-def getNewId(old_id):
-    """returns an id based on the old id
-
-        if old_id ends with a number, the number is increased, 
-        otherwise 2 is appended
-    """
-    
-    m = p_ID.match(old_id)
-    if m is None: return '%s2' % (old_id, )
-    
-    name = m.group(1)
-    count = int(m.group(2))
-    
-    return "%s%i" % (name, count+1)
-    
-
-_marker = ()
-
-module_security.declarePublic('check_valid_id')
-def check_valid_id(folder, maybe_id, allow_dup=0):
-    """ test if the given id is valid, returning a status code
-        about its validity or reason of invalidity
-    """
-
-    if _id_re.search(maybe_id) is None:
-        return IdCheckValues.ID_CONTAINS_BAD_CHARS
-    prefixing = maybe_id.split('_')
-    if (len(prefixing)>1) and (prefixing[0] in _reserved_prefixes):
-        return IdCheckValues.ID_RESERVED_PREFIX
-
-    if maybe_id in _reserved_ids:
-        return IdCheckValues.ID_RESERVED
-
-    attr = getattr(folder.aq_inner, maybe_id, _marker)
-    if attr is not _marker:
-        if ISilvaObject.isImplementedBy(attr):
-            # there is a silva object with the same id
-            if allow_dup: return IdCheckValues.ID_OK
-            attr = getattr(folder.aq_base, maybe_id, _marker)
-            if attr is _marker:
-                # shadowing a content object is ok (hopefully)
-                return IdCheckValues.ID_OK
-            if IAsset.isImplementedBy(attr):
-                return IdCheckValues.ID_IN_USE_ASSET
-            # else it must be a content object (?)
-            return IdCheckValues.ID_IN_USE_CONTENT
-
-        # check if object with this id is acquired; if not, it cannot be allowed
-        attr2 = getattr(folder.aq_base, maybe_id, _marker)
-	if attr2 is not _marker:
-	    return IdCheckValues.ID_RESERVED
-
-        # object using wanted id is acquried
-        # now it may be a Zope object, which is allowed (for now)
-        # or it is an attribute (which is disallowed)
-        if not hasattr(attr, 'meta_type'):
-            # not a zope object (guessing ...)            
-            return IdCheckValues.ID_RESERVED
-    
-    return IdCheckValues.ID_OK
-
-
-module_security.declarePublic('check_valid_id_file')
-def check_valid_id_file(folder, id, file):
-    """ special check for image, which may use the file name for id creation"""
-    from OFS import Image
-    from Products.Silva.File import TRANSMAP
-    import string
-    id, unused_title = Image.cookId(id, "", file)
-    id = string.translate(id, TRANSMAP)
-    return (id, check_valid_id(folder, id))
-    
 
 def add_and_edit(self, id, REQUEST):
     """Helper function to point to the object's management screen if

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.9 2003/07/02 13:56:18 faassen Exp $
+# $Id: VirtualGroup.py,v 1.10 2003/07/17 13:28:34 zagy Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -8,6 +8,7 @@ from OFS.SimpleItem import SimpleItem
 # Silva
 from SilvaObject import SilvaObject
 import SilvaPermissions
+from Products.Silva import mangle
 # misc
 from helpers import add_and_edit
 
@@ -112,7 +113,7 @@ def manage_addVirtualGroup(self, id, title, group_name, asset_only=0,
         REQUEST=None):
     """Add a Virtual Group."""
     if not asset_only:
-        if not self.is_id_valid(id):
+        if not mangle.Id(self, id).isValid():
             return
         if not hasattr(self, 'service_groups'):
             raise AttributeError, "There is no service_groups"

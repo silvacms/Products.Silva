@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.118 $
+# $Revision: 1.119 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -26,6 +26,7 @@ from sys import exc_info
 from Products.Silva.ImporterRegistry import get_importer, xml_import_helper, get_xml_id, get_xml_title
 from Products.Silva.ImportArchive import import_archive_helper
 from Products.Silva.Metadata import export_metadata
+from Products.Silva import mangle
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.ExtraDOM import writeStream
@@ -294,7 +295,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         """Change id of object with id orig_id.
         """
         # check if new_id is valid
-        if not self.is_id_valid(new_id):
+        if not mangle.Id(self, new_id).isValid():
             return
         # check if renaming (which in essence is the deletion of a url)
         # is allowed
@@ -660,14 +661,6 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
             # XXX non-versioned content should always be deletable.
             return 1
 
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'is_id_valid')
-    def is_id_valid(self, id, allow_dup=0):
-        """Check whether id is valid.
-        """
-        return helpers.check_valid_id(self, id, allow_dup) == helpers.IdCheckValues.ID_OK
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_default')
     def get_default(self):
@@ -936,7 +929,8 @@ manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
 
 def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     """Add a Folder."""
-    if not self.is_id_valid(id):
+
+    if not mangle.Id(self, id).isValid():
         return
     object = Folder(id)
     self._setObject(id, object)
@@ -950,10 +944,8 @@ def xml_import_handler(object, node):
     """Helper for importing folder objects into an other object"""
     id = get_xml_id(node)
     title = get_xml_title(node)
-
-    used_ids = object.objectIds()
-    while id in used_ids:
-        id = helpers.getNewId(id)
+    
+    id = str(mangle.Id(object, id).unique())
 
     object.manage_addProduct['Silva'].manage_addFolder(id, title, 0)
     newfolder = getattr(object, id)

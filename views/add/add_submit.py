@@ -1,4 +1,4 @@
-from Products.Silva.helpers import check_valid_id, IdCheckValues
+from Products.Silva import mangle
 
 model = context.REQUEST.model
 view = context
@@ -14,10 +14,11 @@ try:
     result = view.form.validate_all(REQUEST)
 except FormValidationError, e:
     # in case of errors go back to add page and re-render form
-    return view.add_form(message_type="error", message=view.render_form_errors(e))
+    return view.add_form(message_type="error",
+        message=view.render_form_errors(e))
 
-# get id and title from form, convert title to unicode
-id = result['object_id'].encode('ascii', 'replace')
+# get id and set up the mangler
+id = mangle.Id(model, result['object_id'])
 # remove them from result dictionary
 del result['object_id']
 
@@ -29,9 +30,12 @@ else:
     title = ""
 
 # if we don't have the right id, reject adding
-id_check = check_valid_id(model, id)
-if not id_check == IdCheckValues.ID_OK:
-    return view.add_form(message_type="error", message=view.get_id_status_text(id, id_check))
+id_check = id.validate()
+if id_check == id.OK:
+    id = str(id)
+else:
+    return view.add_form(message_type="error",
+        message=view.get_id_status_text(id))
 
 # process data in result and add using validation result
 object = context.add_submit_helper(model, id, title, result)

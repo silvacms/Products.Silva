@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -11,6 +11,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
+from Products.Silva import mangle
 # try to import xpath
 try:
     from xml import xpath
@@ -114,7 +115,7 @@ manage_addIndexerForm = PageTemplateFile("www/indexerAdd", globals(),
 
 def manage_addIndexer(self, id, title, REQUEST=None):
     """Add an indexer."""
-    if not self.is_id_valid(id):
+    if not mangle.Id(self, id).isValid():
         return
     object = Indexer(id, title)
     self._setObject(id, object)

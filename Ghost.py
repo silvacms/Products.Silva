@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.63 $
+# $Revision: 1.64 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -10,6 +10,7 @@ from DateTime import DateTime
 # Silva
 from VersionedContent import CatalogedVersionedContent
 from Version import CatalogedVersion
+from Products.Silva import mangle
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
@@ -278,7 +279,7 @@ manage_addGhostForm = PageTemplateFile("www/ghostAdd", globals(),
 
 def manage_addGhost(self, id, content_url, REQUEST=None):
     """Add a Ghost."""
-    if not self.is_id_valid(id):
+    if not mangle.Id(self, id).isValid():
         return
     object = Ghost(id)
     self._setObject(id, object)

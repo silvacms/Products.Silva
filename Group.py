@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -8,6 +8,7 @@ from OFS.SimpleItem import SimpleItem
 
 # Silva
 from SilvaObject import SilvaObject
+from Products.Silva import mangle
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
@@ -125,7 +126,7 @@ manage_addGroupForm = PageTemplateFile("www/groupAdd", globals(),
 def manage_addGroup(self, id, title, group_name, asset_only=0, REQUEST=None):
     """Add a Group."""
     if not asset_only:
-        if not self.is_id_valid(id):
+        if not mangle.Id(self, id).isValid():
             return
         # these checks should also be repeated in the UI
         if not hasattr(self, 'service_groups'):
