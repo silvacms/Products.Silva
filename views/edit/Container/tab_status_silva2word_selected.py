@@ -17,6 +17,10 @@ model.security_trigger()
 if not request.has_key('refs') or not request['refs']:
     return view.tab_status(message_type='error', message='No items were selected, so nothing is exported')
 
+objects = []
+for ref in request['refs'].split('||'):
+    objects.append(model.resolve_ref(ref))
+
 if request.has_key('with_sub_publications') and request['with_sub_publications']:
     with_sub_publications = 1
 
@@ -27,13 +31,7 @@ description = 'No description'
 if request.has_key('description') and request['description']:
     description = request['description']
 
-objects = []
-for ref in request['refs'].split('||'):
-    objects.append(model.resolve_ref(ref))
-
 data = model.get_xml_for_objects(objects, with_sub_publications, export_last_version)
-
-view.cupboard.set('XML', data)
 
 if not request['email']:
     return view.tab_status(message_type='error', message='You have not entered your e-mail address')

@@ -9,7 +9,7 @@
     condition="view/has_access">
     <h2>
       <img tal:replace="structure python:view.render_icon(model.meta_type)" />
-      &nbsp;Access Permissions for:
+      &nbsp;Access Settings for:
       <span class="folder-title"
         tal:content="structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">
         title
@@ -360,8 +360,7 @@
                   </label></b>
                   <tal:block tal:condition="python: group not in 
                     here.service_groups.listAllGroups()">
-                      &lt;broken&gt; <!-- XXX replace this by something nice
-                      -->
+                      &lt;broken&gt; <!-- XXX replace this by something nice -->
                   </tal:block>
                 </td>
                 <td align="right"
