@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -12,6 +12,9 @@ from IDataSource import IDataSource
 # Silva
 from Asset import Asset
 import SilvaPermissions
+# Formulator
+from Products.Formulator.Form import Form, BasicForm
+from Products.Formulator.StandardFields import StringField, IntegerField
 
 class DataSource(Asset):
     """A base class for data source
@@ -60,6 +63,8 @@ class DataSource(Asset):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'parameter_string_to_dict')
     def parameter_string_to_dict(self, parameter_string):
+        """ String format: "type : name [: default value [: description]]"
+        """
         parameters = {}
         if not parameter_string:
             return parameters
@@ -81,8 +86,24 @@ class DataSource(Asset):
                 if len(values) > 3:
                     description = values[3]
             parameters[name] = (type, default_value, description)
-
         return parameters
 
-    
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'parameter_as_form')
+    def parameter_values_as_form(self, parameters):
+        """ Parameter format: {name: value}
+        """
+        # FIXME (?):
+        # Set form and field(s) as attributes of this data source, mainly
+        # to get these objects in the right security/aquisition machinery.
+        self._form_ = BasicForm()
+        for name, (type, value, description) in self._parameters.items():
+            if parameters.has_key(name):
+                value = parameters[name]
+            self._field_ = StringField(
+                name, title=name, default=value, description=description)
+            self._form_.add_field(self._field_)
+        return self._form_
+
+
 InitializeClass(DataSource)
