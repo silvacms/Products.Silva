@@ -94,6 +94,7 @@ class SidebarService(SimpleItem):
         template = template.replace('{__class__}', 'unselected')
         template = template.replace('{__vein_id__}', tab_name)
         template = template.replace('{__breadcrumb_vein__}', breadcrumb_vein)
+        template = template.replace('{__absolute_url__}', self.absolute_url())
 
         return template
         
