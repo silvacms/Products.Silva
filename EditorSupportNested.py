@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -131,7 +131,7 @@ class EditorSupport(SimpleItem):
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
         return ''.join(result)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_text_as_editable')
     def render_text_as_editable(self, node):
         """Render textual content as editable text.
@@ -192,7 +192,7 @@ class EditorSupport(SimpleItem):
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
         return ''.join(result)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_heading_as_editable')
     def render_heading_as_editable(self, node):
         """Render textual content as editable text.
@@ -216,7 +216,7 @@ class EditorSupport(SimpleItem):
         return self.output_convert_editable(''.join(result))
 
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'replace_text')
     def replace_text(self, node, st):
         """'Parse' the markup to XML. Instead of tokenizing this method uses
@@ -271,7 +271,7 @@ class EditorSupport(SimpleItem):
         for child in newdom.childNodes:
             self._replace_helper(doc, node, child)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'replace_heading')
     def replace_heading(self, node, st):
         """'Parse' the markup into XML using regular expressions
@@ -312,7 +312,7 @@ class EditorSupport(SimpleItem):
                 node.appendChild(newnode)
                 self._replace_helper(doc, newnode, child)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'replace_pre')
     def replace_pre(self, node, text):
         """Replace text in a heading containing node. Does not do much since 
