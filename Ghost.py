@@ -1,4 +1,4 @@
-# Zope
+id# Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -32,7 +32,7 @@ class Ghost(VersionedContent):
         """
         ghost_version = Ghost.inheritedAttribute('get_viewable')(self)
         if ghost_version is None:
-            return ''
+            return 'no title available'
         return ghost_version._get_content().title()
 
     def get_creation_datetime(self):
