@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Id: virtualGroupEdit.zpt,v 1.1 2003/01/20 11:22:53 zagy Exp $
+$Id: virtualGroupEdit.zpt,v 1.2 2003/01/24 08:45:29 zagy Exp $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -10,6 +10,9 @@ $Id: virtualGroupEdit.zpt,v 1.1 2003/01/20 11:22:53 zagy Exp $
 
 <h3>Manage Silva Virtual Group</h3>
 
-There is no user interface, yet.
+<div>
+  This virtual group asset can only be managed from 
+  <span tal:replace="python: '/'.join(here.valid_path)" />
+</div>
 
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>
