@@ -1,13 +1,15 @@
 import Document, Folder, Root, ViewRegistry,\
        Publication, Ghost, ContactInfo, Image, Course
 
+product_visibility = None # set to 'Global' to make visible in ZMI
+
 def initialize(context):
      context.registerClass(
           Document.Document,
           constructors = (Document.manage_addDocumentForm,
                           Document.manage_addDocument),
           icon="www/silvadoc.gif",
-	  visibility=None
+	  visibility = product_visibility
           )
      
      context.registerClass(
@@ -15,7 +17,7 @@ def initialize(context):
           constructors = (Folder.manage_addFolderForm,
                           Folder.manage_addFolder),
           icon="www/silvafolder.gif",
-	  visibility=None
+	  visibility = product_visibility
           )  
 
      context.registerClass(
@@ -29,7 +31,7 @@ def initialize(context):
           constructors = (Publication.manage_addPublicationForm,
                           Publication.manage_addPublication),
 	  icon="www/silvapublication.gif",
-	  visibility=None
+	  visibility = product_visibility
           )
 
      context.registerClass(
@@ -37,7 +39,7 @@ def initialize(context):
           constructors = (Ghost.manage_addGhostForm,
                           Ghost.manage_addGhost),
 	  icon="www/silvaghost.gif",
-	  visibility=None
+	  visibility = product_visibility
           )
 
      context.registerClass(
@@ -45,7 +47,7 @@ def initialize(context):
           constructors = (Course.manage_addCourseForm,
                           Course.manage_addCourse),
 	  icon="www/silvacourse.gif",
-	  visibility=None
+	  visibility = product_visibility
           )
      
      context.registerClass(
@@ -53,7 +55,7 @@ def initialize(context):
           constructors = (ViewRegistry.manage_addViewRegistryForm,
                           ViewRegistry.manage_addViewRegistry),
           icon="www/silva_view_registry.gif",
-	  visibility=None
+	  visibility = product_visibility
           )
      
      context.registerClass(
@@ -61,7 +63,7 @@ def initialize(context):
           constructors = (ContactInfo.manage_addContactInfoForm,
                           ContactInfo.manage_addContactInfo),
 	  icon="www/silvacontactinfo.gif",
-	  visibility=None
+	  visibility = product_visibility
           )
      
      context.registerClass(
@@ -69,7 +71,7 @@ def initialize(context):
           constructors = (Image.manage_addImageForm,
                           Image.manage_addImage),
 	  icon="www/silvaimage.gif",
-	  visibility=None
+	  visibility = product_visibility
           )
 
      context.registerClass(
