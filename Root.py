@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Revision: 1.29 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -14,8 +14,7 @@ import install
 # misc
 from helpers import add_and_edit
 
-#icon="www/silvageneric.gif"
-icon="globals/silva.gif"
+icon="www/silvageneric.gif"
 
 class Root(Publication):
     """Root of Silva site.
@@ -35,16 +34,6 @@ class Root(Publication):
     def manage_beforeDelete(self, item, container):
         # since we're root, we don't want to notify our container
         pass
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaViewRegistry,
-                              'reinstall')
-    def refresh_widgets(self):
-        "reinstall all widgets, etc"
-        # XXX quite a hack yet
-        install.unregisterViews(self.service_view_registry)
-        install.registerViews(self.service_view_registry)
-        install.registerCoreWidgets(self)
-        return "Done"
 
     # ACCESSORS
 
