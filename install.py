@@ -184,6 +184,7 @@ def configureMetadata(root):
         {'type':'Silva Root',               'chain':'silva-extra, silva-publication'},
         {'type':'Silva SQL Data Source',    'chain':'silva-content, silva-extra'},
         {'type':'Silva Simple Content',     'chain':'silva-content, silva-extra'},
+        {'type':'Silva Semi Ghost', 'chain': 'silva-content, silva-extra'},
         )
 
     mapping.editMappings(default, tm)
@@ -437,6 +438,8 @@ def registerViews(reg):
     reg.register('public', 'Silva SQL Data Source',
                  ['public', 'SQLDataSource'])
     reg.register('public', 'Silva Ghost Folder', ['public', 'Folder'])
+    reg.register('public', 'Silva Semi Ghost', ['public', 'SemiGhost'])
+    
 
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
