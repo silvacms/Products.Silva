@@ -114,6 +114,10 @@ tr.focus-cycle, th.focus-cycle, td.focus-cycle {
   background : #cccccc;
 }
 
+tr.focus-fixed, td.focus-fixed {
+    background : #b0b0b0;
+}
+
 tr.focus-light, th.focus-light, td.focus-light {
   background : #d0d0d0;
 }
@@ -124,16 +128,16 @@ tr.focus-light-cycle, td.focus-light-cycle {
 
 tr.controls, td.controls {
   color : #e2e9eb;
-  background : #999999;
+  background : #909090;
 }
 
 tr.controls-cycle, th.controls-cycle, td.controls-cycle {
   color : #e2e9eb;
-  background : #a0a0a0;
+  background : #999999;
 }
 
 tr.topcontrols, td.topcontrols {
-  color : #e2e9eb;
+  color : #d0d4d8;
   background : #666666;
 }
 
@@ -170,11 +174,15 @@ td.rowhead {
   color : #555555; 
 }
 
+td.hilight {
+  background : #cfcfcf;
+}
+
 .tablehead3 {
   font-size : 14px; 
   font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif; 
-  color : #e2e9eb; 
+  color : #d0d4d8; 
   background : transparent;
 }
 
@@ -206,13 +214,11 @@ ul.tips-nested {
 }
 
 dt {
-  font-size : 11px; 
-  font-family : verdana, arial, helvetica, sans-serif; 
-  color : #444444; 
   background : transparent;
 }
 
 dd {
+  background : transparent;
   margin-left : 2.5em;
 }
 
@@ -302,7 +308,7 @@ select {
   font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif;
   color : #bce4ee; 
-  background : #666666;
+  background : #555555;
   border-left : 1px solid #a2c9cc;
   border-top : 1px solid #a2c9cc;
   border-right : 1px solid #a2c9cc;
@@ -314,7 +320,7 @@ select {
   font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif;
   color : #f0c0c0; 
-  background : #666666;
+  background : #555555;
   border-left : 1px solid #d7acac;
   border-top : 1px solid #d7acac;
   border-right : 1px solid #d7acac;
@@ -385,10 +391,11 @@ td.tab {
   background : #39988f;
 }
 
+/* was b8cdd0 */
 td.tab-up {
   font-size : 1px;
   color : #330033;
-  background : #b8cdd0;
+  background : #bdd0d0;
 }
 
 td.tab-edge {
@@ -492,7 +499,7 @@ a.buttonlink {
   font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif;
   color : #bce4ee; 
-  background : #666666;
+  background : #555555;
   border : 1px solid #a2c9cc;
   text-decoration : none;
   padding : 0.2em 0.5em 0.1em 0.5em;
@@ -577,6 +584,7 @@ a.index-element {
 .widebody {
   font-size : 11px; 
   font-family : verdana, arial, helvetica, sans-serif; 
+  color : #e4e8ec;
 }
 
 /* feedback from system */
