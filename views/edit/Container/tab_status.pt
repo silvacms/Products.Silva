@@ -210,16 +210,17 @@
               </tbody>
               <tfoot tal:condition="may_change_content">
                 <tr tal:condition="objects">
-                  <th class="controls listing-left"
-                    colspan="5">
-                    <!-- span class="widebody" style="float: right;">
-                    date format: day/month/year hours:minutes
-                    </span -->
+                  <th class="listing-left"
+                    colspan="2">
                     <tal:define define="select_id string:refs">
                       <metal:block use-macro="view/macro_select_all/macros/select_all" />
                     </tal:define>
                   </th>
-                  <th class="controls listing-left">
+                  <th class="align-right"
+                    colspan="3">
+                    day / month / year &nbsp;23:59
+                  </th>
+                  <th>
                   </th>
                 </tr>
                 <tr class="controls inter-controls">
@@ -227,61 +228,17 @@
                     ______________ publication time controls ______________
                   </tal:block>
                   <td class="align-right"
-                  style="vertical-align:middle;"
-                    colspan="2">
-                    <span class="widebody">
-                      date format: day/month/year&nbsp;23:59
-                    </span >
+                    colspan="5">                    
+                    <label class="widebody"
+                      title="access key: alt-m" 
+                      accesskey="m">
+                      publish time:
+                    </label>
+                    <tal:block tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
                   </td>
                   <td class="align-right"
-                    colspan="3">                    
-                    <nobr>
-                      <label class="widebody"
-                        title="access key: alt-m" 
-                        accesskey="m">
-                        publish time:
-                      </label>
-                      <tal:block tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
-                    </nobr>
-                  </td>
-                  <td>
-                    <div class="buttons" style="float:right;">
-                      <tal:block tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
-                    </div>
-                      <label 
-                        for="publish_nested_flag" 
-                        title="access key: alt-i" 
-                        accesskey="i">
-                        <span class="widebody">
-                          <u>i</u>nclude sub- publications?
-                        </span>
-                      </label>
-                  </td>
-                </tr>
-                <tr class="controls inter-controls">
-                  <tal:block replace="nothing">
-                    ______________ expiration time controls ______________
-                  </tal:block>
-                  <td class="align-right"
-                    style="vertical-align:middle;"
-                    colspan="2">
-                    <span class="widebody">
-                      expiration time is optional
-                    </span>
-                  </td>
-                  <td class="align-right"
-                    colspan="3">                    
-                    <nobr>
-                      <label class="widebody"
-                        title="access key: alt-x" 
-                        accesskey="x">
-                        expiration time:
-                      </label>
-                      <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
-                    </nobr>
-                  </td>
-                  <td class="align-right"
-                    style="white-space:nowrap; vertical-align:middle;">
+                    style="vertical-align:bottom; line-height:160%; padding-bottom:0.3em;"
+                    rowspan="2">
                     <tal:block condition="may_approve_content">
                       <label 
                         for="publish_now_flag" 
@@ -291,6 +248,26 @@
                           p<u>u</u>blish&nbsp;now?
                         </span>
                       </label>
+                      <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+                    </tal:block>
+                  </td>
+                </tr>
+                <tr class="controls inter-controls">
+                  <tal:block replace="nothing">
+                    ______________ expiration time controls ______________
+                  </tal:block>
+                  <td class="align-right"
+                    colspan="5">
+                    <label class="widebody"
+                      title="access key: alt-x" 
+                      accesskey="x">
+                      expiration time:
+                    </label>
+                    <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
+                  </td>
+                  <td class="align-right"       tal:replace="nothing"
+                    style="vertical-align:middle;">
+                    <tal:block condition="may_approve_content">
                       <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
                     </tal:block>
                   </td>
@@ -316,7 +293,7 @@
                     <input class="button" 
                       type="submit" 
                       name="tab_status_new_version:method" 
-                      value="New versions" 
+                      value="New version" 
                       title="create new versions of published docs: alt-n" 
                       accesskey="n" />
                     <input class="warning"
@@ -361,6 +338,12 @@
                       title="revoke approval of new versions: alt-v"
                       type="submit"
                       value="Revoke" />
+                    <input class="button" 
+                      type="submit" 
+                      name="tab_status_new_version:method" 
+                      value="New version" 
+                      title="create new versions of published docs: alt-n" 
+                      accesskey="n" />
                   </td>
                   <td class="align-right">
                     <input class="button"
