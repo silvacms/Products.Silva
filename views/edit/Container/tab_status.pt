@@ -271,7 +271,7 @@
     </tr>
     <tr class="controls inter-controls"
       tal:condition="
-        python: approveables or ((revokeables or rejectables) and may_approve_content)">
+        python: approveables or ((revokeables or rejectables or new_versionables) and may_approve_content)">
       <tal:block replace="nothing">
         ______________ publication time controls ______________
       </tal:block>
@@ -313,7 +313,7 @@
     </tr>
     <tr class="controls inter-controls"
       tal:condition="
-        python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)">
+        python: approveables or ((closeables or revokeables or rejectables or new_versionables) and may_approve_content)">
       <tal:block replace="nothing">
         ______________ expiration time controls ______________
       </tal:block>
@@ -410,7 +410,7 @@
           value="open to public"
           title="approve or publish new versions: alt-o"
           accesskey="o"
-          tal:condition="python: approveables or rejectables"
+          tal:condition="python: approveables or rejectables or new_versionables"
           i18n:attributes="value title"
         />
       </td>
