@@ -10,6 +10,7 @@
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <link rel="stylesheet" href="frontend.css" type="text/css" />
+  <link rel="up" href="../../edit" title="Up one level" />
 </head>
 
 <body>
@@ -28,7 +29,7 @@
     accesskey="s">
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
       tal:attributes="href here/globals/silva_32.png/absolute_url | nothing" /></a>
-  &nbsp;Silva &#8211; medium independent publishing<br />
+  &nbsp;Silva &#8211; medium independent content management
 </h2>
 
 <div class="citation"
@@ -59,7 +60,7 @@
   Initial (and continued) development was for <a href="http://www.eur.nl/">Erasmus University Rotterdam</a>.
 </p>
 
-<h4>Infrae Silva team</h4>
+<h4>Infrae Silva crew</h4>
 
 <p style="line-height:1.5em;">
   <a href="mailto:kitblake@infrae.com">Kit Blake</a><br />
@@ -67,6 +68,9 @@
   <a href="mailto:jw@infrae.com">Jan-Wijbrand Kolman</a><br />
   <a href="mailto:guido@infrae.com">Guido Wesdorp</a><br />
   <a href="mailto:gst@infrae.com">Guido Goldstein</a><br />
+  <a href="mailto:eric@infrae.com">Eric Casteleijn</a><br />
+  <a href="mailto:walco@infrae.com">Walco van Loon</a><br />
+  <a href="mailto:roman@infrae.com">Roman Joost</a><br />
   <a href="mailto:torvald@infrae.com">Torvald de Boskat</a><br />
 </p>
 

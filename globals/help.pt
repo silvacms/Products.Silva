@@ -9,6 +9,7 @@
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <link rel="stylesheet" href="frontend.css" type="text/css" />
+  <link rel="up" href="../edit" title="Up one level" />
 </head>
 
 <body>
@@ -18,7 +19,7 @@
     title="Silva info: alt-i"
     accesskey="i">
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
-      tal:attributes="href here/globals/silva_32.png/absolute_url | nothing" />
+      tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
   </a>
 </div>
 
