@@ -20,7 +20,7 @@
           <default type="int">1</default>
           <title>acquire</title>
           <extra></extra>
-          <description>If checked, inherit the allowed addables from above.</description>
+          <description>If checked, inherit the addables from above. Uncheck this to change the allowed addables below.</description>
           <external_validator></external_validator>
         </values>
         <tales>
