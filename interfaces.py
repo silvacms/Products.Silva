@@ -290,6 +290,10 @@ class ISilvaObject(ISecurity):
     def implements_versioned_content():
         """This object implements IVersionedContent."""
 
+    def is_deletable():
+        """Returns True if object is deletable right now
+        """
+        
 class IPublishable(Interface):
     # MANIPULATORS
     def activate():
@@ -327,6 +331,7 @@ class IPublishable(Interface):
 
     def can_deactivate():
         pass
+
 
 class IContainer(ISilvaObject, IPublishable):
     
