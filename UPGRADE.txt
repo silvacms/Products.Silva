@@ -3,25 +3,10 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.1.1
+  Valid for:  Silva 0.9.1.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26.2.8 $
-
-Upgrading from 0.9.1 to 0.9.1.1
-
-  There shouldn't be any problems (also not for upgrading from the beta
-  directly). Just do a 'refresh all' and all things should work. If you 
-  are using Groups, please upgrade to Groups 0.3.2 as it contains a 
-  bugfix. Groups can be found here:
-
-    "Groups 0.3.2":http://www.zope.org/Members/faassen/Groups/Groups-0.3.2.tgz.Upgrading from 0.9.1 beta to 0.9.1
- 
-  There shouldn't be any problems. Just do a 'refresh all' and things
-  should work. If you are using Groups, please upgrade from Groups 0.3 to
-  Groups 0.3.1 as it contains a bugfix. Groups can be found here:
-
-    "Groups 0.3.1":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz.
+  CVS:        $Revision: 1.26.2.9 $
 
 Upgrading from 0.8.6 and below
 
@@ -31,6 +16,15 @@ Upgrading from 0.8.6 and below
   "Silva 0.9.0.4":http://www.zope.org/Members/faassen/Silva/Silva-0.9.0.4.tgz
 
   Please read the UPGRADE.txt included with that release.
+
+Upgrading from 0.9.1 to 0.9.1.x
+
+  There shouldn't be any problems (also not for upgrading from the beta
+  directly). Just do a 'refresh all' and all things should work. If you 
+  are using Groups, please upgrade to Groups 0.3.2 as it contains a 
+  bugfix. Groups can be found here:
+
+    "Groups 0.3.2":http://www.zope.org/Members/faassen/Groups/Groups-0.3.2.tgz.
 
 Upgrading Silva 0.9.0.x to 0.9.1.x
 
@@ -58,10 +52,10 @@ Upgrading Silva 0.9.0.x to 0.9.1.x
 
   Silva Filesystem Products
 
-    In order to upgrade to 0.9.1.1 you need a new version of Silva
-    (0.9.1.1) and FileSystemSite (1.2). Download them here:
+    In order to upgrade to 0.9.1.2 you need a new version of Silva
+    (0.9.1.2) and FileSystemSite (1.2). Download them here:
 
-      * "Silva-0.9.1.1.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.1.tgz
+      * "Silva-0.9.1.2.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.2.tgz
   
       * "FileSystemSite-1.2.tgz":http://www.zope.org/Members/faassen/Silva/FileSystemSite-1.2.tgz
 
@@ -99,7 +93,7 @@ Upgrading Silva 0.9.0.x to 0.9.1.x
 
   Refreshing and upgrading the Silva product
 
-    If you are upgrading from 0.9 to 0.9.1.1, you need to upgrade the
+    If you are upgrading from 0.9 to 0.9.1.2, you need to upgrade the
     content of Silva, as some of the structures have changed. After
     the restart, go to 'service_extensions' in the Silva Root as Zope
     manager and click the 'upgrade content' button. This will
@@ -107,7 +101,7 @@ Upgrading Silva 0.9.0.x to 0.9.1.x
     upgrade the Silva content that needs upgrading. Note that this
     will take a while if your site is large.
 
-    Upgrading the content from 0.9 to 0.9.1.1 will change the following
+    Upgrading the content from 0.9 to 0.9.1.2 will change the following
     things:
   
       * List titles are changed to headings. The list title option is

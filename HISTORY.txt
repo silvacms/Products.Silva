@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.24 $
+$Revision: 1.47.2.25 $
 
 Silva changes
 
@@ -19,8 +19,9 @@ Silva changes
           or in a subcontainer of this container. If not, the path will be
           an absolute path.
 
-        - Docma queue viewer is now on both import and export screen. On import
-          only Silva XML files are shown, on export only Word documents.
+        - Docma queue viewer is now on both import and export screen. On
+          import only Silva XML files are shown, on export only Word
+          documents.
 
         - Export screen prefills email address and description.
 
