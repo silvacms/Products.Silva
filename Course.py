@@ -50,13 +50,6 @@ class Course(VersionedContent, EditorSupport):
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'xml_url')
-    def xml_url2(self):
-        """Get URL for xml data.
-        """
-        return self.absolute_url() + '/' + self.get_unapproved_version()
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title')
     def get_title(self):
         """Get title. If we're the default document,
@@ -85,11 +78,6 @@ class CourseVersion(SimpleItem.SimpleItem):
         self.id = id
         self.title = title 
         self._data = { 'course_title' : title}
-        self.xml = ParsedXML(id, '<doc><goal /><content /></doc>')
-        #self.content = ParsedXML(id, '<doc></doc>')
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'xml')
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_data')

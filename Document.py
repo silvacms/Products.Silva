@@ -91,13 +91,6 @@ class Document(VersionedContent, EditorSupport):
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'xml_url')
-    def xml_url2(self):
-        """Get URL for xml data.
-        """
-        return self.absolute_url() + '/' + self.get_unapproved_version()
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title')
     def get_title(self):
         """Get title. If we're the default document,
