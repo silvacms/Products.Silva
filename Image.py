@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.32 2004/07/21 09:22:35 jw Exp $
+# $Id: Image.py,v 1.50.4.1.6.33 2004/07/21 09:24:12 jw Exp $
 
 # Python
 import re, string
@@ -274,7 +274,7 @@ class Image(Asset):
         if y2 > bbox[3]:
             y2 = bbox[3]
         if x1 >= x2 or y1 >= y2:
-            raise ValueError, "'%s' defines an impossible croping" % (crop, )
+            raise ValueError, "'%s' defines an impossible cropping" % (crop, )
         return (x1, y1, x2, y2)
 
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
