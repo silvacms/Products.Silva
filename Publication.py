@@ -53,5 +53,8 @@ def manage_addPublication(self, id, title, REQUEST=None):
     object = Publication(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
+    # add doc
+    if create_default:
+        object.manage_addProduct['Silva'].manage_addDocument('index', '')
     add_and_edit(self, id, REQUEST)
     return ''
