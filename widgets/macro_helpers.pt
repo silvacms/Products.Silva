@@ -1,11 +1,13 @@
+<html>
+
 <div metal:define-macro="edit_top" tal:omit-tag="">
-<tr class="halfline" tal:condition="python:not is_embedded">
-  <td class="transparent" colspan="4">
+<tr class="halfline invisible" tal:condition="python:not is_embedded">
+  <td class="invisible" colspan="4">
     <a name="focus"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></a>
   </td>
 </tr>
 <tr>
-  <td class="transparent" width="16">
+  <td class="invisible" width="16">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="20" border="0" />
   </td>
   <th align="left">
@@ -19,14 +21,14 @@
 </div>
 
 <div metal:define-macro="edit_bottom_start" tal:omit-tag="">
-  <td class="transparent" width="16">
-    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="22" />
+  <td class="invisible" width="16">
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" />
   </td>
 </div>
 
 <div metal:define-macro="edit_bottom_controls" tal:omit-tag="">
-  <td align="right" width="25%">&nbsp;&nbsp;
-    <input class="button" type="submit" value=" Save " title="Access key: alt-s" accesskey="s"
+  <td class="align-right">
+    <input class="button" type="submit" value=" Save " title="access key: alt-s" accesskey="s"
       tal:attributes="name string:${rel_url_start}/save:method" id="default_submit" />&nbsp; 
     <input class="button" type="submit" value=" Save and exit " title="Access key: alt-e" accesskey="e"
       tal:attributes="name string:${rel_url_start}/save_and_exit:method" />&nbsp;
@@ -41,54 +43,54 @@
       setAutoSave();
     </script>
   </td>
-  <div metal:use-macro="container/macro_helpers/macros/empty_buttons" />
 </div>
 
 <div metal:define-macro="edit_bottom_end" tal:omit-tag="">
-<tr tal:condition="not:disable_insert">
-  <td align="right"><a title="insert element" tal:attributes="href string:${url_start}/insert_mode">
+<tr class="invisible" tal:condition="not:disable_insert">
+  <td class="invisible" align="right"><a title="insert element" tal:attributes="href string:${url_start}/insert_mode">
   <img tal:condition="python:not is_embedded" tal:attributes="src string:${silva_root}/globals/insert.gif" width="16" height="16" alt="insert element" border="0" />
   <img tal:condition="python:is_embedded" tal:attributes="src string:${silva_root}/globals/insert_low.gif" width="16" height="7" alt="insert element" border="0" /></a>
   </td>
-  <td class="focus-cycle" colspan="2"
-     tal:attributes="class python:test(is_embedded, 'focus-cycle', 'transparent')"><span class="halfline">&nbsp;</span></td>
-  <td></td>
+  <td class="invisible" colspan="2"
+     tal:attributes="class python:test(is_embedded, 'odd', 'invisible')"><span class="halfline">&nbsp;</span></td>
+  <td class="invisible"></td>
 </tr>
 </div>
 
 <div metal:define-macro="normal_insert" tal:omit-tag="">
 <tr tal:condition="python:mode != 'insert' and not disable_insert">
-  <td align="left" width="16"
+  <td class="invisible" align="left" width="16"
     tal:condition="python:not is_embedded">
     <a title="insert element" tal:attributes="href string:${url_start}/insert_mode" href="insert_mode"><img tal:attributes="src string:${silva_root}/globals/insert.gif" width="16" height="16" alt="insert element" border="0" /></a>
   </td>
-  <td align="left" width="16"
+  <td class="invisible" align="left" width="16"
     tal:condition="python:is_embedded"><a title="insert line item" tal:attributes="href string:${url_start}/insert_mode" href="insert_mode"><img tal:attributes="src string:${silva_root}/globals/insert_now.gif" width="16" height="7" alt="insert item" border="0" /></a></td>
   <td tal:attributes="class insert_cell_class" colspan="2"><span class="halfline">&nbsp;</span></td>
-  <td class="transparent" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
+  <td class="invisible" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
 </tr>
 <form tal:condition="python:mode == 'insert'" action="." method="POST" tal:omit-tag="is_embedded">
 <tr class="halfline" tal:condition="python:not is_embedded">
-  <td class="transparent" colspan="4">
+  <td class="invisible" colspan="4">
     <a name="focus"><img width="1" height="4" tal:attributes="src string:${silva_root}/globals/pixel.gif" /></a>
   </td>
 </tr>
-<tr class="controls-cycle">
-  <td class="transparent" width="16"><img width="16" height="28" tal:attributes="src string:${silva_root}/globals/pixel.gif" /></td>
+<tr class="inter-controls">
+  <td class="invisible" width="16"><img width="16" height="16" tal:attributes="src string:${silva_root}/globals/pixel.gif" /></td>
   <td colspan="2">
-    <span class="subhead">&nbsp;Add element</span>&nbsp;&nbsp;
-    <select name="what" notal:attributes="onChange string:location.href='${url_start}/insert?what='+this.options[this.selectedIndex].value">
+    add element&nbsp;
+    <select class="manipulator"
+      name="what">
       <option tal:replace="nothing" value="" disabled="disabled">Select item....</option>
       <option tal:repeat="item python:here.get_allowed_info(wr_name, node)" 
         tal:attributes="value python:item[1]" tal:content="python:item[0]"></option>
-    </select>&nbsp;&nbsp;&nbsp;&nbsp;
+    </select>
     <input tal:attributes="name string:${rel_url_start}/insert:method" title="Access key: alt-i" accesskey="i"
       class="button" type="submit" name="submit_method" value=" Insert " />
   </td>
-  <td class="transparent" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
+  <td class="invisible" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" border="0" /></td>
 </tr>
 <tr class="halfline" tal:condition="python:not is_embedded">
-  <td class="transparent" colspan="4">
+  <td class="invisible" colspan="4">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="4" />
   </td>
 </tr>
@@ -96,7 +98,7 @@
 </div>
 
 <div metal:define-macro="element_buttons" tal:omit-tag="">
-  <td class="transparent" width="60" align="right" valign="top" nowrap="nowrap">
+  <td class="invisible" width="60" align="right" valign="top" nowrap="nowrap">
   <a title="delete element" tal:condition="not:disable_delete" tal:attributes="href string:${url_start}/delete" onClick="return confirm('Really delete?')" href="delete"><img tal:attributes="src string:${silva_root}/globals/delete.gif" width="16" height="12" alt="delete element" border="0" /></a><img tal:condition="disable_delete" tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
   <a title="move down" tal:condition="not:disable_move_down" tal:attributes="href string:${url_start}/move_down" href="move_down"><img tal:attributes="src string:${silva_root}/globals/down.gif" width="16" height="12" alt="move down" border="0" /></a><img tal:condition="disable_move_down" tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
   <a title="move up" tal:condition="not:disable_move_up" tal:attributes="href string:${url_start}/move_up" href="move_up"><img tal:attributes="src string:${silva_root}/globals/up.gif" width="16" height="12" alt="move up" border="0" /></a><img tal:condition="disable_move_up" tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
@@ -104,9 +106,11 @@
 </div>
 
 <div metal:define-macro="empty_buttons" tal:omit-tag="">
-  <td class="transparent" width="60" align="right" valign="top" nowrap="nowrap">
-  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
-  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
-  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
+  <td class="invisible" width="60" align="right" valign="top" nowrap="nowrap">
+  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="1" />
+  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="1" />
+  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="1" />
   </td>
 </div>
+
+</html>

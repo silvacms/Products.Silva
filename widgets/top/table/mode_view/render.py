@@ -57,7 +57,8 @@ for child in node.childNodes:
 
 table = []
 table.append("""<table class="silvatable %s" width="100%%" cellspacing="0" cellpadding="3px">""" % (type))
-table.append("""<caption>%s</caption>""" % (caption))
+# this is always empty in rendered html
+# table.append("""<caption>%s</caption>""" % (caption))
 for col in columns_info:
     table.append("""<col width="%s" align="%s" valign="top"/>""" % (
         col['html_width'], col['align']))

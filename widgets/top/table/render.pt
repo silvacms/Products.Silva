@@ -3,23 +3,25 @@
     global disable_move_up python:1;
     global disable_move_down python:1;
     global columns_info here/get_columns_info" />
+
 <div metal:use-macro="container/macro_embed_view/macros/embed_view">
-<div metal:fill-slot="embed_controls"  class="table-bg">
+<div metal:fill-slot="embed_controls">
 <table border="0" width="100%" cellspacing="0">
-<tr class="controls-cycle">
-  <td class="rowhead">
+<tr class="inter-controls">
+  <td>
     &nbsp;Column settings
   </td>
-  <td align="right">
+  <td class="align-right">
     <input class="button" type="submit" tal:attributes="name string:${rel_url_start}/add_column:method" value="Add column" />&nbsp;
-    <input class="warningbutton" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="Delete column" />&nbsp;
+    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="Delete column" />&nbsp;
   </td>
 </tr>
 </table>
-<table border="0" width="100%" cellspacing="1">
-<tr class="focus">
-   <td tal:replace="nothing"><img tal:attributes="src string:${here/silva_root}/globals/pixel.gif" width="25" height="1" /></td>
-  <td align="center" tal:repeat="info columns_info" tal:attributes="align info/align; width info/html_width">
+<table class="invisible" 
+  border="0" width="100%" cellspacing="1">
+<tr>
+  <td class="invisible"
+     align="center" tal:repeat="info columns_info" tal:attributes="align info/align; width info/html_width">
      <div tal:omit-tag="" tal:define="align_name string:column_align_${repeat/info/index};
                                       width_name string:column_width_${repeat/info/index};
                                       align info/align">
@@ -35,15 +37,37 @@
 </tr>
 </table>
 </div>
+
 <div metal:fill-slot="embedded_elements" tal:omit-tag="">
 <content tal:replace="structure python:here.service_editor.renderElementsCache(node)" />
 </div>
-<div metal:fill-slot="element_controls" tal:omit-tag="">
 
-<table border="0" width="100%" cellspacing="0">
+<div metal:fill-slot="element_controls" tal:omit-tag="">
+Type: 
+<select class="manipulator"
+  name="element_type" tal:define="type python:here.get_type(node)">
+  <option value="plain" 
+          tal:attributes="selected python:test(type == 'plain', 'selected', nothing)">
+    Plain table (bold heading, no borders)
+  </option>
+  <option value="list"
+          tal:attributes="selected python:test(type == 'list', 'selected', nothing)">
+    List table (bold underlined heading, borderless rows)
+  </option>
+  <option value="grid" 
+          tal:attributes="selected python:test(type == 'grid', 'selected', nothing)" >
+    Grid table (bold bordered heading, bordered rows)
+  </option>
+  <option value="datagrid"
+          tal:attributes="selected python:test(type == 'datagrid', 'selected', nothing)">
+    Data grid table (bold borderless heading, bordered rows)
+  </option>
+</select>
+
+<table border="0" cellspacing="0" cellpadding="0"     tal:replace="nothing">
 <tr>
 <td>
-<enable tal:omit-tag="" tal:replace="nothing">
+<enable tal:omit-tag="">
   &nbsp;Move row(s) to position: 
   <select name="move_to">
     <option>(not yet)</option>
@@ -55,25 +79,6 @@
 </enable>
 </td>
 <td align="right">
-Type: 
-<select name="element_type" tal:define="type python:here.get_type(node)">
-  <option value="plain" 
-          tal:attributes="selected python:test(type == 'plain', 'selected', nothing)">
-    Plain table (bold borderless heading, borderless rows)
-  </option>
-  <option value="listing" 
-          tal:attributes="selected python:test(type == 'listing', 'selected', nothing)">
-    Listing table (bold borderless heading, horizontal line, borderless rows)
-  </option>
-  <option value="grid" 
-          tal:attributes="selected python:test(type == 'grid', 'selected', nothing)" >
-    Grid table (bold bordered heading, bordered rows)
-  </option>
-  <option value="datagrid"
-          tal:attributes="selected python:test(type == 'datagrid', 'selected', nothing)">
-    Data grid table (bold borderless heading, bordered rows)
-  </option>
-</select>
 </td>
 </tr>
 </table>

@@ -1,3 +1,5 @@
+<html>
+
 <div metal:define-macro="normal_view" tal:omit-tag="">
 <init tal:omit-tag=""
   tal:define="
@@ -8,9 +10,9 @@
     global mode here/get_mode;
     global is_embedded is_embedded | nothing;
     global edit_or_nest python:test(wr_name == 'service_nlist_editor', 'nest_element.gif', 'edit_element.gif');
-    global color python:test(is_embedded, 'focus', None);
+    global color python:test(is_embedded, 'even', 'invisible');
     global content_cell_class python:test(mode == 'done', 'post-focus', color);
-    global insert_cell_class python:test(is_embedded, 'focus-cycle', color);
+    global insert_cell_class python:test(is_embedded, 'odd', color);
     global disable_edit disable_edit | nothing;
     global disable_insert disable_insert | nothing;
     global disable_delete disable_delete | nothing;
@@ -20,21 +22,23 @@
     global rel_url_start string:${request/xml_rel_url}/${node_path}/edit;
     global display_name_method nocall: here/service_doc_editor/getDisplayName" />  
 <!--(m-n-v)-->
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
-<tr tal:condition="python:mode == 'done' and not is_embedded" class="transparent">
+<table class="listing"
+  style="margin-bottom:0;"
+  width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr class="invisible" tal:condition="python:mode == 'done' and not is_embedded">
   <td class="halfline" colspan="4">
     <a name="focus"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="4" /></a>
   </td>
 </tr>
-<tr valign="top">
-  <td tal:condition="not:disable_edit" class="transparent" width="16">
+<tr class="invisible" valign="top">
+  <td class="invisible" tal:condition="not:disable_edit" width="16">
     <a href="edit_mode" title="edit element" 
       tal:attributes="
         href string:${url_start}/edit_mode;
         title python:'edit %s' % display_name_method(node.nodeName).lower();
 "><img tal:attributes="src string:${silva_root}/globals/${edit_or_nest}" width="16" height="16" border="0" alt="edit element" /></a>
   </td>
-  <td tal:condition="disable_edit" class="transparent" width="16">
+  <td class="invisible" tal:condition="disable_edit" width="16">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
   </td>
   <td tal:attributes="class content_cell_class" colspan="2">
@@ -45,3 +49,5 @@
 <div metal:use-macro="container/macro_helpers/macros/normal_insert" />
 </table>
 </div>
+
+</html>

@@ -101,11 +101,11 @@
             <select name="element_type" tal:define="type python:node.getAttribute('type')">
               <option value="plain" 
                 tal:attributes="selected python:test(type == 'plain', 'selected', nothing)">
-                Plain table (bold borderless heading, borderless rows)
+                Plain table (bold heading, no borders)
               </option>
-              <option value="listing" 
-                tal:attributes="selected python:test(type == 'listing', 'selected', nothing)">
-                Listing table (bold borderless heading, horizontal line, borderless rows)
+              <option value="list" 
+                tal:attributes="selected python:test(type == 'list', 'selected', nothing)">
+                Listing table (bold underlined heading, borderless rows)
               </option>
               <option value="grid" 
                 tal:attributes="selected python:test(type == 'grid', 'selected', nothing)" >

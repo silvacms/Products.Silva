@@ -24,7 +24,7 @@
 &nbsp;&nbsp;&nbsp;
 </enable>
 </td>
-<td align="right">
+<td class="align-right">
 Type: 
 <select name="element_type">
 <option value="disc"

@@ -1,3 +1,5 @@
+<html>
+
 <metal:block define-macro="edit_view">
 <tal:block 
   define="global silva_root here/silva_root;
@@ -17,10 +19,10 @@
     global rel_url_start string:${request/xml_rel_url}/${node_path}/edit" />  
 <form name="focusbox" action="." method="POST" tal:omit-tag="is_embedded">
 <!--(m-e-v)-->
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<table class="listing" width="100%" cellspacing="0" cellpadding="0" border="0">
 <div metal:use-macro="container/macro_helpers/macros/edit_top" />
-<tr class="focus" valign="top">
-  <td class="transparent"></td>
+<tr class="even" valign="top">
+  <td class="invisible"></td>
   <td colspan="2"
     tal:attributes="colspan python:test(disable_notes, 2, nothing);
       class content_cell_class">
@@ -29,14 +31,16 @@
   <td tal:condition="not:disable_notes">
     <div metal:define-slot="edit_notes">_____ notes get slotted in ____ </div>
   </td>
-  <td class="transparent"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" border="0" /></td>
+  <td class="invisible"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" border="0" /></td>
 </tr>
-<tr class="controls">
+<tr class="inter-controls">
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_start" tal:omit-tag="" />
-<td align="right"><div metal:define-slot="element_controls">&nbsp;</div></td>
+<td class="align-right"><div metal:define-slot="element_controls">&nbsp;</div></td>
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_controls" tal:omit-tag="" />
 </tr>
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_end" tal:omit-tag="" />
 </table>
 </form>
 </metal:block>
+
+</html>

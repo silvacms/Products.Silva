@@ -70,7 +70,7 @@ else:
         child.setAttribute('value', node.input_convert(default_value))
         node.appendChild(child)
 
-type = 'listing'
+type = 'list'
 if request.has_key('element_type'):
     type = request['element_type']
 node.setAttribute('type', node.input_convert(type))

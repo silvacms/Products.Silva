@@ -6,46 +6,46 @@
   <div class="margins">
   <table cellpadding="2" border="0" width="100%">
     <tr>
-      <td colspan="1" width="10%">
+      <td class="invisible align-right" colspan="1" width="10%">
         <input type="button" class="button" name="" value="Get image reference" title="Access key: alt-g" accesskey="g"
           tal:define="asset_context python:here.get_start_container();"
           tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Image&asset_context=%s\', \'_reference_\', \'focusbox\', \'path\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))" />
       </td>
-      <td colspan="2">  
+      <td class="invisible align-right" colspan="2">  
         <input style="width:100%;" type="text" name="path" value=""
           tal:attributes="value python:node.getAttribute('path');"  />
       </td>
     </tr>
     <tr>
-      <td colspan="1" align="right">
-        Enter URL to link to:
+      <td class="invisible align-right" colspan="1">
+        or enter URL to link to:
       </td>
-      <td colspan="2">  
+      <td class="invisible align-right" colspan="2">  
         <input style="width:100%;" type="text" name="link" value=""
           tal:attributes="value python:node.getAttribute('link');"  />
       </td>
     </tr>
     <tr>
-      <td colspan="3">
+      <td class="invisible" colspan="3">
         <span class="subhead">Image alignment:</span>
       </td>
     </tr>
     <tr>
-      <td>
+      <td class="invisible">
         <input type="radio" name="alignment" value="float-left" id="float-left"
           tal:condition="python:alignment != 'float-left'" />
         <input type="radio" name="alignment" value="float-left" id="float-left" checked=""
           tal:condition="python:alignment == 'float-left'" />
         <label for="float-left">Float left</label><br />
       </td>
-      <td>
+      <td class="invisible">
         <input type="radio" name="alignment" value="none" id="none"
           tal:condition="python:alignment != ''" />
         <input type="radio" name="alignment" value="none" id="none" checked=""
           tal:condition="python:alignment == ''" />
         <label for="none">Default</label><br />
       </td>
-      <td>
+      <td class="invisible">
         <input type="radio" name="alignment" value="float-right" id="float-right"
           tal:condition="python:alignment != 'float-right'" />
         <input type="radio" name="alignment" value="float-right" id="float-right" checked=""
@@ -54,21 +54,21 @@
       </td>
     </tr>
     <tr>
-      <td>
+      <td class="invisible">
         <input type="radio" name="alignment" value="image-left" id="image-left"
           tal:condition="python:alignment != 'image-left'" />
         <input type="radio" name="alignment" value="none" id="image-left" checked=""
           tal:condition="python:alignment == 'image-left'" />
         <label for="image-left">Align left</label><br />
       </td>
-      <td>
+      <td class="invisible">
         <input type="radio" name="alignment" value="image-center" id="image-center"
           tal:condition="python:alignment != 'image-center'" />
         <input type="radio" name="alignment" value="image-center" id="image-center" checked=""
           tal:condition="python:alignment == 'image-center'" />
         <label for="image-center">Align center</label><br />
       </td>
-      <td>
+      <td class="invisible">
         <input type="radio" name="alignment" value="image-right" id="image-right"
           tal:condition="python:alignment != 'image-right'" />
         <input type="radio" name="alignment" value="image-right" id="image-right" checked=""

@@ -1,10 +1,10 @@
 <tal:block 
   define="global is_embedded python:1;
-    global content_cell_class string:table-focus" />
+    global content_cell_class string:post-focus" />
 <div metal:use-macro="container/macro_normal_view/macros/normal_view">
-<div metal:fill-slot="node_content" class="table-bg">
+<div metal:fill-slot="node_content">
   <table border="0" width="100%" cellspacing="1">
-    <tr class="focus" valign="top" tal:attributes="colspan here/get_columns">
+    <tr valign="top" tal:attributes="colspan here/get_columns">
 <enable tal:omit-tag="" tal:replace="nothing">
       <td valign="top">
         <input type="checkbox" name="prefixed nodepath?" /><br />

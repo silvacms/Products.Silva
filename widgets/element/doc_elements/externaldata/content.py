@@ -30,7 +30,7 @@ except:
 # FIXME: Using CSS this hairball is slightly less hairy
 # than it used to be
 caption = escape_entities(datasource.get_title())
-type = node.getAttribute('type') or 'listing'
+type = node.getAttribute('type') or 'list'
 show_headings = node.getAttribute('show_headings') or 'true'
 show_caption = node.getAttribute('show_caption') or 'true'
 
