@@ -71,6 +71,25 @@
     </thead>
 
     <tbody>
+      <tr tal:condition="groups">
+        <th class="listing-left">
+        </th>
+        <th>
+          Name
+        </th>
+        <th>
+          Title
+        </th>
+        <th>
+          Type
+        </th>
+        <th>
+          Modified
+        </th>
+        <th>
+          Modifier
+        </th>
+      </tr>
       <tal:repeat repeat="group groups">
         <tal:define define="iterate repeat/group/odd">
           <tr tal:attributes="class python:iterate and 'odd' or 'even'">
@@ -81,7 +100,7 @@
                 value=""
                 tal:attributes="value group/id;"
               />
-              <a class="blacklink"
+              <a class="published"
                 title="Edit"
                 tal:attributes="
                   href string:${group/absolute_url}/edit;
@@ -90,7 +109,7 @@
               </a>
             </td>
             <td>
-              <a class="blacklink"
+              <a class="published"
                 title="edit this group"
                 tal:attributes="href string:${group/absolute_url}/edit"
                 i18n:attributes="title">
@@ -104,15 +123,13 @@
                 title="edit this group"
                 tal:attributes="href string:${group/absolute_url}/edit"
                 i18n:attributes="title">
-                <tal:block replace="group/get_title_or_id">
+                <tal:block replace="group/get_title">
                   title
                 </tal:block>                    
               </a>
             </td>
-            <td>
-              (<i tal:content="structure group/meta_type">
-              title
-              </i>)
+            <td tal:content="structure group/meta_type">
+              type
             </td>
             <td>
               <tal:block replace="structure python:view.service_utils.backend_short_datetime_to_str(group.get_modification_datetime()) or default">
