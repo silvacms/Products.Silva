@@ -4,14 +4,14 @@
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
+<span tal:replace="nothing"> _______ closed message _______ </span>
+<div class="alert" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
+  <b>This is a closed version. You see it, but the public won't!</b>
+</div>
+
 <tal:block condition="exists: model/layout_macro.html/macros/previewer"
   tal:on-error="structure string:<div class='alert'>There is a problem in layout_macro.html, or in a script that's called in it. Use the 'Presentation preview' link to see what's wrong.</div>">
 <metal:preview use-macro="model/layout_macro.html/macros/previewer">
-
-<span tal:replace="nothing"> _______ closed message _______ </span>
-<div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
-  <b class="warning">This is a closed version. You see it, but the public won't!</b>
-</div>
 
 <!-- start Silva content -->
 <div metal:fill-slot="main" tal:omit-tag="" 
@@ -21,7 +21,6 @@
 <!-- end Silva content -->
 
 </metal:preview>
-
 </tal:block>
 
 <table border="0" width="100%" cellspacing="0" cellpadding="0"
