@@ -1,12 +1,3 @@
-## Script (Python) "add_submit"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
 from Products.Silva.helpers import check_valid_id, IdCheckValues
 
 model = context.REQUEST.model
