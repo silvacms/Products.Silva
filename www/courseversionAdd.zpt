@@ -1,13 +1,13 @@
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
-<h2 tal:define="form_title string:Add Silva Ghost"
+<h2 tal:define="form_title string:Add Course Version"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
 <p class="form-help">
-Add Silva Ghost.
+Add Course Version.
 </p>
 
-<form action="manage_addGhost" method="post">
+<form action="manage_addCourseVersion" method="post">
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">

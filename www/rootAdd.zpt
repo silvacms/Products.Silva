@@ -1,10 +1,10 @@
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
-<h2 tal:define="form_title string:Add XA Root"
+<h2 tal:define="form_title string:Add Silva Root"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
 <p class="form-help">
-Add a XA Root.
+Add a Silva Root.
 </p>
 
 <form action="manage_addRoot" method="post">
