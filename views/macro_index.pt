@@ -171,6 +171,9 @@ function handle_default_action(element, event, action)
       </div>
     </tal:block>
   </tal:block>
+  <tal:block condition="not: model/sec_in_development_mode">
+      <div class="fixed-clear">&nbsp;</div>
+  </tal:block>
 </tal:block>
 <span tal:replace="nothing">
 <!-- ______________ end feedback ______________ -->
