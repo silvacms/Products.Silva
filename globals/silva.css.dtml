@@ -295,24 +295,28 @@ a.index-element {
 /* _____ frontend style sheet for forms editor display ______________________ */
 /* _____ adjust these selectors to match style in your frontend.css _________ */
 
+/* in use? */
 p.frontend {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
   color: #003333;
 }
 
+/* in use? */
 td.frontend {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
   color: #003333;
 }
 
+/* to be deprecated, but first warn users */
 ul.frontend {
   font-size: 11px;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   color: #003333;
 }
 
+/* to be deprecated, but first warn users */
 ol.frontend {
   font-size: 11px;
   font-family: Verdana, Arial, Helvetica, sans-serif;
