@@ -41,7 +41,6 @@ class XSLTRendererBase(Acquisition.Implicit):
         style = self.stylesheet()
         doc = libxml2.parseDoc(source_xml)
         
-        print repr(style)
         result = style.applyStylesheet(doc,{})
         result_as_string = style.saveResultToString(result)
 
