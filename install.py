@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.104 2004/10/08 17:19:37 guido Exp $
+# $Id: install.py,v 1.105 2004/12/01 16:07:14 guido Exp $
 """Install for Silva Core
 """
 # Python
@@ -335,6 +335,7 @@ def configureSecurity(root):
     root.manage_permission('Approve Silva content', roleinfo.EDITOR_ROLES)
     root.manage_permission('Change Silva access', roleinfo.CHIEF_ROLES)
     root.manage_permission('Change Silva content', roleinfo.AUTHOR_ROLES)
+    root.manage_permission('Delete objects', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Manage properties', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Read Silva content', roleinfo.READER_ROLES)
     # authenticated needs this permission as we are not
