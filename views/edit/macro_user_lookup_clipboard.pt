@@ -33,7 +33,7 @@
                     accesskey="l"
                     i18n:translate="lookup_users"
                     i18n:attributes="title">
-                    Lookup users...
+                    lookup users...
                   </a>
                 </metal:block>
               </td>

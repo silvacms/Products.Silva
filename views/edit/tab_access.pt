@@ -60,7 +60,7 @@
               <tr class="top-controls">
                 <td colspan="3">
                   <h3 i18n:translate="grant_revoke_local_roles">
-                    Grant or revoke local roles for users
+                    grant or revoke local roles for users
                   </h3>
                 </td>
               </tr>
@@ -186,7 +186,7 @@
               style="empty-cells:show;">
               <tr class="top-controls">
                 <td colspan="3">
-                  <h3 i18n:translate="pending_requests_for_roles">Pending requests for roles</h3>
+                  <h3 i18n:translate="pending_requests_for_roles">pending requests for roles</h3>
                 </td>
               </tr>
               <tr>
@@ -240,7 +240,7 @@
                   <input class="warning"
                     name="tab_access_deny_access:method"
                     type="submit"
-                    value="Deny role"
+                    value="deny role"
                     title="access key: alt-d"
                     accesskey="d"
                     i18n:attributes="title value"
@@ -252,7 +252,7 @@
                     <input class="button"
                       name="tab_access_allow_access:method"
                       type="submit"
-                      value="Grant role"
+                      value="grant role"
                       title="access key: alt-g"
                       i18n:attributes="title value"
                       accesskey="g"
@@ -316,11 +316,10 @@
               <span class="subhead">
                 <span class="warning" i18n:translate="groups_service_not_defined">A Groups Service is not installed</span>
               </span><br /><span i18n:translate="groups_service_not_defined_explanation">
-              You are seeing this message because the Silva Groups 
-              extension is installed on the file system, 
-              but a Groups Service hasn't been added to this Silva 
-              instance. To install one, go to the 
-              <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services">Silva Root in the ZMI</a>, choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>. 
+              You are seeing this message because the Silva Groups extension is installed on the file system, 
+              but a Groups Service hasn't been added to this Silva instance. To install one, go to the 
+              <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services">Silva Root in the ZMI</a>,
+              choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>. 
               No further configuration is necessary.</span>
             </p>
           </div>
@@ -350,7 +349,7 @@
                 <tr class="top-controls">
                   <td colspan="3">
                     <h3 i18n:translate="grant_revoke_local_roles_for_groups">
-                      Grant or revoke local roles for groups of users
+                      grant or revoke local roles for groups
                     </h3>
                   </td>
                 </tr>
