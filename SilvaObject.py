@@ -223,7 +223,10 @@ class SilvaObject(Security):
         method's name is less, er, hackish... (e.g. when visible in error
         messages and trace-backs).
         """
-        pass
+        # create a member implicitely, if not already there
+        if hasattr(self.get_root(),'service_members'):
+            self.get_root().service_members.get_member(
+                self.REQUEST.AUTHENTICATED_USER.getUserName())
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_xml')
