@@ -1,11 +1,18 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
 from UserManagement import user_management
 import Interfaces
+
+# Are groups available?
+try:
+    from ZGroups import ZGroupsMapping
+    groups_enabled = 1
+except:
+    groups_enabled = 0
 
 interesting_roles = ['Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager']
 
@@ -132,8 +139,9 @@ class Security:
                     break
         return result
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'sec_get_userids_deep')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_userids_deep')
+    #DEPRECATED
     def sec_get_userids_deep(self):
         """Get all userids that have local roles in anything under this
         object.
@@ -146,6 +154,7 @@ class Security:
             dict[userid] = 0
         return dict.keys()
 
+    #DEPRECATED
     def _sec_get_userids_deep_helper(self, l):
         for userid in self.sec_get_userids():
             l.append(userid)
@@ -190,8 +199,9 @@ class Security:
         return [role for role in self.get_local_roles_for_userid(userid)
                 if role in interesting_roles]
     
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'sec_get_roles')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_roles')
+    #DEPRECATED
     def sec_get_roles(self):
         """Get all roles defined here that we can manage, given the
         roles of this user.
@@ -315,6 +325,13 @@ class Security:
         for userid in userids:
             d[userid] = self.sec_get_user_info(userid)
         return d
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_groups_enabled')
+    def sec_groups_enabled(self):
+        """Are groups enabled in this Silva site
+        """
+        return groups_enabled
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_groups')
