@@ -291,7 +291,7 @@ def configureSecurity(root):
     # chief editors and up may also place groups and Datasources.
     root.manage_permission('Add Silva Groups', all_chief)
     root.manage_permission('Add Silva Virtual Groups', all_chief)
-    root.manage_permission('Add Silva SQL Data Sources',, all_chief)
+    root.manage_permission('Add Silva SQL Data Sources', all_chief)
     
     # everybody may view root by default XXX
     # (is this bad in case of upgrade/refresh)
