@@ -11,4 +11,4 @@ wr = getattr(context, wr_name)
 name = wr.getDisplayName(node.nodeName)
 if same_type(name, u' '):
   name = node.output_convert_editable(name)
-return name
+return name.capitalize()

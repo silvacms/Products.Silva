@@ -8,5 +8,5 @@
 ##title=
 ##
 wr = getattr(context, wr_name)
-return [(wr.getDisplayName(name), name)
+return [(wr.getDisplayName(name).capitalize(), name)
         for name in wr.getAllowed(node.parentNode.nodeName)]
