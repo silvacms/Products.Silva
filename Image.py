@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.24 2003/03/03 17:37:42 jw Exp $
+# $Id: Image.py,v 1.25 2003/03/05 10:19:58 zagy Exp $
 
 # Python
 import re
@@ -230,7 +230,6 @@ class Image(Asset):
             return    
         if self.web_scale == '100%' and image.format == self.web_format:
             self.image = self.hires_image
-            print "using as is"
             return
         web_image_data = StringIO()
         web_image = image.resize((width, height), PIL.Image.BICUBIC)
