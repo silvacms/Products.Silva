@@ -23,7 +23,7 @@ Silva changes
 
     Features Added
 
-        - Bulk import of files (for FIle Assets) and/or images (for Image
+        - Bulk import of files (for File Assets) and/or images (for Image
           Assets) using a zipfile.
 
         - New metadata architecture, which provides multiple configurable
@@ -81,17 +81,36 @@ Silva changes
         - A number of minor bugs, mainly in UI.
         
   0.9.1.5
-                                                                                                
+                                                                                                    
+    Features Added
+                                                                                                    
+        - Bulk import of files (for File Assets) and/or images (for Image
+          Assets) using a zipfile. Note though, that the 091 id
+          checking is less tolerant compared to the 092 id checking.
+                                                                                                    
     Bugs Fixed
-
+                                                                                                    
+        - Removed "Asset reference" asset-type stickyness.
+                                                                                                    
+        - Fixed button for refresh queue when Docma is enabled.
+                                                                                                    
+        - Added a find_indexers utility (accesible through
+          http://server/silva/edit/service_utils/find_indexers) to find all
+          Indexer objects in use.
+                                                                                                    
         - Help text opens in new browser window.
-                                                               
+                                                                                                    
         - Indexer -all non-versioned content actually- can now be deleted.
-
+                                                                                                    
         - Indexer objects now render the correct URLs in virtual host
-          situations.
-
+          situations. Use the 'update index' in the edit tab of Indexer
+          objects to get the Indexers up to date.
+                                                                                                    
         - Setting a TOC level would display one level too much.
+                                                                                                    
+        - Pressing 'Export' in Document's status tab now takes a user to the
+          export screen of the container so the user can indeed (as the text
+          suggests) export to Docma as well as download the content.
 
   0.9.1.4
 
