@@ -74,6 +74,10 @@ Silva changes
         to the object now will return the actual data. This obsoletes
         the need for URL's like "path/to/some/file/download'.
 
+      - A long standing problem with occasional InvalidObjectReference
+        errors when installing or refreshing Silva should now be
+        fixed.
+
   0.9.3.4
   
     Bugs fixed
