@@ -203,7 +203,8 @@
                 </tr>
             </table>
           </div>
-          <img tal:replace="structure python:model.tag(id='image', hires=1)" />
+          <img src=""
+            tal:attributes="src string:${model/absolute_url}/getImage?hires=1&webformat=1" />
         </div>
         
         <script type="text/javascript">
