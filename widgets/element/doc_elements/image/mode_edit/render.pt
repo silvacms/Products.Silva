@@ -7,7 +7,7 @@
   <table cellpadding="2" border="0" width="100%">
     <tr>
       <td colspan="1" width="10%">
-        <input type="button" class="button" name="" value="Get image reference"
+        <input type="button" class="button" name="" value="Get image reference" title="Access key: alt-i" accesskey="i"
           tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Image\', \'_reference_\', \'focusbox\', \'image_path\');;return false;;' % here.get_start_container().absolute_url();" />
       </td>
       <td colspan="2">  
