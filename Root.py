@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.50 $
+# $Revision: 1.51 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -123,6 +123,39 @@ class Root(Publication):
         return "Upgrade of %s succeeded.\nA backup is in %s_09." \
                % (my_id, my_id)
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'start_status_update')
+    def start_status_update(self):
+        """Updates status for objects that need status updated
+
+        Searches the ZCatalog for objects that should be published or closed
+        and updates the status accordingly
+        """
+        if not getattr(self, 'service_catalog', None):
+            return 'No catalog found!'
+        
+        # first get all approved objects that should be published
+        query = {'publication_datetime': DateTime(),
+                 'publication_datetime_usage': 'range:max',
+                 'version_status': 'approved'
+                }
+
+        result = self.service_catalog(query)
+
+        # now get all published objects that should be closed
+        query = {'expiration_datetime': DateTime(),
+                 'expiration_datetime_usage': 'range:max',
+                 'version_status': 'public'
+                }
+
+        result += self.service_catalog(query)
+        
+        for item in result:
+            ob = item.getObject()
+            ob.object()._update_publication_status()
+
+        return 'Status updated'
+        
 InitializeClass(Root)
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
