@@ -1,10 +1,9 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.52 $
 
 Silva changes
   
-  xxx
+  0.9.2 
 
     Features Added
 
@@ -19,14 +18,23 @@ Silva changes
 
     Bugs Fixed
 
-        - Now refreshes all installed products before an "upgrade all" 
-          action.
+        - Put your 0.9.2 specific bug fixes here..
+	
+  0.9.1
+
+    Bugs Fixed
 
         - Fix where the Groups administration button was shown, even
-          if no service_groups was available.
+          if no service_groups was available.      
 
-        - Fixed bug where a new connection id was not updated correctly on
-          the SQL Datasource Asset
+        - Now refreshes all installed products before an 
+          "upgrade all" action.
+
+        - Fixed bug where a new connection id was not updated correctly 
+          on the SQL Datasource Asset
+
+        - Indexer objects now show up in public table of contents always
+          if placed (before they never did).
 
   0.9.1 beta
 
