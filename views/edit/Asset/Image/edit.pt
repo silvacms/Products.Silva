@@ -5,66 +5,130 @@
     root_url model/get_root_url;
     title model/get_title_editable;
     breadcrumb_vein string:Edit;
-">
+    ">
 
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
-
 <metal:fill-slot fill-slot="info">
-<div class="info"
-  tal:condition="model/canScale">
-  <h3 class="info">
-    <img tal:replace="structure icon" /> Image info
-  </h3>
-  <tal:condition condition="not: model/hires_image">
-    <span class="subhead">format</span><br />
-    <span tal:replace="model/getFormat" /> image<br />
-    <span class="subhead">dimensions</span><br />
-    <span 
-      tal:define="
+  <div class="info"
+    tal:condition="model/canScale">
+    <h3 class="info">
+      <img tal:replace="structure icon" /> Image info
+    </h3>
+    <tal:condition condition="not: model/hires_image">
+      <span class="subhead">format</span><br />
+      <span tal:replace="model/getFormat" /> image<br />
+      <span class="subhead">dimensions</span><br />
+      <span 
+        tal:define="
+          img_width python: model.getDimensions()[0];
+          img_height python: model.getDimensions()[1];
+          "
+        tal:on-error="string: unknown"
+        tal:replace="string:${img_width}x${img_height}"
+      />
+    </tal:condition> 
+    <tal:condition condition="model/hires_image">
+      <span class="subhead">format</span><br />
+      <span tal:replace="model/web_format">format</span> image<br />
+      <span class="subhead">dimensions</span><br />
+      <span tal:define="
         img_width python: model.getDimensions()[0];
         img_height python: model.getDimensions()[1];
         "
-      tal:on-error="string: unknown"
-      tal:replace="string:${img_width}x${img_height}"
-    />
-  </tal:condition> 
-  <tal:condition condition="model/hires_image">
-    <span class="subhead">format</span><br />
-    <span tal:replace="model/web_format">format</span> image<br />
-    <span class="subhead">dimensions</span><br />
-    <span tal:define="
-      img_width python: model.getDimensions()[0];
-      img_height python: model.getDimensions()[1];
-      "
-      tal:on-error="string: unknown"
-      tal:replace="string:${img_width}x${img_height}"
-    />, scaled to 
-    <span tal:define="
-      img_width python: model.getCanonicalWebScale()[0];
-      img_height python: model.getCanonicalWebScale()[1];
-      "
-      tal:on-error="string: unknown"
-      tal:replace="string:${img_width}x${img_height}"
-    />
-    <span class="subhead">original</span><br />
-    <a href="" class="underline"
-      title="see the original image"
-      accesskey="v"
-      tal:attributes="href string:${model/absolute_url}/hires_image">view unscaled image</a>
-  </tal:condition>        
-</div>
-<div class="info"
-  tal:condition="not: model/canScale">
-  Note: Silva provides image scaling and conversion when PIL 
-  (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>) 
-  is installed. 
-</div>
+        tal:on-error="string: unknown"
+        tal:replace="string:${img_width}x${img_height}"
+        />, scaled to 
+        <span tal:define="
+          img_width python: model.getCanonicalWebScale()[0];
+          img_height python: model.getCanonicalWebScale()[1];
+          "
+          tal:on-error="string: unknown"
+          tal:replace="string:${img_width}x${img_height}"
+        />
+        <span class="subhead">original</span><br />
+        <a href="" class="underline"
+          title="see the original image"
+          accesskey="v"
+          tal:attributes="href string:${model/absolute_url}/hires_image">view unscaled image</a>
+    </tal:condition>        
+  </div>
+  <div class="info"
+    tal:condition="not: model/canScale">
+    Note: Silva only provides image scaling and conversion when PIL 
+    (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>) 
+    is installed. This seems not to be the case.
+  </div>
 </metal:fill-slot>
 
-<metal:fill-slot fill-slot="additional_tools">
 <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
-</metal:fill-slot>
+<metal:fill-slot fill-slot="additional_tools">
+  <form method="POST" name="form" action="." enctype="multipart/form-data"
+    tal:condition="model/canScale">
+    <table class="listing">
+      <thead>
+        <tal:block replace="nothing">
+          ______________ top controls row ______________
+        </tal:block>
+        <tr class="top-controls">
+          <td colspan="3">
+            <h3>
+              Format and Scaling
+            </h3>
+          </td>
+        </tr>
+      </thead>
+      <tbody tal:define="fields view/scale_form/get_fields">
+        <tr>
+          <th class="align-right"
+            width="12%">
+            Element
+          </th>
+          <th>
+            Content
+          </th>
+          <th width="40%">
+            Note
+          </th>
+        </tr>
+        <tal:repeat repeat="field fields">
+          <tal:define define="iterate repeat/field/odd">
+            <tr tal:attributes="class python:iterate and 'even' or 'odd'">
+              <td class="field-title">
+                <span tal:replace="python:field['title']">
+                  Title</span><span class="warning"
+                  tal:condition="python:field.is_required()">*</span>
+              </td>
+              <td>
+                <input tal:replace="structure python:field.render()" />
+              </td>
+              <td>
+                <span tal:replace="structure python:field.get_value('description')">
+                  comments here (field description)
+                </span>&nbsp;
+              </td>
+            </tr>
+          </tal:define>
+        </tal:repeat>
+      </tbody>
+      <tfoot>
+        <tr class="controls">
+          <td class="align-right"
+            colspan="3">
+            <input class="button"
+              type="submit"
+              name="scale_submit:method"
+              value="Set format and scale"
+              title="access key: alt-s"
+              accesskey="s"
+            />
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
 
+  <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
+</metal:fill-slot>
 </metal:use-macro>
 
 </html>

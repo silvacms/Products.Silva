@@ -3,14 +3,11 @@ model = context.REQUEST.model
 view = context
 
 try:
-    result = view.form.validate_all(context.REQUEST)
+    result = view.scale_form.validate_all(context.REQUEST)
 except FormValidationError, e:
     return view.tab_edit(message_type="error", message=context.render_form_errors(e))
 
-model.sec_update_last_author_info()
-model.set_title(model.input_convert(result['image_title']))
-
-msg = ['Properties changed']
+msg = ['Scaling and/or format changed']
 msg_type = 'feedback'
 
 if model.canScale():

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.35 2003/06/19 10:24:05 jw Exp $
+# $Id: Image.py,v 1.36 2003/06/19 13:01:20 jw Exp $
 
 # Python
 import re, string 
@@ -108,7 +108,7 @@ class Image(Asset):
         if self.hires_image is not None:
             self.hires_image.manage_beforeDelete(self.hires_image, self)
         self.hires_image = self._image_factory(
-            'hires_image', self.get_title().encode('utf-8'), file)
+            'hires_image', self.get_title(), file)
         format = self.getFormat()
         if format in self.web_formats:
             self.web_format = format
@@ -160,7 +160,7 @@ class Image(Asset):
         if callable(height):
             height = height()
         if not (isinstance(width, IntType) and isinstance(height, IntType)):
-            image = self._getPILImage()
+            image = self._getPILImage(self.hires_image)
             width, height = image.size
         return width, height            
 
@@ -169,7 +169,7 @@ class Image(Asset):
         """returns image format (PIL identifier) or unknown if there is no PIL
         """
         try:
-            return self._getPILImage().format
+            return self._getPILImage(self.hires_image).format
         except ValueError:
             return 'unknown'
 
@@ -181,13 +181,13 @@ class Image(Asset):
         elif not hires and webformat:
             image = self.image
         elif hires and webformat:
-            pil_image = self._getPILImage()
+            pil_image = self._getPILImage(self.hires_image)
             pil_image = self._prepareWebFormat(pil_image)
             image_data = StringIO()
             pil_image.save(image_data, self.web_format)
             del(pil_image)
             image = OFS.Image.Image(
-                'custom_image', self.get_title().encode('utf-8'), image_data)
+                'custom_image', self.get_title(), image_data)
         elif not hires and not webformat:
             raise ValueError, "Low resolution image in original format is " \
                 "not supported"
@@ -196,19 +196,33 @@ class Image(Asset):
         else:
             return str(image.data)
         
+    security.declareProtected(SilvaPermissions.View, 'getWebFormat')
+    def getWebFormat(self):
+        """Return file format of web presentation image
+        """
+        try:
+            return self._getPILImage(self.image).format
+        except ValueError:
+            return 'unknown'
+
+    security.declareProtected(SilvaPermissions.View, 'getWebScale')
+    def getWebScale(self):
+        """Return scale percentage / WxH of web presentation image
+        """
+        return '%s' % self.web_scale
+
     security.declareProtected(SilvaPermissions.View, 'canScale')
     def canScale(self):
         """returns if scaling/converting is possible"""
         return havePIL
 
-    def _getPILImage(self):
-        """return PIL of hi res image
+    def _getPILImage(self, img):
+        """return PIL of an image
 
             raise ValueError if no PIL is available
         """
         if not havePIL:
             raise ValueError, "No PIL installed."""
-        img = self.hires_image
         if img is None:
             img = self.image
         if isinstance(img, OFS.Image.Image):
@@ -225,7 +239,7 @@ class Image(Asset):
     def _createWebPresentation(self):
         width, height = self.getCanonicalWebScale()
         try:
-            image = self._getPILImage()
+            image = self._getPILImage(self.hires_image)
         except ValueError:
             # XXX: warn the user, no scaling or converting has happend
             self.image = self.hires_image
@@ -238,7 +252,7 @@ class Image(Asset):
         web_image = self._prepareWebFormat(web_image)
         web_image.save(web_image_data, self.web_format)
         self.image = OFS.Image.Image(
-            'image', self.get_title().encode('utf-8'), web_image_data)
+            'image', self.get_title(), web_image_data)
 
     def _prepareWebFormat(self, pil_image):
         """converts image's mode if necessary"""
@@ -287,7 +301,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
 
     # Copy code from ExtFile, but we don't want a dependency per se:
     id, _title = OFS.Image.cookId(id, title, file)
-    id = string.translate(id.encode('ascii'), TRANSMAP)
+    id = string.translate(id.encode('ascii', 'replace'), TRANSMAP)
 
     if not context.is_id_valid(id):
         return

@@ -1,12 +1,3 @@
-## Script (Python) "upload_submit"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
 from Products.Formulator.Errors import ValidationError, FormValidationError
 model = context.REQUEST.model
 view = context
@@ -21,6 +12,6 @@ try:
 except IOError, e:
     return view.tab_edit(message_type="error", message=e)
 model.sec_update_last_author_info()
-#context.REQUEST.RESPONSE.redirect('%s/edit/tab_edit' % context.container_url())
+
 return container.tab_edit(message_type="feedback", message="Image uploaded.")
 
