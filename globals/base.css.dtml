@@ -176,7 +176,7 @@ td.rowhead {
 }
 
 td.hilight {
-  background : #cfcfcf;
+  background : #ebebeb;
 }
 
 .tablehead3 {
