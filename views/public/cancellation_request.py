@@ -1,4 +1,4 @@
-from Products.Silva import subscriptionerrors
+from Products.Silva import subscriptionerrors as errors
 from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
@@ -11,12 +11,13 @@ if content is None:
 
 try:
     service.requestCancellation(content, request['emailaddress'])
-except subscriptionerrors.EmailaddressError, e:
+except (errors.AlreadySubscribedError, errors.NotSubscribedError), e:
     # We just pretend to have sent email in order not to expose
     # any information on the validity of the emailaddress
     pass
-except subscriptionerrors.SubscriptionError, e:
-    return str(e)
+except errors.SubscriptionError, e:
+    return context.subscriptions(
+        message=_(e), cancel_emailaddress=request['emailaddress'])
 
 return context.subscriptions(
     message=_('Confirmation request for cancellation has been emailed'))

@@ -1,6 +1,6 @@
 
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -57,7 +57,7 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
         self._testException(
-            errors.EmailaddressError, 
+            errors.SubscriptionError, 
             'emailaddress not valid',
             self.service.requestSubscription, self.doc, emailaddress)
         # emailaddress already subscribed
@@ -66,7 +66,7 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
         subscr.subscribe(emailaddress)
         self._testException(
-            errors.EmailaddressError, 
+            errors.AlreadySubscribedError, 
             'emailaddress already subscribed',
             self.service.requestSubscription, self.doc, emailaddress)
 
@@ -83,13 +83,13 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         # invalid emailaddress
         emailaddress = "foo bar baz"
         self._testException(
-            errors.EmailaddressError, 
+            errors.SubscriptionError, 
             'emailaddress not valid',
             self.service.requestCancellation, self.doc, emailaddress)
         # emailaddress was not subscribed
         emailaddress = "foo@localhost.com"
         self._testException(
-            errors.EmailaddressError, 
+            errors.NotSubscribedError, 
             'emailaddress was not subscribed',
             self.service.requestCancellation, self.doc, emailaddress)
             

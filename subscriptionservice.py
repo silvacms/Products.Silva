@@ -105,7 +105,7 @@ class SubscriptionService(Folder.Folder):
             raise errors.SubscriptionError('content is not subscribable')
         # validate address
         if not self._isValidEmailaddress(emailaddress):
-            raise errors.EmailaddressError('emailaddress not valid')
+            raise errors.SubscriptionError('emailaddress not valid')
         # generate confirmation token using adapter
         token = adapted.generateConfirmationToken(emailaddress)
         # check if not yet subscribed
@@ -115,7 +115,7 @@ class SubscriptionService(Folder.Folder):
             self._sendSuperfluousSubscriptionRequestEmail(
                 content, emailaddress, token, 'already_subscribed_template', 
                 'confirm_subscription', subscription.contentSubscribedTo())
-            raise errors.EmailaddressError('emailaddress already subscribed')
+            raise errors.AlreadySubscribedError('emailaddress already subscribed')
         # send confirmation email to emailaddress
         self._sendConfirmationEmail(
             content, emailaddress, token, 
@@ -132,13 +132,13 @@ class SubscriptionService(Folder.Folder):
             raise errors.SubscriptionError('content does not support subscriptions')
         # validate address
         if not self._isValidEmailaddress(emailaddress):
-            raise errors.EmailaddressError('emailaddress not valid')
+            raise errors.SubscriptionError('emailaddress not valid')
         # check if indeed subscribed
         if not adapted.isSubscribed(emailaddress):
             # send an email informing about this situation
             self._sendSuperfluousCancellationRequestEmail(
                 content, emailaddress, 'not_subscribed_template')
-            raise errors.EmailaddressError('emailaddress was not subscribed')
+            raise errors.NotSubscribedError('emailaddress was not subscribed')
         # generate confirmation token using adapter
         token = adapted.generateConfirmationToken(emailaddress)
         # send confirmation email to emailaddress

@@ -14,9 +14,16 @@ class SubscriptionError(Exception):
 
 allow_class(SubscriptionError)
 
-class EmailaddressError(SubscriptionError):
+class AlreadySubscribedError(SubscriptionError):
     # NOTE: Please make sure in the UI code not to expose any information
     # about the validity of the email address!
     pass
 
-allow_class(EmailaddressError)
+allow_class(AlreadySubscribedError)
+
+class NotSubscribedError(SubscriptionError):
+    # NOTE: Please make sure in the UI code not to expose any information
+    # about the validity of the email address!
+    pass
+
+allow_class(NotSubscribedError)
