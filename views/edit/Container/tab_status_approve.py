@@ -72,7 +72,7 @@ for ref in refs:
 
     if expiration_datetime:
         obj.set_unapproved_version_expiration_datetime(expiration_datetime)
-    if clear_expiration:
+    if clear_expiration_flag:
         obj.set_unapproved_version_expiration_datetime(None)
 
     obj.approve_version()

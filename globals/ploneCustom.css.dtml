@@ -681,7 +681,7 @@ label {
   text-transform : &dtml-textTransform;;
 }
 
-tr label {
+tr.controls label, tr.inter-controls label {
   color: &dtml-listingHeaderFontColor;;
 }
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.57 $
+# $Revision: 1.58 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -11,8 +11,8 @@ from DateTime import DateTime
 from IVersionedContent import IVersionedContent
 from IContainer import IContainer
 # Silva
-from VersionedContent import VersionedContent
-from Version import Version
+from VersionedContent import CatalogedVersionedContent
+from Version import CatalogedVersion
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
@@ -20,7 +20,7 @@ import urlparse
 
 icon = "www/silvaghost.gif"
 
-class Ghost(VersionedContent):
+class Ghost(CatalogedVersionedContent):
     """Ghosts are special documents wich function as a
        placeholder for an object in another location (like an alias,
        symbolic link, shortcut). Unlike a hyperlink, which takes the
@@ -74,7 +74,7 @@ class Ghost(VersionedContent):
 
 InitializeClass(Ghost)
 
-class GhostVersion(Version):
+class GhostVersion(CatalogedVersion):
     """Ghost version.
     """
     meta_type = 'Silva Ghost Version'
@@ -125,6 +125,15 @@ class GhostVersion(Version):
         if not short_title:
             return self.get_title()
         return short_title
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'fulltext')
+    def fulltext(self):
+       target = self._get_content()
+       public_version = target.get_viewable()
+       if public_version and hasattr(public_version.aq_inner, 'fulltext'):
+           return public_version.fulltext()
+       return None
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_content_url')
