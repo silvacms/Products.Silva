@@ -66,5 +66,34 @@ If the test framework starts up but then before the first test is run
 gives an error about persistence, you may have forgotten to import
 SilvaTestCase.
 
+Status
+======
+
+This is a temporary list showing the status of the test suite. This
+list will go away in the future as all test modules always have to
+work.
+
+test_CatalogedVersioning .. errors 1 (to do with catalog, test in 2.6.2)
+test_Container           .. ok
+test_Copy                .. broken
+test_Ghost               .. errors 1 (render_view issue)
+test_Publishable         .. ok
+test_Security            .. ok
+test_ServiceLayouts      .. broken (can't test without product installed..)
+test_SilvaObject         .. ok
+test_SimpleMembership    .. ok
+test_VersionedContent    .. ok
+test_Versioning          .. ok
+test_catalog             .. ok
+test_convert             .. ok
+test_file                .. ok
+test_icon                .. ok
+test_mangle              .. ok
+
+runalltests result: 
+
+119 tests, failures=9, errors=11
+
+  
 
 
