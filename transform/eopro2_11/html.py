@@ -22,12 +22,12 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.5 $'
+__version__='$Revision: 1.6 $'
 
 try:
-    from transform.base import Element, Text
+    from transform.base import Element, Text, Frag
 except ImportError:
-    from Products.Silva.transform.base import Element, Text
+    from Products.Silva.transform.base import Element, Text, Frag
 
 import silva
 
@@ -131,11 +131,26 @@ class h6(Element):
             )
 
 class p(Element):
+    """ the html p element can contain nodes which are "standalone"
+        in silva-xml. 
+    """
     def convert(self, *args, **kwargs):
+        pre,img,post = self.find_and_partition('img')
         type = self.attrs.get('silva_type', 'normal')
-        return silva.p(
-            self.content.convert(*args, **kwargs),
-            type=type
+        if pre:
+            pre = silva.p(pre.convert(*args, **kwargs), type=type)
+        if img:
+            img = img.convert(*args, **kwargs)
+        if post:
+            post = silva.p(post.convert(*args, **kwargs), type=type)
+
+        if not (pre or img or post):
+            pre = silva.p(type=type)
+
+        return Frag(
+            pre, 
+            img,
+            post,
         )
 
 class ul(Element):
@@ -202,6 +217,12 @@ class img(Element):
         return silva.image(
             self.content.convert(*args, **kwargs),
             image_path=self.attrs['src']
+            )
+class br(Element):
+    def convert(self, *args, **kwargs):
+        return silva.p(
+            "",
+            type='normal'
             )
 
 

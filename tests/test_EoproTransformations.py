@@ -5,7 +5,8 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.8 $
+
+# $Revision: 1.9 $
 import unittest
 
 # 
@@ -23,14 +24,15 @@ except ImportError:
 
 import sys,os
 
-sys.path.insert(0, '..')
 
 try:
     sys.path.insert(0, '..')
     from transform.eopro2_11 import silva, html
+    from transform.Transformer import Transformer, EditorTransformer
 except ImportError:
     from Products.Silva.transform.eopro2_11 import silva, html
-    
+    from Products.Silva.transform.Transformer import Transformer, EditorTransformer
+
 # lazy, but in the end we want to test everything anyway
 
 from xml.dom import minidom
@@ -42,7 +44,6 @@ class Base(unittest.TestCase):
     """ Check various conversions/transformations """
 
     def setUp(self):
-        from Products.Silva.transform.Transformer import EditorTransformer
         self.transformer = EditorTransformer('eopro2_11')
 
 class Fixup(Base):
@@ -57,6 +58,7 @@ class Fixup(Base):
 
 class HTML2XML(Base):
     """ conversions from HTML-nodes to XML """
+    context = {'id': 'test', 'title':'testtitle'}
 
     def test_empty_list_title(self):
         """test that a list without a title and/or a 
@@ -175,12 +177,43 @@ class HTML2XML(Base):
 
         self.assertEquals(node, node2)
 
+    def test_image_within_p_turns_outside(self):
+        frag="""<p>hallo<img src="/path/to/image"/>dies</p>"""
+        node = self.transformer.target_parser.parse(frag)
+        node = node.convert(self.context)
+
+        p = node.find('p')
+        self.assert_(len(p)==2)
+        image = node.find('image')
+        self.assert_(len(image)==1)
+        self.assert_(p[0].content.asBytes()=='hallo')
+        self.assert_(p[1].content.asBytes()=='dies')
+
+    def test_empty_paras_are_preserved(self):
+        frag="""<body><p>hallo</p><p></p><p></p></body>"""
+        node = self.transformer.target_parser.parse(frag)
+        node = node.convert(self.context)
+
+        doc = node.find('silva_document')[0].find('doc')[0]
+        p = doc.find('p')
+        self.assert_(len(p)==3)
+        self.assert_(p[0].content.asBytes()=='hallo')
+        self.assert_(not p[1].content.asBytes())
+        self.assert_(not p[2].content.asBytes())
+
+    def test_br_turns_into_emtpy_paragraph(self):
+        """ test that the BR tag turns into an empty paragraph """
+        frag="""<br/>"""
+        node = self.transformer.target_parser.parse(frag)
+        node = node.conv()
+
+        p = node.find('p')
+        self.assert_(len(p)==1)
 
 
 class RoundtripWithTidy(unittest.TestCase):
     """ Transform and validate with 'tidy' if available. Also do a roundtrip """
     def setUp(self):
-        from Products.Silva.transform.Transformer import Transformer 
         self.transformer = Transformer(source='eopro2_11.silva', target='eopro2_11.html')
 
     def _check(self, string):
@@ -329,17 +362,16 @@ class RoundtripWithTidy(unittest.TestCase):
         self.assert_(a.content.asBytes()=='linktext')
 
     def test_image(self):
-        """ check that the image works"""
+        """ check that 'image' works"""
         silvadoc = '''<silva_document id="test"><title>title</title>
-                        <doc><p type="normal">
+                        <doc><p type="normal">text</p>
                              <image image_path="/path/to/image"></image>
-                             </p>
                         </doc>
                       </silva_document>''' 
         htmlnode = self._check(silvadoc)
         body = htmlnode.find('body')[0]
         p = body.find('p')[0]
-        img = p.find('img')
+        img = body.find('img')
         self.assert_(len(img)==1)
         img = img[0]
         self.assert_(img.attrs.get('src')=='/path/to/image')

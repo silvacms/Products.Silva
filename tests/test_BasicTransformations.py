@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 import unittest
 
 # 
@@ -135,6 +135,34 @@ class SilvaXMLObjectParser(unittest.TestCase):
         self.assert_(sdoc.find('doc'))
         self.assertEquals(sdoc.find('doc'),
                           sdoc.find(silva.doc))
+
+    def test_method_find_and_partition(self):
+        doc = '''<doc>
+                  <heading type="normal">normal</heading>
+                  <p type="normal">p</p>
+                  <heading type="sub">sub</heading>
+               </doc>'''
+
+        node = self.parser.parse(doc)
+        node = node.compact()
+        node = node.find('doc')[0]
+        pre,match,post = node.find_and_partition('p')
+        #print "pre",pre.asBytes()
+        #print "match",match.asBytes()
+        #print "post",repr(post), post.asBytes()
+
+        self.assert_(len(pre)==1)
+        self.assert_(pre[0].name()=='heading')
+        self.assert_(match.name()=='p')
+        self.assert_(len(post)==1)
+        self.assert_(post[0].name()=='heading')
+
+        pre,match,post = node.find_and_partition('list')
+        self.assert_(isinstance(match, base.Element))
+        self.assert_(not match)
+        self.assert_(not post)
+        self.assert_(len(post)==0)
+
 
     def test_method_compact(self):
         node= self.parser.parse(self.basicdoc)

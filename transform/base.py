@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 # look ma, i only have these dependencies 
 # and with python2.2 even they would vanish
@@ -72,12 +72,13 @@ class Frag(Node, List):
 
     def append(self, *others):
         for other in others:
-            #other = toNode(other)
+            if not other:
+                continue
             if isinstance(other, Frag) or \
                type(other) == type(()) or \
                type(other) == type([]):
                 List.extend(self, other)
-            elif other is not None:
+            else:
                 List.append(self, other)
 
     def convert(self, context, *args, **kwargs):
@@ -112,6 +113,19 @@ class Frag(Node, List):
             if not ignore(child) and child._matches(tag):
                 node.append(child)
         return node
+
+    def find_and_partition(self, tag):
+        pre,match,post = Frag(), Element(), Frag()
+        allnodes = self[:]
+
+        while allnodes:
+            child = allnodes.pop(0)
+            if child._matches(tag):
+                match = child
+                post = Frag(allnodes)
+                break
+            pre.append(child)
+        return pre,match,post
 
     def asBytes(self, encoding='UTF-8'):
         l = []
@@ -157,6 +171,9 @@ class Element(Node):
     def __ne__(self, other):
         return not self==other
 
+    def __nonzero__(self):
+        return self.name()!=Element.__name__
+
     def compact(self):
         node = self.__class__()
         node.content = self.content.compact()
@@ -172,6 +189,12 @@ class Element(Node):
 
     def find(self, *args, **kwargs):
         return self.content.find(*args, **kwargs)
+
+    def find_and_partition(self, *args, **kwargs):
+        return self.content.find_and_partition(*args, **kwargs)
+
+    def convert(self, *args, **kwargs):
+        return self
 
     def asBytes(self, encoding='UTF-8'):
         """ return canonical xml-conform representation  """
