@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Wed Dec  8 18:26:36 2004\n"
-"PO-Revision-Date: 2004-12-16 10:22+0100\n"
+"PO-Revision-Date: 2004-12-16 10:52+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: /Image.py:429
 msgid "portrait"
-msgstr ""
+msgstr "Portrait"
 
 #: /Image.py:49
 msgid ""
