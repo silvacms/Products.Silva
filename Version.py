@@ -11,10 +11,6 @@ class Version(SimpleItem):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, id):
-        self.id = id
-        #self.index_object()
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'version_status')
     def version_status(self):
@@ -38,7 +34,8 @@ class Version(SimpleItem):
             elif self.id in previous_versions:
                 status = "closed"
             else:
-                raise ValueError, "Version %s not found in object %s" % (self.id, self.object().id)
+                status = 'unapproved' # this is a completely new version not even registered with the machinery yet
+                # raise ValueError, "Version %s not found in object %s" % (self.id, self.object().id)
         return status
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -85,4 +82,3 @@ class Version(SimpleItem):
             return getattr(self, 'get_%s_version_expiration_datetime' % status)()
 
 InitializeClass(Version)
-

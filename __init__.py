@@ -1,9 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
-import Document, Folder, Root, ViewRegistry,\
-       Publication, Ghost, Image, DemoObject,\
-       File
+# $Revision: 1.32 $
+import Document, Folder, Root, ViewRegistry
+import Publication, Ghost, Image, File
+import DemoObject, CatalogedDemoObject
 
 def initialize(context):
     context.registerClass(
@@ -85,5 +85,18 @@ def initialize(context):
         DemoObject.DemoObjectVersion,
         constructors = (DemoObject.manage_addDemoObjectVersionForm,
                         DemoObject.manage_addDemoObjectVersion),
+        icon="www/silvageneric.gif"
         )
 
+    context.registerClass(
+        CatalogedDemoObject.CatalogedDemoObject,
+        constructors = (CatalogedDemoObject.manage_addCatalogedDemoObjectForm,
+                        CatalogedDemoObject.manage_addCatalogedDemoObject)
+        )
+
+    context.registerClass(
+        CatalogedDemoObject.CatalogedDemoObjectVersion,
+        constructors = (CatalogedDemoObject.manage_addCatalogedDemoObjectVersionForm,
+                        CatalogedDemoObject.manage_addCatalogedDemoObjectVersion)
+        )
+    
