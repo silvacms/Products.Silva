@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.64 $
+# $Revision: 1.65 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -20,6 +20,8 @@ except ImportError:
     groups_enabled = 0
 
 from interfaces import IContainer
+
+from Products.SilvaMetadata.Exceptions import BindingError
 
 LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
 
@@ -333,7 +335,10 @@ class Security(AccessManager):
             self.REQUEST.AUTHENTICATED_USER.getUserName())
         version = self.get_previewable()
         assert version is not None
-        binding = self.service_metadata.getMetadata(version)
+        try:
+            binding = self.service_metadata.getMetadata(version)
+        except BindingError:
+            binding = None
         if binding is None:
             return
         binding.setValues(

@@ -1,0 +1,160 @@
+<html tal:omit-tag=""
+  tal:define="
+    view here;
+    model request/model;
+    root_url model/get_root_url;
+    global editable model/get_editable;
+    title model/get_title_editable;
+    breadcrumb_vein string:Editor;
+">
+
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <td class="left">
+        <tal:block replace="nothing">
+          _____________________ sidebar subtable _____________________
+        </tal:block>
+        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ main _____________________
+      </tal:block>
+      <td class="main">
+
+<form method="POST" 
+  name="form" 
+  action="submit"
+  tal:define="
+  version     python:model.get_editable();
+  link_status python:here.get_ghost_link_status_text(version);
+  content_url python:version.get_content_url();
+ ">
+  <table class="listing">
+    <thead>
+      <tal:block replace="nothing">
+        ______________ vein + title row ______________
+      </tal:block>
+      <tr>
+        <td class="top"
+          colspan="3">
+          <h2>
+            <img tal:replace="structure python:view.render_icon(model)" />
+            ghost of &#xab;<tal:block content="title" />&#xbb;
+          </h2>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <th class="align-right"
+          width="12%">
+          Attributes
+        </th>
+        <th>
+          Content
+        </th>
+        <th width="40%">
+          Note
+        </th>
+      </tr>
+
+      <tr class="even" valign="top">
+        <td class="field-title">
+          Path
+          <span class="required">*</span>
+        </td>
+        <td>
+          <input type="text"
+            name="content_url"
+            size="60" 
+            value="" 
+            tal:attributes="value content_url"
+          />
+        </td>
+        <td>
+          Path to original (starts with a slash).
+        </td>
+      </tr>
+
+      <tr class="odd"
+        tal:condition="not:link_status">
+        <td class="field-title">
+          Link:
+        </td>
+        <td>
+          <a href="original"
+            tal:attributes="href python:content_url + '/edit/tab_preview'"
+            tal:content="python:content_url + ' (' + model.get_editable().get_title() + ')'">
+            Link
+          </a>
+        </td>
+        <td>
+          &nbsp;<span tal:replace="nothing"> _______ FIXME: add 'Locate original' button _______ </span>
+        </td>
+      </tr>
+
+      <tr class="odd"
+        tal:condition="link_status">
+        <td class="field-title">
+          Problem
+        </td>
+        <td class="alert">
+          <span class="error"
+          tal:content="structure link_status" />
+        </td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr class="controls">
+        <td>
+          <input class="cancel"
+            type="button"
+            name="edit_cancel" 
+            value=" Cancel " 
+            title="Access key: alt-c" 
+            accesskey="c" 
+            onClick="history.back()" 
+          />
+        </td>
+        <td class="align-right" 
+          colspan="2">
+          <input class="button"
+            type="submit"
+            name="form_submitted"
+            value="Save ghost"
+            title="access key: alt-s"
+            accesskey="s"
+          />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+       
+<form method="POST" name="form" action="sync">
+   <input type="submit" name="sync" value="sync ghost folder" />
+</form>
+
+<form method="POST" name="form" action="convert_to_folder">
+   <input type="submit" name="sync" value="convert to folder" />
+</form>
+
+<form method="POST" name="form" action="convert_to_publication">
+   <input type="submit" name="sync" value="convert to publication" />
+</form>
+
+
+   
+      </td>
+    </tr>
+  </tbody>
+</table>
+        
+</html>

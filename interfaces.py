@@ -1060,4 +1060,6 @@ class IContainerPolicy(Interface):
         """create default document in given container"""
     
 
-    
+class IGhost(Interface):
+    """Marker interface for ghosts"""
+

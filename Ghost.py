@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.66 $
+# $Revision: 1.67 $
 
 # Zope
 from OFS import SimpleItem
@@ -18,9 +18,200 @@ import SilvaPermissions
 from helpers import add_and_edit
 import urlparse
 
-from interfaces import IVersionedContent, IContainer, IVersion
+from interfaces import \
+    IVersionedContent, IContainer, IVersion, IContent, IGhost
 
 icon = "www/silvaghost.gif"
+
+class GhostBase:
+    """baseclas for Ghosts (or Ghost versions if it's versioned)
+    """
+    security = ClassSecurityInfo()
+
+    # status codes as returned by get_link_status
+    # NOTE: LINK_FOLDER (and alike) must *only* be returned if it is an error
+    # for the link to point to a folder. If it is not an error LINK_OK must
+    # be returned.
+    LINK_OK = None   # link is ok
+    LINK_EMPTY = 1   # no link entered (XXX this cannot happen)
+    LINK_VOID = 2    # object pointed to does not exist
+    LINK_FOLDER = 3  # link points to folder
+    LINK_GHOST = 4   # link points to another ghost
+    LINK_NO_CONTENT = 5 # link points to something which is not a content
+    LINK_CONTENT = 6 # link points to content
+    LINK_NO_FOLDER = 7 # link doesn't point to a folder
+
+    # those should go away
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
+    def set_title(self, title):
+        """Don't do a thing.
+        """
+        pass
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title')
+    def get_title(self):
+        """Get title.
+        """        
+        content = self._get_content()
+        if content is None:
+            return "Ghost target is broken"
+        else:
+            return content.get_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    def get_short_title(self):
+        """Get short title.
+        """        
+        content = self._get_content()
+        if content is None:
+            return "Ghost target is broken"
+        else:
+            short_title = content.get_short_title()
+        if not short_title:
+            return self.get_title()
+        return short_title
+    # /those should go away
+
+
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_content_url')
+    def set_content_url(self, content_url):
+        """Set content url.
+        """
+        # simplify url
+        scheme, netloc, path, parameters, query, fragment = \
+                urlparse.urlparse(content_url)
+        path_elements = path.split('/')
+
+        # Cut off 'edit' and anything after it
+        try:
+            idx = path_elements.index('edit')
+        except ValueError:
+            pass
+        else:
+            path_elements = path_elements[:idx]
+
+        content_url = '/'.join(path_elements)
+
+        if path_elements[0] == '':
+            # absolute, so traverse relatively from silva root
+            traversal_root = silva_root = self.get_root()
+            silva_root_url = '/' + silva_root.absolute_url(1)
+
+            if not silva_root_url.endswith('/'):
+                silva_root_url = silva_root_url + '/'            
+
+            # Cut the 'silva root url' part off from the content url.
+            # This will result in a relative (to the silva root) path
+            # to the object            
+            if content_url.startswith(silva_root_url):
+                # replace only first occurence
+                content_url = content_url.replace(silva_root_url, '', 1)
+        else:
+            # relative, so traverse from ghost's container:
+            traversal_root = self.get_container()
+
+        # Now resolve it...
+        try:
+            target = traversal_root.unrestrictedTraverse(content_url)
+            # ...and get physical path for it
+            self._content_path = target.getPhysicalPath()
+        except (AttributeError, KeyError):
+            # ...or, in case of errors, set it to the raw input
+            #
+            # AttributeError is what unrestrictedTraverse raises
+            # if it can find an object, but not its attribute.
+            # KeyError is what unrestrictedTraverse raises
+            # if it cannot find the object.
+            self._content_path = path_elements
+        
+    def get_content_url(self):
+        """Get content url.
+        """
+        if self._content_path is None:
+            return None
+        try:
+            object = self.get_root().unrestrictedTraverse(self._content_path)
+            return '/' + object.absolute_url(1)
+        except (AttributeError, KeyError):
+            # AttributeError is what unrestrictedTraverse raises
+            # if it can find an object, but not its attribute.
+            # KeyError is what unrestrictedTraverse raises
+            # if it cannot find the object.
+            return '/'.join(self._content_path)
+
+    security.declareProtected(SilvaPermissions.View,'get_link_status')
+    def get_link_status(self, content=None):
+        """return an error code if this version of the ghost is broken.
+        returning None means the ghost is Ok.
+        """
+        raise NotImplementedError, "implemented in subclasses"
+        
+    def _get_content_object(self, path, check=1):
+        """Get content object for a url.
+        """
+        # XXX what if we're pointing to something that cannot be viewed
+        # publically?
+        if path is None:
+            return None
+        try:
+            content = self.unrestrictedTraverse(path)
+        except:
+            # catch all traversal failures
+            return None
+        # check if it's valid
+        valid = None 
+        if check:
+            valid = self.get_link_status(content)
+        if valid is None:
+            return content
+        return None
+    
+    def _get_content(self, check=1):
+        """Get the real content object.
+        """
+        path = self._content_path
+        return self._get_content_object(path, check)
+
+    def render_preview(self):
+        """Render preview of this version (which is what we point at)
+        """
+        # FIXME what if content is None?
+        # what if we get circular ghosts?
+        content = self._get_content()
+        if content is None:
+            # public render code of ghost should give broken message
+            return None 
+        user = self.REQUEST.AUTHENTICATED_USER
+        permission = 'View'
+        if user.has_permission(permission, content):
+            self.REQUEST.set('ghost_model', self.aq_inner)
+            # XXX shouldn't this be content.preview()?
+            return content.view()
+        else:
+            raise "Unauthorized"
+
+    def render_view(self):
+        """Render view of this version (which is what we point at)
+        """
+        # FIXME what if content is None?
+        # what if we get circular ghosts?
+        content = self._get_content()
+        if content is None:
+            # public render code of ghost should give broken message
+            return None
+        user = self.REQUEST.AUTHENTICATED_USER
+        permission = 'View'
+        if user.has_permission(permission, content):
+            self.REQUEST.set('ghost_model', self.aq_inner)
+            return content.view()
+        else:
+            raise "Unauthorized"
+
 
 class Ghost(CatalogedVersionedContent):
     """Ghosts are special documents wich function as a
@@ -36,7 +227,7 @@ class Ghost(CatalogedVersionedContent):
 
     meta_type = "Silva Ghost"
 
-    __implements__ = IVersionedContent
+    __implements__ = IVersionedContent, IGhost
     
     def __init__(self, id):
         Ghost.inheritedAttribute('__init__')(self, id)
@@ -76,59 +267,17 @@ class Ghost(CatalogedVersionedContent):
 
 InitializeClass(Ghost)
 
-class GhostVersion(CatalogedVersion):
+class GhostVersion(GhostBase, CatalogedVersion):
     """Ghost version.
     """
     meta_type = 'Silva Ghost Version'
 
     security = ClassSecurityInfo()
 
-    # status codes:
-    LINK_OK = None   # link is ok
-    LINK_EMPTY = 1   # no link entered (XXX this cannot happen)
-    LINK_VOID = 2    # object pointed to does not exist
-    LINK_FOLDER = 3  # link points to folder
-    LINK_GHOST = 4   # link points to another ghost
-    LINK_NO_CONTENT = 5 # link points to something which is not a content
-    
-    __implements__ = IVersion
-    
     def __init__(self, id):
         GhostVersion.inheritedAttribute('__init__')(
             self, id, '[Ghost title bug]')
         self._content_path = None
-        
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_title')
-    def set_title(self, title):
-        """Don't do a thing.
-        """
-        pass
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title')
-    def get_title(self):
-        """Get title.
-        """        
-        content = self._get_content()
-        if content is None:
-            return "Ghost target is broken"
-        else:
-            return content.get_title()
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_short_title')
-    def get_short_title(self):
-        """Get short title.
-        """        
-        content = self._get_content()
-        if content is None:
-            return "Ghost target is broken"
-        else:
-            short_title = content.get_short_title()
-        if not short_title:
-            return self.get_title()
-        return short_title
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'fulltext')
@@ -140,153 +289,26 @@ class GhostVersion(CatalogedVersion):
                return public_version.fulltext()
        return ""
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_content_url')
-    def set_content_url(self, content_url):
-        """Set content url.
-        """
-        # simplify url
-        scheme, netloc, path, parameters, query, fragment = \
-                urlparse.urlparse(content_url)        
-        path_elements = path.split('/')
-
-        # Cut off 'edit' and anything after it
-        try:
-            idx = path_elements.index('edit')
-        except ValueError:
-            pass
-        else:
-            path_elements = path_elements[:idx]
-
-        content_url = '/'.join(path_elements)
-
-        if path_elements[0] == '':
-            # absolute, so traverse relatively from silva root
-            traversal_root = silva_root = self.get_root()
-            silva_root_url = '/' + silva_root.absolute_url(1)
-
-            if not silva_root_url.endswith('/'):
-                silva_root_url = silva_root_url + '/'            
-
-            # Cut the 'silva root url' part off from the content url.
-            # This will result in a relative (to the silva root) path
-            # to the object            
-            if content_url.startswith(silva_root_url):
-                # replace only first occurence
-                content_url = content_url.replace(silva_root_url, '', 1)
-        else:
-            # relative, so traverse from ghost's container:
-            traversal_root = self.get_container()               
-
-        # Now resolve it...
-        try:
-            target = traversal_root.unrestrictedTraverse(content_url)
-            # ...and get physical path for it
-            self._content_path = target.getPhysicalPath()
-        except (AttributeError, KeyError):
-            # ...or, in case of errors, set it to the raw input
-            #
-            # AttributeError is what unrestrictedTraverse raises
-            # if it can find an object, but not its attribute.
-            # KeyError is what unrestrictedTraverse raises
-            # if it cannot find the object.
-            self._content_path = path_elements
-        
-    def get_content_url(self):
-        """Get content url.
-        """
-        if self._content_path is None:
-            return None
-        try: 
-            object = self.get_root().unrestrictedTraverse(self._content_path)
-            return '/' + object.absolute_url(1)
-        except (AttributeError, KeyError):
-            # AttributeError is what unrestrictedTraverse raises
-            # if it can find an object, but not its attribute.
-            # KeyError is what unrestrictedTraverse raises
-            # if it cannot find the object.
-            return '/'.join(self._content_path)
-
     security.declareProtected(SilvaPermissions.View,'get_link_status')
-    def get_link_status(self):
+    def get_link_status(self, content=None):
         """return an error code if this version of the ghost is broken.
         returning None means the ghost is Ok.
         """
+        if content is None:
+            content = self._get_content(check=0)
         if self._content_path is None:
             return self.LINK_EMPTY
-        try: 
-            content = self.unrestrictedTraverse(self._content_path)
-        except:
-            # unrestrictedTraverse can throw a myriad of exceptions all 
-            # meaning the object cannot be found.
+        if content is None:
             return self.LINK_VOID
         if IContainer.isImplementedBy(content):
             return self.LINK_FOLDER
-        if not IVersionedContent.isImplementedBy(content):
+        if not IContent.isImplementedBy(content):
             return self.LINK_NO_CONTENT
-        if content.meta_type == 'Silva Ghost':
+        if IGhost.isImplementedBy(content):
             return self.LINK_GHOST
-
         return self.LINK_OK
 
-    def _get_content_object(self, path):
-        """Get content object for a url.
-        """
-        # XXX what if we're pointing to something that cannot be viewed
-        # publically?
-        if path is None:
-            return None
-        # XXX should this be a bare exception? catch all traversal failures
-        try:
-            content = self.unrestrictedTraverse(path)
-        except:
-            return None
-        # Not allowed to ghost to a ghost or a container
-        if (not IVersionedContent.isImplementedBy(content) or    
-            content.meta_type == 'Silva Ghost'):
-            return None
-        return content
     
-    def _get_content(self):
-        """Get the real content object.
-        """
-        path = self._content_path
-        return self._get_content_object(path)
-
-    def render_preview(self):
-        """Render preview of this version (which is what we point at)
-        """
-        # FIXME what if content is None?
-        # what if we get circular ghosts?
-        content = self._get_content()
-        if content is None:
-            return None # public render code of ghost should give broken message
-
-        user = self.REQUEST.AUTHENTICATED_USER
-        permission = 'View'
-        if user.has_permission(permission, content):
-            self.REQUEST.set('ghost_model', self.aq_inner)
-            return content.view()
-        else:
-            raise "Unauthorized"
-
-    def render_view(self):
-        """Render view of this version (which is what we point at)
-        """
-        # FIXME what if content is None?
-        # what if we get circular ghosts?
-        content = self._get_content()
-        if content is None:
-            return None # public render code of ghost should give broken message
-
-        user = self.REQUEST.AUTHENTICATED_USER
-        permission = 'View'
-        if user.has_permission(permission, content):
-            self.REQUEST.set('ghost_model', self.aq_inner)
-            return content.view()
-        else:
-            raise "Unauthorized"
-
 manage_addGhostForm = PageTemplateFile("www/ghostAdd", globals(),
                                        __name__='manage_addGhostForm')
 
@@ -316,3 +338,55 @@ def manage_addGhostVersion(self, id,REQUEST=None):
     object.set_content_url(content_url)
     add_and_edit(self, id, REQUEST)
     return ''
+
+
+def ghostFactory(container, id, haunted_object):
+    """add new ghost to container
+
+        container: container to add ghost to (must be acquisition wrapped)
+        id: (str) id for new ghost in container
+        haunted_object: object to be haunted (ghosted), acquisition wrapped
+        returns created ghost
+
+        actual ghost created depends on haunted object
+        on IContainer a GhostFolder is created
+        on IVersionedContent a Ghost is created
+
+        willem suggested to call this function electricChair, but well... 
+    """
+    addProduct = container.manage_addProduct['Silva']
+    content_url = '/'.join(haunted_object.getPhysicalPath())
+    if IContainer.isImplementedBy(haunted_object):
+        factory = addProduct.manage_addGhostFolder
+    elif IContent.isImplementedBy(haunted_object):
+        if haunted_object.meta_type == 'Silva Ghost':
+            version = getLastVersionFromGhost(haunted_object)
+            content_url = version.get_content_url()
+        factory = addProduct.manage_addGhost
+    factory(id, content_url)
+    ghost = getattr(container, id)
+    return ghost
+
+
+def canBeHaunted(to_be_haunted):
+    if (IContainer.isImplementedBy(to_be_haunted) or
+            IContent.isImplementedBy(to_be_haunted)):
+        return 1
+    return 0
+
+
+def getLastVersionFromGhost(ghost):
+    """returns `latest' version of ghost
+
+        ghost: Silva Ghost intance
+        returns GhostVersion
+    """
+    assert ghost.meta_type == 'Silva Ghost'
+    version_id = ghost.get_public_version()
+    if version_id is None:
+        version_id = ghost.get_next_version()
+    if version_id is None:
+        version_id = ghost.get_last_closed_version()
+    version = getattr(ghost, version_id)
+    return version
+

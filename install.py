@@ -432,6 +432,8 @@ def registerViews(reg):
                  ['edit', 'Asset', 'SQLDataSource'])
     reg.register('edit', 'Silva Simple Member',
                  ['edit', 'Member', 'SimpleMember'])
+    reg.register('edit', 'Silva Ghost Folder',
+        ['edit', 'Content', 'GhostFolder'])
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
@@ -459,6 +461,7 @@ def registerViews(reg):
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
     reg.register('add', 'Silva Simple Content', ['add', 'SimpleContent'])
     reg.register('add', 'Silva SQL Data Source', ['add', 'SQLDataSource'])
+    reg.register('add', 'Silva Ghost Folder', ['add', 'GhostFolder'])
 
 def registerGroupsViews(reg):
     """Register groups views on registry.
@@ -476,7 +479,7 @@ def unregisterViews(reg):
                       'Silva DemoObject', 'Silva File', 'Silva Indexer',
                       'Silva Simple Content',
                       'Silva SQL Data Source', 'Silva Group', 
-                      'Silva Virtual Group']:
+                      'Silva Virtual Group', 'Silva Ghost Folder']:
         reg.unregister('edit', meta_type)
         reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)

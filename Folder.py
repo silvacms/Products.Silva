@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.128 $
+# $Revision: 1.129 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -10,6 +10,7 @@ from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode # HACK
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 # Silva
+from Products.Silva.Ghost import ghostFactory, canBeHaunted
 from SilvaObject import SilvaObject
 from Publishable import Publishable
 import Copying
@@ -442,7 +443,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                     add = ''
                     if i > 1:
                         add = str(i)
-                    if IVersionedContent.isImplementedBy(item):
+                    if canBeHaunted(item):
                         paste_id = 'ghost%s_of_%s' % (add, org_paste_id)
                     else:
                         paste_id = 'copy%s_of_%s' % (add, org_paste_id)
@@ -453,27 +454,11 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         return ', '.join(messages).capitalize()
 
     def _ghost_paste(self, paste_id, item, REQUEST):
-        if IContainer.isImplementedBy(item):
-            # copy the container (but not its content)
-            if item.meta_type == 'Silva Folder':
-                self.manage_addProduct['Silva'].manage_addFolder(
-                    paste_id, item.get_title(), 0)
-            elif item.meta_type == 'Silva Publication':
-                self.manage_addProduct['Silva'].manage_addPublication(
-                    paste_id, item.get_title(), 0)
-            else:
-                raise NotImplementedError,\
-                      "Unknown container ghost copy (%s)." % item.meta_type
-            container = getattr(self, paste_id)
-            default = item.get_default()
-            if default is not None:
-                container._ghost_paste(default.id, default, REQUEST)
-            for object in item.get_ordered_publishables():
-                container._ghost_paste(object.id, object, REQUEST)
-            # FIXME: ghost copy nonactives as well?
-            # XXX are assets ghostable in the first place?
-            for object in item.get_assets():
-                container._ghost_paste(object.id, object, REQUEST)
+        if canBeHaunted(item):
+            ghost = ghostFactory(self, paste_id, item)
+            #if IContainer.isImplementedBy(item):
+            #for object in item.get_assets():
+            #    ghost._ghost_paste(object.id, object, REQUEST)
         elif IVersionedContent.isImplementedBy(item):
             if item.meta_type == 'Silva Ghost':
                 # copy ghost
