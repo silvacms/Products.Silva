@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.70 $
+# $Revision: 1.71 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -27,6 +27,7 @@ import XMLImporter
 import helpers
 import re
 import urllib
+from sys import exc_info
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 from Products.ParsedXML.ParsedXML import ParsedXML
@@ -450,7 +451,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """Check whether id is valid.
         """
         return self._id_re.search(id) is not None
-        
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_default')
     def get_default(self):
@@ -620,7 +621,14 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def xml_import(self, xml):
         """Import XML"""
         dom = createDOMDocument(xml)
-        xml_import_helper(self, dom.childNodes[0])
+        # since some exceptions raised are strings or so, we're going to convert them to 'Exception' here
+        try:
+            xml_import_helper(self, dom.childNodes[0])
+        except Exception:
+            raise
+        except:
+            obj, info, tb = exc_info()
+            raise Exception, info, tb
 
     security.declarePublic('url_encode')
     def url_encode(self, string):
