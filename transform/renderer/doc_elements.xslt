@@ -144,6 +144,44 @@
       <xsl:apply-templates mode="nlist" />
     </ul>
   </xsl:template>
+
+  <xsl:template match="doc:nlist[@type='1']">
+    <ol class="decimal">
+      <xsl:apply-templates mode="nlist" />
+    </ol>
+  </xsl:template>
+
+  <xsl:template match="doc:nlist[@type='I']">
+    <ol class="upper-roman">
+      <xsl:apply-templates mode="nlist" />
+    </ol>
+  </xsl:template>
+  
+  <xsl:template match="doc:nlist[@type='i']">
+    <ol class="lower-roman">
+      <xsl:apply-templates mode="nlist" />
+    </ol>
+  </xsl:template>
+
+  <xsl:template match="doc:nlist[@type='A']">
+    <ol class="upper-alpha">
+      <xsl:apply-templates mode="nlist" />
+    </ol>
+  </xsl:template>
+
+  <xsl:template match="doc:nlist[@type='a']">
+    <ol class="lower-alpha">
+      <xsl:apply-templates mode="nlist" />
+    </ol>
+  </xsl:template>
+  
+  <!-- need IE support? -->
+  <xsl:template match="doc:nlist[@type='none']">
+    <ul class="nobullet">
+      <xsl:apply-templates mode="nlist" />
+    </ul>
+  </xsl:template>
+  
   
   <xsl:template match="doc:li" mode="list">
     <li><xsl:apply-templates mode="text-content" /></li>
