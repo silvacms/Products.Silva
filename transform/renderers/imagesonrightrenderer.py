@@ -7,7 +7,7 @@ from Globals import InitializeClass
 # Silva
 from Products.Silva.transform.renderers.xsltrendererbase import XSLTRendererBase
 
-class RenderImagesOnRight(XSLTRendererBase):
+class ImagesOnRightRenderer(XSLTRendererBase):
     def __init__(self):
         XSLTRendererBase.__init__(self)
 
@@ -17,4 +17,4 @@ class RenderImagesOnRight(XSLTRendererBase):
             "images_to_the_right.xslt")
         self._stylesheet = None
 
-InitializeClass(RenderImagesOnRight)
+InitializeClass(ImagesOnRightRenderer)

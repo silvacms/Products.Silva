@@ -10,20 +10,20 @@ from Interface.Exceptions import BrokenImplementation, DoesNotImplement, BrokenM
 import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
-from Products.Silva.transform.renderers.RenderImagesOnRight import RenderImagesOnRight
+from Products.Silva.transform.renderers.imagesonrightrenderer import ImagesOnRightRenderer
 from Products.Silva.transform.renderers.xsltrendererbase import RenderError
 
-class RenderImagesOnRightTest(SilvaTestCase.SilvaTestCase):
+class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 
     def test_implements_renderer_interface(self):
-        images_on_right = RenderImagesOnRight()
+        images_on_right = ImagesOnRightRenderer()
         try:
-            verifyClass(IRenderer, RenderImagesOnRight)
+            verifyClass(IRenderer, ImagesOnRightRenderer)
         except (BrokenImplementation, DoesNotImplement, BrokenMethodImplementation):
-            self.fail("RenderImagesOnRight does not implement IRenderer")
+            self.fail("ImagesOnRightRenderer does not implement IRenderer")
 
     def test_get_renderer_name(self):
-        images_on_right = RenderImagesOnRight()
+        images_on_right = ImagesOnRightRenderer()
         self.assertEquals(images_on_right.getName(), "Images on Right")
 
     def test_renders_images_on_right(self):
@@ -48,7 +48,7 @@ class RenderImagesOnRightTest(SilvaTestCase.SilvaTestCase):
         # XXX get a (which?) version
         obj = self.root.silva_xslt.test_document
 
-        images_on_right = RenderImagesOnRight()
+        images_on_right = ImagesOnRightRenderer()
         self.assertEquals(images_on_right.render(obj), '<?xml version="1.0"?>\n<table><tr><td valign="top">unapproved<h2 class="heading">This is a rendering test</h2><p xmlns:doc="http://infrae.com/ns/silva_document" xmlns:silva="http://infrae.com/ns/silva" class="p">This is a test of the XSLT rendering functionality.</p></td><td valign="top"><a href="bar.html"><img src="foo"/></a><br/></td></tr></table>\n')
 
     def test_error_handling(self):
@@ -57,9 +57,9 @@ class RenderImagesOnRightTest(SilvaTestCase.SilvaTestCase):
         except ImportError:
             return
 
-        class BrokenRenderImagesOnRight(RenderImagesOnRight):
+        class BrokenImagesOnRightRenderer(ImagesOnRightRender):
             def __init__(self):
-                RenderImagesOnRight.__init__(self)
+                ImagesOnRightRenderer.__init__(self)
                 self._stylesheet_path = "data/images_to_the_right_broken.xslt"
 
         importfolder = self.add_folder(
@@ -79,7 +79,7 @@ class RenderImagesOnRightTest(SilvaTestCase.SilvaTestCase):
         # XXX get a (which?) version
         obj = self.root.silva_xslt.test_document
 
-        images_on_right = BrokenRenderImagesOnRight()
+        images_on_right = BrokenImagesOnRightRenderer()
         self.assertRaises(RenderError, images_on_right.render, obj)
 
 if __name__ == '__main__':
@@ -88,5 +88,5 @@ else:
     import unittest
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(RenderImagesOnRightTest))
+        suite.addTest(unittest.makeSuite(ImagesOnRightRendererTest))
         return suite

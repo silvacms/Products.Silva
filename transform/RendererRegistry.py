@@ -1,8 +1,8 @@
 from Products.Silva.transform.interfaces import IRendererRegistry
-from Products.Silva.transform.renderers.RenderImagesOnRight import RenderImagesOnRight
-from Products.Silva.transform.renderers.BasicRenderer import BasicRenderer
+from Products.Silva.transform.renderers.imagesonrightrenderer import ImagesOnRightRenderer
+from Products.Silva.transform.renderers.basicxsltrenderer import BasicXSLTRenderer
 
-_REGISTRY = {'Silva Document Version' : [RenderImagesOnRight(), BasicRenderer()]}
+_REGISTRY = {'Silva Document Version' : [ImagesOnRightRenderer(), BasicXSLTRenderer()]}
 
 class RendererRegistry(object):
 

@@ -8,7 +8,7 @@ import SilvaTestCase
 from Interface.Verify import verifyClass
 from Products.Silva.transform.interfaces import IRendererRegistry
 from Products.Silva.transform.RendererRegistry import RendererRegistry
-from Products.Silva.transform.renderers.RenderImagesOnRight import RenderImagesOnRight
+from Products.Silva.transform.renderers.imagesonrightrenderer import ImagesOnRightRenderer
 from Interface.Exceptions import BrokenImplementation, DoesNotImplement, BrokenMethodImplementation
 
 class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
@@ -25,7 +25,7 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
         registry = RendererRegistry()
         doc_version_renderers = registry.getRenderersForMetaType("Silva Document Version")
         self.assertEquals(len(doc_version_renderers), 2)
-        self.assert_(isinstance(doc_version_renderers[0], RenderImagesOnRight))
+        self.assert_(isinstance(doc_version_renderers[0], ImagesOnRightRenderer))
 
     def test_get_renderer_by_name(self):
         registry = RendererRegistry()
@@ -34,7 +34,7 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
                 registry.getRendererByName(
                     name = 'Images on Right',
                     meta_type = 'Silva Document Version'),
-                RenderImagesOnRight))
+                ImagesOnRightRenderer))
 
     def test_get_default_renderer_name_for_meta_type(self):
         # XXX: unlike the above tests, this code is actually hitting

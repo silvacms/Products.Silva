@@ -7,9 +7,9 @@ from AccessControl import ClassSecurityInfo
 
 # Silva
 from Products.Silva.transform.RendererRegistry import RendererRegistry
-from Products.Silva.transform.renderers.RenderImagesOnRight import RenderImagesOnRight
+from Products.Silva.transform.renderers.imagesonrightrenderer import ImagesOnRightRenderer
 from Products.Silva.transform.renderers.widgetsrenderer import WidgetsRenderer
-from Products.Silva.transform.renderers.BasicRenderer import BasicRenderer
+from Products.Silva.transform.renderers.basicxsltrenderer import BasicXSLTRenderer
 import SilvaPermissions
 from helpers import add_and_edit
 
@@ -39,8 +39,8 @@ class RendererRegistryService(SimpleItem.SimpleItem):
         except ImportError:
             pass
         else:
-            renderers.append(RenderImagesOnRight().__of__(self))
-            renderers.append(BasicRenderer().__of__(self))
+            renderers.append(ImagesOnRightRenderer().__of__(self))
+            renderers.append(BasicXSLTRenderer().__of__(self))
 
         return {'Silva Document Version' : renderers}
 
