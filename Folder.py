@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.158 $
+# $Revision: 1.159 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -79,10 +79,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         Folder.inheritedAttribute('manage_afterAdd')(self, item, container)
         # container added, always invalidate sidebar
         self._invalidate_sidebar(item)
-        # Walk recursively through self to find and
-        # (if published) close versioned content items
-        # this is probably only used when importing a zexp
-        self._update_contained_documents_status()
 
     def manage_beforeDelete(self, item, container):
         # call before delete code on SilvaObject
@@ -110,19 +106,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 not IRoot.isImplementedBy(item)):
             service_sidebar.invalidate(item.aq_inner.aq_parent)
 
-    def _update_contained_documents_status(self):
-        """Closes all objects that implement VersionedContent (if public) 
-        and recurses into subcontainers"""
-        for obj in self.objectValues():
-            if IVersionedContent.isImplementedBy(obj):
-                if obj.is_version_published():
-                    obj.close_version()
-                    obj.create_copy()
-                if obj.is_version_approved():
-                    obj.unapprove_version()
-            elif IContainer.isImplementedBy(obj):
-                obj._update_contained_documents_status()
-    
     # MANIPULATORS
 
     security.declarePrivate('titleMutationTrigger')
