@@ -461,6 +461,17 @@ upgrade_registry.register('Silva Document', set_cache_data_092, '0.9.2')
 upgrade_registry.register('Silva Ghost', set_cache_data_092, '0.9.2')
 upgrade_registry.register('Silva DemoObject', set_cache_data_092, '0.9.2')
 
+def add_default_doc_092(obj):
+    if not hasattr(obj, '_title'):
+        # is new style folder, no title anymore
+        return
+    if obj.get_default() is None:
+        obj.manage_addProduct['Silva'].manage_addDocument('index', obj._title)
+        
+upgrade_registry.register('Silva Folder', add_default_doc_092, '0.9.2')
+upgrade_registry.register('Silva Publication', add_default_doc_092, '0.9.2')
+upgrade_registry.register('Silva Root', add_default_doc_092, '0.9.2')
+
 def replace_container_title_092(obj):
     """Move the title to the metadata
     
