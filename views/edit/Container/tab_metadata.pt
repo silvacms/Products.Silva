@@ -91,25 +91,12 @@
   <table class="listing">
     <thead>
       <tr tal:replace="nothing">
-        ______________ vein + title row ______________
-      </tr>
-      <tr>
-        <td class="top"
-          colspan="3">
-          <h2>
-            <img tal:replace="structure python:view.render_icon(model)" />
-            metadata
-          </h2>
-        </td>
-      </tr>
-
-      <tr tal:replace="nothing">
         ______________ top controls row ______________
       </tr>
       <tr class="top-controls">
         <td colspan="3">
           <h3>
-            default settings
+            metadata
           </h3>
         </td>
       </tr>

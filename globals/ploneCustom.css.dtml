@@ -173,6 +173,7 @@ div.tabs a.normal {
 /* ________________________________________ river bar (or sidewalk :) _____ */
 
 div.riverBar {
+  font-size : 90%;
   height : 0.3em;
   background: &dtml-mainTabBackgroundSelected;;
   margin-bottom: 0;
@@ -243,7 +244,7 @@ table.columns td.main {
 }
 table.columns td.right {
     /* background: red; fkg IE */
-    width: 10%;
+    width: 20%;
     padding: 8px 8px 0 0 ! important;
 }
 
@@ -308,7 +309,7 @@ table.listing tr.controls {
 }
 
 table.listing tr.top-controls {
-  background-color: #567275;
+  background-color: #4b6466;
 }
 
 table.listing tr.controls-1 {
@@ -728,8 +729,8 @@ div.clipboard {
 
 h2.clipboard {
   color: #394b4d;
-  margin-top : 0.1em;
-  margin-bottom : 0.1em;  
+  margin-top : 0em;
+  margin-bottom : 0.2em;  
   text-transform: &dtml-textTransform;;
 }
 
@@ -741,9 +742,10 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
   margin-bottom: 0em;
   border : 1px solid &dtml-shade60;;
   line-height : 96%;
+  width: 100%
 }
 
-div.clipboard option.header {
+div.clipboard option.disabled {
   color: #dbf3f6;
   background: #71969a;
 

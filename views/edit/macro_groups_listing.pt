@@ -73,24 +73,28 @@
                   title="groups administration: alt-g"
                   accesskey="g"
                   tal:condition="python:model_is_container and group_service">
-                  <u>G</u>roups administration...
+                  <u>G</u>roups admin...
                 </a>
               </metal:block>
             </td>
+          </tr>
+          <tr>
+            <th>
+              Control-click to multi-select
+            </th>
           </tr>
           <tr valign="top"
             tal:condition="groups">
             <td style="padding: 0;">
               <select class="clipboard"
-                style="width: 100%"
                 multiple="multiple"
                 name="groups:list"
                 size="10">
                 <tal:block condition="groups">
-                  <option class="header"
+                  <option class="disabled"
                     disabled="disabled"
                     value="None">
-                    Control-click to select groups
+                    select groups:
                   </option>
                   <option value="group"
                     tal:repeat="group groups"
@@ -99,7 +103,7 @@
                     Group
                   </option>
                 </tal:block>
-                <option class="header"
+                <option class="disabled"
                   tal:condition="not:groups">
                   No groups available
                 </option>

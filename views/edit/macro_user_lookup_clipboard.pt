@@ -32,27 +32,31 @@
             <td>
               <metal:block define-slot="clipboard_lookup_action">
                 <a class="navigation" 
-                  accesskey="l"
+                  style="float:right;"
+                  href="lookup"
                   title="lookup users: alt-l"
-                  style="float: right;"
-                  href="lookup">
+                  accesskey="l">
                   <u>L</u>ookup users...
                 </a>
               </metal:block>
             </td>
           </tr>
+          <tr>
+            <th>
+              Control-click to multi-select
+            </th>
+          </tr>
           <tr valign="top">
             <td style="padding: 0;">
               <select class="clipboard"
-                style="width: 100%"
                 multiple="multiple"
                 name="userids:list"
                 size="10">
                 <tal:block condition="clipboard_members">
-                  <option class="header"
+                  <option class="disabled"
                     disabled="disabled"
                     value="None">
-                    Control-click to select users
+                    select users:
                   </option>
                   <tal:block repeat="userid clipboard_members">
                     <option value="userid"
@@ -63,11 +67,11 @@
                     </option>
                   </tal:block>
                 </tal:block>
-                <option class="header"
+                <option class="disabled"
                   disabled="disabled"
                   value="None"
                   tal:condition="not:clipboard_members">
-                  No users on lookup clipboard
+                  No users on clipboard
                 </option>
               </select>
             </td>
@@ -81,7 +85,7 @@
             </td>
           </tr -->
           <tr class="controls">
-            <td class="align-left">
+            <td>
               <tal:block condition="clipboard_members">
                 <metal:block define-slot="clipboard_actions" />
               </tal:block>

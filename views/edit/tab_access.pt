@@ -99,7 +99,7 @@
                         local
                       </label>
                       &nbsp;
-                      <input class="warning"
+                      <input class="warning-checkbox"
                         name="revoke_roles:list"
                         type="checkbox"
                         value=""
@@ -114,7 +114,7 @@
                 tal:condition="not:members">
                 <td colspan="3">
                   <i>
-                    No users with local roles.
+                    No users with local roles
                   </i>
                 </td>
               </tr>
@@ -133,7 +133,6 @@
                         Role name
                       </option>
                     </select>
-                    &nbsp;
                     <input class="button"
                       name="access_assign_to_user:method"
                       title="assign a local role to selected user(s)"
@@ -212,7 +211,7 @@
                 </tr>
                 <tr class="controls align-right">
                   <td>
-                    <input class="warningbutton"
+                    <input class="warning"
                       name="tab_access_deny_access:method"
                       type="submit"
                       value="Deny role"
@@ -371,7 +370,7 @@
                             local
                           </label>
                           &nbsp;
-                          <input class="warning"
+                          <input class="warning-checkbox"
                             name="revoke_roles:list"
                             type="checkbox"
                             value=""
@@ -406,7 +405,6 @@
                             Role name
                           </option>
                         </select>
-                        &nbsp;
                         <input class="button"
                           name="access_assign_to_group:method"
                           title="assign a local role to selected user(s)"

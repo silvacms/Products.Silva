@@ -42,8 +42,8 @@
 
     <span tal:replace="breadcrumb_vein">
       Vein
-    </span>:
-
+    </span><a name="top">:</a>
+    
     <tal:block tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
 
       <a href="url"
@@ -138,12 +138,6 @@
   </div>
 
   <div class="riverBar">
-    <a name="top">
-      <img border="0"
-        height="4"
-        width="1"
-        tal:attributes="src python: '%s/globals/pixel.gif' % root_url" />
-    </a>
   </div>
 
 </tal:block>

@@ -197,14 +197,15 @@
               title="return to the access screen with this clipboard: alt-u"
               href="lookup_back_link"
               tal:attributes="href here/lookup_back_link">
-              <u>U</u>se current clipboard...
+              <u>U</u>se clipboard...
             </a>
           </metal:block>
           <metal:block fill-slot="clipboard_actions">
             <input class="warning"
+              style="float: right;"
               name="lookup_remove_from_selection:method"
               type="submit"
-              value="Remove from clipboard"
+              value="Remove"
               title="remove users from the clipboard: alt-r"
               accesskey="r"
             />
