@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.14.54.1 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -102,9 +102,18 @@ class Indexer(Content, SimpleItem):
             else:
                 l.append(child)
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'is_deletable')
     def is_deletable(self):
         """always deletable"""
         return 1
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'can_set_title')
+    def can_set_title(self):
+        """return 1 so the title can be set"""
+        return 1
+         
 
 InitializeClass(Indexer)
 
