@@ -447,7 +447,6 @@ table.listing td.field-title {
 
 /* ______________ sidebar navigation ______________ */
 
-
 table.listing th.top {
   color: #e3eef0;
   background: #71969a;

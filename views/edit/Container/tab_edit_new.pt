@@ -64,27 +64,25 @@
     </tr>
     <tr class="top-controls">
       <td>
-        <h3 i18n:translate="descriptions_of_objects">
-          Descriptions of objects available at this location
+        <h3 i18n:translate="create_an_object">
+          Create an object 
         </h3>
       </td>
     </tr>
   </thead>
 
   <tbody>
-    <tr class="odd">
+    <tr class="even">
       <td style="padding-top: 0.5em;">
-        <span class="back3" tal:replace="nothing">Descriptions of available objects at this location</span>  
         <p class="readable">
-	  <span i18n:translate="click_name_to_create_object">
-            Click a name to create an object. For additional information about the item see the
-	  </span>
-	  <a class="published" 
-	     href="http://www.infrae.com/products/silva/docs"
-	     i18n:translate="silva_doc"
-	  >
-	    Silva documentation
-	  </a>.
+	        <span i18n:translate="click_name_to_create_object">
+            Click a name to create an item. Note that this screen only lists descriptions of objects that are available at this location. For additional information about an item see the
+	        </span>
+	        <a class="underline" 
+	           href="http://www.infrae.com/products/silva/docs"
+	           i18n:translate="silva_doc"
+	        >
+	          Silva documentation</a>.
           <br />
         </p>
       </td>
@@ -92,7 +90,7 @@
 
     <tr tal:replace="nothing"> ______________ listing iteration ______________ </tr>
     <tal:repeat repeat="addable model/get_silva_addables">
-      <tr class="odd">
+      <tr class="even">
         <td>
           <div class="subhead">
             <img tal:replace="structure python:here.render_icon_by_meta_type(addable['name'])" />
@@ -107,7 +105,7 @@
         </td>
       </tr>
 
-      <tr class="odd"
+      <tr class="even"
         valign="top">
         <td style="padding-left: 2.6em;">
           <p class="readable"
@@ -119,7 +117,7 @@
       </tr>
     </tal:repeat>
 
-    <tr class="odd"
+    <tr class="even"
       tal:condition="not:may_change_content">
        <td colspan="2">
          <p i18n:translate="not_authorized">

@@ -119,7 +119,6 @@ setTimeout('handleTimeout()', document.timeout * 1000, '');
 <!-- Plone Javascript -->
 <script type="text/javascript"
   xml:space="preserve"
-  tal:replace="nothing"
   tal:attributes="src string:${root_url}/globals/plone_javascripts.js"
 >
 </script>
