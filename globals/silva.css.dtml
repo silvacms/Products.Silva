@@ -1003,12 +1003,11 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
   margin-bottom: -0.5em;
   border : 1px solid &dtml-shade60;;
   line-height : 96%;
-  width: 100%
+  width: 100%;
 }
 
 select.clipboard option.disabled {
   color: #dbf3f6;
-  background: #71969a;
   background: &dtml-listingHeaderBackground;; 
 
 }
