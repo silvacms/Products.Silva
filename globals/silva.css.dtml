@@ -603,6 +603,7 @@ table.listing a.up:hover {
 td.selected {
   background: &dtml-oddRowBackground;;
   padding-left: 0 ! important;
+  padding-right: 0 ! important;
   border-top: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
 }
@@ -610,6 +611,7 @@ td.selected {
 td.unselected {
   background: &dtml-evenRowBackground;;
   padding-left: 0 ! important;
+  padding-right: 0 ! important;
   border-top: 1px solid &dtml-evenRowBackground;;
   border-bottom:  1px solid &dtml-evenRowBackground;;
 }
@@ -622,13 +624,54 @@ td.unselected:hover {
   cursor : pointer;
 } 
 
-div.slider {
-  float:left;
-  height:16px;
-  width:8px;
+table.listing td a.normal:link {
+  display : block;
+    color: &dtml-mainTabFontColor;;
+    background: &dtml-listingHeaderBackground;; 
 }
-div.slider:hover {
-  background-image: url(<dtml-var root>/globals/slider.png);
+
+table.listing th.top a.normal:visited {
+  display : block;
+    color: &dtml-mainTabFontColor;;
+    background: &dtml-listingHeaderBackground;; 
+}
+
+table.listing th.top a.normal:hover {
+  display : block;
+    color: &dtml-mainTabFontColorSelected;;
+  background: #d2e6f8;
+    text-decoration: none;
+}
+
+/* _______ slidelinks _______ */
+table.listing a.left {
+  display : block;
+  width : 8px;
+  height : 16px;
+  float: left;
+}
+
+table.listing a.right {
+  display : block;
+  width : 8px;
+  height : 16px;
+  float: right;
+}
+
+table.listing a.left:hover {
+  background-image: url(<dtml-var root>/globals/slideleft.gif);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+table.listing a.right:hover {
+  background-image: url(<dtml-var root>/globals/slideright.gif);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+div.normal {
+  display: block;
 }
 
 
@@ -1002,6 +1045,7 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
   border : 1px solid &dtml-shade60;;
   line-height : 96%;
   width: 100%;
+  max-width: 100%;
 }
 
 select.clipboard option.disabled {
