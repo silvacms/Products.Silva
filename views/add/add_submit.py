@@ -49,5 +49,5 @@ object.sec_update_last_author_info()
 if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
-    return view.tab_edit(message_type="feedback", 
+    return model.edit['tab_edit'](message_type="feedback", 
                          message="Added %s %s." % (object.meta_type, view.quotify(id)))
