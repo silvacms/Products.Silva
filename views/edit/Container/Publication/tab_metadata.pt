@@ -49,7 +49,7 @@
           title="manage subscriptions: alt-m"
           accesskey="m"
           tal:attributes="href string:${url}/edit/tab_subscriptions"
-          tal:condition="here/service_subscriptions/subscriptionsEnabled | nothing"
+          tal:condition="here/is_subscribable_content"
           i18n:attributes="title;accesskey manage_subscriptions_accesskey"
           i18n:translate=""
           ><u>m</u>anage subscriptions...</a>

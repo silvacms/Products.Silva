@@ -18,7 +18,7 @@
   <metal:block use-macro="view/Container/tab_metadata/macros/master">
     <metal:block fill-slot="top_controls">
       <tal:block 
-        condition="here/service_subscriptions/subscriptionsEnabled | nothing">
+        condition="here/is_subscribable_content">
         <a class="transport"
           style="float:right;"
           title="manage subscriptions: alt-m"
