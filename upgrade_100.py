@@ -17,6 +17,8 @@ from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.VersionedContent import VersionedContent
 from Products.SilvaMetadata.Exceptions import BindingError
 
+import zLOG
+
 #-----------------------------------------------------------------------------
 # 0.9.3 to 1.0.0
 #-----------------------------------------------------------------------------
@@ -29,7 +31,12 @@ class ImageUpgrade:
     def upgrade(self, image):
         if image.hires_image is None:
             image.hires_image = image.image
-        image._createDerivedImages()
+        try:
+            image._createDerivedImages()
+        except IOError, e:
+            zLOG.LOG('Silva', zLOG.WARNING,
+                    ('Error upgrading image %s: %s, the image is probably '
+                    'unusable from now on.') % (image.absolute_url(), e))
         return image
             
     
