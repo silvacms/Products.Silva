@@ -15,7 +15,7 @@ _____________________ Author requests approval _______________________________
 <tr class="focus-cycle" valign="top">
 <td align="right">
 <span class="textarea">
-<field tal:replace="structure python:view.tab_status_form_author.message.render()" />
+<field tal:replace="structure python:view.tab_status_form_author.message.render(REQUEST=request)" />
 </span>
 </td>
 <td width="30%" valign="top">
@@ -41,8 +41,10 @@ The last message related to this is:
 <tr class="focus" valign="top">
 <td align="right">
 Content publish time:&nbsp;
-
-<field tal:replace="structure python:view.tab_status_form_author.publish_datetime.render()" />
+<field tal:replace="structure 
+      python:view.tab_status_form_author.publish_datetime.
+                render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)" 
+/>
 </td>
 <td>
 &nbsp;
@@ -52,7 +54,10 @@ Content publish time:&nbsp;
 <tr class="focus-cycle" valign="top">
 <td align="right">
 Expiration time:&nbsp;
-<field tal:replace="structure python:view.tab_status_form_author.expiration_datetime.render()" />
+<field tal:replace="structure 
+     python:view.tab_status_form_author.expiration_datetime.
+          render(value=model.get_unapproved_version_expiration_datetime(), REQUEST=request)" 
+/>
 </td>
 <td>
 If this content should expire, set the time.&nbsp;
@@ -65,7 +70,7 @@ If this content should expire, set the time.&nbsp;
 </td>
 <td align="right">
 Turn on expiration time?&nbsp;<field
-    tal:replace="structure python:view.tab_status_form_author.expires_flag.render()" />
+    tal:replace="structure python:view.tab_status_form_author.expires_flag.render(REQUEST=request)" />
 </td>
 </tr>
 
@@ -97,10 +102,10 @@ _____________________ Author / Editor withdraws request for  approval __________
  Author <span tal:replace="python:model.get_approval_requester()">author id</span>
 has requested approval at 
 <span tal:replace="structure python:here.service_utils.backend_datetime_to_str(model.get_approval_request_datetime())">some date</span>
-<span tal:omit-tag="" tal:condition="python:model.get_approval_request_message()">
+<tal:if condition="python:model.get_approval_request_message()">
 with the following comments:
 <div class="message" tal:content="python:model.get_approval_request_message()" />
-</span>
+</tal:if>
 </td></tr>
 <tr>
 <input type="hidden" name="rejection_status" tal:attributes="value python:test(silva_permissions['ApproveSilvaContent'], 'true', 'false')" />
@@ -163,7 +168,10 @@ Notes
 <tr class="focus" valign="top">
 <td align="right">
 Content publish time:&nbsp;
-<field tal:replace="structure python:view.tab_status_form_editor.publish_datetime.render(model.get_next_version_publication_datetime())" />
+<field tal:replace="structure 
+    python:view.tab_status_form_editor.publish_datetime.
+       render(REQUEST=request)
+" />
 </td>
 <td>
 &nbsp;
@@ -173,7 +181,10 @@ Content publish time:&nbsp;
 <tr class="focus-cycle" valign="top">
 <td align="right">
 Expiration time:&nbsp;
-<field tal:replace="structure python:view.tab_status_form_editor.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
+<field tal:replace="structure 
+     python:view.tab_status_form_editor.expiration_datetime.
+         render(REQUEST=request)
+" />
 </td>
 <td>
 If this content should expire, set the time.&nbsp;
@@ -186,7 +197,7 @@ If this content should expire, set the time.&nbsp;
 </td>
 <td align="right">
 Turn on expiration time?&nbsp;<field
-    tal:replace="structure python:view.tab_status_form_editor.expires_flag.render(model.get_next_version_expiration_datetime() is not None)" />
+    tal:replace="structure python:view.tab_status_form_editor.expires_flag.render(REQUEST=request)" />
 </td>
 </tr>
 
@@ -196,7 +207,7 @@ Turn on expiration time?&nbsp;<field
 </td>
 <td align="right">
 Publish right now?&nbsp;<field
-    tal:replace="structure python:view.tab_status_form_editor.publish_now_flag.render()" />
+    tal:replace="structure python:view.tab_status_form_editor.publish_now_flag.render(REQUEST=request)" />
 </td>
 </tr>
 
