@@ -10,7 +10,7 @@
   </td>
   <th align="left">
   &nbsp;<span tal:replace="python:here.get_display_name(wr_name, node)">Edit title</span>
-  <a href="#top" title="Up to top of page"><img tal:attributes="src string:${silva_root}/globals/up_to_top.gif" width="16" height="16" border="0" hspace="7" /></a>
+  <a href="#top" title="Up to top of page"><img tal:attributes="src string:${silva_root}/globals/up_to_top.gif" width="16" height="12" border="0" hspace="7" /></a>
   </th>
   <th tal:condition="not:disable_notes" align="left" width="30%">Notes</th>
   <th tal:condition="disable_notes" align="left" width="30%">&nbsp;</th>
