@@ -34,7 +34,7 @@
   rel="shortcut icon"
   tal:attributes="href string:${root_url}/globals/favicon.ico"
 />
-<!-- Plone Stylesheets -->
+<tal:block replace="nothing"> <!-- Plone Stylesheets --> </tal:block>
 <style media="all"
   type="text/css"
   xml:space="preserve"
@@ -60,6 +60,9 @@
   tal:condition="python:template.id == 'tab_preview'"
   tal:attributes="href here/frontend.css/absolute_url | nothing"
 />
+<tal:block replace="nothing"> _______ hook for application specific stylesheet extension _______ </tal:block>
+<metal:block define-slot="extension_css" />
+<tal:block replace="nothing"> _______ hook for refresh function _______ </tal:block>
 <metal:block define-slot="refresher" />
 <!-- Plone Javascript -->
 <script type="text/javascript"
@@ -82,17 +85,7 @@ function handle_default_action(element, event, action)
 }
 
 </script>
-<tal:block replace="nothing">
-_______ application specific stylesheet extension _______
-</tal:block>
-<link href="ext_stylesheet"
-  rel="stylesheet"
-  tal:condition="view/extension_style_url | nothing"
-  tal:attributes="href view/extension_style_url"
-/>
-<script tal:replace="nothing">
-  _______ editor hooks _______
-</script>
+<script tal:replace="nothing"> _______ editor hooks _______ </script>
 <script language="JavaScript"
   type="text/javascript"
   xml:space="preserve"
@@ -114,18 +107,18 @@ _______ application specific stylesheet extension _______
 />
 </head>
 <body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
-<!-- ____________________________ start tabs ___________________________ -->
+<!-- ___________________________ start tabs ___________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   top navigation plugs in here....
 </metal:block>
 <!-- ____________________________ end tabs _____________________________ -->
 <span tal:replace="nothing">
-<!-- _____________________ start workspace _____________________ -->
+<!-- ____________________________ start workspace ____________________________ -->
 </span>
 <div class="workspace">
 
 <span tal:replace="nothing">
-<!-- _______ start feedback _______ -->
+<!-- ______________ start feedback ______________ -->
 </span>
 <tal:block define="
   type options/message_type | request/message_type | nothing;
@@ -144,17 +137,17 @@ _______ application specific stylesheet extension _______
   </div>
 </tal:block>
 <span tal:replace="nothing">
-<!-- _______ end feedback _______ -->
+<!-- ______________ end feedback ______________ -->
 </span>
 
-<!-- ____________________________ main start ___________________________ -->
+<!-- _____________________ main start _____________________ -->
 <div metal:define-slot="main">
   Here the local content (a.k.a. "model") is inserted (this text will be replaced).
 </div>
-<!-- ____________________________ main ends ____________________________ -->
+<!-- _____________________ main ends _____________________ -->
 
 <span tal:replace="nothing">
-<!-- ______________ footer start ______________ -->
+<!-- _____________________ footer start _____________________ -->
 </span>
 <span tal:replace="nothing">
 <!-- _______ white space + jump to top _______ -->
@@ -162,8 +155,7 @@ _______ application specific stylesheet extension _______
 <div>
   <div style="float: left;">
     <a href="#top"
-      title="jump to top: alt-t"
-    >
+      title="jump to top: alt-t">
       <img alt="jump to top"
         border="0"
         height="16"
@@ -175,8 +167,7 @@ _______ application specific stylesheet extension _______
   <div style="float: right;">
     <a accesskey="t"
       href="#top"
-      title="jump to top: alt-t"
-    >
+      title="jump to top: alt-t">
       <img alt="jump to top"
         border="0"
         height="16"
@@ -189,7 +180,7 @@ _______ application specific stylesheet extension _______
 </div>
 
 <span tal:replace="nothing">
-<!-- _______ page info _______ -->
+<!-- ______________ page info ______________ -->
 </span>
 <div class="footer">
   <div style="float: left;">
@@ -223,7 +214,7 @@ _______ application specific stylesheet extension _______
 </div>
 
 <span tal:replace="nothing">
-<!-- _______ user tools _______ -->
+<!-- ______________ user tools ______________ -->
 </span>
 <div class="personalBar"
   tal:define="userid request/AUTHENTICATED_USER/getUserName"
@@ -257,24 +248,22 @@ _______ application specific stylesheet extension _______
       <span tal:replace="userid" />
     </a>
   </div>
-  <a accesskey=","
-    shape="rect"
-    title="Request an additional role in this location: alt-,"
-    tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()"
-    tal:attributes="href string:public/request_roles?last_url=${url}"
-  >
-    request access
-  </a>
   <a name="bottom">
     &nbsp;
   </a>
+  <a title="Request an additional role in this location: alt-,"
+    accesskey=","
+    tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()"
+    tal:attributes="href string:public/request_roles?last_url=${url}/edit/${template/id}">
+    request access
+  </a>
 </div>
 <span tal:replace="nothing">
-<!-- ______________ footer ends ______________ -->
+<!-- _____________________ footer ends _____________________ -->
 </span>
 
 <span tal:replace="nothing">
-<!-- _____________________ workspace ends _____________________ -->
+<!-- ____________________________ workspace ends ____________________________ -->
 </span>
 </div>
  

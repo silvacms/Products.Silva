@@ -102,7 +102,7 @@
                   <td class="align-right">
                     <tal:block repeat="local python:model.sec_get_local_roles_for_userid(userid)">
                       <label tal:content="local" 
-                        tal:attributes="for string:revoke_${userid}">
+                        tal:attributes="for string:revoke_${local}-${userid}">
                         local
                       </label>
                       <input class="warning-checkbox"
@@ -111,7 +111,7 @@
                         value=""
                         tal:attributes="
                           value python:'%s||%s' % (userid, local);
-                          id string:revoke_${userid}" 
+                          id string:revoke_${local}-${userid}" 
                         tal:define="global revokeable_roles python: 1"
                        /><br tal:condition="not:repeat/local/end" />
                     </tal:block>
@@ -168,26 +168,27 @@
           <!-- Pending role requests -->
           <tal:block condition="allow_subscription">
             <form action="."
-              method="POST">
+              method="POST"
+              tal:define="requested_roles model/requested_roles"
+              tal:condition="requested_roles">
               <table class="listing"
                 border="0"
                 cellpadding="5"
                 cellspacing="0"
-                style="empty-cells:show;"
-                tal:define="requested_roles model/requested_roles">
+                style="empty-cells:show;">
                 <tr class="top-controls">
                   <td colspan="3">
                     <h3>Pending requests for roles</h3>
                   </td>
                 </tr>
-                <tr tal:condition="requested_roles">
-                  <th class="align-left">
+                <tr>
+                  <th>
                     Username
                   </th>
-                  <th class="align-left">
+                  <th>
                     Requested role
                   </th>
-                  <th class="align-left">
+                  <th>
                     Is approved
                   </th>
                 </tr>
@@ -215,6 +216,9 @@
                     </td>
                   </tr>
                 </tal:block>
+                <tal:block replace="nothing"> 
+                 _____ shouldn't be needed, since the entire form is conditioned _____
+                </tal:block>
                 <tr class="even"
                   tal:condition="not:requested_roles">
                   <td colspan="3">
@@ -227,7 +231,9 @@
                       name="tab_access_deny_access:method"
                       type="submit"
                       value="Deny role"
-                      tal:condition="requested_roles" />
+                      title="access key: alt-d"
+                      accesskey="d"
+                    />
                   </td>
                   <td class="align-right"
                     colspan="2">
@@ -235,11 +241,17 @@
                       <input class="button"
                         name="tab_access_allow_access:method"
                         type="submit"
-                        value="Grant role" />
+                        value="Grant role"
+                        title="access key: alt-g"
+                        accesskey="g"
+                      />
                       <input class="button"
                         name="tab_access_allow_and_approve:method"
                         type="submit"
-                        value="Grant and approve" />
+                        value="Grant and approve"
+                        title="access key: alt-a"
+                        accesskey="a"
+                      />
                     </tal:block>
                   </td>
                 </tr>
@@ -581,7 +593,7 @@
                   <td class="align-right">
                     <input class="button"
                       type="submit"
-                      value="Set restriction"
+                      value="Set ip restriction"
                       title="restrict access to specified IP addresses" />
                   </td>
                 </tr>

@@ -1,69 +1,77 @@
 <html metal:use-macro="here/layout_macro.html/macros/layout">
-  <head>
-    <title tal:content="template/title">The title</title>
-  </head>
-  <body>
-
-<div metal:fill-slot="main" tal:define="dummy here/security_trigger" tal:omit-tag="">
-
+<head>
+  <title>Membership</title>
+</head>
+<body>
+<metal:block fill-slot="main">
 <tal:block condition="python: hasattr(here, 'service_members') and here.service_members.allow_subscription()">
-
-<!-- __________________________ feedback _________________________ -->
-<tal:block
-  define="msg options/message | nothing"
-  condition="msg">
-<div class="alert" style="margin:0%;">
-<span tal:replace="structure msg">message</span>
-</div>
-</tal:block>
 
 <h2>Membership</h2>
 
-<tal:define define="global view here; global member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId())" />
+<form action="request_roles_submit"
+  method="POST"
+  tal:define="global view here; global member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId())">
+<input type="hidden"
+  name="last_url"
+  tal:attributes="value view/REQUEST/last_url"
+/>
+<div style="width:24em;"
+   tal:define="notice options/message | nothing">
+  <h4>
+    Request roles at this location
+  </h4>
+  <!-- __________________________ feedback _________________________ -->
+  <p tal:condition="notice">
+    <span class="error"
+      tal:content="structure notice">
+      message
+    </span>
+    <br /><br />
+  </p>
+  <tal:condition condition="python: not member.email() or not member.fullname()">
+    <p tal:condition="not: notice">
+        Please fill in the following fields.
+        <br /><br />
+    </p>
+    <p>
+      Full name:<br />
+      <input type="text" name="fullname" style="width: 100%;"
+        tal:attributes="value member/fullname" /><br /><br />
+      E-mail address:<br />
+      <input type="text" name="email" style="width: 100%;"
+        tal:attributes="value member/email" /><br /><br />
+    </p>
+  </tal:condition>
 
-<form action="request_roles_submit" method="POST">
-<input type="hidden" name="last_url" tal:attributes="value view/REQUEST/last_url" />
-
-<div class="hilight borders top right bottom left"
-  style="padding: 0.2em 0.5em 1em 0.5em; clear: both; width: 20em; line-height:1.1em;">
-    
-<tal:block tal:condition="python: not member.email() or not member.fullname()">
-  <span class="subhead">Request roles at this location</span><br /><br />
-  Please fill in the following fields.<br /><br />
-
-  Full name:<br />
-  <input type="text" name="fullname" style="width: 100%;"
-    tal:attributes="value member/fullname" /><br /><br />
-
-  E-mail address:<br />
-  <input type="text" name="email" style="width: 100%;"
-    tal:attributes="value member/email" /><br /><br />
-
-</tal:block>
-
-Choose role(s) to request:<br />
-<tal:repeat repeat="role view/get_available_roles">
-<input type="checkbox" name="roles:list" 
- tal:attributes="
-  value role;
-  id role;" />&nbsp;<label tal:attributes="for role" tal:content="role">Role</label><br />
-</tal:repeat>
-
-<input class="button" type="submit" value=" Send request " 
-  title="Send request for role: alt-s" accesskey="s" style="float:right;" />
-<br />
+  <p>
+    Choose role(s) to request:<br />
+    <tal:repeat repeat="role view/get_available_roles">
+    <input type="checkbox" name="roles:list" 
+     tal:attributes="
+      value role;
+      id role;"
+    />
+    <label tal:attributes="for role"
+      tal:content="role">
+      Role
+    </label><br />
+    </tal:repeat>
+  </p>
+  <input class="button"
+    style="float:right;"
+    type="submit"
+    value=" Send request " 
+    title="Send request for role: alt-s"
+    accesskey="s"
+  />
 </div>
-
 </form>
 
 </tal:block>
 <tal:block condition="python: not hasattr(here, 'service_members') or not here.service_members.allow_subscription()">
-
-This site does not allow requests for roles.
-
+  This site does not allow requests for roles.
 </tal:block>
 
-</div>
-
-  </body>
+</metal:block>
+</body>
 </html>
