@@ -183,7 +183,7 @@
      <value key="required"></value>
      <value key="allow_empty_time"></value>
      <value key="css_class"></value>
-     <value key="default">python: content.get_creation_datetime() or 'n/a'</value>
+     <value key="default">python: content.get_creation_datetime() or None</value>
      <value key="title"></value>
      <value key="description"></value>
      <value key="start_datetime"></value>
