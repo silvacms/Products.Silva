@@ -4,7 +4,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
 # Author: Jan-Wijbrand Kolman (jw@infrae.com)
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 #
 # Issues:
 #  * Testing, testing, testing. It would be rather horrible to 
@@ -208,7 +208,7 @@ class PrettyZPT(saxutils.DefaultHandler):
                 self._write(NEWLINE + indent + '%s="%s"' % (key, value))
 
     def printComment(self, content):
-        self._write(NEWLINE + self._indent() + '<!-- ' + content + ' -->' + NEWLINE)
+        self._write(NEWLINE + self._indent() + '<!-- ' + content + ' -->')
 
     def _attributeValues(self, value):
         multi_indent = self._indent() + (INDENTCHAR * INDENTDEPTH) * 2
