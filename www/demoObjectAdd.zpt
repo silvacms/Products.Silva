@@ -1,18 +1,18 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.2 $
+Version of this file: $Revision: 1.3 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
-<h2 tal:define="form_title string:Add Silva DemoAddable"
+<h2 tal:define="form_title string:Add Silva DemoObject"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
 <p class="form-help">
-Add Silva DemoAddable
+Add Silva DemoObject
 </p>
 
-<form action="manage_addDemoAddable" method="post">
+<form action="manage_addDemoObject" method="post">
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">
