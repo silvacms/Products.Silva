@@ -70,7 +70,22 @@ class SilvaObject(Security):
     def get_modification_datetime(self):
         """Return modification datetime."""
         return self._modification_datetime
-    
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_breadcrumbs')
+    def get_breadcrumbs(self):
+        """Get information used to display breadcrumbs. This is a
+        list of items from the Silva Root.
+        """
+        result = []
+        item = self
+        beginning = self.get_root()
+        while item >= beginning:
+            result.append(item)
+            item = item.aq_parent
+        result.reverse()
+        return result
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
     def get_editable(self):

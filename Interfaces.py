@@ -90,6 +90,12 @@ class SilvaObject(Security):
         """
         pass
 
+    def get_breadcrumbs(self):
+        """Get the objects above this item, until the Silva Root, in
+        order from Silva Root.
+        """
+        pass
+        
     def get_editable(self):
         """Get the editable version (may be object itself if no versioning).
         Returns None if there is no such version.
