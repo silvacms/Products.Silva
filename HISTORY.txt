@@ -11,6 +11,9 @@ Silva changes
         will now not break on anything anymore, it will print a warning to
         the zLOG on every exception.
 
+      - Problem in Kupu transformations that made 'spurious' <p> elements 
+        without content appear on the page.
+
   1.0 (release candidate 4)
 
     Bugs fixed
