@@ -129,6 +129,9 @@ def install(root):
     root.add_silva_addable_forbidden('Silva Group')
     root.add_silva_addable_forbidden('Silva Virtual Group')
     root.add_silva_addable_forbidden('Silva IP Group')
+    
+    # forbid adding sqldatasources - being replaced with SilvaExternalSources
+    root.add_silva_addable_forbidden('Silva SQL Data Source')
 
     # add or update service metadata
     configureMetadata(root)
