@@ -116,7 +116,7 @@ span.kupu-tb-buttongroup button.kupu-undo:hover {background-image: url("kupu/kup
 span.kupu-tb-buttongroup button.kupu-redo {background-image: url("kupu/kupuimages/redo.gif"); background-color: #cedae8;}
 span.kupu-tb-buttongroup button.kupu-redo:hover {background-image: url("kupu/kupuimages/redo.gif"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-source {display: none}
+span.kupu-tb-buttongroup button.kupu-source {background-image: url("kupu/kupuimages/source.gif"); background-color: #cedae8;}
 
 div.kupu-tb select {
   color : #333767;
@@ -136,6 +136,15 @@ div.kupu-editorframe {
 
 #kupu-editor {
   height: 580px;
+  width: 99%;
+  margin-left: 0em;
+  margin-bottom: 0em;
+  border: solid 1px #6c797f;
+}
+
+#kupu-editor-textarea {
+  height: 580px;
+  width: 99%;
   margin-left: 0em;
   margin-bottom: 0em;
   border: solid 1px #6c797f;
