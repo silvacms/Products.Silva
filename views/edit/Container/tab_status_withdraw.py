@@ -39,8 +39,8 @@ for ref in refs:
         not_approved_refs.append(ref)
         continue
     message = '''\
-Request for approval was withdrawn via a bulk operation in the publish tab of /%s
-(Automatically generated message)''' % model.absolute_url(1)
+Request for approval was withdrawn via a bulk operation in the publish screen of /%s
+(automatically generated message)''' % model.absolute_url(1)
     obj.withdraw_version_approval(message)
     approved_ids.append(obj.id)
 

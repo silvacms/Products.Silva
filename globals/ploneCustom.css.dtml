@@ -268,23 +268,6 @@ table.columns1 {
     padding: 0 8px 0 8px;
 }
 
-/* used to shape non-nested listing tables */
-.focus-box {
-  /* for IE5 */
-  width : 90%;
-  max-width : 55em; 
-  margin : 0em 8px 0em 8px;
-  padding-top: 8px;
-}
-
-.focus-rectangle {
-  /* for IE5 */
-  width : 100%;
-  max-width : 98%;
-  margin : 0em 8px 0em 8px;
-  padding-top: 8px;
-}
-
 
 /* ____________________________________________________ table listing _____ */
 
@@ -320,12 +303,20 @@ table.listing tr.controls-1 {
     background-color: #648589;
 }
 
+/* last situation */
 tr.unselected, td.unselected {
   background-color: &dtml-evenRowBackground;;
+    border-top: none ! important;
+    border-bottom: none ! important;
+  border-collapse: collapse;
 }
 
+/* last situation */
 tr.selected, td.selected {
   background-color: &dtml-oddRowBackground;;
+    border-top: none ! important;
+    border-bottom: none ! important;
+  border-collapse: collapse;
 }
 
 tr.divider, th.divider, td.divider {
@@ -626,6 +617,26 @@ table.listing a.navigation:hover {
 }
 
 
+/* _____________________________________________________ focus shapes _____ */
+
+/* used to shape non-nested listing tables */
+.focus-box {
+  /* for IE5 */
+  width : 73%;
+  max-width : 56em; 
+  margin : 0 8px;
+  padding-top: 8px;
+}
+
+.focus-rectangle {
+  /* for IE5 */
+  width : 100%;
+  max-width : 98%;
+  margin : 0 8px;
+  padding-top: 8px;
+}
+
+
 /* _______________________________________________________ form stuff _____ */
 
 form.compact {
@@ -779,10 +790,42 @@ div.alert {
   border-collapse: collapse;
 }
 
-/* not in use */
+div.floating-feedback {
+    color: #555555;
+    background: #f3f3d9;
+    border: &dtml-messageBorder;;
+    border-style: solid solid solid solid;
+    margin: 0 8px 0 8px;
+    padding: 0.1em 9px 0.2em 9px;
+}
+
 div.feedback a {
-	color: &dtml-mainFontColor;;
+	color: &dtml-mainLinkColor;;
     text-decoration: underline;
+}
+
+table.listing td.feedback {
+  color: #555555;
+  background: #f3f3d9;
+  padding-top : 0.1em;
+  padding-bottom : 0.2em;
+}
+
+table.listing td.message {
+  padding : 0 ! important;
+  border-collapse: collapse;
+}
+
+table.listing div.message {
+  font-weight: normal;
+  color: #444488;
+  background: #cdffe6;
+  margin : 0;
+  padding : 0.1em 0.6em 0.2em 0.6em;
+  border : 1px solid #555577;
+  border-style: solid none solid none;
+  border-collapse: collapse;
+  white-space : pre;
 }
 
 .highlight {

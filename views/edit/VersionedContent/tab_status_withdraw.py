@@ -21,13 +21,13 @@ else:
   tab_name = request['tab_name']
   if is_rejection:
     message = '''\
-Rejected request for approval via the %s tab.
-(Automatically generated message)
+Apporval was rejected via the %s screen.
+(automatically generated message)
 ''' % tab_name
   else:
     message = '''\
-Withdrew request for approval via the %s tab. 
-(Automatically generated message)
+Approval was withdrawn via the %s screen. 
+(automatically generated message)
 ''' % tab_name
   # next fish
   if tab_name == 'edit':
@@ -39,14 +39,14 @@ Withdrew request for approval via the %s tab.
 if model.get_unapproved_version() is None:
   if model.get_public_version() is not None:
     if view.get_silva_permissions()['ApproveSilvaContent']:
-      return view(message_type="error", message="This content object is already public. You can close the current public version.")
+      return view(message_type="error", message="This content is already public. You can close the current public version.")
     else:
-      return view(message_type="error", message="This content object is already public.")
+      return view(message_type="error", message="This content is already public.")
   else:
-    return view(message_type="error", message="This content object is already approved. You can revoke the approval.")
+    return view(message_type="error", message="This content is already approved. You can revoke the approval.")
 
 if not model.is_version_approval_requested():
-    return view(message_type="error", message="No request for approval is pending for this content object.")
+    return view(message_type="error", message="No request for approval is pending for this content.")
 
 
 if is_rejection:

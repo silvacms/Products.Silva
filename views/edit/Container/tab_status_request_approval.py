@@ -62,8 +62,8 @@ for ref in refs:
     #    obj.set_unapproved_version_expiration_datetime(expiration_datetime)
 
     message = '''\
-Request for approval via bulk request in the publish tab of /%s
-(Automatically generated message)''' % model.absolute_url(1)
+Request for approval via a bulk request in the publish screen of /%s
+(automatically generated message)''' % model.absolute_url(1)
     obj.request_version_approval(message)    
     approved_ids.append(get_name(obj))
 

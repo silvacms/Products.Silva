@@ -143,8 +143,8 @@
 
 
 
-
-<div tal:replace="nothing" comment="scrap until Docma is running again">
+<span tal:replace="nothing" comment="scrap until Docma is running again">sigh</span>
+<div>
 
 <h3><a href="tab_status" title="up to Publish tab">
     <img tal:attributes="src string:${root_url}/globals/up_gray.gif" width="9" height="9" border="0" alt="Up to top of Edit tab" />
