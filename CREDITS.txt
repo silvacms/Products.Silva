@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.3
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.9 $
+  CVS:        $Revision: 1.10 $
 
 Silva is developed by Infrae (http://www.infrae.com). Initial (and
 continued) development is for the Erasmus University Rotterdam
@@ -23,6 +23,8 @@ Thanks to:
     
   Clemens Klein-Robbenhaar for various bug reports,
   suggestions and useful discussion on the mailinglist.
+
+  Holger Krekel for the CVS hosting.
 
   Jim Washington for fixing <script /> and <meta /> in
   layout_macro.html.
