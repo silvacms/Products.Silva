@@ -3,11 +3,19 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.1 beta
+  Valid for:  Silva 0.9.1
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26.2.1 $
+  CVS:        $Revision: 1.26.2.2 $
+
+Upgrading from 0.9.1 beta to 0.9.1
  
+  There shouldn't be any problems, though do a 'refresh all' to make
+  sure. If you are using Groups, do upgrade from Groups 0.3 to Groups
+  0.3.1 as it contains a bugfix. Groups can be found here:
+
+  "Groups 0.3.1":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz.
+
 Upgrading from 0.8.6 and below
 
   Please upgrade your Silva to 0.9 first. Be careful to read its
@@ -48,9 +56,9 @@ Upgrading Silva 0.9.0.x to 0.9.1
       * "FileSystemSite-1.2.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite
 
     If you are using Groups, you also need to download and install the
-    new Groups 0.3. Find it here:
+    new Groups 0.3.1. Find it here:
 
-      * "Groups-0.3.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.tgz
+      * "Groups-0.3.1.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz
 
     To upgrade, remove the Silva, FileSystemSite and (if you have it)
     Groups directories from your 'Products' directory first. Then
@@ -127,11 +135,11 @@ Upgrading Silva 0.9.0.x to 0.9.1
     you should include the objects of your content types in the upgrade
     process.
 
-    For this you need to register an upgrade function associated
-    with the meta type of Your content type class at the
-    'upgrade_registry', before you upgrade. to achieve this 
-    place something along the lines of
-    the following code in the '__init__.py' of your product::
+    For this you need to register an upgrade function associated with
+    the meta type of your content type class at the
+    'upgrade_registry', before you upgrade. to achieve this place
+    something along the lines of the following code in the
+    '__init__.py' of your product::
 
        from Products.Silva.upgrade import upgrade_registry, upgrade_list_titles_in_parsed_xml
 
@@ -144,10 +152,11 @@ Upgrading Silva 0.9.0.x to 0.9.1
     The helper function 'upgrade_list_titles_in_parsed_xml' actually
     does all the XML upgrades mentioned in the section above.
 
-    If you only need to update the "last author" information,
-    you do not need to take any action; the upgrade process will do this
+    If you only need to update the "last author" information, you do
+    not need to take any action; the upgrade process will do this
     automatically for you.
 
-    You also may want to take a look at the most current version of the
-    "SilvaDemoExtension Product":http://cvs.infrae.com/SilvaDemoExtension/
-    for an example of upgrading a custom content type.
+    You also may want to take a look at the most current version of
+    the "SilvaDemoExtension
+    Product":http://cvs.infrae.com/SilvaDemoExtension/ for an example
+    of upgrading a custom content type.
