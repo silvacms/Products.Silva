@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.33 2004/07/21 09:24:12 jw Exp $
+# $Id: Image.py,v 1.50.4.1.6.34 2004/08/18 13:04:25 guido Exp $
 
 # Python
 import re, string
@@ -300,9 +300,9 @@ class Image(Asset):
                 width = height = None
         if not (isinstance(width, IntType) and isinstance(height, IntType)):
             width, height = self._get_dimensions_from_image_data(img)
-        if img.meta_type == 'Image':
-            img.width = width
-            img.height = height
+            if img.meta_type == 'Image':
+                img.width = width
+                img.height = height
         return width, height
 
     security.declareProtected(SilvaPermissions.View, 'getFormat')
