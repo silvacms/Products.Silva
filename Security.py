@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.42 $
+# $Revision: 1.43 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -301,7 +301,7 @@ class Security:
             return noneMember.__of__(self)
         
         # get cached author info (may be None)
-        info = self._last_author_info
+        info = self.sec_get_member(self._last_author_userid)
         if info is None:
             return noneMember.__of__(self)
         else:
