@@ -75,12 +75,12 @@
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
 <td width="2%">
-<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
+<br /><a href="#top" title="jump to top: alt-t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
 </td>
 <td colspan="3">
 </td>
 <td width="2%">
-<br /><a href="#top" title="jump to top - alt-t" accesskey="t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
+<br /><a href="#top" title="jump to top: alt-t" accesskey="t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
 </td>
 </tr>
 
@@ -122,7 +122,7 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="12" />
 </td>
 <td class="footer" width="30%">
-<a class="footer" title="Change your settings by clicking on the little Plone man" target="silva_member_page"
+<a class="footer" title="Change your settings: alt-~" accesskey="~" target="silva_member_page"
   tal:attributes="href string:${silva_root}/Members/${userid}/edit">
   <img tal:attributes="src string:${silva_root}/globals/user.gif" width="8" height="9" border="0"/>
   User settings
@@ -135,8 +135,7 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
   </a>
 </td>
 <td class="footer" align="right" width="30%">
-<a class="footer" href="logout">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="userid" /></a>
-<!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
+<a class="footer" href="logout" title="Logout of Silva: alt-\" accesskey="\">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="userid" /></a>
 </td>
 <td class="footer" width="2%">
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
@@ -148,6 +147,7 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 <td colspan="5" class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="2" /></td>
 </tr>
 </table>
+<!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
 
 </div>
 <!-- ___________________________ footer ends ___________________________ -->
