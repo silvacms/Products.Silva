@@ -22,7 +22,7 @@ msgstr "Aanmeldingsaanvragen zijn voor deze website niet toegestaan."
 #: /AccessManager.py:29
 msgid "Sorry, no ChiefEditors are available to receive the request."
 msgstr ""
-"Sorry, er zijn geen ChiefEditors beschikbaar om de aanvraag te ontvangen."
+"Sorry, er zijn geen Hoofdredacteurs beschikbaar om de aanvraag te ontvangen."
 
 #: /AccessManager.py:60
 msgid "Member is not approved"
@@ -30,7 +30,7 @@ msgstr "Lid is niet goedgekeurd"
 
 #: /AccessManager.py:76 /AccessManager.py:98
 msgid "No ChiefEditors are available to receive the request."
-msgstr "Geen ChiefEditors aanwezig om de aanvraag te ontvangen."
+msgstr "Geen Hoofdredacteurs aanwezig om de aanvraag te ontvangen."
 
 #: /ContainerPolicy.py:67
 msgid ""
@@ -124,83 +124,87 @@ msgid ""
 "'${scale}' is not a valid scale identifier. Probably a percent symbol is "
 "missing."
 msgstr ""
+"'${scale}' is geen geldige schaalwaarde. Waarschijnlijk ontbreekt er een "
+"procentteken."
 
 #: /Image.py:234
 msgid ""
 "'${scale} is not a valid scale identifier. At least one number is required."
-msgstr ""
+msgstr "'${scale}' is geen geldige schaalwaarde. Tenminste één getalwaarde "
+"is vereist."
 
 #: /Image.py:259
 msgid "'${crop} is not a valid crop identifier"
-msgstr ""
+msgstr "'${crop}' is geen geldige afsnijd-waarde"
 
 #: /Image.py:285
 msgid "'${crop}' defines an impossible cropping"
-msgstr ""
+msgstr "'${crop}' is een onmogelijke afsnijdwaarde"
 
 #: /Image.py:344
 msgid "Low resolution image in original format is not supported"
-msgstr ""
+msgstr "Lage resolutie afbeelding is niet ondersteund in het originele "
+"formaat"
 
 #: /Image.py:423
 msgid "square"
-msgstr ""
+msgstr "vierkant"
 
 #: /Image.py:425
 msgid "landscape"
-msgstr ""
+msgstr "landschap"
 
 #: /Image.py:426
 msgid "portrait"
-msgstr ""
+msgstr "portret"
 
 #: /Image.py:469
 msgid "No PIL installed."
-msgstr ""
+msgstr "PIL is niet geïnstalleerd."
 
 #: /Image.py:579
 msgid "There is no service_files. Refresh your Silva root."
-msgstr ""
+msgstr "Kan geen 'service_files' vinden. Ververs de Silva 'root'"
 
 #: /Image.py:636
 msgid "Could not identify image type."
-msgstr ""
+msgstr "Kan afbeeldingstype niet bepalen"
 
 #: /Image.py:708
 msgid "Invalid asset at ${url}"
-msgstr ""
+msgstr "Ongeldige asset op ${url}"
 
 #: /ImporterRegistry.py:125
 msgid "No id found"
-msgstr ""
+msgstr "Geen id gevonden"
 
 #: /ImporterRegistry.py:70
 msgid "can't only register initializer for tag_name *or* as a default"
-msgstr ""
+msgstr "kan niet alleen een 'initializer' registreren voor 'tag_name' *of* als standaard"
 
 #: /LayoutService.py:51
 msgid "${name} installed"
-msgstr ""
+msgstr "${name} geïnstalleerd"
 
 #: /LayoutService.py:60
 msgid "${name} uninstalled"
-msgstr ""
+msgstr "${name} gedeïnstalleerd"
 
 #: /LayoutService.py:72
 msgid "${name} refreshed"
-msgstr ""
+msgstr "${name} ververst"
 
 #: /LayoutService.py:82
 msgid "All layouts have been refreshed"
-msgstr ""
+msgstr "Alle vromgevingen zijn ververst"
 
 #: /Root.py:224
 msgid "No catalog found!"
-msgstr ""
+msgstr "Geen 'catalog' gevonden!"
 
 #: /Root.py:246
 msgid "Status updated"
-msgstr ""
+msgstr "Status bijgewerkt"
 
 #: /SidebarService.py:54
 msgid "Id does not provide for an existing cache container"
@@ -208,7 +212,7 @@ msgstr ""
 
 #: /SidebarService.py:57
 msgid "Id changed"
-msgstr ""
+msgstr "Id veranderd"
 
 #: /SilvaObject.py:319
 msgid "Sorry, this ${meta_type} version is not viewable."
@@ -216,23 +220,23 @@ msgstr ""
 
 #: /SilvaObject.py:329
 msgid "no ${view_type} view defined"
-msgstr ""
+msgstr "geen ${view_type}-'view' gedefinieerd"
 
 #: /Versioning.py:100
 msgid "Cannot approve version without publication datetime."
-msgstr ""
+msgstr "Kan versie niet goedkeuren zonder publicatie-tijdstip."
 
 #: /Versioning.py:104
 msgid "Cannot approve version; not allowed."
-msgstr ""
+msgstr "Kan versie niet goedkeuren; geen toestemming."
 
 #: /Versioning.py:161
 msgid "No approved version to unapprove."
-msgstr ""
+msgstr "Geen goedgekeurde versie om de goedkeuring van in te trekken."
 
 #: /Versioning.py:189
 msgid "No public version to close."
-msgstr ""
+msgstr "Geen publieke versie om te sluiten."
 
 #: /Versioning.py:216 /Versioning.py:237
 msgid "Should never happen!"
@@ -241,59 +245,60 @@ msgstr ""
 #: /Versioning.py:241 /adapters/version_management.py:81
 #: /adapters/version_management.py:89
 msgid "No unapproved version available"
-msgstr ""
+msgstr "Geen versie beschikbaar die nog niet is goedgekeurd"
 
 #: /Versioning.py:274 /Versioning.py:323 /Versioning.py:353
 msgid "There is no unapproved version to request approval for."
-msgstr ""
+msgstr "Er is geen versie die nog niet is goedgekeurd waar goedkeuring "
+"voor kan worden aangevraagd."
 
 #: /Versioning.py:278
 msgid "The version is already requested for approval."
-msgstr ""
+msgstr "Er is al goedkeuring aangevraagd voor deze versie."
 
 #: /Versioning.py:327 /Versioning.py:357
 msgid "The version is not requested for approval."
-msgstr ""
+msgstr "Er is geen goedkeuring voor de versie aangevraagd."
 
 #: /Versioning.py:377 /Versioning.py:390
 msgid "No unapproved version."
-msgstr ""
+msgstr "Geen versie die nog niet is goedgekeurd."
 
 #: /Versioning.py:403 /Versioning.py:424
 msgid "No approved version."
-msgstr ""
+msgstr "Geen goedgekeurde versie."
 
 #: /Versioning.py:406
 msgid "Must specify publication datetime."
-msgstr ""
+msgstr "Publicatie-tijdstip moet worden opegeven."
 
 #: /Versioning.py:437
 msgid "No public version."
-msgstr ""
+msgstr "Geen publieke versie."
 
 #: /Versioning.py:464 /Versioning.py:483
 msgid "No next version."
-msgstr ""
+msgstr "Geen volgende versie."
 
 #: /Versioning.py:497
 msgid "There is no version to add messages for."
-msgstr ""
+msgstr "Er is geen versie om boodschappen voor toe te voegen."
 
 #: /Versioning.py:59
 msgid "There is an approved version already; unapprove it. (${id})"
-msgstr ""
+msgstr "Er is al een goedgekeurde versie; trek de goedkeuring in. (${id})"
 
 #: /Versioning.py:63
 msgid "There already is an unapproved version (${id})."
-msgstr ""
+msgstr "Er is al een versie die nog niet is goedgekeurd (${id})."
 
 #: /Versioning.py:69
 msgid "The public version has that id already (${id})."
-msgstr ""
+msgstr "De publieke versie heeft dat id al (${id})."
 
 #: /Versioning.py:75
 msgid "A previous version has that id already (${id})."
-msgstr ""
+msgstr "Een vorige versie heeft dat id al (${id})."
 
 #: /Versioning.py:94 /views/edit/VersionedContent/tab_edit_publish.py:12
 msgid "There is no unapproved version to approve."
@@ -301,35 +306,35 @@ msgstr "Er is geen nog niet goedgekeurde versie om goed te keuren."
 
 #: /Versioning.py:97
 msgid "There already is an approved version."
-msgstr ""
+msgstr "Er is al een goedgekeurde versie."
 
 #: /adapters/version_management.py:113
 msgid "Can not delete all versions"
-msgstr ""
+msgstr "Kan niet alle versies verwijderen"
 
 #: /adapters/version_management.py:257
 msgid "no such version ${version}"
-msgstr ""
+msgstr "versie bestaat niet ${version}"
 
 #: /icon.py:55
 msgid "Icon not found"
-msgstr ""
+msgstr "Ikoon niet gevonden"
 
 #: /icon.py:63
 msgid "No icon for ${identifier}"
-msgstr ""
+msgstr "Geen ikoon voor ${identifier}"
 
 #: /icon.py:84
 msgid "The product ${product} doesn't exist"
-msgstr ""
+msgstr "Het product ${product} bestaat niet"
 
 #: /mangle.py:139
 msgid "id must be str or unicode (${id})"
-msgstr ""
+msgstr "id moet string of unicode-string zijn (${id})"
 
 #: /mangle.py:311
 msgid "obj_context is not list type"
-msgstr ""
+msgstr "'obj_context' is geen lijst-type"
 
 #: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:62
 msgid "slide to the publish screen"
@@ -410,7 +415,7 @@ msgstr "${meta_type} ${id} toegevoegd."
 
 #: /views/add/File/form.form:28
 msgid "form_add_file_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/File/form.form:30
 msgid "form_add_file_object_id_description"
@@ -418,7 +423,7 @@ msgstr "Geen spaties of speciale karakters behalve '_' of '-' of '.'"
 
 #: /views/add/File/form.form:50
 msgid "form_add_file_object_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/add/File/form.form:51
 msgid "form_add_file_object_title_description"
@@ -426,35 +431,37 @@ msgstr ""
 
 #: /views/add/File/form.form:66
 msgid "form_add_file_file_title"
-msgstr ""
+msgstr "bestand"
 
 #: /views/add/File/form.form:68
 msgid "form_add_file_file_description"
-msgstr ""
+msgstr "<strong>Tip:</strong> Id en titel hoeven niet te worden ingevuld."
 
 #: /views/add/Folder/form.form:28
 msgid "form_add_folder_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/Folder/form.form:30
 msgid "form_add_folder_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/Folder/form.form:50
 msgid "form_add_folder_object_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/add/Folder/form.form:51
 msgid "form_add_folder_object_title_description"
-msgstr ""
+msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
+"voor de link in indexen."
 
 #: /views/add/Folder/form.form:62
 msgid "form_add_folder_policy_name_description"
-msgstr ""
+msgstr "Kies een item om in de folder aan te maken."
 
 #: /views/add/Folder/form.form:70
 msgid "form_add_folder_policy_name_title"
-msgstr ""
+msgstr "eerste item"
 
 #: /views/add/Ghost/add_form.pt:32 /views/add/GhostFolder/add_form.pt:32
 msgid "create ${meta_type}"
@@ -478,19 +485,20 @@ msgstr "verwijzing..."
 
 #: /views/add/Ghost/form.form:28
 msgid "form_add_ghost_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/Ghost/form.form:30
 msgid "form_add_ghost_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/Ghost/form.form:48
 msgid "form_add_ghost_content_url_title"
-msgstr ""
+msgstr "url"
 
 #: /views/add/Ghost/form.form:50
 msgid "form_add_ghost_content_url_description"
-msgstr ""
+msgstr "Locatie van oorspronkelijk document."
 
 #: /views/add/GhostFolder/add_form.pt:63
 msgid "find the folder this ghost should refer to: alt-r"
@@ -506,19 +514,20 @@ msgstr ""
 
 #: /views/add/GhostFolder/form.form:28
 msgid "form_add_ghostfolder_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/GhostFolder/form.form:30
 msgid "form_add_ghostfolder_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/GhostFolder/form.form:48
 msgid "form_add_ghostfolder_content_url_title"
-msgstr ""
+msgstr "url"
 
 #: /views/add/GhostFolder/form.form:50
 msgid "form_add_ghostfolder_content_url_description"
-msgstr ""
+msgstr "Locatie van oorspronkelijke folder."
 
 #: /views/add/Groups/add_submit.py:39
 msgid ""
@@ -532,15 +541,16 @@ msgstr ""
 
 #: /views/add/Groups/form.form:28
 msgid "form_add_groups_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/Groups/form.form:30
 msgid "form_add_groups_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/Groups/form.form:48
 msgid "form_add_groups_object_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/add/Groups/form.form:50
 msgid "form_add_groups_object_title_description"
@@ -554,15 +564,16 @@ msgstr "Leeg of incorrect bestand."
 
 #: /views/add/Image/form.form:28
 msgid "form_add_image_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/Image/form.form:30
 msgid "form_add_image_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/Image/form.form:50
 msgid "form_add_image_object_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/add/Image/form.form:51
 msgid "form_add_image_object_title_description"
@@ -570,91 +581,100 @@ msgstr ""
 
 #: /views/add/Image/form.form:66
 msgid "form_add_image_file_title"
-msgstr ""
+msgstr "afbeelding"
 
 #: /views/add/Image/form.form:67
 msgid "form_add_image_file_description"
-msgstr ""
+msgstr "<strong>Tip:</strong> titel en id hoeven niet te worden ingevuld."
 
 #: /views/add/Indexer/form.form:28
 msgid "form_add_indexer_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/Indexer/form.form:30
 msgid "form_add_indexer_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/Indexer/form.form:50
 msgid "form_add_indexer_object_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/add/Indexer/form.form:51
 msgid "form_add_indexer_object_title_description"
-msgstr ""
+msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
+"voor de link in indexen."
 
 #: /views/add/Link/form.form:28
 msgid "form_add_link_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/Link/form.form:30
 msgid "form_add_link_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/Link/form.form:51
 msgid "form_add_link_object_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/add/Link/form.form:52
 msgid "form_add_link_object_title_description"
-msgstr ""
+msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
+"voor de link in indexen."
 
 #: /views/add/Link/form.form:71
 msgid "form_add_link_url_title"
-msgstr ""
+msgstr "url"
 
 #: /views/add/Link/form.form:73
 msgid "form_add_link_url_description"
-msgstr ""
+msgstr "Url van de link."
 
 #: /views/add/Publication/form.form:28
 msgid "form_add_publication_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/Publication/form.form:30
 msgid "form_add_publication_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/Publication/form.form:50
 msgid "form_add_publication_object_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/add/Publication/form.form:51
 msgid "form_add_publication_object_title_description"
-msgstr ""
+msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
+"voor de link in indexen."
 
 #: /views/add/Publication/form.form:62
 msgid "form_add_publication_policy_name_description"
-msgstr ""
+msgstr "Welk type object moet er worden toegevoegd na het aanmaken van de "
+"folder."
 
 #: /views/add/Publication/form.form:70
 msgid "form_add_publication_policy_name_title"
-msgstr ""
+msgstr "Eerste item"
 
 #: /views/add/SimpleContent/form.form:28
 msgid "form_add_simplecontent_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/SimpleContent/form.form:30
 msgid "form_add_simplecontent_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/SimpleContent/form.form:50
 msgid "form_add_simplecontent_object_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/add/SimpleContent/form.form:51
 msgid "form_add_simplecontent_object_title_description"
-msgstr ""
+msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
+"voor de link in indexen."
 
 #: /views/add/add_form.pt:37
 msgid "create ${TOC_or_meta_type}"
@@ -732,19 +752,21 @@ msgstr "sneltoets: alt-e"
 
 #: /views/add/form.form:28
 msgid "default_form_add_object_id_title"
-msgstr ""
+msgstr "id"
 
 #: /views/add/form.form:30
 msgid "default_form_add_object_id_description"
-msgstr ""
+msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
+"&#8216;-&#8217; of &#8216;.&#8217;"
 
 #: /views/add/form.form:50
 msgid "default_form_add_object_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/add/form.form:51
 msgid "default_form_add_object_title_description"
-msgstr ""
+msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
+"voor de link in indexen."
 
 #: /views/add/get_id_status_text.py:24
 msgid ""
@@ -816,11 +838,11 @@ msgstr "'mime type' van bestand"
 
 #: /views/edit/Asset/File/form.form:28
 msgid "file_asset_form_file_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/edit/Asset/File/form.form:30
 msgid "file_asset_form_file_title_description"
-msgstr ""
+msgstr "Niet verplicht, maar nuttig."
 
 #: /views/edit/Asset/File/submit.py:20
 msgid "${old_title} to ${new_title}"
@@ -1069,7 +1091,7 @@ msgstr "formaat en schalen"
 
 #: /views/edit/Asset/Image/edit.pt:176
 msgid "set crop coordinates..."
-msgstr "afsnijd-coördinaten..."
+msgstr "afsnijdcoördinaten instellen..."
 
 #: /views/edit/Asset/Image/edit.pt:176
 msgid "specify the center of the area to crop by clicking in the image: alt-o"
@@ -1201,27 +1223,30 @@ msgstr "venster slepen"
 
 #: /views/edit/Asset/Image/scale_form.form:25
 msgid "scale_web_format_title"
-msgstr ""
+msgstr "webformaat"
 
 #: /views/edit/Asset/Image/scale_form.form:29
 msgid "scale_web_format_description"
-msgstr ""
+msgstr "Afbeeldingsformaat voor het web"
 
 #: /views/edit/Asset/Image/scale_form.form:49
 msgid "scale_web_scaling_title"
-msgstr ""
+msgstr "schaal"
 
 #: /views/edit/Asset/Image/scale_form.form:56
 msgid "scale_web_scaling_description"
-msgstr ""
+msgstr "Afbeelding schalen voor het web: gebruik breedte x hoogte in "
+"pixels (100x200), of de maat van één as (100x*), of een percentage (40%)."
 
 #: /views/edit/Asset/Image/scale_form.form:77
 msgid "scale_web_crop_title"
-msgstr ""
+msgstr "afsnijden"
 
 #: /views/edit/Asset/Image/scale_form.form:84
 msgid "scale_web_crop_description"
-msgstr ""
+msgstr "Afbeelding afsnijden/uitsnijden voor het web: gebruik de knop "
+"&amp;#8216;afsnijdcoördinaten instellen&amp;#8217;, of voer X1xY1-X2xY2 "
+"in om de afsnijdmaten te definiëren."
 
 #: /views/edit/Asset/Image/scale_submit.py:12
 msgid "Scaling and/or format changed"
@@ -1285,11 +1310,11 @@ msgstr "toegang"
 
 #: /views/edit/Asset/upload_form.form:25
 msgid "form_file_title"
-msgstr ""
+msgstr "bestand"
 
 #: /views/edit/Asset/upload_form.form:26
 msgid "form_file_description"
-msgstr ""
+msgstr "Zoek een bestand op."
 
 #: /views/edit/Container/Folder/placeholder.py:3
 msgid "This is just a placeholder so this directory won't get pruned."
@@ -1391,11 +1416,11 @@ msgstr "Vormgeving gekopieerd"
 
 #: /views/edit/Container/Publication/layout_form.form:29
 msgid "layout_layout_title"
-msgstr ""
+msgstr "vormgeving"
 
 #: /views/edit/Container/Publication/layout_form.form:31
 msgid "layout_layout_description"
-msgstr ""
+msgstr "Kies één van de geïnstalleerde vormgevingstemplates."
 
 #: /views/edit/Container/Publication/layout_submit.py:19
 msgid "Layout saved."
@@ -1419,19 +1444,23 @@ msgstr "toevoeg-instellingen voor &#xab;${title}&#xbb;"
 
 #: /views/edit/Container/Publication/settings_addables_form.form:23
 msgid "addables_acquire_addables_title"
-msgstr ""
+msgstr "overerven"
 
 #: /views/edit/Container/Publication/settings_addables_form.form:25
 msgid "addables_acquire_addables_description"
-msgstr ""
+msgstr "Indien aangevinkt, worden de toevoeg-instellingen overgeërfd van "
+"boven. Niet aanvinken als toevoeg-instellingen hieronder gewijzigd moeten "
+"kunnen worden."
 
 #: /views/edit/Container/Publication/settings_addables_form.form:39
 msgid "addables_addables_title"
-msgstr ""
+msgstr "toevoegbare items"
 
 #: /views/edit/Container/Publication/settings_addables_form.form:41
 msgid "addables_addables_description"
-msgstr ""
+msgstr "Als 'overerven' niet is aangevinkt, bepalen deze instellingen wat "
+"voor items in deze publicatie mogen worden toegevoegd. Anders worden de "
+"toevoeg-instellingen overgeërfd van de bovenliggende publicatie."
 
 #: /views/edit/Container/Publication/settings_addables_submit.py:34
 msgid "Addable settings have not changed and remain acquired."
@@ -2691,7 +2720,7 @@ msgstr "Lid goedgekeurd"
 
 #: /views/edit/Member/SimpleMember/memberform.form:28
 msgid "simplemember_form_fullname_title"
-msgstr ""
+msgstr "volledige naam"
 
 #: /views/edit/Member/SimpleMember/memberform.form:30
 msgid "simplemember_form_fullname_description"
@@ -2699,7 +2728,7 @@ msgstr ""
 
 #: /views/edit/Member/SimpleMember/memberform.form:49
 msgid "simplemember_form_email_title"
-msgstr ""
+msgstr "e-mailadres"
 
 #: /views/edit/Member/SimpleMember/memberform.form:51
 msgid "simplemember_form_email_description"
@@ -2707,11 +2736,13 @@ msgstr ""
 
 #: /views/edit/Member/SimpleMember/memberform.form:69
 msgid "simplemember_form_editor_title"
-msgstr ""
+msgstr "favoriete editor"
 
 #: /views/edit/Member/SimpleMember/memberform.form:71
 msgid "simplemember_form_editor_description"
-msgstr ""
+msgstr "Kies 'forms editor' voor de formulier-gebaseerde editor, of 'kupu' "
+"voor de Kupu WYSIWYG editor (vereist Internet Explorer 5.5+, Netscape 7+ "
+"of Mozilla 1.3.1+)"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:27
 msgid "fullname updated"
@@ -2983,7 +3014,7 @@ msgstr "${id} verwijderd"
 
 #: /views/edit/VersionedContent/tab_status_form_author.form:28
 msgid "tab_status_form_author_message_title"
-msgstr ""
+msgstr "boodschap"
 
 #: /views/edit/VersionedContent/tab_status_form_author.form:30
 msgid "tab_status_form_author_message_description"
@@ -2991,7 +3022,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_author.form:50
 msgid "tab_status_form_author_publish_datetime_title"
-msgstr ""
+msgstr "publicatie-tijdstip"
 
 #: /views/edit/VersionedContent/tab_status_form_author.form:51
 msgid "tab_status_form_author_publish_datetime_description"
@@ -2999,15 +3030,15 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_author.form:72
 msgid "tab_status_form_author_expiration_datetime_title"
-msgstr ""
+msgstr "verloop-tijdstip"
 
 #: /views/edit/VersionedContent/tab_status_form_author.form:73
 msgid "tab_status_form_author_expiration_datetime_description"
-msgstr ""
+msgstr "Stel een tijsdtip in, indien dit document moet verlopen."
 
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
 msgid "tab_status_form_change_settings_publish_datetime_title"
-msgstr ""
+msgstr "publicatie-tijdstip"
 
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:31
 msgid "tab_status_form_change_settings_publish_datetime_description"
@@ -3015,15 +3046,15 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
 msgid "tab_status_form_change_settings_expiration_datetime_title"
-msgstr ""
+msgstr "verloop-tijdstip"
 
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:53
 msgid "tab_status_form_change_settings_expiration_datetime_description"
-msgstr ""
+msgstr "Stel een tijsdtip in, indien dit document moet verlopen."
 
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:67
 msgid "tab_status_form_change_settings_publish_now_flag_title"
-msgstr ""
+msgstr "nu publiceren"
 
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:68
 msgid "tab_status_form_change_settings_publish_now_flag_description"
@@ -3031,7 +3062,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:81
 msgid "tab_status_form_change_settings_clear_expiration_title"
-msgstr ""
+msgstr "verloop-tijdstip wissen"
 
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:82
 msgid "tab_status_form_change_settings_clear_expiration_description"
@@ -3039,7 +3070,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:30
 msgid "tab_status_form_editor_publish_datetime_title"
-msgstr ""
+msgstr "publicatie-tijdstip"
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:31
 msgid "tab_status_form_editor_publish_datetime_description"
@@ -3047,15 +3078,15 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:53
 msgid "tab_status_form_editor_expiration_datetime_title"
-msgstr ""
+msgstr "verloop-tijdstip"
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:54
 msgid "tab_status_form_editor_expiration_datetime_description"
-msgstr ""
+msgstr "Stel een tijsdtip in, indien dit document moet verlopen."
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:69
 msgid "tab_status_form_editor_publish_now_flag_title"
-msgstr ""
+msgstr "nu publiceren"
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:71
 msgid "tab_status_form_editor_publish_now_flag_description"
@@ -3063,7 +3094,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:88
 msgid "tab_status_form_editor_message_title"
-msgstr ""
+msgstr "boodschap"
 
 #: /views/edit/VersionedContent/tab_status_form_editor.form:90
 msgid "tab_status_form_editor_message_description"
@@ -3079,15 +3110,15 @@ msgstr "voor nieuwe versie"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:113
 msgid "message to editor"
-msgstr "bericht aan 'editor'"
+msgstr "boodschap aan redacteur"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:129
 msgid ""
 "This message will remain visible in the status screen for other authors and "
 "editors."
 msgstr ""
-"Dit bericht zal zichtbaar blijven in het scherm 'status' voor andere auteurs "
-"en 'editors'."
+"Deze boodschap zal zichtbaar blijven in het scherm 'status' voor andere auteurs "
+"en redacteuren."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:138
 msgid "content publish ti<u>m</u>e:"
@@ -3174,35 +3205,35 @@ msgstr "sneltoets: alt-o"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:399
 msgid "request"
-msgstr ""
+msgstr "aanvraag"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:408
 msgid "add message on"
-msgstr ""
+msgstr "boodschap toevoegen over"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:411
 msgid "rejection"
-msgstr ""
+msgstr "afwijzing"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:414
 msgid "withdrawal"
-msgstr ""
+msgstr "intrekking"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:432
 msgid "The message may be viewed by local users."
-msgstr "The message may be viewed by local users."
+msgstr "De boodschap mag door lokale gebruikers bekeken worden."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:443
 msgid " Reject approval request "
-msgstr ""
+msgstr " Goedkeuringsaanvraag afwijzen "
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:445
 msgid " Withdraw approval request "
-msgstr ""
+msgstr " Goedkeuringsaanvraag intrekken "
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:45
 msgid "messages"
-msgstr "berichten"
+msgstr "boodschappen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:472
 msgid "If further editing is required, first revoke the approval."
@@ -3245,7 +3276,7 @@ msgstr "gepubliceerde versie sluiten"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:57
 msgid "${author_id} sent a message on ${some_date} ${with_comments}"
-msgstr "${author_id} verstuurde op ${some_date} een bericht ${with_comments}"
+msgstr "${author_id} verstuurde op ${some_date} een boodschap ${with_comments}"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:86
 msgid ""
@@ -3253,9 +3284,9 @@ msgid ""
 "withdrawing the request; if this person for example made an empty reject, "
 "this is the message of the requester ..."
 msgstr ""
-"het laatste bericht hoeft niet noodzakelijk door de persoon geschreven te "
+"de laatste boodschap hoeft niet noodzakelijkerwijs door de persoon geschreven te "
 "zijn die de aanvraag intrekt; als deze persoon bijvoorbeeld een lege "
-"afwijzing heeft gemaakt, is dit het bericht van degene die de aanvraag heeft "
+"afwijzing heeft gemaakt, is dit de boodschap van degene die de aanvraag heeft "
 "ingediend..."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:86
@@ -3265,7 +3296,7 @@ msgid ""
 "issue is:"
 msgstr ""
 "Een vorige aanvraag om goedkeuring is geweigerd / ingetrokken door "
-"${requester} op ${some_date}. ${comment} Het laatste bericht hierover is:"
+"${requester} op ${some_date}. ${comment} De laatste boodschap hierover is:"
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
 msgid "There is no unapproved version."
@@ -3460,7 +3491,7 @@ msgstr "-"
 #: /views/edit/VersionedContent/tab_status.pt:72
 #: /views/edit/VersionedContent/tab_status.pt:96
 msgid "editor"
-msgstr "'editor'"
+msgstr "redacteur"
 
 #: /views/edit/document_lookup.pt:371
 msgid "insert the reference: alt-p"
@@ -4115,7 +4146,7 @@ msgstr ""
 
 #: /views/edit/tab_status_form.form:30
 msgid "tab_status_form_publish_datetime_title"
-msgstr ""
+msgstr "publicatie-tijdstip"
 
 #: /views/edit/tab_status_form.form:31
 msgid "tab_status_form_publish_datetime_description"
@@ -4123,15 +4154,15 @@ msgstr ""
 
 #: /views/edit/tab_status_form.form:52
 msgid "tab_status_form_expiration_datetime_title"
-msgstr ""
+msgstr "verloop-tijdstip"
 
 #: /views/edit/tab_status_form.form:53
 msgid "tab_status_form_expiration_datetime_description"
-msgstr ""
+msgstr "Stel een tijsdtip in, indien dit document moet verlopen."
 
 #: /views/edit/tab_status_form.form:67
 msgid "tab_status_form_publish_now_flag_title"
-msgstr ""
+msgstr "nu publiceren"
 
 #: /views/edit/tab_status_form.form:68
 msgid "tab_status_form_publish_now_flag_description"
@@ -4139,7 +4170,7 @@ msgstr ""
 
 #: /views/edit/tab_status_form.form:81
 msgid "tab_status_form_clear_expiration_title"
-msgstr ""
+msgstr "verloop-tijdstip wissen"
 
 #: /views/edit/tab_status_form.form:82
 msgid "tab_status_form_clear_expiration_description"
@@ -4308,8 +4339,8 @@ msgid ""
 "Roles requested. You will receive an e-mail from the Chief Editor or Manager "
 "as soon as your request is processed."
 msgstr ""
-"Rollen aangevraagd. Je ontvangt een e-mail van de 'Chief Editor' of "
-"'Manager' zodra de aanvraag verwerkt is."
+"Rollen aangevraagd. Je ontvangt een e-mail van de Hoofderedacteur of "
+"Beheerder zodra de aanvraag verwerkt is."
 
 #: /views/public/request_roles_submit.py:9
 msgid "No roles were selected."
@@ -4317,23 +4348,24 @@ msgstr "Er zijn geen rollen geselecteerd."
 
 #: /views/public/search_form.form:100
 msgid "public_search_form_metatype_title"
-msgstr ""
+msgstr "inhoudstype"
 
 #: /views/public/search_form.form:101
 msgid "public_search_form_metatype_description"
-msgstr ""
+msgstr "Selecteer één of meer (met de ctrl-toets) objecttypen om in te "
+"zoeken. Als er niets is geselecteerd, wordt in alle typen gezocht."
 
 #: /views/public/search_form.form:28
 msgid "public_search_form_fulltext_title"
-msgstr ""
+msgstr "inhoud"
 
 #: /views/public/search_form.form:30
 msgid "public_search_form_fulltext_description"
-msgstr ""
+msgstr "Gebruik de 'asterisk' ('*') als joker."
 
 #: /views/public/search_form.form:56
 msgid "public_search_form_maintitle_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/public/search_form.form:58
 msgid "public_search_form_maintitle_description"
@@ -4341,11 +4373,12 @@ msgstr ""
 
 #: /views/public/search_form.form:77
 msgid "public_search_form_search_subtree_title"
-msgstr ""
+msgstr "alleen sub-boom"
 
 #: /views/public/search_form.form:78
 msgid "public_search_form_search_subtree_description"
-msgstr ""
+msgstr "Aanvinken om zoekopdracht te beperken to de sub-boom van deze "
+"inhoud."
 
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
@@ -4372,7 +4405,7 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 #~ msgstr "${action} aanvraag"
 
 #~ msgid "add message on ${rejection_withdrawal}"
-#~ msgstr "bericht toevoegen bij ${rejection_withdrawal}"
+#~ msgstr "boodschap toevoegen bij ${rejection_withdrawal}"
 
 #~ msgid ""
 #~ "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; "
