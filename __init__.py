@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.98 $
+# $Revision: 1.99 $
 
 import Metadata
 import Folder, Root
@@ -30,6 +30,7 @@ import UnicodeSplitter # To make the splitter register itself
 import ContainerPolicy
 
 from Products.Silva import icon
+from Products.Silva import upgrade_imports
 
 # enable Formulator support for FileSystemSite
 from Products.Formulator import FSForm

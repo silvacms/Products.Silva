@@ -3,6 +3,9 @@
 from Globals import package_home
 import os
 
+import zLOG
+from OFS.Uninstalled import BrokenClass
+
 import File
 from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
@@ -131,6 +134,10 @@ def install(root):
     
     configureContainerPolicies(root)
     
+    if not hasattr(root, 'service_layouts'):
+        root.manage_addProduct['Silva'].manage_addLayoutService(
+        'service_layouts', 'Silva Layouts Configuration')
+        
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     root.service_views.manage_delObjects(['Silva'])
@@ -351,9 +358,6 @@ def configureLayout(root, default_if_existent=0):
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
 
     add_helper(root, 'frontend.css', globals(), dtml_add_helper, default_if_existent)
-    if not hasattr(root, 'service_layouts'):
-        root.manage_addProduct['Silva'].manage_addLayoutService(
-        'service_layouts', 'Silva Layouts Configuration')
 
 def configureMembership(root):
     """Install membership code into root.
@@ -611,7 +615,6 @@ def installSilvaDocument(root):
     from Products.Silva.ExtensionRegistry import extensionRegistry
     if 'SilvaDocument' in extensionRegistry.get_names():
         extensionRegistry.install('SilvaDocument', root)
-        
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
