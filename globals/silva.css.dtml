@@ -602,12 +602,14 @@ table.listing a.up:hover {
 
 td.selected {
   background: &dtml-oddRowBackground;;
+  padding-left: 0 ! important;
   border-top: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
 }
 
 td.unselected {
   background: &dtml-evenRowBackground;;
+  padding-left: 0 ! important;
   border-top: 1px solid &dtml-evenRowBackground;;
   border-bottom:  1px solid &dtml-evenRowBackground;;
 }
@@ -619,6 +621,15 @@ td.unselected:hover {
   border-bottom: &dtml-listingBorder;;
   cursor : pointer;
 } 
+
+div.slider {
+  float:left;
+  height:16px;
+  width:8px;
+}
+div.slider:hover {
+  background-image: url(<dtml-var root>/globals/slider.png);
+}
 
 
 /* _____________________________________________________ focus shapes _____ */
