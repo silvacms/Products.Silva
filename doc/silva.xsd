@@ -66,6 +66,7 @@
         <xsd:element name="image" type="Image" />
         <xsd:element name="toc" type="TableOfContents" />
         <xsd:element name="pre" type="xsd:string" />
+        <xsd:element name="externaldata" type="ExternalData" />   
       </xsd:choice>
     </xsd:sequence>
   </xsd:complexType>
@@ -175,6 +176,29 @@
     </xsd:simpleContent>
   </xsd:complexType>
 
+  <xsd:complexType name="ExternalData">
+    <xsd:element name="parameter" maxOccurs="unbounded">
+      <xsd:complexType>
+        <xsd:attribute name="key" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+      </xsd:complexType>
+    </xsd:element>
+    <xsd:attribute name="path" type="xsd:string" use="required" />
+    <xsd:attribute name="show_headings" type="xsd:boolean">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          If this attribute is left out, it is regarded true
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="show_caption" type="xsd:boolean">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          If this attribute is left out, it is regarded true
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
 
   <xsd:complexType name="Image">
     <xsd:attribute name="image_id" type="xsd:string">
