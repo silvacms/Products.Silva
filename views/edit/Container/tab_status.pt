@@ -20,16 +20,22 @@
         <tr>
           <td class="left">
             <tal:block replace="nothing">
-              ________________ sidebar subtable ________________
+              _____________________ sidebar subtable _____________________
             </tal:block>
             <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_status', breadcrumb_vein)" />
           </td>
           <td class="main">
+            <tal:block replace="nothing">
+              _____________________ main subtable _____________________
+            </tal:block>
             <table class="listing">
               <thead>
+                <tr tal:replace="nothing">
+                  ______________ vein + title row ______________
+                </tr>
                 <tr>
                   <td class="top"
-                    colspan="99">
+                    colspan="6">
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />
                       &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
@@ -40,7 +46,7 @@
                   ______________ top controls row ______________
                 </tal:block>
                 <tr class="top-controls">
-                  <td colspan="99">
+                  <td colspan="6">
                     <span style="float:right;">
                       <input class="navigation"
                         accesskey="e"
@@ -50,15 +56,18 @@
                         value=""
                         tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
                         tal:attributes="
-                          value string:Export this ${type}...;
+                          value string: Export...;
                           title string:export this ${type}: alt-e;" />
-                        <input class="navigation"
+                        <input class="navigation" tal:replace="nothing"
                           accesskey="p"
                           name="tab_status_export_selected_start:method"
                           title="export selected items: alt-p"
                           type="submit"
                           value="Export selected..." />
                     </span>
+                    <h3>
+                      Publishing options
+                    </h3>
                   </td>
                 </tr>
               </thead>
@@ -215,8 +224,18 @@
                     </label>
                     <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
                   </td>
-                  <td class="align-right"
-                    style="white-space: nowrap;">
+                  <td>
+                    <div class="buttons" style="float:right;">
+                      <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+                    </div>
+                      <label 
+                        for="publish_nested_flag" 
+                        title="access key: alt-i" 
+                        accesskey="i">
+                        <span class="widebody">
+                          <u>i</u>nclude sub- publications?
+                        </span>
+                      </label>
                   </td>
                 </tr>
                 <tr class="controls controls-1">
@@ -233,8 +252,8 @@
                   <td class="align-right"
                     colspan="3">                    
                     <label class="widebody"
-                      title="access key: alt-i" 
-                      accesskey="i">
+                      title="access key: alt-x" 
+                      accesskey="x">
                       expiration time:
                     </label>
                     <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
@@ -278,14 +297,12 @@
                       value="Create new versions" 
                       title="Create new versions of published docs: alt-n" 
                       accesskey="n" />
-                    &nbsp;
                     <input class="warning"
                       accesskey="c"
                       name="tab_status_close:method"
                       title="close published items: alt-c"
                       type="submit"
                       value="Close public" />
-                    &nbsp;
                   </td>
                   <td class="align-right">
                     <input class="button"
@@ -293,7 +310,7 @@
                       name="tab_status_change_settings:method"
                       title="change publish and expiration times: alt-s"
                       type="submit"
-                      value="Change timings" />
+                      value="Set timings" />
                   </td>
                   <td class="align-right">
                     <input class="button"

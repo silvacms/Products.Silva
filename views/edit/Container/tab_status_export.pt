@@ -9,12 +9,142 @@
   tal:define="
     global breadcrumb_vein string:Status;
     global active_tab string:tab_status;
+    global parent_screen_name string:Publish;
     global view here;
     global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
     global lastclass string:focus-cycle;
     ">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
+
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <td class="left">
+        <span tal:replace="nothing">
+          ______________ parent screen navigation ______________
+        </span>
+        <metal:block use-macro="view/macro_parent_screen_navigation/macros/parent" />
+
+        <span tal:replace="nothing">
+          _____________________ sidebar subtable _____________________
+        </span>
+        <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_status_export', breadcrumb_vein)" />
+      </td>
+
+      <td class="main">
+
+        <span tal:replace="nothing">
+          _____________________ inner import table  _____________________
+        </span>
+        <form action="." enctype="multipart/form-data" method="POST">
+          <input type="hidden" 
+            name="refs"
+            tal:condition="view/REQUEST/refs | nothing" 
+            tal:attributes="value python: view.REQUEST['refs']" />
+          <table class="listing">
+            <thead>
+              <tr tal:replace="nothing">
+                ______________ vein + title row ______________
+              </tr>
+              <tr>
+                <td class="top"
+                  colspan="3">
+                  <h2 tal:attributes="title string:id: ${model/id}">
+                    <img tal:replace="structure python:view.render_icon(model)" />
+                    export from <span tal:replace="structure string:&amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
+                  </h2>
+                </td>
+              </tr>
+              <tr class="top-controls">
+                <td colspan="3">
+                    <a class="navigation"
+                      style="float: right;"
+                      href="tab_edit_import"
+                      title="over to the import screen: alt-i"
+                      accesskey="i">
+                      Import...
+                    </a>
+                  <h3>
+                    Export to Silva XML (.slv)
+	               </h3>
+                </td>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th class="align-right">
+                  Options
+                </th>
+                <th>
+                </th>
+                <th>
+                  Notes
+                </th>
+              </tr>
+
+              <tr class="odd">
+                <td class="align-right">
+                  Include sub publications?
+                </td>
+                <td class="align-center">
+                  <input type="checkbox" name="with_sub_publications" />
+                </td>
+                <td>
+                </td>
+              </tr>
+
+              <tr class="even">
+                <td class="align-right">
+                  Export newest versions?
+                </td>
+                <td class="align-center">
+                  <input type="checkbox" name="export_last_version" />
+                </td>
+                <td>
+                  If not checked the published version is exported
+                </td>
+              </tr>
+
+              <tr class="odd">
+                <td class="align-right">
+                  Export closed content?
+                </td>
+                <td class="align-center">
+                  <input type="checkbox" name="export_last_version" />
+                </td>
+                <td>
+                  Check to include closed content in the export
+                </td>
+              </tr>
+            </tbody>
+
+            <tfoot>
+              <tr class="controls">
+                <td>
+                  <input class="cancel" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
+                </td>
+                <td class="align-right"
+                  colspan="2">
+                  <input class="button" type="submit" name="download_xml:method" value=" Export " title="Access key: alt-e" accesskey="e" />
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+<div tal:replace="nothing" comment="scrap until Docma is running again">
 
 <h3><a href="tab_status" title="Up to Publish tab">
     <img tal:attributes="src string:${root_url}/globals/up_gray.gif" width="9" height="9" border="0" alt="Up to top of Edit tab" />
@@ -263,6 +393,8 @@
     Import
   </a>
 </h3>
+
+</div>
 
 </metal:block>
 </metal:block>

@@ -10,7 +10,7 @@
     global view here;
     global breadcrumb_vein string:Import;
     global active_tab string:tab_edit;
-    global parent_screen_name string:contents;
+    global parent_screen_name string:Contents;
     global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
     global lastclass string:even;
     global silva_permissions here/get_silva_permissions;
@@ -42,333 +42,335 @@
 
     <td class="main">
 
-    <span tal:replace="nothing">
-      _____________________ inner import table  _____________________
-    </span>
-    <form action="." enctype="multipart/form-data" method="POST">
-      <table class="listing">
-        <thead>
-          <tr tal:replace="nothing">
-            ______________ vein + title row ______________
-          </tr>
-          <tr>
-            <td class="top"
-              colspan="3">
-              <h2 tal:attributes="title string:id: ${model/id}">
-                <img tal:replace="structure python:view.render_icon(model)" />
-                import in: <span tal:replace="structure string:&amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
-              </h2>
-            </td>
-          </tr>
-          <tr class="top-controls">
-            <td colspan="3">
-                <a class="navigation"
-                  style="float: right;"
-                  href="tab_status_export"
-                  title="over to the export screen: alt-e"
-                  accesskey="e">
-                  Export...
-                </a>
-              <h3>
-                import Silva XML (.slv)
-	           </h3>
-            </td>
-          </tr>
-        </thead>
+<span tal:replace="nothing">
+  _____________________ inner import table  _____________________
+</span>
+<form action="." enctype="multipart/form-data" method="POST">
+  <table class="listing">
+    <thead>
+      <tr tal:replace="nothing">
+        ______________ vein + title row ______________
+      </tr>
+      <tr>
+        <td class="top"
+          colspan="3">
+          <h2 tal:attributes="title string:id: ${model/id}">
+            <img tal:replace="structure python:view.render_icon(model)" />
+            import in <span tal:replace="structure string:&amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
+          </h2>
+        </td>
+      </tr>
+      <tr class="top-controls">
+        <td colspan="3">
+            <a class="navigation"
+              style="float: right;"
+              href="tab_status_export"
+              title="over to the export screen: alt-e"
+              accesskey="e">
+              Export...
+            </a>
+          <h3>
+            import Silva XML (.slv)
+	       </h3>
+        </td>
+      </tr>
+    </thead>
 
-        <tbody>
-          <tr>
-            <th width="15%">
-              Element
-            </th>
-            <th align="left">
-              Content
-            </th>
-            <th align="left" width="40%">
-              Note
-            </th>
-          </tr>
+    <tbody>
+      <tr>
+        <th width="15%">
+          Element
+        </th>
+        <th>
+          Content
+        </th>
+        <th width="40%">
+          Note
+        </th>
+      </tr>
 
-          <tr class="odd" valign="top">
-            <td class="align-right">
-              file to upload<span class="warning">*</span>
-            </td>
-            <td align="left">
-              <input type="file"
-                name="importfile"
-                size="40"
-                title="browse for a file on your disk"
-              />
-            </td>
-            <td>
-              Choose an XML file to import (must be valid Silva XML)
-            </td>
-          </tr>
+      <tr class="odd" valign="top">
+        <td class="align-right">
+          file to upload<span class="warning">*</span>
+        </td>
+        <td align="left">
+          <input type="file"
+            name="importfile"
+            size="40"
+            title="browse for a file on your disk"
+          />
+        </td>
+        <td>
+          Choose an XML file to import (must be valid Silva XML)
+        </td>
+      </tr>
 
-          <tr class="controls">
-            <td class="align-right"
-              colspan="3">
-              <input class="cancel"
-                style="float: left;"
-                type="button"
-                value=" Cancel "
-                title="access key: alt-c"
-                accesskey="c"
-                onClick="history.back()"
-              />
-              <input class="button"
-                type="submit"
-                value=" Import "
-                name="tab_edit_import_xml:method"
-                title="access key: alt-i"
-                accesskey="i"
-              />
-            </td>
-           </tr>
-          </tbody>
-         </table>
-        </form>
+    <tr class="controls">
+      <td class="align-right"
+        colspan="3">
+        <input class="cancel"
+          style="float: left;"
+          type="button"
+          value=" Cancel "
+          title="access key: alt-c"
+          accesskey="c"
+          onClick="history.back()"
+        />
+        <input class="button"
+          type="submit"
+          value=" Import "
+          name="tab_edit_import_xml:method"
+          title="access key: alt-i"
+          accesskey="i"
+        />
+      </td>
+     </tr>
+    </tbody>
+   </table>
+  </form>
 
-        <tal:block condition="docma_running">
-        <div class="feedback"
-         tal:define="
-           global queue view/service_docma/get_queue;
-           global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid));
-           global processingident view/service_docma/get_processing_ident;"
-         tal:condition="python: processingident != 0">
-         Current&nbsp;job: <span tal:replace="processingident" /><br />
-         Owner: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /><br />
-         Description: <span tal:replace="python: view.service_docma.get_ident_description(processingident)" />
-        </div>
+<tal:block condition="docma_running">
+<div class="feedback"
+ tal:define="
+   global queue view/service_docma/get_queue;
+   global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid));
+   global processingident view/service_docma/get_processing_ident;"
+ tal:condition="python: processingident != 0">
+ Current&nbsp;job: <span tal:replace="processingident" /><br />
+ Owner: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /><br />
+ Description: <span tal:replace="python: view.service_docma.get_ident_description(processingident)" />
+</div>
 
-        <form action="." enctype="multipart/form-data" method="POST">
-          <table class="listing sublisting">
-            <thead>
-              <tr tal:replace="nothing">
-                ______________ vein + title row ______________
-              </tr>
-              <tr>
-                <td class="top"
-                  colspan="5">
-                  <h2>
-                    <img class="icon"
-                      border="0"
-                      width="16"
-                      height="16"
-                      alt="Docma icon" 
-                      tal:attributes="src string:${root_url}/globals/docma.gif"
-                    />
-                    docma facilities
-                  </h2>
-                </td>
-              </tr>
-            </thead>
+<form action="." enctype="multipart/form-data" method="POST">
+  <table class="listing sublisting">
+    <thead>
+      <tr tal:replace="nothing">
+        ______________ vein + title row ______________
+      </tr>
+      <tr>
+        <td class="top"
+          colspan="5">
+          <h2>
+            <img class="icon"
+              border="0"
+              width="16"
+              height="16"
+              alt="Docma icon" 
+              tal:attributes="src string:${root_url}/globals/docma.gif"
+            />
+            docma facilities
+          </h2>
+        </td>
+      </tr>
+    </thead>
 
-            <tbody>
-              <tr tal:replace="nothing">
-                ______________ upload word file ______________
-              </tr>
-              <tr class="top-controls">
-                <td colspan="3">
-                  <h3>
-                    upload Word document (.doc)
-                  </h3>
-                </td>
-              </tr>
+    <tbody>
+      <tr tal:replace="nothing">
+        ______________ upload word file ______________
+      </tr>
+      <tr class="top-controls">
+        <td colspan="3">
+          <h3>
+            upload Word document (.doc)
+          </h3>
+        </td>
+      </tr>
 
-              <tr>
-                <th width="15%">
-                  Element
-                </th>
-                <th align="left">
-                  Content
-                </th>
-                <th width="40%">
-                  Note
-                </th>
-              </tr>
+      <tr>
+        <th width="15%">
+          Element
+        </th>
+        <th align="left">
+          Content
+        </th>
+        <th width="40%">
+          Note
+        </th>
+      </tr>
 
-              <tr class="odd" valign="top">
-                <td class="align-right">
-                    file to upload<span class="warning">*</span>
-                </td>
-                <td align="left">
-                    <input type="file" size="40" name="importfile" />
-                </td>
-                <td align="right">
-                    Choose a Word file to upload. It'll be converted and appear in the list of processed items below. It can be imported anywhere in Silva.
-                </td>
-              </tr>
+      <tr class="odd" valign="top">
+        <td class="align-right">
+            file to upload<span class="warning">*</span>
+        </td>
+        <td align="left">
+            <input type="file" size="40" name="importfile" />
+        </td>
+        <td align="right">
+            Choose a Word file to upload. It'll be converted and appear in the list of processed items below. It can be imported anywhere in Silva.
+        </td>
+      </tr>
 
-              <tr class="even" valign="top">
-                <td class="align-right">
-                  email address<span class="warning">*</span>
-                </td>
-                <td align="left">
-                  <input style="width: 100%;"
-                    type="text"
-                    name="email"
-                    tal:attributes="value email | nothing;"
-                  />
-                </td>
-                <td>
-                  An e-mail will be sent to you when the item is processed.
-                </td>
-              </tr>
+      <tr class="even" valign="top">
+        <td class="align-right">
+          email address<span class="warning">*</span>
+        </td>
+        <td align="left">
+          <input style="width: 100%;"
+            type="text"
+            name="email"
+            tal:attributes="
+              value python:here.service_members.get_member(user.getUserName()).email() or ''
+          " />
+        </td>
+        <td>
+          An e-mail will be sent to you when the item is processed.
+        </td>
+      </tr>
 
-              <tr class="odd" valign="top">
-                <td class="align-right">
-                  description
-                </td>
-                <td>
-                  <textarea name="description"
-                    style="width: 100%;"></textarea>
-                </td>
-                <td>
-                    This description will be shown in the queue and the list of processed items.
-                </td>
-              </tr>
+      <tr class="odd" valign="top">
+        <td class="align-right">
+          description
+        </td>
+        <td>
+          <textarea name="description"
+            style="width: 100%;"
+              ></textarea>
+        </td>
+        <td>
+            This description will be shown in the queue and the list of processed items.
+        </td>
+      </tr>
 
-              <tr class="controls-1">
-                <td class="align-right"
-                  colspan="3">
-                  <input class="button" type="submit" value=" Upload " name="tab_edit_import_docma:method" title="upload a Word document from your local drive: alt-u" accesskey="u" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
+      <tr class="controls-1">
+        <td class="align-right"
+          colspan="3">
+          <input class="button" type="submit" value=" Upload " name="tab_edit_import_docma:method" title="upload a Word document from your local drive: alt-u" accesskey="u" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
 
-        </tal:block>
+</tal:block>
 
 
-    <span tal:replace="nothing">
-      _____________________ processing table  _____________________
-    </span>
-    <form action="." enctype="multipart/form-data" method="POST"
-      tal:condition="docma_running">
-      <table class="listing">
-        <thead>
-          <tr tal:replace="nothing">
-            ______________ vein + title row ______________
-          </tr>
-          <tr class="top-controls">
-            <td colspan="5">
-              <a class="button"
-                style="float: right;"
-                href="#"
-                title="reload to update the queue lists: alt-r"
-                accesskey="r"
-                onClick="document.location = 'tab_edit_import?focus=queue'; return false;">
-                <u>R</u>efresh queue lists
-              </a>
-              <h3>
-                queue of items to process
-              </h3>
-            </td>
-          </tr>
-        </thead>
+<span tal:replace="nothing">
+  _____________________ processing table  _____________________
+</span>
+<form action="." enctype="multipart/form-data" method="POST"
+  tal:condition="docma_running">
+  <table class="listing">
+    <thead>
+      <tr tal:replace="nothing">
+        ______________ vein + title row ______________
+      </tr>
+      <tr class="top-controls">
+        <td colspan="5">
+          <a class="button"
+            style="float: right;"
+            href="#"
+            title="reload to update the queue lists: alt-r"
+            accesskey="r"
+            onClick="document.location = 'tab_edit_import?focus=queue'; return false;">
+            <u>R</u>efresh queue lists
+          </a>
+          <h3>
+            queue of items to process
+          </h3>
+        </td>
+      </tr>
+    </thead>
 
-        <tbody>
-          <tal:block condition="nothing"> ________ Docma Queue ________ </tal:block>
-            <tr tal:condition="python: len(queue) != 0">
-              <th align="left" width="8%">Job&nbsp;id</th>
-              <th align="left" width="15%">Job&nbsp;owner</th>
-              <th align="left">Description</th>
-              <th align="left" width="15%">Status</th>
-              <th align="left" width="10%">Estimated&nbsp;time</th>
-            </tr>
+    <tbody>
+      <tal:block condition="nothing"> ________ Docma Queue ________ </tal:block>
+        <tr tal:condition="python: len(queue) != 0">
+          <th align="left" width="8%">Job&nbsp;id</th>
+          <th align="left" width="15%">Job&nbsp;owner</th>
+          <th align="left">Description</th>
+          <th align="left" width="15%">Status</th>
+          <th align="left" width="10%">Estimated&nbsp;time</th>
+        </tr>
 
-            <tr tal:repeat="job queue" tal:define="class python:test(lastclass == 'even', 'odd', 'even'); lastclass class" tal:attributes="class lastclass">
-              <td align="left" tal:content="job">JobId</td>
-              <td align="left" tal:content="python: view.service_docma.get_ident_owner(job)">Owner</td>
-              <td align="left" tal:content="python: view.service_docma.get_ident_description(job)">Description</td>
-              <td align="left" tal:content="python: view.service_docma.get_status(job)">Status</td>
-              <td align="left" tal:content="python: '%s seconds' % view.service_docma.get_estimated_time_for_ident(job)">Estimated time</td>
-            </tr>
+        <tr tal:repeat="job queue" tal:define="class python:test(lastclass == 'even', 'odd', 'even'); lastclass class" tal:attributes="class lastclass">
+          <td align="left" tal:content="job">JobId</td>
+          <td align="left" tal:content="python: view.service_docma.get_ident_owner(job)">Owner</td>
+          <td align="left" tal:content="python: view.service_docma.get_ident_description(job)">Description</td>
+          <td align="left" tal:content="python: view.service_docma.get_status(job)">Status</td>
+          <td align="left" tal:content="python: '%s seconds' % view.service_docma.get_estimated_time_for_ident(job)">Estimated time</td>
+        </tr>
 
-            <tr class="odd" tal:condition="python: len(queue) == 0">
-              <td align="left" colspan="5">There are no jobs in the queue</td>
-            </tr>
-          </tbody>
+        <tr class="odd" tal:condition="python: len(queue) == 0">
+          <td align="left" colspan="5">There are no jobs in the queue</td>
+        </tr>
+      </tbody>
 
-          <tfoot>
-            <tr class="divider">
-              <td colspan="5">
-             </td>
-            </tr>
-          </tfoot>
-        </table>
-      </form>
+      <tfoot>
+        <tr class="divider">
+          <td colspan="5">
+         </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
 
-      <tal:block condition="nothing"> _______ Finished Queue _______ </tal:block>
+  <tal:block condition="nothing"> _______ Finished Queue _______ </tal:block>
 
-      <form name="finishedJobQueue" action="." method="POST"
-       tal:condition="docma_running">
-        <table class="listing">
-          <tbody>
-            <tr class="top-controls">
-              <td colspan="5">
-                <h3>
-                  list of processed items
-                </h3>
-              </td>
-            </tr>
+  <form name="finishedJobQueue" action="." method="POST"
+   tal:condition="docma_running">
+    <table class="listing">
+      <tbody>
+        <tr class="top-controls">
+          <td colspan="5">
+            <h3>
+              list of processed items
+            </h3>
+          </td>
+        </tr>
 
-            <tr tal:condition="python: len(finished_jobs) != 0">
-              <th class="align-right" colspan="2" width="8%">Job&nbsp;#</th>
-              <th width="15%">Type</th>
-              <th>Description</th>
-              <th class="align-right" width="10%">Download</th>
-            </tr>
+        <tr tal:condition="python: len(finished_jobs) != 0">
+          <th class="align-right" colspan="2" width="8%">Job&nbsp;#</th>
+          <th width="15%">Type</th>
+          <th>Description</th>
+          <th class="align-right" width="10%">Download</th>
+        </tr>
 
-            <tr tal:repeat="job finished_jobs"
-              tal:define="
-                class python:test(lastclass == 'even', 'odd', 'even');
-                lastclass class"
-              tal:attributes="class class">
-              <td width="1%"><input type="checkbox" name="storageids:list" tal:attributes="value python: '%s|%s' % (job.id, job.format)"/></td>
-              <td tal:content="python: job.id">JobId</td>
-              <td tal:condition="python: job.format == 'silva'">Silva XML</td>
-              <td tal:condition="python: job.format == 'word'">Word&nbsp;document</td>
-              <td tal:content="python: job.description">Description</td>
-              <td class="align-right"><a href="#" tal:attributes="href python:'tab_edit_import_download?storageid=%s|%s' % (job.id, job.format)">Download</a></td>
-            </tr>
+        <tr tal:repeat="job finished_jobs"
+          tal:define="
+            class python:test(lastclass == 'even', 'odd', 'even');
+            lastclass class"
+          tal:attributes="class class">
+          <td width="1%"><input type="checkbox" name="storageids:list" tal:attributes="value python: '%s|%s' % (job.id, job.format)"/></td>
+          <td tal:content="python: job.id">JobId</td>
+          <td tal:condition="python: job.format == 'silva'">Silva XML</td>
+          <td tal:condition="python: job.format == 'word'">Word&nbsp;document</td>
+          <td tal:content="python: job.description">Description</td>
+          <td class="align-right"><a href="#" tal:attributes="href python:'tab_edit_import_download?storageid=%s|%s' % (job.id, job.format)">Download</a></td>
+        </tr>
 
-            <tr class="odd"
-               tal:condition="python: len(finished_jobs) == 0">
-              <td colspan="5">There are no processed jobs</td>
-            </tr>
-          </tbody>
+        <tr class="odd"
+           tal:condition="python: len(finished_jobs) == 0">
+          <td colspan="5">There are no processed jobs</td>
+        </tr>
+      </tbody>
 
-          <tfoot>
-            <tr class="controls">
-              <td colspan="3">
-                <tal:condition condition="python: len(finished_jobs) != 0">
-                  <script type="text/javascript">
-                    <!--
-                      if (document.forms[0])
-                      {
-                        document.write('<input class="button" type="submit" value="Select all" value="submit" name="selectButton" value="Select all" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false">');
-                      }
-                    //-->
-                  </script>
-                </tal:condition>
-              </td>
-              <td class="align-right"
-                colspan="2">
-                <tal:condition condition="python: len(finished_jobs) != 0">
-                  <tal:block condition="silva_permissions/ChangeSilvaContent">
-                    <input class="warning" type="submit" name="tab_edit_import_delete:method" value=" Remove " title="there's no undo: alt-x" accesskey="x" onClick="return confirm('Really remove?')" />
-                    <input class="button" type="submit" name="tab_edit_import_import_and_delete:method" value=" Import and remove " title="import to the current location and remove from the list: alt-m" accesskey="m" />
-                    <input class="button" type="submit" name="tab_edit_import_w2s:method" value=" Import " title="import to the current location: alt-p" accesskey="p" />
-                  </tal:block>
-                </tal:condition>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </form>
+      <tfoot>
+        <tr class="controls">
+          <td colspan="3">
+            <tal:condition condition="python: len(finished_jobs) != 0">
+              <script type="text/javascript">
+                <!--
+                  if (document.forms[0])
+                  {
+                    document.write('<input class="button" type="submit" value="Select all" value="submit" name="selectButton" value="Select all" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false">');
+                  }
+                //-->
+              </script>
+            </tal:condition>
+          </td>
+          <td class="align-right"
+            colspan="2">
+            <tal:condition condition="python: len(finished_jobs) != 0">
+              <tal:block condition="silva_permissions/ChangeSilvaContent">
+                <input class="warning" type="submit" name="tab_edit_import_delete:method" value=" Remove " title="there's no undo: alt-x" accesskey="x" onClick="return confirm('Really remove?')" />
+                <input class="button" type="submit" name="tab_edit_import_import_and_delete:method" value=" Import and remove " title="import to the current location and remove from the list: alt-m" accesskey="m" />
+                <input class="button" type="submit" name="tab_edit_import_w2s:method" value=" Import " title="import to the current location: alt-p" accesskey="p" />
+              </tal:block>
+            </tal:condition>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
 
    </td>
   </tr>
