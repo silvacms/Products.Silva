@@ -28,38 +28,44 @@
         <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
           <tr>
-            <td colspan="2">
-              <h3>Export to Silva XML (.slv)
-                <img src="pixel.gif" width="1px" height="14px"
-                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-              </h3>
+            <td colspan="3">
+              <h3>Export to Silva XML (.slv)</h3>
             </td>
           </tr>
 
-          <tr class="topcontrols">
-            <td style="background:#c0dbe0;" align="left" colspan="2">
-              <img src="pixel.gif" width="1px" height="14px"
-                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+          <tr>
+            <th align="right">
+              Options
+            </th>
+            <th align="left">
               &nbsp;
-            </td>
+            </th>
+            <th align="right" colspan="2">
+              Notes
+            </th>
           </tr>
 
           <tr class="focus" valign="top">
             <td align="right" width="50%">
               Include sub publications?
             </td>
-            <td align="left">
+            <td>
               <input type="checkbox" name="with_sub_publications" />
+            </td>
+            <td>
+              &nbsp;
             </td>
           </tr>
 
           <tr class="focus-cycle" valign="top">
             <td align="right">
-              Export newest version?<br />
-              (if not checked the published version is exported)
+              Export newest version?
             </td>
-            <td align="left">
+            <td>
               <input type="checkbox" name="export_last_version" />
+            </td>
+            <td align="right">
+	       If not checked the published version is exported
             </td>
           </tr>
 
@@ -115,27 +121,16 @@
 
           <tr>
             <td colspan="5">
-              <h3>Queue of items to process
-                <img src="pixel.gif" width="1px" height="14px"
-                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-              </h3>
-            </td>
-          </tr>
-
-          <tr class="topcontrols">
-            <td style="background:#b0cbd0;" align="left" colspan="5">
-              <img src="pixel.gif" width="1px" height="14px"
-                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-              &nbsp;
+              <h3>Queue of items to process</h3>
             </td>
           </tr>
 
           <tr>
-            <th align="left" width="8%">Job Id:</th>
-            <th align="left" width="15%">Job Owner:</th>
-            <th align="left">Description:</th>
-            <th align="left" width="15%">Status:</th>
-            <th align="left" width="10%">Estimated Time:</th>
+            <th align="left" width="8%">Job&nbsp;id</th>
+            <th align="left" width="15%">Job&nbsp;owner</th>
+            <th align="left">Description</th>
+            <th align="left" width="15%">Status</th>
+            <th align="left" width="10%">Estimated&nbsp;time</th>
           </tr>
 
           <tr tal:repeat="job queue" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
@@ -165,19 +160,17 @@
 
           <tr>
             <td colspan="3">
-              <h3>Export to Docma (.doc)
-                <img src="pixel.gif" width="1px" height="14px"
-                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-              </h3>
+              <h3>Export to Docma (.doc)</h3>
             </td>
           </tr>
 
-          <tr class="topcontrols">
-            <td style="background:#c0dbe0;" align="left" colspan="3">
-              <img src="pixel.gif" width="1px" height="14px"
-                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-              &nbsp;
-            </td>
+          <tr>
+            <th align="right">
+              Options
+            </th>
+            <th align="right" colspan="2">
+              Notes
+            </th>
           </tr>
 
           <tr class="focus" valign="top">
@@ -191,18 +184,20 @@
 
           <tr class="focus-cycle" valign="top">
             <td align="right">
-              Export newest version?<br />
-              (if not checked the published version is exported)
+              Export newest version?
             </td>
-            <td align="left" colspan="2">
+            <td>
               <input type="checkbox" name="export_last_version" />
+            </td>
+            <td align="right">
+	       If not checked the published version is exported
             </td>
           </tr>
 
           <tr class="focus">
-            <td align="right" width="20%">Enter your e-mail address:</td>
+            <td align="right" width="20%">Enter your e-mail address: <span class="warning">*</span></td>
             <td align="left" width="1%"><input type="text" name="email" size="30" /></td>
-            <td align="right">An e-mail will be sent to you as soon as the job is finished</td>
+            <td align="right">An e-mail will be sent once the job is finished</td>
           </tr>
 
           <tr class="focus-cycle">
