@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -18,7 +18,7 @@ from cgi import escape
 
 module_security =  ModuleSecurityInfo('Products.Silva.helpers')
 
-_id_re = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.]*$')
+_id_re = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.-]*$')
 p_ID = re.compile(r'^(.*?)([0-9]+)$')
 
 # sequence of all reserved prefixes (before the first '_')
@@ -76,7 +76,7 @@ def getNewId(old_id):
 _marker = ()
 
 module_security.declarePublic('check_valid_id')
-def check_valid_id(folder, maybe_id):
+def check_valid_id(folder, maybe_id, allow_dup=0):
     """ test if the given id is valid, returning a status code
         about its validity or reason of invalidity
     """
@@ -94,6 +94,7 @@ def check_valid_id(folder, maybe_id):
     if attr is not _marker:
         if ISilvaObject.isImplementedBy(attr):
             # there is a silva object with the same id
+            if allow_dup: return IdCheckValues.ID_OK
             attr = getattr(folder.aq_base, maybe_id, _marker)
             if attr is _marker:
                 # shadowing a content object is ok (hopefully)
