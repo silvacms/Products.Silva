@@ -40,30 +40,18 @@
 <!-- end of 3 Funky macro definitions to reuse the listing -->
 
 <!-- actual macro where layout is done -->
+<!-- this form deliberately has no submit buttons; filled in in slots -->
 <metal:block define-macro="listing">
   <div class="clipboard">
-    <metal:block define-macro="listing_no_style">
-      <!-- this form deliberately has no submit buttons; filled in in slots -->
+    <metal:block define-macro="listing_no_style">      
       <form action="."
         method="POST">
         <h2 class="clipboard">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Group')" />
           Available groups
         </h2>
-
         <table class="listing"
           style="margin-bottom:0.5em;">
-          <!-- thead>
-            <tr>
-              <td class="top"
-                style="white-space: nowrap;">
-                <h2>
-                  Available groups:
-                </h2>
-              </td>
-            </tr>
-          </thead -->
-
           <tr class="top-controls">
             <td>
               <metal:block define-slot="groups_admin_action">
@@ -110,14 +98,6 @@
               </select>
             </td>
           </tr>
-          <!-- tr class="controls inter-controls align-left">
-            <td>
-              <span class="widebody"
-                tal:condition="groups">
-                (Ctrl-mouseclick for a multi-select)
-              </span>
-            </td>
-          </tr -->
           <tr class="controls"
             tal:condition="groups">
             <td>
