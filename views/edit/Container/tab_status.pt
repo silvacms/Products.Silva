@@ -151,18 +151,17 @@
                   class obj/status_style | default;
                   href string:${obj_url}/edit/tab_preview;
                   title string:preview ${obj/id};
-                  "
-                i18n:translate="">
+                  ">
                 <tal:block condition="obj/is_default | nothing">
                   <em i18n:translate="">
                     index of
                   </em>
                   <tal:block condition="title" replace="title" />
-                  <i tal:condition="not:title" tal:content="obj/id">id</i>
+                  <em tal:condition="not:title" tal:content="obj/id">id</em>
                 </tal:block>
                 <tal:block condition="not:obj/is_default | nothing">
                   <tal:block condition="title" replace="title" />
-                  <i tal:condition="not:title" tal:content="obj/id">id</i>
+                  <em tal:condition="not:title" tal:content="obj/id">id</em>
                 </tal:block>
               </a>
             </div>

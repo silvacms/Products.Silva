@@ -27,9 +27,9 @@
 <thead>
   <tr>
     <td class="top location" colspan="3">
-    <h2 i18n:translate="">
+    <h2>
       <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />&nbsp;
-        create <span tal:replace="python: request.meta_type" i18n:name="meta_type" />
+      <tal:block i18n:translate="">create <span tal:replace="python: request.meta_type" i18n:name="meta_type" /></tal:block>
     </h2>
     </td>
   </tr>

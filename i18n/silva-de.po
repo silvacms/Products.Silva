@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Wed Nov 24 15:06:58 2004\n"
+"POT-Creation-Date: Wed Nov 24 18:41:38 2004\n"
 "PO-Revision-Date: 2004-11-23 14:07+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -140,7 +140,7 @@ msgid "Added ${meta_type} ${id}."
 msgstr "Hinzugefügt ${meta_type} ${id}."
 
 #: /views/add/Ghost/add_form.pt:32 /views/add/GhostFolder/add_form.pt:32
-msgid "&nbsp; create ${meta_type}"
+msgid "create ${meta_type}"
 msgstr ""
 
 #: /views/add/Ghost/add_form.pt:40 /views/add/GhostFolder/add_form.pt:40
@@ -361,7 +361,7 @@ msgstr "Benutzer entfernen"
 #: /views/edit/Asset/Groups/Group/edit.pt:126
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:174
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:124
-msgid "\"Things to do when virtual groups is not in it original location\""
+msgid "\"Things to do when virtual groups is not in its original location\""
 msgstr ""
 
 #: /views/edit/Asset/Groups/Group/edit.pt:142
@@ -602,11 +602,9 @@ msgstr ""
 msgid "orientation"
 msgstr ""
 
-#: /views/edit/Asset/Image/edit.pt:90
+#: /views/edit/Asset/Image/edit.pt:88
 msgid ""
-"Note: Silva can provide image scaling and conversion with the help of PIL "
-"(<a href=\"http://www.pythonware.com/products/pil/\" i18:name=\"PIL\">Python "
-"Imaging Library</a>). <span>x</span>"
+"Note: Silva can provide image scaling and conversion with the help of PIL"
 msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:90
@@ -757,8 +755,8 @@ msgstr "Inhalte"
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
 #: /views/edit/hyperlink_lookup.pt:243 /views/edit/Container/tab_edit.pt:255
 #: /views/edit/Container/tab_edit.pt:264
-#: /views/edit/Container/tab_status.pt:175
-#: /views/edit/Container/tab_status.pt:184
+#: /views/edit/Container/tab_status.pt:174
+#: /views/edit/Container/tab_status.pt:183
 #: /views/edit/Container/GhostFolder/tab_edit.pt:352
 msgid "publish"
 msgstr "Publizieren"
@@ -1177,7 +1175,7 @@ msgid "end"
 msgstr "Ende"
 
 #: /views/edit/Container/tab_edit.pt:479
-#: /views/edit/Container/tab_status.pt:348
+#: /views/edit/Container/tab_status.pt:347
 #: /views/edit/VersionedContent/tab_status_macros.pt:503
 msgid "access key: alt-p"
 msgstr "Kurzwahl: alt-p"
@@ -1609,125 +1607,121 @@ msgstr "In Publikation umgewandelt"
 msgid "published"
 msgstr "publiziert"
 
-#: /views/edit/Container/tab_status.pt:157
+#: /views/edit/Container/tab_status.pt:156
 msgid "index of"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:165
-msgid "<em>x</em> <i></i> <i></i>"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:222
+#: /views/edit/Container/tab_status.pt:221
 msgid "public version"
 msgstr "veröffentlichte Version"
 
-#: /views/edit/Container/tab_status.pt:238
+#: /views/edit/Container/tab_status.pt:237
 msgid "closed"
 msgstr "geschlossen"
 
-#: /views/edit/Container/tab_status.pt:252
+#: /views/edit/Container/tab_status.pt:251
 msgid "There are no publishable items here."
 msgstr "Es sind hier keine veröffentlichbaren Dinge."
 
-#: /views/edit/Container/tab_status.pt:270
+#: /views/edit/Container/tab_status.pt:269
 msgid "day / month / year"
 msgstr "Tag / Monat / Jahr"
 
-#: /views/edit/Container/tab_status.pt:285
+#: /views/edit/Container/tab_status.pt:284
 msgid "publish time"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:301
+#: /views/edit/Container/tab_status.pt:300
 msgid "p<u>u</u>blish&nbsp;now?"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:301
+#: /views/edit/Container/tab_status.pt:300
 #: /views/edit/VersionedContent/tab_status_macros.pt:241
 #: /views/edit/VersionedContent/tab_status_macros.pt:258
 #: /views/edit/VersionedContent/tab_status_macros.pt:357
 msgid "access key: alt-u"
 msgstr "Kurzwahl: alt-u"
 
-#: /views/edit/Container/tab_status.pt:329
+#: /views/edit/Container/tab_status.pt:328
 msgid "access key: alt-x"
 msgstr "Kurzwahl: alt-x"
 
-#: /views/edit/Container/tab_status.pt:329
+#: /views/edit/Container/tab_status.pt:328
 #: /views/edit/VersionedContent/tab_status.pt:254
 msgid "expiration time"
 msgstr "Verfallsdatum"
 
-#: /views/edit/Container/tab_status.pt:348
+#: /views/edit/Container/tab_status.pt:347
 msgid "clear&nbsp;ex<u>p</u>iration"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:366
+#: /views/edit/Container/tab_status.pt:365
 msgid "reject"
 msgstr "Ablehnen"
 
-#: /views/edit/Container/tab_status.pt:366
+#: /views/edit/Container/tab_status.pt:365
 msgid "reject pending request for approval: alt-j"
 msgstr "Wartende Veröffentlichungsanfrage ablehnen: alt-j"
 
-#: /views/edit/Container/tab_status.pt:375
+#: /views/edit/Container/tab_status.pt:374
 msgid "withdraw approval of approved versions: alt-v"
 msgstr "Genehmigte Veröffentlichungen widerrufen: alt-v"
 
-#: /views/edit/Container/tab_status.pt:375
-#: /views/edit/Container/tab_status.pt:443
+#: /views/edit/Container/tab_status.pt:374
+#: /views/edit/Container/tab_status.pt:442
 msgid "revoke"
 msgstr "Widerrufen"
 
-#: /views/edit/Container/tab_status.pt:384
+#: /views/edit/Container/tab_status.pt:383
 msgid "close published items: alt-c"
 msgstr "Veröffentlichte Dokumente schliessen: alt-c"
 
-#: /views/edit/Container/tab_status.pt:384
+#: /views/edit/Container/tab_status.pt:383
 #: /views/edit/Member/SimpleMember/tab_edit.pt:112
 msgid "close"
 msgstr "Schließen"
 
-#: /views/edit/Container/tab_status.pt:393
-#: /views/edit/Container/tab_status.pt:452
+#: /views/edit/Container/tab_status.pt:392
+#: /views/edit/Container/tab_status.pt:451
 msgid "create new versions of published docs: alt-n"
 msgstr "Neue Versionen der veröffentlichten Dokumente erstellen: alt-n"
 
-#: /views/edit/Container/tab_status.pt:405
-#: /views/edit/Container/tab_status.pt:464
+#: /views/edit/Container/tab_status.pt:404
+#: /views/edit/Container/tab_status.pt:463
 msgid "change publish and expiration times: alt-s"
 msgstr "Veröffentlichungs- und Verfallsdaten ändern: alt-s"
 
-#: /views/edit/Container/tab_status.pt:405
-#: /views/edit/Container/tab_status.pt:464
+#: /views/edit/Container/tab_status.pt:404
+#: /views/edit/Container/tab_status.pt:463
 msgid "set timing"
 msgstr "Zeitvorgaben speichern"
 
-#: /views/edit/Container/tab_status.pt:416
+#: /views/edit/Container/tab_status.pt:415
 msgid "approve or publish new versions: alt-o"
 msgstr "Genehmigen oder Veröffentlichen von neuen Versionen: alt-o"
 
-#: /views/edit/Container/tab_status.pt:416
+#: /views/edit/Container/tab_status.pt:415
 #: /views/edit/VersionedContent/tab_status_macros.pt:374
 msgid "open to public"
 msgstr "Veröffentlichen"
 
-#: /views/edit/Container/tab_status.pt:434
+#: /views/edit/Container/tab_status.pt:433
 msgid "withdraw"
 msgstr "Zurücknehmen"
 
-#: /views/edit/Container/tab_status.pt:434
+#: /views/edit/Container/tab_status.pt:433
 msgid "withdraw pending request for approval: alt-w"
 msgstr "Ausstehnende Anfrage zurückziehen: alt-w"
 
-#: /views/edit/Container/tab_status.pt:443
+#: /views/edit/Container/tab_status.pt:442
 msgid "revoke approval of approved versions: alt-v"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:475
+#: /views/edit/Container/tab_status.pt:474
 msgid "request approval for new versions: alt-r"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:475
+#: /views/edit/Container/tab_status.pt:474
 #: /views/edit/VersionedContent/tab_status_macros.pt:174
 msgid "request approval"
 msgstr ""
@@ -2662,7 +2656,7 @@ msgstr ""
 #: /views/edit/document_lookup.pt:348 /views/edit/hyperlink_lookup.pt:228
 #: /views/edit/hyperlink_lookup.pt:248 /views/edit/Container/tab_edit.pt:234
 #: /views/edit/Container/tab_edit.pt:270
-#: /views/edit/Container/tab_status.pt:190
+#: /views/edit/Container/tab_status.pt:189
 #: /views/edit/Container/GhostFolder/tab_edit.pt:338
 #: /views/edit/Container/GhostFolder/tab_edit.pt:356
 msgid "n/a"
@@ -2884,8 +2878,8 @@ msgstr "Genehmigung widerrufen"
 msgid "create a new version of this content: alt-n"
 msgstr "Neue Version dieses Inhalts erzeugen: alt-n"
 
-#: /views/edit/macro_metadata.pt:399 /views/edit/Container/tab_status.pt:393
-#: /views/edit/Container/tab_status.pt:452
+#: /views/edit/macro_metadata.pt:399 /views/edit/Container/tab_status.pt:392
+#: /views/edit/Container/tab_status.pt:451
 #: /views/edit/VersionedContent/macro_tab_edit.pt:96
 msgid "new version"
 msgstr "Neue Version"

@@ -122,7 +122,7 @@
 </table>
 
 <tal:block condition="not:model/isValid | nothing"  i18n:translate="">
-  "Things to do when virtual groups is not in it original location"
+  "Things to do when virtual groups is not in its original location"
 </tal:block>
 
       </td>

@@ -84,10 +84,10 @@
           >Square</span>
       </p>
     </tal:block>
-    <p tal:condition="not: model/canScale" i18n:translate="">
-      Note: Silva can provide image scaling and conversion with the help of PIL 
-      (<a href="http://www.pythonware.com/products/pil/" i18:name="PIL">Python Imaging Library</a>).
-    <span i18n:translate="">PIL doesn't seem to be installed.</span>
+    <p tal:condition="not: model/canScale">
+      <tal:block i18n:translate="">Note: Silva can provide image scaling and conversion with the help of PIL</tal:block>
+      (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
+      <tal:block i18n:translate="">PIL doesn't seem to be installed.</tal:block>
     </p>
     <p tal:define="
         size model/get_file_size;
