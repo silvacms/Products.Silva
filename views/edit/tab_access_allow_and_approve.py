@@ -11,7 +11,7 @@ view = context
 request = view.REQUEST
 model = request.model
 
-if not request['requests']:
+if not request.has_key('requests') or not request['requests']:
     return view.tab_access(message_type='error', message='No requests selected')
 
 messages = []
