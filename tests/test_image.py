@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_image.py,v 1.1.2.1 2004/07/09 10:20:07 zagy Exp $
+# $Id: test_image.py,v 1.1.2.2 2004/07/12 11:49:49 guido Exp $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -14,6 +14,7 @@ import PIL
 
 from Products.Silva import Image
 
+from test_file import FileTest
 
 class ImageTest(SilvaTestCase.SilvaTestCase):
    
