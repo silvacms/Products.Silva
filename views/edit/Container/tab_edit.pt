@@ -11,7 +11,7 @@
 <div class="margins">
   <h2><img src="%s" width="16" height="16" alt="%s"
         tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    Contents of <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
+    Contents of <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_or_id_html}&raquo;">title here</span>
   </h2>
 </div>
 <form action="." name="silvaObjects" method="POST">
@@ -70,7 +70,7 @@
             tal:define="url python:model.get_publication().absolute_url()"
             tal:attributes="href string:${url}/edit/tab_edit"><img tal:attributes="src string:${silva_root}/globals/silvapublication.gif" width="16" height="16" border="0" alt="Silva Publication" /></a>
           <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
-            tal:attributes="href string:${url}/edit/tab_edit"><span tal:replace="structure python:model.get_publication().get_title_html()">Publication top</span></a>
+            tal:attributes="href string:${url}/edit/tab_edit"><span tal:replace="structure python:model.get_publication().get_title_or_id_html()">Publication top</span></a>
         </td>
       </tr>
 
@@ -90,7 +90,7 @@
             <a class="blacklink" href="title" title="id"
               tal:attributes="href string:${item/absolute_url}/edit/tab_edit;
                               title string:id: ${item/id}">
-              <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_html()">no title</span>
+              <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_or_id_html()">no title</span>
             </a>
             </span>
           </td>

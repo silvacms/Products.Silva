@@ -9,7 +9,7 @@
 <tr valign="top">
 <td width="16"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" alt="not editable" /></td>
 <td class="frontend" colspan="3" width="98%">
-<div class="front3">&nbsp;Demo-details for: <span tal:replace="structure python:model.get_title_html()" /></div>
+<div class="front3">&nbsp;Demo-details for: <span tal:replace="structure python:model.get_title_or_id_html()" /></div>
 </td>
 <td width="60" align="right" valign="top">&nbsp;</td>
 </tr>

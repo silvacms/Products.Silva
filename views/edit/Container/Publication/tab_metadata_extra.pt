@@ -6,7 +6,7 @@
 
 <p class="halfline">&nbsp;</p>
 
-<h2>Addable settings for <span class="document-title" tal:content="structure string:&raquo;${model/get_title_html}&laquo;">title here</span></h2>
+<h2>Addable settings for <span class="document-title" tal:content="structure string:&laquo;${model/get_title_or_id_html}&raquo;">title here</span></h2>
 
 <form method="POST" name="form" action="tab_metadata_extra_submit">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"

@@ -18,8 +18,7 @@
     &nbsp; Access Settings for
     <span class="folder-title"
       tal:content="
-        structure string:&laquo;
-        ${model/get_title_html}&raquo;">
+        structure string:&laquo;${model/get_title_or_id_html}&raquo;">
       title
     </span>
   </h2>
@@ -569,7 +568,7 @@
     <span class="folder-title"
       tal:content="
         structure string:&laquo;
-        ${model/get_title_html}&raquo;">
+        ${model/get_title_or_id_html}&raquo;">
       title
     </span>
   </h2>
