@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -17,6 +17,19 @@ class VersioningError(Exception):
 
 empty_version = (None, None, None)
 
+class RequestForApprovalInfo:
+    """ simple helper class storing information about the
+    current request for approval
+    """
+
+    def __init__(self):
+        self.request_pending = None
+        self.requester = None
+        self.request_messages = []
+        self.request_date = None
+
+empty_request_for_approval_info = RequestForApprovalInfo()
+
 class Versioning:
     """Mixin baseclass to make object contents versioned.
     """
@@ -28,6 +41,7 @@ class Versioning:
     _approved_version = empty_version
     _public_version = empty_version
     _previous_versions = None
+    _request_for_approval_info = empty_request_for_approval_info
     
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -62,6 +76,8 @@ class Versioning:
         self._unapproved_version = (version_id,
                                     publication_datetime,
                                     expiration_datetime)
+        # overwrite possible previous info ...
+        self._request_for_approval_info = RequestForApprovalInfo()
         self._reindex_version(self._unapproved_version)
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -85,6 +101,9 @@ class Versioning:
                       'Cannot approve version; not allowed.'
         self._approved_version = self._unapproved_version
         self._unapproved_version = empty_version
+        if self._request_for_approval_info != empty_request_for_approval_info:
+            self._request_for_approval_info.request_pending = None
+            self._request_for_approval_info = self._request_for_approval_info
         self._reindex_version(self._approved_version)
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -124,6 +143,63 @@ class Versioning:
         self._previous_versions = previous_versions
         self._reindex_version(last_closed_version)
         self._reindex_version(previous_versions[-1])
+
+
+    def _get_editeable_rfa_info(self):
+        """ helper method: return the request for approval information,
+        this creates a new one, if necessary; notifes Zope that this has changed
+        in advance ... i.e. do not call this method if You do not want to change
+        the information.
+        """
+        if self._request_for_approval_info == empty_request_for_approval_info:
+            self._request_for_approval_info =  RequestForApprovalInfo()
+        else:
+            # Zope should be notified that it has changed
+            self._request_for_approval_info = self._request_for_approval_info
+        return self._request_for_approval_info
+    
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'request_version_approval')
+    def request_version_approval(self):
+        """Request approval for the current unapproved version
+        Raises VersioningError, if there is no such version, or it is already approved.
+        Returns None otherwise
+        """
+        # called implicitely: self._update_publication_status()
+        if self.get_unapproved_version() is None:
+            raise VersioningError,\
+                  'There is no unapproved version to request approval for.'
+
+        if self.is_version_approval_requested():
+            raise VersioningError,\
+                  'The version is already requested for approval.'
+
+        info = self._get_editeable_rfa_info()
+        info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        info.request_date = DateTime()
+        info.request_pending=1
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'withdraw_version_approval')
+    def withdraw_version_approval(self):
+        """Withdraw a previous request for approval
+        Implementation should raise VersioningError, if the
+        currently unapproved version has no request for approval yet,
+        or if there is no unapproved version.
+        """
+        
+        self._update_publication_status()
+        if self.get_unapproved_version is None:
+            raise VersioningError,\
+                  'There is no unapproved version to request approval for.'
+
+        if not self.is_version_approval_requested():
+            raise VersioningError,\
+                  'The version is not requested for approval.'
+        info = self._get_editeable_rfa_info()
+        info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        info.request_pending=None
+    
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_unapproved_version_publication_datetime')
@@ -210,7 +286,27 @@ class Versioning:
         else:
             raise VersioningError,\
                   'No next version.'
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_approval_request_message')
+    def set_approval_request_message(self, message):
+        """Allows to add a message concerning the
+        current request for approval.
+        setting the currently approved message
+        overwrites any previous message for this content.
+        The implementation cleans the message
+        if a new version is created.
+        """
+        # very weak restriction ... allows to call this method
+        # before or after requesting approval, or the like.
+        if self.get_next_version() is None:
+            raise VersioningError, \
+                  "There is no version to add messages for."
         
+        info = self._get_editeable_rfa_info()
+        info.request_messages.append(message)
+
+    
     def _update_publication_status(self):
         now = DateTime()
         # get publication datetime of approved version
@@ -267,6 +363,15 @@ class Versioning:
         """
         self._update_publication_status()
         return self._public_version != empty_version
+
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'is_version_approval_requested')
+    def is_version_approval_requested(self):
+        """Check if there exists an unapproved version
+        which has a request for approval.
+        """        
+        return self._request_for_approval_info.request_pending is not None
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_unapproved_version')
@@ -341,7 +446,10 @@ class Versioning:
         """Get status of next version.
         """
         if self.get_unapproved_version() is not None:
-            return "not_approved"
+            if self.is_version_approval_requested():
+                return "request_pending"
+            else:
+                return "not_approved"
         elif self.get_approved_version() is not None:
             return "approved"
         else:
@@ -399,6 +507,35 @@ class Versioning:
             return None
         else:
             return versions[-1]
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_approval_requester')
+    def get_approval_requester(self):
+        """Return the id of the user requesting approval
+        of the currently unapproved version."""
+        return self._request_for_approval_info.requester
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_approval_requester')
+    def get_approval_request_message(self):
+        """Get the current message associated with
+        request for approval; i.e. argument passed the
+        on the last call to "set_approval_request_message".
+        """
+        messages = self._request_for_approval_info.request_messages
+        if len(messages)==0:
+            return None
+        else:
+            return messages[-1]
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_approval_requester')
+    def get_approval_request_datetime(self):
+        """Get the date when the currently unapproved version
+        did get a request for approval as a DateTime object,
+        or None if there is no such version or request.
+        """
+        return self._request_for_approval_info.request_date
 
     def _reindex_version(self, version):
         pass
