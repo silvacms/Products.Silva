@@ -24,14 +24,18 @@
         tal:attributes="title string: ${size}"
         tal:content="python:mangle.Bytes(size)" /> 
     </p>
-    <tal:block tal:condition="python:user.has_role(['Manager'], model)">
+    <tal:condition condition="python:user.has_role(['Manager'], model)">
       <p tal:define="path model/getFileSystemPath"
-        tal:condition="path"
-        >
+        tal:condition="path">
         <span class="subhead"><b i18n:translate="file_system_path">file system path</b><br /></span>
         <span tal:replace="structure python: ' / '.join(path.split('/'))" />
       </p>
-    </tal:block>
+      <p tal:define="mime_type model/get_mime_type"
+        tal:condition="mime_type">
+        <span class="subhead"><b i18n:translate="file_mime_type">file mime type</b><br /></span>
+        <span tal:replace="mime_type" />
+      </p>
+    </tal:condition>
   </div>
 </metal:fill-slot>
 
