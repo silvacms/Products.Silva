@@ -62,7 +62,7 @@
           <extra></extra>
           <extra_item></extra_item>
           <hidden type="int">0</hidden>
-          <items type="list">[]</items>
+          <items type="list">[('Silva Document', 'Silva Document'), ('Automatic Table of Contents', 'Auto TOC'), ('None', 'None')]</items>
           <required type="int">1</required>
           <size type="int">5</size>
           <title>First item</title>
@@ -71,7 +71,6 @@
           <first_item type="int">1</first_item>
         </values>
         <tales>
-          <items>form/service_containerpolicy/listPolicies</items>
         </tales>
         <messages>
           <message name="external_validator_failed">The input failed the external validator.</message>
