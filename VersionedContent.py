@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
+# $Revision: 1.32 $
 
 # Python
 from StringIO import StringIO
@@ -23,8 +23,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     # created by the object's factory function
     _version_count = 1
 
-    _cached_datetime = None
-    _cached_data = None
+    _cached_data = {}
 
     def __init__(self, id):
         """Initialize VersionedContent.
@@ -176,28 +175,35 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     def view(self, view_type='public'):
         """
         """
-        if (view_type != 'public') or (DevelopmentMode is not None):
+        # XXX view_type=edit or add does not work anyway, but ...
+        if (view_type in ('edit','add')) or (DevelopmentMode is not None):
             return VersionedContent.inheritedAttribute('view')(self, view_type)
 
-        if (self._cached_datetime is None or
-             self._cached_datetime <
+        data, cached_datetime = self._cached_data.get(view_type, (None, None))
+
+        if (cached_datetime is None or
+             cached_datetime <
              self.get_public_version_publication_datetime() or
-             self._cached_datetime <
+             cached_datetime <
              self.service_extensions.get_refresh_datetime()):
             data = VersionedContent.inheritedAttribute('view')(self, view_type)
-            self._cached_datetime = DateTime()
+            cached_datetime = DateTime()
             if self.is_cacheable():
-                self._cached_data = data
+                cached_data = data
             else:
-                self._cached_data = None
+                cached_data = None
+            self._cached_data[view_type] = (data, cached_datetime)
+            self._cached_data = self._cached_data
         else:
             # XXX is_version_published() triggers a workflow update
             # check that is not necessary, ideally remove it somehow.
-            if (self._cached_data is not None and
+            if (data is not None and
                  not self.is_version_published()):
                 # do not render versions which have been closed explicitely
-                self._cached_data = None
-            data = self._cached_data
+                data = None
+                self._cached_data[view_type] = (data, DateTime())
+                self._cached_data = self._cached_data
+            
             if data is None:
                 data = VersionedContent.inheritedAttribute('view')(
                     self, view_type)
