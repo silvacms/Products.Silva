@@ -1,12 +1,54 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.21 $
+$Revision: 1.22 $
 
 Silva changes
 
+  0.9
+
+    Features Added
+ 
+        - Can change publication to folder and the reverse.
+
+        - Links in editor now can have a 'target' option.
+       
+        - Images can now be hyperlinks.
+
+        - Implementation of DataSource/DataElement for testing.
+
+    Bugs Fixed
+
+        - All __index__.py files are now non-empty, so that WinZip
+          actually unpacks them...
+
+        - Table edit bug fixed.
+
+        - Memory leak fixed (really in ParsedXML and XMLWidgets).
+
+        - Fix bug with wrong element-type selectors in editor.
+
+        - Rename now provides better user feedback.
+
+        - Definition list rendering bug fixed.
+
+        - Access restriction by role UI bug fixed.
+
+        - ZMI find should now work better, thanks to bugfix in ParsedXML.
+
+        - Lookup screen now accepts searches for people with names only
+          2 characters big.
+
+        - Lists with style no bullets are now rendered with p tag.
+
+        - Pasted ghosts now obtain a last author.
+
+        - Indexer is now addable by editor and up (used to be 
+          manager only). Added note in UI that indexer works for published
+          content only.
+
   0.8.6.1
 
-    Bugs fixed
+    Bugs Fixed
 
         - RealObjects "edit-on Pro" integration improved.
 
