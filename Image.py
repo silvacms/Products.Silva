@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.15 2003/02/11 11:19:43 zagy Exp $
+# $Id: Image.py,v 1.16 2003/02/11 11:35:03 zagy Exp $
 
 import re
 from cStringIO import StringIO
@@ -176,7 +176,7 @@ class Image(Asset):
         """
         if not havePIL:
             raise ValueError, "No PIL installed."""
-        image_file = StringIO(str(self.hires_image.data.aq_base))
+        image_file = StringIO(str(self.hires_image.data))
         image = PIL.Image.open(image_file)
         return image
 
