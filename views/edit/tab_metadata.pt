@@ -28,9 +28,30 @@
           _____________________ main _____________________
         </tal:block>
         <td class="main">
-          <tal:block define="macro python: model.get_editable() and 'edit_table' or 'view_table';">
+          <tal:block 
+            define="
+              editable python: model.get_editable();
+              version python: editable or model.get_previewable();
+              macro python: editable and 'edit_table' or 'view_table';
+              ">
             <metal:block use-macro="here/macro_metadata/macros/?macro" />
           </tal:block>
+
+          <tal:block 
+            define="version python: model.get_viewable()"
+            condition="version">
+            <metal:block use-macro="here/macro_metadata/macros/view_table">
+              <h2 metal:fill-slot="table_title">
+                <img tal:replace="structure python:view.render_icon(model)" />
+                metadata
+                <span tal:condition="not: model/implements_container">
+                  for public version of
+                  &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                </span>
+              </h2>
+            </metal:block>
+          </tal:block>
+
         </td>
       </tr>
     </tbody>
