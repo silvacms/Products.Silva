@@ -11,17 +11,17 @@ status = ghost_version.get_link_status()
 if status == ghost_version.LINK_OK:
   return ''
 elif status == ghost_version.LINK_EMPTY:
-  return 'You have to enter an URL here.'
+  return 'A path must be filled in above.'
 elif status == ghost_version.LINK_VOID:
-  return 'The object &#xab;%s&#xbb; the ghost points to does not exist' %  \
+  return "The ghost points to an object that doesn't exist (%s)." %  \
     ghost_version.get_content_url()
 elif status == ghost_version.LINK_FOLDER:
-  return 'The object &#xab;%s&#xbb; the ghost points to is a container.' % \
+  return "The ghost points to a folder (%s). Folders can't be ghosted. Try adding 'index' to the path." % \
     ghost_version.get_content_url()
 elif status == ghost_version.LINK_GHOST:
-  return 'The object &#xab;%s&#xbb; the ghost points to is itself a ghost.' % \
+  return 'The ghost points to another ghost (%s). Please ghost the original.' % \
     ghost_version.get_content_url()
 elif status == ghost_version.LINK_NO_CONTENT:
-  return 'The object &#xab;%s&#xbb; the ghost points to is not a content object.' % \
+  return 'The ghost points to an item that is not content (%s).' % \
     ghost_version.get_content_url()
 return 'The ghost is in an undefined state.'
