@@ -6,9 +6,6 @@
   <action></action>
   <enctype></enctype>
   <method>POST</method>
-  <i18n_domain>silva</i18n_domain>
-  <i18n>scale</i18n>
-
   <groups>
     <group>
       <title>web presentation</title>
@@ -22,7 +19,7 @@
           <required type="int">1</required>
           <items type="list">[('jpg', 'JPEG'), ('png', 'PNG'), ('gif', 'GIF')]</items>
           <default></default>
-          <title i18n="">web format</title>
+          <title>web format</title>
           <first_item type="int">1</first_item>
           <alternate_name></alternate_name>
           <unicode type="int">0</unicode>
@@ -53,7 +50,7 @@
           <display_width type="int">18</display_width>
           <extra></extra>
           <truncate type="int">0</truncate>
-          <description i18n="image-scaling-description">
+          <description>
 	  Image scaling for web: use width x height in pixels, or one axis length, or a percentage (100x200, 100x*, *x200, 40%).</description>
           <unicode>1</unicode>
         </values>
@@ -81,7 +78,7 @@
           <display_width type="int">18</display_width>
           <extra>id="web_crop"</extra>
           <truncate type="int">0</truncate>
-          <description i18n="image-cropping-description">
+          <description>
               Image cropping for web: use the &amp;#8216;set crop coordinates&amp;#8217; button, or enter X1xY1-X2xY2 to define the cropping box.
           </description>
           <unicode>1</unicode>
