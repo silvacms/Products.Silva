@@ -102,6 +102,7 @@ class Document(TocSupport, Folder.Folder, Versioning):
             return
         
         # if there is no next version, get copy of public version
+        # FIXME: way to get copy of last closed version?
         published_version_id = self.get_public_version()
         # copy published version
         new_version_id = str(self._version_count)

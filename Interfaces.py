@@ -1,4 +1,6 @@
-class SilvaObject:
+import Interface
+
+class SilvaObject(Interface.Base):
     """Interface that should be supported by all Silva objects.
     """
     # MANIPULATORS
@@ -71,7 +73,7 @@ class Content(SilvaObject):
         """
         pass
 
-class Security:
+class Security(Interface.Base):
     """Can be mixed in with an object to support Silva security.
     (built on top of Zope security)
     """
@@ -108,7 +110,7 @@ class Security:
         pass
     
 
-class Versioning:
+class Versioning(Interface.Base):
     """Can be mixed in with an object to support simple versioning.
     This interface only keeps a reference id to the version and the
     various datetimes. The versioned objects themselves are not
