@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.56 $
+# $Revision: 1.57 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -21,9 +21,10 @@ try:
 except ImportError:
     groups_enabled = 0
 
-LOCK_DURATION = 1./24./3./20. # 20 minutes
+LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
 
-interesting_roles = ['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager']
+interesting_roles = ['Viewer', 'Reader', 'Author', 'Editor', \
+                     'ChiefEditor', 'Manager']
 
 class Security(AccessManager):
     """Can be mixed in with an object to support Silva security.
