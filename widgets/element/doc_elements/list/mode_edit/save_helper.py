@@ -27,9 +27,6 @@ if not request.has_key('element_type'):
 else:
     element_type = request['element_type']
 
-list_title = getattr(request,'list_title','')
-context.util.save_title(node, list_title)
-
 if element_type not in ['circle', 'square', 'disc', 
                         '1', 'A', 'a', 'I', 'i', 'none']:
     return

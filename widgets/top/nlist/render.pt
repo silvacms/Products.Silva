@@ -5,12 +5,6 @@
     global type here/get_list_type;
     global insert_now python:1" />
 <div metal:use-macro="container/macro_embed_view/macros/embed_view">
-<div metal:fill-slot="embed_controls" tal:omit-tag="">
-    &nbsp;<nobr>List title</nobr>:<br />
-    <input type="text" name="list_title" size="65" style="font-weight:bold;width:100%;" value=""
-           tal:attributes="value python:here.util.get_title_text(node)" />
-    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2">
-</div>
 <div metal:fill-slot="embedded_elements" tal:omit-tag="">
   <content tal:replace="structure here/content" />
 </div>

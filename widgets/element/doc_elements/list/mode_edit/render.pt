@@ -1,10 +1,6 @@
 <div metal:use-macro="container/macro_edit_view/macros/edit_view">
 
 <div metal:fill-slot="edit_input" tal:omit-tag="">
-&nbsp;List title:<br />
-<textarea name="list_title" cols="65" rows="2" style="font-weight:bold;" size="65" value=""
-  tal:content="python:here.util.get_title_text(node)">Title</textarea><br /><br />
-
 <script type="text/javascript" tal:content="structure here/asset_reference.js" />
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
 <input type="button" class="button" name="" value="Append asset reference" style="float:right;" title="Access key: alt-a" accesskey="a"
