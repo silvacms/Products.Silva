@@ -36,8 +36,7 @@
           _____________________ main subtable _____________________
         </tal:block>
 
-<table class="listing"
-  style="margin-bottom:0em;">
+<table class="listing">
 <thead>
   <tr tal:replace="nothing"> ______________ vein + title row ______________ </tr>
   <tr>
