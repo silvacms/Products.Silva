@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 import unittest
 
 # 
@@ -300,8 +300,28 @@ class RoundtripWithTidy(Base):
         self.assertEquals(img.attrs.get('src'), ctx.url+'/myimg/image')
         self.assertEquals(img.attrs.get('alt'), 'test')
         self.assertEquals(img.attrs.get('align'), 'float-left')
+        self.assert_(not img.attrs.get('link'))
 
         self._check_string(silvafrag, ctx)
+
+    def test_image_linked(self):
+
+        silvafrag = '<image link="http://www.heise.de" path="myimg" alt="test" alignment="float-left"/>'
+        silvanode = self.parse_silvafrag(silvafrag)
+        ctx = Context()
+        ctx.url = 'http://localhost/silva1/doc1'
+
+        htmlnode = silvanode.convert(ctx)
+
+        a = htmlnode.find_one('a')
+        self.assertEquals(a.attrs.get('href'), 'http://www.heise.de')
+
+        img = a.find_one('img')
+        self.assertEquals(img.attrs.get('src'), ctx.url+'/myimg/image')
+        self.assertEquals(img.attrs.get('alt'), 'test')
+        self.assertEquals(img.attrs.get('align'), 'float-left')
+        self._check_string(silvafrag, ctx)
+
         
     def test_heading_and_p(self):
         simple = '''

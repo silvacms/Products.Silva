@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.5 $'
+__version__='$Revision: 1.6 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -368,17 +368,25 @@ class font(Element):
 
 class a(Element):
     def convert(self, context):
-        return silva.link(
-            self.content.convert(context),
-            url=self.attrs['href']
-            )
+        url = self.attrs['href']
+        context.link = url
+        content = self.content.convert(context)
+        del context.link
+
+        if len(content)==1 and content.find('image'):
+            return content
+        else:
+            return silva.link(
+                content,
+                url=url
+                )
 
 class img(Element):
     def convert(self, context):
         from urlparse import urlparse
         src = self.attrs['src']
         #src = urlparse(src)[2]
-        link = self.attrs.get('link')
+        link = getattr(context, 'link', '')
         if src.endswith('/image'):
             src = src[:-len('/image')]
         if src.startswith(context.url):

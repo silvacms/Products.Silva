@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import unittest
 
 # 
@@ -261,6 +261,12 @@ class SilvaXMLObjectParser(unittest.TestCase):
         node = base.Text(ustring)
         s = node.asBytes(encoding='utf8')
         self.assertEquals(s, '&quot;&apos;&amp;&lt;&gt;')
+
+    def test_asBytes_attr_none_is_ignored(self):
+
+        node = silva.p(type='normal', link=None)
+        s = node.asBytes()
+        self.assertEquals(s, '<p type="normal"/>')
 
     def test_ignore_unknown_tags(self):
         """ test that ignore_unknown contains unknown tags """
