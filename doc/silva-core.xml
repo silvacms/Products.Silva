@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+
+<metadata_set id="silva-core" ns_uri="http://infrae.com/namespaces/metadata/silva" ns_prefix="silva">
+  <metadata_element id="maintitle">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>StringField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="alternate_name" type="str" value="" />
+        <value key="hidden" type="int" value="0" />
+        <value key="unicode" type="int" value="1" />
+        <value key="max_length" type="str" value="" />
+        <value key="external_validator" type="str" value="" />
+        <value key="display_maxwidth" type="str" value="" />
+        <value key="display_width" type="int" value="20" />
+        <value key="required" type="int" value="1" />
+        <value key="css_class" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="title" type="str" value="Title" />
+        <value key="truncate" type="int" value="0" />
+        <value key="description" type="str" value="Title of content object." />
+        <value key="extra" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="alternate_name"></value>
+     <value key="hidden"></value>
+     <value key="unicode"></value>
+     <value key="max_length"></value>
+     <value key="external_validator"></value>
+     <value key="display_maxwidth"></value>
+     <value key="display_width"></value>
+     <value key="required"></value>
+     <value key="css_class"></value>
+     <value key="default"></value>
+     <value key="title"></value>
+     <value key="truncate"></value>
+     <value key="description"></value>
+     <value key="extra"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+     <value key="lexicon_id">silva_lexicon</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="index_type">Cosine Measure</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="shorttitle">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>StringField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="alternate_name" type="str" value="" />
+        <value key="hidden" type="int" value="0" />
+        <value key="display_width" type="int" value="20" />
+        <value key="unicode" type="int" value="1" />
+        <value key="max_length" type="str" value="" />
+        <value key="external_validator" type="str" value="" />
+        <value key="display_maxwidth" type="str" value="" />
+        <value key="required" type="int" value="0" />
+        <value key="css_class" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="title" type="str" value="Short title" />
+        <value key="truncate" type="int" value="0" />
+        <value key="description" type="str" value="Short version of title of content object. Mostly used for purposes of navigation." />
+        <value key="extra" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="alternate_name"></value>
+     <value key="hidden"></value>
+     <value key="display_width"></value>
+     <value key="unicode"></value>
+     <value key="max_length"></value>
+     <value key="external_validator"></value>
+     <value key="display_maxwidth"></value>
+     <value key="required"></value>
+     <value key="css_class"></value>
+     <value key="default"></value>
+     <value key="title"></value>
+     <value key="truncate"></value>
+     <value key="description"></value>
+     <value key="extra"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+     <value key="lexicon_id">silva_lexicon</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="index_type">Cosine Measure</value>
+   </index_args>
+  </metadata_element>
+</metadata_set>

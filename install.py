@@ -168,7 +168,7 @@ def configureMetadata(root):
 
     collection = root.service_metadata.getCollection()
 
-    xml_file = path.join(silva_docs, 'silva.xml')
+    xml_file = path.join(silva_docs, 'silva-core.xml')
     fh = open(xml_file, 'r')
     collection.importSet(fh)
 
@@ -178,11 +178,11 @@ def configureMetadata(root):
 
     # set the default type mapping
     mapping = root.service_metadata.getTypeMapping()
-    default = 'silva'
+    default = ''
     tm = (
-        {'type':'Silva Document Version',   'chain':'silva, silva-extra'},
-        {'type':'Silva DemoObject Version', 'chain':'silva, silva-extra'},
-        {'type':'Silva Ghost Version',      'chain':''},
+        {'type':'Silva Document Version',   'chain':'silva-core, silva-extra'},
+        {'type':'Silva DemoObject Version', 'chain':'silva-core, silva-extra'},
+        {'type':'Silva Ghost Version',      'chain':'silva-extra'},
         {'type':'Silva Folder',             'chain':'silva-extra'},
         {'type':'Silva File',               'chain':''},
         {'type':'Silva Image',              'chain':''},
