@@ -354,6 +354,10 @@ table.columns {
 	width: 100%;
 }
 
+table.columns tr {
+  vertical-align: top;
+}
+
 table.columns td.left {
     vertical-align: top;
     width: 15%;

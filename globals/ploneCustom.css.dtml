@@ -246,6 +246,10 @@ table.columns {
   border-collapse: collapse;
 }
 
+table.columns tr {
+  vertical-align: top;
+}
+
 /* 3 column table (default) */
 table.columns td.left {
     width: 20%;
@@ -298,7 +302,6 @@ table.listing tfoot {
 }
 
 /* _____________________ rows ______________________ */
-
 table.listing tr.controls {
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
