@@ -10,7 +10,7 @@ is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3.2.1 $'
+__version__='$Revision: 1.3.2.2 $'
 
 
 class Transformer:
@@ -27,6 +27,8 @@ class Transformer:
         self.target = target
 
         # Alex Martelli and other cowards would frown on me :-)
+        # XXX Guido: Not because I'm a coward or so, but can't this be done
+        # using __import__?
         exec "import %s as s ; import %s as t" %(source, target)
         self.source_spec = s
         self.target_spec = t
@@ -53,5 +55,9 @@ class EditorTransformer(Transformer):
             Transformer.__init__(self, 
                                  source='eopro2_11.silva', 
                                  target='eopro2_11.html')
+        elif editor == 'epoz':
+            Transformer.__init__(self, 
+                                 source='epoz.silva', 
+                                 target='epoz.html')
         else:
             raise "Unknown Editor: %s" % editor

@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.10.2.1 $'
+__version__='$Revision: 1.10.2.2 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -88,6 +88,7 @@ class Frag(Node, List):
                 List.append(self, other)
 
     def convert(self, context):
+        print 'Convert called for frag', self.name()
         try: context = Context(**context)
         except TypeError: pass
 
@@ -147,6 +148,7 @@ class Frag(Node, List):
         return l
 
     def asBytes(self, encoding='UTF-8'):
+        # print 'Calling asBytes on', self.__class__
         l = []
         for child in self:
             l.append(child.asBytes(encoding))
@@ -222,6 +224,7 @@ class Element(Node):
 
     def asBytes(self, encoding='UTF-8'):
         """ return canonical xml-conform representation  """
+        print 'Element asBytes', self.name()
         attrlist=[]
         for name, value in self.attrs.items():
             if value is None:
@@ -313,6 +316,7 @@ class CharacterData(Node):
         return len(self.content)
 
     def asBytes(self, encoding):
+        print 'Character data asBytes', self.name()
         content = escape_chars(self.content)
         return content.encode(encoding)
 
