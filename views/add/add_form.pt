@@ -13,20 +13,25 @@
     global mode_asset request/mode_asset | python:0;
     global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]"
   i18n:domain="silva">
+
 <metal:block metal:use-macro="use_macro/macros/master">
 <metal:block fill-slot="main">
 <script type="text/javascript" 
   tal:content="structure python:here.focus_editor('field_object_id')" />
 
 <div class="focus-rectangle">
-<form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
+<form method="POST"
+  action="add_object_submit"
+  name="focusbox"
+  enctype="multipart/form-data">
 <input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
 <input type="hidden" name="mode_asset:int" value="0"
   tal:attributes="value mode_asset" />
 <table class="listing">
 <thead>
   <tr>
-    <td class="top location" colspan="3">
+    <td class="top"
+      colspan="3">
     <h2>
       <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />
         create <span tal:replace="python: request.meta_type.lower()" />
@@ -47,10 +52,9 @@
     Notes
     </th>
   </tr>
-
   <tal:repeat repeat="field here/form/get_fields">
-  <tal:define define="oddrow repeat/field/odd">
-  <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
+  <tal:define define="iterate repeat/field/odd">
+  <tr tal:attributes="class python:test(iterate, 'odd', 'even')">
     <td class="align-right">
       <span tal:replace="python:field['title'].lower()">
         title
@@ -75,16 +79,16 @@
         style="float:left;"
         type="submit"
         name="add_cancel"
-        value=" Cancel "
-        title="Access key: alt-c"
+        value="cancel"
+        title="access key: alt-c"
         accesskey="c"
         i18n:attributes="value title"
       />
       <input class="button"
         type="submit"
         name="add_submit"
-        value=" Save "
-        title="Access key: alt-s"
+        value="save"
+        title="access key: alt-s"
         i18n:attributes="value title"
         accesskey="s"
       />
@@ -92,8 +96,8 @@
       <input class="button"
         type="submit"
         name="add_edit_submit"
-        value="Save + edit"
-        title="Access key: alt-e"
+        value="save + edit"
+        title="access key: alt-e"
         accesskey="e"
         tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Save + enter ', ' Save + edit ')"
       />
