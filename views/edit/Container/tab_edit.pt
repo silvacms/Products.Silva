@@ -506,7 +506,10 @@
                         title="cut items: alt-x"
                         accesskey="x" 
                         i18n:attributes="value title"
-                      />                        
+                      />               
+                    </tal:block>
+                  </tal:block>
+                  <tal:block tal:condition="python:(default_document or publishables or assets)">
                       <input class="button"
                         name="tab_edit_copy:method"
                         type="submit"
@@ -515,7 +518,8 @@
                         accesskey="c" 
                         i18n:attributes="value title"
                       />
-                    </tal:block>
+                  </tal:block>
+                  <tal:block condition="may_change_content">                  
                     <tal:block replace="nothing">
                       ______________ paste (to ghost) controls exist even
                       if there's no content (there should be something on 
