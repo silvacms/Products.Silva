@@ -436,6 +436,64 @@ div.public a:hover {
 a img {
   border: 0;
 }
+
+/* __________________________________________________________ buttons _____ */
+
+input.button {
+  font-size: 95%;
+    font-weight: normal;
+    color: #d9f3da;
+  background : #064C29;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: 0 0.2em;
+  border: 1px solid #6bb591;
+    cursor: pointer;
+}
+
+button.button {
+  font-size: 95%;
+    font-weight: normal;
+    color: #d9f3da;
+  background : #064C29;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: 0 0.2em;
+  border: 1px solid #6bb591;
+    cursor: pointer;
+}
+
+input.transport {
+  font-size: 95%;
+    font-weight: normal;
+  color: #d9f3f1;
+  background: #283365;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: 0 0.2em;
+  border: 1px solid #8faecf;
+    cursor: pointer;
+}
+
+input.warning {
+  font-size: 95%;
+    font-weight: normal;
+  color : #fdeaea; 
+  background : #752e2f;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: 0 0.2em;
+  border: 1px solid #b48f8f;
+    cursor: pointer;
+}
+
+input.cancel {
+  font-size: 95%;
+    font-weight: normal;
+  color : #ccd7d6;
+  background : #666668;
+  background : #444446;
+  border : 1px solid #b9c2c1;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: 0 0.2em;
+    cursor: pointer;
+}
   
 </dtml-let>
 
