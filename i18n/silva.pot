@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 29 14:09:57 2004\n"
+"POT-Creation-Date: Mon Nov 29 15:08:35 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -2007,6 +2007,10 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_new.pt:83
 msgid "Silva documentation"
+msgstr ""
+
+#: /views/edit/Container/tab_edit_new_link_title.py:11
+msgid "Create a ${addable_name}"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_paste.py:16

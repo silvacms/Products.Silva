@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Mon Nov 29 14:09:57 2004\n"
+"POT-Creation-Date: Mon Nov 29 15:08:35 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -2019,6 +2019,10 @@ msgstr ""
 #: /views/edit/Container/tab_edit_new.pt:83
 msgid "Silva documentation"
 msgstr "Silva-Dokumentation"
+
+#: /views/edit/Container/tab_edit_new_link_title.py:11
+msgid "Create a ${addable_name}"
+msgstr ""
 
 #: /views/edit/Container/tab_edit_paste.py:16
 msgid "No content available to paste."

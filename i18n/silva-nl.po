@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Mon Nov 29 14:09:57 2004\n"
-"PO-Revision-Date: 2004-11-29 14:21+0100\n"
+"POT-Creation-Date: Mon Nov 29 15:08:35 2004\n"
+"PO-Revision-Date: 2004-11-29 15:09+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -347,8 +347,8 @@ msgstr "Geen spaties of speciale karakters behalve '_' of '-' of '.'"
 msgid "form_add_file_object_title_title"
 msgstr "titel"
 
-#: /views/add/File/form.form:51
 # XXX seems this doesn't need a translation
+#: /views/add/File/form.form:51
 msgid "form_add_file_object_title_description"
 msgstr ""
 
@@ -480,8 +480,8 @@ msgstr ""
 msgid "form_add_groups_object_title_title"
 msgstr "titel"
 
-#: /views/add/Groups/form.form:50
 # XXX Seems this doesn't need a translation
+#: /views/add/Groups/form.form:50
 msgid "form_add_groups_object_title_description"
 msgstr ""
 
@@ -505,8 +505,8 @@ msgstr ""
 msgid "form_add_image_object_title_title"
 msgstr "titel"
 
-#: /views/add/Image/form.form:51
 # XXX Seems this doesn't need a translation
+#: /views/add/Image/form.form:51
 msgid "form_add_image_object_title_description"
 msgstr ""
 
@@ -2137,6 +2137,10 @@ msgstr ""
 msgid "Silva documentation"
 msgstr "Silva documentatie"
 
+#: /views/edit/Container/tab_edit_new_link_title.py:11
+msgid "Create a ${addable_name}"
+msgstr "Maak een ${addable_name}"
+
 #: /views/edit/Container/tab_edit_paste.py:16
 msgid "No content available to paste."
 msgstr "Geen inhoud beschikbaar om te plakken."
@@ -2666,8 +2670,8 @@ msgstr "Lid goedgekeurd"
 msgid "simplemember_form_fullname_title"
 msgstr "volledige naam"
 
-#: /views/edit/Member/SimpleMember/memberform.form:30
 # XXX Seems this doesn't need a translation
+#: /views/edit/Member/SimpleMember/memberform.form:30
 msgid "simplemember_form_fullname_description"
 msgstr ""
 
@@ -2675,8 +2679,8 @@ msgstr ""
 msgid "simplemember_form_email_title"
 msgstr "e-mailadres"
 
-#: /views/edit/Member/SimpleMember/memberform.form:51
 # XXX Seems this doesn't need a translation
+#: /views/edit/Member/SimpleMember/memberform.form:51
 msgid "simplemember_form_email_description"
 msgstr ""
 
@@ -2963,8 +2967,8 @@ msgstr "${id} verwijderd"
 msgid "tab_status_form_author_message_title"
 msgstr "boodschap"
 
-#: /views/edit/VersionedContent/tab_status_form_author.form:30
 # XXX Seems this doesn't need a translation
+#: /views/edit/VersionedContent/tab_status_form_author.form:30
 msgid "tab_status_form_author_message_description"
 msgstr ""
 
@@ -2972,8 +2976,8 @@ msgstr ""
 msgid "tab_status_form_author_publish_datetime_title"
 msgstr "publicatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status_form_author.form:51
 # XXX Seems this doesn't need a translation
+#: /views/edit/VersionedContent/tab_status_form_author.form:51
 msgid "tab_status_form_author_publish_datetime_description"
 msgstr ""
 
@@ -2989,8 +2993,8 @@ msgstr "Stel een tijsdtip in, indien dit document moet verlopen."
 msgid "tab_status_form_change_settings_publish_datetime_title"
 msgstr "publicatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:31
 # XXX Seems this doesn't need a translation
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:31
 msgid "tab_status_form_change_settings_publish_datetime_description"
 msgstr ""
 
@@ -3006,8 +3010,8 @@ msgstr "Stel een tijsdtip in, indien dit document moet verlopen."
 msgid "tab_status_form_change_settings_publish_now_flag_title"
 msgstr "nu publiceren"
 
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:68
 # XXX Seems this doesn't need a translation
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:68
 msgid "tab_status_form_change_settings_publish_now_flag_description"
 msgstr ""
 
@@ -3015,8 +3019,8 @@ msgstr ""
 msgid "tab_status_form_change_settings_clear_expiration_title"
 msgstr "verloop-tijdstip wissen"
 
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:82
 # XXX Seems this doesn't need a translation
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:82
 msgid "tab_status_form_change_settings_clear_expiration_description"
 msgstr ""
 
@@ -3024,8 +3028,8 @@ msgstr ""
 msgid "tab_status_form_editor_publish_datetime_title"
 msgstr "publicatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status_form_editor.form:31
 # XXX Seems this doesn't need a translation
+#: /views/edit/VersionedContent/tab_status_form_editor.form:31
 msgid "tab_status_form_editor_publish_datetime_description"
 msgstr ""
 
@@ -3041,8 +3045,8 @@ msgstr "Stel een tijsdtip in, indien dit document moet verlopen."
 msgid "tab_status_form_editor_publish_now_flag_title"
 msgstr "nu publiceren"
 
-#: /views/edit/VersionedContent/tab_status_form_editor.form:71
 # XXX Seems this doesn't need a translation
+#: /views/edit/VersionedContent/tab_status_form_editor.form:71
 msgid "tab_status_form_editor_publish_now_flag_description"
 msgstr ""
 
@@ -3050,8 +3054,8 @@ msgstr ""
 msgid "tab_status_form_editor_message_title"
 msgstr "boodschap"
 
-#: /views/edit/VersionedContent/tab_status_form_editor.form:90
 # XXX Seems this doesn't need a translation
+#: /views/edit/VersionedContent/tab_status_form_editor.form:90
 msgid "tab_status_form_editor_message_description"
 msgstr ""
 
@@ -4107,8 +4111,8 @@ msgstr ""
 msgid "tab_status_form_publish_datetime_title"
 msgstr "publicatie-tijdstip"
 
-#: /views/edit/tab_status_form.form:31
 # XXX Seems this doesn't need a translation
+#: /views/edit/tab_status_form.form:31
 msgid "tab_status_form_publish_datetime_description"
 msgstr ""
 
@@ -4124,8 +4128,8 @@ msgstr "Stel een tijsdtip in, indien dit document moet verlopen."
 msgid "tab_status_form_publish_now_flag_title"
 msgstr "nu publiceren"
 
-#: /views/edit/tab_status_form.form:68
 # XXX Seems this doesn't need a translation
+#: /views/edit/tab_status_form.form:68
 msgid "tab_status_form_publish_now_flag_description"
 msgstr ""
 
@@ -4133,8 +4137,8 @@ msgstr ""
 msgid "tab_status_form_clear_expiration_title"
 msgstr "verloop-tijdstip wissen"
 
-#: /views/edit/tab_status_form.form:82
 # XXX Seems this doesn't need a translation
+#: /views/edit/tab_status_form.form:82
 msgid "tab_status_form_clear_expiration_description"
 msgstr ""
 
@@ -4330,8 +4334,8 @@ msgstr "Gebruik de 'asterisk' ('*') als joker."
 msgid "public_search_form_maintitle_title"
 msgstr "titel"
 
-#: /views/public/search_form.form:58
 # XXX Seems this doesn't need a translation
+#: /views/public/search_form.form:58
 msgid "public_search_form_maintitle_description"
 msgstr ""
 
