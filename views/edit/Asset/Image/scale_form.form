@@ -50,11 +50,11 @@
           <alternate_name></alternate_name>
           <unicode type="int">0</unicode>
           <display_maxwidth></display_maxwidth>
-          <display_width type="int">16</display_width>
+          <display_width type="int">18</display_width>
           <extra></extra>
           <truncate type="int">0</truncate>
           <description i18n="image-scaling-description">
-	  Image scaling for web: use width x height in pixels, or a percentage (100x200, 100x*, *x200, 40%).</description>
+	  Image scaling for web: use width x height in pixels, or one axis length, or a percentage (100x200, 100x*, *x200, 40%).</description>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -78,11 +78,11 @@
           <alternate_name></alternate_name>
           <unicode type="int">0</unicode>
           <display_maxwidth></display_maxwidth>
-          <display_width type="int">16</display_width>
+          <display_width type="int">18</display_width>
           <extra>id="web_crop"</extra>
           <truncate type="int">0</truncate>
           <description i18n="image-cropping-description">
-              Image cropping for web: define use X1xY1-X2xY2 do define a cropping box or click the 'set crop co-ordinates' button.
+              Image cropping for web: use the &amp;#8216;set crop coordinates&amp;#8217; button, or enter X1xY1-X2xY2 to define the cropping box.
           </description>
           <unicode>1</unicode>
         </values>
