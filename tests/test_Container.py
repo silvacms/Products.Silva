@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.38 $
+# $Revision: 1.38.2.1 $
 import unittest
 from os.path import dirname, join
 import Zope
@@ -11,11 +11,15 @@ from Products.Silva.ISilvaObject import ISilvaObject
 from Products.Silva.Folder import Folder
 import Products.Silva.Folder
 from Products.Silva.SilvaObject import SilvaObject
-from Products.Silva.helpers import check_valid_id, IdCheckValues
+from Products.Silva.mangle import Id
 from Testing import makerequest
 from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
 from test_SilvaObject import hack_create_user
+
+# helper for simple migration of the helpers -> mangle 
+def check_valid_id(folder, id, allow_dup=0):
+    return Id(folder, id, allow_dup).validate()
 
 def add_helper(object, typename, id, title, **kw):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title, **kw)
@@ -291,35 +295,35 @@ class ContainerTestCase(ContainerBaseTestCase):
 
     def test_check_valid_id(self):
         self.assertEquals(check_valid_id(self.folder4, 'doc2'),
-                          IdCheckValues.ID_OK)
+                          Id.OK)
         self.assertEquals(check_valid_id(self.folder4, self.folder4.id),
-                          IdCheckValues.ID_OK)
+                          Id.OK)
         self.assertEquals(check_valid_id(self.folder4, 'subdoc'),
-                          IdCheckValues.ID_IN_USE_CONTENT)
+                          Id.IN_USE_CONTENT)
         self.assertEquals(check_valid_id(self.folder4, 'subdoc',
                                          allow_dup=1),
-                          IdCheckValues.ID_OK)
+                          Id.OK)
         self.assertEquals(check_valid_id(self.folder4, 'service_foo'),
-                          IdCheckValues.ID_RESERVED_PREFIX)
+                          Id.RESERVED_PREFIX)
         self.assertEquals(check_valid_id(self.folder4, 'edit'),
-                          IdCheckValues.ID_RESERVED)
+                          Id.RESERVED)
         self.assertEquals(check_valid_id(self.folder4, 'edit',
                                          allow_dup=1),
-                          IdCheckValues.ID_RESERVED)
+                          Id.RESERVED)
         self.assertEquals(check_valid_id(self.folder4, 'manage'),
-                          IdCheckValues.ID_RESERVED)
+                          Id.RESERVED)
         self.assertEquals(check_valid_id(self.folder4, 'title'),
-                          IdCheckValues.ID_RESERVED)
+                          Id.RESERVED)
         self.assertEquals(check_valid_id(self.folder4, 'index_html'),
-                          IdCheckValues.ID_RESERVED)
+                          Id.RESERVED)
         self.assertEquals(check_valid_id(self.folder4, 'index_html',
                                          allow_dup=1),
-                          IdCheckValues.ID_RESERVED)
-        self.assertEquals(check_valid_id(self.folder4, 'get_title_or_id'),
-                          IdCheckValues.ID_RESERVED)
-        self.assertEquals(check_valid_id(self.folder4, 'get_title_or_id',
+                          Id.RESERVED)
+        self.assertEquals(check_valid_id(self.folder4, 'implements_asset'),
+                          Id.RESERVED)
+        self.assertEquals(check_valid_id(self.folder4, 'implements_asset',
                                          allow_dup=1),
-                          IdCheckValues.ID_RESERVED)
+                          Id.RESERVED)
 
 
 
