@@ -64,7 +64,7 @@
       </tr>
 
       <tr class="even">
-        <td class="field-title">
+        <td class="align-right">
           <script type="text/javascript"
             tal:content="structure here/reference.js" />
           <input class="transport" 
@@ -86,13 +86,13 @@
           />
         </td>
         <td>
-          path to original (begins with &#8216;/&#8217;).
+          Path to original (begins with &#8216;/&#8217;).
         </td>
       </tr>
 
       <tr class="odd"
         tal:condition="not:link_status">
-        <td class="field-title">
+        <td class="align-right">
           link
         </td>
         <td>

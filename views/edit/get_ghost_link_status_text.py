@@ -11,9 +11,9 @@ status = ghost_version.get_link_status()
 if status == ghost_version.LINK_OK:
   return ''
 elif status == ghost_version.LINK_EMPTY:
-  return 'You have to enter an URL here.'
+  return 'You have to enter a path here.'
 elif status == ghost_version.LINK_VOID:
-  return 'The object &#xab;%s&#xbb; the ghost points to does not exist' %  \
+  return 'The object &#xab;%s&#xbb; the ghost points to does not exist.' %  \
     ghost_version.get_haunted_url()
 elif status == ghost_version.LINK_FOLDER:
   return 'The object &#xab;%s&#xbb; the ghost points to is a container.' % \
