@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.33 $
+# $Revision: 1.34 $
 
 # Python
 from StringIO import StringIO
@@ -191,9 +191,9 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         data, cached_datetime = self._cached_data.get(view_type, (None, None))
 
         if (cached_datetime is None or
-             cached_datetime <
+             cached_datetime <=
              self.get_public_version_publication_datetime() or
-             cached_datetime <
+             cached_datetime <=
              self.service_extensions.get_refresh_datetime()):
             data = VersionedContent.inheritedAttribute('view')(self, view_type)
             cached_datetime = DateTime()
@@ -201,7 +201,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
                 cached_data = data
             else:
                 cached_data = None
-            self._cached_data[view_type] = (data, cached_datetime)
+            self._cached_data[view_type] = (cached_data, cached_datetime)
             self._cached_data = self._cached_data
         else:
             # XXX is_version_published() triggers a workflow update
