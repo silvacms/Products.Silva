@@ -82,7 +82,6 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         settings = xmlexport.ExportSettings()
         exporter = xmlexport.theXMLExporter
         exportRoot = xmlexport.SilvaExportRoot(testfolder3)
-        print len(splittor.split(exporter.exportToString(exportRoot, settings)))
         part1, part2, part3, part4, part5, part6 = splittor.split(exporter.exportToString(exportRoot, settings))
         self.assertEquals('<?xml version="1.0" encoding="utf-8"?>\n<silva xmlns="http://infrae.com/ns/silva" xmlns:doc="http://infrae.com/ns/silva_document" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" datetime="', part1)
         self.assertEquals('" path="/root/testfolder3" silva_version="%s" url="http://nohost/root/testfolder3"><folder id="testfolder3"><metadata><set id="silva-content"><silva-content:maintitle>This is yet &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime type="datetime">' % exportRoot.getSilvaProductVersion(), part2)
