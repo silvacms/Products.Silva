@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.55 $
+# $Revision: 1.56 $
 
 # Python
 from StringIO import StringIO
@@ -219,6 +219,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         if data is not None:
             return data
 
+        # No cache or not valid anymore, so render.
         content = self.get_viewable()
         if content is None:
             return "Sorry, this document is not published yet."
@@ -239,7 +240,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             # purity sometimes. :)
             data = VersionedContent.inheritedAttribute('view')(self, view_type)
         
-        # No cache or not valid anymore, so render.
         # See if the previous cacheability check is still valid,
         # if not, see if we can cache at all.
         publicationtime = self.get_public_version_publication_datetime()
