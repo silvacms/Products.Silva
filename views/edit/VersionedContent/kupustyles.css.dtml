@@ -127,14 +127,13 @@ div.kupu-tb select:hover {
 div.kupu-editorframe {
   margin-left: 0em;
   margin-bottom: 0em;
+  width: 98%;
+  border: solid 1px #6c797f;
 }
 
 #kupu-editor {
   height: 580px;
   width: 100%;
-  border: solid 1px #6c797f;
-  border-style: none none solid solid;
-  border-bottom-width: 2px;
 }
 
 div.kupu-toolboxes {
@@ -145,7 +144,7 @@ div.kupu-toolboxes {
   height: 580px;
   margin-right: 0em;
   border: solid 1px #6c797f;
-  border-style: none solid solid solid;
+  border-style: solid solid solid solid;
   border-bottom-width: 2px;
 }
 
