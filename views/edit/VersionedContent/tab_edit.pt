@@ -17,6 +17,63 @@
   tal:attributes="href string:${root_url}/globals/widgetEditor.css"
 />
 </metal:block>
+<metal:block fill-slot="refresher">
+  <tal:block define="rft refresh_time | python: 0">
+    <tal:block condition="python: rft > 0">
+      <tal:block condition="nothing"> Refresh code for session timeout </tal:block>
+<noscript>
+  <meta http-equiv="refresh" tal:attributes="content python:'%s, %s/edit/tab_preview' % (rft, request['model'].absolute_url())" />
+</noscript>
+<script language="JavaScript" 
+  tal:define="destination_path string:${request/model/absolute_url}/edit/"
+  tal:content="string:
+
+  document.timeout = '${rft}'; 
+  document.refresh_url = '${destination_path}tab_preview';
+  document.prompt_url = '${destination_path}promptWindow';
+
+" />
+<script language="JavaScript">
+
+  function handleTimeout()
+  {
+  if (document.promptWindow)
+  {
+  document.promptWindow.close();
+  }
+
+  loc = document.location.toString();
+  editurl = loc.substring(0, loc.indexOf('/edit/'));
+
+  document.location = document.refresh_url;
+  }
+
+  function setAutoSave(submit)
+  {
+  if (! document.autoSaveFormSubmit)
+  {
+  document.autoSaveFormSubmit = document.getElementById('default_submit');
+  setTimeout('savePrompt()', document.timeout * 1000 / 4 * 3, '');
+  }
+  }
+
+  function savePrompt()
+  {
+  document.promptWindow = window.open(document.prompt_url, 'promptWindow');
+  }
+
+  function saveHelper()
+  {
+  document.autoSaveFormSubmit.click();
+  }
+
+  setTimeout('handleTimeout()', document.timeout * 1000, '');
+
+</script>
+    </tal:block>
+  </tal:block>
+</metal:block>
+
 <metal:block fill-slot="main"
   tal:define="
     is_locked model/sec_is_locked;
