@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.64 2005/01/19 14:26:09 faassen Exp $
+# $Id: Image.py,v 1.65 2005/03/02 08:35:50 jw Exp $
 # Python
 import re, string
 from cStringIO import StringIO
@@ -284,7 +284,7 @@ class Image(Asset):
             msg = _("'${crop}' defines an impossible cropping")
             msg.set_mapping({'crop': crop})
             raise ValueError, msg
-            return (x1, y1, x2, y2)
+        return (x1, y1, x2, y2)
 
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
     def getDimensions(self, img=None):

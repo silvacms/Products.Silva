@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_image.py,v 1.5 2005/01/19 14:26:09 faassen Exp $
+# $Id: test_image.py,v 1.6 2005/03/02 08:35:50 jw Exp $
 
 from __future__ import nested_scopes
 
@@ -132,7 +132,20 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         if s.startswith('Status: 200'):
             s = s[s.find('\n\n')+2:]
         return s
-    
+
+    def test_getCropBox(self):
+        image_file = open('test_image_data/photo.tif', 'rb')
+        image_data = image_file.read()
+        image_file.seek(0)
+        self.root.manage_addProduct['Silva'].manage_addImage(
+            'testimage', 'Test Image', image_file)
+        image_file.close()
+        image = self.root.testimage
+        if not havePIL:
+            return
+        cropbox = image.getCropBox(crop="242x379-392x479")
+        self.assert_(cropbox is not None)
+
 if __name__ == '__main__':
     framework()
 else:
