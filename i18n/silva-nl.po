@@ -22,7 +22,7 @@ msgstr "Aanmeldingsaanvragen zijn voor deze website niet toegestaan."
 #: /AccessManager.py:29
 msgid "Sorry, no ChiefEditors are available to receive the request."
 msgstr ""
-"Sorry, er zijn geen Hoofdredacteurs beschikbaar om de aanvraag te ontvangen."
+"Sorry, er zijn geen Hoofdredacteuren beschikbaar om de aanvraag te ontvangen."
 
 #: /AccessManager.py:60
 msgid "Member is not approved"
@@ -30,7 +30,7 @@ msgstr "Lid is niet goedgekeurd"
 
 #: /AccessManager.py:76 /AccessManager.py:98
 msgid "No ChiefEditors are available to receive the request."
-msgstr "Geen Hoofdredacteurs aanwezig om de aanvraag te ontvangen."
+msgstr "Geen Hoofdredacteuren aanwezig om de aanvraag te ontvangen."
 
 #: /ContainerPolicy.py:67
 msgid ""
