@@ -454,8 +454,8 @@ def registerDocEditor(root):
     wr.setDisplayName('code', 'Code Element')
     wr.setDisplayName('externaldata', 'External Data')
 
-    wr.setAllowed('doc', ['p', 'heading', 'list', 'pre', 'nlist', 'table',
-                  'image', 'toc', 'dlist', 'code', 'externaldata'])
+    wr.setAllowed('doc', ['p', 'heading', 'list', 'dlist', 'pre', 'image', 
+                  'table', 'nlist', 'toc', 'code', 'externaldata'])
 
 
 def registerDocViewer(root):
