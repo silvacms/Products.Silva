@@ -1,14 +1,13 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_ServiceLayouts.py,v 1.5 2003/10/15 19:24:30 gotcha Exp $
+# $Id: test_ServiceLayouts.py,v 1.6 2003/10/16 20:08:27 gotcha Exp $
 
 import os, sys
 if __name__ == '__main__':
+    moduleFilename = os.path.join(os.getcwd(), sys.argv[0])
     execfile(os.path.join(sys.path[0], 'framework.py'))
-    moduleFilename = sys.argv[0]
 else:
-    moduleFilename = __file__
-moduleFilename = os.path.abspath(moduleFilename)    
+    moduleFilename = os.path.abspath(__file__)
 modulePathname = os.path.dirname(moduleFilename)
     
 import SilvaTestCase
@@ -17,7 +16,6 @@ from Testing import ZopeTestCase
 
 from Products.Silva.LayoutRegistry import layoutRegistry
 from Products.Silva.LayoutService import LayoutService
-from Products.Silva.fssite import registerDirectory
 
 
 layoutTest1 = {'name':'test1', 'directory':'layout_test1', 'description':'test 1 Layout'}
@@ -85,17 +83,10 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.failIf(self.service_layouts.layout_items(self.pub))     
         # setup layout
         self.service_layouts.setup_layout(layoutTest1['name'], self.pub)
-        for id in layoutTest1Items:
-            self.failUnless(id in self.pub.objectIds())
-        self.failUnless(self.service_layouts.has_layout(self.pub))
-        for id in layoutTest1Items:
-            self.failUnless(id in self.service_layouts.layout_items(self.pub))
+        self.checkLayoutTest1(self.pub)
         # remove layout
         self.service_layouts.remove_layout(self.pub)
-        self.failIf(self.service_layouts.has_layout(self.pub))
-        self.failIf(self.service_layouts.layout_items(self.pub))     
-        for id in layoutTest1Items:
-            self.failIf(id in self.pub.objectIds())
+        self.checkLayoutTest1Removed(self.pub)
 
     def testSetupOnPublication(self):
         self.add_publication(self.root, 'pub', 'publication')
@@ -105,7 +96,13 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.pub.set_layout(layoutTest1['name'])
         self.checkLayoutTest1(self.pub)
         self.pub.set_layout('')
-        self.failIf(self.service_layouts.has_layout(self.pub))
+        self.checkLayoutTest1Removed(self.pub)
+
+    def checkLayoutTest1Removed(self, pub):
+        self.failIf(self.service_layouts.has_layout(pub))
+        self.failIf(self.service_layouts.layout_items(pub))     
+        for id in layoutTest1Items:
+            self.failIf(id in pub.objectIds())
 
     def checkLayoutTest1(self, pub):
         for id in layoutTest1Items:
