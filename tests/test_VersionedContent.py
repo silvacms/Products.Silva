@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 import unittest
 import Zope
 import time
@@ -145,7 +145,8 @@ class VersionedContentTestCase(unittest.TestCase):
 
 
     def test_cache(self):
-
+        # XXX for some reason this test fails, which is scary
+        
         # cacheability of the test document is actually 
         # not part of the test, but a necessary preliminary
         self.assert_(self.document.is_cacheable())
