@@ -19,7 +19,7 @@
 <metal:block fill-slot="metatype_css">
 <link rel="stylesheet"
   type="text/css"
-  tal:attributes="href here/frontend.css/absolute_url | nothing"
+  tal:attributes="href here/globals/frontend.css/absolute_url | nothing"
 />
 <link rel="stylesheet"
   type="text/css"
