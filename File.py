@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 
 # Python
 import os
@@ -288,20 +288,28 @@ class FilesService(SimpleItem.SimpleItem):
 
     # ACCESSORS
     
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'is_filesystem_storage_available')
     def is_filesystem_storage_available(self):
         """is_filesystem_storage_available
         """
         return FILESYSTEM_STORAGE_AVAILABLE 
     
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'filesystem_storage_enabled')
     def filesystem_storage_enabled(self):
         """filesystem_storage_enabled
         """
         return self._filesystem_storage_enabled
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'useFSStorage')
     def useFSStorage(self):
         return (self.is_filesystem_storage_available() and 
             self.filesystem_storage_enabled())
     
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'filesystem_path')
     def filesystem_path(self):
         """filesystem_path
         """
