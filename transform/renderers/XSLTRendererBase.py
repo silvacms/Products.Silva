@@ -44,7 +44,8 @@ class XSLTRendererBase(Acquisition.Implicit):
         result = style.applyStylesheet(doc,{})
         result_as_string = style.saveResultToString(result)
 
-        style.freeStylesheet()
+        # XXX this should go, right?
+        # style.freeStylesheet()
         doc.freeDoc()
         result.freeDoc()
 
