@@ -1,4 +1,8 @@
 <!-- _________________ START SETTINGS WORKSHEET ________________________ -->
+<tal:block define="
+  global active_tab string:tab_access;
+  global location string:Lookup;
+  " />
 <metal:block use-macro="here/macro_index/macros/master">
 <div class="margins" metal:fill-slot="main">
 <h2>

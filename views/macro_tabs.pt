@@ -1,8 +1,10 @@
 <div metal:define-macro="tabs" tal:omit-tag="">
 <tal:block
- tal:define="global tabs view/get_authorized_tabs; 
+ tal:define="global tabs view/get_authorized_tabs;
              global active_tab active_tab | nothing;
-             selected_tab_id template/id">
+             global location location | nothing;
+             selected_tab_id template/id;
+             ">
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
@@ -30,7 +32,7 @@
 <a class="" href=""
   tal:attributes="href tab_info/tab_url;
                 class python:test(is_selected_tab, 'tab-up', 'tab');"
-  tal:content="structure string:&nbsp;&nbsp;${tab_info/tab_name}&nbsp;&nbsp;"> 
+  tal:content="structure string:&nbsp;&nbsp;${tab_info/tab_name}&nbsp;&nbsp;">
 Tab Name
 </a>
 </td>
@@ -40,7 +42,7 @@ Tab Name
 ><img tal:attributes="src string:${silva_root}/globals/up_level.gif" width="19" height="14"  border="0" /></a></td>
 
 </tal:block>
-</tal:block>            
+</tal:block>
 </tr>
 
 <span tal:replace="nothing"> _______ tabs lower edge _______ </span>
@@ -74,13 +76,13 @@ Tab Name
 <td class="tab-up" width="2%"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" /></td>
 <td class="tab-up">
 <div class="breadcrumb">
-<span tal:replace="template/title">Edit</span>:&nbsp;&nbsp;
+<span tal:replace="location">Location</span>:&nbsp;&nbsp;
 </div>
 </td>
 
 <td class="tab-up" width="95%">
 <div class="breadcrumb">
-<repeat tal:omit-tag="" tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)"> 
+<repeat tal:omit-tag="" tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
 <a href="url"
   tal:attributes="href string:${item/absolute_url}/edit/${template/id}"
   tal:content="structure python: item.getProperty('short_title') or item.get_title_html()">Name</a>
@@ -92,20 +94,20 @@ Tab Name
 <tal:block replace="nothing"> ___________ Start hook for the experimental Bitflux WYSIWYG editor integration ___________ </tal:block>
 <tal:block condition="
     python:model.meta_type == 'Silva Document'
-           and hasattr(here, 'bxe')">  
+           and hasattr(here, 'bxe')">
   &nbsp;experimental:&nbsp;
   <a href="" tal:attributes="href python:'%s/edit/tab_edit_bxe' % model.absolute_url()"><span class="idea">/bxe edit...</span></a>
 </tal:block>
 
 <tal:block condition="
     python:model.meta_type == 'Silva Document'
-           and hasattr(here, 'xopus')">  
+           and hasattr(here, 'xopus')">
   &nbsp;experimental:&nbsp;
   <a href="" tal:attributes="href python:'%s/edit/tab_edit_xopus' % model.absolute_url()"><span class="idea">/xopus edit</span></a>
 </tal:block>
 <tal:block condition="
     python:model.meta_type == 'Silva Document'
-           and hasattr(here, 'eopro')">  
+           and hasattr(here, 'eopro')">
   &nbsp;experimental:&nbsp;
   <a href="" tal:attributes="href python:'%s/edit/tab_edit_eopro' % model.absolute_url()"><span class="idea">/eopro edit</span></a>
 </tal:block>

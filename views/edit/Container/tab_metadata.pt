@@ -1,10 +1,11 @@
 <!-- ___________________________ start index_html ___________________________ -->
+<tal:block define="global location string:Metadata;" />
 <html  metal:use-macro="here/macro_index/macros/master">
 <div class="margins"
   metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<h2><img src="%s" width="16" height="16" alt="%s" 
+<h2><img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
   Metadata for <span class="document-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
 </h2>
@@ -72,7 +73,7 @@
 </tr>
 </table>
 </form>
-        
+
 <span tal:replace="structure here/tab_metadata_extra | nothing" tal:omit-tag="" />
 
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
@@ -99,20 +100,26 @@
   </td>
   <td>&nbsp;</td>
 </tr>
+
 </table>
 
 <p class="halfline">&nbsp;</p>
-<tal:block condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
-<h3>Authorized users below this level</h3>
-<form>
-  <span class="textarea">
-    <textarea name="data" cols="65" rows="5" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="userinfo python:model.sec_get_user_info(userid)"
-      tal:condition="userinfo/mail | nothing" tal:replace="userinfo/mail">
-      userid
-    </span><span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></repeat></textarea>
-  </span>
-</form>
-</tal:block>
+
+<check tal:omit-tag=""
+  tal:condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
+  <dummy tal:omit-tag="" tal:define="dummy python:model.security_trigger()" />
+
+  <h3>Authorized users below this level</h3>
+
+  <form>
+    <span class="textarea">
+      <textarea name="data" cols="65" rows="5" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="userinfo python:model.sec_get_user_info(userid)"
+        tal:condition="userinfo/mail | nothing" tal:replace="userinfo/mail">
+        userid
+      </span><span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></repeat></textarea>
+    </span>
+  </form>
+</check>
 
 <!-- ___________________________ end index_html/slot main ___________________________ -->
 </div>

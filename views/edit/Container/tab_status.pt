@@ -1,4 +1,5 @@
 <!-- ____________________________ start index_html ____________________________ -->
+<tal:block define="global location string:Publish;" />
 <html  metal:use-macro="here/macro_index/macros/master">
 
 <div tal:omit-tag="" metal:fill-slot="main">
@@ -9,7 +10,7 @@
   global silva_permissions view/get_silva_permissions" />
 
 <div class="margins">
-<h2><img src="%s" width="16" height="16" alt="%s" 
+<h2><img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
   Manage <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
 </h2>
@@ -19,7 +20,7 @@
 <form action="." name="silvaObjects" method="POST">
 <table width="100%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="cellspacing container/table_cellspacing;
-                  cellpadding container/table_cellpadding; 
+                  cellpadding container/table_cellpadding;
                   border container/table_border">
 <tr class="topcontrols">
 <td align="left" colspan="6">
@@ -29,7 +30,7 @@
 <img width="16" height="16" border="0" alt="Up to containing Publication" hspace="2"
   tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%silva_root, '%s/globals/up_tree_gray.gif'%silva_root)" />
 </a>
-<span class="back3">Publication 
+<span class="back3">Publication
 <span tal:condition="python:model != model.get_publication()"
   tal:omit-tag="">branch</span></span>
 <a href="../../edit/tab_status" title="Up one level"
@@ -52,7 +53,7 @@
   tal:condition="model/get_default">
 <span tal:replace="nothing"> _______ checkbox + icon _______ </span>
 <td nowrap="1">
-<input type="checkbox" name="refs:list" value="value" 
+<input type="checkbox" name="refs:list" value="value"
   tal:define="ref python:model.create_ref(model.get_default())"
   tal:attributes="value ref; checked python:test(here.is_item_in_ids(ref),'checked','')" />
 <a href="default" title="Edit..."
@@ -115,14 +116,14 @@
   tal:repeat="obj objects">
 <cycle tal:define="oddrow repeat/obj/odd" tal:omit-tag="">
 <tr class="focus-cycle"
-  tal:define="indent python:obj[0]; 
-              item python:obj[1]; 
+  tal:define="indent python:obj[0];
+              item python:obj[1];
               ref python:model.create_ref(item)"
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
 
 <span tal:replace="nothing"> _______ checkbox + icon _______ </span>
 <td nowrap="1">
-<input type="checkbox" name="refs:list" value="value" 
+<input type="checkbox" name="refs:list" value="value"
   tal:attributes="value ref; checked python:test(here.is_item_in_ids(ref),'checked','')" />
 <a href="edit" title="Edit this item"
   tal:attributes="href string:${item/absolute_url}/edit/tab_edit">
@@ -134,13 +135,13 @@
 <td valign="top">
 <a title="Edit..."
   tal:condition="python:item.id != 'index'"
-  tal:attributes="href string:${item/absolute_url}/edit; 
+  tal:attributes="href string:${item/absolute_url}/edit;
                   class python:view.get_status_style(item)"
   tal:content="python:here.service_utils.truncate(item.id, 20)">id
 </a>
 <a title="Edit..."
   tal:condition="python:item.id == 'index'"
-  tal:attributes="href string:${item/absolute_url}/edit; 
+  tal:attributes="href string:${item/absolute_url}/edit;
                   class python:view.get_status_style(item)">index of...
 </a>
 </td>
@@ -265,7 +266,7 @@ There are no publishable objects in this folder.
   tal:condition="python:len(objects) != 0 or model.get_default()">
 <td colspan="2">
 <script type="text/javascript">
-<!-- 
+<!--
 if (document.forms[0]) {
   document.write('<input class="button" type="submit" name="selectButton" value="Select all" title="Select all items on and below this level" onClick="toggleSelect(); return false">')
   }
@@ -308,7 +309,7 @@ Publish right now?&nbsp;
 
 <check tal:condition="python:len(objects) != 0 or model.get_default()">
 <script type="text/javascript">
-<!-- 
+<!--
 isSelected = false;
 
 function toggleSelect() {
@@ -324,12 +325,12 @@ function toggleSelect() {
       document.silvaObjects.elements[i].checked = false ;
       isSelected = false;
       document.silvaObjects.selectButton.value = "Select all";
-      return isSelected;       
+      return isSelected;
   }
 }
 //-->
 </script>
- 
+
 <span tal:replace="nothing"> ______________ controls for editor ______________ </span>
 <tr class="controls"
   tal:condition="silva_permissions/ApproveSilvaContent">

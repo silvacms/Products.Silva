@@ -1,12 +1,13 @@
+<tal:block define="global location string:EoPro;" />
 <html metal:use-macro="here/macro_index/macros/master">
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<tal:block tal:define="
-  global could_lock model/sec_create_lock;
-  global unapproved_version model/get_unapproved_version;
-  "/>
-  <div>
+<tal:block tal:define="dummy python:model.security_trigger();
+                       global could_lock model/sec_create_lock;
+                       global unapproved_version model/get_unapproved_version;
+                       " />
+<div>
 
 <iframe id="RSIFrame"
   name="RSIFrame"
@@ -38,7 +39,7 @@
             <PARAM NAME="encoding" VALUE="UTF8">
 
             <PARAM NAME="toolbarurl" tal:attributes="VALUE python: template.tab_edit_eopro_toolbar.absolute_url()">
-			<!-- This is relative to CODEBASE -->
+      <!-- This is relative to CODEBASE -->
 
             <PARAM NAME="cabbase" VALUE="edit-on-pro-signed.cab,ssce.cab">
 
@@ -84,7 +85,7 @@ relative image SRCs -->
             <PARAM NAME="ONEDITORLOADED" VALUE="onEditorLoaded">
         </APPLET>
 
-	
+
       </div>
 
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
@@ -119,7 +120,7 @@ relative image SRCs -->
 <div class="margins">
 <input class="button" type="submit" value="Revoke approval" />
 </div>
-</form> 
+</form>
 </div>
 
 <!-- ___________________________ end index_html/slot main ___________________________ -->

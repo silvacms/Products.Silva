@@ -1,4 +1,5 @@
 <!-- ___________________________ start index_html ___________________________ -->
+<tal:block define="global location string:Preview;" />
 <html metal:use-macro="here/macro_index/macros/master">
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
@@ -19,7 +20,7 @@
   <tr>
     <tal:block tal:repeat="pub python:model.get_root().get_ordered_publishables()">
     <td tal:condition="python:pub.meta_type == 'Silva Publication'">
-      <a class="tab-up" href="pub" 
+      <a class="tab-up" href="pub"
         tal:attributes="href string:${pub/absolute_url}/edit/tab_preview"
         tal:content="python:pub.id.upper()">id
       </a>

@@ -1,11 +1,13 @@
 <!-- ___________________________ start index_html ______________________ -->
-<html  metal:use-macro="here/macro_index/macros/master">
+<tal:block define="global location string:Contents;" /> 
+<html metal:use-macro="here/macro_index/macros/master">
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ____________________________ -->
 
 <tal:block define="
   global objects python:model.get_tree();
-  global silva_permissions here/get_silva_permissions" />
+  global silva_permissions here/get_silva_permissions;
+  " />
 
 <div class="margins">
   <h2><img src="%s" width="16" height="16" alt="%s" 

@@ -1,15 +1,15 @@
 <!-- ___________________________ start index_html ___________________________ -->
+<tal:block define="global location string:Edit;" />
 <html metal:use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<tal:block tal:define="
-  global could_lock model/sec_create_lock;
-  global unapproved_version model/get_unapproved_version;
-  global request_pending python:model.is_version_approval_requested();
-  "/>
+<tal:block tal:define="dummy python:model.security_trigger();
+                       global could_lock model/sec_create_lock;
+                       global unapproved_version model/get_unapproved_version;
+                       global request_pending python:model.is_version_approval_requested();" />
 
-<model tal:condition="python:unapproved_version and not request_pending and could_lock" 
+<model tal:condition="python:unapproved_version and not request_pending and could_lock"
          tal:replace="structure view/edit">Content</model>
 
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
@@ -44,7 +44,7 @@
 <div class="margins">
 <input class="button" type="submit" value="Revoke approval" />
 </div>
-</form> 
+</form>
 </div>
 
 <span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
@@ -56,7 +56,7 @@
 <div class="margins">
 <input class="button" type="submit" value="Withdraw request" />
 </div>
-</form> 
+</form>
 </div>
 
 <!-- ___________________________ end index_html/slot main ___________________________ -->

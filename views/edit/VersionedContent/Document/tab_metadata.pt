@@ -1,3 +1,4 @@
+<tal:block define="global location string:Metadata;" />
 <!-- ___________________________ start index_html ___________________________ -->
 <html  metal:use-macro="here/macro_index/macros/master">
 
@@ -5,7 +6,7 @@
   metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<h2><img src="%s" width="16" height="16" alt="%s" 
+<h2><img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
   Metadata for <span class="document-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
 </h2>
@@ -87,7 +88,7 @@ comments here (field description)
     Creator:
   </td>
   <td>&nbsp;</td>
-  <td>      
+  <td>
     ( not yet )
   </td>
   <td>&nbsp;</td>
@@ -95,7 +96,7 @@ comments here (field description)
 
 <tr valign="top">
   <td align="right">
-    Creation date: 
+    Creation date:
   </td>
   <td>&nbsp;</td>
   <td tal:content="python:view.service_utils.backend_datetime_to_str(model.get_creation_datetime())">

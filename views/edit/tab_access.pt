@@ -1,9 +1,12 @@
 <!-- _______________________ start index_html __________________________ -->
+<tal:block define="global location string:Access;" />
 <html metal:use-macro="here/macro_index/macros/master">
 <div class="margins" metal:fill-slot="main">
-<tal:block condition="python:view.has_access()">
+<tal:block
+  condition="python:view.has_access()"
+  define="dummy python:model.security_trigger();">
 
-<h2><img src="%s" width="16" height="16" alt="%s" 
+<h2><img src="%s" width="16" height="16" alt="%s"
   tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
   Access Settings for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title</span>
 </h2>
@@ -69,12 +72,12 @@
   <td align="left" colspan="2">
     <select name="assign_role">
       <option value="None">Select...</option>
-      <option value="role" 
-        tal:repeat="role model/sec_get_roles" 
-        tal:attributes="value role" 
+      <option value="role"
+        tal:repeat="role model/sec_get_roles"
+        tal:attributes="value role"
         tal:content="role">Role name</option>
     </select>&nbsp;
-    <input type="submit" class="button" name="access_assign_to_user:method" value="Assign local role" 
+    <input type="submit" class="button" name="access_assign_to_user:method" value="Assign local role"
       title="Assign a local role to selected user(s)." />
   </td>
 </tr>
@@ -94,7 +97,7 @@
   </td>
   <td colspan="2" align="right">
     <input type="hidden" name="referer" value="tab_access"/>
-    <input type="submit" class="button" name="lookup:method" value="Users lookup..." 
+    <input type="submit" class="button" name="lookup:method" value="Users lookup..."
       title="Go to: Lookup and select users to add to groups..." />
   </td>
 </tr>
@@ -105,7 +108,7 @@
   </td>
 </tr>
 <tal:block repeat="userinfo local_userinfos">
-<tal:block 
+<tal:block
   condition="userinfo"
   define="
     local_roles python:model.sec_get_local_roles_for_userid(userinfo['uid']);
@@ -126,7 +129,7 @@
     &nbsp;
   </td>
 </tr>
-<tr class="focus-cycle" 
+<tr class="focus-cycle"
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')"
   tal:repeat="role upward_roles">
   <td>
@@ -139,7 +142,7 @@
     &nbsp;
   </td>
 </tr>
-<tr class="focus-cycle" 
+<tr class="focus-cycle"
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')"
   tal:repeat="role local_roles">
   <td>
@@ -169,14 +172,14 @@
   <td align="left" colspan="3">
     <select name="assign_role">
       <option value="None">Select...</option>
-      <option value="role" 
-        tal:repeat="role model/sec_get_roles" 
-        tal:attributes="value role" 
+      <option value="role"
+        tal:repeat="role model/sec_get_roles"
+        tal:attributes="value role"
         tal:content="role">Role name</option>
     </select>&nbsp;
     <input type="submit" class="button" name="access_assign_to_user:method" value="Assign"
       title="Assign a role to selected user(s)." />&nbsp; &nbsp;
-    <input type="submit" class="button" name="access_remove_user:method" value="Remove" 
+    <input type="submit" class="button" name="access_remove_user:method" value="Remove"
       title="Remove this user from local access definitions."
       onClick="return confirm('Really remove user(s)?')" />
   </td>
@@ -196,7 +199,7 @@
   <td>
     <h3>Groups</h3>
     <p>To actually use Group access definitions, a Groups Service is needed.<br />
-      This service should have <code>service_groups</code> for its and be placed 
+      This service should have <code>service_groups</code> for its and be placed
       in the Silva Root.
     </p>
   </td>
@@ -414,7 +417,7 @@
         tal:attributes="src string:${silva_root}/globals/pixel.gif" />
       &nbsp;
     </td>
-  </tr>  
+  </tr>
   <tr class="focus">
     <td valign="top">
         <p>
@@ -425,7 +428,7 @@
         </select>
         </p>
         <p tal:condition="python: is_closed > 1">
-          This restriction is acquired from above and can be changed here: 
+          This restriction is acquired from above and can be changed here:
           <a tal:attributes="href python:'%s/edit/tab_access' % view.REQUEST['URLPATH%s' % (is_closed + 1)]"
             tal:content="python: view.REQUEST['URLPATH%s' % (is_closed + 1)]">here</a>
         </p>
@@ -462,7 +465,7 @@
       tal:attributes="src string:${silva_root}/globals/pixel.gif" />
     &nbsp;
   </td>
-</tr>  
+</tr>
 <tr class="focus">
   <td>
     <p tal:condition="definition_aquired">

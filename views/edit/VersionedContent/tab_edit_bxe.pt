@@ -1,26 +1,26 @@
 <!-- ___________________________ start index_html ___________________________ -->
+<tal:block define="global location string:BXE;" />
 <html metal:use-macro="here/macro_index/macros/master">
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<tal:block tal:define="
-  global could_lock model/sec_create_lock;
-  global unapproved_version model/get_unapproved_version;
-  "/>
+<tal:block tal:define="dummy python:model.security_trigger();
+                       global could_lock model/sec_create_lock;
+                       global unapproved_version model/get_unapproved_version;" />
 
-  <div id="bxe_area">
-		<noscript>
-    
-	  <h2><span tal:replace="here/title_or_id">content title or id</span>
-	    <span tal:condition="template/title"
+        <div id="bxe_area">
+    <noscript>
+
+    <h2><span tal:replace="here/title_or_id">content title or id</span>
+      <span tal:condition="template/title"
               tal:replace="template/title">optional template id</span></h2>
-	  <div class="feedback">
-	    <span class="warning">Sorry, your browser is not enabled for JavaScript.</span>
-	  </div>
-  
-	  <a tal:condition="python: request.HTTP_REFERER or nothing"
-	    tal:attributes="href request/HTTP_REFERER">Back</a>
-   
+    <div class="feedback">
+      <span class="warning">Sorry, your browser is not enabled for JavaScript.</span>
+    </div>
+
+    <a tal:condition="python: request.HTTP_REFERER or nothing"
+      tal:attributes="href request/HTTP_REFERER">Back</a>
+
       </div>
 
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
@@ -55,7 +55,7 @@
 <div class="margins">
 <input class="button" type="submit" value="Revoke approval" />
 </div>
-</form> 
+</form>
 </div>
 
 <!-- ___________________________ end index_html/slot main ___________________________ -->
