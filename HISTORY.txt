@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.42 $
+$Revision: 1.43 $
 
 Silva changes
 
@@ -31,7 +31,7 @@ Silva changes
           have permissions to access a place can request roles on
           objects.
 
-        - New SQL Query object is now enabled by default.
+        - New SQL Data Source is now enabled by default.
 
     Bugs Fixed
 
