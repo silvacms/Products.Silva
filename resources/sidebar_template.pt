@@ -43,20 +43,28 @@
     indent python:indent_item[0];
     oddrow repeat/indent_item/odd;">
     <td class="{__class__}"
-      tal:define="item_url string:${item/absolute_url}">
+      tal:define="
+        item_url string:${item/absolute_url};
+        title item/get_short_title_editable">
       <div tal:attributes="style python:'margin-left:'+str(indent * 10)+'px'">
         <a title="contents"
           tal:attributes="href string:${item_url}/edit/tab_edit">
           <img tal:replace="structure python:here.render_icon(item)" />
         </a>
         <a class="blacklink"
-          title="id"
           tal:attributes="
             href string:${item_url}/edit/{__vein_id__};
             title string:id: ${item/id};"
-          tal:define="title item/get_short_title_editable"
           tal:content="title">
-          <i>no title</i>
+          title
+        </a>
+        <a class="blacklink"
+          tal:attributes="
+            href string:${item_url}/edit/{__vein_id__};
+            title string:id: ${item/id};"
+          tal:condition="python:title == ''"
+          tal:content="item/id">
+          no title
         </a>
       </div>
     </td>
