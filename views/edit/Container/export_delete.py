@@ -7,6 +7,7 @@
 ##parameters=delete_after_import=0
 ##title=
 ##
+"""delete a job from the docma queue"""
 view = context
 request = view.REQUEST
 model = request.model
