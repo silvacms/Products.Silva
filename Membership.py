@@ -86,6 +86,8 @@ Globals.InitializeClass(NoneMember)
 noneMember = NoneMember()
 
 def cloneMember(member):
+    if member is None:
+        return NoneMember()
     return Member(userid=member.userid(),
                   fullname=member.fullname(),
                   email=member.email(),
