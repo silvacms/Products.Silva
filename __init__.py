@@ -77,12 +77,14 @@ def initialize(context):
      context.registerClass(
           Ghost.GhostVersion,
           constructors = (Ghost.manage_addGhostVersionForm,
-                          Ghost.manage_addGhostVersion)
+                          Ghost.manage_addGhostVersion),
+	  visibility = product_visibility
           )
 
      context.registerClass(
           Course.CourseVersion,
           constructors = (Course.manage_addCourseVersionForm,
-                          Course.manage_addCourseVersion)
+                          Course.manage_addCourseVersion),
+	  visibility = product_visibility
           )
      
