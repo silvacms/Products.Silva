@@ -1,5 +1,6 @@
 view = context
 request = view.REQUEST
+model = request.model
 userid = request.AUTHENTICATED_USER.getId()
 
 if not request.has_key('roles') or not request['roles']:
@@ -14,7 +15,7 @@ if request.has_key('fullname') or request.has_key('email'):
     member.set_email(request['email'])
 
 try:
-    context.request_roles_for_user(request.AUTHENTICATED_USER.getId(), request['roles'])
+    model.request_roles_for_user(request.AUTHENTICATED_USER.getId(), request['roles'])
 except Exception, e:
     return view.request_roles(message='Error: %s' % e)
 else:
