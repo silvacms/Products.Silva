@@ -1,27 +1,31 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.39 $
-import Interfaces
+# $Revision: 1.40 $
+# Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
+from DateTime import DateTime
+from StringIO import StringIO
+# Silva interfaces
+from ISilvaObject import ISilvaObject
+from IContent import IContent
+from IPublishable import IPublishable
+from IAsset import IAsset
+from IContent import IContent
+from IContainer import IContainer
+from IPublication import IPublication
+from IVersioning import IVersioning
+from IVersionedContent import IVersionedContent
+# Silva
 import SilvaPermissions
 from ViewRegistry import ViewAttribute
-from DateTime import DateTime
 from Security import Security
-from StringIO import StringIO
+# misc
 from cgi import escape
 
-CONVERT_CHARS = (('\221', '&lsquo;', "'",   u'\u2018'),
-                 ('\222', '&rsquo;', "'",   u'\u2019'),
-                 ('\223', '&ldquo;', '"',   u'\u201C'),
-                 ('\224', '&rdquo;', '"',   u'\u201D'),
-                 ('\226', '&ndash;', '-',   u'\u2013'),
-                 ('\227', '&mdash;', '-',   u'\u2014'),
-                 ('\200', '&euro;',  'EUR', u'\u20AC'),
-                 ('\203', '&fnof;',  'NLG', u'\u0192'),
-                 )
-
 class XMLExportContext:
+    """Simple context class used in XML export.
+    """
     pass
 
 class SilvaObject(Security):
@@ -107,10 +111,10 @@ class SilvaObject(Security):
         """
         result = []
         item = self
-        while Interfaces.SilvaObject.isImplementedBy(item):
+        while ISilvaObject.isImplementedBy(item):
             # Should the index be included?
             if ignore_index:
-                if not (Interfaces.Content.isImplementedBy(item) 
+                if not (IContent.isImplementedBy(item) 
                         and item.is_default()):
                     result.append(item)
             else:
@@ -160,37 +164,37 @@ class SilvaObject(Security):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_publishable')
     def implements_publishable(self):
-        return Interfaces.Publishable.isImplementedBy(self)
+        return IPublishable.isImplementedBy(self)
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_asset')  
     def implements_asset(self):
-        return Interfaces.Asset.isImplementedBy(self)
+        return IAsset.isImplementedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_content')
     def implements_content(self):
-        return Interfaces.Content.isImplementedBy(self)
+        return IContent.isImplementedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_container')
     def implements_container(self):
-        return Interfaces.Container.isImplementedBy(self)
+        return IContainer.isImplementedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_publication')
     def implements_publication(self):
-        return Interfaces.Publication.isImplementedBy(self)
+        return IPublication.isImplementedBy(self)
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_versioning')
     def implements_versioning(self):
-        return Interfaces.Versioning.isImplementedBy(self)
+        return IVersioning.isImplementedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_versioned_content')
     def implements_versioned_content(self):
-        return Interfaces.VersionedContent.isImplementedBy(self)
+        return IVersionedContent.isImplementedBy(self)
 
     # HACK, DEPRECATED
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -234,7 +238,7 @@ class SilvaObject(Security):
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'output_convert_html')
-    def output_convert_html(self, s, CONVERT_CHARS=CONVERT_CHARS):
+    def output_convert_html(self, s):
         """Turn unicode text to something displayable on the web.
         """
         # make sure HTML is quoted

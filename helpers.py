@@ -1,8 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
+# Silva interfaces
+from IVersioning import IVersioning
+from IContainer import IContainer
+# misc
 import urllib
-import Interfaces
 
 def add_and_edit(self, id, REQUEST):
     """Helper function to point to the object's management screen if
@@ -22,22 +25,22 @@ def add_and_edit(self, id, REQUEST):
 def unapprove_helper(object):
     """Unapprove object and anything unapprovable contained by it.
     """
-    if Interfaces.Versioning.isImplementedBy(object):
+    if IVersioning.isImplementedBy(object):
         if object.is_version_approved():
             object.unapprove_version()
-    if Interfaces.Container.isImplementedBy(object):
+    if IContainer.isImplementedBy(object):
         for item in object.get_ordered_publishables():
             unapprove_helper(item)
     
 def unapprove_close_helper(object):
     """Unapprove/close object and anything unapprovable/closeable contained by it.
     """
-    if Interfaces.Versioning.isImplementedBy(object):
+    if IVersioning.isImplementedBy(object):
         if object.is_version_approved():
             object.unapprove_version()
         if object.is_version_published():
             object.close_version()
-    if Interfaces.Container.isImplementedBy(object):
+    if IContainer.isImplementedBy(object):
         for item in object.get_ordered_publishables():
             unapprove_close_helper(item)
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.50 $
+# $Revision: 1.51 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -9,11 +9,18 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode # HACK
+# Silva interfaces
+from IContainer import IContainer
+from IPublishable import IPublishable
+from IContent import IContent
+from IVersionedContent import IVersionedContent
+from ISilvaObject import ISilvaObject
+from IAsset import IAsset
+from IPublication import IPublication
 # Silva
 from SilvaObject import SilvaObject
 from Publishable import Publishable
 import Copying
-import Interfaces
 import SilvaPermissions
 import XMLImporter
 # misc
@@ -35,7 +42,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         inherited_manage_options[1:]
         )
 
-    __implements__ = Interfaces.Container
+    __implements__ = IContainer
         
     def __init__(self, id, title):
         Folder.inheritedAttribute('__init__')(self, id, title)
@@ -103,9 +110,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """Make sure item is in ordered_ids when it should be after
         active status changed.
         """
-        if not Interfaces.Publishable.isImplementedBy(item):
+        if not IPublishable.isImplementedBy(item):
             return
-        if Interfaces.Content.isImplementedBy(item) and item.is_default():
+        if IContent.isImplementedBy(item) and item.is_default():
             return
         ids = self._ordered_ids
         id = item.id
@@ -127,9 +134,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         self._refresh_ordered_ids(item)
         
     def _remove_ordered_id(self, item):
-        if not Interfaces.Publishable.isImplementedBy(item):
+        if not IPublishable.isImplementedBy(item):
             return
-        if Interfaces.Content.isImplementedBy(item) and item.is_default():
+        if IContent.isImplementedBy(item) and item.is_default():
             return
         ids = self._ordered_ids
         if item.is_active() and item.id in ids:
@@ -145,13 +152,13 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """
         ids = []
         for object in self.objectValues():
-            if not Interfaces.Publishable.isImplementedBy(object):
+            if not IPublishable.isImplementedBy(object):
                 continue
-            if Interfaces.Content.isImplementedBy(object) and object.is_default():
+            if IContent.isImplementedBy(object) and object.is_default():
                 continue
             if object.is_active():
                 ids.append(object.id)
-            if Interfaces.Container.isImplementedBy(object):
+            if IContainer.isImplementedBy(object):
                 object.refresh_active_publishables()
         self._ordered_ids = ids
 
@@ -266,14 +273,14 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         for item in self.cb_dataItems():
             paste_id = item.id
             while paste_id in ids:
-                if Interfaces.VersionedContent.isImplementedBy(item):
+                if IVersionedContent.isImplementedBy(item):
                     paste_id = 'ghost_of_%s' % paste_id
                 else:
                     paste_id = 'copy_of_%s' % paste_id
             self._ghost_paste(paste_id, item, REQUEST)
 
     def _ghost_paste(self, paste_id, item, REQUEST):
-        if Interfaces.Container.isImplementedBy(item):
+        if IContainer.isImplementedBy(item):
             # copy the container (but not its content)
             if item.meta_type == 'Silva Folder':
                 self.manage_addProduct['Silva'].manage_addFolder(
@@ -290,7 +297,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             # FIXME: ghost copy nonactives as well?
             for object in item.get_assets():
                 container._ghost_paste(object.id, object, REQUEST)
-        elif Interfaces.VersionedContent.isImplementedBy(item):
+        elif IVersionedContent.isImplementedBy(item):
             if item.meta_type == 'Silva Ghost':
                 # copy ghost
                 version_id = item.get_public_version()
@@ -344,7 +351,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """
         return (
             addable_dict.has_key('instance') and
-            Interfaces.SilvaObject.isImplementedByInstancesOf(
+            ISilvaObject.isImplementedByInstancesOf(
             addable_dict['instance']))
     
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -409,7 +416,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
              above, recursively
         """
         object = getattr(self, id)
-        if Interfaces.Publishable.isImplementedBy(object):
+        if IPublishable.isImplementedBy(object):
             return not object.is_published() and not object.is_approved()
         else:
             return 1
@@ -450,7 +457,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def get_nonactive_publishables(self):
         result = []
         for object in self.objectValues():
-            if (Interfaces.Publishable.isImplementedBy(object) and
+            if (IPublishable.isImplementedBy(object) and
                 not object.is_active()):
                 result.append(object)
         return result
@@ -460,7 +467,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def get_assets(self):
         result = []
         for object in self.objectValues():
-            if Interfaces.Asset.isImplementedBy(object):
+            if IAsset.isImplementedBy(object):
                 result.append(object)
         return result
 
@@ -469,7 +476,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def get_assets_of_type(self, meta_type):
         result = []
         for object in self.objectValues():
-            if (Interfaces.Asset.isImplementedBy(object) and
+            if (IAsset.isImplementedBy(object) and
                 object.meta_type == meta_type):
                 result.append(object)
         return result
@@ -508,7 +515,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     
     def _get_tree_helper(self, l, indent):
         for item in self.get_ordered_publishables():
-            if (Interfaces.Container.isImplementedBy(item) and
+            if (IContainer.isImplementedBy(item) and
                 item.is_transparent()):
                 l.append((indent, item))
                 item._get_tree_helper(l, indent + 1)
@@ -517,7 +524,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 
     def _get_container_tree_helper(self, l, indent):
         for item in self.get_ordered_publishables():
-            if not Interfaces.Container.isImplementedBy(item):
+            if not IContainer.isImplementedBy(item):
                 continue
             if item.is_transparent():
                 l.append((indent, item))
@@ -529,7 +536,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         for item in self.get_ordered_publishables():
             if not item.is_published():
                 continue
-            if (Interfaces.Container.isImplementedBy(item) and
+            if (IContainer.isImplementedBy(item) and
                 item.is_transparent()):
                 l.append((indent, item))
                 item._get_public_tree_helper(l, indent + 1)
@@ -538,7 +545,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 
     def _get_status_tree_helper(self, l, indent):
         for item in self.get_ordered_publishables():
-            if Interfaces.Container.isImplementedBy(item):
+            if IContainer.isImplementedBy(item):
                 default = item.get_default()
                 if default is not None:
                     l.append((indent, default))
@@ -573,7 +580,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         if default is not None:
             default.to_xml(context)
         for object in self.get_ordered_publishables():
-            if Interfaces.Publication.isImplementedBy(object) and not context.with_sub_publications:
+            if IPublication.isImplementedBy(object) and not context.with_sub_publications:
                 continue
             object.to_xml(context)
         #for object in self.get_assets():
@@ -585,7 +592,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         for object in self.objectValues():
             if object.meta_type == 'Silva Ghost':
                 object.update()
-            if Interfaces.Container.isImplementedBy(object):
+            if IContainer.isImplementedBy(object):
                 object.update()
     
 InitializeClass(Folder)

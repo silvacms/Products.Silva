@@ -1,10 +1,17 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
-import Interfaces
+# $Revision: 1.15 $
+# Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
+# Silva interfaces
+from IPublishable import IPublishable
+from IContent import IContent
+from IVersioning import IVersioning
+from IContainer import IContainer
+# Silva 
 import SilvaPermissions
+# misc
 import helpers
 
 class Publishable:
@@ -13,7 +20,7 @@ class Publishable:
     """
     security = ClassSecurityInfo()
         
-    __implements__ = Interfaces.Publishable
+    __implements__ = IPublishable
 
     _active_flag = 1
 
@@ -59,7 +66,7 @@ class Publishable:
         if not self._active_flag:
             return 0
         # can't deactivate default
-        if Interfaces.Content.isImplementedBy(self) and self.is_default():
+        if IContent.isImplementedBy(self) and self.is_default():
             return 0
         # can't deactivate something published
         if self.is_published():
@@ -70,7 +77,7 @@ class Publishable:
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_published')
     def is_published(self):
-        if Interfaces.Versioning.isImplementedBy(self):
+        if IVersioning.isImplementedBy(self):
             return self.is_version_published()
         else:
             # FIXME: should always be published if no versioning supported?
@@ -79,7 +86,7 @@ class Publishable:
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_approved')
     def is_approved(self):
-        if Interfaces.Versioning.isImplementedBy(self):
+        if IVersioning.isImplementedBy(self):
             return self.is_version_approved()
         else:
             # never be approved if there is no versioning
@@ -97,7 +104,7 @@ class Publishable:
             return 0
         # check all containers to see if they are inactive as well
         object = self.aq_parent
-        while Interfaces.Container.isImplementedBy(object):
+        while IContainer.isImplementedBy(object):
             if not object.is_active():
                 return 0
             object = object.aq_parent

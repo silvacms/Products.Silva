@@ -1,15 +1,16 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.42 $
+# $Revision: 1.43 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
+# Silva interfaces
+from IVersionedContent import IVersionedContent
 # Silva
 from VersionedContent import VersionedContent
-import Interfaces
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
@@ -23,7 +24,7 @@ class Ghost(VersionedContent):
 
     meta_type = "Silva Ghost"
 
-    __implements__ = Interfaces.VersionedContent
+    __implements__ = IVersionedContent
     
     def __init__(self, id):
         Ghost.inheritedAttribute('__init__')(self, id, 'No title for ghost')
@@ -128,7 +129,7 @@ class GhostVersion(SimpleItem.SimpleItem):
         except:
             return None
         
-        if (not Interfaces.VersionedContent.isImplementedBy(content) or    
+        if (not IVersionedContent.isImplementedBy(content) or    
             content.meta_type == 'Silva Ghost'):
             return None
         return content
@@ -147,7 +148,7 @@ class GhostVersion(SimpleItem.SimpleItem):
         except:
             return None
         
-        if (not Interfaces.VersionedContent.isImplementedBy(content) or    
+        if (not IVersionedContent.isImplementedBy(content) or    
             content.meta_type == 'Silva Ghost'):
             return None    
         return content

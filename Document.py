@@ -1,16 +1,16 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.34 $
+# $Revision: 1.35 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
-import SilvaPermissions
-
+# Silva interfaces
+from IVersionedContent import IVersionedContent
 # Silva
+import SilvaPermissions
 from VersionedContent import VersionedContent
-import Interfaces
 from EditorSupport import EditorSupport
 
 # misc
@@ -23,7 +23,7 @@ class Document(VersionedContent, EditorSupport):
     
     meta_type = "Silva Document"
 
-    __implements__ = Interfaces.VersionedContent
+    __implements__ = IVersionedContent
     
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = VersionedContent.manage_options

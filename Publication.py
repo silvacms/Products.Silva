@@ -1,15 +1,16 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
+# Silva interfaces
+from IPublication import IPublication
 # Silva
 from Folder import Folder
-import Interfaces
 import SilvaPermissions
-#misc
+# misc
 from helpers import add_and_edit
 
 class Publication(Folder):
@@ -19,7 +20,7 @@ class Publication(Folder):
     
     meta_type = "Silva Publication"
 
-    __implements__ = Interfaces.Publication
+    __implements__ = IPublication
 
     _addables_allowed_in_publication = None
     

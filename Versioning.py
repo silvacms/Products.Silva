@@ -1,12 +1,17 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
+# Zope
 from DateTime import DateTime
-import Interfaces
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-import SilvaPermissions
 import ExtensionClass
+# Silva interfaces
+from IVersioning import IVersioning
+from IPublishable import IPublishable
+# Silva
+import SilvaPermissions
+
 
 class VersioningError(Exception):
     pass
@@ -18,7 +23,7 @@ class Versioning:
     """
     security = ClassSecurityInfo()
 
-    __implements__ = Interfaces.Versioning
+    __implements__ = IVersioning
     
     _unapproved_version = empty_version
     _approved_version = empty_version
@@ -74,7 +79,7 @@ class Versioning:
         if self._unapproved_version[1] is None:
             raise VersioningError,\
                   'Cannot approve version without publication datetime.'
-        if Interfaces.Publishable.isImplementedBy(self):
+        if IPublishable.isImplementedBy(self):
             if not self.can_approve():
                 raise VersioningError,\
                       'Cannot approve version; not allowed.'

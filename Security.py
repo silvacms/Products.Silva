@@ -1,12 +1,15 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Revision: 1.29 $
+# Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
+from DateTime import DateTime
+# Silva interfaces
+from IContainer import IContainer
+# Silva
 import SilvaPermissions
 from UserManagement import user_management
-import Interfaces
-from DateTime import DateTime
 
 # Are groups available?
 try:
@@ -189,7 +192,7 @@ class Security:
     def _sec_get_userids_deep_helper(self, l):
         for userid in self.sec_get_userids():
             l.append(userid)
-        if Interfaces.Container.isImplementedBy(self):
+        if IContainer.isImplementedBy(self):
             for item in self.get_ordered_publishables():
                 item._sec_get_userids_deep_helper(l)
             for item in self.get_nonactive_publishables():
@@ -261,7 +264,7 @@ class Security:
         userid).
         """
         # containers have no author
-        if Interfaces.Container.isImplementedBy(self):
+        if IContainer.isImplementedBy(self):
             return { 'cn': '', 'userid': None }
 
         # unknown author if none assigned yet
@@ -307,7 +310,7 @@ class Security:
         """
         userids = {}
         parent = self.aq_inner.aq_parent
-        while Interfaces.Container.isImplementedBy(parent):
+        while IContainer.isImplementedBy(parent):
             for userid in parent.sec_get_local_defined_userids():
                 userids[userid] = 1
             parent = parent.aq_parent
@@ -321,7 +324,7 @@ class Security:
         """
         roles = {}
         parent = self.aq_inner.aq_parent
-        while Interfaces.Container.isImplementedBy(parent):
+        while IContainer.isImplementedBy(parent):
             for role in parent.sec_get_local_roles_for_userid(userid):
                 roles[role] = 1
             parent = parent.aq_parent
@@ -341,7 +344,7 @@ class Security:
     def _sec_get_downward_defined_userids_helper(self, d):
         for userid in self.sec_get_userids():
             d[userid] = 1
-        if Interfaces.Container.isImplementedBy(self):
+        if IContainer.isImplementedBy(self):
             for item in self.get_ordered_publishables():
                 item._sec_get_downward_defined_userids_helper(d)
             for item in self.get_nonactive_publishables():
@@ -392,7 +395,7 @@ class Security:
         """
         parent = self.aq_inner.aq_parent
         groups = {}
-        while Interfaces.Container.isImplementedBy(parent):
+        while IContainer.isImplementedBy(parent):
             for group in parent.sec_get_local_defined_groups():
                 groups[group] = 1
             parent = parent.aq_parent
@@ -406,7 +409,7 @@ class Security:
         """
         parent = self.aq_inner.aq_parent
         roles = {}
-        while Interfaces.Container.isImplementedBy(parent):
+        while IContainer.isImplementedBy(parent):
             for role in parent.sec_get_local_roles_for_group(group):
                 roles[role] = 1
             parent = parent.aq_parent
@@ -425,7 +428,7 @@ class Security:
     def _sec_get_downward_defined_groups_helper(self, d):
         for group in self.sec_get_local_defined_groups():
             d[group] = 1
-        if Interfaces.Container.isImplementedBy(self):
+        if IContainer.isImplementedBy(self):
             for item in self.get_ordered_publishables():
                 item._sec_get_downward_defined_groups_helper(d)
             for item in self.get_nonactive_publishables():

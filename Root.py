@@ -1,15 +1,16 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.23 $
+# $Revision: 1.24 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
+# Silva interfaces
+from IPublication import IPublication
 # Silva
 from Publication import Publication
-import Interfaces
 import SilvaPermissions
-#misc
+# misc
 from helpers import add_and_edit
 
 class Root(Publication):
@@ -19,7 +20,7 @@ class Root(Publication):
     
     meta_type = "Silva Root"
 
-    __implements__ = Interfaces.Publication
+    __implements__ = IPublication
     
     # MANIPULATORS
 

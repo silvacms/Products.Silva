@@ -1,9 +1,10 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 import unittest
 import Zope
-from Products.Silva import Interfaces
+from Products.Silva.IContent import IContent
+from Products.Silva.ISilvaObject import ISilvaObject
 from Products.Silva.Folder import Folder
 from Products.Silva.SilvaObject import SilvaObject
 from Testing import makerequest
@@ -42,7 +43,7 @@ class ContainerTestCase(ContainerBaseTestCase):
     def test_get_default(self):
         doc = self.folder4.get_default()
         self.assertEquals(doc.get_title(), 'Folder4')
-        self.assert_(Interfaces.Content.isImplementedBy(doc),
+        self.assert_(IContent.isImplementedBy(doc),
                      'doc is not a Content object')
         self.assert_(doc.is_default(),
                      'Default document is_default gives false')
@@ -308,7 +309,7 @@ def get_silva_addables_allowed_hack(self):
 
 class MySilvaObject(SilvaObject):
     meta_type = 'Minimal Silva Object'
-    __implements__ = Interfaces.SilvaObject
+    __implements__ = ISilvaObject
     
 def filtered_meta_types_hack(self):
     return [

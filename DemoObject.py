@@ -1,17 +1,18 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
+# Silva interfaces
+from IVersionedContent import IVersionedContent
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.EditorSupport import EditorSupport
 from Products.Silva.VersionedContent import VersionedContent
-from Products.Silva import Interfaces
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.helpers import add_and_edit, translateCdata
 # misc
@@ -24,7 +25,7 @@ class DemoObject(VersionedContent, EditorSupport):
     
     meta_type = "Silva DemoObject"
 
-    __implements__ = Interfaces.VersionedContent
+    __implements__ = IVersionedContent
        
     def __init__(self, id, title):
         """The constructor, does not do much in this case (just maps to

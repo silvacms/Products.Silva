@@ -1,15 +1,16 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 import OFS
+# Silva interfaces
+from IAsset import IAsset
 # Silva
 from Asset import Asset
-import Interfaces
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
@@ -21,7 +22,7 @@ class Image(Asset):
 
     meta_type = "Silva Image"
 
-    __implements__ = Interfaces.Asset
+    __implements__ = IAsset
     
     def __init__(self, id, title):
         Image.inheritedAttribute('__init__')(self, id, title)

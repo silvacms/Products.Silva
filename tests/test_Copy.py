@@ -1,9 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 import unittest
 import Zope
-from Products.Silva import Interfaces, Document, Folder
+from Products.Silva import Document, Folder
 from Testing import makerequest
 from DateTime import DateTime
 from Products.ParsedXML.ParsedXML import ParsedXML
