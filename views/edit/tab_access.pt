@@ -41,7 +41,9 @@
               border="0"
               cellpadding="5"
               cellspacing="0"
-              tal:define="members view/get_members">
+              tal:define="
+                members view/get_members;
+                global local_roles python:None">
               <thead>
                 <tr>
                   <td class="top"
@@ -53,7 +55,6 @@
                     </h2>
                   </td>
                 </tr>
-              </thead>
               <tr class="top-controls">
                 <td colspan="3">
                   <h3>
@@ -61,6 +62,8 @@
                   </h3>
                 </td>
               </tr>
+            </thead>
+            <tbody>
               <tr class="align-left"
                 tal:condition="members">
                 <th>
@@ -87,7 +90,6 @@
                       tal:attributes="
                         value userid;
                         id fullname;" />
-                      &nbsp;
                       <label tal:content="fullname"
                         tal:attributes="for fullname">
                         username
@@ -105,14 +107,14 @@
                         tal:attributes="for string:revoke_${userid}">
                         local
                       </label>
-                      &nbsp;
                       <input class="warning-checkbox"
                         name="revoke_roles:list"
                         type="checkbox"
                         value=""
                         tal:attributes="
                           value python:'%s||%s' % (userid, local);
-                          id string:revoke_${userid}" /><br tal:condition="not:repeat/local/end" />
+                          id string:revoke_${userid}" 
+                        tal:define="global local_roles string:1" /><br tal:condition="not:repeat/local/end" />
                     </tal:block>
                   </td>
                 </tr>
@@ -154,15 +156,16 @@
                     title="revoke selected role(s) from selected user(s)"
                     type="submit"
                     value="Revoke role" 
-                    tal:condition="members"
+                    tal:condition="local_roles"
                   />
                 </td>
               </tr>
-            </table>
-          </form>
-          <tal:block replace="nothing"> 
-            ____________ pending roles management ____________
-          </tal:block>
+            </tbody>
+          </table>
+        </form>
+        <tal:block replace="nothing"> 
+          ____________ pending roles management ____________
+        </tal:block>
           <!-- Pending role requests -->
           <tal:block condition="allow_subscription">
             <form action="."
