@@ -6,7 +6,7 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
-/* __________________ style sheet voor Silva backend __________________ */
+/* _________________________ style sheet voor Silva backend _________________________ */
 
 /* standard bg color, change in overide stylesheet */ 
 body {
@@ -180,7 +180,7 @@ td.hilight {
 
 .tablehead3 {
   font-size : 14px; 
-  font-weight : normal; 
+  font-weight : bold; 
   font-family : verdana, arial, helvetica, sans-serif; 
   color : #d0d4d8; 
   background : transparent;
@@ -277,7 +277,6 @@ input:hover, textarea:hover, select:hover {
   background : #e3f0e4 none; 
 }
 
-/* was ffe6cc cbe4eb */
 input:focus:hover, textarea:focus:hover { 
   color : #333355; 
   background : #e3f0e4;
