@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_ServiceLayouts.py,v 1.12 2003/11/12 14:25:36 gotcha Exp $
+# $Id: test_ServiceLayouts.py,v 1.13 2003/12/15 09:50:39 gotcha Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -15,11 +15,18 @@ from Testing import ZopeTestCase
 
 
 from Products.Silva.LayoutRegistry import layoutRegistry
+from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT
+from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT_DESCRIPTION
+from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT_DIRECTORY
 from Products.Silva.LayoutService import LayoutService
 
 
-layoutTest1 = {'name':'test1', 'directory':'layout_test1', 'description':'test 1 Layout'}
-layoutTest2 = {'name':'test2', 'directory':'layout_test2', 'description':'test 2 Layout'}
+defaultLayout = {'name':DEFAULT_LAYOUT, 'directory':DEFAULT_LAYOUT_DIRECTORY,
+    'description':DEFAULT_LAYOUT_DESCRIPTION}
+layoutTest1 = {'name':'test1', 'directory':'layout_test1',
+    'description':'test 1 Layout'}
+layoutTest2 = {'name':'test2', 'directory':'layout_test2',
+    'description':'test 2 Layout'}
 
 layoutTest1Items = [('template', 'Filesystem Directory View', 'Folder'),
     ('test1.html', 'Filesystem Page Template', 'Page Template'),
@@ -50,13 +57,18 @@ class TestInstallLayouts(SilvaTestCase.SilvaTestCase):
     def testSetup(self):
         self.failUnless(hasattr(self.root, 'service_layouts'))
         self.failUnless(hasattr(self.root.service_resources, 'Layouts'))
-        self.assertEqual(len(self.service_layouts.get_names()), 2)
+        self.assertEqual(len(self.service_layouts.get_names()), 3)
         self.failUnless(layoutTest1['name'] in self.service_layouts.get_names())
-        self.assertEqual(len(self.service_layouts.get_installed_names()),0)
+        self.failUnless(layoutTest2['name'] in self.service_layouts.get_names())
+        self.failUnless(defaultLayout['name'] in self.service_layouts.get_names())
+        # default is already installed
+        self.assertEqual(len(self.service_layouts.get_installed_names()), 1)
+        self.failIf(self.service_layouts.show_layout_section())
 
     def testInstall(self):
         self.service_layouts.install(layoutTest1['name'])
-        self.assertEqual(len(self.service_layouts.get_installed_names()),1)
+        self.failUnless(self.service_layouts.show_layout_section())
+        self.assertEqual(len(self.service_layouts.get_installed_names()), 1 + 1) 
         self.failUnless(layoutTest1['name'] in self.service_layouts.get_installed_names())
         self.failUnless(self.service_layouts.is_installed(layoutTest1['name']))
         self.failUnless(hasattr(self.root.service_resources.Layouts, layoutTest1['directory']))
@@ -70,22 +82,27 @@ class TestInstallLayouts(SilvaTestCase.SilvaTestCase):
         # check list for select HTML UI    
         # with one layout
         select = self.service_layouts.get_installed_for_select()
-        self.assertEqual(len(select), 2)
-        awaited = [(LayoutService.NOLAYOUT, ''), (layoutTest1['description'], layoutTest1['name'])]
+        self.assertEqual(len(select), 3)
+        awaited = [(DEFAULT_LAYOUT_DESCRIPTION, DEFAULT_LAYOUT), 
+            (layoutTest1['description'], layoutTest1['name']),
+            (self.service_layouts.NOLAYOUT, '')]
         for item in awaited:
             self.failUnless(item in select)
         # with two layouts
         self.service_layouts.install(layoutTest2['name'])
         select = self.service_layouts.get_installed_for_select()
-        self.assertEqual(len(select), 3)
-        awaited = [(LayoutService.NOLAYOUT, ''), (layoutTest1['description'], layoutTest1['name']), (layoutTest2['description'], layoutTest2['name'])]
+        self.assertEqual(len(select), 4)
+        awaited = [(DEFAULT_LAYOUT_DESCRIPTION, DEFAULT_LAYOUT),
+            (layoutTest1['description'], layoutTest1['name']),
+            (layoutTest2['description'], layoutTest2['name']),
+            (self.service_layouts.NOLAYOUT, '')]
         for item in awaited:
             self.failUnless(item in select)
         
     def testUninstall(self):
         self.service_layouts.install(layoutTest1['name'])
         self.service_layouts.uninstall(layoutTest1['name'])
-        self.assertEqual(len(self.service_layouts.get_installed_names()),0)
+        self.assertEqual(len(self.service_layouts.get_installed_names()), 1)
         self.failIf(layoutTest1['name'] in self.service_layouts.get_installed_names())
         self.failIf(self.service_layouts.is_installed(layoutTest1['name']))
 
@@ -133,24 +150,19 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
             self.failUnless(id in self.service_layouts.layout_ids(pub))
             
     def testWithoutLayouts(self):
-        self.checkNoLayout(self.root)
-        self.checkNoOwnLayout(self.root)
-        self.checkNoLayout(self.pub)
         self.checkNoOwnLayout(self.pub)
         self.add_publication(self.pub, 'subpub', 'subpublication')
         self.subpub = self.pub.subpub
-        self.checkNoLayout(self.subpub)
         self.checkNoOwnLayout(self.subpub)
 
     def testSetupInPublication(self):
-        self.failIf(self.service_layouts.layout_ids(self.pub))     
         # setup layout
         self.service_layouts.setup_layout(layoutTest1['name'], self.pub)
         self.checkLayout(self.pub, layoutTest1)
         self.checkOwnLayout(self.pub, layoutTest1)
         # remove layout
         self.service_layouts.remove_layout(self.pub)
-        self.checkNoLayout(self.pub)
+        self.checkNoOwnLayout(self.pub)
 
     def testLayoutOnRoot(self):
         self.root.set_layout(layoutTest2['name'])
@@ -165,11 +177,11 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.checkLayout(self.pub, layoutTest2) 
         self.checkOwnLayout(self.pub, layoutTest2)
         self.pub.set_layout('')
-        self.checkNoLayout(self.pub) 
+        self.checkNoOwnLayout(self.pub) 
 
     def testSetupOnPublication(self):
-        self.failIf(self.pub.get_layout_key())
-        self.assertEqual(self.service_layouts.get_layout_name(self.pub), '')
+        self.assertEqual(self.service_layouts.get_layout_name(self.pub),
+            DEFAULT_LAYOUT_DIRECTORY)
         self.pub.set_layout(layoutTest2['name'])
         self.failUnless(self.pub.get_layout_key())
         self.assertEqual(self.service_layouts.get_layout_name(self.pub), layoutTest2['name'])
@@ -178,7 +190,7 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.checkLayout(self.pub, layoutTest1)
         self.checkOwnLayout(self.pub, layoutTest1)
         self.pub.set_layout('')
-        self.checkNoLayout(self.pub)
+        self.checkNoOwnLayout(self.pub)
 
     def testLayoutCopied(self):
         #before customize
@@ -244,6 +256,8 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.root.set_layout('')
         self.pub.set_layout('')
         self.subpub.set_layout('')
+        self.checkNoLayout(self.root)
+        self.checkNoLayout(self.pub)
         self.checkNoLayout(self.subpub)
         self.checkNoOwnLayout(self.subpub)
         

@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 
 from Products.Silva import icon
 from Products.Silva.install import add_fss_directory_view
@@ -8,6 +8,10 @@ from Products.Silva.fssite import registerDirectory
 import os
 import md5
 import cPickle
+
+DEFAULT_LAYOUT = 'default'
+DEFAULT_LAYOUT_DESCRIPTION = 'Default layout'
+DEFAULT_LAYOUT_DIRECTORY = 'default'
 
 class LayoutRegistry:
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 
 # Zope
 from OFS import SimpleItem
@@ -11,7 +11,7 @@ from DateTime import DateTime
 # Silva
 from helpers import add_and_edit
 import SilvaPermissions
-from LayoutRegistry import layoutRegistry
+from LayoutRegistry import layoutRegistry, DEFAULT_LAYOUT
 import LayoutRegistry
 import install
 import whrandom
@@ -88,8 +88,15 @@ class LayoutService(SimpleItem.SimpleItem):
         """
         return [name for name in self.get_names()
                 if self.is_installed(name)]
-    
-    NOLAYOUT = 'Select a layout for this area:'
+
+    def show_layout_section(self):
+        installed = self.get_installed_names()
+        if len(installed) <= 1 and DEFAULT_LAYOUT in installed:
+            return 0
+        else:
+            return 1
+
+    NOLAYOUT = 'No own layout, get acquired'
 
     def get_installed_for_select(self):
         result = [(self.NOLAYOUT, '')]

@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.113 $
+# $Revision: 1.114 $
 
 import ContainerPolicy
 
@@ -43,6 +43,16 @@ def initialize(context):
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
     
+
+    from Products.Silva.LayoutRegistry import layoutRegistry
+    from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT
+    from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT_DESCRIPTION
+    from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT_DIRECTORY
+    
+    layoutRegistry.register(
+        DEFAULT_LAYOUT, DEFAULT_LAYOUT_DESCRIPTION, __file__,
+        DEFAULT_LAYOUT_DIRECTORY)
+
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
         Folder, Root, Publication, Ghost, Image, File, Link, 
