@@ -8,15 +8,10 @@
       allow_subscription model/service_members/allow_subscription | nothing;"
     condition="view/has_access">
     <h2>
-      <img alt="%s"
-        height="16"
-        src="%s"
-        width="16"
-        tal:replace="structure python:view.render_icon(model.meta_type)" />
-      &nbsp;Access Permissions for
+      <img tal:replace="structure python:view.render_icon(model.meta_type)" />
+      &nbsp;Access Permissions for:
       <span class="folder-title"
-        tal:content="
-          structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">
+        tal:content="structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">
         title
       </span>
     </h2>

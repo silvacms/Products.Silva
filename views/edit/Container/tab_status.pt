@@ -10,9 +10,8 @@
   global silva_permissions view/get_silva_permissions" />
 
 <div class="margins">
-<h2><img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-  Manage <span class="folder-title" tal:content="structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
+<h2><img tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+  Manage: <span class="folder-title" tal:content="structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
 </h2>
 </div>
 

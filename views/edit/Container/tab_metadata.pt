@@ -8,9 +8,8 @@
   global silva_permissions here/get_silva_permissions;
   " />
 
-<h2><img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-  Metadata for <span class="document-title" tal:content="structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
+<h2><img tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+  Metadata for: <span class="document-title" tal:content="structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
 </h2>
 <init tal:omit-tag=""
   tal:define="global fields python:view.tab_metadata_form.get_fields()" />
