@@ -42,6 +42,11 @@ class Security(Interface.Base):
         """Get list of users on the clipboard.
         """
         pass
+
+    def sec_find_users(self, search_string):
+        """Look up users in user database. Return a list of userids.
+        """
+        pass
     
     def sec_get_user_info(self, userid):
         """Get information for userid. FIXME: describe which info fields

@@ -58,3 +58,7 @@ def initialize(context):
           constructors = (Ghost.manage_addGhostVersionForm,
                           Ghost.manage_addGhostVersion)
           )
+
+# simple way to configure user management
+from SimpleUserManagement import user_management
+#from LDAPUserManagement import user_management

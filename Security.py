@@ -1,6 +1,7 @@
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
+from Products.Silva import user_management
 
 class Security:
     """Can be mixed in with an object to support Silva security.
@@ -78,12 +79,19 @@ class Security:
         """
         return ['foo', 'bar']
 
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'sec_find_users')
+    def sec_find_users(self, userid):
+        """Find users in user database.
+        """
+        return user_management.find_users(self, userid)
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_get_user_info')  
     def sec_get_user_info(self, userid):
         """Get information for userid. FIXME: describe which info fields
         exist.
         """
-        return {}
+        return user_management.get_user_info(object, userid)
 
 InitializeClass(Security)
