@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.147 $
+# $Revision: 1.148 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -873,30 +873,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """
         return urllib.quote(string)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'cleanup_versions')
-    def cleanup_versions(self):
-        """ Cleanup versions of VersionContent objects
-        contained in this Folder recursively down.
-        """
-        for descendant in self.get_all_descendants():
-            if IVersionedContent.isImplementedBy(descendant):
-                descendant.cleanup_versions()            
-        return 'Done!'
-
-    def get_all_descendants(self):
-        """ Return a list of all descendants
-        """
-        descendants = []
-        self._get_descendants_helper(self, descendants)        
-        return descendants
-        
-    def _get_descendants_helper(self, obj, descendants):
-        for i in obj.objectValues():            
-            descendants.append(i)
-            if IContainer.isImplementedBy(i):
-                self._get_descendants_helper(i, descendants)    
-        
 InitializeClass(Folder)
 
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
