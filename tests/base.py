@@ -30,7 +30,6 @@ class SilvaTestCase(unittest.TestCase):
             root.REQUEST.AUTHENTICATED_USER = OmnipotentUser()
             root.manage_addProduct['Silva'].manage_addRoot(
                 'silva_test', 'Silva Test')
-            root.silva_test.service_extensions.install('SilvaDocument')
             self.silva = root.silva_test
         except:
             self.tearDown()
