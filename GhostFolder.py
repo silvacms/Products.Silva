@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.3 2003/08/03 10:42:25 zagy Exp $
+# $Id: GhostFolder.py,v 1.4 2003/08/05 21:06:36 zagy Exp $
 
 #zope
 import OFS.Folder
@@ -15,6 +15,7 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Ghost import GhostBase, getLastVersionFromGhost
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
+from Products.Silva.Metadata import export_metadata
 
 from Products.Silva.interfaces import IContainer, IContent, IAsset, IGhost
 
@@ -116,6 +117,13 @@ class GhostFolder(GhostBase, Folder):
     def to_folder(self):
         """replace self with a folder"""
         self._to_folder_or_publication_helper(to_folder=1)
+
+    def to_xml(self, context):
+        f = context.f
+        f.write("<silva_ghostfolder id='%s'>" % self.getId())
+        self._to_xml_helper(context)
+        export_metadata(self._get_content(), context)
+        f.write("</silva_ghostfolder>")
         
 InitializeClass(GhostFolder)
 
