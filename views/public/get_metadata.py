@@ -1,3 +1,4 @@
+##parameters=content=None
 from Products.SilvaMetadata.Exceptions import BindingError
 
 # Build a dict for use in the public pagetemplate,
@@ -13,7 +14,8 @@ from Products.SilvaMetadata.Exceptions import BindingError
 # }
 
 request = context.REQUEST
-content = context.get_viewable()
+if content is None:
+    content = context.get_viewable()
 
 if content is None:
     return None
