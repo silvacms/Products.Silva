@@ -48,8 +48,6 @@
   Tab bar plugs in here....
 </tabs>
 <!-- ____________________________ end tabs _____________________________ -->
-<span class="halfline"
-  tal:condition="python:template.id != 'tab_preview'"><br /></span>
 <!-- __________________________ start feedback _________________________ -->
 <tal:block
   define="type options/message_type | request/message_type | nothing;
@@ -132,7 +130,7 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 <td class="footer" width="30%">
 <a class="footer" title="Change your settings: alt-~" accesskey="~" href="#"
   tal:attributes="onclick string: userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450,height=350,resizable=no');; userWindow.focus();; return false;;">
-  <img tal:attributes="src string:${silva_root}/globals/user.png" width="8" height="9" border="0"/>
+  <img tal:attributes="src string:${silva_root}/globals/user.gif" width="8" height="9" border="0"/>
   User settings
 </a>
 </td>
