@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.63 $
+# $Revision: 1.64 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -19,6 +19,7 @@ from Version import Version
 
 # For XML-Conversions for editors
 from transform.Transformer import EditorTransformer
+from transform.base import Context
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 from Products.ParsedXML.ExtraDOM import writeStream
@@ -143,7 +144,7 @@ class Document(CatalogedVersionedContent):
 
         # it should suffice to test the children of the root element only,
         # since currently the only non-cacheable elements are root elements
-        for node in viewable.documentElement.childNodes:
+        for node in viewable.content.documentElement.childNodes:
             if node.nodeName in non_cacheable_objects:
                 is_cacheable = 0
                 break
@@ -210,29 +211,30 @@ class Document(CatalogedVersionedContent):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
                               'editor_storage')
-    def editor_storage(self, string=None, editor='eopro2_11', encoding='UTF-8'):
+    def editor_storage(self, string=None, editor='eopro3_0', encoding='UTF-8'):
         """provide xml/xhtml/html (GET requests) and (heuristic) 
            back-transforming to xml/xhtml/html (POST requests)
         """
         transformer = EditorTransformer(editor=editor)
 
         if string is None:
+            ctx = Context(url=self.absolute_url())
             string = self.get_xml(last_version=1, with_sub_publications=0)
-            htmlnode = transformer.to_target(sourceobj=string)
+            htmlnode = transformer.to_target(sourceobj=string, context=ctx)
             return htmlnode.asBytes(encoding=encoding)
         else:
             version = self.get_editable()
             if version is None:
                 raise "Hey, no version to store to!"
-            conv_context = {'id': self.id,
-                            'title': self.get_title()}
-
-            silvanode = transformer.to_source(targetobj=string,
-                                              context=conv_context
-                                              )[0]
+            
+            ctx = Context(id=self.id,
+                            title=self.get_title(),
+                            url=self.absolute_url())
+            
+            silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
             title = silvanode.find('title')[0].content.asBytes(encoding='utf8')
             title = unicode(title, 'utf8')
-            docnode = silvanode.find('doc')[0]
+            docnode = silvanode.find_one('doc')
             content = docnode.asBytes(encoding="UTF8")
             version.content.manage_edit(content)  # needs utf8-encoded string
             self.set_title(title)         # needs unicode
