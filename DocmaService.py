@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.9 2003/05/08 18:19:28 clemens Exp $
+# $Id: DocmaService.py,v 1.10 2003/05/24 13:20:23 kitblake Exp $
 
 from __future__ import nested_scopes
 
@@ -27,7 +27,7 @@ class Job:
 class DocmaService(SimpleItem):
 
     security = ClassSecurityInfo()
-    meta_type = 'Silva Docma Service'
+    meta_type = 'Docma Service'
 
     manage_options = (
                       {'label': 'Edit', 'action': 'edit_tab'},
