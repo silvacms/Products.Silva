@@ -250,16 +250,22 @@
   </xsl:template>
   
   <xsl:template match="doc:external_data">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:apply-templates />
   </xsl:template>
   
   <xsl:template match="doc:code">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:apply-templates />
   </xsl:template>
 
   <xsl:template match="doc:source">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:apply-templates />
   </xsl:template>
+  
+  <xsl:template match="doc:rendered_html">
+    <xsl:copy-of select="./@*|node()" />
+  </xsl:template>
+  
+  <xsl:template match="doc:parameter" />
   
   <xsl:template match="doc:br" mode="text-content">
     <br />
