@@ -8,7 +8,8 @@ from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
 from Products.ProxyIndex.ProxyIndex import RecordStyle
 
-from Products.Silva.ContainerPolicy import NothingPolicy, SimpleContentPolicy
+from Products.Silva.ContainerPolicy import \
+    NothingPolicy, SimpleContentPolicy, SemiGhostPolicy
 from SimpleMembership import SimpleMemberService
 
 def add_fss_directory_view(obj, name, base, *args):
@@ -564,6 +565,7 @@ def configureContainerPolicies(root):
     cpr = root.service_containerpolicy
     cpr.register('None', NothingPolicy)
     cpr.register('Simple Content', SimpleContentPolicy)
+    cpr.register('First Published', SemiGhostPolicy)
 
 
 if __name__ == '__main__':

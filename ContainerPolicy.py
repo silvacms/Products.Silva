@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 
 # zope
 from Globals import InitializeClass
@@ -103,4 +103,14 @@ class _SimpleContentPolicy(Persistent):
         
 SimpleContentPolicy = _SimpleContentPolicy()
     
+
+class _SemiGhostPolicy(Persistent):
+    __implements__ = IContainerPolicy
+
+    def createDefaultDocument(self, container, title):
+        assert IContainer.isImplementedBy(container)
+        container.manage_addProduct['Silva'].manage_addSemiGhost(
+            'index', title)
+        container.index.sec_update_last_author_info()
+SemiGhostPolicy = _SemiGhostPolicy()
 
