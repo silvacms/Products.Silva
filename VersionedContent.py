@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.52.8.1 $
+# $Revision: 1.52.8.2 $
 
 # Python
 from StringIO import StringIO
@@ -65,16 +65,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             container = self.get_container()
             container._invalidate_sidebar(container)
     
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'clean_public_rendering_cache')
-    def clean_public_rendering_cache(self):
-        """Cleans all current caching data from the cache.
-        Currently this is only necessary for an upgrade of old content object
-        which do not have cache yet.
-        """
-        self._cached_data = {}
-        self._cached_checked = {}
-
     # ACCESSORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'can_set_title')    
@@ -270,7 +260,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             if datetime > publicationtime:
                 refreshtime = self.service_extensions.get_refresh_datetime()
                 if (datetime > refreshtime and self.is_version_published()):
-                    # Yes! We have valid cached data! Return data                    
+                    # Yes! We have valid cached data! Return data
                     return data
         return None
     
