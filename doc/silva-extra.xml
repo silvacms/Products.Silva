@@ -810,7 +810,7 @@
      <message name="external_validator_failed">The input failed the external validator.</message>
      <message name="required_not_found">Input is required but no input given.</message>
      <message name="too_long">Too much input was given.</message>
-     <message name="not_email">You did not enter an email address.</message>
+     <message name="not_email">The email address is not formatted properly.</message>
    </field_messages>
    <index_args>
      <value key="lexicon_id">silva_lexicon</value>
