@@ -1,4 +1,4 @@
-/<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html tal:omit-tag=""
   lang="en"
   xml:lang="en"
@@ -162,7 +162,7 @@
                     name="access_revoke_from_user:method"
                     title="revoke selected role(s) from selected user(s)"
                     type="submit"
-                    value="Revoke role"
+                    value="revoke role"
                     tal:condition="revokeable_roles"
                     i18n:attributes="title value"
                   />
