@@ -13,6 +13,7 @@
 <!-- properties (aka tab_metadata) for Publications: XXX Fixme:
      isn't this duplicated code from the same pt above? -->
 <metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
 <metal:use use-macro="view/Container/tab_metadata/macros/master">
 <metal:block fill-slot="top_controls">
   <tal:block replace="nothing">
