@@ -49,7 +49,7 @@
                 <th class="top"
                   tal:define="
                     model_is_root python: model.meta_type == 'Silva Root';
-                    model_is_publication python: model.meta_type == 'Silva Publication';
+                    model_is_publication python: model.implements_publication();
                     publication model/get_publication;
                     containing_publication publication/../get_publication | publication;
                     query_string query_string | nothing;
