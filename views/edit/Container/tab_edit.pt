@@ -442,7 +442,7 @@ There are no active content objects in this folder.
   //-->
   </script>
   <tal:block condition="silva_permissions/ChangeSilvaContent">
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_rename:method" value="Rename..." title="Rename and retitle an item: alt-r" accesskey="r" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_rename_start:method" value="Rename..." title="Rename and retitle an item: alt-r" accesskey="r" />
   &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_edit_delete:method" value=" Delete " title="There's no undo: alt-d" accesskey="d" onClick="return confirm('Really delete?')" />
   &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_cut:method" value=" Cut " title="Cut items: alt-x" accesskey="x" />
   </tal:block>
