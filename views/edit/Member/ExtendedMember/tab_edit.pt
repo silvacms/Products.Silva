@@ -24,13 +24,13 @@
 <tal:block condition="silva_permissions/ChangeSilvaAccess">
 
 <form action="." method="post" tal:attributes="action python:model.absolute_url()+'/edit'">
-<table>
+<table border="0" cellspacing="0" cellpading="0">
   <tr>
     <th colspan="2" align="left">Field name:</th>
     <th align="left">Field value:</th>
   </tr>
 
-  <tr tal:repeat="field fields">
+  <tr tal:repeat="field fields" tal:attributes="class python:test(repeat['field'].odd, 'focus', 'focus-cycle')">
     <td tal:content="structure python: test(field.is_required(), '*', '&nbsp;')">
     </td>
     <td tal:content="field/title">
@@ -40,21 +40,21 @@
     </td>
   </tr>
 
-  <tr>
+  <tr class="controls">
     <td>
       &nbsp;
     </td>
-    <td valign="bottom">
+    <th valign="bottom">
       Approved member:
-    </td>
-    <td valign="bottom">
+    </th>
+    <th valign="bottom" align="left">
       <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')" />&nbsp;
       <input  class="button" type="submit" name="approve_visitor:method" tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != request.AUTHENTICATED_USER.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()" value="Approve now"/>
-    </td>
+    </th>
   </tr>
 
-  <tr><td colspan="3" class="halfline">&nbsp;</td></tr>
-  <tr>
+  <tr class="focus"><td colspan="3" class="halfline">&nbsp;</td></tr>
+  <tr class="controls">
     <td align="left" colspan="2">
       <input type="button" class="cancelbutton" name="close" value="  Close  " 
           title="Close window - alt-c" accesskey="c"
@@ -63,8 +63,8 @@
     </td>
     <td align="right">
       <input class="button" type="submit" 
-             name="save_memberdata:method" value="   Edit   "
-             title="Edit operation - alt-e" accesskey="e"
+             name="save_memberdata:method" value="   Save   "
+             title="Save member data - alt-s" accesskey="s"
       />
     </td>
   </tr>
