@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.98.4.2.14.5 2004/05/20 18:59:32 kitblake Exp $
+# $Id: SilvaObject.py,v 1.98.4.2.14.6 2004/06/22 12:11:28 roman Exp $
 
 # python
 from types import StringType
@@ -9,6 +9,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from DateTime import DateTime
 from StringIO import StringIO
+from App.Common import rfc1123_date
 # Silva
 import SilvaPermissions
 from Products.SilvaViews.ViewRegistry import ViewAttribute
@@ -399,5 +400,12 @@ class SilvaObject(Security, ViewCode):
         """always deletable"""
         return 1
         
+    def HEAD(self, REQUEST, RESPONSE):
+        """ assumes the content type is text/html;
+            override HEAD for clases where this is wrong!
+        """
+        mod_time = rfc1123_date ( self.get_modification_datetime() )
+        RESPONSE.setHeader('Content-Type', 'text/html')
+        RESPONSE.setHeader('Last-Modified', mod_time)
         
 InitializeClass(SilvaObject)

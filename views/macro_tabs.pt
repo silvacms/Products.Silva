@@ -39,7 +39,6 @@
         width="14"
         border="0"
         tal:attributes="src string:${root_url}/globals/silva_emblem.png"
-        i18n:attributes="alt"
       />
     </a>
     <a name="top"> </a>
@@ -95,6 +94,7 @@
       up_key tab_info/uplink_accesskey | nothing;
       ">
       <a class="left"
+        title 
         tal:condition="tab_info/toplink_url"
         tal:attributes="href tab_info/toplink_url;
           title string:up to top of publication: alt-${top_key};
@@ -125,7 +125,9 @@
         tal:attributes="href tab_info/uplink_url;
           title string:up a level: alt-${up_key};
           accesskey up_key;
-          ">
+          "
+        i18n:attributes="title"
+        >
         <img border="0"
            height="9"
            width="9"

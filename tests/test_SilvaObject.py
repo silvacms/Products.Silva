@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22.8.1.16.1 $
+# $Revision: 1.22.8.1.16.2 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -115,6 +115,13 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals([self.root, self.folder,
                            self.subfolder, self.subsubdoc],
                           self.subsubdoc.get_breadcrumbs())
+
+
+    def test_HEAD(self):
+        for object in (self.root, self.folder, self.subsubdoc):
+            self.folder.HEAD(self.app.REQUEST, self.app.REQUEST.RESPONSE)
+            self.assertEquals('text/html',
+                              self.app.REQUEST.RESPONSE.getHeader('content-type'))
 
 if __name__ == '__main__':
     framework()

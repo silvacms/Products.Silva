@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.27 2004/06/02 10:11:47 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.28 2004/06/22 12:11:28 roman Exp $
 
 # Python
 import re, string
@@ -429,6 +429,20 @@ class Image(Asset):
     def PUT(self, REQUEST, RESPONSE):
         """Handle HTTP PUT requests"""
         return self.image.PUT(REQUEST, RESPONSE)
+
+    def HEAD(self, REQUEST, RESPONSE):
+        """ forward the request to the underlying image object
+        """
+        # XXX: copy & paste from "index_html"
+        img = None
+        query = REQUEST.QUERY_STRING
+        if query == 'hires':
+            img = self.hires_image
+        elif query == 'thumbnail':
+            img = self.thumbnail_image
+        if img is None:
+            img = self.image
+        return img.HEAD(REQUEST, RESPONSE)
 
     def get_file_size(self):
         return self.hires_image.get_size()

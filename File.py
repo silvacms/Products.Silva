@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27.8.1.6.8 $
+# $Revision: 1.27.8.1.6.9 $
 
 # Python
 import os
@@ -172,11 +172,18 @@ class File(Asset):
         """Handle HTTP PUT requests"""
         return self._file.PUT(REQUEST, RESPONSE)
 
+    def HEAD(self, REQUEST, RESPONSE):
+        """ forward the request to the underlying file object
+        """
+        # should this set the content-disposition header,
+        # like the "index_html" does?
+        return self._file.HEAD(REQUEST, RESPONSE)
+
 InitializeClass(File)
 
 
 class ZODBFile(File):                                   
-    """Silva File object, storage in Filesystem. Contains the OFS.Image.File    
+    """Silva File object, storage in Filesystem. Contains the OFS.Image.File
     """       
     def __init__(self, id, title, file):
         ZODBFile.inheritedAttribute('__init__')(self, id, title)
