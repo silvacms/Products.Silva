@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  Development
+  1.1.3
 
     Features added:
 
@@ -17,6 +17,17 @@ Silva changes
         citation elements
 
       - Fixed problem with vanishing paragraphs after a save in Kupu.
+
+      - Fixed problem that made subsubheadings break Kupu editing.
+      
+      - Fixed several issues in list conversions on saving a document from
+        Kupu.
+
+      - Fixed bug in mangle.DateTime.toStrOptionalTime() that made the method
+        raise an exception if the datetime argument was None, now it returns
+        an empty string like the rest of the mangle.DateTime methods.
+
+      - Fixed bugs and cleaned up standard_error_message
 
   1.1.2
 
