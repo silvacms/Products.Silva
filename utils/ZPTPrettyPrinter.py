@@ -4,7 +4,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
 # Author: Jan-Wijbrand Kolman (jw@infrae.com)
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 #
 # Issues:
 #  * Testing, testing, testing. It would be rather horrible to 
@@ -324,7 +324,7 @@ def write(ch):
 
 def main(options, files):
     parser = make_parser() # ['xml.sax.drivers2.drv_sgmlop', 'xml.sax.drivers2.drv_pyexpat', 'xml.sax.drivers2.drv_xmlproc', ])
-    sys.stderr.write(str(parser) + '\n\n\n')
+    #sys.stderr.write(str(parser) + '\n\n\n')
 
     handler = PrettyZPT(options, writer=None)
     parser.setContentHandler(handler)
