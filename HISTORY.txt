@@ -1,12 +1,31 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.18 $
+$Revision: 1.19 $
 
 Silva changes
 
+  Version under development
+
+    Features Added
+
+       - Moved views, widgets and other support folders to the
+         filesystem, now using FileSystemSite.
+
+       - Created new view registry called MultiViewRegistry which
+         can deal with views from multiple Silva extension packages.
+         View code can be maintained in extension packages apart from 
+         the Silva core.
+
+       - Created installation framework for Silva extension packages.
+         'service_extensions' allows site managers to install new
+         extension packages into a Silva install.
+
+    Bugs fixed
+
+
   0.8.5
 
-    Featues Added
+    Features Added
 
       - New tab layout.
 
