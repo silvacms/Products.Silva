@@ -103,7 +103,7 @@
           title string:up to top of publication: alt-${top_key};
           accesskey top_key;
           "
-          i18n:attributes="title top_publication"
+          i18n:attributes="title"
           >
         <img border="0"
            height="9"
