@@ -92,5 +92,5 @@ Installing Silva on a ZEO cluster
   Since Silva depends heavily on sessions, these also need to be
   shared throughout the cluster; this can be done by mounting a
   non-undoable storage into the main storage that will be used
-  specifically as a store for session data. [see other document]
-
+  specifically as a store for session data. For more information
+  on this, see 'doc/zeo_cluster_notes'.
