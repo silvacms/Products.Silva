@@ -10,7 +10,8 @@
     global vein string:settings;
     ">
 
-<!-- settings (aka tab_metadata) for Container objects -->
+<!-- properties (aka tab_metadata) for Publications: XXX Fixme:
+     isn't this duplicated code from the same pt above? -->
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 <metal:use use-macro="view/Container/tab_metadata/macros/master">
@@ -63,8 +64,15 @@
       </tal:define>
       </tal:repeat>
       <tr class="controls">
-        <td class="align-right" colspan="4">
-          <input class="button" type="submit" name="layout_submit:method" value=" Save layout " title="access key: alt-l" accesskey="l" />
+        <td class="align-right"
+          colspan="4">
+          <input class="button"
+            type="submit"
+            name="layout_submit:method"
+            value="save layout"
+            title="access key: alt-l"
+            accesskey="l"
+          />
         </td>
       </tr>
     </tbody>    
