@@ -41,15 +41,19 @@ if show_headings == 'true':
         table_data.append("""<td align="%s">\n  %s\n</td>""" % ('left', name))
     table_data.append("""</tr>""")
 
+rownr = 0
 for row in data:
     row_data = []
     col = 0
     for field in row:
-        row_data.append(
-            """<td align="%s">\n  %s\n</td>""" % ('left', field))
         col += 1
+        row_data.append(
+            """<td align="%s">\n  %s\n</td>""" % ('left', field))        
+    rownr += 1
+    if rownr % 2: cssclass = "odd"
+    else: cssclass = "even"
     table_data.append(
-        """<tr>\n%s\n</tr>""" % '\n'.join(row_data))
+        """<tr class="%s">\n%s\n</tr>""" % (cssclass, '\n'.join(row_data)))
 
 table = []
 table.append("""<table class="silvatable %s" width="100%%" cellspacing="0" cellpadding="3px">""" % (type))
