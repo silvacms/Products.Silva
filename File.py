@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27.8.1.6.7 $
+# $Revision: 1.27.8.1.6.8 $
 
 # Python
 import os
@@ -18,7 +18,8 @@ from webdav.WriteLockInterface import WriteLockInterface
 # Silva
 from Asset import Asset
 from Products.Silva import mangle
-import SilvaPermissions
+from Products.Silva import SilvaPermissions
+from Products.Silva import upgrade
 # Storages
 from OFS import Image                            # For ZODB storage
 try:                                             #
@@ -254,6 +255,7 @@ def manage_addFile(self, id, title, file):
     object.set_title(title)
     return object
 
+
 class FilesService(SimpleItem.SimpleItem):
     meta_type = 'Silva Files Service'
 
@@ -294,11 +296,16 @@ class FilesService(SimpleItem.SimpleItem):
     def useFSStorage(self):
         return (self.is_filesystem_storage_available() and 
             self.filesystem_storage_enabled())
-
+    
     def filesystem_path(self):
         """filesystem_path
         """
         return self._filesystem_path
+
+    security.declarePublic('cookPath')
+    def cookPath(self, path):
+        "call cook path"
+        return cookPath(path)
 
     # MANIPULATORS
     security.declareProtected('View management screens', 
@@ -313,6 +320,20 @@ class FilesService(SimpleItem.SimpleItem):
         if REQUEST is not None:
             return self.manage_filesServiceEditForm(
                 manage_tabs_message='Settings Changed')
+
+    security.declareProtected('View management screens',
+        'manage_convertImageStorage')
+    def manage_convertImageStorage(self, REQUEST=None):
+        """converts images to be stored like set in files service"""
+        from Products.Silva.Image import ImageStorageConverter
+        upg = upgrade.UpgradeRegistry()
+        upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
+        root = self.get_root()
+        upg.upgrade(root, '0.0', '0.1')
+        if REQUEST is not None:
+            return self.manage_filesServiceEditForm(
+                manage_tabs_message='Silva Images converted. See Zope '
+                    'log for details.')
 
 InitializeClass(FilesService)
 
@@ -341,4 +362,6 @@ def cookPath(path):
             break
     path_items.reverse()        
     return tuple(path_items)
+
+
 

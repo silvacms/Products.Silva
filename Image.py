@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.23 2004/05/13 07:24:25 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.24 2004/05/13 15:34:14 zagy Exp $
 
 # Python
 import re, string
@@ -21,8 +21,8 @@ from webdav.WriteLockInterface import WriteLockInterface
 # Silva
 import SilvaPermissions
 from Asset import Asset
-from File import cookPath
 from Products.Silva import mangle
+from Products.Silva import upgrade
 # misc
 from helpers import add_and_edit
 
@@ -37,7 +37,7 @@ try:
 except ImportError:  
     pass
 
-from interfaces import IAsset
+from interfaces import IAsset, IUpgrader
 
 icon = "www/silvaimage.gif"
 addable_priority = -0.4
@@ -187,7 +187,7 @@ class Image(Asset):
             ct = file.headers.get('Content-Type')
         except AttributeError:
             ct = None
-        self._image_factory('hires_image', self.get_title(), file, ct)
+        self._image_factory('hires_image', file, ct)
         self._set_redirect(self.hires_image)
         format = self.getFormat()
         if format in self.web_formats:
@@ -415,21 +415,19 @@ class Image(Asset):
         if self.web_scale == '100%' and image.format == self.web_format:
             # there image is neither scaled nor changed in format, just use
             # the same one
-            if (self.image is not None and
-                    self.image.aq_base is not self.hires_image.aq_base):
+            if self.image is not None and not self._image_is_hires():
                 self._remove_image('image')
             self.image = self.hires_image
             return
         else:
-            if (self.image is not None and 
-                    self.image.aq_base is self.hires_image.aq_base):
+            if self.image is not None and self._image_is_hires():
                 self.image = None
         web_image_data = StringIO()
         image = image.resize((width, height), PIL.Image.ANTIALIAS)
         image = self._prepareWebFormat(image)
         image.save(web_image_data, self.web_format)
         ct = self._web2ct[self.web_format]
-        self._image_factory('image', self.get_title(), web_image_data, ct)
+        self._image_factory('image', web_image_data, ct)
         self._set_redirect(self.image)
 
     def _createThumbnail(self):
@@ -446,8 +444,7 @@ class Image(Asset):
         thumb_data = StringIO()
         thumb.save(thumb_data, self.web_format)
         ct = self._web2ct[self.web_format]
-        self._image_factory('thumbnail_image', self.get_title(), thumb_data,
-            ct)
+        self._image_factory('thumbnail_image', thumb_data, ct)
 
     def _prepareWebFormat(self, pil_image):
         """converts image's mode if necessary"""
@@ -456,10 +453,11 @@ class Image(Asset):
             pil_image = pil_image.convert("RGB")
         return pil_image
 
-    def _image_factory(self, id, title, file, content_type):
+    def _image_factory(self, id, file, content_type):
         repository = self._useFSStorage()
         image = getattr(self, id, None)
         created = 0
+        title = self.get_title()
         if repository is None:
             image = OFS.Image.Image(id, title, file,
                 content_type=content_type)
@@ -481,6 +479,10 @@ class Image(Asset):
             image = image.aq_base
             # set the actual id (so that absolute_url works)
             image.id = id
+        if created:
+            old_img = getattr(self, id, None)
+            if old_img is not None:
+                old_img.manage_beforeDelete(image, self)
         setattr(self, id, image)
         if created:
             image.manage_afterAdd(image, self)
@@ -492,7 +494,7 @@ class Image(Asset):
         assert service_files is not None, "There is no service_files. " \
             "Refresh your silva root."
         if service_files.useFSStorage():
-            return cookPath(service_files.filesystem_path())
+            return service_files.cookPath(service_files.filesystem_path())
         return None
 
     def _get_image_and_src(self, hires=0, thumbnail=0):
@@ -527,6 +529,10 @@ class Image(Asset):
         image.manage_beforeDelete(self.image, self)
         setattr(self, id, None)
 
+    def _image_is_hires(self):
+        return (self.image is not None and
+            self.image.aq_base is self.hires_image.aq_base)
+
 
 InitializeClass(Image)
     
@@ -557,6 +563,32 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
 
     add_and_edit(context, id, REQUEST)
     return img
+
+
+
+class ImageStorageConverter:
+
+    __implements__ = IUpgrader
+
+    def upgrade(self, asset):
+        assert asset.meta_type == 'Silva Image'
+        self._restore_image(asset, 'hires_image')
+        asset._createDerivedImages()
+        return asset
+
+    def _restore_image(self, asset, id):
+        image = getattr(asset, id, None)
+        if image is None:
+            return
+        if image.meta_type == 'Image':
+            data = StringIO(str(image.data))
+        elif image.meta_type == 'ExtImage':
+            data = open(image.get_fsname(), 'rb')
+        else:
+            raise RuntimeError, "Invalid asset at %s" % asset.absolute_url()
+        ct = image.getContentType()
+        asset._image_factory(id, data, ct)
+
 
 # Register Image factory for image mimetypes
 import mimetypes

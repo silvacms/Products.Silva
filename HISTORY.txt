@@ -7,6 +7,12 @@ Silva changes
   1.0a2
 
     Features added
+    
+      - All images of a Silva Image asset are stored in the filesystem if
+        ExtFile is available and the corresponding option is set in
+        service_files. Also better support for ExtFile's static serving was
+        introduced. service_files allows to convert the storage method of
+        all Silva Image assets.
 
       - Image scaling supports "keep aspect ratio" now. You can scale with
         120x* or *x211 to fix width or height.
