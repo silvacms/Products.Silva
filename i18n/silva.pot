@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 18 16:16:52 2004\n"
+"POT-Creation-Date: Thu Nov 18 17:04:31 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -3155,6 +3155,18 @@ msgstr ""
 
 #: /views/edit/tab_preview.pt:37
 msgid "This is a closed version. You see it, but the public won't!"
+msgstr ""
+
+#: /views/get_tab_info.py:25
+msgid "up a level: alt-${key}"
+msgstr ""
+
+#: /views/get_tab_info.py:27
+msgid "up to top of publication: alt-${key}"
+msgstr ""
+
+#: /views/get_tab_info.py:29
+msgid "access key: alt-${key}"
 msgstr ""
 
 #: /views/logout.pt:36

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 18 16:16:52 2004\n"
+"POT-Creation-Date: Thu Nov 18 17:04:31 2004\n"
 "PO-Revision-Date: 2004-11-17 18:17+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -2997,7 +2997,7 @@ msgstr "een niveau naar boven: alt-]"
 #: /views/edit/macro_vein_navigation.pt:76
 #: /views/edit/macro_vein_navigation.pt:82
 msgid "up to containing publication: alt-["
-msgstr "omhoog naar omvattende publication: alt-["
+msgstr "omhoog naar omvattende publicatie: alt-["
 
 #: /views/edit/macro_vein_navigation.pt:89
 msgid "reload screen"
@@ -3327,6 +3327,18 @@ msgstr "public&nbsp;preview..."
 #: /views/edit/tab_preview.pt:37
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr "This is a closed version. You see it, but the public won't!"
+
+#: /views/get_tab_info.py:25
+msgid "up a level: alt-${key}"
+msgstr "een niveau omhoog: alt-${key}"
+
+#: /views/get_tab_info.py:27
+msgid "up to top of publication: alt-${key}"
+msgstr "omhoog naar top van publicatie: alt-${key}"
+
+#: /views/get_tab_info.py:29
+msgid "access key: alt-${key}"
+msgstr "sneltoets: alt-${key}"
 
 #: /views/logout.pt:36
 msgid "To <b>actually</b> logout, wait 5 seconds or hit this"
