@@ -1071,3 +1071,17 @@ class IGhost(Interface):
 
     def _factory(container, id, content_url):
         """call factory method in container context"""
+
+
+class IIcon(Interface):
+    # XXX I don't like the name
+    
+    def getIconIdentifier():
+        """returns icon identifier
+        
+            the icon registry should be able to return an icon from an icon
+            identifier
+        """
+
+
+    
