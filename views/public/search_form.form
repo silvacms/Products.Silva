@@ -6,6 +6,8 @@
   <action></action>
   <enctype></enctype>
   <method>POST</method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>public_search_form</i18n>
 
   <groups>
     <group>

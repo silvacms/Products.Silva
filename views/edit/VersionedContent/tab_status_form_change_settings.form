@@ -6,6 +6,8 @@
   <action></action>
   <enctype></enctype>
   <method></method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>tab_status_form_change_settings</i18n>
 
   <groups multiple="true">
     <group>
