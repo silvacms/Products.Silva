@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.63 $
+# $Revision: 1.64 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -313,6 +313,9 @@ class Security(AccessManager):
             return noneMember.__of__(self)
         userid = binding.get('silva-extra', element_id='lastauthor',
             no_defaults=1)
+        # XXX: the userid comes back as unicode which zope doesn't like
+        # just using str might not be a good idea, but weired characters
+        # are not allowed in userids anyway
         userid = str(userid)
         # get cached author info (may be None)
         info = self.sec_get_member(userid).aq_base
