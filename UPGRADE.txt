@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.4
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.11 $
+  CVS:        $Revision: 1.12 $
 
 Upgrading Silva 0.8.3 to 0.8.4
 
@@ -58,7 +58,7 @@ Upgrading Silva 0.8.3 to 0.8.4
 
     To start using the Groups definitions, a "Groups Service" is needed.
     Once the Groups Filesystem Product is installed, such a service can be
-    added to the Silv Root via the ZMI. This service should have
+    added to the Silva Root via the ZMI. This service should have
     'service_groups' for its id.
 
   Silva services (ZODB)
