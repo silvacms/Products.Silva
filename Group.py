@@ -1,7 +1,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
-from AccessControl import ClassSecurityInfo
+# $Revision: 1.3 $
+from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # Silva interfaces
@@ -32,23 +32,41 @@ class Group(Asset):
         
     def manage_beforeDelete(self, item, container):
         Group.inheritedAttribute('manage_beforeDelete')(self, item, container)
-        self.service_groups.removeNormalGroup(self._group_name)
+        if self.isValid():
+            # the real group is only deleted if the asset is valid
+            self.service_groups.removeNormalGroup(self._group_name)
+   
+    def isValid(self):
+        """returns whether the group asset is valid
+
+            A group asset becomes invalid if it gets moved around ...
+        """
+        return (self.valid_path == self.getPhysicalPath())
         
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'addUser')
     def addUser(self, userid):
+        """adds user with given userid to group"""
+        if not self.isValid():
+            raise Unauthorized, "Zombie group asset"
         self.service_groups.addUserToZODBGroup(userid, self._group_name)
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'removeUser')
     def removeUser(self, userid):
+        """removes user with given userid from group"""
+        if not self.isValid():
+            raise Unauthorized, "Zombie group asset"
         self.service_groups.removeUserFromZODBGroup(userid, self._group_name)
 
     # ACCESSORS    
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'listUsers')
     def listUsers(self):
+        """ returns a (sorted) list of users in this group""" 
+        if not self.isValid():
+            raise Unauthorized, "Zombie group asset"
         result = self.service_groups.listUsersInZODBGroup(self._group_name)
         result.sort()
         return result
@@ -63,12 +81,15 @@ def manage_addGroup(self, id, title, group_name, REQUEST=None):
         return
     # these checks should also be repeated in the UI
     if not hasattr(self, 'service_groups'):
-        return
+        raise AttributeError, "There is no service_groups"
     if self.service_groups.isGroup(group_name):
-        return
+        raise ValueError, "There is already a group of that name."
     object = Group(id, title, group_name)
     self._setObject(id, object)
     object = getattr(self, id)
+    # set the valid_path, this cannot be done in the constructor because the context
+    # is not known as the object is not inserted into the container.
+    object.valid_path = object.getPhysicalPath()
     self.service_groups.addNormalGroup(group_name)
     add_and_edit(self, id, REQUEST)
     return ''
