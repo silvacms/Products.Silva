@@ -264,8 +264,8 @@ div.searchBox {
 }
 
 input.searchButton {
-    font-size: 100%red;
-    margin-bottom: 1pxred;
+    font-size: 100%;
+    margin-bottom: 1px;
 }
 
 div.tabs {
