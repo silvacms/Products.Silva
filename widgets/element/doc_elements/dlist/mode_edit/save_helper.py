@@ -7,6 +7,7 @@
 ##parameters=
 ##title=
 ##
+# $Id: save_helper.py,v 1.4 2003/01/27 15:53:16 zagy Exp $
 request = context.REQUEST
 node = request.node
 model = node.get_content()
@@ -27,16 +28,15 @@ data = request['data']
 # strip off empty newlines at the end
 data = data.rstrip()
 
-list_title = getattr(request,'list_title','')
-context.util.save_title(node, list_title)
-
 if element_type not in ['normal', 'compact']:
     return
 
 node.setAttribute('type', element_type)
 
 # remove previous items, except for the title node
-childNodes = [ child for child in  node.childNodes if child.nodeName=='dd' or child.nodeName == 'dt']
+childNodes = [ child 
+    for child in  node.childNodes 
+    if child.nodeName=='dd' or child.nodeName == 'dt']
 childNodes.reverse()
 for child in childNodes:
     node.removeChild(child)
