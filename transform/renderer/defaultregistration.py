@@ -17,6 +17,8 @@ def registerDefaultRenderers():
          ImagesOnRightRenderer
     from Products.Silva.transform.renderer.basicxsltrenderer import\
          BasicXSLTRenderer
+    from Products.Silva.transform.renderer.notitlerenderer import\
+         NoTitleRenderer
     
     reg = getRendererRegistry()
     
@@ -24,9 +26,13 @@ def registerDefaultRenderers():
         'Silva Document',
         'Basic XSLT Renderer',
         BasicXSLTRenderer())
+
+    reg.registerRenderer(
+        'Silva Document',
+        'Basic XSLT Renderer (No Title)',
+        NoTitleRenderer())
         
     reg.registerRenderer(
         'Silva Document', 
         'Images on Right',
         ImagesOnRightRenderer())
-

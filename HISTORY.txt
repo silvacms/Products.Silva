@@ -5,6 +5,11 @@ Silva changes
 
   1.1.1
 
+    Features Added
+
+      - Added a new xslt renderer that renders Silva Documents without a
+        title at the top.
+
     Bugs Fixed
 
       - Headings are no longer incorrectly discarded by the xslt renderer.
