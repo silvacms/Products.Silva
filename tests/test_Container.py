@@ -93,8 +93,8 @@ class ContainerTestCase(unittest.TestCase):
         
     def test_get_status_tree(self):
         l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
-             (0, self.folder4.default), (1, self.subdoc),
-             (1, self.subfolder.default), (2, self.subfolder.subsubdoc)]
+             (0, self.folder4.index), (1, self.subdoc),
+             (1, self.subfolder.index), (2, self.subfolder.subsubdoc)]
         self.assertEquals(self.sroot.get_status_tree(),
                           l)
         
@@ -222,10 +222,10 @@ class ContainerTestCase(unittest.TestCase):
 
     def test_get_default(self):
         # add default to root
-        self.sroot.manage_addProduct['Silva'].manage_addDocument('default', 'Default')
-        self.assertEquals(getattr(self.sroot, 'default'), self.sroot.get_default())
+        self.sroot.manage_addProduct['Silva'].manage_addDocument('index', 'Default')
+        self.assertEquals(getattr(self.sroot, 'index'), self.sroot.get_default())
         # delete default object
-        self.folder4.action_delete(['default'])
+        self.folder4.action_delete(['index'])
         self.assertEquals(None, self.folder4.get_default())        
         
 def test_suite():

@@ -39,14 +39,14 @@ class SilvaObjectTestCase(unittest.TestCase):
         self.assertEquals(self.document.get_title(), 'Document2')
         self.folder.set_title('Folder2')
         self.assertEquals(self.folder.get_title(), 'Folder2')
-        self.assertEquals(self.folder.default.get_title(), 'Folder2')
+        self.assertEquals(self.folder.index.get_title(), 'Folder2')
         self.sroot.set_title('Root2')
         self.assertEquals(self.sroot.get_title(), 'Root2')
         self.publication.set_title('Publication2')
         self.assertEquals(self.publication.get_title(), 'Publication2')
 
-        self.folder.default.set_title('Set by default')
-        self.assertEquals(self.folder.default.get_title(),
+        self.folder.index.set_title('Set by default')
+        self.assertEquals(self.folder.index.get_title(),
                           'Set by default')
         self.assertEquals(self.folder.get_title(),
                           'Set by default')
@@ -56,7 +56,7 @@ class SilvaObjectTestCase(unittest.TestCase):
         self.assertEquals(self.folder.get_title(), 'Folder')
         self.assertEquals(self.sroot.get_title(), 'Root')
         self.assertEquals(self.publication.get_title(), 'Publication')
-        self.assertEquals(self.folder.default.get_title(), 'Folder')
+        self.assertEquals(self.folder.index.get_title(), 'Folder')
 
     def test_title2(self):
         # set title through document metadata, perhaps this should

@@ -220,8 +220,8 @@ class CopyTestCase(unittest.TestCase):
 
     def test_delete7(self):
         # delete folder without default doc
-        self.folder4.action_delete(['default'])
-        self.assert_(not hasattr(self.folder4, 'default'))
+        self.folder4.action_delete(['index'])
+        self.assert_(not hasattr(self.folder4, 'index'))
         self.sroot.action_delete(['folder4'])
         self.assert_(not hasattr(self.sroot, 'folder4'))
 
