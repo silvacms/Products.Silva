@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.24 2003/11/02 09:56:28 kitblake Exp $
+# $Id: GhostFolder.py,v 1.25 2003/11/03 06:31:59 kitblake Exp $
 
 from __future__ import nested_scopes
 
@@ -69,7 +69,7 @@ class SyncFolder(Sync):
 
     def _do_create(self):
         self.g_container.manage_addProduct['Silva'].manage_addFolder(
-            self.h_id, '[no title]', 0)
+            self.h_id, self.h_id, 0)
 
 
 class SyncPublication(Sync):
@@ -79,7 +79,7 @@ class SyncPublication(Sync):
 
     def _do_create(self):
         self.g_container.manage_addProduct['Silva'].manage_addPublication(
-            self.h_id, '[no title]', 0)
+            self.h_id, self.h_id, 0)
 
 
 class SyncGhost(Sync):
