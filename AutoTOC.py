@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.4 2003/11/02 09:56:28 kitblake Exp $
+# $Id: AutoTOC.py,v 1.5 2003/11/04 06:19:45 kitblake Exp $
 
 # Zope
 from Globals import InitializeClass
@@ -19,7 +19,7 @@ from Products.Silva import mangle
 from Products.Silva.interfaces import IContent, IContainerPolicy
 from Products.Silva.helpers import add_and_edit
 
-icon = "www/silvageneric.gif"
+icon = "www/autotoc.png"
 addable_priority = 2
 
 class AutoTOC(Content, SimpleItem):
