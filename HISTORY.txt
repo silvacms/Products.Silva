@@ -35,11 +35,15 @@ Silva changes
           and also the id of the object to be pasted is now changed until
           it's unique (in the past, a bug in creating a unique id kept the
           status of a document 'public' in some cases).
+        
+	- Fixed problems arising from allowing to create content objects
+          which may shadow important internal objects (issue321) or 
+          cause unfriendly Zope error messages (issue189)
 
         - Intermediate fix where an local roles mapping for an non-existing
           userid would display "Unknown User" and could not be deleted.
 
-        - Past to ghost of Publications exposed two bugs. Fixed now.
+        - Paste to ghost of Publications exposed two bugs. Fixed now.
 
         - The "use selection" button would not return to tab_access 
           just after assigning a role to a user.
@@ -143,13 +147,13 @@ Silva changes
         - Asset reference fix where it didn't work in virtual host
           setups.
 
-	- Fix some unicode issue related to tables (issue184)
+        - Fix some unicode issue related to tables (issue184)
 
-	- Silva does no longer display non-installed content types
-	  in list of addables (issue159).
+        - Silva does no longer display non-installed content types
+          in list of addables (issue159).
 
-	- Modification time of assets should now be updated properly
-	  (issue147).
+        - Modification time of assets should now be updated properly
+          (issue147).
 
         - Some characters that were removed by the Silva editor
           shouldn't be removed -- made these work (issue 176).
