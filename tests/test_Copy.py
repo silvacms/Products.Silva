@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 import unittest
 import Zope
 from Products.Silva import Document, Folder, Ghost
@@ -285,7 +285,7 @@ class CopyTestCase(unittest.TestCase):
     def test_delete7(self):
         # delete folder without default doc
         self.folder4.action_delete(['index'])
-        self.assert_(not hasattr(self.folder4, 'index'))
+        self.assert_(not hasattr(self.folder4.aq_explicit, 'index'))
         self.sroot.action_delete(['folder4'])
         self.assert_(not hasattr(self.sroot, 'folder4'))
 
