@@ -91,8 +91,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             version_id = self.get_public_version()
             if version_id is None:
                 version_id = self.get_last_closed_version()
-                if version_id is None:
-                    return None
         return getattr(self, version_id)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
