@@ -86,7 +86,7 @@ class ConvertRegistry(SilvaTestCase.SilvaTestCase):
         self.assertEquals(res.strip(), 'x-y y-z')
 
 
-class ShortestPath(unittest.TestCase):
+class ShortestPath(SilvaTestCase.SilvaTestCase):
 
     def test_simple_path(self):
         G = { 'x' : {'y': 1, 'z': 1},
@@ -109,5 +109,6 @@ else:
     import unittest
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestSilvaTestCase))
+        suite.addTest(unittest.makeSuite(ConvertRegistry))
+        suite.addTest(unittest.makeSuite(ShortestPath))
         return suite
