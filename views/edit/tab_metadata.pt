@@ -26,8 +26,47 @@
         <tal:block replace="nothing">
           _____________________ main _____________________
         </tal:block>
+        
         <td class="main"
           tal:define="display_flag python:1;">
+          <table class="listing">
+            <thead>
+              <tr tal:replace="nothing">
+                ______________ vein + title row ______________
+              </tr>
+              <tr>
+                <td class="top">
+                  <h2 tal:attributes="title string:id: ${model/id}" 
+                    i18n:translate="">
+                    <img tal:replace="structure python:view.render_icon(model)" />                      
+                    properties of &#xab;<tal:block content="title"
+                    i18n:name="title" />&#xbb;
+                  </h2>
+                </td>
+              </tr>
+              <tr tal:replace="nothing">
+                ______________ top controls row ______________
+              </tr>
+              <tr class="top-controls">
+                <td>
+                  <tal:condition condition="may_change_content">
+                    <tal:block condition="here/service_subscriptions | nothing">
+                      <a class="transport"
+                        style="float:right;"
+                        title="manage subscriptions: alt-m"
+                        accesskey="m"
+                        i18n:attributes="title"
+                        i18n:translate=""
+                        tal:attributes="href string:${url}/service_subscriptions/edit/"
+                        >
+                        manage subscriptions...
+                      </a>
+                    </tal:block>
+                  </tal:condition>
+                </td>
+            </thead>
+          </table>
+          
           <tal:block condition="model/implements_versioning">
             <tal:block 
               define="version model/get_editable | nothing;"
