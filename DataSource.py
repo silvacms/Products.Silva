@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -122,6 +122,7 @@ class DataSource(Asset):
             field = StringField(
                 name, title=name, default=value, 
                 description=description, unicode=1).__of__(self)
+            field.get_form_encoding = form.get_form_encoding
             form.add_field(field)
         return form
 
