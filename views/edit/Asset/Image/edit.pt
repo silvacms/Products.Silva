@@ -70,15 +70,15 @@
       </p>
       <p>
       <span class="subhead">original</span><br />
-        <img style="margin-top:0.3em;"
-          tal:condition="model/thumbnail_image"
-          tal:attributes="src string:${model/absolute_url}?thumbnail" /><br />
         <a href="" class="underline"
           title="see the original image"
           accesskey="v"
           tal:attributes="href string:${model/absolute_url}?hires"
           i18n:attributes="title"
           i18n:translate="view_unscaled_image">
+          <tal:condition condition="model/thumbnail_image">
+            <img tal:attributes="src string:${model/absolute_url}?thumbnail" /><br />
+          </tal:condition>
           view un<span tal:content="transf">scaled</span> image
         </a>
       </p>
@@ -204,8 +204,8 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="3">
-          <h3 i18n:translate="image_thumbnailing">
-            thumbnailing 
+          <h3 i18n:translate="cropping">
+            cropping
           </h3>
         </td>
       </tr>

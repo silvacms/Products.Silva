@@ -103,6 +103,14 @@
         accesskey="e"
         tal:attributes="value python:test(here.id in ('Folder','Publication'), ' save + enter ', ' save + edit ')"
       />
+      <input class="button" 
+        type="submit"
+        name="add_edit_index_submit"
+        value="save + edit index"
+        title="access key: alt-i"
+        accesskey="i"
+        tal:condition="python:here.id in ('Folder','Publication')"
+      />
       </tal:condition>
     </td>
   </tr>

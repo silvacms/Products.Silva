@@ -22,7 +22,7 @@
           <alternate_name></alternate_name>
           <css_class>store</css_class>
           <default></default>
-          <description>Crop the image with the specified dimensions.</description>
+          <description>Crop the display image with the specified dimensions.</description>
           <display_maxwidth></display_maxwidth>
           <display_width type="int">12</display_width>
           <enabled type="int">1</enabled>
@@ -48,7 +48,7 @@
           <alternate_name></alternate_name>
           <css_class>store</css_class>
           <default>0</default>
-          <description>The x coordinate of the center of the area to crop.</description>
+          <description>The x coordinate of the top left corner of the area to crop.</description>
           <display_maxwidth></display_maxwidth>
           <display_width type="int">12</display_width>
           <enabled type="int">1</enabled>
@@ -75,7 +75,7 @@
           <alternate_name></alternate_name>
           <css_class>store</css_class>
           <default>0</default>
-          <description>The y coordinate for cropping.</description>
+          <description>The y coordinate of the crop bounding box.</description>
           <display_maxwidth></display_maxwidth>
           <display_width type="int">12</display_width>
           <enabled type="int">1</enabled>
