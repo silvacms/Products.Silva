@@ -12,7 +12,7 @@
 
     type model/meta_type;
     url model/absolute_url;
-    title model/get_title_html;
+    title model/get_title;
     
     root_url model/get_root_url;
 
@@ -27,7 +27,7 @@
     may_change_content silva_permissions/ChangeSilvaContent | nothing;"
   >
 <head>
-<title tal:content="structure title">
+<title tal:content="title">
   Title
 </title>
 <link href="globals/favicon.ico"

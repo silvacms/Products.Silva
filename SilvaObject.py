@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.74 2003/05/12 13:33:46 guido Exp $
+# $Id: SilvaObject.py,v 1.75 2003/05/15 14:07:53 jw Exp $
 
 # python
 from types import StringType
@@ -118,16 +118,6 @@ class SilvaObject(Security, ViewCode):
         title = self.get_title()
         if not title: title = self.id
         return title
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title_html')
-    def get_title_html(self):
-        return self.output_convert_html(self.get_title())
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title_or_id_html')
-    def get_title_or_id_html(self):
-        return self.output_convert_html(self.get_title_or_id())
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title_editable')
@@ -310,28 +300,6 @@ class SilvaObject(Security, ViewCode):
     def to_xml(self, context):
         """Handle unknown objects. (override in subclasses)
         """
-        context.f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))
-        
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'output_convert_html')
-    def output_convert_html(self, s):
-        """Turn unicode text to something displayable on the web.
-        """
-        # make sure HTML is quoted
-        return escape(s, 1)
-    
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'input_convert')
-    def input_convert(self, s):
-        """Turn input to unicode.
-        """
-        return unicode(' '.join(s.split()), 'utf-8')
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'input_convert2')
-    def input_convert2(self, s):
-        """Turn input to unicode.
-        """
-        return unicode(s, 'utf-8')
+        context.f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))      
         
 InitializeClass(SilvaObject)

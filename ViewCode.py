@@ -1,5 +1,6 @@
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
+from cgi import escape
 
 import SilvaPermissions
 
@@ -146,5 +147,26 @@ class ViewCode:
                     str_datetime = self.service_utils.datetime_to_date_space(datetime)
                     infodict['public_version_expiration_datetime'] = str_datetime
         return ret
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'output_convert_html')
+    def output_convert_html(self, s):
+        """Escape entities
+        """
+        return escape(s, 1)
+    
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'input_convert')
+    def input_convert(self, s):
+        """Turn input to unicode. Assume it is UTF-8.
+        """
+        return unicode(' '.join(s.split()), 'utf-8')
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'input_convert2')
+    def input_convert2(self, s):
+        """Turn input to unicode. Assume it is UTF-8.
+        """
+        return unicode(s, 'utf-8')
 
 InitializeClass(ViewCode)

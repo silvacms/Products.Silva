@@ -46,7 +46,7 @@
       <td class="top">
         <h2>
           <img tal:replace="structure python:view.render_icon(model)" />
-          <span tal:replace="structure string:&#xab;${model/get_title_html}&#xbb;">id</span>
+            &#xab;<tal:block content="model/get_title" />&#xbb;
         </h2>
       </td>
     </tr>

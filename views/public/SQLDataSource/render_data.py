@@ -23,7 +23,7 @@ data = datasource.get_data(parameters)
 
 # FIXME: Using CSS this hairball is slightly less hairy
 # than is used to be
-caption = datasource.get_title_html()
+caption = datasource.output_convert_html(datasource.get_title())
 type = 'listing'
 show_headings = 'true'
 show_caption = 'true'

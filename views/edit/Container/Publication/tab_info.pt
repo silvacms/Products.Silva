@@ -5,7 +5,11 @@
   metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<h2>Info for <span class="folder-title" tal:content="structure string:&#xbb;${model/get_title_html}&#xab;">title here</span></h2>
+<h2>Info for 
+  <span class="folder-title">
+    &#xab;<tal:block content="model/get_title" />&#xbb;
+  </span>
+</h2>
 
 <h3>Authorized users below this level</h3>
 

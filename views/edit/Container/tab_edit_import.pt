@@ -56,7 +56,10 @@
           colspan="3">
           <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure python:view.render_icon(model)" />
-            <span i18n:translate="import_in">import in</span> <span tal:replace="structure string:&amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
+            <span i18n:translate="import_in">
+              import in
+            </span>
+            &#xab;<tal:block content="model/get_title" />&#xbb;
           </h2>
         </td>
       </tr>

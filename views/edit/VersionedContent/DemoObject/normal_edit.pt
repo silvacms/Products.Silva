@@ -9,7 +9,10 @@
 <tr valign="top">
 <td width="16"><img tal:attributes="src string:${root_url}/globals/pixel.gif" width="16" height="16" border="0" alt="not editable" /></td>
 <td colspan="3" width="98%">
-<div class="front3">&nbsp;Demo-details for: <span tal:replace="structure python:model.get_title_or_id_html()" /></div>
+<div class="front3">
+  &nbsp;Demo-details for: 
+  &#xab;<tal:block content="model/get_title" />&#xbb;
+</div>
 </td>
 <td width="60" align="right" valign="top">&nbsp;</td>
 </tr>
@@ -41,7 +44,7 @@ Note
 *
 </td>
 <td align="left">
-<input tal:replace="structure python:view.form.object_title.render(model.get_title_html())" />
+<input tal:replace="python:view.form.object_title.render(model.get_title())" />
 </td>
 <td>
 The title

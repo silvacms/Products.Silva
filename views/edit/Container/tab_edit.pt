@@ -199,8 +199,8 @@
                           tal:attributes="
                             href string:${item_url}/edit/tab_preview;
                             class python:item.get_object_status()[1];"
-                          tal:define="title python:(item.get_title_html() or default)"
-                          tal:content="structure title">
+                          tal:define="title python:(item.get_title() or default)"
+                          tal:content="title">
                           <i>no title</i>
                         </a>
                       </td>
@@ -281,7 +281,7 @@
                     asset_url asset/absolute_url;
                     oddrow repeat/asset/odd">
                     <tr 
-                      tal:define="title python:(asset.get_title_html())"
+                      tal:define="title python:(asset.get_title())"
                       tal:attributes="class python:oddrow and 'odd' or 'even'">
                       <tal:block replace="nothing">
                         _______ checkbox + position cell _______
@@ -317,7 +317,7 @@
                       <td>
                         <a class="blacklink"
                           title="preview"
-                          tal:content="structure asset/get_title_html"
+                          tal:content="asset/get_title"
                           tal:attributes="href string:${asset_url}/edit/tab_preview">
                           title
                         </a>

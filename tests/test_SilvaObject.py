@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 import unittest
 import Zope
 Zope.startup()
@@ -116,7 +116,7 @@ class SilvaObjectTestCase(unittest.TestCase):
         self.assertEquals('Foo', self.document.get_title())
         
     def test_title3(self):
-        # Test get_title_or_id_html
+        # Test get_title_or_id
         self.assertEquals(self.document.get_title_or_id(), 'Document')
         self.assertEquals(self.document2.get_title_or_id(), 'document2')
 

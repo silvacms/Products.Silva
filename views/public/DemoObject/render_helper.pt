@@ -6,7 +6,7 @@
 
 <!-- Course Title and Code -->
 <div tal:omit-tag="" tal:condition="title | nothing">
-<h2 tal:content="structure python:model.get_title_html()">title</h2>
+<h2 tal:content="python:model.get_title()">title</h2>
 </div>
 
 <h3>Content</h3>

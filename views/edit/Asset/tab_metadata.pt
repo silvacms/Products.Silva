@@ -7,8 +7,11 @@
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
 <h2><img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model)" />&nbsp;
-  Metadata for <span class="document-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
+  tal:replace="structure python:view.render_icon(model)" />&nbsp;
+  Metadata for 
+  <span class="document-title">
+    &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+  </span>
 </h2>
 
 <init tal:omit-tag=""

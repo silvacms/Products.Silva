@@ -51,7 +51,7 @@ Link:
 <td>
 <a href="original"
   tal:attributes="href python:content_url + '/edit/tab_preview'"
-  tal:content="structure python:content_url + ' &nbsp;(' + model.get_editable().get_title_html() + ')'">Link
+  tal:content="python:content_url + ' (' + model.get_editable().get_title() + ')'">Link
 </a>
 </td>
 <td class="leadedbody">

@@ -45,7 +45,7 @@
               <tal:block define="obj python: request['model'].resolve_ref(ref); path python: '/'.join(obj.getPhysicalPath())">
                 <td valign="top">
                   <a class="blacklink" tal:attributes="href string:${path}/edit/tab_preview">
-                    <b tal:content="structure obj/get_title_html" />
+                    <b tal:content="obj/get_title" />
                   </a>
                 </td>
                 <td valign="top">
@@ -75,7 +75,8 @@
                   colspan="3">
                   <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
-                    <span i18n:translate="export_from">export from</span> <span tal:replace="structure string:&amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
+                    <span i18n:translate="export_from">export from</span> 
+                    &#xab;<tal:block content="model/get_title" />&#xbb;
                   </h2>
                 </td>
               </tr>
@@ -327,7 +328,7 @@
         <td>
           <textarea name="description"
             style="width: 100%;"
-            tal:content="model/get_title_html"></textarea>
+            tal:content="model/get_title"></textarea>
         </td>
         <td i18n:translate="description_shown_in_queue">
           This description will be shown in the queue and the list of processed items.

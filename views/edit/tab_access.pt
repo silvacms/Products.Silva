@@ -52,7 +52,7 @@
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />
                       user roles for
-                      &#xab;<span tal:replace="structure string:${model/get_title_html}">
+                      &#xab;<span tal:replace="string:${model/get_title}">
                         title
                       </span>&#xbb;
                     </h2>
@@ -323,7 +323,7 @@
                         <h2 tal:attributes="title string:id: ${model/id}">
                           <img tal:replace="structure python:view.render_icon(model)" />
                           group roles for
-                          &#xab;<span tal:replace="structure string:${model/get_title_html}">
+                          &#xab;<span tal:replace="string:${model/get_title}">
                             title
                           </span>&#xbb;
                         </h2>

@@ -29,9 +29,7 @@
   <h2>
      <img tal:replace="structure python:view.render_icon(model)" />
      &nbsp; Group definitions for
-     <span tal:content="structure string:&amp;#xab;${model/get_title_or_id_html}&amp;#xbb;">
-       title
-     </span>
+     &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
    </h2>
    <h3 i18n:translate="group_definitions">
      Group definitions
@@ -206,7 +204,7 @@
                     href="asset"
                     title="edit this group"
                     tal:attributes="href string:${group/absolute_url}/edit"
-		    i18n:attributes="title">
+                    i18n:attributes="title">
                     <tal:block replace="group/id">
                       id
                     </tal:block>
@@ -217,8 +215,8 @@
                     href="asset"
                     title="Edit this asset"
                     tal:attributes="href string:${group/absolute_url}/edit"
-		    i18n:attributes="title">
-		  <tal:block replace="structure group/get_title_or_id_html">
+                    i18n:attributes="title">
+                    <tal:block replace=" group/get_title_or_id">
                     title
                   </tal:block>                    
                   </a>

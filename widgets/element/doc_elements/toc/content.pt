@@ -17,7 +17,7 @@
         tal:define="
           indent python:obj[0]; 
           item python:obj[1];
-          title python:obj[1].get_title_html();
+          title python:obj[1].get_title();
           url string:${item/absolute_url}/${append_to_url}"
         tal:condition="python:not (hasattr(item, 'hide_from_tocs') and item.hide_from_tocs)"
         >
@@ -31,7 +31,7 @@
           <a class="toc-link"
             href="edit"
             tal:attributes="href url"
-            tal:content="structure title">
+            tal:content="title">
             title
           </a>
           <br />

@@ -6,7 +6,7 @@
   metal:define-macro="layout">
 
 <head metal:define-slot="head">
-  <title metal:define-slot="title" tal:content="here/get_title_html">layout_macro.html</title>
+  <title metal:define-slot="title" tal:content="here/get_title">layout_macro.html</title>
   <meta name="DC.subject" content="Silva metadata subject" tal:attributes="content python:getattr(here, 'subject', '')" />
   <meta metal:define-slot="meta" tal:omit-tag="" />
   <link rel="shortcut icon" href="globals/favicon.ico" tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />

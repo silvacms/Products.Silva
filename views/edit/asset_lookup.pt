@@ -13,7 +13,10 @@
 <div class="margins">
   <h2><img src="%s" width="16" height="16" alt="%s" 
         tal:replace="structure python:view.render_icon(model)" />&nbsp;
-    Contents of <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
+    Contents of 
+    <span class="folder-title">
+      &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+    </span>
   </h2>
 </div>
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -67,7 +70,7 @@
       tal:define="url python:model.get_publication().absolute_url()"
       tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><img tal:replace="structure python:view.render_icon(model.get_publication())" /></a>
       <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
-        tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><span tal:replace="structure python:model.get_publication().get_title_html()">Publication top</span></a>
+        tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><span tal:replace="python:model.get_publication().get_title()">Publication top</span></a>
   </td>
 </tr>
 
@@ -86,7 +89,7 @@
           <a class="blacklink" href="title" title="id"
             tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (item.absolute_url(), filter);
               title string:id: ${item/id}">
-            <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_html()">no title</span>
+            <span tal:replace="python:item.getProperty('short_title') or item.get_title()">no title</span>
           </a>
       </span>
     </td>
@@ -157,8 +160,8 @@ function setReference() {
   <td>
     <a class="blacklink" title="Preview"
       tal:attributes="href string:${asset/absolute_url}/edit/tab_preview">
-      <span tal:replace="structure asset/get_title_html"
-        tal:condition="python:asset.get_title_html() != ''">title</span>
+      <span tal:replace="asset/get_title"
+        tal:condition="python:asset.get_title() != ''">title</span>
     </a>
   </td>
 <span tal:replace="nothing"> _______ modification date cell _______ </span>

@@ -43,7 +43,8 @@
     <td class="top" colspan="3">
     <h2>
       <img tal:replace="structure python:view.render_icon(model)" />
-      status of <span tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title</span>
+      status of 
+      &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
     </h2>
     </td>
   </tr>
@@ -172,7 +173,7 @@ _______ manual close section here _______
          <td class="top">
            <h2 tal:attributes="title string:id: ${model/id}">
              <img tal:replace="structure python:view.render_icon(model)" />
-             export <span tal:replace="structure string:&amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
+             export <span tal:replace="string:&amp;#xab;${model/get_title}&amp;#xbb;">id</span>
            </h2>
          </td>
        </tr>

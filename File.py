@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 
 # Python
 import os
@@ -90,7 +90,7 @@ class File(Asset):
         if style_attr:
             attrs.append('style="%"' % style_attr)
         attrs = ' '.join(attrs)
-        link_text = self.get_title_html() or self.id
+        link_text = self.output_convert_html(self.get_title()) or self.id
         return '<a %s href="%s">%s</a>' % (
             attrs, self.get_download_url(), link_text)
 

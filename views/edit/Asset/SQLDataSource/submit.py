@@ -26,12 +26,12 @@ if current_connection_id != new_connection_id:
     changed.append(('connection id', '%s to %s' % (
         current_connection_id, new_connection_id)))
 
-current_title = model.get_title_html()
+current_title = model.output_convert_html(model.get_title())
 new_title = result['object_title']
 if current_title != new_title:
     model.set_title(new_title)
-    changed.append(('title', '%s to %s' % (
-        current_title, model.get_title_html())))
+    changed.append(( 'title', '%s to %s' % (
+        current_title, model.output_convert_html(model.get_title())) ))
 
 new_parameters = model.parameter_string_to_dict(result['parameters'])
 current_parameters = model.parameters()

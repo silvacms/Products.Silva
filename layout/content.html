@@ -6,7 +6,11 @@
 
 <head>
 <!-- delete this title slot to use the automatic document title in layout_macro.html -->
-<title metal:fill-slot="title" tal:content="here/get_title_or_id_html">Local or custom title (in content.html)</title>
+<title 
+	metal:fill-slot="title" 
+	tal:content="here/get_title_or_id">
+	Local or custom title (in content.html)
+</title>
 
 <!-- add custom meta tags -->
 <metal:block fill-slot="meta">
@@ -35,7 +39,7 @@
 <div metal:fill-slot="navigation" tal:omit-tag="">
   <!-- Start navigation slot -->
   <span class="breadcrumb"><span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
-    <a tal:attributes="href item/absolute_url" tal:content="structure item/get_title_html">Name</a>
+    <a tal:attributes="href item/absolute_url" tal:content="item/get_title">Name</a>
     <span tal:condition="not:repeat/item/end" tal:omit-tag="">/</span></span>
   </span>
   <!-- End navigation slot -->

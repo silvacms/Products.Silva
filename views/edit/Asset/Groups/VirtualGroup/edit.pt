@@ -21,9 +21,9 @@
           Meta type
         </span>
         for
-        <span class="document-title"
-          tal:content="
-            structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title</span>
+        <span class="document-title">
+          &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+        </span>
       </h2>
 
       <h3>

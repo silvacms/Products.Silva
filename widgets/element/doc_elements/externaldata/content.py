@@ -28,7 +28,7 @@ except:
 
 # FIXME: Using CSS this hairball is slightly less hairy
 # than it used to be
-caption = datasource.get_title_html()
+caption = datasource.output_convert_html(datasource.get_title())
 type = node.getAttribute('type') or 'listing'
 show_headings = node.getAttribute('show_headings') or 'true'
 show_caption = node.getAttribute('show_caption') or 'true'

@@ -7,4 +7,5 @@
 ##parameters=
 ##title=
 ##
-return context.REQUEST.node.get_content().get_title_html()
+content = context.REQUEST.node.get_content()
+return content.output_convert_html(content.get_title())

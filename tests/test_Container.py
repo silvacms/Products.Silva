@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.34 $
+# $Revision: 1.35 $
 import unittest
 import Zope
 Zope.startup()
@@ -326,17 +326,17 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.sroot.xml_import(xml1)
 
         self.assert_(hasattr(self.sroot, 'test'))
-        self.assert_(self.sroot.test.get_title_html() == 'TestPub')
+        self.assert_(self.sroot.test.get_title() == 'TestPub')
         self.assert_(hasattr(self.sroot.test, 'index'))
-        self.assert_(self.sroot.test.index.get_title_html() == 'TestPub')
+        self.assert_(self.sroot.test.index.get_title() == 'TestPub')
         self.assert_(str(self.sroot.test.index.get_editable().content.documentElement) == '<doc><p>Content</p></doc>')
 
         self.sroot.xml_import(xml2)
 
         self.assert_(hasattr(self.sroot, 'test2'))
-        self.assert_(self.sroot.test2.get_title_html() == 'TestFolder')
+        self.assert_(self.sroot.test2.get_title() == 'TestFolder')
         self.assert_(hasattr(self.sroot.test2, 'do'))
-        self.assert_(self.sroot.test2.do.get_title_html() == 'DemoObject')
+        self.assert_(self.sroot.test2.do.get_title() == 'DemoObject')
         self.assert_(str(self.sroot.test2.do.get_editable().number()) == '10')
         self.assert_(self.sroot.test2.do.get_editable().date() == DateTime('2002/10/16'))
         self.assert_(self.sroot.test2.do.get_editable().info() == 'Info')

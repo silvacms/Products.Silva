@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.26 2003/03/21 14:13:19 zagy Exp $
+# $Id: Image.py,v 1.27 2003/05/15 14:07:53 jw Exp $
 
 # Python
 import re
@@ -68,9 +68,9 @@ class Image(Asset):
         """
         self._title = title
         if self.image:
-            # have to encode as otherwise unicode will blow up image rendering
-            # code
-            self.image.title = self.get_title_html()
+            # have to encode as otherwise unicode will blow up 
+            # image rendering code
+            self.image.title = self.get_title().encode('utf-8')
 
     def set_web_presentation_properties(self, web_format, web_scale):
         """sets format and scaling for web presentation
@@ -107,8 +107,8 @@ class Image(Asset):
         """
         if self.hires_image is not None:
             self.hires_image.manage_beforeDelete(self.hires_image, self)
-        self.hires_image = self._image_factory('hires_image', 
-            self.get_title_html(), file)
+        self.hires_image = self._image_factory(
+            'hires_image', self.get_title().encode('utf-8'), file)
         format = self.getFormat()
         if format in self.web_formats:
             self.web_format = format
@@ -186,7 +186,7 @@ class Image(Asset):
             image_data = StringIO()
             pil_image.save(image_data, self.web_format)
             del(pil_image)
-            image = OFS.Image.Image('custom_image', self.get_title_html(), 
+            image = OFS.Image.Image('custom_image', self.get_title().encode('utf-8')), 
                 image_data)
         elif not hires and not webformat:
             raise ValueError, "Low resolution image in original format is " \
@@ -237,7 +237,7 @@ class Image(Asset):
         web_image = image.resize((width, height), PIL.Image.BICUBIC)
         web_image = self._prepareWebFormat(web_image)
         web_image.save(web_image_data, self.web_format)
-        self.image = OFS.Image.Image('image', self.get_title_html(), 
+        self.image = OFS.Image.Image('image', self.get_title().encode('utf-8')), 
             web_image_data)
 
     def _prepareWebFormat(self, pil_image):

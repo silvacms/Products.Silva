@@ -52,7 +52,8 @@
                     colspan="3">
                     <h2>
                       <img tal:replace="structure python:view.render_icon(model)" />
-                      addable settings for: <span tal:replace="structure string:&#xab;${model/get_title_html}&#xbb;">id</span>
+                      addable settings for: 
+                      &#xab;<tal:block content="model/get_title" />&#xbb;
                     </h2>
                   </td>
                 </tr>

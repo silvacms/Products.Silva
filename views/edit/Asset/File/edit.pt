@@ -1,7 +1,12 @@
 <div class="margins" tal:define="view here; model request/model">
 
 <h2><img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model)" />&nbsp;<span tal:replace="model/meta_type">Meta type</span> <span class="document-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span></h2>
+      tal:replace="structure python:view.render_icon(model)" />&nbsp;
+      <span tal:replace="model/meta_type">Meta type</span> 
+      <span class="document-title">
+        &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+      </span>
+</h2>
 
 <init tal:omit-tag=""
   tal:define="global fields python:view.properties_form.get_fields()" />
