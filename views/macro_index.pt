@@ -26,6 +26,7 @@
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content silva_permissions/ChangeSilvaContent | nothing;    
     dummy python: here.REQUEST.set('edit_mode', 1);
+    editor python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getUserName()).editor();
 ">
 
 <head>
@@ -86,7 +87,7 @@ function handle_default_action(element, event, action)
 <metal:block define-slot="script" />
 </head>
 
-<body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
+<body tal:attributes="onload python: test(vein == 'editor' and editor == 'epoz', 'epoz = initSilvaEpoz(document.getElementById(\'epoz-editor\'));; epozui = epoz.getTool(\'ui\');;', 'if (window.focus_editor) window.focus_editor()')">
 <!-- __________________________ Start matrix tabs _________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   top navigation plugs in here....

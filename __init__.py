@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.112.6.2 $
+# $Revision: 1.112.6.3 $
 
 import ContainerPolicy
 
@@ -16,8 +16,14 @@ def initialize(context):
 # (use CMFCore if FileSystemSite is not installed)
     from Products.Silva.fssite import registerDirectory, registerFileExtension
     from Products.Silva.fssite import FSImage
+    from Products.FileSystemSite.FSDTMLMethod import FSDTMLMethod
+    from Products.FileSystemSite.FSPageTemplate import FSPageTemplate
 # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
+# enable some extensions for epoz
+    registerFileExtension('js', FSDTMLMethod)
+    registerFileExtension('css', FSDTMLMethod)
+    registerFileExtension('html', FSPageTemplate)
     import Folder, Root
     import Publication, Ghost, Image, File, SimpleContent, Link
     import Indexer
@@ -139,6 +145,15 @@ def initialize(context):
     registerDirectory('views', globals())
     registerDirectory('resources', globals())
     registerDirectory('globals', globals())
+
+    try:
+        from Products import epoz
+    except ImportError:
+        pass
+    else:
+        print 'epoz imported'
+        registerDirectory('%s/common' % os.path.dirname(epoz.__file__), globals())
+        registerDirectory('%s/silva' % os.path.dirname(epoz.__file__), globals())
 
     # initialize the metadata system
     #  register silva core types w/ metadata system
