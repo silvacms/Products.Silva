@@ -58,7 +58,7 @@
          <script type="text/javascript"
            tal:content="structure here/reference.js" />
 
-          <input type="button" class="navigation" value="Path..."
+          <input type="button" class="navigation" value="Reference..."
             tal:define="asset_context model"
             tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Content&asset_context=%s\', \'_reference_\', \'focusbox\', \'field_content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
             />
