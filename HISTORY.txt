@@ -1,10 +1,17 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.21 $
+$Revision: 1.47.2.22 $
 
 Silva changes
 
   0.9.1.2
+
+    Features Added
+
+	- Asset references and code element references will now be relative
+          paths if the Assets are in the same container the Document is in,
+          or in a subcontainer of this container. If not, the path will be
+          an absolute path.
 
     Bugs Fixed
 
