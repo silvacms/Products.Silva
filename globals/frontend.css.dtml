@@ -384,6 +384,8 @@ div.header a.icon {
 }
 
 .preview_compare_left {
+  vertical-align: top;
+  text-align: top;
   border-width: 0px;
   border-color: black;
   border-style: solid;
@@ -392,6 +394,8 @@ div.header a.icon {
 }
 
 .preview_compare_right {
+  vertical-align: top;
+  text-align: top;
   padding-left: 2.3em;
 }
 
