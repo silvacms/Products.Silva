@@ -215,76 +215,6 @@ a:hover {
   text-decoration : underline;
 }
 
-/* draft (red) selectors */
-a.draft:link {
-  color : #cc0000;
-  text-decoration : none;
-}
-a.draft:visited {
-  color : #cc0000;
-  text-decoration : none;
-}
-a.draft:hover {
-  color : #cc0000;
-  text-decoration : underline;
-}
-
-/* pending (yellow) selectors */
-a.pending:link {
-  color : #8f7f01;
-  text-decoration : none;
-}
-a.pending:visited {
-  color : #8f7f01;
-  text-decoration : none;
-}
-a.pending:hover {
-  color : #8f7f01;
-  text-decoration : underline;
-}
-
-/* approved (green) selectors */
-a.approved:link {
-  color : #007746;
-  text-decoration : none;
-}
-a.approved:visited {
-  color : #007746;
-  text-decoration : none;
-}
-a.approved:hover {
-  color : #007746;
-  text-decoration : underline;
-}
-
-/* published (blue) selectors */
-a.published:link {
-  color : #000080;
-  text-decoration : none;
-}
-a.published:visited {
-  color : #000080;
-  text-decoration : none;
-}
-a.published:hover {
-  color : #000080;
-  text-decoration : underline;
-}
-
-/* closed (gray) selectors */
-a.closed:link {
-  color : #666666;
-  text-decoration : none;
-}
-a.closed:visited {
-  color : #666666;
-  text-decoration : none;
-}
-a.closed:hover {
-  color : #666666;
-  text-decoration : underline;
-}
-
 /* blacklink selectors */
 a.blacklink:link {
   color : #333333;
@@ -383,5 +313,99 @@ a.index-element {
   color : #634d82;
 }
 
+/* draft (red) selectors */
+.draft, a.draft {
+  color : #cc0000;
+}
+
+/* pending (yellow) selectors */
+.pending, a.pending {
+  color : #8f7f01;
+}
+
+/* approved (green) selectors */
+.approved, a.approved {
+  color : #007746;
+}
+
+/* published (blue) selectors */
+.published, a.published {
+  color : #000080;
+}
+
+/* closed (gray) selectors */
+.closed, a.closed {
+  color : #666666;
+}
+
+/* draft (red) selectors */
+a.draft:link {
+  color : #cc0000;
+  text-decoration : none;
+}
+a.draft:visited {
+  color : #cc0000;
+  text-decoration : none;
+}
+a.draft:hover {
+  color : #cc0000;
+  text-decoration : underline;
+}
+
+/* pending (yellow) selectors */
+a.pending:link {
+  color : #8f7f01;
+  text-decoration : none;
+}
+a.pending:visited {
+  color : #8f7f01;
+  text-decoration : none;
+}
+a.pending:hover {
+  color : #8f7f01;
+  text-decoration : underline;
+}
+
+/* approved (green) selectors */
+a.approved:link {
+  color : #007746;
+  text-decoration : none;
+}
+a.approved:visited {
+  color : #007746;
+  text-decoration : none;
+}
+a.approved:hover {
+  color : #007746;
+  text-decoration : underline;
+}
+
+/* published (blue) selectors */
+a.published:link {
+  color : #000080;
+  text-decoration : none;
+}
+a.published:visited {
+  color : #000080;
+  text-decoration : none;
+}
+a.published:hover {
+  color : #000080;
+  text-decoration : underline;
+}
+
+/* closed (gray) selectors */
+a.closed:link {
+  color : #666666;
+  text-decoration : none;
+}
+a.closed:visited {
+  color : #666666;
+  text-decoration : none;
+}
+a.closed:hover {
+  color : #666666;
+  text-decoration : underline;
+}
 
 /* style is a filter */
