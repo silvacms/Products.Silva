@@ -197,12 +197,12 @@
               tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
               <td style="border-left: 1px solid black; border-right: 1px solid black;"
                 valign="top">
-                <b tal:content="member/userid">
-                  name
-                </b>
                 <input name="requests:list"
                   type="checkbox"
                   tal:attributes="value python: '|'.join(req)" />
+                <b tal:content="member/userid">
+                  name
+                </b>
               </td>
               <td tal:content="requested_role">
               </td>
