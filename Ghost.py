@@ -10,6 +10,7 @@ import Interfaces
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
+import urlparse
 
 class Ghost(VersionedContent):
     """Ghost object.
@@ -66,11 +67,26 @@ class GhostVersion(SimpleItem.SimpleItem):
         self._content_url = content_url
 
     def set_content_url(self, content_url):
+        """Set content url.
+        """
         # FIXME: should never ever be allowed to point to a ghost
         # or a container - do a lot of tests
-        self._content_url = content_url
 
+        # simplify url
+        scheme, netloc, path, parameters, query, fragment = \
+                urlparse.urlparse(content_url)
+        steps = path.split('/')
+        
+        #if steps[1] == 'silva':
+        #    steps = steps[2:]
+        if len(steps) >= 2 and steps[-2] == 'edit':
+            steps = steps[:-2]
+        content_url = '/'.join(steps)
+        self._content_url = content_url
+        
     def get_content_url(self):
+        """Get content url.
+        """
         return self._content_url
 
     def _get_content(self):
