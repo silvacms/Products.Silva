@@ -6,6 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     view here;
     vein string:export;
@@ -82,10 +83,10 @@
               <tr>
                 <td class="top"
                   colspan="3">
-                  <h2 tal:attributes="title string:id: ${model/id}">
+                  <h2 tal:attributes="title string:id: ${model/id}" i18n:translate="">
                     <img tal:replace="structure python:view.render_icon(model)" />
-                    <span i18n:translate="export_from">export from</span> 
-                    &#xab;<tal:block content="title" />&#xbb;
+                    export from
+                    &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;
                   </h2>
                 </td>
               </tr>
@@ -96,13 +97,14 @@
                       href="tab_edit_import"
                       title="over to the import screen: alt-i"
                       accesskey="i"
-                      i18n:attributes="title">
-                      <span i18n:translate="import">import</span>...
+                      i18n:attributes="title"
+                      i18n:translate="">
+                      import...
                     </a>
-                  <h3 i18n:translate="export_to_silva_xml">
+                  <h3 i18n:translate="">
                     export to Silva xml (.xml)
-                    <tal:condition condition="view/service_docmapdf | nothing">
-                      or Adobe PDF (.pdf)
+                    <tal:condition condition="view/service_docmapdf | nothing" i18n:name="or_adobe">
+                      <tal:block i18n:translate="">or Adobe PDF (.pdf)</tal:block>
                     </tal:condition>
                   </h3>
                 </td>
@@ -112,12 +114,12 @@
             <tbody>
               <tr>
                 <th width="30%" class="align-right"
-                  i18n:translate="options">
+                  i18n:translate="">
                   options
                 </th>
                 <th>
                 </th>
-                <th i18n:translate="note">
+                <th i18n:translate="">
                   note
                 </th>
               </tr>
@@ -125,7 +127,7 @@
               <tr class="odd">
                 <td class="align-right">
                   <label for="with_sub_publications"
-                    i18n:translate="include_sub_publications?">
+                    i18n:translate="">
                     include sub publications?
                   </label>
                 </td>
@@ -142,7 +144,7 @@
               <tr class="even">
                 <td class="align-right">
                   <label for="export_last_version"
-                    i18n:translate="export_newest_versions?">
+                    i18n:translate="">
                     export newest versions?
                   </label>
                 </td>
@@ -152,7 +154,7 @@
                     id="export_last_version"
                   />
                 </td>
-                <td i18n:translate="if_not_checked_the_published_version_is_exported">
+                <td i18n:translate="">
                   If not checked the published version is exported.
                 </td>
               </tr>
@@ -170,7 +172,7 @@
                       value="export pdf"
                       title="access key: alt-e"
                       accesskey="e"
-                      i18n:attributes="value title"
+                      i18n:attributes="value;title"
                     />
                   </tal:condition>
                   <input class="button"
@@ -179,7 +181,7 @@
                     value="export xml"
                     title="access key: alt-e"
                     accesskey="e"
-                    i18n:attributes="value title"
+                    i18n:attributes="value;title"
                   />
                 </td>
               </tr>
@@ -196,22 +198,22 @@
       <thead>
         <tr class="top-controls">
           <td colspan="3">
-            <h3 i18n:translate="export_to_zip">
+            <h3 i18n:translate="">
               full media export (.zip)
-          </h3>
-        </td>
+            </h3>
+          </td>
         </tr>
       </thead>
 
       <tbody>
         <tr>
           <th width="30%" class="align-right"
-            i18n:translate="options">
+            i18n:translate="">
             options
           </th>
           <th>
           </th>
-          <th i18n:translate="note">
+          <th i18n:translate="">
             note
           </th>
       </tr>
@@ -219,7 +221,7 @@
         <tr class="odd">
           <td class="align-right">
             <label for="with_sub_publications"
-              i18n:translate="include_sub_publications?">
+              i18n:translate="">
               include sub publications?
             </label>
           </td>
@@ -236,7 +238,7 @@
         <tr class="even">
           <td class="align-right">
             <label for="export_last_version"
-              i18n:translate="export_last_version?">
+              i18n:translate="">
               export only last version?
             </label>
           </td>
@@ -246,7 +248,7 @@
                 id="export_last_version"
               />
           </td>
-          <td i18n:translate="export_last_version_note">
+          <td i18n:translate="">
             Check to export only the last version. 
           </td>
         </tr>
@@ -262,7 +264,7 @@
         value="export zip"
         title="access key: alt-z"
         accesskey="z"
-        i18n:attributes="value title"
+        i18n:attributes="value;title"
         />
         </td>
         </tr>
@@ -303,14 +305,14 @@
               tal:attributes="src string:${root_url}/globals/docma.png"
               i18n:attributes="alt"
             />
-            <span i18n:translate="docma_facilities">docma facilities</span>
+            <span i18n:translate="">docma facilities</span>
           </h2>
         </td>
       </tr>
 
       <tr class="top-controls">
         <td colspan="3">
-          <h3 i18n:translate="export_to_docma">
+          <h3 i18n:translate="">
             export to Docma (.doc)
           </h3>
         </td>
@@ -320,14 +322,14 @@
     <tbody>
       <tr>
         <th class="align-right"
-          i18n:translate="options">
+          i18n:translate="">
           options
         </th>
-        <th i18n:translate="content">
+        <th i18n:translate="">
           content
         </th>
         <th width="40%"
-          i18n:translate="note">
+          i18n:translate="">
           note
         </th>
       </tr>
@@ -335,7 +337,7 @@
       <tr class="even">
         <td class="align-right">
           <label for="docma_with_sub_publications"
-            i18n:translate="include_sub_publications?">
+            i18n:translate="">
             include sub publications?
           </label>
         </td>
@@ -352,7 +354,7 @@
       <tr class="odd">
         <td class="align-right">
           <label for="docma_export_last_version"
-            i18n:translate="export_newest_versions?">
+            i18n:translate="">
             export newest versions?
           </label>
         </td>
@@ -362,7 +364,7 @@
             id="docma_export_last_version"
           />
         </td>
-        <td i18n:translate="if_not_checked_the_published_version_is_exported">
+        <td i18n:translate="">
           If not checked the published version is exported.
         </td>
       </tr>
@@ -370,7 +372,7 @@
       <tr class="even">
         <td class="align-right">
           <label for="docma_export_closed_content"
-            i18n:translate="export_closed_content?">
+            i18n:translate="">
             export closed content?
           </label>
         </td>
@@ -380,14 +382,14 @@
             id="docma_export_closed_content"
           />
         </td>
-        <td i18n:translate="check_to_include_closed_content">
+        <td i18n:translate="">
           Check to include closed content in the export.
         </td>
       </tr>
 
       <tr class="odd">
         <td class="align-right">
-          <span i18n:translate="email_address">email address</span><span class="warning">*</span>
+          <span i18n:translate="">email address</span><span class="warning">*</span>
         </td>
         <td align="left">
           <input class="store"
@@ -397,20 +399,20 @@
               value python:here.service_members.get_member(user.getUserName()).email() or ''"
           />
         </td>
-        <td i18n:translate="email_will_be_sent">
+        <td i18n:translate="">
           An e-mail will be sent to you when the item is processed.
         </td>
       </tr>
 
       <tr class="even">
         <td class="align-right"
-          i18n:translate="choose_a_template">
+          i18n:translate="">
           choose a template
         </td>
         <td align="left">
           <select class="store"
             name="template">
-            <option value="">
+            <option value="" i18n:translate="">
               none
             </option>
             <tal:repeat repeat="template view/service_docma/get_templates">
@@ -427,7 +429,7 @@
 
       <tr class="odd">
         <td class="align-right"
-          i18n:translate="description">
+          i18n:translate="">
           description
         </td>
         <td>
@@ -435,7 +437,7 @@
             class="store"
             tal:content="model/get_title_editable"></textarea>
         </td>
-        <td i18n:translate="description_shown_in_queue">
+        <td i18n:translate="">
           This description will be shown in the queue and the list of processed items.
         </td>
       </tr>
@@ -452,7 +454,7 @@
           value="export to Docma"
           title="export the selection to word: alt-d"
           accesskey="d"
-          i18n:attributes="value title"
+          i18n:attributes="value;title"
         />
         </tal:block>
         </td>
@@ -470,6 +472,7 @@
 ">
 <metal:use-macro use-macro="here/docma_queue/macros/listings">
 <metal:fill-slot fill-slot="manipulators">
+  <!--  XXX i18n hell-->
   <input class="warning"
     accesskey="x"
     name="export_delete:method"
@@ -477,7 +480,7 @@
     title="there's no undo: alt-x"
     type="submit"
     value="remove" 
-    i18n:attributes="onclick value title"
+    i18n:attributes="value;title"
   />
 </metal:fill-slot>
 </metal:use-macro>

@@ -8,7 +8,9 @@
     vein string:edit;
     active_tab string:../../edit/tab_access_groups;
     parent_screen_name string:groups;
-    has_access here/has_change_access_permission;">
+    has_access here/has_change_access_permission;"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
   
 <table class="columns columns3">
   <tbody>
@@ -51,7 +53,7 @@
     </tr>
     <tr class="top-controls">
       <td>
-        <h3>
+        <h3 i18n:translate="">
           IPs and IP ranges
         </h3>
       </td>
@@ -64,7 +66,7 @@
       tal:define="ipranges model/listIPRanges"
       tal:condition="model/isValid | nothing">
       <tr>
-        <th tal:condition="ipranges">
+        <th tal:condition="ipranges" i18n:translate="">
           settings
         </th>
       </tr>
@@ -93,9 +95,9 @@
       <tr class="even"
         tal:condition="not:ipranges">
         <td>
-          <i i18n:translate="ip_group_does_not_contain_any_ips">
+          <em i18n:translate="">
             This IP Group does not contain any IPs.
-          </i>
+          </em>
         </td>
       </tr>
       <tr class="controls">
@@ -106,7 +108,7 @@
             value="remove ranges"
             title="remove range(s) from this ip group: alt-r"
             accesskey="r"
-            i18n:attributes="title value"
+            i18n:attributes="title;value"
             onClick="return confirm('Really remove?')"
             tal:condition="ipranges"
           />
@@ -126,7 +128,7 @@
     <thead>
       <tr class="top-controls">
         <td colspan="3">
-          <h3 i18n:translate="add_ip_address">
+          <h3 i18n:translate="">
             add an IP address
           </h3>
         </td>
@@ -135,7 +137,7 @@
     <tbody>
       <tr class="even">
         <td class="align-right"
-          width="10%">
+          width="10%" i18n:translate="">
           ip range<span class="warning">*</span>
         </td>
         <td style="width: 20em;">
@@ -144,8 +146,8 @@
             name="iprange"
           />
         </td>
-        <td>
-          <b>Can be:</b><br />
+        <td  i18n:translate="">
+          <strong>Can be:</strong><br />
           IP&nbsp;(like: 10.1.1.1), <br />
           IP-IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br />
           IP/Netmask&nbsp;(like:&nbsp;10.1.1.0/255.255.255.0).
@@ -161,6 +163,7 @@
           value="add ip range"
           name="add_iprange_to_ipgroup:method"
           title="add an ip or an ip range"
+          i18n:attributes="value;title"
           />
         </td>
       </tr>
@@ -168,7 +171,7 @@
   </table>
 </form>
 
-<tal:block condition="not:model/isValid | nothing">
+<tal:block condition="not:model/isValid | nothing"  i18n:translate="">
   "Things to do when virtual groups is not in it original location"
 </tal:block>
 
@@ -193,7 +196,7 @@
                   title="transfer ip(s) to this ip group"
                   type="submit"
                   value="copy ips to ip group" 
-                  i18n:attributes="title value"
+                  i18n:attributes="title;value"
                 />
               </metal:block>
             </metal:block>

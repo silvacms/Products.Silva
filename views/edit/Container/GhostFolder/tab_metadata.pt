@@ -6,6 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:properties;
 ">
@@ -29,6 +30,7 @@
           title="convert this ghost folder to a normal folder: alt-c"
           accesskey="c"
           tal:condition="not:link_status"
+          i18n:attributes="value;title"
         />
         <input class="button"
           type="submit" 
@@ -37,13 +39,14 @@
           title="convert this ghost folder to a normal publication: alt-p"
           accesskey="p"
           tal:condition="not:link_status"
+          i18n:attributes="value;title"
         />
       </form>
     </metal:block>
     <metal:fill fill-slot="actual_table">
       <tal:block define="version model">
         <metal:block use-macro="here/macro_metadata/macros/view_table">
-          <h2 metal:fill-slot="table_title">
+          <h2 metal:fill-slot="table_title" i18n:translate="">
             <img tal:replace="structure python:view.render_icon(model)" />
             metadata of &#8216;original&#8217;
           </h2>

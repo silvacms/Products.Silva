@@ -59,10 +59,10 @@
                 <tr>
                   <td class="top"
                     colspan="3">
-                    <h2>
+                    <h2 i18n:translate="">
                       <img tal:replace="structure python:view.render_icon(model)" />
-                      <span i18n:translate="addable_settings_for">addable settings for</span>
-                      &#xab;<tal:block content="title" />&#xbb;
+                      addable settings for
+                      &#xab;<tal:block content="title" i18n:name="title" />&#xbb;
                     </h2>
                   </td>
                 </tr>
@@ -72,13 +72,13 @@
                 <tr>
                   <th class="align-right"
                     width="12%"
-                    i18n:translate="element">
+                    i18n:translate="">
                     element
                   </th>
-                  <th i18n:translate="content">
+                  <th i18n:translate="">
                     content
                   </th>
-                  <th i18n:translate="note" width="60%">
+                  <th i18n:translate="" width="60%">
                     note
                   </th>
                 </tr>
@@ -97,7 +97,7 @@
                         <span tal:replace="python:field.get_value('description')">
                           comments here (field description)
                         </span><br />
-                        <span tal:condition="python:field.id == 'contact_name' or field.id == 'contact_email'" tal:omit-tag="">(<i tal:content="python:getattr(model, field.id, 'None')"></i>)</span>
+                        <span tal:condition="python:field.id == 'contact_name' or field.id == 'contact_email'" tal:omit-tag="">(<em tal:content="python:getattr(model, field.id, 'None')"></em>)</span>
                       </td>
                     </tr>
                   </tal:define>
@@ -114,7 +114,7 @@
                       value="save addables settings"
                       title="save addable settings for this publication: alt-a"
                       accesskey="a"
-                      i18n:attributes="value title accesskey"
+                      i18n:attributes="value;title"
                     />
                   </td>
                 </tr>

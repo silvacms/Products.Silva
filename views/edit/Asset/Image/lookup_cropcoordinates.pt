@@ -121,8 +121,8 @@
         <div class="info" style='width: 180px; top: 0px; left: 0px;
         position: absolute; '>
           
-          <h3>instructions</h3>
-          <p>
+          <h3 i18n:translate="">instructions</h3>
+          <p i18n:translate="">
             Drag the window below to the image region which should be cropped.
             You can resize the window with the handle on the lower right
             corner. If you're done, you can click the submit button below or 
@@ -130,33 +130,41 @@
             cropping tool.
           </p>
           
-          <h3>predefined sizes</h3>
+          <h3 i18n:translate="">predefined sizes</h3>
           <ul style="list-item-style: none">
             <li>
               <a href="#" class="button" 
               onclick="setDraggableSize(50, 50)"
-              title="50x50 pixels">
+              title="50x50 pixels"
+              i18n:attributes="title"
+              i18n:translate="">
                 50x50 pixel
               </a>
             </li>
             <li>
               <a href="#" class="button"
               onclick="setDraggableSize(75, 75)"
-              title="75x75 pixels">
+              title="75x75 pixels"
+              i18n:attributes="title"
+              i18n:translate="">
                 75x75 pixel
               </a>
             </li>
             <li>
               <a href="#" class="button"
               onclick="setDraggableSize(100, 100)" 
-              title="100x100 pixels">
+              title="100x100 pixels"
+              i18n:attributes="title"
+              i18n:translate="">
                 100x100 pixel
               </a>
             </li>
             <li>
               <a href="#" class="button"
               onclick="setDraggableSize(250, 250)" 
-              title="250x250 pixels">
+              title="250x250 pixels"
+              i18n:attributes="title"
+              i18n:translate="">
                 250x250 pixel
               </a>
             </li>
@@ -169,11 +177,12 @@
               title="alt-u"
               accesskey="u"
               style="float: right"
+              i18n:attributes="value;title"
             />
         </div>
         <div style="top: 0px; margin-left: 200px;">
           <div class="info" id="ground">
-            <h3>drag window</h3>
+            <h3 i18n:translate="">drag window</h3>
           </div>
           <div id="draggable" 
             style="position: absolute; 

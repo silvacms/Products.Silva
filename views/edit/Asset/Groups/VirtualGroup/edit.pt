@@ -8,7 +8,9 @@
     vein string:edit;
     active_tab string:../../edit/tab_access_groups;
     parent_screen_name string:groups;
-    has_access here/has_change_access_permission;">
+    has_access here/has_change_access_permission;"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
   
 <table class="columns columns3">
   <tbody>
@@ -51,7 +53,7 @@
     </tr>
     <tr class="top-controls">
       <td>
-        <h3>
+        <h3 i18n:translate="">
           Virtual Group &#8216;members&#8217;
         </h3>
       </td>
@@ -65,7 +67,7 @@
       tal:condition="model/isValid | nothing">
       <tr>
         <th tal:condition="groupids"
-          i18n:translate="group name">
+          i18n:translate="">
           Group name
         </th>
       </tr>
@@ -96,7 +98,7 @@
       <tr class="even"
         tal:condition="not:groupids">
         <td>
-          <i i18n:translate="virtual_group_does_not_have_member_groups">
+          <i i18n:translate="">
            This Virtual Group does not have any &#8216;member groups&#8217;.
           </i>
         </td>
@@ -109,7 +111,7 @@
             name="remove_groups_from_virtualgroup:method"
             title="remove selected group(s) from this virtual group: alt-r"
             accesskey="r"
-            i18n:attributes="title value"
+            i18n:attributes="title;value"
             onClick="return confirm('Really remove?')"
             tal:condition="groupids"
           />
@@ -119,7 +121,7 @@
   </tbody>
 </table>
 
-<tal:block condition="not:model/isValid | nothing">
+<tal:block condition="not:model/isValid | nothing"  i18n:translate="">
   "Things to do when virtual groups is not in it original location"
 </tal:block>
 
@@ -144,7 +146,7 @@
                   title="add group(s) to this virtual group."
                   type="submit"
                   value="add to group" 
-                  i18n:attributes="title value"
+                  i18n:attributes="title;value"
                 />
               </metal:block>
             </metal:block>
@@ -164,7 +166,7 @@
                   value="copy from virtual group(s)" 
                   name="add_groups_from_virtualgroup_to_virtualgroup:method"
                   title="transfer groups defined in other virtual groups"
-                  i18n:attributes="title value"
+                  i18n:attributes="title;value"
                 />
               </metal:block>
             </metal:block>

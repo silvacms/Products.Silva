@@ -49,7 +49,7 @@
       <metal:block define-slot='title_metadata'>
       <tr class="top-controls">
         <td colspan="2">
-          <h3 i18n:translate="identification">
+          <h3 i18n:translate="">
             characterization
           </h3>
         </td>
@@ -62,10 +62,10 @@
       <tr>
         <th class="align-right"
           width="12%"
-          i18n:translate="element">
+          i18n:translate="">
           element
         </th>
-        <th i18n:translate="content">
+        <th i18n:translate="">
           content
         </th>
       </tr>
@@ -96,7 +96,7 @@
             value="save"
             title="access key: alt-s"
             accesskey="s"
-            i18n:attributes="title value"
+            i18n:attributes="title;value"
           />
         </td>
       </tr>
@@ -138,7 +138,7 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="2">
-          <h3 i18n:translate="upload">
+          <h3 i18n:translate="">
             upload
           </h3>
         </td>
@@ -149,7 +149,7 @@
         <th class="align-right"
           width="12%">
         </th>
-        <th i18n:translate="content">
+        <th i18n:translate="">
           content
         </th>
       </tr>

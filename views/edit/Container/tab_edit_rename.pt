@@ -25,10 +25,10 @@
         <tr>
           <td class="top"
             colspan="3">
-            <h2>
+            <h2 i18n:translate="">
               <img tal:replace="structure python:view.render_icon(model)" />
-              <span i18n:translate="rename_objects_in">rename objects in</span>       
-              &#xab;<tal:block content="title" />&#xbb;
+              rename objects in       
+              &#xab;<tal:block content="title" i18n:name="title" />&#xbb;
             </h2>
           </td>
         </tr>
@@ -36,14 +36,14 @@
 
       <tbody>
         <tr>
-          <th class="align-right" i18n:translate="attribute">
+          <th class="align-right" i18n:translate="">
             attribute
           </th>
-          <th i18n:translate="old">
+          <th i18n:translate="">
             old
           </th>
           <th width="66%"
-            i18n:translate="new">
+            i18n:translate="">
             new
           </th>
         </tr>
@@ -51,7 +51,7 @@
         <tal:repeat repeat="objectid objects">
         <tal:define define="object python:getattr(model, objectid)">
         <tr class="odd" valign="top">
-          <td class="align-right" i18n:translate="id">
+          <td class="align-right" i18n:translate="">
             id
           </td>
           <td>
@@ -69,12 +69,12 @@
           </tr>
 
           <tr class="even" valign="top">
-          <td class="align-right" i18n:translate="title">
+          <td class="align-right" i18n:translate="">
             title
           </td>
           <td tal:define="
                 title python: object.get_title_editable()" >
-            <i tal:condition="not: title">no title</i> 
+            <em tal:condition="not: title" i18n:translate="">no title</em> 
             <span 
               tal:condition="title"
               tal:content="
@@ -122,12 +122,14 @@
               value="rename"
               title="access key: alt-r"
               accesskey="r"
+              i18n:attributes="value;title"
             />
             <input class="cancel"
               type="button"
               name="edit_cancel"
               value="cancel"
               onClick="history.back()" title="access key: alt-c" accesskey="c"
+              i18n:attributes="value;title"
             />
           </td>
         </tr>

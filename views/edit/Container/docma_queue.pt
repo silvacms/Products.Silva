@@ -17,11 +17,11 @@
 </span>
 <tal:condition condition="python: processingident != 0">
   <div class="feedback">
-        <span i18n:translate="current_job">current job</span>:
+        <span i18n:translate="">current job</span>:
         <span tal:replace="processingident">#</span><br />
-        <span i18n:translate="owner">owner</span>:
+        <span i18n:translate="">owner</span>:
         <span tal:replace="python: view.service_members.get_member(view.service_docma.get_ident_owner(processingident)).fullname()">owner</span><br />
-        <span i18n:translate="description">description</span>:
+        <span i18n:translate="">description</span>:
         <span tal:replace="python: view.service_docma.get_ident_description(processingident)">desc</span>
   </div>
 </tal:condition>
@@ -42,12 +42,12 @@
             title="reload to update the queue lists: alt-r"
             accesskey="r"
             i18n:attributes="title"
-            i18n:translate="refresh_queue_lists"
+            i18n:translate=""
             tal:attributes="href string:${model/absolute_url}/edit/${template/id}"
           >
             <u>r</u>efresh queue lists
           </a>
-          <h3 i18n:translate="queue_of_items">
+          <h3 i18n:translate="">
             queue of items to process
           </h3>
         </td>
@@ -61,24 +61,24 @@
       <tr tal:condition="qls">
         <th class="align-right"
           width="4%"
-          i18n:translate="job_id">
+          i18n:translate="">
           job id
         </th>
         <th width="15%"
-          i18n:translate="job_owner">
+          i18n:translate="">
           job owner
         </th>
         <th
-          i18n:translate="description">
+          i18n:translate="">
           description
         </th>
         <th width="15%"
-          i18n:translate="estimated_time">
+          i18n:translate="">
           estimated time
         </th>
         <th class="align-right"
           width="10%"
-          i18n:translate="status">
+          i18n:translate="">
           status
         </th>
       </tr>
@@ -96,10 +96,10 @@
           <td  tal:content="python: view.service_docma.get_ident_description(job)">
             description
           </td>
-          <td>
-            <span tal:content="python: view.service_docma.get_estimated_time_for_ident(job)">
+          <td i18n:translate="">
+            <span tal:content="python: view.service_docma.get_estimated_time_for_ident(job)" i18n:name="estimated_time">
             estimated time</span>
-            &nbsp;<span i18n:translate="seconds">seconds</span>
+            &nbsp;seconds
           </td>
           <td class="align-right"
             tal:content="python: view.service_docma.get_status(job)">
@@ -111,7 +111,7 @@
       <tr class="even"
         tal:condition="not: qls">
         <td colspan="5"
-          i18n:translate="no_jobs_in_queue">
+          i18n:translate="">
           There are no jobs in the queue.
         </td>
       </tr>
@@ -140,11 +140,9 @@
     <thead>
       <tr class="top-controls">
         <td colspan="4">
-          <h3>
-            <span i18n:translate="list_processed_items">
-              list of processed items
-            </span>
-            <tal:condition condition="python: format is not None">
+          <h3 i18n:translate="">
+            list of processed items
+            <tal:condition condition="python: format is not None" i18n:name="format">
               (<tal:replace replace="python:here.getDocmaFormatName(format)" />)
             </tal:condition>
           </h3>
@@ -156,19 +154,19 @@
       <tr tal:condition="ls">
         <th class="align-right"
           width="4%" 
-          i18n:translate="job_id">
+          i18n:translate="">
           job id
         </th>
         <th width="15%"
-          i18n:translate="type">
+          i18n:translate="">
           type
         </th>
-        <th i18n:translate="description">
+        <th i18n:translate="">
           description
         </th>
         <th class="align-right" 
           width="10%" 
-          i18n:translate="download">
+          i18n:translate="">
           download
         </th>
       </tr>
@@ -192,7 +190,7 @@
           <td class="align-right">
             <a href="#"
               tal:attributes="href python:'tab_edit_import_download?storageid=%s|%s' % (job.id, job.format)"
-              i18n:translate="download">
+              i18n:translate="">
               download
             </a>
           </td>
@@ -203,7 +201,7 @@
         tal:condition="not:ls">
         <td align="left"
           colspan="4"
-          i18n:translate="no_processed_jobs">
+          i18n:translate="">
           There are no processed jobs.
         </td>
       </tr>
@@ -236,21 +234,21 @@
                 title="there's no undo: alt-x"
                 type="submit"
                 value="remove" 
-                i18n:attributes="onclick value title" />
+                i18n:attributes="value;title" />
               <input class="button"
                 accesskey="m"
                 name="tab_edit_import_import_and_delete:method"
                 title="import to the current location and remove from the list: alt-m"
                 type="submit"
                 value="import and remove" 
-                i18n:attributes="value title" />
+                i18n:attributes="value;title" />
               <input class="button"
                 accesskey="p"
                 name="tab_edit_import_w2s:method"
                 title="import to the current location: alt-p"
                 type="submit"
                 value="import"
-                i18n:attributes="value title" />
+                i18n:attributes="value;title" />
             </div>
           </tal:condition>
         </td>

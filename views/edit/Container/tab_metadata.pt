@@ -6,6 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:properties;
 ">
@@ -41,10 +42,10 @@
                 <tr>
                   <td class="top">
                     <h2 tal:attributes="title string:id: ${model/id}" 
-                      i18n:translate="properties_of">
+                      i18n:translate="">
                       <img tal:replace="structure python:view.render_icon(model)" />                      
                       properties of &#xab;<tal:block content="title"
-                      i18n:name="property_title" />&#xbb;
+                      i18n:name="title" />&#xbb;
                     </h2>
                   </td>
                 </tr>
@@ -61,7 +62,10 @@
                         style="float:left;"
                         href="tab_edit_to_publication"
                         title="change Folder into Publication: alt-c"
-                        accesskey="c">
+                        accesskey="c"
+                        i18n:attributes="title"
+                        i18n:translate=""
+                        >
                         convert to publication
                       </a>
                     </tal:block>

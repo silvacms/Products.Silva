@@ -14,11 +14,11 @@
 
 <metal:fill-slot fill-slot="info">
   <div class="info">
-    <h3>
+    <h3 i18n:translate="">
       <img tal:replace="structure icon" /> file info
     </h3>
     <p>
-      <span class="subhead"><b i18n:translate="file_size">file size</b><br /></span>
+      <span class="subhead"><strong i18n:translate="">file size</strong><br /></span>
       <span 
         tal:define="size model/get_file_size"
         tal:attributes="title string: ${size}"
@@ -27,12 +27,12 @@
     <tal:condition condition="python:user.has_role(['Manager'], model)">
       <p tal:define="path model/getFileSystemPath"
         tal:condition="path">
-        <span class="subhead"><b i18n:translate="file_system_path">file system path</b><br /></span>
+        <span class="subhead"><strong i18n:translate="">file system path</strong><br /></span>
         <span tal:replace="structure python: ' / '.join(path.split('/'))" />
       </p>
       <p tal:define="mime_type model/get_mime_type"
         tal:condition="mime_type">
-        <span class="subhead"><b i18n:translate="file_mime_type">file mime type</b><br /></span>
+        <span class="subhead"><strong i18n:translate="">file mime type</strong><br /></span>
         <span tal:replace="mime_type" />
       </p>
     </tal:condition>

@@ -29,6 +29,8 @@
             href="tab_edit_to_folder"
             title="change Publication into Folder: alt-c"
             accesskey="c"
+            i18n:attributes="title"
+            i18n:translate=""
             tal:condition="python:type != 'Silva Root'">
             convert to folder
           </a>
@@ -39,10 +41,9 @@
           href="settings_addables"
           title="change the addables allowed in this publication: alt-a"
           accesskey="c"
-          i18n:attributes="title">
-          <tal:block i18n:translate="">
+          i18n:attributes="title"
+          i18n:translate="">
           configure <u>a</u>ddables...
-          </tal:block>
         </a>
       </td>
     </tr>
@@ -60,7 +61,7 @@
       <tr>
         <td class="top" colspan="4">
           <h2 tal:attributes="title string:id: ${model/id}"
-            i18n:attributes="title">
+            i18n:translate="">
             <img tal:replace="structure python:view.render_icon(model)" />                      
             layout
           </h2>
@@ -71,17 +72,17 @@
       <tr>
         <th class="align-right"
           width="12%"
-          i18n:translate="element">
+          i18n:translate="">
           element
         </th>
-        <th i18n:translate="content">
+        <th i18n:translate="">
           content
         </th>
-        <th i18n:translate="acquired_layout">
+        <th i18n:translate="">
            acquired layout
         </th>
         <th width="25%"
-          i18n:translate="note">
+          i18n:translate="">
           note
         </th>
       </tr>
@@ -94,7 +95,7 @@
         </td>
         <td>
           <p tal:condition="model/layout_copied"
-          i18n:translate="layout_copied">Layout has been copied for customization.</p>
+          i18n:translate="">Layout has been copied for customization.</p>
           <input tal:replace="structure python:field.render(model.get_own_layout(), request)" />
         </td>
         <td>
@@ -113,8 +114,8 @@
               style="float:left;"
               href="copy_layout_submit"
               title="copy the layout into the Publication in order to customize it"
-              i18n:translate="layout_customize"
-              i18n:attributes="title layout_customize_desc;">
+              i18n:translate=""
+              i18n:attributes="title">
               customize layout
             </a>
           </tal:block>
@@ -126,7 +127,7 @@
             accesskey="l"
             tal:define="js string:return confirm('Really remove copied layout?')"
             tal:attributes="onclick python:(model.layout_copied() and js) or ''"
-            i18n:attributes="value title"
+            i18n:attributes="value;title"
           />
         </td>
       </tr>

@@ -73,7 +73,7 @@
                     title="add a new item - alt-n"
                     accesskey="n"
                     tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
-                    i18n:attributes="value title"
+                    i18n:attributes="value;title"
                   />
                   <label for="meta_type" 
                     title="access key: alt-s" 
@@ -87,8 +87,8 @@
                     tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
                     i18n:attributes="title"
                   >
-                    <option value="None">
-                      <span i18n:translate="select">select</span>:
+                    <option value="None" i18n:translate="">
+                      select:
                     </option>
                     <tal:block tal:repeat="addable model/get_silva_addables">
                       <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
@@ -103,9 +103,10 @@
                     title="import xml data or a zip file: alt-i"
                     accesskey="i"
                     i18n:attributes="title"
+                    i18n:translate=""
                     tal:condition="may_change_content"
                   >
-                    <span i18n:translate="import">import</span>...
+                    import...
                   </a>
                   <span
                      tal:condition="not:may_change_content">&nbsp;</span>
@@ -121,20 +122,20 @@
                 <th class="listing-left">
                  &nbsp;
                 </th>
-                <th i18n:translate="modify">
+                <th i18n:translate="">
                   modify
                 </th>
-                <th i18n:translate="preview">
+                <th i18n:translate="">
                   preview
                 </th>
-                <th i18n:translate="modified">
+                <th i18n:translate="">
                   modified
                 </th>
-                <th i18n:translate="author">
+                <th i18n:translate="">
                   author
                 </th>
-                <th class="nosort listing-right">
-                  &nbsp;&nbsp;<span i18n:translate="shift" tal:omit-tag="">Shift</span>
+                <th class="nosort listing-right" i18n:translate="">
+                  &nbsp;&nbsp;Shift
                 </th>
               </tr>
 
@@ -143,7 +144,7 @@
               </tal:block>
               <tr class="odd"
                 tal:condition="python: not(default_document or publishables or assets)">
-                <td colspan="6" i18n:translate="no_content_objects_in_folder">
+                <td colspan="6" i18n:translate="">
                   There is no content here.
                 </td>
               </tr>
@@ -172,7 +173,8 @@
                       />
                       <label 
                         tal:content="item_info/number"
-                        tal:attributes="for item_info/item_id">
+                        tal:attributes="for item_info/item_id"
+                        i18n:translate="">
                         # with index doc, starts at 0, else starts at 1
                       </label>
                     </td>
@@ -192,8 +194,7 @@
                         tal:attributes="
                           href item_info/editor_link;
                           class item_info/status_style;"
-                          i18n:attributes="title"
-                      >
+                        i18n:attributes="title">
                         id
                       </a>
                     </td>
@@ -208,7 +209,7 @@
                           class item_info/status_style;"
                         i18n:attributes="title"
                         tal:content="python:(item_info['title_editable'] or default)">
-                        <i i18n:translate="no_title">no title</i>
+                        <em i18n:translate="">no title</em>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -230,7 +231,7 @@
                         tal:attributes="href string:${item_info/item_url}/edit/tab_metadata"
                         i18n:attributes="title"
                       >
-                      <i>n/a</i>
+                      <em i18n:translate="">n/a</em>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -248,6 +249,7 @@
                           height="10"
                           tal:condition="item_info/is_published_or_approved"
                           tal:attributes="src string:${root_url}/globals/checkmark.gif"
+                          i18n:attributes="alt"
                         />
                       </a>
                       <a class="blacklink"
@@ -263,9 +265,8 @@
                         title="publish"
                         tal:condition="item_info/is_container"
                         tal:attributes="href string:${item_info/item_url}/edit/tab_status"
-                        i18n:translate="n/a"
                       >
-                        <i>n/a</i>
+                        <em i18n:translate="">n/a</em>
                       </a>
                       <span 
                         tal:condition="item_info/is_content"
@@ -287,7 +288,8 @@
                             border="0"
                             height="12"
                             width="16"
-                            tal:attributes="src string:${root_url}/globals/down.gif" />
+                            tal:attributes="src string:${root_url}/globals/down.gif" 
+                            i18n:attributes="alt" />
                         </a>
                         <a class="icon"
                           title="move up"
@@ -298,7 +300,8 @@
                             border="0"
                             height="12"
                             width="16"
-                            tal:attributes="src string:${root_url}/globals/up.gif" />
+                            tal:attributes="src string:${root_url}/globals/up.gif" 
+                            i18n:attributes="alt"/>
                         </a>
                       </tal:block>
                     </td>
@@ -383,7 +386,7 @@
                           class asset_info/blacklink_class"
                         i18n:attributes="title"
                       >
-                        <i i18n:translate="view">view</i>
+                        <em i18n:translate="">view</em>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -405,9 +408,9 @@
                         tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata"
                         i18n:attributes="title"
                         >
-                        <i i18n:translate="unknown">
+                        <em i18n:translate="">
                           unknown
-                        </i>
+                        </em>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -454,7 +457,7 @@
                           tal:define="length python: len(publishables) - test(default_document, 1, 0)"
                           i18n:attributes="title">
                           <option value="position">
-                            <span i18n:translate="position">position</span>:
+                            <span i18n:translate="">position</span>:
                           </option>
                           <tal:block repeat="item python:range(length)">                            
                             <option value="0"   
@@ -467,7 +470,7 @@
                           </tal:block>
                           <option value="0"
                             tal:attributes="value python:test(default_document, len(publishables) - 1, len(publishables))"
-                            i18n:translate="end"
+                            i18n:translate=""
                           >
                             end
                           </option>
@@ -484,7 +487,7 @@
                           value="move"
                           title="move selected items into position: alt-m"
                           accesskey="m"
-                          i18n:attributes="value title"
+                          i18n:attributes="value;title"
                         />
                       </div>
                       &nbsp;
@@ -494,7 +497,7 @@
                         value="rename..."
                         title="rename and retitle items: alt-r"
                         accesskey="r" 
-                        i18n:attributes="value title"
+                        i18n:attributes="value;title"
                       />
                       <input class="button"
                         name="tab_edit_cut:method"
@@ -502,7 +505,7 @@
                         value="cut"
                         title="cut items: alt-x"
                         accesskey="x" 
-                        i18n:attributes="value title"
+                        i18n:attributes="value;title"
                       />               
                     </tal:block>
                   </tal:block>
@@ -513,7 +516,7 @@
                         value="copy"
                         title="copy items: alt-c"
                         accesskey="c" 
-                        i18n:attributes="value title"
+                        i18n:attributes="value;title"
                       />
                   </tal:block>
                   <tal:block condition="may_change_content">                  
@@ -529,7 +532,7 @@
                         value="paste"
                         title="paste items: alt-v" 
                         accesskey="v" 
-                        i18n:attributes="value title"
+                        i18n:attributes="value;title"
                       />
                       <input class="button"
                         name="tab_edit_paste_to_ghost:method"
@@ -537,7 +540,7 @@
                         value="paste ghost"
                         title="paste (items on clipboard) as ghost objects: alt-g"
                         accesskey="g" 
-                        i18n:attributes="value title"
+                        i18n:attributes="value;title"
                       />
                     </tal:block>
                     <tal:block tal:condition="python:(default_document or publishables or assets)">
@@ -548,7 +551,7 @@
                         title="there's no undo: alt-d"
                         accesskey="d"
                         onclick="return confirm('Really delete?')"
-                        i18n:attributes="onclick value title"
+                        i18n:attributes="value;title"
                       />
                     </tal:block>
                   </tal:block>

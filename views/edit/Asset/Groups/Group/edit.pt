@@ -8,7 +8,9 @@
     vein string:edit;
     active_tab string:../../edit/tab_access_groups;
     parent_screen_name string:groups;
-    has_access here/has_change_access_permission;">
+    has_access here/has_change_access_permission;"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
   
 <table class="columns columns3">
   <tbody>
@@ -51,7 +53,7 @@
     </tr>
     <tr class="top-controls">
       <td>
-        <h3>
+        <h3 i18n:translate="">
           group members
         </h3>
       </td>
@@ -65,7 +67,7 @@
       tal:condition="model/isValid | nothing">
       <tr>
         <th tal:condition="userids"
-          i18n:translate="username">
+          i18n:translate="">
           Username
         </th>
       </tr>
@@ -98,7 +100,7 @@
       <tr class="even"
         tal:condition="not:userids">
         <td>
-          <i i18n:translate="group_has_no_member">
+          <i i18n:translate="">
             This group does not have any members.
           </i>
         </td>
@@ -111,7 +113,7 @@
             name="remove_users_from_group:method"
             title="remove selected user(s) from this group: alt-r"
             accesskey="r"
-            i18n:attributes="title value"
+            i18n:attributes="title;value"
             onClick="return confirm('Really remove?')"
             tal:condition="userids"
           />
@@ -121,7 +123,7 @@
   </tbody>
 </table>
 
-<tal:block condition="not:model/isValid | nothing">
+<tal:block condition="not:model/isValid | nothing" i18n:translate="">
   "Things to do when virtual groups is not in it original location"
 </tal:block>
 
@@ -143,7 +145,7 @@
                 value="add to group" 
                 title="add selected users to this group"
                 accesskey="a"
-                i18n:attributes="title value"
+                i18n:attributes="title;value"
               />
             </metal:block>
           </metal:block>
@@ -163,7 +165,7 @@
                   value="copy users from group(s)" 
                   title="transfer members from selected groups"
                   accesskey="c"
-                  i18n:attributes="title value"
+                  i18n:attributes="title;value"
                 />
               </metal:block>
             </metal:block>

@@ -65,7 +65,7 @@
     </tr>
     <tr class="top-controls">
       <td>
-        <h3 i18n:translate="create_an_object">
+        <h3 i18n:translate="">
           create an object 
         </h3>
       </td>
@@ -75,14 +75,13 @@
   <tbody>
     <tr class="even">
       <td>
-        <p class="readable">
-	        <span i18n:translate="click_name_to_create_object">
+        <p class="readable" i18n:translate="">
             Click a name to create an item. Note that this screen only lists descriptions of objects that are available at this location. For additional information about an item see the
-	        </span>
 	        <a class="underline" 
 	           href="http://www.infrae.com/products/silva/docs"
-	           i18n:translate="silva_doc">
-	          Silva documentation</a>.
+	           i18n:name="silva_documentation">
+             <tal:block i18n:translate="">Silva documentation</tal:block>
+          </a>.
           <br />
         </p>
       </td>
@@ -121,7 +120,7 @@
     <tr class="even"
       tal:condition="not:may_change_content">
        <td colspan="2">
-         <p i18n:translate="not_authorized">
+         <p i18n:translate="">
            Sorry, you're not authorized to add anything in this location.
          </p>
        </td>

@@ -64,16 +64,16 @@
       <tr>
         <td class="top"
           colspan="5">
-          <h2 tal:attributes="title string:id: ${model/id}">
+          <h2 tal:attributes="title string:id: ${model/id}" i18n:translate="">
             <img tal:replace="structure python:view.render_icon(model)" />
-            <span i18n:translate="groups_in">groups in</span>
-            &#xab;<tal:block content="title" />&#xbb;
+            groups in
+            &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;
           </h2>
         </td>
       </tr>
       <tr class="top-controls">
         <td colspan="3">
-          <h3 i18n:translate="add_group">
+          <h3 i18n:translate="">
             create a group
           </h3>
         </td>
@@ -94,7 +94,7 @@
             size="20" 
           />
         </td>
-        <td i18n:translate="add_form_object_id_description">
+        <td i18n:translate="">
           No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;
         </td>
       </tr>
@@ -106,14 +106,14 @@
         <td>
           <select class="store"
             name="meta_type">
-            <option value="Silva Group" i18n:translate="silva_group">
+            <option value="Silva Group" i18n:translate="">
               Group: a group defined by a list of users
             </option>
             <option value="Silva Virtual Group"
-            i18n:translate="virtual_group">
+            i18n:translate="">
               Virtual Group: a group defined by a list of normal groups
             </option>
-            <option value="Silva IP Group" i18n:translate="ip_group">
+            <option value="Silva IP Group" i18n:translate="">
               IP Group: a group based on ip addresses
             </option>
           </select>
@@ -133,7 +133,7 @@
             value="save" 
             title="access key: alt-s" 
             accesskey="s" 
-            i18n:attributes="title value"
+            i18n:attributes="title;value"
           />
           <input class="button"
             type="submit"
@@ -141,7 +141,7 @@
             value="save + edit"
             title="access key: alt-e"
             accesskey="e"
-            i18n:attributes="title value"
+            i18n:attributes="title;value"
           />
         </td>
       </tr>
@@ -158,7 +158,7 @@
     <thead>
       <tr class="top-controls">
         <td colspan="5">
-          <h3 i18n:translate="groups_located_in_folder">
+          <h3 i18n:translate="">
             groups located in this folder
           </h3>
         </td>
@@ -169,19 +169,19 @@
       <tr tal:condition="groups">
         <th class="listing-left">
         </th>
-        <th i18n:translate="name">
+        <th i18n:translate="">
           name
         </th>
-        <th tal:replace="nothing">
+        <th tal:replace="nothing" i18n:translate="">
           title
         </th>
-        <th i18n:translate="type">
+        <th i18n:translate="">
           type
         </th>
-        <th i18n:translate="modified">
+        <th i18n:translate="">
           modified
         </th>
-        <th i18n:translate="modifier">
+        <th i18n:translate="">
           modifier
         </th>
       </tr>
@@ -240,7 +240,7 @@
       <tr class="even">
         <td colspan="5"
           tal:condition="not:groups">
-          <i i18n:translate="no_groups_defined_in_folder">
+          <i i18n:translate="">
             No groups have been defined in this location.
           </i>
         </td>
@@ -255,7 +255,7 @@
             title="delete selected groups: alt-d"
             accesskey="d"
             onclick="return confirm('Really delete?')"
-            i18n:attributes="title value onclick"
+            i18n:attributes="title;value"
             tal:condition="groups"
           />
         </td>

@@ -7,6 +7,7 @@
     title model/get_title_editable;
     vein string:edit;
     "
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
 
@@ -15,15 +16,15 @@
           tal:attributes="src view/cropping.js/absolute_url">
   </script>
   <div class="info">
-    <h3 i18n:translate="image_info">
+    <h3 i18n:translate="">
       <img tal:replace="structure icon" /> image info
     </h3>
     <tal:block tal:condition="model/canScale">
       <p tal:condition="not: model/hires_image">
-        <span class="subhead">format</span><br />
+        <span class="subhead" i18n:translate="">format</span><br />
         <span tal:replace="python: model.web_format.lower()" /> image
         <br />
-        <span class="subhead">dimensions</span><br />
+        <span class="subhead" i18n:translate="">dimensions</span><br />
         <span tal:define="
           img_width python: model.getDimensions()[0];
           img_height python: model.getDimensions()[1];
@@ -34,7 +35,7 @@
       </p>
 
       <p tal:condition="model/hires_image">
-      <span class="subhead" i18n:translate="image_format">format</span><br />
+      <span class="subhead" i18n:translate="">format</span><br />
       <span tal:replace="python: model.web_format.lower()">format</span>
       <span i18n:translate="">image</span>
       </p>
@@ -44,28 +45,31 @@
         scale_width python: model.getCanonicalWebScale()[0];
         scale_height python: model.getCanonicalWebScale()[1];
         ">
-        <span class="subhead" i18n:translate="image_dimension">dimensions</span><br />
+        <span class="subhead" i18n:translate="">dimensions</span><br />
         <span tal:on-error="string: unknown"
           tal:replace="string:${image_width}x${image_height} pixels"
         />
         <tal:condition condition="python:
           image_width != scale_width or
-          image_height != scale_height"><br />
-          <span i18n:translate="">scaled to </span>
+          image_height != scale_height"
+          i18n:translate=""><br />
+          scaled to
           <span
             tal:on-error="string: unknown"
-            tal:replace="string:${scale_width}x${scale_height} pixels"
+            tal:replace="string:${scale_width}x${scale_height}"
+            i18n:name="WxH"
           />
+          pixels
         </tal:condition>
       </p>
       <p>
-      <span class="subhead">original</span><br />
+      <span class="subhead" i18n:translate="">original</span><br />
         <a href="" class="underline"
           title="see the original image"
           accesskey="v"
           tal:attributes="href python:model.url(hires=1)"
           i18n:attributes="title"
-          i18n:translate="view_unscaled_image">
+          i18n:translate="">
           <tal:condition condition="model/thumbnail_image">
             <img tal:replace="structure python:model.tag(thumbnail=1)" /><br />
           </tal:condition>
@@ -74,22 +78,22 @@
       </p>
       <p tal:condition="model/hires_image" 
         tal:define="orientation model/getOrientation">
-        <span class="subhead">orientation</span><br />
+        <span class="subhead" i18n:translate="">orientation</span><br />
         <span tal:content="orientation" 
           tal:attributes="class string:${orientation} orientation"
-          i18n:translate="">Square</span>
+          >Square</span>
       </p>
     </tal:block>
-    <p tal:condition="not: model/canScale" i18n:translate="note_silva_can_provide_image_scaling">
+    <p tal:condition="not: model/canScale" i18n:translate="">
       Note: Silva can provide image scaling and conversion with the help of PIL 
-      (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
-    <span i18n:translate="pil_not_installed">PIL doesn't seem to be installed.</span>
+      (<a href="http://www.pythonware.com/products/pil/" i18:name="PIL">Python Imaging Library</a>).
+    <span i18n:translate="">PIL doesn't seem to be installed.</span>
     </p>
     <p tal:define="
         size model/get_file_size;
         scaled_size model/get_scaled_file_size;
       ">
-      <span class="subhead"><b i18n:translate="file_size">file size</b><br /></span>
+      <span class="subhead"><strong i18n:translate="">file size</strong><br /></span>
       <span tal:attributes="title string: ${size} Bytes"
         tal:content="python:mangle.Bytes(size)" />
       <tal:block tal:condition="model/canScale">
@@ -105,7 +109,7 @@
     <tal:block tal:condition="python:user.has_role(['Manager'], model)">
       <p tal:define="path model/getFileSystemPath"
         tal:condition="path">
-        <span class="subhead"><b i18n:translate="file_system_path">file system path</b><br /></span>
+        <span class="subhead"><strong i18n:translate="">file system path</strong><br /></span>
         <span tal:replace="structure python:  ' / '.join(path.split('/'))" />
       </p>
       </tal:block>
@@ -125,7 +129,7 @@
         </tal:block>
         <tr class="top-controls">
           <td colspan="3">
-            <h3 i18n:translate="format_and_scaling">
+            <h3 i18n:translate="">
               format and scaling
             </h3>
           </td>
@@ -135,13 +139,13 @@
         <tr>
           <th class="align-right"
             width="12%"
-            i18n:translate="element">
+            i18n:translate="">
             element
           </th>
-          <th i18n:translate="content">
+          <th i18n:translate="">
             content
           </th>
-          <th width="40%" i18n:translate="note">
+          <th width="40%" i18n:translate="">
             note
           </th>
         </tr>
@@ -176,7 +180,7 @@
               accesskey="o"
               tal:define="asset_context python:request.model"
               tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
-              i18n:attributes="title value"
+              i18n:attributes="title;value"
               />
           </td>
           <td class="align-right">
@@ -186,7 +190,7 @@
               value="change"
               title="access key: alt-c"
               accesskey="c"
-              i18n:attributes="title value"
+              i18n:attributes="title;value"
             />
           </td>
         </tr>
