@@ -172,7 +172,7 @@ _______ manual close section here _______
          <td class="top">
            <h2 tal:attributes="title string:id: ${model/id}">
              <img tal:replace="structure python:view.render_icon(model)" />
-             export <span tal:replace="string:&amp;#xab;${model/get_title_editable}&amp;#xbb;">id</span>
+             export &#xab;<span tal:replace="string:${model/get_title_editable}">id</span>&#xbb;
            </h2>
          </td>
        </tr>
