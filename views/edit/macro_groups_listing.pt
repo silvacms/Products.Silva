@@ -123,7 +123,7 @@
           <tfoot>
             <tr class="controls"
               tal:condition="groups">
-              <td class="align-right">
+              <td>
                 <metal:block define-slot="actions" />
               </td>
             </tr>

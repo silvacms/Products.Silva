@@ -82,7 +82,7 @@
           </tbody>
           <tfoot>
             <tr class="controls">
-              <td class="align-right">
+              <td>
                 <tal:block condition="clipboard_members">
                   <metal:block define-slot="clipboard_actions" />
                 </tal:block>
