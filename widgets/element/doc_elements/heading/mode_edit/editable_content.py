@@ -9,4 +9,4 @@
 ##
 node = context.REQUEST.node
 editorsupport = context.service_editorsupport
-return editorsupport.get_content().render_heading_as_editable(node)
+return editorsupport.render_heading_as_editable(node)
