@@ -80,12 +80,9 @@ for set_name in set_names:
             element['render'] = renderEdit(set_name, element_name)
         else:
             # show a field, when it is read-only *and not* acquired (since
-            # it then is show in the acquired content column anyway).
+            # it then is shown in the acquired content column anyway).
             element['isEditable'] = 0
-            if not element['isAcquired']:
-                element['render'] = element['view']
-            else:
-                element['render'] = None
+            element['render'] = None
         # isRequired, isAcquirable, description, title
         bound_element = binding.getElement(set_name, element_name)
         element['isAcquireable'] = bound_element.isAcquireable()        
