@@ -193,12 +193,13 @@ ol.lower-alpha {
 }
 
 dt {
+  font-weight: bold;
   background : transparent;
 }
 
 dd {
   background : transparent;
-  margin-left : 2.5em;
+  margin-left : 1.5em;
 }
 
 
