@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.10 2003/07/17 13:28:34 zagy Exp $
+# $Id: VirtualGroup.py,v 1.11 2003/08/29 08:16:42 zagy Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -17,6 +17,7 @@ from interfaces import ISilvaObject
 icon = "www/virtualgroup.png"
 
 class VirtualGroup(SilvaObject, SimpleItem):
+    """Silva Virtual Group"""
     security = ClassSecurityInfo()
 
     meta_type = "Silva Virtual Group"
