@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.1.2.2 $
+CVS:        $Revision: 1.1.2.3 $
 
 Introduction
 ------------
@@ -133,7 +133,7 @@ See INSTALL.txt for details on how to install Groups.
 To start using the Groups definitions, a "Groups Service" is
 needed. Once the Groups Filesystem Product is installed, such a
 service can be added to the Silva Root via the ZMI. This service
-should have ``service_groups`` for its id.
+should have `service_groups` for its id.
 
 http://www.zope.org/Members/infrae/Groups
 

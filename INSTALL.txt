@@ -11,7 +11,7 @@ See also LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.40.8.8.8.3 $
+CVS:        $Revision: 1.40.8.8.8.4 $
 
 Introduction
 ------------
@@ -35,9 +35,9 @@ Here is a quick checklist what to do to install Silva:
 * Download and install PyXML_ for the Python that Zope uses. PyXML
   0.8.3 works.
 
-* Download an appropriate Silva ``-all.tgz`` for the version you want
+* Download an appropriate Silva `-all.tgz` for the version you want
   from `the Silva download area on zope.org`_ and unpack it into your
-  Zope's ``Products`` directory. Be aware the the ordering of the
+  Zope's `Products` directory. Be aware the the ordering of the
   releases gets messed up by zope.org, so be sure you get the latest
   one. For a list of what is contained in the Silva distribution and
   other extension products you can install, see PRODUCTS.txt.
@@ -103,7 +103,7 @@ root.
 Note that enabling/disabling ExtFile storage does not change the
 storage of the already present Silva File objects. It has no effect to
 the Silva Image objects either, as they are stored in the ZODB in any
-case. More information is available in ``docs/FileObject.stx``.
+case. More information is available in `docs/FileObject.stx`.
 
 http://www.zope.org/Members/shh/ExtFile
 

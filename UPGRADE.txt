@@ -11,14 +11,14 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.36.8.12.8.2 $
+CVS:        $Revision: 1.36.8.12.8.3 $
 
 Introduction
 ------------
 
 This document contains generic upgrade instructions for minor and
 major version upgrades of Silva. For information about particular
-upgrade issues please read the ``Upgrade issues``_ section of this
+upgrade issues please read the `Upgrade issues`_ section of this
 document. If you still run into trouble, please consult
 TROUBLESHOOTING.txt.
 
@@ -30,15 +30,15 @@ Minor upgrades
 
 If you are upgrading Silva minor versions (1.0.1 to 1.0.2 for
 instance), you shouldn't need to do anything special; just install the
-updated Silva Products (the ``-all`` distribution) and restart
+updated Silva Products (the `-all` distribution) and restart
 Zope. 
 
 Note that it is a good idea to remove the previous versions of the
 Products before you install the new ones, even for small upgrades.
 
-If there are problems, please try pressing ``Refresh all`` in
-``service_extensions``, available in the Zope Management Interface
-under the ``services`` tab in your Silva root.
+If there are problems, please try pressing `Refresh all` in
+`service_extensions`, available in the Zope Management Interface
+under the `services` tab in your Silva root.
 
 Major upgrades
 --------------
@@ -66,7 +66,7 @@ Steps to take during a major Silva upgrade:
 
 - In your Silva root, click on the 'services' tab.
 
-- Go to ``service_extensions``, the extensions service.
+- Go to `service_extensions`, the extensions service.
 
 - Click on the 'upgrade content' button. This will automatically
   refresh all installed Silva extensions as well as upgrade the Silva
@@ -97,23 +97,23 @@ Layout templates
 The upgrade will likely carry new default versions of the page
 templates and style sheets used for presentation of the public
 website. You can install these examples in your Silva root by going to
-``service_extensions`` in the Silva Root and pressing the ``install
-default layout`` button.
+`service_extensions` in the Silva Root and pressing the `install
+default layout` button.
 
 Doing this won't overwrite your public layout code; the only thing
 overwritten will be whatever in the current 'default_' objects, if any
 exist. You can then look at this code for examples. If you're
 satisfied with their contents you can also rename them to versions
-without the ``default_`` prefix and start using them.
+without the `default_` prefix and start using them.
 
 Because some API changes in Silva might break the layout templates and
 scripts in the Silva root, you should take a good look at these new
 versions if you have any problems with your current templates.
 
-In particular, ``frontend.css`` changes regularly. If you haven't
+In particular, `frontend.css` changes regularly. If you haven't
 changed this stylesheet just remove the old version and rename
-``default_frontend.css`` to ``frontend.css``. If you see red text in
-the SMI or preview this is a signal that your ``frontend.css`` should be
+`default_frontend.css` to `frontend.css`. If you see red text in
+the SMI or preview this is a signal that your `frontend.css` should be
 updated, since you're missing key selectors for content display.
 
 If you are using the default layout (most likely not), or for some
@@ -124,8 +124,8 @@ objects in the Silva root (from the Zope Management Interface):
 frontend.css, get_metadata_element, index_html, layout_macro.html,
 standard_error_message, standard_unauthorized_message
 
-Then go to ``service_extensions`` and click ``install default
-layout``. The new versions of the default layout should now be
+Then go to `service_extensions` and click `install default
+layout`. The new versions of the default layout should now be
 installed.
 
 For more info about layouts see:
@@ -160,14 +160,14 @@ Brokenness after upgrading Silva to a newer version
 ---------------------------------------------------
 
 Most of the problems after upgrading Silva are caused by missing
-product refresh via the ``service_extensions`` service in the Silva
+product refresh via the `service_extensions` service in the Silva
 Root.
 
 Major releases usually need a content upgrade, too. This is also
-available via the ``service_extensions`` by the ``upgrade content``
+available via the `service_extensions` by the `upgrade content`
 button.
 
-Please try at least a ``refresh all`` from the ``service_extensions``
+Please try at least a `refresh all` from the `service_extensions`
 before reporting any problems with upgrading.
 
 Also please note in case of several Silva Roots within one Zope
