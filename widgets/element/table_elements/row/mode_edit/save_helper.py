@@ -12,12 +12,18 @@ row = request.node
 editorsupport = context.service_editorsupport
 node = row.firstChild
 while node:
-    is_simple = context.is_field_simple(node)
-    if not is_simple:
-        node = node.nextSibling
+    field = node
+    node = node.nextSibling
+    if field.nodeName != 'field':
         continue
-    p_node = node.firstChild
+    if not context.is_field_simple(field):
+        continue
+    p_node = field.firstChild
+    while (p_node and p_node.nodeName != 'p'):
+        # basictly this ignores text nodes.
+        p_node = p_node.nextSibling
+    if not p_node:
+        raise ValueError, "The stored xml is invalid."
     data = request[p_node.getNodePath('widget')]
     editorsupport.replace_text(p_node, data)
-    node = node.nextSibling
-    
+
