@@ -8,8 +8,10 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   i18n:domain="silva">
 
-<!-- main template (for "view' and "edit" tables see below... -->
-<metal:block define-macro="main">
+<!-- main template awaiting further refactoring
+  (for "view' and "edit" tables see below...) 
+-->
+<!-- metal:block define-macro="main">
   <table class="columns columns2">
     <tbody>
       <tr>
@@ -52,7 +54,7 @@
       </tr>
     </tbody>
   </table>  
-</metal:block>
+</metal:block-->
 
 <!-- Edit table -->
 <metal:block define-macro="edit_table">
