@@ -22,15 +22,13 @@
       title
     </span>
   </h2>
+
 <!-- ++++++++++++++++++++++++++USERS++++++++++++++++++++++++++++++++ -->
+
   <h3>
-    User Management &nbsp;
-    <span style="font-size: 75%;">
-      (<a href="tab_access_authorized_below">here's a list</a> of all users 
-      working in this area)
-    </span>
+    User Roles Management
   </h3>
-  <h4 tal:condition="allow_subscription">
+  <h4>
     Grant or revoke local roles for users
   </h4>
 <!-- Clipboard -->
@@ -335,17 +333,24 @@
     <div class="rule">
       &nbsp;
     </div>
+
     <h3>
-      Group Management
+      Group Roles management
     </h3>
+    <h4>
+      Grant or revoke local roles for groups of users
+    </h4>
     <div class="hilight borders top bottom left right"
-      style="padding: 0.5em; width: 65%; clear: both;"
+      style="padding: 0.5em;"
       tal:condition="python:not getattr(here, 'service_groups', None)">
       <div style="padding: 0em 2em 0em 2em;">
         <p class="warning"
           style="font-size: 105%;">
-          To actually use Group access definitions, a Groups Service is needed.
-          <br />
+          <b>Groups Service</b>
+        </p>
+        <p>
+          You are seeing this message, because the Groups Silva extension
+          is installed but there's currently no Groups Service available.
           This service should have
           <code>
             service_groups
@@ -354,7 +359,7 @@
         </p>
       </div>
     </div>
-  <!-- Defind groups listing -->
+    <!-- Defind groups listing -->
 
     <tal:block condition="python:getattr(here, 'service_groups', None)">
       <div class="hilight borders top bottom left right"
@@ -431,7 +436,7 @@
         </form>
 
       </div>
-    <!-- Role assignment table -->
+      <!-- Role assignment table -->
 
       <form action="."
         method="POST">
@@ -501,7 +506,7 @@
                     value=""
                     tal:attributes="
                       value python:'%s||%s' % (group, local);" />
-                  <br tal:condition="not:repeat/local/end" />
+                    <br tal:condition="not:repeat/local/end" />
                 </tal:block>
 
               </td>
@@ -665,9 +670,42 @@
           </td>
         </tr>
       </table>
-
     </form>
-
   </div>
+
+  <h2>
+    <img alt="%s"
+      height="16"
+      src="%s"
+      width="16"
+      tal:replace="structure python:view.render_icon(model.meta_type)" />
+    &nbsp; Utilities
+  </h2>
+
+  <div class="hilight borders top bottom left right"
+    style="padding: 0.5em; margin: 0em 0em 2em 1em; clear: both;">
+    <table border="0"
+      cellpadding="3"
+      cellspacing="0">
+      <tr align="left">
+        <td>
+          <b>
+            List user email addresses
+          </b>
+          <br />
+          <br />
+          List email addresses of all users from this level down.
+        </td>
+      </tr>
+      <tr valign="top">
+        <td>
+          <a class="buttonlink" href="tab_access_authorized_below">
+            List email addresses
+          </a> 
+        </td>
+      </tr>
+    </table>
+  </div>
+
 </div>
 </html>
