@@ -217,9 +217,16 @@ function handle_default_action(element, event, action)
     <div style="float: left;"> 
       <tal:block i18n:translate="">contact:</tal:block>
     <a shape="rect"
-      tal:attributes="href string:mailto:${email}"
-      tal:content="python: name or email or 'no name'"
-      i18n:translate="">
+      tal:attributes="href string:mailto:${email}">
+      <tal:block tal:condition="name" tal:content="name">
+      </tal:block>
+      <tal:block tal:condition="python:not name">
+        <tal:block tal:condition="email" tal:content="email">
+        </tal:block>
+        <tal:block tal:condition="python:not email" i18n:translate="">
+          no name
+        </tal:block>
+      </tal:block>
     </a>
   </div>
   <div style="float: right;">

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Thu Nov 25 17:50:29 2004\n"
+"POT-Creation-Date: Thu Nov 25 18:09:59 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -173,6 +173,46 @@ msgstr ""
 
 #: /ImporterRegistry.py:70
 msgid "can't only register initializer for tag_name *or* as a default"
+msgstr ""
+
+#: /LayoutService.py:51
+msgid "${name} installed"
+msgstr ""
+
+#: /LayoutService.py:60
+msgid "${name} uninstalled"
+msgstr ""
+
+#: /LayoutService.py:72
+msgid "${name} refreshed"
+msgstr ""
+
+#: /LayoutService.py:82
+msgid "All layouts have been refreshed"
+msgstr ""
+
+#: /Root.py:224
+msgid "No catalog found!"
+msgstr ""
+
+#: /Root.py:246
+msgid "Status updated"
+msgstr ""
+
+#: /SidebarService.py:54
+msgid "Id does not provide for an existing cache container"
+msgstr ""
+
+#: /SidebarService.py:57
+msgid "Id changed"
+msgstr ""
+
+#: /SilvaObject.py:319
+msgid "Sorry, this ${meta_type} version is not viewable."
+msgstr ""
+
+#: /SilvaObject.py:329
+msgid "no ${view_type} view defined"
 msgstr ""
 
 #: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:62
@@ -3502,30 +3542,34 @@ msgid "contact:"
 msgstr "Kontakt:"
 
 #: /views/macro_index.pt:226
+msgid "no name"
+msgstr ""
+
+#: /views/macro_index.pt:233
 msgid "Leave Silva and view the public page: alt-:"
 msgstr "Silva verlassen und veröffentlichte Seite sehen: alt-:"
 
-#: /views/macro_index.pt:226
+#: /views/macro_index.pt:233
 msgid "see public version"
 msgstr "Öffentliche Version ansehen"
 
-#: /views/macro_index.pt:245
+#: /views/macro_index.pt:252
 msgid "Change your settings: alt-~"
 msgstr "Benutzereinstellungen ändern: alt-~"
 
-#: /views/macro_index.pt:258
+#: /views/macro_index.pt:265
 msgid "user settings"
 msgstr "Benutzereinstellungen"
 
-#: /views/macro_index.pt:262
+#: /views/macro_index.pt:269
 msgid "Logout of Silva: alt-q"
 msgstr "aus Silva abmelden: alt-q"
 
-#: /views/macro_index.pt:271
+#: /views/macro_index.pt:278
 msgid "logout ${role} ${userid}"
 msgstr "Logout ${role} ${userid}"
 
-#: /views/macro_index.pt:277
+#: /views/macro_index.pt:284
 msgid "request access"
 msgstr "Zugang beantragen"
 

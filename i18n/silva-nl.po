@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 25 17:50:29 2004\n"
+"POT-Creation-Date: Thu Nov 25 18:09:59 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -175,6 +175,46 @@ msgstr ""
 
 #: /ImporterRegistry.py:70
 msgid "can't only register initializer for tag_name *or* as a default"
+msgstr ""
+
+#: /LayoutService.py:51
+msgid "${name} installed"
+msgstr ""
+
+#: /LayoutService.py:60
+msgid "${name} uninstalled"
+msgstr ""
+
+#: /LayoutService.py:72
+msgid "${name} refreshed"
+msgstr ""
+
+#: /LayoutService.py:82
+msgid "All layouts have been refreshed"
+msgstr ""
+
+#: /Root.py:224
+msgid "No catalog found!"
+msgstr ""
+
+#: /Root.py:246
+msgid "Status updated"
+msgstr ""
+
+#: /SidebarService.py:54
+msgid "Id does not provide for an existing cache container"
+msgstr ""
+
+#: /SidebarService.py:57
+msgid "Id changed"
+msgstr ""
+
+#: /SilvaObject.py:319
+msgid "Sorry, this ${meta_type} version is not viewable."
+msgstr ""
+
+#: /SilvaObject.py:329
+msgid "no ${view_type} view defined"
 msgstr ""
 
 #: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:62
@@ -3577,8 +3617,7 @@ msgstr "sneltoets: alt-${key}"
 
 #: /views/logout.pt:36
 msgid "To <strong>actually</strong> logout, wait 5 seconds or hit this"
-msgstr "Wacht 5 seconden of klik hier, om <strong>echt</strong> uit te "
-"loggen."
+msgstr "Wacht 5 seconden of klik hier, om <strong>echt</strong> uit te loggen."
 
 #: /views/logout.pt:37
 msgid "logout link"
@@ -3642,30 +3681,34 @@ msgid "contact:"
 msgstr "contact:"
 
 #: /views/macro_index.pt:226
+msgid "no name"
+msgstr "geen naam"
+
+#: /views/macro_index.pt:233
 msgid "Leave Silva and view the public page: alt-:"
 msgstr "Silva verlaten en publieke pagina bekijken: alt-:"
 
-#: /views/macro_index.pt:226
+#: /views/macro_index.pt:233
 msgid "see public version"
 msgstr "publieke versie bekijken"
 
-#: /views/macro_index.pt:245
+#: /views/macro_index.pt:252
 msgid "Change your settings: alt-~"
 msgstr "Je instellingen veranderen: alt-~"
 
-#: /views/macro_index.pt:258
+#: /views/macro_index.pt:265
 msgid "user settings"
 msgstr "gebruikersinstellingen"
 
-#: /views/macro_index.pt:262
+#: /views/macro_index.pt:269
 msgid "Logout of Silva: alt-q"
 msgstr "Uit Silva uitloggen: alt-q"
 
-#: /views/macro_index.pt:271
+#: /views/macro_index.pt:278
 msgid "logout ${role} ${userid}"
 msgstr "${role} ${userid} uitloggen"
 
-#: /views/macro_index.pt:277
+#: /views/macro_index.pt:284
 msgid "request access"
 msgstr "toegang aanvragen"
 
@@ -3707,8 +3750,8 @@ msgstr "Deze 'ghost' is gebroken. (${haunted_url})"
 
 #: /views/public/Ghost/view/render.py:15
 msgid "This 'ghost' document is broken. Please inform the site administrator."
-msgstr "Dir 'ghost'-document is gebroken. Geef dit a.u.b. door aan de "
-"site-beheerder."
+msgstr ""
+"Dir 'ghost'-document is gebroken. Geef dit a.u.b. door aan de site-beheerder."
 
 #: /views/public/request_roles_submit.py:14
 msgid "You must enter your full name and your e-mail address"
