@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78.4.1.24.2 $
+# $Revision: 1.78.4.1.24.3 $
 
 import os
 
@@ -259,7 +259,7 @@ def installRootDocumentation(root):
     root.aq_inner._importObjectFromFile('%s/www/silva_docs.zexp' % os.path.dirname(__file__))
     recursive_publish(root.silva_docs)
 
-def manage_addRoot(self, id, title, REQUEST=None):
+def manage_addRoot(self, id, title, add_docs=0, REQUEST=None):
     """Add a Silva root."""
     # no id check possible or necessary, as this only happens rarely and the
     # Zope id check is fine
@@ -277,7 +277,7 @@ def manage_addRoot(self, id, title, REQUEST=None):
     install.installFromScratch(object)
     object.set_title(title)
 
-    if REQUEST.has_key('add_docs') and REQUEST['add_docs']:
+    if add_docs:
         installRootDocumentation(object)
 
     add_and_edit(self, id, REQUEST)
