@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.6 2003/10/18 14:48:00 clemens Exp $
+# $Id: test_mangle.py,v 1.7 2003/10/18 17:15:18 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -59,11 +59,10 @@ class MangleIdTest(SilvaTestCase.SilvaTestCase):
         id = mangle.Id(self.folder, 'index-html')
         self.assertEqual(id.validate(), id.OK)
 
-        # Zope does not allow any id ending with '__' in a hard boiled manner,
+        # Zope does not allow any id ending with '__' in a hard boiled manner
         # (see OFS.ObjectManager.checkValidId)
-        # thus the following _should_ be forbidden:
-        #id = mangle.Id(self.folder, 'index__', allow_dup=1)
-        #self.assertEqual(id.validate(), id.CONTAINS_BAD_CHARS)
+        id = mangle.Id(self.folder, 'index__', allow_dup=1)
+        self.assertEqual(id.validate(), id.CONTAINS_BAD_CHARS)
    
         id = mangle.Id(self.folder, 'index')
         self.assertEqual(id.validate(), id.OK)
