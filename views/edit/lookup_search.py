@@ -4,7 +4,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=name
+##parameters=name=None
 ##title=
 ##
 request = context.REQUEST
@@ -15,6 +15,8 @@ view = context
 key1 = ('silva_lookup_query', context.silva_root())
 key2 = ('silva_lookup_search_result', context.silva_root())
 
+if not name:
+    name = request.form.get('name', ' ')
 name = name.strip()
 
 if name == '':

@@ -113,8 +113,7 @@
                   type="checkbox"
                   value=""
                   tal:attributes="
-                    value python:'%s||%s' % (userid, local);" />
-                <br tal:condition="not:repeat/local/end" />
+                    value python:'%s||%s' % (userid, local);" /><br tal:condition="not:repeat/local/end" />                
               </tal:block>
             </td>
           </tr>
@@ -357,8 +356,7 @@
                       type="checkbox"
                       value=""
                       tal:attributes="
-                        value python:'%s||%s' % (group, local);" />
-                    <br tal:condition="not:repeat/local/end" />
+                        value python:'%s||%s' % (group, local);" /><br tal:condition="not:repeat/local/end" />                    
                   </tal:block>
                 </td>
               </tr>

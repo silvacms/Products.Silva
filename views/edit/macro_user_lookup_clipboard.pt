@@ -13,15 +13,17 @@
           <tr align="left">
             <td colspan="2">
               <div style="float: right;">
-                <input name="referer"
-                  type="hidden"
-                  value="tab_access" />
-                <input class="button"
-                  accesskey="l"
-                  name="lookup:method"
-                  title="Lookup and select users to add to groups... - alt-l"
-                  type="submit"
-                  value="Lookup..." />
+                <metal:block define-slot="clipboard_lookup_action">
+                  <input name="referer"
+                    type="hidden"
+                    value="tab_access" />
+                  <input class="button"
+                    accesskey="l"
+                    name="lookup:method"
+                    title="Lookup and select users to add to groups... - alt-l"
+                    type="submit"
+                    value="Lookup..." />
+                </metal:block>
               </div>
               <div>
                 <b>
