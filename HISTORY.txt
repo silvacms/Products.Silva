@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.44 $
+$Revision: 1.45 $
 
 Silva changes
 
@@ -29,14 +29,16 @@ Silva changes
 
         - Access request system. A new UI so that users who do not
           have permissions to access a place can request roles on
-          objects.
+          objects (optional).
 
         - New 'Data Source' is now enabled by default. The first
-        implementation is an 'SQL Data Source' Asset. This can be used to
-        import data from a relational database into a Document using the
-        'external data' element.
+          implementation is an 'SQL Data Source' Asset. This can be
+          used to import data from a relational database into a
+          Document using the 'external data' element.
 
-    Bugs Fixed
+        - List titles have been removed and transformed into headings.
+ 
+   Bugs Fixed
 
         - Fix where the "/manage" display link in the SMI tabs didn't
           didn't regard the local roles on the current object.
@@ -59,6 +61,8 @@ Silva changes
 
         - Invalid image references now properly display error message
           (issue 204).
+
+ 
 
   0.9.0.3
 
