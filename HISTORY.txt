@@ -20,14 +20,15 @@ Silva changes
 
       - Issue 942: quotes in links around images broke the public view.
 
-      - Added RefreshAll to update.
+      - Added refresh all to update.
 
       - Issues 996 and 998: changed image links that pointed to the hires 
         version of the image, instead of pointing to <image>/hires_image
         they now point to <image>?hires.
 
-      - Minor problem where the image edit form in the form editor didn't recognize
-        a link as one to the hires version of the image.
+      - Minor problem where the image edit form in the form editor
+        didn't recognize a link as one to the hires version of the
+        image.
 
       - Added test cases for get_creation_datetime() and
         get_modification_datetime() in SilvaObject. Also re-enabled and
