@@ -67,14 +67,14 @@
               ______________ top controls row ______________
             </tal:block>
             <tr class="top-controls">
-              <td colspan="5">
+              <td class="align-right"
+                colspan="5">
                 <form action="." name="silvaObjects" method="POST">
-                  <h3>
+                  <h3 style="float:left;">
                     <tal:block content="string:${filter}s" />
                   </h3>
                   <tal:block condition="python:silva_permissions['ChangeSilvaContent'] and filter != 'Asset'">
                     <input class="navigation"
-                      style="float:right;"
                       type="submit"
                       name="add_object:method" 
                       title="add a new item: alt-n"

@@ -269,10 +269,9 @@ table.columns2 td.main {
     padding: 8px 8px 0 8px;
 }
 
-/* 1 column table, not in use */
-table.columns1 {
+table.columns1 td.main {
     width: 100%;
-    padding: 0 8px 0 8px;
+    padding: 8px 8px 0 8px;
 }
 
 
@@ -926,6 +925,7 @@ table.listing div.message {
   border: &dtml-messageBorder;;
   border-style: solid none solid none;
   border-collapse: collapse;
+  text-transform : none;
 /*  white-space : pre; */
 }
 

@@ -62,7 +62,8 @@
 />
 <tal:block replace="nothing"> _______ hook for application specific stylesheet extension _______ </tal:block>
 <metal:block define-slot="extension_css" />
-<tal:block replace="nothing"> _______ hook for refresh function _______ </tal:block>
+<tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
+<metal:block define-slot="meta" />
 <metal:block define-slot="refresher" />
 <!-- Plone Javascript -->
 <script type="text/javascript"

@@ -13,6 +13,11 @@
 
 /* _________________________________________________ element typography _____ */
 
+/* override plone listing heading selector */
+.heading {
+  color : #455885;
+}
+
 /* header-like elements for table cells, prevents extra line space */
 
 .back2 {
@@ -41,7 +46,6 @@ p.lead {
 }
 
 pre {
-  font-size : 100%; 
   color : #473f69; 
   background: transparent;
   padding: 0;
