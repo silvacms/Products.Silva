@@ -236,18 +236,19 @@ def configureSecurity(root):
     except:
         pass
 
-def configureLayout(root, default=0):
+def configureLayout(root, default_if_existent=0):
     """Install layout code into root.
-    If the default argument is true, ids will be prefixed with default_.
+    If the default_if_existent argument is true, ids will be prefixed with 
+    default_ if the id already exists in the root.
     """
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
                'standard_error_message', 'standard_unauthorized_message', ]:
-        add_helper(root, id, globals(), zpt_add_helper, default)
+        add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
     for id in ['index_html.py', 'index_html_restricted.py', 'preview_html.py']:
-        add_helper(root, id, globals(), py_add_helper, default)
+        add_helper(root, id, globals(), py_add_helper, default_if_existent)
 
-    add_helper(root, 'frontend.css', globals(), dtml_add_helper, default)
+    add_helper(root, 'frontend.css', globals(), dtml_add_helper, default_if_existent)
 
 def configureMembership(root):
     """Install membership code into root.
@@ -267,15 +268,16 @@ def configureMembership(root):
 
 # helpers to add various objects to the root from the layout directory
 # these won't add FS objects but genuine ZMI managed code
-def add_helper(root, id, info, add_func, default=0, folder='layout'):
+def add_helper(root, id, info, add_func, default_if_existent=0, folder='layout'):
     filename = id
-    if default:
+    if add_func == py_add_helper or add_func == pt_add_helper:
+        id = os.path.splitext(id)[0]
+    if default_if_existent and hasattr(root.aq_base, id):
         id = 'default_' + id
     text = read_file(filename, info, folder)
     add_func(root, id, text)
 
 def pt_add_helper(root, id, text):
-    id = os.path.splitext(id)[0]
     if hasattr(root.aq_base, id):
         getattr(root, id).write(text)
     else:
@@ -296,7 +298,6 @@ def dtml_add_helper(root, id, text):
         root.manage_addDTMLMethod(id, file=text)
 
 def py_add_helper(root, id, text):
-    id = os.path.splitext(id)[0]
     if hasattr(root.aq_base, id):
         getattr(root, id).write(text)
     else:
