@@ -7,7 +7,7 @@
 </dtml-let>
 
 /* This style sheet contains Silva specific styles, and may override */
-/* certain selectors in the base.  If you edit this css, you _MUST_  */ 
+/* certain selectors in others.    If you edit this css, you _MUST_  */ 
 /* backup before upgrading to a new version of Silva.                */
 
 
@@ -412,5 +412,26 @@ a.closed:hover {
   color : #666666;
   text-decoration : underline;
 }
+
+
+/* defines the width of the text in help, etc */
+.readable {
+    /* for IE5 */
+    width : 512px;
+  max-width : 40em;
+  line-height: 1.3em;
+  text-align: left;
+}
+
+/* defines the width of the text in the preview/public layout */
+/* duplicated in frontend.css */
+.public {
+  margin-left : 5em;
+  padding-top : 2em;
+  max-width : 40em;
+  /* for IE5 */
+  width : 512px;
+}
+
 
 /* style is a filter */

@@ -1,8 +1,11 @@
-<html 
-    tal:define="mangle python:modules['Products'].Silva.mangle;">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<tal:block tal:condition="python: options['error_type'] != 'NotFound'">
+<html tal:define="mangle python:modules['Products'].Silva.mangle;">
   <head>
-    <link rel="stylesheet" href="globals/base.css"
-      tal:attributes="href here/globals/base.css/absolute_url | nothing" />
+    <link rel="stylesheet"
+      tal:attributes="href here/globals/ploneCustom.css/absolute_url | nothing" />
+    <link rel="stylesheet"
+      tal:attributes="href here/globals/frontend.css/absolute_url | nothing" />
     <title>Message from server</title>
   </head>
   <body>
@@ -18,6 +21,8 @@
 
     <div class="info"
       tal:condition="python: (options['error_type'] == 'Unauthorized' and here.service_members.allow_authentication_requests())">
+     <div class="public">
+      <br />
       <h2>Membership system</h2>
       <p class="readable">
         Sorry, this page is only available to visitors with proper credentials.
@@ -32,38 +37,42 @@
             tal:attributes="href string:service_resources/${here/service_members/get_authentication_requests_url}?last_url=${here/absolute_url}">
           Become a visitor to the site
           </a><br /></span>
-          As a visitor, you can view certain items that anonymous users are not allowed to see.<br /><br />
+          As a visitor, you can view certain items that anonymous users are not allowed to see.
       </div>
+      <br /><br />
       <h3>Visitor options</h3>
       <span class="subhead"><a tal:attributes="href string:${here/REQUEST/model/absolute_url}/public/request_roles?last_url=${here/absolute_url}">Request a role which allows access to this location</a>
       <br /></span>
       Note that you must first have visitor rights to apply for roles.
       <br /><br />
       <span class="subhead">
-        <a href="#" onclick="document.location = document.location; return false">Try logging in again....</a>
+        <a href="#" onclick="document.location = document.location; return false">Try logging in again....</a><br /><br />
       </span>
+     </div>
     </div>
 
     <div class="info"
       tal:condition="python: (options['error_type'] == 'Unauthorized' and not here.service_members.allow_authentication_requests())">
+     <div class="public">
       <h2>Login required</h2>
       <p>
       Sorry, this page is only available to visitors with proper credentials.  
       <br /><br />
       <span class="subhead">
-        <a href="#" onclick="document.location = document.location">Try logging in again....</a>
-      <br /><br />
+        <a href="#" onclick="document.location = document.location">Try logging in again....</a><br /><br />
+     </div>
     </div>
 
   <tal:condition condition="python: options['error_type'] != 'Unauthorized'">
-
+    <div class="public">
+      <br /><br />
       <h2>System problem</h2>
-      <p>Something went wrong. If you're testing, the information below is important. <br />
-        <span class="error">Please note what you were doing when this error occured.</span></p>
-        <p>In any case, you can use your back button to return to the previous page.</p>
-        <p>Sorry for the irritation.</p>
+      <p>
+        Something went wrong. Please use your back button to return to the previous page.
+        Sorry for the irritation.
+        <br /><br />
+      </p>
 
-        <hr class="netscape4" size="" />
         <h4>Error Type: <span class="error" tal:content="structure options/error_type|string:unknwon">error_type</span></h4>
         <h4>Error Value: <span class="error" tal:content="structure options/error_value|string:unknown"></span></h4>
         <h4>Error info:</h4>
@@ -79,7 +88,46 @@
         <h4>Linked from:</h4>
         <span class="error" tal:content="request/HTTP_REFERER|string:unknown">error</span>
         <br />
-
+    </div>
   </tal:condition>
   </body>
 </html>
+</tal:block>
+
+<!-- _____________________ 404 error message  _____________________ -->
+
+<tal:block tal:condition="python: options['error_type'] == 'NotFound'">
+<!-- _______ Silva version 0.9 _______ -->
+<html metal:use-macro="here/layout_macro.html/macros/layout"
+  tal:define="mangle python:modules['Products'].Silva.mangle;">
+<head>
+<title metal:fill-slot="title" 
+  tal:content="here/get_title_or_id">
+  Local or custom title (in content.html)
+</title>
+
+<!-- define custom stylesheet -->
+<metal:block fill-slot="style">
+  <!-- Start style slot -->
+  <link rel="stylesheet" href="frontend.css" type="text/css"
+    tal:attributes="href here/frontend.css/absolute_url | nothing" />
+  <!-- End style slot -->
+</metal:block>
+</head>
+
+<body>
+<!-- _____________________ main slot  _____________________ -->
+<div metal:fill-slot="main">
+  <h2>404 &#8211; document not found</h2>
+  <p>
+    The document you are looking for is not or no longer available.<br />
+    Please check your request for typing errors and retry. 
+  </p>
+  <p tal:content="request/URL0|string:unknown">
+    url
+  </p>
+</div>
+
+</body>
+</html>
+</tal:block>

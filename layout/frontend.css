@@ -9,13 +9,24 @@
 /* _______________ stylesheet for Silva 0.9.x frontend ________________ */
 /* _______ Silva customers can insert their own frontend styles _______ */
 
-
+body {
+  font: 70% Verdana, Helvetica, Arial, sans-serif;
+  background-image: url(/sylph/globals/skyfade.gif); 
+  background-repeat: repeat-x;
+  background-color: #dde5ee;
+  color: #2d374c;
+  margin: 0;
+  padding: 0;
+}
+  
 h1, h2, h3, h4, h5 {
   color : #455885;
+  margin : 0.7em 0em 0.3em 0em;
 }
 
 h2 {
   font-size : 150%;
+  margin-top : 0;
 }
 
 h3 {
@@ -45,12 +56,24 @@ p.lead {
   font-weight : bold;
 }
 
+p.annotation {
+  font-style : italic;
+}
+
 pre {
+  font-size: 120%;
   color: #444466;
   background: transparent;
   padding: 0;
   border: none;
 }
+
+span.breadcrumb a {
+  text-decoration : none;
+}  
+span.breadcrumb a:hover {
+  text-decoration : underline;
+}  
 
 /* highlighting index links */
 /* keep this if you markup text with index elements, this overrides the highlighting in the editor */
@@ -173,9 +196,11 @@ dd {
 }
 
 
-/* defines the width of the text in the preview, help, etc */
-.readable {
-  max-width :40em;
+/* defines the width of the text in the preview/public layout */
+.public {
+  margin-left : 5em;
+  padding-top : 2em;
+  max-width : 40em;
   /* for IE5 */
   width : 512px;
 }

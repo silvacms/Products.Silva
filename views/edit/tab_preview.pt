@@ -9,56 +9,23 @@
   tal:define="
     global breadcrumb_vein string:Preview;"
   i18n:domain="silva">
+
 <metal:block metal:use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main" tal:omit-tag="">
 
-<table border="0" width="100%" cellspacing="0" cellpadding="0">
-
-<tr valign="top">
-  <td width="32" bgcolor="#d1d4d8">
-    <img tal:attributes="src here/globals/silva_icon_32.gif/absolute_url" height="32" width="32" />
-  </td>
-  <td width="16" bgcolor="#dde1e4">
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
-  </td>
-  <td width="12">
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
-  </td>
-  <td valign="top">
     <span tal:replace="nothing"> _______ link to see page in public/local style _______ </span>
-    <span class="widebody"><a tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank" style="float:right;">Presentation&nbsp;preview</a></span>
+    <span class="widebody"><a tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank" style="float:right; margin-right:2em;">Presentation&nbsp;preview</a></span>
     <span tal:replace="nothing"> _______ closed message _______ </span>
     <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
       <b class="warning" i18n:translate="closed_message">This is a closed version. You see it, but the public won't!</b>
     </div>
-  </td>
-  <td width="4%">
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
-  </td>
-</tr>
 
-<tr valign="top">
-  <td bgcolor="#d1d4d8">
-    &nbsp;
-  </td>
-  <td bgcolor="#dde1e4">
-    &nbsp;
-  </td>
-  <td>
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
-  </td>
-  <span tal:replace="nothing"> _______ content cell, here the XML is rendered in HTML _______ </span>
-  <td valign="top">
-    <div class="readable" tal:content="structure model/preview">
-    <!-- this text is replaced by Silva content -->
+    <span tal:replace="nothing"> _______ content cell, here the XML is rendered in HTML _______ </span>
+    <div class="public"
+      tal:content="structure model/preview">
+      <!-- this text is replaced by Silva content -->
     </div>
     <br />
-  </td>
-  <td>
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
-  </td>
-</tr>
-</table>
 
 </metal:block>
 </metal:block>

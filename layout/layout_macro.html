@@ -1,94 +1,64 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- _______ Silva version 0.9.1 _______ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- _______ Silva version 0.9.3.0 _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   metal:define-macro="layout">
 
 <head metal:define-slot="head">
-  <title metal:define-slot="title" tal:content="here/get_title">layout_macro.html</title>
+  <title metal:define-slot="title"
+    tal:content="here/get_title">doc title</title>
   <meta name="DC.subject" content="" 
-		tal:define="subject python: here.get_metadata_element('silva-extra', 'subject') or nothing"
-		tal:condition="subject"
-		tal:attributes="content subject" />
-	<meta name="Contact.name" content="" 
-		tal:define="name python: here.get_metadata_element('silva-extra', 'contactname') or nothing"
-		tal:condition="name"
-		tal:attributes="content name" />
-	<meta name="Contact.email" content="" 
-		tal:define="email python: here.get_metadata_element('silva-extra', 'contactemail') or nothing"
-		tal:condition="email"
-		tal:attributes="content email" />
+    tal:define="subject python: here.get_metadata_element('silva-extra', 'subject') or nothing"
+    tal:condition="subject"
+    tal:attributes="content subject" />
+  <meta name="DC.description" content="" 
+    tal:define="description python: here.get_metadata_element('silva-extra', 'comment') or nothing"
+    tal:condition="description"
+    tal:attributes="content description" />
+  <meta name="contact.name" content="" 
+    tal:define="name python: here.get_metadata_element('silva-extra', 'contactname') or nothing"
+    tal:condition="name"
+    tal:attributes="content name" />
+  <meta name="contact.email" content="" 
+    tal:define="email python: here.get_metadata_element('silva-extra', 'contactemail') or nothing"
+    tal:condition="email"
+    tal:attributes="content email" />
   <meta metal:define-slot="meta" tal:omit-tag="" />
-  <link rel="shortcut icon" href="globals/favicon.ico" tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
-  <link rel="stylesheet" href="globals/base.css" type="text/css" tal:attributes="href here/globals/base.css/absolute_url | nothing" />
-  <link rel="stylesheet" href="globals/silva.css" type="text/css" tal:attributes="href here/globals/silva.css/absolute_url | nothing" />
-  <link metal:define-slot="style" rel="stylesheet" href="frontend.css" type="text/css" tal:omit-tag="" />
+  <link rel="shortcut icon"
+    tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
+  <link metal:define-slot="style" rel="stylesheet" href="frontend.css"
+    type="text/css" tal:omit-tag="" />
   <script metal:define-slot="script" type="text/javascript" tal:omit-tag="">
     <!-- script slot -->
   </script>
 </head>
 
-<body metal:define-slot="body" leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-
-<span tal:replace="nothing"> _______ this macro inserts the public view in the preview tab _______ </span>
-<metal:block define-macro="previewer">
+<body metal:define-slot="body">
 
 <metal:block define-slot="page_header">
-  <!-- page_header slot -->
+  <!-- Start page_header slot -->
+<img height="32" width="32" alt="Silva logo"
+  tal:attributes="src here/globals/silva_icon_32.gif/absolute_url | nothing" />
+  <metal:block define-slot="top_navigation">
+    <!-- top_navigation slot -->
+  </metal:block>
+  <!-- End page_header slot -->
 </metal:block>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr valign="top">
-  <td width="32" bgcolor="#d1d4d8">
-    <img tal:attributes="src here/globals/silva_icon_32.gif/absolute_url" height="32" width="32" />
-  </td>
-  <td width="16" bgcolor="#dde1e4">
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
-  </td>
-  <td width="12">
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
-  </td>
-  <td valign="top">
-    &nbsp;
-  </td>
-  <td width="4%">
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
-  </td>
-</tr>
-
-<tr valign="top">
-  <td bgcolor="#d1d4d8">
-    &nbsp;
-  </td>
-  <td bgcolor="#dde1e4">
-    &nbsp;
-  </td>
-  <td>
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
-  </td>
-  <span tal:replace="nothing"> _______ content cell, here the XML is rendered in HTML _______ </span>
-  <td valign="top">
-    <metal:block define-slot="table_of_contents">
-      <!-- table_of_contents slot -->
-    </metal:block>
-    <div class="readable">
-      <metal:block define-slot="main">
-        <!-- main slot -->
-      </metal:block>
-    </div>
-    <br />
-  </td>
-  <td>
-    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
-  </td>
-</tr>
-</table>
+<span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
+<metal:block define-slot="table_of_contents">
+  <!-- table_of_contents slot -->
+</metal:block>
+<div class="public">
+  <metal:block define-slot="main">
+    <!-- main slot -->
+  </metal:block>
+</div>
+<br />
 
 <metal:block define-slot="page_footer">
   <!-- page_footer slot -->
-</metal:block>
-
 </metal:block>
 </body>
 </html>

@@ -1,15 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- _______ Silva version 0.9.1 _______ -->
+<!-- _______ Silva version 0.9.3.0 _______ -->
 <html metal:use-macro="here/layout_macro.html/macros/layout">
+
+Use this template to customize the layout that is defined in layout_macro.html. 
+The 'fill-slots' here can be used to override slots in the layout_macro.
+
+The following slots are available:
+head
+  title
+  meta
+  style
+  script
+body
+  page_header
+    top_navigation (contains breadcrumb trail)
+  table_of_contents
+  page_footer
+
+Some slots are not active. Activate by removing the 'no' from 'nometal'.
 
 <!-- only comments starting with a capital letter appear in the rendered HTML source -->
 
-<head>
-<!-- delete this title slot to use the automatic document title in layout_macro.html -->
-<title 
-	metal:fill-slot="title" 
-	tal:content="here/get_title_or_id">
-	Local or custom title (in content.html)
+<head nometal:fill-slot="head">
+<!-- customize html title -->
+<title nometal:fill-slot="title" 
+  tal:content="here/get_title_or_id">
+  Local or custom title
 </title>
 
 <!-- add custom meta tags -->
@@ -30,22 +46,22 @@
 </script>
 </head>
 
-<body>
-<div metal:fill-slot="page_header" tal:omit-tag="">
-  <!-- Page header slot (empty) -->
-</div>
-
+<body nometal:fill-slot="body" tal:omit-tag="">
+<div nometal:fill-slot="page_header" tal:omit-tag="">
+  <!-- Begin page_header slot -->
   <!-- this breadcrumb trail could be moved to layout_macro.html if it's always in use -->
-<div metal:fill-slot="navigation" tal:omit-tag="">
-  <!-- Start navigation slot -->
-  <span class="breadcrumb"><span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
-    <a tal:attributes="href item/absolute_url" tal:content="item/get_title">Name</a>
-    <span tal:condition="not:repeat/item/end" tal:omit-tag="">/</span></span>
-  </span>
-  <!-- End navigation slot -->
+  <div metal:fill-slot="top_navigation" tal:omit-tag="">
+    <!-- Start top_navigation slot -->
+    <span class="breadcrumb"><span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
+      <a tal:attributes="href item/absolute_url" tal:content="item/get_title">Name</a>
+      <span tal:condition="not:repeat/item/end" tal:omit-tag="">/</span></span>
+    </span>
+    <!-- End top_navigation slot -->
+  </div>
+  <!-- End page_header slot -->
 </div>
 
-<div metal:fill-slot="table_of_contents" tal:omit-tag="">
+<div nometal:fill-slot="table_of_contents" tal:omit-tag="">
   <!-- Table of Contents slot (empty) -->
 </div>
 

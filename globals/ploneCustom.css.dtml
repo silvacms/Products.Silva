@@ -30,14 +30,6 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 
-.readable {
-  /* for IE5 */
-  width : 512px;
-  max-width : 40em;
-  line-height: 1.3em;
-  text-align: left;
-}
-
 
 /* _________________________________________________________ path bar _____ */
 
