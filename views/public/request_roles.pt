@@ -21,22 +21,25 @@
 
 <tal:define define="global view here; global member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId())" />
 
-<form action="request_roles_submit" method="POST"
-  tal:condition="python: not member.email() or not member.fullname()">
+<form action="request_roles_submit" method="POST">
 <input type="hidden" name="last_url" tal:attributes="value view/REQUEST/last_url" />
 
 <div class="hilight borders top right bottom left"
   style="padding: 0.2em 0.5em 1em 0.5em; clear: both; width: 20em; line-height:1.1em;">
-<span class="subhead">Request roles at this location</span><br /><br />
-Please fill in the following fields.<br /><br />
+    
+<tal:block tal:condition="python: not member.email() or not member.fullname()">
+  <span class="subhead">Request roles at this location</span><br /><br />
+  Please fill in the following fields.<br /><br />
 
-Full name:<br />
-<input type="text" name="fullname" style="width: 100%;"
- tal:attributes="value member/fullname" /><br /><br />
+  Full name:<br />
+  <input type="text" name="fullname" style="width: 100%;"
+    tal:attributes="value member/fullname" /><br /><br />
 
-E-mail address:<br />
-<input type="text" name="email" style="width: 100%;"
- tal:attributes="value member/email" /><br /><br />
+  E-mail address:<br />
+  <input type="text" name="email" style="width: 100%;"
+    tal:attributes="value member/email" /><br /><br />
+
+</tal:block>
 
 Choose role(s) to request:<br />
 <tal:repeat repeat="role view/get_available_roles">
