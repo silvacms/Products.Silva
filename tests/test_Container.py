@@ -134,6 +134,14 @@ class ContainerTestCase(ContainerBaseTestCase):
         l = [(0, self.folder4), (0, self.publication5)]
         self.assertEquals(self.root.get_public_tree(0), l)
 
+    def test_get_public_tree_all(self):
+        self.subdoc2.set_unapproved_version_publication_datetime(DateTime())
+        self.subdoc2.approve_version()
+        
+        l = [(0, self.folder4), (1, self.subfolder), 
+             (0, self.publication5), (1, self.subdoc2),]
+        self.assertEquals(self.root.get_public_tree_all(), l)
+
     def test_get_status_tree(self):
         l = [(0, self.root.index), (0, self.doc1), (0, self.doc2),
             (0, self.doc3), (0, self.folder4), (1, self.folder4.index),

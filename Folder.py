@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.155 $
+# $Revision: 1.156 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -763,9 +763,23 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_tree')
     def get_public_tree(self, depth=-1):
+        """Get flattened tree with public content, excluding subpublications.
+        The 'depth' argument limits the number of levels, defaults to unlimited
+        """
         l = []
         self._get_public_tree_helper(l, 0, depth)
         return l
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_public_tree_all')
+    def get_public_tree_all(self, depth=-1):
+        """Get flattened tree with public content, including subpublications.
+        The 'depth' argument limits the number of levels, defaults to unlimited
+        """
+        l = []
+        self._get_public_tree_helper(l, 0, depth, 1)
+        return l
+
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_status_tree')
@@ -799,12 +813,12 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             else:
                 l.append((indent, item))
 
-    def _get_public_tree_helper(self, l, indent, depth):
+    def _get_public_tree_helper(self, l, indent, depth, include_non_transparent_containers=0):
         for item in self.get_ordered_publishables():
             if not item.is_published():
                 continue
             if (IContainer.isImplementedBy(item) and
-                item.is_transparent()):
+                (item.is_transparent() or include_non_transparent_containers)):
                 l.append((indent, item))
                 if depth == -1 or indent < depth:
                     item._get_public_tree_helper(l, indent + 1, depth)

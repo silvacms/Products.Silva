@@ -460,6 +460,13 @@ class IContainer(ISilvaObject, IPublishable):
         """
         pass
 
+    def get_public_tree_all():
+        """Get tree of all publishables that are public,
+        including the publishables in subpublications.
+        PUBLIC
+        """
+        pass
+
     def get_status_tree():
         """Get tree of all active content objects. For containers,
         show the default object if available.
