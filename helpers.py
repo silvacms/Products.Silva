@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -25,11 +25,10 @@ p_ID = re.compile(r'^(.*?)([0-9]+)$')
 _reserved_prefixes = ('service', 'manage', 'aq');
 
 # all reserved/internally used ids. (This list is most probably incomplete)
-_reserved_ids = ('edit', 'public', 'index_html', 'preview_html', 
-                 'REQUEST', 'acl_users',
+_reserved_ids = ( 'index_html', 'preview_html', 'REQUEST',
                  'standard_error_message', 'standard_unauthorized_message',
                  'content.html', 'override.html', 'layout_macro.html',
-                 'code_source', 'Members', 'globals' );
+                 'acl_users', 'code_source', 'Members', 'globals' );
 
 module_security.declarePublic('escape_entities')
 def escape_entities(text):
@@ -104,6 +103,12 @@ def check_valid_id(folder, maybe_id, allow_dup=0):
             # else it must be a content object (?)
             return IdCheckValues.ID_IN_USE_CONTENT
 
+        # check if object with this id is acquired; if not, it cannot be allowed
+        attr2 = getattr(folder.aq_base, maybe_id, _marker)
+	if attr2 is not _marker:
+	    return IdCheckValues.ID_RESERVED
+
+        # object using wanted id is acquried
         # now it may be a Zope object, which is allowed (for now)
         # or it is an attribute (which is disallowed)
         if not hasattr(attr, 'meta_type'):
