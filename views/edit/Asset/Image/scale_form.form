@@ -6,7 +6,8 @@
   <action></action>
   <enctype></enctype>
   <method>POST</method>
-  <i18n>true</i18n>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>scale</i18n>
 
   <groups>
     <group>
@@ -25,7 +26,7 @@
           <first_item type="int">1</first_item>
           <alternate_name></alternate_name>
           <unicode type="int">0</unicode>
-          <description i18n="">Image format for web.</description>
+          <description>Image format for web.</description>
           <orientation>horizontal</orientation>
         </values>
         <tales>

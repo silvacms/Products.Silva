@@ -182,7 +182,7 @@
             value="upload file"
             title="access key: alt-u"
             accesskey="u"
-            i18n:attributes="title"
+            i18n:attributes="value"
           />
         </td>
       </tr>

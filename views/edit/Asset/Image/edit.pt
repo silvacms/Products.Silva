@@ -161,7 +161,7 @@
           <tal:define define="iterate repeat/field/odd">
             <tr tal:attributes="class python:iterate and 'odd' or 'even'">
               <td class="field-title">
-                <span tal:content="python:field['title']" i18n:translate="">
+                <span tal:content="python:field['title']" >
                   title</span><span class="warning"
                   tal:condition="python:field.is_required()">*</span>
               </td>
@@ -231,7 +231,7 @@
         <tal:define define="iterate repeat/field/odd">
           <tr tal:attributes="class python:iterate and 'odd' or 'even'">
             <td class="field-title">
-              <span tal:content="python:field['title']" i18n:translate="">
+              <span tal:content="python:field['title']">
                 title</span><span class="warning"
                 tal:condition="python:field.is_required()">*</span>
             </td>
