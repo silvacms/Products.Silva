@@ -8,7 +8,7 @@
 ##title=
 ##
 node = context.REQUEST.node
-node.sec_update_last_author_info()
+node.get_content().sec_update_last_author_info()
 n = node
 while 1:
     n = n.previousSibling
