@@ -7,7 +7,7 @@
   tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup\', \'((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % node.get_container().absolute_url()" />
 &nbsp;List items: <br style="clear:both;" /> 
 <textarea style="width:100%" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
-  tal:content="structure here/editable_content">Dummy</textarea><br />
+  tal:content="here/editable_content">Dummy</textarea><br />
 </div>
 
 <div metal:fill-slot="element_controls" tal:omit-tag="">

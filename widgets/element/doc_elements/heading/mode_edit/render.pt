@@ -1,7 +1,7 @@
 <div metal:use-macro="container/macro_edit_view/macros/edit_view">
 <metal:block fill-slot="edit_input">
   <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
-  <textarea style="width:100%" tal:content="structure here/editable_content" id="data" name="data" cols="65" rows="2">Dummy text</textarea>
+  <textarea style="width:100%" tal:content="here/editable_content" id="data" name="data" cols="65" rows="2">Dummy text</textarea>
 </metal:block>
 <metal:block fill-slot="edit_notes">
 <ul class="tips">

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26.2.2 $
+# $Revision: 1.26.2.3 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -203,7 +203,7 @@ class EditorSupport(SimpleItem):
                     self.render_text_as_editable(child))
                 #raise EditorSupportError, ("Unknown element: %s" % 
                 #    child.nodeName
-        return self.replace_xml_entities(''.join(result))
+        return ''.join(result)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_heading_as_editable')
@@ -227,7 +227,7 @@ class EditorSupport(SimpleItem):
                 raise EditorSupportError, ("Unknown element: %s" % 
                     child.nodeName)
 
-        return self.replace_xml_entities(''.join(result))
+        return ''.join(result)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'replace_text')

@@ -15,4 +15,4 @@ for child in node.childNodes:
 node = child
 return '''<textarea cols="20" rows="2" wrap="soft" style="width:100%%;" 
     name="%s">%s</textarea>''' % (node.getNodePath('widget'), 
-        editorsupport.render_text_as_editable(node))
+        editorsupport.replace_xml_entities(editorsupport.render_text_as_editable(node)))
