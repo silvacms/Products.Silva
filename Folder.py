@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.52 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -292,9 +292,12 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 raise NotImplementedError,\
                       "Unknown container ghost copy (%s)." % item.meta_type
             container = getattr(self, paste_id)
+            default = item.get_default()
+            container._ghost_paste(default.id, default, REQUEST)
             for object in item.get_ordered_publishables():
                 container._ghost_paste(object.id, object, REQUEST)
             # FIXME: ghost copy nonactives as well?
+            # XXX are assets ghostable in the first place?
             for object in item.get_assets():
                 container._ghost_paste(object.id, object, REQUEST)
         elif IVersionedContent.isImplementedBy(item):
