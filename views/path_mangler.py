@@ -1,5 +1,5 @@
 ##parameters=base_path, item_path
-# $Id: path_mangler.py,v 1.2 2003/03/19 09:21:18 zagy Exp $
+# $Id: path_mangler.py,v 1.2.2.1 2003/03/19 09:45:46 zagy Exp $
 # returns relative path of item_path if the item is in basepath or a subfolder.
 # base_path, item_path: tuple
 # returns tuple
