@@ -1,4 +1,4 @@
-# Version: $Revision: 1.24 $
+# Version: $Revision: 1.25 $
 import Document, Folder, Root, ViewRegistry,\
        Publication, Ghost, Image, DemoObject
 
@@ -34,20 +34,21 @@ def initialize(context):
         Ghost.Ghost,
         constructors = (Ghost.manage_addGhostForm,
                         Ghost.manage_addGhost),
-	icon="www/silvaghost.gif"
+        icon="www/silvaghost.gif"
         )
      
     context.registerClass(
         ViewRegistry.ViewRegistry,
         constructors = (ViewRegistry.manage_addViewRegistryForm,
-                        ViewRegistry.manage_addViewRegistry)
+                        ViewRegistry.manage_addViewRegistry),
+        icon = "www/silva_view_registry.gif"
         )
           
     context.registerClass(
         Image.Image,
         constructors = (Image.manage_addImageForm,
                         Image.manage_addImage),
-	icon="www/silvaimage.gif"
+        icon="www/silvaimage.gif"
         )
 
     context.registerClass(
@@ -60,13 +61,12 @@ def initialize(context):
         DemoObject.DemoObject,
         constructors = (DemoObject.manage_addDemoObjectForm,
                         DemoObject.manage_addDemoObject),
-        icon="www/silvademo.gif"
-        )
+        icon="www/silvageneric.gif"
+        )       # generic icon for PluggableObjects
 
     context.registerClass(
         DemoObject.DemoObjectVersion,
         constructors = (DemoObject.manage_addDemoObjectVersionForm,
                         DemoObject.manage_addDemoObjectVersion),
-        icon="www/silvademo.gif"
         )
 

@@ -1,4 +1,4 @@
-# Version: $Revision: 1.2 $
+# Version: $Revision: 1.3 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -25,10 +25,10 @@ class DemoObject(VersionedContent, EditorSupport):
     __implements__ = Interfaces.VersionedContent
        
     def __init__(self, id, title):
-        """The constructor, doe not do much in this case (just maps to
-	the constructor of the parent).
-	"""
-	DemoObject.inheritedAttribute('__init__')(self, id, title)
+        """The constructor, does not do much in this case (just maps to
+        the constructor of the parent).
+        """
+        DemoObject.inheritedAttribute('__init__')(self, id, title)
     
 InitializeClass(DemoObject)
 
@@ -40,11 +40,11 @@ class DemoObjectVersion(SimpleItem.SimpleItem):
     meta_type = "Silva DemoObject Version"
 
     def __init__(self, id, title):
-    	"""Set id and initialize the ParsedXML tree.
-	"""
+        """Set id and initialize the ParsedXML tree.
+        """
         self.id = id
-	self._title = title
-	self._info = ''
+        self._title = title
+        self._info = ''
         self.content = ParsedXML('content', '<doc></doc>')
         
     # MANIPULATORS
