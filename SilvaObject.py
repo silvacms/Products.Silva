@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.44 $
+# $Revision: 1.45 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -200,7 +200,7 @@ class SilvaObject(Security):
         return IVersionedContent.isImplementedBy(self)
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'security_trigger')
+        SilvaPermissions.ViewAuthenticated, 'security_trigger')
     def security_trigger(self):
         """This is equivalent to activate_security_hack(), however this 
         method's name is less, er, hackish... (e.g. when visible in error
@@ -213,15 +213,15 @@ class SilvaObject(Security):
     def get_xml(self, with_sub_publications=0, last_version=0):
         """Get XML for object and everything under it.
         """
-        # FIXME: Where is the starttag gone i  the output? Seems to work better with 'getvalue' instead of
-        # 'buflist' to retrieve the output, but didn't want to ruin someone else's code... G
         context = XMLExportContext()
-        context.f = StringIO(u'<?xml version="1.0" ?>\n')
+        context.f = StringIO()
+        context.f.write(u'<?xml version="1.0" ?>\n')
         context.with_sub_publications = with_sub_publications
         context.last_version = last_version
         self.to_xml(context)
         # XXX HACK
-        result = ''.join(context.f.buflist)
+        result = context.f.getvalue()
+        print "Result get_xml:", result.encode('UTF-8')
         return result.encode('UTF-8') #return f.getvalue()
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -238,7 +238,7 @@ class SilvaObject(Security):
         """
         # make sure HTML is quoted
         return escape(s.encode('cp1252'), 1)
-        
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'output_convert_editable')
     def output_convert_editable(self, s):

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner
@@ -100,7 +100,7 @@ class ViewRegistry(Folder.Folder):
         for view_id in self.view_types[view_type][meta_type]:
             found = getattr(found, view_id, None)
         return found
-    
+
     def render_preview(self, view_type, obj):
         """Render preview of object using view_registry. This calls
         the render_preview() method defined on the view in the registry.

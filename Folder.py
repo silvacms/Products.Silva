@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.54 $
+# $Revision: 1.55 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -600,7 +600,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 object.update()
             if IContainer.isImplementedBy(object):
                 object.update()
-    
+
 InitializeClass(Folder)
 
 
