@@ -261,6 +261,14 @@
       <h3>
         Group Roles management
       </h3>
+      <a class="buttonlink" 
+        accesskey="g"
+        title="Groups administration... - alt-g"
+        style="float: right;"
+        href="tab_access_groups"
+        tal:condition="exists:view/tab_access_groups">
+        Groups administration
+      </a>
       <h4>
         Grant or revoke local roles for groups of users
       </h4>
