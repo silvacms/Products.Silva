@@ -28,7 +28,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.19 $'
+__version__='$Revision: 1.20 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -264,7 +264,7 @@ class ul(Element):
         if type is None:
             type = self.attrs.get('silva_type')
         else:
-            type = type.content.lower()
+            type = type.lower()
 
         if type not in self.default_types:
             type = self.default_types[0]

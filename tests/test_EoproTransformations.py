@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 import unittest
 
 # 
@@ -27,10 +27,12 @@ import sys,os
 
 try:
     sys.path.insert(0, '..')
+    from transform import base
     from transform.eopro2_11 import silva, html
     from transform.Transformer import Transformer, EditorTransformer
 except ImportError:
     import Zope
+    from Products.Silva.transform import base
     from Products.Silva.transform.eopro2_11 import silva, html
     from Products.Silva.transform.Transformer import Transformer, EditorTransformer
 
@@ -119,8 +121,9 @@ class HTML2XML(Base):
             a sane document. 
         """
         html_frag ="""<body><ul><li>eins</li></ul></body>"""
-        nodes = self.transformer.to_source(html_frag, {'id':'testid', 
-                                                       'title':'testtitle'})
+        nodes = self.transformer.to_source(html_frag, base.Context(
+            id='testid', title='testtitle'))
+
         self.assert_(not self.transformer.target_parser.unknown_tags)
 
     def test_heading_conversion(self):
@@ -142,7 +145,7 @@ class HTML2XML(Base):
 
         html_frag = "<body><%(htag)s>eins</%(htag)s></body>" % locals()
         htmlnode = self.transformer.target_parser.parse(html_frag)
-        node = htmlnode.convert(context={'id':u'id', 'title':u'title'})
+        node = htmlnode.convert(base.Context(id='id',title='title'))
         doc = node.find('silva_document')[0].find('doc')[0]
 
         heading = doc.find('heading')
@@ -173,7 +176,7 @@ class HTML2XML(Base):
         html_frag="""<body><h1>eins</h1></body>"""
         htmlnode = self.transformer.target_parser.parse(html_frag)
         self.assert_(not self.transformer.target_parser.unknown_tags)
-        node = htmlnode.convert(context={'id':u'', 'title':u''})
+        node = htmlnode.convert(base.Context(id='id',title='test'))
         doc = node.find('silva_document')[0].find('doc')[0]
         heading = doc.find('heading')
         self.assertEquals(len(heading), 1)
@@ -208,7 +211,7 @@ class HTML2XML(Base):
     def test_image_within_p_turns_outside(self):
         frag="""<p>hallo<img src="/path/to/image"/>dies</p>"""
         node = self.transformer.target_parser.parse(frag)
-        node = node.convert(self.context)
+        node = node.conv()
 
         p = node.find('p')
         self.assert_(len(p)==2)
@@ -220,7 +223,7 @@ class HTML2XML(Base):
     def test_empty_paras_are_preserved(self):
         frag="""<body><p>hallo</p><p></p><p></p></body>"""
         node = self.transformer.target_parser.parse(frag)
-        node = node.convert(self.context)
+        node = node.convert(base.Context(id='id',title='title'))
 
         doc = node.find('silva_document')[0].find('doc')[0]
         p = doc.find('p')

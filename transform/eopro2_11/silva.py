@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14 $'
+__version__='$Revision: 1.15 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -74,7 +74,7 @@ class doc(SilvaElement):
 
 class heading(SilvaElement):
     def convert(self, context):
-        level = self.attrs['type'].content
+        level = self.attrs['type']
         h_tag = {u'normal' : html.h3, 
                  u'sub': html.h4, 
                  u'subsub': html.h5,
@@ -132,7 +132,7 @@ class list(SilvaElement):
     """ Simple lists """
     def convert(self, context):
         listtype = self.attrs.get('type')
-        listtype = listtype and listtype.content.lower() or u'none'
+        listtype = listtype and listtype.lower() or u'none'
 
         attrs = {}
         if listtype in ['1','i','a']:
