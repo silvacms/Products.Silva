@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -15,7 +15,7 @@ from Testing import makerequest
 from AccessControl.User import SimpleUser
 from Products.SilvaDocument.Document import Document, DocumentVersion
 
-# awful HACK
+# awful HACK (unused yet)
 def _getCopy(self, container):
     """A hack to make copy & paste work (used by create_copy())
     """
@@ -30,8 +30,7 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
 
 
-
-        DocumentVersion._getCopy = _getCopy
+        #DocumentVersion._getCopy = _getCopy
         Document._verifyObjectPaste = _verifyObjectPaste
 
         add = self.root.manage_addProduct['Silva']
