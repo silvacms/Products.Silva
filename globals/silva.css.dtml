@@ -115,7 +115,7 @@ input.navigation[type="submit"]:hover, button[type="button"]:hover {
   border-color : #99b4cf;
 }
 
-input.navigation[type="submit"]:focus, button[type="button"]:focus {
+input.navigation[type="submit"]:focus {
   color : #e9f7ff;
   background : #7a83a6;
 }
@@ -133,25 +133,32 @@ input.button[type="submit"]:focus, button[type="button"]:focus {
 }
 
 /* hot glow: 74748b */
-input.warning[type="submit"]:hover, button[type="button"]:hover { 
+input.warning[type="submit"]:hover { 
   color : #ffd8d8; 
   background : #a85353; 
   border-color : #cdb1a3;
 }
 
-input.warning[type="submit"]:focus, button[type="button"]:focus { 
+input.warning[type="submit"]:focus { 
   color : #f0c0c0; 
   background : #53538b;
 }
 
-input[type="submit"]:hover, input[type="button"]:hover { 
-  color : #bfffd3; 
-  background : #69878c; 
+/* publish screen state coded buttons */
+input.reject[type="submit"]:hover { 
+  color : #e5ffec; 
+  background : #9b8800; 
+  border-color : #8dc1a8;
 }
-
-input[type="submit"]:focus, input[type="button"]:focus { 
-  color : #bfffd3; 
-  background : #008a8a;
+input.revoke[type="submit"]:hover { 
+  color : #e5ffec; 
+  background : #009a62; 
+  border-color : #8dc1a8;
+}
+input.close[type="submit"]:hover { 
+  color : #e5ffec; 
+  background : #4a4aa7; 
+  border-color : #8dc1a8;
 }
 
 /* image button */

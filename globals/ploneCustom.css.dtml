@@ -672,10 +672,46 @@ input.cancel {
   border : &dtml-cancelButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
-  line-height : 80%;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
 }
+
+/* publish screen state coded buttons */
+input.reject {
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-contextButtonFontColor;;
+  background : #8f7f01;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-contextButtonPadding;;
+  border: &dtml-contextButtonBorder;;
+  cursor: pointer;
+  text-transform: &dtml-textTransform;;
+}
+input.revoke {
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-contextButtonFontColor;;
+  background : #008c55;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-contextButtonPadding;;
+  border: &dtml-contextButtonBorder;;
+  cursor: pointer;
+  text-transform: &dtml-textTransform;;
+}
+input.close {
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-contextButtonFontColor;;
+  background : #202080;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-contextButtonPadding;;
+  border: &dtml-contextButtonBorder;;
+  cursor: pointer;
+  text-transform: &dtml-textTransform;;
+}
+
+
 
 /* _______ form labels _______ */
 
