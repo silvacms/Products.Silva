@@ -101,7 +101,8 @@ class UpgradeRegistry:
             'threshold': 0,
             'starttime': DateTime.DateTime(),
             'endtime': None,
-            }            
+            'maxqueue' : 0,
+            }
         
         self.setUp(root, version)
         object_list = [root]
@@ -115,7 +116,9 @@ class UpgradeRegistry:
                     if o.meta_type == "Parsed XML":
                         print '#### Skip the Parsed XML object'
                     else:
-                        object_list.extend(o.objectValues())                        
+                        object_list.extend(o.objectValues())
+                        stats['maxqueue'] = max(stats['maxqueue'],
+                                                len(object_list))
                 stats['total'] += 1
                 stats['threshold'] += 1                
                 if stats['threshold'] > threshold:
@@ -127,9 +130,9 @@ class UpgradeRegistry:
                         print 'No _p_jar, or it is None for', repr(o)
                     stats['threshold'] = 0
             stats['endtime'] = DateTime.DateTime()
-        finally:
             self.tearDown(root, version)
-        print repr(stats)
+        finally:
+            print repr(stats)
 
     def upgrade(self, root, from_version, to_version):
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrading content from %s to %s.' % (
