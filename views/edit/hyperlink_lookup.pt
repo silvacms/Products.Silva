@@ -353,7 +353,7 @@
                   i18n:attributes="title value"
                   onclick="window.close();return false;"
                 />
-                <input class="button"
+                <input class="navigation"
                   type="button"
                   name="place"
                   value="place reference"
