@@ -34,7 +34,7 @@
         height="14"
         width="14"
         border="0"
-        tal:attributes="src string:${root_url}/globals/silva_icon_corner.gif"
+        tal:attributes="src string:${root_url}/globals/silva_emblem.gif"
       />
     </a>
 
