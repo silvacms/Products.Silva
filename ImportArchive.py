@@ -10,7 +10,7 @@ from IAsset import IAsset
 # Silva
 import mangle
 
-def import_archive_helper(context, file, title):
+def import_archive_helper(context, file, title, recreate_dirs=1):
     try:
         zip = ZipFile(file)
     except BadZipfile, bzf:
@@ -28,15 +28,19 @@ def import_archive_helper(context, file, title):
     for name in namelist:
         extracted_file = StringIO(zip.read(name))
         guessed_type, enc = guess_content_type(name)
-        
-        # Split path into filename and directories.
-        path = name.split('/')
-        dirs, filename = path[:-1], path[-1]
 
-        container = _find_silva_folder(context, dirs)
-        if container is None:
-            failed_list.append('/'.join(dirs))
-            break
+        if not recreate_dirs:
+            filename = name
+            container = context
+        else:
+            # Split path into filename and directories.
+            path = name.split('/')
+            dirs, filename = path[:-1], path[-1]
+
+            container = _find_silva_folder(context, dirs)
+            if container is None:
+                failed_list.append('/'.join(dirs))
+                break
 
         # Factories return None upon failure
         # FIXME: can I extract some info for the reason of failure?
@@ -57,6 +61,7 @@ def import_archive_helper(context, file, title):
         added_object = factory(asset_id, title, extracted_file)
         # ...successfully?
         if added_object is not None:
+            added_object.sec_update_last_author_info()
             succeeded_list.append(name)
         else:
             failed_list.append(name)

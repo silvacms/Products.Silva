@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.87.2.6 $
+# $Revision: 1.87.2.7 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -749,12 +749,12 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'archive_file_import')
-    def archive_file_import(self, file, title=''):
+    def archive_file_import(self, file, title='', recreate_dirs=1):
         """Import archive file (currently zip format) and
         create Assets from its contents. Use given title for 
         all assets created
         """
-        return import_archive_helper(self, file, title)
+        return import_archive_helper(self, file, title, recreate_dirs)
 
     security.declarePublic('url_encode')
     def url_encode(self, string):
