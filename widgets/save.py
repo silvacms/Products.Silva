@@ -7,6 +7,7 @@
 ##parameters=
 ##title=
 ##
+context.get_root().security_trigger()
 context.save_helper()
 context.invalidate_cache_helper()
 return context.redirect()

@@ -7,6 +7,7 @@
 ##parameters=
 ##title=
 ##
+context.get_root().security_trigger()
 request = context.REQUEST
 node = request.node
 context.save_helper()
