@@ -15,7 +15,7 @@
   <td tal:content="meta_type">meta_type</td>
   <td><a href=""
     tal:content="python:here.get_view(view_type, meta_type).id"
-    tal:attributes="href python:'%s/manage_main/' % here.get_view(view_type, meta_type).absolute_url()">view_id</a></td>
+    tal:attributes="href python:'%s/manage_main' % here.get_view(view_type, meta_type).absolute_url()">view_id</a></td>
   </tr>
 </table>
 <br />
