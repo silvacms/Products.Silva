@@ -94,7 +94,8 @@ function handle_default_action(element, event, action)
   tal:attributes="href string:${root_url}/edit" />
 <link rel="up" href="../../edit" title="Up one level" 
   tal:condition="python:model.meta_type != 'Silva Root'" />
-<link rel="help" href="globals/help" title="Help with access keys and links to docs" />
+<link rel="help" title="Help with access keys and links to docs"
+  tal:attributes="href here/help_url" />
 <link rel="copyright" href="globals/copyright" title="Silva copyright info" />
 </head>
 
@@ -133,6 +134,24 @@ function handle_default_action(element, event, action)
         i18n:attributes="title"
         i18n:translate="">
         zroot...
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a class="reveal"
+        title="jump to silva root in zodb: alt-*"
+        tal:attributes="href string:${root_url}/manage_main"
+        accesskey="*"
+        i18n:attributes="title"
+        i18n:translate="">
+        sroot...
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a class="reveal"
+        title="jump to silva root in zodb: alt-§"
+        tal:attributes="href string:${root_url}/manage_services"
+        accesskey="§"
+        i18n:attributes="title"
+        i18n:translate="">
+        sservices...
       </a>
     </tal:block>
     <tal:block tal:condition="python:type == 'feedback' and notice">
