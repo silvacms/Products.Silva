@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53.2.4 $
+# $Revision: 1.53.2.5 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -23,7 +23,7 @@ except ImportError:
 
 LOCK_DURATION = 1./24./3./20. # 20 minutes
 
-interesting_roles = ['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager']
+interesting_roles = ['Viewer', 'Viewer +', 'Viewer ++', 'Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager']
 
 class Security(AccessManager):
     """Can be mixed in with an object to support Silva security.
@@ -162,9 +162,10 @@ class Security(AccessManager):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_is_closed_to_public')
     def sec_is_closed_to_public(self):
-        """Check whether this is closed. This method returns 0 if the object is open to public,
-        1 if the object itself is set to closed and a 1+<number of parents up> if the some parent
-        object is closed (so if the effect is acquired).
+        """Check whether this is closed. This method returns 0 if the object 
+        is open to public, 1 if the object itself is set to closed and a 
+        1+<number of parents up> if the some parent object is closed (so if 
+        the effect is acquired).
         """
         # XXX ugh
         i = 0
@@ -460,7 +461,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for group in parent.sec_get_local_defined_groups():
                 groups[group] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return groups.keys()
 
     security.declareProtected(
@@ -474,7 +475,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for role in parent.sec_get_local_roles_for_group(group):
                 roles[role] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return roles.keys()
 
     security.declareProtected(
