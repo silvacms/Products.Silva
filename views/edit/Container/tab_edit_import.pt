@@ -221,7 +221,8 @@
                   description
                 </td>
                 <td>
-                  <textarea name="description"> </textarea>
+                  <textarea name="description"
+                    style="width: 100%;"></textarea>
                 </td>
                 <td>
                     This description will be shown in the queue and the list of processed items.
@@ -329,7 +330,7 @@
               <td tal:content="python: job.id">JobId</td>
               <td tal:condition="python: job.format == 'silva'">Silva XML</td>
               <td tal:condition="python: job.format == 'word'">Word&nbsp;document</td>
-              <td tal:content="python: job.id">Description</td>
+              <td tal:content="python: job.description">Description</td>
               <td class="align-right"><a href="#" tal:attributes="href python:'tab_edit_import_download?storageid=%s|%s' % (job.id, job.format)">Download</a></td>
             </tr>
 
