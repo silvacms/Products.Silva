@@ -5,7 +5,7 @@ node = context.REQUEST.node
 datasource = context.get_datasource()
 parameters = context.get_parameters()
 
-errmsg = "<span class='warning'>[externaldata element broken]</span>"
+errmsg = u"<span class='warning'>[externaldata element broken]</span>"
 if not datasource:
     return errmsg
 

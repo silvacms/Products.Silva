@@ -509,7 +509,7 @@
    </index_args>
   </metadata_element>
   <metadata_element id="location">
-   <index_type>PathIndex</index_type>
+   <index_type>TextIndex</index_type>
    <index_p>1</index_p>
    <field_type>StringField</field_type>
    <acquire_p>0</acquire_p>

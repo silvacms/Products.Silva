@@ -44,7 +44,7 @@ if current_path == new_path:
         except ValidationError, e:
             errors[e.field_id] = e.error_text
         else:
-            # set parameter data from form. Form outputs unicode!
+            # Set parameter data from form. Form outputs unicode!
             child = node.createElement('parameter')
             child.setAttribute('key', field.id)
             child.setAttribute('value', value)

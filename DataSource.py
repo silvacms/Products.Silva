@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -13,7 +13,7 @@ from IDataSource import IDataSource
 from Asset import Asset
 import SilvaPermissions
 # Formulator
-from Products.Formulator.Form import Form, BasicForm
+from Products.Formulator.Form import BasicForm
 from Products.Formulator.StandardFields import StringField, IntegerField
 
 class DataSource(Asset):
@@ -115,17 +115,15 @@ class DataSource(Asset):
     def parameter_values_as_form(self, parameters={}):
         """ Parameter format: {name: value}
         """
-        # FIXME (?):
-        # Set form and field(s) as attributes of this data source, mainly
-        # to get these objects in the right security/aquisition machinery.
-        self._form_ = BasicForm()
+        form = BasicForm().__of__(self)
         for name, (type, value, description) in self._parameters.items():
             if parameters.has_key(name):
                 value = parameters[name]
-            self._field_ = StringField(
-                name, title=name, default=value, description=description)
-            self._form_.add_field(self._field_)
-        return self._form_
+            field = StringField(
+                name, title=name, default=value, 
+                description=description, unicode=1).__of__(self)
+            form.add_field(field)
+        return form
 
 
 InitializeClass(DataSource)
