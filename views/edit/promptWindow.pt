@@ -14,39 +14,26 @@
     style="margin-bottom:0;">
     <tbody>
       <tr class="top-controls">
-        <td width="25%">
-        </td>
-        <td class="align-left">
+        <td class="align-left"
+          colspan="2">
           <h3>
             Session timeout
           </h3>
         </td>
-        <td width="25%">
-        </td>
-        <td width="25%">
-        </td>
       </tr>
 
       <tr class="even">
-        <td>
-        </td>
         <td class="feedback"
           colspan="2">
           In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; to save any changes, or &#8216;cancel&#8217; to go back to the editor and save manually (or not at all).
         </td>
-        <td>
-        </td>
       </tr>
 
       <tr class="controls">
-        <td width="25%">
-        </td>
         <td>
           <input class="cancel" type="button" value="Cancel" onClick="window.close()" />
         <td class="align-right">
         <input class="button" type="button" value=" Save " onClick="window.opener.saveHelper(); window.close()" />
-        </td>
-        <td>
         </td>
       </tr>
     </tbody>

@@ -61,7 +61,7 @@
   {
     leftPos = screen.width / 2 - 175;
     topPos = screen.height / 2 - 100;
-    document.promptWindow = window.open(document.prompt_url, 'promptWindow', "height=200,width=350");
+    document.promptWindow = window.open(document.prompt_url, 'promptWindow', "height=175,width=300");
     document.promptWindow.focus();
   }
 
