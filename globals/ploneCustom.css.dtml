@@ -372,8 +372,8 @@ table.listing td.top {
   background: &dtml-listingTopBackground;;
     border: &dtml-listingBorder; ! important;
     border-bottom: none ! important;
-    padding-top: 0em ! important;
-    padding-bottom: 0em ! important;
+    padding-top: 0em;
+    padding-bottom: 0em;
     vertical-align: bottom;
     /* workaround for plone 'insane IE row bug workaround' */
     position: relative;
@@ -385,7 +385,7 @@ table.listing td.top h2 {
   color: #b8ccce;
   color: &dtml-listingTopHeadingColor;;
     text-align: left;
-    margin: 0.1em 0.5em 0.2em 0.4em;
+    margin: 0.1em 0.4em 0.2em 0.4em;
     display: inline;
     border: none;
     float: left;
@@ -583,12 +583,11 @@ textarea.readable {
 }
 
 select {
-  color: &dtml-contextButtonFontColor;;
-  background : &dtml-contextButtonBackground;;
+  color : &dtml-mainTabFontColorSelected;;
+  background : &dtml-controlBackground;;
   font-size: 90% ! important;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
-  border : 5px solid &dtml-nightShade;;
   line-height : 96%;
 }
 
@@ -598,6 +597,17 @@ select.navigation {
   font-size: 90% ! important;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
+  border : 1px solid &dtml-nightShade;;
+  line-height : 96%;
+}
+
+select.manipulator {
+  color: &dtml-contextButtonFontColor;;
+  background : &dtml-contextButtonBackground;;
+  font-size: 90% ! important;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  border : 1px solid &dtml-nightShade;;
   line-height : 96%;
 }
 
@@ -661,25 +671,25 @@ input.cancel {
 /* _______ pseudo form button selectors, matches button style _______ */
 
 table.listing a.button:link {
-  font-size: 90%;
+  font-size: 95%;
   font-weight: &dtml-buttonWeight;;
   color: &dtml-contextButtonFontColor;;
   background: &dtml-contextButtonBackground;;
   border: &dtml-contextButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: 0em 2em 1px 2em;
+  padding: 0.1em 2em 0.1em 2em;
   line-height : 90%;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
 }
 table.listing a.button:visited {
-  font-size: 90%;
+  font-size: 95%;
   font-weight: &dtml-buttonWeight;;
   color: &dtml-contextButtonFontColor;;
   background: &dtml-contextButtonBackground;;
   border: &dtml-contextButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: 0em 2em 1px 2em;
+  padding: 0.1em 2em 0.1em 2em;
   line-height : 90%;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
@@ -795,9 +805,8 @@ div.feedback {
     background: #f3f3d9;
     border: &dtml-messageBorder;;
     border-style: solid solid solid solid;
-    margin: -1px 0 0 0;
+    margin: -1px 0 1em 0;
     padding: 0.1em 9px 0.2em 9px;
-  border-collapse: collapse;
 }
 
 div.alert {
@@ -805,18 +814,8 @@ div.alert {
     background: #f7d1d1;
     border: &dtml-messageBorder;;
     border-style: solid solid solid solid;
-    margin: -1px 0 0 0;
+    margin: -1px 0 1em 0;
     padding: 0.1em 9px 0.1em 9px;
-  border-collapse: collapse;
-}
-
-div.floating-feedback {
-    color: #555555;
-    background: #f3f3d9;
-    border: &dtml-messageBorder;;
-    border-style: solid solid solid solid;
-    margin: 0 8px 0 8px;
-    padding: 0.1em 9px 0.2em 9px;
 }
 
 div.feedback a {

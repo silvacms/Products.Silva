@@ -14,23 +14,21 @@ body {
 /*  background: #aaabaa; */
 }
 
-/* e6e6ee blue range e5e9ee; */
 div.workspace {
   background: &dtml-contentWorkspace;;
 }
 
 div.tabs a {
-  background: #729b87;
   background: &dtml-contentTabBackground;;
 }
 
-/* green b3d4c4; bg e5eeea; */
 div.tabs a.selected {
   background: &dtml-contentTabBackgroundSelected;;
   border-bottom: &dtml-contentTabBackgroundSelected; 1px solid;
 }
 
 /* yellowjacket b3d4bf */
+/* green b3d4c4; bg e5eeea; */
 div.tabs a.interim {
   background: #729b7b;
 }

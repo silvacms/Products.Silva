@@ -195,15 +195,13 @@ _______ editor hooks _______
 <span tal:replace="nothing">
 <!-- _______ start feedback _______ -->
 </span>
-<tal:block 
-  define="
-    type options/message_type | request/message_type | nothing;
-    msg options/message | request/message | nothing;"
-  condition="type"
->
+<tal:block define="
+  type options/message_type | request/message_type | nothing;
+  msg options/message | request/message | nothing;"
+  condition="type">
   <div class="feedback"
-    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'"
-  >
+    style="margin-bottom:0;"
+    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'">
     <span tal:replace="structure msg">
       message
     </span>

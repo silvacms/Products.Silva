@@ -49,7 +49,7 @@ mainLinkColor:string=#384798
 pathBarBackground:string=#2b303a
 
 mainTabBackdrop:string=#7b90a6
-mainTabBackground:string=#8493b4
+mainTabBackground:string=#848bb4
 mainTabBackgroundDark:string=#7a8ea6
 mainTabBackgroundRecede:string=#9baec9
 mainTabBackgroundSelected:string=#afc5db
@@ -95,7 +95,7 @@ preBackground:string=#E5E5E5
 
 messageFont:string=bold 100% Verdana, Helvetica, Arial, sans-serif
 messageBackground:string=#000000
-messageBorder:string=1px solid #000000
+messageBorder:string=1px solid #666666
 
 groupBorder:string=1px solid #000000
 requiredField:string=url(required.gif) right no-repeat
@@ -110,6 +110,7 @@ inputBackground:string=#d5e7e6
 inputBorder:string=1px solid #99cfcf
 
 buttonWeight:string=normal
+controlBackground:string=#afcccf
 
 standaloneButtonBackground:string=#666c80
 standaloneButtonPadding:string=0.1em 0em 0em 0em

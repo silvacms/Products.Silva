@@ -1,321 +1,277 @@
-<div class="worksheet borders top bottom left right"
-  tal:define="global view here;
-              global active_tab string:tab_edit;
-              global breadcrumb_vein string:Import;
-              global lastclass string:focus-cycle;
-              global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
-              global root_url here/get_root;
-              global format options/format | python: None;
-              " 
-  >
+<html tal:omit-tag=""
+  tal:define="
+    global view here;
+    global lastclass string:whatever;
+    global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
+    global root_url here/get_root;
+    global format options/format | python: None;
+    global userid view/REQUEST/AUTHENTICATED_USER;
+    global queue view/service_docma/get_queue;
+    global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid), format=format);
+    global processingident view/service_docma/get_processing_ident;
+">
 
-  <tal:block tal:define="
-      global userid view/REQUEST/AUTHENTICATED_USER;
-      global queue view/service_docma/get_queue;
-      global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid), format=format);
-      global processingident view/service_docma/get_processing_ident;" />
-
-
-  <table border="0"
-    cellpadding="5"
-    cellspacing="0"
-    width="100%">
-    <tr>
-      <td>
-
-        <tal:block tal:condition="python: processingident != 0">
-
-          <table class="feedback"
-            cellpadding="0"
-            cellspacing="0"
-            width="100%">
-            <tr>
-              <td>
-                <span i18n:translate="current_job">Current job</span>:
-                <span tal:replace="processingident" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span i18n:translate="owner">Owner</span>:
-                <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span i18n:translate="description">Description</span>:
-                <span tal:replace="python: view.service_docma.get_ident_description(processingident)" />
-              </td>
-            </tr>
-          </table>
-
-        </tal:block>
+<span tal:replace="nothing">
+  _____________________ running job feedback _____________________
+</span>
+<tal:condition condition="python: processingident != 0">
+  <div class="feedback">
+        <span i18n:translate="current_job">Current job</span>:
+        <span tal:replace="processingident">#</span><br />
+        <span i18n:translate="owner">Owner</span>:
+        <span tal:replace="python: view.service_docma.get_ident_owner(processingident)">owner</span><br />
+        <span i18n:translate="description">Description</span>:
+        <span tal:replace="python: view.service_docma.get_ident_description(processingident)">desc</span>
+  </div>
+</tal:condition>
 
 
-        <form action="."
-          enctype="multipart/form-data"
-          method="POST">
+<span tal:replace="nothing">
+  _____________________ processing table  _____________________
+</span>
+<form action="." enctype="multipart/form-data" method="POST"
+  tal:condition="docma_running">
+  <table class="listing">
+    <thead>
+      <tr class="top-controls">
+        <td colspan="5">
+          <a class="button"
+            style="float: right;"
+            href="#"
+            title="reload to update the queue lists: alt-r"
+            accesskey="r"
+            onClick="document.location = 'tab_edit_import?focus=queue'; return false;"
+            i18n:attributes="title"
+            i18n:translate="refresh_queue_lists"
+          >
+            <u>R</u>efresh queue lists
+          </a>
+          <h3 i18n:translate="queue_of_items">
+            queue of items to process
+          </h3>
+        </td>
+      </tr>
+    </thead>
 
-          <table cellpadding="3"
-            cellspacing="0"
-            width="100%">
+    <tbody>
+      <tal:block condition="nothing">
+        ______________ docma queue ______________
+      </tal:block>
+      <tr tal:condition="python: len(queue) != 0">
+        <th class="align-right"
+          width="4%"
+          i18n:translate="job_id">
+          Job id
+        </th>
+        <th width="15%"
+          i18n:translate="job_owner">
+          job owner
+        </th>
+        <th
+          i18n:translate="description">
+          description
+        </th>
+        <th width="15%"
+          i18n:translate="estimated_time">
+          estimated time
+        </th>
+        <th class="align-right"
+          width="10%"
+          i18n:translate="status">
+          status
+        </th>
+      </tr>
 
-            <tal:block condition="nothing">
-              ________ Docma Queue ________
-            </tal:block>
+      <tal:repeat repeat="job queue">
+        <tr tal:define="iterate repeat/job/odd;"
+          tal:attributes="class python: iterate and 'odd' or 'even'">
+          <td class="align-right"
+            tal:content="job">
+            JobId
+          </td>
+          <td tal:content="python: view.service_docma.get_ident_owner(job)">
+            Owner
+          </td>
+          <td  tal:content="python: view.service_docma.get_ident_description(job)">
+            Description
+          </td>
+          <td>
+            <span tal:content="python: view.service_docma.get_estimated_time_for_ident(job)">
+            Estimated time</span>
+            &nbsp;<span i18n:translate="seconds">seconds</span>
+          </td>
+          <td class="align-right"
+            tal:content="python: view.service_docma.get_status(job)">
+            Status
+          </td>
+        </tr>
+      </tal:repeat>
 
-            <tr>
-              <td colspan="5">
-                <h3>
-                  <a name="queue" i18n:translate="queue_items_process">
-		    Queue of items to process
-                  </a>
-                </h3>
-              </td>
-            </tr>
-            <tr class="topcontrols"
-              tal:condition="options/refresh_page | nothing">
-              <td align="right"
-                colspan="5">
-                <a class="buttonlink"
-                  accesskey="r"
-                  href="#"
-                  title="reload to update the queue lists: alt-r"
-                  tal:attributes="onclick string:document.location = '${options/refresh_page}?focus=queue';; return false;;;"
-		  i18n:attributes="title"
-                  i18n:translate="refresh_queue_lists"> <u>r</u>efresh queue lists </a>
-                  <tal:block condition="view/REQUEST/focus | nothing">
-                  <script language="JavaScript" tal:content="string:document.location = '${options/refresh_page}#${view/REQUEST/focus}';">
-                  </script>
-                  </tal:block>
+      <tr class="even"
+        tal:condition="python: len(queue) == 0">
+        <td colspan="5"
+          i18n:translate="no_jobs_in_queue">
+          There are no jobs in the queue
+        </td>
+      </tr>
+    </tbody>
 
-              </td>
-            </tr>
-            <tr>
-              <th align="left" width="8%" i18n:translate="job_id">
-	        Job id
-              </th>
-              <th align="left" width="15%" i18n:translate="job_owner">
-	        Job owner
-              </th>
-              <th align="left" i18n:translate="descrption">
-	        Description
-	      </th>
-              <th align="left" width="15%" i18n:translate="status">
-		  Status
-              </th>
-              <th align="left" width="10%" i18n:translate="estimated_time">
-	        Estimated time
-              </th>
-            </tr>
-            <tr tal:define="
-                class python:test(lastclass == 'focus', 'focus-cycle', 'focus');
-                lastclass class;"
-              tal:repeat="job queue"
-              tal:attributes="class class">
-              <td align="left" 
-	        tal:content="job">
-                JobId
-              </td>
-              <td align="left"
-                tal:content="python: view.service_docma.get_ident_owner(job)">
-                Owner
-              </td>
-              <td align="left"
-                tal:content="python: view.service_docma.get_ident_description(job)">
-                Description
-              </td>
-              <td align="left"
-                tal:content="python: view.service_docma.get_status(job)">
-                Status
-              </td>
-              <td align="left">
-                <span tal:content="python: view.service_docma.get_estimated_time_for_ident(job)">
-                Estimated time</span>
-		&nbsp;<span i18n:translate="seconds">seconds</span>
-              </td>
-            </tr>
-            <tr class="focus"
-              tal:condition="python: len(queue) == 0">
-              <td align="left"
-                colspan="5" i18n:translate="no_jobs_queue">
-		There are no jobs in the queue
-              </td>
-            </tr>
-            <tr>
-              <td class="divider"
-                colspan="5">
-                <img height="3"
-                  width="1"
-                  tal:attributes="src string:${root_url}/globals/pixel.gif" />
-              </td>
-            </tr>
-          </table>
-
-        </form>
-
-        <br />
-
-        <form action="."
-          method="POST"
-          name="finishedJobQueue">
-
-          <table cellpadding="3"
-            cellspacing="0"
-            width="100%">
-
-            <tal:block condition="nothing">
-              ________ Finished Queue ________
-            </tal:block>
-
-            <tr>
-              <td colspan="5">
-                <h3>
-		  <span i18n:translate="list_proccessed_items">
-		    List of processed items </span>
-                    <tal:block 
-                      tal:condition="python: format is not None">
-                      (
-		      <span tal:replace="python:here.getDocmaFormatName(format)" />
-		      &nbsp;<span i18n:translate="only">only</span>)
-                    </tal:block>
-                </h3>
-              </td>
-            </tr>
-            <tr>
-              <th align="left" 
-	        colspan="2" 
-		width="8%" 
-		i18n:translate="job_id">
-                Job id
-              </th>
-              <th align="left" 
-	        width="10%" 
-		i18n:translate="type">
-                Type
-              </th>
-              <th align="left" 
-	        i18n:translate="description">
-                Description
-              </th>
-              <th align="right" 
-	        width="1%" 
-		i18n:translate="download">
-                Download
-              </th>
-            </tr>
-            <tr tal:define="
-                class python:test(lastclass == 'focus', 'focus-cycle', 'focus');
-                lastclass class;"
-              tal:repeat="job finished_jobs"
-              tal:attributes="class class">
-              <td align="left"
-                width="1%">
-                <input name="storageids:list"
-                  type="checkbox"
-                  tal:attributes="value python: '%s|%s' % (job.id, job.format)" />
-              </td>
-              <td align="left"
-                tal:content="job/id">
-                JobId
-              </td>
-              <td align="left"
-                tal:content="python:here.getDocmaFormatName(format)">
-                Silva XML
-              </td>
-              <td align="left"
-                tal:content="job/description">
-                Description
-              </td>
-              <td align="right">
-                <a href="#"
-                  tal:attributes="href python:'tab_edit_import_download?storageid=%s|%s' % (job.id, job.format)"
-		  i18n:translate="download">
-                  Download
-                </a>
-              </td>
-            </tr>
-            <tr class="focus"
-              tal:condition="python: len(finished_jobs) == 0">
-              <td align="left"
-                colspan="5"
-		i18n:translate="no_processed_jobs">
-                There are no processed jobs
-              </td>
-            </tr>
-            <tr class="controls">
-              <td align="left"
-                colspan="3">
-                <script type="text/javascript">
-                <!-- if (document.forms[0])
-                {
-                  document.write('<input class="button" type="submit" value="select all" value="submit" name="selectButton" value="select all" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false" i18n:attributes="value title">');
-                }
-              // -->
-
-                </script>
-              </td>
-              <td align="right"
-                colspan="2">
-
-                <tal:block condition="may_change_content">
-                  &nbsp;&nbsp;
-                  <input class="warningbutton"
-                    accesskey="x"
-                    name="tab_edit_import_delete:method"
-                    onClick="return confirm('Really remove?')"
-                    title="there's no undo: alt-x"
-                    type="submit"
-                    value="remove" 
-		    i18n:attributes="onClick value title"/>
-                  &nbsp;&nbsp;
-                  <input class="button"
-                    accesskey="m"
-                    name="tab_edit_import_import_and_delete:method"
-                    title="import to the current location and remove from the list: alt-m"
-                    type="submit"
-                    value="import and remove" 
-		    i18n:attributes="value title" />
-                  &nbsp;&nbsp;
-                  <input class="button"
-                    accesskey="p"
-                    name="tab_edit_import_w2s:method"
-                    title="import to the current location: alt-p"
-                    type="submit"
-                    value="import"
-		    i18n:attributes="value title" />
-                </tal:block>
-
-              </td>
-            </tr>
-          </table>
-
-        </form>
-
-      </td>
-    </tr>
+    <tfoot>
+      <tr class="controls">
+        <td colspan="5">
+       </td>
+      </tr>
+    </tfoot>
   </table>
+</form>
 
-  <script type="text/javascript">
-  <!-- isSelected = false;
 
-    function toggleSelect() {
-      if (isSelected == false) {
-        for (i = 0; i < document.finishedJobQueue.length; i++)
-          document.finishedJobQueue.elements[i].checked = true ;
-        isSelected = true;
-        document.finishedJobQueue.selectButton.value = "Deselect all";
-        return isSelected;
-      }
-      else {
-        for (i = 0; i < document.finishedJobQueue.length; i++)
-          document.finishedJobQueue.elements[i].checked = false ;
-        isSelected = false;
-        document.finishedJobQueue.selectButton.value = "Select all";
-        return isSelected;
-      }
+<span tal:condition="nothing">
+  _____________________ finished jobs _____________________
+</span>
+
+<form action="."
+  method="POST"
+  name="finishedJobQueue">
+
+  <table class="listing"
+    tal:define="ls python: len(finished_jobs) != 0">
+    <thead>
+      <tr class="top-controls">
+        <td colspan="4">
+          <h3>
+            <span i18n:translate="list_processed_items">
+              List of processed items
+            </span>
+            <tal:condition condition="python: format is not None">
+              (<tal:replace replace="python:here.getDocmaFormatName(format)" />)
+            </tal:condition>
+          </h3>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr tal:condition="ls">
+        <th class="align-right"
+          width="4%" 
+          i18n:translate="job_id">
+          Job id
+        </th>
+        <th width="15%"
+          i18n:translate="type">
+          Type
+        </th>
+        <th i18n:translate="description">
+          Description
+        </th>
+        <th class="align-right" 
+          width="10%" 
+          i18n:translate="download">
+          Download
+        </th>
+      </tr>
+
+      <tal:repeat repeat="job finished_jobs">
+        <tr tal:define="iterate repeat/job/odd;"
+          tal:attributes="class python: iterate and 'odd' or 'even'">
+          <td style="white-space:nowrap;">
+            <input name="storageids:list"
+              type="checkbox"
+              tal:attributes="value python: '%s|%s' % (job.id, job.format)" />
+            <span tal:content="job/id">job id</span>
+          </td>
+          <td tal:content="python:here.getDocmaFormatName(format)">
+            format
+          </td>
+          <td tal:content="job/description">
+            description
+          </td>
+          <td class="align-right">
+            <a href="#"
+              tal:attributes="href python:'tab_edit_import_download?storageid=%s|%s' % (job.id, job.format)"
+              i18n:translate="download">
+              download
+            </a>
+          </td>
+        </tr>
+      </tal:repeat>
+
+      <tr class="even"
+        tal:condition="not:ls">
+        <td align="left"
+          colspan="4"
+          i18n:translate="no_processed_jobs">
+          There are no processed jobs
+        </td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr class="controls">
+        <td class="align-right"
+          colspan="4">
+          <tal:condition condition="ls">
+            <script type="text/javascript">
+            <!-- if (document.forms[0])
+            {
+              document.write('<input class="button" style="float:left" type="submit" value="select all" name="selectButton" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false" i18n:attributes="value title">');
+            }
+          // -->
+
+            </script>
+            <div notal:condition="may_change_content">
+              <input class="warning"
+                accesskey="x"
+                name="tab_edit_import_delete:method"
+                onClick="return confirm('Really remove?')"
+                title="there's no undo: alt-x"
+                type="submit"
+                value="remove" 
+                i18n:attributes="onClick value title"/>
+              <input class="button"
+                accesskey="m"
+                name="tab_edit_import_import_and_delete:method"
+                title="import to the current location and remove from the list: alt-m"
+                type="submit"
+                value="import and remove" 
+                i18n:attributes="value title" />
+              <input class="button"
+                accesskey="p"
+                name="tab_edit_import_w2s:method"
+                title="import to the current location: alt-p"
+                type="submit"
+                value="import"
+                i18n:attributes="value title" />
+            </div>
+          </tal:condition>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+<script type="text/javascript">
+<!-- isSelected = false;
+
+  function toggleSelect() {
+    if (isSelected == false) {
+      for (i = 0; i < document.finishedJobQueue.length; i++)
+        document.finishedJobQueue.elements[i].checked = true ;
+      isSelected = true;
+      document.finishedJobQueue.selectButton.value = "Deselect all";
+      return isSelected;
     }
-    // -->
+    else {
+      for (i = 0; i < document.finishedJobQueue.length; i++)
+        document.finishedJobQueue.elements[i].checked = false ;
+      isSelected = false;
+      document.finishedJobQueue.selectButton.value = "Select all";
+      return isSelected;
+    }
+  }
+  // -->
 
-  </script>
-</div>
+</script>
+
+</html>
