@@ -2,6 +2,7 @@ from __future__ import nested_scopes
 
 # zope imports
 import zLOG
+import DateTime
 
 # silva imports
 from Products.Silva.interfaces import ISilvaObject, IContainer, IUpgrader
@@ -93,8 +94,6 @@ class UpgradeRegistry:
                 "this is a bug." % (upgrader, )
         return obj
         
-    import DateTime
-    
     def upgradeTree(self, root, version):
         """upgrade a whole tree to version"""
         stats = {
@@ -110,9 +109,15 @@ class UpgradeRegistry:
             while object_list:
                 o = object_list[0]
                 del object_list[0]
+                print 'Upgrading object', o.absolute_url()
                 self.upgradeObject(o, version)
                 if hasattr(o.aq_base, 'objectValues'):
-                    object_list.extend(o.objectValues())
+                    if o.meta_type == "Parsed XML":
+                        print 'Skip the Parsed XML object'
+                    else:
+                        print 'Extending upgrade list from', len(object_list), 
+                        object_list.extend(o.objectValues())
+                        print 'to', len(object_list), 'items.'
                 stats['total'] += 1
                 stats['threshold'] += 1                
                 if stats['threshold'] > threshold:
@@ -123,7 +128,7 @@ class UpgradeRegistry:
                     else:
                         print '_p_jar is None for', o
                     stats['threshold'] = 0
-            stat['endtime'] = DateTime.DateTime()
+            stats['endtime'] = DateTime.DateTime()
         finally:
             self.tearDown(root, version)
         print repr(stats)
