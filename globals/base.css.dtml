@@ -103,36 +103,8 @@ h5 {
     color : #444444; 
 }
 
-.datacell {}
-
 
 /* __________________________________________________ table style definitions _____ */
-.borders {
-    border-width : 1px;
-    border-color : #090909;
-    border-style : none;
-    }
-
-.topleft {
-    border-top-style : solid;
-    border-left-style : solid;
-    }
-
-.top {
-    border-top-style : solid;
-    }
-
-.left {
-    border-left-style : solid;
-    }
-
-.bottom {
-    border-bottom-style : solid;
-    }
-
-.right {
-    border-right-style : solid;
-    }
 
 tr.focus, th.focus, td.focus {
     background : #c0c0c0;
@@ -151,15 +123,18 @@ tr.focus-light-cycle, td.focus-light-cycle {
 }
 
 tr.controls, td.controls {
-    background : #aaaaaa;
+    color : #e2e9eb;
+    background : #999999;
 }
 
 tr.controls-cycle, th.controls-cycle, td.controls-cycle {
-    background : #b0b0b0;
+    color : #e2e9eb;
+    background : #a0a0a0;
 }
 
 tr.topcontrols, td.topcontrols {
-    background : #999999;
+    color : #e2e9eb;
+    background : #666666;
 }
 
 tr.border, td.border {
@@ -168,15 +143,15 @@ tr.border, td.border {
 
 tr.divider, th.divider, td.divider {
     font-size : 4px; 
-    background : #888888;
+    background : #666666;
 }
 
 th {
     font-size : 12px; 
-    font-weight : bold; 
+    font-weight : normal; 
     font-family : verdana, arial, helvetica, sans-serif; 
-    color : #333333; 
-    background : #a0a0a0;
+    color : #e2e9eb;
+    background : #808080;
 }
 
 /* for N4 compatibility, make this match the page bgcolor (don't use 'transparent') */ 
@@ -193,6 +168,14 @@ td {
 td.rowhead {
     font-weight : bold; 
     color : #555555; 
+}
+
+.tablehead3 {
+    font-size : 14px; 
+    font-weight : normal; 
+    font-family : verdana, arial, helvetica, sans-serif; 
+    color : #e2e9eb; 
+    background : transparent;
 }
 
 
