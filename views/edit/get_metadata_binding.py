@@ -1,4 +1,4 @@
-##parameters=content=None
+##parameters=content
 
 if content is None:
     return None
@@ -17,7 +17,6 @@ def isAcquired(set_name, element_name):
 
 isViewable = binding.isViewable
 isEditable = binding.isEditable
-
 value = binding.get
 
 pt_binding = {}
@@ -60,12 +59,13 @@ for set_name in set_names:
             element['isEditable'] = isEditable(set_name, element_name)
             element['render'] = renderEdit(set_name, element_name)
         else:
-            # show a field, when it is read-only *and not* acquired
+            # show a field, when it is read-only *and not* acquired (since
+            # it then is show in the acquired content column anyway).
             if not element['isAcquired']:
                 element['render'] = element['view']
             else:
                 element['render'] = None
-        # description, isRequired, isAcquirable
+        # isRequired, isAcquirable, description, title
         bound_element = binding.getElement(set_name, element_name)
         element['isAcquireable'] = bound_element.isAcquireable()        
         element['isRequired'] = bound_element.isRequired()
