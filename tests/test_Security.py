@@ -7,16 +7,7 @@ def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(
         id, title)
     return getattr(object, id)
-
-# awful hacks to set up user
-class FakeUser:
-    def getRolesInContext(self, object):
-        return ['Anonymous', 'Editor', 'Author', 'Manager', 'Owner']
-    
-class FakeRequest:
-    def __init__(self):
-        self.AUTHENTICATED_USER = FakeUser()
-        
+       
 class SecurityTestCase(unittest.TestCase):
     """Test the Security interface.
     """
@@ -43,8 +34,6 @@ class SecurityTestCase(unittest.TestCase):
         # that will be returned by sec_get_roles()
         self.sroot._addRole('Author')
         self.sroot._addRole('Editor')
-        # set up an awful hack for REQUEST
-        self.sroot.REQUEST = FakeRequest()
         
     def tearDown(self):
         get_transaction().abort()

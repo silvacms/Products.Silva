@@ -66,11 +66,6 @@ class Security:
         """Get all roles defined here that we can manage, given the
         roles of this user.
         """
-        # get roles the user has here
-        user_roles = self.REQUEST.AUTHENTICATED_USER.getRolesInContext(self)
-        # should be editor or manager in order to get roles at all
-        if not('Editor' in user_roles or 'Manager' in user_roles):
-            return []
         # FIXME: make this configurable?
         not_to_use_roles = ['Anonymous', 'Authenticated', 'Manager', 'Owner']
         return [role for role in self.valid_roles() if role not in not_to_use_roles]
