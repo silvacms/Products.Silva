@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.4
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.13 $
+  CVS:        $Revision: 1.14 $
 
 Installing Silva
 
@@ -87,6 +87,20 @@ Installing Silva
       or just download:
 
         "Formulator-1.2.0.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.2.0.tgz
+
+    Groups (0.1)
+
+      If you want to take advantage of Groups support, please download and
+      install the Groups product, here:
+  
+       "Groups-0.1.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.1.tgz
+
+      Groups support is optional; Silva should run without the Groups
+      product installed. Groups use a rather hackish technique called
+      'monkey patching' to hook groups support into the Silva core, and
+      this may conflict with other products that do the same. If you get
+      strange behavior, removing the Groups product and restarting Zope
+      will safely remove it.
 
   Silva services (ZODB)
 
