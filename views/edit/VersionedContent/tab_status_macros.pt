@@ -116,32 +116,48 @@ notes
 </th>
 </tr>
 
-<tr class="odd">
+<tr class="odd"
+  tal:define="field view/tab_status_form_author/message">
 <td class="align-right">
-  <field tal:replace="structure python:view.tab_status_form_author.message.render(REQUEST=request)" />
+  <tal:block 
+    attributes="id field/id" 
+    replace="structure python: field.render(REQUEST=request)"
+  />
 </td>
 <td>
 This message will remain visible in the status screen for other authors and editors.
 </td>
 </tr>
 
-<tr class="inter-controls">
+<tr class="inter-controls"
+  tal:define="field view/tab_status_form_author/publish_datetime">
 <td class="align-right"
  style="vertical-align:bottom; white-space: nowrap;'">
  <label title="access key: alt-m" accesskey="m"
-   i18n:translate="access_publish_time">
+   i18n:translate="access_publish_time"
+   tal:attributes="for field/id"
+   >
    content publish ti<u>m</u>e:</label>
-<field tal:replace="structure python:view.tab_status_form_author.publish_datetime.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)" />
+<tal:block 
+  attributes="id field/id" 
+  replace="structure python: field.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)"
+/>
 </td>
 <td style="vertical-align:middle;" i18n:translate="publish_dateformat">
 day / month / year &nbsp;23:59
 </td>
 </tr>
 
-<tr class="inter-controls">
+<tr class="inter-controls"
+  tal:define="field view/tab_status_form_change_settings/expiration_datetime">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time</label>&nbsp;
-<field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
+<label title="access key: alt-i (some platforms)" accesskey="i"
+  tal:attributes="for field/id"
+  >expiratio<u>n</u> time</label>&nbsp;
+<tal:block 
+  attributes="id field/id" 
+  replace="structure python: field.render(model.get_next_version_expiration_datetime())"
+/>
 </td>
 <td style="vertical-align:middle;">
 If this content should expire, set the time.
@@ -178,20 +194,31 @@ notes
 </th>
 </tr>
 
-<tr class="odd">
+<tr class="odd"
+  tal:define="field view/tab_status_form_change_settings/publish_datetime">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-m (some platforms)" accesskey="m">publish ti<u>m</u>e:</label>&nbsp;
-<field tal:replace="structure python:view.tab_status_form_change_settings.publish_datetime.render(model.get_next_version_publication_datetime())" />
+<label title="access key: alt-m (some platforms)" accesskey="m"
+  tal:attributes="for field/id"
+  >publish ti<u>m</u>e:</label>&nbsp;
+<tal:block 
+  attributes="id field/id"
+  replace="structure python: field.render(model.get_next_version_publication_datetime())"
+/>
 </td>
 <td>
 &nbsp;
 </td>
 </tr>
 
-<tr class="even">
+<tr class="even"
+  tal:define="field view/tab_status_form_change_settings/expiration_datetime">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time</label>&nbsp;
-<field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
+<label title="access key: alt-i (some platforms)" accesskey="i"
+  tal:attributes="for field/id"
+  >expiratio<u>n</u> time</label>&nbsp;
+<tal:block attributes="id field/id"
+  replace="structure python: field.render(model.get_next_version_expiration_datetime())"
+/>
 </td>
 <td style="vertical-align:middle;">
 If this content should expire, set the time.
@@ -199,30 +226,37 @@ If this content should expire, set the time.
 </tr>
 
 <tr>
-<th class="align-right"
-  colspan="2">
+<th class="align-right" colspan="2"
+  tal:define="field view/tab_status_form_change_settings/publish_now_flag">
   <span class="widebody">
-    <label for="publish_now_flag" title="access key: alt-u" accesskey="u"
-      i18n:translate="publish_now">
+    <label title="access key: alt-u" accesskey="u"
+      i18n:translate="publish_now"
+      tal:attributes="for field/id">
       p<u>u</u>blish right now?
   </label>
 </span>
-<field tal:replace="structure python:view.tab_status_form_change_settings.publish_now_flag.render()" />
+<tal:block 
+  attributes="id field/id"
+  replace="structure python: field.render()"
+/>
 </th>
 </tr>
 <tr>
-  <th class="align-right"
-    colspan="2">
+  <th class="align-right" colspan="2"
+    tal:define="field view/tab_status_form_change_settings/clear_expiration">
     <span class="widebody">
       <label 
-        for="publish_now_flag" 
         title="access key: alt-u" 
         accesskey="u"
+        tal:attributes="for field/id"
         i18n:translate="publish_clear_exp"
         >clear ex<u>p</u>iration?
     </label>
   </span>
-    <field tal:replace="structure python:view.tab_status_form_change_settings.clear_expiration.render()" />
+    <tal:block 
+      attributes="id field/id"
+      replace="structure python: field.render()"
+    />
   </th>
 </tr>
 
@@ -269,24 +303,34 @@ notes
 </th>
 </tr>
 
-<tr class="even">
+<tr class="even"
+  tal:define="field view/tab_status_form_editor/publish_datetime">
 <td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-m"
   accesskey="m"
   i18n:translate="access_publish_time"
+  tal:attributes="for field/id"
   >content publish ti<u>m</u>e</label>&nbsp;
-<field tal:replace="structure python:view.tab_status_form_editor.publish_datetime.render(REQUEST=request)" />
+<tal:block 
+  attributes="id field/id"
+  replace="structure python: field.render(REQUEST=request)"
+/>
 </td>
 <td i18n:translate="publish_dateformat">
 day / month / year &nbsp;23:59
 </td>
 </tr>
 
-<tr class="odd">
+<tr class="odd"
+  tal:define="field view/tab_status_form_editor/expiration_datetime">
 <td class="align-right" style="white-space: nowrap;">
   <label title="access key: alt-i" accesskey="i"
-    i18n:translate="access_expiration">expiratio<u>n</u> time</label>&nbsp;
-<field tal:replace="structure python:view.tab_status_form_editor.expiration_datetime.render(REQUEST=request)" />
+    i18n:translate="access_expiration"
+    tal:attributes="for field/id">expiratio<u>n</u> time</label>&nbsp;
+<tal:block 
+  attributes="id field/id"
+  replace="structure python: field.render(REQUEST=request)"
+/>
 </td>
 <td style="vertical-align:middle;" i18n:translate="publish_empty">
 Empty indicates no expiration.
@@ -294,15 +338,19 @@ Empty indicates no expiration.
 </tr>
 
 <tr>
-<th class="align-right"
-  colspan="2">
+<th class="align-right" colspan="2"
+  tal:define="field view/tab_status_form_editor/publish_now_flag">
   <span class="widebody">
-    <label for="publish_now_flag" title="access key: alt-u" accesskey="u"
-      i18n:translate="publish_now">
+    <label title="access key: alt-u" accesskey="u"
+      i18n:translate="publish_now"
+      tal:attributes="for field/id">
       p<u>u</u>blish right now?
   </label>
 </span>
-<field tal:replace="structure python:view.tab_status_form_editor.publish_now_flag.render(REQUEST=request)" />
+<tal:block 
+  attributes="id field/id" 
+  replace="structure python: field.render(REQUEST=request)"
+/>
 </th>
 </tr>
 
