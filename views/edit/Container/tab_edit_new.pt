@@ -1,0 +1,227 @@
+<!-- ___________________________ start index_html ______________________ -->
+<tal:block define="
+  global breadcrumb_vein string:New;
+  global active_tab string:tab_edit;" />
+<html metal:use-macro="here/macro_index/macros/master">
+<div metal:fill-slot="main" tal:omit-tag="">
+<!-- ___________________________ start index_html/slot main ____________________________ -->
+
+<tal:block define="
+  global objects python:model.get_tree();
+  global silva_permissions here/get_silva_permissions;
+  dummy model/security_trigger;
+  " />
+
+<div class="margins">
+<h2><img src="%s" width="16" height="16" alt="%s"
+      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+  Silva objects available at <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
+</h2>
+</div>
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<span tal:replace="nothing"> ______________ framing table header ______________ </span>
+<tr>
+  <td class="divider" colspan="3"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></td>
+</tr>
+
+<tr class="topcontrols" valign="bottom">
+  <!-- top row of complete table with sidebar -->
+  <td width="22%" nowrap="1">
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication: alt-[" accesskey="["
+      tal:condition="python:model != model.get_root()"
+      tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/tab_edit_new'"><img width="16" height="16" border="0" alt="Up to containing Publication" hspace="3"
+      tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%silva_root, '%s/globals/up_tree_gray.gif'%silva_root)" /></a>
+    <span class="tablehead3">Publication</span>
+    <a href="../../edit/tab_edit_new" title="Up one level: alt-]" accesskey="]"
+      tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
+  </td>
+
+  <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
+
+  <td class="focus-light">
+    <span class="back3" style="margin-left:20px;">&nbsp;Object descriptions</span>  
+  </td>
+  <td tal:replace="nothing">
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s"
+      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    <span class="tablehead3"><span tal:replace="model/id">id</span></span>
+  </td>
+
+</tr>
+
+<span tal:replace="nothing"> _____________________ sidebar _____________________ </span>
+
+<tr class="focus" valign="top">
+  <td>
+    <!-- inner table for sidebar -->
+    <table cellspacing="0" cellpadding="1" border="0" width="100%">
+<span tal:replace="nothing"> ______________ publication header ______________ </span>
+      <tr>
+        <td class="border"
+          tal:attributes="class python:test(model == model.get_publication(), 'hilight', 'focus-fixed')">
+          <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" />
+          <a href="top" title="Up to publication top"
+            tal:define="url python:model.get_publication().absolute_url()"
+            tal:attributes="href string:${url}/edit/tab_edit_new"><img tal:replace="structure python:view.render_icon(model.meta_type)" /></a>
+          <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
+            tal:attributes="href string:${url}/edit/tab_edit_new"><span tal:replace="structure python:model.get_publication().get_title_or_id_html()">Publication top</span></a>
+        </td>
+      </tr>
+
+      <span tal:replace="nothing"> ______________ folder listing ______________ </span>
+      <rowset tal:omit-tag=""
+        tal:repeat="indent_item python:model.get_publication().get_container_tree()">
+        <tr tal:define="item python:indent_item[1]; indent python:indent_item[0];
+          oddrow repeat/indent_item/odd">
+          <td class="hilight"
+            tal:attributes="class python:test(model == item, 'hilight', 'focus')">
+            <img width="5" height="5" tal:attributes="width python:indent * 16 + 5; src string:${silva_root}/globals/pixel.gif" />
+            <span no-class="position-relative"
+              no-tal:attributes="style python:'left:%s%%' % str(indent*3)">
+            <a href="folder" title="Manage folder"
+              tal:attributes="href string:${item/absolute_url}/edit/tab_edit_new"><img src="%s" width="16" height="16" alt="%s"
+              tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
+            <a class="blacklink" href="title" title="id"
+              tal:attributes="href string:${item/absolute_url}/edit/tab_edit_new;
+                               title string:id: ${item/id}">
+              <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_or_id_html()">no title</span>
+            </a>
+            </span>
+          </td>
+        </tr>
+      </rowset>
+    </table>
+  </td>
+  <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+
+  <td class="focus-light">
+    <!-- inner table -->
+
+<span tal:replace="nothing"> _____________________ objects subtable _____________________ </span>
+
+<form action="." name="silvaObjects" method="POST">
+
+<table cellspacing="0" cellpadding="5" border="0" width="96%" style="margin-left:20px;margin-right:20px;"
+  tal:condition="silva_permissions/ChangeSilvaContent">
+<tr valign="top">
+  <td colspan="2">
+    <p class="readable">
+      Following are descriptions of Silva objects that can be added at this location. Click a name to add it. For additional information about the item see the Silva documentation.
+      <br /><br />
+    </p>
+  </td>
+</tr>
+
+<span tal:replace="nothing"> ______________ listing iteration ______________ </span>
+<tal:repeat repeat="addable model/get_silva_addables">
+<tal:define define="oddrow repeat/addable/odd">
+
+<tr class="focus-cycle" valign="top" tal:attributes="class python:test(oddrow, None, None)">
+  <td width="16">
+    <img src="%s" width="16" height="16" alt="%s"
+      tal:replace="structure python:view.render_icon(model.meta_type)" />
+  </td>
+  <td>
+    <h4><a href="#" tal:content="addable/name">Addable</a></h4>
+  </td>
+  <td tal:replace="nothing">
+  </td>
+</tr>
+
+<tr class="focus-cycle" valign="top"
+  tal:attributes="class python:test(oddrow, None, None)">
+  <td>
+  </td>
+  <td>
+    <p class="readable">
+    Description lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+    <br />
+    <br />
+    </p>
+  </td>
+  <td tal:replace="nothing">
+    <input class="button" type="submit" name="add_object:method" value=" Add " title="Add a new item: alt-n" accesskey="n" />
+  </td>
+</tr>
+</tal:define>
+</tal:repeat>
+</table>
+
+<tal:block condition="not:silva_permissions/ChangeSilvaContent">
+You can't do anything here.
+</tal:block>
+
+</form>
+
+  </td>
+</tr>
+
+<tr>
+  <td class="divider" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="3" /></td>
+</tr>
+</table>
+
+<div class="margins" tal:replace="nothing">
+
+<h2><img src="%s" width="16" height="16" alt="%s"
+      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+  Silva objects available at <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
+</h2>
+
+<p style="width: 70%">
+Following are descriptions of Silva objects that can be added at this location.
+Click the name to add it. For more information about the item see the documentation.
+</p>
+
+<form action="." name="silvaObjects" method="POST">
+
+<table cellspacing="0" cellpadding="3" border="0" width="67%" style="margin-left:3%"
+  tal:condition="silva_permissions/ChangeSilvaContent">
+<span tal:replace="nothing"> ______________ listing iteration ______________ </span>
+<rowset tal:omit-tag="" tal:repeat="addable model/get_silva_addables">
+<cycle tal:omit-tag="" tal:define="oddrow repeat/addable/odd">
+
+<tr class="focus-cycle" valign="top" tal:attributes="class python:test(oddrow, None, None)">
+  <td width="16">
+    <img src="%s" width="16" height="16" alt="%s"
+      tal:replace="structure python:view.render_icon(model.meta_type)" />
+  </td>
+  <td>
+    <h3><a href="#" tal:content="addable/name">Addable</a></h3>
+  </td>
+  <td align="right" tal:replace="nothing">
+  </td>
+</tr>
+
+<tr class="focus-cycle" valign="top"
+  tal:attributes="class python:test(oddrow, None, None)">
+  <td>
+  </td>
+  <td>
+    <p>
+    Description lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+    <br />
+    <br />
+    </p>
+  </td>
+  <td align="right" tal:replace="nothing">
+    <input class="button" type="submit" name="add_object:method" value=" Add " title="Add a new item: alt-n" accesskey="n" />
+  </td>
+</tr>
+</cycle>
+</rowset>
+</table>
+
+<tal:block condition="not:silva_permissions/ChangeSilvaContent">
+You can't do anything here.
+</tal:block>
+
+</form>
+</div>
+
+
+<!-- ___________________________ end index_html/slot main ____________________________ -->
+</div>
+</html>
+<!-- ___________________________ end index_html ______________________________________ -->
