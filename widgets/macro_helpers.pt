@@ -30,6 +30,13 @@
       tal:attributes="name string:${rel_url_start}/save:method" />&nbsp; 
     <input class="button" type="submit" value=" Save and exit " title="Access key: alt-e" accesskey="e"
       tal:attributes="name string:${rel_url_start}/save_and_exit:method" />&nbsp;
+    <tal:block
+      condition="python:0"><!-- uncomment this for a "save and insert next" button (layout is ugly ...) -->
+      <input 
+         class="button" type="submit" value=" Save and insert next " 
+         tal:condition="python:not disable_insert" 
+         tal:attributes="name string:${rel_url_start}/save_and_insert:method" />&nbsp;
+    </tal:block>
   </td>
   <div metal:use-macro="container/macro_helpers/macros/empty_buttons" />
 </div>
@@ -53,7 +60,7 @@
     <a title="insert element" tal:attributes="href string:${url_start}/insert_mode" href="insert_mode"><img tal:attributes="src string:${silva_root}/globals/insert.gif" width="16" height="16" alt="insert element" border="0" /></a>
   </td>
   <td align="left" width="16"
-    tal:condition="python:is_embedded"><a title="insert item" tal:condition="python:not insert_now" tal:attributes="href string:${url_start}/insert_mode" href="insert"><img tal:attributes="src string:${silva_root}/globals/insert_low.gif" width="16" height="7" alt="insert element" border="0" /></a><a title="insert line item" tal:condition="python:insert_now" tal:attributes="href string:${url_start}/insert?what=li" href="insert_mode"><img tal:attributes="src string:${silva_root}/globals/insert_now.gif" width="16" height="7" alt="insert item" border="0" /></a></td>
+    tal:condition="python:is_embedded"><a title="insert line item" tal:attributes="href string:${url_start}/insert_mode" href="insert_mode"><img tal:attributes="src string:${silva_root}/globals/insert_now.gif" width="16" height="7" alt="insert item" border="0" /></a></td>
   <td tal:attributes="class insert_cell_class" colspan="2"><span class="halfline">&nbsp;</span></td>
   <td class="transparent" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
 </tr>
