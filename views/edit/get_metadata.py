@@ -42,13 +42,44 @@ def isAcquired(set_name, element_name):
         return 1
     return 0
 
+def isEqualToOrGreaterThan(role1, role2):
+    if role1 == 'Manager' or role1 == 'ChiefEditor':
+        return True
+    if role2 == 'Manager' or role2 == 'ChiefEditor':
+        return False
+    if role1 == 'Editor':
+        return True
+    if role2 == 'Editor':
+        return False
+    if role1 == 'Author':
+        return True
+    if role2 == 'Author':
+        return False
+    return True
+    
+def isAllowed(set_name):
+    minimal_role = binding.getSet(set_name).getMinimalRole()
+    if minimal_role:
+        user_roles = context.sec_get_all_roles_for_userid(
+            context.REQUEST.AUTHENTICATED_USER.getId()
+            )
+        for role in user_roles:
+            if isEqualToOrGreaterThan(role, minimal_role):
+                return True
+        return False
+    return True
+
 isViewable = binding.isViewable
 isEditable = binding.isEditable
 
 pt_binding = {}
-pt_binding['setNames'] = set_names = binding.getSetNames()
+set_names = binding.getSetNames()
+pt_binding['setNames'] = []
 
 for set_name in set_names:
+    if not isAllowed(set_name):
+        continue
+    pt_binding['setNames'].append(set_name)
     pt_binding[set_name] = set = {}
     set['setTitle'] = binding.getSet(set_name).getTitle() or set_name
     # Filter for viewable items
@@ -88,6 +119,7 @@ for set_name in set_names:
         element['isAcquireable'] = bound_element.isAcquireable()        
         element['isRequired'] = bound_element.isRequired()
         element['description'] = bound_element.Description()
+
         element['title'] = bound_element.Title()
 
 return pt_binding
