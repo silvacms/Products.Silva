@@ -44,9 +44,9 @@
   <tr tal:replace="nothing"> ______________ vein + title row ______________ </tr>
   <tr>
     <td class="top" colspan="3">
-    <h2 i18n:translate="">
+    <h2>
       <img tal:replace="structure python:view.render_icon(model)" />
-      status of &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;
+      <tal:block i18n:translate="">status of &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;</tal:block>
     </h2>
     </td>
   </tr>
