@@ -12,7 +12,7 @@
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      $Id: silva.xsd,v 1.17 2003/02/20 16:30:56 zagy Exp $
+      $Id: silva.xsd,v 1.18 2003/03/19 15:06:12 zagy Exp $
     
       Silva XML schema
       Copyright 2002 Infrae
@@ -302,7 +302,6 @@
                       <xsd:element name="p" type="Paragraph" />
                       <xsd:element name="list" type="List" />
                       <xsd:element name="nlist" type="NestedList" />
-                      <xsd:element name="table" type="Table" />
                     </xsd:choice>
                   </xsd:sequence>
                 </xsd:complexType>
