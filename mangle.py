@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.22 2004/07/21 11:40:40 jw Exp $
+# $Id: mangle.py,v 1.23 2004/09/03 14:39:36 guido Exp $
 # Python
 import string
 import re
@@ -396,6 +396,15 @@ class DateTime:
             return ''
         return "%02d.%s.%s&middot;%02d:%02d" % (dt.day(), dt.aMonth().lower(),
             dt.yy(), dt.hour(), dt.minute())
+
+    def toStrOptionalTime(self):
+        """returns self.toStr() unless time is 00:00, then it returns
+            a similar string without the time
+        """
+        dt = self._dt
+        if int(dt.hour() == 0) and int(dt.minute()) == 0:
+            return '%02d %s %04d' % (dt.day(), dt.aMonth().lower, dt.year())
+        return self.toStr()
 
 module_security.declarePublic('Now')
 class Now(DateTime):
