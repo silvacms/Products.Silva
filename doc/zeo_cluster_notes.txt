@@ -1,6 +1,27 @@
 Setting up a ZEO Cluster with session tracking.
 
-    Intro / Problem description
+    Version / Author
+
+        Version: $Version$
+        Jan-Wijbrand Kolman
+        jw@infrae.com
+
+    Introduction
+
+        These notes were collected during a ZEO Cluster setup proces to
+        test Silva in a clustered environment. Most information can be
+        found at the www.zope.org website, although either slightly
+        outdated or targeting a specific platform or usage.
+
+        So, these notes do not provide a complete set of instructions.
+        They asume knowledge of and experience with setting up Zope from
+        sources, using the Zope Session managers, etc.
+
+        However, I hope the notes do provide a highlevel overview and
+        sufficient pointers to more information. Feedback and/or
+        corrections are welcome.
+
+    Problem description
   
         A ZEO cluster provides building blocks to setup a scalable and
         highly available platform for CPU intensive webapplications.
