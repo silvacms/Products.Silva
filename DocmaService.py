@@ -51,12 +51,12 @@ class DocmaService(SimpleItem):
         return self._password
 
     security.declareProtected(Permissions.access_contents_information, "silva2word")
-    def silva2word(self, email, xml, fronttemplatedir, fronttemplate, username, description):
+    def silva2word(self, email, xml, fronttemplate, username, description):
         """Silva to Word conversion"""
         server = xmlrpclib.Server("http://%s:%s" % (self._host, self._port))
         if fronttemplate.endswith('.doc'):
             fronttemplate = fronttemplate[:-4]
-        (ident, storageid) = server.silva2word(username, self._password, email, "sample", fronttemplate, xmlrpclib.Binary(xml), description)
+        (ident, storageid) = server.silva2word(username, self._password, email, fronttemplate, xmlrpclib.Binary(xml), description)
         status = server.getJobStatus(ident)
         return (ident, status)
 
