@@ -1,4 +1,4 @@
-# Zope
+# Version: $Revision: 1.6 $
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -29,11 +29,20 @@ class Image(Asset):
                               'image')
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_title')
+    def set_title(self, title):
+        """Set the title of the silva object.
+        Overrides SilvaObject set_title() to accomodate the OFS.Image.Image 
+        title attribute - which in turn is used in the tag() method.
+        """
+        self._title = self.image.title = title    
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
     def set_image(self, file):
         """Set the image object.
         """
-        self.image = OFS.Image.Image('image', 'No image title', file)
+        self.image = OFS.Image.Image('image', self._title, file)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_zope_image')
@@ -49,7 +58,7 @@ manage_addImageForm = PageTemplateFile("www/imageAdd", globals(),
                                        __name__='manage_addImageForm')
 
 def manage_addImage(self, id, title, REQUEST=None):
-    """Add a Image."""
+    """Add an Image."""
     if not self.is_id_valid(id):
         return
     object = Image(id, title)
