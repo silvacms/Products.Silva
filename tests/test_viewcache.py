@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -195,7 +195,6 @@ class ViewCacheVirtualHostTestCase(ViewCacheTestCase):
         doc.set_unapproved_version_publication_datetime(now - 1)
         doc.approve_version()        
         self.assert_(not doc.is_cached())
-        import pdb; pdb.set_trace()
         data1 = doc.view()
         self.assert_(doc.is_cached())
         # Get REQUEST in shape for different virtual host
