@@ -161,4 +161,9 @@ class ViewCode:
         """
         return unicode(s, 'utf-8')
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'reduce_whitespace')
+    def reduce_whitespace(self, text):
+        return ' '.join(text.split())
+
 InitializeClass(ViewCode)

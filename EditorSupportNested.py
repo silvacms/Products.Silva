@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -238,7 +238,7 @@ class EditorSupport(SimpleItem):
         """
         # since we don't use Formulator we get UTF8 from the forms, so encode
         # manually here
-        st = self.input_convert(st)
+        st = self.input_convert2(st)
         st = self.replace_xml_entities(st)
         st = self._unifyLineBreak(st)
         while 1:
@@ -279,6 +279,9 @@ class EditorSupport(SimpleItem):
                     match.group(3), 
                     match.group(2)))
         st = st.replace('\n', '<br/>')
+        # reduce whitespace
+        st = self.reduce_whitespace(st)
+
         st = self._replace_silva_entities(st)
         node = node._node
         doc = node.ownerDocument
