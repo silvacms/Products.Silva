@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -109,6 +109,15 @@ class Versioning:
             self._request_for_approval_info.request_pending = None
             self._request_for_approval_info = self._request_for_approval_info
         self._reindex_version(self._approved_version)
+
+        # send messages
+        info = self._get_editable_rfa_info()
+        if info.requester is None:
+            return # no requester found, so don't send messages
+        editor = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        text = "Version was approved for publication by %s." % (editor)
+        self._send_message(editor, info.requester,
+                           "Version approved", text)
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'unapprove_version')
@@ -127,7 +136,14 @@ class Versioning:
         self._unapproved_version = self._approved_version
         self._approved_version = empty_version
         self._reindex_version(self._unapproved_version)
-        
+
+        # send messages to editor
+        # XXX what if editors themselves withdraw approval?
+        # what if author should be informed?
+        author = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        text = "Version was unapproved by %s." % author
+        self._send_message_to_editors(author, 'Unapproved', text)
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'close_version')
     def close_version(self):
@@ -149,7 +165,7 @@ class Versioning:
         self._reindex_version(previous_versions[-1])
 
 
-    def _get_editeable_rfa_info(self):
+    def _get_editable_rfa_info(self):
         """ helper method: return the request for approval information,
         this creates a new one, if necessary; notifes Zope that this has changed
         in advance ... i.e. do not call this method if You do not want to change
@@ -164,7 +180,7 @@ class Versioning:
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'request_version_approval')
-    def request_version_approval(self):
+    def request_version_approval(self, message):
         """Request approval for the current unapproved version
         Raises VersioningError, if there is no such version, or it is already approved.
         Returns None otherwise
@@ -178,14 +194,18 @@ class Versioning:
             raise VersioningError,\
                   'The version is already requested for approval.'
 
-        info = self._get_editeable_rfa_info()
+        info = self._get_editable_rfa_info()
         info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
         info.request_date = DateTime()
         info.request_pending=1
+        self.set_approval_request_message(message)
+        # send messages
+        text = "Approval was requested by %s.\nMessage:\n%s" % (info.requester, message)
+        self._send_message_to_editors(info.requester, 'Approval requested', text)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'withdraw_version_approval')
-    def withdraw_version_approval(self):
+    def withdraw_version_approval(self, message):
         """Withdraw a previous request for approval
         Implementation should raise VersioningError, if the
         currently unapproved version has no request for approval yet,
@@ -200,10 +220,41 @@ class Versioning:
         if not self.is_version_approval_requested():
             raise VersioningError,\
                   'The version is not requested for approval.'
-        info = self._get_editeable_rfa_info()
+        info = self._get_editable_rfa_info()
         info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
         info.request_pending=None
-    
+        self.set_approval_request_message(message)
+        # send messages
+        text = "Request for approval was withdrawn by %s.\nMessage:\n%s" % (info.requester, message)
+        self._send_message_to_editors(info.requester,
+                                      'Approval withdrawn by author', text)
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'reject_version_approval')
+    def reject_version_approval(self, message):
+        """Reject a previous request for approval
+        Implementation should raise VersioningError, if the
+        currently unapproved version has no request for approval yet,
+        or if there is no unapproved version.
+        """
+        
+        self._update_publication_status()
+        if self.get_unapproved_version is None:
+            raise VersioningError,\
+                  'There is no unapproved version to request approval for.'
+
+        if not self.is_version_approval_requested():
+            raise VersioningError,\
+                  'The version is not requested for approval.'
+        info = self._get_editable_rfa_info()
+        original_requester = info.requester
+        info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        info.request_pending=None
+        self.set_approval_request_message(message)
+        # send message back to requester
+        text = "Request for approval was rejected by %s.\nMessage:\n%s" % (info.requester, message)
+        self._send_message(info.requester, original_requester,
+                           "Approval rejected by editor", text)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_unapproved_version_publication_datetime')
@@ -307,7 +358,7 @@ class Versioning:
             raise VersioningError, \
                   "There is no version to add messages for."
         
-        info = self._get_editeable_rfa_info()
+        info = self._get_editable_rfa_info()
         info.request_messages.append(message)
 
     
@@ -557,7 +608,32 @@ class Versioning:
 
     def _reindex_version(self, version):
         pass
-        
+
+    def _send_message_to_editors(self, from_userid, subject, text):
+        service_messages = getattr(self, 'service_messages', None)
+        if service_messages is None:
+            return
+        # find out some information about the object and add it to the
+        # message
+        text = "Object: %s %s\n%s" % (
+            self.get_title_editable(),
+            self.absolute_url(), text)
+        # XXX this may not get the right people, but what does?
+        for userid in self.sec_get_nearest_of_role('ChiefEditor'):
+            service_messages.send_message(
+                from_userid, userid, subject, text)
+
+    def _send_message(self, from_userid, to_userid, subject, text):
+        service_messages = getattr(self, 'service_messages', None)
+        if service_messages is None:
+            return
+        # find out some information about the object and add it to the
+        # message
+        text = "Object: %s %s\n%s" % (
+            self.get_title_editable(),
+            self.absolute_url(), text)
+        service_messages.send_message(from_userid, to_userid, subject, text)
+
 InitializeClass(Versioning)
 
 

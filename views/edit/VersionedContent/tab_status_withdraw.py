@@ -10,13 +10,21 @@
 request = context.REQUEST
 model = request.model
 
+is_rejection = request['rejection_status'] == 'true'
+
 # XXX fishy: if no message, we are called from the edit tab ...
 if request.has_key('message'):
   message = request['message']
   view  = context.tab_status
 else:
-  message = '''
-Rejected request for approval via the publish tab. 
+  if is_rejection:
+    message = '''\
+rejected request for approval via the publish tab.
+(Automatically generated message)
+'''
+  else:
+    message = '''\
+Withdrew request for approval via the publish tab. 
 (Automatically generated message)
 '''
   view = context.tab_edit
@@ -33,7 +41,18 @@ if model.get_unapproved_version() is None:
 if not model.is_version_approval_requested():
     return view(message_type="error", message="No request for approval is pending for this content object.")
 
-model.set_approval_request_message(message)
-model.withdraw_version_approval()
 
-return view(message_type="feedback", message="Rejected/withdrew request for approval.")
+if is_rejection:
+  model.reject_version_approval(message)
+else:
+  model.withdraw_version_approval(message)
+
+if hasattr(model, 'service_messages'):
+  model.service_messages.send_pending_messages()
+
+if is_rejection:
+  message = 'Rejected request for approval'
+else:
+  message = 'Withdrew request for approval'
+
+return view(message_type="feedback", message=message)

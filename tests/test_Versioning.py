@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import unittest
 import Zope
 #import ZODB
@@ -198,14 +198,14 @@ class VersioningTestCase(unittest.TestCase):
         self.versioning.create_version('0', DateTime() + 10, None)
         self._check_version_state()        
         self.versioning.set_approval_request_message('foo')
-        self.versioning.request_version_approval()
+        self.versioning.request_version_approval('Request message')
         self._check_version_state(approval_requested=true)
         self.assertEquals('TestUser',self.versioning.get_approval_requester())
         self.assertEquals('foo',
                           self.versioning.get_approval_request_message())
-        self.versioning.withdraw_version_approval()
+        self.versioning.withdraw_version_approval('Withdraw message')
         self._check_version_state()
-        self.versioning.request_version_approval()
+        self.versioning.request_version_approval('Request message')
         self._check_version_state(approval_requested=true)
         self.versioning.approve_version()
         self._check_version_state(approved=true)
@@ -231,45 +231,45 @@ class VersioningTestCase(unittest.TestCase):
         hack_add_user(self.versioning.REQUEST)
 
         try:
-            self.versioning.request_version_approval()
+            self.versioning.request_version_approval('Request message')
             self.fail(msg="cannot request for approval without version")
         except Versioning.VersioningError:
             pass
         
         self.versioning.create_version('first', DateTime() + 10, None)
-        self.versioning.request_version_approval()
+        self.versioning.request_version_approval('Request message')
         try:
-            self.versioning.request_version_approval()
+            self.versioning.request_version_approval('Request message')
             self.fail(msg="cannot request for approval twice")
         except Versioning.VersioningError:
             pass
 
-        self.versioning.withdraw_version_approval()
+        self.versioning.withdraw_version_approval('Withdraw message')
         try:
-            self.versioning.withdraw_version_approval()
+            self.versioning.withdraw_version_approval('Withdraw message')
             self.fail(msg="cannot withdraw request for approval twice")
         except Versioning.VersioningError:
             pass
 
         self.versioning.approve_version()
         try:
-            self.versioning.request_version_approval()
+            self.versioning.request_version_approval('Request message')
             self.fail(msg="cannot request for approval after approving version")
         except Versioning.VersioningError:
             pass
         try:
-            self.versioning.withdraw_version_approval()
+            self.versioning.withdraw_version_approval('Withdraw message')
             self.fail(msg="cannot withdraw request for approval after approving version")
         except Versioning.VersioningError:
             pass
 
         self.versioning.unapprove_version()
         try:
-            self.versioning.withdraw_version_approval()
+            self.versioning.withdraw_version_approval('Withdraw message')
             self.fail(msg="cannot withdraw request for approval after approving and unapproving version")
         except Versioning.VersioningError:
             pass
-        self.versioning.request_version_approval()
+        self.versioning.request_version_approval('Request message')
         self._check_version_state(approval_requested=1)
 
         # XXX check publish state here ? shoud be in workflow6?
@@ -279,12 +279,12 @@ class VersioningTestCase(unittest.TestCase):
         self.versioning.close_version()
         
         try:
-            self.versioning.request_version_approval()
+            self.versioning.request_version_approval('Request message')
             self.fail(msg="cannot request for approval after closing version")
         except Versioning.VersioningError:
             pass
         try:
-            self.versioning.withdraw_version_approval()
+            self.versioning.withdraw_version_approval('Withdraw message')
             self.fail(msg="cannot withdraw request for approval after closing version")
         except Versioning.VersioningError:
             pass

@@ -338,7 +338,7 @@ function toggleSelect() {
 <tr class="divider"
   tal:condition="silva_permissions/ApproveSilvaContent">
 <td colspan="3">
-<input class="button" type="submit" name="tab_status_withdraw:method" value="reJect request for approval" title="Reject request for approval of new versions - alt-j" accesskey="j" />
+<input class="button" type="submit" name="tab_status_reject:method" value="reJect request for approval" title="Reject request for approval of new versions - alt-j" accesskey="j" />
 &nbsp;
 <input class="button" type="submit" name="tab_status_revoke:method" value="reVoke approval" title="Withdraw approval of new versions - alt-v" accesskey="v" />
 &nbsp;

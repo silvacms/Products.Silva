@@ -15,13 +15,13 @@ result = view.tab_status_form_author.validate_all(context.REQUEST)
 # check for status
 message=None
 if model.get_unapproved_version() is None:
-  message='There is no unapproved version.'
+    message='There is no unapproved version.'
 elif model.is_version_approval_requested():
-  message='Approval has already been requested.'
+    message='Approval has already been requested.'
 # no check for closed ...
 
 if message is not None:
-  return view.tab_status(message_type="error", message=message)
+    return view.tab_status(message_type="error", message=message)
 
 context.set_unapproved_version_publication_datetime(result['publish_datetime'])
 
@@ -31,7 +31,9 @@ if result['expires_flag']:
 else:
     model.set_unapproved_version_expiration_datetime(None)
 
-model.set_approval_request_message(result['message'])
-model.request_version_approval()
+model.request_version_approval(result['message'])
 
+if hasattr(model, 'service_messages'):
+    model.service_messages.send_pending_messages()
+    
 return view.tab_status(message_type="feedback", message="Approval requested.")

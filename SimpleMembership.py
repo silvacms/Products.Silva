@@ -177,8 +177,9 @@ class EmailMessageService(SimpleItem.SimpleItem):
         if not hasattr(self.aq_base, '_v_messages'):
             self._v_messages = {}
         self._v_messages.setdefault(to_memberid, {}).setdefault(from_memberid, []).append((subject, message))
-        
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+
+    # XXX have to open this up to the world, unfortunately.. 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'send_pending_messages')
     def send_pending_messages(self):
         if not hasattr(self.aq_base, '_v_messages'):
@@ -186,11 +187,14 @@ class EmailMessageService(SimpleItem.SimpleItem):
         for to_memberid, message_dict in self._v_messages.items():
             to_email = self.service_members.get_member(to_memberid).email()
             if to_email is None:
+                print "messages: no email for: %s" % to_memberid
+                to_email = to_memberid + "@madeup.infrae.com"
                 # no email address known, so can't send these messages!
-                continue
+                #continue
             lines = []
             for from_memberid, messages in message_dict.items():
                 from_email = self.service_members.get_member(from_memberid).email()
+                # XXX what if no from_email?
                 lines.append("Message from: %s %s" %
                              (from_memberid, from_email)) 
                 for subject, message in messages:
@@ -204,9 +208,11 @@ class EmailMessageService(SimpleItem.SimpleItem):
 
     def _send_email(self, toaddr, msg):
         msg = 'From: %s\r\nTo: %s\r\n\r\n%s' % (self._fromaddr, toaddr, msg)
-        server = smtplib.SMTP(self._host, self._port)
-        server.sendmail(self._fromaddr, [toaddr], msg)
-        server.quit()
+        print "messages:"
+        print msg
+        #server = smtplib.SMTP(self._host, self._port)
+        #server.sendmail(self._fromaddr, [toaddr], msg)
+        #server.quit()
         
 Globals.InitializeClass(EmailMessageService)
 

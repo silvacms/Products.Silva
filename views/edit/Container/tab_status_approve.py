@@ -80,4 +80,7 @@ if not_approved:
 
 context.REQUEST.set('refs', [])
 
+if hasattr(context, 'service_messages'):
+    context.service_messages.send_pending_messages()
+    
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

@@ -16,7 +16,7 @@ from Products.Formulator.Errors import FormValidationError
 if not refs:
     return view.tab_status(
         message_type='error',
-        message='Nothing was selected, so no approval withdrawn')
+        message='Nothing was selected, so no approval rejected')
 
 try:
     result = view.tab_status_form.validate_all(context.REQUEST)
@@ -46,18 +46,18 @@ for ref in refs:
         not_approved_refs.append(ref)
         continue
     message = '''\
-Request for approval was withdrawn via a bulk operation in the publish tab of /%s
+Request for approval was rejected via a bulk operation in the publish tab of /%s
 (Automatically generated message)''' % model.absolute_url(1)
-    obj.withdraw_version_approval(message)
+    obj.reject_version_approval(message)
     approved_ids.append(obj.id)
 
 context.REQUEST.set('refs', [])
 
 if approved_ids:
-    msg.append( 'Withdrawn request for approval for: %s' % view.quotify_list(approved_ids))
+    msg.append( 'Rejected request for approval for: %s' % view.quotify_list(approved_ids))
 
 if not_approved:
-    msg.append( '<span class="error">Not withdrawn: %s</span>' % view.quotify_list_ext(not_approved))
+    msg.append( '<span class="error">Not rejected: %s</span>' % view.quotify_list_ext(not_approved))
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

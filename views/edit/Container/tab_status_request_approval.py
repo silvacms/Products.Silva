@@ -61,10 +61,10 @@ for ref in refs:
     if expires_flag:
         obj.set_unapproved_version_expiration_datetime(expiration_datetime)
 
-    obj.set_approval_request_message('''
+    message = '''\
 Request for approval via bulk request in the publish tab of /%s
-(Automatically generated message)''' % model.absolute_url(1))
-    obj.request_version_approval()    
+(Automatically generated message)''' % model.absolute_url(1)
+    obj.request_version_approval(message)    
     approved_ids.append(get_name(obj))
 
 
@@ -75,5 +75,7 @@ if approved_ids:
 if not_approved:
     msg.append('<span class="error">No request for approval on: %s</span>' % view.quotify_list_ext(not_approved))
 
-
+if hasattr(context, 'service_messages'):
+    context.service_messages.send_pending_messages()
+    
 return view.tab_status(message_type='feedback', message=('<br />'.join(msg)) )

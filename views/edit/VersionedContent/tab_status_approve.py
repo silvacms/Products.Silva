@@ -37,4 +37,7 @@ else:
 
 model.approve_version()
 
+if hasattr(model, 'service_messages'):
+    model.service_messages.send_pending_messages()
+    
 return view.tab_status(message_type="feedback", message="Version approved.")
