@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.72 $
+# $Revision: 1.73 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -179,7 +179,8 @@ class Security(AccessManager):
             if userids:
                 result = []
                 for userid in userids:
-                    if role in obj.sec_get_roles_for_userid(userid):
+                    if (role in obj.sec_get_roles_for_userid(userid) and 
+                            self.service_members.get_member(userid)):
                         result.append(userid)
                 if result:
                     return result
