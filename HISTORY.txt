@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  unreleased
+
+    Bugs fixed
+
+      - Fixed issue1246, where the cropbox didn't work correctly.
+
   1.2
 
     Bugs fixed
