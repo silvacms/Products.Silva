@@ -82,7 +82,7 @@
             export...
           </a>
           <h3 i18n:translate="import_silva_xml">
-            import Silva xml (.slv)
+            import silva xml (.slv)
           </h3>
         </td>
       </tr>
@@ -151,7 +151,7 @@
       <tr class="top-controls">
         <td colspan="3">
           <h3 i18n:translate="import_zip_file">
-            import and extract zip archive file (.zip)
+            import and extract zip archive (.zip)
           </h3>
         </td>
       </tr>
