@@ -136,7 +136,27 @@ class VersioningTestCase(unittest.TestCase):
         versioning.approve_version()
         # second should be public now
         self.assertEqual(versioning.get_public_version(), 'second')
-      
+
+    def test_workflow5(self):
+        # test manual close
+        versioning = Versioning.Versioning()
+        # create new version, publish before now, expire after now
+        versioning.create_version('first', DateTime() - 1, DateTime() + 2)
+        # approve it
+        versioning.approve_version()
+        # should be published now, not expired yet
+        # close public version
+        versioning.close_version()
+        self.assertEqual(versioning.get_previous_versions(), ['first'])
+        self.assertEqual(versioning.get_last_closed_version(), 'first')
+        # create a new version
+        versioning.create_version('second', DateTime() - 1, DateTime() + 2)
+        # approve and close it too
+        versioning.approve_version()
+        versioning.close_version()
+        self.assertEqual(versioning.get_previous_versions(), ['first', 'second'])
+        self.assertEqual(versioning.get_last_closed_version(), 'second')
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(VersioningTestCase, 'test'))

@@ -8,7 +8,22 @@ class SilvaObject(Interface.Base):
         """Change the title of the content object.
         """
         pass
-          
+
+    # MANIPULATORS
+    def manage_afterAdd(self, item, container):
+        """Hook called by Zope just after the item was added to
+        container. Adds item id to an ordered list, if item is
+        a publishable object.
+        """
+        pass
+
+    def manage_beforeDelete(self, item, container):
+        """Hook called by Zope just before the item is deleted from
+        container. Removes item id to from ordered list (item is
+        a publishable object).
+        """
+        pass        
+
     # ACCESSORS
     def title(self):
         """The title of the content object.
@@ -28,37 +43,26 @@ class SilvaObject(Interface.Base):
 
     def get_editable(self):
         """Get the editable version (may be object itself if no versioning).
+        Returns None if there is no such version.
         """
         pass
 
     def get_previewable(self):
         """Get the previewable version (may be the object itself if no
         versioning).
+        Returns None if there is no such version.
         """
         pass
 
     def get_viewable(self):
         """Get the publically viewable version (may be the object itself if
         no versioning).
+        Returns None if there is no such version.
         """
         pass
 
-class Publishable(SilvaObject):
+class Publishable(Interface.Base):
     # MANIPULATORS
-    def manage_afterAdd(self, item, container):
-        """Hook called by Zope just after the item was added to
-        container. Adds item id to an ordered list, if item is
-        a publishable object.
-        """
-        pass
-
-    def manage_beforeDelete(self, item, container):
-        """Hook called by Zope just before the item is deleted from
-        container. Removes item id to from ordered list (item is
-        a publishable object).
-        """
-        pass
-
     def activate(self):
         """Make this publishable item active.
         """
@@ -70,8 +74,6 @@ class Publishable(SilvaObject):
         pass
     
     # ACCESSORS
-
-
     def is_published(self):
         """Return true if this object is visible to the public.
         """
@@ -95,18 +97,29 @@ class Asset(SilvaObject):
     """
     pass
 
-class Content(Publishable):
+class Content(SilvaObject, Publishable):
     """An object that can be published directly and would appear
     in the table of contents. Can be ordered.
     """
     # ACCESSORS
+    def get_content(self):
+        """Used by acquisition to get the nearest containing content object.
+        """
+        pass
+
+    def content_url(self):
+        """Used by acquisition to get the URL of the containing content object.
+        """
+        pass
+    
     def is_default(self):
         """True if this content object is the default content object of
         the folder.
         """
         pass
-    
-class Container(Publishable):
+
+
+class Container(SilvaObject, Publishable):
     
     # MANIPULATORS
     def move_object_up(self, id):
@@ -131,6 +144,17 @@ class Container(Publishable):
     
     # ACCESSORS
 
+    def get_container(self):
+        """Get the nearest container in the acquisition hierarchy.
+        (this one)
+        """
+        pass
+
+    def container_url(self):
+        """Get the url of the nearest container.
+        """
+        pass
+    
     def is_transparent(self):
         """Show this subtree in get_tree().
         """
@@ -356,8 +380,14 @@ class Versioning(Interface.Base):
 
     def get_previous_versions(self):
         """Get a list of the ids of the most recent versions (that
-        are not public anymore. Index 0 is most recent, up is older
+        are not public anymore. Index 0 is oldest, up is more recent
         versions).
+        """
+        pass
+
+    def get_last_closed_version(self):
+        """Get the id of the version that was last closed, or None if
+        no such version.
         """
         pass
     

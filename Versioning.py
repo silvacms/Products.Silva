@@ -1,4 +1,5 @@
 from DateTime import DateTime
+import Interfaces
 
 class VersioningError(Exception):
     pass
@@ -143,7 +144,11 @@ class Versioning:
         expiration_datetime = self._public_version[2]
         # expire public version if expiration datetime reached
         if expiration_datetime and now >= expiration_datetime:
+            # make sure to add it to the previous versions
+            previous_versions = self._previous_versions or []
+            previous_versions.append(self._public_version)
             self._public_version = empty_version
+            self._previous_versions = previous_versions
             
     # ACCESSORS
     
@@ -246,7 +251,20 @@ class Versioning:
     def get_previous_versions(self):
         """Get list of previous versions, index 0 most recent.
         """
-        return self._previous_versions or []
+        if self._previous_versions is None:
+            return []
+        else:
+            return [version[0] for version in self._previous_versions]
+
+    def get_last_closed_version(self):
+        """Get the last closed version or None if no such thing.
+        """
+        versions = self.get_previous_versions()
+        if len(versions) < 1:
+            return None
+        else:
+            return versions[-1]
     
-    def can_approve(self):
-        raise NotImplementedError
+    
+    #def can_approve(self):
+    #    raise NotImplementedError

@@ -6,15 +6,14 @@ import Globals
 import DateTime
 # Silva
 from ViewRegistry import ViewAttribute
-from Content import Content
-from Versioning import Versioning
+from VersionedContent import VersionedContent
 import ForgivingParser
 import Interfaces
 # misc
 from helpers import add_and_edit
 from cgi import escape
 
-class Document(Content, Folder.Folder, Versioning):
+class Document(VersionedContent, Folder.Folder):
     """Silva Document.
     """
     meta_type = "Silva Document"
@@ -54,7 +53,6 @@ class Document(Content, Folder.Folder, Versioning):
     def __init__(self, id, title):
         self.id = id
         self._title = title
-        self._version_count = 1
         self._creation_datetime = DateTime.DateTime()
 
         self._metadata = {
@@ -95,38 +93,12 @@ class Document(Content, Folder.Folder, Versioning):
         """
         if self.is_default():
             # set the nearest container's title
-            self.get_folder().set_title(title)
+            self.get_container().set_title(title)
         else:
             # set title of this document
             self._title = title
 
-    def create_copy(self):
-        """Create new version of public version.
-        """
-        if self.get_next_version() is not None:
-            return
-        
-        # if there is no next version, get copy of public version
-        # FIXME: way to get copy of last closed version?
-        published_version_id = self.get_public_version()
-        # copy published version
-        new_version_id = str(self._version_count)
-        self._version_count = self._version_count + 1
-        self.manage_clone(getattr(self, published_version_id),
-                          new_version_id,
-                          self.REQUEST)
-        self.create_version(new_version_id, None, None)
-
     # ACCESSORS
-    def get_document(self):
-        """Get the document. Can be used with acquisition to get
-        the 'nearest' document."""
-        return self.aq_inner
-
-    def document_url(self):
-        """Get document URL."""
-        return self.absolute_url()
-
     def xml_url(self):
         """Get URL for xml data.
         """
@@ -138,15 +110,10 @@ class Document(Content, Folder.Folder, Versioning):
         """
         if self.is_default():
             # get the nearest container's title
-            return self.get_folder().title()
+            return self.get_container().title()
         else:
             return self._title
-    
-    def is_published(self):
-        """Return true if this is published.
-        """
-        return self.get_public_version() is not None
-    
+        
     def get_creation_datetime(self):
         """Get document creation date.
         """
@@ -165,41 +132,17 @@ class Document(Content, Folder.Folder, Versioning):
         else:
             return None
                         
-    def editor(self):
-        """Show document in editor mode.
-        """
-        # now show unapproved version in editor
-        version_id = self.get_unapproved_version()
-        if version_id is None:
-            return None # there is no editable version
-        doc = getattr(self, version_id)
-        wm = self.wm
-        node = wm.get_widget_node(doc.documentElement)
-        return node.render(node, self.REQUEST)
-
-    def preview(self):
-        """Preview document as HTML
-        """
-        version_id = self.get_next_version()
-        if version_id is None:
-            version_id = self.get_public_version()
-            if version_id is None:
-                return None
-        doc = getattr(self, version_id)
-        view_wm = self.view_wm
-        node = view_wm.get_widget_node(doc.documentElement)
-        return node.render(node, self.REQUEST)
-
-    def view(self):
-        """Get version open to the public.
-        """
-        version_id = self.get_public_version()
-        if version_id is None:
-            return None # There is no public document
-        doc = getattr(self, version_id)
-        view_wm = self.view_wm
-        node = view_wm.get_widget_node(doc.documentElement)
-        return node.render(node, self.REQUEST)
+    #def get_editable(self):
+    #    """Get the editable object.
+    #    """
+    #    # the editable version is the unapproved version
+    #    version_id = self.get_unapproved_version()
+    #    if version_id is None:
+    #        return None # there is no editable version
+    #    doc = getattr(self, version_id)
+    #    wm = self.wm
+    #    node = wm.get_widget_node(doc.documentElement)
+    #    return node.render(node, self.REQUEST)
         
     def get_metadata(self, name):
         """Get meta data.
@@ -222,7 +165,7 @@ class Document(Content, Folder.Folder, Versioning):
         # we will rename ourselves to a temporary id
         temp_id = 'silva_temp_%s' % id
         # get parent folder
-        parent = self.get_folder()
+        parent = self.get_container()
         # rename doc so we can create folder with the same name
         parent.manage_renameObject(id, temp_id)
         # create Silva Folder to hold self

@@ -14,7 +14,7 @@ import Interfaces
 # misc
 from helpers import add_and_edit
 
-class Folder(Publishable, Folder.Folder):
+class Folder(SilvaObject, Publishable, Folder.Folder):
     """Silva Folder.
     """
     meta_type = "Silva Folder"
@@ -106,14 +106,14 @@ class Folder(Publishable, Folder.Folder):
               
     # ACCESSORS
 
-    def get_folder(self):
-        """Get the folder an object is in. Can be used with
-        acquisition to get the 'nearest' folder.
+    def get_container(self):
+        """Get the container an object is in. Can be used with
+        acquisition to get the 'nearest' container.
         """
         return self.aq_inner
     
-    def folder_url(self):
-        """Get url for folder.
+    def container_url(self):
+        """Get url for container.
         """
         return self.absolute_url()
 
@@ -122,15 +122,18 @@ class Folder(Publishable, Folder.Folder):
         """
         return self._title
     
-    def is_published(self):
-        """Return true if this is published."""
-        #for item in self.objectValues(['Silva Folder', 'Silva Document']):
-        #    if item.is_published():
-        #        return 1            
-        return 1
-            
     def is_transparent(self):
         return 1
+
+    def is_published(self):
+        # NOTE: this is inefficient if there's a big unpublished hierarchy..
+        # Folder is published if anything inside is published
+        if self.get_default().is_published():
+            return 1
+        for object in self.get_ordered_publishables():        
+            if object.is_published():
+                return 1
+        return 0
 
     def get_default(self):
         """Get the default content object of the folder.
@@ -167,7 +170,7 @@ class Folder(Publishable, Folder.Folder):
         l = []
         self._get_container_tree_helper(l, 0)
         return l
-    
+
     def _get_tree_helper(self, l, indent):
         for item in self.get_ordered_publishables():
             if (Interfaces.Container.isImplementedBy(item) and
@@ -186,7 +189,7 @@ class Folder(Publishable, Folder.Folder):
                 item._get_container_tree_helper(l, indent + 1)
             else:
                 l.append((indent, item))
-                
+    
     def create_ref(self, obj):
         """Create a moniker for the object.
         """
