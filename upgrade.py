@@ -7,6 +7,8 @@ import zLOG
 from Products.Silva.interfaces import ISilvaObject, IContainer, IUpgrader
 from Products.Silva import mangle
 
+threshold = 500
+
 class GeneralUpgrader:
     """wrapper for upgrade functions"""
     
@@ -91,8 +93,17 @@ class UpgradeRegistry:
                 "this is a bug." % (upgrader, )
         return obj
         
+    import DateTime
+    
     def upgradeTree(self, root, version):
         """upgrade a whole tree to version"""
+        stats = {
+            'total': 0,
+            'threshold': 0,
+            'starttime': DateTime.DateTime(),
+            'endtime': None,
+            }            
+        
         self.setUp(root, version)
         object_list = [root]
         try:
@@ -102,8 +113,17 @@ class UpgradeRegistry:
                 self.upgradeObject(o, version)
                 if hasattr(o.aq_base, 'objectValues'):
                     object_list.extend(o.objectValues())
+                stats['total'] += 1
+                stats['threshold'] += 1                
+                if stats['threshold'] > threshold:
+                    print '#### Commit sub transaction ####'
+                    get_transaction().commit(1)
+                    o._p_jar.cacheGC()
+                    stats['threshold'] = 0
+            stat['endtime'] = DateTime.DateTime()
         finally:
             self.tearDown(root, version)
+        print repr(stats)
 
     def upgrade(self, root, from_version, to_version):
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrading content from %s to %s.' % (
