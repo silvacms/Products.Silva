@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- _______ Silva version 0.9.3.0 _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
@@ -32,7 +32,7 @@
 </h2>
 
 <div class="citation"
-  style="font-size:90%; margin:2em 0; padding:0 1em 0.3em 1em;">
+  style="font-size:90%; margin:2em 0; padding:0 1em 0.3em 1em; border-width:3px; border-style:double; border-color:#6873a5">
   <dl>
     <dt>
       From WordNet (r) 1.6 [wn]:
