@@ -287,7 +287,8 @@ class GhostContentHandler(SilvaBaseHandler):
 class GhostFolderHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
-            (NS_URI, 'content'): GhostContentHandler
+            (NS_URI, 'haunted_url'): HauntedUrlHandler,
+            (NS_URI, 'content'): NoopHandler,
             }
 
     def startElementNS(self, name, qname, attrs):
@@ -299,12 +300,21 @@ class GhostFolderHandler(SilvaBaseHandler):
             object = getattr(self.parent(), uid)
             self.setResult(object)
 
+    def endElementNS(self, name, qname):
+        if name == (NS_URI, 'content'):
+            self.storeWorkflow()
+            updateVersionCount(self)
+
 class HauntedUrlHandler(SilvaBaseHandler):
     def characters(self, chars):
         self.parent().set_haunted_url(chars)
 
 class NoopHandler(SilvaBaseHandler):
-    pass
+    def startElementNS(self, name, qname, attrs):
+        pass
+
+    def endElementNS(self, name, qname):
+        pass
 
 class LinkHandler(SilvaBaseHandler):
     def getOverrides(self):
@@ -428,6 +438,7 @@ class ImportInfo:
         self._asset_paths = {}
         self._zexp_paths = {}
         self._zip_file = None
+        self._ghostfolders = [] 
 
     def setZipFile(self, file):
         self._zip_file = file
@@ -452,6 +463,10 @@ class ImportInfo:
 
     def getZexpPaths(self):
         return self._zexp_paths.items()
+
+    def addSyncTarget(self, ghostfolder):
+        self._ghostfolders.append(ghostfolder)
+
     
 def generateUniqueId(org_id, context):
         i = 0
