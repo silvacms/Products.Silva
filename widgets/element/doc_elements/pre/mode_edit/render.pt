@@ -15,6 +15,7 @@ Element:
   <option value="list">list</option>
   <option value="dlist">definition list</option>
 </select>
+&nbsp;
 Type: 
 <select class="manipulator"
    name="element_type" tal:define="type here/get_type">
@@ -24,7 +25,7 @@ Type:
 <metal:block fill-slot="edit_notes">
 <ul class="tips">
   <li>Preformatted text will be shown exactly as entered, with all characters displayed literally. White space is preserved (unless the textarea is empty).</li>
-  <li><b>Tip:</b> Tab to the exit button or alt-e.</li>
+  <li><b>Tip:</b> tab to the exit button or alt-e.</li>
 </ul>
 </metal:block>
 </div>

@@ -1,0 +1,16 @@
+<html>
+
+<metal:block define-macro="markup_notes">
+  <li>Text can be formatted &#8211; in <i>italic</i>, <b>bold</b>, etc. &#8211; with &#8220;Silva markup&#8221;:
+    <ul class="tips-nested">
+      <li>**bold** ++italic++ __underlined__ ^^superscript^^ ~~subscript~~</li>
+      <li>((link text|http://www.x.yz))</li>
+      <li>((link text|http://www.x.yz|target)) &#8212; if &#8216;target&#8217; is empty a new window opens</li>
+      <li>[[index item|item as shown in index]]</li>
+      <li tal:replace="nothing">{{name of person|name in index}}</li>
+    </ul>
+  </li>
+</metal:block>
+
+
+</html>

@@ -31,7 +31,7 @@
 <metal:block fill-slot="edit_notes">
 <ul class="tips">
   <li>Select the code to be executed when document is displayed.</li>
-  <li><b>Tip:</b> Tab to the exit button or alt-e.</li>
+  <li><b>Tip:</b> tab to the exit button or alt-e.</li>
 </ul>
 </metal:block>
 

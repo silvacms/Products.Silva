@@ -29,7 +29,7 @@
     <div metal:define-slot="edit_input">_______ local input/textarea gets slotted in _______</div>
   </td>
   <td tal:condition="not:disable_notes">
-    <div metal:define-slot="edit_notes">_____ notes get slotted in ____ </div>
+    <div metal:define-slot="edit_notes">_____ custom notes get slotted in ____ </div>
   </td>
   <td class="invisible"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" border="0" /></td>
 </tr>
@@ -37,6 +37,7 @@
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_start" tal:omit-tag="" />
 <td class="align-right"><div metal:define-slot="element_controls">&nbsp;</div></td>
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_controls" tal:omit-tag="" />
+<div metal:use-macro="container/macro_helpers/macros/element_buttons" />
 </tr>
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_end" tal:omit-tag="" />
 </table>

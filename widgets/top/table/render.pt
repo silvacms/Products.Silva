@@ -7,20 +7,19 @@
 <div metal:use-macro="container/macro_embed_view/macros/embed_view">
 <div metal:fill-slot="embed_controls" tal:omit-tag="">
 <table border="0" width="100%" cellspacing="0">
-<tr class="inter-controls">
+<tr class="controls">
   <td>
-    &nbsp;Column settings
+    Column settings
   </td>
   <td class="align-right">
-    <input class="button" type="submit" tal:attributes="name string:${rel_url_start}/add_column:method" value="Add column" />&nbsp;
-    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="Delete column" />&nbsp;
+    <input class="button" type="submit" tal:attributes="name string:${rel_url_start}/add_column:method" value="Add column" />
+    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="Delete column" />
   </td>
 </tr>
 </table>
-<table class="invisible" 
-  border="0" width="100%" cellspacing="1">
-<tr>
-  <td class="invisible"
+<table border="0" width="100%" cellspacing="0">
+<tr class="inter-controls">
+  <td style="text-transform:lowercase;"
      align="center" tal:repeat="info columns_info" tal:attributes="align info/align; width info/html_width">
      <div tal:omit-tag="" tal:define="align_name string:column_align_${repeat/info/index};
                                       width_name string:column_width_${repeat/info/index};

@@ -11,8 +11,8 @@
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="20" border="0" />
   </td>
   <th align="left">
-  &nbsp;<span tal:replace="python:here.get_display_name(wr_name, node)">Edit title</span>
-  <a href="#top" title="Up to top of page"><img tal:attributes="src string:${silva_root}/globals/up_to_top.gif" width="16" height="12" border="0" hspace="7" /></a>
+  <span tal:replace="python:here.get_display_name(wr_name, node)">Edit title</span>
+  <a href="#top" title="up to top of page"><img tal:attributes="src string:${silva_root}/globals/up_to_top.gif" width="16" height="12" border="0" hspace="7" /></a>
   </th>
   <th tal:condition="not:disable_notes" align="left" width="30%">Notes</th>
   <th tal:condition="disable_notes" align="left" width="30%">&nbsp;</th>
@@ -29,15 +29,15 @@
 <div metal:define-macro="edit_bottom_controls" tal:omit-tag="">
   <td class="align-right">
     <input class="button" type="submit" value=" Save " title="access key: alt-s" accesskey="s"
-      tal:attributes="name string:${rel_url_start}/save:method" id="default_submit" />&nbsp; 
-    <input class="button" type="submit" value=" Save and exit " title="Access key: alt-e" accesskey="e"
-      tal:attributes="name string:${rel_url_start}/save_and_exit:method" />&nbsp;
+      tal:attributes="name string:${rel_url_start}/save:method" id="default_submit" /> 
+    <input class="button" type="submit" value=" Save and exit " title="access key: alt-e" accesskey="e"
+      tal:attributes="name string:${rel_url_start}/save_and_exit:method" />
     <tal:block
       condition="python:0"><!-- uncomment this for a "save and insert next" button (layout is ugly ...) -->
       <input 
          class="button" type="submit" value=" Save and insert next " 
          tal:condition="python:not disable_insert" 
-         tal:attributes="name string:${rel_url_start}/save_and_insert:method" />&nbsp;
+         tal:attributes="name string:${rel_url_start}/save_and_insert:method" />
     </tal:block>
     <script language="JavaScript">
       setAutoSave();
@@ -99,17 +99,17 @@
 
 <div metal:define-macro="element_buttons" tal:omit-tag="">
   <td class="invisible" width="60" align="right" valign="top" nowrap="nowrap">
-  <a title="delete element" tal:condition="not:disable_delete" tal:attributes="href string:${url_start}/delete" onClick="return confirm('Really delete?')" href="delete"><img tal:attributes="src string:${silva_root}/globals/delete.gif" width="16" height="12" alt="delete element" border="0" /></a><img tal:condition="disable_delete" tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
-  <a title="move down" tal:condition="not:disable_move_down" tal:attributes="href string:${url_start}/move_down" href="move_down"><img tal:attributes="src string:${silva_root}/globals/down.gif" width="16" height="12" alt="move down" border="0" /></a><img tal:condition="disable_move_down" tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
-  <a title="move up" tal:condition="not:disable_move_up" tal:attributes="href string:${url_start}/move_up" href="move_up"><img tal:attributes="src string:${silva_root}/globals/up.gif" width="16" height="12" alt="move up" border="0" /></a><img tal:condition="disable_move_up" tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
+  <a title="delete element" tal:condition="not:disable_delete" tal:attributes="href string:${url_start}/delete" onClick="return confirm('Really delete?')" href="delete"><img tal:attributes="src string:${silva_root}/globals/delete.gif" width="16" height="12" alt="delete element" border="0" /></a><img tal:condition="disable_delete" tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" border="0" />
+  <a title="move down" tal:condition="not:disable_move_down" tal:attributes="href string:${url_start}/move_down" href="move_down"><img tal:attributes="src string:${silva_root}/globals/down.gif" width="16" height="12" alt="move down" border="0" /></a><img tal:condition="disable_move_down" tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" border="0" />
+  <a title="move up" tal:condition="not:disable_move_up" tal:attributes="href string:${url_start}/move_up" href="move_up"><img tal:attributes="src string:${silva_root}/globals/up.gif" width="16" height="12" alt="move up" border="0" /></a><img tal:condition="disable_move_up" tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" border="0" />
   </td>
 </div>
 
 <div metal:define-macro="empty_buttons" tal:omit-tag="">
   <td class="invisible" width="60" align="right" valign="top" nowrap="nowrap">
-  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="1" />
-  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="1" />
-  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="1" />
+  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" border="1" />
+  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" border="1" />
+  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" border="1" />
   </td>
 </div>
 
