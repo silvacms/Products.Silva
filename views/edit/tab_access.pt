@@ -78,7 +78,7 @@
           </th>
         </tr>
         <tal:comment condition="nothing">
-          _______ why is line-height: 250%? _______ 
+          _______ why is the line-height: 250%? _______ 
         </tal:comment>
         <tal:block repeat="member members">
           <tr style="line-height: 250%;"
@@ -94,7 +94,7 @@
                 value="userid"
                 tal:attributes="
                   value userid;
-                  id userid;" />
+                  id fullname;" />
               &nbsp;
               <b><label tal:content="fullname"
                 tal:attributes="for fullname">

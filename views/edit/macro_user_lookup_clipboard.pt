@@ -38,11 +38,11 @@
                 value="userid"
                 tal:attributes="
                   value member/userid;
-                  id member/userid" />
+                  id string:lookup_${member/userid}" />
             </td>
             <td>
               <b><label tal:content="member/fullname"
-                tal:attributes="for member/userid">
+                tal:attributes="for string:lookup_${member/userid}">
                 Name
               </label></b>
             </td>
