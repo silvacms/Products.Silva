@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5.2.2 $
+# $Revision: 1.5.2.3 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -72,18 +72,19 @@ class Indexer(Content, SimpleItem):
         ci_names.sort()
         names = [name for name_lower, name in ci_names]
         for name in names:
-            links = [(content.get_title(), url)
-                     for url, content in result[name].items()]
+            links = [(content.get_title(), path)
+                     for path, content in result[name].items()]
             index.append((name, links))
         self._index = index
 
     def _indexObject(self, result, object):
-        for doc in object.get_indexables():
-            context = Context(doc.getDOM(), 0, 0)
+        for version in object.get_indexables():
+            context = Context(version.getDOM(), 0, 0)
             nodes = xpath.Evaluate('//index', context=context)
             for node in nodes:
+                content = object.get_content()
                 result.setdefault(node.getAttribute('name'), {})[
-                    object.content_url()] = object.get_content()
+                    content.getPhysicalPath()] = content
 
     def _get_tree(self):
         l = []

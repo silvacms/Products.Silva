@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.31 $
+$Revision: 1.47.2.32 $
 
 Silva changes
 
@@ -9,7 +9,10 @@ Silva changes
     Bugs Fixed
                                                                
         - Indexer -all non-versioned content actually- can now be deleted.
-                                                                                              
+
+        - Indexer objects now render the correct URLs in virtual host
+          situations.
+
         - Setting a TOC level would display one level too much.
 
   0.9.1.4
