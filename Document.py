@@ -137,9 +137,9 @@ class Document(VersionedContent):
     def get_modification_datetime(self):
         """Get document modification date.
         """
-        doc_id = self.get_next_version() or self.get_public_version()
-        if doc_id is not None:
-            return getattr(self, doc_id).bobobase_modification_time()
+        version_id = self.get_next_version() or self.get_public_version()
+        if version_id is not None:
+            return getattr(self, version_id).bobobase_modification_time()
         else:
             return None
                         

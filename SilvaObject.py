@@ -21,6 +21,16 @@ class SilvaObject:
         container._refresh_ordered_ids(item)
 
     # ACCESSORS
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_creation_datetime')
+    def get_creation_datetime(self):
+        return None
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_modification_datetime')
+    def get_modification_datetime(self):
+        return None
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
