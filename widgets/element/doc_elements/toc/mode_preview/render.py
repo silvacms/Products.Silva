@@ -1,1 +1,0 @@
-return context.content(append_to_url='edit/tab_preview', public=0)
