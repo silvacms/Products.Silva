@@ -1,7 +1,7 @@
 from Products.Silva.transform.interfaces import IRendererRegistry
+from Products.Silva.transform.renderers.RenderImagesOnRight import RenderImagesOnRight
 
-# XXX: no real renderers yet
-_REGISTRY = {'Silva Document' : None}
+_REGISTRY = {'Silva Document Version' : [RenderImagesOnRight()]}
 
 class RendererRegistry(object):
 
@@ -10,10 +10,10 @@ class RendererRegistry(object):
     def __init__(self):
         self._registry = _REGISTRY
 
-    def getRendererById(self, renderer_id, meta_type):
+    def getRendererByName(self, name, meta_type):
         meta_type_renderers = self._registry.get(meta_type, None)
         for r in meta_type_renderers:
-            if r.getId() == renderer_id:
+            if r.getName() == name:
                 return r
 
     def getRenderersForMetaType(self, meta_type):

@@ -5,37 +5,36 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
-from Interface.Implements import implements
+from Interface.Verify import verifyClass
 from Products.Silva.transform.interfaces import IRendererRegistry
 from Products.Silva.transform.RendererRegistry import RendererRegistry
-from Products.Silva.tests.testrenderers.HelloWorldRenderer import HelloWorldRenderer
-from Products.Silva.tests.testrenderers.UpperCaseAllRenderer import UpperCaseAllRenderer
-
-class MockRendererRegistry(RendererRegistry):
-
-    def __init__(self):
-        self._registry = {
-            'Silva Document' : [HelloWorldRenderer(), UpperCaseAllRenderer()]}
+from Products.Silva.transform.renderers.RenderImagesOnRight import RenderImagesOnRight
+from Interface.Exceptions import BrokenImplementation, DoesNotImplement, BrokenMethodImplementation
 
 class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
 
     def test_implements_renderer_interface(self):
-        IRendererRegistry.isImplementedByInstancesOf(RendererRegistry)
-        implements(RendererRegistry, IRendererRegistry)
+        try:
+            verifyClass(IRendererRegistry, RendererRegistry)
+        except (BrokenImplementation, DoesNotImplement, BrokenMethodImplementation), err:
+            self.fail(
+                "RendererRegistry does not implement IRendererRegistry: %s" %
+                str(err))
 
-    def test_get_renderers_for_meta_type(self):
-        rr = MockRendererRegistry()
-        sd_renderers = rr.getRenderersForMetaType("Silva Document")
-        self.assertEquals(len(sd_renderers), 2)
-        self.assert_(isinstance(sd_renderers[0], HelloWorldRenderer))
-        self.assert_(isinstance(sd_renderers[1], UpperCaseAllRenderer))
+    def test_renderers_registered_for_meta_type(self):
+        registry = RendererRegistry()
+        doc_version_renderers = registry.getRenderersForMetaType("Silva Document Version")
+        self.assertEquals(len(doc_version_renderers), 1)
+        self.assert_(isinstance(doc_version_renderers[0], RenderImagesOnRight))
 
-    def test_get_renderer_by_id(self):
-        rr = MockRendererRegistry()
-        self.assert_(isinstance(
-            rr.getRendererById(
-                renderer_id = 'HelloWorldRenderer', meta_type = 'Silva Document'),
-            HelloWorldRenderer))
+    def test_get_renderer_by_name(self):
+        registry = RendererRegistry()
+        self.assert_(
+            isinstance(
+                registry.getRendererByName(
+                    name = 'Images on Right',
+                    meta_type = 'Silva Document Version'),
+                RenderImagesOnRight))
 
 if __name__ == '__main__':
     framework()
