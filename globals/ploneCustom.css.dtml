@@ -329,7 +329,7 @@ tr.selected, td.selected {
 }
 
 tr.divider, th.divider, td.divider {
-  height : 0.1em;
+  height : 0.5em;
   background-color: #648589;
 }
 
