@@ -6,15 +6,24 @@
   tal:define="global fields python:view.properties_form.get_fields()" />
 
 <tal:block tal:condition="model/canScale">
-  <span 
-    tal:on-error="string: unknown"
-    tal:replace="model/getDimensions"
-    />
-  <span tal:replace="model/getFormat" /> image  scaled to 
-    <span    
+  <tal:block tal:condition="python: model.hires_image is None">
+    <span 
       tal:on-error="string: unknown"
-      tal:replace="model/getCanonicalWebScale"
-      /> <span tal:replace="model/web_format" /> image.
+      tal:replace="model/getDimensions"
+      />
+    <span tal:replace="model/getFormat" /> image.
+  </tal:block> 
+  <tal:block tal:condition="python: model.hires_image is not None">
+    <span 
+      tal:on-error="string: unknown"
+      tal:replace="model/getDimensions"
+      />
+    <span tal:replace="model/getFormat" /> image  scaled to 
+      <span    
+        tal:on-error="string: unknown"
+        tal:replace="model/getCanonicalWebScale"
+        /> <span tal:replace="model/web_format" /> image.
+  </tal:block>        
 </tal:block>
 <tal:block tal:condition="not: model/canScale">
   No PIL installed, no scaling or converting is possible. The uploaded image

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.21 2003/02/19 15:16:11 zagy Exp $
+# $Id: Image.py,v 1.22 2003/02/21 08:38:57 zagy Exp $
 
 # Python
 import re
@@ -83,6 +83,10 @@ class Image(Asset):
             
         """
         update_cache = 0
+        if self.hires_image is None:
+            update_cache = 1
+            self.hires_image = self.image
+            self.image = None
         if self.web_format != web_format:
             self.web_format = web_format
             update_cache = 1
@@ -145,9 +149,10 @@ class Image(Asset):
             returns width, height otherwise
         
         """
+        img = self.hires_image
         if self.hires_image is None:
-            return 0, 0
-        width, height = self.hires_image.width, self.hires_image.height
+            img = self.image
+        width, height = img.width, img.height
         if callable(width):
             width = width()
         if callable(height):
