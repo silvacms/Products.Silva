@@ -98,7 +98,7 @@
         <td>
           <a href="original"
             tal:attributes="href python:content_url + '/edit/tab_edit'"
-            tal:content="python: model.get_editable().get_title()">
+            tal:content="python: model.get_editable().get_title_editable()">
             Link
           </a>
         </td>
