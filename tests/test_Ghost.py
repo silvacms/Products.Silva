@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -74,6 +74,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         Document._verifyObjectPaste = _verifyObjectPaste
         GhostVersion._getCopy = _getCopyGhostVersion
         Ghost._verifyObjectPaste = _verifyObjectPaste
+        
+        # register silva document
         self.setPermissions([SilvaPermissions.ReadSilvaContent])
         self.doc1 = doc1 = self.add_document(self.root, 'doc1', 'Doc1')
         self.doc2 = doc2 = self.add_document(self.root, 'doc2', 'Doc2')
@@ -93,12 +95,17 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_ghost(self):
         self.root.manage_addProduct['Silva'].manage_addGhost('ghost1',
-                                                              '/root/doc1')
-        ghost = getattr(self.root, 'ghost1')
+            '/root/doc1')
+    
+        # testing call cases of published (1) and non published (0)
         
+        ghost = getattr(self.root, 'ghost1')
         # there is no version published at all there
-        self.assertEquals('This ghost is broken. (/root/doc1)', ghost.preview())
-        self.assertEquals('Sorry, this document is not published yet.', ghost.view())
+        # ghost=0, doc=0
+        self.assertEquals('This ghost is broken. (/root/doc1)',
+            ghost.preview())
+        self.assertEquals('Sorry, this document is not published yet.',
+            ghost.view())
 
         # approve version of thing we point to
         self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
@@ -106,58 +113,78 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         # since there is still no published version, preview and view return
         # None
-        self.assertEquals('This ghost is broken. (/root/doc1)', ghost.preview())
-        self.assertEquals('Sorry, this document is not published yet.', ghost.view())
+        # ghost=0, doc=0
+        self.assertEquals('This ghost is broken. (/root/doc1)',
+            ghost.preview())
+        self.assertEquals('Sorry, this document is not published yet.',
+            ghost.view())
 
         # this should publish doc1
         self.doc1.set_approved_version_publication_datetime(DateTime() - 1)
-        
-        self.assertEquals('This ghost is broken. (/root/doc1)', ghost.preview())
-        self.assertEquals('Sorry, this document is not published yet.', ghost.view())
+        # ghost=0, doc=1
+        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+            ghost.preview())
+        self.assertEquals('Sorry, this document is not published yet.',
+            ghost.view())
 
         # publish ghost version
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
 
-        self.assertEquals('This ghost is broken. (/root/doc1)', ghost.preview())
-        self.assertEquals("This 'ghost' document is broken. Please inform the site administrator.", ghost.view())
+        # ghost=1, doc=1
+        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+            ghost.preview())
+        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+            ghost.view())
 
+            
         # make new version of doc1 ('1')
         #self.doc1.REQUEST = {}
         self.doc1.create_copy()
+        self.doc1.set_title('Doc1 1')
 
         # shouldn't affect what we're ghosting
-        self.assertEquals('doc1 0', ghost.preview())
-        self.assertEquals('doc1 0', ghost.view())
+        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+            ghost.preview())
+        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+            ghost.view())
 
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc1.approve_version()
 
         # now we're ghosting the version 1
-        self.assertEquals('doc1 1', ghost.preview())
-        self.assertEquals('doc1 1', ghost.view())
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2> \n\n',
+            ghost.preview())
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2> \n\n',
+            ghost.view())
 
         # create new version of ghost
-        # ghost.REQUEST = None Removed by Guido, 'cause it broke the test, wonder why it was here, though... are the tests still correct now?
         ghost.create_copy()
         ghost.get_editable().set_content_url('/root/doc2')
 
-        self.assertEquals('doc2 no view', ghost.preview())
-        self.assertEquals('doc1 1', ghost.view())
+        self.assertEquals(u'This ghost is broken. (/root/doc2)',
+            ghost.preview())
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2> \n\n',
+            ghost.view())
 
         # publish doc2
         self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc2.approve_version()
 
-        self.assertEquals('doc2 0', ghost.preview())
-        self.assertEquals('doc1 1', ghost.view())
+        self.assertEquals(u'<h2 class="heading">Doc2</h2> \n\n',
+            ghost.preview())
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2> \n\n',
+            ghost.view())
+
 
         # approve ghost again
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
 
-        self.assertEquals('doc2 0', ghost.preview())
-        self.assertEquals('doc2 0', ghost.view())
+        self.assertEquals(u'<h2 class="heading">Doc2</h2> \n\n',
+            ghost.preview())
+        self.assertEquals(u'<h2 class="heading">Doc2</h2> \n\n',
+            ghost.view())
 
         # publish a ghost pointing to something that hasn't a published
         # version
@@ -165,8 +192,10 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost.get_editable().set_content_url('/root/doc3')
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
-        self.assertEquals('doc3 no view', ghost.preview())
-        self.assertEquals('doc3 no view', ghost.view())
+        self.assertEquals('This ghost is broken. (/root/doc3)',
+            ghost.preview())
+        self.assertEquals("This 'ghost' document is broken. Please inform the"
+            " site administrator.", ghost.view())
         
     def test_broken_link1(self):
         # add a ghost
