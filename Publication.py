@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.32 $
+# $Revision: 1.33 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -11,7 +11,7 @@ from IPublication import IPublication
 from Folder import Folder
 import SilvaPermissions
 # misc
-from helpers import add_and_edit
+from helpers import add_and_edit, getNewId
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 
@@ -107,6 +107,9 @@ def manage_addPublication(self, id, title, create_default=1, REQUEST=None):
 def xml_import_handler(object, node):
     id = get_xml_id(node)
     title = get_xml_title(node)
+    used_ids = object.objectIds()
+    while id in used_ids:
+        id = getNewId(id)
     object.manage_addProduct['Silva'].manage_addPublication(id, title, 0)
     newpub = getattr(object, id)
     for child in node.childNodes:

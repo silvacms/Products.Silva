@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.47 $
+# $Revision: 1.48 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -270,6 +270,9 @@ def manage_addDocument(self, id, title, REQUEST=None):
 def xml_import_handler(object, node):
     id = get_xml_id(node)
     title = get_xml_title(node)
+    used_ids = object.objectIds()
+    while id in used_ids:
+        id = getNewId(id)
     object.manage_addProduct['Silva'].manage_addDocument(id, title)
     newdoc = getattr(object, id)
     for child in node.childNodes:
