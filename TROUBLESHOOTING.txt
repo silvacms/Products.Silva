@@ -1,8 +1,10 @@
 
 Installation problems
 
-  Broken public views after upgrading Silva to a newer version (for 0.9.3:
-        AttributeError on get_title_html or KeyError on silva_icon_32.gif).
+  Broken public views after upgrading Silva to a newer version
+
+    (for 0.9.3: AttributeError on get_title_html or KeyError on
+    silva_icon_32.gif).
 
     Because some API changes in Silva might break the layout templates and 
     scripts in the Silva root, you should either replace those templates 
