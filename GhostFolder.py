@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.4 2003/08/05 21:06:36 zagy Exp $
+# $Id: GhostFolder.py,v 1.5 2003/08/06 06:42:57 zagy Exp $
 
 #zope
 import OFS.Folder
@@ -10,7 +10,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 
 # silva
-from Products.Silva.Folder import Folder
+from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
 from Products.Silva.Ghost import GhostBase, getLastVersionFromGhost
 from Products.Silva.helpers import add_and_edit
@@ -21,7 +21,7 @@ from Products.Silva.interfaces import IContainer, IContent, IAsset, IGhost
 
 icon = 'www/silvaghost.gif'
 
-class GhostFolder(GhostBase, Folder):
+class GhostFolder(GhostBase, Folder.Folder):
     """GhostFolders are used to haunt folders."""
 
     meta_type = 'Silva Ghost Folder'
@@ -120,7 +120,8 @@ class GhostFolder(GhostBase, Folder):
 
     def to_xml(self, context):
         f = context.f
-        f.write("<silva_ghostfolder id='%s'>" % self.getId())
+        f.write("<silva_ghostfolder id='%s' content_url='%s'>" % (
+            self.getId(), self.get_content_url()))
         self._to_xml_helper(context)
         export_metadata(self._get_content(), context)
         f.write("</silva_ghostfolder>")
@@ -143,3 +144,22 @@ def manage_addGhostFolder(dispatcher, id, content_url, REQUEST=None):
     add_and_edit(dispatcher, id, REQUEST)
     return ''
 
+def xml_import_handler(object, node):
+
+    def _get_content_url(node):
+        content_url = node.attributes.getNamedItem('content_url').nodeValue
+        assert type(content_url) == type(u''), \
+            "got %r, expected a unicode" % content_url
+        return content_url.encode('us-ascii', 'ignore')
+    
+    def factory(object, id, title, content_url):
+        object.manage_addProduct['Silva'].manage_addGhostFolder(id,
+            content_url)
+    
+    content_url = _get_content_url(node)
+    f = lambda object, id, title, content_url=content_url: \
+        factory(object, id, title, content_url)
+    ghostfolder = Folder.xml_import_handler(object, node, factory=f)
+    ghostfolder.haunt()
+    return ghostfolder
+       
