@@ -878,15 +878,17 @@ div.info {
   color: &dtml-inputFontColor;;
   background: &dtml-evenRowBackground;;
   margin: 0;
-  padding: 0 0.5em 0.5em 0.5em; 
+  padding: 0.1em 0.5em 0.5em 0.5em; 
   border: &dtml-listingBorder;;
+  width : 100%; /* fix IE glitch */
 }
 
 h2.info {
   color: #394b4d;
   color: &dtml-inputFontColor;;
   margin-top : 0em;
-  margin-bottom : 0.2em;  
+  margin-bottom : 0.1em;  
+  font-size: 120%;
 }
 
 h3.info {
