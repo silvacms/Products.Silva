@@ -92,7 +92,7 @@
 <span tal:replace="nothing"> _______ page info _______ </span>
 <tr>
 <td class="tab-up" width="2%">
-<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="10" />
+<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="11" />
 </td>
 <td class="tab-up" width="30%">
 <span class="breadcrumb">
@@ -125,7 +125,7 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 <a class="footer" title="Change your settings by clicking on the little Plone man" target="silva_member_page"
   tal:attributes="href string:${silva_root}/Members/${userid}/edit">
   <img tal:attributes="src string:${silva_root}/globals/user.gif" width="8" height="9" border="0"/>
-  User preferences
+  User settings
 </a>
 </td>
 <td class="footer" align="center" width="36%">
