@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_image.py,v 1.1.2.3 2004/07/12 17:18:54 zagy Exp $
+# $Id: test_image.py,v 1.1.2.4 2004/08/23 13:56:53 faassen Exp $
 
 from __future__ import nested_scopes
 
@@ -15,7 +15,13 @@ from Testing.ZopeTestCase import utils
 
 
 from StringIO import StringIO
-import PIL
+
+try:
+    import PIL
+except ImportError:
+    havePIL = 0
+else:
+    havePIL = 1
 
 from Products.Silva import Image
 
@@ -47,6 +53,9 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         
         self.assertRaises(ValueError, image.getImage, hires=0, webformat=0)
 
+        if not havePIL:
+            return
+        
         it = image.getImage(hires=0, webformat=1)
         pil_image = PIL.Image.open(StringIO(it))
         self.assertEquals((100, 100), pil_image.size)
@@ -79,6 +88,9 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         image = self.root.testimage
         image.set_web_presentation_properties('JPEG', '100x100', '')
         request = self.root.REQUEST
+
+        if not havePIL:
+            return
 
         data = image.index_html(request)
         it = self._get_req_data(data)
