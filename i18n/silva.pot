@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Wed Dec  8 12:47:40 2004\n"
+"POT-Creation-Date: Wed Dec  8 18:26:36 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -771,6 +771,14 @@ msgstr ""
 msgid "ChiefEditor"
 msgstr ""
 
+#: /subscriptionservice.py:106
+msgid "content is not subscribable"
+msgstr ""
+
+#: /subscriptionservice.py:109
+msgid "emailaddress not valid"
+msgstr ""
+
 #: /views/add/File/add_submit.py:68
 #: /views/add/Groups/add_submit.py:60
 #: /views/add/Image/add_submit.py:68
@@ -979,7 +987,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:78
 #: /views/edit/Container/GhostFolder/tab_edit.pt:143
 #: /views/edit/VersionedContent/Ghost/edit.pt:134
-#: /views/public/subscriptions.pt:46
+#: /views/public/subscriptions.pt:70
 msgid "access key: alt-s"
 msgstr ""
 
@@ -1602,7 +1610,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:254
 #: /views/edit/VersionedContent/tab_status_macros.pt:273
 #: /views/edit/VersionedContent/tab_status_macros.pt:375
-#: /views/public/subscriptions.pt:92
+#: /views/public/subscriptions.pt:118
 msgid "access key: alt-u"
 msgstr ""
 
@@ -3033,11 +3041,11 @@ msgid "export pdf"
 msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:180
-msgid "export_xml_accesskey"
+msgid "export xml"
 msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:180
-msgid "export xml"
+msgid "export_xml_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:203
@@ -4507,16 +4515,16 @@ msgid "grant role"
 msgstr ""
 
 #: /views/edit/tab_access.pt:273
-msgid "access key: alt-a"
-msgstr ""
-
-#: /views/edit/tab_access.pt:273
 # Default: "a"
 msgid "grant_and_approve_accesskey"
 msgstr ""
 
 #: /views/edit/tab_access.pt:273
 msgid "Grant and approve"
+msgstr ""
+
+#: /views/edit/tab_access.pt:273
+msgid "access key: alt-a"
 msgstr ""
 
 #: /views/edit/tab_access.pt:309
@@ -5008,8 +5016,29 @@ msgstr ""
 msgid "Index"
 msgstr ""
 
-#: /views/public/cancellation_request.py:16
+#: /views/public/cancellation_request.py:10
+#: /views/public/subscription_request.py:10
+msgid "Path does not lead to a content object"
+msgstr ""
+
+#: /views/public/cancellation_request.py:23
 msgid "Confirmation request for cancellation has been emailed"
+msgstr ""
+
+#: /views/public/confirm_cancellation.py:12
+msgid "Something went wrong in unsubscribing from this page. It might be that the link you followed was too old."
+msgstr ""
+
+#: /views/public/confirm_cancellation.py:15
+msgid "You have been successfully unsubscribed."
+msgstr ""
+
+#: /views/public/confirm_subscription.py:12
+msgid "Subscription failed"
+msgstr ""
+
+#: /views/public/confirm_subscription.py:15
+msgid "You have been successfully subscribed. This means you will receive email notifications whenever a new version of these pages becomes available."
 msgstr ""
 
 #: /views/public/request_roles.pt:12
@@ -5043,12 +5072,12 @@ msgid " Send request "
 msgstr ""
 
 #: /views/public/request_roles.pt:71
-# Default: "s"
-msgid "send_request_accesskey"
+msgid "Send request for role: alt-s"
 msgstr ""
 
 #: /views/public/request_roles.pt:71
-msgid "Send request for role: alt-s"
+# Default: "s"
+msgid "send_request_accesskey"
 msgstr ""
 
 #: /views/public/request_roles.pt:85
@@ -5162,34 +5191,37 @@ msgstr ""
 msgid "Next &gt;&gt;"
 msgstr ""
 
-#: /views/public/subscription_request.py:15
+#: /views/public/subscription_request.py:23
 msgid "Confirmation request for subscription has been emailed"
 msgstr ""
 
-#: /views/public/subscriptions.pt:20
-msgid "Subscribe for &#xab;${title_or_id}&#xbb;"
+#: /views/public/subscriptions.pt:118
+msgid "unsubscribe"
 msgstr ""
 
-#: /views/public/subscriptions.pt:22
-#: /views/public/subscriptions.pt:68
-msgid "you'll get an confirmation message..."
+#: /views/public/subscriptions.pt:40
+msgid "Subscribe to &#xab;${title_or_id}&#xbb;"
 msgstr ""
 
-#: /views/public/subscriptions.pt:31
-#: /views/public/subscriptions.pt:77
+#: /views/public/subscriptions.pt:42
+msgid "Fill in your email address if you want to receive email notifications whenever a new version of this page or its subsections becomes available."
+msgstr ""
+
+#: /views/public/subscriptions.pt:53
+#: /views/public/subscriptions.pt:101
 msgid "emailaddress"
 msgstr ""
 
-#: /views/public/subscriptions.pt:46
+#: /views/public/subscriptions.pt:70
 msgid "subscribe"
 msgstr ""
 
-#: /views/public/subscriptions.pt:66
-msgid "Unsubscribe for &#xab;${title_or_id}&#xbb;"
+#: /views/public/subscriptions.pt:89
+msgid "Unsubscribe from &#xab;${title_or_id}&#xbb;"
 msgstr ""
 
-#: /views/public/subscriptions.pt:92
-msgid "unsubscribe"
+#: /views/public/subscriptions.pt:91
+msgid "Fill in your emailaddress here if you want to unsubscribe from email notifications for this page and its subsections."
 msgstr ""
 
 #: /views/render_form_errors.py:15
