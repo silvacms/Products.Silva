@@ -767,7 +767,6 @@ def setup_catalog(silva_root):
         'object_path', 
         'publication_datetime',
         'expiration_datetime', 
-        'title', 
         'version_status', 
         'object_type'
         ]
