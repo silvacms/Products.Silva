@@ -289,7 +289,8 @@
               <option value="role"
                 tal:repeat="role model/sec_get_roles"
                 tal:content="role"
-                tal:attributes="value role">
+                tal:attributes="value role; 
+                                selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
                 role name
               </option>
             </select>
@@ -486,7 +487,8 @@
                   <option value="role"
                     tal:repeat="role model/sec_get_roles"
                     tal:content="role"
-                    tal:attributes="value role">
+                    tal:attributes="value role; 
+                                    selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
                     Role
                   </option>
                 </select>
