@@ -41,6 +41,8 @@ theXMLSourceRegistry = XMLSourceRegistry()
 
 getXMLSource = theXMLSourceRegistry.getXMLSource
 
+SilvaDocumentNS = "http://infrae.com/ns/silva_document/1.0"
+
 def initializeXMLSourceRegistry():
     """Here the actual content types are registered. Non-Silva-Core content
     types probably need to register themselves in in their product
@@ -81,6 +83,7 @@ class BaseXMLSource:
         """Export self.context to XML Sax-events 
         """
         reader.startPrefixMapping(None, self.ns_default)
+        reader.startPrefixMapping('doc', SilvaDocumentNS)
         for set in self.context.service_metadata.collection.getMetadataSets(
             ):
             reader.startPrefixMapping(set.id, set.metadata_uri)
@@ -275,7 +278,7 @@ class DocumentVersionXMLSource(VersionXMLSource):
         if node.attributes:
             for key in node.attributes.keys():
                 attributes[key] = node.attributes[key].value
-        self._startElement(reader, node.nodeName, attributes)
+        self._startElementNS(reader, SilvaDocumentNS, node.nodeName, attributes)
         text = ''
         if node.hasChildNodes():
             for child in node.childNodes:
@@ -287,7 +290,7 @@ class DocumentVersionXMLSource(VersionXMLSource):
         else:
             if node.nodeValue:
                 reader.characters(node.nodeValue)
-        self._endElement(reader, node.nodeName)
+        self._endElementNS(reader, SilvaDocumentNS, node.nodeName)
 
 class LinkXMLSource(VersionedContentXMLSource):
     """Export a Silva Link object to XML.
