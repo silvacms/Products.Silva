@@ -1,5 +1,5 @@
 import Document, Folder, Root, ViewRegistry,\
-       Publication, Ghost, ContactInfo, Image
+       Publication, Ghost, ContactInfo, Image, Course
 
 def initialize(context):
      context.registerClass(
@@ -33,6 +33,12 @@ def initialize(context):
           constructors = (Ghost.manage_addGhostForm,
                           Ghost.manage_addGhost)
           )
+
+     context.registerClass(
+          Course.Course,
+          constructors = (Course.manage_addCourseForm,
+                          Course.manage_addCourse)
+          )
      
      context.registerClass(
           ViewRegistry.ViewRegistry,
@@ -58,3 +64,10 @@ def initialize(context):
           constructors = (Ghost.manage_addGhostVersionForm,
                           Ghost.manage_addGhostVersion)
           )
+
+     context.registerClass(
+          Course.CourseVersion,
+          constructors = (Course.manage_addCourseVersionForm,
+                          Course.manage_addCourseVersion)
+          )
+     
