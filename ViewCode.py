@@ -25,12 +25,18 @@ class ViewCode:
    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_icon')
-    def render_icon(self, obj):
+    def render_icon(self, obj=None, meta_type='Unknown'):
         """Gets the icon for the object and wraps that in an image tag"""
-        icon_path = obj.icon
-        if not icon_path:
-            icon_path = '%s/globals/silvageneric.gif' % self.get_root_url()
-        return '<img src="%s" width="16" height="16" border="0" alt="%s" />' % (icon_path, obj.meta_type)
+        tag = ('<img src="%(icon_path)s" width="16" height="16" border="0" '
+                'alt="%(alt)s" />')
+        if obj is None:
+            return tag % {'icon_path': ('%s/globals/silvageneric.gif' % 
+                                            self.get_root_url()),
+                            'alt': meta_type}
+        icon_path = getattr(obj, 'icon', 
+                        '%s/globals/silvageneric.gif' % self.get_root_url())
+        mt = getattr(obj, 'meta_type', meta_type)
+        return tag % {'icon_path': icon_path, 'alt': mt}
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_icon_by_meta_type')
@@ -41,7 +47,7 @@ class ViewCode:
             if d['name'] == meta_type:
                 if d.has_key('instance'):
                     return self.render_icon(d['instance'])
-        return self.render_icon('default')
+        return self.render_icon(meta_type=meta_type)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_object_status')
@@ -74,7 +80,6 @@ class ViewCode:
                 status_style = status.lower()
 
         return (status, status_style, public_status)
-
        
     security.declareProtected(SilvaPermissions.AccessContentsInformation, 'truncate')
     def truncate(self, text, length):
