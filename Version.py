@@ -32,11 +32,11 @@ class Version(SimpleItem):
         approved_version = self.get_approved_version(0)
         public_version = self.get_public_version(0)
         previous_versions = self.get_previous_versions()
-        if unapproved_version and unapproved_version[0] == self.id:
+        if unapproved_version and unapproved_version == self.id:
             status = "unapproved"
-        elif approved_version and approved_version[0] == self.id:
+        elif approved_version and approved_version == self.id:
             status = "approved"
-        elif public_version and public_version[0] == self.id:
+        elif public_version and public_version == self.id:
             status = "public"
         else:
             if previous_versions and previous_versions[-1] == self.id:
