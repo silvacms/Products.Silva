@@ -76,9 +76,11 @@
                     <select class="navigation"
                       name="meta_type"
                       title="select a new item - alt-s"
-                      tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value">
+                      tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
+                      i18n:attributes="title"
+                    >
                       <option value="None">
-                        select:
+                        <span i18n:translate="select">select</span>:
                       </option>
                       <tal:block tal:repeat="addable model/get_silva_addables">
                         <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
@@ -92,8 +94,9 @@
                       href="tab_edit_import"
                       title="import XML data - alt-i"
                       accesskey="i"
-                      >
-                      Import...
+                      i18n:attributes="title"
+                    >
+                      <span i18n:translate="import">Import</span>...
                     </a>
                   </td>
                 </tr>
@@ -107,16 +110,16 @@
                   <th class="listing-right">
                     #&nbsp;
                   </th>
-                  <th>
+                  <th i18n:translate="edit">
                     Edit
                   </th>
-                  <th>
+                  <th i18n:translate="preview">
                     Preview
                   </th>
-                  <th>
+                  <th i18n:translate="modified">
                     Modified
                   </th>
-                  <th>
+                  <th i18n:translate="author">
                     Author
                   </th>
                   <th class="nosort listing-right">
@@ -129,7 +132,7 @@
                 </tal:block>
                 <tr class="odd"
                   tal:condition="python: not(default_document or publishables or assets)">
-                  <td colspan="6">
+                  <td colspan="6" i18n:translate="no_content_objects_in_folder">
                     There are no content objects in this folder.
                   </td>
                 </tr>
@@ -177,7 +180,9 @@
                           tal:content="item/id"
                           tal:attributes="
                             href python:here.get_editor_link(item);
-                            class status_style;">
+                            class status_style;"
+                          i18n:translate="id"
+                        >
                           id
                         </a>
                         <img alt="content approved or published"
@@ -203,7 +208,7 @@
                             class status_style;"
                           tal:define="title python:(item.get_title_editable() or default)"
                           tal:content="title">
-                          <i>no title</i>
+                          <i i18n:translate="no_title">no title</i>
                         </a>
                       </td>
                       <tal:block replace="nothing">
@@ -213,12 +218,15 @@
                         <a class="blacklink" title="metadata"
                           tal:condition="modification_time"
                           tal:attributes="href string:${item_url}/edit/tab_metadata"
-                          tal:content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)">
+                          tal:content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)"
+                        >
                           date
                         </a>
                         <a class="closed" title="settings"
                           tal:condition="not:modification_time"
-                          tal:attributes="href string:${item_url}/edit/tab_metadata">
+                          tal:attributes="href string:${item_url}/edit/tab_metadata"
+                          i18n:translate="n/a"
+                        >
                           n/a
                         </a>
                       </td>
@@ -229,12 +237,15 @@
                         <a class="blacklink" title="status"
                           tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
                           tal:attributes="href string:${item_url}/edit/tab_status"
-                          tal:content="structure last_author">
+                          tal:content="structure last_author"
+                        >
                           authorname
                         </a>
                         <a class="closed" title="publish"
                           tal:condition="python:item.implements_container()"
-                          tal:attributes="href string:${item_url}/edit/tab_status">
+                          tal:attributes="href string:${item_url}/edit/tab_status"
+                          i18n:translate="n/a"
+                        >
                           n/a
                         </a>
                         <span 
@@ -250,7 +261,9 @@
                         <tal:block condition="python:may_change_content and not is_default">
                           <a class="image"
                             title="move down"
-                            tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item/id}">
+                            tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item/id}"
+                            i18n:attributes="title"
+                          >
                             <img alt="Move down"
                               border="0"
                               height="12"
@@ -259,7 +272,9 @@
                           </a>
                           <a class="image"
                             title="move up"
-                            tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item/id}">
+                            tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item/id}"
+                            i18n:attributes="title"
+                          >
                             <img alt="Move up"
                               border="0"
                               height="12"
@@ -309,7 +324,9 @@
                           href="asset"
                           title="edit"
                           tal:attributes="href string:${asset_url}/edit/tab_edit"
-                          tal:content="structure asset/id">
+                          tal:content="structure asset/id"
+                          i18n:attributes="title"
+                        >
                           id
                         </a>
                       </td>
@@ -320,7 +337,9 @@
                         <a class="blacklink"
                           title="preview"
                           tal:content="asset/get_title"
-                          tal:attributes="href string:${asset_url}/edit/tab_preview">
+                          tal:attributes="href string:${asset_url}/edit/tab_preview"
+                          i18n:attributes="title"
+                        >
                           title
                         </a>
                       </td>
@@ -333,7 +352,7 @@
                           content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)">
                         </tal:block>
                         <tal:block condition="not:modification_time">
-                          <i>
+                          <i i18n:translate="unknown">
                             unknown
                           </i>
                         </tal:block>
@@ -380,7 +399,7 @@
                             name="new_position"
                             title="move selected items to">
                             <option value="Position">
-                              position:
+                              <span i18n:translate="position">position</span>:
                             </option>
                             <tal:block repeat="item publishables">
                               <option value="0"
@@ -388,20 +407,26 @@
                                 tal:attributes="value repeat/item/number" />
                             </tal:block>
                             <option value="0"
-                              tal:attributes="value python:len(publishables) + 1">
+                              tal:attributes="value python:len(publishables) + 1"
+                              i18n:translate="end"
+                            >
                               end
                             </option>
                           </select>
                           <label for="new_position"
                             title="access key: alt-p"
-                            accesskey="p">
+                            accesskey="p"
+                            i18n:attributes="title"
+                          >
                           </label>
                           <input class="button"
                             name="tab_edit_move_to:method"
                             type="submit"
                             value="Move"
                             title="move selected items into position: alt-m"
-                            accesskey="m" />
+                            accesskey="m"
+                            i18n:attributes="title"
+                          />
                         </div>
                         &nbsp;
                         <input class="button"
@@ -410,6 +435,7 @@
                           value=" Rename..."
                           title="rename and retitle items: alt-r"
                           accesskey="r" 
+                          i18n:attributes="value title"
                         />
                         <input class="button"
                           name="tab_edit_cut:method"
@@ -417,6 +443,7 @@
                           value="Cut"
                           title="cut items: alt-x"
                           accesskey="x" 
+                          i18n:attributes="value title"
                         />                        
                         <input class="button"
                           name="tab_edit_copy:method"
@@ -424,6 +451,7 @@
                           value="Copy"
                           title="copy items: alt-c"
                           accesskey="c" 
+                          i18n:attributes="value title"
                         />
                       </tal:block>
                       <tal:block replace="nothing">
@@ -438,6 +466,7 @@
                           value="Paste"
                           title="paste items: alt-v" 
                           accesskey="v" 
+                          i18n:attributes="value title"
                         />
                         <input class="button"
                           name="tab_edit_paste_to_ghost:method"
@@ -445,6 +474,7 @@
                           value="Paste ghost"
                           title="paste (items on clipboard) as ghost objects: alt-g"
                           accesskey="g" 
+                          i18n:attributes="value title"
                         />
                       </tal:block>
                       <tal:block tal:condition="python:(default_document or publishables or assets)">
@@ -455,6 +485,7 @@
                           title="there's no undo: alt-d"
                           accesskey="d"
                           onClick="return confirm('Really delete?')"
+                          i18n:attributes="onClick value title"
                         />
                       </tal:block>
                     </tal:block>
