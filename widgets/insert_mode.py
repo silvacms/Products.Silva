@@ -8,7 +8,7 @@
 ##title=
 ##
 node = context.REQUEST.node
-node.sec_update_last_author_info()
+node.get_content().sec_update_last_author_info()
 allowed_types = context.get_allowed_info(context.REQUEST.wr_name,node)
 if len(allowed_types)==1:
    return context.insert(what = allowed_types[0][1])
