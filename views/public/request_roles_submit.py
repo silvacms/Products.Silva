@@ -3,7 +3,7 @@ request = view.REQUEST
 userid = request.AUTHENTICATED_USER.getId()
 
 if not request.has_key('roles') or not request['roles']:
-    return view.request_roles(message='No roles selected!')
+    return view.request_roles(message='No roles were selected.')
 
 member = None
 if request.has_key('fullname') or request.has_key('email'):
@@ -18,4 +18,4 @@ try:
 except Exception, e:
     return view.request_roles(message='Error: %s' % e)
 else:
-    return view.service_resources.Silva.request_processed(message='Roles requested. You will receive an e-mail from the chief-editor or manager as soon as your request is processed.')
+    return view.service_resources.Silva.request_processed(message='Roles requested. You will receive an e-mail from the Chief Editor or Manager as soon as your request is processed.')
