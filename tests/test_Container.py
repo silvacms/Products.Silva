@@ -270,6 +270,7 @@ class ContainerTestCase(ContainerBaseTestCase):
 
 
     def test_check_valid_id(self):
+        # XXX this test is duplicate to MangleIdTest.test_validate
         self.assertEquals(check_valid_id(self.folder4, 'doc2'),
                           Id.OK)
         self.assertEquals(check_valid_id(self.folder4, self.folder4.id),
