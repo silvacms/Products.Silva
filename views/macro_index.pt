@@ -70,6 +70,8 @@
 <!-- ____________________________ main ends ____________________________ -->
 <!-- ___________________________ footer start __________________________ -->
 <div style="clear: both;">
+
+<span tal:replace="nothing"> _______ white space + jump to top _______ </span>
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
 <td width="2%">
@@ -81,31 +83,27 @@
 <br /><a href="#top" title="jump to top - alt-t" accesskey="t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
 </td>
 </tr>
+
+<span tal:replace="nothing"> _______ border _______ </span>
 <tr>
 <td colspan="5" class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
 </tr>
+
+<span tal:replace="nothing"> _______ page info _______ </span>
 <tr>
-<td colspan="5" class="tab-up"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
-</tr>
-<tr valign="top">
 <td class="tab-up" width="2%">
-<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
+<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="10" />
 </td>
 <td class="tab-up" width="30%">
 <span class="breadcrumb">
-Contact person: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email',None)"><span class="index-link" tal:content="model/contact_name|string:no name"></span></a>
+Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email',None)"><span class="index-link" tal:content="model/contact_name|string:no name"></span></a>
 </span>
 </td>
-<td class="tab-up" align="center" width="36%" tal:define="userid request/AUTHENTICATED_USER/getUserName">
+<td class="tab-up" align="center" width="36%">
 <span class="breadcrumb">
-<a href="logout">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="userid" /></a>
-<!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
-<span tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()">&nbsp;&nbsp;<a href="request_roles">(request more roles)</a></span>
+<a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email',nothing)"><span class="index-link" tal:content="model/contact_email | nothing"></span></a>
 </span>
 &nbsp;&nbsp;
-<span class="breadcrumb">
-<a target="silva_member_page" tal:attributes="href string:${silva_root}/Members/${userid}/edit">My member page</a>
-</span>
 </td>
 <td class="tab-up" align="right" width="30%">
 <span class="breadcrumb">
@@ -116,13 +114,41 @@ Contact person: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contac
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
 </td>
 </tr>
-<tr>
-<td colspan="5" class="tab-up"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="1" /></td>
+
+<span tal:replace="nothing"> _______ user info _______ </span>
+<tr valign="bottom"
+  tal:define="userid request/AUTHENTICATED_USER/getUserName">
+<td class="footer" width="2%">
+<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="12" />
+</td>
+<td class="footer" width="30%">
+<a class="footer" title="Change your settings by clicking on the little Plone man" target="silva_member_page"
+  tal:attributes="href string:${silva_root}/Members/${userid}/edit">
+  <img tal:attributes="src string:${silva_root}/globals/user.gif" width="8" height="9" border="0"/>
+  User preferences
+</a>
+</td>
+<td class="footer" align="center" width="36%">
+<a class="footer" href="request_roles"
+  tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()">
+    Request additional role
+  </a>
+</td>
+<td class="footer" align="right" width="30%">
+<a class="footer" href="logout">Logout&nbsp;<span tal:replace="python:here.get_user_role()" />&nbsp;<span tal:replace="userid" /></a>
+<!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
+</td>
+<td class="footer" width="2%">
+<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" />
+</td>
 </tr>
+
+<span tal:replace="nothing"> _______ border _______ </span>
 <tr>
-<td colspan="5"  class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="2" /></td>
+<td colspan="5" class="tab-bg"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="2" /></td>
 </tr>
 </table>
+
 </div>
 <!-- ___________________________ footer ends ___________________________ -->
 </body>

@@ -49,7 +49,7 @@
         </tal:block>
       </select>
       &nbsp;&nbsp;
-      <input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data - alt-i" accesskey="i" />&nbsp;&nbsp;
+      <input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data - alt-i" accesskey="i" />&nbsp;
     </tal:block>
   </td>
 </tr>
