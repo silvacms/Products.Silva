@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 import unittest
 
 # 
@@ -344,6 +344,12 @@ class RoundtripWithTidy(unittest.TestCase):
 
     def test_modifier_underline(self):
         self._check_modifier('u','underline')
+
+    def test_modifier_superscript(self):
+        self._check_modifier('sup','super')
+
+    def test_modifier_subscript(self):
+        self._check_modifier('sub','sub')
 
     def test_link_with_absolute_url(self):
         """ check that a link works """
