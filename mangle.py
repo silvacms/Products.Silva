@@ -1,12 +1,13 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.27 2004/11/29 12:50:52 guido Exp $
+# $Id: mangle.py,v 1.28 2004/12/09 15:35:09 faassen Exp $
 # Python
 import string
 import re
 import cgi
 from types import StringType, UnicodeType, InstanceType
+import md5
 
 # Zope
 from AccessControl import ModuleSecurityInfo
@@ -14,6 +15,7 @@ from DateTime import DateTime as _DateTime
 
 # Silva
 from interfaces import ISilvaObject, IVersioning, IContainer, IAsset
+from Products.Silva import characters
 
 module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
@@ -109,10 +111,6 @@ class Id:
         IAsset: ('index', )
     }
 
-    _bad_chars  = r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?ÄÅÁÀÂÃäåáàâãÇçÉÈÊËÆéèêëæÍÌÎÏíìîïÑñÖÓÒÔÕØöóòôõøŠšßÜÚÙÛüúùûÝŸýÿŽž"""
-    _good_chars = r"""_____________________________AAAAAAaaaaaaCcEEEEEeeeeeIIIIiiiiNnOOOOOOooooooSssUUUUuuuuYYyyZz"""
-    _char_transmap = string.maketrans(_bad_chars, _good_chars)
-
     _validation_result = None
 
     def __init__(self, folder, maybe_id, allow_dup=0, file=None, instance=None,
@@ -162,7 +160,7 @@ class Id:
                 pass
         if type(id) == UnicodeType:
             id = id.encode('latin1', 'replace')
-        id = string.translate(id, self._char_transmap)
+        id = string.translate(id, characters.char_transmap)
         self._maybe_id = id
         self._validation_result = None
         return self
@@ -493,3 +491,22 @@ class _String:
 
 module_security.declarePublic('String')
 String = _String()
+
+def generateAnchorName(s):
+    """Generate a valid name for an anchor.
+
+    Anchors only accept the following characters [A-Z a-z 0-9 -_:.]
+
+    HTML 4 also requires the first character to be in [A-Z a-z].
+    """
+    # we solve this by generating a hex digest of a md5 hash.
+    # this is not guaranteed to be unique but hopefully good enough,
+    # and it's fairly short.
+
+    # convert to a bytestream first (UTF-8) if necessary
+    if isinstance(s, unicode):
+        s = s.encode('UTF-8')
+    # because a hex digest can still start with a non-alphabetic character,
+    # we prefix everything with a capital A
+    return 'A' + md5.new(s).hexdigest()
+
