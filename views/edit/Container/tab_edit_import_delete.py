@@ -11,6 +11,8 @@ view = context
 request = view.REQUEST
 model = request.model
 
+model.security_trigger()
+
 if not request.has_key('storageids') or not request['storageids']:
     return view.tab_docma(message_type='error', message='Select one or more jobs to delete')
 

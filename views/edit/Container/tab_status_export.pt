@@ -1,5 +1,11 @@
 <init tal:omit-tag=""
-  tal:define="global view here; global active_tab string:tab_status; global docma_running view/service_docma/try_connection_and_pw;" />
+      tal:define="global view here;
+                  global active_tab string:tab_status;
+                  global docma_running view/service_docma/try_connection_and_pw;
+                  global lastclass string:focus-cycle;
+                  global silva_permissions here/get_silva_permissions;
+                  global breadcrumb_vein string:Status;
+                  " />
 
 <!-- ____________________________ start index_html ____________________________ -->
 <html metal:use-macro="here/macro_index/macros/master">
@@ -10,76 +16,226 @@
 <div class="margins">
 <h2>Export options for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
 
-<form action=".">
-<table width="43%" cellspacing="0" cellpadding="3" border="0"
-  tal:attributes="cellspacing container/table_cellspacing;
-    cellpadding container/table_cellpadding; border container/table_border">
-<tr>
-<th align="left">
-XML export
-</th>
-<th align="right" width="20">
-Set
-</th>
-</tr>
+<div class="worksheet borders top bottom left right">
 
-<tr class="focus" valign="top">
-<td align="right">
-Include sub publications?  
-</td>
-<td align="right">
-<input type="checkbox" name="with_sub_publications" />
-</td>
-</tr>
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+  <tr>
+    <td>
 
-<tr class="focus-cycle" valign="top">
-<td align="right">
-Export newest version?<br /> 
-(if not checked the published version is exported)
-</td>
-<td align="right">
-<input type="checkbox" name="export_last_version" />
-</td>
-</tr>
+      <form action="." method="POST">
+        <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
-<tr class="focus" valign="top" tal:condition="docma_running">
-<td align="right">
-Enter e-mail address (for Docma export only):
-</td>
-<td align="right">
-<input type="text" name="email_address" />
-</td>
-</tr>
+          <tr>
+            <td colspan="2">
+              <h3>Export to Silva XML (.slv)
+                <img src="pixel.gif" width="1px" height="14px"
+                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+              </h3>
+            </td>
+          </tr>
 
-<tr class="focus-cycle" valign="top" tal:condition="docma_running">
-<td align="right">
-Choose template (for Docma export only):
-</td>
-<td align="right">
-<select name="template">
-<tal:block repeat="template view/service_docma/get_templates">
-<option tal:attributes="value template" tal:content="template"></option>
-</tal:block>
-</select>
-</td>
-</tr>
+          <tr class="topcontrols">
+            <td style="background:#c0dbe0;" align="left" colspan="2">
+              <img src="pixel.gif" width="1px" height="14px"
+                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+              &nbsp;
+            </td>
+          </tr>
 
-<tr class="focus" valign="top" tal:condition="docma_running">
-<td align="right">
-Choose filename (for Docma export only):
-</td>
-<td align="right">
-<input type="text" name="outfilename" />
-</td>
-</tr>
+          <tr class="focus" valign="top">
+            <td align="right" width="50%">
+              Include sub publications?
+            </td>
+            <td align="left">
+              <input type="checkbox" name="with_sub_publications" />
+            </td>
+          </tr>
 
-<tr class="controls">
-<td colspan="2" align="right">
-<input class="button" type="submit" value=" Export to Docma " name="tab_status_silva2word:method" />
-<input class="button" type="submit" value=" Export to XML" name="download_xml:method" />
-</td>
-</tr>
+          <tr class="focus-cycle" valign="top">
+            <td align="right">
+              Export newest version?<br />
+              (if not checked the published version is exported)
+            </td>
+            <td align="left">
+              <input type="checkbox" name="export_last_version" />
+            </td>
+          </tr>
+
+          <tr class="controls">
+            <td colspan="3" align="right">
+                <input class="button" type="submit" name="download_xml:method" value=" Export " />
+            </td>
+          </tr>
+        </table>
+
+      </form>
+
+    </td>
+  </tr>
+
 </table>
+
+</div>
+
+<div class="worksheet borders top bottom left right" tal:condition="docma_running">
+
+<init tal:define="global userid view/REQUEST/AUTHENTICATED_USER;
+                  global queue view/service_docma/get_queue;
+                  global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid));
+                  global processingident view/service_docma/get_processing_ident;" />
+
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+  <tr>
+    <td>
+
+      <tal:block tal:condition="python: processingident != 0">
+        <table width="100%" cellspacing="0" cellpadding="0" class="feedback">
+          <tr>
+            <td>Current job: <span tal:replace="processingident" /></td>
+          </tr>
+          <tr>
+            <td>Owner: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /></td>
+          </tr>
+          <tr>
+            <td>Description: <span tal:replace="python: view.service_docma.get_ident_description(processingident)" /></td>
+          </tr>
+        </table>
+      </tal:block>
+
+      <form action="." enctype="multipart/form-data" method="POST">
+
+        <table width="100%" cellpadding="3" cellspacing="0">
+
+        <tal:block condition="nothing"> ________ Docma Queue ________ </tal:block>
+
+          <tr>
+            <td colspan="5">
+              <h3>Queue of items to process
+                <img src="pixel.gif" width="1px" height="14px"
+                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+              </h3>
+            </td>
+          </tr>
+
+          <tr class="topcontrols">
+            <td style="background:#b0cbd0;" align="left" colspan="5">
+              <img src="pixel.gif" width="1px" height="14px"
+                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+              &nbsp;
+            </td>
+          </tr>
+
+          <tr>
+            <th align="left" width="8%">Job Id:</th>
+            <th align="left" width="15%">Job Owner:</th>
+            <th align="left">Description:</th>
+            <th align="left" width="15%">Status:</th>
+            <th align="left" width="10%">Estimated Time:</th>
+          </tr>
+
+          <tr tal:repeat="job queue" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
+            <td align="left" tal:content="job">JobId</td>
+            <td align="left" tal:content="python: view.service_docma.get_ident_owner(job)">Owner</td>
+            <td align="left" tal:content="python: view.service_docma.get_ident_description(job)">Description</td>
+            <td align="left" tal:content="python: view.service_docma.get_status(job)">Status</td>
+            <td align="left" tal:content="python: '%s seconds' % view.service_docma.get_estimated_time_for_ident(job)">Estimated time</td>
+          </tr>
+
+          <tr class="focus" tal:condition="python: len(queue) == 0">
+            <td align="left" colspan="5">There are no jobs in the queue</td>
+          </tr>
+
+          <tr>
+            <td class="divider" colspan="5"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="3" /></td>
+          </tr>
+
+        </table>
+
+      </form>
+
+      <br /><br />
+
+      <form action="." method="POST">
+        <table width="100%" cellspacing="0" cellpadding="3" border="0">
+
+          <tr>
+            <td colspan="3">
+              <h3>Export to Docma (.doc)
+                <img src="pixel.gif" width="1px" height="14px"
+                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+              </h3>
+            </td>
+          </tr>
+
+          <tr class="topcontrols">
+            <td style="background:#c0dbe0;" align="left" colspan="3">
+              <img src="pixel.gif" width="1px" height="14px"
+                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+              &nbsp;
+            </td>
+          </tr>
+
+          <tr class="focus" valign="top">
+            <td align="right" width="50%">
+              Include sub publications?
+            </td>
+            <td align="left" colspan="2">
+              <input type="checkbox" name="with_sub_publications" />
+            </td>
+          </tr>
+
+          <tr class="focus-cycle" valign="top">
+            <td align="right">
+              Export newest version?<br />
+              (if not checked the published version is exported)
+            </td>
+            <td align="left" colspan="2">
+              <input type="checkbox" name="export_last_version" />
+            </td>
+          </tr>
+
+          <tr class="focus">
+            <td align="right" width="20%">Enter your e-mail address:</td>
+            <td align="left" width="1%"><input type="text" name="email" size="30" /></td>
+            <td align="right">An e-mail will be sent to you as soon as the job is finished</td>
+          </tr>
+
+          <tr class="focus-cycle">
+            <td align="right" width="20%">Choose a Word template:</td>
+            <td align="left" width="1%">
+              <select name="template">
+                <tal:block repeat="template view/service_docma/get_templates">
+                <option tal:attributes="value template" tal:content="template"></option>
+                </tal:block>
+              </select>
+            </td>
+            <td align="right">&nbsp;</td>
+          </tr>
+
+          <tr class="focus">
+            <td align="right" width="20%">Enter a description of the job:</td>
+            <td align="left" width="1%"><textarea rows="3" cols="30" name="description"></textarea></td>
+            <td align="right">&nbsp;</td>
+          </tr>
+
+          <tr class="controls">
+            <td colspan="3" align="right">
+            <tal:block condition="silva_permissions/ChangeSilvaContent">
+                &nbsp;&nbsp;<input class="button" type="submit" name="tab_status_silva2word:method" value=" Export " title="Export the current location to Word" />
+            </tal:block>
+            </td>
+          </tr>
+
+        </table>
+
+      </form>
+
+    </td>
+  </tr>
+
+</table>
+
+</div>
 
 </div>
 </div>
