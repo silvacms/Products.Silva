@@ -59,7 +59,7 @@
 <!-- Virtual Group listing macro -->
 <metal:block define-macro="virtual_groups_listing">
   <div class="hilight borders top bottom left right"
-    style="padding: 0.5em; width: 20em; float: right; margin: 0em 0em 2em 1em;">
+    style="padding: 0.5em; width: 22em; float: right; margin: 0em 0em 2em 1em;">
     <metal:block define-macro="virtual_groups_listing_no_style">
       <form action="."
         method="POST">
