@@ -41,6 +41,9 @@ Silva changes
           All uses of FileSystemSite functionality in Silva should now
           import through this module.
 
+        - DemoObject is removed from the core in favor of a (to be
+          developed/updated) demo extension.
+
     Bugs fixed
 
         - Fixed rare or edge-case situations in the Publish tab. UI
