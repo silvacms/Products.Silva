@@ -42,7 +42,7 @@
       i18n:translate="attributes">
       attributes
     </th>
-    <th style="width:50%;">
+    <th style="width:50%;" i18n:translate="content">
       content
     </th>
     <th i18n:translate="notes">
@@ -67,6 +67,7 @@
           accesskey="r"
           tal:define="asset_context model"
           tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'focusbox\', \'field_content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+          i18n:attributes="value title"
           /><span class="warning" tal:condition="python:field.is_required()">*</span>
       </tal:block>
     </td>
@@ -78,7 +79,8 @@
         tal:condition="python:field.getId() != 'content_url'">
         note
       </span>
-      <tal:block tal:condition="python:field.getId() == 'content_url'">
+      <tal:block tal:condition="python:field.getId() == 'content_url'"
+      i18n:translate="ghost_originate_folder">
         Location of originating folder. Depending on how much content there is, <span class="warning">creation may take a while</span>.
       </tal:block>
     </td>
@@ -115,8 +117,9 @@
         value="save + edit"
         title="access key: alt-e"
         accesskey="e"
-        tal:attributes="value python:test(here.id in ('Folder','Publication'), ' save + enter ', ' save + edit ')"
-      />
+        tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
+        i18n:attributes="value title" 
+        />
       </tal:condition>
     </td>
   </tr>

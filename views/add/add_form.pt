@@ -101,7 +101,8 @@
         value="save + edit"
         title="access key: alt-e"
         accesskey="e"
-        tal:attributes="value python:test(here.id in ('Folder','Publication'), ' save + enter ', ' save + edit ')"
+        tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
+        i18n:attributes="value title"
       />
       <input class="button" tal:replace="nothing"
         type="submit"

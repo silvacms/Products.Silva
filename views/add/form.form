@@ -5,7 +5,9 @@
    <name>add_form</name>   
    <action></action>   
    <enctype>None</enctype>   
-   <method>POST</method>   
+   <method>POST</method>
+   <i18n_domain>silva</i18n_domain>
+   <i18n>add_form</i18n>
      
    <groups multiple="true">    
      <group>   

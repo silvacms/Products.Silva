@@ -6,6 +6,8 @@
   <action></action>
   <enctype>None</enctype>
   <method>POST</method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>add_form</i18n>
 
   <groups multiple="true">
     <group>
@@ -21,12 +23,12 @@
           <display_maxwidth></display_maxwidth>
           <display_width type="int">20</display_width>
           <required type="int">1</required>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default></default>
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra>class="store"</extra>
+          <extra></extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -44,11 +46,11 @@
           <external_validator></external_validator>
           <height type="int">2</height>
           <required type="int">1</required>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default></default>
           <title>title</title>
           <description>The title will be publicly visible, and is used for the link in indexes.</description>
-          <extra>class="store"</extra>
+          <extra></extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -64,12 +66,12 @@
           <display_maxwidth></display_maxwidth>
           <display_width type="int">40</display_width>
           <required type="int">1</required>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default></default>
           <title>url</title>
           <truncate type="int">0</truncate>
           <description>Link url.</description>
-          <extra>class="store"</extra>
+          <extra></extra>
           <unicode>1</unicode>
         </values>
         <tales>

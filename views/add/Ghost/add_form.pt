@@ -27,7 +27,7 @@
 <thead>
   <tr>
     <td class="top location" colspan="3">
-    <h2>
+    <h2 i18n:translate="">
       <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />&nbsp;
         create <span tal:replace="python: request.meta_type" />
     </h2>
@@ -64,6 +64,7 @@
           accesskey="r"
           tal:define="asset_context model"
           tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Content&asset_context=%s\', \'_reference_\', \'focusbox\', \'field_content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+          i18n:attributes="value title"
         />
       </tal:block>
       <span class="warning" tal:condition="python:field.is_required()">*</span>
@@ -107,7 +108,8 @@
         value="save + edit"
         title="access key: alt-e"
         accesskey="e"
-        tal:attributes="value python:test(here.id in ('Folder','Publication'), ' save + enter ', ' save + edit ')"
+        tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
+        i18n:attributes="value title"
       />
       </tal:condition>
     </td>
