@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -105,11 +105,14 @@ def check_valid_id(folder, maybe_id):
     return IdCheckValues.ID_OK
 
 
-module_security.declarePublic('check_valid_id_image')
-def check_valid_id_image(folder, id, file):
+module_security.declarePublic('check_valid_id_file')
+def check_valid_id_file(folder, id, file):
     """ special check for image, which may use the file name for id creation"""
     from OFS import Image
+    from Products.Silva.File import TRANSMAP
+    import string
     id, unused_title = Image.cookId(id, "", file)
+    id = string.translate(id, TRANSMAP)
     return (id, check_valid_id(folder, id))
     
 
