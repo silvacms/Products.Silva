@@ -17,7 +17,7 @@ except FormValidationError, e:
     return view.tab_edit(message_type="error",
                          message=context.render_form_errors(e))
 try:
-    model.set_image(result['image_file'])
+    model.set_image(result['file'])
 except IOError, e:
     return view.tab_edit(message_type="error", message=e)
 model.sec_update_last_author_info()
