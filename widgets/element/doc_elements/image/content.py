@@ -13,7 +13,6 @@ image_path = node.output_convert_html(node.getAttribute('image_path'))
 if image_path:
     try:
         image = node.restrictedTraverse(image_path)
-        # check meta_type here ?
     except KeyError:
         # image reference is broken (i.e. renamed)
         image = None
@@ -23,5 +22,9 @@ else:
     if not image_id:
         return None
     image = getattr(node.get_content().get_container(), image_id, None)
+
+# check meta_type here ?
+if image.meta_type != 'Silva Image':
+    image = None
 
 return image
