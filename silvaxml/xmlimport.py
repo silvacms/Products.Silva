@@ -216,6 +216,7 @@ class IndexerHandler(SilvaBaseHandler):
         if name == (NS_URI, 'indexer'):
             self.setMaintitle()
             self.storeMetadata()
+            self._info.addIndexer(self.result())
             
 class VersionHandler(SilvaBaseHandler):
     def getOverrides(self):
@@ -462,6 +463,7 @@ class ImportInfo:
         self._zexp_paths = {}
         self._zip_file = None
         self._ghostfolders = [] 
+        self._indexers = []
 
     def setZipFile(self, file):
         self._zip_file = file
@@ -490,13 +492,23 @@ class ImportInfo:
     def addSyncTarget(self, ghostfolder):
         self._ghostfolders.append(ghostfolder)
 
+    def addIndexer(self, indexer):
+        self._indexers.append(indexer)
+
     def getSyncTargets(self):
         return self._ghostfolders
+
+    def getIndexers(self):
+        return self._indexers
 
     def syncGhostFolders(self):
         for folder in self.getSyncTargets():
             folder.haunt()
             
+    def updateIndexers(self):
+        for indexer in self.getIndexers():
+            indexer.update()
+
 def generateUniqueId(org_id, context):
         i = 0
         id = org_id
@@ -538,4 +550,5 @@ def importFromFile(source_file, import_container, info=None):
         info=info)
     # sync all ghost folders after all is imported
     info.syncGhostFolders()
+    info.updateIndexers()
     return import_container
