@@ -1,8 +1,8 @@
 """
 module for providing base xml element/attribute classes.
 
-a namespace (silva and html currently) uses the default
-behaviour of the elements contained here.
+this module provides a lot of default behaviour for 
+objects as defined in user-namespaces (silva and html currently).
 
 Note: 
    There is no xml-namespace support up to now.
@@ -10,7 +10,7 @@ Note:
    The actual transformations are in separate 
    module and don't depend on Zope or Silva. They do
    depend on a DOM-parser (and thus share the
-   dependcy on PyXML.
+   dependcy on PyXML).
 
 the scheme used for the transformation roughly
 follows the ideas used with XIST.  Note that we
@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.17 $'
+__version__='$Revision: 1.18 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -103,7 +103,6 @@ class Frag(Node, List):
         for node in self:
             l.append(node.extract_text())
         return u''.join(l)
-
 
     def compact(self):
         node = self.__class__()
