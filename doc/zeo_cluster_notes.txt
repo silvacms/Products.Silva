@@ -2,7 +2,7 @@ Setting up a ZEO Cluster with session tracking.
 
     Version / Author
 
-        Version: $version$
+        Version: $Revision: 1.4 $
         Jan-Wijbrand Kolman
         jw@infrae.com
 
