@@ -1,0 +1,87 @@
+<html tal:omit-tag=""
+  tal:define="
+    view here;
+    model request/model;
+    version options/version;
+    version_name options/name;
+    title options/title;
+    link_status python:here.get_ghost_link_status_text(version);
+    content_url python:version.get_haunted_url();
+">
+
+  <table class="listing">
+    <thead>
+      <tal:block replace="nothing">
+        ______________ vein + title row ______________
+      </tal:block>
+      <tr>
+        <td class="top"
+          colspan="3">
+          <h2>
+            <img tal:replace="structure python:view.render_icon(model)" />
+            ghost of &#xab;<tal:block content="title" />&#xbb; (<tal:block content="version_name" /> version)
+          </h2>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <th class="align-right"
+          width="15%">
+          attributes
+        </th>
+        <th>
+          content
+        </th>
+        <th width="30%">
+          note
+        </th>
+      </tr>
+
+      <tr class="even">
+        <td class="field-title">
+          reference
+        </td>
+        <td tal:content="content_url">
+          /foo/bar
+        </td>
+        <td>
+          path to original (begins with &#8216;/&#8217;).
+        </td>
+      </tr>
+
+      <tr class="odd"
+        tal:condition="not:link_status">
+        <td class="field-title">
+          link
+        </td>
+        <td>
+          <a href="original"
+            tal:attributes="href python:content_url + '/edit/tab_edit'"
+            tal:content="title">
+            Link
+          </a>
+        </td>
+        <td>
+          Link to editor screen of original.
+        </td>
+      </tr>
+
+      <tr class="odd"
+        tal:condition="link_status">
+        <td class="field-title">
+          problem
+        </td>
+        <td class="alert">
+          <span class="error"
+            tal:content="structure link_status" />
+        </td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</html>

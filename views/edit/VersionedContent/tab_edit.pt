@@ -105,7 +105,7 @@
       <input class="button" style="margin-left:0;" type="submit" value="create new version" title="Work on a new version while the previous one stays online: alt-c" accesskey="c" />
     </div>
   </form>
-  <div tal:content="structure here/edit_info | nothing" />
+  <div tal:replace="structure here/edit_info | nothing" />
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
@@ -116,6 +116,7 @@
     <input class="button" style="margin-left:0;" type="submit" value="revoke approval" title="'Un-approve' this item in order to edit: alt-r" accesskey="r" />
   </div>
 </form>
+  <div tal:replace="structure here/edit_info | nothing" />
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
@@ -128,6 +129,7 @@
     <input type="hidden" name="tab_name" value="edit" />
   </div>
 </form>
+  <div tal:replace="structure here/edit_info | nothing" />
 </tal:condition>
 
 </metal:block>
