@@ -120,7 +120,7 @@
   tal:define="indent python:obj[0];
               item python:obj[1];
               ref python:model.create_ref(item)"
-  tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
+  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
 
 <span tal:replace="nothing"> _______ checkbox + icon _______ </span>
 <td nowrap="1">

@@ -137,15 +137,15 @@ a.redlink:hover {
 /* yellow selectors */
 .yellowish { color: #eeee88; }
 a.yellowlink:link {
-  color : #eeee88;
+  color : #8f7f01;
   text-decoration : none;
 }
 a.yellowlink:visited {
-  color : #eeee88;
+  color : #8f7f01;
   text-decoration : none;
 }
 a.yellowlink:hover {
-  color : #eeee88;
+  color : #8f7f01;
   text-decoration : underline;
 }
 

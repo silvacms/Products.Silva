@@ -107,19 +107,20 @@ h5 {
 /* __________________________________________________ table style definitions _____ */
 
 tr.focus, th.focus, td.focus {
-  background : #c0c0c0;
+  background : #d0d0d0;
 }
 
 tr.focus-cycle, th.focus-cycle, td.focus-cycle {
-  background : #cccccc;
+  background : #dedede;
 }
 
+/* was b0b0b0 */
 tr.focus-fixed, td.focus-fixed {
-    background : #b0b0b0;
+    background : #d0d0d0;
 }
 
 tr.focus-light, th.focus-light, td.focus-light {
-  background : #d0d0d0;
+  background : #dedede;
 }
 
 tr.focus-light-cycle, td.focus-light-cycle {
@@ -151,7 +152,7 @@ tr.divider, th.divider, td.divider {
 }
 
 th {
-  font-size : 12px; 
+  font-size : 11px; 
   font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif; 
   color : #e2e9eb;
@@ -179,7 +180,7 @@ td.hilight {
 }
 
 .tablehead3 {
-  font-size : 14px; 
+  font-size : 13px; 
   font-weight : bold; 
   font-family : verdana, arial, helvetica, sans-serif; 
   color : #d0d4d8; 
@@ -379,22 +380,25 @@ input[type="checkbox"]:hover, input[type="radio"]:hover {
 
 /* ______________________________________________________ tab bar definition _____ */  
 
+/* was 36445b */
 td.tab-bg {
   font-size : 1px;
-  background : #36445b;
+  background : #323c47;
 }
 
+/* mx trans:conta:4a7f6b */
+/* mx trans:39988f */
 td.tab {
   font-size : 1px;
   color : #ffffff;
-  background : #39988f;
+  background : #67788c;
 }
 
-/* was b8cdd0 */
+/* was b8cdd0 bdd0d0 */
 td.tab-up {
   font-size : 1px;
   color : #330033;
-  background : #bdd0d0;
+  background : #bdc5c8;
 }
 
 td.tab-edge {

@@ -125,7 +125,7 @@
     Author
   </th>
   <th align="right" width="2%">
-    Shift&nbsp;&nbsp;
+    Shift&nbsp;&nbsp;&nbsp;
   </th>
 </tr>
 
@@ -187,7 +187,7 @@
 <rowset tal:omit-tag="" tal:repeat="item publishables">
 <cycle tal:omit-tag="" tal:define="oddrow repeat/item/odd">
 <!-- iteration over ordered publishables -->
-<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
+<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
   <span tal:replace="nothing"> _______ position cell _______ </span>
   <td align="right" tal:content="repeat/item/number">
     #
