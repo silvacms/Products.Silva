@@ -6,10 +6,10 @@ from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
 # Silva
-from Products.Silva.transform.RendererRegistry import RendererRegistry
-from Products.Silva.transform.renderers.imagesonrightrenderer import ImagesOnRightRenderer
-from Products.Silva.transform.renderers.widgetsrenderer import WidgetsRenderer
-from Products.Silva.transform.renderers.basicxsltrenderer import BasicXSLTRenderer
+from Products.Silva.transform.rendererreg import RendererRegistry
+from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+from Products.Silva.transform.renderer.widgetsrenderer import WidgetsRenderer
+from Products.Silva.transform.renderer.basicxsltrenderer import BasicXSLTRenderer
 import SilvaPermissions
 from helpers import add_and_edit
 

@@ -7,8 +7,8 @@ if __name__ == '__main__':
 import SilvaTestCase
 from Interface.Verify import verifyClass
 from Products.Silva.transform.interfaces import IRendererRegistry
-from Products.Silva.transform.RendererRegistry import RendererRegistry
-from Products.Silva.transform.renderers.imagesonrightrenderer import ImagesOnRightRenderer
+from Products.Silva.transform.rendererreg import RendererRegistry
+from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
 from Interface.Exceptions import BrokenImplementation, DoesNotImplement, BrokenMethodImplementation
 
 class RendererRegistryTest(SilvaTestCase.SilvaTestCase):

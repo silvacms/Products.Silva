@@ -10,8 +10,8 @@ from Interface.Exceptions import BrokenImplementation, DoesNotImplement, BrokenM
 import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
-from Products.Silva.transform.renderers.imagesonrightrenderer import ImagesOnRightRenderer
-from Products.Silva.transform.renderers.xsltrendererbase import RenderError
+from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+from Products.Silva.transform.renderer.xsltrendererbase import RenderError
 
 class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 
