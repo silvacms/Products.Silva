@@ -1,10 +1,9 @@
 <html metal:define-macro="master"
-  tal:define="    
+  tal:define="
     silva_root here/silva_root;
     view here;
     model request/model;
-    security model/security_trigger;"
-  >
+    ">
 <head>
 <title tal:content="structure python:model.get_title_html()">Title</title>
 <link rel="shortcut icon" href="globals/favicon.ico" tal:attributes="href here/globals/favicon.ico/absolute_url" />
@@ -14,12 +13,11 @@
   tal:condition="python:template.id == 'tab_preview'" />
 <script tal:replace="nothing"> _______ application specific stylesheet extension _______ </script>
 <link rel="stylesheet" href="ext_stylesheet"
-  tal:condition="python:hasattr(here, 'extension_style_url')" 
+  tal:condition="python:hasattr(here, 'extension_style_url')"
   tal:attributes="href python:here.extension_style_url()" />
-<style 
-  tal:define="local_style view/local_style"
-  tal:condition="local_style"
-  tal:content="structure view/local_style" />
+<style tal:define="tab_color view/local_style"
+  tal:condition="tab_color"
+  tal:content="structure tab_color">color container tabs green</style>
 <script type="text/javascript"
   tal:condition="not:exists:template/focus_field">
 <!--
@@ -29,7 +27,7 @@ function focusCursor() {
   }
 }
 // -->
-</script> 
+</script>
 <script type="text/javascript"
   tal:condition="exists:template/focus_field">
 <!--
@@ -39,7 +37,7 @@ function focusCursor() {
   }
 }
 // -->
-</script> 
+</script>
 <script type="text/javascript" language="JavaScript"
   tal:condition="python: template.id == 'tab_edit_bxe'"
   tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url">
@@ -49,7 +47,7 @@ function focusCursor() {
   tal:attributes="src container/xopus/xopus/xopus.js/absolute_url">
 </script>
 <script type="text/javascript" language="JavaScript"
-	tal:condition="python: template.id == 'tab_edit_eopro'"
+  tal:condition="python: template.id == 'tab_edit_eopro'"
         tal:content="python: template.tab_edit_eopro_js()">
 </script>
 
@@ -57,8 +55,8 @@ function focusCursor() {
 <body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
   tal:attributes="onload python: test(template.id == 'tab_edit_bxe',
                                  'BX_load(\'%s/bxe/bxe_config.xml\')' % (model.absolute_url()),
-                                 test(view.has_focus_box(template.id), 
-                                 'focusCursor()', 
+                                 test(view.has_focus_box(template.id),
+                                 'focusCursor()',
                                  nothing))">
     <tal:block replace="nothing">Previous onload tests facilitate Bitflux editor support</tal:block>
 <!-- ____________________________ start tabs ___________________________ -->
