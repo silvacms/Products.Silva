@@ -43,7 +43,7 @@ Silva changes
         - Fix icon rendering. It should now be faster and more
           browser-cache friendly.
  
-        - Fixed unicode issue when deleting a table column
+        - Fixed unicode issue when deleting a table column.
 
           XXX put in the right versions
           XXX upgrade script to fix existing catalogs?
@@ -153,43 +153,43 @@ Silva changes
         - A number of minor bugs, mainly in UI.
         
   0.9.1.6
-                                                                                                    
+
     Bugs Fixed
-                                                                                                    
+
         - Fix bug where viewing content normally restricted by an
           AccessRestriction, could be viewed via a Ghost.
 
   0.9.1.5
-                                                                                                    
+
     Features Added
-                                                                                                    
+                                           
         - Added support for ExternalEditor, Silva Files and Images can now
           be edited using your favorite editor.
 
         - Bulk import of files (for File Assets) and/or images (for Image
           Assets) using a zipfile. Note though, that the 091 id
           checking is less tolerant compared to the 092 id checking.
-                                                                                                    
+
     Bugs Fixed
-                                                                                                    
+
         - Removed "Asset reference" asset-type stickyness.
-                                                                                                    
+
         - Fixed button for refresh queue when Docma is enabled.
-                                                                                                    
+
         - Added a find_indexers utility (accesible through
           http://server/silva/edit/service_utils/find_indexers) to find all
           Indexer objects in use.
-                                                                                                    
+
         - Help text opens in new browser window.
-                                                                                                    
+
         - Indexer -all non-versioned content actually- can now be deleted.
-                                                                                                    
+
         - Indexer objects now render the correct URLs in virtual host
           situations. Use the 'update index' in the edit tab of Indexer
           objects to get the Indexers up to date.
-                                                                                                    
+
         - Setting a TOC level would display one level too much.
-                                                                                                    
+
         - Pressing 'Export' in Document's status tab now takes a user to the
           export screen of the container so the user can indeed (as the text
           suggests) export to Docma as well as download the content.
@@ -201,7 +201,7 @@ Silva changes
         - The UI for 'Access Restriction by Role' did not properly expose
           the possibility to set this role more restrictive on a lower
           level. (the pull down menu and button would have been disabled).
-                                                                                            
+
         - get_public_tree() would not do the right thing with the depth-
           level control argument.
 
