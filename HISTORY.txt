@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.3.4
+  
+    Bugs fixed
+
+      - A problem in the upgrade code handling index elements in Silva
+        Documents was repaired.
+
   0.9.3.3
 
     Bugs fixed

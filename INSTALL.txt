@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3.x
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.40.8.6 $
+  CVS:        $Revision: 1.40.8.7 $
 
 Installing Silva
 
@@ -40,7 +40,7 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.9.3.3)
+    Silva (0.9.3.4)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some
@@ -114,7 +114,7 @@ Installing Silva
 
         "Annotations":http://www.zope.org/Members/infrae/Annotations
 
-    SilvaDocument (0.9.3.3)
+    SilvaDocument (0.9.3.4)
 
       Silva Document contains the functionality implementing the Silva
       Document object and editor. It is optional, but in order to do

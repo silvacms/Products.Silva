@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3.x
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36.8.10 $
+  CVS:        $Revision: 1.36.8.11 $
 
 Upgrading from 0.9.1 and below
 
@@ -38,23 +38,7 @@ Upgrading Silva 0.9.2.x to 0.9.3
     Silva Documents are now in a separate package called
     SilvaDocument. This you need to have this Product too.
 
-      "Silva-0.9.3.3.tgz":http://www.zope.org/Members/infrae/Silva
-
-      "SilvaDocument-0.9.3.3.tgz":http://www.zope.org/Members/infrae/Silva
-
-      "Formulator-1.6.2.tgz":http://www.zope.org/Members/infrae/Formulator
-
-      "XMLWidgets-0.10.3.tgz":http://www.zope.org/Members/infrae/XMLWidgets
-
-      "ProxyIndex-1.1.2.tgz":http://www.zope.org/Members/infrae/Silva
-
-      "Annotations-0.4.3.tgz":http://www.zope.org/Members/infrae/Silva
-
-      "SilvaMetadata-0.7.5.tgz":http://www.zope.org/Members/infrae/Silva
-
-      "SilvaViews-0.9.tgz":http://www.zope.org/Members/infrae/Silva
-    
-    Alternatively You can get a bundle of all required products at:
+    You can get a bundle of all required products here:
  
        "Silva-0.9.3.3-all.tgz":http://www.zope.org/Members/infrae/Silva
 
