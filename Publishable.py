@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -77,8 +77,7 @@ class Publishable:
         if IVersioning.isImplementedBy(self):
             return self.is_version_published()
         else:
-            # FIXME: should always be published if no versioning supported?
-            return 0
+            return 1
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_approved')
