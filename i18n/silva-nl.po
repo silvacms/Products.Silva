@@ -1166,7 +1166,7 @@ msgstr "access key: alt-p"
 
 #: /views/edit/Container/tab_edit.pt:484
 msgid "move selected items into position: alt-m"
-msgstr "verplaats geselecteerde items naar positie: alt-m"
+msgstr "geselecteerde items naar positie verplaatsen: alt-m"
 
 #: /views/edit/Container/tab_edit.pt:484
 msgid "move"
@@ -1174,7 +1174,7 @@ msgstr "verplaatsen"
 
 #: /views/edit/Container/tab_edit.pt:494
 msgid "rename and retitle items: alt-r"
-msgstr "rename and retitle items: alt-r"
+msgstr "naam en titel van items veranderen: alt-r"
 
 #: /views/edit/Container/tab_edit.pt:494
 msgid "rename..."
@@ -1206,7 +1206,7 @@ msgstr "plakken"
 
 #: /views/edit/Container/tab_edit.pt:537
 msgid "paste (items on clipboard) as ghost objects: alt-g"
-msgstr "plak (items op clipboard) als ghost objecten: alt-g"
+msgstr "items op clipboard als ghost objecten plakken: alt-g"
 
 #: /views/edit/Container/tab_edit.pt:537
 msgid "paste ghost"
@@ -1215,7 +1215,7 @@ msgstr "ghost plakken"
 #: /views/edit/Container/tab_edit.pt:547
 #: /views/edit/VersionedContent/tab_status.pt:324
 msgid "there's no undo: alt-d"
-msgstr "there's no undo: alt-d"
+msgstr "verwijderen van items (er is geen undo): alt-d"
 
 #: /views/edit/Container/tab_edit.pt:69
 msgid "new..."
