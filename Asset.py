@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12.32.1.16.1 $
+# $Revision: 1.12.32.1.16.2 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -32,7 +32,7 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
         Asset.inheritedAttribute('manage_beforeDelete')(self, item, container)
 
     def is_deletable(self):
-        """assets are delteable
+        """assets are deletable
 
             NOTE: once there is reference management those should only be
             deletable if not referenced
