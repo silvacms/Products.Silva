@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.41 2003/07/24 13:04:18 zagy Exp $
+# $Id: Image.py,v 1.42 2003/07/31 09:58:06 zagy Exp $
 
 # Python
 import re, string 
@@ -311,7 +311,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image."""
     id = mangle.Id(context, id, file=file, interface=IAsset)
     id.cook()
-    if id.isValid():
+    if not id.isValid():
         return
     id = str(id)
     img = Image(id, title)
