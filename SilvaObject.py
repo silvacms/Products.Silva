@@ -4,8 +4,9 @@ from Globals import InitializeClass
 import SilvaPermissions
 from ViewRegistry import ViewAttribute
 from DateTime import DateTime
+from Security import Security
 
-class SilvaObject:
+class SilvaObject(Security):
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()

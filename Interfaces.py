@@ -1,6 +1,55 @@
 import Interface
 
-class SilvaObject(Interface.Base):
+class Security(Interface.Base):
+    """Can be mixed in with an object to support Silva security.
+    (built on top of Zope security)
+    Methods prefixed with sec_ so as not to disrupt similarly named
+    Zope's security methods. (ugly..)
+    """ 
+    # MANIPULATORS
+    def sec_assign(self, userid, role):
+        """Assign role to userid for this object.
+        """
+        pass
+
+    def sec_remove(self, userid):
+        """Remove a user completely from this object.
+        """
+        pass
+
+    def sec_revoke(self, userid, revoke_roles):
+        """Remove roles from user in this object.
+        """
+        pass
+    
+    # ACCESSORS
+    def sec_get_userids(self):
+        """Get the userids that have local roles here.
+        """
+        pass
+
+    def sec_get_roles_for_userid(self, userid):
+        """Get the local roles that a userid has here.
+        """
+        pass
+
+    def sec_get_roles(self):
+        """Get all roles defined here that we're interested in managing.
+        """
+        pass
+
+    def sec_get_current_userids_on_clipboard(self):
+        """Get list of users on the clipboard.
+        """
+        pass
+    
+    def sec_get_user_info(self, userid):
+        """Get information for userid. FIXME: describe which info fields
+        exist.
+        """
+        pass
+
+class SilvaObject(Security):
     """Interface that should be supported by all Silva objects.
     """
     # MANIPULATORS
@@ -241,60 +290,6 @@ class Container(SilvaObject, Publishable):
 
     def get_public_tree(self):
         """Get tree of all publishables that are public.
-        """
-        pass
-    
-class Security(Interface.Base):
-    """Can be mixed in with an object to support Silva security.
-    (built on top of Zope security)
-    Methods prefixed with sec_ so as not to disrupt similarly named
-    Zope's security methods. (ugly..)
-    """ 
-    # MANIPULATORS
-    def sec_assign(self, userid, role):
-        """Assign role to userid for this object.
-        """
-        pass
-
-    def sec_remove(self, userid):
-        """Remove a user completely from this object.
-        """
-        pass
-
-    def sec_revoke(self, userid, revoke_roles):
-        """Remove roles from user in this object.
-        """
-        pass
-    
-    # ACCESSORS
-    def sec_get_userid(self):
-        """Get the userids that have local roles here.
-        """
-        pass
-
-    def sec_get_roles_for_userid(self, userid):
-        """Get the local roles that a userid has here.
-        """
-        pass
-
-    def sec_get_roles(self):
-        """Get all roles defined here that we're interested in managing.
-        """
-        pass
-
-    def sec_get_current_userids_on_clipboard(self):
-        """Get list of users on the clipboard.
-        """
-        pass
-    
-    def sec_get_user_info(self, userid):
-        """Get information for userid. FIXME: describe which info fields
-        exist.
-        """
-        pass
-
-    def get_roles_for_group(self, groupid):
-        """Get the local roles that a silva group has here.
         """
         pass
     
