@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 
 # zope
 from Globals import InitializeClass
@@ -46,6 +46,7 @@ class ContainerPolicyRegistry(SimpleItem):
         """register policy"""
         assert IContainerPolicy.isImplementedBy(policy)
         self._policies[name] = policy
+        self._p_changed = 1
 
     def unregister(self, name):
         """unregister policy"""
@@ -53,6 +54,7 @@ class ContainerPolicyRegistry(SimpleItem):
             del(self._policies[name])
         except KeyError:
             pass
+        self._p_changed = 1
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'createDefaultDocument')
