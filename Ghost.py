@@ -7,6 +7,7 @@ from DateTime import DateTime
 # Silva
 from VersionedContent import VersionedContent
 import Interfaces
+import SilvaPermissions
 # misc
 from helpers import add_and_edit
 
