@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.13.2.3 $'
+__version__='$Revision: 1.13.2.4 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -92,6 +92,10 @@ class p(SilvaElement):
             self.content.convert(context),
             silva_type=self.attrs.get('type')
             )
+
+class br(Element):
+    def convert(self, context):
+        return html.br()
 
 class dlist(SilvaElement):
     """ Simple lists """

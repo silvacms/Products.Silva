@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.18.8.3 $
+# $Revision: 1.18.8.4 $
 import unittest
 
 # 
@@ -228,15 +228,6 @@ class HTML2XML(Base):
         self.assert_(p[0].content.asBytes()=='hallo')
         self.assert_(not p[1].content.asBytes())
         self.assert_(not p[2].content.asBytes())
-
-    def test_br_turns_into_emtpy_paragraph(self):
-        """ test that the BR tag turns into an empty paragraph """
-        frag="""<br/>"""
-        node = self.transformer.target_parser.parse(frag)
-        node = node.conv()
-
-        p = node.find('p')
-        self.assert_(len(p)==1)
 
     def test_image_simple(self):
         htmlfrag="""<img src="/silva/path/image" link="http://www.heise.de" align="float-left"/>"""
@@ -580,6 +571,10 @@ class RoundtripWithTidy(unittest.TestCase):
         self.assertEquals(len(img),1)
         img = img[0]
         self.assertEquals(img.attrs.get('src'), 'path/file/image')
+
+    def test_br(self):
+        """ check that 'br' works """
+        self._check_string('<p>before<br/>after</p>')
 
     def test_preformatted(self):
         """ check that 'pre' (preformatted text) works """
