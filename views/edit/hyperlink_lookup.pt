@@ -106,7 +106,7 @@
                 <th class="listing-right">
                   #&nbsp;
                 </th>
-                <th i18n:translate="select">
+                <th i18n:translate="edit">
                   Edit
                 </th>
                 <th i18n:translate="view">
