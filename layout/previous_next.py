@@ -13,6 +13,8 @@ if current_id == 'index':
    return None, None
 folder = context.get_container()
 ordered_ids = [doc.id for (indent, doc) in folder.get_public_tree(1)]
+if len(ordered_ids) < 1:
+   return None, None
 current_index = ordered_ids.index(current_id)
 if current_index == 0:
    previous_doc = None
