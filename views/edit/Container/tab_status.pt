@@ -153,7 +153,7 @@
             tal:condition="is_container"
             tal:attributes="
               href string:${obj_url}/edit/tab_status;">
-            n/a
+            <i>n/a</i>
           </a>
         </td>
         <tal:block replace="nothing">

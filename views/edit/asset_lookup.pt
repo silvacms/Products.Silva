@@ -77,10 +77,9 @@
                       style="float:right;"
                       type="submit"
                       name="add_object:method" 
-                      value=" New:"
                       title="add a new item: alt-n"
                       accesskey="n" 
-                      tal:attributes="value string: New: ${filter} "
+                      tal:attributes="value string: New ${filter} "
                       />
                     <input type="hidden"
                       id="meta_type"

@@ -52,20 +52,11 @@
                 </tr>
                 <tr class="top-controls"
                   tal:condition="may_change_content">
-                  <td>
-                    <div class="buttons"
-                      style="float:right;">
-                      <a class="navigation"
-                        href="settings_addables"
-                        title="change the addables allowed in this publication: alt-a"
-                        accesskey="c"
-                        tal:condition="python:type == 'Silva Publication' or type == 'Silva Root'">
-                        Configure <u>a</u>ddables...
-                      </a>
-                    </div>
+                  <td class="align-right">
                     <div class="buttons">
                       <tal:block condition="python:type == 'Silva Folder'">
                         <a class="button"
+                          style="float:left;"
                           href="tab_edit_to_publication"
                           title="change Folder into Publication: alt-c"
                           accesskey="c">
@@ -74,12 +65,20 @@
                       </tal:block>
                       <tal:block condition="python:type == 'Silva Publication'">
                         <a class="button"
+                          style="float:left;"
                           href="tab_edit_to_folder"
                           title="change Publication into Folder: alt-c"
                           accesskey="c">
                           Convert to folder
                         </a>
                       </tal:block>
+                      <a class="navigation"
+                        href="settings_addables"
+                        title="change the addables allowed in this publication: alt-a"
+                        accesskey="c"
+                        tal:condition="python:type == 'Silva Publication' or type == 'Silva Root'">
+                        Configure <u>a</u>ddables...
+                      </a>
                     </div>
                   </td>
                 </tr>

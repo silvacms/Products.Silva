@@ -241,7 +241,7 @@
                         tal:attributes="href string:${item_url}/edit/tab_metadata"
                         i18n:translate="n/a"
                       >
-                        n/a
+                      <i>n/a</i>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -260,7 +260,7 @@
                         tal:attributes="href string:${item_url}/edit/tab_status"
                         i18n:translate="n/a"
                       >
-                        n/a
+                      <i>n/a</i>
                       </a>
                       <span 
                         tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
@@ -320,9 +320,15 @@
                     <td class="listing-left">
                       <input name="ids:list"
                         type="checkbox"
-                        value="value"
-                        tal:attributes="value asset/id" />
+                        tal:attributes="
+                          value asset/id;
+                          id asset/id;"
+                      />
+                      <label 
+                        tal:condition="default_document"
+                        tal:attributes="for asset/id">
                       &#8211;
+                      </label>
                     </td>
                     <tal:block replace="nothing">
                       _______ icon + id cell _______
