@@ -22,11 +22,11 @@ function setCoords(ev) {
 }
 
 function openlookupWindow(url_to_open, url_to_image) {
-  width = 512;
+width = 512;
   height = 512;
   leftPos = (screen.width - width) / 2;
   topPos = (screen.height - height) / 2;
-  aspects = 'toolbar=no, status=yes, scrollbars=yes, resizeable=yes, width='+width+',height='+height+',left='+leftPos+',top='+topPos;
+  aspects = 'toolbar=no, status=yes, scrollbars=yes, resizable=yes, width='+width+',height='+height+',left='+leftPos+',top='+topPos;
   lookupWindow = window.open(
     url_to_open, 'ImageMapWindow', aspects);
   lookupWindow.focus();
