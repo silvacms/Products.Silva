@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.64 $
+# $Revision: 1.65 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -27,11 +27,16 @@ import XMLImporter
 import helpers
 import re
 
+from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
+from Products.ParsedXML.ParsedXML import ParsedXML
+from Products.ParsedXML.ParsedXML import createDOMDocument
+from Products.ParsedXML.ExtraDOM import writeStream
+
 class Folder(SilvaObject, Publishable, Folder.Folder):
     """Silva Folder.
     """
     security = ClassSecurityInfo()
-    
+
     meta_type = "Silva Folder"
 
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
@@ -142,7 +147,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         if item.is_active() and item.id in ids:
             ids.remove(item.id)
             self._ordered_ids = ids
-        
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent, 'refresh_active_publishables')
     def refresh_active_publishables(self):
         """Clean up all ordered ids in this container and all subcontainers.
@@ -262,7 +267,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                     else:
                         paste_ids.append(cut_id)
             else:
-                # no changes to cut_ids 
+                # no changes to cut_ids
                 paste_ids = cut_ids
         # now we do the paste
         self.manage_pasteObjects(REQUEST=REQUEST)
@@ -493,7 +498,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 object.meta_type == meta_type):
                 result.append(object)
         return result
-    
+
     # FIXME: what if the objects returned are not accessible with my
     # permissions? unlikely as my role is acquired?
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -610,8 +615,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'xml_import')
     def xml_import(self, xml):
-        dom = ParsedXML(xml)
-        ImporterRegistry.xml_import_helper(self, dom)
+        """Import XML"""
+        dom = createDOMDocument(xml)
+        xml_import_helper(self, dom.childNodes[0])
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'import_xml')
     def import_xml(self, xml):
@@ -670,7 +676,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 for key in attrs.keys():
                         if hasattr(newObject, 'set_%s' % key.encode('cp1252')):
                             # data is set on the object itself
-                            getattr(newObject, 'set_%s' % key.encode('cp1252'))(attrs[key].encode('cp1252'))
+                            getattr(newObject, 'set_%s' % key.encode('cp1252'))(
+attrs[key].encode('cp1252'))
                         elif hasattr(newObject, 'get_editable'):
                             # data is set on the version
                             version = newObject.get_editable()
@@ -682,11 +689,13 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 InitializeClass(Folder)
 
 
+
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
                                         __name__='manage_addFolderForm')
 
 def manage_addIndex(folder):
     folder.manage_addProduct['Silva'].manage_addDocument('index', '')
+
 
 
 manage_addIndexHook = manage_addIndex
@@ -707,20 +716,15 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     helpers.add_and_edit(self, id, REQUEST)
     return ''
 
-def xml_import_handler(self, object, node):
-    id = node._attrs[u'id'].nodeValue
-    title = ''
-    for child in node.childNodes:
-        if child.nodeName == u'title':
-            title = child.childNodes[0].nodeValue
-    object.manage_addProducts['Silva'].manage_addFolder(id, title, 0)
+def xml_import_handler(object, node):
+    id = get_xml_id(node)
+    title = get_xml_title(node)
+    object.manage_addProduct['Silva'].manage_addFolder(id, title, 0)
     newfolder = getattr(object, id)
     for child in node.childNodes:
-        if child.nodeName == u'title':
-            pass
-        elif child.nodeName.encode('cp1252') in ImporterRegistry.importer_registry.keys():
-            ImporterRegistry.import_xml_helper(newfolder, child)
-        elif hasattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252')):
-            getattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252'))(child.nodeValue.encode('cp1252'))
+        if child.nodeName.encode('cp1252') in importer_registry.keys():
+            xml_import_helper(newfolder, child)
+        elif hasattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252')) and child.childNodes[0].nodeValue:
+            getattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252'))(child.childNodes[0].nodeValue.encode('cp1252'))
 
 

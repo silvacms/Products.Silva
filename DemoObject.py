@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -17,6 +17,9 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.helpers import add_and_edit, translateCdata
 # misc
 from cgi import escape
+
+from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
+from Products.ParsedXML.ExtraDOM import writeStream
 
 class DemoObject(VersionedContent, EditorSupport):
     """Silva DemoObject.
@@ -85,6 +88,7 @@ class DemoObjectVersion(SimpleItem.SimpleItem):
         self._number = number
         self._date = date
 
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'info')
     def info(self):
@@ -101,6 +105,7 @@ class DemoObjectVersion(SimpleItem.SimpleItem):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'number')
     def number(self):
+
         """Get the number for this version.
         """
         return self._number
@@ -152,3 +157,21 @@ def manage_addDemoObjectVersion(self, id, title, REQUEST=None):
     self._setObject(id, object)
     add_and_edit(self, id, REQUEST)
     return ''
+
+def xml_import_handler(object, node):
+    id = get_xml_id(node)
+    title = get_xml_title(node)
+    object.manage_addProduct['Silva'].manage_addDemoObject(id, title)
+    newdo = getattr(object, id)
+    version = getattr(newdo, '0')
+    print dir(version)
+    for child in node.childNodes:
+        print "Going to set", child.nodeName
+        print "Has setter:", hasattr(version, 'set_%s' % child.nodeName.encode('cp1252'))
+        print "Has value:", hasattr(child.childNodes[0], 'nodeValue') and child.childNodes[0].nodeValue
+        if child.nodeName == u'doc':
+            childxml = writeStream(child).getvalue().encode('utf8')
+            version.content.manage_edit(childxml) # expects utf8
+        elif hasattr(version, 'set_%s' % child.nodeName.encode('cp1252')) and child.childNodes[0].nodeValue:
+            getattr(version, 'set_%s' % child.nodeName.encode('cp1252'))(child.childNodes[0].nodeValue.encode('cp1252'))
+

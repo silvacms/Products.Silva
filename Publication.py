@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27 $
+# $Revision: 1.28 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -12,6 +12,8 @@ from Folder import Folder
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
+
+from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 
 class Publication(Folder):
     """Publication.
@@ -99,7 +101,7 @@ class Publication(Folder):
                               'is_silva_addables_acquired')
     def is_silva_addables_acquired(self):
         return self._addables_allowed_in_publication is None
-          
+
 InitializeClass(Publication)
 
 manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),
@@ -114,26 +116,21 @@ def manage_addPublication(self, id, title, create_default=1, REQUEST=None):
     object = getattr(self, id)
     # add doc
     if create_default:
-        # XXX avoid name clash between module and class Folder 
+        # XXX avoid name clash between module and class Folder
         import Products.Silva.Folder
         Products.Silva.Folder.manage_addIndexHook(object)
     if hasattr(object,'index'):
-        object.index.sec_update_last_author_info()        
+        object.index.sec_update_last_author_info()
     add_and_edit(self, id, REQUEST)
     return ''
 
-def xml_import_handler(self, object, node):
-    id = node._attrs[u'id'].nodeValue
-    title = ''
+def xml_import_handler(object, node):
+    id = get_xml_id(node)
+    title = get_xml_title(node)
+    object.manage_addProduct['Silva'].manage_addPublication(id, title, 0)
+    newpub = getattr(object, id)
     for child in node.childNodes:
-        if child.nodeName == u'title':
-            title = child.childNodes[0].nodeValue
-    object.manage_addProducts['Silva'].manage_addPublication(id, title, 0)
-    newfolder = getattr(object, id)
-    for child in node.childNodes:
-        if child.nodeName == u'title':
-            pass
-        elif child.nodeName.encode('cp1252') in ImporterRegistry.importer_registry.keys():
-            ImporterRegistry.import_xml_helper(newfolder, child)
-        elif hasattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252')):
-            getattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252'))(child.nodeValue.encode('cp1252'))
+        if child.nodeName.encode('cp1252') in importer_registry.keys():
+            xml_import_helper(newpub, child)
+        elif hasattr(newpub, 'set_%s' % child.nodeName.encode('cp1252')) and child.childNodes[0].nodeValue:
+            getattr(newpub, 'set_%s' % child.nodeName.encode('cp1252'))(child.childNodes[0].nodeValue.encode('cp1252'))

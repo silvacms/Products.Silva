@@ -1,11 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.44 $
+# $Revision: 1.45 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
+from StringIO import StringIO
 
 # Silva interfaces
 from IVersionedContent import IVersionedContent
@@ -16,18 +17,23 @@ from VersionedContent import VersionedContent
 from EditorSupport import EditorSupport
 from helpers import add_and_edit, translateCdata
 
-# For XML-Conversions for editors 
-from transform.Transformer import EditorTransformer   
+# For XML-Conversions for editors
+from transform.Transformer import EditorTransformer
+
+from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
+from Products.ParsedXML.ExtraDOM import writeStream
+from Products.ParsedXML.ParsedXML import createDOMDocument
+from Products.ParsedXML.PrettyPrinter import _translateCdata
 
 class Document(VersionedContent, EditorSupport):
     """Silva Document.
     """
     security = ClassSecurityInfo()
-    
+
     meta_type = "Silva Document"
 
     __implements__ = IVersionedContent
-    
+
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = VersionedContent.manage_options
     manage_options=(
@@ -43,7 +49,7 @@ class Document(VersionedContent, EditorSupport):
             'subject' : '',
             'description' : ''
             }
-        
+
         self._automatic_metadata = {
             'creator' : '',
             'creation_date' : None,
@@ -104,7 +110,7 @@ class Document(VersionedContent, EditorSupport):
             return self.get_container().get_title()
         else:
             return self._title
-                        
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_metadata')
     def get_metadata(self, name):
@@ -126,39 +132,35 @@ class Document(VersionedContent, EditorSupport):
                 version_id = self.get_public_version()
         else:
             version_id = self.get_public_version()
-            
+
         if version_id is None:
             return
         version = getattr(self, version_id)
         f.write('<silva_document id="%s">' % self.id)
         f.write('<title>%s</title>' % translateCdata(self.get_title()))
         #for key, value in self._metadata.items():
-        #    f.write('<%s>%s</%s>' % (key, translateCdata(value), key))            
+        #    f.write('<%s>%s</%s>' % (key, translateCdata(value), key))
         version.documentElement.writeStream(f)
         f.write('</silva_document>')
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'store_xml')
     def store_xml(self, xml):
-        """Store the Document from the xml-string in this object.  
+        """Store the Document from the xml-string in this object.
 
            the xml string is usually utf-8 encoded. Make sure
            that the "encoding" in any xml-processing instruction
-           really matches the encoding of the string. 
+           really matches the encoding of the string.
            Weird Errors can occur if they differ!
 
         """
-        from Products.ParsedXML.ExtraDOM import writeStream
-        from Products.ParsedXML.ParsedXML import createDOMDocument
-        from Products.ParsedXML.PrettyPrinter import _translateCdata
-
         version = self.get_editable()
         if version is None:
             # XXX should put in nicer exceptions (or just return)
             raise "Hey, no version to edit!"
 
         dom = createDOMDocument(xml)
-        
+
         title = content = None
         # hackish way to do this..
 
@@ -219,7 +221,7 @@ class Document(VersionedContent, EditorSupport):
 #        # rename doc so we can create folder with the same name
 #        parent.manage_renameObject(id, temp_id)
 #        # create Silva Folder to hold self
-#        parent.manage_addProduct['Silva'].manage_addFolder(id, self.title(), 0)
+#        parent.manage_addProduct['Silva'].managre_addFolder(id, self.title(), 0)
 #        # get folder
 #        folder = getattr(parent, id)
 #        # now add self to folder
@@ -243,7 +245,6 @@ class Document(VersionedContent, EditorSupport):
         if version is None:
             return []
         return [version]
-    
 
 InitializeClass(Document)
 
@@ -264,5 +265,15 @@ def manage_addDocument(self, id, title, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
-
-
+def xml_import_handler(object, node):
+    id = get_xml_id(node)
+    title = get_xml_title(node)
+    object.manage_addProduct['Silva'].manage_addDocument(id, title)
+    newdoc = getattr(object, id)
+    for child in node.childNodes:
+        if child.nodeName == u'doc':
+            version = getattr(newdoc, '0')
+            childxml = writeStream(child).getvalue().encode('utf8')
+            version.manage_edit(childxml) # expects utf8
+        elif hasattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252')) and child.nodeValue:
+            getattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252'))(child.nodeValue.encode('cp1252'))
