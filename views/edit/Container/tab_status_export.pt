@@ -146,8 +146,15 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
           </tr>
 
           <tr class="focus">
-            <td align="right" width="20%">Enter your e-mail address: <span class="warning">*</span></td>
-            <td align="left" width="1%"><input type="text" name="email" size="30" /></td>
+            <td align="right" width="20%">
+              Enter your e-mail address: <span class="warning">*</span>
+            </td>
+            <td align="left" width="1%">
+              <input type="text" name="email" size="30" 
+                tal:attributes="value python:here.service_members.get_member(
+                  user.getUserName()).email()" 
+              />
+            </td>
             <td align="right">An e-mail will be sent once the job is finished</td>
           </tr>
 
@@ -166,7 +173,11 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
 
           <tr class="focus">
             <td align="right" width="20%">Enter a description of the job:</td>
-            <td align="left" width="1%"><textarea rows="3" cols="30" name="description"></textarea></td>
+            <td align="left" width="1%">
+              <textarea rows="3" cols="30" name="description"
+                tal:content="model/get_title_html"
+              ></textarea>
+            </td>
             <td align="right">&nbsp;</td>
           </tr>
 

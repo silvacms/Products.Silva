@@ -152,7 +152,10 @@
             </span>
             </td>
             <td align="left">
-                <input type="text" name="email" style="width: 100%" />
+                <input type="text" name="email" style="width: 100%" 
+                  tal:attributes="value python:here.service_members.get_member(
+                    user.getUserName()).email()" 
+                />
             </td>
             <td align="right">
                 An email will be sent to you when the item is processed.
