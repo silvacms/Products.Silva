@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -225,6 +225,7 @@ class Versioning:
             raise VersioningError,\
                   'The version is not requested for approval.'
         info = self._get_editable_rfa_info()
+        orginal_requester = info.requester
         info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
         info.request_pending=None
         self._set_approval_request_message(message)
@@ -233,6 +234,9 @@ class Versioning:
                % (info.requester, message)
         self._send_message_to_editors(info.requester,
                                       'Approval withdrawn by author', text)
+        if orginal_requester != info.requester:
+            self._send_message(info.requester, orginal_requester,
+                               'Approval withdrawn by author', text)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'reject_version_approval')
