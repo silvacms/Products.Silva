@@ -466,7 +466,7 @@
                                 " />
                           </tal:block>
                           <option value="0"
-                            tal:attributes="value python:len(publishables) + 1"
+                            tal:attributes="value python:test(default_document, len(publishables) - 1, len(publishables))"
                             i18n:translate="end"
                           >
                             end
