@@ -23,6 +23,7 @@ for child in node.childNodes:
         continue
     if child.nodeName == 'row':
         row_data = []
+        col = 0
         for field in child.childNodes:
             if field.nodeType != node.ELEMENT_NODE:
                 continue
@@ -40,7 +41,11 @@ for child in node.childNodes:
                 if content == '':
                     content = '&nbsp;'
                 row_data.append(
-                    """<td>\n  %s\n</td>""" % content)
+                    """<td align="%s">\n  %s\n</td>""" % (
+                    columns_info[col]['align'], content))
+                    # this align thingy should not be needed if mozilla would
+                    # consider the alignment as specified in the <col />
+                col += 1
         table_data.append(
             """<tr>\n%s\n</tr>""" % '\n'.join(row_data))
     if child.nodeName == 'row_heading':
