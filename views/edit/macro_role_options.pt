@@ -1,8 +1,8 @@
 <metal:block define-macro="options">
   <tal:block define="
     preselected preselected | nothing;
-    i_am_manager silva_permissions/ChangeSilvaViewRegistry | nothing;    
-    managers_only_options python: ('Manager', 'ChiefEditor');
+    i_am_manager i_am_manager | silva_permissions/ChangeSilvaViewRegistry | nothing;    
+    managers_only_options managers_only_options | python: ('Manager', 'ChiefEditor');
     optgroups python: {
       'public silva roles' : ('Viewer', 'Viewer +', 'Viewer ++'),
       'silva roles' : ('Reader', 'Author', 'Editor', 'ChiefEditor'),

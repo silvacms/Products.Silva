@@ -18,6 +18,8 @@
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;
     silva_permissions here/get_silva_permissions;
+    i_am_manager silva_permissions/ChangeSilvaViewRegistry | nothing;
+    managers_only_options python: ('Manager', 'ChiefEditor');    
 ">
 
 <table class="columns columns3"
@@ -107,19 +109,26 @@
                   </td>
                   <td class="align-right">
                     <tal:block repeat="local python:model.sec_get_local_roles_for_userid(userid)">
-                      <label tal:content="local" 
+                      <label 
+                        tal:content="local" 
                         tal:attributes="for string:revoke_${local}-${userid}">
                         local
                       </label>
-                      <input class="warning-checkbox"
-                        name="revoke_roles:list"
-                        type="checkbox"
-                        value=""
-                        tal:attributes="
-                          value python:'%s||%s' % (userid, local);
-                          id string:revoke_${local}-${userid}" 
-                        tal:define="global revokeable_roles python: 1"
-                        /><br tal:condition="not:repeat/local/end" />
+                        <input class="warning-checkbox"
+                          name="revoke_roles:list"
+                          type="checkbox"
+                          value=""
+                          tal:define="
+                            global revokeable_roles python: 1;
+                            enable python: i_am_manager or local not in managers_only_options;
+                            disable not: enable;
+                            "
+                          tal:attributes="
+                            value python:'%s||%s' % (userid, local);
+                            id string:revoke_${local}-${userid};
+                            disabled disable | nothing;
+                            " 
+                          /><br tal:condition="not:repeat/local/end" />
                     </tal:block>
                   </td>
                 </tr>
@@ -400,15 +409,21 @@
                           local
                         </label>
                         &nbsp;
-                        <input class="warning-checkbox"
-                          name="revoke_roles:list"
-                          type="checkbox"
-                          value=""
-                          tal:attributes="
-                            value python:'%s||%s' % (group, local);
-                            id string:revoke_${group};"
-                          tal:define="global revokeable_groups python: 1"
-                          /><br tal:condition="not:repeat/local/end" />
+                          <input class="warning-checkbox"
+                            name="revoke_roles:list"
+                            type="checkbox"
+                            value=""
+                            tal:define="
+                              global revokeable_groups python: 1;
+                              enable python: i_am_manager or local not in managers_only_options;
+                              disable not: enable;
+                              "
+                            tal:attributes="
+                              value python:'%s||%s' % (group, local);
+                              id string:revoke_${group};
+                              disabled disable | nothing;
+                              "
+                            /><br tal:condition="not:repeat/local/end" />
                       </tal:block>
                     </td>
                   </tr>
