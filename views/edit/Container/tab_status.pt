@@ -129,18 +129,21 @@
         <td>
           <div tal:attributes="style string:margin-left:${indent_depth}">
             <div style="float: left;">
-              <a title="edit"
-                tal:attributes="href string:${obj_url}/edit/tab_edit">
+              <a 
+                tal:attributes="href string:${obj_url}/edit/tab_edit;
+                title string:edit: ${obj/id};
+                ">
                 <img tal:replace="structure obj/icon" />
               </a>
             </div>
             <div style="padding-left: 19px;"
               tal:define="title obj/title">
               <a class="blacklink"
-                title="preview"
                 tal:attributes="
                   class obj/status_style | default;
-                  href string:${obj_url}/edit/tab_preview;">
+                  href string:${obj_url}/edit/tab_preview;
+                  title string:preview: ${obj/id};
+                  ">
                   <i tal:condition="obj/is_default | nothing">
                     index of
                   </i>

@@ -13,18 +13,18 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main"
+<metal:block fill-slot="main">
+
+<form action="."
+  method="POST"
+  name="silvaObjects"
   tal:define="
     default_document view/get_default;
     default_doc_list python: test(default_document, [default_document], []);
     publishables python: default_doc_list + model.get_ordered_publishables();
     assets model/get_assets;
     iterate python: 0;
-   ">
-
-<form action="."
-  method="POST"
-  name="silvaObjects">
+    ">
   <table class="columns columns2">
     <tbody>
       <tr>
@@ -136,7 +136,7 @@
               </tr>
 
               <tal:block replace="nothing">
-                ______________ if no publishables in this folder ______________
+                ______________ if folder is empty (XXX: check for Zope level objects?) ______________
               </tal:block>
               <tr class="odd"
                 tal:condition="python: not(default_document or publishables or assets)">
@@ -148,9 +148,9 @@
               <tal:block replace="nothing">
                 ______________ default + publishables ______________
               </tal:block>
-              <tal:block
+              <tal:repeat
                 repeat="item publishables">
-                <tal:block define="
+                <tal:define define="
                   is_default python: item is default_document;
                   item_url item/absolute_url;
                   status_style python:item.get_object_status()[1];
@@ -228,7 +228,7 @@
                       </a>
                     </td>
                     <tal:block replace="nothing">
-                      _______ modified date/metadata downlink cell _______
+                      _______ modified date/tab_metadata downlink cell _______
                     </tal:block>
                     <td tal:define="modification_time item/get_modification_datetime | nothing">
                       <a class="blacklink" title="metadata"
@@ -247,7 +247,7 @@
                       </a>
                     </td>
                     <tal:block replace="nothing">
-                      _______ author/status downlink cell _______
+                      _______ author/tab_status downlink cell _______
                     </tal:block>
                     <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
                       <a class="blacklink" title="status"
@@ -300,8 +300,8 @@
                       </tal:block>
                     </td>
                   </tr>
-                </tal:block>
-              </tal:block>
+                </tal:define>
+              </tal:repeat>
 
               <tal:block replace="nothing">
                 ______________ assets ______________
@@ -532,6 +532,7 @@
               </tr>
             </tfoot>
           </table>
+
         </td>
       </tr>
     </tbody>
