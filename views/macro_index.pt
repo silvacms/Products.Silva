@@ -36,7 +36,6 @@
   tal:attributes="href string:${root_url}/globals/favicon.ico"
 />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  
 <metal:block define-slot="meta" />
 <style media="all"
   type="text/css"
@@ -53,11 +52,12 @@
 />
 <tal:block replace="nothing"> _______ hook for metatype stylesheet _______ </tal:block>
 <metal:block define-slot="metatype_css" />
+<tal:block replace="nothing"> _______ use frontend.css in preview _______ </tal:block>
 <link rel="stylesheet"
   tal:condition="python:template.id == 'tab_preview'"
   tal:attributes="href here/frontend.css/absolute_url | nothing"
 />
-<tal:block replace="nothing"> _______ hook for application specific stylesheet extension _______ </tal:block>
+<tal:block replace="nothing"> _______ hook for application specific stylesheet _______ </tal:block>
 <metal:block define-slot="extension_css" />
 <tal:block replace="nothing"> _______ hook for refresh function _______ </tal:block>
 <metal:block define-slot="refresher" />
