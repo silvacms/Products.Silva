@@ -152,8 +152,8 @@
                   is_default python: item is default_document;
                   item_url item/absolute_url;
                   status_style python:item.get_object_status()[1];
-                  oddrow repeat/item/odd">
-                  <tr tal:attributes="class python:oddrow and 'odd' or 'even'">
+                  global iterate repeat/item/odd">
+                  <tr tal:attributes="class python: iterate and 'odd' or 'even'">
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
                     </tal:block>
@@ -310,10 +310,16 @@
 
                 <tal:block define="
                   asset_url asset/absolute_url;
-                  oddrow repeat/asset/odd">
+                  odd_even python: iterate == 'odd' and 'odd' or 'even';
+                  iterate repeat/asset/?odd_even;
+                  ">
                   <tr 
-                    tal:define="title python:(asset.get_title())"
-                    tal:attributes="class python:oddrow and 'odd' or 'even'">
+                    tal:define="
+                      title python:(asset.get_title());
+                      show_top_border repeat/asset/start;"
+                    tal:attributes="
+                      class python: iterate and 'odd' or 'even';
+                      style python: show_top_border and 'border-top: 1px solid #77858c' or nothing">
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
                     </tal:block>
