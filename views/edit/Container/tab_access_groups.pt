@@ -57,14 +57,14 @@
         <td class="top" colspan="6">
           <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure python:view.render_icon(model)" />
-            <span i18n:translate="group_definitions_for">groups in</span>
+            <span i18n:translate="groups_in">groups in</span>
             &#xab;<tal:block content="title" />&#xbb;
           </h2>
         </td>
       </tr>
       <tr class="top-controls">
         <td colspan="6">
-          <h3 i18n:translate="group_definitions">
+          <h3 i18n:translate="groups_located_in_folder">
             Groups located in this folder
           </h3>
         </td>
@@ -200,8 +200,8 @@
             <tbody>
               <tr>
                 <th colspan="2">
-                  <i i18n:translate="group_defined_by_list_groups">
-                    (a group defined by a list of users)
+                  <i i18n:translate="group_defined_by_list_users">
+                    a group defined by a list of users
                   </i>
                 </th>
               </tr>
