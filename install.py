@@ -8,7 +8,7 @@ import EditorSupportNested
 import File
 from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
-
+from Products.ProxyIndex.ProxyIndex import RecordStyle
 
 from SimpleMembership import SimpleMemberService
 
@@ -81,9 +81,6 @@ def installFromScratch(root):
     configureLayout(root)
     # now do the uinstallable stuff (views)
     install(root)
-    # metadata needs the catalog from above
-    configureMetadata(root)    
-
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
@@ -133,6 +130,8 @@ def install(root):
     root.add_silva_addable_forbidden('Silva Group')
     root.add_silva_addable_forbidden('Silva Virtual Group')
 
+    # add or update service metadata
+    configureMetadata(root)
 
     
 def uninstall(root):
@@ -157,10 +156,12 @@ def configureMetadata(root):
     from Globals import package_home
     
     # install annotations
-    install_annotations(root)
+    if not 'service_annotations' in root.objectIds():
+        install_annotations(root)
     
     # install metadata
-    install_metadata(root)
+    if not 'service_metadata' in root.objectIds():    
+        install_metadata(root)
     
     # load up the default metadata
     silva_home = package_home(globals())
@@ -168,15 +169,17 @@ def configureMetadata(root):
 
     collection = root.service_metadata.getCollection()
 
-    xml_file = path.join(silva_docs, 'silva-core.xml')
-    fh = open(xml_file, 'r')
-    collection.importSet(fh)
+    if not 'silva-core' in collection.objectIds():
+        xml_file = path.join(silva_docs, 'silva-core.xml')
+        fh = open(xml_file, 'r')        
+        collection.importSet(fh)
 
-    xml_file = path.join(silva_docs, 'silva-extra.xml')
-    fh = open(xml_file, 'r')
-    collection.importSet(fh)    
+    if not 'silva-extra' in collection.objectIds():
+        xml_file = path.join(silva_docs, 'silva-extra.xml')
+        fh = open(xml_file, 'r')
+        collection.importSet(fh)    
 
-    # set the default type mapping
+    # (re) set the default type mapping
     mapping = root.service_metadata.getTypeMapping()
     default = ''
     tm = (
@@ -194,9 +197,10 @@ def configureMetadata(root):
 
     mapping.editMappings(default, tm)
 
-    # initialize the default sets
+    # initialize the default set if not already initialized
     for set in collection.getMetadataSets():
-        set.initialize()
+        if not set.isInitialized():
+            set.initialize()
 
 def configureProperties(root):
     """Configure properties on the root folder.
@@ -741,10 +745,17 @@ def setup_catalog(silva_root):
     columns = ['expiration_datetime', 'id', 'meta_type', 'object_path', 'publication_datetime',
                 'title', 'version_status', 'object_type']
 
-    indexes = [('creation_datetime', 'FieldIndex'), ('fulltext', 'TextIndex'), ('id', 'FieldIndex'),
-                ('meta_type', 'FieldIndex'), ('object_path', 'KeywordIndex'), ('path', 'PathIndex'), 
-                ('publication_datetime', 'FieldIndex'), ('version_status', 'FieldIndex'),
-                ('object_type', 'FieldIndex')]
+    indexes = [
+        ('id', 'FieldIndex'),
+        ('meta_type', 'FieldIndex'),
+        ('object_path', 'KeywordIndex'),
+        ('path', 'PathIndex'),
+        ('fulltext', 'ZCTextIndex'),        
+        ('creation_datetime', 'DateIndex'),        
+        ('publication_datetime', 'FieldIndex'),
+        ('version_status', 'FieldIndex'),
+        ('object_type', 'FieldIndex')
+        ]
 
     existing_columns = catalog.schema()
     existing_indexes = catalog.indexes()
@@ -754,14 +765,28 @@ def setup_catalog(silva_root):
             continue
         catalog.addColumn(column_name)
 
-    for field_name, field_type in indexes:
-        if field_name in existing_indexes:
-            continue
-        catalog.addIndex(field_name, field_type)
 
-    # set the vocabulary of the fulltext-index to some Unicode aware one
-    # (Should probably be ISO-8859-1, but that Splitter crashes Zope 2.5.1?!?)
-    catalog.Indexes['fulltext'].manage_setPreferences('UnicodeVocabulary')
+    for field_name, field_type in indexes:
+
+        # drop silva defined text indexes in deference to zctextindex
+        if field_type in ('TextIndex',):
+            catalog.delIndex(field_name)
+
+        elif field_name in existing_indexes:
+            continue
+
+        # special handling for argument passing to zctextindex
+        # ranking algorithm used is best for larger text body / query size ratios
+        if field_type == 'ZCTextIndex':
+            extra = RecordStyle(
+                {'doc_attr':field_name,
+                 'lexicon_id':'silva_lexicon',
+                 'index_type':'Okapi BM25 Rank'}
+                )
+            catalog.addIndex(field_name, field_type, extra)
+            continue
+        
+        catalog.addIndex(field_name, field_type)
 
     # if the silva root has an index_object attribute, add it to the catalog
     if hasattr(silva_root, 'index_object'):
