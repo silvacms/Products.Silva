@@ -7,6 +7,11 @@ Silva changes
 
     Bugs fixed
 
+        - Authors can now create new document versions again. This was
+          a permission setting problem. It can be fixed by going to
+          service_extensions and pressing 'refresh' for the Silva
+          core.
+
         - Fixed two issues with the SQLDataSource and integer fields:
           the code doesn't try to convert the contents of the field to
           unicode anymore if it's not a plain string (fails with
@@ -27,14 +32,14 @@ Silva changes
             * Improving Formulator so that TALES expressions are
               cached. This avoids a massive Python expression
               compilation overhead. Upgrade Formulator to version
-              1.x.x for a massive boost in indexing performance.
+              1.5.0 for a massive boost in indexing performance.
 
             * Fixing Silva metadata to avoid quadratic behavior while
               indexing. Previously, for n elements that are indexed,
               for each element indexing the data for the n indexes was
               accessed, resulting in quadratic behavior while indexing
               (n * n values were accessed per object). Upgrade SilvaMetadata
-              to version x.x for another boost in indexing performance.
+              to version 0.7.1 for another boost in indexing performance.
 
             * Fulltext indexing of unapproved versions is avoided.
 
@@ -45,8 +50,10 @@ Silva changes
  
         - Fixed unicode issue when deleting a table column.
 
-          XXX put in the right versions
-          XXX upgrade script to fix existing catalogs?
+        - A number of things fixed in 0.9.1.x have also been fixed
+          for 0.9.2.
+
+          XXX edit index element in heading needs to be tested
           XXX upgrade script from 0.9.1 needs to be re-tested
 
   0.9.2.2
@@ -151,7 +158,49 @@ Silva changes
           cause unfriendly Zope error messages (issue189)
 
         - A number of minor bugs, mainly in UI.
-        
+
+  0.9.1.10
+
+    Bugs Fixed
+
+      - There was a problem where files could be downloaded even from
+        areas where viewing was restricted. This has been fixed.
+
+  0.9.1.9
+
+    Bugs Fixed
+
+      - EditorSupportNested was passing along a document object as an
+        object id. That can't be right. Fixed.
+
+      - Unicode error for index markup in headings fixed.
+
+  0.9.1.8
+
+    Bugs Fixed
+
+      - Better check for availablity of ExternalEditor.
+
+      - The bug fixed in 0.9.1.7 regarding
+        _allow_authentication_requests should have been fixed in a
+        backward compatible way in 0.9.1.7, which it wasn't. Therefore
+        old content and extensions broke. This release adds only some
+        backward compatible code to resolve this issue. From now on,
+        0.9.1.4 (and older 0.9.1.x) content and extensions should work
+        again.
+ 
+  0.9.1.7
+
+    Features Added
+
+      - Support for external editor is now complete, users don't have
+        to manually setup anything anymore to use it.
+
+    Bugs Fixed
+
+      - Fixed bug in the upgrade script that lead to an
+        AttributeError on '_allow_authentication_requests'
+
   0.9.1.6
 
     Bugs Fixed
