@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.66 $
+# $Revision: 1.67 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -19,7 +19,7 @@ try:
 except ImportError:
     groups_enabled = 0
 
-from interfaces import IContainer
+from interfaces import IContainer, IRoot
 
 from Products.SilvaMetadata.Exceptions import BindingError
 
@@ -158,10 +158,10 @@ class Security(AccessManager):
             rop = curobj.rolesOfPermission('View')
             if {'selected': 'SELECTED', 'name': 'Viewer'} in rop and not {'selected': 'SELECTED', 'name': 'Anonymous'} in rop:
                 return i
-            # we know now that on this particular object ther viewer role is not set as a minimum,
+            # we know now that on this particular object the viewer role is not set as a minimum,
             # but need to also know if that behaviour isn't acquired at this point. So let's walk through
             # all parents
-            if curobj.meta_type == 'Silva Root':
+            if IRoot.isImplementedBy(curobj):
                 return 0
             curobj = curobj.aq_parent
 
@@ -258,8 +258,7 @@ class Security(AccessManager):
                 if result:
                     return result
                 
-            # XXX: this is depending on meta type, but should be unique..
-            if obj.meta_type == 'Silva Root':
+            if IRoot.isImplementedBy(obj):
                 break
             obj = obj.aq_parent
         return []
