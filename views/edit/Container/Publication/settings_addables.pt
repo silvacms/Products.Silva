@@ -10,7 +10,7 @@
   tal:define="
     global vein string:addables;
     global active_tab string:tab_metadata;
-    global parent_screen_name string:settings;
+    global parent_screen_name string:properties;
     "
   i18n:domain="silva">
 
@@ -62,7 +62,7 @@
                     <h2>
                       <img tal:replace="structure python:view.render_icon(model)" />
                       <span i18n:translate="addable_settings_for">addable settings for</span>: 
-                      &#xab;<tal:block content="model/get_title_editable" />&#xbb;
+                      &#xab;<tal:block content="title" />&#xbb;
                     </h2>
                   </td>
                 </tr>
