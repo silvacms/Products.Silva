@@ -27,6 +27,13 @@ body {
     color: &dtml-mainFontColor;;
     margin: 0;
     padding: 0;
+    scrollbar-base-color: &dtml-mainTabBackground;;
+    scrollbar-highlight-color: &dtml-mainTabBackground;;
+    scrollbar-track-color: &dtml-evenRowBackground;;
+    scrollbar-darkshadow-color: &dtml-evenRowBackground;;
+    scrollbar-3dlight-color: &dtml-mainTabBorderColorSelected;;
+    scrollbar-shadow-color: &dtml-mainTabBorderColorSelected;;
+    scrollbar-arrow-color: &dtml-mainTabFontColorSelected;;
 }
 
 div.workspace {
@@ -114,7 +121,7 @@ div.tabs a {
   border : &dtml-mainTabBorderColor; 1px solid;
     border-bottom-color: #8b939b;
     margin: 0;
-    padding: 0 ! important;
+    padding: 0;
   text-align : center;
     font-weight: &dtml-mainTabFontWeight;;
 }
@@ -222,7 +229,7 @@ div.flowBar {
   min-height : 3px;
   max-height : 0.3em;
   background: &dtml-mainTabBackgroundSelected;;
-  margin: 0px 0 0 0;
+  margin: 0;
   padding: 0;
   border-bottom: #636da6 1px solid;
   clear : all;
@@ -293,35 +300,36 @@ table.columns {
 /* 3 column table (default) */
 table.columns td.left {
     width: 20%;
-    padding: 0px 8px 0 8px;
+    padding: 0 8px 0 8px;
     vertical-align: top;
 }
 table.columns td.main {
     width: 60%;
-    padding: 0px 8px 0 0;
+    padding: 0 8px 0 0;
     vertical-align: top;
 }
 table.columns td.right {
     width: 20%;
-    padding: 0px 8px 0 0;
+    padding: 0 8px 0 0;
+    vertical-align: top;
 }
 
 /* 2 column table */
 table.columns2 td.left {
     width: 20%;
-    padding: 0px 0 0 8px;
+    padding: 0 0 0 8px;
     vertical-align: top;
 }
 table.columns2 td.main {
     width: 80%;
-    padding: 0px 8px 0 8px;
+    padding: 0 8px 0 8px;
     vertical-align: top;
 }
 
 /* 1 column */
 table.columns1 td.main {
     width: 100%;
-    padding: 0px 8px 0 8px;
+    padding: 0 8px 0 8px;
     vertical-align: top;
 }
 
@@ -644,14 +652,11 @@ textarea.readable {
 }
 
 select {
-}
-
-select {
   color : &dtml-mainTabFontColorSelected;;
   background : &dtml-controlBackground;;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
-    border: &dtml-inputBorder;;  
+  border : 1px solid &dtml-nightShade;;
     vertical-align: top;
     font: &dtml-inputFont;;
   font-size: 90% ! important;
@@ -661,30 +666,24 @@ select {
 select.transport {
   color: &dtml-standaloneButtonFontColor;;
   background : &dtml-standaloneButtonBackground;;
-  font-size: 90% ! important;
-  margin-top: 0.1em;
-  margin-bottom: 0.1em;
-  border : 1px solid &dtml-nightShade;;
-  line-height : 96%;
 }
 
 select.manipulator {
   color: &dtml-contextButtonFontColor;;
   background : &dtml-contextButtonBackground;;
-  font-size: 90% ! important;
-  margin-top: 0.1em;
-  margin-bottom: 0.1em;
-  border : 1px solid &dtml-nightShade;;
-  line-height : 96%;
 }
 
 input[type="checkbox"] {
-  color : &dtml-mainTabFontColorSelected;;
-  background : #afcccf;
+  color : &dtml-shade56;;
+  background : &dtml-inputBackground;;
   border : 1px solid &dtml-inputBorder;;
 }
- 
-/* Plone buttons, "ported" to Silva class names */
+
+/* checkboxes used (only) for deletion */
+input.warning-checkbox {
+  color : &dtml-shade56;;
+  background : #ead5d3;
+}
 
 input.transport {
   font-size: 95%;
@@ -729,12 +728,6 @@ input.cancel {
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
     cursor: pointer;
-}
-
-/* checkboxes used (only) for deletion */
-input.warningbox {
-  color : #3f4570;
-  background : #ead5d3;
 }
 
 /* publish screen state coded buttons */
@@ -884,7 +877,7 @@ table.listing div.transport-border:hover {
 div.info {
   color: &dtml-inputFontColor;;
   background: &dtml-evenRowBackground;;
-  margin: -1px 0 0 0;
+  margin: 0;
   padding: 0 0.5em 0.5em 0.5em; 
   border: &dtml-listingBorder;;
 }
@@ -1201,21 +1194,12 @@ input.imagebutton {
 
 input[type="checkbox"]:focus, input[type="radio"]:focus { 
   color : #777; 
-  background : #dee9eb none; 
+  background : #dee9eb;
 }
 
 input[type="checkbox"]:hover, input[type="radio"]:hover { 
   color : #777; 
   background : #b9e3e8 none; 
-}
-
-input.warning-checkbox {
-  font-size : 11px; 
-  font-weight : normal; 
-  font-family : verdana, arial, helvetica, sans-serif;
-  color : #3f4570;
-  background : #ead5d3;
-  border : 1px solid #333333;
 }
 
 
