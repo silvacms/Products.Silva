@@ -4,10 +4,25 @@ See also LICENSE.txt
 Silva changes
 
 
-  1.0a2
+  1.0 (beta 1)
 
     Features added
+
+      - Kupu, a WYSIWYG editor for Silva Document. This editor offers
+        a load of new features:
+
+          - full Silva integration; Kupu knows about special Silva
+            elements and saves Silva XML
+
+          - Copy and paste HTML from any source into Kupu.
+
+          - works in Internet Explorer (5.5 and higher) and Mozilla
+
+        Kupu was formerly known as Epoz 1.0.
     
+      - Extensive documentation released along with Silva, and can be
+        automatically installed.
+
       - All images of a Silva Image asset are stored in the filesystem if
         ExtFile is available and the corresponding option is set in
         service_files. Also better support for ExtFile's static serving was
@@ -18,24 +33,22 @@ Silva changes
         120x* or *x211 to fix width or height.
 
       - An Image has a thumbnail now, retrievable via foo.jpg?thumbnail.
-    
-      - Images can be viewed w/o the /image at the end (issue 594), the high
-        resolution version can be retrieved via foo.jpg?hires. 
 
-      - Kupu, a WYSIWYG editor for Silva Document. This editor offers
-        a load of new features:
+      - Cropper tool - Silva now provides facilities for cropping
+        images. This tool combines with the scaling possibilities to
+        give authors the means to both scale and resize a high
+        resolution image to web format.
+  
+      - Images can be viewed without the /image at the end (issue
+        594), the high resolution version can be retrieved via
+        foo.jpg?hires.
 
-          - full Silva integration; Kupu knows about special Silva
-            elements and saves Silva XML
-
-          - Copy and paste HTML from any source into Kupu.
-
-          - works in Internet Explorer and Mozilla
-
-        Kupu was formerly known as Epoz 1.0.
+      - Supporting a newer, improved version of ExtFile.
 
       - Performance improvements in contents screen for folders, icon
         presentation, and metadata system.
+
+      - Numerous tweaks in the UI.
 
       - Revision of the archive file import (i.e. zipfile import)
         functionality. Mimetypes can be registered for specific Asset
@@ -43,8 +56,8 @@ Silva changes
 
     Bugs fixed
 
-      - When run with Python 2.3 (at the point of writing not yet
-        recommended by Infrae), suppress source code encoding warnings when
+      - When run with Python 2.3 in 2.7 (not yet recommended by Infrae
+        for Silva 1.0), suppress source code encoding warnings when
         starting up.
 
       - Another problem with the upgrade code for handling index elements,
@@ -53,15 +66,11 @@ Silva changes
       - Ghost Folders now can be added by Editors (required Manager role
         previously)
 
-      - Some small usability and bug fixes in Kupu
+      - Groups are installable as specified in the UI (no more KeyError).
 
       - The File asset behaves more like the Image asset, where the URL
         to the object now will return the actual data. This obsoletes
         the need for URL's like "path/to/some/file/download'.
-
-  1.0a1
-
-    Was not a public release.
 
   0.9.3.4
   
@@ -486,36 +495,37 @@ Silva changes
         - A number of minor bugs, mainly in UI.
 
   0.9.1.5
-                                                                                                    
+                                                                      
     Features Added
-                                                                                                    
-        - Added support for ExternalEditor, Silva Files and Images can now
-          be edited using your favorite editor.
+        
+        - Added support for ExternalEditor, Silva Files and Images can
+          now be edited using your favorite editor.
 
         - Bulk import of files (for File Assets) and/or images (for Image
           Assets) using a zipfile. Note though, that the 091 id
           checking is less tolerant compared to the 092 id checking.
-                                                                                                    
+
+                                                               
     Bugs Fixed
-                                                                                                    
+                                                                            
         - Removed "Asset reference" asset-type stickyness.
-                                                                                                    
+                                                                               
         - Fixed button for refresh queue when Docma is enabled.
-                                                                                                    
+                                                                               
         - Added a find_indexers utility (accesible through
           http://server/silva/edit/service_utils/find_indexers) to find all
           Indexer objects in use.
-                                                                                                    
+                                                                            
         - Help text opens in new browser window.
-                                                                                                    
+                                                                            
         - Indexer -all non-versioned content actually- can now be deleted.
-                                                                                                    
+
         - Indexer objects now render the correct URLs in virtual host
           situations. Use the 'update index' in the edit tab of Indexer
           objects to get the Indexers up to date.
-                                                                                                    
+
         - Setting a TOC level would display one level too much.
-                                                                                                    
+
         - Pressing 'Export' in Document's status tab now takes a user to the
           export screen of the container so the user can indeed (as the text
           suggests) export to Docma as well as download the content.
@@ -527,7 +537,7 @@ Silva changes
         - The UI for 'Access Restriction by Role' did not properly expose
           the possibility to set this role more restrictive on a lower
           level. (the pull down menu and button would have been disabled).
-                                                                                            
+
         - get_public_tree() would not do the right thing with the depth-
           level control argument.
 

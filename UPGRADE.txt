@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.36.8.12.8.6 $
+CVS:        $Revision: 1.36.8.12.8.7 $
 
 Introduction
 ------------
@@ -21,6 +21,11 @@ major version upgrades of Silva. For information about particular
 upgrade issues please read the ``Upgrade issues``_ section of this
 document. Reading this is strongly recommended! If you still run into
 trouble, please consult TROUBLESHOOTING.txt.
+
+Note: The Silva 1.0b release does not yet fully support upgrades from
+Silva 0.9.3. If you want to test this, by all means let us know how it
+works, but it's not yet officially supported. The final release will
+include full upgrade functionality.
 
 Upgrades
 ========
@@ -76,14 +81,13 @@ Steps to take during a major Silva upgrade:
 Upgrading from Silva 0.9.3 to Silva 1.0
 ---------------------------------------
 
+Not yet entirely supported by the beta, see note at top.
+
 If you are using ExtFile for image storage, upgrading to version 1.4.2
 of ExtFile is required.
 
 You need to update your layout templates. To see how, please read the
 section ``Layout templates``_ below.
-
-[Metadata upgrade issue]
-[more to be done]
 
 Upgrading from Silva 0.9.2 to Silva 0.9.3
 -----------------------------------------
