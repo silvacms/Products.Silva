@@ -80,12 +80,16 @@
 <script language="JavaScript"><!--
   function setReference() {
     doc = document.all ? document.all : document;
-    l = doc.mumble_form.mumble.length;
-    for (i=0; i<l; i++) {
-      if (doc.mumble_form.mumble[i].checked) {
-        reference = doc.mumble_form.mumble[i];
-        break;
+    l = doc.mumble_form.mumble.length;    
+    if (l) {
+      for (i=0; i<l; i++) {
+        if (doc.mumble_form.mumble[i].checked) {
+          reference = doc.mumble_form.mumble[i];
+          break;
+        }
       }
+    } else {
+      reference = doc.mumble_form.mumble;      
     }    
     opener.insertAssetReference(reference.value);
   }
