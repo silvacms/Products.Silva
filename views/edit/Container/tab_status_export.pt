@@ -55,7 +55,7 @@
               <tal:block define="obj python: request['model'].resolve_ref(ref); path python: '/'.join(obj.getPhysicalPath())">
                 <td valign="top">
                   <a class="blacklink" tal:attributes="href string:${path}/edit/tab_preview">
-                    <b tal:content="obj/get_title" />
+                    <b tal:content="obj/get_title_editable" />
                   </a>
                 </td>
                 <td valign="top">

@@ -70,10 +70,7 @@
             title
           </td>
           <td>
-            <span tal:condition="python: object.getId() != 'index'"
-              tal:replace="python:object.get_title_or_id_editable()" />
-            <span tal:condition="python: object.getId() == 'index'"
-              tal:replace="object/aq_inner/aq_parent/get_title" />
+            <span tal:replace="object/get_title_editable | object/getId" />
           </td>
           <td width="45%">
             <input
@@ -82,16 +79,20 @@
               style="width: 100%"
               value="value"
               tal:condition="python: object.getId() != 'index'"
-              tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
+              tal:attributes="
+                name string:title_${object/getId}; 
+                value object/get_title_editable;" />
             <input
               type="text"
               name="name"
               style="width: 100%"
               tal:condition="python: object.getId() == 'index'"
-              tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
+              tal:attributes="name string:title_${object/getId}; 
+                value object/get_title_editable;" />
           </td>
           <td>
-            <span class="error" tal:condition="python: object.getId() == 'index'"
+            <span class="error" 
+              tal:condition="python: object.getId() == 'index'"
               i18n:translate="changes_the_title_of_the_folder">
               Changes the title of the folder!
             </span>
