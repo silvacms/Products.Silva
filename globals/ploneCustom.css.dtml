@@ -49,10 +49,9 @@ pre {
 
 div.pathBar {
   font-size: 90%;
-    color: &dtml-shade68;;
+    color: &dtml-shade72;;
     background-image: url(/silva/globals/sky.gif);
     background-repeat: repeat-x;
-    background-color: #39424d;
     background-color: &dtml-pathBarBackground;;
     padding: 2px 4px 0 22px;
     border: none;
@@ -60,7 +59,7 @@ div.pathBar {
 }
 
 div.pathBar a {
-    color: &dtml-shade74;;
+    color: &dtml-shade82;;
     font-weight: &dtml-mainTabFontWeight;;
     padding: 0 ! important;
     margin: 0 ! important;
@@ -68,11 +67,11 @@ div.pathBar a {
 }
 
 div.pathBar a:visited {
-    color: &dtml-shade74;;
+    color: &dtml-shade82;;
 }
 
 div.pathBar a:hover {
-    color: &dtml-shade74;;
+    color: &dtml-shade92;;
     text-transform: underline;
 }
 
@@ -193,6 +192,7 @@ div.riverBar {
 div.footer {
   font-size: 94%;
     background: #b3c1d4;
+    background: &dtml-mainTabBackgroundSelected;;
   margin: 0.5em 0em 0em 0em;
     padding: 0em 16px 0.1em 16px;
     border-top: &dtml-shade60; 1px solid;
@@ -291,51 +291,33 @@ table.listing tfoot {
   border-top: &dtml-listingBorder; ! important;
 }
 
-/* _______ rows _______ */
+/* _____________________ rows ______________________ */
 
 table.listing tr.controls {
-  background-color: #567275;
-  background-color: &dtml-listingControlsBackground;;
+  background: &dtml-listingControlsBackground;;
   /* in case it's empty */
   height : 0.2em;
 }
 
 table.listing tr.top-controls {
-  background-color: #4b6466;
-  background-color: &dtml-listingTopControlsBackground;;
+  background: &dtml-listingTopControlsBackground;;
 }
 
 table.listing tr.inter-controls {
-    background-color: #648589;
-    background-color: &dtml-listingInter-ControlsBackground;;
-}
-
-tr.unselected, td.unselected {
-  background-color: &dtml-evenRowBackground;;
-    border-top: none ! important;
-    border-bottom: none ! important;
-  border-collapse: collapse;
-}
-
-tr.selected, td.selected {
-  background-color: &dtml-oddRowBackground;;
-    border-top: none ! important;
-    border-bottom: none ! important;
-  border-collapse: collapse;
+    background: &dtml-listingInter-ControlsBackground;;
 }
 
 tr.divider, th.divider, td.divider {
   height : 0.5em;
-  background-color: #648589;
   background: &dtml-listingDividerBackground;;
 }
 
 /* not in use */
 table.listing tr.fixed, td.fixed {
-    background-color: &dtml-shade78;;
+    background: &dtml-evenRowBackground;;
 }
 
-/* _______ cells _______ */
+/* _____________________ cells _____________________ */
 
 table.listing th {
     text-align: left;
@@ -388,6 +370,7 @@ table.listing td.top {
   background: #394b4d;
   background: &dtml-listingTopBackground;;
     border: &dtml-listingBorder; ! important;
+    border-bottom: none ! important;
     padding-top: 0em ! important;
     padding-bottom: 0em ! important;
     vertical-align: bottom;
@@ -401,7 +384,7 @@ table.listing td.top h2 {
   color: #b8ccce;
   color: &dtml-listingTopHeadingColor;;
     text-align: left;
-    margin: 0em 0.5em 0.1em 0.4em;
+    margin: 0.1em 0.5em 0.2em 0.4em;
     display: inline;
     border: none;
     float: left;
@@ -426,7 +409,7 @@ table.listing tr.top-controls td {
 table.listing tr.top-controls h3 {
   color: #c9dfe2;
   color: &dtml-listingTopControlsHeadingColor;;
-  margin: 1px 0.2em 1px 0.2em;
+  margin: 0.1em 0.2em 0.2em 0.2em;
   padding: 0em;
   border: none;
   display: inline;
@@ -463,6 +446,7 @@ table.listing tr.controls td, tr.inter-controls td {
 
 /* ______________ sidebar navigation ______________ */
 
+
 table.listing th.top {
   color: #e3eef0;
   background: #71969a;
@@ -488,6 +472,20 @@ table.listing th.top a.normal:visited {
 table.listing th.top a.normal:hover {
     color: &dtml-mainTabFontColorSelected;;
     text-decoration: none;
+}
+
+td.unselected {
+  background: &dtml-evenRowBackground;;
+    border-top: none ! important;
+    border-bottom: none ! important;
+  border-collapse: collapse;
+}
+
+td.selected {
+  background: &dtml-listingOddBackground;;
+    border-top: none ! important;
+    border-bottom: none ! important;
+  border-collapse: collapse;
 }
 
 /*table.listing div.vein:hover { 
@@ -648,9 +646,10 @@ input.warning {
 
 input.cancel {
     font-weight: &dtml-buttonWeight;;
-  color : &dtml-shade88;; 
+  color : &dtml-cancelButtonFontColor;;
   background : #666668;
-  border : 1px solid &dtml-shade76;;
+  background : &dtml-cancelButtonBackground;;
+  border : &dtml-cancelButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
     cursor: pointer;
@@ -755,7 +754,7 @@ table.listing div.navigation-border:hover {
 /* ________________________________________________________ clipboard _____ */
 
 div.clipboard {
-  background: #b8ccce;
+  background: &dtml-evenRowBackground;;
   margin: 0;
   padding: 0 0.5em; 
   border: &dtml-listingBorder;;
@@ -770,7 +769,7 @@ h2.clipboard {
 
 select.clipboard, select.clipboard:focus, select.clipboard:hover {
   color : &dtml-shade26;;;
-  background : &dtml-listingOddBackground;;
+  background : &dtml-listingEvenBackground;;
   font-size: 90%;
   margin-top: 0.1em;
   margin-bottom: 0em;
@@ -782,6 +781,7 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
 div.clipboard option.disabled {
   color: #dbf3f6;
   background: #71969a;
+  background: &dtml-listingHeaderBackground;; 
 
 }
 
