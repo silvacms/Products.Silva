@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.47 $
+# $Revision: 1.48 $
 
 # Zope
 from DateTime import DateTime
@@ -12,6 +12,8 @@ import SilvaPermissions
 from Products.Silva import mangle
 
 from interfaces import IVersioning, IPublishable
+
+from Products.Silva.i18n import translate as _
 
 class VersioningError(Exception):
     pass
@@ -54,25 +56,25 @@ class Versioning:
         """
         self._update_publication_status()
         if self._approved_version != empty_version:
-            raise VersioningError,\
-                  'There is an approved version already; unapprove it. (%s)' %\
-                  (self._approved_version[0])
+            msg = _('There is an approved version already; unapprove it. (${id})')
+            msg.set_mapping({'id': self._approved_version[0]})
+            raise VersioningError, msg
         if self._unapproved_version != empty_version:
-            raise VersioningError,\
-                  'There already is an unapproved version (%s).' %\
-                  (self._unapproved_version[0])
+            msg = _('There already is an unapproved version (${id}).')
+            msg.set_mapping({'id': self._unapproved_version[0]})
+            raise VersioningError, msg
         # if a version with this name already exists, complain
         if (self._public_version and
             version_id == self._public_version[0]):
-            raise VersioningError,\
-                  'The public version has that id already (%s).' %\
-                 (self._public_version[0])
+            msg = _('The public version has that id already (${id}).')
+            msg.set_mapping({'id': self._public_version[0]})
+            raise VersioningError, msg
         previous_versions = self._previous_versions or []
         for previous_version in previous_versions:
             if version_id == previous_version[0]:
-                raise VersioningError,\
-                      'A previous version has that id already (%s).' %\
-                      (self._previous_version[0])
+                msg = _('A previous version has that id already (${id}).')
+                msg.set_mapping({'id': self._previous_version[0]})
+                raise VersioningError, msg
     
         self._unapproved_version = (version_id,
                                     publication_datetime,
@@ -89,17 +91,17 @@ class Versioning:
         self._update_publication_status()
         if self._unapproved_version == empty_version:
             raise VersioningError,\
-                  'There is no unapproved version to approve.'
+                  _('There is no unapproved version to approve.')
         if self._approved_version != empty_version:
             raise VersioningError,\
-                  'There already is an approved version.'
+                  _('There already is an approved version.')
         if self._unapproved_version[1] is None:
             raise VersioningError,\
-                  'Cannot approve version without publication datetime.'
+                  _('Cannot approve version without publication datetime.')
         if IPublishable.isImplementedBy(self):
             if not self.can_approve():
                 raise VersioningError,\
-                      'Cannot approve version; not allowed.'
+                      _('Cannot approve version; not allowed.')
         # turn any publication dates in the past into now
         # this is to avoid odd caching behavior
         if not self._unapproved_version[1].isFuture():
@@ -156,7 +158,7 @@ class Versioning:
         self._update_publication_status()
         if self._approved_version == empty_version:
             raise VersioningError,\
-                  'No approved version to unapprove.'
+                  _('No approved version to unapprove.')
         if self._unapproved_version != empty_version:
             raise VersioningError,\
                   ('Should never happen: unapproved version %s found while '
@@ -184,7 +186,7 @@ class Versioning:
         self._update_publication_status()
         if self._public_version == empty_version:
             raise VersioningError,\
-                  'No public version to close.'
+                  _('No public version to close.')
         previous_versions = self._previous_versions or []          
         previous_versions.append(self._public_version)
         self._public_version = empty_version
@@ -211,7 +213,7 @@ class Versioning:
             # there is no old version left!
             if version_id_to_copy is None:
                 # FIXME: could create new empty version..
-                raise  VersioningError, "Should never happen!"
+                raise  VersioningError, _("Should never happen!")
         # copy published version
         new_version_id = str(self._version_count)
         self._version_count = self._version_count + 1
@@ -232,11 +234,11 @@ class Versioning:
         version_id_to_copy = (self.get_public_version() or
                               self.get_last_closed_version())
         if version_id_to_copy is None:
-            raise VersioningError, "Should never happen!"
+            raise VersioningError, _("Should never happen!")
         # get the id of the current version
         current_version_id = self.get_unapproved_version()
         if current_version_id is None:
-            raise VersioningError, "No unapproved version available"
+            raise VersioningError, _("No unapproved version available")
         self._unindex_version(current_version_id)
         # delete the current version
         self.manage_delObjects([current_version_id])
@@ -269,11 +271,11 @@ class Versioning:
         # called implicitely: self._update_publication_status()
         if self.get_unapproved_version() is None:
             raise VersioningError,\
-                  'There is no unapproved version to request approval for.'
+                  _('There is no unapproved version to request approval for.')
 
         if self.is_version_approval_requested():
             raise VersioningError,\
-                  'The version is already requested for approval.'
+                  _('The version is already requested for approval.')
 
         last_author = self.sec_get_last_author_info()
 
@@ -318,11 +320,11 @@ class Versioning:
         self._update_publication_status()
         if self.get_unapproved_version is None:
             raise VersioningError,\
-                  'There is no unapproved version to request approval for.'
+                  _('There is no unapproved version to request approval for.')
 
         if not self.is_version_approval_requested():
             raise VersioningError,\
-                  'The version is not requested for approval.'
+                  _('The version is not requested for approval.')
         info = self._get_editable_rfa_info()
         orginal_requester = info.requester
         info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
@@ -348,11 +350,11 @@ class Versioning:
         self._update_publication_status()
         if self.get_unapproved_version is None:
             raise VersioningError,\
-                  'There is no unapproved version to request approval for.'
+                  _('There is no unapproved version to request approval for.')
 
         if not self.is_version_approval_requested():
             raise VersioningError,\
-                  'The version is not requested for approval.'
+                  _('The version is not requested for approval.')
         info = self._get_editable_rfa_info()
         original_requester = info.requester
         info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
@@ -372,7 +374,7 @@ class Versioning:
         """
         if self._unapproved_version == empty_version:
             raise VersioningError,\
-                  'No unapproved version.'
+                  _('No unapproved version.')
         version_id, publication_datetime, expiration_datetime = \
                     self._unapproved_version
         self._unapproved_version = version_id, dt, expiration_datetime
@@ -385,7 +387,7 @@ class Versioning:
         """
         if self._unapproved_version == empty_version:
             raise VersioningError,\
-                  'No unapproved version.'
+                  _('No unapproved version.')
         version_id, publication_datetime, expiration_datetime = \
                     self._unapproved_version
         self._unapproved_version = version_id, publication_datetime, dt
@@ -398,10 +400,10 @@ class Versioning:
         """
         if self._approved_version == empty_version:
             raise VersioningError,\
-                  'No approved version.'
+                  _('No approved version.')
         if dt is None:
             raise VersioningError,\
-                  'Must specify publication datetime.'
+                  _('Must specify publication datetime.')
         if not dt.isFuture():
             dt = DateTime()
         version_id, publication_datetime, expiration_datetime = \
@@ -419,7 +421,7 @@ class Versioning:
         """
         if self._approved_version == empty_version:
             raise VersioningError,\
-                  'No approved version.'
+                  _('No approved version.')
         version_id, publication_datetime, expiration_datetime = \
                     self._approved_version
         self._approved_version = version_id, publication_datetime, dt
@@ -432,7 +434,7 @@ class Versioning:
         """
         if self._public_version == empty_version:
             raise VersioningError,\
-                  'No public version.'
+                  _('No public version.')
         version_id, publication_datetime, expiration_datetime = \
             self._public_version
         self._public_version = version_id, publication_datetime, dt
@@ -459,7 +461,7 @@ class Versioning:
             self._reindex_version(self._unapproved_version[0])
         else:
             raise VersioningError,\
-                  'No next version.'
+                  _('No next version.')
             
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_next_version_expiration_datetime')
@@ -478,7 +480,7 @@ class Versioning:
             self._reindex_version(self._unapproved_version[0])
         else:
             raise VersioningError,\
-                  'No next version.'
+                  _('No next version.')
 
     def _set_approval_request_message(self, message):
         """Allows to add a message concerning the
@@ -492,7 +494,7 @@ class Versioning:
         # before or after requesting approval, or the like.
         if self.get_next_version() is None:
             raise VersioningError, \
-                  "There is no version to add messages for."
+                  _("There is no version to add messages for.")
         
         info = self._get_editable_rfa_info()
         info.request_messages.append(message)

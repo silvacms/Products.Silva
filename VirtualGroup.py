@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.13 2004/07/21 11:40:40 jw Exp $
+# $Id: VirtualGroup.py,v 1.14 2004/11/25 17:33:40 guido Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -13,6 +13,8 @@ from Products.Silva import mangle
 from helpers import add_and_edit
 
 from interfaces import ISilvaObject
+
+from Products.Silva.i18n import translate as _
 
 icon = "www/virtual_group.png"
 
@@ -63,7 +65,7 @@ class VirtualGroup(SilvaObject, SimpleItem):
     def addGroup(self, group):
         """add a group to the virtual group"""
         if not self.isValid():
-            raise Unauthorized, "Zombie group asset"
+            raise Unauthorized, _("Zombie group asset")
         
         self.service_groups.addGroupToVirtualGroup(group, self._group_name)
 
@@ -89,7 +91,7 @@ class VirtualGroup(SilvaObject, SimpleItem):
     def removeGroup(self, group):
         """removes a group from the vgroup"""
         if not self.isValid():
-            raise Unauthorized, "Zombie group asset"
+            raise Unauthorized, _("Zombie group asset")
         self.service_groups.removeGroupFromVirtualGroup(
             group, self._group_name)
     
@@ -99,7 +101,7 @@ class VirtualGroup(SilvaObject, SimpleItem):
     def listGroups(self):
         """list groups in this vgroup"""
         if not self.isValid():
-            raise Unauthorized, "Zombie group asset"
+            raise Unauthorized, _("Zombie group asset")
         result = self.service_groups.listGroupsInVirtualGroup(self._group_name)
         result.sort()
         return result
@@ -117,9 +119,9 @@ def manage_addVirtualGroup(self, id, title, group_name, asset_only=0,
         if not mangle.Id(self, id).isValid():
             return
         if not hasattr(self, 'service_groups'):
-            raise AttributeError, "There is no service_groups"
+            raise AttributeError, _("There is no service_groups")
         if self.service_groups.isGroup(group_name):
-            raise ValueError, "There is already a group of that name."
+            raise ValueError, _("There is already a group of that name.")
     object = VirtualGroup(id, title, group_name)
     self._setObject(id, object)
     object = getattr(self, id)

@@ -69,6 +69,8 @@ class ViewCode:
         status = public_status = None
         status_style = 'blacklink'
 
+        # XXX i18n - how can we translate those strings?
+
         if self.implements_versioning():
             next_status = self.get_next_version_status()
             public = self.get_public_version_status()
