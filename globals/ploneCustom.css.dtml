@@ -362,7 +362,7 @@ table.listing td.top div.addMenu {
 }
 
 table.listing td.top h2 img {
-    padding-right: 0.2em;
+    padding-right: 0em;
     vertical-align: top;
 }
 

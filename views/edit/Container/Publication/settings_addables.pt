@@ -48,7 +48,7 @@
                     colspan="3">
                     <h2>
                       <img tal:replace="structure python:view.render_icon(model)" />
-                      settings for: <span tal:replace="structure string:${model/id}&amp;nbsp; &amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
+                      settings for: <span tal:replace="structure string:&#xab;${model/get_title_html}&#xbb;">id</span>
                     </h2>
                   </td>
                 </tr>
