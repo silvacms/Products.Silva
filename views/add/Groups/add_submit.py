@@ -39,7 +39,7 @@ if model.is_id_valid(id):
 """There's already a (Virtual) Group with the name %s in this Silva site. 
 <br />
 <br />
-In contrast to other Silva Ojects, (Virtual) Group IDs must to be unique 
+In contrast to other Silva Ojects, (Virtual) Group IDs must be unique 
 within a complete Silva instance.""" % view.quotify(id))
 else:
     return view.add_form(
