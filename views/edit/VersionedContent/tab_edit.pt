@@ -7,7 +7,11 @@
 <tal:block tal:define="dummy python:model.security_trigger();
                        global could_lock model/sec_create_lock;
                        global unapproved_version model/get_unapproved_version;
-                       global request_pending python:model.is_version_approval_requested();" />
+                       global request_pending python:model.is_version_approval_requested();
+                       " />
+
+<tal:block condition="nothing">Empty the session for asset lookup</tal:block>
+<tal:block define="global empty_session_dummy python: request['SESSION'].get('filter') and request['SESSION'].delete('filter')" />
 
 <model tal:condition="python:unapproved_version and not request_pending and could_lock"
          tal:replace="structure view/edit">Content</model>
