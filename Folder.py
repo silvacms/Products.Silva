@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.87.2.10 $
+# $Revision: 1.87.2.11 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -762,38 +762,6 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def url_encode(self, string):
         """A wrapper for the urllib.quote function to be used in Python scripts and PT's"""
         return urllib.quote(string)
-    
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'delete_old_versions')
-    def delete_old_versions(self, statistics=None):
-        """ Delete all versions from the current location downward
-        """
-        threshold = 500
-        if statistics is None:
-            statistics = {
-                'total': 0,
-                'total_versions': 0,
-                'total_cleaned': 0,
-                'threshold': 0,
-                'max_versions': 0,
-                'starttime': DateTime(),
-                'endtime': None,
-                }
-        
-        for obj in self.objectValues():
-            if IVersionedContent.isImplementedBy(obj):
-                obj.cleanup_versions(statistics)
-            if IContainer.isImplementedBy(obj):
-                obj.delete_old_versions(statistics)
-                
-            if statistics['threshold'] > threshold:
-                print 'commit sub transaction'
-                get_transaction().commit(1)
-                self._p_jar.cacheGC()
-                statistics['threshold'] = 0                
-                
-        statistics['endtime'] = DateTime()
-        return statistics
 
     def get_all_descendants(self):
         """Returns a list of all descendants"""

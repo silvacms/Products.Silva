@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26.2.3 $
+# $Revision: 1.26.2.4 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -692,50 +692,6 @@ class Versioning:
             self.get_title_editable(),
             self.absolute_url(), text)
         service_messages.send_message(from_userid, to_userid, subject, text)
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'cleanup_versions')
-    def cleanup_versions(self, statistics=None):
-        """ Remove unreachable version objects
-        """
-        if statistics is None:
-            statistics = {
-                'total': 0,
-                'total_versions': 0,
-                'total_cleaned': 0,
-                'threshold': 0,
-                'max_versions': 0,
-                'starttime': DateTime(),
-                'endtime': None,
-                }
-        
-        pvs = self._previous_versions        
-        if pvs is None:
-            return
-                
-        removable_versions = pvs[:-1] # get older versions
-        self._previous_versions = pvs[-1:] # keep the last one
-        
-        contained_ids = self.objectIds()            
-        
-        removable_version_ids = [
-            str(version[0]) for version in removable_versions
-            if version[0] in contained_ids]
-
-        statistics['total'] += 1
-        statistics['subtotal'] += 1
-            
-        if removable_version_ids:
-            print 'Removing old versions for %s %s' %  (
-                '/'.join(self.getPhysicalPath()), removable_version_ids)
-            statistics['total_cleaned'] += 1
-            statistics['total_versions'] += len(removable_version_ids)
-            statistics['max_versions'] = max(
-                statistics['max_versions'], len(removable_version_ids))
-            self.manage_delObjects(removable_version_ids)                        
-            
-        statistics['endtime'] = DateTime()            
-        return statistics
 
 def _format_date_helper(date):
     # XXX cut & paste from service_utils/backend_datetime_to_str
