@@ -17,6 +17,8 @@ class Security:
     def sec_assign(self, userid, role):
         """Assign role to userid for this object.
         """
+        if role not in ['Author', 'Editor']:
+            return  
         self.manage_addLocalRoles(userid, [role])
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -24,6 +26,8 @@ class Security:
     def sec_remove(self, userid):
         """Remove a user completely from this object.
         """
+        # FIXME: should this check for non Silva roles and keep
+        # user if they exist?
         self.manage_delLocalRoles([userid])
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -31,6 +35,9 @@ class Security:
     def sec_revoke(self, userid, revoke_roles):
         """Remove roles from user in this object.
         """
+        for role in revoke_roles:
+            if role not in ['Author', 'Editor']:
+                return
         old_roles = self.get_local_roles_for_userid(userid)
         roles = [role for role in old_roles if role not in revoke_roles]
         if len(roles) > 0:
@@ -45,7 +52,7 @@ class Security:
     def sec_get_userids(self):
         """Get the userids that have local roles here that we care about.
         """
-        interesting_roles = self.sec_get_roles()
+        interesting_roles = ['Author', 'Editor']
         result = []
         for userid, roles in self.get_local_roles():
             for role in roles:
@@ -59,25 +66,16 @@ class Security:
     def sec_get_roles_for_userid(self, userid):
         """Get the local roles that a userid has here.
         """
-        return self.get_local_roles_for_userid(userid)
-
+        return [role for role in self.get_local_roles_for_userid(userid)
+                if role in ['Author', 'Editor']]
+    
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'sec_get_roles')
     def sec_get_roles(self):
         """Get all roles defined here that we can manage, given the
         roles of this user.
         """
-        # FIXME: make this configurable?
-        not_to_use_roles = ['Anonymous', 'Authenticated', 'Manager', 'Owner']
-        return [role for role in self.valid_roles() if role not in not_to_use_roles]
-
-
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'sec_get_current_userids_on_clipboard')  
-    def sec_get_current_userids_on_clipboard(self):
-        """Get list of users on the clipboard.
-        """
-        return ['foo', 'bar']
+        return ['Author', 'Editor']
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'sec_find_users')
@@ -92,6 +90,6 @@ class Security:
         """Get information for userid. FIXME: describe which info fields
         exist.
         """
-        return user_management.get_user_info(object, userid)
+        return user_management.get_user_info(self, userid)
 
 InitializeClass(Security)

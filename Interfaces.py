@@ -38,13 +38,10 @@ class Security(Interface.Base):
         """
         pass
 
-    def sec_get_current_userids_on_clipboard(self):
-        """Get list of users on the clipboard.
-        """
-        pass
-
     def sec_find_users(self, search_string):
-        """Look up users in user database. Return a list of userids.
+        """Look up users in user database. Return a dictionary of  
+        users with userid as key, and dictionaries with user info
+        as value.
         """
         pass
     
