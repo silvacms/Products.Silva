@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.46 2003/08/12 07:54:38 zagy Exp $
+# $Id: Image.py,v 1.47 2003/08/25 08:33:29 zagy Exp $
 
 # Python
 import re, string 
@@ -111,7 +111,7 @@ class Image(Asset):
         if self.hires_image is not None:
             self.hires_image.manage_beforeDelete(self.hires_image, self)
         self.hires_image = self._image_factory(
-            self.getId(), self.get_title(), file)
+            'hires_image', self.get_title(), file)
         format = self.getFormat()
         if format in self.web_formats:
             self.web_format = format
@@ -279,12 +279,15 @@ class Image(Asset):
         if repository is None:
             image = OFS.Image.Image(id, title, file)
         else:
-            image = ExtImage(id, title)
+            # self.getId() is used to get a `normal' file name
+            image = ExtImage(self.getId(), title)
             image._repository = repository
             image = image.__of__(self)
             image.manage_file_upload(file)
             image = image.aq_base
-        return image        
+            # set the actual id (so that absolute_url works)
+            image.id = id
+        return image
     
     def _useFSStorage(self):
         """return true if we should store images on the filesystem"""
