@@ -365,7 +365,7 @@
                       </a>
 
                     <tal:block condition="python: hasattr(view, 'externalEditLink_')">
-                      <span tal:replace="structure python: view.externalEditLink_(asset)" />
+                      <span tal:replace="structure python: view.externalEditLink_(d)" />
                     </tal:block>
 
                     </td>
