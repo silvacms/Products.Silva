@@ -1,12 +1,3 @@
-## Script (Python) "tab_status_request"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=Request approval
-##
 from Products.Formulator.Errors import FormValidationError
 
 model = context.REQUEST.model
@@ -15,8 +6,8 @@ view = context
 try:
     result = view.tab_status_form_author.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return view.tab_status(message_type="error",
-                           message=view.render_form_errors(e))
+    return view.tab_status(
+        message_type="error", message=view.render_form_errors(e))
 
 # check for status
 message=None
@@ -31,9 +22,9 @@ if message is not None:
 
 context.set_unapproved_version_publication_datetime(result['publish_datetime'])
 
-if result['expires_flag']:
-    model.set_unapproved_version_expiration_datetime(
-       result['expiration_datetime'])
+expiration = result['expiration_datetime']
+if expiration:
+    model.set_unapproved_version_expiration_datetime(expiration)
 else:
     model.set_unapproved_version_expiration_datetime(None)
 

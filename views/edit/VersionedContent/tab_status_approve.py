@@ -1,12 +1,3 @@
-## Script (Python) "tab_status_approve"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=Approve unapproved content
-##
 from Products.Formulator.Errors import ValidationError, FormValidationError
 
 model = context.REQUEST.model
