@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.3
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.8 $
+  CVS:        $Revision: 1.9 $
 
 Upgrading Silva 0.8 to 0.8.3
 
@@ -57,7 +57,7 @@ Upgrading Silva 0.8 to 0.8.3
     You do not need 'silva-0.8.3.zexp.gz', as you are upgrading, not
     installing from scratch.
 
-    Unpack 'silva-0.8.3.zexp.gz' and place it in your Zope's 'import'
+    Unpack 'silva_upgrade_0.8.3.zexp.gz' and place it in your Zope's 'import'
     directory. Now import it into the same folder where you installed
     silva previously (i.e as a sibling to the silva root, not into the
     silva root itself). Usually this means importing it into your
