@@ -128,6 +128,21 @@ Installation problems
       context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;charset=utf-8')
 
 
+  Some links, image references, etc. are broken after the upgrade which
+  have been valid before the upgrade
+
+    The cause of the problem is that Silva has added some new methods
+    or other internal structures which impose new restrictions on the
+    set of valid content object ids. To operate properly Silva renames
+    content objects with conflicting ids to new ids in the upgrade 
+    process. However it does not fix links in other content objects
+    which reference theses objects.
+    
+    The upgrade process should leave a warning in the 'event.log' if it
+    needs to rename a content object. As Silva does not have a operable
+    reference management yet, You will have to check an possibly fix
+    references to the renamed objects manually after the upgrade. 
+
 
 
 Problems when using Silva 
