@@ -262,7 +262,7 @@
                         tal:attributes="href string:${item_url}/edit/tab_status"
                         i18n:translate="n/a"
                       >
-                      <i>n/a</i>
+                        <i>n/a</i>
                       </a>
                       <span 
                         tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
@@ -389,18 +389,22 @@
                       _______ modified date cell _______
                     </tal:block>
                     <td tal:define="modification_time asset/get_modification_datetime | nothing">
-                      <a class="blacklink" title="metadata"
+                      <a class="blacklink"
+                        title="metadata"
                         tal:condition="modification_time"
                         tal:attributes="href string:${asset_url}/edit/tab_metadata"
                         tal:content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)"
                         >
                          date
                       </a>
-                      <tal:block condition="not:modification_time">
+                      <a class="closed"
+                        title="metadata"
+                        tal:condition="not: modification_time"
+                        tal:attributes="href string:${asset_url}/edit/tab_metadata">
                         <i i18n:translate="unknown">
                           unknown
                         </i>
-                      </tal:block>
+                      </a>
                     </td>
                     <tal:block replace="nothing">
                       _______ author cell _______
