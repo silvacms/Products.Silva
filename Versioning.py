@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -43,6 +43,10 @@ class Versioning:
     _previous_versions = None
     _request_for_approval_info = empty_request_for_approval_info
     
+    def manage_afterAdd(self, item, container):
+        #Versioning.inheritedAttribute('manage_afterAdd')(self, item, container)
+        self.reindex_object()
+
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'create_version')
@@ -356,7 +360,7 @@ class Versioning:
         self._update_publication_status()
         return self._approved_version != empty_version
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_version_published')
     def is_version_published(self):
         """Check whether version is published.
@@ -375,69 +379,78 @@ class Versioning:
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_unapproved_version')
-    def get_unapproved_version(self):
+    def get_unapproved_version(self, update_status=1):
         """Get the unapproved version.
         """
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._unapproved_version[0]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_unapproved_version_publication_datetime')
-    def get_unapproved_version_publication_datetime(self):
+    def get_unapproved_version_publication_datetime(self, update_status=1):
         """Get publication datetime."""
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._unapproved_version[1]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_unapproved_version_expiration_datetime')
-    def get_unapproved_version_expiration_datetime(self):
+    def get_unapproved_version_expiration_datetime(self, update_status=1):
         """Get version datetime."""
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._unapproved_version[2]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_approved_version')
-    def get_approved_version(self):
+    def get_approved_version(self, update_status=1):
         """Get the approved version.
         """
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._approved_version[0]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_approved_version_publication_datetime')
-    def get_approved_version_publication_datetime(self):
+    def get_approved_version_publication_datetime(self, update_status=1):
         """Get publication datetime."""
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._approved_version[1]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_approved_version_expiration_datetime')
-    def get_approved_version_expiration_datetime(self):
+    def get_approved_version_expiration_datetime(self, update_status=1):
         """Get version datetime."""
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._approved_version[2]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_next_version')
-    def get_next_version(self):
+    def get_next_version(self, update_status=1):
         """Get either approved version if available, or unapproved
         version if not, or None if no next version.
         """
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._approved_version[0] or self._unapproved_version[0]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_next_version_publication_datetime')
-    def get_next_version_publication_datetime(self):
+    def get_next_version_publication_datetime(self, update_status=1):
         """Get publication datetime."""
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._approved_version[1] or self._unapproved_version[1]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_next_version_expiration_datetime')
-    def get_next_version_expiration_datetime(self):
+    def get_next_version_expiration_datetime(self, update_status=1):
         """Get version datetime."""
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._approved_version[2] or self._unapproved_version[2]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -457,27 +470,30 @@ class Versioning:
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_public_version')
-    def get_public_version(self):
+    def get_public_version(self, update_status=1):
         """Get the public version.
         """
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._public_version[0]
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_public_version_publication_datetime')
-    def get_public_version_publication_datetime(self):
+    def get_public_version_publication_datetime(self, update_status=1):
         """Get publication datetime."""
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._public_version[1]
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_public_version_expiration_datetime')
-    def get_public_version_expiration_datetime(self):
+    def get_public_version_expiration_datetime(self, update_status=1):
         """Get version datetime."""
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._public_version[2]
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_public_version_status')
     def get_public_version_status(self):
         if self.get_public_version() is not None:

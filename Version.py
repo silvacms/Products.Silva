@@ -18,9 +18,9 @@ class Version(SimpleItem):
         Can be 'unapproved', 'approved', 'published', 'last_closed' or 'closed'
         """
         status = None
-        unapproved_version = self.get_unapproved_version()
-        approved_version = self.get_approved_version()
-        public_version = self.get_public_version()
+        unapproved_version = self.get_unapproved_version(0)
+        approved_version = self.get_approved_version(0)
+        public_version = self.get_public_version(0)
         previous_versions = self.get_previous_versions()
         if unapproved_version and unapproved_version[0] == self.id:
             status = "unapproved"
@@ -68,7 +68,7 @@ class Version(SimpleItem):
         if status == 'closed' or status == 'last_closed':
             return None
         else:
-            return getattr(self, 'get_%s_version_publication_datetime' % status)()
+            return getattr(self, 'get_%s_version_publication_datetime' % status)(0)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'expiration_datetime')
@@ -79,6 +79,6 @@ class Version(SimpleItem):
         if status == 'closed' or status == 'last_closed':
             return None
         else:
-            return getattr(self, 'get_%s_version_expiration_datetime' % status)()
+            return getattr(self, 'get_%s_version_expiration_datetime' % status)(0)
 
 InitializeClass(Version)
