@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.27 2003/11/10 16:51:15 zagy Exp $
+# $Id: GhostFolder.py,v 1.28 2003/11/11 16:05:16 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -325,13 +325,24 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         SilvaPermissions.ChangeSilvaContent, 'to_publication')
     def to_publication(self):
         """replace self with a folder"""
-        self._to_folder_or_publication_helper(to_folder=0)
+        new_self = self._to_folder_or_publication_helper(to_folder=0)
+        self._copy_annotations_from_haunted(new_self)
         
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'to_folder')
     def to_folder(self):
         """replace self with a folder"""
-        self._to_folder_or_publication_helper(to_folder=1)
+        new_self = self._to_folder_or_publication_helper(to_folder=1)
+        self._copy_annotations_from_haunted(new_self)
+
+    def _copy_annotations_from_haunted(self, new_self):
+        marker = []
+        a_attr = '_portal_annotations_'
+        annotations = getattr(self.get_haunted_unrestricted().aq_base, a_attr,
+            marker)
+        if annotations is marker:
+            return
+        setattr(new_self, a_attr, annotations)
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'to_xml')

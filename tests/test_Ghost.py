@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27 $
+# $Revision: 1.28 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -261,13 +261,14 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
     def test_ghost_points(self):
         # test that the ghost cannot point to the wrong thing;
         # only non-ghost versioned content
-        self.root.manage_addProduct['Silva'].manage_addGhost('ghost1', '/root/does_not_exist')
+        self.root.manage_addProduct['Silva'].manage_addGhost('ghost1',
+            '/root/does_not_exist')
         self.root.manage_addProduct['Silva'].manage_addImage('image6',
                                                               'Test image')
         ghost = getattr(self.root, 'ghost1')
         self.assertEquals('This ghost is broken. (/root/does_not_exist)', ghost.preview())
         self.assertEquals(GhostVersion.LINK_VOID,
-                          ghost.get_editable().get_link_status())        
+                          ghost.get_editable().get_link_status())
         ghost.get_editable().set_haunted_url('/root/folder4')
         self.assertEquals('This ghost is broken. (/root/folder4)', ghost.preview())
         self.assertEquals(GhostVersion.LINK_FOLDER,
@@ -279,8 +280,44 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost.get_editable().set_haunted_url('/root/image6')
         self.assertEquals('This ghost is broken. (/root/image6)', ghost.preview())
         self.assertEquals(GhostVersion.LINK_NO_CONTENT,
-  
-  ghost.get_editable().get_link_status())
+            ghost.get_editable().get_link_status())
+
+    def test_ghostfolder(self):
+        self.root.manage_addProduct['Silva'].manage_addGhostFolder('gf1',
+            '/root/publication5')
+        self.root.manage_addProduct['Silva'].manage_addGhostFolder('gf2',
+            '/root/folder4')
+        gfpub = self.root.gf1
+        gffold = self.root.gf2
+        self.assert_(gfpub.implements_container())
+        self.assert_(gfpub.implements_publication())
+        self.assert_(not gffold.implements_publication())
+        self.assertEquals(gfpub.get_link_status(), gfpub.LINK_OK)
+        self.assertEquals(gffold.get_link_status(), gffold.LINK_OK)
+        metadata_pub = self.root.service_metadata.getMetadata(
+            self.root.publication5)
+        metadata_gf = self.root.service_metadata.getMetadata(gfpub)
+        metadata_pub.setValues('silva-content', {'maintitle': 'snafu'})
+        self.assertEquals(metadata_gf.get('silva-content', 'maintitle'),
+            'snafu')
+
+        
+    def test_ghostfolder_topub(self):
+        self.root.manage_addProduct['Silva'].manage_addGhostFolder('gf1',
+            '/root/publication5')
+        gfpub = self.root.gf1
+        self.assert_(gfpub.implements_container())
+        self.assert_(gfpub.implements_publication())
+        self.assertEquals(gfpub.get_link_status(), gfpub.LINK_OK)
+        metadata_pub = self.root.service_metadata.getMetadata(
+            self.root.publication5)
+        metadata_pub.setValues('silva-content', {'maintitle': 'snafu'})
+        gfpub.to_publication()
+        pub = self.root.gf1
+        self.assertEquals(pub.meta_type, 'Silva Publication')
+        metadata_newpub = self.root.service_metadata.getMetadata(pub)
+        self.assertEquals(metadata_newpub.get('silva-content', 'maintitle'),
+            'snafu')
 
 if __name__ == '__main__':
     framework()

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.146 $
+# $Revision: 1.147 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -463,6 +463,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             # to publication
             container.manage_addProduct['Silva'].manage_addPublication(
                 convert_id, self.get_title(), create_default=0)
+        ## assure the folder/pub has a _p_jar
+        get_transaction().commit(1)
         folder = getattr(container, convert_id)
         # copy all contents into new folder
         cb = self.manage_copyObjects(self.objectIds())
@@ -475,7 +477,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 folder.manage_delProperties([id])
             # if we still have property it must be required, change it
             if folder.hasProperty(id):
-                folder.manage_changeProperties({id:value})
+                folder.manage_changeProperties(id=value)
             else:
                 # add it
                 folder.manage_addProperty(id, value, type)
@@ -505,6 +507,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         container.manage_renameObject(convert_id, orig_id)
         # now restore ordered ids of container to original state
         container._ordered_ids = container_ordered_ids
+        return folder
         
     # ACCESSORS
     
