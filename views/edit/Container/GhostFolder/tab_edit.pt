@@ -9,6 +9,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:contents;
+    global iterate string:odd;
     "
   i18n:domain="silva">
 
@@ -356,7 +357,7 @@
           ______________ sync cycling of row colors ______________
         </tal:block>
         <tal:condition condition="repeat/item/end">
-          <tal:define define="global iterate python:iterate == 1 and 'odd' or 'even'" />
+          <tal:define define="global iterate python: iterate == 1 and 'odd' or 'even'" />
         </tal:condition>
       </tal:define>
     </tal:repeat>
