@@ -184,9 +184,9 @@ _______ manual close section here _______
      <tbody>
        <tr class="even">
          <td>
-           Export this document via the export screen as Silva XML, or - if the 
+           Export this document via the export screen as Silva XML, or &#8211; if the 
            <a href="http://www.infrae.com/products/docma">DocmaServer</a> is 
-           installed - convert it to a another format. 
+           installed &#8211; convert it to a another format. 
            <span tal:condition="python: not next and not closed">There is no 
            new version, so the published version will be exported.</span>
          </td>

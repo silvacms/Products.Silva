@@ -17,17 +17,19 @@
   tal:condition="start_time"
   >
   <br />
+  <p style="margin-top:0.3em; margin-bottom:0.2em;">
   <span class="subhead">
     Publication
     <tal:block condition="end_time">
       and expiration
     </tal:block>
-    time of public version
+    time of public version<sup>&nbsp;</sup>
   </span>
   <br />
   <tal:block
     replace="
       structure python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))" />
+  </p>
 </metal:block>
   
 <span tal:replace="nothing"> _______ messages _______ </span>
