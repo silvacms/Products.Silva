@@ -232,6 +232,7 @@ def upgrade_using_registry(obj, version):
         mt = o.meta_type
         if upgrade_registry.is_registered(mt, version):
             for upgrade in upgrade_registry.get_meta_type(mt, version):
+                print 'Going to run %s on %s' % (upgrade, obj.absolute_url())
                 res = upgrade(o)
                 # sometimes upgrade methods will replace objects, if so the
                 # new object should be returned so that can be used for the rest
@@ -336,7 +337,6 @@ def convert_document_092(obj):
         newver = DocumentVersion(version, doc._title)
         newver.content.manage_edit(xml)
         setattr(doc, version, newver)
-        used_ids.append(version)
         doc._update_publication_status()
             
     for version in ['unapproved', 'approved', 'public', 'last_closed']:
@@ -374,7 +374,9 @@ upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
 set_el_name_mapping = {'silva-content': {'short_title': 'shorttitle',
                                     },
                         'silva-extra': {'document_comment': 'comment', 
-                                    'container_comment': 'comment',
+                                        'container_comment': 'comment',
+                                        'contact_email': 'contactemail',
+                                        'contact_name': 'contact_name',
                                     }
                     }
 
