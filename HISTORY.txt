@@ -29,6 +29,10 @@ Silva changes
       - Minor problem where the image edit form in the form editor didn't recognize
         a link as one to the hires version of the image.
 
+      - Added test cases for get_creation_datetime() and
+        get_modification_datetime() in SilvaObject. Also re-enabled and
+        revised some tests that were commented out in test_SilvaObject.
+
   1.0 (release candidate 4)
 
     Bugs fixed
@@ -678,7 +682,7 @@ Silva changes
           may contain characters illegal in URLs, such as the @ sign.
 
         - Edit on pro transformations up to date.
-	  
+    
   0.9.1
 
     Bugs Fixed
@@ -795,7 +799,7 @@ Silva changes
 
         - Some characters that were removed by the Silva editor
           shouldn't be removed -- made these work (issue 176).
-	
+  
         - New ('add') button should work properly again (issue 162).
 
         - Invalid image references now properly display error message
@@ -1048,7 +1052,7 @@ Silva changes
 
      - Some utility code in EditorSupport to support multi-column
      rendering.
-	    
+      
      - Demo Object added to demonstrate how to extend Silva with new
      objects.
      
@@ -1074,9 +1078,9 @@ Silva changes
      - SMI (Silva Management Interface)
 
         * Fix and cleanup of tabs_status code (thanks to Clemens Klein-
-	Robbenhaar (a.o.) for reporting).
+  Robbenhaar (a.o.) for reporting).
 
-	* Fix of bug in Publish tab that occurred when no items selected.
+  * Fix of bug in Publish tab that occurred when no items selected.
 
      - Presentation Pagetemplates: 
 
