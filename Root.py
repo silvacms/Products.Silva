@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78.4.1.24.10 $
+# $Revision: 1.78.4.1.24.11 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -279,6 +279,11 @@ class Root(Publication):
             raise DocumentationInstallationException, 'Documentation can not be installed since SilvaDocument is not available'
         self.aq_inner._importObjectFromFile('%s/doc/silva_docs.zexp' % os.path.dirname(__file__))
         self._recursivePublish(self.silva_docs)
+
+        # there's an indexer in the root of the docs folder, trigger a reindex
+        # action because the paths in the zexp may well be different from the 
+        # ones stored in the indexer
+        self.silva_docs.Indexer.update_index()
 
     def _recursivePublish(self, obj):
         """recursively publish all Silva VersionedContent objects"""
