@@ -40,47 +40,47 @@
       <td class="main">
 
 <table class="listing">
-  <form method="POST" 
-    name="form" 
-    action=".">
-    <thead>
-       <tal:block replace="nothing">
-          ______________ vein + title row ______________
-       </tal:block>
-       <tr>
-          <td class="top"
-             colspan="3">
-             <h2>
-                <img tal:replace="structure python:view.render_icon(model)" />
-                ghost folder of &#xab;<tal:block content="title" />&#xbb;
-             </h2>
-          </td>
-       </tr>
-       <tal:block replace="nothing">
-          ______________ top controls row ______________
-       </tal:block>
-       <tr class="top-controls">
-          <td colspan="3">
-             <input class="button"
-                type="submit" 
-                name="convert_to_folder:method" 
-                value="convert to folder"
-                title="access key: alt-f"
-                accesskey="f"
-                tal:condition="not:link_status"
-             />
-             <input class="button"
-                type="submit" 
-                name="convert_to_publication:method" 
-                value="convert to publication"
-                title="access key: alt-p"
-                accesskey="p"
-                tal:condition="not:link_status"
-             />
-          </td>
-       </tr>
-    </thead>
-  </form>
+   <thead>
+      <tal:block replace="nothing">
+         ______________ vein + title row ______________
+      </tal:block>
+      <tr>
+         <td class="top"
+            colspan="3">
+            <h2>
+               <img tal:replace="structure python:view.render_icon(model)" />
+               ghost folder of &#xab;<tal:block content="title" />&#xbb;
+            </h2>
+         </td>
+      </tr>
+      <tal:block replace="nothing">
+         ______________ top controls row ______________
+      </tal:block>
+      <tr class="top-controls">
+         <td colspan="3">
+            <form method="POST" 
+               name="conversion_form" 
+               action=".">
+               <input class="button"
+                  type="submit" 
+                  name="convert_to_folder:method" 
+                  value="convert to folder"
+                  title="access key: alt-f"
+                  accesskey="f"
+                  tal:condition="not:link_status"
+               />
+               <input class="button"
+                  type="submit" 
+                  name="convert_to_publication:method" 
+                  value="convert to publication"
+                  title="access key: alt-p"
+                  accesskey="p"
+                  tal:condition="not:link_status"
+               />
+            </form>
+         </td>
+      </tr>
+   </thead>
 
   <form method="POST" 
      name="form" 
@@ -102,15 +102,15 @@
         <tr class="even">
            <td class="field-title">
               <script type="text/javascript"
-                 tal:content="structure here/reference.js" />
+                tal:content="structure here/reference.js" />
               <input class="navigation" 
-                 type="button" 
-                 value="reference..."
-                 title="Locate item to refer to: alt-r"
-                 accesskey="r"
-                 tal:define="asset_context python:here.get_start_container();"
-                 tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
-                 /><span class="warning">*</span>
+                type="button" 
+                value="reference..."
+                title="Locate item to refer to: alt-r"
+                accesskey="r"
+                tal:define="asset_context python:here.get_start_container();"
+                tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+              /><span class="warning">*</span>
            </td>
            <td>
               <input type="text"
@@ -210,16 +210,20 @@
     </tal:block>
     <tr class="top-controls">
       <td colspan="5">
-        <div style="float: left;">
-          <input class="button"
-            type="submit"
-            name="sync:method"
-            value="resync ghost folder"
-            title="re-synchronize with content from the source folder: alt-e"
-            accesskey="e"
-            tal:condition="not:link_status"
-          />
-        </div>
+         <div style="float: left;">
+            <form method="POST" 
+              name="resync_form" 
+              action=".">
+              <input class="button"
+                type="submit"
+                name="sync:method"
+                value="resync ghost folder"
+                title="re-synchronize with content from the source folder: alt-e"
+                accesskey="e"
+                tal:condition="not:link_status"
+               />
+            </form>
+         </div>
       </td>
     </tr>
   </thead>
