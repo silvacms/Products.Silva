@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-16 15:33+0100\n"
+"PO-Revision-Date: 2004-12-16 15:58+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -504,7 +504,7 @@ msgstr "Silva-Dokumentation"
 
 #: /globals/accesskeys.pt:214
 msgid "The most up to date documentation can be found at:<br /> ${silva_documentation_link}"
-msgstr ""
+msgstr "Die aktuellste Dokumentation kann hier gefunden werden: <br /> ${silva_documentation_link}"
 
 #: /globals/accesskeys.pt:216
 msgid "The technical documentation is included in the Silva product in &#8216;plain&#8217; structured text, gracefully degraded for text mode (no links, unicode entities, etc.)."
@@ -528,7 +528,7 @@ msgstr "Silvainfo: alt-i"
 
 #: /globals/accesskeys.pt:37
 msgid "Silva access keys"
-msgstr ""
+msgstr "Silva Kurzwahlen"
 
 #: /globals/accesskeys.pt:43
 msgid "The access key on your machine may be &#8216;alt&#8217;. On a Mac it&#8217;s &#8216;ctrl&#8217;."
@@ -536,7 +536,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:45
 msgid "Hover over the link or button and a tooltip will popup with the access key."
-msgstr ""
+msgstr "Bewegen Sie den Mauszeiger über einen Knopf und ein Fenster mit der Kurzwahl erscheint."
 
 #: /globals/accesskeys.pt:47
 msgid "Save time, energy, and wrists by keying to your destination."
