@@ -43,7 +43,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(part6, """</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><doc>
             <node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<node2>boo</node2>
             baz</node></doc></content></document></content></folder></silva>""")
-
+            
     def test_xml_folder_export(self):
         testfolder = self.add_folder(
             self.root,

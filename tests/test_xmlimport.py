@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os, sys, re
 import xml.sax
 from xml.sax.handler import feature_namespaces
@@ -197,17 +198,20 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         parser.setContentHandler(handler)
         parser.parse(source_file)
         source_file.close()
-        linkversion = importfolder.testfolder.link.get_editable()
+        linkversion = importfolder.testfolder.testfolder2.test_link.get_editable()
         self.assertEquals(
             linkversion.get_title(),
-            'linktitle'
+            'This is a test link, you insensitive clod!'
             )
         metadata_service = getToolByName(linkversion, 'portal_metadata')
         binding = metadata_service.getMetadata(linkversion)
         self.assertEquals(
             binding._getData('silva-extra').data['creator'],
             'test_user_1_')
-        
+
+    def test_document_import(self):
+        pass
+    
 if __name__ == '__main__':
     framework()
 else:
