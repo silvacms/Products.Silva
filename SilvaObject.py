@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 import Interfaces
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -196,6 +196,15 @@ class SilvaObject(Security):
         """This does nothing at all, except that calling this apparently
         as a side effect activates security on this object enough so you
         can check what roles a user has.
+        """
+        pass
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'security_trigger')
+    def security_trigger(self):
+        """This is equivalent to activate_security_hack(), however this 
+        method name is less, er, hackish... (e.g. when visible in error
+        messages and trace-backs).
         """
         pass
 
