@@ -144,6 +144,11 @@ class SilvaObject(Security):
         return Interfaces.Container.isImplementedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'implements_publication')
+    def implements_publication(self):
+        return Interfaces.Publication.isImplementedBy(self)
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_versioning')
     def implements_versioning(self):
         return Interfaces.Versioning.isImplementedBy(self)
