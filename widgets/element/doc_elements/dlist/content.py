@@ -11,7 +11,7 @@ node = context.REQUEST.node
 content = node.get_content()
 
 type = None
-if node.hasAttribute('compact'):
+if node.hasAttribute('type'):
     type = node.output_convert_html(node.getAttribute('type'))
 
 # first remove any crap
