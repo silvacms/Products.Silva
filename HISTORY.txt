@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.0.x
+
+    Bugs fixed
+
+      - The Indexer could break when the content tree it indexed contains
+        Silva Publications.
+
   1.0.2
 
     Bugs fixed

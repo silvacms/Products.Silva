@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14.54.4 $
+# $Revision: 1.14.54.5 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -118,8 +118,9 @@ class Indexer(Content, SimpleItem):
         for child in item.get_ordered_publishables():
             if not item.is_published():
                 continue
-            if IContainer.isImplementedBy(child) and not IPublication.isImplementedBy(child):
-                self._get_tree_helper(l, child)
+            if IContainer.isImplementedBy(child):
+                if not IPublication.isImplementedBy(child):
+                    self._get_tree_helper(l, child)
             else:
                 l.append(child)
 
