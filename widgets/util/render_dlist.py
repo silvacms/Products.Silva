@@ -8,7 +8,7 @@
 ##title=
 ##
 if pairs:
-    content = '<dl'
+    content = '<dl class="dl"'
     if type == 'normal':
         content += '>\n'
     else:
