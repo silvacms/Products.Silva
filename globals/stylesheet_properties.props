@@ -43,8 +43,8 @@ nightShade:string=black
 
 mainFont:string=70% Verdana, Helvetica, Arial, sans-serif
 mainBackground:string=#808989
-mainFontColor:string=#4a4a4c
-mainLinkColor:string=#384798
+mainFontColor:string=#2d374c
+mainLinkColor:string=#2d3c98
 
 pathBarBackground:string=#2b303a
 
@@ -84,11 +84,11 @@ contentTabBorder:string=1px solid #000000
 contentTabBackgroundNotSelected:string=#000000
 contentTabBackdrop:string=#000000
 contentTabFontWeight:string=normal
-contentTabFontColor:string=#d9f3e2
 contentTabFontColorSelected:string=#000000
 
 contentTabBackground:string=#729b87
 contentTabBackgroundSelected:string=#b3d4bf
+contentTabFontColor:string=#d9f3e2
 
 preBorder:string=1px solid #A3A3A3
 preBackground:string=#E5E5E5
@@ -117,15 +117,15 @@ standaloneButtonPadding:string=0.1em 0em 0em 0em
 standaloneButtonBorder:string=1px solid #848fb3
 standaloneButtonFontColor:string=#d9f3f1
 
-contextButtonBackground:string=#2d5b44
+contextButtonBackground:string=#1e4e36
 contextButtonPadding:string=0.1em 0em 0em 0em
 contextButtonBorder:string=1px solid #709c88
 contextButtonFontColor:string=#d9f3e2
 
-destructiveButtonBackground:string=#2d5b5b
+destructiveButtonBackground:string=#674747
 destructiveButtonPadding:string=0em 2em 0.1em 2em
 destructiveButtonBorder:string=1px solid #a79085
-destructiveButtonFontColor:string=#e6c7b8
+destructiveButtonFontColor:string=#f3c2c2
 
 cancelButtonBackground:string=#666668
 cancelButtonPadding:string=0em 2em 0.1em 2em

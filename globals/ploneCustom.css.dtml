@@ -464,10 +464,12 @@ table.listing th.top img {
 
 table.listing th.top a.normal:link {
     color: &dtml-mainTabFontColor;;
+    background: &dtml-listingHeaderBackground;; 
 }
 
 table.listing th.top a.normal:visited {
     color: &dtml-mainTabFontColor;;
+    background: &dtml-listingHeaderBackground;; 
 }
 
 table.listing th.top a.normal:hover {
@@ -727,8 +729,9 @@ table.listing a.navigation:visited {
   text-transform: &dtml-textTransform;;
 }
 table.listing a.navigation:hover {
-  color : #bff1ff; 
+  color : #e5fffe; 
   background : #74748b; 
+  border-color : #99b4cf;
   cursor : pointer;
 }
 
