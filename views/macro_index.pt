@@ -43,8 +43,7 @@
 <style media="all"
   type="text/css"
   xml:space="preserve"
-  tal:define="imports python: ['silva.css',]"
-  tal:content="structure python: view.css_imports(imports)"
+  tal:content="structure python: view.css_imports(['silva.css'])"
 >
 @imports
 </style>
@@ -231,7 +230,7 @@ function handle_default_action(element, event, action)
   <a href=""
     title="Request an additional role in this location: alt-,"
     accesskey=","
-    tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_authentication_requests()"
+    tal:condition="view/service_members/allow_authentication_requests"
     tal:attributes="href string:public/request_roles?last_url=${url}/edit/${template/id}">
     request access
   </a>
