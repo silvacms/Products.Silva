@@ -1,14 +1,16 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
+# $Revision: 1.32 $
 import unittest
 import Zope
 Zope.startup()
 from Products.Silva.IContent import IContent
+from Products.Silva.IVersionedContent import IVersionedContent
 from Products.Silva.ISilvaObject import ISilvaObject
 from Products.Silva.Folder import Folder
 import Products.Silva.Folder
 from Products.Silva.SilvaObject import SilvaObject
+from Products.Silva.helpers import check_valid_id, IdCheckValues
 from Testing import makerequest
 from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
@@ -256,10 +258,36 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assert_(not hasattr(self.sroot, '.this__'))
         r = self.sroot.manage_addProduct['Silva'].manage_addDocument('.foo_', 'This should not work')
         self.assert_(not hasattr(self.sroot, '.foo_'))
+        # issues189/321
+        for bad_id in ('service_foo', 'edit', 'manage_main', 'index_html'):
+            r = self.sroot.manage_addProduct['Silva'].manage_addDocument(bad_id, 'This should not work')
+            obj = getattr(self.sroot, bad_id, None)            
+            self.assert_(not IVersionedContent.isImplementedBy(obj),
+                         'should not have created document with id '+bad_id)
+        
         # during rename
         r = self.sroot.action_rename('doc1', '_doc')
         self.assert_(hasattr(self.sroot, 'doc1'))
         self.assert_(not hasattr(self.sroot, '_doc'))
+
+
+    def test_check_valid_id(self):
+        self.assertEquals(check_valid_id(self.folder4, 'doc2'),
+                          IdCheckValues.ID_OK)
+        self.assertEquals(check_valid_id(self.folder4, 'subdoc'),
+                          IdCheckValues.ID_IN_USE_CONTENT)
+        self.assertEquals(check_valid_id(self.folder4, 'service_foo'),
+                          IdCheckValues.ID_RESERVED_PREFIX)
+        self.assertEquals(check_valid_id(self.folder4, 'edit'),
+                          IdCheckValues.ID_RESERVED)
+        self.assertEquals(check_valid_id(self.folder4, 'manage'),
+                          IdCheckValues.ID_RESERVED)
+        self.assertEquals(check_valid_id(self.folder4, 'title'),
+                          IdCheckValues.ID_RESERVED)
+        self.assertEquals(check_valid_id(self.folder4, 'get_title_or_id'),
+                          IdCheckValues.ID_RESERVED)
+
+
 
     def test_get_default(self):
         # add default to root
