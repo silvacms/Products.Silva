@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
   
+  Under development
+
+    Features Added
+
+        - Removed Silva Document and editor functionality from the core
+          into its own product, SilvaDocument.
+
   0.9.2 
 
     Features Added
