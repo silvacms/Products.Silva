@@ -58,9 +58,8 @@
 <div class="feedback" tal:condition="python:type == 'feedback'">
 <span tal:replace="structure msg">message</span>&nbsp;&nbsp;<span tal:replace="string:(${here/service_utils/backend_now_to_str})">datetime</span>
 </div>
-<div class="feedback" tal:condition="python:type == 'error'">
-&nbsp;<img tal:attributes="src string:${silva_root}/globals/warning.gif" width="11" height="11" valign="top" />
-<span class="error" tal:content="structure msg">message</span>
+<div class="alert" tal:condition="python:type == 'error'">
+<span tal:replace="structure msg">message</span>
 </div>
 </tal:block>
 <!-- __________________________ end feedback __________________________ -->
