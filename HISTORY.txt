@@ -16,7 +16,7 @@ Silva changes
           the zope root).
 
         - Changed check_reserved_ids() function in the content upgrade
-          script from breadth-first to depth-first. This work better for
+          script from breadth-first to depth-first. This works better for
           content hierarchies where folders with an invalid id containing
           content also with invalid ids, are being renamed.
                                                                                                     
@@ -24,7 +24,7 @@ Silva changes
           was available.
 
         - Be less aggressive about trying to add a Unicode Whitespace
-          splitter, and accept is one is already there.
+          splitter, and accept if one is already there.
 
   0.9.2.1
 
