@@ -10,31 +10,38 @@
 <div class="margins">
 <h2>Import options for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
 
-<form action="tab_edit_word2silva" enctype="multipart/form-data" method="POST">
+<form action="." enctype="multipart/form-data" method="POST">
 <table width="100%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="cellspacing container/table_cellspacing;
     cellpadding container/table_cellpadding; border container/table_border">
 <tr>
-<th align="left">
+<th align="left" width="20%">
 Option:
 </th>
-<th align="left" width="60%">
+<th align="left" width="20%">
 Value:
+</th>
+<th align="right">
+Comment:
 </th>
 </tr>
 
 <tr class="focus-cycle" valign="top">
-<td align="right">
-Word-file to upload:
+<td align="left">
+File to upload:
 </td>
 <td align="left">
-<input type="file" name="wordfile" />
+<input type="file" name="importfile" />
+</td>
+<td align="right">
+This should either be an MS Word file for the Docma import or an XML file for plain import.
 </td>
 </tr>
 
 <tr class="controls">
-<td colspan="2" align="right">
-<input class="button" type="submit" value=" Docma-import from Word " />
+<td colspan="3" align="right">
+<input class="button" type="submit" name="tab_edit_import_xml:method" value=" XML import " />
+<input class="button" type="submit" name="tab_edit_import_docma:method" value=" Docma-import from Word " />
 </td>
 </tr>
 </table>

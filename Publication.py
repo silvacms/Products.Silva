@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -134,5 +134,5 @@ def xml_import_handler(object, node):
     for child in node.childNodes:
         if child.nodeName.encode('cp1252') in importer_registry.keys():
             xml_import_helper(newpub, child)
-        elif hasattr(newpub, 'set_%s' % child.nodeName.encode('cp1252')) and child.childNodes[0].nodeValue:
+        elif child.nodeName != u'title' and hasattr(newpub, 'set_%s' % child.nodeName.encode('cp1252')) and child.childNodes[0].nodeValue:
             getattr(newpub, 'set_%s' % child.nodeName.encode('cp1252'))(child.childNodes[0].nodeValue.encode('cp1252'))

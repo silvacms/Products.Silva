@@ -58,6 +58,6 @@ def get_xml_title(node):
     title = ''
     for child in node.childNodes:
         if child.nodeName == u'title':
-            title = child.childNodes[0].nodeValue.encode('cp1252')
+            title = child.childNodes[0].nodeValue
     return title
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -166,11 +166,7 @@ def xml_import_handler(object, node):
     object.manage_addProduct['Silva'].manage_addDemoObject(id, title)
     newdo = getattr(object, id)
     version = getattr(newdo, '0')
-    print dir(version)
     for child in node.childNodes:
-        print "Going to set", child.nodeName
-        print "Has setter:", hasattr(version, 'set_%s' % child.nodeName.encode('cp1252'))
-        print "Has value:", hasattr(child.childNodes[0], 'nodeValue') and child.childNodes[0].nodeValue
         if child.nodeName == u'doc':
             childxml = writeStream(child).getvalue().encode('utf8')
             version.content.manage_edit(childxml) # expects utf8

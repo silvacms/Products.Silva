@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.68 $
+# $Revision: 1.69 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -621,73 +621,6 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         dom = createDOMDocument(xml)
         xml_import_helper(self, dom.childNodes[0])
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'import_xml')
-    def import_xml(self, xml):
-        from xml.dom.minidom import parseString
-        dom = parseString(xml)
-
-        # process the xml and place all objects in self
-        self.process_xml(dom, self)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'import_xml')
-    def process_xml(self, dom, obj):
-        """Imports an XML-document (.slv) into this folder. This function expects unencoded strings (cp1252)
-        and does the encoding on the fly"""
-        # Rules:
-        #   A main node (publication, document) has an id as a property
-        #   A main node has a title as content of the (first) title-tagpair
-        tag_product_mapping = {'silva_publication': ('Silva', 'manage_addPublication'),
-                               'silva_document': ('Silva', 'manage_addDocument'),
-                               'silva_folder': ('Silva', 'manage_addFolder'),
-                               'silva_demoobject': ('Silva', 'manage_addDemoObject'),
-                              }
-
-        for node in dom.childNodes:
-            name = node.nodeName
-            if name in tag_product_mapping.keys():
-                attrs = {}
-                doc = None
-                prodname, prodconstr = tag_product_mapping[name.encode('cp1252')]
-                id = node._attrs[u'id'].nodeValue
-                title = ''
-                for child in node.childNodes:
-                    if child.nodeName == u'title':
-                        title = child.childNodes[0].nodeValue
-                    elif child.nodeName == u'doc':
-                        doc = child.toxml()
-                    else:
-                        attrs[child.nodeName] = child.childNodes[0].nodeValue
-                # create the publication, without index...
-                if name == 'silva_publication' or name == 'silva_folder':
-                    # need an extra argument to prevent index from being created
-                    getattr(obj.manage_addProduct[prodname], prodconstr)(id.encode('cp1252'), title, 0)
-                else:
-                    getattr(obj.manage_addProduct[prodname], prodconstr)(id.encode('cp1252'), title)
-                newObject = getattr(obj, id.encode('cp1252'))
-                # add the doc (if any)
-                if doc:
-                    # all objects with a doc are versioned
-                    version = newObject.get_editable()
-                    if hasattr(version, 'manage_edit'):
-                        # version IS ParsedXML
-                        version.manage_edit(doc.encode('utf8'))
-                    else:
-                        # version CONTAINS ParsedXML, hopefully the ParsedXML-member is called 'content'
-                        version.content.manage_edit(doc.encode('utf8'))
-                # set data-members
-                for key in attrs.keys():
-                        if hasattr(newObject, 'set_%s' % key.encode('cp1252')):
-                            # data is set on the object itself
-                            getattr(newObject, 'set_%s' % key.encode('cp1252'))(
-attrs[key].encode('cp1252'))
-                        elif hasattr(newObject, 'get_editable'):
-                            # data is set on the version
-                            version = newObject.get_editable()
-                            if hasattr(version, 'set_%s' % key.encode('cp1252')):
-                                getattr(version, 'set_%s' % key.encode('cp1252'))(attrs[key].encode('cp1252'))
-                # now recurse the content
-                self.process_xml(node, newObject)
-
 InitializeClass(Folder)
 
 
@@ -719,6 +652,7 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     return ''
 
 def xml_import_handler(object, node):
+    """Helper for importing folder objects into an other object"""
     id = get_xml_id(node)
     title = get_xml_title(node)
     object.manage_addProduct['Silva'].manage_addFolder(id, title, 0)
@@ -726,7 +660,7 @@ def xml_import_handler(object, node):
     for child in node.childNodes:
         if child.nodeName.encode('cp1252') in importer_registry.keys():
             xml_import_helper(newfolder, child)
-        elif hasattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252')) and child.childNodes[0].nodeValue:
+        elif child.nodeName != u'title' and hasattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252')) and child.childNodes[0].nodeValue:
             getattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252'))(child.childNodes[0].nodeValue.encode('cp1252'))
 
 

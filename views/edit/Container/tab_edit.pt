@@ -442,6 +442,9 @@ There are no active content objects in this folder.
   &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste:method" value="Paste" title="Paste items" />
   &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste_to_ghost:method" value="Paste as ghost" title="Paste (items on clipboard) as ghost objects" />
   </tal:block>
+  <tal:block condition="python: silva_permissions['ChangeSilvaContent']">
+    &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value="Import" title="Import XML data" />
+  </tal:block>
   </td>
 </tr>
 </table>
