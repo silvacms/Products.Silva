@@ -8,6 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
     global breadcrumb_vein string:Edit;
+    refresh_time python:19 * 60;
   ">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">

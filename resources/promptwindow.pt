@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Session expiration save</title>
+</head>
+
+<body>
+<form>
+  In about 5 minutes, the session is going to expire for the document you are currently editing. This means
+  that all your data will be lost. Press 'Save' to save the page, and 'Cancel' to go back to the page to save
+  manually (or not at all).<br /><br />
+  <table width="100%" border="0">
+  <tr>
+  <td width="50%" align="center">
+  <input type="button" value="Save" onClick="window.opener.saveHelper(); window.close()" />
+  </td>
+  <td width="50%" align="center">
+  <input type="button" value="Cancel" onClick="window.close()" />
+  </td>
+  </tr>
+  </table>
+</form>
+</body>
+</html>
