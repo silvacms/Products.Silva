@@ -20,7 +20,6 @@
 div.workspace {
   background : &dtml-workspace;;
   margin: none;
-  border-collapse: collapse;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -283,6 +282,7 @@ table.listing {
     color: #444444;
     width: 100%;
     margin: 0em 0em 1em 0em;    
+  border-collapse: collapse;
 }
 
 table.listing thead {
@@ -419,12 +419,6 @@ table.listing tr.top-controls h3 {
   line-height : 100%;
 }
 
-/* use for forcing button floats in table cells 
-   without text to line up properly */
-table.listing tr.top-controls div.buttons {
-    padding: 0.2em 0;
-}
-
 table.listing td.listing-left {
   text-align: left;
   padding: 0em 0.4em 0em 0.4em;
@@ -444,6 +438,13 @@ table.listing tr.controls td, tr.inter-controls td {
 table.listing td.field-title {
   text-align : right;
   text-transform : &dtml-textTransform;;
+}
+
+/* force button floats in table cells 
+   without text to line up properly */
+table.listing div.controls {
+  padding: 0.2em 0;
+  vertical-align: bottom;
 }
 
 /* rename this selector */
