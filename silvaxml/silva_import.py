@@ -122,6 +122,7 @@ class GhostContentHandler(BaseHandler):
                 version = GhostContent(id)
                 self._parent._setObject(id, version)
                 self._result = version
+                updateVersionCount(self)
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'ghost'):
@@ -156,6 +157,7 @@ class LinkContentHandler(BaseHandler):
             version = LinkVersion(id, '')
             self._parent._setObject(id, version)
             self._result = getattr(self._parent, id)
+            updateVersionCount(self)
             
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
@@ -214,6 +216,7 @@ class DocumentContentHandler(BaseHandler):
             version = DocumentVersion(id, '')
             self._parent._setObject(id, version)
             self._result = getattr(self._parent, id)
+            updateVersionCount(self)
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
@@ -244,3 +247,22 @@ class DocElementHandler(BaseHandler):
         else:
             self._node = self._node.parentNode
             
+def updateVersionCount(versionhandler):
+    # The parent of a version is a VersionedContent object. This VC object
+    # has an _version_count attribute to keep track of the number of
+    # existing version objects and is the used to determine the id for a
+    # new version. However, after importing, this _version_count has the
+    # default value (1) and thus should be updated to reflect the highest
+    # id of imported versions (+1 of course :)
+    parent = versionhandler._parent
+    version = versionhandler._result
+    id = version.id
+    try:
+        id = int(id)
+    except ValueError:
+        # I guess this is the only reasonable thing to do - apparently 
+        # this id does not have any numerical 'meaning'.
+        return 
+    vc = max(parent._version_count, (id + 1))
+    parent._version_count = vc
+    
