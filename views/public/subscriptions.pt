@@ -9,6 +9,14 @@
     margin : 0;
     /*  border-bottom: 1px solid #689799; */
     }
+    div.feedback {
+    color: #555;
+    background: #f3f3d9;
+    margin: 0;
+    border: &dtml-inputBorder;;
+    padding: 0.4em 0.7em 0.7em 0.7em;
+    font-weight: bold;
+    }
   </style>
 </metal:block>
 <metal:block fill-slot="main">
