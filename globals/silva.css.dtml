@@ -7,8 +7,8 @@
 </dtml-let>
 
 /* This style sheet contains Silva specific styles, and may override */
-/* certain selectors in the base.  Frontend style can be adjusted if */
-/* required, but you _MUST_ backup before upgrading to new version.  */
+/* certain selectors in the base.  If you edit this css, you _MUST_  */ 
+/* backup before upgrading to a new version of Silva.                */
 
 
 /* _______________________________________________ element typography _____ */
@@ -114,8 +114,8 @@ input.navigation[type="submit"]:focus, button[type="button"]:focus {
 /* warm glow: 668b69 bfffd3 */
 input.button[type="submit"]:hover, button[type="button"]:hover { 
   color : #e5ffec; 
-  background : #4c8067; 
-  border-color : #99cfb5;
+  background : #548e72; 
+  border-color : #8dc1a8;
 }
 
 input.button[type="submit"]:focus, button[type="button"]:focus { 

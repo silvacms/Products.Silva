@@ -17,25 +17,25 @@
 
 <dtml-with stylesheet_properties>
 
+div.workspace {
+  background : &dtml-workspace;;
+  margin: none;
+  border-collapse: collapse;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
-    margin: 0em 0em 1em 0em;
+  margin: 0em 0em 1em 0em;
     padding: 0;
   border: none;
 }
 
-/* darker870: cfd7e1; selected bac1cc; light d4dce6; */
-div.workspace {
-  background : &dtml-workspace;;
-  margin: none;
-}
-
 .readable {
-  max-width : 40em;
   /* for IE5 */
   width : 512px;
+  max-width : 40em;
   line-height: 1.3em;
-    text-align: left;
+  text-align: left;
 }
 
 
@@ -45,44 +45,48 @@ div.workspace {
 
 div.pathBar {
   font-size: 90%;
-    color: &dtml-shade72;;
-    background-image: url(/silva/globals/sky.gif);
+    color: &dtml-shade36;;
+    background-image: url(/silva/globals/skylight.gif);
     background-repeat: repeat-x;
     background-color: &dtml-pathBarBackground;;
-    padding: 2px 4px 0 22px;
+    padding: 0em 4px 0.2em 22px;
     border: none;
-    line-height: 1.3em;
+    line-height: 1.4em;
 }
 
 div.pathBar a {
-    color: &dtml-shade82;;
+    color: &dtml-shade26;;
     font-weight: &dtml-mainTabFontWeight;;
-    padding: 0 ! important;
     margin: 0 ! important;
     text-transform: none;
 }
-
 div.pathBar a:visited {
-    color: &dtml-shade82;;
+    color: &dtml-shade26;;
 }
-
 div.pathBar a:hover {
-    color: &dtml-shade92;;
+    color: &dtml-shade42;;
     text-transform: underline;
 }
 
 div.pathBar a.manage {
-	color: &dtml-shade60;;
-    margin-left: 0.5em ! important;
+  color: &dtml-shade50;;
+  margin-left: 0.5em ! important;
+}
+
+div.pathBar a.idea {
+  color: &dtml-shade78;;
+}
+div.pathBar a.idea:visited {
+  color: &dtml-shade78;;
+}
+div.pathBar a.idea:hover {
+  color: &dtml-shade96;;
+  text-decoration: none;
 }
 
 div.pathBar img {
   vertical-align: top;
-  margin: -2px 0em 0em -22px;
-}
-
-div.pathBar a.idea {
-  color : #634d82;
+  margin: 0 0 0 -22px;
 }
 
 
@@ -90,9 +94,9 @@ div.pathBar a.idea {
 
 div.tabs {
     background-color: &dtml-mainTabBackdrop;;
-    background-image: url(/silva/globals/skylight.gif);
+    background-image: url(/silva/globals/skyrise.gif);
     background-repeat: repeat-x;
-    border-bottom-color: #636da6;
+    border-bottom-color: #8b939b;
     padding: 0em 0em 0em 15px;
 }
 
@@ -156,14 +160,21 @@ div.tabs a.right:hover {
     border-style: solid solid none none;
 }
 
+/* help */
 div.tabs a.normal {
-    color: &dtml-shade72;;
+    font-size: 100%;
+    color: &dtml-shade46;;
     background: none;
     border: none;
     margin: 0;
     padding: 0;
-    text-transform: none;
-    font-size: 100%;
+}
+div.tabs a.normal:visited {
+  color: &dtml-shade46;;
+}
+div.tabs a.normal:hover {
+  color: &dtml-shade68;;
+  text-decoration: underline;
 }
 
 
@@ -187,8 +198,7 @@ div.riverBar {
 
 div.footer {
   font-size: 94%;
-    background: #b3c1d4;
-    background: &dtml-mainTabBackgroundSelected;;
+  background: &dtml-listingTopBackground;;
   margin: 0.5em 0em 0em 0em;
     padding: 0em 16px 0.1em 16px;
     border-top: &dtml-shade60; 1px solid;
@@ -196,7 +206,7 @@ div.footer {
 }
 
 div.footer a {
-	color: &dtml-mainLinkColor;;
+  color: &dtml-mainLinkColor;;
     font-weight: &dtml-mainTabFontWeight;;
     padding: 0;
     margin: 0;
@@ -211,16 +221,15 @@ img.icon {
 /* _____________________________________________________ personal bar _____ */
 
 div.personalBar {
-    text-align: center;
-    background: #39424d;
-    background: &dtml-listingTopBackground;;
+  text-align: center;
+  background: &dtml-topBackground;;
   margin: 0em 0em 0em 0em;
-    padding: 0.1em 16px 0.2em 16px;
+  padding: 0.1em 16px 0.2em 16px;
   border-collapse: collapse;
 }
 
 div.personalBar a {
-  color: #8fb4ac;
+  color: #b7cee6;
     padding: 0 ! important;
     margin: 0 ! important;
     text-transform: none;
@@ -248,7 +257,7 @@ table.columns td.main {
 }
 table.columns td.right {
     width: 20%;
-    padding: 8px 8px 0 0 ! important;
+    padding: 8px 8px 0 0;
 }
 
 /* 2 column table */
@@ -364,11 +373,12 @@ table.listing td {
     vertical-align: top;
 }
 
+/* _______ title cell _______ */
+
 table.listing td.top {
   color: &dtml-shade40;;
   background: &dtml-listingTopBackground;;
     border: &dtml-listingBorder; ! important;
-    border-bottom: none ! important;
     padding-top: 0em;
     padding-bottom: 0em;
     vertical-align: bottom;
@@ -381,10 +391,8 @@ table.listing td.top {
 table.listing td.top h2 {
   color: &dtml-listingTopHeadingColor;;
     text-align: left;
-    margin: 0.1em 0.4em 0.2em 0.4em;
-    display: inline;
+    margin: 0.1em 0.4em 0.1em 0.4em;
     border: none;
-    float: left;
 }
 
 /* not in use */
@@ -407,8 +415,6 @@ table.listing tr.top-controls h3 {
   margin: 0.1em 0.2em 0.2em 0.2em;
   padding: 0em;
   border: none;
-  display: inline;
-  float: left;
   text-transform: &dtml-textTransform;;
   line-height : 100%;
 }
@@ -787,8 +793,9 @@ div.info {
   color: &dtml-inputFontColor;;
   background: &dtml-evenRowBackground;;
   margin: 0;
-  padding: 0 0.5em; 
+  padding: 0 0.5em 0.5em 0.5em; 
   border: &dtml-listingBorder;;
+  border-collapse: collapse;
 }
 
 h2.info {
@@ -800,7 +807,6 @@ h2.info {
 }
 
 h3.info {
-  color: #394b4d;
   color: &dtml-inputFontColor;;
   margin-top : 0em;
   margin-bottom : 0.2em;  
@@ -812,7 +818,7 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
   background : &dtml-listingEvenBackground;;
   font-size: 90%;
   margin-top: 0.1em;
-  margin-bottom: 0em;
+  margin-bottom: -0.5em;
   border : 1px solid &dtml-shade60;;
   line-height : 96%;
   width: 100%

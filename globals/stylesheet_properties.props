@@ -1,60 +1,59 @@
 plone_skin:string=Plone Core
 
 noShade:string=white
-shade98:string=#f3f9fa
-shade96:string=#eaf5f4
-shade94:string=#e5f0ef
-shade92:string=#e0ebea
-shade90:string=#dbe6e5
-shade88:string=#d6e1e0
-shade86:string=#d1dcdb
-shade84:string=#ccd7d6
-shade82:string=#c7d1d0
-shade80:string=#c3cccb
-shade78:string=#bec7c6
-shade76:string=#b9c2c1
-shade74:string=#b4bdbc
-shade72:string=#afb8b7
-shade70:string=#aab3b2
-shade68:string=#a5aead
-shade66:string=#a0a8a8
-shade64:string=#9ca3a3
-shade62:string=#979e9d
-shade60:string=#929998
-shade58:string=#8d9493
-shade56:string=#888f8e
-shade54:string=#838a89
-shade52:string=#7e8584
-shade50:string=#797f7f
-shade48:string=#757a7a
-shade46:string=#707575
-shade44:string=#6b7070
-shade42:string=#666b6b
-shade40:string=#616665
+shade98:string=#f3f8fa
+shade96:string=#eaf3f5
+shade94:string=#e9eef0
+shade92:string=#e4e9eb
+shade90:string=#dfe4e6
+shade88:string=#dadfe1
+shade86:string=#d5d9dc
+shade84:string=#d1d4d7
+shade82:string=#cccfd1
+shade80:string=#c7cacc
+shade78:string=#c2c5c7
+shade76:string=#bdc0c2
+shade74:string=#b8bbbd
+shade72:string=#b3b6b8
+shade70:string=#acb0b3
+shade68:string=#a7abae
+shade66:string=#a2a6a8
+shade64:string=#9da1a3
+shade62:string=#989c9e
+shade60:string=#909699
+shade58:string=#8b9194
+shade56:string=#868c8f
+shade54:string=#81878a
+shade52:string=#7d8285
+shade50:string=#757c7f
+shade48:string=#71777a
+shade46:string=#6c7275
+shade44:string=#676d70
+shade42:string=#6w686b
+shade40:string=#5c6266
 
-shade36:string=#575c5b
-shade30:string=#494c4c
-shade26:string=#3f4242
+shade36:string=#51585c
+shade30:string=#42484c
+shade26:string=#373e42
 nightShade:string=black
 
 
-workspace:string=#d1dcdb
-contentWorkspace:string=#e5eeea
+workspace:string=#dde5ee
+contentWorkspace:string=#eceeee
 
 mainFont:string=70% Verdana, Helvetica, Arial, sans-serif
 mainBackground:string=#808989
 mainFontColor:string=#2d374c
 mainLinkColor:string=#2d3c98
 
-pathBarBackground:string=#2b303a
+pathBarBackground:string=#b0c4d8
+pathBarLinkColor:string=#000000
 
-mainTabBackdrop:string=#7b90a6
-mainTabBackground:string=#7a83a6
-mainTabBackgroundTwilight:string=#848bb4
+mainTabBackdrop:string=#d7e8f0
+mainTabBackground:string=#7a90a6
 mainTabBackgroundRecede:string=#9baec9
-mainTabBackgroundSelected:string=#afc5db
-mainTabBackgroundSelectedMatch:string=#a9bbe6
-mainTabBorderColor:string=#26334c
+mainTabBackgroundSelected:string=#c1daf3
+mainTabBorderColor:string=#3d4b67
 mainTabBorderColorSelected:string=#26334c
 mainTabFontWeight:string=normal
 mainTabFontColor:string=#e3ecff
@@ -62,7 +61,7 @@ mainTabFontColorSelected:string=#424244
 mainTabBackgroundNotSelected:string=#000000
 
 headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
-headingFontColor:string=#444446
+headingFontColor:string=red
 headingSize1:string=140%
 headingSize2:string=130%
 headingSize3:string=120%
@@ -87,8 +86,8 @@ contentTabBackground:string=#729b87
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
-preBorder:string=1px solid #A3A3A3
-preBackground:string=#E5E5E5
+preBorder:string=1px solid #000000
+preBackground:string=#eaf3f5
 
 messageFont:string=bold 100% Verdana, Helvetica, Arial, sans-serif
 messageBackground:string=#d9f4eb
@@ -99,8 +98,8 @@ requiredField:string=url(required.gif) right no-repeat
 
 textTransform:string=lowercase
 noBorder:string=none
-evenRowBackground:string=#bdc9ce
-oddRowBackground:string=#dbe6e5
+evenRowBackground:string=#c5d6dc
+oddRowBackground:string=#000000
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 inputFontColor:string=#333767
@@ -110,17 +109,17 @@ inputBorder:string=1px solid #797f7f
 buttonWeight:string=normal
 controlBackground:string=#afcccf
 
-standaloneButtonBackground:string=#27324f
+standaloneButtonBackground:string=#556474
 standaloneButtonPadding:string=0em
-standaloneButtonBorder:string=1px solid #848fb3
+standaloneButtonBorder:string=1px solid #96b1cd
 standaloneButtonFontColor:string=#d9f3f1
 
-contextButtonBackground:string=#164e32
+contextButtonBackground:string=#46755e
 contextButtonPadding:string=0em
-contextButtonBorder:string=1px solid #709c88
+contextButtonBorder:string=1px solid #83b39c
 contextButtonFontColor:string=#d9f3e2
 
-destructiveButtonBackground:string=#674747
+destructiveButtonBackground:string=#755c5c
 destructiveButtonPadding:string=0em
 destructiveButtonBorder:string=1px solid #a78585
 destructiveButtonFontColor:string=#f3c2c2
@@ -130,36 +129,38 @@ cancelButtonPadding:string=0em
 cancelButtonBorder:string=1px solid #b9c2c1
 cancelButtonFontColor:string=#ccd7d6
 
-boxBorder:string=1px solid #A3A3A3
-boxHeaderBackground:string=#E5E5E5
-boxHeaderFontColor:string=#808080
+boxBorder:string=1px solid #000000
+boxHeaderBackground:string=#000000
+boxHeaderFontColor:string=#000000
 boxLinkBackground:string=url(linkTransparent.gif) -0.5em 0px no-repeat
 boxLinkColor:string=Black
-boxEvenBackground:string=#F8F8F8
-boxOddBackground:string=White
-boxHighlight:string=2px solid #FFCF7F
+boxEvenBackground:string=#000000
+boxOddBackground:string=000000
+boxHighlight:string=2px solid #000000
 
 
 
-listingBorder:string=1px solid #4c5d66
-listingHeaderBackground:string=#738d9a
-listingHeaderFontColor:string=#dbf3f6
+listingTopBackground:string=#c4d6e7
+listingTopControlsBackground:string=#77868c
+listingControlsBackground:string=#7d8d94
+listingInter-ControlsBackground:string=#86979e
+listingDividerBackground:string=#6c7a7f
+listingBorder:string=1px solid #7d8d94
+
+listingTopHeadingColor:string=#2d374c
+listingTopControlsHeadingColor:string=#cce0f1
+
+listingHeaderBackground:string=#8e9fa8
+listingHeaderFontColor:string=#e0eefc
 listingLinkHover:string=underline
-listingEvenBackground:string=#c9d5db
-listingOddBackground:string=#d3e0e6
+listingEvenBackground:string=#cfe0e7
+listingOddBackground:string=#d7e8f0
 
-listingTopBackground:string=#39464d
-listingTopControlsBackground:string=#4c5d66
-listingControlsBackground:string=#53656e
-listingInter-ControlsBackground:string=#617681
-listingDividerBackground:string=#44535b
+listingTopBackgroundContent:string=#c5d4ca
+listingTopHeadingColorContent:string=
+listingTopControlsHeadingColorContent:string=#ddeee3
 
-listingTopHeadingColor:string=#b6d5f4
-listingTopControlsHeadingColor:string=#bedeff
-listingTopHeadingColorContent:string=#aedabd
-listingTopControlsHeadingColorContent:string=#b9e8c9
-
-topBackground:string=#000000
+topBackground:string=#6c7f7f
 topMargin:string=0
 topPadding:string=0
 

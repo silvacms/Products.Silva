@@ -46,8 +46,12 @@ div.riverBar {
   background: &dtml-contentTabBackgroundSelected;;
 }
 
+table.listing td.top {
+  background: &dtml-listingTopBackgroundContent;;
+}
+
 table.listing td.top h2 {
-  color: &dtml-listingTopHeadingColorContent;;
+  color: &dtml-shade36;;
 }
 
 table.listing tr.top-controls h3 {
