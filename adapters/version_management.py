@@ -210,7 +210,7 @@ class VersionManagementAdapter(adapter.Adapter):
                                 'getVersionLastAuthorInfo')
     def getVersionLastAuthorInfo(self, versionid):
         version = self.getVersionById(versionid)
-        info = version._last_author_info
+        info = getattr(version, '_last_author_info', None)
         if info is None:
             return noneMember.__of__(self.context)
         else:
