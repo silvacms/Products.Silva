@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -119,7 +119,7 @@ class EditorSupport(SimpleItem):
                 result.append('<br />')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-        return self._replace_silva_entities(''.join(result))
+        return ''.join(result)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_heading_as_html')
@@ -141,7 +141,7 @@ class EditorSupport(SimpleItem):
                 result.append('</a>')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-        return self._replace_silva_entities(''.join(result))
+        return ''.join(result)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_text_as_editable')
@@ -149,9 +149,11 @@ class EditorSupport(SimpleItem):
         """Render textual content as editable text.
         """
         result = []
+        convert = self.output_convert_editable
+        chars_to_entities = self._silva_chars_to_entities
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(self.output_convert_editable(child.data))
+                result.append(chars_to_entities(convert(child.data)))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -175,12 +177,12 @@ class EditorSupport(SimpleItem):
                 result.append('((')
                 result.append(self.render_text_as_editable(child))
                 result.append('|')
-                result.append(self.output_convert_editable(
-                    child.getAttribute('url')))
+                result.append(chars_to_entities(convert(
+                    child.getAttribute('url'))))
                 if child.getAttribute('target'):
                     result.append('|')
-                    result.append(self.output_convert_editable(
-                        child.getAttribute('target')))
+                    result.append(chars_to_entities(convert(
+                        child.getAttribute('target'))))
                 result.append('))')
             elif child.nodeName == 'underline':
                 result.append('__')
@@ -190,8 +192,8 @@ class EditorSupport(SimpleItem):
                 result.append('[[')
                 result.append(self.render_text_as_editable(child))
                 result.append('|')
-                result.append(self.output_convert_editable(
-                    child.getAttribute('name')))
+                result.append(chars_to_entities(convert(
+                    child.getAttribute('name'))))
                 result.append(']]')
             #elif child.nodeName == 'person':
             #    result.append('{{')
@@ -212,7 +214,8 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(child.data)
+                result.append(self._silva_chars_to_entities(
+                                self.output_convert_editable(child.data)))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -274,6 +277,7 @@ class EditorSupport(SimpleItem):
                     match.group(3), 
                     match.group(2)))
         st = st.replace('\n', '<br/>')
+        st = self._replace_silva_entities(st)
         st = self.input_convert(st).encode('UTF8')
         node = node._node
         doc = node.ownerDocument
@@ -300,6 +304,7 @@ class EditorSupport(SimpleItem):
             st = st.replace(match.group(0), '<index name="%s">%s</index>' % (
                 match.group(2), match.group(1)))
 
+        st = self._replace_silva_entities(st)
         st = self.input_convert(st).encode('UTF8')
         node = node._node
         doc = node.ownerDocument
@@ -362,6 +367,11 @@ class EditorSupport(SimpleItem):
         for name, rep in self._silva_entities.items():
             # mind that we've already replaced the XML entities, so we should be looking at '&amp;<name>;' instead of '&<name>;'
             text = text.replace('&amp;%s;' % name, rep)
+        return text
+
+    def _silva_chars_to_entities(self, text):
+        for name, rep in self._silva_entities.items():
+            text = text.replace(rep, '&%s;' % name)
         return text
 
     security.declarePrivate('create_dom_forgiving')
