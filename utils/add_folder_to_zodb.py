@@ -81,7 +81,9 @@ if __name__=='__main__':
             usage()
 
     os.putenv('INSTANCE_HOME', instance_home)
+    os.environ['INSTANCE_HOME']= instance_home
     os.putenv('SOFTWARE_HOME', software_home)
+    os.environ['SOFTWARE_HOME']= software_home
     sys.path.insert(0, software_home)
 
     print "importing zope"
