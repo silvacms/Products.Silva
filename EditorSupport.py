@@ -148,5 +148,10 @@ class EditorSupport:
                 node.appendChild(newnode) 
             else:
                 raise "Unknown structure: %s" % structure
-            
+
+    def normalize_whitespace(self, s):
+        """Collapse all whitespace in string to single spaces.
+        """
+        return ' '.join(s.split())
+
 InitializeClass(EditorSupport)
