@@ -41,7 +41,7 @@ for row in data:
     row_data = []
     col = 0
     for field in row:
-        if field is None:
+        if not field:
             field = ''
         col += 1        
         row_data.append(

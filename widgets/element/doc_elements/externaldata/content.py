@@ -16,7 +16,6 @@ if not datasource:
 try:
     data = datasource.get_data(parameters)
 except:
-    raise
     return errmsg
 
 # FIXME: Using CSS this hairball is slightly less hairy
@@ -41,6 +40,8 @@ for row in data:
     row_data = []
     col = 0
     for field in row:
+        if not field:
+            field = ''
         col += 1
         row_data.append(
             u"""<td align="%s">\n  %s\n</td>""" % (u'left', unicode(field, data_encoding, 'replace') ))
