@@ -177,7 +177,15 @@
 
 
   <xsd:complexType name="Image">
-    <xsd:attribute name="image_id" type="xsd:string" />
+    <xsd:attribute name="image_id" type="xsd:string">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          This attribute is deprecated and will be removed in the future.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="path" type="xsd:string" />
+    <xsd:attribute name="alignment" type="xsd:string" />
     <!-- there should be som uri -->
   </xsd:complexType>
 
