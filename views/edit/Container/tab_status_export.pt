@@ -159,7 +159,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
           </tr>
 
           <tr class="focus-cycle">
-            <td align="right" width="20%">Choose a front page template:</td>
+            <td align="right" width="20%">Choose a Word template:</td>
             <td align="left" width="1%">
               <select name="template">
                 <option value="">none</option>
