@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -11,8 +11,10 @@ import Interfaces
 try:
     from Products.Groups.ZGroups import ZGroupsMapping
     groups_enabled = 1
-except:
+except ImportError:
     groups_enabled = 0
+
+LOCK_DURATION = 1./24./3./20. # 20 minutes, um 1 minute
 
 interesting_roles = ['Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager']
 
@@ -26,7 +28,7 @@ class Security:
 
     _last_author_userid = None
     _last_author_info = None
-
+    
     __ac_local_groups__ = None
     
     # MANIPULATORS
@@ -105,7 +107,18 @@ class Security:
         self.manage_permission('View',
                                roles=allowed_roles,
                                acquire=0)
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'sec_create_lock')
+    def sec_create_lock(self):
+        """Create lock for this object.
+        """
+        if self.sec_is_locked():
+            return
+        username = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        dt = DateTime()
+        self._lock_info = username, dt
+        
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_is_open_to_public')
@@ -118,6 +131,21 @@ class Security:
                 role_info['selected'] == 'SELECTED'):
                 return 0
         return 1
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'sec_is_locked')
+    def sec_is_locked(self):
+        """Check whether this object is locked by a user currently
+        editing.
+        """
+        if self._lock_info is None:
+            return 0
+        username, dt = self._lock_info
+        current_dt = DateTime()
+        if current_dt - dt >= LOCK_DURATION:
+            return 0
+        current_username = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        return username == current_username
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_have_management_rights')
