@@ -68,7 +68,7 @@
 </td>
 <span tal:replace="nothing"> _______ title cell _______ </span>
 <td>
-<a href="../index/edit/tab_preview" title="Preview..."
+<a class="blacklink position-relative" href="../index/edit/tab_preview" title="Preview..."
   tal:content="structure model/get_title_html">Title
 </a>
 </td>
