@@ -621,9 +621,10 @@
         </form>
         <tal:block replace="nothing"> 
           ____________________ utilities ____________________
+          turned off because of ridulously expensive tree walking
         </tal:block>
-        <table class="listing sublisting">
-	  <thead>
+        <table class="listing sublisting" tal:replace="nothing">
+          <thead>
             <tal:block replace="nothing">
               ______________ vein + title row _______________
             </tal:block>
