@@ -12,6 +12,8 @@ Silva changes
 
     Bugs Fixed
 
+      - URLs are now rendered correctly in the context of a Ghost object.
+
       - Added 'Delete objects' permission to authors and up, this was not
         used in previous Zope versions but is in 2.7.3.
 
