@@ -1,4 +1,5 @@
-<html>
+<html 
+    tal:define="mangle python:modules['Products'].Silva.mangle;">
   <head>
     <link rel="stylesheet" href="globals/base.css"
       tal:attributes="href here/globals/base.css/absolute_url | nothing" />
@@ -8,7 +9,7 @@
     <tal:block condition="python:options.has_key('message_type')">
       <div class="feedback"
         tal:condition="python:options['message_type'] == 'feedback'">
-        <span tal:replace="structure python:options['message']" />&nbsp;&nbsp;<span tal:replace="string:(${here/service_utils/backend_now_to_str})">datetime</span>
+        <span tal:replace="structure python:options['message']" />&nbsp;&nbsp;(<span tal:replace="python:mangle.Now().toStr()">datetime</span>)
       </div>
       <div class="alert" tal:condition="python:options['message_type'] == 'error'">
         <span class="error" tal:content="structure python:options['message']" />
