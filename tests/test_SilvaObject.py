@@ -61,9 +61,9 @@ class SilvaObjectTestCase(unittest.TestCase):
     def test_title2(self):
         # set title through document metadata, perhaps this should
         # move to a different test suite
-        self.assertEquals(self.document.get_metadata('title'), 'Document')
-        self.document.set_metadata('title', 'Foo')
-        self.assertEquals('Foo', self.document.get_metadata('title'))
+        self.assertEquals(self.document.get_metadata('document_title'), 'Document')
+        self.document.set_metadata('document_title', 'Foo')
+        self.assertEquals('Foo', self.document.get_metadata('document_title'))
         self.assertEquals('Foo', self.document.get_title())
         
     #def test_get_creation_datetime(self):

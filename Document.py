@@ -117,7 +117,7 @@ class Document(VersionedContent):
     def get_metadata(self, name):
         """Get meta data.
         """
-        if name == 'title':
+        if name == 'document_title':
             return self.get_title()
         return self._metadata.get(name, None)
 
@@ -126,7 +126,7 @@ class Document(VersionedContent):
     def set_metadata(self, name, value):
         """Set meta data.
         """
-        if name == 'title':
+        if name == 'document_title':
             self.set_title(value)
             return
         if not self._metadata.has_key(name):
