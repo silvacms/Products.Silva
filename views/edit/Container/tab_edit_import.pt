@@ -300,17 +300,17 @@
               <!--
                 if (document.forms[0])
                 {
-                  document.write('<input class="button" type="submit" value="Select all..." value="submit" name="selectButton" value="Select all" title="Select all items in this folder" onClick="toggleSelect(); return false">');
+                  document.write('<input class="button" type="submit" value="Select all" value="submit" name="selectButton" value="Select all" title="Select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false">');
                 }
               //-->
             </script>
             </td>
             <td align="right">
             <tal:block condition="silva_permissions/ChangeSilvaContent">
-                &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_edit_import_delete:method" value=" Remove " title="There's no undo" onClick="return confirm('Really remove?')" />
-                &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import_download:method" value=" Download " title="Download this item" />
-                &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import_import_and_delete:method" value=" Import and remove " title="Import to the current location and remove from the list" />
-                &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import_w2s:method" value=" Import " title="Import to the current location" />
+                &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_edit_import_delete:method" value=" Remove " title="There's no undo: alt-x" accesskey="x" onClick="return confirm('Really remove?')" />
+                &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import_download:method" value=" Download " title="Download this item: alt-d" accesskey="d" />
+                &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import_import_and_delete:method" value=" Import and remove " title="Import to the current location and remove from the list: alt-m" accesskey="m" />
+                &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import_w2s:method" value=" Import " title="Import to the current location: alt-p" accesskey="p" />
             </tal:block>
             </td>
           </tr>
@@ -323,6 +323,29 @@
   </tr>
 
 </table>
+
+<script type="text/javascript">
+    <!--
+    isSelected = false;
+
+    function toggleSelect() {
+      if (isSelected == false) {
+        for (i = 0; i < document.finishedJobQueue.length; i++)
+          document.finishedJobQueue.elements[i].checked = true ;
+        isSelected = true;
+        document.finishedJobQueue.selectButton.value = "Deselect all";
+        return isSelected;
+      }
+      else {
+        for (i = 0; i < document.finishedJobQueue.length; i++)
+          document.finishedJobQueue.elements[i].checked = false ;
+        isSelected = false;
+        document.finishedJobQueue.selectButton.value = "Select all";
+        return isSelected;
+      }
+    }
+    //-->
+</script>
 
 </div>
 
