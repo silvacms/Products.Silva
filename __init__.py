@@ -1,6 +1,10 @@
 import Document, Folder, Root, ViewRegistry,\
        Publication, Ghost, ContactInfo, Image
 
+# simple way to configure user management
+from SimpleUserManagement import user_management
+#from LDAPUserManagement import user_management
+
 def initialize(context):
      context.registerClass(
           Document.Document,
@@ -58,7 +62,3 @@ def initialize(context):
           constructors = (Ghost.manage_addGhostVersionForm,
                           Ghost.manage_addGhostVersion)
           )
-
-# simple way to configure user management
-from SimpleUserManagement import user_management
-#from LDAPUserManagement import user_management
