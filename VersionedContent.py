@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.32 $
+# $Revision: 1.33 $
 
 # Python
 from StringIO import StringIO
@@ -23,8 +23,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     # created by the object's factory function
     _version_count = 1
 
-    _cached_data = {}
-
     def __init__(self, id):
         """Initialize VersionedContent.
 
@@ -32,6 +30,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         """
         VersionedContent.inheritedAttribute('__init__')(
             self, id, '[VersionedContent title bug]')
+        self._cached_data = {}
     
     # MANIPULATORS
     
@@ -47,7 +46,17 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         if self.id == 'index':
             container = self.get_container()
             container._invalidate_sidebar(container)
-            
+    
+    security.declareProtected(SilvaPermissions.ChangeSilvaViewRegistry,
+                              'cleanPublicRenderingCache')
+    def cleanPublicRenderingCache(self):
+        """Cleans all current caching data from the cache.
+        Currently this is only necessary for an upgrade of old content object
+        which do not have cache yet.
+        """
+        self._cached_data = {}
+
+
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                              'get_title')
@@ -203,7 +212,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
                 data = None
                 self._cached_data[view_type] = (data, DateTime())
                 self._cached_data = self._cached_data
-            
+
             if data is None:
                 data = VersionedContent.inheritedAttribute('view')(
                     self, view_type)
@@ -216,7 +225,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         """
         # by default nothing is safely cacheable
         return 0
-    
+
 InitializeClass(VersionedContent)
 
 class CatalogedVersionedContent(VersionedContent):
