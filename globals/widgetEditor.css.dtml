@@ -157,15 +157,6 @@ ol.lower-alpha {
   list-style-type : lower-alpha;
 }
 
-dt {
-  background : transparent;
-}
-
-dd {
-  background : transparent;
-  margin-left : 2.5em;
-}
-
 
 /* _______________________________________ focus box rendering styles _____ */
 
@@ -174,25 +165,6 @@ dd {
   border: none ! important;
   border-right: none ! important;
 }
-
-
-/* _______ focus box list styles _______ */ 
-ul.tips {
-  list-style-type : square;
-  margin-left : 0.1em;
-  margin-top : 0.2em;
-  padding-left : 1em;
-  line-height : 130%;
-}
-
-ul.tips-nested {
-  list-style-image: none; 
-  list-style-type : circle;
-  margin-left : 0.5em;
-  padding-left : 1em;
-  line-height : 130%;
-}
-
 
 
 /* header-like elements for table cells in editor, prevents extra line space */

@@ -106,6 +106,7 @@ evenRowBackground:string=#bdc9ce
 oddRowBackground:string=#dbe6e5
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
+inputFontColor:string=#333767
 inputBackground:string=#d5e7e6
 inputBorder:string=1px solid #797f7f
 
@@ -117,7 +118,7 @@ standaloneButtonPadding:string=0.1em 0em 0em 0em
 standaloneButtonBorder:string=1px solid #848fb3
 standaloneButtonFontColor:string=#d9f3f1
 
-contextButtonBackground:string=#1e4e36
+contextButtonBackground:string=#164e32
 contextButtonPadding:string=0.1em 0em 0em 0em
 contextButtonBorder:string=1px solid #709c88
 contextButtonFontColor:string=#d9f3e2
@@ -143,7 +144,7 @@ boxHighlight:string=2px solid #FFCF7F
 
 
 
-listingBorder:string=1px solid #617681
+listingBorder:string=1px solid #4c5d66
 listingHeaderBackground:string=#738d9a
 listingHeaderFontColor:string=#dbf3f6
 listingLinkHover:string=underline

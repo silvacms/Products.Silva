@@ -234,6 +234,7 @@ div.personalBar img {
 /* ____________________________________________________ table columns _____ */
 
 table.columns {
+  border-collapse: collapse;
 }
 
 /* 3 column table (default) */
@@ -366,7 +367,6 @@ table.listing td {
 
 table.listing td.top {
   color: &dtml-shade40;;
-  background: #394b4d;
   background: &dtml-listingTopBackground;;
     border: &dtml-listingBorder; ! important;
     border-bottom: none ! important;
@@ -380,7 +380,6 @@ table.listing td.top {
 }
 
 table.listing td.top h2 {
-  color: #b8ccce;
   color: &dtml-listingTopHeadingColor;;
     text-align: left;
     margin: 0.1em 0.4em 0.2em 0.4em;
@@ -397,7 +396,6 @@ table.listing td.top div.addMenu {
 }
 
 table.listing td.top h2 img {
-    padding-right: 0em;
     vertical-align: top;
 }
 
@@ -406,7 +404,6 @@ table.listing tr.top-controls td {
 }
 
 table.listing tr.top-controls h3 {
-  color: #c9dfe2;
   color: &dtml-listingTopControlsHeadingColor;;
   margin: 0.1em 0.2em 0.2em 0.2em;
   padding: 0em;
@@ -569,20 +566,15 @@ form.compact {
 }
 
 input {
-  color : #333333;
-  background : #c3e6e6;
+  color : $dtml-inputFontColor;;
   background : &dtml-inputBackground;;
-  border : 1px solid &dtml-shade40;;
-    border: &dtml-inputBorder;;
   margin-top: 1px;
 }
  
 textarea {
-  color : #333333;  
-  background : #c3e6e6;
+  font: &dtml-inputFont;;
+  color : &dtml-inputFontColor;;
   background : &dtml-inputBackground;;
-  border : 1px solid &dtml-shade40;;
-    border: &dtml-inputBorder;;
 }
 
 textarea.readable {
@@ -670,6 +662,7 @@ input.cancel {
   border : &dtml-cancelButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
+  line-height : 90%;
     cursor: pointer;
     text-transform: &dtml-textTransform;;
 }
@@ -789,17 +782,27 @@ table.listing div.navigation-border:hover {
 }
 
 
-/* ________________________________________________________ clipboard _____ */
+/* _________________________________________________ info + clipboard _____ */
 
-div.clipboard {
+div.info {
+  color: &dtml-inputFontColor;;
   background: &dtml-evenRowBackground;;
   margin: 0;
   padding: 0 0.5em; 
   border: &dtml-listingBorder;;
 }
 
-h2.clipboard {
+h2.info {
   color: #394b4d;
+  color: &dtml-inputFontColor;;
+  margin-top : 0em;
+  margin-bottom : 0.2em;  
+  text-transform: &dtml-textTransform;;
+}
+
+h3.info {
+  color: #394b4d;
+  color: &dtml-inputFontColor;;
   margin-top : 0em;
   margin-bottom : 0.2em;  
   text-transform: &dtml-textTransform;;
@@ -816,7 +819,7 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
   width: 100%
 }
 
-div.clipboard option.disabled {
+select.clipboard option.disabled {
   color: #dbf3f6;
   background: #71969a;
   background: &dtml-listingHeaderBackground;; 

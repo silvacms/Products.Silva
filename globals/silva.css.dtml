@@ -11,9 +11,9 @@
 /* required, but you _MUST_ backup before upgrading to new version.  */
 
 
-/* _________________________________________________ element typography _____ */
+/* _______________________________________________ element typography _____ */
 
-/* __________________________________________ align/float definitions _____ */
+/* ______________________________________________________ align/float _____ */
 
 .image-left {
   text-align: left;
@@ -40,7 +40,36 @@
 }
 
 
-/* ___________________________________________ form style definitions _____ */
+/* ____________________________________________________________ lists _____ */
+
+dt {
+  background : transparent;
+}
+
+dd {
+  background : transparent;
+  margin-left : 2.5em;
+}
+
+ul.tips {
+  list-style-type : square;
+  list-style-image: none; 
+  margin-left : 0.1em;
+  margin-top : 0.2em;
+  padding-left : 1em;
+  line-height : 130%;
+}
+
+ul.tips-nested {
+  list-style-type : circle;
+  list-style-image: none; 
+  margin-left : 0.5em;
+  padding-left : 1em;
+  line-height : 130%;
+}
+
+
+/* ____________________________________________________________ forms _____ */
 
 input:focus, textarea:focus { 
   color : #333355; 
@@ -139,7 +168,7 @@ input.warning-checkbox {
 }
 
 
-/* _________________________________________________ link definitions _____ */
+/* ____________________________________________________________ links _____ */
 
 a:link {
   color : #000040;
@@ -298,7 +327,7 @@ a.index-element {
     border: 0;
     padding: 0;
     margin: 0;
-    width: none;
+    width: 100% ! important;
 }
 
 .fault {
@@ -306,12 +335,13 @@ a.index-element {
 }
 
 .subhead {
-  font-size : 11px;
+  font-size : 100%;
   font-weight : bold;  
   font-family : verdana, arial, helvetica, sans-serif;
-  text-align : left;
   color : #444444; 
-  line-height : 16px;
+  color: #333767;
+  text-align : left;
+  line-height : 1.6em;
 } 
 
 .control-label {
