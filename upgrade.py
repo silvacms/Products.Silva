@@ -289,6 +289,7 @@ def get_versions_or_self(obj):
     ret = []
     if (IVersionedContent.isImplementedBy(obj) or
             ICatalogedVersionedContent.isImplementedBy(obj)):
+        versions = []
         for version in ['_unapproved_version', '_approved_version',
                         '_public_version']:
             v = getattr(obj, version)
@@ -509,6 +510,12 @@ def replace_object_title_092(obj):
     print 'Replace object title for', obj.id
     if not hasattr(obj, '_title'):
         return
+    if obj is obj.aq_parent.get_default():
+        return
+    title = obj._title
+    del obj._title
+    if type(title) != type(u''):
+        title = unicode(title, 'cp1252', 'replace')
     objects = get_versions_or_self(obj)
     for object in objects:
         object.set_title(title)
