@@ -1,8 +1,3 @@
-===================================================================
-Checking out interfaces.py
-RCS:  /cvs/infrae/Silva/interfaces.py,v
-VERS: 1.10
-***************
 from Interface import Interface
 
 from AccessControl import ModuleSecurityInfo
