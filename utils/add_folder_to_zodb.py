@@ -90,6 +90,7 @@ if __name__=='__main__':
     print "using INSTANCE_HOME =", instance_home
     print "      SOFTWARE_HOME =", software_home
     import Zope
+    Zope.startup()
 
     print "beginning transaction"
     get_transaction().begin()
