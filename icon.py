@@ -1,6 +1,6 @@
 # Copyright (c) 2003, 2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.8 2004/11/29 12:50:52 guido Exp $
+# $Id: icon.py,v 1.9 2004/11/29 15:53:30 guido Exp $
 
 """Sivla icon registry"""
 
@@ -58,7 +58,7 @@ class _IconRegistry:
     def getIconByIdentifier(self, identifier):
         icon = self._icon_mapping.get(identifier, None)
         if icon is None:
-            msg = "No icon for %r" % identifier
+            msg = "No icon for %s" % repr(identifier)
             raise RegistryError, msg
         return icon
 
