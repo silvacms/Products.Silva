@@ -15,7 +15,7 @@ model = request.model
 from DateTime import DateTime
 
 if not request.has_key('refs') or not request['refs']:
-    return view.tab_status(message_type='error', message='No items were selected, so nothing is exported')
+    return view.tab_status(message_type='error', message='No items were selected, so no content will be exported')
 
 objects = []
 for ref in request['refs'].split('||'):
