@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.46 $
+CVS:        $Revision: 1.47 $
 
 Introduction
 ------------
@@ -82,11 +82,8 @@ Steps to take during a major Silva upgrade:
 Upgrading from Silva 1.1 to Silva 1.2
 -------------------------------------
 
-
-Upgrading Silva 1.1 to Silva 1.2 does not require a content
-upgrade. Although this is a major feature upgrade, the procedure for
-upgrading is therefore the same as for minor upgrades. A ``Refresh
-all`` in ``service_extensions`` is however required in this upgrade.
+Upgrading Silva 1.1 to Silva 1.2 requires a content
+upgrade.
 
 If you want to enable the new (since 1.1) XSLT support, please see
 the section "XSLT Support" in INSTALL.txt.
