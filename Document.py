@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.75 $
+# $Revision: 1.76 $
 # Zope
 
 from StringIO import StringIO
@@ -162,6 +162,11 @@ class DocumentVersion(CatalogedVersion):
         self.content.documentElement.writeStream(f)
         export_metadata(self, context)
 
+    def manage_afterClone(self, item):
+        # if we're a copy, clear cache
+        # XXX should be part of workflow system
+        self.service_editor.clearCache(self.content)
+        
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'fulltext')
     def fulltext(self):
