@@ -4,7 +4,7 @@
 
 <p class="frontend" tal:define="node request/node">
   <toc tal:omit-tag=""
-    tal:repeat="obj python:node.get_content().get_container().get_tree()">
+    tal:repeat="obj python:node.get_content().get_container().get_tree(int(toc_depth))">
   <loop tal:omit-tag=""
     tal:condition="python:(obj[1].is_published() or (hasattr(obj[1], 'show_in_tocs') and obj[1].show_in_tocs)) and (toc_depth == -1 or indent < toc_depth) and (not hasattr(obj[1], 'hide_from_tocs') or not obj[1].hide_from_tocs)"
     tal:define="indent python:obj[0]; 

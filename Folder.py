@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.72 $
+# $Revision: 1.73 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -508,75 +508,79 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     # permissions? unlikely as my role is acquired?
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_tree')
-    def get_tree(self):
+    def get_tree(self, depth=-1):
         """Get flattened tree of contents.
+        The 'depth' argument limits the number of levels, defaults to unlimited
         """
         l = []
-        self._get_tree_helper(l, 0)
+        self._get_tree_helper(l, 0, depth)
         return l
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_container_tree')
-    def get_container_tree(self):
+    def get_container_tree(self, depth=-1):
         l = []
-        self._get_container_tree_helper(l, 0)
+        self._get_container_tree_helper(l, 0, depth)
         return l
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_tree')
-    def get_public_tree(self):
+    def get_public_tree(self, depth=-1):
         l = []
-        self._get_public_tree_helper(l, 0)
+        self._get_public_tree_helper(l, 0, depth)
         return l
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_status_tree')
-    def get_status_tree(self):
+    def get_status_tree(self, depth=-1):
         l = []
-        self._get_status_tree_helper(l, 0)
+        self._get_status_tree_helper(l, 0, depth)
         return l
-    
-    def _get_tree_helper(self, l, indent):
+
+    def _get_tree_helper(self, l, indent, depth):
         for item in self.get_ordered_publishables():
             if (IContainer.isImplementedBy(item) and
                 item.is_transparent()):
                 l.append((indent, item))
-                item._get_tree_helper(l, indent + 1)
+                if depth == -1 or indent < depth:
+                    item._get_tree_helper(l, indent + 1, depth)
             else:
                 l.append((indent, item))
 
-    def _get_container_tree_helper(self, l, indent):
+    def _get_container_tree_helper(self, l, indent, depth):
         for item in self.get_ordered_publishables():
             if not IContainer.isImplementedBy(item):
                 continue
             if item.is_transparent():
                 l.append((indent, item))
-                item._get_container_tree_helper(l, indent + 1)
+                if depth == -1 or depth < indent:
+                    item._get_container_tree_helper(l, indent + 1, depth)
             else:
                 l.append((indent, item))
 
-    def _get_public_tree_helper(self, l, indent):
+    def _get_public_tree_helper(self, l, indent, depth):
         for item in self.get_ordered_publishables():
             if not item.is_published():
                 continue
             if (IContainer.isImplementedBy(item) and
                 item.is_transparent()):
                 l.append((indent, item))
-                item._get_public_tree_helper(l, indent + 1)
+                if depth == -1 or depth < indent:
+                    item._get_public_tree_helper(l, indent + 1, depth)
             else:
                 l.append((indent, item))
 
-    def _get_status_tree_helper(self, l, indent):
+    def _get_status_tree_helper(self, l, indent, depth):
         for item in self.get_ordered_publishables():
             if IContainer.isImplementedBy(item):
                 default = item.get_default()
                 if default is not None:
                     l.append((indent, default))
-                if item.is_transparent():
-                    item._get_status_tree_helper(l, indent + 1)
+                if (depth == -1 or indent < depth) and item.is_transparent():
+                    item._get_status_tree_helper(l, indent + 1, depth)
             else:
                 l.append((indent, item))
-            
+
     def create_ref(self, obj):
         """Create a moniker for the object.
         """

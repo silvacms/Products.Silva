@@ -4,7 +4,7 @@
 
 <p class="frontend">
   <toc tal:omit-tag=""
-       tal:repeat="obj python:request.node.get_content().get_container().get_status_tree()">
+       tal:repeat="obj python:request.node.get_content().get_container().get_status_tree(int(toc_depth))">
   <loop tal:omit-tag=""
         tal:define="indent python:obj[0]; 
                     item python:obj[1];
