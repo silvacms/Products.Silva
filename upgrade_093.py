@@ -474,10 +474,8 @@ class SetTitleFromIndexOnContainer:
             title = index.get_title()
             container.set_title(title)
         except Exception, e:
-            print '#### Cannot set title due to: %s' % repr(e)
             zLOG.LOG(
-                'Silva', zLOG.WARNING, 
-                'Cannot set title due to: %s' % repr(e))
+                'Silva', zLOG.WARNING, 'Cannot set title due to: %s' % e)
         return container
     
 def initialize():
@@ -508,11 +506,6 @@ def initialize():
                                       upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
         'Groups Service')
-        
-    for metatype in ['Silva Root', 'Silva Publication', 'Silva Folder']:
-        upgrade.registry.registerUpgrader(
-            SetTitleFromIndexOnContainer(), '0.9.3', metatype)
-        
     # On the root, do an "all product refresh"
     upgrade.registry.registerUpgrader(
         RefreshAll(), '0.9.3', 'Silva Root')
@@ -522,3 +515,6 @@ def initialize():
     # On the service_members double check the _allow_authentication_requests attrs.
     upgrade.registry.registerUpgrader(
         CheckServiceMembers(), '0.9.3', 'Silva Root')
+    for metatype in ['Silva Root', 'Silva Publication', 'Silva Folder']:
+        upgrade.registry.registerUpgrader(
+            SetTitleFromIndexOnContainer(), '0.9.3', metatype)
