@@ -690,6 +690,17 @@ input.button {
     cursor: pointer;
 }
 
+button.button {
+  font-size: 95%;
+    font-weight: &dtml-buttonWeight;;
+    color: &dtml-manipulatorFontColor;;
+  background : &dtml-manipulatorBackground;;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: &dtml-manipulatorPadding;;
+  border: &dtml-manipulatorBorder;;
+    cursor: pointer;
+}
+
 input.transport {
   font-size: 95%;
     font-weight: &dtml-buttonWeight;;
