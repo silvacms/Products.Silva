@@ -209,6 +209,11 @@ class Container(SilvaObject, Publishable):
         This is a list of indent, object tuples.
         """
         pass
+
+    def get_public_tree(self):
+        """Get tree of all publishables that are public.
+        """
+        pass
     
 class Security(Interface.Base):
     """Can be mixed in with an object to support Silva security.

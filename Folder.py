@@ -244,6 +244,13 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         self._get_container_tree_helper(l, 0)
         return l
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_public_tree')
+    def get_public_tree(self):
+        l = []
+        self._get_public_tree_helper(l, 0)
+        return l
+    
     def _get_tree_helper(self, l, indent):
         for item in self.get_ordered_publishables():
             if (Interfaces.Container.isImplementedBy(item) and
@@ -262,7 +269,18 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 item._get_container_tree_helper(l, indent + 1)
             else:
                 l.append((indent, item))
-    
+
+    def _get_public_tree_helper(self, l, indent):
+        for item in self.get_ordered_publishables():
+            if not item.is_published():
+                continue
+            if (Interfaces.Container.isImplementedBy(item) and
+                item.is_transparent()):
+                l.append((indent, item))
+                item._get_public_tree_helper(l, indent + 1)
+            else:
+                l.append((indent, item))
+        
     def create_ref(self, obj):
         """Create a moniker for the object.
         """

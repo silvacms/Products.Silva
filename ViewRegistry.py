@@ -66,17 +66,21 @@ class ViewRegistry(Folder.Folder):
         return self.view_types[view_type][meta_type]
 
     def render_preview(self, view_type, obj):
-        """Call render method for preview.
+        """Render preview of object using view_registry. This calls
+        the render_preview() method defined on the view in the registry.
         """
-        return getattr(self,
-                       self.view_types[view_type][obj.meta_type]).__of__(obj).render(version=self.get_previewable())
+        return (getattr(self,
+                        self.view_types[view_type][obj.meta_type]).
+                __of__(obj).render_preview())
+
     
     def render_view(self, view_type, obj):
-        """Call render method in view.
+        """Render view of object using view_registry. This calls
+        the render_preview() method defined on the view in the registry.
         """
-        return getattr(self,
-                       self.view_types[view_type][obj.meta_type]).__of__(obj).render(version=self.get_viewable())
-
+        return (getattr(self,
+                        self.view_types[view_type][obj.meta_type]).
+                __of__(obj).render_view())
     
     def wrap(self, view_type, obj):
         """Wrap object in view (wrapping skin)

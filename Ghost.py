@@ -30,7 +30,8 @@ class Ghost(VersionedContent):
     def get_title(self):
         """Get title.
         """
-        ghost_version = self.get_viewable()
+        return 'no title available'
+        ghost_version = self.get_previewable()
         if ghost_version is None:
             return 'no title available'
         return ghost_version._get_content().get_title()

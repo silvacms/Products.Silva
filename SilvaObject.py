@@ -29,6 +29,11 @@ class SilvaObject:
     #def _get_title_helper(self):
     #    return self.get_title() # get_title() can be defined on subclass
     #title = ComputedAttribute(_get_title_helper)
+
+    def get_model(self):
+        """Get the model. Can be used with acquisition to get
+        the 'nearest' model from the view."""
+        return self.aq_inner
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
