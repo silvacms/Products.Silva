@@ -104,8 +104,7 @@ class SetHandler(BaseHandler):
             
     def characters(self, chrs):
         if self._metadata_key is not None:
-            self._parent_handler._metadata[
-                 self._metadata_set][self._metadata_key] = chrs
+            self._parent_handler.setMetadata(self._metadata_set, self._metadata_key, chrs)
         
     def endElementNS(self, name, qname):
         self._metadata_key = None

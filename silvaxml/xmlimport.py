@@ -1,6 +1,10 @@
 import sys, string
 from xml.sax.handler import ContentHandler
 from Products.SilvaMetadata.Compatibility import getToolByName
+from DateTime import DateTime
+
+class XMLImportError(Exception):
+    pass
 
 class XMLOverridableElementRegistry:
     """An element registry which can be overridden while handling events.
@@ -128,10 +132,15 @@ class BaseHandler:
             return self._data[key]
         return None
 
-    def setMetaData(self, set, key, value):
+    def setMetadata(self, set, key, value):
+        # XXX Hardcoded. Will update this to look up the types in a
+        # dictionary. 
+        if set == 'silva-extra' and value:
+            if key == 'modificationtime' or key == 'creationtime' or key == 'publitiontime' or key == 'expirationtime':
+                value = DateTime(value)
         self._metadata[set][key] = value
 
-    def getMetaData(self, set, key):
+    def getMetadata(self, set, key):
         return self._metadata[set][key]
     
     def getResult(self):
