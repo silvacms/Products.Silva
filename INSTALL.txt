@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.40.8.3 $
+  CVS:        $Revision: 1.40.8.4 $
 
 Installing Silva
 
@@ -54,11 +54,11 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.9.3.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3.tgz
+        "Silva-0.9.3.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3/Silva-0.9.3.tgz
   
       or everything together:
 
-        "Silva-0.9.3-all.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3-all.tgz
+        "Silva-0.9.3-all.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3/Silva-0.9.3-all.tgz
 
     SilvaViews (0.9)
 
