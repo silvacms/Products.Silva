@@ -78,6 +78,11 @@ pre {
   border: none;
 }
 
+/* Dashed underlines for acronyms in IE - actually abbr is not yet supported by IE */
+acronym, abbr {
+	border-bottom-style:dashed;
+	border-bottom-width:1px;
+}
 
 /* ____________________________________________ silva specific styles _____ */
 
