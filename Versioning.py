@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -362,7 +362,7 @@ class Versioning:
         self._update_publication_status()
         return self._approved_version != empty_version
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_version_published')
     def is_version_published(self):
         """Check whether version is published.
@@ -470,7 +470,7 @@ class Versioning:
         else:
             return "no_next_version"
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_version')
     def get_public_version(self, update_status=1):
         """Get the public version.
@@ -479,7 +479,7 @@ class Versioning:
             self._update_publication_status()
         return self._public_version[0]
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_version_publication_datetime')
     def get_public_version_publication_datetime(self, update_status=1):
         """Get publication datetime."""
@@ -487,7 +487,7 @@ class Versioning:
             self._update_publication_status()
         return self._public_version[1]
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_version_expiration_datetime')
     def get_public_version_expiration_datetime(self, update_status=1):
         """Get version datetime."""
@@ -495,7 +495,7 @@ class Versioning:
             self._update_publication_status()
         return self._public_version[2]
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_version_status')
     def get_public_version_status(self):
         if self.get_public_version() is not None:
