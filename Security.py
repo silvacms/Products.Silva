@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -327,6 +327,8 @@ class Security:
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_groups')
     def sec_get_local_defined_groups(self):
+        """Get the list of groups with locally defined roles.
+        """
         local_groups = self.__ac_local_groups__
         if local_groups is None:
             return []
@@ -335,6 +337,8 @@ class Security:
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_roles_for_group')
     def sec_get_local_roles_for_group(self, group):
+        """Get a list of local roles that are defined for a group here.
+        """
         local_gropus = self.__ac_local_groups__
         if local_groups is None:
             return []
@@ -343,6 +347,9 @@ class Security:
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_defined_groups')
     def sec_get_upward_defined_groups(self):
+        """Get the list of groups with roles defined in a higer
+        level of the tree.
+        """
         parent = self.aq_inner.aq_parent
         groups = {}
         while Interfaces.Container.isImplementedBy(parent):
@@ -354,6 +361,9 @@ class Security:
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_roles_for_group')
     def sec_get_upward_roles_for_group(self, group):
+        """Get the roles that a group has here, defined in a higer
+        level of the tree.
+        """
         parent = self.aq_inner.aq_parent
         if not Interfaces.Container.isImplementedBy(parent):
             return []
@@ -363,6 +373,9 @@ class Security:
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_downward_defined_groups')
     def sec_get_downward_defined_groups(self):
+        """Get the list of groups with roles defined in a lower
+        level of the tree.
+        """
         d = {}
         self._sec_get_downward_defined_groups_helper(d)
         return d.keys()
