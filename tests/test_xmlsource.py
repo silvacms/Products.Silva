@@ -36,7 +36,7 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
         exportRoot = xmlexport.SilvaExportRoot(obj)
         expected_xml = exporter.exportToString(exportRoot, settings)
         self.assertEqual(
-            xmlsource.XMLSourceAdapter(obj).getXML(), expected_xml)
+            expected_xml, xmlsource.XMLSourceAdapter(obj).getXML())
 
 if __name__ == '__main__':
     framework()
