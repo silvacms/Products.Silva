@@ -23,7 +23,7 @@
 
 <p>
   <a style="text-decoration:underline;"
-    tal:attributes="href options/last_url">Return to where you came from...</a>
+    tal:attributes="href options/last_url" i18n:translate="">Return to where you came from...</a>
 </p>
 </metal:block>
 

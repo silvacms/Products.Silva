@@ -37,7 +37,7 @@
       <a href="/manage_zmi_logout"
         title="accesskey: alt-l"
         accesskey="l"
-        i18n:attributes="title accesskey"
+        i18n:attributes="title"
         i18n:translate="logout_link">logout link</a>.
       <br />
         <span i18n:translate="when_login_dialog_appears">When the login dialog appears, choose <b>"Cancel"</b></span>.

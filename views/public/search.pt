@@ -6,7 +6,7 @@
       metal:fill-slot="style">
       @import url(globals/silva.css);
     </style>
-    <title>Search</title>
+    <title i18n:translate="">Search</title>
   </head>
   <body>
     <metal:block fill-slot="main"
@@ -26,12 +26,12 @@
             <tr>
               <td class="top"
                 colspan="3">
-                <h2>
+                <h2 i18n:translate="">
                   <img tal:replace="structure icon" />
                   Search in 
                   <span style="text-transform:lowercase;"
-                    tal:content="model/meta_type">Meta type</span> 
-                    &#xAB;<tal:block content="model/get_title_or_id" />&#xbb;
+                    tal:content="model/meta_type" i18n:name="meta_type">Meta type</span> 
+                    &#xAB;<tal:block content="model/get_title_or_id" i18n:name="title_or_id" />&#xbb;
                 </h2>
               </td>
             </tr>
@@ -40,7 +40,7 @@
             </tal:block>
             <tr class="top-controls">
               <td colspan="3">
-                <h3>
+                <h3 i18n:translate="">
                   Search interface
                 </h3>
               </td>
@@ -50,13 +50,13 @@
           <tbody tal:define="fields view/search_form/get_fields">
             <tr>
               <th class="align-right"
-                width="20%">
+                width="20%" i18n:translate="">
                 Element
               </th>
-              <th>
+              <th i18n:translate="">
                 Content
               </th>
-              <th width="40%">
+              <th width="40%" i18n:translate="">
                 Note
               </th>
             </tr>
@@ -91,7 +91,8 @@
                   name="search_results:method"
                   value="Find"
                   title="access key: alt-f"
-                  accesskey="s"
+                  accesskey="f"
+                  i18n:attributes="value title"
                 />
               </td>
             </tr>

@@ -37,7 +37,7 @@
       title="up to top of publication"
       tal:attributes="href publication_url"
       tal:content="python: publication.get_short_title_editable() == '' and publication.id or publication.get_short_title_editable()"
-       i18n:attributes="title">
+      i18n:attributes="title">
       Publication
     </a>
     </div>
@@ -75,7 +75,8 @@
           onclick string:javascript:window.location='${item_url}/edit/{__vein_id__}'">
         <a class="icon"
           title="container"
-          tal:attributes="href string:${item_url}/edit/{__vein_id__}">
+          tal:attributes="href string:${item_url}/edit/{__vein_id__}"
+          i18n:attributes="title">
           <img tal:replace="structure python:here.render_icon(item)" />
         </a>
         <a class="blacklink"

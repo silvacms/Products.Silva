@@ -6,7 +6,7 @@
       metal:fill-slot="style">
       @import url(globals/silva.css);
     </style>
-    <title>Search results</title>
+    <title i18n:translate="">Search results</title>
   </head>
   <body>
     <metal:block fill-slot="main"
@@ -29,20 +29,20 @@
             <tr class="controls">
               <td class="rowhead" align="left">
                 <tal:block condition="request/previous_batch_url | nothing">
-                  [<a href="previousbatch" tal:attributes="href request/previous_batch_url">
+                  [<a href="previousbatch" tal:attributes="href request/previous_batch_url" i18n:translate="">
                   &lt;&lt; Previous
                   </a>]
                 </tal:block>
               </td>
-              <td class="rowhead" nowrap="1">
+              <td class="rowhead" nowrap="1" i18n:translate="">
                 Showing results
-                <tal:block replace="batch/start" />
+                <tal:block replace="batch/start" i18n:name="batch_start" />
                 to
-                <tal:block replace="batch/end" />.
+                <tal:block replace="batch/end" i18n:name="batch_end" />.
               </td>
               <td class="rowhead" align="right">
                 <tal:block condition="request/next_batch_url | nothing">
-                  [<a href="nextbatch" tal:attributes="href request/next_batch_url">
+                  [<a href="nextbatch" tal:attributes="href request/next_batch_url" i18n:translate="">
                   Next &gt;&gt;
                   </a>]
                 </tal:block>
@@ -76,7 +76,7 @@
             <tr class="controls">
               <td class="rowhead" align="left">
                 <tal:block condition="request/previous_batch_url | nothing">
-                  [<a href="previousbatch" tal:attributes="href request/previous_batch_url">
+                  [<a href="previousbatch" tal:attributes="href request/previous_batch_url" i18n:translate="">
                   &lt;&lt; Previous
                   </a>]
                 </tal:block>
@@ -85,7 +85,7 @@
               </td>
               <td class="rowhead" align="right">
                 <tal:block condition="request/next_batch_url | nothing">
-                  [<a href="nextbatch" tal:attributes="href request/next_batch_url">
+                  [<a href="nextbatch" tal:attributes="href request/next_batch_url" i18n:translate="">
                   Next &gt;&gt;
                   </a>]
                 </tal:block>

@@ -21,10 +21,10 @@
         tal:define="p batch/previous | nothing" 
         tal:condition="p"> 
         <a href=""
-          tal:attributes="href python: '%s?%s' % (url , mq( request.form, {batch.b_start_str:p.first} ))">
+          tal:attributes="href python: '%s?%s' % (url , mq( request.form, {batch.b_start_str:p.first} ))" i18n:translate="">
           &laquo;
           Previous
-          <span tal:content="p/length">n</span> 
+          <span tal:content="p/length" i18n:name="n">n</span> 
           items
         </a>
       </span>
@@ -33,9 +33,9 @@
         tal:define="n batch/next | nothing" 
         tal:condition="n">
         <a href=""
-          tal:attributes="href python: '%s?%s' % (url , mq( request.form, {batch.b_start_str:n.first} ))">
+          tal:attributes="href python: '%s?%s' % (url , mq( request.form, {batch.b_start_str:n.first} ))" i18n:translate="">
           Next
-          <span tal:content="n/length">n</span> 
+          <span tal:content="n/length" i18n:name="n">n</span> 
           items
           &raquo;
         </a>

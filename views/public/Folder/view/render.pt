@@ -1,4 +1,4 @@
 <div tal:omit-tag="" tal:define="model request/model">
 <p tal:condition="model/get_default | nothing" 
-   tal:replace="structure python:model.get_default().view()">View</p>
+   tal:replace="structure python:model.get_default().view()" i18n:translate="">View</p>
 </div>

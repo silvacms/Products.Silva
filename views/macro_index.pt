@@ -182,6 +182,7 @@ function handle_default_action(element, event, action)
         height="16"
         width="16"
         tal:attributes="src string:${root_url}/globals/up_to_top_gray.gif"
+        i18n:attributes="alt"
       />
     </a>
   </div>
@@ -194,6 +195,7 @@ function handle_default_action(element, event, action)
         height="16"
         width="16"
         tal:attributes="src string:${root_url}/globals/up_to_top_gray.gif"
+        i18n:attributes="alt"
       />
     </a>
   </div>
@@ -273,7 +275,8 @@ function handle_default_action(element, event, action)
     title="Request an additional role in this location: alt-,"
     accesskey=","
     tal:condition="view/service_members/allow_authentication_requests"
-    tal:attributes="href string:public/request_roles?last_url=${url}/edit/${template/id}">
+    tal:attributes="href string:public/request_roles?last_url=${url}/edit/${template/id}"
+    i18n:translate="">
     request access
   </a>
 </div>

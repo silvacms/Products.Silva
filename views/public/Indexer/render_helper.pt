@@ -1,4 +1,4 @@
-<h3>Index</h3>
+<h3 i18n:translate="">Index</h3>
 
 <table class="indexer"
   tal:define="model request/model; view here;
@@ -7,7 +7,7 @@
 	<th class="transparent" align="left">
 	Terms
 	</th>
-	<th class="transparent" align="left">
+	<th class="transparent" align="left" i18n:translate="">
 	Links
 	</th>
   </tr>
@@ -21,7 +21,7 @@
   </tr>
 
   <tr valign="top" tal:condition="python: items == None">
-  <td colspan="2">
+  <td colspan="2" i18n:translate="">
   No index items listed or found. Perhaps go to the edit tab and run the indexer.
 	</td>
   </tr>

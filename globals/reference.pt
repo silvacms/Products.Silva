@@ -2,10 +2,11 @@
 <!-- _______ Silva version 0.9.3.4e _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal">
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
 <head>
-  <title>Silva - Reference</title>
+  <title i18n:translate="">Silva - Reference</title>
   <!-- Links to favicon and stylesheet -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
@@ -24,10 +25,13 @@
   back
 </a>
 <div class="public">
-<h2 style="margin-top:2em;">
+<h2 style="margin-top:2em;" i18n:translate="">
   <a href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-s"
-    accesskey="s">
+    accesskey="s"
+    i18n:attributes="title"
+    i18n:name="silva_icon"
+     >
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
       tal:attributes="href here/globals/silva_32.png/absolute_url | nothing" /></a>
   &nbsp;Silva &#8211; medium independent content management
@@ -35,6 +39,7 @@
 
 <div class="citation"
   style="margin:2em 0; padding:0 1em 0.3em 1em; border-width:3px; border-style:double; border-color:#6873a5">
+  <!--  XXX: i18n impossible? Maybe find some definitions in english-dutch dictionaries?-->
   <dl>
     <dt>
       From WordNet (r) 1.6 [wn]:
@@ -54,13 +59,13 @@
   </dl>
 </div>
 
-<h3>Credits</h3>
+<h3 i18n:translate="">Credits</h3>
 
-<p style="line-height:1.5em;">
-  Silva is developed by <a href="http://www.infrae.com/">Infrae</a> and many others. <br />
+<p style="line-height:1.5em;" i18n:translate="">
+  Silva is developed by <a href="http://www.infrae.com/" i18n:name="infrae">Infrae</a> and many others. <br />
 </p>
 
-<h4>Infrae Silva crew</h4>
+<h4 i18n:translate="">Infrae Silva crew</h4>
 
 <p style="line-height:1.5em;">
   Kit Blake<br />
@@ -74,7 +79,7 @@
   Torvald de Boskat<br />
 </p>
 
-<h4>External developers</h4>
+<h4 i18n:translate="">External developers</h4>
 
 <p style="line-height:1.5em;">
   Godefroid Chapelle from <a href="http://www.bubblenet.be/">BubbleNet.be</a><br />
@@ -88,31 +93,34 @@
   Christian Zagrodnick (and others) from <a href="http://www.gocept.com/">gocept</a><br />
 </p>
   
-<h4>Thanks to....</h4>
+<h4 i18n:translate="">Thanks to....</h4>
 
-<p>
-  The people at <a href="http://www.ethz.ch/">ETH Zürich</a> for their feedback, contributions, and innovation.
+<p i18n:translate="">
+  The people at <a href="http://www.ethz.ch/" i18n:name="eth_zuerich">ETH Zürich</a> for their feedback, contributions, and innovation.
 </p>
-<p>
-  Jan Smith at <a href="http://ozzope.org">ozzope.org</a> for advice, hosting the documentation wiki, and her tutorials.
+<p i18n:translate="">
+  Jan Smith at <a href="http://ozzope.org" i18n:name="ozzope">ozzope.org</a> for advice, hosting the documentation wiki, and her tutorials.
 </p>
-<p>
-  Many thanks go to Hans Verster at the <a href="http://www.eur.nl/">Erasmus University Rotterdam</a> for his vision and support.
+<p i18n:translate="">
+  Many thanks go to Hans Verster at the <a href="http://www.eur.nl/" i18n:name="eur">Erasmus University Rotterdam</a> for his vision and support.
 </p>
-<p>
+<p  i18n:translate="">
   <br />
   <br />
-  <span class="subhead" tal:content="here/get_silva_product_version"/><br />
+  <span class="subhead" tal:content="here/get_silva_product_version" i18n:name="silva_version"/><br />
   <a style="float:right; margin-bottom:1em;" 
     href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-i"
-    accesskey="i">
+    accesskey="i"
+    i18n:attributes="title"
+    i18n:name="silva_icon">
     <img style="vertical-align:top;"
       src="powered_by.png" 
       width="64"
       height="16"
       border="0"
       alt="Silva site"
+      i18n:attributes="alt"
     />
   </a>
   &#xa9; Copyright 2001-2004 Infrae. All rights reserved.
