@@ -1,80 +1,99 @@
 <html metal:use-macro="here/layout_macro.html/macros/layout">
   <head>
-    <title>Search</title>
+    <style media="all"
+      type="text/css"
+      metal:fill-slot="style">
+      @import url(globals/plone.css);
+      @import url(globals/ploneCustom.css);
+    </style>
+    <title>Search results</title>
   </head>
   <body>
-      <metal:block fill-slot="main"
-        tal:define="
-          view here;
-          model request/model;
-          icon python:view.render_icon(model);
-          content_type here/set_content_type;"
-        >
-        <tal:block define="dummy here/set_content_type" />
-        <form method="POST" name="form" action=".">
-          <table class="listing">
-            <thead>
-              <tal:block replace="nothing">
-                ______________ vein + title row ______________
+    <metal:block fill-slot="main"
+      tal:define="
+        view here;
+        content_type here/set_content_type;
+
+        model request/model;
+        icon python:view.render_icon(model);          
+
+        results view/perform_search;
+        batch python:view.getBatch(results);"
+      >
+      <tal:block define="dummy here/set_content_type" />
+      <form method="POST" name="form" action=".">
+
+      <tal:block tal:condition="results">    
+        <table class="listing" cellspacing="0" cellpadding="3" border="0" width="100%">
+          <thead>
+            <tr class="controls">
+              <td class="rowhead" align="left">
+                <tal:block condition="request/previous_batch_url | nothing">
+                  [<a href="previousbatch" tal:attributes="href request/previous_batch_url">
+                  &lt;&lt; Previous
+                  </a>]
+                </tal:block>
+              </td>
+              <td class="rowhead" nowrap="1">
+                Showing results
+                <tal:block replace="batch/start" />
+                to
+                <tal:block replace="batch/end" />.
+              </td>
+              <td class="rowhead" align="right">
+                <tal:block condition="request/next_batch_url | nothing">
+                  [<a href="nextbatch" tal:attributes="href request/next_batch_url">
+                  Next &gt;&gt;
+                  </a>]
+                </tal:block>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tal:block repeat="item batch">
+              <tal:block
+                tal:define="iterate repeat/item/even;">
+                <tr valign="top"
+                  tal:attributes="class python: iterate and 'even' or 'odd'">
+                  <td>
+                  </td>
+                  <td
+                    tal:define="
+                      doc item/getObject;
+                      url doc/silva_object_url | string:#;
+                      ">
+                    <a href="#"
+                      tal:content="string:${doc/get_title_or_id}"
+                      tal:attributes="href url" />
+                  </td>
+                  <td>
+                  </td>
+                </tr>
               </tal:block>
-              <tr>
-                <td class="top"
-                  colspan="3">
-                  <h2>
-                    <img tal:replace="structure icon" />
-                    Items found in
-                    <span style="text-transform:lowercase;"
-                      tal:content="model/meta_type">Meta type</span> 
-                      &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
-                  </h2>
-                </td>
-              </tr>
-              <tal:block replace="nothing">
-                ______________ top controls row ______________
-              </tal:block>
-              <tr class="top-controls">
-                <td colspan="3">
-                  <h3>
-                  </h3>
-                </td>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <th class="align-right"
-                  width="12%">
-                  Object
-                </th>
-                <th>
-                </th>
-                <th width="40%">
-                </th>
-              </tr>
-
-              <tr tal:repeat="result view/perform_search">
-                <td colspan="3"
-                  tal:define="
-                    doc result/getObject;
-                    url doc/silva_object_url;
-                    ">
-                  <a href="#"
-                    tal:content="string:${doc/get_title_or_id} (${url})"
-                    tal:attributes="href url" />
-                </td>
-              </tr>
-
-            </tbody>
-
-            <tfoot>
-              <tr class="controls">
-                <td class="align-right"
-                  colspan="3">
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </form>
+            </tal:block>
+          </tbody>
+          <tfoot>
+            <tr class="controls">
+              <td class="rowhead" align="left">
+                <tal:block condition="request/previous_batch_url | nothing">
+                  [<a href="previousbatch" tal:attributes="href request/previous_batch_url">
+                  &lt;&lt; Previous
+                  </a>]
+                </tal:block>
+              </td>
+              <td class="rowhead" nowrap="1">
+              </td>
+              <td class="rowhead" align="right">
+                <tal:block condition="request/next_batch_url | nothing">
+                  [<a href="nextbatch" tal:attributes="href request/next_batch_url">
+                  Next &gt;&gt;
+                  </a>]
+                </tal:block>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </tal:block>
 
     </metal:block>
   </body>

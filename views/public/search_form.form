@@ -11,7 +11,6 @@
     <group>
       <title>Default</title>
       <fields>
-
         <field><id>fulltext</id> <type>StringField</type>
           <values>
             <alternate_name></alternate_name>
@@ -26,7 +25,9 @@
             <default></default>
             <title>Content</title>
             <truncate type="int">0</truncate>
-            <description></description>
+            <description>
+              Use an asterix ('*') for wildcard.
+            </description>
             <whitespace_preserve type="int">0</whitespace_preserve>
             <extra></extra>
           </values>
@@ -52,7 +53,8 @@
             <default></default>
             <title>Title</title>
             <truncate type="int">0</truncate>
-            <description></description>
+            <description>
+            </description>
             <whitespace_preserve type="int">0</whitespace_preserve>
             <extra></extra>
           </values>
@@ -63,6 +65,22 @@
             <message name="required_not_found">Input is required but no input given.</message>
             <message name="too_long">Too much input was given.</message>
           </messages>
+        </field>
+        <field><id>search_subtree</id> <type>CheckBoxField</type>
+          <values>
+            <alternate_name></alternate_name>
+            <hidden type="int">0</hidden>
+            <css_class></css_class>
+            <default type="int">1</default>
+            <title>Subtree only</title>
+            <description>
+              Check to restrict search to this content's subtree.
+            </description>
+            <external_validator></external_validator>
+            <extra>id="search_subtree"</extra>
+          </values>
+          <tales>
+          </tales>
         </field>
         <field><id>metatype</id> <type>MultiListField</type>
           <values>
@@ -78,10 +96,13 @@
             <css_class></css_class>
             <default type="list">[]</default>
             <title>Content type</title>
-            <description></description>
+            <description>
+              Select (multiple using ctrl-key) object type(s) to search in. 
+              If none is selected, all types are searched.
+            </description>
             <extra></extra>
           </values>
-          <tales>
+          <tales>            
             <items>python: form.REQUEST.model.service_catalog.uniqueValuesFor('meta_type')</items>
           </tales>
           <messages>

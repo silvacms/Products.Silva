@@ -25,8 +25,10 @@ metatype = result.get('metatypes')
 if metatype:
     query['meta_type'] = metatype
 
-path = model.getPhysicalPath()
-query['path'] = '/'.join(path)
+subtree = result.get('search_subtree')
+if subtree:
+    path = model.get_container().getPhysicalPath()
+    query['path'] = '/'.join(path)
 
 #raise str(query)
 return catalog(query)
