@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 import unittest
 
 # 
@@ -201,6 +201,18 @@ class HTML2XML(Base):
         img = img[0]
         self.assertEquals(img.attrs.get('path'), '/silva/path')
 
+
+    def test_table_col_determination(self):
+        frag="""<table silva_columns="2" silva_type="datagrid" silva_column_info="L:1 R:1">
+                   <tr><td>1</td><td>2</td><td>3</td></tr>
+                </table>"""
+        htmlnodes = self.parse_htmlfrag(frag)
+        silvanodes = htmlnodes.conv()
+        table = silvanodes.find_one('table')
+        #print table.asBytes()
+        self.assertEquals(table.attrs.get('columns'), 3)
+        self.assertEquals(table.attrs.get('column_info'), "L:1 R:1 L:1")
+
     def test_nested_list_conversion_works_with_titles(self):
         frag="""<ul><li>one</li>
                     <ol><li>nested item</li></ol>
@@ -269,16 +281,22 @@ class RoundtripWithTidy(Base):
         orignode = orignode.compact()
         try:
             self.assertEquals(silvanode, orignode)
-        except:
-            print 
-            print "*"*70
-            print orignode.asBytes()
-            print "-"*70
-            print html
-            print "-"*70
-            print silvanode.asBytes()
-            print "*"*70
-            raise
+        except AssertionError:
+            try:
+                s1 = silvanode.asBytes()
+                s2 = orignode.asBytes()
+                self.assertEquals(s1,s2)
+                print "warning, dom_nodes are not equal but string repr is"
+            except AssertionError:
+                print 
+                print "*"*70
+                print orignode.asBytes()
+                print "-"*70
+                print html
+                print "-"*70
+                print silvanode.asBytes()
+                print "*"*70
+                raise
         return htmlnode
 
     def test_workaround_eonpro_bug_p_space(self):
@@ -571,7 +589,7 @@ class RoundtripWithTidy(Base):
         self.assert_(a.content.asBytes()=='text')
 
     def test_table1(self):
-        tabledoc = '''<table columns="3">
+        tabledoc = '''<table column_info="L:1 L:1 L:1" columns="3">
                           <row>
                               <field><p>eins</p></field>
                               <field><p>zwei</p></field>

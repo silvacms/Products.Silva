@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.10 $'
+__version__='$Revision: 1.11 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -427,12 +427,17 @@ class pre(Element):
 class table(Element):
     def convert(self, context):
         rows = self.content.find('tr')
-        if len(rows)>0:
-            cols = len(rows[0].find('td'))
+        cols = len(rows[0].find('td'))
+
+        column_info = self.attrs.get('silva_column_info','').split()
+        if cols > len(column_info):
+            column_info.extend(["L:1"] * (cols-len(column_info)))
+        column_info = " ".join(column_info[:cols])
+
         return silva.table(
                 self.convert_inner(context),
-                columns=self.attrs.get('cols', cols),
-                column_info = self.attrs.get('silva_column_info'),
+                columns=cols, 
+                column_info = column_info,
                 type=self.attrs.get('silva_type')
             )
 
