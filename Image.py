@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.29 2004/07/09 10:20:07 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.30 2004/07/12 17:18:54 zagy Exp $
 
 # Python
 import re, string
@@ -96,8 +96,6 @@ class Image(Asset):
             img = self.thumbnail_image
         if img is None:
             img = self.image
-        args = ()
-        kw = {}
         return self._image_index_html(img, REQUEST, RESPONSE)
 
     def manage_afterAdd(self, item, container):
@@ -634,12 +632,14 @@ class Image(Asset):
         return image_reference
 
     def _image_index_html(self, image, REQUEST, RESPONSE):
-        if img.meta_type == 'Image':
+        args = ()
+        kw = {}
+        if image.meta_type == 'Image':
             # ExtFile and OFS.Image have different signature
             args = (REQUEST, RESPONSE)
         else:
             kw['REQUEST'] = REQUEST
-        return img.index_html(*args, **kw)
+        return image.index_html(*args, **kw)
 
 
 InitializeClass(Image)
