@@ -15,7 +15,12 @@
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 
-<table class="columns columns2">
+<table class="columns columns2"
+  tal:define="
+    version     python:model.get_editable();
+    link_status python:here.get_ghost_link_status_text(version);
+    content_url python:version.get_content_url();
+">
   <tbody>
     <tr>
       <td class="left">
@@ -34,140 +39,140 @@
       </tal:block>
       <td class="main">
 
-<form method="POST" 
-  name="form" 
-  action="."
-  tal:define="
-  version     python:model.get_editable();
-  link_status python:here.get_ghost_link_status_text(version);
-  content_url python:version.get_content_url();
- ">
-  <table class="listing">
+<table class="listing">
+  <form method="POST" 
+    name="form" 
+    action=".">
     <thead>
-      <tal:block replace="nothing">
-        ______________ vein + title row ______________
-      </tal:block>
-      <tr>
-        <td class="top"
-          colspan="3">
-          <h2>
-            <img tal:replace="structure python:view.render_icon(model)" />
-            ghost folder of &#xab;<tal:block content="title" />&#xbb;
-          </h2>
-        </td>
-      </tr>
-      <tal:block replace="nothing">
-        ______________ top controls row ______________
-      </tal:block>
-      <tr class="top-controls">
-        <td colspan="3">
-          <input class="button"
-            type="submit" 
-            name="convert_to_folder:method" 
-            value="convert to folder"
-            title="access key: alt-f"
-            accesskey="f"
-            tal:condition="not:link_status"
-          />
-          <input class="button"
-            type="submit" 
-            name="convert_to_publication:method" 
-            value="convert to publication"
-            title="access key: alt-p"
-            accesskey="p"
-            tal:condition="not:link_status"
-          />
-        </td>
-      </tr>
+       <tal:block replace="nothing">
+          ______________ vein + title row ______________
+       </tal:block>
+       <tr>
+          <td class="top"
+             colspan="3">
+             <h2>
+                <img tal:replace="structure python:view.render_icon(model)" />
+                ghost folder of &#xab;<tal:block content="title" />&#xbb;
+             </h2>
+          </td>
+       </tr>
+       <tal:block replace="nothing">
+          ______________ top controls row ______________
+       </tal:block>
+       <tr class="top-controls">
+          <td colspan="3">
+             <input class="button"
+                type="submit" 
+                name="convert_to_folder:method" 
+                value="convert to folder"
+                title="access key: alt-f"
+                accesskey="f"
+                tal:condition="not:link_status"
+             />
+             <input class="button"
+                type="submit" 
+                name="convert_to_publication:method" 
+                value="convert to publication"
+                title="access key: alt-p"
+                accesskey="p"
+                tal:condition="not:link_status"
+             />
+          </td>
+       </tr>
     </thead>
+  </form>
 
-    <tbody>
-      <tr>
-        <th class="align-right"
-          width="12%">
-          attributes
-        </th>
-        <th>
-          content
-        </th>
-        <th width="30%">
-          note
-        </th>
-      </tr>
+  <form method="POST" 
+     name="form" 
+     action=".">
+     <tbody>
+        <tr>
+           <th class="align-right"
+              width="12%">
+              attributes
+           </th>
+           <th>
+              content
+           </th>
+           <th width="30%">
+              note
+           </th>
+        </tr>
 
-      <tr class="even">
-        <td class="field-title">
-          <script type="text/javascript"
-            tal:content="structure here/reference.js" />
-          <input class="navigation" 
-            type="button" 
-            value="reference..."
-            title="Locate item to refer to: alt-r"
-            accesskey="r"
-            tal:define="asset_context python:here.get_start_container();"
-            tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
-            /><span class="warning">*</span>
-        </td>
-        <td>
-          <input type="text"
-            name="content_url"
-            size="60" 
-            value="" 
-            tal:attributes="value content_url"
-          />
-        </td>
-        <td>
-          Path to original (begins with &#8216;/&#8217;).
-        </td>
-      </tr>
+        <tr class="even">
+           <td class="field-title">
+              <script type="text/javascript"
+                 tal:content="structure here/reference.js" />
+              <input class="navigation" 
+                 type="button" 
+                 value="reference..."
+                 title="Locate item to refer to: alt-r"
+                 accesskey="r"
+                 tal:define="asset_context python:here.get_start_container();"
+                 tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+                 /><span class="warning">*</span>
+           </td>
+           <td>
+              <input type="text"
+                 name="content_url"
+                 size="60" 
+                 value="" 
+                 tal:attributes="value content_url"
+              />
+           </td>
+           <td>
+              Path to original (begins with &#8216;/&#8217;).
+           </td>
+        </tr>
 
-      <tr class="odd"
-        tal:condition="not:link_status">
-        <td class="field-title">
-          link
-        </td>
-        <td>
-          <a href="original"
-            tal:attributes="href python:content_url + '/edit/tab_edit'"
-            tal:content="python: model.get_editable().get_title_or_id()">
-            link
-          </a>
-        </td>
-        <td>
-          Link to contents screen of original.
-        </td>
-      </tr>
+        <tr class="odd"
+           tal:condition="not:link_status">
+           <td class="field-title">
+              link
+           </td>
+           <td>
+              <a href="original"
+                 tal:attributes="href python:content_url + '/edit/tab_edit'"
+                 tal:content="python: model.get_editable().get_title_or_id()">
+                 link
+              </a>
+           </td>
+           <td>
+              Link to contents screen of original.
+           </td>
+        </tr>
 
-      <tr class="odd"
-        tal:condition="link_status">
-        <td class="field-title">
-          problem
-        </td>
-        <td class="alert">
-          <span class="error"
-          tal:content="structure link_status" />
-        </td>
-        <td>
-          &nbsp;
-        </td>
-      </tr>
-    </tbody>
+        <tr class="odd"
+           tal:condition="link_status">
+           <td class="field-title">
+              problem
+           </td>
+           <td class="alert">
+              <span class="error"
+                 tal:content="structure link_status" />
+           </td>
+           <td>
+              &nbsp;
+           </td>
+        </tr>
+     </tbody>
 
-    <tfoot>
-      <tr class="controls">
-        <td class="align-right" 
-          colspan="3">
-          <input class="button"
-            type="submit"
-            name="submit:method"
-            value="save reference"
-            title="access key: alt-s"
-            accesskey="s"
-          />
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+     <tfoot>
+        <tr class="controls">
+           <td class="align-right" 
+              colspan="3">
+              <input class="button"
+                 type="submit"
+                 name="submit:method"
+                 value="save reference"
+                 title="access key: alt-s"
+                 accesskey="s"
+              />
+           </td>
+        </tr>
+     </tfoot>
+  </form>
+</table>
        
 <tal:block replace="nothing">
   ____________________________ contents listing ____________________________
@@ -479,8 +484,6 @@
     </tr>
   </tfoot>
 </table>
-
-</form>
 
       </td>
     </tr>
