@@ -53,6 +53,8 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
         set_ids.sort()
         for set_id in set_ids:
             prefix, namespace = binding.collection[set_id].getNamespace()
+            if namespace != 'http://infrae.com/namespaces/metadata/silva' and namespace != 'http://infrae.com/namespaces/metadata/silva-extra':
+                self.handler.startPrefixMapping(prefix, namespace)
             self.startElement('set', {'id': set_id})
             keys = binding._getData(set_id).keys()
             keys.sort()
