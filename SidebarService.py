@@ -33,6 +33,8 @@ class SidebarService(SimpleItem):
         self.id = id
         self._title = title
 
+    security.declareProtected(
+        'View management screens', 'manage_sidebarServiceEdit')
     def manage_sidebarServiceEdit(self, id):
         """set the cache container
         """
