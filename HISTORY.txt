@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.3.5
+
+    Features added
+
+      - Preliminary Epoz (NG) integration for SilvaDocument.
+
   0.9.3.4
   
     Bugs fixed
