@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.56 $
+# $Revision: 1.57 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -29,6 +29,11 @@ class Root(Publication):
 
     __implements__ = IRoot
 
+    def __init__(self, id, title):
+        Root.inheritedAttribute('__init__')(self, id, title)
+        # if we add a new root, version starts out as the software version
+        self._content_version = self.get_silva_software_version()
+    
     # MANIPULATORS
 
     def manage_afterAdd(self, item, container):
@@ -118,6 +123,23 @@ class Root(Publication):
             return 0
         else:
             return self._addables_forbidden.has_key(meta_type)
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_silva_software_version')
+    def get_silva_software_version(self):
+        """The version of the Silva software.
+        """
+        return '0.9.2'
+    
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_silva_content_version')
+    def get_silva_content_version(self):
+        """Return the version of Silva content.
+
+        This version is usually the same as the software version, but
+        can be different in case the content was not yet updated.
+        """
+        return getattr(self, '_content_version', 'before 0.9.2')
     
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'upgrade_silva')
