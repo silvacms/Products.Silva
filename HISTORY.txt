@@ -7,7 +7,8 @@ Silva changes
 
     Features added
 
-      - Silva has been i18n-ed.
+      - Silva has been i18n-ed. (Works with Placeless Translation Service
+        1.0)
 
       - Link objects now accept other protocols in the URL too (https,
         news, ftp, mailto).
@@ -18,6 +19,9 @@ Silva changes
         whenever a publication event for this object is triggered.
 
     Bugs fixed
+
+      - Fixed a bug in the xml importer that could result in loss of text
+        data.
 
       - Fixed color of error display when something could not be pasted.
         Note: see doc/developer_changes.txt for information about the impact
