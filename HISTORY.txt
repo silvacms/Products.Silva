@@ -8,7 +8,10 @@ Silva changes
 
     Features added
 
-      - Images can be viewed w/o the /image at the end (issue 594)
+      - An Image has a thumbnail now, retrievable via foo.jpg?thumbnail.
+    
+      - Images can be viewed w/o the /image at the end (issue 594), the high
+        resolution version can be retrieved via foo.jpg?hires. 
 
       - Kupu, a WYSIWYG editor for Silva Document. This editor offers
         a load of new features:

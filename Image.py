@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.11 2004/04/12 08:22:32 kitblake Exp $
+# $Id: Image.py,v 1.50.4.1.6.12 2004/04/14 16:28:24 zagy Exp $
 
 # Python
 import re, string 
@@ -54,8 +54,11 @@ class Image(Asset):
     
     re_WidthXHeight = re.compile(r'^([0-9]+)[Xx]([0-9]+)$')
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
+    
+    thumbnail_size = 120
 
     hires_image = None
+    thumbnail_image = None
     web_scale = '100%'
     web_format = 'JPEG'
     web_formats = ('JPEG', 'GIF', 'PNG')
@@ -75,12 +78,17 @@ class Image(Asset):
         view_method: parameter is set by preview_html (for instance) but
             ignored here.
         """
-        img = self.image
+        img = None
         if REQUEST is None:
             REQUEST = self.REQUEST
         RESPONSE = REQUEST.RESPONSE
-        if REQUEST.QUERY_STRING == 'hires':
+        query = REQUEST.QUERY_STRING
+        if query == 'hires':
             img = self.hires_image
+        elif query == 'thumbnail':
+            img = self.thumbnail_image
+        if img is None:
+            img = self.image
         args = ()
         if img.meta_type == 'Image':
             # ExtFile and OFS.Image have different signature
@@ -113,6 +121,9 @@ class Image(Asset):
             
         """
         update_cache = 0
+        if self.cropped:
+            update_cache = 1
+            self.cropped = 0
         if self.hires_image is None:
             update_cache = 1
             self.hires_image = self.image
@@ -126,7 +137,7 @@ class Image(Asset):
             update_cache = 1
             self.web_scale = web_scale
         if self.hires_image is not None and update_cache:
-            self._createWebPresentation()
+            self._createDerivedImages()
    
     def cropImage(self, size, x, y):
         """crops the image
@@ -161,7 +172,7 @@ class Image(Asset):
         format = self.getFormat()
         if format in self.web_formats:
             self.web_format = format
-        self._createWebPresentation()
+        self._createDerivedImages()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_zope_image')
@@ -169,7 +180,7 @@ class Image(Asset):
         """Set the image object with zope image.
         """
         self.hires_image = zope_img
-        self._createWebPresentation()
+        self._createDerivedImages()
 
     security.declareProtected(SilvaPermissions.View, 'getCanonicalWebScale')
     def getCanonicalWebScale(self, scale=None):
@@ -352,7 +363,10 @@ class Image(Asset):
             get_transaction().abort()
             raise
         return image
-    
+
+    def _createDerivedImages(self):
+        self._createWebPresentation()
+        self._createThumbnail()
 
     def _createWebPresentation(self):
         width, height = self.getCanonicalWebScale()
@@ -367,11 +381,27 @@ class Image(Asset):
             return
         self.cropped = 0 
         web_image_data = StringIO()
-        web_image = image.resize((width, height), PIL.Image.BICUBIC)
+        web_image = image.resize((width, height), PIL.Image.ANTIALIAS)
         web_image = self._prepareWebFormat(web_image)
         web_image.save(web_image_data, self.web_format)
         self.image = OFS.Image.Image(
             'image', self.get_title(), web_image_data)
+
+    def _createThumbnail(self):
+        try:
+            image = self._getPILImage(self.hires_image)
+        except ValueError:
+            # no thumbnail
+            self.thumbnail_image = None
+            return
+        thumb = image.copy()
+        ts = self.thumbnail_size
+        thumb.thumbnail((ts, ts), PIL.Image.ANTIALIAS)
+        thumb_data = StringIO()
+        thumb.save(thumb_data, self.web_format)
+        self.thumbnail_image = OFS.Image.Image('thumbnail_image',
+            self.get_title(), thumb_data)
+        
 
     def _prepareWebFormat(self, pil_image):
         """converts image's mode if necessary"""
