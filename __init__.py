@@ -1,11 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.77 $
+# $Revision: 1.78 $
 import Metadata
 import Folder, Root
 import Publication, Ghost, Image, File, SimpleContent
 import DemoObject, Indexer
 import SQLDataSource
+import GhostFolder
 import install
 import helpers # to execute the module_permission statements
 import mangle
@@ -34,7 +35,8 @@ def initialize(context):
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
         Folder, Root, Publication, Ghost, Image, File, SimpleContent,
-        Indexer, SQLDataSource, DemoObject, Group, VirtualGroup],
+        Indexer, SQLDataSource, DemoObject, Group, VirtualGroup,
+        GhostFolder],
         install, depends_on=None)
 
     context.registerClass(

@@ -433,6 +433,7 @@ def registerViews(reg):
     reg.register('public', 'Silva Simple Content', ['public', 'SimpleContent'])
     reg.register('public', 'Silva SQL Data Source',
                  ['public', 'SQLDataSource'])
+    reg.register('public', 'Silva Ghost Folder', ['public', 'Folder'])
 
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
