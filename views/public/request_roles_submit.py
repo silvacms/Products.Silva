@@ -19,4 +19,4 @@ try:
 except Exception, e:
     return view.request_roles(message='Error: %s' % e)
 else:
-    return view.service_resources.Silva.request_processed(message='Roles requested. You will receive an e-mail from the Chief Editor or Manager as soon as your request is processed.')
+    return view.service_resources.Silva.request_processed(message='Roles requested. You will receive an e-mail from the Chief Editor or Manager as soon as your request is processed.', last_url=request['last_url'])

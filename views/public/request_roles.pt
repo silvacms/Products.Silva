@@ -22,6 +22,7 @@
 <tal:define define="global view here; global member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId())" />
 
 <form action="request_roles_submit" method="POST">
+<input type="hidden" name="last_url" tal:attributes="value view/REQUEST/last_url" />
 
 <div class="hilight borders top right left"
   style="padding: 0 0.5em 0 0.5em; clear: both; width: 50%;">

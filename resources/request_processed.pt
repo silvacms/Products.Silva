@@ -9,9 +9,10 @@
 <h2>Request processed</h2>
 
 <!-- __________________________ start feedback _________________________ -->
-<span tal:replace="structure options/message">message</span>
+<span tal:replace="structure options/message">message</span><br /><br />
 
+<a tal:attributes="href options/last_url">Go back to the object where you came from</a>
 </div>
 
-  </body>
+</body>
 </html>
