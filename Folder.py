@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.150.6.2 $
+# $Revision: 1.150.6.3 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -702,8 +702,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     def get_assets(self):
         result = []
         for object in self.objectValues(self.get_silva_asset_types()):
-            if IAsset.isImplementedBy(object):
-                result.append(object)
+            result.append(object)
         result.sort(lambda x,y: cmp(x.getId(), y.getId()))
         return result
 
