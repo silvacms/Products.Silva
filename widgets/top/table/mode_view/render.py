@@ -15,7 +15,7 @@ columns_info = context.get_columns_info()
 # than is used to be
 caption = ""
 nr_of_columns = len(columns_info)
-type = node.getAttribute('type')
+type = node.output_convert_html(node.getAttribute('type'))
 
 table_data = []
 for child in node.childNodes:
