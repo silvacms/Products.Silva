@@ -42,7 +42,7 @@
     &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data" />&nbsp;&nbsp;&nbsp;
     <select name="meta_type"
       tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value.replace(' ', '+')">
-      <option value="" disabled>Select...</option>
+      <option value="None" disabled="1">Select...</option>
       <tal:block tal:repeat="addable model/get_silva_addables">
         <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
                tal:attributes="value python: model.url_encode(addable['name'])" tal:content="addable/name"></option>
