@@ -69,11 +69,11 @@
 </metal:block>
 <metal:block fill-slot="edit_notes">
   <ul class="tips">
-    <li>Use the "Get image reference" button to locate an image.
-      If you know the location, you can type in the path directly.
+    <li>Use the "Get image reference" button to locate an image, or
+      type in the full path.
     </li>
-    <li>Alignments using 'float' make the next document element
-      wrap around the image - if there's room.
+    <li>A 'float' alignment allows the next document element
+      to wrap around the image - if there's room.
     </li>
   </ul>
 </metal:block>
