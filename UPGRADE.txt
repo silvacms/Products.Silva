@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36.8.1 $
+  CVS:        $Revision: 1.36.8.2 $
 
 Upgrading from 0.9.1 and below
 
@@ -32,8 +32,8 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
     In order to upgrade to 0.9.3 you need a new versions of Silva,
     Formulator, XMLWidgets. In addition to this you now need
-    ProxyIndex, Annotations and SilvaMetadata too. The Groups product
-    has also been updated.
+    ProxyIndex, Annotations, SilvaViews and SilvaMetadata too. The
+    Groups product has also been updated.
 
     Silva Documents are now in a separate package called
     SilvaDocument. This you need to have this Product too.
@@ -65,7 +65,15 @@ Upgrading Silva 0.9.2.x to 0.9.3
     SilvaMetadata:
 
         "SilvaMetadata-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.XXX.tgz
+
+    SilvaViews:
+
+        "SilvaViews-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/SilvaViews-0.XXX.tgz
     
+    Alternatively You can get a bundle of all required products at:
+ 
+         "Silva-0.9.3-all.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3-all.tgz
+
 
   Refreshing and upgrading the Silva product
 
