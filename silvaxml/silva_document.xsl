@@ -38,6 +38,10 @@
   <h6 class="minor"><xsl:apply-templates mode="text-content" /></h6>
 </xsl:template>
 
+<xsl:template match="p[@type='normal']" mode="text">
+<p class="p"><xsl:apply-templates mode="text-content" /></p>
+</xsl:template>
+
 <xsl:template match="p" mode="text">
 <p class="{@type}"><xsl:apply-templates mode="text-content" /></p>
 </xsl:template>
@@ -110,8 +114,21 @@
 <pre class="pre"><xsl:apply-templates mode="pre" /></pre>
 </xsl:template>
 
+<xsl:template match="nlist[@type='disc']" mode="text">
+<ul class="disc">
+<xsl:apply-templates mode="nlist" />
+</ul>
+</xsl:template>
+
 <xsl:template match="li" mode="list">
 <li><xsl:apply-templates mode="text-content" /></li>
+</xsl:template>
+
+<xsl:template match="li" mode="nlist">
+<li>
+<xsl:apply-templates select="*" mode="text-content" />
+<xsl:apply-templates select="p" mode="text" />
+</li>
 </xsl:template>
 
 <xsl:template match="dt" mode="dlist">
