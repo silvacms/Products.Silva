@@ -433,7 +433,7 @@ def registerViews(reg):
     reg.register('edit', 'Silva Simple Member',
                  ['edit', 'Member', 'SimpleMember'])
     reg.register('edit', 'Silva Ghost Folder',
-        ['edit', 'Content', 'GhostFolder'])
+        ['edit', 'Container', 'GhostFolder'])
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
