@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- _______ Silva version 0.8.5 _______ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  metal:define-macro="layout">
+
+<head metal:define-slot="head">
+  <title metal:define-slot="title" tal:content="here/get_title_html">layout_macro.html</title>
+  <meta name="DC.subject" content="Silva metadata subject" tal:attributes="content python:getattr(here, 'subject', '')" />
+  <meta metal:define-slot="meta" tal:omit-tag="" />
+  <link rel="shortcut icon" href="globals/favicon.ico" tal:attributes="href here/globals/favicon.ico/absolute_url" />
+  <link rel="stylesheet" href="globals/base.css" type="text/css" tal:attributes="href here/globals/base.css/absolute_url" />
+  <link rel="stylesheet" href="globals/silva.css" type="text/css" tal:attributes="href here/globals/silva.css/absolute_url" />
+  <link metal:define-slot="style" rel="stylesheet" href="frontend.css" type="text/css" tal:omit-tag="" />
+  <script metal:define-slot="script" type="text/javascript" tal:omit-tag="">
+    <!-- script slot -->
+  </script>
+</head>
+
+<body metal:define-slot="body" leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<metal:block define-slot="page_header">
+  <!-- page_header slot -->
+</metal:block>
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+<tr valign="top" height="100%">
+  <td width="16" bgcolor="#d1d4d8">
+    <img src="globals/silva_icon_32.gif" tal:attributes="src here/globals/silva_icon_32.gif/absolute_url" height="32" width="32" />
+  </td>
+  <td width="16" bgcolor="#dde1e4">
+    <img src="globals/pixel.gif" tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
+  </td>
+  <td width="12">
+    <img src="globals/pixel.gif" tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
+  </td>
+  <td width="512" class="margins">
+    <metal:block define-slot="navigation">
+      <!-- navigation slot -->
+    </metal:block>
+  </td>
+  <td>
+    &nbsp;
+  </td>
+</tr>
+<tr valign="top" height="100%">
+  <td bgcolor="#d1d4d8">
+  </td>
+  <td bgcolor="#dde1e4">
+    &nbsp;
+  </td>
+  <td>
+    &nbsp;
+  </td>
+  <td width="512">
+    <metal:block define-slot="table_of_contents">
+      <!-- table_of_contents slot -->
+    </metal:block>
+    <metal:block define-slot="main">
+      <!-- main slot -->
+    </metal:block>
+  </td>
+  <td>
+    &nbsp;
+  </td>
+</tr>
+</table>
+<metal:block define-slot="page_footer">
+  <!-- page_footer slot -->
+</metal:block>
+</body>
+</html>

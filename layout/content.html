@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- _______ Silva version 0.8.5 _______ -->
+<html metal:use-macro="here/layout_macro.html/macros/layout">
+
+<!-- only comments starting with a capital letter appear in the rendered HTML source -->
+
+<head>
+<!-- delete this title slot to use the automatic document title in layout_macro.html -->
+<title metal:fill-slot="title" tal:content="here/get_title_html">Local or custom title (in content.html)</title>
+
+<!-- add custom meta tags -->
+<metal:block fill-slot="meta">
+  <!-- Meta slot (empty) -->
+</metal:block>
+
+<!-- define custom stylesheet -->
+<metal:block fill-slot="style">
+  <!-- Start style slot -->
+  <link rel="stylesheet" href="frontend.css" type="text/css" tal:attributes="href here/frontend.css/absolute_url" />
+  <!-- End style slot -->
+</metal:block>
+
+<!-- add custom scripts -->
+<script metal:fill-slot="script">
+  <!-- Script slot (empty) -->
+</script>
+</head>
+
+<body>
+<div metal:fill-slot="page_header" tal:omit-tag="">
+  <!-- Page header slot (empty) -->
+</div>
+
+  <!-- this breadcrumb trail could be moved to layout_macro.html if it's always in use -->
+<div metal:fill-slot="navigation" class="margins">
+  <!-- Start navigation slot -->
+  <span class="breadcrumb"><span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
+    <a tal:attributes="href item/absolute_url" tal:content="structure item/get_title_html">Name</a>
+    <span tal:condition="not:repeat/item/end" tal:omit-tag="">/</span></span>
+  </span>
+  <!-- End navigation slot -->
+</div>
+
+<div metal:fill-slot="table_of_contents" tal:omit-tag="">
+  <!-- Table of Contents slot (empty) -->
+</div>
+
+<!-- start Silva content -->
+<div metal:fill-slot="main" class="margins" 
+  tal:define="view_method options/view_method"
+  tal:content="structure python:getattr(here, view_method)()">
+  <!-- this comment gets replaced by the Silva document content -->
+</div>
+<!-- end Silva content -->
+
+<div metal:fill-slot="page_footer" tal:omit-tag="">
+  <!-- Page footer slot (empty) -->
+</div>
+</body>
+</html>

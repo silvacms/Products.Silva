@@ -2,12 +2,15 @@
 """
 
 from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
+from Globals import package_home
+import os
 
 def install(root):
     configureProperties(root)
     configureCoreFolders(root)
     configureViews(root)
     configureXMLWidgets(root)
+    configureLayout(root)
     
 def uninstall(root):
     # Silva Core cannot be uninstalled
@@ -60,7 +63,41 @@ def configureViews(root):
     registerViews(root.service_view_registry)
     # and set Silva tree XXX should be more polite to extension packages
     root.service_view_registry.set_trees(['Silva'])
+
+def configureLayout(root):
+    """Install layout code into root.
+    """
+    for id in ['layout_macro.html', 'content.html', 'rename-to-override.html']:
+        zpt_add_helper(root, id, globals())    
+
+    for id in ['index_html.py', 'index_html_restricted.py', 'preview_html.py']:
+        py_add_helper(root, id, globals())
+
+    dtml_add_helper(root, 'frontend.css', globals())
     
+# helpers to add various objects to the root from the layout directory
+# these won't add FS objects but genuine ZMI managed code
+def zpt_add_helper(root, id, info):
+    root.manage_addProduct['PageTemplates'].manage_addPageTemplate(
+        id, text=read_file(id, info))
+
+def dtml_add_helper(root, id, info):
+    root.manage_addDTMLMethod(id, file=read_file(id, info))
+
+def py_add_helper(root, id, info):
+    filename = id
+    id = os.path.splitext(id)[0]
+    root.manage_addProduct['PythonScripts'].manage_addPythonScript(id)
+    obj = getattr(root, id)
+    obj.write(read_file(filename, info))
+
+def read_file(id, info):
+    filename = os.path.join(package_home(info), 'layout', id)
+    f = open(filename, 'rb')
+    text = f.read()
+    f.close()
+    return text
+
 def registerViews(reg):
     """Register core views on registry.
     """
