@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.104 $
+# $Revision: 1.105 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -645,6 +645,45 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
             return None
         else:
             return getattr(self, 'index')
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_default_editable')
+    def get_default_editable(self):
+        """Get the editable version of the default content object
+        of this container.
+        """
+        # Returns None if there's no default, or the default has no
+        # editable version.
+        default = self.get_default()
+        if default is None:
+            return None
+        return default.get_editable()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_default_previewable')
+    def get_default_previewable(self):
+        """Get the previewable version of the default content object
+        of this container.
+        """
+        # Returns None if there's no default, or the default has no
+        # previewable version.
+        default = self.get_default()
+        if default is None:
+            return None
+        return default.get_previewable()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_default_viewable')
+    def get_default_viewable(self):
+        """Get the viewable version of the default content object
+        of this container.
+        """
+        # Returns None if there's no default, or the default has no
+        # viewable version.
+        default = self.get_default()
+        if default is None:
+            return None
+        return default.get_viewable()
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
