@@ -54,16 +54,3 @@ def initialize(context):
           constructors = (Ghost.manage_addGhostVersionForm,
                           Ghost.manage_addGhostVersion)
           )
-     
-     context.registerClass(
-          Course.Course,
-          constructors = (Course.manage_addCourseForm,
-                          Course.manage_addCourse),
-          icon="www/silvacourse.gif"
-          )
-     
-     context.registerClass(
-          Course.CourseVersion,
-          constructors = (Course.manage_addCourseVersionForm,
-                          Course.manage_addCourseVersion)
-          )
