@@ -3,9 +3,11 @@
 <div metal:fill-slot="edit_input" tal:omit-tag="">
 <script type="text/javascript" tal:content="structure here/asset_reference.js" />
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
-<input type="button" class="navigation" name="" value="Add hyperlink..." style="float:right;" title="Access key: alt-a" accesskey="a"
-  tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup\', \'((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % node.get_container().absolute_url()" />
-&nbsp;List items: <br style="clear:both;" /> 
+<div align="right">
+<input type="button" class="navigation" name="" value="add hyperlink..." title="create a hyperlink: alt-a" accesskey="a"
+  tal:define="container node/get_container"
+    tal:attributes="onclick python:'getAssetReference(\'%s/edit/hyperlink_lookup?asset_context=%s\', \' ((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % (container.absolute_url(), '/'.join(container.getPhysicalPath()))" />
+    </div>
 <textarea style="width:100%" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
   tal:content="here/editable_content">Dummy</textarea><br />
 </div>
