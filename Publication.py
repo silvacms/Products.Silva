@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.47 $
+# $Revision: 1.48 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -37,10 +37,12 @@ class Publication(Folder.Folder):
 
     _addables_allowed_in_publication = None
 
+    layout = None
+
     def __init__(self, id):
         Publication.inheritedAttribute('__init__')(
             self, id)
-        self.layout = "myLayout"
+        self.layout = None
     
     # MANIPULATORS
     
