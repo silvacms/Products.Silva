@@ -18,4 +18,4 @@ if request['what'] != 'pre':
 # don't need to conver this, later on we will convert it in replace_text()
 data = request['data']
 
-editorsupport.replace_pre(node, data)
+editorsupport.replace_pre(node, node.input_convert(data))
