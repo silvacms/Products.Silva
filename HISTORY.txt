@@ -48,6 +48,10 @@ Silva changes
 
     Bugs Fixed
 
+        - The widgets cache would be cleared correctly upon Document
+          deletion. This could result in inconsistent Document editor states
+          if this Document has an id earlier held by a Document now deleted.
+
         - Setting a TOC level would display one level too much.
 
         - The UI for 'Access Restriction by Role' did not properly expose
