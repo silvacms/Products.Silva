@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -19,7 +19,6 @@ def _regular_expression_escape(st):
     for c in st:
         result += '\\'+c
     return result        
-
 
 class EditorSupportError(Exception):
     pass
@@ -57,8 +56,9 @@ class EditorSupport(SimpleItem):
     p_MARKUP = re.compile(r"(?P<markup>%s)(?P<text>.*?)(?P=markup)" % (
         '|'.join(map(_regular_expression_escape, _silva_markup.keys())), ),
         re.S)
-    p_LINK = re.compile(r"^([^<]*|.*>[^\"]*)\({2}(.*?)\|([^|]*?)(\|(.*?))?\){2}",
-       re.S)
+    p_LINK = re.compile(
+        r"^([^<]*|.*>[^\"]*)\({2}(.*?)\|([^|]*?)(\|(.*?))?\){2}",
+        re.S)
     p_INDEX = re.compile(r"^([^<]*|.*>[^\"]*)\[{2}(.*?)\|(.*?)\]{2}", re.S)
     
     
@@ -98,7 +98,7 @@ class EditorSupport(SimpleItem):
                               escape_entities(child.getAttribute('url')))
                 if child.getAttribute('target'):
                     result.append(' target="%s"' %
-                                  escape_entities(child.getAttribute('target')))
+                              escape_entities(child.getAttribute('target')))
                 result.append('>')
                 result.append(self.render_text_as_html(child))
                 result.append('</a>')
@@ -114,8 +114,10 @@ class EditorSupport(SimpleItem):
             elif child.nodeName == 'br':
                 result.append('<br />')
             else:
-                result.append('<span class="error">%s</span> ' % self.render_text_as_html(child))
-                #raise EditorSupportError, "Unknown element: %s" % child.nodeName
+                result.append('<span class="error">%s</span> ' % 
+                    self.render_text_as_html(child))
+                #raise EditorSupportError, (
+                #   "Unknown element: %s" % child.nodeName)
         return ''.join(result)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -136,7 +138,8 @@ class EditorSupport(SimpleItem):
                 result.append(self.render_heading_as_html(child))
                 result.append('</a>')
             else:
-                raise EditorSupportError, "Unknown element: %s" % child.nodeName
+                raise EditorSupportError, ("Unknown element: %s" % 
+                    child.nodeName)
         return ''.join(result)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -175,7 +178,8 @@ class EditorSupport(SimpleItem):
                 result.append(chars_to_entities(child.getAttribute('url')))
                 if child.getAttribute('target'):
                     result.append('|')
-                    result.append(chars_to_entities(child.getAttribute('target')))
+                    result.append(chars_to_entities(
+                        child.getAttribute('target')))
                 result.append('))')
             elif child.nodeName == 'underline':
                 result.append('__')
@@ -195,8 +199,10 @@ class EditorSupport(SimpleItem):
             elif child.nodeName == 'br':
                 result.append('\n')
             else:
-                result.append('ERROR %s ERROR ' % self.render_text_as_editable(child))
-                #raise EditorSupportError, "Unknown element: %s" % child.nodeName
+                result.append('ERROR %s ERROR ' % 
+                    self.render_text_as_editable(child))
+                #raise EditorSupportError, ("Unknown element: %s" % 
+                #    child.nodeName
         return ''.join(result)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -218,10 +224,10 @@ class EditorSupport(SimpleItem):
                 result.append(child.getAttribute('name'))
                 result.append(']]')
             else:
-                raise EditorSupportError, "Unknown element: %s" % child.nodeName
+                raise EditorSupportError, ("Unknown element: %s" % 
+                    child.nodeName)
 
         return ''.join(result)
-
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'replace_text')
@@ -240,8 +246,9 @@ class EditorSupport(SimpleItem):
             if not match:
                 break
             st = st.replace(match.group(0), u'<%s>%s</%s>' % (
-                self._silva_markup[match.group('markup')], match.group('text'), 
-                self._silva_markup[match.group('markup')]))
+                self._silva_markup[match.group('markup')], 
+                    match.group('text'), 
+                    self._silva_markup[match.group('markup')]))
         while 1:
             match = self.p_LINK.search(st)
             if not match:
@@ -272,6 +279,30 @@ class EditorSupport(SimpleItem):
                     match.group(3), 
                     match.group(2)))
         st = st.replace('\n', '<br/>')
+        st = self._replace_silva_entities(st)
+        node = node._node
+        doc = node.ownerDocument
+
+        # remove all old subnodes of node
+        while node.hasChildNodes():
+            node.removeChild(node.firstChild)
+        newdom = self.create_dom_forgiving(doc, st)
+        for child in newdom.childNodes:
+            self._replace_helper(doc, node, child)
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'replace_pre')
+    def replace_pre(self, node, st):
+        """Add the pre element to the dom
+
+        Don't have to much work here, since no markup is allowed
+        """
+        # since we don't use Formulator we get UTF8 from the forms, so encode
+        # manually here
+        # use input convert 2, since the 'normal' one strips whitespace
+        st = self.input_convert2(st)
+        st = self.replace_xml_entities(st)
+        st = self._unifyLineBreak(st)
         st = self._replace_silva_entities(st)
         node = node._node
         doc = node.ownerDocument
@@ -321,24 +352,10 @@ class EditorSupport(SimpleItem):
             elif child.nodeType == 1:
                 newnode = doc.createElement(child.nodeName)
                 for i in range(child.attributes.length):
-                    newnode.setAttribute(child.attributes.item(i).name, child.attributes.item(i).value)
+                    newnode.setAttribute(child.attributes.item(i).name, 
+                        child.attributes.item(i).value)
                 node.appendChild(newnode)
                 self._replace_helper(doc, newnode, child)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'replace_pre')
-    def replace_pre(self, node, text):
-        """Replace text in a heading containing node. Does not do much since 
-            no markup is allowed in preformatted block
-        """
-        node = node._node
-        doc = node.ownerDocument
-        while node.hasChildNodes():
-            node.removeChild(node.firstChild)
-        text = self.replace_xml_entities(text)
-        text = self._replace_silva_entities(text)
-        newNode = doc.createTextNode(self._replace_silva_entities(text))
-        node.appendChild(newNode)
 
     security.declarePublic('replace_xml_entities')
     def replace_xml_entities(self, text):
@@ -352,7 +369,8 @@ class EditorSupport(SimpleItem):
 
     def _replace_silva_entities(self, text):
         for name, rep in self._silva_entities.items():
-            # mind that we've already replaced the XML entities, so we should be looking at '&amp;<name>;' instead of '&<name>;'
+            # mind that we've already replaced the XML entities, so we 
+            # should be looking at '&amp;<name>;' instead of '&<name>;'
             text = text.replace('&amp;%s;' % name, rep)
         return text
 
@@ -428,9 +446,7 @@ class EditorSupport(SimpleItem):
         # looks like unix :)
         return data
 
-
 InitializeClass(EditorSupport)
-
 
 def manage_addEditorSupport(container):
     "editor support service factory"
