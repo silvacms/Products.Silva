@@ -305,6 +305,58 @@ div.header a.icon {
   width : 512px;
 }
 
+/*___________________________________________ different table layouts _____ */ 
+
+table.black_border td,
+table.black1 td,
+table.red td, 
+table.green td {
+  padding: 0 5px;
+}
+
+table.black_border { 
+  border: 1px solid black;
+}
+
+table.black_border td { 
+  border: 1px solid black;
+}
+
+table.black_border tr.odd td { 
+  background-color: #c1c1c1; 
+}
+
+table.black1 tbody { 
+  border-right: 1px solid black; 
+}
+
+table.black1 td {
+  border: 1px solid black;
+}
+
+table.red { 
+  border: 1px solid darkred;
+}
+
+table.red td {
+  border: 1px solid darkred;
+}
+
+table.red tr.odd td {
+  background-color: #d0bbbb;
+}
+
+table.green {
+  border: 1px solid darkgreen;
+}
+
+table.green td {
+  border: 1px solid darkgreen;
+}
+
+table.green tr.odd td {
+  background-color: #b3c99c;
+
 </dtml-let>
 
 /* end cascade */
