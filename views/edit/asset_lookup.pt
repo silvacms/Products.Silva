@@ -7,18 +7,18 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/tal/i18n"
-  tal:define="global breadcrumb_vein string:Contents;">
+  tal:define="global breadcrumb_vein string:Contents;"
+>
 
 <metal:block use-macro="here/macro_no_tabs/macros/master">
-<metal:block fill-slot="main">
-
-<tal:block define="
-  objects python:model.get_tree();
-  silva_permissions here/get_silva_permissions;
-  filter request/filter | request/SESSION/filter | string:Asset;
-  asset_context request/asset_context | request/SESSION/asset_context | string:/;
-  dummy python: request.SESSION.set('filter', filter);
-  dummy python: request.SESSION.set('asset_context', asset_context);
+<metal:block fill-slot="main"
+  tal:define="
+    objects python:model.get_tree();
+    silva_permissions here/get_silva_permissions;
+    filter request/filter | request/SESSION/filter | string:Asset;
+    asset_context request/asset_context | request/SESSION/asset_context | string:/;
+    dummy python: request.SESSION.set('filter', filter);
+    dummy python: request.SESSION.set('asset_context', asset_context);
 ">
 
 <table class="columns columns2">
@@ -135,11 +135,11 @@ function setReference() {
               <th class="listing-right">
                 &nbsp;
               </th>
+              <th i18n:translate="select">
+                Select
+              </th>
               <th i18n:translate="view">
                 View
-              </th>
-              <th i18n:translate="title">
-                Title
               </th>
               <th i18n:translate="modified">
                 Modified
@@ -149,29 +149,35 @@ function setReference() {
               </th>
               </tr>
 
-              <tal:block repeat="asset assets">
-              <tal:block define="iterate repeat/asset/odd">
+              <tal:repeat repeat="asset assets">
+              <tal:define define="
+                iterate repeat/asset/odd;
+                identifier python:'%s||%s' % (asset.id, here.asset_lookup_path_mangler(asset_context, asset));
+              ">
               <tr tal:attributes="class python:iterate and 'even' or 'odd'">
                 <tal:block tal:replace="nothing"> _______ radio button cell _______ </tal:block>
                 <td>
-                  <input type="radio" name="mumble" value=""
-                    tal:attributes="value python:'%s||%s' % (asset.id, here.asset_lookup_path_mangler(asset_context, asset))" />
+                  <input
+                    type="radio"
+                    name="mumble"
+                    tal:attributes="
+                      value identifier;
+                      id identifier;
+                      " />
                 </td>
-                <tal:block tal:replace="nothing"> _______ icon + id cell _______ </tal:block>
+                <tal:block tal:replace="nothing"> _______ icon + label cell _______ </tal:block>
                 <td nowrap="1">
-                  <a href="asset" title="View this asset"
-                    tal:attributes="href string:${asset/absolute_url}"><img tal:replace="structure python:view.render_icon(asset)" /></a>
-                  <a class="blacklink" href="asset" title="view this asset"
-                    tal:attributes="href string:${asset/absolute_url}">
+                  <label style="text-transform:none;"
+                    title="select this asset"
+                    tal:attributes="for identifier"><img tal:replace="structure python:view.render_icon(asset)" />
                     <tal:block tal:replace="asset/id">id</tal:block>
-                  </a>
+                  </label>
                 </td>
                 <tal:block tal:replace="nothing"> _______ title cell _______ </tal:block>
                 <td>
-                  <a class="blacklink" title="Preview"
-                    tal:attributes="href string:${asset/absolute_url}/edit/tab_preview">
-                    <span tal:replace="asset/get_title"
-                      tal:condition="python:asset.get_title() != ''">title</span>
+                  <a class="blacklink" title="View this asset"
+                    tal:attributes="href string:${asset/absolute_url}">
+                    <span tal:replace="asset/get_title_or_id">title</span>
                   </a>
                 </td>
                 <tal:block tal:replace="nothing"> _______ modification date cell _______ </tal:block>
@@ -185,8 +191,8 @@ function setReference() {
                   author name
                 </td>
               </tr>
-              </tal:block>
-              </tal:block>
+              </tal:define>
+              </tal:repeat>
               <tr class="even"
                 tal:condition="empty">
                 <tal:block tal:replace="nothing"> _______ if no assets _______ </tal:block>
@@ -232,7 +238,6 @@ function setReference() {
   </tbody>
 </table>
 
-</tal:block>
 </metal:block>
 </metal:block>
 </html>
