@@ -19,7 +19,7 @@ link = node.output_convert_editable(node.getAttribute('link'))
 
 tag = image.image.tag(css_class=alignment)
 if link:
-    tag = '<a href="%s">%s</a>' % (link, tag)
+    tag = '<a class="image" href="%s">%s</a>' % (link, tag)
 
 if alignment.startswith('image-'):
     # I don't want to do this... Oh well, long live CSS...
