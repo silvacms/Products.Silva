@@ -93,6 +93,16 @@ class SubscriptionService(Folder.Folder):
         return self._enabled
         
     # Called from subscription UI
+
+    security.declareProtected(SilvaPermissions.View, 'isSubscribable')
+    def isSubscribable(self, content):
+        # Convenience method to quickly determine if content is
+        # subscribable, without having to get the content's 
+        # subscribable-adapter for it - e.g. in a pagetemplate.
+        adapted = subscribable.getSubscribable(content)
+        if adapted is None:
+            return False
+        return adapted.isSubscribable()
     
     security.declareProtected(SilvaPermissions.View, 'requestSubscription')
     def requestSubscription(self, content, emailaddress):
