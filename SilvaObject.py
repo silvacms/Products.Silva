@@ -14,13 +14,11 @@ class SilvaObject:
     # MANIPULATORS
     def manage_afterAdd(self, item, container):
         #self.inheritedAttribute('manage_afterAdd')(self, item, container)
-        print "afterAdd", item.id, container.id
-        container._refresh_ordered_ids(item)
+        container._add_ordered_id(item)
         
     def manage_beforeDelete(self, item, container):
-        print "beforeDelete", item.id, container.id
         #self.inheritedAttribute('manage_beforeDelete')(self, item, container)
-        container._refresh_ordered_ids(item)
+        container._remove_ordered_id(item)
 
     # ACCESSORS
 

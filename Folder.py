@@ -96,9 +96,10 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         ids = [id for id in ids if id is not None]
         self._ordered_ids = ids
         return 1
-    
+
     def _refresh_ordered_ids(self, item):
-        """Make sure item is in ordered_ids when it should be.
+        """Make sure item is in ordered_ids when it should be after
+        active status changed.
         """
         if not Interfaces.Publishable.isImplementedBy(item):
             return
@@ -112,7 +113,46 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         if not item.is_active() and id in ids:
             ids.remove(id)
             self._ordered_ids = ids
-              
+
+    def _add_ordered_id(self, item):
+        """Add item to the end of the list of ordered ids.
+        """
+        # this already happens to do what we want
+        # this works in case of active objects that were added
+        # (they're added to the list of ordered ids)
+        # and also for inactive objects
+        # (they're not added to the list; nothing happens)
+        self._refresh_ordered_ids(item)
+        
+    def _remove_ordered_id(self, item):
+        if not Interfaces.Publishable.isImplementedBy(item):
+            return
+        if Interfaces.Content.isImplementedBy(item) and item.is_default():
+            return
+        ids = self._ordered_ids
+        if item.is_active() and item.id in ids:
+            ids.remove(item.id)
+            self._ordered_ids = ids
+        
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent, 'refresh_active_publishables')
+    def refresh_active_publishables(self):
+        """Clean up all ordered ids in this container and all subcontainers.
+        This method normally does not need to be called, but if something is
+        wrong, this can be called in emergency situations. WARNING: all
+        ordering information is lost!
+        """
+        ids = []
+        for object in self.objectValues():
+            if not Interfaces.Publishable.isImplementedBy(object):
+                continue
+            if Interfaces.Content.isImplementedBy(object) and object.is_default():
+                continue
+            if object.is_active():
+                ids.append(object.id)
+            if Interfaces.Container.isImplementedBy(object):
+                object.refresh_active_publishables()
+        self._ordered_ids = ids
+
     # ACCESSORS
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
