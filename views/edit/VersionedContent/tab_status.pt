@@ -225,7 +225,7 @@ _______ manual close section here _______
                    <img tal:replace="structure python:view.render_icon(model)" />
                    <tal:block i18n:translate="">
                    manage versions of &#xab;<tal:block 
-                      content="string:${model/get_title_editable}"
+                      content="string:${model/get_title_or_id}"
                       i18n:name="export_id">id</tal:block>&#xbb;
                    </tal:block>
                  </h2>
