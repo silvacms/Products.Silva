@@ -4,6 +4,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
   vein string:publish;
   "
@@ -181,7 +182,7 @@
             tal:condition="is_container"
             tal:attributes="
             href string:${obj_url}/edit/tab_status;"
-            i18n:attributes="publish">
+            i18n:attributes="title">
             <i>n/a</i>
           </a>
         </td>
