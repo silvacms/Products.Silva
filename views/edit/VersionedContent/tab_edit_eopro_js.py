@@ -58,6 +58,12 @@ js.append("""
     }
     """ )
 
+js.append("""
+    function handleError(msg) {
+	document.write(msg);
+    }
+""")
+
 #from Products.PythonScripts.standard import html_quote
 
 js = map(lambda x: x.strip(), js)

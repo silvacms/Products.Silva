@@ -36,7 +36,7 @@ if error:
 <script type="text/javascript">
 window.parent.handleError("ServerError: %s");
 </script>
-""" % str(error)
+""" % str(error).replace('"', '\\"')
 
 return """
 <script type="text/javascript">
