@@ -73,3 +73,8 @@ show_headings = 'yes'
 if request.has_key('show_headings'):
     show_headings = request['show_headings']
 node.setAttribute('show_headings', show_headings)
+
+show_caption = 'yes'
+if request.has_key('show_caption'):
+    show_caption = request['show_caption']
+node.setAttribute('show_caption', show_caption)

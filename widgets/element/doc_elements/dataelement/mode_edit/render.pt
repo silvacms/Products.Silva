@@ -73,6 +73,20 @@
         </tr>
         <tr>
           <td>
+            Show Data source title as caption:
+          </td>
+          <td colspan="2" align="left"
+            tal:define="show_caption python:node.getAttribute('show_caption')">
+            Yes:&nbsp;
+            <input type="radio" name="show_caption" value="yes"
+              tal:attributes="checked python:test(show_caption == 'yes', 'checked', nothing)" />&nbsp;
+            No:&nbsp;
+            <input type="radio" name="show_caption" value="no" 
+              tal:attributes="checked python:test(show_caption == 'no', 'checked', nothing)"/>&nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td>
             Show table column headings:
           </td>
           <td colspan="2" align="left"

@@ -20,6 +20,7 @@ output_convert = context.output_convert_html
 caption = datasource.get_title_html()
 type = node.getAttribute('type') or 'listing'
 show_headings = node.getAttribute('show_headings') or 'yes'
+show_caption = node.getAttribute('show_caption') or 'yes'
 
 table_data = []
 if show_headings == 'yes':
@@ -40,10 +41,8 @@ for row in data:
 
 table = []
 table.append("""<table class="silvatable %s" width="100%%" cellspacing="0" cellpadding="3px">""" % (type))
-table.append("""<caption>%s</caption>""" % (caption))
-#for col in columns_info:
-#    table.append("""<col width="%s" align="%s" valign="top"/>""" % (
-#        col['html_width'], col['align']))
+if show_caption == 'yes':
+    table.append("""<caption>%s</caption>""" % (caption))
 table.append("""<tbody>""")
 table.append('\n'.join(table_data))
 table.append("""</tbody>""")
