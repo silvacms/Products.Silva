@@ -267,7 +267,7 @@ _______ manual close section here _______
                                   lastauthor python: vmadapter.getVersionLastAuthorInfo(versionid).fullname();
                                   creator python: vmadapter.getVersionCreatorInfo(versionid).fullname();
               ">
-                <td style="white-space: nowrap">
+                <td class="listing-left">
                   <input type="checkbox" 
                           name="versions" 
                           tal:attributes="value version/id; id string:version_${version/id}" />
