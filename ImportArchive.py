@@ -30,7 +30,7 @@ def import_archive_helper(context, file, title):
         # Actually add object; factories return None upon failure
         # FIXME: can I extract some info for the reason of failure?
         added_object = factory(name, title, extracted_file)
-        if added_object:
+        if added_object is not None:
             succeeded_list.append(name)
         else:
             failed_list.append(name)

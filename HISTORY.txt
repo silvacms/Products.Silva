@@ -1,19 +1,29 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.33 $
+$Revision: 1.47.2.34 $
 
 Silva changes
 
   0.9.1.5
                                                                                                 
+    Features Added
+                                                                                                    
+        - Mass upload of assets via zipfiles. Note though, that the 091 id
+         checking is less tolerant compared to the 092 id checking.
+
     Bugs Fixed
+
+        - Added a find_indexers utility (accesible through
+          http://server/silva/edit/service_utils/find_indexers) to find all
+          Indexer objects in use.
 
         - Help text opens in new browser window.
                                                                
         - Indexer -all non-versioned content actually- can now be deleted.
 
         - Indexer objects now render the correct URLs in virtual host
-          situations.
+          situations. Use the 'update index' in the edit tab of Indexer
+          objects to get the Indexers up to date.
 
         - Setting a TOC level would display one level too much.
 

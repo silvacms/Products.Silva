@@ -89,6 +89,105 @@
   </tr>
 
 </table>
+<tal:block replace="nothing">
+  ____________________________ upload zip file____________________________
+</tal:block>
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+  <tr>
+    <td>
+      <form action="." enctype="multipart/form-data" method="POST">
+        <table width="100%" cellspacing="0" cellpadding="3" border="0">
+          <thead>
+            <tr tal:replace="nothing">
+              ______________ vein + title row ______________
+            </tr>
+            <tr class="top-controls">
+              <td colspan="3">
+                <h3>
+                  import and extract zip archive file (.zip)
+                </h3>
+              </td>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <th class="align-right"
+                width="15%">
+                Element
+              </th>
+              <th>
+                Content
+              </th>
+              <th width="40%">
+                Note
+              </th>
+            </tr>
+
+            <tr class="odd">
+              <td class="align-right">
+                <span>
+                  file to upload
+                </span><span class="warning">*</span>
+              </td>
+              <td>
+                <input type="file"
+                  name="importfile"
+                  size="40"
+                  title="browse for a file on your disk"
+                />
+              </td>
+              <td>
+                Choose a zip file to import and convert to Assets
+                (file names will become ids).
+              </td>
+            </tr>
+
+            <tr class="odd">
+              <td class="align-right">
+                <span>
+                  title for assets
+                </span>
+              </td>
+              <td>
+                <input type="text"
+                  name="title"
+                  size="40"
+                  title="Optional title for all assets"
+                />
+              </td>
+              <td>
+                Provide an optional title for all Assets created
+                from the contents of the zip file.
+              </td>
+            </tr>
+
+            <tr class="controls">
+              <td align="left"
+                colspan="2">
+                <input class="cancelbutton" 
+                  type="button" 
+                  value=" Cancel " 
+                  onClick="history.back()" 
+                  title="Access key: alt-c" 
+                  accesskey="c" />
+              </td>
+              <td align="right">
+                <input class="button"
+                  type="submit"
+                  value="import zip"
+                  name="import_archive_file:method"
+                  title="access key: alt-z"
+                  accesskey="z"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </td>
+  </tr>
+</table>
 
 <br />
 

@@ -7,12 +7,13 @@ if not request.has_key('importfile') or not request['importfile']:
         message_type='error', message='Select a file for upload')
 
 feedback = model.archive_file_import(
-    request.get('importfile'), request.get('title', ''))
+    request.get('importfile'), model.input_convert(request.get('title', '')) )
 
 try:
     succeeded, failed = feedback
 except:
-    # feedback is not a tuple, just a message
+    # feedback seems not a tuple, just a
+    # message (in case something is wrong).
     msg = feedback
     message_type='alert'
 else:
