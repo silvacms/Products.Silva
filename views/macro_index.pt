@@ -174,7 +174,7 @@ function handle_default_action(element, event, action)
 <span tal:replace="nothing">
 <!-- _______ white space + jump to top _______ -->
 </span>
-<div>
+<div style="clear: both;">
   <div style="float: left;">
     <a href="#top"
       title="jump to top: alt-t">
