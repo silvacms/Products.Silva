@@ -2,8 +2,8 @@
 
 
 <metadata_set id="silva-extra" ns_uri="http://infrae.com/namespaces/metadata/silva-extra" ns_prefix="silva-extra">
-<title>Silva extra set</title>
-<description>Optional extra metadata, as has been used in older Silva versions.</description>
+<title></title>
+<description></description>
   <metadata_element id="subject">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
@@ -21,22 +21,22 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="alternate_name" type="str" value="" />
         <value key="hidden" type="int" value="0" />
-        <value key="unicode" type="int" value="1" />
         <value key="max_linelength" type="str" value="" />
-        <value key="max_lines" type="str" value="" />
+        <value key="max_length" type="str" value="" />
         <value key="width" type="int" value="40" />
         <value key="external_validator" type="str" value="" />
-        <value key="height" type="int" value="5" />
         <value key="required" type="int" value="0" />
         <value key="css_class" type="str" value="" />
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="Subject" />
-        <value key="description" type="str" value="Subject of this content area." />
-        <value key="max_length" type="str" value="" />
         <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="max_lines" type="str" value="" />
+        <value key="height" type="int" value="5" />
+        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+        <value key="description" type="str" value="Subject of this content area." />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
@@ -86,22 +86,22 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="alternate_name" type="str" value="" />
         <value key="hidden" type="int" value="0" />
-        <value key="unicode" type="int" value="1" />
         <value key="max_linelength" type="str" value="" />
-        <value key="max_lines" type="str" value="" />
+        <value key="max_length" type="str" value="" />
         <value key="width" type="int" value="40" />
         <value key="external_validator" type="str" value="" />
-        <value key="height" type="int" value="5" />
         <value key="required" type="int" value="0" />
         <value key="css_class" type="str" value="" />
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="Comment" />
-        <value key="description" type="str" value="Additional comments on  this content." />
-        <value key="max_length" type="str" value="" />
         <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="max_lines" type="str" value="" />
+        <value key="height" type="int" value="5" />
+        <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
+        <value key="description" type="str" value="Additional comments on  this content." />
    </field_values>
    <field_tales>
      <value key="alternate_name"></value>
