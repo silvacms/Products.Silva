@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1 $
+Version of this file: $Revision: 1.2 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -13,10 +13,27 @@ Version of this file: $Revision: 1.1 $
 </h3>
 
 <form action="." method="POST" class="form-text">
-Allow subscription on this site:<br />
-<input type="radio" name="allow_subscription" value="0" tal:attributes="checked python: test(here.allow_subscription(), '', 'CHECKED')" />No<br />
-<input type="radio" name="allow_subscription" value="1" tal:attributes="checked python: test(here.allow_subscription(), 'CHECKED', '')" />Yes<br />
-<input type="submit" name="manage_allowSubscription:method" value="Change Settings" class="form-element" />
+
+<table width="500">
+  <tr>
+    <td valign="top" width="300">
+      <div class="form-label">Allow membership requests on this site:</div>
+      <div class="form-element">
+        <input type="radio" name="allow_subscription" value="0" tal:attributes="checked python: test(here.allow_subscription(), '', 'CHECKED')" />No<br />
+        <input type="radio" name="allow_subscription" value="1" tal:attributes="checked python: test(here.allow_subscription(), 'CHECKED', '')" />Yes<br />
+      </div>
+    </td>
+    <td class="form-text" valign="top">
+      When set to 'Yes', a user will be presented a link to request roles on an object if he/she fails to authenticate. The requests will be e-mailed to the (nearest) ChiefEditor(s), who can then allow or deny the role to that user in the access tab of the object.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top">
+      <input type="submit" name="manage_allowSubscription:method" value="Change Settings" class="form-element" />
+    </td>
+  </tr>
+</table>
+
 </form>
 
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>
