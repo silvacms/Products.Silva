@@ -2,6 +2,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
 import ForgivingParser
+import re
 
 class EditorSupportError(Exception):
     pass
@@ -277,5 +278,33 @@ class EditorSupport:
             #    node.appendChild(newnode)
             else:
                 raise EditorSupportError, "Unknown structure: %s" % structure
+            
+    # XXX should really be in a better place, like some kind of editor
+    # support service
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'split_silva_html')
+    def split_silva_html(self, html, min_characters):
+        """Split html into two blocks. There'll be at least min_characters
+        in the first block, and the rest will be in the second block.
+        If the second block will be larger than the first, the html
+        is split equally instead.
+        """
+        l = len(html)
+        if l - min_characters < min_characters:
+            i = _find_split_point(html, min_characters)
+        else:
+            i = _find_split_point(html, l/2)
+        return html[:i], html[i:]
 
+# do never split at a heading, so h2/h3 not included
+tags = ['p', 'ol', 'ul', 'table']
+split_pattern = re.compile("(%s)" % '|'.join(
+    ['</%s>' % tag for tag in tags]))
+def _find_split_point(html, approximate_point):
+    r = split_pattern.search(html, approximate_point)
+    if r is not None:
+        return r.end()
+    else:
+        return len(html)
+        
 InitializeClass(EditorSupport)

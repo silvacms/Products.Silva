@@ -27,7 +27,22 @@ class Root(Publication):
     def manage_beforeDelete(self, item, container):
         # since we're root, we don't want to notify our container
         pass
-    
+                
+    security.declareProtected('View management screens',
+                              'merge_tree')
+    def merge_tree(self, main_tree, install_tree):
+        """Merge install_tree into main_tree
+        """
+        for object in install_tree.objectValues():
+            if object.meta_type == 'Folder':
+                if not hasattr(main_tree.aq_base, object.id):
+                    main_tree.manage_addFolder(object.id, '')    
+                self.merge_tree(getattr(main_tree, object.id), object)
+            else:
+                if not hasattr(main_tree.aq_base, object.id):
+                    cb = install_tree.manage_copyObjects([object.id])
+                    main_tree.manage_pasteObjects(cb_copy_data=cb)
+                    
     # ACCESSORS
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

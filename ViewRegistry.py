@@ -43,7 +43,7 @@ class ViewRegistry(Folder.Folder):
         """
         del self.view_types[view_type][meta_type]
         self.view_types = self.view_types
-        
+
     # ACCESSORS
     def get_view_types(self):
         """Get all view types, sorted.
@@ -65,7 +65,9 @@ class ViewRegistry(Folder.Folder):
         """
         return self.view_types[view_type][meta_type]
 
-    def _get_view(self, view_type, meta_type):
+    def get_view(self, view_type, meta_type):
+        """Get view for meta_type.
+        """
         found = self
         for view_id in self.view_types[view_type][meta_type]:
             found = getattr(found, view_id)
@@ -76,7 +78,7 @@ class ViewRegistry(Folder.Folder):
         the render_preview() method defined on the view in the registry.
         """
         self.REQUEST['model'] = obj
-        return self._get_view(view_type,
+        return self.get_view(view_type,
                               obj.meta_type).render_preview()
     
     def render_view(self, view_type, obj):
@@ -84,13 +86,13 @@ class ViewRegistry(Folder.Folder):
         the render_preview() method defined on the view in the registry.
         """
         self.REQUEST['model'] = obj
-        return self._get_view(view_type,
+        return self.get_view(view_type,
                               obj.meta_type).render_view()
 
     def get_method_on_view(self, view_type, obj, name):
         """Get a method on the view for the object.
         """
-        return getattr(self._get_view(view_type, obj.meta_type), name)
+        return getattr(self.get_view(view_type, obj.meta_type), name)
     
     #def wrap(self, view_type, obj):
     #    """Wrap object in view (wrapping skin)
