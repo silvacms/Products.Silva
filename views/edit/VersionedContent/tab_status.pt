@@ -55,6 +55,7 @@
       <span class="subhead" style="color:ForestGreen;">Content is approved, not published</span><br />
       <span tal:condition="may_approve_content"
         tal:omit-tag="">Publication settings can be changed.</span>
+        <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
   </tr>
 
@@ -64,6 +65,7 @@
       <span class="subhead">Content is published</span><br />
       This content is published (online for the public).<br />
       If you wish you can make an editable copy by going to the <a href="tab_edit">editor</a>.
+      <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
   </tr>
 
@@ -73,6 +75,7 @@
       <span class="subhead">Published version exists</span><br />
       <span class="warning" tal:condition="may_approve_content">Note: an older version of this content is online.<br /></span>
       Publishing this version will replace the public version.
+      <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
   </tr>
 
@@ -82,6 +85,7 @@
     <span class="subhead">Content is closed</span><br />
     This content was once published but is now closed.<br />
     If you wish you can make an editable copy in the <a href="tab_edit">editor</a>.
+    <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
   </tr>
 </thead>
@@ -212,6 +216,7 @@ _______ manual close section here _______
 <span class="subhead">Content is approved, not published</span><br />
 <span tal:condition="not:may_approve_content"
   tal:omit-tag="">Publication settings can be changed.<br /></span>
+<metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>
 
 <span tal:replace="nothing"> _______ status: content is published _______ </span>
@@ -219,6 +224,7 @@ _______ manual close section here _______
 <span class="subhead">Content is published</span><br />
 This content is published (online for the public).<br />
 If you wish you can make an editable copy by going to the <a href="tab_edit">editor</a>.
+<metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>
 
 <span tal:replace="nothing"> _______ status: warning of new version of published content _______ </span>
@@ -226,7 +232,7 @@ If you wish you can make an editable copy by going to the <a href="tab_edit">edi
 <span class="subhead">Published version exists</span><br />
 Note: <span class="warning">an older version of this content is online.</span><br />
 Publishing this version will replace the public version.
-<br />
+<metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>
 
 <span tal:replace="nothing"> _______ status: content is closed _______ </span>
@@ -234,7 +240,7 @@ Publishing this version will replace the public version.
 <span class="subhead">Content is closed</span><br />
 This content was once published but is now closed.<br />
 If you wish you can make an editable copy by going to the <a href="tab_edit"><span class="index-link">Edit tab</span></a>.
-<br />
+<metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
 </div>
 </tal:replace>
 
