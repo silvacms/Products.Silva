@@ -8,6 +8,9 @@ Silva changes
 
     Features added
 
+      - Image scaling supports "keep aspect ratio" now. You can scale with
+        120x* or *x211 to fix width or height.
+
       - An Image has a thumbnail now, retrievable via foo.jpg?thumbnail.
     
       - Images can be viewed w/o the /image at the end (issue 594), the high

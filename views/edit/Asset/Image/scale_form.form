@@ -54,7 +54,7 @@
           <extra></extra>
           <truncate type="int">0</truncate>
           <description i18n="image-scaling-description">
-	  Image scaling for web: use width x height in pixels, or a percentage (100x200, 40%).</description>
+	  Image scaling for web: use width x height in pixels, or a percentage (100x200, 100x*, *x200, 40%).</description>
           <unicode>1</unicode>
         </values>
         <tales>

@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.16 2004/04/25 05:31:05 kitblake Exp $
+# $Id: Image.py,v 1.50.4.1.6.17 2004/04/27 10:55:44 zagy Exp $
 
 # Python
 import re, string 
@@ -52,7 +52,7 @@ class Image(Asset):
 
     __implements__ = (WriteLockInterface, IAsset)
     
-    re_WidthXHeight = re.compile(r'^([0-9]+)[Xx]([0-9]+)$')
+    re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
     
     thumbnail_size = 120
@@ -191,15 +191,28 @@ class Image(Asset):
         if m is None:
             m = self.re_percentage.match(scale)
             if m is None:
-                raise ValueError, "'%s' is not a valid scale identifier. Probably a percent symbol is missing." % (
-                    scale, )
+                raise ValueError, "'%s' is not a valid scale identifier. "+\
+                    "Probably a percent symbol is missing." % (scale, )
             percentage = float(m.group(1))/100.0
             width, height = self.getDimensions()
             width = int(width * percentage)
             height = int(height * percentage)
         else:
-            width = int(m.group(1))
-            height = int(m.group(2))
+            img_w, img_h = self.getDimensions()
+            width = m.group(1)
+            height = m.group(2)
+            if width == height == '*':
+                raise ValueError, "'%s' is not a valid scale identifier. " +\
+                    "At least one number is required." % (scale, )
+            if width == '*':
+                height = int(height)
+                width = img_w * height / img_h
+            elif height == '*':
+                width = int(width)
+                height = img_h * width / img_w
+            else:
+                width = int(width)
+                height = int(height)
         return width, height
    
     security.declareProtected(SilvaPermissions.View, 'getCroppedSize(self)')
