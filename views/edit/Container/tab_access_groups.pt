@@ -28,7 +28,7 @@
   <div class="worksheet">
   <h2>
      <img tal:replace="structure python:view.render_icon(model)" />
-     <span tal:replace="group_definitions_for">Group definitions for</span>
+     <span i18n:translate="group_definitions_for">Group definitions for</span>
      &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
    </h2>
    <h3 i18n:translate="group_definitions">
