@@ -21,6 +21,7 @@
     containing_publication publication/../get_publication | publication;
     
     content_type view/set_content_type;
+    set_cache_headers view/set_cache_headers;
 
     silva_permissions view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
