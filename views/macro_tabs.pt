@@ -88,7 +88,7 @@ Tab Name
   tal:content="structure python: item.getProperty('short_title') or item.get_title_html()">Name</a>
 <span tal:condition="not:repeat/item/end" tal:omit-tag="">/</span>
 </repeat>
-<tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'])">
+<tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'], object=here)">
   &nbsp;
   <a href="" tal:attributes="href python:'%s/manage_main' % model.absolute_url()"><span class="idea">/manage...</span></a>
 <tal:block replace="nothing"> ___________ Start hook for the experimental Bitflux WYSIWYG editor integration ___________ </tal:block>
