@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.10 2003/08/28 10:31:32 jw Exp $
+# $Id: mangle.py,v 1.11 2003/08/28 14:26:23 guido Exp $
 
 # Python
 import string
@@ -300,8 +300,6 @@ class _Entities:
 
 module_security.declarePublic('entities')
 entities = _Entities()
-        
-
 
 module_security.declarePublic('DateTime')
 class DateTime:
