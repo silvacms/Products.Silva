@@ -70,6 +70,7 @@ td.invisible {
 table.silvatable {
   empty-cells: show;
   border-collapse: collapse;
+  margin-bottom: 1em;
 }
 table.silvatable tr {
   vertical-align: top;
@@ -88,18 +89,21 @@ table.plain td {
   border-right: none ! important;
 }
  
-table.list tr.rowheading td {
-  border-bottom: 2px solid black;
+table.list td {
+  border-bottom: 1px solid #444444 ! important;
+} 
+  table.list tr.rowheading td {
+  border-bottom: 2px solid #444444 ! important;
 } 
   
 table.grid td {
-  border: 2px solid black;
-  border-right: 2px solid black ! important;
+  border: 2px solid #444444;
+  border-right: 2px solid #444444 ! important;
 } 
   
 table.datagrid td {
-  border: 2px solid black;
-  border-right: 2px solid black ! important;
+  border: 2px solid #444444;
+  border-right: 2px solid #444444 ! important;
 } 
 table.datagrid tr.rowheading td {
   border-top-style: none;

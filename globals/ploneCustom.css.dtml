@@ -696,7 +696,7 @@ table.listing a.button:link {
   background: &dtml-contextButtonBackground;;
   border: &dtml-contextButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: 0.1em 2em 0.1em 2em;
+  padding: 0.1em 1em 0.1em 1em;
   line-height : 90%;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
@@ -708,7 +708,7 @@ table.listing a.button:visited {
   background: &dtml-contextButtonBackground;;
   border: &dtml-contextButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: 0.1em 2em 0.1em 2em;
+  padding: 0.1em 1em 0.1em 1em;
   line-height : 90%;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
