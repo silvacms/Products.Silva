@@ -71,7 +71,8 @@ class VersionedContentTestCase(unittest.TestCase):
         # approve version so will be published & expired at once
         document.approve_version()
         self.assertEquals(document.get_editable(), None)
-        self.assertEquals(document.get_previewable(), None)
+        # we will show last closed version as preview in this case
+        self.assertEquals(document.get_previewable().id, '0')
         self.assertEquals(document.get_viewable(), None)
         # now create a copy of the last closed version
         # fake present of REQUEST
@@ -94,7 +95,7 @@ class VersionedContentTestCase(unittest.TestCase):
         # instantly close version
         document.close_version()
         self.assertEquals(document.get_editable(), None)
-        self.assertEquals(document.get_previewable(), None)
+        self.assertEquals(document.get_previewable().id, '0')
         self.assertEquals(document.get_viewable(), None)
         # now create a copy of the last closed version
         # fake present of REQUEST

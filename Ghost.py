@@ -121,7 +121,7 @@ class GhostVersion(SimpleItem.SimpleItem):
         if content is None:
             return None # public render code of ghost should give broken message
         else:
-            return content.preview()
+            return content.view()
 
     def render_view(self):
         """Render view of this version (which is what we point at)

@@ -94,7 +94,8 @@ class ContainerTestCase(unittest.TestCase):
     def test_get_status_tree(self):
         l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
              (0, self.folder4.index), (1, self.subdoc),
-             (1, self.subfolder.index), (2, self.subfolder.subsubdoc)]
+             (1, self.subfolder.index), (2, self.subfolder.subsubdoc),
+             (0, self.sroot.publication5.index)]
         self.assertEquals(self.sroot.get_status_tree(),
                           l)
         
