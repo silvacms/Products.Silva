@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 import types
 
 try:
@@ -15,7 +15,7 @@ class LDAPUserManagement:
     def _get_user_folder(self, object):
         # XXX hack...relatively inefficient
         while 1:
-            if (hasattr(object.aq_base, 'acl_users') and
+            if (object._getOb('acl_users', 0) and
                 object.acl_users.meta_type == 'LDAPUserFolder'):
                 return object.acl_users
             if object.meta_type == 'Silva Root':
@@ -38,15 +38,16 @@ class LDAPUserManagement:
 user_management = LDAPUserManagement()
 
 def ldap_search(user_folder, search_string, attrs=None):
+    if attrs is None:
+        attrs = [] # argh
     res = user_folder._searchResults(
         search_base=user_folder.users_base,
         search_scope=_ldap.SCOPE_SUBTREE,
         search_string=search_string,
         attrs=attrs)
-    
     result = []
     for dn, dict in res:
-        userinfo = { 'dn': dn, 'sn' : '', 'cn' : '' }
+        userinfo = { 'dn': dn, 'sn' : '', 'cn' : '', 'uid': '#hack#'}
         for key, value in dict.items():
             if key == 'ou':
                 userinfo[key] = value
