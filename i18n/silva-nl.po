@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
 "POT-Creation-Date: Mon Nov 29 18:15:57 2004\n"
-"PO-Revision-Date: 2004-11-29 17:38+0100\n"
+"PO-Revision-Date: 2004-11-29 18:33+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -260,11 +260,11 @@ msgstr "Standaard Documentbeleid"
 
 #: /resources/request_processed.pt:18
 msgid "Request processed"
-msgstr ""
+msgstr "Verzoek verwerkt"
 
 #: /resources/request_processed.pt:26
 msgid "Return to where you came from..."
-msgstr ""
+msgstr "Terug naar waar je vandaan kwam..."
 
 #: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:62
 msgid "slide to the publish screen"
@@ -355,7 +355,7 @@ msgstr "Geen spaties of speciale karakters behalve '_' of '-' of '.'"
 msgid "form_add_file_object_title_title"
 msgstr "titel"
 
-# XXX seems this doesn't need a translation
+# XXX Seems this doesn't need a translation
 #: /views/add/File/form.form:51
 msgid "form_add_file_object_title_description"
 msgstr ""
@@ -1409,7 +1409,7 @@ msgstr "Item om naar te verwijzen opzoeken: alt-r"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 msgid "convert this ghost folder to a normal folder: alt-c"
-msgstr ""
+msgstr "converteer deze 'ghost folder' naar een gewone folder: alt-c"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 #: /views/edit/Container/Publication/tab_metadata.pt:27
@@ -1418,11 +1418,11 @@ msgstr "omzetten naar folder"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:36
 msgid "convert this ghost folder to a normal publication: alt-p"
-msgstr ""
+msgstr "converteer deze 'ghost folder' naar een normale publicatie: alt-p"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:51
 msgid "metadata of &#8216;original&#8217;"
-msgstr ""
+msgstr "eigenschappen van &#8216;origineel&#8217;"
 
 #: /views/edit/Container/Publication/copy_layout_submit.py:12
 msgid "Layout copied"
@@ -2307,12 +2307,12 @@ msgstr "Veranderd in publicatie"
 
 #: /views/edit/Container/tab_metadata.pt:81
 msgid "change Folder into Publication: alt-c"
-msgstr ""
+msgstr "verander Folder naar Publicatie: alt-c"
 
 #: /views/edit/Container/tab_metadata.pt:81
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:36
 msgid "convert to publication"
-msgstr ""
+msgstr "converteer naar publicatie"
 
 #: /views/edit/Container/tab_status.pt:101
 msgid "published"
@@ -2907,15 +2907,15 @@ msgstr "'ghost' van &#xab;${name}&#xbb;"
 
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:30
 msgid "ghost of &#xab;${title}&#xbb; (${version_name} version)"
-msgstr ""
+msgstr "'ghost' van &#xab;${title}&#xbb; (${version_name} versie)"
 
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:51
 msgid "reference"
-msgstr ""
+msgstr "referentie"
 
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:57
 msgid "path to original (begins with &#8216;/&#8217;)."
-msgstr ""
+msgstr "pad naar het origineel (begint met &#8216;/&#8217;)."
 
 #: /views/edit/VersionedContent/Ghost/submit.py:18
 msgid "Ghost changed."
@@ -2927,11 +2927,11 @@ msgstr "metadata ${for_public_version_of}"
 
 #: /views/edit/VersionedContent/Link/edit.pt:72
 msgid "link url"
-msgstr ""
+msgstr "link url"
 
 #: /views/edit/VersionedContent/Link/edit.pt:89
 msgid "change link"
-msgstr ""
+msgstr "verander link"
 
 #: /views/edit/VersionedContent/Link/submit.py:11
 msgid "Link changed"
@@ -3832,24 +3832,24 @@ msgstr "naam (of deel van naam)"
 # Default: "select groups:"
 #: /views/edit/macro_groups_listing.pt:106
 msgid "select_groups"
-msgstr ""
+msgstr "selecteer groepen:"
 
 # Default: "No groups available"
 #: /views/edit/macro_groups_listing.pt:119
 msgid "no_groups_available"
-msgstr ""
+msgstr "Geen groupen aanwezig"
 
 #: /views/edit/macro_groups_listing.pt:66
 msgid "existing ${type} groups"
-msgstr ""
+msgstr "bestaande ${type} groepen"
 
 #: /views/edit/macro_groups_listing.pt:78
 msgid "groups administration: alt-g"
-msgstr ""
+msgstr "groups administratie: alt-g"
 
 #: /views/edit/macro_groups_listing.pt:78
 msgid "<u>g</u>roups admin..."
-msgstr ""
+msgstr "<u>g</u>roepen administratie"
 
 #: /views/edit/macro_groups_listing.pt:91
 #: /views/edit/macro_user_lookup_clipboard.pt:45
@@ -4508,43 +4508,43 @@ msgstr ""
 
 #: /views/public/Indexer/render_helper.pt:1
 msgid "Index"
-msgstr ""
+msgstr "Index"
 
 #: /views/public/request_roles.pt:12 /views/public/request_roles.pt:20
 msgid "membership"
-msgstr ""
+msgstr "lidmaatschap"
 
 #: /views/public/request_roles.pt:31
 msgid "Request roles at this location"
-msgstr ""
+msgstr "Vraag rollen aan op deze locatie"
 
 #: /views/public/request_roles.pt:43
 msgid "Please fill in the following fields. <br /><br />"
-msgstr ""
+msgstr "Vul alsjeblieft de volgende velden. <br /><br />"
 
 #: /views/public/request_roles.pt:48
 msgid "full name"
-msgstr ""
+msgstr "volledige naam"
 
 #: /views/public/request_roles.pt:51
 msgid "e-mail address"
-msgstr ""
+msgstr "e-mail adres"
 
 #: /views/public/request_roles.pt:58
 msgid "Choose role(s) to request"
-msgstr ""
+msgstr "Kies (een) rol(len) om aan te vragen"
 
 #: /views/public/request_roles.pt:71
 msgid "Send request for role: alt-s"
-msgstr ""
+msgstr "Verstuur een aanvraag voor een rol: alt-s"
 
 #: /views/public/request_roles.pt:71
 msgid " Send request "
-msgstr ""
+msgstr " Verstuur aanvraag "
 
 #: /views/public/request_roles.pt:85
 msgid "This site does not allow requests for roles"
-msgstr ""
+msgstr "Deze site staat rol aanvragen niet toe"
 
 #: /views/public/request_roles_submit.py:14
 msgid "You must enter your full name and your e-mail address"
@@ -4568,35 +4568,35 @@ msgstr "Er zijn geen rollen geselecteerd."
 
 #: /views/public/search.pt:18
 msgid "Search"
-msgstr ""
+msgstr "Zoeken"
 
 #: /views/public/search.pt:43
 msgid "Search in ${meta_type} &#xAB;${title_or_id}&#xbb;"
-msgstr ""
+msgstr "Zoek in ${meta_type} &#xAB;${title_or_id}&#xbb;"
 
 #: /views/public/search.pt:52
 msgid "Search interface"
-msgstr ""
+msgstr "Zoek interface"
 
 #: /views/public/search.pt:61
 msgid "Element"
-msgstr ""
+msgstr "Element"
 
 #: /views/public/search.pt:65
 msgid "Content"
-msgstr ""
+msgstr "Inhoud"
 
 #: /views/public/search.pt:68
 msgid "Note"
-msgstr ""
+msgstr "Notitie"
 
 #: /views/public/search.pt:98
 msgid "Find"
-msgstr ""
+msgstr "Zoek"
 
 #: /views/public/search.pt:98
 msgid "access key: alt-f"
-msgstr ""
+msgstr "sneltoets: alt-f"
 
 #: /views/public/search_form.form:100
 msgid "public_search_form_metatype_title"
@@ -4635,19 +4635,19 @@ msgstr "Aanvinken om zoekopdracht te beperken to de sub-boom van deze inhoud."
 
 #: /views/public/search_results.pt:18
 msgid "Search results"
-msgstr ""
+msgstr "Zoekresultaten"
 
 #: /views/public/search_results.pt:41 /views/public/search_results.pt:88
 msgid "&lt;&lt; Previous"
-msgstr ""
+msgstr "&lt;&lt; Vorige"
 
 #: /views/public/search_results.pt:50
 msgid "Showing results ${batch_start} to ${batch_end}."
-msgstr ""
+msgstr "Resultaten van ${batch_start} tot ${batch_end}."
 
 #: /views/public/search_results.pt:54 /views/public/search_results.pt:97
 msgid "Next &gt;&gt;"
-msgstr ""
+msgstr "Volgende &gt;&gt;"
 
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
