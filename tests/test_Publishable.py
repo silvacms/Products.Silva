@@ -1,44 +1,27 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
-import unittest
-import Zope
-Zope.startup()
+# $Revision: 1.10 $
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
+
+import SilvaTestCase
 
 from DateTime import DateTime
 from Testing import makerequest
 from Products.Silva.Versioning import VersioningError
-from test_SilvaObject import hack_create_user
 
-class PublishableTestCase(unittest.TestCase):
-    def setUp(self):
-        get_transaction().begin()
-        self.connection = Zope.DB.open()
-        try:
-            self.root = makerequest.makerequest(self.connection.root()
-                                                ['Application'])
-            self.root.REQUEST['URL1'] = ''
-            # awful hack: add a user who may own the 'index'
-            # of the test containers
-            hack_create_user(self.root)
-            self.root.manage_addProduct['Silva'].manage_addRoot(
-                'root', 'Root')
-            self.sroot = self.root.root
-            add = self.sroot.manage_addProduct['Silva']
-            add.manage_addDocument('document', 'Document')
-            add.manage_addFolder('folder', 'Folder')
-            self.document = self.sroot.document
-            self.folder = self.sroot.folder
-            self.folder.manage_addProduct['Silva'].manage_addDocument(
-                'subdoc', 'Document')
-            self.subdoc = self.folder.subdoc
-        except:
-            self.tearDown()
-            raise
-
-    def tearDown(self):
-        get_transaction().abort()
-        self.connection.close()
+class PublishableTestCase(SilvaTestCase.SilvaTestCase):
+    def afterSetUp(self):
+        self.root.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'document', 'Document')
+        self.root.manage_addProduct['Silva'].manage_addFolder(
+            'folder', 'Folder')
+        self.document = self.root.document
+        self.folder = self.root.folder
+        self.folder.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'subdoc', 'Document')
+        self.subdoc = self.folder.subdoc
 
     def test_activation_unpublished(self):
         # we can deactivate/activate something that is unpublished
@@ -91,9 +74,11 @@ class PublishableTestCase(unittest.TestCase):
 
     def test_activation_approved2(self):
         # if we deactivate a folder unapprove everything inside
-        self.folder.manage_addProduct['Silva'].manage_addFolder('subfolder', 'Subfolder')
+        self.folder.manage_addProduct['Silva'].manage_addFolder(
+            'subfolder', 'Subfolder')
         subfolder = self.folder.subfolder
-        subfolder.manage_addProduct['Silva'].manage_addDocument('subsubdoc', 'Subsubdoc')
+        subfolder.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'subsubdoc', 'Subsubdoc')
         subsubdoc = subfolder.subsubdoc
         # we can deactivate it still
         self.assert_(self.folder.can_deactivate())
@@ -174,14 +159,14 @@ class PublishableTestCase(unittest.TestCase):
 
     def approve_sub_document(self):
         self.folder.get_default().approve_version()
-        
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(PublishableTestCase, 'test'))
-    return suite
     
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
 if __name__ == '__main__':
-    main()
+    framework()
+else:
+    # While framework.py provides its own test_suite()
+    # method the testrunner utility does not.
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(PublishableTestCase))
+        return suite

@@ -192,6 +192,13 @@ def setupSilvaRoot(app, id='root', quiet=0):
         newSecurityManager(None, user)
         factory = app.manage_addProduct['Silva']
         factory.manage_addRoot(id, '')
+        # XXX make document be the default index
+        # this should go away after indexgeddon
+        root = app.root
+        binding = root.service_metadata.getMetadata(root)
+        binding.setValues('silva-publication', {
+            'defaultdocument_policy': 'Silva Document',
+            })
         factory = app.manage_addProduct['TemporaryFolder']
         factory.constructTemporaryFolder('temp_folder', '')
         noSecurityManager()
