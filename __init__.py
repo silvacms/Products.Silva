@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.102 $
+# $Revision: 1.103 $
 
 import Metadata
 import Folder, Root
@@ -97,7 +97,7 @@ def initialize(context):
         DocmaService.DocmaService,
         constructors = (DocmaService.manage_addDocmaServiceForm,
                         DocmaService.manage_addDocmaService),
-        icon = "www/docma.gif"
+        icon = "www/docma.png"
         )
 
     context.registerClass(
