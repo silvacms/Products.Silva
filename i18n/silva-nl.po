@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 25 17:18:18 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:35:58 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -105,17 +105,77 @@ msgstr "url ${url} ontvangen terwijl we unicode werd verwacht"
 msgid "implemented in subclasses"
 msgstr "geïmplementeerd in subclasses"
 
-#: /Group.py:136
+#: /Group.py:136 /IPGroup.py:119
 msgid "There is no service_groups"
 msgstr "Er is geen 'service_groups' gevonden"
 
-#: /Group.py:138
+#: /Group.py:138 /IPGroup.py:121
 msgid "There is already a group of that name."
 msgstr "Er bestaat al een groep met deze naam."
 
-#: /Group.py:80 /Group.py:88 /Group.py:111 /Group.py:120
+#: /Group.py:80 /Group.py:88 /Group.py:111 /Group.py:120 /IPGroup.py:62
+#: /IPGroup.py:90 /IPGroup.py:101
 msgid "Zombie group asset"
 msgstr "Zombie groep asset"
+
+#: /Image.py:215
+msgid ""
+"'${scale}' is not a valid scale identifier. Probably a percent symbol is "
+"missing."
+msgstr ""
+
+#: /Image.py:234
+msgid ""
+"'${scale} is not a valid scale identifier. At least one number is required."
+msgstr ""
+
+#: /Image.py:259
+msgid "'${crop} is not a valid crop identifier"
+msgstr ""
+
+#: /Image.py:285
+msgid "'${crop}' defines an impossible cropping"
+msgstr ""
+
+#: /Image.py:344
+msgid "Low resolution image in original format is not supported"
+msgstr ""
+
+#: /Image.py:423
+msgid "square"
+msgstr ""
+
+#: /Image.py:425
+msgid "landscape"
+msgstr ""
+
+#: /Image.py:426
+msgid "portrait"
+msgstr ""
+
+#: /Image.py:469
+msgid "No PIL installed."
+msgstr ""
+
+#: /Image.py:579
+msgid "There is no service_files. Refresh your Silva root."
+msgstr ""
+
+#: /Image.py:636
+msgid "Could not identify image type."
+msgstr ""
+
+#: /Image.py:708
+msgid "Invalid asset at ${url}"
+msgstr ""
+
+#: /ImporterRegistry.py:125
+msgid "No id found"
+msgstr ""
+
+#: /ImporterRegistry.py:70
+msgid "can't only register initializer for tag_name *or* as a default"
+msgstr ""
 
 #: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:62
 msgid "slide to the publish screen"
@@ -270,7 +330,7 @@ msgstr "inhoud"
 #: /views/edit/VersionedContent/tab_status_macros.pt:116
 #: /views/edit/VersionedContent/tab_status_macros.pt:197
 #: /views/edit/VersionedContent/tab_status_macros.pt:312
-#: /views/edit/VersionedContent/tab_status_macros.pt:411
+#: /views/edit/VersionedContent/tab_status_macros.pt:418
 msgid "notes"
 msgstr "notities"
 
@@ -278,7 +338,7 @@ msgstr "notities"
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:127
 #: /views/edit/VersionedContent/tab_status_macros.pt:277
-#: /views/edit/VersionedContent/tab_status_macros.pt:543
+#: /views/edit/VersionedContent/tab_status_macros.pt:552
 msgid "access key: alt-c"
 msgstr "sneltoets: alt-c"
 
@@ -1264,7 +1324,7 @@ msgstr "einde"
 
 #: /views/edit/Container/tab_edit.pt:479
 #: /views/edit/Container/tab_status.pt:347
-#: /views/edit/VersionedContent/tab_status_macros.pt:503
+#: /views/edit/VersionedContent/tab_status_macros.pt:512
 msgid "access key: alt-p"
 msgstr "sneltoets: alt-p"
 
@@ -1672,8 +1732,9 @@ msgstr "hernoemen"
 
 #: /views/edit/Container/tab_edit_rename.pt:119
 #: /views/edit/VersionedContent/tab_status_macros.pt:174
-#: /views/edit/VersionedContent/tab_status_macros.pt:436
-#: /views/edit/VersionedContent/tab_status_macros.pt:472
+#: /views/edit/VersionedContent/tab_status_macros.pt:443
+#: /views/edit/VersionedContent/tab_status_macros.pt:445
+#: /views/edit/VersionedContent/tab_status_macros.pt:481
 msgid "access key: alt-r"
 msgstr "sneltoets: alt-r"
 
@@ -1774,12 +1835,13 @@ msgid "clear&nbsp;ex<u>p</u>iration"
 msgstr "verloo<u>p</u>tijdstip&nbsp;wissen"
 
 #: /views/edit/Container/tab_status.pt:365
-msgid "reject"
-msgstr "afwijzen"
-
-#: /views/edit/Container/tab_status.pt:365
 msgid "reject pending request for approval: alt-j"
 msgstr "uitstaande aanvraag voor goedkeuring afwijzen: alt-j"
+
+#: /views/edit/Container/tab_status.pt:365
+#: /views/edit/VersionedContent/tab_status_macros.pt:397
+msgid "reject"
+msgstr "afwijzen"
 
 #: /views/edit/Container/tab_status.pt:374
 msgid "withdraw approval of approved versions: alt-v"
@@ -1824,12 +1886,13 @@ msgid "open to public"
 msgstr "openzetten voor publiek"
 
 #: /views/edit/Container/tab_status.pt:433
-msgid "withdraw"
-msgstr "intrekken"
-
-#: /views/edit/Container/tab_status.pt:433
 msgid "withdraw pending request for approval: alt-w"
 msgstr "uitstaand aanvraag voor goedkeuring intrekken: alt-w"
+
+#: /views/edit/Container/tab_status.pt:433
+#: /views/edit/VersionedContent/tab_status_macros.pt:398
+msgid "withdraw"
+msgstr "intrekken"
 
 #: /views/edit/Container/tab_status.pt:442
 msgid "revoke approval of approved versions: alt-v"
@@ -2559,32 +2622,48 @@ msgstr "Leeg betekent: verloopt niet."
 msgid "access key: alt-o"
 msgstr "sneltoets: alt-o"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:397
-msgid "${action} request"
-msgstr "${action} aanvraag"
+#: /views/edit/VersionedContent/tab_status_macros.pt:399
+msgid "request"
+msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:409
-msgid "add message on ${rejection_withdrawal}"
-msgstr "bericht toevoegen bij ${rejection_withdrawal}"
+#: /views/edit/VersionedContent/tab_status_macros.pt:408
+msgid "add message on"
+msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:425
+#: /views/edit/VersionedContent/tab_status_macros.pt:411
+msgid "rejection"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:414
+msgid "withdrawal"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:432
 msgid "The message may be viewed by local users."
 msgstr "The message may be viewed by local users."
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:443
+msgid " Reject approval request "
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:445
+msgid " Withdraw approval request "
+msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:45
 msgid "messages"
 msgstr "berichten"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:463
+#: /views/edit/VersionedContent/tab_status_macros.pt:472
 msgid "If further editing is required, first revoke the approval."
 msgstr ""
 "Als verder bewerken nodig is, moet eerst de goedkeuring worden ingetrokken."
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:489
+#: /views/edit/VersionedContent/tab_status_macros.pt:498
 msgid "revert to previous version"
 msgstr "terugvallen op vorige versie"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:495
+#: /views/edit/VersionedContent/tab_status_macros.pt:504
 msgid ""
 "The current editable version can be replaced with the previous (published) "
 "version. This can not be undone afterwards and will discard all changes made "
@@ -2594,15 +2673,15 @@ msgstr ""
 "(gepubliceerde) versie. Dit kan daarna niet meer worden ongedaan gemaakt en "
 "gooit alle wijzigingen die in de huidige versie zijn gemaakt weg."
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:503
+#: /views/edit/VersionedContent/tab_status_macros.pt:512
 msgid "revert to previous"
 msgstr "terugvallen op vorige"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:527
+#: /views/edit/VersionedContent/tab_status_macros.pt:536
 msgid "manual close"
 msgstr "handmatig sluiten"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:534
+#: /views/edit/VersionedContent/tab_status_macros.pt:543
 msgid ""
 "If necessary, the published version of this content can be manually closed "
 "(taken offline). It will also be removed from the public index."
@@ -2610,7 +2689,7 @@ msgstr ""
 "Indien nodig, kan de gepubliceerde versie van deze inhoud handmatig gesloten "
 "(offline gezet) worden. Deze zal ook verwijderd worden uit de publieke index."
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:543
+#: /views/edit/VersionedContent/tab_status_macros.pt:552
 msgid "close published version"
 msgstr "gepubliceerde versie sluiten"
 
@@ -3050,8 +3129,8 @@ msgstr ""
 
 #: /views/edit/macro_metadata.pt:385
 #: /views/edit/VersionedContent/macro_tab_edit.pt:117
-#: /views/edit/VersionedContent/tab_status_macros.pt:454
-#: /views/edit/VersionedContent/tab_status_macros.pt:472
+#: /views/edit/VersionedContent/tab_status_macros.pt:463
+#: /views/edit/VersionedContent/tab_status_macros.pt:481
 msgid "revoke approval"
 msgstr "goedkeuring intrekken"
 
@@ -3383,55 +3462,53 @@ msgstr "toegangsbeperkingen publieke weegave voor &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_access.pt:74 /views/edit/tab_access.pt:203
 msgid "username"
-msgstr "username"
+msgstr "gebruikersnaam"
 
 #: /views/edit/tab_access.pt:754
 msgid "An access restriction here affects objects on this and lower levels."
-msgstr "An access restriction here affects objects on this and lower levels."
+msgstr ""
+"Een toegangsbeperking op deze plaats heeft invloed op objecten op dit en "
+"lagergelegen niveaus."
 
 #: /views/edit/tab_access.pt:77 /views/edit/tab_access.pt:371
 msgid "roles defined above"
-msgstr "roles defined above"
+msgstr "hierboven gedefinieerde rollen"
 
 #: /views/edit/tab_access.pt:80 /views/edit/tab_access.pt:374
 msgid "roles defined here"
-msgstr "roles defined here"
+msgstr "hier gedefinieerde rollen"
 
 #: /views/edit/tab_access_acquire_minimum_role_submit.py:14
 msgid "Minimum role to access is now acquired"
-msgstr "Minimum role to access is now acquired"
+msgstr "Minimale rol voor toegang is nu 'overgeërfd'"
 
 #: /views/edit/tab_access_allow_access.py:17
 #: /views/edit/tab_access_allow_and_approve.py:17
 #: /views/edit/tab_access_deny_access.py:17
 msgid "No requests selected"
-msgstr "No requests selected"
+msgstr "Geen aanvragen geselecteerd"
 
 #: /views/edit/tab_access_allow_access.py:25
 msgid "&#xab;${user_id}&#xbb; allowed the ${role} role"
-msgstr "&#xab;${user_id}&#xbb; allowed the ${role} role"
+msgstr "&#xab;${user_id}&#xbb; heeft de ${role}-rol toegestaan"
 
 #: /views/edit/tab_access_allow_and_approve.py:23
 msgid "&#xab;${user_id}&#xbb; approved and allowed the ${role} role"
-msgstr "&#xab;${user_id}&#xbb; approved and allowed the ${role} role"
+msgstr "&#xab;${user_id}&#xbb; heeft de ${role}-rol goedgekeurd en toegestaan"
 
 #: /views/edit/tab_access_authorized_below.pt:47
 msgid "email addresses for"
-msgstr "email addresses for"
+msgstr "e-mailadressen voor"
 
 #: /views/edit/tab_access_authorized_below.pt:59
 msgid "listing of all authorized users below this level"
-msgstr "listing of all authorized users below this level"
+msgstr "lijst van alle geauthoriseerde gebruikers beneden dit niveau"
 
-#: /views/edit/tab_access_authorized_below.pt:70
+#: /views/edit/tab_access_authorized_below.pt:67
 msgid ""
 "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; "
-"field of an email message. <br /> <textarea class=\"store\" name=\"data\" "
-"cols=\"60\" rows=\"5\" wrap=\"soft\"></textarea>"
+"field of an email message."
 msgstr ""
-"Addresses are formatted for copying and pasting in the &#8216;To:&#8217; "
-"field of an email message. <br /> <textarea class=\"store\" name=\"data\" "
-"cols=\"60\" rows=\"5\" wrap=\"soft\"></textarea>"
 
 #: /views/edit/tab_access_deny_access.py:22
 msgid "&#xab;${user_id}&#xbb; has been denied the ${role} role"
@@ -3655,6 +3732,21 @@ msgstr "No roles were selected."
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
+
+#~ msgid "${action} request"
+#~ msgstr "${action} aanvraag"
+
+#~ msgid "add message on ${rejection_withdrawal}"
+#~ msgstr "bericht toevoegen bij ${rejection_withdrawal}"
+
+#~ msgid ""
+#~ "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; "
+#~ "field of an email message. <br /> <textarea class=\"store\" name=\"data\" "
+#~ "cols=\"60\" rows=\"5\" wrap=\"soft\"></textarea>"
+#~ msgstr ""
+#~ "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; "
+#~ "field of an email message. <br /> <textarea class=\"store\" name=\"data\" "
+#~ "cols=\"60\" rows=\"5\" wrap=\"soft\"></textarea>"
 
 # Default: "Setting an access restriction here affects objects on this and lower levels."
 #~ msgid "access_setting_restriction"

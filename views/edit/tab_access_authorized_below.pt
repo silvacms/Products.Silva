@@ -63,9 +63,9 @@
     </tr>
 
     <tr class="even">
-      <td i18n:translate="">
-        Addresses are formatted for copying and pasting 
-        in the &#8216;To:&#8217; field of an email message.
+      <td>
+        <tal:block i18n:translate="">Addresses are formatted for copying and
+          pasting in the &#8216;To:&#8217; field of an email message.</tal:block>
         <br />
         <textarea 
           class="store"

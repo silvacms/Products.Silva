@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Nov 25 17:18:18 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:35:58 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -100,10 +100,12 @@ msgid "implemented in subclasses"
 msgstr ""
 
 #: /Group.py:136
+#: /IPGroup.py:119
 msgid "There is no service_groups"
 msgstr ""
 
 #: /Group.py:138
+#: /IPGroup.py:121
 msgid "There is already a group of that name."
 msgstr ""
 
@@ -111,7 +113,66 @@ msgstr ""
 #: /Group.py:88
 #: /Group.py:111
 #: /Group.py:120
+#: /IPGroup.py:62
+#: /IPGroup.py:90
+#: /IPGroup.py:101
 msgid "Zombie group asset"
+msgstr ""
+
+#: /Image.py:215
+msgid "'${scale}' is not a valid scale identifier. Probably a percent symbol is missing."
+msgstr ""
+
+#: /Image.py:234
+msgid "'${scale} is not a valid scale identifier. At least one number is required."
+msgstr ""
+
+#: /Image.py:259
+msgid "'${crop} is not a valid crop identifier"
+msgstr ""
+
+#: /Image.py:285
+msgid "'${crop}' defines an impossible cropping"
+msgstr ""
+
+#: /Image.py:344
+msgid "Low resolution image in original format is not supported"
+msgstr ""
+
+#: /Image.py:423
+msgid "square"
+msgstr ""
+
+#: /Image.py:425
+msgid "landscape"
+msgstr ""
+
+#: /Image.py:426
+msgid "portrait"
+msgstr ""
+
+#: /Image.py:469
+msgid "No PIL installed."
+msgstr ""
+
+#: /Image.py:579
+msgid "There is no service_files. Refresh your Silva root."
+msgstr ""
+
+#: /Image.py:636
+msgid "Could not identify image type."
+msgstr ""
+
+#: /Image.py:708
+msgid "Invalid asset at ${url}"
+msgstr ""
+
+#: /ImporterRegistry.py:125
+msgid "No id found"
+msgstr ""
+
+#: /ImporterRegistry.py:70
+msgid "can't only register initializer for tag_name *or* as a default"
 msgstr ""
 
 #: /resources/sidebar_template.pt:25
@@ -270,7 +331,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:116
 #: /views/edit/VersionedContent/tab_status_macros.pt:197
 #: /views/edit/VersionedContent/tab_status_macros.pt:312
-#: /views/edit/VersionedContent/tab_status_macros.pt:411
+#: /views/edit/VersionedContent/tab_status_macros.pt:418
 msgid "notes"
 msgstr ""
 
@@ -280,7 +341,7 @@ msgstr ""
 #: /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:127
 #: /views/edit/VersionedContent/tab_status_macros.pt:277
-#: /views/edit/VersionedContent/tab_status_macros.pt:543
+#: /views/edit/VersionedContent/tab_status_macros.pt:552
 msgid "access key: alt-c"
 msgstr ""
 
@@ -1240,7 +1301,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:479
 #: /views/edit/Container/tab_status.pt:347
-#: /views/edit/VersionedContent/tab_status_macros.pt:503
+#: /views/edit/VersionedContent/tab_status_macros.pt:512
 msgid "access key: alt-p"
 msgstr ""
 
@@ -1592,8 +1653,9 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_rename.pt:119
 #: /views/edit/VersionedContent/tab_status_macros.pt:174
-#: /views/edit/VersionedContent/tab_status_macros.pt:436
-#: /views/edit/VersionedContent/tab_status_macros.pt:472
+#: /views/edit/VersionedContent/tab_status_macros.pt:443
+#: /views/edit/VersionedContent/tab_status_macros.pt:445
+#: /views/edit/VersionedContent/tab_status_macros.pt:481
 msgid "access key: alt-r"
 msgstr ""
 
@@ -1694,11 +1756,12 @@ msgid "clear&nbsp;ex<u>p</u>iration"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:365
-msgid "reject"
+msgid "reject pending request for approval: alt-j"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:365
-msgid "reject pending request for approval: alt-j"
+#: /views/edit/VersionedContent/tab_status_macros.pt:397
+msgid "reject"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:374
@@ -1744,11 +1807,12 @@ msgid "open to public"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:433
-msgid "withdraw"
+msgid "withdraw pending request for approval: alt-w"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:433
-msgid "withdraw pending request for approval: alt-w"
+#: /views/edit/VersionedContent/tab_status_macros.pt:398
+msgid "withdraw"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:442
@@ -2427,47 +2491,63 @@ msgstr ""
 msgid "access key: alt-o"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:397
-msgid "${action} request"
+#: /views/edit/VersionedContent/tab_status_macros.pt:399
+msgid "request"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:409
-msgid "add message on ${rejection_withdrawal}"
+#: /views/edit/VersionedContent/tab_status_macros.pt:408
+msgid "add message on"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:425
+#: /views/edit/VersionedContent/tab_status_macros.pt:411
+msgid "rejection"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:414
+msgid "withdrawal"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:432
 msgid "The message may be viewed by local users."
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:443
+msgid " Reject approval request "
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:445
+msgid " Withdraw approval request "
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:45
 msgid "messages"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:463
+#: /views/edit/VersionedContent/tab_status_macros.pt:472
 msgid "If further editing is required, first revoke the approval."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:489
+#: /views/edit/VersionedContent/tab_status_macros.pt:498
 msgid "revert to previous version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:495
+#: /views/edit/VersionedContent/tab_status_macros.pt:504
 msgid "The current editable version can be replaced with the previous (published) version. This can not be undone afterwards and will discard all changes made to the current version."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:503
+#: /views/edit/VersionedContent/tab_status_macros.pt:512
 msgid "revert to previous"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:527
+#: /views/edit/VersionedContent/tab_status_macros.pt:536
 msgid "manual close"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:534
+#: /views/edit/VersionedContent/tab_status_macros.pt:543
 msgid "If necessary, the published version of this content can be manually closed (taken offline). It will also be removed from the public index."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:543
+#: /views/edit/VersionedContent/tab_status_macros.pt:552
 msgid "close published version"
 msgstr ""
 
@@ -2879,8 +2959,8 @@ msgstr ""
 
 #: /views/edit/macro_metadata.pt:385
 #: /views/edit/VersionedContent/macro_tab_edit.pt:117
-#: /views/edit/VersionedContent/tab_status_macros.pt:454
-#: /views/edit/VersionedContent/tab_status_macros.pt:472
+#: /views/edit/VersionedContent/tab_status_macros.pt:463
+#: /views/edit/VersionedContent/tab_status_macros.pt:481
 msgid "revoke approval"
 msgstr ""
 
@@ -3247,8 +3327,8 @@ msgstr ""
 msgid "listing of all authorized users below this level"
 msgstr ""
 
-#: /views/edit/tab_access_authorized_below.pt:70
-msgid "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; field of an email message. <br /> <textarea class=\"store\" name=\"data\" cols=\"60\" rows=\"5\" wrap=\"soft\"></textarea>"
+#: /views/edit/tab_access_authorized_below.pt:67
+msgid "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; field of an email message."
 msgstr ""
 
 #: /views/edit/tab_access_deny_access.py:22
