@@ -233,10 +233,10 @@ function setReference() {
                  i18n:attributes="title value"
                  onclick="window.close();return false;"
                 />
-               <input class="button"
+               <input class="transport"
                  type="button"
                  name="place"
-                 value="place reference"
+                 value="place reference..."
                  title="insert a reference to this asset: alt-p"
                  accesskey="p"
                  i18n:attributes="title value"
