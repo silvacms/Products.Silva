@@ -15,7 +15,7 @@ if context.is_field_simple(node):
   node = child
   if len(node.childNodes) == 0:
       return '<td align="%s" width="%s">&nbsp;</td>' % (info['align'], info['html_width'])
-  if len(node.childNodes) == 1 and len(node.childNodes[0].data.strip()) == 0:
+  if len(node.childNodes) == 1 and hasattr(node.childNodes[0], 'data') and len(node.childNodes[0].data.strip()) == 0:
       return '<td align="%s" width="%s">&nbsp;</td>' % (info['align'], info['html_width'])
   else:
       return '<td align="%s" width="%s">%s</td>' % (info['align'], info['html_width'], node.render_text_as_html(node))
