@@ -311,7 +311,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """Get the default content object of the folder.
         """
         # NOTE: another dependency on hardcoded name 'default'
-        return getattr(self, 'default', None)
+        return getattr(self.aq_base, 'default', None)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')

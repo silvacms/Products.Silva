@@ -219,7 +219,15 @@ class ContainerTestCase(unittest.TestCase):
         r = self.sroot.action_rename('doc1', '_doc')
         self.assert_(hasattr(self.sroot, 'doc1'))
         self.assert_(not hasattr(self.sroot, '_doc'))
-                     
+
+    def test_get_default(self):
+        # add default to root
+        self.sroot.manage_addProduct['Silva'].manage_addDocument('default', 'Default')
+        self.assertEquals(getattr(self.sroot, 'default'), self.sroot.get_default())
+        # delete default object
+        self.folder4.action_delete(['default'])
+        self.assertEquals(None, self.folder4.get_default())
+        
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ContainerTestCase, 'test'))
