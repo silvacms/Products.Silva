@@ -7,7 +7,7 @@ import SilvaTestCase
 from Products.SilvaDocument.Document import manage_addDocument
 from Products.Silva.Ghost import manage_addGhost
 from Products.Silva.GhostFolder import manage_addGhostFolder
-from Products.Silva.xml import xmlexport
+from Products.Silva.silvaxml import xmlexport
 from Products.Silva.Link import manage_addLink
 from Products.ParsedXML.ParsedXML import ParsedXML
 
