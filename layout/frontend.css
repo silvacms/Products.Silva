@@ -20,6 +20,8 @@ body {
   margin: 0;
 }
 
+/* _________________________________________________________ typography _____ */
+
 h1, h2, h3, h4, h5 {
   color : #455885;
   margin : 1.4em 0em 0em 0em;
@@ -62,7 +64,8 @@ h6.minor {
 } 
 
 p {
-  margin : 0.7em 0em;
+  margin : 0.5em 0em;
+  text-align: left;
 }
 
 p.lead {
@@ -81,22 +84,29 @@ pre {
   border: none;
 }
 
-span.breadcrumb a {
-  text-decoration : none;
-}  
-span.breadcrumb a:hover {
-  text-decoration : underline;
-}  
+div.citation {
+  font-size : 110%;
+  color : #426061;
+  background : #F4F3DB;
+  margin : 1em 3em;
+  padding : 0.4em 2em 1.2em 2em;
+  border : 1px solid #426061;
+}
 
-/* highlighting index links */
-/* keep this if you markup text with index elements, this overrides the highlighting in the editor */
-a.index-element {
-  background-color : transparent;
-  text-decoration : none;
+div.citation p.author {
+  font-size : 90%;
+  font-weight : bold;
+  margin-bottom : 0;
+}
+
+div.citation p.source {
+  font-size : 90%;
+  margin-top: 0;
+  margin-bottom : 0;
 }
 
 
-/* ______________ silva table styles ______________ */
+/* _________________________________________________ silva table styles _____ */
 
 table.silvatable {
   empty-cells: show;
@@ -210,6 +220,20 @@ dd {
 
 
 /* ____________________________________________________________ links _____ */
+
+span.breadcrumb a {
+  text-decoration : none;
+}  
+span.breadcrumb a:hover {
+  text-decoration : underline;
+}  
+
+/* highlighting index links */
+/* keep this if you markup text with index elements, this overrides the highlighting in the editor */
+a.index-element {
+  background-color : transparent;
+  text-decoration : none;
+}
 
 div.public a:link {
   color : #0000aa;
