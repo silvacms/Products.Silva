@@ -35,6 +35,9 @@
 	<icon paramname="ORDEREDLIST">
 		<iconfile>icons/olist.gif</iconfile>
 	</icon>
+	<icon paramname="UNORDEREDLIST">
+		<iconfile>icons/list.gif</iconfile>
+	</icon>
 	<icon paramname="ALPHABETLIST">
 		<iconfile>icons/alist.gif</iconfile>
 	</icon>

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.59 $
+# $Revision: 1.60 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -208,7 +208,7 @@ class Document(VersionedContent):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
                               'editor_storage')
-    def editor_storage(self, string=None, editor='eopro2_11', encoding='UTF-8'):
+    def editor_storage(self, string=None, editor='eopro3_0', encoding='UTF-8'):
         """provide xml/xhtml/html (GET requests) and (heuristic) 
            back-transforming to xml/xhtml/html (POST requests)
         """

@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.11 $'
+__version__='$Revision: 1.12 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -123,6 +123,17 @@ class Frag(Node, List):
                 node.append(child)
         return node
 
+    def find_one(self, tag=None, ignore=None):
+        l = self.find(tag,ignore)
+        if len(l)==0:
+            print l.find()
+            raise ValueError, "result set for %s is empty with %s" % (
+                repr(tag), self.asBytes())
+        elif len(l)>1:
+            raise ValueError, "result set for %s has too many results with %s" % (
+                repr(tag), self.asBytes())
+        return l[0]
+
     def find_and_partition(self, tag, ignore=lambda x: None):
         pre,match,post = Frag(), Element(), Frag()
         allnodes = self[:]
@@ -163,7 +174,7 @@ class Attrs(Dict):
     def __contains__(self, name):
         if name.startswith('_'):
             name = name[1:]
-            return name in self
+        return name in self
 
 class Element(Node):
     def __init__(self, *content, **attrs):
@@ -210,6 +221,9 @@ class Element(Node):
 
     def find(self, *args, **kwargs):
         return self.content.find(*args, **kwargs)
+
+    def find_one(self, *args, **kwargs):
+        return self.content.find_one(*args, **kwargs)
 
     def find_and_partition(self, *args, **kwargs):
         return self.content.find_and_partition(*args, **kwargs)

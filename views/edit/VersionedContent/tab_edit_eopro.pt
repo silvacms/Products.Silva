@@ -11,83 +11,73 @@
 
 <iframe id="RSIFrame"
   name="RSIFrame"
-  style="width:0px; height:0px; border: 0px"
+  style="width:0; height:0px; border: 0px"
   src="blank.html"></iframe>
 
 <table width="100%">
 <tr>
 <td width="810" >
-        <APPLET code="EditorApplet" id="myEditor" name="myEditor"
-                archive="edit-on-pro-signed.jar,ssce.jar" width="800"  height="500" VIEWASTEXT="VIEWASTEXT" MAYSCRIPT="MAYSCRIPT"
-                tal:attributes="codeBase template/eopro/absolute_url"
+        <APPLET code="com.realobjects.eop.applet.EditorApplet" id="editor" name="editor"
+                archive="edit-on-pro-signed.jar,ssce.jar" width="800"  height="500" 
+                tal:attributes="codeBase template/eopro/absolute_url" 
+                VIEWASTEXT MAYSCRIPT
         >
-<!--
-            <PARAM NAME="gethtmldataurl" tal:attributes="VALUE python: 'tab_edit_eopro_submit'">
-
-            <PARAM NAME="get_ok_url" tal:attributes="VALUE python: 'editor_ok_message'">
-            <PARAM NAME="get_ok_target" value="result">
-            <PARAM NAME="get_error_url" tal:attributes="VALUE python: 'editor_status_message?save=failure'">
-            <PARAM NAME="get_error_target" value="result">
+            <!-- <PARAM NAME="sethtmldataurl" tal:attributes="VALUE python: model.absolute_url()+'/editor_storage'"/>  -->
+            <PARAM NAME="encoding" VALUE="UTF8"/>
 
 
--->
-            <PARAM NAME="sethtmldataurl" tal:attributes="VALUE python: model.absolute_url()+'/editor_storage'">
 
-            <PARAM NAME="encoding" VALUE="UTF8">
+        <!-- general settings (configuration files) (relative to CODEBASE!?) -->
 
-            <PARAM NAME="toolbarurl" tal:attributes="VALUE python: template.tab_edit_eopro_toolbar.absolute_url()">
-      <!-- This is relative to CODEBASE -->
+            <PARAM NAME="cabbase" VALUE="edit-on-pro-signed.cab,ssce.cab"/>
+            <PARAM NAME="locale" VALUE="en_US"/>           
+            <PARAM NAME="help" VALUE="eophelp/en_US/help_en_US.htm"/>
+            <PARAM NAME="configurl" tal:attributes="VALUE python: template.tab_edit_eopro_config.absolute_url()"/>
+            <PARAM NAME="toolbarurl" tal:attributes="VALUE python: template.tab_edit_eopro_toolbar.absolute_url()"/>
+            <PARAM NAME="spellcheckproperties" VALUE="sc-americanenglish.txt"/>
 
-            <PARAM NAME="cabbase" VALUE="edit-on-pro-signed.cab,ssce.cab">
+            <!--    <PARAM NAME="imageroot" VALUE="http://localhost"/> relative image SRCs -->
+            <!--    <PARAM NAME="imageproxyurl" VALUE="/cgi-bin/imageproxy.cgi?"/> unsigned CAB/JAR and want to insert remote images-->
 
-            <PARAM NAME="locale" VALUE="en_US">            <!-- Change this to change UI language e.g de_DE, fr_
-FR, es_ES -->
-            <PARAM NAME="help" VALUE="eophelp/en_US/help_en_US.htm">   <!-- This is relative to CODEBASE, can be
- changed according to UI language -->
+        <!-- Display options -->
 
-            <PARAM NAME="spellcheckproperties" VALUE="sc-americanenglish.txt">  <!-- This is relative to CODEBAS
-E -->
+            <PARAM NAME="startupscreenbackgroundcolor" value="#e2e9eb"/>
+            <PARAM NAME="defaultfontcolor" VALUE="black"/>
+            <PARAM NAME="defaultbackgroundcolor" VALUE="#e2e9eb"/>
+            <PARAM NAME="defaultlinkcolor" VALUE="blue"/>
+            <PARAM NAME="defaultfontsize" VALUE="12"/>
+            <PARAM NAME="defaultfontface" VALUE="Serif"/>
 
-        <!--    <PARAM NAME="imageroot" VALUE="http://localhost">  Optional - Set this to the reference base of
-relative image SRCs -->
-        <!--    <PARAM NAME="imageproxyurl" VALUE="/cgi-bin/imageproxy.cgi?">  Optional - Set this if you use an
- unsigned CAB/JAR and want to insert remote images-->
+        <!-- formatting parameters -->
 
-            <PARAM NAME="sourceview" VALUE="true">
-            <PARAM NAME="sourceviewwordwrap" VALUE="true">
-
-            <PARAM NAME="startupscreenbackgroundcolor" value="#e2e9eb">
-
-            <PARAM NAME="defaultfontcolor" VALUE="black">
-  <PARAM NAME="defaultbackgroundcolor" VALUE="#e2e9eb">
-            <PARAM NAME="defaultlinkcolor" VALUE="blue">
-            <PARAM NAME="defaultfontsize" VALUE="12">
-            <PARAM NAME="defaultfontface" VALUE="Serif">
-
-            <PARAM NAME="bodyonly" VALUE="false">
-            <PARAM NAME="textmode" VALUE="false">
-            <PARAM NAME="xhtmlmode" VALUE="true">
-
-            <PARAM NAME="inserttext_html" VALUE="TRUE">
+            <PARAM NAME="sourceview" VALUE="true"/>
+            <PARAM NAME="smartindent" VALUE="true"/>
+            <PARAM NAME="sourceviewwordwrap" VALUE="true"/>
+            <PARAM NAME="inserttext_html" VALUE="TRUE"/>
+            <PARAM NAME="bodyonly" VALUE="false"/>
+            <PARAM NAME="textmode" VALUE="false"/>
+            <PARAM NAME="xhtmlmode" VALUE="true"/>
 
 
-            <PARAM NAME="simpletable" VALUE="true">
-            <PARAM NAME="tableNBSPfill" VALUE="true">
-            <PARAM NAME="table_numrows" VALUE="3">
-            <PARAM NAME="table_numcols" VALUE="4">
-            <PARAM NAME="table_overallwidth" VALUE="100%">
-            <PARAM NAME="table_rowheight" VALUE="10">
-            <PARAM NAME="table_colwidth" VALUE="25%">
+            <PARAM NAME="simpletable" VALUE="true"/>
+            <PARAM NAME="tableNBSPfill" VALUE="true"/>
+            <PARAM NAME="table_numrows" VALUE="3"/>
+            <PARAM NAME="table_numcols" VALUE="4"/>
+            <PARAM NAME="table_overallwidth" VALUE="100%"/>
+            <PARAM NAME="table_rowheight" VALUE="10"/>
+            <PARAM NAME="table_colwidth" VALUE="25%"/>
 
-            <PARAM NAME="ONEDITORLOADED" VALUE="onEditorLoaded">
+            <PARAM NAME="oneditorloaded" VALUE="editorloaded"/>
         </APPLET>
 </td>
 <td valign="top" align="left">
 <form name="myForm" target="RSIFrame" method="POST" tal:attributes="action python: 'tab_edit_eopro_submit'">
     <input type="button" name="save" value="Save Document" onClick="functSave();">
 			<br/><br/>
-    <input type="button" name="reset" value="Reset Document" onClick="functReload();">
-    <input type="hidden" name="HTMLDATA">
+    <input type="button" name="reload" value="Reload Document" onClick="functReload();">
+    <input type="hidden" name="HTMLDATA"
+            tal:attributes="value python: model.editor_storage()"
+	   >
 <br><br><small>(buttons require LiveConnect)</small>
 </form>
 </td>

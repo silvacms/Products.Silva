@@ -19,7 +19,7 @@ js.append("""
 
 js.append("""
     function functSave() {
-      mydoc = document.myEditor.getHTMLData('http://');
+      mydoc = document.editor.getHTMLData('http://');
       document.myForm.HTMLDATA.value = mydoc;
       document.myForm.submit();
       document.myForm.save.blur();
@@ -29,20 +29,35 @@ js.append("""
 
 #url = container.REQUEST.model.absolute_url()+'/editor_storage'
 
-#js.append("""
-#    function onEditorLoaded() {
-#        //mydoc = document.LastDocumentFrame.document.value;
-#        //document.myForm.HTML_DATA_LAST.value=mydoc;
-#        //alert("onEditorLoaded finished");
-#    }
-#    """) 
+js.append("""
+    function editorloaded(applet) {
+        //applet.insertHTMLData("","hello"); 
+        //document.editor.setHTMLData("","startup")
+        document.editor.setHTMLData("", document.myForm.HTMLDATA.value); 
+        //http://localhost/silva1/test/editor_storage");
+        //alert("onEditorLoaded finished");
+    }
+    """) 
+        #//mydoc = document.LastDocumentFrame.document.value;
+        #//document.myForm.HTML_DATA_LAST.value=mydoc;
 
 js.append("""
-    function functReload() {
+    function functReset() {
       window.location.reload();
       //mydoc = document.myForm.HTMLDATA.value;
     }
     """ )
+
+js.append("""
+    function functReload() {
+      //document.editor.setHTMLData("http://localhost/silva1/test2/editor_storage");
+      document.editor.setHTMLData("", document.myForm.HTMLDATA.value); 
+      //document.editor.insertHTMLData("","<h2>title</h2>");
+      document.myForm.reload.blur();
+      //mydoc = document.myForm.HTMLDATA.value;
+    }
+    """ )
+
 #from Products.PythonScripts.standard import html_quote
 
 js = map(lambda x: x.strip(), js)

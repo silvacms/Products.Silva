@@ -13,9 +13,10 @@ Currently only minidom is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
 
 from base import Element, Frag, Text
+import inspect
 
 #
 # Transformation from Dom to our Nodes
@@ -67,12 +68,13 @@ class ObjectParser:
                 cls = self.typemap.get(node.nodeName)
                 if not cls:
                     self.unknown_tags.append(node.nodeName)
+                    print self.unknown_tags
                     res.extend(childs)
                 else:
                     attrs = {}
                     if node.attributes:
                         for name, item in node.attributes.items():
-                            attrs[name]=Text(item) # .nodeValue)
+                            attrs[name]=item # Text(item) # .nodeValue)
                     res.append(cls(attrs, *childs))
 
             elif node.nodeType == node.TEXT_NODE:

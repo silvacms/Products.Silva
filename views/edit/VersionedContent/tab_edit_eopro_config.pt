@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<config>
+        <paragraphstyles>
+                <paragraphstyle name="Standard" />
+                <paragraphstyle name="H3"/>
+                <paragraphstyle name="H4"/>
+                <paragraphstyle name="H5"/>
+                <paragraphstyle name="H6"/>
+	        <paragraphstyle name="PRE"/>
+                <!-- <paragraphstyle name="DIV"/> -->
+        </paragraphstyles>
+
+     
+    <fontmapping>
+                <font name="Arial">
+                        <renderedfont>SansSerif</renderedfont>
+                        <exportedfont>Arial</exportedfont>
+                </font>
+                <font name="Courier">
+                        <renderedfont>Monospaced</renderedfont>
+                        <exportedfont>Courier</exportedfont>
+                </font>
+                <font name="Times">
+                        <renderedfont>Serif</renderedfont>
+                        <exportedfont>Times new roman,Times</exportedfont>
+                </font>
+        </fontmapping>
+        <presetcolors>
+                <color rgb="#0045aa" />
+                <color rgb="#0067aa" />
+                <color rgb="#0123aa" />
+                <color rgb="#ee45aa" />
+                <color rgb="#00e023" />
+                <color rgb="#e0e0aa" />
+                <color rgb="#30801a" />
+                <color rgb="#346788" />
+                <color rgb="#0EE0aa" />
+                <color rgb="#01e4aa" />
+                <color rgb="#12300a" />
+                <color rgb="#111111" />
+        </presetcolors>
+        <customtags>
+                <customtag name="customreadonlytag" alwaysshow="true" isreadonlytag="true"></customtag>
+                <customtag name="customreadonlyarea" alwaysshow="true" isreadonlyarea="true"></customtag>
+                <customtag name="custominline" alwaysshow="true"></customtag>
+                <customtag name="customblock" alwaysshow="true"  isblockelement="true"></customtag>
+                <customtag name="doctitle" alwaysshow="true" isblockelement="true" isreadonlytag="true">
+                </customtag>
+        </customtags>
+        <spellingcheckers>
+                <spellingchecker name="US English" properties="sc-americanenglish.txt" default="true" />
+                <spellingchecker name="Brit. English" properties="sc-british.txt" default="false" />
+                <spellingchecker name="Canad. English" properties="sc-canadianenglish.txt" default="false" />
+                <spellingchecker name="German" properties="sc-german.txt" default="false" />
+                <spellingchecker name="Danish" properties="sc-danish.txt" default="false" />
+                <spellingchecker name="Brazilian" properties="sc-brazilian.txt" default="false" />
+                <spellingchecker name="Dutch" properties="sc-dutch.txt" default="false" />
+                <spellingchecker name="Finnish" properties="sc-finnish.txt" default="false" />
+                <spellingchecker name="Norwegian" properties="sc-norwegian.txt" default="false" />
+                <spellingchecker name="Swedish" properties="sc-swedish.txt" default="false" />
+                <spellingchecker name="Spanish" properties="sc-spanish.txt" default="false" />
+                <spellingchecker name="Italian" properties="sc-italian.txt" default="false" />
+                <spellingchecker name="US Medical" properties="sc-usmed.txt" default="false" />
+                <spellingchecker name="Brit. Medical" properties="sc-brmed.txt" default="false" />
+        </spellingcheckers>
+        <cleanupprocess isclientside="true" enabled="true" alwaysclean="false"/>
+        <htmlformatclipboard enabled="true" />
+</config>
