@@ -1,6 +1,5 @@
 import sys, string
 from xml.sax.handler import ContentHandler
-from Products.SilvaMetadata.Compatibility import getToolByName
 from DateTime import DateTime
 
 class XMLImportError(Exception):
@@ -175,7 +174,7 @@ class BaseHandler:
 
     def storeMetadata(self):
         content = self._result
-        metadata_tool = getToolByName(content, 'portal_metadata')
+        metadata_tool = content.service_metadata
         metadata = {}
         binding = metadata_tool.getMetadata(content)
         for set_name in binding.collection.keys():
