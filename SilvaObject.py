@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.83.2.2 2003/09/01 14:37:44 guido Exp $
+# $Id: SilvaObject.py,v 1.83.2.3 2003/09/12 14:13:43 guido Exp $
 
 # python
 from types import StringType
@@ -54,6 +54,10 @@ class SilvaObject(Security, ViewCode):
     # location of the xml schema
     _xml_namespace = "http://www.infrae.com/xml"
     _xml_schema = "silva-0.9.1.xsd"
+    
+    # a bit of a hack, when an object that is derived from SilvaObject doesn't
+    # have an icon defined for it, this makes the default icon appear
+    icon = 'misc_/Silva/silvageneric.gif'
 
     def __init__(self, id, title):
         self.id = id

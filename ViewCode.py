@@ -31,11 +31,9 @@ class ViewCode:
         tag = ('<img src="%(icon_path)s" width="16" height="16" border="0" '
                 'alt="%(alt)s" />')
 
-        if obj is None or not hasattr(aq_base(obj), 'icon'):
-            icon_path = '%s/globals/silvageneric.gif' % self.get_root_url()
-        else:
+        if obj is not None:
             icon_path = '%s/%s' % (self.REQUEST['BASE1'], getattr(obj, 'icon'))
-    
+
         if obj is not None:
             meta_type = getattr(obj, 'meta_type')
 
