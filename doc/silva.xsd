@@ -12,11 +12,12 @@
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      $Id: silva.xsd,v 1.18 2003/03/19 15:06:12 zagy Exp $
+      $Id: silva.xsd,v 1.19 2003/10/06 09:09:03 zagy Exp $
     
       Silva XML schema
       Copyright 2002 Infrae
       Author: Christian Zagrodnick, cz@gocept.com
+      Valid for: Silva 0.9.3
     </xsd:documentation>
   </xsd:annotation>
 
@@ -185,11 +186,11 @@
   </xsd:complexType>
   
   <xsd:complexType name="IndexItem">
-    <xsd:simpleContent>
-      <xsd:extension base="xsd:string">
+    <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
         <xsd:attribute name="name" type="xsd:string" />
-      </xsd:extension>
-    </xsd:simpleContent>
+        </xsd:restriction>
+    </xsd:complexContent>
   </xsd:complexType>
 
   <xsd:complexType name="ExternalData">
