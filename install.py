@@ -578,6 +578,13 @@ def configureContainerPolicies(root):
     cpr.register('First Published', SemiGhostPolicy)
     cpr.register('Auto TOC', AutoTOCPolicy)
 
+    # set default container policy
+    binding = root.service_metadata.getMetadata(root)
+    binding.setValues('silva-publication', {
+        'defaultdocument_policy': 'Simple Content',
+    })
+    
+
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
