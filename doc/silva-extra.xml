@@ -695,6 +695,43 @@
    <index_args>
    </index_args>
  </metadata_element>
+ <metadata_element id="renderer_id">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>0</index_p>
+   <field_type>ListField</field_type>
+   <acquire_p>1</acquire_p>
+   <read_only_p>0</read_only_p>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+     <value key="required" type="int" value="0" />
+     <value key="description" type="str" value="Name of content renderer." />
+     <value key="css_class" type="str" value="store" />
+     <value key="size" type="int" value="1" />
+     <value key="title" type="str" value="content renderer" />
+   </field_values>
+   <field_tales>
+     <value key="items">form/getRenderersForMetaType</value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+     <value key="lexicon_id">silva_lexicon</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="index_type">Cosine Measure</value>
+   </index_args>
+ </metadata_element>
  <metadata_element id="contactname">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
