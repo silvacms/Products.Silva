@@ -90,7 +90,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'test_link')
         # asset file import works
         self.assertEquals(
-            importfolder.testfolder.testfolder2['testzip']['sound1.mp3'].id(),
+            importfolder.testfolder.testfolder2['testzip']['sound1.mp3'].id,
             'sound1.mp3')
         # .zexp import works:
         self.assertEquals(
