@@ -285,7 +285,9 @@ table.columns1 {
 table.listing {
     color: #444444;
     width: 100%;
-    margin: 0em 0em 1em 0em;    
+    margin: 0em 0em 1em 0em;
+  border-collapse : collapse;
+  border : 0;
 }
 
 table.listing thead {
@@ -371,13 +373,15 @@ table.listing td {
 table.listing td.top {
   color: &dtml-shade40;;
   background: #394b4d;
+    padding-bottom: 0;
     border-top: &dtml-listingBorder; ! important;
     border-left: &dtml-listingBorder; ! important;
     border-right: &dtml-listingBorder; ! important;
-    border-bottom: none;
-    padding-top: 0em ! important;
-    padding-bottom: 0em ! important;
     vertical-align: bottom;
+    /* workaround for plone 'insane IE row bug workaround' */
+    position: relative;
+    left: 0px;
+    top: 0px;
 }
 
 table.listing td.top h2 {

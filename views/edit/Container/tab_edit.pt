@@ -34,7 +34,7 @@
             <tal:block replace="nothing">
               _____________________ inner table with folder view _____________________
             </tal:block>
-            <table class="listing"
+            <table class="listing" border="0"
               id="sortable">
               <thead>
                 <tal:block replace="nothing">

@@ -15,7 +15,7 @@
     root model/get_root;
     " 
   >
-  <table class="listing"
+  <table class="listing" border="1"
     tal:define="publication_url string:${publication/absolute_url}/edit/{__vein_id__}">
     <thead>
       <tr>
