@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14 $'
+__version__='$Revision: 1.15 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -88,9 +88,6 @@ class Frag(Node, List):
                 List.append(self, other)
 
     def convert(self, context):
-        try: context = Context(**context)
-        except TypeError: pass
-
         l = Frag()
         context.resultstack.append(l)
         post = self[:]
@@ -252,17 +249,14 @@ class Element(Node):
                 continue
 
             name = name.encode(encoding)
-            if value:
-                if hasattr(value, 'asBytes'):
-                    value = value.asBytes(encoding)
-                elif type(value)==type(u''):
-                    value = value.encode(encoding)
-                else:
-                    value = value
-
-                attrlist.append('%s="%s"' % (name, value))
+            if hasattr(value, 'asBytes'):
+                value = value.asBytes(encoding)
+            elif type(value)==type(u''):
+                value = value.encode(encoding)
             else:
-                attrlist.append(name)
+                value = value
+
+            attrlist.append('%s="%s"' % (name, value or ''))
 
         subnodes = self.content.asBytes(encoding)
         attrlist = " ".join(attrlist)

@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import unittest
 
 # 
@@ -77,7 +77,6 @@ class Base(unittest.TestCase):
 
 class HTML2XML(Base):
     """ test conversions from HTML to XML """
-    context = {'id': 'test', 'title':'testtitle'}
 
     def test_basic_silva_structure(self):
         silvadoc = self.htmlfrag_to_silvadocument("<h3>title</h3>")
@@ -182,31 +181,16 @@ class HTML2XML(Base):
         self.assert_(p[0].content.asBytes()=='hallo')
         self.assert_(p[1].content.asBytes()=='dies')
 
-    def test_empty_paras_are_preserved(self):
-        frag="""<p>hallo</p><p></p><p></p>"""
+    def test_empty_paras_are_not_preserved(self):
+        frag="""<p></p><p>hallo</p><p></p>"""
         node = self.parse_htmlfrag(frag)
-        doc = node.convert(self.context)
+        doc = node.conv()
         p = doc.find('p')
-        self.assert_(len(p)==3)
-        self.assert_(p[0].content.asBytes()=='hallo')
-        self.assert_(not p[1].content.asBytes())
-        self.assert_(not p[2].content.asBytes())
+        self.assertEquals(len(p),3)
+        self.assert_(not p[0].extract_text())
+        self.assert_(p[1].extract_text(), 'hallo')
+        self.assert_(not p[2].extract_text())
 
-    def _test_image_simple(self):
-        htmlfrag="""<img src="/silva/path/image" link="http://www.heise.de" align="float-left"/>"""
-        node = self.transformer.target_parser.parse(htmlfrag)
-
-        node = node.conv()
-        self.assertEquals(len(node),1)
-        img = node[0]
-        self.assertEquals(img.name(), 'image')
-        self.assertEquals(img.attrs.get('path'), '/silva/path')
-        self.assertEquals(img.attrs.get('link'), 'http://www.heise.de')
-        node = node.conv()
-        self.assertEquals(len(node),1)
-        img = node[0]
-        self.assertEquals(img.attrs.get('src'), '/silva/path/image')
-        self.assertEquals(img.attrs.get('link'), 'http://www.heise.de')
 
     def _test_image_URL_stripping(self):
         frag="""<img src="http://asd:123/silva/path/image"/>"""
@@ -262,19 +246,22 @@ class RoundtripWithTidy(Base):
     def setUp(self):
         self.transformer = Transformer(source='eopro3_0.silva', target='eopro3_0.html')
 
-    def _check_string(self, string):
+    def _check_string(self, string, ctx=None):
+        ctx = ctx or Context()
+
         string_withdoc = """<silva_document id="test"><title>test title</title>
                             <doc>%s</doc></silva_document>""" % string
 
-        htmlnode = self._check_doc(string_withdoc)
+        htmlnode = self._check_doc(string_withdoc, ctx)
         self.assert_(len(htmlnode)==1)
         return htmlnode[0].content
 
-    def _check_doc(self, string):
-        htmlnode = self.transformer.to_target(string)
+    def _check_doc(self, string, ctx=None):
+        ctx = ctx or Context()
+        htmlnode = self.transformer.to_target(string, context=ctx)
         html = htmlnode.asBytes()
         self._checkhtml(html)
-        silvanode = self.transformer.to_source(html)
+        silvanode = self.transformer.to_source(html, context=ctx)
         orignode = self.transformer.source_parser.parse(string)
         silvanode = silvanode.compact()
         orignode = orignode.compact()
@@ -291,6 +278,30 @@ class RoundtripWithTidy(Base):
             print "*"*70
             raise
         return htmlnode
+
+    def test_workaround_eonpro_bug_p_space(self):
+        frag="""<p type="normal"></p>"""
+        silvanode = self.parse_silvafrag(frag)
+        htmlnode = silvanode.conv()
+        p = htmlnode.find_one('p')
+        self.assertEquals(p.extract_text(), ' ')
+
+    def test_image_simple(self):
+
+        silvafrag = '<image link="" path="myimg" alt="test" alignment="float-left"/>'
+        silvanode = self.parse_silvafrag(silvafrag)
+
+        ctx = Context()
+        ctx.url = 'http://localhost/silva1/doc1'
+
+        htmlnode = silvanode.convert(ctx)
+
+        img = htmlnode.find_one('img')
+        self.assertEquals(img.attrs.get('src'), ctx.url+'/myimg/image')
+        self.assertEquals(img.attrs.get('alt'), 'test')
+        self.assertEquals(img.attrs.get('align'), 'float-left')
+
+        self._check_string(silvafrag, ctx)
         
     def test_heading_and_p(self):
         simple = '''
@@ -508,12 +519,12 @@ class RoundtripWithTidy(Base):
     def test_table_data_grid(self):
         self._check_table(columns="3", type='datagrid', column_info="L:1 L:1 L:1")
 
-    def test_image(self):
-        silvadoc = '<image path="path/file"/>'
-        htmlnode = self._check_string(silvadoc)
-        body = htmlnode.find_one('body')
-        img = body.find_one('img')
-        self.assertEquals(img.attrs.get('src'), 'path/file/image')
+    #def test_image(self):
+    #    silvadoc = '<image path="path/file"/>'
+    #    htmlnode = self._check_string(silvadoc)
+    #    body = htmlnode.find_one('body')
+    #    img = body.find_one('img')
+    #    self.assertEquals(img.attrs.get('src'), 'path/file/image')
 
     def test_br(self):
         """ check that 'br' works """
@@ -615,6 +626,20 @@ def equiv_node(node1, node2):
             #print "problem with", c1, "on", node1,node2
             raise AssertionError
 
+
+def transform_html(s):
+    context = Context(url='http://localhost/silva1/imagetest')
+    transformer = EditorTransformer('eopro3_0')
+    silvanode = transformer.to_source(s, context)
+    print silvanode.asBytes()
+
+def transform_silva(s):
+    context = Context(url='http://localhost/silva1/imagetest')
+    transformer = EditorTransformer('eopro3_0')
+    htmlnode = transformer.to_target(s, context)
+    print htmlnode
+    print htmlnode.asBytes()
+
 #
 # invocation of test suite
 #
@@ -630,4 +655,15 @@ def main():
     unittest.TextTestRunner().run(test_suite())
 
 if __name__ == '__main__':
-    main()
+    import sys
+
+    cmd = sys.argv[-1]
+
+    if cmd == 'html':
+        s = sys.stdin.read()
+        transform_html(s)
+    elif cmd == 'silva':
+        s = sys.stdin.read()
+        transform_silva(s)
+    else:
+        main()

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.60 $
+# $Revision: 1.61 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -18,6 +18,7 @@ from helpers import add_and_edit, translateCdata, getNewId
 
 # For XML-Conversions for editors
 from transform.Transformer import EditorTransformer
+from transform.base import Context
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 from Products.ParsedXML.ExtraDOM import writeStream
@@ -214,23 +215,25 @@ class Document(VersionedContent):
         """
         transformer = EditorTransformer(editor=editor)
 
+
         if string is None:
+            ctx = Context(url=self.absolute_url())
             string = self.get_xml(last_version=1, with_sub_publications=0)
-            htmlnode = transformer.to_target(sourceobj=string)
+            htmlnode = transformer.to_target(sourceobj=string, context=ctx)
             return htmlnode.asBytes(encoding=encoding)
         else:
             version = self.get_editable()
             if version is None:
                 raise "Hey, no version to store to!"
 
-            conv_context = {'id': self.id, 'title': self.get_title()}
+            ctx = Context(id=self.id, 
+                          title=self.get_title(),
+                          url=self.absolute_url())
 
-            silvanode = transformer.to_source(targetobj=string,
-                                              context=conv_context
-                                              )[0]
+            silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
             title = silvanode.find('title')[0].content.asBytes(encoding='utf8')
             title = unicode(title, 'utf8')
-            docnode = silvanode.find('doc')[0]
+            docnode = silvanode.find_one('doc')
             content = docnode.asBytes(encoding="UTF8")
             version.manage_edit(content)  # needs utf8-encoded string
             self.set_title(title)         # needs unicode

@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.4 $'
+__version__='$Revision: 1.5 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -91,7 +91,7 @@ class heading(SilvaElement):
 class p(SilvaElement):
     def convert(self, context):
         return html.p(
-            self.content.convert(context),
+            self.content.convert(context) or ' ',
             silva_type=self.attrs.get('type')
             )
 
@@ -215,17 +215,14 @@ class link(SilvaElement):
 class image(SilvaElement):
     def convert(self, context):
         src = self.attrs['path']
-        try:
-            src = src.content
-        except AttributeError:
-            pass
         align = self.attrs.get('alignment')
      
         return html.img(
             self.content.convert(context),
-            src=src+'/image',
-            link=self.attrs.get('link'),
-            align=align
+            src='%s/%s/image' % (context.url, src),
+            link=self.attrs.get('link',''),
+            align=align,
+            alt = self.attrs.get('alt','')
             )
 
 class pre(SilvaElement):

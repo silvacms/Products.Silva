@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.4 $'
+__version__='$Revision: 1.5 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -305,7 +305,6 @@ class ol(ul):
 
 class li(Element):
     def convert(self, context):
-
         return silva.li(
             self.content.convert(context),
             )
@@ -378,15 +377,19 @@ class img(Element):
     def convert(self, context):
         from urlparse import urlparse
         src = self.attrs['src']
-        src = urlparse(src)[2]
+        #src = urlparse(src)[2]
         link = self.attrs.get('link')
         if src.endswith('/image'):
             src = src[:-len('/image')]
+        if src.startswith(context.url):
+            src = src[len(context.url)+1:]
+
         alignment=self.attrs.get('align')
         return silva.image(
             self.content.convert(context),
             path=src,
             link=link,
+            alt=self.attrs.get('alt',''),
             alignment=alignment,
             )
 

@@ -7,6 +7,7 @@
 ##parameters=encoding='latin1'
 ##title=
 ##
+from Products.PythonScripts.standard import html_quote
 error = None
 
 try:
@@ -41,7 +42,7 @@ if error:
 <script type="text/javascript">
 window.parent.handleError("ServerError: %s");
 </script>
-""" % str(error).replace('"', '\\"')
+""" % str(error).replace('"', '\\')
 
 return """
 <script type="text/javascript">
