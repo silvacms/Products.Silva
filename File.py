@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27.8.1.6.9 $
+# $Revision: 1.27.8.1.6.10 $
 
 # Python
 import os
@@ -185,11 +185,10 @@ InitializeClass(File)
 class ZODBFile(File):                                   
     """Silva File object, storage in Filesystem. Contains the OFS.Image.File
     """       
-    def __init__(self, id, title, file):
+    def __init__(self, id, title):
         ZODBFile.inheritedAttribute('__init__')(self, id, title)
         # Actual container of file data
         self._file = Image.File(id, title, '')        
-        self._set_file_data_helper(file)
 
     def _set_file_data_helper(self, file):
         self._file.manage_upload(file=file)
@@ -205,11 +204,10 @@ class FileSystemFile(File):
     from the ExtFile Product - if available.
     """    
 
-    def __init__(self, id, title, file, repository):
+    def __init__(self, id, title, repository):
         FileSystemFile.inheritedAttribute('__init__')(self, id, title)        
         self._file = ExtFile(id, title)
         self._file._repository = cookPath(repository)
-        self._set_file_data_helper(file)
 
     def _set_file_data_helper(self, file):
         self._file.manage_file_upload(file=file)
@@ -253,13 +251,13 @@ def manage_addFile(self, id, title, file):
     assert service_files is not None, "There is no service_files. " \
         "Refresh your silva root."
     if service_files.useFSStorage():        
-        object = FileSystemFile(id, title, file, 
-            service_files.filesystem_path())
+        object = FileSystemFile(id, title, service_files.filesystem_path())
     else:
-        object = ZODBFile(id, title, file)
+        object = ZODBFile(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
     object.set_title(title)
+    object._set_file_data_helper(file)
     return object
 
 
