@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.85 $
+# $Revision: 1.86 $
 
 # Zope
 from OFS import SimpleItem
@@ -17,6 +17,8 @@ import SilvaPermissions
 # misc
 from helpers import add_and_edit
 import urlparse
+
+from Products.Silva.i18n import translate as _
 
 from interfaces import \
     IVersionedContent, IContainer, IVersion, IContent, IGhost, \
