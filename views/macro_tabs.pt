@@ -34,7 +34,8 @@
   accesskey top_key;
   "><img tal:attributes="src python: test(model.meta_type == 'Silva Publication', silva_root+'/globals/up_publication.gif', silva_root+'/globals/up_tree.gif')" width="19" height="14" border="0" /></a></td>
 <td align="center" width="75"
-  tal:attributes="class python:test(is_selected_tab, active_tab and 'tab-recede' or 'tab-up', 'tab');">
+  tal:condition="tab_info/tab_url"
+  tal:attributes="class python:is_selected_tab and (active_tab and 'tab-recede' or 'tab-up') or 'tab';">
 <a class="" href=""
   tal:content="structure string:&nbsp;&nbsp;${tab_info/tab_name}&nbsp;&nbsp;"
   tal:attributes="href tab_info/tab_url;
@@ -44,6 +45,9 @@
   ">Tab Name
 </a>
 </td>
+<td class="tab-inactive" align="center" width="75"
+  tal:condition="not:tab_info/tab_url"
+  tal:content="structure string:&nbsp;&nbsp;${tab_info/tab_name}&nbsp;&nbsp;" />
 <td class="tab"><a href="" class="tree" title="Up a level"
   tal:condition="tab_info/uplink_url"
   tal:attributes="href tab_info/uplink_url;

@@ -1,12 +1,4 @@
-## Script (Python) "get_tab_info"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
 ##parameters=tab_item
-##title=
-##
 model = context.REQUEST.model
 view = context
 tab_name, tab_id, tab_up_id, toplink_accesskey, tab_accesskey, uplink_accesskey = tab_item
@@ -24,11 +16,16 @@ else:
     uplink_url = None
     toplink_url = None
 
+if tab_id:
+    tab_url = model.absolute_url() + '/edit/' + tab_id
+else:
+    tab_url = None
+
 return { 
   'tab_name' : tab_name,
   'tab_id' : tab_id,
   'toplink_url' : toplink_url,
-  'tab_url' : model.absolute_url() + '/edit/' + tab_id,
+  'tab_url' : tab_url,
   'uplink_url' : uplink_url,
   'toplink_accesskey' : toplink_accesskey,
   'tab_accesskey' : tab_accesskey,

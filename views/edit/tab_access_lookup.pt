@@ -175,10 +175,8 @@
           </td>
         <!-- __________________________ selection ______________________________ -->
           <td>
-            <div class="hilight borders top right bottom left"
-              style="margin: 0em 1em;">
               <!-- Clipboard -->
-              <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard_no_style">
+              <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
                 <metal:block fill-slot="clipboard_lookup_action">
                   <!-- fill slot to suppress lookup button -->
                 </metal:block>
@@ -201,7 +199,6 @@
                     value="Deselect" />
                 </metal:block>
               </metal:block>
-            </div>
           </td>
         <!-- ________________________ end selection ____________________________ -->
         </tr>

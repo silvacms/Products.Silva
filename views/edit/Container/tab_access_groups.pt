@@ -61,7 +61,7 @@
                     *
                   </span>
                 </td>
-                <td>
+                <td style="width: 20em;">
                   <input size="20" 
                     value="" 
                     type="text" 
@@ -116,7 +116,7 @@
                     *
                   </span>
                 </td>
-                <td>
+                <td  style="width: 20em;">
                   <input size="20" 
                     value="" 
                     type="text" 

@@ -77,12 +77,8 @@
             </b>
           </th>
         </tr>
-        <tal:comment condition="nothing">
-          _______ why is the line-height: 250%? _______ 
-        </tal:comment>
         <tal:block repeat="member members">
-          <tr style="line-height: 250%;"
-            valign="top"
+          <tr valign="top"
             tal:define="
               oddrow repeat/member/odd;
               userid member/userid;
@@ -101,12 +97,11 @@
                 username
               </label></b>
             </td>
-            <td align="right"
+            <td align="right" valign="bottom"
               style="border-left: 1px solid Black; border-right: 1px solid Black;"
               tal:define="upward_roles python:model.sec_get_upward_roles_for_userid(userid)">
               <tal:block repeat="upward upward_roles">
-                <i tal:content="upward" />
-                <br tal:condition="not:repeat/upward/end" />
+                <i tal:content="upward" /><br tal:condition="not:repeat/upward/end" />
               </tal:block>
             </td>
             <td align="right">
