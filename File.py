@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 
 # Python
 import os
@@ -203,6 +203,8 @@ def manage_addFile(self, id='', title='', file=''):
     
     # Copy code from ExtFile, but we don't want a dependency per se:
     id = string.translate(id, TRANSMAP)
+    if not self.is_id_valid(id):
+        return None 
 
     # Switch storage type:
     service_files = getattr(self.get_root(), 'service_files', None)
