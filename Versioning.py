@@ -1,11 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 from DateTime import DateTime
 import Interfaces
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
+import ExtensionClass
 
 class VersioningError(Exception):
     pass
@@ -362,3 +363,147 @@ class Versioning:
             return versions[-1]
         
 InitializeClass(Versioning)
+
+class CataloguedVersioning(Versioning, ExtensionClass.Base):
+    security = ClassSecurityInfo()
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'create_version')
+    def approve_version(self):
+        CataloguedVersioning.inheritedAttribute('create_version')(self)
+        self._reindex_versions(('unapproved',))
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'approve_version')
+    def approve_version(self):
+        CataloguedVersioning.inheritedAttribute('approve_version')(self)
+        self._reindex_versions(('approved',))
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'unapprove_version')
+    def unapprove_version(self):
+        CataloguedVersioning.inheritedAttribute('unapprove_version')(self)
+        self._reindex_versions(('unapproved',))
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'close_version')
+    def close_version(self):
+        CataloguedVersioning.inheritedAttribute('close_version')(self)
+        self._reindex_versions(('last_closed','closed'))
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_unapproved_version_publication_datetime')
+    def set_unapproved_version_publication_datetime(self, dt):
+        CataloguedVersioning.inheritedAttribute('set_unapproved_version_publication_datetime')(self, dt)
+        self._reindex_versions(('unapproved',))
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_unapproved_version_expiration_datetime')
+    def set_unapproved_version_expiration_datetime(self, dt):
+        CataloguedVersioning.inheritedAttribute('set_unapproved_version_expiration_datetime')(self, dt)
+        self._reindex_versions(('unapproved',))
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_approved_version_publication_datetime')
+    def set_approved_version_publication_datetime(self, dt):
+        CataloguedVersioning.inheritedAttribute('set_approved_version_publication_datetime')(self, dt)
+        self._reindex_versions(('approved',))
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_approved_version_expiration_datetime')
+    def set_approved_version_expiration_datetime(self, dt):
+        CataloguedVersioning.inheritedAttribute('set_approved_version_expiration_datetime')(self, dt)
+        self._reindex_versions(('approved',))
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_next_version_publication_datetime')
+    def set_next_version_publication_datetime(self, dt):
+        """Set publication datetime of next version.
+        """
+        status = ""
+        if self._approved_version[0]:
+            version_id, publication_datetime, expiration_datetime = self._approved_version
+            self._approved_version = version_id, dt, expiration_datetime
+            self._reindex_versions(("approved",))
+        elif self._unapproved_version[0]:
+            version_id, publication_datetime, expiration_datetime = self._unapproved_version
+            self._unapproved_version = version_id, dt, expiration_datetime
+            self._reindex_versions(('unapproved',))
+        else:
+            raise VersioningError,\
+                  'No next version.'
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_next_version_expiration_datetime')
+    def set_next_version_expiration_datetime(self, dt):
+        """Set expiration datetime of next version.
+        """
+        status = ""
+        if self._approved_version[0]:
+            version_id, publication_datetime, expiration_datetime = self._approved_version
+            self._approved_version = version_id, publication_datetime, dt
+            self._reindex_versions(('approved',))
+        elif self._unapproved_version[0]:
+            version_id, publication_datetime, expiration_datetime = self._unapproved_version
+            self._unapproved_version = version_id, publication_datetime, dt
+            self._reindex_versions(('unapproved',))
+        else:
+            raise VersioningError,\
+                  'No next version.'
+
+    def _update_publication_status(self):
+        now = DateTime()
+        # get publication datetime of approved version
+        publication_datetime = self._approved_version[1]
+        # if it is time make approved version public
+        reindex_last_closed = 0
+        if publication_datetime and now >= publication_datetime:
+            # BEGIN BUGFIX
+            if self._public_version[0]:
+                if not self._previous_versions:
+                    self._previous_versions = []
+                self._previous_versions.append(self._public_version)
+                reindex_last_closed = 1
+            # END BUGFIX
+            self._public_version = self._approved_version
+            self._approved_version = empty_version
+            self._reindex_versions(('public',))
+            if reindex_last_closed:
+                self._reindex_versions(('last_closed','closed'))
+        # get expiration datetime of public version
+        expiration_datetime = self._public_version[2]
+        # expire public version if expiration datetime reached
+        if expiration_datetime and now >= expiration_datetime:
+            # make sure to add it to the previous versions
+            previous_versions = self._previous_versions or []
+            previous_versions.append(self._public_version)
+            self._public_version = empty_version
+            self._previous_versions = previous_versions
+            self._reindex_versions(('last_closed','closed'))
+
+    def _reindex_versions(self, which):
+        if 'unapproved' in which:
+            version = getattr(self, str(self._unapproved_version[0]))
+            if version != empty_version:
+                version.reindex_object()
+        if 'approved' in which:
+            version = getattr(self, str(self._approved_version[0]))
+            if version != empty_version:
+                version.reindex_object()
+        if 'public' in which:
+            version = getattr(self, str(self._public_version[0]))
+            if version != empty_version:
+                version.reindex_object()
+        if 'last_closed' in which:
+            version = getattr(self, str(self._previous_versions[-1][0]))
+            if version != empty_version:
+                version.reindex_object()
+        if 'closed' in which:
+            for id, pdt, edt in self._previous_versions:
+                if id:
+                    version = getattr(self, str(id))
+                    if version != empty_version:
+                        version.reindex_object()
+
+InitializeClass(CataloguedVersioning)
+

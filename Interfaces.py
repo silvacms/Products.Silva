@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 import Interface
 
 class Security(Interface.Base):
@@ -646,4 +646,32 @@ class VersionedAsset(Versioning, Asset):
         """Create new version of asset.
         """
         pass
-        
+
+class Version(Interface.Base):
+    """Version of a versioned object
+    """
+
+    def version_status(self):
+        """Returns the current status of this version (unapproved, approved,
+        public, last closed of closed)
+        """
+
+    def object_path(self):
+        """Returns the physical path of the object this is a version of
+        """
+
+    def version(self):
+        """Returns the version-id
+        """
+
+    def object(self):
+        """Returns the object this is a version of
+        """
+
+    def publication_datetime(self):
+        """Returns the version's publication datetime
+        """
+
+    def expiration_datetime(self):
+        """Returns the version's expiration datetime
+        """

@@ -1,8 +1,8 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 from Content import Content
-from Versioning import Versioning, VersioningError
+from Versioning import Versioning, VersioningError, CataloguedVersioning
 from OFS import Folder
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -110,3 +110,17 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         return getattr(self, version_id)
         
 InitializeClass(VersionedContent)
+
+class CataloguedVersionedContent(CataloguedVersioning, VersionedContent):
+    """This class merely exists to mix VersionedContent with CataloguedVersioning
+    """
+
+    # Override this method from superclasses so we can remove all versions from the catalog
+    def manage_beforeDelete(self, item, container):
+        CataloguedVersionedContent.inheritedAttribute('manage_beforeDelete')(self, item, container)
+        for version in [self.get_unapproved_version(), self.get_approved_version(), self.get_public_version()] + self.get_previous_versions():
+            if version:
+                getattr(self, version).unindex_object()
+
+InitializeClass(CataloguedVersionedContent)
+
