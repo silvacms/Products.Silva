@@ -694,32 +694,30 @@ input.store, select.store {
   font: &dtml-inputFont;;
   color : &dtml-inputFontColor;;
   background : &dtml-inputBackground;;
+  width: 90%;
   margin-top: 1px;
   margin-bottom: 1px; /* IE bug fix */
   padding: 0.1em;
   border: &dtml-inputBorder;;
 }
 
-input.store, textarea.store {
-  width: 90%;
-}
-
 /* 
 * this selector works only for standard compatible browsers like mozilla, so
 * IE ignores this definition below
 */
-td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget, td>input.store, td>textarea.store {
+td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget, 
+  td>input.store, td>textarea.store, td>select.store {
   width: 100%;
 }
 
 select {
+    font: &dtml-inputFont;;
+  font-size: 90%;
   color : &dtml-mainTabFontColorSelected;;
   background : &dtml-inputBackground;;
   margin: 0.1em;
   border : 1px solid &dtml-nightShade;;
     vertical-align: top;
-    font: &dtml-inputFont;;
-  font-size: 90%;
   line-height : 96%;
 }
 
