@@ -112,7 +112,7 @@ _______ editor hooks _______
   type="text/javascript"
   xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_eopro'"
-  tal:content="python: template.tab_edit_eopro_js()"
+  tal:content="structure python: template.tab_edit_eopro_js()"
 />
 </head>
 <body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">

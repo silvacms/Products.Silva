@@ -20,7 +20,7 @@
         <APPLET code="com.realobjects.eop.applet.EditorApplet" id="editor" name="editor"
                 archive="edit-on-pro-signed.jar,ssce.jar" width="800"  height="500" 
                 tal:attributes="codeBase template/eopro/absolute_url" 
-                VIEWASTEXT MAYSCRIPT
+                VIEWASTEXT MAYSCRIPT SCRIPTABLE
         >
             <!-- <PARAM NAME="sethtmldataurl" tal:attributes="VALUE python: model.absolute_url()+'/editor_storage'"/>  -->
             <PARAM NAME="encoding" VALUE="UTF8"/>
@@ -74,7 +74,7 @@
 <form name="myForm" target="RSIFrame" method="POST" tal:attributes="action python: 'tab_edit_eopro_submit'">
     <input type="button" name="save" value="Save Document" onClick="functSave();">
 			<br/><br/>
-    <input type="button" name="reload" value="Reload" onClick="functReset();">
+    <input type="button" name="reload" value="Reload" onClick="functReload();">
     <input type="hidden" name="HTMLDATA"
             tal:attributes="value python: model.editor_storage()"
 	   >

@@ -13,9 +13,9 @@ js = []
 
 js.append("""
     function handleResponse(msg) {
-      frames.logframe.document.write("<p>");
+      frames.logframe.document.write('<p>');
       frames.logframe.document.write(msg);
-      frames.logframe.document.write("</p>");
+      frames.logframe.document.write('</p>');
       //alert(msg);
     }
     """)
@@ -72,4 +72,5 @@ js.append("""
 js = map(lambda x: x.strip(), js)
 
 return "\n".join(js)
+
 
