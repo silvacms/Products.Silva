@@ -38,7 +38,16 @@
     <tal:block condition="not:silva_permissions/ChangeSilvaContent">
     &nbsp;
     </tal:block>
+    <tal:block condition="python:silva_permissions['ApproveSilvaContent']">
+      <tal:block condition="python:model.meta_type == 'Silva Folder'">
+      &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_to_publication:method" value="Convert to publication" title="Change Folder into Publication" />
+      </tal:block>
+      <tal:block condition="python:model.meta_type == 'Silva Publication'">
+      &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_to_folder:method" value="Convert to folder" title="Change Publication into Folder" />
+      </tal:block>
+    </tal:block>
     <tal:block condition="silva_permissions/ChangeSilvaContent">
+    &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value="Import..." title="Import XML data" />&nbsp;&nbsp;
     <select name="meta_type"
       tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value.replace(' ', '+')">
       <option value="" disabled>Select...</option>
@@ -441,17 +450,6 @@ There are no active content objects in this folder.
   <tal:block condition="python:request.has_key('__cp') and silva_permissions['ChangeSilvaContent']">
   &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste:method" value="Paste" title="Paste items" />
   &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste_to_ghost:method" value="Paste as ghost" title="Paste (items on clipboard) as ghost objects" />
-  </tal:block>
-  <tal:block condition="python:silva_permissions['ChangeSilvaContent']">
-    &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value="Import" title="Import XML data" />
-  </tal:block>
-  <tal:block condition="python:silva_permissions['ApproveSilvaContent']">
-    <tal:block condition="python:model.meta_type == 'Silva Folder'">
-    &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_to_publication:method" value="To Publication" title="Change Folder into Publication" />
-    </tal:block>
-    <tal:block condition="python:model.meta_type == 'Silva Publication'">
-    &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_to_folder:method" value="To Folder" title="Change Publication into Folder" />
-    </tal:block>
   </tal:block>
   </td>
 </tr>
