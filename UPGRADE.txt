@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.2
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.28 $
+  CVS:        $Revision: 1.29 $
 
 Upgrading from 0.8.6 and below
 
@@ -45,48 +45,15 @@ Upgrading Silva 0.9.1.x to 0.9.2
 
   Silva Filesystem Products
 
-    In order to upgrade to 0.9.1 you need a new version of Silva
-    (0.9.1) and FileSystemSite (1.2). Download them here:
+    In order to upgrade to 0.9.2 you need a new versions of Silva,
+    Formulator and XMLWidgets. In addition to this you now need ProxyIndex,
+    Annotations and SilvaMetadata too.
 
-      * "Silva-0.9.1b.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1b.tgz
-  
-      * "FileSystemSite-1.2.tgz":http://www.zope.org/Members/faassen/Silva/FileSystemSite-1.2.tgz
-
-    The latter is a temporary location, it should be downloadable here
-    soon:
-
-      * "FileSystemSite-1.2.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite
-
-    If you are using Groups, you also need to download and install the
-    new Groups 0.3.1. Find it here:
-
-      * "Groups-0.3.1.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz
-
-    To upgrade, remove the Silva, FileSystemSite and (if you have it)
-    Groups directories from your 'Products' directory first. Then
-    unpack the new files you downloaded.
-
-    Formulator, XMLWidgets and ParsedXML do not require an upgrade in
-    this release.
-
-    Note that LDAP integration of Silva has changed with the new
-    membership system. If you are using LDAP integration with your
-    Silva, you will notice that the old system has disappeared. In its
-    stead we have a new member extension mechanism that takes it
-    place. If you need help enabling membership please contact
-    Infrae. We will place a demo membership extension that uses LDAP
-    online soon.
-
-    If you are using Silva's ExtFile support (turned off by default),
-    you should consult the section in 'INSTALL.txt' to see how to
-    configure the newly installed Silva product to use this again.
-
-    Restart Zope to make the new product code take effect. Now go on
-    to the next step.
+    [to be finished]
 
   Refreshing and upgrading the Silva product
 
-    If you are upgrading from 0.9 to 0.9.1, you need to upgrade the
+    If you are upgrading from 0.9.1 to 0.9.2, you need to upgrade the
     content of Silva, as some of the structures have changed. After
     the restart, go to 'service_extensions' in the Silva Root as Zope
     manager and click the 'upgrade content' button. This will
@@ -94,25 +61,7 @@ Upgrading Silva 0.9.1.x to 0.9.2
     upgrade the Silva content that needs upgrading. Note that this
     will take a while if your site is large.
 
-    Upgrading the content from 0.9 to 0.9.1 will change the following
-    things:
-  
-      * List titles are changed to headings. The list title option is
-        gone, as it was too hard to integrate with external systems,
-        and not really useful when the heading option is available.
-
-      * In the image element, 'image_id' and 'image_path' are
-        transformed to 'path' for consistency with other elements
-        which reference assets.
-
-      * Last author information is stored in a new way after the
-        membership changes; the upgrade script updates this
-        information.
-
-    If you are upgrading a minor version (bugfix release) it should be
-    enough to just press the 'refresh all' button to upgrade. This
-    lets Silva update various configurations in the Zope object
-    database.
+    [to be finished]
 
     You should be done upgrading now!
  
