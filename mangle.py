@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.19.8.1 2003/12/16 16:13:00 jw Exp $
+# $Id: mangle.py,v 1.19.8.2 2004/01/30 08:19:43 jw Exp $
 
 # Python
 import string
@@ -74,6 +74,7 @@ class Id:
         'delete',
         'edit',
         'elements',
+        'email',
         'form',
         'fulltext',
         'getBatch',
