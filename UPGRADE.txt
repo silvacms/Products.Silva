@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.47 $
+CVS:        $Revision: 1.48 $
 
 Introduction
 ------------
@@ -50,7 +50,7 @@ first upgrade to version 0.9.2.
 Steps to take during a major Silva upgrade:
 
 - *Recommended*: It always makes sense to backup your Silva data
-  before upgrading, especially when doing making upgrades. The
+  before upgrading, especially when doing major upgrades. The
   simplest way to make sure you have a functional backup is to backup
   the whole ZODB. To do this, make a backup copy of var/Data.fs.
 
@@ -82,11 +82,16 @@ Steps to take during a major Silva upgrade:
 Upgrading from Silva 1.1 to Silva 1.2
 -------------------------------------
 
-Upgrading Silva 1.1 to Silva 1.2 requires a content
-upgrade.
+With the the introduction of the subscriptions feature and a rewrite of the
+Silva Indexers, upgrading Silva 1.1 to Silva 1.2 now requires a content
+upgrade. The upgrade procedure is described in the previous section "Major
+upgrades".
 
-If you want to enable the new (since 1.1) XSLT support, please see
-the section "XSLT Support" in INSTALL.txt.
+This upgrade will add and update an index in the service_catalog and it will
+trigger an update on all existing Indexer objects in the Silva site.
+
+If you want to enable the new (since 1.1) XSLT support, please see the
+section "XSLT Support" in INSTALL.txt.
 
 Upgrading from Silva 1.0 to Silva 1.1
 -------------------------------------
