@@ -31,8 +31,6 @@ class Haunted(adapter.Adapter):
         for b in brains:
             yield b.getObject().get_silva_object()
 
-Globals.InitializeClass(Haunted)
-
 class HauntedGhost(Haunted):
     """Adapted content for retrieving the 'iterator' of haunting 
     objects (Ghosts).
@@ -47,14 +45,14 @@ class HauntedGhost(Haunted):
         # XXX how to not yield anything??
         for b in []:
             yield None
-
-Globals.InitializeClass(HauntedGhost)
-
-# Jumping through security hoops to get the adapter
-# somewhat accessible to Python scripts
-
-# Security declaration commented for the moment, as this adapter
+            
+# XXX Security declaration commented for the moment, as this adapter
 # is not yet used by the view-layer.
+
+#Globals.InitializeClass(Haunted)
+
+#Globals.InitializeClass(HauntedGhost)
+
 #allow_module('Products.Silva.adapters.haunted')
 
 #__allow_access_to_unprotected_subobjects__ = True
@@ -66,7 +64,6 @@ Globals.InitializeClass(HauntedGhost)
 
 def getHaunted(context):
     # XXX do we want to support container types too for this adapter?
-    
     if interfaces.IGhost.isImplementedBy(context):
         # It's a Ghost, return HauntedGhost adapter
         return HauntedGhost(context).__of__(context)

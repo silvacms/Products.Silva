@@ -74,6 +74,8 @@ class Subscribable(adapter.Adapter):
     
     # ACCESSORS
     
+    security.declareProtected(
+        SilvaPermissions.ApproveSilvaContent, 'getSubscriptions')
     def getSubscriptions(self):
         return self._getSubscriptions().values()
     
