@@ -79,7 +79,7 @@ class Course(VersionedContent, EditorSupport):
         version.content.documentElement.writeStream(f)
         f.write('</content>')
         f.write('<goal>')
-        version.content.documentElement.writeStream(f)
+        version.goal.documentElement.writeStream(f)
         f.write('</goal>')
         f.write('</silva_course>')
 
