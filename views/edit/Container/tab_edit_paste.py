@@ -13,7 +13,7 @@ model = context.REQUEST.model
 view = context
 
 if not context.REQUEST.has_key('__cp'):
-    return view.tab_edit(message_type="error", _(message="No content available to paste."))
+    return view.tab_edit(message_type="error", message=_("No content available to paste."))
 
 message = model.action_paste(context.REQUEST)
 return view.tab_edit(message_type="feedback", message=message)
