@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.9 $'
+__version__='$Revision: 1.10 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -138,7 +138,7 @@ class p(Element):
     """
     def convert(self, *args, **kwargs):
         pre,img,post = self.find_and_partition('img')
-        type = self.attrs.get('silva_type', 'normal')
+        type = self.attrs.get('silva_type', None)
         if pre:
             pre = silva.p(pre.convert(*args, **kwargs), type=type)
         if img:
@@ -220,18 +220,6 @@ class font(Element):
         else:
             return self.content.convert(*args, **kwargs)
 
-class sub(Element):
-    def convert(self, *args, **kwargs):
-        return silva.sub(
-            self.content.convert(*args, **kwargs),
-            )
-
-class sup(Element):
-    def convert(self, *args, **kwargs):
-        return silva.super(
-            self.content.convert(*args, **kwargs),
-            )
-
 class a(Element):
     def convert(self, *args, **kwargs):
         return silva.link(
@@ -261,7 +249,29 @@ class pre(Element):
             self.content.convert(*args, **kwargs)
         )
 
+class table(Element):
+    def convert(self, context, *args, **kwargs):
+        rows = self.content.find('tr')
+        if len(rows)>0:
+            cols = len(rows[0].find('td'))
+        return silva.table(
+                self.content.convert(context, *args, **kwargs),
+                columns=self.attrs.get('cols', cols),
+                column_info = self.attrs.get('silva_column_info', 'L:1 ' * cols),
+                type=self.attrs.get('silva_type', 'plain')
+            )
 
+class tr(Element):
+    def convert(self, context, *args, **kwargs):
+        return silva.row(
+            self.content.convert(context, *args, **kwargs)
+        )
+
+class td(Element):
+    def convert(self, *args, **kwargs):
+        return silva.field(
+            self.content.convert(*args, **kwargs)
+        )
 
 """
 current mapping of tags with silva

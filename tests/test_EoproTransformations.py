@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 import unittest
 
 # 
@@ -217,7 +217,15 @@ class RoundtripWithTidy(unittest.TestCase):
     def setUp(self):
         self.transformer = Transformer(source='eopro2_11.silva', target='eopro2_11.html')
 
-    def _check(self, string):
+    def _check_string(self, string):
+        string_withdoc = """<silva_document id="testdoc"><title>testdoctitle</title>
+                            <doc>%s</doc></silva_document>""" % string
+
+        htmlnode = self._check_doc(string_withdoc)
+        self.assert_(len(htmlnode)==1)
+        return htmlnode[0].content
+
+    def _check_doc(self, string):
         htmlnode = self.transformer.to_target(string)
         html = htmlnode.asBytes()
         self._checkhtml(html)
@@ -245,7 +253,7 @@ class RoundtripWithTidy(unittest.TestCase):
            <p type="normal">normal paragraph</p>
         </doc>
         </silva_document>'''
-        self._check(simple)
+        self._check_doc(simple)
 
     def test_heading_and_p_special_chars(self):
         simple = '''
@@ -255,7 +263,7 @@ class RoundtripWithTidy(unittest.TestCase):
            <p type="normal">&quot;&amp;&lt;&gt;&apos;</p>
         </doc>
         </silva_document>'''
-        self._check(simple)
+        self._check_doc(simple)
 
     def test_empty_list_title_produces_no_html_title(self):
         simple = '''
@@ -273,7 +281,7 @@ class RoundtripWithTidy(unittest.TestCase):
         # check no title
         self.assert_(not list[0].find('h5'))
         # check roundtrip
-        self._check(simple)
+        self._check_doc(simple)
 
     def test_existing_list_title_produces_h5(self):
         simple = '''
@@ -306,19 +314,19 @@ class RoundtripWithTidy(unittest.TestCase):
         </silva_document>'''
 
     def test_list_disc(self):
-        self._check(self._simplelist() % 'disc')
+        self._check_doc(self._simplelist() % 'disc')
     def test_list_circle(self):
-        self._check(self._simplelist() % 'circle')
+        self._check_doc(self._simplelist() % 'circle')
     def test_list_square(self):
-        self._check(self._simplelist() % 'square')
+        self._check_doc(self._simplelist() % 'square')
     def test_list_a(self):
-        self._check(self._simplelist() % 'a')
+        self._check_doc(self._simplelist() % 'a')
     def test_list_i(self):
-        self._check(self._simplelist() % 'i')
+        self._check_doc(self._simplelist() % 'i')
     def test_list_1(self):
-        self._check(self._simplelist() % '1')
+        self._check_doc(self._simplelist() % '1')
     def test_list_none(self):
-        self._check(self._simplelist() % 'none')
+        self._check_doc(self._simplelist() % 'none')
 
     def _check_modifier(self, htmltag, silvatag):
         """ check that given markups work """
@@ -328,7 +336,7 @@ class RoundtripWithTidy(unittest.TestCase):
                              </p>
                         </doc>
                       </silva_document>''' % locals()
-        htmlnode = self._check(silvadoc)
+        htmlnode = self._check_doc(silvadoc)
         body = htmlnode.find('body')[0]
         p = body.find('p')[0]
         htmlmarkup = p.find(htmltag)
@@ -354,7 +362,7 @@ class RoundtripWithTidy(unittest.TestCase):
                              </p>
                         </doc>
                       </silva_document>''' 
-        htmlnode = self._check(silvadoc)
+        htmlnode = self._check_doc(silvadoc)
         body = htmlnode.find('body')[0]
         p = body.find('p')[0]
         a = p.find('a')
@@ -370,7 +378,7 @@ class RoundtripWithTidy(unittest.TestCase):
                              <image image_path="/path/to/image"></image>
                         </doc>
                       </silva_document>''' 
-        htmlnode = self._check(silvadoc)
+        htmlnode = self._check_doc(silvadoc)
         body = htmlnode.find('body')[0]
         p = body.find('p')[0]
         img = body.find('img')
@@ -378,13 +386,50 @@ class RoundtripWithTidy(unittest.TestCase):
         img = img[0]
         self.assert_(img.attrs.get('src')=='/path/to/image')
 
+    def test_table1(self):
+        tabledoc = '''<table columns="3">
+                          <row>
+                              <field><p>eins</p></field>
+                              <field><p>zwei</p></field>
+                              <field><p>drei</p></field>
+                          </row>
+                      </table>''' 
+        tablenode = self._check_string(tabledoc)
+
+    def _check_table(self, **kwargs):
+        attrs = []
+        for name, value in kwargs.items():
+            if value is not None:
+                attrs.append('%s="%s"' % (name, value))
+
+        attrs = " ".join(attrs)
+
+        tabledoc = '''<table %(attrs)s>
+                          <row>
+                              <field><p>eins</p></field>
+                              <field><p>zwei</p></field>
+                              <field><p>drei</p></field>
+                          </row>
+                      </table>'''  % locals()
+        tablenode = self._check_string(tabledoc)
+        return tablenode
+
+    def test_table_listing(self):
+        self._check_table(type='listing', column_info="L:1 L:1 L:1")
+
+    def test_table_grid(self):
+        self._check_table(type='grid', column_info="L:1 L:1 L:1")
+
+    def test_table_data_grid(self):
+        self._check_table(type='datagrid', column_info="L:1 L:1 L:1")
+
     def test_preformatted(self):
         """ check that 'pre' (preformatted text) works """
         silvadoc = '''<silva_document id="test"><title>title</title>
                         <doc><pre>\n  &quot;&gt;&lt;dies\n</pre>
                         </doc>
                       </silva_document>''' 
-        htmlnode = self._check(silvadoc)
+        htmlnode = self._check_doc(silvadoc)
         body = htmlnode.find('body')[0]
         pre = body.find('pre')
         self.assert_(len(pre)==1)

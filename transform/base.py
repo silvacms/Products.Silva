@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.4 $'
+__version__='$Revision: 1.5 $'
 
 # look ma, i only have these dependencies 
 # and with python2.2 even they would vanish
@@ -159,7 +159,9 @@ class Element(Node):
                     child = Text(child)
                 newcontent.append(child)
         self.content = Frag(*newcontent)
-        self.attrs.update(attrs)
+        for name, value in attrs.items():
+            if value is not None:
+                self.attrs[name]=value
 
     def __eq__(self, other):
         try:
@@ -200,6 +202,9 @@ class Element(Node):
         """ return canonical xml-conform representation  """
         attrlist=[]
         for name, value in self.attrs.items():
+            if value is None:
+                continue
+
             name = name.encode(encoding)
             if value:
                 if hasattr(value, 'asBytes'):
@@ -215,6 +220,7 @@ class Element(Node):
 
         subnodes = self.content.asBytes(encoding)
         attrlist = " ".join(attrlist)
+
         name = self.name().encode(encoding)
         
         if attrlist:
