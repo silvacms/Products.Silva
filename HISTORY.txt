@@ -48,6 +48,8 @@ Silva changes
 
     Bugs Fixed
 
+        - Setting a TOC level would display one level too much.
+
         - The UI for 'Access Restriction by Role' did not properly expose
           the possibility to set this role more restrictive on a lower
           level. (the pull down menu and button would have been disabled).
