@@ -724,7 +724,7 @@ def registerTableViewer(root):
 def setup_catalog(silva_root):
     """Sets the ZCatalog up"""
     from Products.ZCTextIndex.ZCTextIndex import PLexicon
-    from Products.ZCTextIndex.Lexicon import Splitter
+    from Products.ZCTextIndex.HTMLSplitter import HTMLWordSplitter
     from Products.ZCTextIndex.Lexicon import CaseNormalizer, StopWordRemover
     
     if hasattr(silva_root, 'service_catalog'):
@@ -737,7 +737,7 @@ def setup_catalog(silva_root):
 
     if not 'silva_lexicon' in catalog.objectIds():
         catalog._setObject('silva_lexicon',
-                           PLexicon('silva_lexicon', '', Splitter(), CaseNormalizer(), StopWordRemover())
+                           PLexicon('silva_lexicon', '', HTMLWordSplitter(), CaseNormalizer(), StopWordRemover())
                            )
 
     catalog.manage_addProduct['ZCatalog'].manage_addVocabulary('UnicodeVocabulary', 'UnicodeVocabulary', 1, splitter='UnicodeSplitter')
