@@ -173,7 +173,7 @@
                   value="save"
                   title="access key: alt-s"
                   accesskey="s"
-                  i18n:attributes="value;title"
+                  i18n:attributes="value;title;accesskey save_accesskey"
                 />
               </td>
             </tr>
@@ -246,7 +246,7 @@
                   value="save"
                   title="access key: alt-s"
                   accesskey="s"
-                  i18n:attributes="value;title"
+                  i18n:attributes="value;title;accesskey save_accesskey"
                 />
               </td>
             </tr>
@@ -389,7 +389,7 @@
                     value="revoke approval" 
                     title="first 'un-approve' this item in order to edit: alt-r" 
                     accesskey="r"
-                    i18n:attributes="value;title"
+                    i18n:attributes="value;title;accesskey revoke_approval_accesskey"
                   />
                 </form>
               </tal:block>
@@ -402,7 +402,7 @@
                     value="new version"
                     title="create a new version of this content: alt-n"
                     accesskey="n"
-                    i18n:attributes="value;title"
+                    i18n:attributes="value;title;accesskey new_version_accesskey"
                   />
                 </form>
               </tal:block>

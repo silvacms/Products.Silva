@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  >
 
 <head>
   <title i18n:translate="">Silva - Reference</title>
@@ -20,21 +22,20 @@
   href="javascript:history.back();" 
   title="access key: alt-b"
   accesskey="b"
-  i18n:attributes="title"
+  
+  i18n:attributes="title;accesskey back_accesskey"
   i18n:translate="">
   back
 </a>
 <div class="public">
-<h2 style="margin-top:2em;" i18n:translate="">
+<h2 style="margin-top:2em;">
   <a href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-s"
     accesskey="s"
-    i18n:attributes="title"
-    i18n:name="silva_icon"
-     >
+    i18n:attributes="title;accesskey silva_info_accesskey">
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
       tal:attributes="href here/globals/silva_32.png/absolute_url | nothing" /></a>
-  &nbsp;Silva &#8211; medium independent content management
+      &nbsp;<tal:block i18n:translate=""><tal:block i18n:name="Silva">Silva</tal:block> &#8211; medium independent content management</tal:block>
 </h2>
 
 <div class="citation"
@@ -112,8 +113,9 @@
     href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-i"
     accesskey="i"
-    i18n:attributes="title"
-    i18n:name="silva_icon">
+    i18n:attributes="title;accesskey info_accesskey"
+    i18n:name="silva_icon"
+    >
     <img style="vertical-align:top;"
       src="powered_by.png" 
       width="64"

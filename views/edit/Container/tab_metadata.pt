@@ -68,9 +68,9 @@
                             style="float:right;"
                             title="manage subscriptions: alt-m"
                             accesskey="m"
-                            i18n:attributes="title"
-                            i18n:translate=""
                             tal:attributes="href string:${url}/service_subscriptions/edit/"
+                            i18n:attributes="title;accesskey manage_subscriptions_accesskey"
+                            i18n:translate=""
                             >
                             manage subscriptions...
                           </a>
@@ -83,7 +83,7 @@
                         href="tab_edit_to_publication"
                         title="change Folder into Publication: alt-c"
                         accesskey="c"
-                        i18n:attributes="title"
+                        i18n:attributes="title;accesskey covert_to_publication_accesskey"
                         i18n:translate=""
                         >
                         convert to publication

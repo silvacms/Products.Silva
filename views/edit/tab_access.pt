@@ -256,7 +256,7 @@
                     value="deny role"
                     title="access key: alt-d"
                     accesskey="d"
-                    i18n:attributes="title;value"
+                    i18n:attributes="title;value;accesskey deny_role_accesskey"
                   />
                 </td>
                 <td class="align-right"
@@ -267,16 +267,16 @@
                       type="submit"
                       value="grant role"
                       title="access key: alt-g"
-                      i18n:attributes="title;value"
                       accesskey="g"
+                      i18n:attributes="title;value;accesskey grant_role_accesskey"
                     />
                     <input class="button"
                       name="tab_access_allow_and_approve:method"
                       type="submit"
                       value="Grant and approve"
                       title="access key: alt-a"
-                      i18n:attributes="title;value"
                       accesskey="a"
+                      i18n:attributes="title;value;accesskey grant_and_approve_accesskey"
                     />
                   </tal:block>
                 </td>
@@ -673,7 +673,7 @@
                   href="tab_access_authorized_below"
                   title="retrieve a comma separated list of user email addresses"
                   accesskey="e"
-                  i18n:attributes="title"
+                  i18n:attributes="title;accesskey list_email_addresses_accesskey"
                   i18n:translate=""
                   >
                   &nbsp;list <u>e</u>mail addresses...

@@ -45,8 +45,9 @@
                 <a href="parent screen"
                   title="return to previous screen: alt-k"
                   accesskey="k"
-                  i18n:attributes="title"
-                  tal:attributes="href here/lookup_back_link">
+                  tal:attributes="href here/lookup_back_link"
+                  i18n:attributes="title;accesskey back_accesskey"
+                  >
                   <div class="transport-border" i18n:translate="">
                     bac<u>k</u>...
                   </div>
@@ -111,7 +112,7 @@
                     value="search"
                     accesskey="s"                      
                     title="access key: alt-s"
-                    i18n:attributes="value;title"
+                    i18n:attributes="value;title;accesskey search_accesskey"
                   />
                 </td>
               </tr>
@@ -132,8 +133,8 @@
                     value="add to clipboard"
                     title="add checked users to clipboard: alt-a"
                     accesskey="a"                      
-                    i18n:attributes="value;title"
-                    tal:condition="python:lookup_result and len(lookup_result) > 3" />
+                    tal:condition="python:lookup_result and len(lookup_result) > 3"
+                    i18n:attributes="value;title;accesskey add_to_clipboard_accesskey" />
                   <h3 i18n:translate="">
                     search results
                   </h3>
@@ -200,8 +201,8 @@
                     value="add to clipboard"
                     title="add checked users to clipboard: alt-a"
                     accesskey="a"
-                    i18n:attributes="value;title"
                     tal:condition="lookup_result"
+                    i18n:attributes="value;title;accesskey add_to_clipboard_accesskey"
                   />
                 </td>
               </tr>
@@ -220,7 +221,7 @@
               title="return to the access screen with this clipboard: alt-u"
               href="lookup_back_link"
               tal:attributes="href here/lookup_back_link"
-              i18n:attributes="title"
+              i18n:attributes="title;accesskey use_clipboard_accesskey"
               i18n:translate="">
               <u>u</u>se clipboard...
             </a>
@@ -232,7 +233,7 @@
               value="remove user"
               title="remove users from the clipboard: alt-r"
               accesskey="r"
-              i18n:attributes="value;title"
+              i18n:attributes="value;title;accesskey remove_user_accesskey"
            />
           </metal:block>
         </metal:block>

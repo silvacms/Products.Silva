@@ -97,7 +97,7 @@
             value="save"
             title="access key: alt-s"
             accesskey="s"
-            i18n:attributes="title;value"
+            i18n:attributes="title;value;accesskey save_accesskey"
           />
         </td>
       </tr>
@@ -181,7 +181,7 @@
             value="upload file"
             title="access key: alt-u"
             accesskey="u"
-            i18n:attributes="value"
+            i18n:attributes="value;title;accesskey upload_file_accesskey"
           />
         </td>
       </tr>

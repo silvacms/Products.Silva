@@ -134,10 +134,12 @@ This message will remain visible in the status screen for other authors and edit
   tal:define="field view/tab_status_form_author/publish_datetime">
 <td class="align-right"
  style="vertical-align:bottom; white-space: nowrap;'">
- <label title="access key: alt-m" accesskey="m"
-   i18n:translate=""
+ <label 
+   title="access key: alt-m"
+   accesskey="m"
    tal:attributes="for field/id"
-   i18n:attributes="title"
+   i18n:translate=""
+   i18n:attributes="title;accesskey content_publish_time_accesskey"
    >
    content publish ti<u>m</u>e</label>
 <tal:block 
@@ -153,9 +155,11 @@ day / month / year &nbsp;23:59
 <tr class="inter-controls"
   tal:define="field view/tab_status_form_change_settings/expiration_datetime">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-i (some platforms)" accesskey="i"
+<label 
+  title="access key: alt-i (some platforms)" 
+  accesskey="i"
   tal:attributes="for field/id"
-  i18n:attributes="title"
+  i18n:attributes="title;accesskey expiration_time_accesskey"
   i18n:translate=""
   >expiratio<u>n</u> time</label>&nbsp;
 <tal:block 
@@ -170,7 +174,13 @@ If this content should expire, set the time.
 
 <tr class="controls">
 <td colspan="2" class="align-right">
-<input type="submit" value="request approval" class="button" title="access key: alt-r" accesskey="r" i18n:attributes="value;title" />
+<input 
+  type="submit" 
+  value="request approval" 
+  class="button" 
+  title="access key: alt-r" 
+  accesskey="r" 
+  i18n:attributes="value;title;accesskey request_approval_accesskey" />
 </td>
 </tr>
 </form>
@@ -201,7 +211,9 @@ notes
 <tr class="odd"
   tal:define="field view/tab_status_form_change_settings/publish_datetime">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-m (some platforms)" accesskey="m"
+<label 
+  title="access key: alt-m (some platforms)" 
+  accesskey="m"
   tal:attributes="for field/id"
   i18n:attributes="title; accesskey access_key_publish_datetime;"
   i18n:translate=""
@@ -219,9 +231,11 @@ notes
 <tr class="even"
   tal:define="field view/tab_status_form_change_settings/expiration_datetime">
 <td class="align-right" style="white-space: nowrap;">
-<label title="access key: alt-i (some platforms)" accesskey="i"
+<label 
+  title="access key: alt-i (some platforms)" 
+  accesskey="i"
   tal:attributes="for field/id"
-  i18n:attributes="title"
+  i18n:attributes="title;accesskey expiration_time_accesskey"
   i18n:translate=""
   >expiratio<u>n</u> time</label>&nbsp;
 <tal:block attributes="id field/id"
@@ -237,8 +251,10 @@ If this content should expire, set the time.
 <th class="align-right" colspan="2"
   tal:define="field view/tab_status_form_change_settings/publish_now_flag">
   <span class="widebody">
-    <label title="access key: alt-u" accesskey="u"
-      i18n:attributes="title"
+    <label 
+      title="access key: alt-u" 
+      accesskey="u"
+      i18n:attributes="title;accesskey publish_right_now_accesskey"
       i18n:translate=""
       tal:attributes="for field/id">
       p<u>u</u>blish right now?
@@ -258,7 +274,7 @@ If this content should expire, set the time.
         title="access key: alt-u" 
         accesskey="u"
         tal:attributes="for field/id"
-        i18n:attributes="title"
+        i18n:attributes="title;accesskey clear_expiration_time_accesskey"
         i18n:translate=""
         >clear ex<u>p</u>iration?
     </label>
@@ -318,7 +334,7 @@ notes
 <td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-m"
   accesskey="m"
-  i18n:attributes="title"
+  i18n:attributes="title;accesskey content_publish_time_accesskey"
   i18n:translate=""
   tal:attributes="for field/id"
   >content publish ti<u>m</u>e</label>&nbsp;
@@ -335,8 +351,11 @@ day / month / year &nbsp;23:59
 <tr class="odd"
   tal:define="field view/tab_status_form_editor/expiration_datetime">
 <td class="align-right" style="white-space: nowrap;">
-  <label title="access key: alt-i" accesskey="i"
-    i18n:attributes="title"
+  <label 
+    title="access key: alt-i"
+    accesskey="i"
+    
+    i18n:attributes="title;accesskey expiration_time_accesskey"
     i18n:translate=""
     tal:attributes="for field/id">expiratio<u>n</u> time</label>&nbsp;
 <tal:block 
@@ -353,8 +372,10 @@ Empty indicates no expiration.
 <th class="align-right" colspan="2"
   tal:define="field view/tab_status_form_editor/publish_now_flag">
   <span class="widebody">
-    <label title="access key: alt-u" accesskey="u"
-      i18n:attributes="title"
+    <label 
+      title="access key: alt-u" 
+      accesskey="u"
+      i18n:attributes="title;accesskey publish_right_now_accesskey"
       i18n:translate=""
       tal:attributes="for field/id">
       p<u>u</u>blish right now?
@@ -375,7 +396,7 @@ Empty indicates no expiration.
   value="open to public"
   title="access key: alt-o"
   accesskey="o"
-  i18n:attributes="value;title"
+  i18n:attributes="value;title;accesskey open_to_public_accesskey"
 />
 </td> 
 </tr>
@@ -439,10 +460,24 @@ The message may be viewed by local users.
 </td>
 <td class="align-right"
   width="40%">
-<input type="submit" class="button"  title="access key: alt-r" accesskey="r"
-    tal:condition="may_approve_content" value=" Reject approval request " i18n:attributes="title;value" />
-<input type="submit" class="button"  title="access key: alt-r" accesskey="r"
-    tal:condition="not: may_approve_content" value=" Withdraw approval request " i18n:attributes="title;value" />
+<input 
+  type="submit" 
+  class="button"  
+  title="access key: alt-r" 
+  accesskey="r"
+  tal:condition="may_approve_content" 
+  value=" Reject approval request " 
+  i18n:attributes="title;value;accesskey reject_approval_request_accesskey" 
+/>
+<input 
+  type="submit" 
+  class="button"  
+  title="access key: alt-r" 
+  accesskey="r"
+  tal:condition="not: may_approve_content" 
+  value=" Withdraw approval request " 
+  i18n:attributes="title;value;accesskey withdraw_approval_request_accesskey" 
+/>
 </td>
 </tr>
 </table>
@@ -477,7 +512,13 @@ If further editing is required, first revoke the approval.
 <tfoot>
 <tr class="controls">
 <td class="align-right">
-<input type="submit" value="revoke approval" class="button" title="access key: alt-r" accesskey="r" i18n:attributes="value;title" />
+<input 
+  type="submit" 
+  value="revoke approval" 
+  class="button" 
+  title="access key: alt-r" 
+  accesskey="r" 
+  i18n:attributes="value;title;accesskey revoke_approval_accesskey" />
 </td>
 </tr>
 </tfoot>
@@ -514,7 +555,7 @@ made to the current version.
   title="access key: alt-p"
   accesskey="p"
   onclick="return confirm('Really revert ?')"
-  i18n:attributes="value;title;onclick"
+  i18n:attributes="value;title;onclick;accesskey revert_to_previous_accesskey"
 />
 </td>
 </tr>
@@ -553,7 +594,7 @@ If necessary, the published version of this content can be manually closed (take
     value="close published version"
     title="access key: alt-c"
     accesskey="c" 
-    i18n:attributes="value;title"
+    i18n:attributes="value;title;accesskey close_published_version_accesskey"
     />
 </td>
 </tr>

@@ -111,9 +111,9 @@
             name="remove_groups_from_virtualgroup:method"
             title="remove selected group(s) from this virtual group: alt-r"
             accesskey="r"
-            i18n:attributes="title;value;onclick"
             onclick="return confirm('Really remove?')"
             tal:condition="groupids"
+            i18n:attributes="title;value;onclick;accesskey remove_group_accesskey"
           />
         </td> 
       </tr>

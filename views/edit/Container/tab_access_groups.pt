@@ -135,7 +135,7 @@
             value="save" 
             title="access key: alt-s" 
             accesskey="s" 
-            i18n:attributes="title;value"
+            i18n:attributes="title;value;accesskey save_accesskey"
           />
           <input class="button"
             type="submit"
@@ -143,7 +143,7 @@
             value="save + edit"
             title="access key: alt-e"
             accesskey="e"
-            i18n:attributes="title;value"
+            i18n:attributes="title;value;accesskey save_and_edit_accesskey"
           />
         </td>
       </tr>
@@ -257,8 +257,8 @@
             title="delete selected groups: alt-d"
             accesskey="d"
             onclick="return confirm('Really delete?')"
-            i18n:attributes="title;value;onclick"
             tal:condition="groups"
+            i18n:attributes="title;value;onclick;accesskey delete_accesskey"
           />
         </td>
       </tr>

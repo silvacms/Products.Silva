@@ -21,7 +21,7 @@
       accesskey=";"
       tal:attributes="href string:${model/absolute_url}/preview_html"
       i18n:translate=""
-      i18n:attributes="title">
+      i18n:attributes="title;accesskey public_preview_accesskey">
       public&nbsp;preview...
     </a>
   </div>
@@ -29,8 +29,16 @@
 
 <metal:block fill-slot="main" tal:omit-tag="">
   <span tal:replace="nothing"> _______ XXX turned off: link to see page in public/local style _______ </span>
-  <span tal:replace="nothing" class="widebody"><a style="float:right; margin-right:3em;" title="see the content in the public layout: alt-;" accesskey=";"
-    tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank" i18n:translate="" i18n:attributes="title">Presentation&nbsp;preview</a></span>
+  <span tal:replace="nothing" class="widebody">
+    <a 
+      style="float:right; margin-right:3em;" 
+      title="see the content in the public layout: alt-;" 
+      accesskey=";"
+      tal:attributes="href string:${model/absolute_url}/preview_html" 
+      target="_blank" 
+      i18n:attributes="title;accesskey presentation_preview_accesskey"
+      i18n:translate="" 
+      >Presentation&nbsp;preview</a></span>
 
   <span tal:replace="nothing"> _______ closed message _______ </span>
   <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">

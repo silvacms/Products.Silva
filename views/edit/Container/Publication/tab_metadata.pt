@@ -29,9 +29,9 @@
             href="tab_edit_to_folder"
             title="change Publication into Folder: alt-c"
             accesskey="c"
-            i18n:attributes="title"
-            i18n:translate=""
-            tal:condition="python:type != 'Silva Root'">
+            tal:condition="python:type != 'Silva Root'"
+            i18n:attributes="title;accesskey convert_to_folder_accesskey"
+            i18n:translate="">
             convert to folder
           </a>
       </td>
@@ -41,17 +41,17 @@
           href="settings_addables"
           title="change the addables allowed in this publication: alt-a"
           accesskey="c"
-          i18n:attributes="title"
+          i18n:attributes="title;accesskey configure_addables_accesskey"
           i18n:translate="">
           configure <u>a</u>ddables...
         </a>
         <a class="transport"
           title="manage subscriptions: alt-m"
           accesskey="m"
-          i18n:attributes="title"
-          i18n:translate=""
           tal:attributes="href string:${url}/service_subscriptions/edit/"
           tal:condition="here/service_subscriptions | nothing"
+          i18n:attributes="title;accesskey manage_subscriptions_accesskey"
+          i18n:translate=""
           >
           manage subscriptions...
         </a>
@@ -137,7 +137,7 @@
               title="access key: alt-l"
               accesskey="l"
               onclick="return confirm('Really remove copied layout?')"
-              i18n:attributes="value;title;onclick"
+              i18n:attributes="value;title;onclick;accesskey save_layout_accesskey"
             />
           </tal:block>
           <tal:block condition="not:model/layout_copied">
@@ -147,7 +147,7 @@
               value="save layout"
               title="access key: alt-l"
               accesskey="l"
-              i18n:attributes="value;title"
+              i18n:attributes="value;title;accesskey save_layout_accesskey"
             />
           </tal:block>
         </td>

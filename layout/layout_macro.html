@@ -2,7 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
-  metal:define-macro="layout">
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  metal:define-macro="layout"
+  >
 
 <head metal:define-slot="head">
   <title metal:define-slot="title"
@@ -97,7 +100,9 @@
   <a class="icon"
     href="http://www.infrae.com/products/silva" 
     title="Silva info on the Infrae site: alt-i"
-    accesskey="i">
+    accesskey="i"
+    i18n:attributes="title;accesskey info_accesskey"
+    >
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
       tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
   </a>

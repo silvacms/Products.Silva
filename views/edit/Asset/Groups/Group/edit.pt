@@ -113,9 +113,9 @@
             name="remove_users_from_group:method"
             title="remove selected user(s) from this group: alt-r"
             accesskey="r"
-            i18n:attributes="title;value;onclick"
             onclick="return confirm('Really remove?')"
             tal:condition="userids"
+            i18n:attributes="title;value;onclick;accesskey remove_users_accesskey"
           />
         </td> 
       </tr>
@@ -145,7 +145,7 @@
                 value="add to group" 
                 title="add selected users to this group"
                 accesskey="a"
-                i18n:attributes="title;value"
+                i18n:attributes="title;value;accesskey add_to_group_accesskey"
               />
             </metal:block>
           </metal:block>
@@ -165,7 +165,7 @@
                   value="copy users from group(s)" 
                   title="transfer members from selected groups"
                   accesskey="c"
-                  i18n:attributes="title;value"
+                  i18n:attributes="title;value;accesskey copy_users_from_group_accesskey"
                 />
               </metal:block>
             </metal:block>

@@ -64,7 +64,7 @@
           accesskey="r"
           tal:define="asset_context model"
           tal:attributes="onclick python:here.reference_js(); url python:here.reference_url(asset_context)"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey reference_accesskey"
         />
       </tal:block>
       <span class="warning" tal:condition="python:field.is_required()">*</span>
@@ -92,15 +92,15 @@
         value="cancel"
         title="access key: alt-c"
         accesskey="c"
-        i18n:attributes="value;title"
+        i18n:attributes="value;title;accesskey cancel_accesskey"
       />
       <input class="button"
         type="submit"
         name="add_submit"
         value="save"
         title="access key: alt-s"
-        i18n:attributes="value;title"
         accesskey="s"
+        i18n:attributes="value;title;accesskey save_accesskey"
       />
       <tal:condition condition="python: not mode_asset" >
       <!--XXX: Here be i18n issues:-->
@@ -111,7 +111,7 @@
         title="access key: alt-e"
         accesskey="e"
         tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
-        i18n:attributes="value;title"
+        i18n:attributes="value;title;accesskey save_and_edit_accesskey"
       />
       </tal:condition>
     </td>

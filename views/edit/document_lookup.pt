@@ -109,12 +109,12 @@
                     title="add a new item - alt-n"
                     accesskey="n"
                     tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
-                    i18n:attributes="value;title"
+                    i18n:attributes="value;title;accesskey new_accesskey"
                   />
                   <label for="meta_type" 
                     title="access key: alt-s" 
                     accesskey="s"
-                    i18n:attributes="title"
+                    i18n:attributes="title;accesskey select_new_item_accesskey"
                   >
                   </label>
                   <select class="transport"
@@ -374,8 +374,8 @@
                         value="place reference..."
                         title="insert the reference: alt-p"
                         accesskey="p"
-                        i18n:attributes="value;title"
                         onclick="setReference()"
+                        i18n:attributes="value;title;accesskey place_reference_accesskey"
                       />
                     </tal:block>
                   </tal:block>

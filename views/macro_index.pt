@@ -133,7 +133,7 @@ function handle_default_action(element, event, action)
         href="/manage_main"
         title="jump to zope root: alt-z"
         accesskey="z"
-        i18n:attributes="title"
+        i18n:attributes="title;accesskey zroot_accesskey"
         i18n:translate="">
         zroot...
       </a>
@@ -142,7 +142,7 @@ function handle_default_action(element, event, action)
         title="jump to silva root in zodb: alt-'"
         tal:attributes="href string:${root_url}/manage_main"
         accesskey="'"
-        i18n:attributes="title"
+        i18n:attributes="title;accesskey sroot_accesskey"
         i18n:translate="">
         sroot...
       </a>
@@ -151,7 +151,7 @@ function handle_default_action(element, event, action)
         title="jump to silva services: alt-`"
         tal:attributes="href string:${root_url}/manage_services"
         accesskey="`"
-        i18n:attributes="title"
+        i18n:attributes="title;accesskey sservices_accesskey"
         i18n:translate="">
         sservices...
       </a>
@@ -190,10 +190,11 @@ function handle_default_action(element, event, action)
     </a>
   </div>
   <div style="float: right;">
-    <a accesskey="t"
+    <a 
+      accesskey="t"
       href="#top"
       title="jump to top: alt-t"
-      i18n:attributes="title">
+      i18n:attributes="title;accesskey jump_to_top_accesskey">
       <img alt="jump to top: alt-t"
         border="0"
         height="16"
@@ -234,9 +235,9 @@ function handle_default_action(element, event, action)
       title="Leave Silva and view the public page: alt-:"
       accesskey=":"
       tal:attributes="href url"
-      i18n:attributes="title"
+      i18n:attributes="title;accesskey view_public_version_accesskey"
       i18n:translate="">
-      see public version
+      view public version
     </a>
   </div>
   &nbsp;
@@ -256,7 +257,7 @@ function handle_default_action(element, event, action)
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
         userWindow.focus();;
         return false;;"
-        i18n:attributes="title">
+      i18n:attributes="title;accesskey user_settings_accesskey">
       <img border="0"
         height="9"
         width="9"
@@ -270,7 +271,7 @@ function handle_default_action(element, event, action)
       accesskey="q"
       title="Logout of Silva: alt-q"
       i18n:translate=""
-      i18n:attributes="title">
+      i18n:attributes="title;accesskey logout_accesskey">
       logout
       <tal:block tal:condition="here/get_user_role"
         i18n:name="role"
@@ -286,6 +287,7 @@ function handle_default_action(element, event, action)
     accesskey=","
     tal:condition="view/service_members/allow_authentication_requests"
     tal:attributes="href string:public/request_roles?last_url=${url}/edit/${template/id}"
+    i18n:attributes="title;accesskey request_access_accesskey"
     i18n:translate="">
     request access
   </a>

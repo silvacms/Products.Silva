@@ -108,9 +108,9 @@
             value="remove ranges"
             title="remove range(s) from this ip group: alt-r"
             accesskey="r"
-            i18n:attributes="title;value;onclick"
             onclick="return confirm('Really remove?')"
             tal:condition="ipranges"
+            i18n:attributes="title;value;onclick;accesskey remove_ranges_accesskey"
           />
         </td> 
       </tr>

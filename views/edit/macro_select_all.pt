@@ -18,7 +18,9 @@
   />
   </tal:block>
   <label for="all"
-    accesskey="a">
+    accesskey="a"
+    i18n:attributes="accesskey select_all_accesskey;"
+    >
     <span i18n:translate="">select <u>a</u>ll</span>
   </label>
   <script type="text/javascript"

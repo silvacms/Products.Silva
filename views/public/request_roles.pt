@@ -74,7 +74,7 @@
     value=" Send request " 
     title="Send request for role: alt-s"
     accesskey="s"
-    i18n:attributes="value;title"
+    i18n:attributes="value;title;accesskey send_request_accesskey"
   />
 </div>
 </form>

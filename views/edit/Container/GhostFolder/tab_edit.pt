@@ -87,7 +87,7 @@
                 accesskey="r"
                 tal:define="asset_context python:here.get_start_container();"
                 tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
-                i18n:attributes="value;title"
+                i18n:attributes="value;title;accesskey reference_accesskey"
               /><span class="warning">*</span>
            </td>
            <td>
@@ -146,7 +146,7 @@
                  value="save reference"
                  title="access key: alt-s"
                  accesskey="s"
-                 i18n:attributes="value;title"
+                 i18n:attributes="value;title;accesskey save_reference_accesskey"
               />
            </td>
         </tr>
@@ -200,8 +200,8 @@
                 value="resync ghost folder"
                 title="re-synchronize with content from the source folder: alt-e"
                 accesskey="e"
-                i18n:attributes="value;title"
                 tal:condition="not:link_status"
+                i18n:attributes="value;title;accesskey resync_ghost_folder_accesskey"
                />
             </form>
          </div>

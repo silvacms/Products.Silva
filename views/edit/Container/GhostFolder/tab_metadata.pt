@@ -31,7 +31,7 @@
           title="convert this ghost folder to a normal folder: alt-c"
           accesskey="c"
           tal:condition="not:link_status"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey convert_to_folder_accesskey"
         />
         <input class="button"
           type="submit" 
@@ -40,7 +40,7 @@
           title="convert this ghost folder to a normal publication: alt-p"
           accesskey="p"
           tal:condition="not:link_status"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey convert_to_publication_accesskey"
         />
       </form>
     </metal:block>

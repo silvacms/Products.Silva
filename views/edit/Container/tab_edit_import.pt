@@ -74,7 +74,7 @@
             href="tab_status_export"
             title="over to the export screen: alt-e"
             accesskey="e"
-            i18n:attributes="title"
+            i18n:attributes="title;accesskey export_accesskey"
             i18n:translate="">
             export...
           </a>
@@ -127,7 +127,7 @@
             name="tab_edit_import_xml:method"
             title="access key: alt-i"
             accesskey="i"
-            i18n:attributes="value;title"  
+            i18n:attributes="value;title;accesskey import_accesskey"  
           />
         </td>
       </tr>
@@ -236,7 +236,7 @@
             name="import_archive_file:method"
             title="access key: alt-z"
             accesskey="z"
-            i18n:attributes="value;title"  
+            i18n:attributes="value;title;accesskey import_zip_accesskey"  
           />
         </td>
       </tr>
@@ -360,7 +360,7 @@
             name="tab_edit_import_docma:method" 
             title="upload a word document from your local drive: alt-u" 
             accesskey="u"
-            i18n:attributes="value;title"
+            i18n:attributes="value;title;accesskey upload_accesskey"
           />
         </td>
       </tr>

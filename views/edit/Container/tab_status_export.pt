@@ -97,7 +97,7 @@
                       href="tab_edit_import"
                       title="over to the import screen: alt-i"
                       accesskey="i"
-                      i18n:attributes="title"
+                      i18n:attributes="title;accesskey import_accesskey"
                       i18n:translate="">
                       import...
                     </a>
@@ -172,9 +172,9 @@
                       type="submit"
                       name="download_pdf_selected:method"
                       value="export pdf"
-                      title="access key: alt-e"
-                      accesskey="e"
-                      i18n:attributes="value;title"
+                      title="access key: alt-p"
+                      accesskey="p"
+                      i18n:attributes="value;title;accesskey export_pdf_accesskey"
                     />
                   </tal:condition>
                   <input class="button"
@@ -183,7 +183,7 @@
                     value="export xml"
                     title="access key: alt-e"
                     accesskey="e"
-                    i18n:attributes="value;title"
+                    i18n:attributes="value;title;access_key export_xml_accesskey"
                   />
                 </td>
               </tr>
@@ -266,7 +266,7 @@
         value="export zip"
         title="access key: alt-z"
         accesskey="z"
-        i18n:attributes="value;title"
+        i18n:attributes="value;title;accesskey export_zip_accesskey"
         />
         </td>
         </tr>
@@ -456,7 +456,7 @@
           value="export to Docma"
           title="export the selection to word: alt-d"
           accesskey="d"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey export_to_docma_accesskey"
         />
         </tal:block>
         </td>
@@ -482,7 +482,7 @@
     title="there's no undo: alt-x"
     type="submit"
     value="remove" 
-    i18n:attributes="value;title;onclick"
+    i18n:attributes="value;title;onclick;accesskey remove_accesskey"
   />
 </metal:fill-slot>
 </metal:use-macro>

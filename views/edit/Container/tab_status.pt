@@ -73,10 +73,11 @@
           name="tab_status_export:method"
           type="submit"
           accesskey="e"
+          value="export..."
           tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
           tal:attributes="
-            value string: export...;
             title string:export this ${type}: alt-e;"
+          i18n:attributes="value;accesskey export_accesskey"
 	       />
       </td>
     </tr>
@@ -281,8 +282,12 @@
       <td class="align-right"
         style="padding-right:0.5em;"
         colspan="5">
-        <label title="access key: alt-m" 
-          accesskey="m" i18n:translate="">
+        <label 
+          title="access key: alt-m" 
+          accesskey="m"
+          i18n:attributes="title;accesskey publish_time_accesskey"
+          i18n:translate=""
+          >
           publish time
         </label>
         <tal:block
@@ -301,7 +306,7 @@
             for="publish_now_flag" 
             title="access key: alt-u" 
             accesskey="u"
-            i18n:attributes="title"
+            i18n:attributes="title;accesskey publish_now_accesskey"
             i18n:translate="">
             p<u>u</u>blish&nbsp;now?
           </label>
@@ -327,7 +332,7 @@
         colspan="5">
         <label title="access key: alt-x" 
           accesskey="x" 
-          i18n:attributes="title"
+          i18n:attributes="title;accesskey expiration_time_accesskey"
           i18n:translate="">
           expiration time
         </label>
@@ -347,7 +352,7 @@
           <label for="clear_expiration"
             title="access key: alt-p"
             accesskey="p"
-            i18n:attributes="title"
+            i18n:attributes="title;accesskey clear_expiration_accesskey"
             i18n:translate="">
             clear&nbsp;ex<u>p</u>iration
           </label>
@@ -369,7 +374,7 @@
           title="reject pending request for approval: alt-j"
           accesskey="j"
           tal:condition="rejectables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey reject_accesskey"
         />
         <input class="revoke"
           type="submit"
@@ -378,7 +383,7 @@
           title="withdraw approval of approved versions: alt-v"
           accesskey="v"
           tal:condition="revokeables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey revoke_accesskey"
         />
         <input class="close"
           type="submit"
@@ -387,7 +392,7 @@
           title="close published items: alt-c"
           accesskey="c"
           tal:condition="closeables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey close_accesskey"
         />
         <input class="button" 
           type="submit" 
@@ -396,7 +401,7 @@
           title="create new versions of published docs: alt-n" 
           accesskey="n"
           tal:condition="new_versionables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey new_version_accesskey"
         />
       </td>
       <td class="align-right"
@@ -408,7 +413,7 @@
           title="change publish and expiration times: alt-s"
           accesskey="s"
           tal:condition="python: approveables or closeables or revokeables or rejectables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey set_timing_accesskey"
         />
       </td>
       <td class="align-right">
@@ -419,7 +424,7 @@
           title="approve or publish new versions: alt-o"
           accesskey="o"
           tal:condition="python: approveables or rejectables or new_versionables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey open_to_public_accesskey"
         />
       </td>
     </tr>
@@ -437,7 +442,7 @@
           title="withdraw pending request for approval: alt-w"
           accesskey="w"
           tal:condition="rejectables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey withdraw_accesskey"
         />
         <input class="revoke"
           accesskey="v"
@@ -446,7 +451,7 @@
           type="submit"
           value="revoke"
           tal:condition="revokeables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey revoke_accesskey"
         />
         <input class="button" 
           type="submit" 
@@ -455,7 +460,7 @@
           title="create new versions of published docs: alt-n" 
           accesskey="n"
           tal:condition="new_versionables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey new_version_accesskey"
         />
       </td>
       <td class="align-right"
@@ -467,7 +472,7 @@
           title="change publish and expiration times: alt-s"
           accesskey="s"
           tal:condition="python: approveables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey set_timing_accesskey"
         />
       </td>
       <td class="align-right">
@@ -478,7 +483,7 @@
           title="request approval for new versions: alt-r"
           accesskey="r"
           tal:condition="approveables"
-          i18n:attributes="value;title"
+          i18n:attributes="value;title;accesskey request_approval_accesskey"
         />
       </td>
     </tr>

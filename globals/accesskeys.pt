@@ -1,7 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal">
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 
 <head>
   <title i18n:translate="">Silva help</title>
@@ -16,7 +18,7 @@
   href="javascript:history.back();" 
   title="access key: alt-r"
   accesskey="r"
-  i18n:attributes="title"
+  i18n:attributes="title;accesskey return_accesskey"
   i18n:translate="">
   return
 </a>
@@ -25,7 +27,7 @@
     href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-i"
     accesskey="i"
-    i18n:attributes="title">
+    i18n:attributes="title;accesskey info_accesskey">
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
       tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
   </a>
@@ -228,7 +230,7 @@ Thanks to <a href="http://www.ethz.ch/" name="eth_zuerich">ETH Z&uuml;rich</a> f
   href="javascript:history.back();" 
   title="access key: alt-r"
   accesskey="r"
-  i18n:attributes="title"
+  i18n:attributes="title;accesskey return_accesskey"
   i18n:translate="">
   return
   </a>

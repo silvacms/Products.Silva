@@ -363,8 +363,8 @@
                   value="cancel"
                   title="cancel operation: alt-c"
                   accesskey="c"
-                  i18n:attributes="title;value"
                   onclick="window.close();return false;"
+                  i18n:attributes="title;value;accesskey cancel_accesskey"
                 />
                 <input class="transport"
                   type="button"
@@ -372,9 +372,9 @@
                   value="place reference..."
                   title="insert a reference to this asset: alt-p"
                   accesskey="p" 
-                  i18n:attributes="title;value"
                   onclick="setReference();return false;" 
                   tal:condition="publishables"
+                  i18n:attributes="title;value;accesskey place_reference_accesskey"
                 />
               </td>
             </tr>

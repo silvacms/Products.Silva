@@ -243,7 +243,7 @@ _______ manual close section here _______
                         value="export..."
                         title="access key: alt-e"
                         accesskey="e"
-                        i18n:attributes="value;title"
+                        i18n:attributes="value;title;accesskey export_accesskey"
                 />
               </td>
             </tr>
@@ -330,7 +330,7 @@ _______ manual close section here _______
                   title="there's no undo: alt-d"
                   accesskey="d"
                   onclick="if (!confirm('Are you sure?')) return false"
-                  i18n:attributes="value;title;onclick"
+                  i18n:attributes="value;title;onclick;accesskey delete_accesskey"
                 />
                 <input class="button"
                   type="submit"
@@ -338,7 +338,7 @@ _______ manual close section here _______
                   value="copy for editing"
                   title="create a new editable version of the selected old one: alt-f"
                   accesskey="f"
-                  i18n:attributes="value;title"
+                  i18n:attributes="value;title;accesskey copy_for_editing_accesskey"
                 />
               </td>
             </tr>

@@ -26,8 +26,8 @@
           <a href="parent screen"
             title="up to parent screen: alt-u"
             accesskey="u"
-            i18n:attributes="title"
-            tal:attributes="href active_tab">
+            tal:attributes="href active_tab"
+            i18n:attributes="title;accesskey up_to_parent_screen_accesskey">
             <div class="transport-border"
               tal:content="structure string:<u>u</u>p to ${parent_screen_name}...">
               parent screen
@@ -63,9 +63,9 @@
           href="../../edit/tab_edit"
           title="up one level: alt-]"
           accesskey="]"
-          i18n:attributes="title"
           tal:condition="not: model_is_root"
-          tal:attributes="href string:../../edit/${vein_id}">
+          tal:attributes="href string:../../edit/${vein_id}"
+          i18n:attributes="title;accesskey up_one_level_accesskey">
           <img width="9"
             height="9"
             border="0"
