@@ -5,7 +5,10 @@
     root_url model/get_root_url;
     title model/get_title_editable;
     vein string:edit;
-">
+    "
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="silva"
+    >
 
 <table class="columns columns3">
   <tbody>

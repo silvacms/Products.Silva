@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Mon Nov 29 17:24:17 2004\n"
-"PO-Revision-Date: 2004-11-29 17:29+0100\n"
+"POT-Creation-Date: Mon Nov 29 17:31:33 2004\n"
+"PO-Revision-Date: 2004-11-29 17:35+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -620,7 +620,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:138
 #: /views/edit/Container/tab_status_export.pt:171
 #: /views/edit/Container/tab_status_export.pt:180
-#: /views/edit/VersionedContent/tab_status.pt:237
+#: /views/edit/VersionedContent/tab_status.pt:238
 msgid "access key: alt-e"
 msgstr "sneltoets: alt-e"
 
@@ -1690,7 +1690,7 @@ msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
 
 #: /views/edit/Container/tab_access_groups.pt:252
 #: /views/edit/Container/tab_edit.pt:548
-#: /views/edit/VersionedContent/tab_status.pt:324
+#: /views/edit/VersionedContent/tab_status.pt:325
 msgid "delete"
 msgstr "verwijderen"
 
@@ -1833,7 +1833,7 @@ msgid "paste ghost"
 msgstr "ghost plakken"
 
 #: /views/edit/Container/tab_edit.pt:548
-#: /views/edit/VersionedContent/tab_status.pt:324
+#: /views/edit/VersionedContent/tab_status.pt:325
 msgid "there's no undo: alt-d"
 msgstr "items verwijderen (er is geen undo): alt-d"
 
@@ -2070,7 +2070,7 @@ msgid "over to the export screen: alt-e"
 msgstr "naar het export scherm: alt-e"
 
 #: /views/edit/Container/tab_edit_import.pt:72
-#: /views/edit/VersionedContent/tab_status.pt:237
+#: /views/edit/VersionedContent/tab_status.pt:238
 msgid "export..."
 msgstr "exporteren..."
 
@@ -2283,7 +2283,7 @@ msgid "access key: alt-x"
 msgstr "sneltoets: alt-x"
 
 #: /views/edit/Container/tab_status.pt:328
-#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:485
+#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:485
 msgid "expiration time"
 msgstr "verlooptijdstip"
 
@@ -2365,7 +2365,7 @@ msgid "request approval"
 msgstr "goedkeuring aanvragen"
 
 #: /views/edit/Container/tab_status.pt:69
-#: /views/edit/VersionedContent/tab_status.pt:234
+#: /views/edit/VersionedContent/tab_status.pt:235
 msgid "publishing actions"
 msgstr "publicatie-acties"
 
@@ -2679,6 +2679,15 @@ msgstr "Niet ingetrokken: ${list}"
 msgid "Not yet :)"
 msgstr "Nog niet"
 
+#: /views/edit/Content/AutoTOC/edit.pt:39
+msgid "automatic table of contents &#xab;${title_or_id}&#xbb;"
+msgstr "Automatische inhoudstabel voor inhoud &#xab;${title_or_id}&#xbb;"
+
+#: /views/edit/Content/AutoTOC/edit.pt:47
+msgid ""
+"An automatic table of contents is generated from the items in its location."
+msgstr "Een automatische inhoudstabel wordt gegenereerd aan de hand van de items op zijn locatie."
+
 #: /views/edit/Content/Indexer/edit.pt:63
 msgid "preview screen"
 msgstr "voorbeeld scherm"
@@ -2686,7 +2695,9 @@ msgstr "voorbeeld scherm"
 #: /views/edit/Content/Indexer/edit.pt:63
 msgid ""
 "An index is not editable. To view the index go to the ${preview_screen}."
-msgstr "Een index kun je niet wijzigen. Om de index te bekijken, ga naar ${preview_screen}"
+msgstr ""
+"Een index kun je niet wijzigen. Om de index te bekijken, ga naar "
+"${preview_screen}"
 
 #: /views/edit/Content/Indexer/edit.pt:64
 msgid ""
@@ -2694,15 +2705,16 @@ msgid ""
 "content</span>, so the list may be empty if nothing is published."
 msgstr ""
 "Let op: <span class=\"warning\">de index toont alleen links naar "
-"gepubliceerde inhoud</span>, dus de lijst kan leeg zijn als er niets is gepubliceerd."
+"gepubliceerde inhoud</span>, dus de lijst kan leeg zijn als er niets is "
+"gepubliceerd."
 
 #: /views/edit/Content/Indexer/edit.pt:65
 msgid ""
 "If new content has been added, click &#8220;update index&#8221; (in large "
 "publications this may take a while)."
 msgstr ""
-"Als nieuwe inhoud is toegevoegd, klik &#8220;index bijwerken&#8221; (in grote "
-"publicaties kan dit enige tijd duren)."
+"Als nieuwe inhoud is toegevoegd, klik &#8220;index bijwerken&#8221; (in "
+"grote publicaties kan dit enige tijd duren)."
 
 #: /views/edit/Content/Indexer/edit.pt:75
 msgid "update index"
@@ -2918,40 +2930,40 @@ msgstr "Blokkade verbroken"
 msgid "Version approved."
 msgstr "Versie goedgekeurd."
 
-#: /views/edit/VersionedContent/tab_status.pt:225
+#: /views/edit/VersionedContent/tab_status.pt:226
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr "versies beheren van &#xab;${export_id}&#xbb;"
 
-#: /views/edit/VersionedContent/tab_status.pt:252 /doc/silva-extra.xml:359
+#: /views/edit/VersionedContent/tab_status.pt:253 /doc/silva-extra.xml:359
 msgid "modification time"
 msgstr "modificatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status.pt:253 /doc/silva-extra.xml:422
+#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:422
 msgid "publication time"
 msgstr "publicatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:606
+#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:606
 msgid "last author"
 msgstr "laatste auteur"
 
-#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:545
+#: /views/edit/VersionedContent/tab_status.pt:257 /doc/silva-extra.xml:545
 msgid "creator"
 msgstr "aangemaakt"
 
-#: /views/edit/VersionedContent/tab_status.pt:257
+#: /views/edit/VersionedContent/tab_status.pt:258
 msgid "version status"
 msgstr "versie-status"
 
 # JS onclick string, not very nice but it works, make sure to copy JS code 1:1
-#: /views/edit/VersionedContent/tab_status.pt:324
+#: /views/edit/VersionedContent/tab_status.pt:325
 msgid "if (!confirm('Are you sure?')) return false"
 msgstr "if (!confirm('Weet je het zeker?')) return false"
 
-#: /views/edit/VersionedContent/tab_status.pt:333
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr "nieuwe bewerkbare versie van geselecteerde oude versie aanmaken: alt-f"
 
-#: /views/edit/VersionedContent/tab_status.pt:333
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "copy for editing"
 msgstr "kopiëren om te bewerken"
 
@@ -2979,11 +2991,11 @@ msgstr ""
 "Deze inhoud is gepubliceerd (online voor publiek).<br /> Indien gewenst, kan "
 "er een bewerkbare kopie van worden gemaakt door naar ${editor} te gaan."
 
-#: /views/edit/VersionedContent/tab_status.pt:81
+#: /views/edit/VersionedContent/tab_status.pt:82
 msgid "Published version exists"
 msgstr "Er bestaat een gepubliceerde versie"
 
-#: /views/edit/VersionedContent/tab_status.pt:82
+#: /views/edit/VersionedContent/tab_status.pt:83
 msgid ""
 "Note: an older version of this content is online.<br /> Publishing this "
 "version will replace the public version."
@@ -2991,17 +3003,22 @@ msgstr ""
 "N.B.: een oudere versie van deze inhoud staat online.<br /> Het publiceren "
 "van deze versie zal de publieke versie vervangen."
 
-#: /views/edit/VersionedContent/tab_status.pt:92
+#: /views/edit/VersionedContent/tab_status.pt:93
 msgid "Content is closed"
 msgstr "Inhoud is gesloten"
 
-#: /views/edit/VersionedContent/tab_status.pt:95
+#: /views/edit/VersionedContent/tab_status.pt:96
 msgid ""
 "This content was once published but is now closed.<br /> If you wish you can "
 "make an editable copy in the ${editor}."
 msgstr ""
 "Deze inhoud was ooit gepubliceerd maar is nu gesloten.<br /> Indien gewenst, "
 "kan er een bewerkbare kopie gemaakt worden in de ${editor}."
+
+# Default: "editor"
+#: /views/edit/VersionedContent/tab_status.pt:97
+msgid "editor-title"
+msgstr "editor"
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
 msgid "There is no approved version."
@@ -3527,10 +3544,10 @@ msgstr "inhoud goedgekeurd of gepubliceerd"
 msgid "n/a"
 msgstr "-"
 
+# Default: "editor"
 #: /views/edit/document_lookup.pt:315 /views/edit/Container/tab_edit.pt:363
-#: /views/edit/VersionedContent/tab_status.pt:72
-#: /views/edit/VersionedContent/tab_status.pt:96
-msgid "editor"
+#: /views/edit/VersionedContent/tab_status.pt:73
+msgid "content-editor"
 msgstr "editor"
 
 #: /views/edit/document_lookup.pt:371
@@ -3784,8 +3801,8 @@ msgstr "element"
 msgid "acquired content"
 msgstr "overgeërfde inhoud"
 
-#: /views/edit/macro_metadata.pt:84 /views/edit/tab_access.pt:568
-#: /views/edit/tab_access.pt:741 /views/edit/Asset/Image/edit.pt:148
+#: /views/edit/macro_metadata.pt:84 /views/edit/tab_access.pt:569
+#: /views/edit/tab_access.pt:742 /views/edit/Asset/Image/edit.pt:148
 #: /views/edit/Container/tab_edit_import.pt:98
 #: /views/edit/Container/tab_edit_import.pt:167
 #: /views/edit/Container/tab_edit_import.pt:305
@@ -3890,89 +3907,89 @@ msgstr "Dit is ${meta_type} \"${id}\""
 msgid "in"
 msgstr "in"
 
-#: /views/edit/tab_access.pt:139
+#: /views/edit/tab_access.pt:140
 msgid "No users with local roles are defined here."
 msgstr "Er zijn hier geen gebruikers met lokale rollen gedefinieerd."
 
-#: /views/edit/tab_access.pt:151 /views/edit/tab_access.pt:604
+#: /views/edit/tab_access.pt:152 /views/edit/tab_access.pt:605
 msgid "select a role to assign"
 msgstr "selecteer een rol om toe te kennen"
 
-#: /views/edit/tab_access.pt:155 /views/edit/tab_access.pt:296
-#: /views/edit/tab_access.pt:454 /views/edit/tab_access.pt:497
+#: /views/edit/tab_access.pt:156 /views/edit/tab_access.pt:297
+#: /views/edit/tab_access.pt:455 /views/edit/tab_access.pt:498
 msgid "select role:"
 msgstr "selecteer rol:"
 
-#: /views/edit/tab_access.pt:160
+#: /views/edit/tab_access.pt:161
 msgid "assign role"
 msgstr "rol toekennen"
 
-#: /views/edit/tab_access.pt:160 /views/edit/tab_access.pt:308
-#: /views/edit/tab_access.pt:460
+#: /views/edit/tab_access.pt:161 /views/edit/tab_access.pt:309
+#: /views/edit/tab_access.pt:461
 msgid "assign a local role to selected user(s)"
 msgstr "een rol toekennen aan geselecteerde gebruiker(s)"
 
-#: /views/edit/tab_access.pt:170
+#: /views/edit/tab_access.pt:171
 msgid "revoke selected role(s) from selected user(s)"
 msgstr "geselecteerde rol(len) van geselecteerde gebruiker(s) intrekken"
 
-#: /views/edit/tab_access.pt:170
+#: /views/edit/tab_access.pt:171
 msgid "revoke role"
 msgstr "rol intrekken"
 
-#: /views/edit/tab_access.pt:199
+#: /views/edit/tab_access.pt:200
 msgid "pending requests for roles"
 msgstr "uitstaande aanvragen om rollen"
 
-#: /views/edit/tab_access.pt:206
+#: /views/edit/tab_access.pt:207
 msgid "requested role"
 msgstr "aangevraagde rol"
 
-#: /views/edit/tab_access.pt:209
+#: /views/edit/tab_access.pt:210
 msgid "is approved"
 msgstr "is goedgekeurd"
 
-#: /views/edit/tab_access.pt:245
+#: /views/edit/tab_access.pt:246
 msgid "No roles have been requested."
 msgstr "Er zijn geen rollen aangevraagd."
 
-#: /views/edit/tab_access.pt:252
+#: /views/edit/tab_access.pt:253
 msgid "deny role"
 msgstr "rol weigeren"
 
-#: /views/edit/tab_access.pt:252
+#: /views/edit/tab_access.pt:253
 msgid "access key: alt-d"
 msgstr "sneltoets: alt-d"
 
-#: /views/edit/tab_access.pt:264
+#: /views/edit/tab_access.pt:265
 msgid "access key: alt-g"
 msgstr "sneltoets: alt-g"
 
-#: /views/edit/tab_access.pt:264
+#: /views/edit/tab_access.pt:265
 msgid "grant role"
 msgstr "rol toekennen"
 
-#: /views/edit/tab_access.pt:272
+#: /views/edit/tab_access.pt:273
 msgid "access key: alt-a"
 msgstr "sneltoets: alt-a"
 
-#: /views/edit/tab_access.pt:272
+#: /views/edit/tab_access.pt:273
 msgid "Grant and approve"
 msgstr "Toekennen en goedkeuren"
 
-#: /views/edit/tab_access.pt:308 /views/edit/tab_access.pt:509
+#: /views/edit/tab_access.pt:309 /views/edit/tab_access.pt:510
 msgid "assign"
 msgstr "toekennen"
 
-#: /views/edit/tab_access.pt:330
+#: /views/edit/tab_access.pt:331
 msgid "A Groups Service is not installed"
 msgstr "Er is geen 'Groups Service' geïnstalleerd"
 
-#: /views/edit/tab_access.pt:334
+#: /views/edit/tab_access.pt:335
 msgid "Silva Root in the ZMI"
 msgstr "Silva Root in de ZMI"
 
-#: /views/edit/tab_access.pt:335
+#: /views/edit/tab_access.pt:336
 msgid ""
 "You are seeing this message because the Silva Groups extension is installed "
 "on the file system, but a Groups Service hasn't been added to this Silva "
@@ -3986,63 +4003,63 @@ msgstr ""
 "kies &#8220;Groups Service&#8221; uit de 'add' lijst en geef die het id "
 "${service_groups}. Verdere configuratie is niet nodig."
 
-#: /views/edit/tab_access.pt:355
+#: /views/edit/tab_access.pt:356
 msgid "group roles"
 msgstr "groepsrollen"
 
-#: /views/edit/tab_access.pt:362
+#: /views/edit/tab_access.pt:363
 msgid "grant or revoke local roles for groups"
 msgstr "locale rollen voor groepen toekennen of intrekken"
 
-#: /views/edit/tab_access.pt:368
+#: /views/edit/tab_access.pt:369
 msgid "groupname"
 msgstr "groepsnaam"
 
-#: /views/edit/tab_access.pt:396
+#: /views/edit/tab_access.pt:397
 msgid "&lt;broken&gt; <!-- XXX replace this by something nice -->"
 msgstr "&lt;gebroken&gt; <!-- XXX vervangen door iets beters -->"
 
-#: /views/edit/tab_access.pt:439
+#: /views/edit/tab_access.pt:440
 msgid "No groups with (local) roles."
 msgstr "Geen groepen met (locale) rollen."
 
-#: /views/edit/tab_access.pt:460
+#: /views/edit/tab_access.pt:461
 msgid "assign role to group"
 msgstr "rol aan groep toekennen"
 
-#: /views/edit/tab_access.pt:470
+#: /views/edit/tab_access.pt:471
 msgid "revoke selected role(s) from selected group(s)"
 msgstr "geselecteerde rol(len) van geselecteerde groep(en) intrekken"
 
-#: /views/edit/tab_access.pt:470
+#: /views/edit/tab_access.pt:471
 msgid "revoke role from group"
 msgstr "rol van groep intrekken"
 
-#: /views/edit/tab_access.pt:509
+#: /views/edit/tab_access.pt:510
 msgid "assign selected role to selected group(s)"
 msgstr "geselecteerde rol aan geselecteerde groep(en) toekennen"
 
-#: /views/edit/tab_access.pt:548
+#: /views/edit/tab_access.pt:549
 msgid "public view access restrictions for"
 msgstr "Publieke toegangsbeperkingen voor"
 
-#: /views/edit/tab_access.pt:557 /views/edit/tab_access.pt:730
+#: /views/edit/tab_access.pt:558 /views/edit/tab_access.pt:731
 msgid "access restriction by role"
 msgstr "toegangsbeperking per rol"
 
-#: /views/edit/tab_access.pt:565 /views/edit/tab_access.pt:738
+#: /views/edit/tab_access.pt:566 /views/edit/tab_access.pt:739
 msgid "current restriction"
 msgstr "huidige beperking"
 
-#: /views/edit/tab_access.pt:573 /views/edit/tab_access.pt:748
+#: /views/edit/tab_access.pt:574 /views/edit/tab_access.pt:749
 msgid "Open to the public"
 msgstr "Open voor het publiek"
 
-#: /views/edit/tab_access.pt:578 /views/edit/tab_access.pt:751
+#: /views/edit/tab_access.pt:579 /views/edit/tab_access.pt:752
 msgid "(acquired)."
 msgstr "(overgeërfd)."
 
-#: /views/edit/tab_access.pt:582
+#: /views/edit/tab_access.pt:583
 msgid ""
 "Setting an access restriction here affects objects on this and lower levels."
 msgstr ""
@@ -4053,20 +4070,20 @@ msgstr ""
 msgid "user roles for &#xab;${title}&#xbb;"
 msgstr "gebruikersrollen voor &#xab;${title}&#xbb;"
 
-#: /views/edit/tab_access.pt:593
+#: /views/edit/tab_access.pt:594
 msgid "acquire restriction"
 msgstr "beperking overerven"
 
-#: /views/edit/tab_access.pt:593
+#: /views/edit/tab_access.pt:594
 msgid ""
 "cancel the access restriction at this level, making it inherit from above"
 msgstr "geen toegangsbeperking op dit niveau, gebruik beperking van boven"
 
-#: /views/edit/tab_access.pt:615
+#: /views/edit/tab_access.pt:616
 msgid "set restriction"
 msgstr "beperking instellen"
 
-#: /views/edit/tab_access.pt:615
+#: /views/edit/tab_access.pt:616
 msgid "restrict access to users with a specific role"
 msgstr "toegang beperken tot gebruikers met een specifieke rol"
 
@@ -4074,25 +4091,25 @@ msgstr "toegang beperken tot gebruikers met een specifieke rol"
 msgid "grant or revoke local roles for users"
 msgstr "lokale rollen voor gebruikers toekennen of intrekken"
 
-#: /views/edit/tab_access.pt:721
+#: /views/edit/tab_access.pt:722
 msgid "public view access restrictions for &#xab;${title}&#xbb;"
 msgstr "toegangsbeperkingen publieke weegave voor &#xab;${title}&#xbb;"
 
-#: /views/edit/tab_access.pt:74 /views/edit/tab_access.pt:203
+#: /views/edit/tab_access.pt:74 /views/edit/tab_access.pt:204
 msgid "username"
 msgstr "gebruikersnaam"
 
-#: /views/edit/tab_access.pt:754
+#: /views/edit/tab_access.pt:755
 msgid "An access restriction here affects objects on this and lower levels."
 msgstr ""
 "Een toegangsbeperking op deze plaats heeft invloed op objecten op dit en "
 "lagergelegen niveaus."
 
-#: /views/edit/tab_access.pt:77 /views/edit/tab_access.pt:371
+#: /views/edit/tab_access.pt:77 /views/edit/tab_access.pt:372
 msgid "roles defined above"
 msgstr "hierboven gedefinieerde rollen"
 
-#: /views/edit/tab_access.pt:80 /views/edit/tab_access.pt:374
+#: /views/edit/tab_access.pt:80 /views/edit/tab_access.pt:375
 msgid "roles defined here"
 msgstr "hier gedefinieerde rollen"
 
@@ -4424,6 +4441,9 @@ msgstr "Aanvinken om zoekopdracht te beperken to de sub-boom van deze inhoud."
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+#~ msgid "editor"
+#~ msgstr "editor"
 
 #~ msgid "Requests for authentication to this site are not allowed."
 #~ msgstr "Aanmeldingsaanvragen zijn voor deze website niet toegestaan."

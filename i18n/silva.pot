@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 29 17:24:17 2004\n"
+"POT-Creation-Date: Mon Nov 29 17:31:33 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -582,7 +582,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:138
 #: /views/edit/Container/tab_status_export.pt:171
 #: /views/edit/Container/tab_status_export.pt:180
-#: /views/edit/VersionedContent/tab_status.pt:237
+#: /views/edit/VersionedContent/tab_status.pt:238
 msgid "access key: alt-e"
 msgstr ""
 
@@ -1619,7 +1619,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:252
 #: /views/edit/Container/tab_edit.pt:548
-#: /views/edit/VersionedContent/tab_status.pt:324
+#: /views/edit/VersionedContent/tab_status.pt:325
 msgid "delete"
 msgstr ""
 
@@ -1757,7 +1757,7 @@ msgid "paste ghost"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:548
-#: /views/edit/VersionedContent/tab_status.pt:324
+#: /views/edit/VersionedContent/tab_status.pt:325
 msgid "there's no undo: alt-d"
 msgstr ""
 
@@ -1944,7 +1944,7 @@ msgid "over to the export screen: alt-e"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:72
-#: /views/edit/VersionedContent/tab_status.pt:237
+#: /views/edit/VersionedContent/tab_status.pt:238
 msgid "export..."
 msgstr ""
 
@@ -2152,7 +2152,7 @@ msgid "access key: alt-x"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:328
-#: /views/edit/VersionedContent/tab_status.pt:254
+#: /views/edit/VersionedContent/tab_status.pt:255
 #: /doc/silva-extra.xml:485
 msgid "expiration time"
 msgstr ""
@@ -2235,7 +2235,7 @@ msgid "request approval"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:69
-#: /views/edit/VersionedContent/tab_status.pt:234
+#: /views/edit/VersionedContent/tab_status.pt:235
 msgid "publishing actions"
 msgstr ""
 
@@ -2536,6 +2536,14 @@ msgstr ""
 msgid "Not yet :)"
 msgstr ""
 
+#: /views/edit/Content/AutoTOC/edit.pt:39
+msgid "automatic table of contents &#xab;${title_or_id}&#xbb;"
+msgstr ""
+
+#: /views/edit/Content/AutoTOC/edit.pt:47
+msgid "An automatic table of contents is generated from the items in its location."
+msgstr ""
+
 #: /views/edit/Content/Indexer/edit.pt:63
 msgid "preview screen"
 msgstr ""
@@ -2738,43 +2746,43 @@ msgstr ""
 msgid "Version approved."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:225
+#: /views/edit/VersionedContent/tab_status.pt:226
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:252
+#: /views/edit/VersionedContent/tab_status.pt:253
 #: /doc/silva-extra.xml:359
 msgid "modification time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:253
+#: /views/edit/VersionedContent/tab_status.pt:254
 #: /doc/silva-extra.xml:422
 msgid "publication time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:255
+#: /views/edit/VersionedContent/tab_status.pt:256
 #: /doc/silva-extra.xml:606
 msgid "last author"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:256
+#: /views/edit/VersionedContent/tab_status.pt:257
 #: /doc/silva-extra.xml:545
 msgid "creator"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:257
+#: /views/edit/VersionedContent/tab_status.pt:258
 msgid "version status"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:324
+#: /views/edit/VersionedContent/tab_status.pt:325
 msgid "if (!confirm('Are you sure?')) return false"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:333
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:333
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "copy for editing"
 msgstr ""
 
@@ -2798,20 +2806,25 @@ msgstr ""
 msgid "This content is published (online for the public).<br /> If you wish you can make an editable copy by going to the ${editor}."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:81
+#: /views/edit/VersionedContent/tab_status.pt:82
 msgid "Published version exists"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:82
+#: /views/edit/VersionedContent/tab_status.pt:83
 msgid "Note: an older version of this content is online.<br /> Publishing this version will replace the public version."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:92
+#: /views/edit/VersionedContent/tab_status.pt:93
 msgid "Content is closed"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:95
+#: /views/edit/VersionedContent/tab_status.pt:96
 msgid "This content was once published but is now closed.<br /> If you wish you can make an editable copy in the ${editor}."
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:97
+# Default: "editor"
+msgid "editor-title"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
@@ -3312,9 +3325,9 @@ msgstr ""
 
 #: /views/edit/document_lookup.pt:315
 #: /views/edit/Container/tab_edit.pt:363
-#: /views/edit/VersionedContent/tab_status.pt:72
-#: /views/edit/VersionedContent/tab_status.pt:96
-msgid "editor"
+#: /views/edit/VersionedContent/tab_status.pt:73
+# Default: "editor"
+msgid "content-editor"
 msgstr ""
 
 #: /views/edit/document_lookup.pt:371
@@ -3552,8 +3565,8 @@ msgid "acquired content"
 msgstr ""
 
 #: /views/edit/macro_metadata.pt:84
-#: /views/edit/tab_access.pt:568
-#: /views/edit/tab_access.pt:741
+#: /views/edit/tab_access.pt:569
+#: /views/edit/tab_access.pt:742
 #: /views/edit/Asset/Image/edit.pt:148
 #: /views/edit/Container/tab_edit_import.pt:98
 #: /views/edit/Container/tab_edit_import.pt:167
@@ -3650,158 +3663,158 @@ msgstr ""
 msgid "in"
 msgstr ""
 
-#: /views/edit/tab_access.pt:139
+#: /views/edit/tab_access.pt:140
 msgid "No users with local roles are defined here."
 msgstr ""
 
-#: /views/edit/tab_access.pt:151
-#: /views/edit/tab_access.pt:604
+#: /views/edit/tab_access.pt:152
+#: /views/edit/tab_access.pt:605
 msgid "select a role to assign"
 msgstr ""
 
-#: /views/edit/tab_access.pt:155
-#: /views/edit/tab_access.pt:296
-#: /views/edit/tab_access.pt:454
-#: /views/edit/tab_access.pt:497
+#: /views/edit/tab_access.pt:156
+#: /views/edit/tab_access.pt:297
+#: /views/edit/tab_access.pt:455
+#: /views/edit/tab_access.pt:498
 msgid "select role:"
 msgstr ""
 
-#: /views/edit/tab_access.pt:160
+#: /views/edit/tab_access.pt:161
 msgid "assign role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:160
-#: /views/edit/tab_access.pt:308
-#: /views/edit/tab_access.pt:460
+#: /views/edit/tab_access.pt:161
+#: /views/edit/tab_access.pt:309
+#: /views/edit/tab_access.pt:461
 msgid "assign a local role to selected user(s)"
 msgstr ""
 
-#: /views/edit/tab_access.pt:170
+#: /views/edit/tab_access.pt:171
 msgid "revoke selected role(s) from selected user(s)"
 msgstr ""
 
-#: /views/edit/tab_access.pt:170
+#: /views/edit/tab_access.pt:171
 msgid "revoke role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:199
+#: /views/edit/tab_access.pt:200
 msgid "pending requests for roles"
 msgstr ""
 
-#: /views/edit/tab_access.pt:206
+#: /views/edit/tab_access.pt:207
 msgid "requested role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:209
+#: /views/edit/tab_access.pt:210
 msgid "is approved"
 msgstr ""
 
-#: /views/edit/tab_access.pt:245
+#: /views/edit/tab_access.pt:246
 msgid "No roles have been requested."
 msgstr ""
 
-#: /views/edit/tab_access.pt:252
+#: /views/edit/tab_access.pt:253
 msgid "deny role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:252
+#: /views/edit/tab_access.pt:253
 msgid "access key: alt-d"
 msgstr ""
 
-#: /views/edit/tab_access.pt:264
+#: /views/edit/tab_access.pt:265
 msgid "access key: alt-g"
 msgstr ""
 
-#: /views/edit/tab_access.pt:264
+#: /views/edit/tab_access.pt:265
 msgid "grant role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:272
+#: /views/edit/tab_access.pt:273
 msgid "access key: alt-a"
 msgstr ""
 
-#: /views/edit/tab_access.pt:272
+#: /views/edit/tab_access.pt:273
 msgid "Grant and approve"
 msgstr ""
 
-#: /views/edit/tab_access.pt:308
-#: /views/edit/tab_access.pt:509
+#: /views/edit/tab_access.pt:309
+#: /views/edit/tab_access.pt:510
 msgid "assign"
 msgstr ""
 
-#: /views/edit/tab_access.pt:330
+#: /views/edit/tab_access.pt:331
 msgid "A Groups Service is not installed"
 msgstr ""
 
-#: /views/edit/tab_access.pt:334
+#: /views/edit/tab_access.pt:335
 msgid "Silva Root in the ZMI"
 msgstr ""
 
-#: /views/edit/tab_access.pt:335
+#: /views/edit/tab_access.pt:336
 msgid "You are seeing this message because the Silva Groups extension is installed on the file system, but a Groups Service hasn't been added to this Silva instance. To install one, go to the ${silva_root_in_the_ZMI}, choose &#8220;Groups Service&#8221; from the add list and give it the id ${service_groups}. No further configuration is necessary."
 msgstr ""
 
-#: /views/edit/tab_access.pt:355
+#: /views/edit/tab_access.pt:356
 msgid "group roles"
 msgstr ""
 
-#: /views/edit/tab_access.pt:362
+#: /views/edit/tab_access.pt:363
 msgid "grant or revoke local roles for groups"
 msgstr ""
 
-#: /views/edit/tab_access.pt:368
+#: /views/edit/tab_access.pt:369
 msgid "groupname"
 msgstr ""
 
-#: /views/edit/tab_access.pt:396
+#: /views/edit/tab_access.pt:397
 msgid "&lt;broken&gt; <!-- XXX replace this by something nice -->"
 msgstr ""
 
-#: /views/edit/tab_access.pt:439
+#: /views/edit/tab_access.pt:440
 msgid "No groups with (local) roles."
 msgstr ""
 
-#: /views/edit/tab_access.pt:460
+#: /views/edit/tab_access.pt:461
 msgid "assign role to group"
 msgstr ""
 
-#: /views/edit/tab_access.pt:470
+#: /views/edit/tab_access.pt:471
 msgid "revoke selected role(s) from selected group(s)"
 msgstr ""
 
-#: /views/edit/tab_access.pt:470
+#: /views/edit/tab_access.pt:471
 msgid "revoke role from group"
 msgstr ""
 
-#: /views/edit/tab_access.pt:509
+#: /views/edit/tab_access.pt:510
 msgid "assign selected role to selected group(s)"
 msgstr ""
 
-#: /views/edit/tab_access.pt:548
+#: /views/edit/tab_access.pt:549
 msgid "public view access restrictions for"
 msgstr ""
 
-#: /views/edit/tab_access.pt:557
-#: /views/edit/tab_access.pt:730
+#: /views/edit/tab_access.pt:558
+#: /views/edit/tab_access.pt:731
 msgid "access restriction by role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:565
-#: /views/edit/tab_access.pt:738
+#: /views/edit/tab_access.pt:566
+#: /views/edit/tab_access.pt:739
 msgid "current restriction"
 msgstr ""
 
-#: /views/edit/tab_access.pt:573
-#: /views/edit/tab_access.pt:748
+#: /views/edit/tab_access.pt:574
+#: /views/edit/tab_access.pt:749
 msgid "Open to the public"
 msgstr ""
 
-#: /views/edit/tab_access.pt:578
-#: /views/edit/tab_access.pt:751
+#: /views/edit/tab_access.pt:579
+#: /views/edit/tab_access.pt:752
 msgid "(acquired)."
 msgstr ""
 
-#: /views/edit/tab_access.pt:582
+#: /views/edit/tab_access.pt:583
 msgid "Setting an access restriction here affects objects on this and lower levels."
 msgstr ""
 
@@ -3809,19 +3822,19 @@ msgstr ""
 msgid "user roles for &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_access.pt:593
+#: /views/edit/tab_access.pt:594
 msgid "acquire restriction"
 msgstr ""
 
-#: /views/edit/tab_access.pt:593
+#: /views/edit/tab_access.pt:594
 msgid "cancel the access restriction at this level, making it inherit from above"
 msgstr ""
 
-#: /views/edit/tab_access.pt:615
+#: /views/edit/tab_access.pt:616
 msgid "set restriction"
 msgstr ""
 
-#: /views/edit/tab_access.pt:615
+#: /views/edit/tab_access.pt:616
 msgid "restrict access to users with a specific role"
 msgstr ""
 
@@ -3829,26 +3842,26 @@ msgstr ""
 msgid "grant or revoke local roles for users"
 msgstr ""
 
-#: /views/edit/tab_access.pt:721
+#: /views/edit/tab_access.pt:722
 msgid "public view access restrictions for &#xab;${title}&#xbb;"
 msgstr ""
 
 #: /views/edit/tab_access.pt:74
-#: /views/edit/tab_access.pt:203
+#: /views/edit/tab_access.pt:204
 msgid "username"
 msgstr ""
 
-#: /views/edit/tab_access.pt:754
+#: /views/edit/tab_access.pt:755
 msgid "An access restriction here affects objects on this and lower levels."
 msgstr ""
 
 #: /views/edit/tab_access.pt:77
-#: /views/edit/tab_access.pt:371
+#: /views/edit/tab_access.pt:372
 msgid "roles defined above"
 msgstr ""
 
 #: /views/edit/tab_access.pt:80
-#: /views/edit/tab_access.pt:374
+#: /views/edit/tab_access.pt:375
 msgid "roles defined here"
 msgstr ""
 
