@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.11 2003/08/28 14:26:23 guido Exp $
+# $Id: mangle.py,v 1.12 2003/08/29 12:40:42 zagy Exp $
 
 # Python
 import string
@@ -121,9 +121,11 @@ class Id:
             interface: an interface, additional tests regarding this interface
                 will be processed
         """
-            
+        orig_id = maybe_id
         if type(maybe_id) == UnicodeType:
             maybe_id = maybe_id.encode('us-ascii', 'replace')
+        if type(maybe_id) != StringType:
+            raise ValueError, "id must be str or unicode (%r)" % orig_id
         if interface not in self._reserved_ids_for_interface.keys():
             interface = None
         self._folder = folder
