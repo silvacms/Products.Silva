@@ -19,7 +19,7 @@
       <span 
         tal:define="size model/get_file_size"
         tal:attributes="title string: ${size}"
-        tal:content="python:view.convertBytesToHumanReadable(size)" />
+        tal:content="python:view.convertBytesToHumanReadable(size)" /> 
     </p>
     <tal:block tal:condition="python:user.has_role(['Manager'], model)">
       <p tal:define="path model/getFileSystemPath"

@@ -84,7 +84,7 @@
       <td>
         <span tal:replace="structure python:field.get_value('description')">
         comments here (field description)
-        </span>&nbsp;
+        </span>
       </td>
       </tr>
       </tal:define>
@@ -95,15 +95,6 @@
       <tr class="controls">
         <td class="align-right"
           colspan="3">
-          <input class="cancel"
-            style="float:left;"
-            type="button"
-            name="edit_cancel"
-            value="Cancel"
-            title="access key: alt-c"
-            accesskey="c"
-            onClick="history.back()"
-          />
           <input class="button"
             type="submit"
             name="submit:method"
