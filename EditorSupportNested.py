@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -215,8 +215,8 @@ class EditorSupport(SimpleItem):
 
         return self.output_convert_editable(''.join(result))
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_text')
     def replace_text(self, node, st):
         """'Parse' the markup to XML. Instead of tokenizing this method uses
@@ -265,7 +265,7 @@ class EditorSupport(SimpleItem):
         doc = node.ownerDocument
 
         # remove all old subnodes of node
-        while node.firstChild:
+        while node.hasChildNodes():
             node.removeChild(node.firstChild)
         newdom = self.create_dom_forgiving(doc, st)
         for child in newdom.childNodes:
@@ -289,7 +289,7 @@ class EditorSupport(SimpleItem):
         st = self.input_convert(st).encode('UTF8')
         node = node._node
         doc = node.ownerDocument
-        while node.firstChild:
+        while node.hasChildNodes():
             node.removeChild(node.firstChild)
         newdom = self.create_dom_forgiving(doc, st)
 
@@ -311,6 +311,7 @@ class EditorSupport(SimpleItem):
                     newnode.setAttribute(child.attributes.item(i).name, child.attributes.item(i).value)
                 node.appendChild(newnode)
                 self._replace_helper(doc, newnode, child)
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_pre')
     def replace_pre(self, node, text):
@@ -328,7 +329,7 @@ class EditorSupport(SimpleItem):
         # get actual DOM node
         node = node._node
         doc = node.ownerDocument
-        while node.firstChild:
+        while node.hasChildNodes():
             node.removeChild(node.firstChild)
         newNode = doc.createTextNode(text)
         node.appendChild(newNode)
