@@ -281,7 +281,7 @@
               <tr>
                 <th colspan="2">
                   <i i18n:translate="group_defined_by_list_groups">
-                    (a group defined by a list of normal groups)
+                    a group defined by a list of normal groups
                   </i>
                 </th>
               </tr>

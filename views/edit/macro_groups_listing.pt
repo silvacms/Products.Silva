@@ -63,7 +63,8 @@
                     href="tab_access_groups"
                     title="groups administration: alt-g"
                     accesskey="g"
-                  >
+                    i18n:attributes="title"
+		    i18n:translate="groups_admin">
                     <u>G</u>roups admin...
                   </a>
                 </metal:block>
@@ -71,7 +72,7 @@
             </tr>
             <tr class="inter-controls">
               <th style="font-size:90%"
-                tal:condition="groups">
+                tal:condition="groups" i18n:translate="ctrl_click_multi-select">
                 Ctrl-click to multi-select
               </th>
             </tr>
@@ -86,7 +87,7 @@
                   <tal:block condition="groups">
                     <option class="disabled"
                       disabled="disabled"
-                      value="None">
+                      value="None" i18n:translate="select_groups">
                       select groups:
                     </option>
                     <option value="group"
@@ -97,7 +98,8 @@
                     </option>
                   </tal:block>
                   <option class="disabled"
-                    tal:condition="not:groups">
+                    tal:condition="not:groups"
+		    i18n:translate="no_groups_available">
                     No groups available
                   </option>
                 </select>

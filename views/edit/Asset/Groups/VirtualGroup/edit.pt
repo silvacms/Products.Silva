@@ -11,7 +11,8 @@
       <h3>
         <a href="tab_access"
           title="Back to Groups"
-          tal:attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()">
+          tal:attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()"
+	   i18n:attributes="title">
           <img alt="Up to top of Access tab"
             border="0"
             height="16"
@@ -23,14 +24,13 @@
       <h2>
         <span tal:replace="model/meta_type">
           Meta type
-        </span>
-        for
+      </span><span i18n:translate="for" tal:omit-tag=""> for </span>
         <span class="document-title">
           &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
         </span>
       </h2>
 
-      <h3>
+      <h3 i18n:translate="virtual_group_members">
         Virtual Group &#8216;members&#8217;
       </h3>
       <!-- Defined virtual groups listing -->
@@ -40,7 +40,8 @@
             name="add_groups_from_virtualgroup_to_virtualgroup:method"
             title="Copy groups as defined on selected virtual group(s)."
             type="submit"
-            value="Copy from virtual group(s)" />
+            value="Copy from virtual group(s)" 
+	    i18n:attributes="title value"/>
         </metal:block>
       </metal:block>
       <!-- Defined groups listing -->
@@ -50,7 +51,8 @@
             name="add_groups_to_virtualgroup:method"
             title="Add selected group(s) to this virtual group."
             type="submit"
-            value="Add to virtual group" />
+            value="Add to virtual group" 
+	    i18n:attributes="title value"/>
         </metal:block>
       </metal:block>
 
@@ -66,7 +68,7 @@
           <tr align="left"
             valign="top">
             <th>
-              <b>
+              <b i18n:translate="groupname">
                 Groupname
               </b>
             </th>
@@ -91,7 +93,7 @@
           <tr class="focus"
             tal:condition="not:groupids">
             <td>
-              <i>
+              <i i18n:translate="virtual_group_does_not_have_member_groups">
                 Virtual Group does not have any "member groups"
               </i>
             </td>
@@ -104,6 +106,7 @@
                 title="Remove selected group(s) from this virtual group."
                 type="submit"
                 value="Remove groups"
+		i18n:attributes="title value"
                 onClick="return confirm('Really remove?')"
                 tal:condition="groupids" />
             </td>

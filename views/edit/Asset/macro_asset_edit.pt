@@ -47,7 +47,7 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="3">
-          <h3>
+          <h3 i18n:translate="properties">
             Properties
           </h3>
         </td>
@@ -58,13 +58,13 @@
     <tbody tal:define="fields view/form/get_fields">
       <tr>
         <th class="align-right"
-           width="12%">
+           width="12%" i18n:translate="element">
           Element
         </th>
-        <th>
+        <th i18n:translate="content">
           Content
         </th>
-        <th width="30%">
+        <th width="30%" i18n:translate="note">
           Note
         </th>
       </tr>
@@ -99,6 +99,7 @@
             name="submit:method"
             value="Save properties"
             title="access key: alt-s"
+	    i18n:attributes="title value"
             accesskey="s"
           />
         </td>
@@ -140,7 +141,7 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="2">
-          <h3>
+          <h3 i18n:translate="upload">
             Upload
           </h3>
         </td>
@@ -151,7 +152,7 @@
         <th class="align-right"
            width="12%">
         </th>
-        <th colspan="2">
+        <th colspan="2" i18n:translate="content">
           Content
         </th>
       </tr>
@@ -181,6 +182,7 @@
             name="upload_submit:method"
             value="Upload file"
             title="access key: alt-u"
+		 i18n:attributes="title"
             accesskey="u"
           />
         </td>

@@ -5,7 +5,7 @@
   metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<h2><span i18n:translate="infor_for">Info for </span>
+<h2><span i18n:translate="info_for">Info for </span>
   <span class="folder-title">
     &#xab;<tal:block content="model/get_title_editable" />&#xbb;
   </span>

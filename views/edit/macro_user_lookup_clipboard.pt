@@ -18,7 +18,7 @@
           clipboard_members python:view.lookup_get_selection().keys();">
         <h2 class="info">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Simple Member')" />
-          user clipboard
+	  <span i18n:translate="user_clipboard" tal:omit-tag="">user clipboard</span>
         </h2>
         <table class="listing"
           style="margin-bottom:0.5em;">
@@ -29,16 +29,19 @@
                   <a class="navigation" 
                     style="float:right;"
                     href="lookup"
-                    title="lookup users: alt-l"
-                    accesskey="l">
-                    <u>L</u>ookup users...
+                    title="lookup users: alt-l" 
+                    accesskey="l"
+		     i18n:translate="lookup_users"
+		     i18n:attributes="title">
+                    Lookup users...
                   </a>
                 </metal:block>
               </td>
             </tr>
             <tr class="inter-controls">
               <th style="font-size:90%"
-                tal:condition="clipboard_members">
+                tal:condition="clipboard_members"
+		i18n:translate="ctrl_click_multi-select">
                 Ctrl-click to multi-select
               </th>
             </tr>
@@ -53,12 +56,13 @@
                   <tal:block condition="clipboard_members">
                     <option class="disabled"
                       disabled="disabled"
-                      value="None">
+                      value="None"
+		      i18n:translate="select_users">
                       select users:
                     </option>
                     <tal:block repeat="userid clipboard_members">
                       <option value="userid"
-                        tal:define="member python: model.sec_get_member(userid);"
+                         tal:define="member python: model.sec_get_member(userid);"
                         tal:content="member/fullname"
                         tal:attributes="value member/userid;">
                         User
@@ -68,7 +72,8 @@
                   <option class="disabled"
                     disabled="disabled"
                     value="None"
-                    tal:condition="not:clipboard_members">
+                    tal:condition="not:clipboard_members"
+		    i18n:translate="no_users_on_clipboard">
                     No users on clipboard
                   </option>
                 </select>

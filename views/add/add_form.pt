@@ -11,8 +11,7 @@
     global breadcrumb_vein string:Add;
     global active_tab string:tab_edit;
     global mode_asset request/mode_asset | python:0;
-    global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]
-    "
+    global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]"
   i18n:domain="silva">
 <metal:block metal:use-macro="use_macro/macros/master">
 <metal:block fill-slot="main">
@@ -38,13 +37,13 @@
 
 <tbody>
   <tr>
-    <th class="align-right" i18n:translate="">
+    <th class="align-right" i18n:translate="attributes">
       Attributes
     </th>
-    <th style="width:50%;" i18n:translate="">
+    <th style="width:50%;" i18n:translate="content">
       Content
     </th>
-    <th i18n:translate="">
+    <th i18n:translate="notes">
     Notes
     </th>
   </tr>
@@ -86,6 +85,7 @@
         name="add_submit"
         value=" Save "
         title="Access key: alt-s"
+        i18n:attributes="value title"
         accesskey="s"
       />
       <tal:condition condition="python: not mode_asset" >

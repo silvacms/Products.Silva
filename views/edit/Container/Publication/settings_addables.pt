@@ -71,13 +71,13 @@
               <tbody>
                 <tr>
                   <th i18n:translate="element" class="align-right" width="12%">
-                    element
+                    Element
                   </th>
                   <th i18n:translate="content">
-                    content
+                    Content
                   </th>
                   <th i18n:translate="note" width="30%">
-                    note
+                    Note
                   </th>
                 </tr>
 

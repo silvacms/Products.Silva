@@ -214,8 +214,7 @@
           />
         </td>
         <td i18n:translate="provide_optional_title_for_assets">
-          Provide an optional title for all Assets created
-          from the contents of the zip file.
+          Provide an optional title for all Assets created from the contents of the zip file.
         </td>
       </tr>
 

@@ -12,26 +12,27 @@
       <h3>
         <a href="tab_access"
           title="Back to Groups"
-          tal:attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()">
+          tal:attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()"
+	   i18n:attributes="title">
           <img alt="Up to top of Access tab"
             border="0"
             height="16"
             width="16"
-            tal:attributes="src string:${root_url}/globals/left.gif" />
-          Back
+            tal:attributes="src string:${root_url}/globals/left.gif" 
+	    i18n:attributes="alt"/>
+	<span i18n:translate="back" tal:omit-tag="">Back</span>
         </a>
       </h3>
       <h2>
         <span tal:replace="model/meta_type">
           Meta type
-        </span>
-        for
-        <span class="document-title">
+        </span><span i18n:translate="for" tal:omit-tag="">for</span>
+      <span class="document-title">
           &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
         </span>
       </h2>
 
-      <h3>
+      <h3 i18n:translate="group_members">
         Group members
       </h3>
       <!-- Defined groups listing -->
@@ -41,7 +42,9 @@
             name="add_users_from_group_to_group:method"
             title="Copy members as defined on selected group(s)."
             type="submit"
-            value="Copy users from group(s)" />
+            value="Copy users from group(s)" 
+	    i18n:attributes="title value"
+	    />
         </metal:block>
       </metal:block>
 
@@ -52,7 +55,8 @@
             name="add_users_to_group:method"
             title="Add selected user(s) to this group."
             type="submit"
-            value="Add to group" />
+            value="Add to group" 
+	    i18n:attributes="title value"/>
         </metal:block>
       </metal:block>
 
@@ -68,7 +72,7 @@
           <tr align="left"
             valign="top">
             <th>
-              <b>
+              <b i18n:translate="username">
                 Username
               </b>
             </th>
@@ -97,7 +101,7 @@
           <tr class="focus"
             tal:condition="not:userids">
             <td>
-              <i>
+              <i i18n:translate="group_has_no_member">
                 Group does not have any members
               </i>
             </td>
@@ -111,9 +115,10 @@
                 value="Remove users"
                 title="Remove selected user(s) from this group: alt-r"
                 accesskey="r"
+		i18n:attributes="title value"
                 onClick="return confirm('Really remove?')"
                 tal:condition="userids" />
-            </td>
+            </td> 
           </tr>
         </table>
       </form>

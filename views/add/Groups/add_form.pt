@@ -9,7 +9,7 @@
 <div class="margins" metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<h2>Add new <span tal:replace="request/meta_type" /></h2>
+<h2 i18n:translate="add____new">Add new <span tal:replace="request/meta_type" /></h2>
 <script type="text/javascript" 
   tal:content="structure python:here.focus_editor('field_object_id')" />
 <form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
@@ -18,13 +18,13 @@
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">
 <tr>
-<th align="left" colspan="2" width="7%">
+<th align="left" colspan="2" width="7%" i18n:translate="attributes">
 Attributes
 </th>
-<th align="left">
+<th align="left" i18n:translate="content">
 Content
 </th>
-<th align="left">
+<th align="left" i18n:translate="notes">
 Notes
 </th>
 </tr>
@@ -65,7 +65,9 @@ id: no spaces or special characters besides an underscore (_).
 <input class="cancelbutton" type="submit" name="add_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c" />
 </td>
 <td colspan="2" align="right">
-<input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
+<input class="button" type="submit" name="add_submit" value=" Add " 
+       title="Access key: alt-a" accesskey="a" 
+       i18n:attributes="title" />
 </td>
 </tr>
 </table>

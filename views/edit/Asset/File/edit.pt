@@ -25,7 +25,7 @@
       <p tal:define="path model/getFileSystemPath"
         tal:condition="path"
         >
-        <span class="subhead"><b>file system path</b><br /></span>
+        <span class="subhead"><b i18n:translate="file_system_path">file system path</b><br /></span>
         <span tal:replace="structure python: ' / '.join(path.split('/'))" />
       </p>
     </tal:block>
