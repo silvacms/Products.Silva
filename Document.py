@@ -1,20 +1,21 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.38 $
+# $Revision: 1.39 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
+from Products.ParsedXML.ParsedXML import ParsedXML
+
 # Silva interfaces
 from IVersionedContent import IVersionedContent
+
 # Silva
 import SilvaPermissions
 from VersionedContent import VersionedContent
 from EditorSupport import EditorSupport
-# misc
 from helpers import add_and_edit, translateCdata
-from Products.ParsedXML.ParsedXML import ParsedXML
 
 class Document(VersionedContent, EditorSupport):
     """Silva Document.
