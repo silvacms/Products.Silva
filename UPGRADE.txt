@@ -3,18 +3,10 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.1
+  Valid for:  Silva 0.9.2
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.27 $
-
-Upgrading from 0.9.1 beta to 0.9.1
- 
-  There shouldn't be any problems. Just do a 'refresh all' and things
-  should work. If you are using Groups, please upgrade from Groups 0.3 to
-  Groups 0.3.1 as it contains a bugfix. Groups can be found here:
-
-  "Groups 0.3.1":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz.
+  CVS:        $Revision: 1.28 $
 
 Upgrading from 0.8.6 and below
 
@@ -25,21 +17,23 @@ Upgrading from 0.8.6 and below
 
   Please read the UPGRADE.txt included with that release.
 
-Upgrading Silva 0.9.0.x to 0.9.1
+Upgrading Silva 0.9.0.x to 0.9.1.x
+
+  Please upgrade your Silva to 0.9.1.x first. Be careful to read its
+  upgrade instructions! You can find Silva 0.9.1.x here:
+
+  "Silva 0.9.0.x":http://www.zope.org/Members/faassen/Silva/
+
+  Please read the UPGRADE.txt included with that release.
+
+Upgrading Silva 0.9.1.x to 0.9.2
 
   This document applies to upgrading Silva only; if you are newly
   installing Silva please look at 'INSTALL.txt'.
 
-  NOTE: It makes of course sense to make a backup of Silva before
-  trying to upgrade! Silva used to make a backup copy automatically
-  but in effect this copying action takes place *after* updating some
-  Silva code. This causes the upgrade to fail in some cases (notably
-  with Silva News which uses the catalog, and backup copying triggers
-  a re-cataloging). In order to evade these problems we have disabled
-  the creation of the backup copy from the upgrade code. Instead you
-  need to do a backup copy *before* you upgrade the product code and
-  restart Zope. The simplest way to make sure you have a functional
-  backup is to backup the whole ZODB; make a copy of 'var/Data.fs'.
+  NOTE: It makes of course sense to make a backup of Silva before trying to
+  upgrade! The simplest way to make sure you have a functional backup is to
+  backup the whole ZODB; make a copy of 'var/Data.fs'.
 
   NOTE: The Groups functionality is changing. With this release existing
   Group definitions are still working but not directly accessible. To get
