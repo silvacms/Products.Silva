@@ -79,8 +79,7 @@ class SilvaObject(Security):
         """
         result = []
         item = self
-        beginning = self.get_root()
-        while item >= beginning:
+        while Interfaces.SilvaObject.isImplementedBy(item):
             result.append(item)
             item = item.aq_parent
         result.reverse()
