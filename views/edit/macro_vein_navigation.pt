@@ -44,6 +44,7 @@
   _______ renders the uplinks cap and vein navigation stack _______
   _______ only containers have a slot for vein navigation thru the content tree_______
 </tal:block>
+<metal:define-macro define-macro="vein">
 <table class="listing">
   <thead>
     <tr>
@@ -101,7 +102,6 @@
     </metal:define-slot>
   </tbody>
 </table>
-<metal:define-macro define-macro="vein">
 </metal:define-macro>
 
 </html>
