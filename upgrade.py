@@ -413,8 +413,9 @@ def convert_document_092(obj):
         # way to do that from the SMI, which corrupts the previous versions 
         # list
         new_previous_versions = []
+        contained_ids = obj.objectIds()
         for versionid, pdt, edt in obj._previous_versions:
-            if not hasattr(obj, versionid):
+            if not versionid in contained_ids:
                 continue
             upgrade_doc_version(obj, versionid)
             new_previous_versions.append((versionid, pdt, edt))
