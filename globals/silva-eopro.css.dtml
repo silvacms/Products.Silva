@@ -21,223 +21,29 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 
+h1{ font-size: 140%; }
+h2 { font-size: 200%; }
+h3 { font-size: 18pt; }
+h4 { font-size: 16pt; }
+h5 { font-size: 14pt; }
+h6 { font-size: 12pt; }
+
+ol {
+  list-style-type: decimal;
+}
+
+ul {
+  list-style-type: disc;
+}
+
 /* darker870: cfd7e1; selected bac1cc; light d4dce6; */
-body, div.workspace {
+body {
   background : #e5eeea;
   margin: none;
 }
 
 pre {
     font-size: 180%;
-}
-
-/* ____________________________________________________ table columns _____ */
-
-table.columns {
-}
-
-/* 3 column table (default) */
-table.columns td.left {
-    width: 20%;
-    padding: 8px 0.8em 0 8px;
-}
-table.columns td.main {
-    width: 60%;
-    padding: 8px 0.6em 0 0;
-}
-table.columns td.right {
-    /* background: red; fkg IE */
-    width: 20%;
-    padding: 8px 8px 0 0 ! important;
-}
-
-/* 2 column table */
-table.columns2 td.left {
-    width: 20%;
-    padding: 8px 0 0 8px;
-}
-table.columns2 td.main {
-    width: 80%;
-    padding: 8px 8px 0 0.8em;
-}
-
-/* 1 column table, not in use */
-table.columns1 {
-    width: 100%;
-    padding: 0 8px 0 8px;
-}
-
-
-/* ____________________________________________________ table listing _____ */
-
-table.listing {
-    color: #444444;
-    width: 100%;
-    margin: 0em 0em 1em 0em;    
-}
-
-table.listing thead {
-  border-top: &dtml-listingBorder; ! important;
-}
-
-table.listing tbody {
-  border-top: &dtml-listingBorder; ! important;
-}
-
-table.listing tfoot {
-  border-top: &dtml-listingBorder; ! important;
-}
-
-/* _____________________ rows ______________________ */
-
-table.listing tr.controls {
-  background: &dtml-listingControlsBackground;;
-  /* in case it's empty */
-  height : 0.2em;
-}
-
-table.listing tr.top-controls {
-  background: &dtml-listingTopControlsBackground;;
-}
-
-table.listing tr.inter-controls {
-    background: &dtml-listingInter-ControlsBackground;;
-}
-
-tr.divider, th.divider, td.divider {
-  height : 0.5em;
-  background: &dtml-listingDividerBackground;;
-}
-
-/* not in use */
-table.listing tr.fixed, td.fixed {
-    background: &dtml-evenRowBackground;;
-}
-
-/* _____________________ cells _____________________ */
-
-table.listing th {
-    text-align: left;
-    color: #dbf3f6;
-    color: &dtml-listingHeaderFontColor;;
-    background: #71969a;
-    background: &dtml-listingHeaderBackground;; 
-    padding-left: 0.6em;
-    padding-right: 0.6em;
-}
-
-table.listing th.listing-left {
-  width: 4%;
-  text-align: left;
-  padding-left: 0.4em;
-}
-
-table.listing th.listing-right {
-  width: 4%;
-  text-align: right;
-  padding-right: 0.4em;
-}
-
-/* not in use */
-table.listing th.empty {
-    border: none;
-    border-bottom: &dtml-listingBorder;;
-}
-
-table.listing th.align-left, table.listing td.align-left {
-  text-align: left;
-}
-
-table.listing th.align-center, table.listing td.align-center {
-  text-align: center;
-}
-
-table.listing th.align-right, table.listing td.align-right {
-  text-align: right;
-}
-
-table.listing td {
-    padding-left: 0.6em;
-    padding-right: 0.6em;
-    vertical-align: top;
-}
-
-table.listing td.top {
-  color: &dtml-shade40;;
-  background: #394b4d;
-  background: &dtml-listingTopBackground;;
-    border: &dtml-listingBorder; ! important;
-    border-bottom: none ! important;
-    padding-top: 0em;
-    padding-bottom: 0em;
-    vertical-align: bottom;
-    /* workaround for plone 'insane IE row bug workaround' */
-    position: relative;
-    left: 0px;
-    top: 0px;
-}
-
-table.listing td.top h2 {
-  color: #b8ccce;
-  color: &dtml-listingTopHeadingColor;;
-    text-align: left;
-    margin: 0.1em 0.4em 0.2em 0.4em;
-    display: inline;
-    border: none;
-    float: left;
-}
-
-/* not in use */
-table.listing td.top div.addMenu {
-    padding-left: 0.4em;
-    display: inline;
-    float: left;
-}
-
-table.listing td.top h2 img {
-    padding-right: 0em;
-    vertical-align: top;
-}
-
-table.listing tr.top-controls td {
-  padding: 0em 0.4em;
-}
-
-table.listing tr.top-controls h3 {
-  color: #c9dfe2;
-  color: &dtml-listingTopControlsHeadingColor;;
-  margin: 0.1em 0.2em 0.2em 0.2em;
-  padding: 0em;
-  border: none;
-  display: inline;
-  float: left;
-  text-transform: &dtml-textTransform;;
-  line-height : 100%;
-}
-
-table.listing tr.top-controls div.buttons {
-    padding: 0.2em 0;
-}
-
-table.listing td.listing-left {
-  text-align: left;
-  padding: 0em 0.4em 0em 0.4em;
-  white-space: nowrap;
-}
-
-table.listing td.listing-right {
-  text-align: right;
-  padding: 0em 0.4em 0em 0.4em;
-  white-space: nowrap;
-}
-
-table.listing tr.controls td, tr.inter-controls td {
-  padding: 0em 0.4em 0em 0.4em;
-}
-
-/* rename this selector */
-.widebody {
-  color: #c9dfe2;
 }
 
 </dtml-with>
