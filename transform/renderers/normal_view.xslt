@@ -12,7 +12,7 @@
     <xsl:apply-templates />
   </xsl:template>
 
-  <xsl:template match="silva_document">
+  <xsl:template match="silva:silva_document">
     <xsl:apply-templates />
   </xsl:template>
 
