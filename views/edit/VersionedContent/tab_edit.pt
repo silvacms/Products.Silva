@@ -40,7 +40,7 @@
   document.prompt_url = '${destination_path}promptWindow';
 
 " />
-<script language="JavaScript" tal:condition="python:editor != 'epoz'">
+<script language="JavaScript" tal:condition="python:editor != 'epoz' or model.meta_type != 'Silva Document'">
 
   function handleTimeout()
   {
@@ -91,13 +91,17 @@
     request_pending python:model.is_version_approval_requested();
 ">
 
-<model tal:condition="python:editor != 'epoz' and unapproved_version and not request_pending and not is_locked">
-  <div style="width: 100%; text-align: right;"><a tal:attributes="href python: '%s/edit?editor=epoz' % model.absolute_url()">Edit with the Epoz editor (experimental)</a>&nbsp;</div>
+<model tal:condition="python:(editor != 'epoz' or not hasattr(view, 'epoz') or model.meta_type != 'Silva Document') and unapproved_version and not request_pending and not is_locked">
+  <div style="width: 100%; text-align: right;">
+    <a tal:attributes="href python: '%s/edit?editor=epoz' % model.absolute_url()" tal:condition="python: hasattr(view, 'epoz') and model.meta_type == 'Silva Document'">
+      Edit with the Epoz editor (experimental)
+    </a>&nbsp;
+  </div>
   <tal:block tal:replace="structure view/edit">Content</tal:block>
 </model>
 
 <span tal:replace="nothing"> ______ epoz ______ </span>
-<tal:block condition="python:editor == 'epoz' and unapproved_version and not request_pending and not is_locked">
+<tal:block condition="python: editor == 'epoz' and hasattr(view, 'epoz') and model.meta_type == 'Silva Document' and unapproved_version and not request_pending and not is_locked">
   <tal:block define="epozmacros view/epoz/epozmacros/macros">
 
     <div style="width: 100%; text-align: right"><a tal:attributes="href python: '%s/edit?editor=field_editor' % model.absolute_url()">Edit with the builtin editor</a>&nbsp;</div>
