@@ -34,6 +34,8 @@ Silva changes
         get_modification_datetime() in SilvaObject. Also re-enabled and
         revised some tests that were commented out in test_SilvaObject.
 
+      - Indexer is now updated when installation documentation.
+
   1.0 (release candidate 4)
 
     Bugs fixed
