@@ -3,6 +3,7 @@ from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from DateTime import DateTime
 # Silva
 from VersionedContent import VersionedContent
 import Interfaces
@@ -10,6 +11,9 @@ import Interfaces
 from helpers import add_and_edit
 
 class Ghost(VersionedContent):
+    """Ghost object.
+    """
+    
     security = ClassSecurityInfo()
 
     meta_type = "Silva Ghost"
@@ -34,16 +38,19 @@ class Ghost(VersionedContent):
     def get_creation_datetime(self):
         """Get creation datetime.
         """
-        return DateTime.Datetime(2002, 1, 1, 12, 0)
+        return Datetime(2002, 1, 1, 12, 0)
 
     def get_modification_datetime(self):
         """Get modification datetime.
         """
-        return DateTime.DateTime(2002, 1, 1, 12, 0)
+        return DateTime(2002, 1, 1, 12, 0)
 
 InitializeClass(Ghost)
 
 class GhostVersion(SimpleItem.SimpleItem):
+    """Ghost version.
+    """
+    
     meta_type = 'Silva Ghost Version'
     
     def __init__(self, id, content_url):
