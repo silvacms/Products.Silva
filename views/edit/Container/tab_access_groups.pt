@@ -20,6 +20,8 @@
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;"
   tal:condition="has_access">
+<script type="text/javascript" 
+  tal:content="structure python:here.focus_editor('field_object_id')" />
 
 <table class="columns columns3">
   <tbody>
@@ -164,8 +166,8 @@
             title="delete selected groups: alt-d"
             accesskey="d"
             onclick="return confirm('Really delete?')"
-            tal:condition="groups"
             i18n:attributes="title value onclick"
+            tal:condition="groups"
           />
         </td>
       </tr>
@@ -184,7 +186,7 @@
   <table class="listing">
     <thead>
       <tr class="top-controls">
-        <td colspan="2">
+        <td colspan="3">
           <h3 i18n:translate="add_group">
             Add a group
           </h3>
@@ -205,23 +207,11 @@
             size="20" 
           />
         </td>
+        <td>
+          No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;
+        </td>
       </tr>
-      <tr class="odd" tal:replace="nothing">
-        <td class="align-right">
-          <span i18n:translate="title"
-            tal:omit-tag="">
-            title
-          </span>
-          <td>
-            <input size="20" 
-              type="text" 
-              name="field_object_title" 
-              value="" 
-              style="width:100%;"
-            />
-          </td>
-      </tr>
-      <tr class="even">
+      <tr class="odd">
         <td class="align-right">
           type<span class="warning">*</span>
         </td>
@@ -236,19 +226,31 @@
             <option value="Silva IP Group">
               IP Group: a group based on ip addresses
             </option>
+          </select>
+        </td>
+        <td>
+          &nbsp;
         </td>
       </tr>
     </tbody>
     <tfoot>
       <tr class="controls">
         <td class="align-right"
-          colspan="2">
+          colspan="3">
           <input class="button" 
             type="submit" 
             name="add_submit" 
-            value="save group" 
+            value="save" 
             title="access key: alt-s" 
             accesskey="s" 
+            i18n:attributes="title value"
+          />
+          <input class="button"
+            type="submit"
+            name="add_edit_submit"
+            value="save + edit"
+            title="access key: alt-e"
+            accesskey="e"
             i18n:attributes="title value"
           />
         </td>

@@ -65,7 +65,7 @@
       tal:condition="model/isValid | nothing">
       <tr>
         <th tal:condition="ipranges">
-          IP
+          settings
         </th>
       </tr>
       <tal:block replace="nothing">
