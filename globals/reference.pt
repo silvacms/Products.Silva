@@ -11,6 +11,7 @@
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <link rel="stylesheet" href="frontend.css" type="text/css" />
   <link rel="up" href="../../edit" title="Up one level" />
+  <link rel="copyright" href="copyright" title="Silva copyright info" />
 </head>
 
 <body>
@@ -84,7 +85,7 @@
   <a href="mailto:js@aixtraware.de">Joachim Schmitz</a> from <a href="http://www.aixtraware.de/">Aixtraware.de</a><br />
   <a href="mailto:itamar@zoteca.com">Itamar Shtull-Trauring</a> from <a href="http://www.zoteca.com/">Zoteca</a><br />
   <a href="mailto:hazmat@infrae.com">Kapil Thangavelu</a><br />
-  <a href="mailto:cz@gocept.com">Christian Zagrodnick</a> (and others) from <a href="http://www.gocept.com/">gocept</a><br />
+  <a href="mailto:cz@gocept.com">Christian Zagrodnick</a> (and others) from <a href="http://www.gocept.com/">Gocept</a><br />
 </p>
   
 <h4>Thanks to....</h4>

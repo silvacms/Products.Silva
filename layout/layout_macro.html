@@ -1,8 +1,8 @@
+<!-- _______ Silva version 0.9.3.0 _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   metal:define-macro="layout">
-<!-- _______ Silva version v1.0a _______ -->
 
 <head metal:define-slot="head">
   <title metal:define-slot="title"
@@ -30,14 +30,34 @@
     tal:condition="email"
     tal:attributes="content email" />
   <meta metal:define-slot="meta" tal:omit-tag="" />
-  <!-- End metatags -->
+  <!-- /End metatags -->
+  <!-- Start related links -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
+  <!-- Access navigation links - if any are not needed remove for better performance -->
+  <link rel="top" title="Up to top of publication" 
+    tal:condition="python:here.meta_type != 'Silva Root'"
+    tal:attributes="href python:here.get_publication().absolute_url()" />
+  <link rel="up" href="../" title="Up a level" 
+    tal:condition="python:here.meta_type != 'Silva Root'" />
+  <tal:define define="
+    previousnext here/previous_next; 
+    previous python: previousnext[0];
+    next python:previousnext[1]">
+  <link rel="previous" title="Previous document" 
+    tal:condition="previous"
+    tal:attributes="href previous/absolute_url" />
+  <link rel="next" title="Next document" 
+    tal:condition="next"
+    tal:attributes="href next/absolute_url" />
+  </tal:define>
+  <!-- /End access navigation links -->
+  <!-- /End related links -->
   <!-- Begin stylesheets -->
   <link rel="stylesheet" href="frontend.css" type="text/css"
     tal:attributes="href here/frontend.css/absolute_url | nothing" />
   <link metal:define-slot="style" tal:omit-tag="" />
-  <!-- End stylesheets -->
+  <!-- /End stylesheets -->
   <script metal:define-slot="script" type="text/javascript" tal:omit-tag="">
     <!-- script slot -->
   </script>
@@ -59,9 +79,8 @@
       <!-- Begin top_navigation slot -->
       <span class="breadcrumb"
          style="display:block;">
-        <span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
-        <a tal:content="python: item.get_short_title() or item.get_title_or_id()" 
-          tal:attributes="href item/absolute_url">Name</a>
+        <span tal:repeat="item python:here.get_breadcrumbs(ignore_index=1)" tal:omit-tag=""> 
+        <a tal:content="python: item.get_short_title() or item.get_title_or_id" tal:attributes="href item/absolute_url">Name</a>
         <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
       </span>
       <!-- End top_navigation slot -->
@@ -86,3 +105,4 @@
 </metal:block>
 </body>
 </html>
+

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.2 2004/04/02 12:46:30 jw Exp $
+# $Id: install.py,v 1.97.4.9.4.3 2004/04/10 19:35:57 kitblake Exp $
 """Install for Silva Core
 """
 # Python
@@ -375,10 +375,11 @@ def configureLayout(root, default_if_existent=0):
     default_ if the id already exists in the root.
     """
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
-               'standard_error_message', 'standard_unauthorized_message',]:
+               'standard_error_message', 'standard_unauthorized_message',
+               'copyright',]:
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
-    for id in ['index_html.py', 'preview_html.py',
+    for id in ['index_html.py', 'preview_html.py', 'previous_next.py',
                'get_metadata_element.py', 'get_layout_macro.py', ]:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
         

@@ -93,7 +93,7 @@ function handle_default_action(element, event, action)
 <link rel="up" href="../../edit" title="Up one level" 
   tal:condition="python:model.meta_type != 'Silva Root'" />
 <link rel="help" href="globals/help" title="Help with access keys and links to docs" />
-<link rel="copyright" href="copyright" title="Silva opyright info" />
+<link rel="copyright" href="copyright" title="Silva copyright info" />
 </head>
 
 <body tal:attributes="onload python: test(vein == 'editor' and editor == 'kupu', 
