@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.63 $
+# $Revision: 1.64 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -608,6 +608,11 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             if IContainer.isImplementedBy(object):
                 object.update()
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'xml_import')
+    def xml_import(self, xml):
+        dom = ParsedXML(xml)
+        ImporterRegistry.xml_import_helper(self, dom)
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'import_xml')
     def import_xml(self, xml):
         from xml.dom.minidom import parseString
@@ -702,5 +707,20 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     helpers.add_and_edit(self, id, REQUEST)
     return ''
 
+def xml_import_handler(self, object, node):
+    id = node._attrs[u'id'].nodeValue
+    title = ''
+    for child in node.childNodes:
+        if child.nodeName == u'title':
+            title = child.childNodes[0].nodeValue
+    object.manage_addProducts['Silva'].manage_addFolder(id, title, 0)
+    newfolder = getattr(object, id)
+    for child in node.childNodes:
+        if child.nodeName == u'title':
+            pass
+        elif child.nodeName.encode('cp1252') in ImporterRegistry.importer_registry.keys():
+            ImporterRegistry.import_xml_helper(newfolder, child)
+        elif hasattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252')):
+            getattr(newfolder, 'set_%s' % child.nodeName.encode('cp1252'))(child.nodeValue.encode('cp1252'))
 
 
