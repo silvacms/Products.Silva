@@ -40,11 +40,11 @@ class IMemberService(Base):
         """Get memberobject which can be cached, or None if no such memberobject.
         """
 
-    def allow_authentication_requests():
-        """Return true if authentication_requests is allowed, false if not
+    def allow_subscription():
+        """Return true if authentication requests are allowed, false if not
         """
 
-    def get_authentication_requests_url():
+    def get_subscription_url():
         """Returns the url of the authentication_requests form
         """
     

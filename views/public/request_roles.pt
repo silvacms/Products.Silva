@@ -6,7 +6,7 @@
 
 <div metal:fill-slot="main" tal:define="dummy here/security_trigger" tal:omit-tag="">
 
-<tal:block condition="python: hasattr(here, 'service_members') and here.service_members.allow_authentication_requests()">
+<tal:block condition="python: hasattr(here, 'service_members') and here.service_members.allow_subscription()">
 
 <!-- __________________________ feedback _________________________ -->
 <tal:block
@@ -57,7 +57,7 @@ Choose role(s) to request:<br />
 </form>
 
 </tal:block>
-<tal:block condition="python: not hasattr(here, 'service_members') or not here.service_members.allow_authentication_requests()">
+<tal:block condition="python: not hasattr(here, 'service_members') or not here.service_members.allow_subscription()">
 
 This site does not allow requests for roles.
 

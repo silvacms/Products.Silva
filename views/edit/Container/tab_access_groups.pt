@@ -6,7 +6,7 @@
     metal:fill-slot="main">
     <tal:block define="
         dummy python:model.security_trigger();
-        allow_authentication_requests model/service_members/allow_authentication_requests | nothing;"
+        allow_subscription model/service_members/allow_subscription | nothing;"
       condition="view/has_access">
       <h3>
         <a href="tab_access"
