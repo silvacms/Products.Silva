@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36.8.3 $
+  CVS:        $Revision: 1.36.8.4 $
 
 Upgrading from 0.9.1 and below
 
@@ -44,31 +44,31 @@ Upgrading Silva 0.9.2.x to 0.9.3
 
     SilvaDocument:
     
-        "SilvaDocument-0.XXX.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.XXX.tgz
+        "SilvaDocument-0.9.3.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3.tgz
 
     Formulator:
 
-        "Formulator-1.XXX.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.XXX.tgz
+        "Formulator-1.6.1.tgz":http://www.zope.org/Members/faassen/Formulator/Formulator-1.6.1.tgz
 
     XMLWidgets:
 
-        "XMLWidgets-0.XXX.tar.gz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.XXX.tgz
+        "XMLWidgets-0.10.3.tar.gz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.10.3.tgz
 
     ProxyIndex:
 
-        "ProxyIndex-1.XXX.tgz":http://www.zope.org/Members/infrae/Silva/ProxyIndex-1.XXX.tgz
+        "ProxyIndex-1.1.2.tgz":http://www.zope.org/Members/infrae/Silva/ProxyIndex-1.1.2.tgz
 
     Annotations:
 
-        "Annotations-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/Annotations-0.XXX.tgz
+        "Annotations-0.4.3.tgz":http://www.zope.org/Members/infrae/Silva/Annotations-0.4.3.tgz
 
     SilvaMetadata:
 
-        "SilvaMetadata-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.XXX.tgz
+        "SilvaMetadata-0.7.5.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.7.5.tgz
 
     SilvaViews:
 
-        "SilvaViews-0.XXX.tgz":http://www.zope.org/Members/infrae/Silva/SilvaViews-0.XXX.tgz
+        "SilvaViews-0.9.tgz":http://www.zope.org/Members/infrae/Silva/SilvaViews-0.9.tgz
     
     Alternatively You can get a bundle of all required products at:
  
