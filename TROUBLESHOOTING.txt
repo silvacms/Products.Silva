@@ -1,6 +1,20 @@
 
 Installation problems
 
+  Broken public views after upgrading Silva to a newer version (for 0.9.3:
+        AttributeError on get_title_html or KeyError on silva_icon_32.gif).
+
+    Because some API changes in Silva might break the layout templates and 
+    scripts in the Silva root, you should either replace those templates 
+    and scripts with the default ones (by removing the old ones and placing
+    the default ones using the 'Install default layout' button in 
+    service_extensions) or, if you have custom versions of these objects 
+    available, modify your custom templates and scripts to work with the 
+    current Silva version.
+
+    For more information see UPGRADE.txt.
+    
+
   The Silva (and XMLWidgets and ParsedXML) Product is broken after
   installation.
 
@@ -65,7 +79,7 @@ Installation problems
     e.g. http://www.infrae.com/products/silva/docs/SysAdmin/LinuxInstallation
 
    
- "AttributeError: _add_ordered_id"
+  "AttributeError: _add_ordered_id"
 
     This happens if one imports the "demo.zexp" outside a Silva Root.
     Please first create a Silva Root via the ZMI and import the
