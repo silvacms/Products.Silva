@@ -80,13 +80,13 @@ input:hover, textarea:hover {
 }
 
 select:focus { 
-  color : #bff1ff; 
-  background : #567275;
+  color : #333344; 
+  background : #b8d7da;
 }
 
 select:hover { 
-  color : #bff1ff; 
-  background : #567275;
+  color : #333344; 
+  background : #b8d7da;
 }
 
 input:focus:hover, textarea:focus:hover { 
