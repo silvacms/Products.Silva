@@ -1,12 +1,14 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.43 $
+$Revision: 1.47.2.44 $
 
 Silva changes
 
   0.9.1.8
 
     Bugs Fixed
+
+      - Better check for availablity of ExternalEditor.
 
       - The bug fixed in 0.9.1.7 regarding _allow_authentication_requests
         should have been fixed in a backward compatible way in 0.9.1.7, which
