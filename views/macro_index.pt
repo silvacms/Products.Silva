@@ -104,7 +104,7 @@ function handle_default_action(element, event, action)
 ">
   <div class="feedback"
     tal:condition="python: template.id != 'tab_preview'"
-    tal:attributes="class python:type == 'feedback' and 'feedback' or (type == 'error' and 'alert' or 'clear')">
+    tal:attributes="class python:type == 'feedback' and 'fixed-feedback' or (type == 'error' and 'fixed-alert' or 'fixed-clear')">
     <span tal:replace="structure notice">
       message
     </span>
