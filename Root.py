@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.86 $
+# $Revision: 1.87 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -285,12 +285,11 @@ class Root(Publication):
             import Products.SilvaDocument
         except ImportError:
             raise DocumentationInstallationException, 'Documentation can not be installed since SilvaDocument is not available'
-        self.aq_inner._importObjectFromFile('%s/doc/silva_docs.zexp' % os.path.dirname(__file__))
-
-        # there's an indexer in the root of the docs folder, trigger a reindex
-        # action because the paths in the zexp may well be different from the 
-        # ones stored in the indexer
-        self.silva_docs.Indexer.update_index()
+        from adapters.zipfileimport import getZipfileImportAdapter
+        importer = getZipfileImportAdapter(self)
+        zipfile = open('%s/doc/silva_docs.zip' % os.path.dirname(__file__), 'r')
+        importer.importFromZip(self, zipfile)
+        zipfile.close()
 
 InitializeClass(Root)
 
