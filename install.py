@@ -232,6 +232,12 @@ def configureXMLWidgets(root):
         root.manage_addProduct['XMLWidgets'].manage_addWidgetRegistry(name)
 
     # now register all widgets
+    registerCoreWidgets(root)
+
+def registerCoreWidgets(root):
+    """ register the core widgets at the corresponding registries.
+    this function assumes the registries already exist.
+    """
     registerDocEditor(root)
     registerDocPreviewer(root)
     registerDocViewer(root)
@@ -327,9 +333,9 @@ def registerNListEditor(root):
         wr.addWidget(nodeName, 
                      ('service_widgets', 'element', 'nlist_elements', nodeName, 'mode_normal'))
         
-    # XXX title needs a dummy treatment; otherwise the top/invalidate_cache_helper rfs
+    # XXX title needs a dummy treatment; otherwise the top/invalidate_cache_helper barfs
     # when trying to invalidate the cache for the list <title> tag
-    # this referenced widget does not need to exist as it is _never_ used
+    # the referenced widget does not need to exist as it is _never_ used
     wr.addWidget('title',  ('service_widgets', 'dummy') )
 
     wr.setDisplayName('nlist', 'Complex list')
@@ -364,7 +370,7 @@ def registerSubEditor(root):
     wr.addWidget('li', ('service_widgets', 'top', 'sub', 'mode_normal'))
     wr.addWidget('field', ('service_widgets', 'top', 'sub', 'mode_normal'))
     
-    for nodeName in ['p', 'heading', 'list', 'image', 'nlist']:
+    for nodeName in ['p', 'heading', 'list', 'image', 'nlist', 'pre', 'dlist']:
         wr.addWidget(nodeName, 
                      ('service_widgets', 'element', 'doc_elements', nodeName, 'mode_normal'))
         
@@ -373,10 +379,11 @@ def registerSubEditor(root):
     wr.setDisplayName('list', 'List')
     wr.setDisplayName('image', 'Image')
     wr.setDisplayName('nlist', 'Complex list')
-    
-    wr.setAllowed('doc', ['p', 'heading', 'list', 'nlist', 'image'])
-    wr.setAllowed('li', ['p', 'heading', 'list', 'nlist', 'image'])
-    wr.setAllowed('field', ['p', 'heading', 'list', 'nlist', 'image'])
+    wr.setDisplayName('pre', 'Preformatted')
+    wr.setDisplayName('dlist', 'Definition list')
+
+    for nodeName in ('doc', 'li', 'field'):
+        wr.setAllowed(nodeName,  ['p', 'heading', 'list', 'nlist', 'image', 'pre', 'dlist'])
 
 def registerSubPreviewer(root):
     wr = root.service_sub_previewer
@@ -386,7 +393,7 @@ def registerSubPreviewer(root):
     wr.addWidget('li', ('service_widgets', 'top', 'sub', 'mode_view'))
     wr.addWidget('field', ('service_widgets', 'top', 'sub', 'mode_view'))
     
-    for name in ['p', 'list', 'heading', 'nlist']:
+    for name in ['p', 'list', 'heading', 'nlist', 'pre', 'dlist']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
         
     # why mode_preview??
@@ -401,7 +408,7 @@ def registerSubViewer(root):
     wr.addWidget('li', ('service_widgets', 'top', 'sub', 'mode_view'))
     wr.addWidget('field', ('service_widgets', 'top', 'sub', 'mode_view'))
     
-    for name in ['p', 'list', 'heading', 'image', 'nlist']:
+    for name in ['p', 'list', 'heading', 'image', 'nlist', 'pre', 'dlist']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
 
 def registerTableEditor(root):
