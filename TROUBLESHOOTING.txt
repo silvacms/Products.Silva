@@ -92,6 +92,26 @@ Installation problems
     separately after installation of an upgrades Silva version.
 
 
+    Another possible source of problems arises if one installs
+    a newer version of Silva in place over an existing one (i.e.
+    by unpacking a *.tgz into a directory where an older version
+    of Silva is installed, overwriting the older version.
+
+    This will not remove files present in the older version.
+    As it often happens that some files are move around 
+    (or removed at all)  between releases, one would have some old 
+    files still around after the upgrade, which may lead to malfunction 
+    of the product.
+
+    Especially there have been reports of an "AttributeError" with an 
+    error value of "__hash__" after upgrading which seemed to be caused 
+    by this upgrade strategy.
+
+    Please remove (or move away) any old installation of Silva
+    (and its companion products) before unpacking the new version 
+    in your Products directory to avoid any problems.
+
+
   Silva only displays '?' for non-ascii characters in the public view
   after upgrading
  
@@ -257,7 +277,7 @@ Unicode Problems In-Depth
     uses numbers internally to represent characters. In the old days
     of computing, most computers were only able to represent a small
     subset of all characters used in natural languages. This subset
-    was called ASCII. ASCII is a set of 128 characters that consits of
+    was called ASCII. ASCII is a set of 128 characters that consists of
     the plain Roman script characters (the Western alphabet) and
     common printable and non-printable characters such as the question
     mark, dot, space, tab, etc.
@@ -325,7 +345,7 @@ Unicode Problems In-Depth
     than ASCII (so with a number higher than 128).
   
     The error is caused because Zope (through Python's mechanisms)
-    will try to implicitely convert these snippets to unicode,
+    will try to implicitly convert these snippets to unicode,
     assuming the ASCII encoding for the 8 bit strings. The bad thing
     about this is that the conversion table only contains the 128
     ASCII characters; anything outside of this range cannot not be
@@ -359,7 +379,7 @@ Unicode Problems In-Depth
        character range in the rendering code. The layout template
        needs to be fixed.
 
-    If you run into a UnicodError we would therefore appreciate it if
+    If you run into a UnicodeError we would therefore appreciate it if
     you'd file in a bug report.
 
     If the content object triggering the problem is no longer
