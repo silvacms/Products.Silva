@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.16.2.1 $
 import unittest
 import Zope
 from Products.Silva.SilvaObject import SilvaObject
@@ -81,6 +81,7 @@ class GhostTestCase(unittest.TestCase):
         try:
             self.root = makerequest.makerequest(self.connection.root()
                                                 ['Application'])
+
             # awful hack: add a user who may own the 'index'
             # of the test containers
             hack_create_user(self.root)
@@ -161,6 +162,7 @@ class GhostTestCase(unittest.TestCase):
         # create new version of ghost
         ghost.REQUEST = None
         ghost.create_copy()
+        del ghost.REQUEST
         ghost.get_editable().set_content_url('/root/doc2')
 
         self.assertEquals('doc2 no view', ghost.preview())
