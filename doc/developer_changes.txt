@@ -1,0 +1,22 @@
+================================
+Developer level changes in Silva
+================================
+
+From 1.0 to 1.1:
+
+* XSLT support for document renderers. While this shouldn't break
+  existing code, it opens up new possibilities for extension
+  writers. You can register your own XSLT templates with Silva that
+  handle content rendering.
+
+* new parser in forms-based editor. The existing parser for bold,
+  italic and the like in the forms based editor has been scrapped and
+  replaced with a parser that uses a simple HTML subset. The new
+  parser should be more predictable for authors and a lot
+  faster. Developers who have written their own widgets-based editors
+  may need to modify code. If you already use the Silva-1.0
+  infrastructure for finding the parser, the changes should be minimal
+  and be limited to the UI, however. The Silva-1.0 pattern is::
+
+    supp = context.editorsupport.getMixedContentSupport(model, node)
+    supp.parse(text)
