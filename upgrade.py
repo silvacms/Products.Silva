@@ -44,12 +44,10 @@ def from091to092(self, root):
     Document.manage_beforeDelete = manage_beforeDelete_old_style_docs
 
     print 'Going to check ids'
-
     # first check the object tree for illegal ids, since they will break the upgrade
     illegal_urls = check_reserved_ids(root)
 
     print 'Going to upgrade'
-
     # set the '_allow_authentication_requests' attribute on servce_members if it isn't there yet
     sm = getattr(root, 'service_members', None)
     
@@ -69,7 +67,7 @@ def from091to092(self, root):
         return ('Upgrade succeeded, but the following objects have been renamed to '
                     'be able to continue:<br /><br />') + '<br />\n'.join(illegal_urls)
     else:
-        return
+        return ('Upgrade succeeded')
 
 def from09to091(self, root):
     """Upgrade Silva from 0.9 to 0.9.1
