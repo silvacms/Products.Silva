@@ -38,6 +38,9 @@ class SilvaObject(Security):
     # allow edit view on this object
     edit = ViewAttribute('edit', 'tab_edit')
 
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'edit')
+
     # and public as well
     public = ViewAttribute('public', 'render_view')
 
