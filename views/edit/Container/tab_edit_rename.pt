@@ -24,7 +24,7 @@
     <td class="top location" colspan="4">
     <h2>
       <img tal:replace="structure python:view.render_icon(model)" />
-      Rename objects in <span tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title</span>
+      rename objects in <span tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title</span>
     </h2>
     </td>
   </tr>

@@ -25,7 +25,7 @@
           <default></default>
           <title>Id</title>
           <truncate type="int">0</truncate>
-          <description>id: no spaces or special characters besides an underscore ("_") or a period (".")</description>
+          <description>The id is seen by the public in their browsers. No spaces or special characters are allowed besides an underscore '_' and a period '.'</description>
           <extra>style="width:100%;"</extra>
         </values>
         <tales>

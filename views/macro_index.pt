@@ -50,7 +50,7 @@
 <link href="globals/silvaContentStyle.css"
   rel="stylesheet"
   tal:condition="python: not model.implements_container()"
-  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css | nothing"
+  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css"
 />
 <link href="frontend.css"
   rel="stylesheet"

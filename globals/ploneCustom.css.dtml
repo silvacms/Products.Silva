@@ -624,9 +624,9 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
 }
 
 input[type="checkbox"] {
-  color : #333333;
-  background : &dtml-shade70;;
-  border : 1px solid &dtml-shade60;;
+  color : &dtml-mainTabFontColorSelected;;
+  background : #afcccf;
+  border : 1px solid &dtml-inputBorder;;
 }
  
 /* Plone buttons, "ported" to Silva class names */
