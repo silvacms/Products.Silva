@@ -23,11 +23,10 @@ p.lead {
 }
 
 pre {
-  font-size : 100%; 
-  color : #444466;
-  background : transparent;
-  padding : 0;
-  border : none;
+  color: #444466;
+  background: transparent;
+  padding: 0;
+  border: none;
 }
 
 /* highlighting index links */
@@ -43,6 +42,7 @@ a.index-element {
 table.silvatable {
   empty-cells: show;
   border-collapse: collapse;
+  margin-bottom: 1em;
 }
 table.silvatable tr {
   vertical-align: top;
@@ -50,38 +50,41 @@ table.silvatable tr {
 table.silvatable tr.rowheading {
   font-weight: bold;
 } 
+table.silvatable td {
+  border-right: none ! important;
+} 
 
 table.plain {
   border-style: none;
 } 
-  
-table.list tr.rowheading td {
-  border-bottom: 2px solid black;
+table.plain td {
+  border-right: none ! important;
+}
+ 
+table.list td {
+  border-bottom: 1px solid #444444;
+} 
+  table.list tr.rowheading td {
+  border-bottom: 2px solid #444444;
 } 
   
 table.grid td {
-  border: 2px solid black;
+  border: 2px solid #444444;
+  border-right: 2px solid #444444 ! important;
 } 
   
 table.datagrid td {
-  border: 2px solid black;
+  border: 2px solid #444444;
+  border-right: 2px solid #444444 ! important;
 } 
 table.datagrid tr.rowheading td {
   border-top-style: none;
   border-left-style: none;
-  border-right-style: none;  
+  border-right-style: none ! important;  
 } 
 
-table.silvatable th.align-left, td.align-left {
-  text-align: left;
-}
-
-table.silvatable th.align-center, td.align-center {
-  text-align: center;
-}
-
-table.silvatable th.align-right, td.align-right {
-  text-align: right;
+td.even table td {
+  border-right: none ! important;
 }
 
 
