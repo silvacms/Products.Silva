@@ -1,13 +1,13 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: cleanup.py,v 1.1 2003/11/11 17:07:11 jw Exp $
+# $Id: cleanup.py,v 1.2 2003/11/11 17:14:58 jw Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ModuleSecurityInfo
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
-from Products.Silva.interfaces import IContainer, IVersioning
+from Products.Silva import interfaces as silvaInterfaces
 from Products.Silva.adapters import adapter
 from Products.Silva.adapters import interfaces
 
@@ -94,9 +94,9 @@ class ContainerCleanupAdapter(CleanupAdapter):
 module_security.declareProtected(
     SilvaPermissions.ApproveSilvaContent, 'getCleanupVersionsAdapter')    
 def getCleanupVersionsAdapter(context):
-    if IContainer.isImplementedBy(context):
+    if silvaInterfaces.IContainer.isImplementedBy(context):
         return ContainerCleanupAdapter(context).__of__(context)
-    elif IVersioning.isImplementedBy(context):
+    elif silvaInterfaces.IVersioning.isImplementedBy(context):
         return VersionedContentCleanupAdapter(context).__of__(context)
     else:
         return None
