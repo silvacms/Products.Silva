@@ -6,7 +6,6 @@
 
 <head>
   <title>Silva help</title>
-  <!-- Links to favicon and stylesheet -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <link rel="stylesheet" href="frontend.css" type="text/css" />
@@ -19,7 +18,6 @@
     accesskey="i">
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva" />
   </a>
-  <!--border:1px solid red;-->
 </div>
 
 <div class="public" style="margin-left:7em; padding-top:0.7em;">

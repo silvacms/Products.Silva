@@ -8,7 +8,6 @@
 <head metal:define-slot="head">
   <title metal:define-slot="title"
     tal:content="here/get_title">doc title</title>
-  <!-- Metatags -->
   <meta name="keywords"
     tal:define="keywords python: here.get_metadata_element('silva-extra', 'keywords') or nothing"
     tal:condition="keywords"
@@ -26,7 +25,6 @@
     tal:condition="email"
     tal:attributes="content email" />
   <meta metal:define-slot="meta" tal:omit-tag="" />
-  <!-- Links to favicon and stylesheet -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <link metal:define-slot="style" rel="stylesheet" href="frontend.css"
@@ -40,11 +38,24 @@
 
 <metal:block define-slot="page_header">
   <!-- Start page_header slot -->
-  <img height="32" width="32" alt="Silva logo"
-    tal:attributes="src here/globals/silva_icon_32.gif/absolute_url | nothing" />
-  <metal:block define-slot="top_navigation">
-    <!-- top_navigation slot -->
-  </metal:block>
+  <div style="margin: 2em 2.1em 0 2.1em; border-bottom:1px solid #666699;">
+    <a href="http://www.infrae.com/products/silva" 
+    style="margin-right:1em;"
+    title="Silva info: alt-i"
+    accesskey="i">
+    <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
+      tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
+    </a>
+    <metal:block define-slot="top_navigation">
+      <!-- Begin top_navigation slot -->
+      <span class="breadcrumb">
+        <span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
+        <a tal:content="item/get_title" tal:attributes="href item/absolute_url">Name</a>
+        <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
+      </span>
+      <!-- End top_navigation slot -->
+    </metal:block>
+  </div>
   <!-- End page_header slot -->
 </metal:block>
 

@@ -13,13 +13,13 @@ head
   script
 body
   page_header
-    top_navigation (contains breadcrumb trail)
+    top_navigation
   table_of_contents
   page_footer
 
 Some slots are not active. Activate by removing the 'no' from 'nometal'.
 
-<!-- only comments starting with a capital letter appear in the rendered HTML source -->
+<!-- only comments starting with a capital letter will appear in the rendered HTML source -->
 
 <head nometal:fill-slot="head">
 <!-- customize html title -->
@@ -48,22 +48,15 @@ Some slots are not active. Activate by removing the 'no' from 'nometal'.
 
 <body nometal:fill-slot="body" tal:omit-tag="">
 <div nometal:fill-slot="page_header" tal:omit-tag="">
-  <!-- Begin page_header slot -->
-  <!-- this breadcrumb trail should be moved to layout_macro.html if it's always in use -->
-  <div metal:fill-slot="top_navigation" tal:omit-tag="">
-    <!-- Start top_navigation slot -->
-    <span class="breadcrumb">
-      <span tal:repeat="item python:here.get_breadcrumbs()" tal:omit-tag=""> 
-      <a tal:attributes="href item/absolute_url" tal:content="item/get_title">Name</a>
-      <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
-    </span>
-    <!-- End top_navigation slot -->
+  <!-- begin page_header slot -->
+  <div nometal:fill-slot="top_navigation" tal:omit-tag="">
+    <!-- top navigation slot -->
   </div>
-  <!-- End page_header slot -->
+  <!-- end page_header slot -->
 </div>
 
 <div nometal:fill-slot="table_of_contents" tal:omit-tag="">
-  <!-- Table of Contents slot (empty) -->
+  <!-- table of Contents slot -->
 </div>
 
 <!-- start Silva content -->
@@ -76,7 +69,7 @@ Some slots are not active. Activate by removing the 'no' from 'nometal'.
 <!-- end Silva content -->
 
 <div metal:fill-slot="page_footer" tal:omit-tag="">
-  <!-- Page footer slot (empty) -->
+  <!-- Page footer slot -->
 </div>
 </body>
 </html>
