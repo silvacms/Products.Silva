@@ -19,7 +19,7 @@
         <span i18n:translate="current_job">current job</span>:
         <span tal:replace="processingident">#</span><br />
         <span i18n:translate="owner">owner</span>:
-        <span tal:replace="python: view.service_docma.get_ident_owner(processingident)">owner</span><br />
+        <span tal:replace="python: view.service_members.get_member(view.service_docma.get_ident_owner(processingident)).fullname()">owner</span><br />
         <span i18n:translate="description">description</span>:
         <span tal:replace="python: view.service_docma.get_ident_description(processingident)">desc</span>
   </div>
@@ -89,7 +89,7 @@
             tal:content="job">
             JobId
           </td>
-          <td tal:content="python: view.service_docma.get_ident_owner(job)">
+          <td tal:content="python: view.service_members.get_member(view.service_docma.get_ident_owner(job)).fullname()">
             Owner
           </td>
           <td  tal:content="python: view.service_docma.get_ident_description(job)">
