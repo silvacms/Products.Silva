@@ -30,7 +30,7 @@
     <td class="top location" colspan="3">
     <h2>
       <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />&nbsp;
-        create new <span tal:replace="request/meta_type" />
+        xxx create new <span tal:replace="request/meta_type" />
     </h2>
     </td>
   </tr>
@@ -41,9 +41,7 @@
     <th class="align-right" i18n:translate="">
       Attributes
     </th>
-    <th style="width:50%;" i18n:translate="">
-      Content
-    </th>
+    <th style="width:50%;" i18n:translate="">Content</th>
     <th i18n:translate="">
     Notes
     </th>
@@ -79,6 +77,7 @@
         value=" Cancel "
         title="Access key: alt-c"
         accesskey="c"
+        i18n:attributes="value title"
       />
       <input class="button"
         type="submit"
