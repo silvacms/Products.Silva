@@ -172,15 +172,19 @@ function setReference() {
                 <tal:block tal:replace="nothing"> _______ icon + label cell _______ </tal:block>
                 <td nowrap="1">
                   <label style="text-transform:none;"
-                    title="select this asset"
+                    tal:attributes="
+                      for identifier;
+                      title string:choose this ${asset/meta_type};"
                     i18n:attributes="title"
-                    tal:attributes="for identifier"><img tal:replace="structure python:view.render_icon(asset)" />
+                    ><img tal:replace="structure python:view.render_icon(asset)" />
                     <tal:block tal:replace="asset/id">id</tal:block>
                   </label>
                 </td>
                 <tal:block tal:replace="nothing"> _______ title cell _______ </tal:block>
                 <td>
-                  <a class="blacklink" title="View this asset" i18n:attributes="title"
+                  <a class="blacklink"
+                    title="view this asset"
+                    i18n:attributes="title"
                     tal:attributes="href string:${asset/absolute_url}">
                     <span tal:replace="asset/get_title_or_id">title</span>
                   </a>
@@ -221,7 +225,7 @@ function setReference() {
                  type="button"
                  name="cancel"
                  value="cancel"
-                 title="cancel operation - alt-c"
+                 title="cancel operation: alt-c"
                  accesskey="c"
                  i18n:attributes="title value"
                  onclick="window.close();return false;"
@@ -230,7 +234,7 @@ function setReference() {
                  type="button"
                  name="place"
                  value="place reference"
-                 title="insert a reference to this asset - alt-p"
+                 title="insert a reference to this asset: alt-p"
                  accesskey="p"
                  i18n:attributes="title value"
                  onclick="setReference();return false;" 

@@ -106,8 +106,8 @@
                 <th class="listing-right">
                   #&nbsp;
                 </th>
-                <th i18n:translate="edit">
-                  edit
+                <th i18n:translate="select">
+                  select
                 </th>
                 <th i18n:translate="view">
                   view
@@ -170,26 +170,27 @@
                     </tal:block>
                     <td>
                       <label style="text-transform:none;"
-                        title="select this asset"
-                        tal:attributes="for identifier">
+                        tal:attributes="
+                          for identifier;
+                          title string:choose this ${item/meta_type};
+                          ">
                         <img tal:replace="structure python:view.render_icon(item)" />
                         <tal:block tal:replace="item/id">
                           id
                         </tal:block>
                       </label>
-
                       <img alt="content approved or published"
                         border="0"
                         height="10"
-                        title="content is approved or published"
                         width="10"
+                        title="content is approved or published"
                         tal:define="
                           is_published item/is_version_published | nothing;
                           is_approved item/is_version_approved | nothing"
                         tal:condition="python:is_published or is_approved"
                         tal:attributes="src string:${root_url}/globals/checkmark.gif" 
-                        i18n:attributes="title"/>
-
+                        i18n:attributes="title"
+                      />
                     </td>
                     <tal:block replace="nothing">
                       _______ title cell _______
@@ -287,7 +288,10 @@
                     <td>
                       <label style="text-transform:none;"
                         title="select this asset"
-                        tal:attributes="for identifier">
+                        tal:attributes="
+                          for identifier;
+                          title string:choose this ${item/meta_type};
+                          ">
                         <img tal:replace="structure python:view.render_icon(asset)" />
                         <tal:block tal:replace="asset/id">
                           id
@@ -348,7 +352,7 @@
                   type="button"
                   name="cancel"
                   value="cancel"
-                  title="cancel operation - alt-c"
+                  title="cancel operation: alt-c"
                   accesskey="c"
                   i18n:attributes="title value"
                   onclick="window.close();return false;"
@@ -357,7 +361,7 @@
                   type="button"
                   name="place"
                   value="place reference"
-                  title="insert a reference to this asset - alt-p"
+                  title="insert a reference to this asset: alt-p"
                   i18n:attributes="title value"
                   accesskey="p" 
                   onclick="setReference();return false;" 

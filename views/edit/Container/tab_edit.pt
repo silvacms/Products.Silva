@@ -122,8 +122,8 @@
                 <th class="listing-right">
                   #&nbsp;
                 </th>
-                <th i18n:translate="edit">
-                  edit
+                <th i18n:translate="modify">
+                  modify
                 </th>
                 <th i18n:translate="preview">
                   preview
@@ -199,7 +199,7 @@
                         <img tal:replace="structure python:view.render_icon(item)" />
                       </a>
                       <a class="blacklink"
-                        title="content"
+                        title="modify"
                         tal:content="item/id"
                         tal:attributes="
                           href python:here.get_editor_link(item);

@@ -86,7 +86,7 @@
         &nbsp;
       </th>
       <th>
-        edit / preview
+        modify / preview
       </th>
       <th class="align-right">
         revision
@@ -131,14 +131,14 @@
           />
         </td>
         <tal:block replace="nothing">
-          _______ title cell _______
+          _______ icon/title cell _______
         </tal:block>
         <td>
           <div tal:attributes="style string:margin-left:${indent_depth}">
             <div style="float: left;">
               <a class="icon"
                 tal:attributes="href string:${obj_url}/edit/tab_edit;
-                title string:edit: ${obj/id};
+                title string:modify ${obj/meta_type};
                 ">
                 <img tal:replace="structure obj/icon" />
               </a>
@@ -149,7 +149,7 @@
                 tal:attributes="
                   class obj/status_style | default;
                   href string:${obj_url}/edit/tab_preview;
-                  title string:preview: ${obj/id};
+                  title string:preview ${obj/id};
                   ">
                   <i tal:condition="obj/is_default | nothing">
                     index of
