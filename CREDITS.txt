@@ -9,3 +9,7 @@ Infrae Silva team:
 
 Many thanks go to Hans Verster <verster@daz.eur.nl> at the Erasmus
 University Rotterdam for his vision and support.
+
+2002 07 12:
+    Thanx to Jim Washington for fixing <script /> and <meta /> in
+    layout_macro.html.
