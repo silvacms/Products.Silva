@@ -56,7 +56,7 @@ def isEqualToOrGreaterThan(role1, role2):
     if role2 == 'Author':
         return False
     return True
-    
+
 def isAllowed(set_name):
     minimal_role = binding.getSet(set_name).getMinimalRole()
     if minimal_role:
@@ -85,13 +85,13 @@ for set_name in set_names:
     # Filter for viewable items
     set['elementNames'] = element_names = binding.getElementNames(
         set_name, mode='view')
-        
+
     # XXX: hack - this check should go in the element's guard
     if set_name == 'silva-content':
-        xtra_editable_check = content.can_set_title()        
+        xtra_editable_check = content.can_set_title()
     else:
         xtra_editable_check = 1
-        
+
     # Per element:
     for element_name in element_names:
         set[element_name] = element = {}
@@ -103,7 +103,7 @@ for set_name in set_names:
         if isAcquired(set_name, element_name):
             element['isAcquired'] = 1
         else:
-            element['isAcquired'] = 0        
+            element['isAcquired'] = 0
         # isEditable, render
         # XXX: using the afformentioned hack...
         if isEditable(set_name, element_name) and xtra_editable_check:
@@ -116,7 +116,7 @@ for set_name in set_names:
             element['render'] = None
         # isRequired, isAcquirable, description, title
         bound_element = binding.getElement(set_name, element_name)
-        element['isAcquireable'] = bound_element.isAcquireable()        
+        element['isAcquireable'] = bound_element.isAcquireable()
         element['isRequired'] = bound_element.isRequired()
         element['description'] = bound_element.Description()
 
