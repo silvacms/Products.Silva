@@ -31,7 +31,7 @@
                   Search in 
                   <span style="text-transform:lowercase;"
                     tal:content="model/meta_type">Meta type</span> 
-                    &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+                    &#xAB;<tal:block content="model/get_title_or_id" />&#xbb;
                 </h2>
               </td>
             </tr>

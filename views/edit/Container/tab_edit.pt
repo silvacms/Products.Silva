@@ -72,7 +72,7 @@
                     value="new..."
                     title="add a new item - alt-n"
                     accesskey="n"
-                    tal:attributes="onClick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
+                    tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
                     i18n:attributes="value title"
                   />
                   <label for="meta_type" 
@@ -523,8 +523,8 @@
                         value="Delete"
                         title="there's no undo: alt-d"
                         accesskey="d"
-                        onClick="return confirm('Really delete?')"
-                        i18n:attributes="onClick value title"
+                        onclick="return confirm('Really delete?')"
+                        i18n:attributes="onclick value title"
                       />
                     </tal:block>
                   </tal:block>

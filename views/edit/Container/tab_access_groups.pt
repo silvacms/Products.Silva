@@ -161,9 +161,9 @@
             value="delete"
             title="delete selected groups: alt-d"
             accesskey="d"
-            onClick="return confirm('Really delete?')"
+            onclick="return confirm('Really delete?')"
             tal:condition="groups"
-            i18n:attributes="title value onClick"
+            i18n:attributes="title value onclick"
           />
         </td>
         <td colspan="2">
@@ -578,9 +578,9 @@
                 title="delete selected groups: alt-d"
                 type="submit"
                 value="delete"
-                onClick="return confirm('Really delete?')"
+                onclick="return confirm('Really delete?')"
                 tal:condition="groups"
-                i18n:attributes="title value onClick"
+                i18n:attributes="title value onclick"
               />
             </td>
             <td align="right"

@@ -39,7 +39,7 @@
       <span i18n:translate="full_name">full name</span>:<br />
       <input type="text" name="fullname" style="width: 100%;"
         tal:attributes="value member/fullname" /><br /><br />
-      <span i18n:translate="email_address>e-mail address</span>:<br />
+      <span i18n:translate="email_address">e-mail address</span>:<br />
       <input type="text" name="email" style="width: 100%;"
         tal:attributes="value member/email" /><br /><br />
     </p>

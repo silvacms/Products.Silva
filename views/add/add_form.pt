@@ -41,7 +41,9 @@
     <th class="align-right" i18n:translate="">
       Attributes
     </th>
-    <th style="width:50%;" i18n:translate="">Content</th>
+    <th style="width:50%;" i18n:translate="">
+      Content
+    </th>
     <th i18n:translate="">
     Notes
     </th>

@@ -231,11 +231,11 @@
               <input class="warning"
                 accesskey="x"
                 name="tab_edit_import_delete:method"
-                onClick="return confirm('Really remove?')"
+                onclick="return confirm('Really remove?')"
                 title="there's no undo: alt-x"
                 type="submit"
                 value="remove" 
-                i18n:attributes="onClick value title" />
+                i18n:attributes="onclick value title" />
               <input class="button"
                 accesskey="m"
                 name="tab_edit_import_import_and_delete:method"
