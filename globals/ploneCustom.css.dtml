@@ -94,7 +94,7 @@ div.pathBar a.idea {
 
 div.tabs {
     background-color: &dtml-mainTabBackdrop;;
-    background-image: url(/silva/globals/skyrise.gif);
+    background-image: url(/silva/globals/skylight.gif);
     background-repeat: repeat-x;
     border-bottom-color: #636da6;
     padding: 0em 0em 0em 15px;
