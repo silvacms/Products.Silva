@@ -6,19 +6,21 @@ if __name__ == '__main__':
 
 from Interface.Verify import verifyClass
 from Interface.Exceptions import BrokenImplementation, DoesNotImplement, BrokenMethodImplementation
-
-import libxslt
-import libxml2
-
 import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
-from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
-from Products.Silva.transform.renderer.xsltrendererbase import RenderError
+xslt = True
+try: 	 
+    from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+    from Products.Silva.transform.renderer.xsltrendererbase import RenderError
+except ImportError: 	
+    xslt = False
 
 class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 
     def test_implements_renderer_interface(self):
+        if not xslt:
+            return
         images_on_right = ImagesOnRightRenderer()
         try:
             verifyClass(IRenderer, ImagesOnRightRenderer)
@@ -26,6 +28,8 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
             self.fail("ImagesOnRightRenderer does not implement IRenderer")
 
     def test_renders_images_on_right(self):
+        if not xslt:
+            return
         importfolder = self.add_folder(
             self.root,
             'silva_xslt',
@@ -47,6 +51,9 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals(images_on_right.render(obj), '<table><tr>\n<td valign="top">unapproved<h2 class="heading">This is a rendering test</h2>\n<p class="p">This is a test of the XSLT rendering functionality.</p>\n</td>\n<td valign="top">\n<a href="bar.html"><img src="foo"></a><br>\n</td>\n</tr></table>\n')
         
     def test_error_handling(self):
+        
+        if not xslt:
+            return
 
         class BrokenImagesOnRightRenderer(ImagesOnRightRenderer):
             def __init__(self):

@@ -30,6 +30,12 @@ def testopen(path, rw='r'):
 class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
+        self._xslt = True
+        try: 	 
+            import libxslt
+        except ImportError: 	
+            self._xslt = False
+            return
         importfolder = self.add_folder(
             self.root,
             'silva_xslt',
@@ -45,11 +51,15 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         source_file.close()
         
     def test_render_preview(self):
+        if not self._xslt:
+            return
         obj = self.root.silva_xslt.test_document
         obj.set_renderer_name('Images on Right')
         self.assertEqual(obj.preview(), expected_html)
 
     def test_render_public_view(self):
+        if not self._xslt:
+            return
         obj = self.root.silva_xslt.test_document
         obj.set_renderer_name('Images on Right')
         self.assertEqual(str(obj.view())[:5], "Sorry")
@@ -58,6 +68,8 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(obj.view(), expected_html)
 
     def test_default_renderer(self):
+        if not self._xslt:
+            return
         registry_service = self.root.service_renderer_registry
         obj = self.root.silva_xslt.test_document
         obj.set_renderer_name(None)
@@ -67,6 +79,8 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         registry_service.registerDefaultRenderer('Silva Document', None)
 
     def test_add_renderer(self):
+        if not self._xslt:
+            return
         registry_service = self.root.service_renderer_registry
         obj = self.root.silva_xslt.test_document
         registry = getRendererRegistry()
