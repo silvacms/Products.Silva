@@ -630,7 +630,17 @@ a.tree:hover img {
 }
 
 /* _______ pseudo form button selectors, matches button style _______ */
-a.buttonlink {
+a.buttonlink:link {
+  font-size : 11px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #bce4ee; 
+  background : #555555;
+  border : 1px solid #a2c9cc;
+  text-decoration : none;
+  padding : 0.2em 0.5em 0.1em 0.5em;
+}
+a.buttonlink:visited {
   font-size : 11px; 
   font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif;
