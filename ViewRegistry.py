@@ -1,7 +1,7 @@
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner
-from OFS import Folder, SimpleItem, ObjectManager
+from OFS import Folder, SimpleItem, ObjectManager, PropertyManager, FindSupport
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
@@ -16,11 +16,13 @@ class ViewRegistry(Folder.Folder):
     security = ClassSecurityInfo()
 
     manage_options = (
-        ( {'label':'Contents', 'action':'manage_main'},
-          {'label':'Associations', 'action':'manage_associationsForm'},
-          {'label':'Security', 'action':'manage_access'},
-          {'label':'Undo', 'action':'manage_UndoForm'})
-        )
+      ( {'label':'Contents', 'action':'manage_main'},
+        {'label':'Associations', 'action':'manage_associationsForm'} ) +\
+        PropertyManager.PropertyManager.manage_options +\
+      ( {'label':'Security', 'action':'manage_access'},
+        {'label':'Undo', 'action':'manage_UndoForm'} ) +\
+        FindSupport.FindSupport.manage_options 
+      )
 
     manage_associationsForm = PageTemplateFile(
         'www/viewRegistryAssociations',
@@ -70,7 +72,7 @@ class ViewRegistry(Folder.Folder):
         """
         found = self
         for view_id in self.view_types[view_type][meta_type]:
-            found = getattr(found, view_id)
+            found = getattr(found, view_id, None)
         return found
     
     def render_preview(self, view_type, obj):
