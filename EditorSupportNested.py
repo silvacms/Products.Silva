@@ -1,10 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
 import re
+from sys import exc_info
+from xml.parsers.expat import ExpatError
 from Products.ParsedXML.ParsedXML import ParsedXML
 import StringIO
 
@@ -165,6 +167,7 @@ class EditorSupport:
         return self.output_convert_editable(''.join(result))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+
                               'replace_text')
     def replace_text(self, node, st):
         """'Parse' the markup to XML. Instead of tokenizing this method uses
@@ -209,7 +212,7 @@ class EditorSupport:
         for child in children:
             node.removeChild(child)
 
-        newdom = ParsedXML(doc, '<p>%s</p>' % st)
+        newdom = self.create_dom_forgiving(doc, st)
 
         for child in newdom.childNodes:
             self._replace_helper(doc, node, child)
@@ -243,7 +246,7 @@ class EditorSupport:
         for child in children:
             node.removeChild(child)
 
-        newdom = ParsedXML(doc, '<h2>%s</h2>' % st)
+        newdom = self.create_dom_forgiving(doc, st)
 
         for child in newdom.childNodes:
             self._replace_helper(doc, node, child)
@@ -254,6 +257,7 @@ class EditorSupport:
         """
         for child in newdoc.childNodes:
             if child.nodeType == 3:
+
                 newnode = doc.createTextNode(child.nodeValue)
                 node.appendChild(newnode)
             elif child.nodeType == 1:
@@ -301,5 +305,55 @@ class EditorSupport:
         text = text.replace('"', '&quot;')
 
         return text
+
+    security.declarePrivate('create_dom_forgiving')
+    def create_dom_forgiving(self, doc, st):
+        """When creating a domtree from the text goes wrong because of illegal markup, this method removes
+        ALL occurrences of the tag where it went wrong.
+        XXX This is rather rigorous, could we remove only the tag which is actually illegal?
+        """
+        elements = ['a', 'strong', 'em', 'underline', 'sub', 'sup']
+        while 1:
+            try:
+                dom = ParsedXML(doc, '<p>%s</p>' % st)
+                return dom
+            except ExpatError:
+                # catch the errormessage and parse it
+                message = str(exc_info()[1])
+                text = st
+                match = re.search('line [0-9]+, column ([0-9]+)', message)
+                # the line number always seems to be 1
+                char = int(match.group(1))
+                # now find the illegal tag
+                foundlines = 1
+                text = text[char:]
+                # expat seems to sometimes return a number a little lower than the index of the start of the tag,
+                # so walk to the next tag
+                while text[0] != '<':
+                    if not text:
+                        # this should not happen, but just in case respond to it by raising the exception again
+                        raise ExpatError
+                    text = text[1:]
+                # check wether it's an opening or closing tag
+                if text[1] == '/':
+                    text = text[2:]
+                else:
+                    text = text[1:]
+                # now check which type of tag this is
+                found = 0
+                for el in elements:
+                    if text[:len(el)] == el:
+                        breakingel = el
+                        # and remove all elements of that type
+                        st = re.sub('<\/?%s.*?>' % el, '', st)
+                        found = 1
+                # this is nessecary so multiple errors can be dealt with
+                if found == 1:
+                    continue
+                # we should never get here, but if we would somehow, we'd get into an endless loop,
+                # avoid that by raising the previous error
+                raise ExpatError, message
+
+
 
 InitializeClass(EditorSupport)
