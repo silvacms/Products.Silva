@@ -40,9 +40,10 @@
     </tal:block>
     <tal:block condition="silva_permissions/ChangeSilvaContent">
     &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data - alt-i" accesskey="i" />&nbsp;&nbsp;&nbsp;
-      <input class="button" type="submit" name="add_object:method" value=" New "
-        title="Add a new item - alt-n" accesskey="n" /><span style="color:#a2c9cc;">&#8211;</span><select name="meta_type"
-        tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value.replace(' ', '+')">
+      <input class="button" type="button" name="add_object:method" value=" New " title="Add a new item - alt-n" accesskey="n"
+      tal:attributes="onClick string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" /><span style="color:#a2c9cc;">&#8211;</span>
+      <select name="meta_type"
+        tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value">
       <option value="None" disabled="1">Select...</option>
       <tal:block tal:repeat="addable model/get_silva_addables">
         <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
