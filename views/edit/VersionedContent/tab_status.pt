@@ -326,9 +326,9 @@ _______ manual close section here _______
                 <input class="transport"
                   type="submit"
                   name="tab_status_view_versions_start:method"
-                  title="view the selected versions next to each other"
-                  value="compare"
-                  accesskey="c"
+                  title="view the selected versions next to each other: alt-="
+                  value="compare..."
+                  accesskey="="
                   i18n:attributes="value;title;accesskey compare_accesskey"
                 />
                 <input class="warning"

@@ -38,8 +38,8 @@
 
     <tal:block define="permissions view/get_silva_permissions;
                         have_approve_permission permissions/ApproveSilvaContent | nothing">
-      <a title="publish the unapproved version: alt-:"
-        accesskey=":"
+      <a title="publish the unapproved version: alt-o"
+        accesskey="o"
         class="button"
         tal:attributes="href string:${model/absolute_url}/edit/tab_edit_publish"
         i18n:translate=""
