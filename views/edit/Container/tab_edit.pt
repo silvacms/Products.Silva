@@ -40,7 +40,7 @@
     </tal:block>
     <tal:block condition="silva_permissions/ChangeSilvaContent">
     <select name="meta_type"
-      tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value">
+      tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value.replace(' ', '+')">
       <option value="" disabled>Select...</option>
       <tal:block tal:repeat="addable model/get_silva_addables">
         <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
