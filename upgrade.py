@@ -234,7 +234,7 @@ upgrade_registry = UpgradeRegistry()
 # Some upgrade stuff
 def upgrade_document(obj):
     for o in obj.objectValues():
-        if o.meta_type == 'ParsedXML':
+        if o.meta_type == 'Parsed XML':
             upgrade_list_titles_in_parsed_xml(o.documentElement)
 
 def upgrade_demoobject(obj):
