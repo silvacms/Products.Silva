@@ -65,7 +65,7 @@
         <th>
           Content
         </th>
-        <th width="27%">
+        <th width="40%">
           Note
         </th>
       </tr>
@@ -150,10 +150,10 @@
         <th class="align-right"
            width="12%">
         </th>
-        <th>
+        <th colspan="2">
           Content
         </th>
-        <th width="27%">
+        <th width="27%"            tal:replace="nothing">
           Note
         </th>
       </tr>
@@ -166,10 +166,10 @@
           Title</span><span class="warning"
           tal:condition="python:field.is_required()">*</span>
       </td>
-      <td>
+      <td colspan="2">
         <input tal:replace="structure python:field.render_from_request(request)" />
       </td>
-      <td>
+      <td            tal:replace="nothing">
         <span tal:replace="structure python:field.get_value('description')">
         comments here (field description)
         </span>&nbsp;

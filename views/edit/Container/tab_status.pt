@@ -53,26 +53,19 @@
       ______________ top controls row ______________
     </tal:block>
     <tr class="top-controls">
-      <td colspan="6">
-        <span style="float:right;">
-          <input class="navigation"
-            name="tab_status_export:method"
-            type="submit"
-            accesskey="e"
-            tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
-            tal:attributes="
-              value string: Export...;
-              title string:export this ${type}: alt-e;" />
-            <input class="navigation" tal:replace="nothing"
-              accesskey="p"
-              name="tab_status_export_selected_start:method"
-              title="export selected items: alt-p"
-              type="submit"
-              value="Export selected..." />
-        </span>
-        <h3>
-          Publishing options
+      <td colspan="6" class="align-right">
+        <h3 style="float:left;">
+          Publishing actions
         </h3>
+        <input class="navigation"
+          name="tab_status_export:method"
+          type="submit"
+          accesskey="e"
+          tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
+          tal:attributes="
+            value string: Export...;
+            title string:export this ${type}: alt-e;"
+	  />
       </td>
     </tr>
   </thead>
