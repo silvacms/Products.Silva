@@ -18,8 +18,11 @@
               tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=SQL%%20Data%%20Source\', \'_reference_\', \'focusbox\', \'path\');;return false;;' % here.get_start_container().absolute_url();" />
           </td>
           <td colspan="2">  
-            <input style="width:100%;" type="text" name="path" value=""
-              tal:attributes="value python:node.output_convert_editable(node.getAttribute('path'));"  />
+            <input style="width:75%;" type="text" name="path" value=""
+              tal:attributes="value python:node.output_convert_editable(node.getAttribute('path'));" />
+            &nbsp;
+            <input class="button" type="submit" value=" Update " title="Access key: alt-s" accesskey="u"
+              tal:attributes="name string:${rel_url_start}/save:method" />
           </td>
         </tr>
         <tal:block
@@ -133,7 +136,7 @@
         Use the "Get data source reference" button to locate a data source
       </li>
       <li>
-        <span class="warning">Hit "Save" to update the parameter form.</span>
+        <span class="warning">Hit "Update" to update the parameter form!</span>
       </li>
       <li>
         Fill in the parameters (if available).
