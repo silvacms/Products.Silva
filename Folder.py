@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.75 $
+# $Revision: 1.76 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -383,6 +383,19 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         # copy over authorization info
         folder.__ac_local_roles__ = self.__ac_local_roles__
         folder.__ac_local_groups__ = self.__ac_local_groups__
+        # also over copy over View permission information
+        acquire = self.acquiredRolesAreUsedBy('View') == 'CHECKED'
+        roles = []
+        for info in self.rolesOfPermission('View'):
+            role = info['name']
+            selected = info['selected'] == 'SELECTED'
+            if selected:
+                roles.append(role)
+        if acquire:
+            folder.manage_permission('View', [], acquire)
+        else:
+            folder.manage_permission('View', roles, acquire)
+        
         # now remove this object from the container
         container.manage_delObjects([self.id])
         # and rename the copy
