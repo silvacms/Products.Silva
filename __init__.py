@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.109 $
+# $Revision: 1.110 $
 
 import ContainerPolicy
 
@@ -61,7 +61,7 @@ def initialize(context):
         LayoutService.LayoutService,
         constructors = (LayoutService.manage_addLayoutServiceForm,
                         LayoutService.manage_addLayoutService),
-        icon = "www/extension_service.gif"
+        icon = "www/layout_service.png"
         )
 
     context.registerClass(
