@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  To be released
+  1.2
 
     Bugs fixed
 
