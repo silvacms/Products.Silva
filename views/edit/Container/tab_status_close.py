@@ -44,7 +44,7 @@ for ref in refs:
 
 if closed_ids:
     request.set('redisplay_timing_form', 0)
-    message = 'Closed: ${ids}'
+    message = _('Closed: ${ids}')
     message.set_mapping({'ids': view.quotify_list(closed_ids)})
     msg.append(unicode(message))
 
