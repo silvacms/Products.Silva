@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.79 $
+# $Revision: 1.80 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -711,11 +711,6 @@ InitializeClass(Folder)
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
                                         __name__='manage_addFolderForm')
 
-def manage_addIndex(folder):
-    folder.manage_addProduct['Silva'].manage_addDocument('index', '')
-
-
-manage_addIndexHook = manage_addIndex
 
 def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     """Add a Folder."""
@@ -726,8 +721,7 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     object = getattr(self, id)
     # add doc
     if create_default:
-        manage_addIndexHook(object)
-        # object.manage_addProduct['Silva'].manage_addDocument('index', '')
+        object.manage_addProduct['Silva'].manage_addDocument('index', '')
     if hasattr(object,'index'):
         object.index.sec_update_last_author_info()
     helpers.add_and_edit(self, id, REQUEST)
