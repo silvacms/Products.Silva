@@ -1,8 +1,17 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.1 $
+$Revision: 1.47.2.2 $
 
 Silva changes
+
+  0.9.1
+
+    Features Added
+
+    Bugs Fixed
+
+        - Fix where the Groups administration button was shown, even
+          if no service_groups was available.      
 
   0.9.1 beta
 
@@ -42,9 +51,6 @@ Silva changes
         - 'image_path' has been renamed to 'path' in the XML.
 
    Bugs Fixed
-
-        - Fix where the Groups administration button was shown, even
-          if no service_groups was available.
 
         - Fix where the "/manage" display link in the SMI tabs didn't
           didn't regard the local roles on the current object.
