@@ -8,4 +8,4 @@
 ##title=
 ##
 
-return context.tag(image)
+return context.tag()
