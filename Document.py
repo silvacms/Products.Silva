@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.68 $
+# $Revision: 1.69 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -22,6 +22,7 @@ from transform.Transformer import EditorTransformer
 from transform.base import Context
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
+from Products.Silva.Metadata import export_metadata
 from Products.ParsedXML.ExtraDOM import writeStream
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.PrettyPrinter import _translateCdata
@@ -172,7 +173,10 @@ class Document(CatalogedVersionedContent):
         f.write('<title>%s</title>' % translateCdata(self.get_title()))
         #for key, value in self._metadata.items():
         #    f.write('<%s>%s</%s>' % (key, translateCdata(value), key))
+        
         version.content.documentElement.writeStream(f)
+        export_metadata(version, context)
+        
         f.write('</silva_document>')
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -286,12 +290,16 @@ def xml_import_handler(object, node):
     print object
     id = get_xml_id(node)
     title = get_xml_title(node)
+    
     used_ids = object.objectIds()
     while id in used_ids:
         id = getNewId(id)
+        
     object.manage_addProduct['Silva'].manage_addDocument(id, title)
+    
     newdoc = getattr(object, id)
     newdoc.sec_update_last_author_info()
+    
     for child in node.childNodes:
         if child.nodeName == u'doc':
             version = getattr(newdoc, '0')
@@ -302,3 +310,4 @@ def xml_import_handler(object, node):
             getattr(newdoc, 'set_%s' % child.nodeName.encode('utf8'))(
                 child.nodeValue.encode('utf8'))
 
+    return newdoc

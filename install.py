@@ -129,6 +129,14 @@ def install(root):
     # forbid adding group & virtualgroup from the SMI
     root.add_silva_addable_forbidden('Silva Group')
     root.add_silva_addable_forbidden('Silva Virtual Group')
+
+    # install annotations
+    from Products.PortalAnnotations.Extensions.SilvaInstall import install as install_annotations
+    install_annotations(root)
+    
+    # install metadata
+    from Products.SilvaMetadata.Extensions.SilvaInstall import install as install_metadata
+    install_metadata(root)
     
 def uninstall(root):
     unregisterViews(root.service_view_registry)

@@ -1,6 +1,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.69 $
+# $Revision: 1.70 $
+import Metadata
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -119,4 +120,11 @@ def initialize(context):
     registerDirectory('widgets', globals())
     registerDirectory('globals', globals())
     registerDirectory('service_utils', globals())
+
+    # initialize the metadata system
+    #  register silva core types w/ metadata system
+    #  register the metadata xml import initializers
+    #  register a special accessor for ghosts
+    Metadata.initialize_metadata()
+
 

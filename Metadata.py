@@ -1,0 +1,113 @@
+#Copyright (c) 2002 Infrae. All rights reserved.
+#See also LICENSE.txt
+"""
+Purpose:
+
+  - Metadata Import/Export Integration w/ Silva.
+
+  - Content Type Registration For Metadata
+
+      Silva maintains a dichotomy between content types addable in the smi
+      and the actual content objects in order to implement its versioning
+      system. Because of this using the silva_addables_all for determining
+      content types for the metadata system is inappropriate, as metadata
+      needs to be versioned along with actual content.
+
+$Id: Metadata.py,v 1.2 2003/05/12 14:32:23 jw Exp $    
+"""
+from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
+from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
+from Products.SilvaMetadata.Import import import_metadata
+from Products.SilvaMetadata.Access import registerAccessHandler, invokeAccessHandler
+from Products.Silva.Versioning import Versioning
+
+#################################
+### handlers and thin wrappers for metadata
+
+def export_metadata(content, context):
+    out = context.f 
+    metadata_service = getToolByName(content, 'portal_metadata')
+    binding = metadata_service.getMetadata(content)
+    out.write( binding.renderXML() )
+    
+    return None
+
+def import_metadata_handler(container, content, node):
+    
+    if isinstance(content, Versioning):
+        # the current import code all seems to create an initial version
+        # of '0' on import
+        version = getattr(content, '0')
+        import_metadata(version, node)
+    else:
+        import_metadata(content, node)
+
+    return None
+
+
+def ghost_access_handler(tool, content_type, content):
+
+    return invokeAccessHandler(
+        tool,
+        content._get_content()
+        )
+    
+
+#################################
+### registration
+
+def initialize_metadata():
+    register_core_types()
+    register_import_initializers()
+    register_access_handlers()
+
+def register_core_types():
+    """
+    register the silva core content types with the metadata system
+    """
+    from Products.Silva.Document import DocumentVersion
+    from Products.Silva.DemoObject import DemoObjectVersion
+    from Products.Silva.File import File
+    from Products.Silva.Folder import Folder
+    from Products.Silva.Ghost import GhostVersion
+    from Products.Silva.Image import Image
+    from Products.Silva.Indexer import Indexer
+    from Products.Silva.Publication import Publication
+    from Products.Silva.Root import Root
+    from Products.Silva.SQLDataSource import SQLDataSource
+
+    registerTypeForMetadata(DocumentVersion.meta_type)
+    registerTypeForMetadata(DemoObjectVersion.meta_type)
+    registerTypeForMetadata(GhostVersion.meta_type)
+    registerTypeForMetadata(Folder.meta_type)
+    registerTypeForMetadata(File.meta_type)
+    registerTypeForMetadata(Image.meta_type)
+    registerTypeForMetadata(Indexer.meta_type)
+    registerTypeForMetadata(Publication.meta_type)
+    registerTypeForMetadata(Root.meta_type)
+    registerTypeForMetadata(SQLDataSource.meta_type)    
+
+    #################################
+    ## Metadata can be applied to these, but there is no smi interface,
+    ## and its not appropriate for systems getting properties from ldap
+    ## from Group import Group
+    ## registerTypeForMetadata(Group.meta_type)
+    ## from SimpleMembership import SimpleMember
+    ## registerTypeForMetadata(SimpleMember.meta_type)
+    ## from VirtualGroup import VirtualGroup
+    ## registerTypeForMetadata(VirtualGroup.meta_type)
+
+def register_import_initializers():
+    """
+    integrate metadata importing with the silva imports
+    """
+    from Products.Silva.ImporterRegistry import register_initializer
+    register_initializer(import_metadata_handler, default=1)
+
+def register_access_handlers():
+    """
+    deal with special silva content types that need specialized
+    metadata handling
+    """
+    from Products.Silva.Ghost import GhostVersion
+    registerAccessHandler(GhostVersion.meta_type, ghost_access_handler)

@@ -8,12 +8,13 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="global breadcrumb_vein string:Access;">
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
-  <table class="columns"
-    tal:define="
-      model_is_container model/implements_container | nothing;
-      group_service view/service_groups | nothing;
-      allow_subscription model/service_members/allow_subscription | nothing;"
+<metal:block fill-slot="main"
+  tal:define="
+    model_is_container model/implements_container | nothing;
+    group_service view/service_groups | nothing;
+    allow_subscription model/service_members/allow_subscription | nothing;
+  ">
+  <table class="columns columns3"
     tal:condition="view/has_access">
     <tbody>
       <tal:block replace="nothing"> ________________ user roles management ________________ </tal:block>

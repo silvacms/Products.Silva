@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.37 $
+# $Revision: 1.38 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -13,7 +13,8 @@ import SilvaPermissions
 # misc
 from helpers import add_and_edit, getNewId
 
-from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
+from Products.Silva.ImporterRegistry import get_importer, xml_import_helper, get_xml_id, get_xml_title
+from Products.Silva.Metadata import export_metadata
 
 icon="www/silvapublication.gif"
 
@@ -69,6 +70,7 @@ class Publication(Folder):
         f = context.f
         f.write('<silva_publication id="%s">' % self.id)
         self._to_xml_helper(context)
+        export_metadata(self, context)
         f.write('</silva_publication>')
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -109,13 +111,17 @@ def manage_addPublication(self, id, title, create_default=1, REQUEST=None):
 def xml_import_handler(object, node):
     id = get_xml_id(node)
     title = get_xml_title(node)
+    
     used_ids = object.objectIds()
     while id in used_ids:
         id = getNewId(id)
+        
     object.manage_addProduct['Silva'].manage_addPublication(id, title, 0)
+    
     newpub = getattr(object, id)
     for child in node.childNodes:
-        if child.nodeName in importer_registry.keys():
+        if get_importer(child.nodeName):
             xml_import_helper(newpub, child)
         elif child.nodeName != u'title' and hasattr(newpub, 'set_%s' % child.nodeName) and child.childNodes[0].nodeValue:
             getattr(newpub, 'set_%s' % child.nodeName)(child.childNodes[0].nodeValue)
+    return newpub

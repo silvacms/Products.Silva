@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.55 $
+# $Revision: 1.56 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -15,6 +15,8 @@ import SilvaPermissions
 import install
 # misc
 from helpers import add_and_edit
+
+from Products.Silva.Metadata import export_metadata
 
 icon="globals/silva.gif"
 
@@ -89,7 +91,10 @@ class Root(Publication):
         """
         f = context.f
         f.write('<silva_root id="%s">' % self.id)
+        
         self._to_xml_helper(context)
+        export_metadata(self, context)
+        
         f.write('</silva_root>')
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -19,7 +19,11 @@ from cgi import escape
 
 from Products.Silva.ImporterRegistry import importer_registry, \
                      xml_import_helper, get_xml_id, get_xml_title
+
+from Products.Silva.Metadata import export_metadata
 from Products.ParsedXML.ExtraDOM import writeStream
+
+
 
 icon="www/silvageneric.gif"
 
@@ -63,7 +67,10 @@ class DemoObject(VersionedContent):
         f.write('<info>%s</info>' % version.info())
         f.write('<number>%s</number>' % version.number())
         f.write('<date>%s</date>' % version.date())
+        
         version.content.documentElement.writeStream(f)
+        export_metadata(version, context)
+        
         f.write('</silva_demoobject>')
 
 InitializeClass(DemoObject)
@@ -180,3 +187,4 @@ def xml_import_handler(object, node):
             getattr(version, 'set_%s' % child.nodeName) \
                         (child.childNodes[0].nodeValue)
 
+    return newdo

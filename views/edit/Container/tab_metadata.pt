@@ -8,219 +8,89 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
     global breadcrumb_vein string:Settings;
-">
+    ">
+
+<!-- tab_metadata for Container objects -->
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 
-<tal:block define="
-  global url model/absolute_url;
-  global fields python:view.tab_metadata_form.get_fields();
-  global root model/get_root;
-" />
-
-<table class="columns columns2">
-  <tbody>
-    <tr>
-      <td class="left">
-        <span tal:replace="nothing">
-          _____________________ sidebar subtable _____________________
-        </span>
-          <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_metadata', breadcrumb_vein)" />
-      </td>
-      <td class="main">
-
-        <span tal:replace="nothing">
-          _____________________ inner table  _____________________
-        </span>
-
-
-<form method="POST" name="form" action=".">
-  <table class="listing">
-    <thead>
-      <tr tal:replace="nothing">
-        ______________ vein + title row ______________
-      </tr>
-      <tr>
-        <td class="top">
-          <h2 tal:attributes="title string:id: ${model/id}">
-            <img tal:replace="structure python:view.render_icon(model)" />
-            &#xab;<span tal:replace="structure string:${model/get_title_html}">title</span>&#xbb;
-          </h2>
-        </td>
-      </tr>
-
-      <tr tal:replace="nothing">
-        ______________ top controls row ______________
-      </tr>
-      <tr class="top-controls"
-        tal:condition="may_change_content">
-        <td>
-          <div class="buttons"
-            style="float:right;">
-            <a class="navigation"
-              href="settings_addables"
-              title="change the addables allowed in this publication: alt-a"
-              accesskey="c"
-              tal:condition="python:model.meta_type == 'Silva Publication'">
-              &nbsp;Configure <u>a</u>ddables...
-            </a>
-          </div>
-          <div class="buttons">
-            <tal:block condition="python:model.meta_type == 'Silva Folder'">
-              <a class="button"
-                href="tab_edit_to_publication"
-                title="change Folder into Publication: alt-c"
-                accesskey="c">
-                Convert to publication
-              </a>
-            </tal:block>
-            <tal:block condition="python:model.meta_type == 'Silva Publication'">
-              <a class="button"
-                href="tab_edit_to_folder"
-                title="change Publication into Folder: alt-c"
-                accesskey="c">
-                Convert to folder
-              </a>
-            </tal:block>
-          </div>
-        </td>
-      </tr>
-    </thead>
-  </table>
-
-  <table class="listing">
-    <thead>
-      <tr tal:replace="nothing">
-        ______________ top controls row ______________
-      </tr>
-      <tr class="top-controls">
-        <td colspan="3">
-          <h3>
-            metadata
-          </h3>
-        </td>
-      </tr>
-    </thead>
-
+  <table class="columns columns2">
     <tbody>
       <tr>
-        <th width="12%">
-          Element
-        </th>
-        <th>
-          Content
-        </th>
-        <th width="30%">
-          Note
-        </th>
-      </tr>
+        <td class="left">
+          <span tal:replace="nothing">
+            _____________________ sidebar subtable _____________________
+          </span>
+          <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_metadata', breadcrumb_vein)" />
+        </td>
+        <td class="main">
 
-      <tal:repeat repeat="field fields">
-        <tal:define define="oddrow repeat/field/odd">
-          <tr valign="top"
-            tal:attributes="class python:oddrow and 'odd' or 'even'">
-            <td class="align-right">
-              <span tal:replace="structure python: field.title().lower()">Title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
-            </td>
-            <td>
-              <input tal:replace="structure python:field.render(value=model.getProperty(field.id))" />
-            </td>
-            <td>
-              <span tal:replace="python:field.get_value('description')">
-                comments here (field description)
-              </span>
-              <span tal:condition="python:field.id == 'contact_name' or field.id == 'contact_email' or field.id == 'subject'" tal:omit-tag="">(<i tal:content="python:getattr(model, field.id, 'None')"></i>)</span>
-            </td>
-          </tr>
-        </tal:define>
-      </tal:repeat>
-    </tbody>
+          <span tal:replace="nothing">
+            _____________________ inner table  _____________________
+          </span>
 
-    <tfoot>
-      <tr class="controls">
-        <td class="align-right"
-          colspan="3">
-          <input class="button" 
-            type="submit"
-            name="tab_metadata_submit:method"
-            value=" Save metadata "
-            title="access key: alt-s"
-            accesskey="s"
-          />
+
+          <form method="POST" name="form" action=".">
+            <table class="listing">
+              <thead>
+                <tr tal:replace="nothing">
+                  ______________ vein + title row ______________
+                </tr>
+                <tr>
+                  <td class="top">
+                    <h2 tal:attributes="title string:id: ${model/id}">
+                      <img tal:replace="structure python:view.render_icon(model)" />
+                      &#xab;<span tal:replace="structure string:${model/get_title_html}">title</span>&#xbb;
+                    </h2>
+                  </td>
+                </tr>
+
+                <tr tal:replace="nothing">
+                  ______________ top controls row ______________
+                </tr>
+                <tr class="top-controls"
+                  tal:condition="may_change_content">
+                  <td>
+                    <div class="buttons"
+                      style="float:right;">
+                      <a class="navigation"
+                        href="settings_addables"
+                        title="change the addables allowed in this publication: alt-a"
+                        accesskey="c"
+                        tal:condition="python:model.meta_type == 'Silva Publication'">
+                        Configure <u>a</u>ddables...
+                      </a>
+                    </div>
+                    <div class="buttons">
+                      <tal:block condition="python:model.meta_type == 'Silva Folder'">
+                        <a class="button"
+                          href="tab_edit_to_publication"
+                          title="change Folder into Publication: alt-c"
+                          accesskey="c">
+                          Convert to publication
+                        </a>
+                      </tal:block>
+                      <tal:block condition="python:model.meta_type == 'Silva Publication'">
+                        <a class="button"
+                          href="tab_edit_to_folder"
+                          title="change Publication into Folder: alt-c"
+                          accesskey="c">
+                          Convert to folder
+                        </a>
+                      </tal:block>
+                    </div>
+                  </td>
+                </tr>
+              </thead>
+            </table>
+          </form>
+
+          <metal:block use-macro="here/macro_metadata/macros/edit_table" />
+          
         </td>
       </tr>
-    </tfoot>
+    </tbody>
   </table>
-</form>
-
-<span tal:replace="nothing"> ______________ metadata from system ______________ </span>
-
-<table class="listing">
-  <thead>
-    <tr tal:replace="nothing">
-      ______________ top controls row ______________
-    </tr>
-    <tr class="top-controls">
-      <td colspan="2">
-        <h3>
-          automatically stored metadata
-        </h3>
-      </td>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr>
-      <th class="align-right"
-        width="12%">
-        Role
-      </th>
-      <th>
-        User name
-      </th>
-    </tr>
-
-    <tr class="unselected">
-      <td class="align-right">
-        Editors
-      </td>
-      <td>
-      <!-- XXX Fixme: need get_nearest_editors() method -->
-        <span tal:replace="python:', '.join([e.fullname() for e in here.get_nearest_chiefeditors()])" />
-      </td>
-    </tr>
-
-    <tr class="unselected">
-      <td class="align-right">
-        Chief&nbsp;Editors
-      </td>
-      <td>
-        <span tal:replace="python:', '.join([ch.fullname() for ch in here.get_nearest_chiefeditors()])" />
-      </td>
-    </tr>
-
-    <tr class="unselected">
-      <td class="align-right">
-        Managers
-      </td>
-      <td>
-        <span tal:replace="python:', '.join([m.fullname() for m in here.get_nearest_managers()])" /> <br />
-      </td>
-    </tr>
-  </tbody>
-
-  <tfoot>
-    <tr class="divider">
-      <td colspan="2">
-      </td>
-    </tr>
-  </tfoot>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
 
 </metal:block>
 </metal:block>

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.99 $
+# $Revision: 1.100 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -30,7 +30,8 @@ import re
 import urllib
 from sys import exc_info
 
-from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
+from Products.Silva.ImporterRegistry import get_importer, xml_import_helper, get_xml_id, get_xml_title
+from Products.Silva.Metadata import export_metadata
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.ExtraDOM import writeStream
@@ -740,6 +741,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         f = context.f
         f.write('<silva_folder id="%s">' % self.id)
         self._to_xml_helper(context)
+        export_metadata(self, context)
         f.write('</silva_folder>')
 
     def _to_xml_helper(self, context):
@@ -823,9 +825,9 @@ def xml_import_handler(object, node):
     object.manage_addProduct['Silva'].manage_addFolder(id, title, 0)
     newfolder = getattr(object, id)
     for child in node.childNodes:
-        if child.nodeName in importer_registry.keys():
+        if get_importer(child.nodeName):
             xml_import_helper(newfolder, child)
         elif child.nodeName != u'title' and hasattr(newfolder, 'set_%s' % child.nodeName) and child.childNodes[0].nodeValue:
             getattr(newfolder, 'set_%s' % child.nodeName)(child.childNodes[0].nodeValue)
 
-
+    return newfolder

@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    global breadcrumb_vein string:Settings;
+    ">
+
+<!-- tab_metadata for non-Container objects -->
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
+
+<div class="focus-box">
+  <metal:block use-macro="here/macro_metadata/macros/edit_table" />
+</div>
+
+</metal:block>
+</metal:block>
+</html>
