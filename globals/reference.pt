@@ -1,4 +1,4 @@
-<!-- ______________ Silva 0.9.1.0b ______________ -->
+<!-- ______________ Silva 0.9.1 ______________ -->
 <html metal:use-macro="here/index_macro/macros/master">
 <title metal:fill-slot="title">Reference</title>
 <div metal:fill-slot="main" tal:omit-tag="">
@@ -61,6 +61,10 @@ The people at <a href="http://www.id.ethz.ch/">ETH in Zürich</a> for their feedb
 <p>
 Jim Washington for fixing &lt;script /&gt; and &lt;meta /&gt; in
 layout_macro.html.
+</p>
+
+<p>
+Jan Smith at <a href="http://ozzope.org">ozzope.org</a> for tireless advice about the documentation, hosting the documentation development wiki, and her tutorials.
 </p>
 
 <p>
