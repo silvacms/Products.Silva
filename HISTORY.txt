@@ -17,11 +17,61 @@ Silva changes
         If a visitor is subscribed, he will receive notifications by email
         whenever a publication event for this object is triggered.
 
-    Bugs fixed
+  1.1.2
 
-      - Fixed incorrect recursive call for get_public_tree_helper
+  1.1.1
 
-      - Enable use of enters for <br> in forms editor.
+    Features Added
+
+      - Added a new xslt renderer that renders Silva Documents without a
+        title at the top.
+
+      - Made kupu the default editor if available.
+
+    Bugs Fixed
+
+      - TOC rendered with the XSLT renderer now use the correct context.
+
+      - Fixed a nasty unicode error in the XSLT renderer, that somehow
+        slips through in Zope 2.7.2 and only breaks Silva in 2.7.3
+
+      - Fixed issue where is_published return true in situations where
+        there isn't any viewable content.
+
+      - URLs are now rendered correctly in the context of a Ghost object.
+
+      - Added 'Delete objects' permission to authors and up, this was not
+        used in previous Zope versions but is in 2.7.3.
+
+      - Fixed bug that made Internet Explorer generate paths to images in
+        Kupu that couldn't be reached by unauthorized users (issues 1165 
+        and 1168).
+
+      - Updated footer of the Silva documentation template, used to mention
+        incorrect Silva and Zope versions.
+
+      - Fixed bug with metadata sets with restricted access, they were not
+        accessible with people who did have the required role(s) but didn't
+        have them defined on the root.
+
+      - Headings are no longer incorrectly discarded by the xslt renderer.
+
+      - Code and data sources no longer incorrectly copy their parameters 
+        into the result html.
+
+      - Images in SilvaDocuments now get their widths, heights, aligments 
+        and titles in the xml export, which fixes some bugs in the xslt 
+        rendering.
+
+      - Tables should have a width of 100%, but this got removed in 1.0
+
+      - Nested lists only worked in the xslt renderers when the outer list 
+        was bulleted. Nested lists can now have any type normal lists can.
+
+      - Newlines can be used instead of <br> in the forms editor.
+
+      - Markup and linebreaks within tables is no longer removed in the
+        xslt renderers.
 
   1.1
 
@@ -36,10 +86,6 @@ Silva changes
         particular (not just in renderer registry).
 
     Bugs fixed
-    
-      - Fixed bug with metadata sets with restricted access, they were not
-        accessible with people who did have the required role(s) but didn't
-        have them defined on the root.
 
       - Replaced print statement in Indexer for a LOG entry.
 
@@ -59,6 +105,8 @@ Silva changes
         truncated now
 
       - Ghosts and ghost folders should import properly with zip file import.
+
+      - Fixed incorrect recursive call for get_public_tree_helper
 
     Removals
 
