@@ -10,9 +10,6 @@
     publication model;
     tree publication/get_container_tree;
     publication_url string:${publication/absolute_url}/edit/{__vein_id__};
-    containing_publication publication/../get_publication | publication;
-    root_url model/get_root_url;
-    root model/get_root;
 ">
 
 <tr tal:replace="nothing"> 

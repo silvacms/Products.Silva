@@ -6,8 +6,12 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  >
+>
 
+<tal:block replace="nothing">
+  _______ macro parent _______
+  _______ for subscreens that need an obvious link up to parent (import, export, etc.) _______
+</tal:block>
 <metal:block define-macro="parent">
         <table class="listing"
           style="margin-bottom:0;">
@@ -33,16 +37,23 @@
 </metal:block>
 
 
+<tal:block replace="nothing">
+  _______ macro vein _______
+  _______ renders the sidebar vein navigation for containers and content objects _______
+  _______ containers have a slot for the vein links of the content tree_______
+</tal:block>
 <metal:define-macro define-macro="vein">
           <table class="listing">
             <thead>
               <tr>
                 <th class="top"
                   tal:define="
-                    model_is_root python: type == 'Silva Root';
-                    model_is_pub python: type == 'Silva Publication';
+                    model_is_root python: model.meta_type == 'Silva Root';
+                    model_is_publication python: model.meta_type == 'Silva Publication';
+                    publication model/get_publication;
+                    containing_publication publication/../get_publication | publication;
                     query_string query_string | nothing;
-                    vein_id string:${template/id}${query_string};
+                    vein_id template_id | string:${template/id}${query_string};
                   ">
                   <a class="up"
                     href="../../edit/tab_edit"
@@ -60,12 +71,12 @@
                     title="up to containing publication: alt-["
                     accesskey="["
                     tal:condition="not: model_is_root"
-                    tal:attributes="href python: model_is_pub and (containing_publication.absolute_url() + '/edit/' + vein_id) or (publication.absolute_url() + '/edit/' + vein_id)">
+                    tal:attributes="href python: model_is_publication and (containing_publication.absolute_url() + '/edit/' + vein_id) or (publication.absolute_url() + '/edit/' + vein_id)">
                     <img width="9"
                     height="9"
                     border="0"
                     alt="Up to containing Publication"
-                    tal:attributes="src python: model_is_pub and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
+                    tal:attributes="src python: model_is_publication and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
                   </a>
                   <a class="normal"
                     style="padding: 0 1em;"
@@ -76,22 +87,23 @@
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody tal:condition="model/implements_container">
               <metal:define-slot define-slot="sidebar">
-                cached sidebar inserted
+                cached sidebar inserted with template variables
               </metal:define-slot>
             </tbody>
           </table>
 </metal:define-macro>
 
 
+<tal:block replace="nothing">
+  _______ macro content_sidebar _______
+  _______ renders the header of the sidebar navigation _______
+  _______ only for content _______
+  _______ DEPRECATED, delete in next checkin _______
+</tal:block>
 <metal:block define-macro="content_sidebar">
-  <table class="listing"
-    tal:define="
-      containing_publication model/../get_publication | publication;
-      query_string query_string | nothing;
-      vein_id template_id | string:${template/id}${query_string};
-  ">
+  <table class="listing">
     <thead>
       <tr>
         <th class="top">

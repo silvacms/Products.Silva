@@ -22,17 +22,11 @@
           __________________ sidebar _________________
         </tal:block>
         <td class="left" rowspan="99">
-          <tal:condition condition="model_is_container">
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
               <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
             </metal:fill-slot>
           </metal:use-macro>
-          </tal:condition>
-          <tal:condition condition="not: model_is_container">
-            <metal:block 
-              use-macro="view/macro_vein_navigation/macros/content_sidebar" />
-          </tal:condition>
         </td>
         <td class="main">
           <tal:block replace="nothing">

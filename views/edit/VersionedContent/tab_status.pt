@@ -29,7 +29,7 @@
         <tal:block replace="nothing">
           _____________________ sidebar subtable _____________________
         </tal:block>
-        <metal:block use-macro="view/macro_vein_navigation/macros/content_sidebar" />
+        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
       </td>
       <td class="main">
         <tal:block replace="nothing">

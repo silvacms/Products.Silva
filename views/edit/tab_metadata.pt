@@ -21,7 +21,7 @@
           _____________________ sidebar _____________________
         </tal:block>
         <td class="left">
-          <metal:block use-macro="view/macro_vein_navigation/macros/content_sidebar" />
+          <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
         </td>
 
         <tal:block replace="nothing">

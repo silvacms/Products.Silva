@@ -104,7 +104,7 @@
         <a class="left"
           tal:condition="tab_info/toplink_url"
           tal:attributes="href tab_info/toplink_url;
-            title string:Up to top of Publication: alt-${top_key};
+            title string:up to top of publication: alt-${top_key};
             accesskey top_key;
         ">
           <img tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url" />
@@ -114,7 +114,7 @@
           tal:content="structure string:${tab_info/tab_name}"
           tal:attributes="href tab_info/tab_url;
             class python:is_selected_tab and (active_tab and 'recede' or 'selected') or '';
-            title string:Access key: alt-${tab_key};
+            title string:access key: alt-${tab_key};
             accesskey tab_key;
           ">
           Tab Name

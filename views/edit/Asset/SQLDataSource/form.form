@@ -41,7 +41,7 @@
           <required type="int">1</required>
           <css_class></css_class>
           <default></default>
-          <title>connection_id</title>
+          <title>Connection id</title>
           <first_item type="int">0</first_item>
           <description>Select the id of the database connection to use.</description>
           <extra></extra>

@@ -16,10 +16,8 @@
     title model/get_title_editable;
     
     root_url model/get_root_url;
-
-    containing_folder model/..;
-    publication model/get_publication;
-    containing_publication publication/../get_publication | publication;
+    global publication model/get_publication;
+    global containing_publication publication/../get_publication | publication;
     
     content_type view/set_content_type;
     set_cache_headers view/set_cache_headers;
