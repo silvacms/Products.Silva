@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -333,6 +333,8 @@ class Versioning:
             self._approved_version = empty_version
             # reindex approved version that is now public
             self._reindex_version(self._public_version)
+            if self._previous_versions:
+                self._reindex_version(self._previous_versions[-1])
         # get expiration datetime of public version 
         expiration_datetime = self._public_version[2]
         # expire public version if expiration datetime reached
