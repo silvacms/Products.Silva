@@ -35,6 +35,8 @@
   rel="shortcut icon"
   tal:attributes="href string:${root_url}/globals/favicon.ico"
 />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  
 <metal:block define-slot="meta" />
 <tal:block replace="nothing"> <!-- Plone Stylesheets --> </tal:block>
 <style media="all"
