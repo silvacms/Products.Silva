@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.43 $
+# $Revision: 1.44 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -15,6 +15,9 @@ import SilvaPermissions
 from VersionedContent import VersionedContent
 from EditorSupport import EditorSupport
 from helpers import add_and_edit, translateCdata
+
+# For XML-Conversions for editors 
+from transform.Transformer import EditorTransformer   
 
 class Document(VersionedContent, EditorSupport):
     """Silva Document.
@@ -172,6 +175,35 @@ class Document(VersionedContent, EditorSupport):
 
         version.manage_edit(content)  # needs utf8-encoded string
         self.set_title(title)         # needs unicode
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
+                              'editor_storage')
+    def editor_storage(self, string=None, editor='eopro2_11', encoding='UTF-8'):
+        """provide xml/xhtml/html (GET requests) and (heuristic) 
+           back-transforming to xml/xhtml/html (POST requests)
+        """
+        transformer = EditorTransformer(editor=editor)
+
+        if string is None:
+            string = self.get_xml(last_version=1, with_sub_publications=0)
+            htmlnode = transformer.to_target(sourceobj=string)
+            return htmlnode.asBytes(encoding=encoding)
+        else:
+            version = self.get_editable()
+            if version is None:
+                raise "Hey, no version to store to!"
+            conv_context = {'id': self.id,
+                            'title': self.get_title()}
+
+            silvanode = transformer.to_source(targetobj=string,
+                                              context=conv_context
+                                              )[0]
+            title = silvanode.find('title')[0].content.asBytes(encoding='utf8')
+            title = unicode(title, 'utf8')
+            docnode = silvanode.find('doc')[0]
+            content = docnode.asBytes(encoding="UTF8")
+            version.manage_edit(content)  # needs utf8-encoded string
+            self.set_title(title)         # needs unicode
 
 #    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
 #                              'to_folder')
