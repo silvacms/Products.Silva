@@ -4,38 +4,57 @@
   </head>
   <body>
 
-<div metal:fill-slot="main" tal:define="dummy here/security_trigger">
+<div metal:fill-slot="main" tal:define="dummy here/security_trigger" tal:omit-tag="">
 
 <tal:block condition="python: hasattr(here, 'service_members') and here.service_members.allow_subscription()">
 
-<!-- __________________________ start feedback _________________________ -->
+<!-- __________________________ feedback _________________________ -->
 <tal:block
   define="msg options/message | nothing"
   condition="msg">
-<div class="feedback" style="margin:0%;">
-<span class="error" tal:content="structure msg">message</span>
+<div class="alert" style="margin:0%;">
+<span tal:replace="structure msg">message</span>
 </div>
 </tal:block>
 
-<h2>Request roles at this location</h2>
+<h2>Membership</h2>
 
 <tal:define define="global view here; global member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId())" />
 
 <form action="request_roles_submit" method="POST">
 
+<div class="hilight borders top right left"
+  style="padding: 0 0.5em 0 0.5em; clear: both; width: 50%;">
+<span class="subhead">Request roles at this location</span>
+</div>
+
+<div class="hilight borders top right bottom left"
+  style="padding: 0.5em; margin: 0em 0em 0em 0em; clear: both; width: 50%;">
 <div tal:condition="python: not member.email() or not member.fullname()">
-  You have not entered all the necessary data. Please fill in the following fields:<br /><br />
+  Please fill in the following fields:<br /><br />
   Full name:<br />
-  <input type="text" name="fullname" tal:attributes="value member/fullname" /><br /><br />
+  <input type="text" name="fullname" style="width: 100%;"
+    tal:attributes="value member/fullname" /><br /><br />
   E-mail address:<br />
-  <input type="text" name="email" tal:attributes="value member/email" /><br /><br />
+  <input type="text" name="email" style="width: 100%;"
+    tal:attributes="value member/email" /><br /><br />
 </div>
 
 Choose role(s) to request:<br />
 <tal:repeat repeat="role view/get_available_roles">
-<input type="checkbox" name="roles:list" tal:attributes="value role" /> <span tal:replace="role"/><br />
-</tal:repeat><br />
-<input class="button" type="submit" value=" Send request " />
+<input type="checkbox" name="roles:list" 
+  tal:attributes="
+    value role;
+    id role;" /> <label tal:attributes="for role" tal:content="role">Role</label><br />
+</tal:repeat>
+</div>
+
+<div class="hilight borders right bottom left"
+  style="padding: 0.2em 0.5em 0.2em 0.5em; margin: 0em 0em 2em 0em; clear: both; text-align: right; width: 50%;">
+<input class="button" type="submit" value=" Send request " 
+  title="Send request for role: alt-s" accesskey="s" />
+</div>
+
 </form>
 
 </tal:block>

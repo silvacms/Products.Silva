@@ -1,4 +1,4 @@
-<metal:block use-macro="here/macro_no_tabs/macros/master">
+<html metal:use-macro="here/macro_no_tabs/macros/master">
 <metal:slot fill-slot="main">
 <tal:block define="
     global view here;
@@ -25,7 +25,7 @@
 
 <tal:block condition="silva_permissions/ChangeSilvaAccess">
 
-<form action="." method="post" tal:attributes="action python:model.absolute_url()+'/edit'">
+<form action="." method="POST" tal:attributes="action python:model.absolute_url()+'/edit'">
 <table border="0" cellspacing="0" cellpadding="3">
   <tr>
     <th colspan="2" align="left">Descriptor</th>
@@ -81,4 +81,4 @@ You are not allowed to edit membership data of member <span tal:content="model/i
 </tal:block>
 </div>
 </metal:slot>
-</metal:block>
+</html>
