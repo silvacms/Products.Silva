@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id $
+# $Id: test_ServiceLayouts.py,v 1.4 2003/10/14 16:25:30 gotcha Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -24,7 +24,6 @@ layoutTest2 = 'test2'
 layoutTest1_dir = 'layout_test1'
 layoutTest2_dir = 'layout_test2'
 
-import os
 layoutTest1Items = ['template', 'test1.html']
 layoutTest2Items = ['template', 'test2.html']
 
