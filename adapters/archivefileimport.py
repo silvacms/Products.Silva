@@ -1,8 +1,9 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: archivefileimport.py,v 1.2 2004/07/21 11:40:40 jw Exp $
+# $Id: archivefileimport.py,v 1.3 2004/08/17 15:15:19 jw Exp $
 #
 # Python
+import os.path
 import zipfile
 try:
     from cStringIO import StringIO
@@ -46,30 +47,23 @@ class ArchiveFileImportAdapter(adapter.Adapter):
         succeeded_list = []
         failed_list = []
         
-        # Extract filenames, not directories (where name ends with a slash).
-        entries = zip.namelist()
-        namelist = []
-        dirlist = []
-        for entry in entries:
-            if entry[-1] == '/':
-                dirlist.append(entry)
-            else:
-                namelist.append(entry)
-    
-        for name in namelist:
+        # Extract filenames, not directories.
+        for name in zip.namelist():
             extracted_file = StringIO(zip.read(name))
             mimetype, enc = content_types.guess_content_type(name)
-        
+            path, filename = os.path.split(name)
+            if not filename:
+                # Its a directory entry
+                continue
+            
             if recreatedirs:
-                # Split path into filename and directories.
-                path = name.split('/')
-                dirs, filename = path[:-1], path[-1]
+                dirs = path.split('/')
                 container = self._getSilvaContainer(self.context, dirs)
                 if container is None:
                     failed_list.append('/'.join(dirs))
                     # Creating the folder failed - bailout for this
                     # zipped file...
-                    break
+                    continue
             else:
                 filename = name
                 container = self.context
