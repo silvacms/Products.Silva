@@ -12,4 +12,15 @@ for set_name in binding.getSetNames():
     if errors:
         all_errors[set_name] = errors
 
-return view.tab_metadata(form_errors=all_errors)
+if all_errors:
+    # There were errors...
+    type = 'warning'
+    msg = 'Metadata input had validation errors.'
+else:
+    type = 'feedback'
+    msg = 'Metadata saved.'
+
+return view.tab_metadata(
+    form_errors=all_errors,
+    message_type=type,
+    message=msg)
