@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.90 $
+# $Revision: 1.91 $
 
 import Metadata
 import Folder, Root
@@ -170,13 +170,14 @@ def initialize_icons():
         ('audio/x-wav', 'file_aiff.png'),
         ('application/msword', 'file_doc.png'),
         ('application/postscript', 'file_illustrator.png'),
+        ('application/x-javascript', 'file_js.png'),
         ('application/pdf', 'file_pdf.png'),
+        ('application/vnd.ms-powerpoint', 'file_ppt.png'),
         ('application/x-rtsp', 'file_quicktime.png'),
         ('application/sdp', 'file_quicktime.png'),
         ('application/x-sdp', 'file_quicktime.png'),
         ('application/vnd.ms-excel', 'file_xls.png'),
-        ('application/vnd.ms-powerpoint', 'file_ppt.png'),
-        ('application/x-javascript', 'file_js.png'),
+        ('application/x-zip-compressed', 'file_zip.png'),
         ('text/plain', 'file_txt.png'),
         ('text/css', 'file_css.png'),
         ('text/html', 'file_html.png'),
