@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Fri Nov 26 15:49:35 2004\n"
+"POT-Creation-Date: Fri Nov 26 19:16:05 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -755,18 +755,18 @@ msgstr "Inhalt"
 
 #: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:46
 #: /views/add/GhostFolder/add_form.pt:48
-#: /views/edit/VersionedContent/tab_status_macros.pt:116
-#: /views/edit/VersionedContent/tab_status_macros.pt:197
-#: /views/edit/VersionedContent/tab_status_macros.pt:312
-#: /views/edit/VersionedContent/tab_status_macros.pt:418
+#: /views/edit/VersionedContent/tab_status_macros.pt:115
+#: /views/edit/VersionedContent/tab_status_macros.pt:196
+#: /views/edit/VersionedContent/tab_status_macros.pt:311
+#: /views/edit/VersionedContent/tab_status_macros.pt:417
 msgid "notes"
 msgstr "Anmerkungen"
 
 #: /views/add/add_form.pt:80 /views/add/Ghost/add_form.pt:87
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:127
-#: /views/edit/VersionedContent/tab_status_macros.pt:277
-#: /views/edit/VersionedContent/tab_status_macros.pt:552
+#: /views/edit/VersionedContent/tab_status_macros.pt:276
+#: /views/edit/VersionedContent/tab_status_macros.pt:551
 msgid "access key: alt-c"
 msgstr "Kurzwahl: alt-c"
 
@@ -1811,7 +1811,7 @@ msgstr "Ende"
 
 #: /views/edit/Container/tab_edit.pt:479
 #: /views/edit/Container/tab_status.pt:347
-#: /views/edit/VersionedContent/tab_status_macros.pt:512
+#: /views/edit/VersionedContent/tab_status_macros.pt:511
 msgid "access key: alt-p"
 msgstr "Kurzwahl: alt-p"
 
@@ -1978,7 +1978,7 @@ msgid "Locate an XML file to import (must be valid Silva XML)."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:125
-#: /views/edit/VersionedContent/tab_status_macros.pt:339
+#: /views/edit/VersionedContent/tab_status_macros.pt:338
 msgid "access key: alt-i"
 msgstr "Kurzwahl: alt-i"
 
@@ -2188,10 +2188,10 @@ msgid "rename"
 msgstr "Umbenennen"
 
 #: /views/edit/Container/tab_edit_rename.pt:119
-#: /views/edit/VersionedContent/tab_status_macros.pt:174
-#: /views/edit/VersionedContent/tab_status_macros.pt:443
-#: /views/edit/VersionedContent/tab_status_macros.pt:445
-#: /views/edit/VersionedContent/tab_status_macros.pt:481
+#: /views/edit/VersionedContent/tab_status_macros.pt:173
+#: /views/edit/VersionedContent/tab_status_macros.pt:442
+#: /views/edit/VersionedContent/tab_status_macros.pt:444
+#: /views/edit/VersionedContent/tab_status_macros.pt:480
 msgid "access key: alt-r"
 msgstr "Kurzwahl: alt-r"
 
@@ -2272,9 +2272,9 @@ msgid "p<u>u</u>blish&nbsp;now?"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:300
-#: /views/edit/VersionedContent/tab_status_macros.pt:241
-#: /views/edit/VersionedContent/tab_status_macros.pt:258
-#: /views/edit/VersionedContent/tab_status_macros.pt:357
+#: /views/edit/VersionedContent/tab_status_macros.pt:240
+#: /views/edit/VersionedContent/tab_status_macros.pt:257
+#: /views/edit/VersionedContent/tab_status_macros.pt:356
 msgid "access key: alt-u"
 msgstr "Kurzwahl: alt-u"
 
@@ -2296,7 +2296,7 @@ msgid "reject pending request for approval: alt-j"
 msgstr "Wartende Veröffentlichungsanfrage ablehnen: alt-j"
 
 #: /views/edit/Container/tab_status.pt:365
-#: /views/edit/VersionedContent/tab_status_macros.pt:397
+#: /views/edit/VersionedContent/tab_status_macros.pt:396
 msgid "reject"
 msgstr "Ablehnen"
 
@@ -2338,7 +2338,7 @@ msgid "approve or publish new versions: alt-o"
 msgstr "Genehmigen oder Veröffentlichen von neuen Versionen: alt-o"
 
 #: /views/edit/Container/tab_status.pt:415
-#: /views/edit/VersionedContent/tab_status_macros.pt:374
+#: /views/edit/VersionedContent/tab_status_macros.pt:373
 msgid "open to public"
 msgstr "Veröffentlichen"
 
@@ -2347,7 +2347,7 @@ msgid "withdraw pending request for approval: alt-w"
 msgstr "Ausstehnende Anfrage zurückziehen: alt-w"
 
 #: /views/edit/Container/tab_status.pt:433
-#: /views/edit/VersionedContent/tab_status_macros.pt:398
+#: /views/edit/VersionedContent/tab_status_macros.pt:397
 msgid "withdraw"
 msgstr "Zurücknehmen"
 
@@ -2360,7 +2360,7 @@ msgid "request approval for new versions: alt-r"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:474
-#: /views/edit/VersionedContent/tab_status_macros.pt:174
+#: /views/edit/VersionedContent/tab_status_macros.pt:173
 msgid "request approval"
 msgstr ""
 
@@ -2676,7 +2676,7 @@ msgstr ""
 #: /views/edit/hyperlink_lookup.pt:223
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:69
 #: /views/edit/Container/GhostFolder/tab_edit.pt:334
-#: /views/edit/VersionedContent/tab_status_macros.pt:309
+#: /views/edit/VersionedContent/tab_status_macros.pt:308
 msgid "settings"
 msgstr "Einstellungen"
 
@@ -3055,184 +3055,188 @@ msgstr ""
 msgid "tab_status_form_editor_message_description"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:108
+#: /views/edit/VersionedContent/tab_status_macros.pt:107
 msgid "request approval ${for_new_version}"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:108
+#: /views/edit/VersionedContent/tab_status_macros.pt:107
 msgid "for new version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:113
+#: /views/edit/VersionedContent/tab_status_macros.pt:112
 msgid "message to editor"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:129
+#: /views/edit/VersionedContent/tab_status_macros.pt:128
 msgid ""
 "This message will remain visible in the status screen for other authors and "
 "editors."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:138
+#: /views/edit/VersionedContent/tab_status_macros.pt:137
 msgid "content publish ti<u>m</u>e:"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:138
-#: /views/edit/VersionedContent/tab_status_macros.pt:320
+#: /views/edit/VersionedContent/tab_status_macros.pt:137
+#: /views/edit/VersionedContent/tab_status_macros.pt:319
 msgid "access key: alt-m"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:149
-#: /views/edit/VersionedContent/tab_status_macros.pt:331
+#: /views/edit/VersionedContent/tab_status_macros.pt:148
+#: /views/edit/VersionedContent/tab_status_macros.pt:330
 msgid "day / month / year &nbsp;23:59"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:157
-#: /views/edit/VersionedContent/tab_status_macros.pt:223
+#: /views/edit/VersionedContent/tab_status_macros.pt:156
+#: /views/edit/VersionedContent/tab_status_macros.pt:222
 msgid "access key: alt-i (some platforms)"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:157
-#: /views/edit/VersionedContent/tab_status_macros.pt:223
-#: /views/edit/VersionedContent/tab_status_macros.pt:339
+#: /views/edit/VersionedContent/tab_status_macros.pt:156
+#: /views/edit/VersionedContent/tab_status_macros.pt:222
+#: /views/edit/VersionedContent/tab_status_macros.pt:338
 msgid "expiratio<u>n</u> time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:167
-#: /views/edit/VersionedContent/tab_status_macros.pt:232
+#: /views/edit/VersionedContent/tab_status_macros.pt:166
+#: /views/edit/VersionedContent/tab_status_macros.pt:231
 msgid "If this content should expire, set the time."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:187
+#: /views/edit/VersionedContent/tab_status_macros.pt:186
 msgid "change settings"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:194
+#: /views/edit/VersionedContent/tab_status_macros.pt:193
 msgid "current timings"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:205
+#: /views/edit/VersionedContent/tab_status_macros.pt:204
 msgid "access key: alt-m (some platforms)"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:205
+#: /views/edit/VersionedContent/tab_status_macros.pt:204
 msgid "publish ti<u>m</u>e:"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:241
-#: /views/edit/VersionedContent/tab_status_macros.pt:357
+#: /views/edit/VersionedContent/tab_status_macros.pt:24
+msgid "Publication time of public version"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:240
+#: /views/edit/VersionedContent/tab_status_macros.pt:356
 msgid "p<u>u</u>blish right now?"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:258
+#: /views/edit/VersionedContent/tab_status_macros.pt:257
 msgid "clear ex<u>p</u>iration?"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:26
-msgid "Publication ${and_expiration} time of public version"
+#: /views/edit/VersionedContent/tab_status_macros.pt:27
+msgid "Publication and expiration time of public version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:277
+#: /views/edit/VersionedContent/tab_status_macros.pt:276
 msgid "change timings"
 msgstr "Zeiten ändern"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:297
+#: /views/edit/VersionedContent/tab_status_macros.pt:296
 msgid "publish new version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:301
+#: /views/edit/VersionedContent/tab_status_macros.pt:300
 msgid "publish closed version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:320
+#: /views/edit/VersionedContent/tab_status_macros.pt:319
 msgid "content publish ti<u>m</u>e"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:348
+#: /views/edit/VersionedContent/tab_status_macros.pt:347
 msgid "Empty indicates no expiration."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:374
+#: /views/edit/VersionedContent/tab_status_macros.pt:373
 msgid "access key: alt-o"
 msgstr "Kurzwahl: alt-o"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:399
+#: /views/edit/VersionedContent/tab_status_macros.pt:398
 msgid "request"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:408
+#: /views/edit/VersionedContent/tab_status_macros.pt:407
 msgid "add message on"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:411
+#: /views/edit/VersionedContent/tab_status_macros.pt:410
 msgid "rejection"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:414
+#: /views/edit/VersionedContent/tab_status_macros.pt:413
 msgid "withdrawal"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:432
+#: /views/edit/VersionedContent/tab_status_macros.pt:431
 msgid "The message may be viewed by local users."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:443
-msgid " Reject approval request "
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:445
-msgid " Withdraw approval request "
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:45
+#: /views/edit/VersionedContent/tab_status_macros.pt:44
 msgid "messages"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:472
+#: /views/edit/VersionedContent/tab_status_macros.pt:442
+msgid " Reject approval request "
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:444
+msgid " Withdraw approval request "
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:471
 msgid "If further editing is required, first revoke the approval."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:498
+#: /views/edit/VersionedContent/tab_status_macros.pt:497
 msgid "revert to previous version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:504
+#: /views/edit/VersionedContent/tab_status_macros.pt:503
 msgid ""
 "The current editable version can be replaced with the previous (published) "
 "version. This can not be undone afterwards and will discard all changes made "
 "to the current version."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:512
+#: /views/edit/VersionedContent/tab_status_macros.pt:511
 msgid "revert to previous"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:536
+#: /views/edit/VersionedContent/tab_status_macros.pt:535
 msgid "manual close"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:543
+#: /views/edit/VersionedContent/tab_status_macros.pt:542
 msgid ""
 "If necessary, the published version of this content can be manually closed "
 "(taken offline). It will also be removed from the public index."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:552
+#: /views/edit/VersionedContent/tab_status_macros.pt:551
 msgid "close published version"
 msgstr "öffentliche Version schließen"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:57
+#: /views/edit/VersionedContent/tab_status_macros.pt:56
 msgid "${author_id} sent a message on ${some_date} ${with_comments}"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:86
+#: /views/edit/VersionedContent/tab_status_macros.pt:85
 msgid ""
 "actually the last message may not have been written by the person "
 "withdrawing the request; if this person for example made an empty reject, "
 "this is the message of the requester ..."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:86
+#: /views/edit/VersionedContent/tab_status_macros.pt:85
 msgid ""
 "A previous request for approval has been rejected / withdrawn by "
 "${requester} on ${some_date}. ${comment} The last message regarding this "
@@ -3630,8 +3634,8 @@ msgstr ""
 
 #: /views/edit/macro_metadata.pt:385
 #: /views/edit/VersionedContent/macro_tab_edit.pt:117
-#: /views/edit/VersionedContent/tab_status_macros.pt:463
-#: /views/edit/VersionedContent/tab_status_macros.pt:481
+#: /views/edit/VersionedContent/tab_status_macros.pt:462
+#: /views/edit/VersionedContent/tab_status_macros.pt:480
 msgid "revoke approval"
 msgstr "Genehmigung widerrufen"
 
