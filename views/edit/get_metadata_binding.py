@@ -1,6 +1,25 @@
 ##parameters=content
 from Products.SilvaMetadata.Exceptions import BindingError
 
+# Build a dict for use in the edit pagetemplate,
+# format:
+# {
+#  'setNames': [name1, name2,..],
+#   set1: {'elementNames': [name1, name2,...],
+#          'setTitle':...,
+#           element1: {'view':...,
+#                      'isAcquired':...},
+#                      'isEditable':...,
+#                      'render':...,
+#                      'isRequired':...},
+#                      'isAcquirable':...},
+#                      'description':...},
+#                      'title':...},
+#           element2:...
+#         },
+#   set2:...
+# }
+
 if content is None:
     return None
 
@@ -30,24 +49,6 @@ value = binding.get
 pt_binding = {}
 pt_binding['setNames'] = set_names = binding.getSetNames()
 
-# Build a dict for use in the pagetemplate,
-# format:
-# {
-#  'setNames': [name1, name2,..],
-#   set1: {'elementNames': [name1, name2,...],
-#          'setTitle':...,
-#           element1: {'view':...,
-#                      'isAcquired':...},
-#                      'isEditable':...,
-#                      'render':...,
-#                      'isRequired':...},
-#                      'isAcquirable':...},
-#                      'description':...},
-#                      'title':...},
-#           element2:...
-#         },
-#   set2:...
-# }
 for set_name in set_names:
     pt_binding[set_name] = set = {}
     set['setTitle'] = binding.getSet(set_name).getTitle() or set_name

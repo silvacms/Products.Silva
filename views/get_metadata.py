@@ -1,5 +1,17 @@
 from Products.SilvaMetadata.Exceptions import BindingError
 
+# Build a dict for use in the public pagetemplate,
+# format:
+# {
+#  'setNames': [name1, name2,..],
+#   set1: {'setTitle':...,
+#          'elementNames': [name1, name2,...],
+#           element1: value},
+#           element2:...
+#         },
+#   set2:...
+# }
+
 request = context.REQUEST
 content = context.get_viewable()
 
@@ -21,17 +33,6 @@ value = binding.get
 pt_binding = {}
 pt_binding['setNames'] = set_names = binding.getSetNames()
 
-# Build a dict for use in the public pagetemplate,
-# format:
-# {
-#  'setNames': [name1, name2,..],
-#   set1: {'setTitle':...,
-#          'elementNames': [name1, name2,...],
-#           element1: value},
-#           element2:...
-#         },
-#   set2:...
-# }
 for set_name in set_names:
     pt_binding[set_name] = set = {}
     set['setTitle'] = binding.getSet(set_name).getTitle() or set_name
