@@ -279,45 +279,56 @@
                   tal:condition="may_approve_content">
                   <td colspan="4">
                     <input class="button"
-                      accesskey="j"
+                      style="background:#8f7f01;"
+                      type="submit"
                       name="tab_status_reject:method"
+                      value="Reject" 
+                      accesskey="j"
                       title="reject request for approval from author: alt-j"
-                      type="submit"
-                      value="Reject" />
+                    />
                     <input class="button"
-                      accesskey="v"
-                      name="tab_status_revoke:method"
-                      title="withdraw approval of new versions: alt-v"
+                      style="background:#007746;"
                       type="submit"
-                      value="Revoke" />
+                      name="tab_status_revoke:method"
+                      value="Revoke"
+                      title="withdraw approval of new versions: alt-v"
+                      accesskey="v"
+                    />
                     <input class="button" 
+                      style="background:#303060;"
                       type="submit" 
                       name="tab_status_new_version:method" 
                       value="New version" 
                       title="create new versions of published docs: alt-n" 
-                      accesskey="n" />
-                    <input class="warning"
-                      accesskey="c"
+                      accesskey="n"
+                    />
+                    <input class="button"
+                      style="background:#000070;"
+                      type="submit"
                       name="tab_status_close:method"
+                      value="Close"
                       title="close published items: alt-c"
-                      type="submit"
-                      value="Close" />
+                      accesskey="c"
+                    />
                   </td>
                   <td class="align-right">
                     <input class="button"
-                      accesskey="s"
                       name="tab_status_change_settings:method"
-                      title="change publish and expiration times: alt-s"
                       type="submit"
-                      value="Set timings" />
+                      value="Set timings"
+                      title="change publish and expiration times: alt-s"
+                      accesskey="s"
+                    />
                   </td>
                   <td class="align-right">
                     <input class="button"
-                      accesskey="o"
+                      style="background:#aa2400;"
                       name="tab_status_approve:method"
-                      title="approve or publish new versions: alt-o"
                       type="submit"
-                      value="Approve" />
+                      value="Approve"
+                      title="approve or publish new versions: alt-o"
+                      accesskey="o"
+                    />
                   </td>
                 </tr>
                 <tr class="controls"                  
@@ -327,31 +338,39 @@
                   </tal:block>
                   <td colspan="5">
                     <input class="button"
-                      accesskey="w"
-                      name="tab_status_withdraw:method"
-                      title="withdraw request for approval of new versions: alt-w"
+                      style="background:#8f7f01;"
                       type="submit"
-                      value="Withdraw approval request" />
+                      name="tab_status_withdraw:method"
+                      value="Withdraw approval request"
+                      title="withdraw request for approval of new versions: alt-w"
+                      accesskey="w"
+                    />
                     <input class="button"
+                      style="background:#007746;"
                       accesskey="v"
                       name="tab_status_revoke:method"
                       title="revoke approval of new versions: alt-v"
                       type="submit"
-                      value="Revoke" />
+                      value="Revoke"
+                    />
                     <input class="button" 
+                      style="background:#303060;"
                       type="submit" 
                       name="tab_status_new_version:method" 
                       value="New version" 
                       title="create new versions of published docs: alt-n" 
-                      accesskey="n" />
+                      accesskey="n"
+                    />
                   </td>
                   <td class="align-right">
                     <input class="button"
-                      accesskey="r"
-                      name="tab_status_request_approval:method"
-                      title="request approval for new versions: alt-r"
+                      style="background:#600000;"
                       type="submit"
-                      value="Request approval" />
+                      name="tab_status_request_approval:method"
+                      value="Request approval"
+                      title="request approval for new versions: alt-r"
+                      accesskey="r"
+                    />
                   </td>
                 </tr>
               </tfoot>
