@@ -363,6 +363,11 @@
                     tal:attributes="for group">
                     group
                   </label></b>
+                  <tal:block tal:condition="python: group not in 
+                    here.service_groups.listAllGroups()">
+                      &lt;broken&gt; <!-- XXX replace this by something nice
+                      -->
+                  </tal:block>
                 </td>
                 <td align="right"
                   style="border-left: 1px solid black; border-right: 1px solid black;">
