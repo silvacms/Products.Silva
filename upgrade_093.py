@@ -301,6 +301,15 @@ class Reindex:
             obj.reindex_object()
         return obj
 
+class PublicRenderingCacheFlusher:
+
+    __implements__ = IUpgrader
+
+    def upgrade(self, obj):
+        if hasattr(obj.aq_base, 'clean_public_rendering_cache'):
+            obj.clean_public_rendering_cache()
+        return obj
+
 class GroupsService:
 
     __implements__ = IUpgrader
@@ -311,6 +320,33 @@ class GroupsService:
             obj._ip_groups = {}
         if not hasattr(obj, '_iprange_to_group'):
             obj._iprange_to_group = {}
+
+
+class BuryDemoObjectCorpses:
+    """
+    This upgrades deletes all broken object which have been DemoObject
+    instances before this class went away.
+    """
+    __implements__ = IUpgrader
+
+    def upgrade(self, obj):
+        # upgrade containers only
+        if not IContainer.isImplementedBy(obj):
+            return obj
+
+        broken_ids = obj.objectIds('Silva DemoObject')
+        if broken_ids:
+            zLOG.LOG('Silva',-200,
+                     'found demo object corpses %s in %s' %\
+                     (broken_ids, obj.absolute_url()))
+            obj.manage_delObjects(broken_ids)
+            # the following assumes all IContainer inherit from Folder ...
+            obj._ordered_ids = [ id for id in  obj._ordered_ids
+                                 if id not in broken_ids ]
+            # FIXME: how do we unindex broken object form the catalog?
+        return obj
+                     
+
 
 def initialize():
     home = package_home(globals())
@@ -330,6 +366,10 @@ def initialize():
         upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(Reindex(), '0.9.3', upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(MovedDocument(), '0.9.3', 'Silva Root')
+    upgrade.registry.registerUpgrader(BuryDemoObjectCorpses(), '0.9.3',
+                                      upgrade.AnyMetaType)
+    upgrade.registry.registerUpgrader(PublicRenderingCacheFlusher(), '0.9.3',
+                                      upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
         'Groups Service')
 
