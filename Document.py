@@ -67,9 +67,6 @@ class Document(VersionedContent):
             'publisher' : ''
             }
         
-    def __repr__(self):
-        return "<Silva Document instance at %s>" % self.id
-
 #    def manage_afterClone(self, obj):
 #        """We were copied, make sure we're not public.
 #        """
@@ -134,37 +131,37 @@ class Document(VersionedContent):
         self._metadata[name] = value
         self._metadata = self._metadata
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'to_folder')
-    def to_folder(self):
-        """Convert this document to folder in same place.
-        """
-        # get id of document; this will be the id of the folder
-        id = self.id
-        # we will rename ourselves to a temporary id
-        temp_id = 'silva_temp_%s' % id
-        # get parent folder
-        parent = self.get_container()
-        # rename doc so we can create folder with the same name
-        parent.manage_renameObject(id, temp_id)
-        # create Silva Folder to hold self
-        parent.manage_addProduct['Silva'].manage_addFolder(id, self.title(), 0)
-        # get folder
-        folder = getattr(parent, id)
-        # now add self to folder
-        cb = parent.manage_cutObjects([temp_id])
-        folder.manage_pasteObjects(cb_copy_data=cb)
-        # rename doc from temp_id to 'doc'
-        folder.manage_renameObject(temp_id, 'doc')
-        return folder
+#    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+#                              'to_folder')
+#    def to_folder(self):
+#        """Convert this document to folder in same place.
+#        """
+#        # get id of document; this will be the id of the folder
+#        id = self.id
+#        # we will rename ourselves to a temporary id
+#        temp_id = 'silva_temp_%s' % id
+#        # get parent folder
+#        parent = self.get_container()
+#        # rename doc so we can create folder with the same name
+#        parent.manage_renameObject(id, temp_id)
+#        # create Silva Folder to hold self
+#        parent.manage_addProduct['Silva'].manage_addFolder(id, self.title(), 0)
+#        # get folder
+#        folder = getattr(parent, id)
+#        # now add self to folder
+#        cb = parent.manage_cutObjects([temp_id])
+#        folder.manage_pasteObjects(cb_copy_data=cb)
+#        # rename doc from temp_id to 'doc'
+#        folder.manage_renameObject(temp_id, 'doc')
+#        return folder
 
-    def action_paste(self, REQUEST):
-        """Convert this to Folder and paste objects on clipboard.
-        """
-        # convert myself to a folder
-        folder = self.to_folder()
-        # paste stuff into the folder
-        folder.action_paste(REQUEST)
+ #   def action_paste(self, REQUEST):
+ #       """Convert this to Folder and paste objects on clipboard.
+ #       """
+ #       # convert myself to a folder
+ #       folder = self.to_folder()
+ #       # paste stuff into the folder
+ #       folder.action_paste(REQUEST)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_text_as_html')
