@@ -51,12 +51,12 @@ def initializeXMLSourceRegistry():
     reg.registerXMLSource(Folder, FolderXMLSource)
     reg.registerXMLSource(Link, LinkXMLSource)
     reg.registerXMLSource(LinkVersion, LinkVersionXMLSource)
-    # XXX move to SilvaDocument
-    reg.registerXMLSource(Document, DocumentXMLSource)
-    reg.registerXMLSource(DocumentVersion, DocumentVersionXMLSource)
     reg.registerXMLSource(Ghost, GhostXMLSource)
     reg.registerXMLSource(GhostVersion, GhostVersionXMLSource)
     reg.registerXMLSource(GhostFolder, GhostFolderXMLSource)
+    # XXX move to SilvaDocument
+    reg.registerXMLSource(Document, DocumentXMLSource)
+    reg.registerXMLSource(DocumentVersion, DocumentVersionXMLSource)
     
 class BaseXMLSource:
     def __init__(self, context):
