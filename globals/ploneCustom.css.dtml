@@ -553,7 +553,6 @@ table.listing tr.controls td, tr.inter-controls td {
 
 table.listing td.field-title {
   text-align : right;
-  text-transform : &dtml-textTransform;;
 }
 
 /* force button floats in table cells 
@@ -749,7 +748,6 @@ input.navigation {
     padding: &dtml-contextButtonPadding;;
   border: &dtml-standaloneButtonBorder;;
     cursor: pointer;
-    text-transform: &dtml-textTransform;;
 }
 
 input.button {
@@ -761,7 +759,6 @@ input.button {
     padding: &dtml-contextButtonPadding;;
   border: &dtml-contextButtonBorder;;
     cursor: pointer;
-    text-transform: &dtml-textTransform;;
 }
 
 input.warning {
@@ -773,7 +770,6 @@ input.warning {
     padding: &dtml-contextButtonPadding;;
   border: &dtml-destructiveButtonBorder;;
     cursor: pointer;
-    text-transform: &dtml-textTransform;;
 }
 
 input.cancel {
@@ -786,7 +782,6 @@ input.cancel {
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
     cursor: pointer;
-    text-transform: &dtml-textTransform;;
 }
 
 /* checkboxes used (only) for deletion */
@@ -805,7 +800,6 @@ input.reject {
   padding: &dtml-contextButtonPadding;;
   border: &dtml-contextButtonBorder;;
   cursor: pointer;
-  text-transform: &dtml-textTransform;;
 }
 input.revoke {
   font-size: 95%;
@@ -816,7 +810,6 @@ input.revoke {
   padding: &dtml-contextButtonPadding;;
   border: &dtml-contextButtonBorder;;
   cursor: pointer;
-  text-transform: &dtml-textTransform;;
 }
 input.close {
   font-size: 95%;
@@ -827,7 +820,6 @@ input.close {
   padding: &dtml-contextButtonPadding;;
   border: &dtml-contextButtonBorder;;
   cursor: pointer;
-  text-transform: &dtml-textTransform;;
 }
 
 
@@ -863,7 +855,6 @@ table.listing a.button:link {
   margin: 0.1em 0.2em;
   padding: 0em 1em 0.1em 1em;
   text-decoration : none;
-  text-transform: &dtml-textTransform;;
 }
 table.listing a.button:visited {
   font-size: 100%;
@@ -874,7 +865,6 @@ table.listing a.button:visited {
   margin: 0.1em 0.2em;
   padding: 0em 1em 0.1em 1em;
   text-decoration : none;
-  text-transform: &dtml-textTransform;;
 }
 table.listing a.button:hover {
   color : #bfffd3; 
@@ -893,7 +883,6 @@ table.listing a.navigation:link {
   margin: 0.1em 0.2em;
   padding: 0em 1em 0.1em 1em;
   text-decoration : none;
-  text-transform: &dtml-textTransform;;
 }
 table.listing a.navigation:visited {
   font-size: 100%;
@@ -904,7 +893,6 @@ table.listing a.navigation:visited {
   margin: 0.1em 0.2em;
   padding: 0em 1em 0.1em 1em;
   text-decoration : none;
-  text-transform: &dtml-textTransform;;
 }
 table.listing a.navigation:hover {
   color : #e5fffe; 
@@ -926,7 +914,6 @@ table.listing td.parent {
 table.listing td.parent a {
   color: &dtml-standaloneButtonFontColor;;
   text-decoration: none;
-  text-transform: &dtml-textTransform;;
 }
 
 table.listing td.parent a:hover {
