@@ -453,6 +453,33 @@ class RemoveOldMetadataIndexes:
                 
         return service_catalog
     
+class SetTitleFromIndexOnContainer:
+    """ Folder titles now are stored on the folder, 
+    not on the index document. To fix this, we set the title of the 
+    container to that of the index document, if it has one.
+    """
+    
+    __implements__ = IUpgrader
+
+    def upgrade(self, container):
+        if not IContainer.isImplementedBy(container):
+            zLOG.LOG(
+                'Silva', zLOG.WARNING, 
+                'This container object does not implement IContainer! (%s)' % repr(container))
+            return container
+        index = getattr(container, 'index', None)
+        if index is None:
+            return container
+        try:
+            title = index.get_title()
+            container.set_title(title)
+        except Exception, e:
+            print '#### Cannot set title due to: %s' % repr(e)
+            zLOG.LOG(
+                'Silva', zLOG.WARNING, 
+                'Cannot set title due to: %s' % repr(e))
+        return container
+    
 def initialize():
     home = package_home(globals())
     xml_home = os.path.join(home, 'doc')
@@ -481,6 +508,10 @@ def initialize():
                                       upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
         'Groups Service')
+        
+    for metatype in ['Silva Root', 'Silva Publication', 'Silva Folder']:
+        upgrade.registry.registerUpgrader(
+            SetTitleFromIndexOnContainer(), '0.9.3', metatype)
         
     # On the root, do an "all product refresh"
     upgrade.registry.registerUpgrader(

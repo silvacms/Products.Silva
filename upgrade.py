@@ -109,15 +109,13 @@ class UpgradeRegistry:
             while object_list:
                 o = object_list[0]
                 del object_list[0]
-                print 'Upgrading object', o.absolute_url()
+                print 'Upgrading object', o.absolute_url(), '(still %s objects to go)' % len(object_list)
                 self.upgradeObject(o, version)
                 if hasattr(o.aq_base, 'objectValues'):
                     if o.meta_type == "Parsed XML":
-                        print 'Skip the Parsed XML object'
+                        print '#### Skip the Parsed XML object'
                     else:
-                        print 'Extending upgrade list from', len(object_list), 
-                        object_list.extend(o.objectValues())
-                        print 'to', len(object_list), 'items.'
+                        object_list.extend(o.objectValues())                        
                 stats['total'] += 1
                 stats['threshold'] += 1                
                 if stats['threshold'] > threshold:
