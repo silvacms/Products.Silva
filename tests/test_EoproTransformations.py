@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 import unittest
 
 # 
@@ -30,7 +30,7 @@ try:
     from transform.eopro2_11 import silva, html
 except ImportError:
     from Products.Silva.transform.eopro2_11 import silva, html
-
+    
 # lazy, but in the end we want to test everything anyway
 
 from xml.dom import minidom
@@ -42,7 +42,7 @@ class Base(unittest.TestCase):
     """ Check various conversions/transformations """
 
     def setUp(self):
-        from transform.Transformer import EditorTransformer
+        from Products.Silva.transform.Transformer import EditorTransformer
         self.transformer = EditorTransformer('eopro2_11')
 
 class Fixup(Base):
@@ -180,7 +180,7 @@ class HTML2XML(Base):
 class RoundtripWithTidy(unittest.TestCase):
     """ Transform and validate with 'tidy' if available. Also do a roundtrip """
     def setUp(self):
-        from transform.Transformer import Transformer 
+        from Products.Silva.transform.Transformer import Transformer 
         self.transformer = Transformer(source='eopro2_11.silva', target='eopro2_11.html')
 
     def _check(self, string):
