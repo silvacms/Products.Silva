@@ -1043,13 +1043,13 @@ div.fixed-clear {
   padding: 0em 9px 0.1em 9px;
   border-bottom: 1px solid &dtml-workspace;;
 }
-a.reveal {
+div.fixed-clear a.reveal {
   color: &dtml-shade96;;
 }
-a.reveal:visited {
+div.fixed-clear a.reveal:visited {
   color: &dtml-shade96;;
 } 
-a.reveal:hover {
+div.fixed-clear a.reveal:hover {
   color: &dtml-shade58;;
   text-decoration: none;
 }
