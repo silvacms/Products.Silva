@@ -83,7 +83,7 @@
           <css_class></css_class>
           <default></default>
           <title>Description</title>
-          <description>Add a description for all top level pages (used by Internet serach engines)</description>
+          <description>Add a description for all top level pages (used by Internet search engines)</description>
           <extra></extra>
         </values>
         <tales>
