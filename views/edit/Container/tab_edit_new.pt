@@ -81,8 +81,7 @@
 	        </span>
 	        <a class="underline" 
 	           href="http://www.infrae.com/products/silva/docs"
-	           i18n:translate="silva_doc"
-	        >
+	           i18n:translate="silva_doc">
 	          Silva documentation</a>.
           <br />
         </p>
