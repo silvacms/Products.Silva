@@ -18,6 +18,8 @@ Silva changes
         completely from a document on save: now instead of removing it it's
         contents get converted and added to the document.
 
+      - Issue 942: quotes in links around images broke the public view.
+
   1.0 (release candidate 4)
 
     Bugs fixed
