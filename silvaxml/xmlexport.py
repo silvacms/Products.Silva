@@ -4,7 +4,6 @@ the existing export machinery.
 """
 from StringIO import StringIO
 from sprout.saxext import xmlexport
-from sprout.saxext.generator import XMLGenerator
 from Products.Silva.interfaces import IPublication
 from Products.ParsedXML.DOM.Core import Node
 from DateTime import DateTime
