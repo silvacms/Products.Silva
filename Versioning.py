@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.39 $
+# $Revision: 1.40 $
 
 # Zope
 from DateTime import DateTime
@@ -493,7 +493,7 @@ class Versioning:
                 self._unindex_version(self._public_version[0])
             self._public_version = self._approved_version
             # unindex previously approved version
-            self._unindex_version(self._approved_version)
+            self._unindex_version(self._approved_version[0])
             self._approved_version = empty_version
             # index approved version that is now public
             self._index_version(self._public_version[0])
