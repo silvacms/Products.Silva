@@ -6,7 +6,7 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
-/* _______________ stylesheet for Silva 0.8.6 frontend ________________ */
+/* ________________ stylesheet for Silva 0.9 frontend _________________ */
 /* _______ Silva customers can insert their own frontend styles _______ */
 
 body {
