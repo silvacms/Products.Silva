@@ -5,6 +5,16 @@ Silva changes
 
   1.1
 
+    Features added
+
+      - Allowed access to the cleanup adapter from Python scripts.
+
+      - Streamlined the creation of XSLT renderers.
+
+      - All objects with renderers registered for them have a way to
+        turn new-style rendering off explicitly for that object in
+        particular (not just in renderer registry).
+
     Bugs fixed
 
       - Replaced print statement in Indexer for a LOG entry.
@@ -20,7 +30,7 @@ Silva changes
       - Remnants of old archive file import code (for bulk creation of
         assets) has been removed.
 
-      - Fixed access to the cleanup adapter from Python scripts
+      - Unused XSLT support cruft has been cleaned up.
 
   1.1 beta 2
 
