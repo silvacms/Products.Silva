@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.1.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.42 $
+CVS:        $Revision: 1.43 $
 
 Introduction
 ------------
@@ -89,6 +89,15 @@ is therefore the same as for minor upgrades. A ``Refresh all`` in
 
 If you want to enable the new XSLT support, please see the section
 "XSLT Support" in INSTALL.txt.
+
+Note that if you are upgrading from 1.1b1 to 1.1b2, you should do the
+following:
+
+* go to the services tab in the Silva root
+
+* remove service_renderer_registry
+
+* go to service_extensions and do a ``Refresh all``
 
 Upgrading from Silva 0.9.3 to Silva 1.0
 ---------------------------------------
