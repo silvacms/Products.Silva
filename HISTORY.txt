@@ -1,4 +1,4 @@
-Version of this document: $Revision: 1.10 $
+Version of this document: $Revision: 1.11 $
 
 Silva changes
 
@@ -6,56 +6,64 @@ Silva changes
 
     Features Added
 
+     - Beginnings of separating out the non-core objects from Silva core.
+
+     - Some utility code in EditorSupport to support multi-column
+     rendering.
+	    
+     - Demo Object added to demonstrate how to extend Silva with new
+     objects.
+     
+     - ChiefEditor and up can now configure what Silva Objects are
+     addable in a Publication.
+     
      - New "Reader" role, for readonly access to Silva Management 
-     Interface (SMI) 
+     Interface (SMI).
 
-    Bugs Fixed
+     - Cleanup of "Add object" infrastructure.
 
-     - ZMI
+     - Cleanup of ZMI tabs for Silva and XMLWidgets specific objects.
 
-        * Cleanup of tabs for Silva and XMLWidgets specific objects
-
-     - SMI (Silva Management Interface)
-
-        * Fix and cleanup of tabs_status code (thanks to Clemens Klein-
-	      Robbenhaar (a.o.) for reporting)
-
-     - Presentation Pagetemplates: 
-
-        * Images "alt" attributes now show correct title
-
-        * Cleanup of index_html
-
-        * Removed "base" tag from layout_macro.html, fixed "script" tag,
-        fixed "link" tag
-
-        * Changed call for "view_method" in content.html (thanks to
-        Clemens Klein-Robbenhaar for reporting)
-
-        * Changed spelling for override.html (thanks to Clemens Klein-
-        Robbenhaar for reporting)
-
-        * Various (cosmetic) changes in view/preview/tab-preview layout  
-
-  0.8.2
-
-    Features Added
-   
-     - Some changes to Ghosts to make them work properly with virtual hosts.
+     - Logout link now works.
 
     Bugs Fixed
 
      - Some bug fixes to make plain Content objects (non-versioned) work
        better.
+
+     - Some changes to Ghosts to make them work properly with virtual hosts.
+     
+     - SMI (Silva Management Interface)
+
+        * Fix and cleanup of tabs_status code (thanks to Clemens Klein-
+	Robbenhaar (a.o.) for reporting).
+
+	* Fix of bug in Publish tab that occurred when no items selected.
+
+     - Presentation Pagetemplates: 
+
+        * Images "alt" attributes now show correct title.
+
+        * Cleanup of index_html.
+
+        * Removed "base" tag from layout_macro.html, fixed "script" tag,
+        fixed "link" tag.
+
+        * Changed call for "view_method" in content.html (thanks to
+        Clemens Klein-Robbenhaar for reporting).
+
+        * Changed spelling for override.html (thanks to Clemens Klein-
+        Robbenhaar for reporting).
+
+        * Various (cosmetic) changes in view/preview/tab-preview layout.  
+
+  0.8.2
+
+    (Internal release)
        
   0.8.1
 
-    Features Added
-   
-     - Beginnings of separating out the Course object from Silva core.
-
-     - Some utility code in EditorSupport to support multi-column
-       rendering.
+    (Internal release) 
 
   0.8
 
