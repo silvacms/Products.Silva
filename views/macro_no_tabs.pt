@@ -30,10 +30,6 @@
 <title tal:content="title">
   Title
 </title>
-<link href="globals/favicon.ico"
-  rel="shortcut icon"
-  tal:attributes="href string:${root_url}/globals/favicon.ico"
-/>
 <!-- Temp Stylesheets -->
 <link href="globals/base.css"
   rel="stylesheet"
@@ -125,12 +121,6 @@ _______ editor hooks _______
 <!-- _____________________ start workspace _____________________ -->
 </span>
 <div class="workspace">
-
-<span class="halfline"
-  tal:condition="python:template.id != 'tab_preview'"
->
-  <br clear="none" />
-</span>
 
 <span tal:replace="nothing">
 <!-- _______ start feedback _______ -->

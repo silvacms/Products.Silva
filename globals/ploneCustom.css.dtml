@@ -669,6 +669,8 @@ input.cancel {
     text-transform: &dtml-textTransform;;
 }
 
+/* _______ form labels _______ */
+
 label {
   color : #403f80; 
   text-transform : &dtml-textTransform;;
