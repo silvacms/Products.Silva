@@ -8,6 +8,10 @@ import Globals
 import SilvaPermissions
 from helpers import add_and_edit
 
+from Products.Formulator.Form import ZMIForm
+from Products.Formulator.Errors import FormValidationError
+from Products.Formulator import StandardFields
+
 class SimpleMember(SimpleItem.SimpleItem):
     __implements__ = IMember
 
@@ -173,41 +177,65 @@ class EmailMessageService(SimpleItem.SimpleItem):
         self._host = None
         self._port = 25
         self._fromaddr = None
+        self._send_email_enabled = 0
+        self._debug = 0
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'set_server')
-    def set_server(self, host, port=25):
-        self._host = host
-        self._port = port
+        edit_form = ZMIForm('edit', 'Edit')
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'set_from_address')
-    def set_from_address(self, fromaddr):
-        self._fromaddr = fromaddr
+        host = StandardFields.StringField(
+            'host',
+            title="Host",
+            required=1,
+            display_width=20)
+        port = StandardFields.IntegerField(
+            'port',
+            title="Port",
+            required=1,
+            display_width=20)
+        fromaddr = StandardFields.EmailField(
+            'fromaddr',
+            title="From address",
+            required=1,
+            display_width=20)
+        send_email_enabled = StandardFields.CheckBoxField(
+            'send_email_enabled',
+            title="Actually send email",
+            required=0,
+            default=0)
+        debug = StandardFields.CheckBoxField(
+            'debug',
+            title="Debug mode",
+            required=0,
+            default=0)
+        
+        for field in [host, port, fromaddr, send_email_enabled, debug]:
+            edit_form._setObject(field.id, field)
+        self.edit_form = edit_form
+        
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'edit_form')
+    # MANIPULATORS
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'manage_edit')
+    def manage_edit(self, REQUEST):
+        """manage method to update data"""
+        try:
+            result = self.edit_form.validate_all(REQUEST)
+        except FormValidationError, e:
+            messages = ["Validation error(s)"]
+            # loop through all error texts and generate messages for it
+            for error in e.errors:
+                messages.append("%s: %s" % (error.field.get_value('title'),
+                                            error.error_text))
+            # join them all together in a big message
+            message = string.join(messages, "<br>")
+            # return to manage_editForm showing this failure message 
+            return self.manage_editForm(self, REQUEST,
+                                        manage_tabs_message=message)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'server')
-    def server(self):
-        """Returns (host, port)"""
-        return (self._host, self._port)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'host')
-    def host(self):
-        """return self._host"""
-        return self._host
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'port')
-    def port(self):
-        """return self._port"""
-        return self._port
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'fromaddr')
-    def fromaddr(self):
-        """return self._fromaddr"""
-        return self._fromaddr
+        for key, value in result.items():
+            setattr(self, '_' + key, value)
+        return self.manage_main(manage_tabs_message="Changed settings.")
 
     # XXX these security settings are not the right thing.. perhaps
     # create a new permission?
@@ -216,7 +244,8 @@ class EmailMessageService(SimpleItem.SimpleItem):
     def send_message(self, from_memberid, to_memberid, subject, message):
         if not hasattr(self.aq_base, '_v_messages'):
             self._v_messages = {}
-        self._v_messages.setdefault(to_memberid, {}).setdefault(from_memberid, []).append((subject, message))
+        self._v_messages.setdefault(to_memberid, {}).setdefault(
+            from_memberid, []).append((subject, message))
 
     # XXX have to open this up to the world, unfortunately..
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -224,17 +253,18 @@ class EmailMessageService(SimpleItem.SimpleItem):
     def send_pending_messages(self):
         if not hasattr(self.aq_base, '_v_messages'):
             self._v_messages = {}
+        get_member = self.service_members.get_member
         for to_memberid, message_dict in self._v_messages.items():
-            to_email = self.service_members.get_member(to_memberid).email()
+            to_email = get_member(to_memberid).email()
             if to_email is None:
-                print "messages: no email for: %s" % to_memberid
-                to_email = to_memberid + "@madeup.infrae.com"
-                # no email address known, so can't send these messages!
-                #continue
+                if self._debug:
+                    print "messages: no email for: %s" % to_memberid
+                continue
             lines = []
             for from_memberid, messages in message_dict.items():
-                print "From memberid:", from_memberid
-                from_email = self.service_members.get_member(from_memberid).email()
+                if self._debug:
+                    print "From memberid:", from_memberid
+                from_email = get_member(from_memberid).email()
                 # XXX what if no from_email?
                 lines.append("Message from: %s %s" %
                              (from_memberid, from_email))
@@ -247,26 +277,56 @@ class EmailMessageService(SimpleItem.SimpleItem):
             self._send_email(to_email, text)
         self._v_messages = {}
 
+    # ACCESSORS
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'server')
+    def server(self):
+        """Returns (host, port)"""
+        return (self._host, self._port)
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'host')
+    def host(self):
+        """return self._host"""
+        return self._host
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'port')
+    def port(self):
+        """return self._port"""
+        return self._port
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'fromaddr')
+    def fromaddr(self):
+        """return self._fromaddr"""
+        return self._fromaddr
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'debug')
+    def debug(self):
+        return self._debug
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'send_email_enabled')
+    def send_email_enabled(self):
+        return self._send_email_enabled
+    
     def _send_email(self, toaddr, msg):
         msg = 'From: %s\r\nTo: %s\r\n\r\n%s' % (self._fromaddr, toaddr, msg)
-        print "messages:"
-        print msg
-        server = smtplib.SMTP(self._host, self._port)
-        server.sendmail(self._fromaddr, [toaddr], msg)
-        server.quit()
-
-    def manage_editEmailMessageService(self, REQUEST):
-        """manage method to update data"""
-        if not REQUEST['host'] or not REQUEST['port'] or not REQUEST['fromaddr']:
-            return self.manage_main(manage_tabs_message='All fields are required!')
-        self.set_server(REQUEST['host'], int(REQUEST['port']))
-        self.set_from_address(REQUEST['fromaddr'])
-        return self.manage_main()
+        if self._debug:
+            print "messages:"
+            print msg
+        if self._send_email_enabled:
+            server = smtplib.SMTP(self._host, self._port)
+            server.sendmail(self._fromaddr, [toaddr], msg)
+            server.quit()
 
 Globals.InitializeClass(EmailMessageService)
 
 manage_addEmailMessageServiceForm = PageTemplateFile(
-    "www/serviceEmailMessageServiceAdd", globals(), __name__='manage_addEmailMessageServiceForm')
+    "www/serviceEmailMessageServiceAdd", globals(),
+    __name__='manage_addEmailMessageServiceForm')
 
 def manage_addEmailMessageService(self, id, title='', REQUEST=None):
     """Add member message service."""

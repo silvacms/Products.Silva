@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1 $
+Version of this file: $Revision: 1.2 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -10,35 +10,17 @@ Version of this file: $Revision: 1.1 $
 
 <h3>Manage E-mail Message Service</h3>
 
-<form action="manage_editEmailMessageService" method="post">
+<form action="manage_edit" method="post">
 <table cellspacing="0" cellpadding="2" border="0">
-  <tr>
-    <td align="left" valign="top" class="form-label">
-      Host:
+  <tr tal:repeat="field here/edit_form/get_fields">
+    <td align="left" valign="top" class="form-label" 
+        tal:content="python:field.get_value('title')">
+      Field title:
     </td>
-    <td align="left" valign="top">
-      <input class="form-element" name="host" tal:attributes="value here/host" />
-    </td>
-  </tr>
-
-  <tr>
-    <td align="left" valign="top" class="form-label">
-      Port:
-    </td>
-    <td align="left" valign="top">
-      <input class="form-element" name="port" tal:attributes="value here/port" />
+    <td align="left" valign="top" 
+        tal:content="structure python:field.render(getattr(here, field.id)())">
     </td>
   </tr>
-
-  <tr>
-    <td align="left" valign="top" class="form-label">
-      From address:
-    </td>
-    <td align="left" valign="top">
-      <input class="form-element" name="fromaddr" tal:attributes="value here/fromaddr" />
-    </td>
-  </tr>
-
   <tr>
     <td align="left" valign="top" colspan="2">
       <input class="form-element" type="submit" />
