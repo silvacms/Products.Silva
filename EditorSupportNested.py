@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -190,7 +190,7 @@ class EditorSupport:
         #st = st.replace('\n\n', ' ')
         tags = {'__': 'underline', '**': 'strong', '++': 'em', '^^': 'super', '~~': 'sub'}
         reg = re.compile(r"(_{2}|\*{2}|\+{2}|\^{2}|~{2})(.*?)\1", re.S)
-        reg_a = re.compile(r"\({2}(.*?)\|([^|]*)(\|?)(.*?)\){2}", re.S)
+        reg_a = re.compile(r"\({2}(.*?)\|([^|]*?)(\|(.*?))?\){2}", re.S)
         reg_i = re.compile(r"\[{2}(.*?)\|(.*?)\]{2}", re.S)
         while 1:
             match = reg.search(st)
