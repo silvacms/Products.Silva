@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.19 2003/11/18 15:07:36 zagy Exp $
+# $Id: mangle.py,v 1.19.8.1 2003/12/16 16:13:00 jw Exp $
 
 # Python
 import string
@@ -435,6 +435,12 @@ class _String:
         if len(text) < max_length:
             return text
         return '%s...' % text[:(max_length - 3)]
+    
+    def centeredTruncate(self, text, max_length):
+        if len(text) < max_length:
+            return text
+        part_length = (max_length - 3) / 2
+        return '%s...%s' % (text[:part_length], text[-part_length:])
 
 module_security.declarePublic('String')
 String = _String()
