@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
 "POT-Creation-Date: Mon Nov 29 17:31:33 2004\n"
-"PO-Revision-Date: 2004-11-29 17:35+0100\n"
+"PO-Revision-Date: 2004-11-29 17:38+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -2720,7 +2720,7 @@ msgstr "Nog niet"
 
 #: /views/edit/Content/AutoTOC/edit.pt:39
 msgid "automatic table of contents &#xab;${title_or_id}&#xbb;"
-msgstr "Automatische inhoudstabel voor inhoud &#xab;${title_or_id}&#xbb;"
+msgstr "Automatische inhoudstabel &#xab;${title_or_id}&#xbb;"
 
 #: /views/edit/Content/AutoTOC/edit.pt:47
 msgid ""
