@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.67.2.2 $
+# $Revision: 1.67.2.3 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -122,6 +122,6 @@ except ImportError:
     pass
 else:
     dirpath = os.path.dirname(ee.__file__)
-    dtmlpath = '%s/manage_main' % dirpath
+    dtmlpath = os.path.join(dirpath, 'manage_main')
     Folder.manage_main = DTMLFile(dtmlpath, globals())
     Root.manage_main = DTMLFile(dtmlpath, globals())
