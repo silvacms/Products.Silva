@@ -14,7 +14,7 @@
   breadcrumb_vein breadcrumb_vein | nothing;
 ">
 <!-- Breadcrumbs -->
-  <div class="pathBar" style="height: 20px">
+  <div class="pathBar">
     <span style="float: right; margin-right: 5px;">
       <a class="idea"      
         href="globals/reference"
