@@ -4,9 +4,8 @@ from Products.Silva.helpers import IdCheckValues
 view = context
 
 if status_code == IdCheckValues.ID_CONTAINS_BAD_CHARS:
-    return """Sorry, weird characters are in the id. It should only contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;<br />
-Spaces are not allowed in URLs, and the id should start with a letter or digit.<br />
-You entered the id %s, which did not match these constraints.""" % view.quotify(id)
+    return """Sorry, strange characters are in the id. It should only contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;<br />
+Spaces are not allowed in Internet addresses, and the id should start with a letter or digit."""
 
 elif status_code == IdCheckValues.ID_RESERVED_PREFIX:
     # FIXME: needs to know about the prefix
