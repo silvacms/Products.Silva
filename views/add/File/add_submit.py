@@ -13,7 +13,7 @@ REQUEST = context.REQUEST
 
 # if we cancelled, then go back to edit tab
 if REQUEST.has_key('add_cancel'):
-    return view.tab_edit()
+    return model.edit['tab_edit']()
 
 # validate form
 from Products.Formulator.Errors import ValidationError, FormValidationError
@@ -50,9 +50,12 @@ object = model.manage_addProduct['Silva'].manage_addFile(id, title, file)
 # update last author info in new object
 object.sec_update_last_author_info()
 
+if not id:
+    id = object.getId()
+    
 # now go to tab_edit in case of add and edit, back to container if not.
 if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
-    return view.tab_edit(message_type="feedback", 
-                         message="Added %s %s." % (object.meta_type, view.quotify(id)))
+     return model.edit['tab_edit'](message_type="feedback", 
+                                   message="Added %s %s." % (object.meta_type, view.quotify(id)))
