@@ -3,119 +3,82 @@
 <tal:block define="here request/model;">
 <metal:block use-macro="request/model/layout_macro.html/macros/layout">
 <metal:block fill-slot="main">
-  <tal:block
-    define="
-      model request/model;
-      title model/get_title;
-      show_form options/show_form | python: True;
-      feedback options/message | nothing;
-      subscr_emailaddress options/subscr_emailaddress | nothing; 
-      cancel_emailaddress options/cancel_emailaddress | nothing; 
-      path python: '/'.join(model.getPhysicalPath());"
-    i18n:domain="silva"
-    >
-    <div tal:condition="feedback" class="feedback" i18n:translate="" tal:content="feedback">
-      feedback message
+<tal:block
+  define="
+    model request/model;
+    title model/get_title;
+    show_form options/show_form | python: True;
+    feedback options/message | nothing;
+    subscr_emailaddress options/subscr_emailaddress | nothing; 
+    cancel_emailaddress options/cancel_emailaddress | nothing; 
+    path python: '/'.join(model.getPhysicalPath());"
+  i18n:domain="silva"
+  >
+  <div class="feedback" 
+    i18n:translate="" 
+    tal:content="feedback"
+    tal:condition="feedback">
+    feedback message
+  </div>
+  <tal:block condition="show_form">
+    <div class="subscriptionform">
+      <form method="POST" name="form" action="subscription_request" enctype="multipart/form-data">
+        <h3 i18n:translate="">
+          Subscribe to 
+          &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
+        </h3>
+        <p i18n:translate="">
+          Fill in your email address if you want to receive email
+          notifications whenever a new version of this page or its
+          subsections becomes available.
+        </p>
+        <span i18n:translate="">email address</span><span class="warning">*</span>
+        <input type="hidden" name="path" tal:attributes="value path"/>
+        <input type="text" name="emailaddress" size="30"
+          tal:attributes="value subscr_emailaddress"
+        />
+        <input class="button"
+          type="submit"
+          value="subscribe"
+          title="access key: alt-s"
+          accesskey="s"
+          i18n:attributes="title;value"
+        />
+      </form>
     </div>
-    <tal:block condition="show_form"> 
-    <form method="POST" name="form" action="subscription_request" enctype="multipart/form-data">
-      <table class="listing">
-        <thead>
-          <tr class="top-controls">
-            <td colspan="3">
-              <h3 i18n:translate="">
-                Subscribe to 
-                &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
-              </h3>
-              <p i18n:translate="">
-                Fill in your email address if you want to receive email
-                notifications whenever a new version of this page or its
-                subsections becomes available.
-              </p>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="odd">
-            <td class="field-title">
-              <span i18n:translate="">emailaddress</span><span class="warning">*</span>
-            </td>
-            <td>
-              <input type="text" name="emailaddress" size="40"
-                tal:attributes="value subscr_emailaddress"
-              />
-            </td>
-            <td>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr class="controls">
-            <td></td>
-            <td align="right" colspan="2">
-              <input type="hidden" name="path" tal:attributes="value path"
-              />
-              <input class="button"
-                type="submit"
-                value="subscribe"
-                title="access key: alt-s"
-                accesskey="s"
-                i18n:attributes="title;value"
-              />
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </form>
-    <form method="POST" name="form" action="cancellation_request" enctype="multipart/form-data">
-      <table class="listing">
-        <thead>
-          <tr class="top-controls">
-            <td colspan="3">
-              <h3 i18n:translate="">
-                Unsubscribe from 
-                &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
-              </h3>
-              <p i18n:translate="">
-                Fill in your emailaddress here if you want to unsubscribe
-                from email notifications for this page and its subsections.
-              </p>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="odd">
-            <td class="field-title">
-              <span i18n:translate="">emailaddress</span><span class="warning">*</span>
-            </td>
-            <td>
-              <input type="text" name="emailaddress" size="40"
-                tal:attributes="value cancel_emailaddress"
-              />
-            </td>
-            <td>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr class="controls">
-            <td></td>
-            <td align="right" colspan="2">
-              <input type="hidden" name="path" tal:attributes="value path"
-              />
-              <input class="button"
-                type="submit"
-                value="unsubscribe"
-                title="access key: alt-u"
-                accesskey="u"
-                i18n:attributes="title;value"
-              />
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </form></tal:block>
+    <div class="cancellationform">
+      <form method="POST" name="form" action="cancellation_request" enctype="multipart/form-data">
+        <h3 i18n:translate="">
+          Unsubscribe from
+          &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
+        </h3>
+        <p i18n:translate="">
+          Fill in your email address here if you want to unsubscribe
+          from email notifications for this page and its subsections.
+        </p>
+        <span i18n:translate="">email address</span><span class="warning">*</span>
+        <input type="hidden" name="path" tal:attributes="value path"/>
+        <input type="text" name="emailaddress" size="30"
+          tal:attributes="value cancel_emailaddress"
+        />
+        <input class="button"
+          type="submit"
+          value="unsubscribe"
+          title="access key: alt-u"
+          accesskey="u"
+          i18n:attributes="title;value"
+        />
+      </form>
+    </div>
+    <div class="backlink" 
+      i18n:translate="">
+      <a tal:attributes="href model/absolute_url">
+        Return to 
+        &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
+      </a>
+    </div>
   </tal:block>
+</tal:block>
 </metal:block>
 </metal:block>
 </tal:block>
