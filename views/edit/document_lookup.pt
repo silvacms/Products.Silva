@@ -92,6 +92,51 @@
                   </h2>
                 </td>
               </tr>
+              <tal:block replace="nothing">
+                ______________ top controls row ______________
+                XXX: the following is turned off because it doesn't work - if the user
+                chooses to upload/create something, he ends up in the Contents screen,
+                where there is no "place reference" button - nasty javascript needed.
+              </tal:block>
+              <tr class="top-controls"  replace="nothing">
+                <td colspan="6">
+                  <div style="float: left;"
+                    tal:condition="may_change_content">
+                  <input class="transport"
+                    name="add_object:method"
+                    type="submit"
+                    value="new..."
+                    title="add a new item - alt-n"
+                    accesskey="n"
+                    tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
+                    i18n:attributes="value title"
+                  />
+                  <label for="meta_type" 
+                    title="access key: alt-s" 
+                    accesskey="s"
+                    i18n:attributes="title"
+                  >
+                  </label>
+                  <select class="transport"
+                    name="meta_type"
+                    title="select a new item - alt-s"
+                    tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
+                    i18n:attributes="title"
+                  >
+                    <option value="None">
+                      <span i18n:translate="select">select</span>:
+                    </option>
+                    <tal:block tal:repeat="addable model/get_silva_addables">
+                      <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
+                        tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
+                        tal:attributes="value addable/name" />
+                    </tal:block>
+                  </select>
+                  </div>
+                  <span
+                     tal:condition="not:may_change_content">&nbsp;</span>
+                </td>
+              </tr>
             </thead>
 
             <tbody>
