@@ -1,0 +1,16 @@
+<html metal:use-macro="here/layout_macro.html/macros/layout">
+<head>
+  <title>Search</title>
+</head>
+<body>
+<metal:block fill-slot="main">
+<tal:block define="dummy here/set_content_type" />
+<h2>Search the public pages</h2>
+<form action="search_results" method="post">
+Searchterm:<br />
+<input type="text" name="query" /><br />
+<input type="submit" value="Search" />
+</form>
+</metal:block>
+</body>
+</html>

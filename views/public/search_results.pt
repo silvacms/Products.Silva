@@ -1,0 +1,16 @@
+<html metal:use-macro="here/layout_macro.html/macros/layout"
+      >
+<head>
+  <title>Search</title>
+</head>
+<body>
+<metal:block fill-slot="main">
+<tal:block define="dummy here/set_content_type" />
+<h2>Results of your query <span tal:replace="python:unicode(here.REQUEST['query'], 'utf-8')" /></h2>
+<tal:block repeat="res here/perform_search">
+<a tal:attributes="href python: '/'.join(res.object_path)" 
+    tal:content="python:'%s (%s)' % (res.getObject().get_title(), '/'.join(res.object_path))" />
+</tal:block>
+</metal:block>
+</body>
+</html>
