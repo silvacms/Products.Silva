@@ -199,7 +199,7 @@ _______ manual close section here _______
            <input class="button"
              type="submit"
              tal:attributes="name python: '%s/edit/tab_status_export:method' % '/'.join(request['model'].get_container().getPhysicalPath())"
-             value=" Export..."
+             value=" export..."
              title="access key: alt-e"
              accesskey="e"
            />
