@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Fri Nov 19 18:31:18 2004\n"
-"PO-Revision-Date: 2004-11-23 12:00+0100\n"
+"PO-Revision-Date: 2004-11-23 12:26+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -2526,38 +2526,38 @@ msgstr ""
 #: /views/edit/access_assign_to_group.py:17
 #: /views/edit/access_assign_to_user.py:15
 msgid "No role selected."
-msgstr ""
+msgstr "Keine Rolle ausgewählt."
 
 #: /views/edit/access_assign_to_group.py:19
 msgid "No groups selected."
-msgstr ""
+msgstr "Keine Gruppen ausgewählt."
 
 #: /views/edit/access_assign_to_group.py:29
 msgid "Role(s) assigned for ${list}"
-msgstr ""
+msgstr "Rolle(n) zugewiesen für ${list}"
 
 #: /views/edit/access_assign_to_user.py:18
 msgid "No user(s) selected."
-msgstr ""
+msgstr "Kein(e) Benutzer ausgewählt."
 
 #: /views/edit/access_revoke_from_group.py:20
 #: /views/edit/access_revoke_from_user.py:19
 msgid "No roles to revoke selected."
-msgstr ""
+msgstr "Keine Rollen zum Zurücknehmen ausgewählt."
 
 #: /views/edit/access_revoke_from_group.py:39
 msgid "Role(s) revoked for ${list}"
-msgstr ""
+msgstr "Roll(n) zurückgenommen für ${list}"
 
 #: /views/edit/access_revoke_from_user.py:35
 msgid "Role(s) revoked"
-msgstr ""
+msgstr "Rolle(n) zurückgenommen"
 
 #: /views/edit/asset_lookup.pt:147
 #: /views/edit/document_lookup.pt:150
 #: /views/edit/hyperlink_lookup.pt:109
 msgid "select"
-msgstr ""
+msgstr "Auswählen"
 
 #: /views/edit/asset_lookup.pt:150
 #: /views/edit/document_lookup.pt:153
@@ -2582,7 +2582,7 @@ msgstr "geändert"
 #: /views/edit/Container/tab_edit.pt:134
 #: /views/edit/Container/GhostFolder/tab_edit.pt:229
 msgid "author"
-msgstr ""
+msgstr "Autor"
 
 #: /views/edit/asset_lookup.pt:191
 msgid "view this asset"
@@ -2914,7 +2914,7 @@ msgstr "<u>a</u>lles auswählen"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:24
 msgid "user clipboard"
-msgstr ""
+msgstr "Zwischenablage für Benutzer"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup users..."
@@ -3257,7 +3257,7 @@ msgstr "Vorschau des Dokumentes: alt-;"
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
 msgid "public&nbsp;preview..."
-msgstr ""
+msgstr "Vorschau der öffentlichen Version"
 
 #: /views/edit/tab_preview.pt:37
 msgid "This is a closed version. You see it, but the public won't!"
@@ -3265,7 +3265,7 @@ msgstr "Dies ist eine geschloßene Version. Sie können sie siehen, aber die Öf
 
 #: /views/get_tab_info.py:25
 msgid "up a level: alt-${key}"
-msgstr ""
+msgstr "Eine Ebene aufwärts: alt-${key}"
 
 #: /views/get_tab_info.py:27
 msgid "up to top of publication: alt-${key}"
@@ -3349,7 +3349,7 @@ msgstr "Silva verlassen und veröffentlichte Seite sehen: alt-:"
 
 #: /views/macro_index.pt:226
 msgid "see public version"
-msgstr "Siehe öffentliche Version"
+msgstr "Öffentliche Version ansehen"
 
 #: /views/macro_index.pt:245
 msgid "Change your settings: alt-~"
