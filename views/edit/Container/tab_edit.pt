@@ -44,7 +44,7 @@
       <option value="" disabled>Select...</option>
       <tal:block tal:repeat="addable model/get_silva_addables">
         <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
-               tal:attributes="value addable/name" tal:content="addable/name"></option>
+               tal:attributes="value python: model.url_encode(addable['name'])" tal:content="addable/name"></option>
        </tal:block>
     </select>
     &nbsp;
