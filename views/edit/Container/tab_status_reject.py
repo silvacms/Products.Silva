@@ -11,7 +11,7 @@ from Products.Formulator.Errors import FormValidationError
 if not refs:
     return view.tab_status(
         message_type='error',
-        message='Nothing was selected, so no approval rejected')
+        message='Nothing was selected, so no approval was rejected.')
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)

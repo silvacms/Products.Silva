@@ -11,7 +11,7 @@ from Products.Formulator.Errors import FormValidationError
 if not refs:
     return view.tab_status(
         message_type='error', 
-        message='Nothing was selected, so nothing approved')
+        message='Nothing was selected, so nothing was approved.')
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
@@ -70,7 +70,7 @@ for ref in refs:
         obj.set_unapproved_version_publication_datetime(publish_datetime)
     elif not obj.get_unapproved_version_publication_datetime():
         # no date set, neither on unapproved version nor in tab_status form
-        not_approved.append((get_name(obj), 'no publication time set'))
+        not_approved.append((get_name(obj), 'no publication time was set'))
         continue
     # expire
     if clear_expiration_flag:

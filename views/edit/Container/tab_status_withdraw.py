@@ -8,7 +8,7 @@ view = context
 if not refs:
     return view.tab_status(
         message_type='error',
-        message='Nothing was selected, so no approval withdrawn')
+        message='Nothing was selected, so no approval was withdrawn.')
 
 msg = []
 approved_ids = []

@@ -11,7 +11,7 @@ from Products.Formulator.Errors import FormValidationError
 if not refs:
     return view.tab_status(
         message_type='error', 
-        message='Nothing was selected, so no settings changed')
+        message='Nothing was selected, so no settings were changed.')
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
@@ -29,7 +29,7 @@ if not publish_datetime and not expiration_datetime \
         and not clear_expiration_flag and not publish_now_flag:
     return view.tab_status(
         message_type='error', 
-        message='No publication nor expiration time nor any of the flags set.')
+        message='No publication nor expiration time nor any of the flags were set.')
 
 now = DateTime()
 
@@ -54,11 +54,11 @@ for ref in refs:
             # since we can change the expiration time for published content.
             if not obj.get_public_version():
                 not_changed.append(
-                    (get_name(obj), 'no next- or public version available'))
+                    (get_name(obj), 'no next or public version available'))
                 continue
             # cannot publish, so report that when publ. times have been set
             if publish_now_flag or publish_datetime:
-                not_changed.append((get_name(obj), 'cannot change publication time of version already public'))
+                not_changed.append((get_name(obj), 'cannot change publication time of already public versions.'))
             # expire
             if clear_expiration_flag:
                 obj.set_public_version_expiration_datetime(None)
