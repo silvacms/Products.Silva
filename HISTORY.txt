@@ -7,12 +7,16 @@ Silva changes
 
     Features added
 
+      - Silva has been i18n-ed.
+
       - Link objects now accept other protocols in the URL too (https,
         news, ftp, mailto).
 
     Bugs fixed
 
       - Fixed incorrect recursive call for get_public_tree_helper
+
+      - Enable use of enters for <br> in forms editor.
 
   1.1
 
