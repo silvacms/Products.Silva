@@ -43,7 +43,7 @@
               cellspacing="0"
               tal:define="
                 members view/get_members;
-                global local_roles python:None">
+                global revokeables python:None">
               <thead>
                 <tr>
                   <td class="top"
@@ -114,7 +114,7 @@
                         tal:attributes="
                           value python:'%s||%s' % (userid, local);
                           id string:revoke_${userid}" 
-                        tal:define="global local_roles string:1" /><br tal:condition="not:repeat/local/end" />
+                        tal:define="global revokeables string:1" /><br tal:condition="not:repeat/local/end" />
                     </tal:block>
                   </td>
                 </tr>
@@ -156,7 +156,7 @@
                     title="revoke selected role(s) from selected user(s)"
                     type="submit"
                     value="Revoke role" 
-                    tal:condition="local_roles"
+                    tal:condition="revokeables"
                   />
                 </td>
               </tr>
