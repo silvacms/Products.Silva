@@ -9,7 +9,7 @@
     tal:define="indent python:obj[0]; 
       item python:obj[1];
       title python:obj[1].get_title_html()"
-    tal:condition="python:toc_depth == -1 or indent &lt; toc_depth">
+    tal:condition="python:toc_depth == -1 or indent < toc_depth and (not hasattr(obj[1], 'hide_from_tocs') or not obj[1].hide_from_tocs)">
   <img width="12" height="14"
     tal:condition="python:indent > 0"
     tal:attributes="width python:indent * 32;

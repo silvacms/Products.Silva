@@ -6,7 +6,7 @@
   <toc tal:omit-tag=""
     tal:repeat="obj python:node.get_content().get_container().get_tree()">
   <loop tal:omit-tag=""
-    tal:condition="python:obj[1].is_published() and (toc_depth == -1 or indent &lt; toc_depth);"
+    tal:condition="python:(obj[1].is_published() or (hasattr(obj[1], 'show_in_tocs') and obj[1].show_in_tocs)) and (toc_depth == -1 or indent < toc_depth) and (not hasattr(obj[1], 'hide_from_tocs') or not obj[1].hide_from_tocs)"
     tal:define="indent python:obj[0]; 
       item python:obj[1];
       title python:obj[1].get_title_html()">
