@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13.2.2 $
+# $Revision: 1.13.2.3 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -200,7 +200,7 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(child.data)
+                result.append(self.output_convert_editable(child.data))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -208,12 +208,12 @@ class EditorSupport(SimpleItem):
                 result.append('[[')
                 result.append(self.render_heading_as_editable(child))
                 result.append('|')
-                result.append(child.getAttribute('name'))
+                result.append(self.output_convert_editable(child.getAttribute('name')))
                 result.append(']]')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-
-        return self.output_convert_editable(''.join(result))
+                
+        return ''.join(result)
 
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
