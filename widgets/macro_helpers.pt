@@ -22,7 +22,6 @@
 
 <div metal:define-macro="edit_bottom_start" tal:omit-tag="">
   <td class="invisible"
-    style="border-right:1px solid #617681;"
     width="16">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" />
   </td>

@@ -1,7 +1,7 @@
 <div metal:use-macro="container/macro_edit_view/macros/edit_view">
 
 <div metal:fill-slot="edit_input" tal:omit-tag="">
-<input type="button" class="button" name="" value="Add hyperlink" style="float:right;" title="Access key: Alt-a" accesskey="a"
+<input type="button" class="navigation" name="" value="Add hyperlink..." style="float:right;" title="Access key: Alt-a" accesskey="a"
   tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup\', \'((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % node.get_container().absolute_url()" />
 &nbsp;List items: <br style="clear:both;" /> 
 <script type="text/javascript" tal:content="structure here/asset_reference.js" />
@@ -41,7 +41,7 @@ Type:
 
 <div metal:fill-slot="edit_notes" tal:omit-tag="">
 <ul class="tips">
-  <li>Add definition term on first line, definition on second line, separate items with an empty line space.</li>
+  <li>Add term on first line, definition on second line. Separate items with an empty line space.</li>
   <li><b>Tip:</b> tab to the exit button or use alt-e.</li>
   <li metal:use-macro="container/macro_notes/macros/markup_notes">markup tips</li>
 </ul>

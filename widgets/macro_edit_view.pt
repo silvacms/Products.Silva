@@ -35,7 +35,8 @@
 </tr>
 <tr class="inter-controls">
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_start" tal:omit-tag="" />
-<td class="align-right"><div metal:define-slot="element_controls">&nbsp;</div></td>
+<td class="align-right"
+    style="border-left:1px solid #617681;"><div metal:define-slot="element_controls">&nbsp;</div></td>
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_controls" tal:omit-tag="" />
 <div metal:use-macro="container/macro_helpers/macros/element_buttons" />
 </tr>

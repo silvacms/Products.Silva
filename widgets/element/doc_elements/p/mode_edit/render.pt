@@ -3,7 +3,7 @@
 <script type="text/javascript" tal:content="structure here/asset_reference.js" />
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
 <div align="right">
-<input type="button" class="button" name="" value="Add hyperlink" title="Access key: alt-a" accesskey="a"
+<input type="button" class="navigation" name="" value="Add hyperlink..." title="Access key: alt-a" accesskey="a"
   tal:define="container node/get_container"
   tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?asset_context=%s\', \' ((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % (container.absolute_url(), '/'.join(container.getPhysicalPath()))" />
 </div>
