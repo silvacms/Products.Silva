@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.101 2004/07/21 11:40:40 jw Exp $
+# $Id: install.py,v 1.102 2004/08/09 17:40:18 bradb Exp $
 """Install for Silva Core
 """
 # Python
@@ -153,6 +153,11 @@ def install(root):
         configure_default_layout_package(root)
     from LayoutRegistry import DEFAULT_LAYOUT
     root.set_layout(DEFAULT_LAYOUT)
+
+    # install the renderer registry service
+    if not hasattr(root, 'service_renderer_registry'):
+        root.manage_addProduct['Silva'].manage_addRendererRegistryService(
+            'service_renderer_registry', 'Silva Renderer Registry Configuration')
 
     # try to install Kupu
     installKupu(root)
