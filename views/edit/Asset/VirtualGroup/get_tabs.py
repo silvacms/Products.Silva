@@ -7,5 +7,9 @@
 ##parameters=
 ##title=
 ##
-# define name, id, up_id
-return [('Edit', 'tab_edit', 'tab_edit'), ]
+# define:
+# name, id/None, up_id, toplink_accesskey, tab_accesskey, uplink_accesskey
+tabs = [('Edit', 'tab_edit', 'tab_edit', '!', '1', '6'),
+       ]
+
+return tabs
