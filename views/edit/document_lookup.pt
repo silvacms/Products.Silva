@@ -340,7 +340,7 @@
                     <tal:block replace="nothing">
                       _______ modified date cell _______
                     </tal:block>
-                    <td tal:define="modification_time asset/get_modification_time | nothing">
+                    <td tal:define="modification_time asset/get_modification_datetime | nothing">
                       <label title="properties"
                         tal:condition="modification_time"
                         tal:attributes="for asset/id"
