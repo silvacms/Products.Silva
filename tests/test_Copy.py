@@ -162,7 +162,6 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         # now copy the folder subdoc is in
         self.root.action_copy(['folder4'], self.REQUEST)
         # into folder5
-        print self.root.folder5
         get_transaction().commit(1)
         self.root.folder5.action_paste(self.REQUEST)
         get_transaction().commit(1)
