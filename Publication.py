@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.50 $
+# $Revision: 1.51 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -76,6 +76,10 @@ class Publication(Folder.Folder):
         """
         self._to_folder_or_publication_helper(to_folder=1)
         
+
+    def manage_afterClone(self, item):
+        Folder.Folder.inheritedAttribute('manage_afterClone')(self, item)
+
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_layout')

@@ -1,9 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 
 from Products.Silva import icon
 from Products.Silva.install import add_fss_directory_view
+from Products.Silva.fssite import registerDirectory
+import os
 
 class LayoutRegistry:
 
@@ -16,6 +18,8 @@ class LayoutRegistry:
     def register(self, name, description, module, template_directory):
         self._layouts[name] = Layout(
             name, description, module, template_directory)
+        registerDirectory(os.path.join(os.path.dirname(module), template_directory), globals())
+        
 
     def install(self, root, name):
         self._layouts[name].install(root.service_resources.Layouts)
