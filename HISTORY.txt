@@ -1,12 +1,23 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.42 $
+$Revision: 1.47.2.43 $
 
 Silva changes
 
+  0.9.1.8
+
+    Bugs Fixed
+
+      - The bug fixed in 0.9.1.7 regarding _allow_authentication_requests
+        should have been fixed in a backward compatible way in 0.9.1.7, which
+        it wasn't. Therefore old content and extensions broke. This release
+        adds only some backward compatible code to resolve this issue. From
+        now on, 0.9.1.4 (and older 0.9.1.x) content and extensions should work
+        again.
+
   0.9.1.7
 
-    Features added
+    Features Added
 
       - Support for external editor is now complete, users don't have to
         manually setup anything anymore to use it.
