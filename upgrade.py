@@ -4,6 +4,28 @@ from IContainer import IContainer
 from IVersionedContent import IVersionedContent, ICatalogedVersionedContent
 from IVersion import IVersion, ICatalogedVersion
 from Membership import NoneMember, noneMember 
+from helpers import reserved_ids
+
+def check_reserved_ids(obj):
+    """Walk through the entire tree to find objects of which the id is not
+    allowed, and return a list of the urls of those objects
+    """
+    illegal_urls = []
+    for o in obj.objectValues():
+        if o.id in reserved_ids:
+            illegal_urls.append(o.absolute_url())
+        if hasattr(o, 'objectValues'):
+            illegal_urls += check_reserved_ids(o)
+    return illegal_urls
+
+illegal_url_template = '''<html>
+<body>
+The following objects have an id that is illegal in
+Silva, and need to be renamed in order for the upgrade to continue:<br /><br />
+%s
+</body>
+</html>
+'''
 
 def from091to092(self, root):
     """Upgrade Silva content from 0.9.1 to 0.9.2
@@ -22,6 +44,15 @@ def from091to092(self, root):
     def manage_beforeDelete_old_style_docs(self, item, container):
         Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
     Document.manage_beforeDelete = manage_beforeDelete_old_style_docs
+
+    # first check the object tree for illegal ids, since they will break the upgrade
+    illegal_urls = check_reserved_ids(root)
+
+    if illegal_urls:
+        urllist = []
+        for url in illegal_urls:
+            urllist.append('<a href="%(url)s">%(url)s</a><br />' % {'url': url})
+        return illegal_url_template % '\n'.join(urllist)
 
     # set the '_allow_subscription' attribute on servce_members if it isn't there yet
     sm = getattr(root, 'service_members', None)
