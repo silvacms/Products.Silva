@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53 $
+# $Revision: 1.53.2.1 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -162,9 +162,10 @@ class Security(AccessManager):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_is_closed_to_public')
     def sec_is_closed_to_public(self):
-        """Check whether this is closed. This method returns 0 if the object is open to public,
-        1 if the object itself is set to closed and a 1+<number of parents up> if the some parent
-        object is closed (so if the effect is acquired).
+        """Check whether this is closed. This method returns 0 if the object 
+        is open to public, 1 if the object itself is set to closed and a 
+        1+<number of parents up> if the some parent object is closed (so if 
+        the effect is acquired).
         """
         # XXX ugh
         i = 0
