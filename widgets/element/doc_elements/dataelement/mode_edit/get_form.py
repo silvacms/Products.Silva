@@ -15,14 +15,7 @@ if not datasource:
     return None
 
 datasource_parameters = datasource.parameters()
-current = {}
-
-for child in node.childNodes:
-    if child.nodeType == child.ELEMENT_NODE:
-        if child.nodeName == 'parameter':
-            name = child.getAttribute('key')
-            value = child.getAttribute('value')
-            current[name] = value
+current = context.get_parameters()
 
 form = datasource.parameter_values_as_form(current)
 return form

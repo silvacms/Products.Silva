@@ -8,13 +8,6 @@
 ##title=
 ##
 
-# <datasource path="">
-#   <parameter key="" value="" />
-#   ...
-# </datasource>
-
-from Products.Formulator.Errors import ValidationError, FormValidationError
-
 request = context.REQUEST
 node = request.node
 parameters = {}
