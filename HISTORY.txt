@@ -25,6 +25,8 @@ Silva changes
       - Nested lists only worked in the xslt renderers when the outer list 
         was bulleted. Nested lists can now have any type normal lists can.
 
+      - Newlines can be used instead of <br> in the forms editor.
+
   1.1
 
     Features added
