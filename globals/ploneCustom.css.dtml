@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 /* darker870: cfd7e1; selected bac1cc; light d4dce6; */
 div.workspace {
   background : #a7adb5;
-  margin: 0;
+  margin: none;
 }
 
 pre {
@@ -45,6 +45,8 @@ pre {
 
 /* _________________________________________________________ path bar _____ */
 
+/* XXX Fixme: use dtml variable for silva root, here and in tabs */
+
 div.pathBar {
   font-size: 90%;
     color: &dtml-shade70;;
@@ -52,8 +54,7 @@ div.pathBar {
     background-repeat: repeat-x;
     background-color: #39424d;
     padding: 2px 4px 0 22px;
-    border: 0;
-    vertical-align: bottom;
+    border: none;
     line-height: 1.3em;
 }
 
@@ -65,8 +66,13 @@ div.pathBar a {
     text-transform: none;
 }
 
-div.pathBar a.visited {
+div.pathBar a:visited {
     color: &dtml-shade74;;
+}
+
+div.pathBar a:hover {
+    color: &dtml-shade74;;
+    text-transform: underline;
 }
 
 div.pathBar a.manage {
@@ -166,9 +172,12 @@ div.tabs a.normal {
 /* ________________________________________ river bar (or sidewalk :) _____ */
 
 div.riverBar {
-  height: 4px;
+  /* for IE5 */
+  font-size: 15%;
+  height: 1.5em;
   background: &dtml-mainTabBackgroundSelected;;
   border-bottom: &dtml-shade50; 1px solid;
+  margin-bottom: 0;
 }
 
 
@@ -221,10 +230,10 @@ div.personalBar img {
 /* ____________________________________________________ table columns _____ */
 
 table.columns {
-  margin-top : 7px;
+  padding-top : 7px;
 }
 
-/* 3 column table */
+/* 3 column table (default) */
 table.columns td.left {
     width: 20%;
     padding: 0 8px 0 8px ! important;
@@ -253,6 +262,16 @@ table.columns1 {
     width: 100%;
     padding: 0 8px 0 8px;
 }
+
+/* used to shape non-nested listing tables */
+.focus-box {
+  /* for IE5 */
+  width : 90%;
+  max-width : 55em; 
+  margin : 0em 8px 0em 8px;
+  padding-top: 8px;
+}
+
 
 /* ____________________________________________________ table listing _____ */
 
@@ -311,10 +330,10 @@ table.listing th.listing-right {
 /* not in use? */
 table.listing th.empty {
     border: none;
-    border-bottom: &dtml-boxBorder;;
+    border-bottom: &dtml-listingBorder;;
 }
 
-/* not in use? */
+/* not in use if we scrap the uplinks */
 table.listing th img {
     vertical-align: bottom;
     padding: 0;
@@ -340,6 +359,7 @@ table.listing td.top {
     border-top: &dtml-listingBorder; ! important;
     border-left: &dtml-listingBorder; ! important;
     border-right: &dtml-listingBorder; ! important;
+    border-bottom: none;
     padding-top: 0em ! important;
     padding-bottom: 0em ! important;
     vertical-align: bottom;
@@ -366,18 +386,18 @@ table.listing td.top h2 img {
     vertical-align: top;
 }
 
-table.listing tr.top-controls td {
-  vertical-align: top;
-  padding-left: 0.4em;
-  padding-right: 0.4em;
-}
-
 table.listing tr.top-controls h3 {
   color: #c9dfe2;
   margin: 0em 0.2em 0.1em 0.2em;
   display: inline;
   border: none;
   float: left;
+}
+
+table.listing tr.top-controls td {
+  vertical-align: top;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
 }
 
 table.listing tr.top-controls div.buttons {
@@ -400,7 +420,7 @@ table.listing tr.controls td, tr.controls-1 td {
   padding: 0em 0.4em 0em 0.4em;
 }
 
-/* rename */
+/* rename this selector */
 .widebody {
   color: #c9dfe2;
 }
@@ -540,14 +560,6 @@ table.listing a.navigation:hover {
 
 /* _______________________________________________________ form stuff _____ */
 
-form.focus-box {
-  /* for IE5 */
-  width : 90%;
-  max-width : 55em; 
-  margin : 0em 8px 0em 8px;
-  padding-top: 8px;
-}
-
 form.compact {
     margin: 0;
     padding: 0;
@@ -657,6 +669,8 @@ input.cancel {
 
 
 
+/* _________________________________________________________ feedback _____ */
+
 /* Plone message box aliased to Silva name */
 
 div.feedback {
@@ -677,6 +691,7 @@ div.alert {
     padding: 0.1em 9px 0.1em 9px;
 }
 
+/* not in use */
 div.feedback a {
 	color: &dtml-mainFontColor;;
     text-decoration: underline;

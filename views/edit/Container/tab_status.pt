@@ -118,12 +118,12 @@
                             tal:attributes="
                               class obj/status_style | default;
                               href string:${obj_url}/edit/tab_preview;">
-                            <span>
+                            <span style="color:#444446;">
                               <i tal:condition="obj/is_default | nothing">
                                 index of
                               </i>
-                              <tal:block replace="structure obj/title_html" />
                             </span>
+                              <tal:block replace="structure obj/title_html" />
                           </a>
                         </div>
                       </div>

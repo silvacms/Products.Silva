@@ -41,8 +41,7 @@
         ______________ vein + title row ______________
       </tr>
       <tr>
-        <td class="top"
-          colspan="3">
+        <td class="top">
           <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure python:view.render_icon(model)" />
             &#xab;<span tal:replace="structure string:${model/get_title_html}">title</span>&#xbb;
@@ -56,6 +55,16 @@
       <tr class="top-controls"
         tal:condition="may_change_content">
         <td>
+          <div class="buttons"
+            style="float:right;">
+            <a class="navigation"
+              href="settings_addables"
+              title="change the addables allowed in this publication: alt-a"
+              accesskey="c"
+              tal:condition="python:model.meta_type == 'Silva Publication'">
+              Configure <u>a</u>ddables...
+            </a>
+          </div>
           <div class="buttons">
             <tal:block condition="python:model.meta_type == 'Silva Folder'">
               <a class="button"
@@ -73,18 +82,6 @@
                 Convert to folder
               </a>
             </tal:block>
-          </div>
-        </td>
-        <td class="align-right"
-          colspan="2">
-          <div class="buttons">
-            <a class="navigation"
-              href="settings_addables"
-              title="change the addables allowed in this publication: alt-a"
-              accesskey="c"
-              tal:condition="python:model.meta_type == 'Silva Publication'">
-              Configure <u>a</u>ddables...
-            </a>
           </div>
         </td>
       </tr>

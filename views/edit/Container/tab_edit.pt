@@ -156,7 +156,7 @@
                       <tal:block replace="nothing">
                         _______ id cell _______
                       </tal:block>
-                      <td>
+                      <td class="listing-left">
                         <a class="image"
                           tal:attributes="
                             href python:here.get_editor_link(item);

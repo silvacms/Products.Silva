@@ -122,7 +122,7 @@ boxEvenBackground:string=#F8F8F8
 boxOddBackground:string=White
 boxHighlight:string=2px solid #FFCF7F
 
-listingBorder:string=1px solid #567275
+listingBorder:string=1px solid red
 listingHeaderBackground:string=transparent
 listingHeaderFontColor:string=#555557
 listingLinkHover:string=underline

@@ -45,6 +45,7 @@
     </span>:
 
     <tal:block tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
+
       <a href="url"
         tal:content="structure item/get_title_html"
         tal:attributes="href string:${item/absolute_url}/edit/${template/id}"
