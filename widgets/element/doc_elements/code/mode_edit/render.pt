@@ -6,7 +6,7 @@
   tal:condition="python: code_in_codecalls == ''">
   &nbsp;No code elements are available.<br />
   &nbsp;Code elements can be Python scripts and ZPTs.<br />
-  &nbsp;They should be located in a folder in the ZMI named 'codecalls'.<br />
+  &nbsp;They should be located in a folder in the ZMI named <tt>codecalls</tt>.<br />
 </tal:block>
 <tal:block 
   tal:condition="python: code_in_codecalls != ''">
@@ -19,7 +19,7 @@
 <div metal:fill-slot="edit_notes" tal:omit-tag="">
 <ul class="tips">
   <li>Select the code to be executed when parsed.</li>
-  <li><b>Tip:</b> Tab to the save button.</li>
+  <li><b>Tip:</b> Tab to the exit button or alt-e.</li>
 </ul>
 </div>
 </div>
