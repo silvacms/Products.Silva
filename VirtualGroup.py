@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.2 2003/01/21 16:51:01 zagy Exp $
+# $Id: VirtualGroup.py,v 1.3 2003/01/24 08:45:55 zagy Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -77,20 +77,23 @@ manage_addVirtualGroupForm = PageTemplateFile(
     "www/virtualGroupAdd", globals(),
     __name__='manage_addVirtualGroupForm')
 
-def manage_addVirtualGroup(self, id, title, group_name, REQUEST=None):
+def manage_addVirtualGroup(self, id, title, group_name, asset_only=0,
+        REQUEST=None):
     """Add a Virtual Group."""
-    if not self.is_id_valid(id):
-        return
-    if not hasattr(self, 'service_groups'):
-        raise AttributeError, "There is no service_groups"
-    if self.service_groups.isGroup(group_name):
-        raise ValueError, "There is already a group of that name."
+    if not asset_only:
+        if not self.is_id_valid(id):
+            return
+        if not hasattr(self, 'service_groups'):
+            raise AttributeError, "There is no service_groups"
+        if self.service_groups.isGroup(group_name):
+            raise ValueError, "There is already a group of that name."
     object = VirtualGroup(id, title, group_name)
     self._setObject(id, object)
     object = getattr(self, id)
     # set the valid_path, this cannot be done in the constructor because the context
     # is not known as the object is not inserted into the container.
     object.valid_path = object.getPhysicalPath()
-    self.service_groups.addVirtualGroup(group_name)
+    if not asset_only:
+        self.service_groups.addVirtualGroup(group_name)
     add_and_edit(self, id, REQUEST)
     return ''
