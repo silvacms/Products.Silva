@@ -9,6 +9,7 @@
   <title metal:define-slot="title"
     tal:content="here/get_title">doc title</title>
   <!-- Begin metatags -->
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
   <meta name="subject"
     tal:define="subject python: here.get_metadata_element('silva-extra', 'subject') or nothing"
     tal:condition="subject"
