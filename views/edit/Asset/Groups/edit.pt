@@ -6,7 +6,7 @@
     <tal:block condition="model/isValid | nothing">
       <h3>
         <a href="tab_access"
-          title="Up to top of Access tab"
+          title="Back to Groups"
           tal:attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()">
           <img alt="Up to top of Access tab"
             border="0"
@@ -80,11 +80,14 @@
                 <input name="userids:list"
                   type="checkbox"
                   value="userid"
-                  tal:attributes="value userid" />
+                  tal:attributes="
+                    value member/userid;
+                    id member/userid" />
                 &nbsp;
-                <b tal:content="member/fullname">
+                <b><label tal:content="member/fullname"
+                  tal:attributes="for member/userid">
                   username
-                </b>
+                </label></b>
               </td>
             </tr>
           </tal:block>
@@ -104,7 +107,8 @@
                 title="Remove selected user(s) from this group."
                 type="submit"
                 value="Remove users"
-                onClick="return confirm('Really remove?')"/>
+                onClick="return confirm('Really remove?')"
+                tal:condition="userids" />
             </td>
           </tr>
         </table>
@@ -112,7 +116,7 @@
     </tal:block>
 
     <tal:block condition="not:model/isValid | nothing">
-      "Things to do when groups is not in it original location"
+      "Things to do when groups is not in its original location"
     </tal:block>
   </tal:block>
 </div>
