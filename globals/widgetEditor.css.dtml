@@ -41,8 +41,12 @@
   color : #444444; 
 }
 
-p.lead {
+.lead {
   font-weight : bold;
+}
+
+.annotation {
+  font-style : italic;
 }
 
 pre {
