@@ -23,6 +23,10 @@ class FakeRenderer:
     def getName(self):
         return "Fake Renderer"
 
+def testopen(path, rw='r'):
+    directory = os.path.dirname(__file__)
+    return open(os.path.join(directory, path), rw)
+    
 class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
@@ -34,7 +38,7 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
-        source_file = open("data/test_document.xml")
+        source_file = testopen("data/test_document.xml")
         importer.importFromFile(
             source_file, result = importfolder,
             settings = test_settings, info = test_info)

@@ -12,10 +12,15 @@ from Products.Silva.silvaxml import xmlimport
 from Products.Silva.interfaces import IGhost, IContainer
 from DateTime import DateTime
 
+def testopen(path, rw):
+    directory = os.path.dirname(__file__)
+    return open(os.path.join(directory, path), rw)
+
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     
     def test_publication_import(self):
-        source_file = open('data/test_publication.xml', 'r')
+        directory = os.path.dirname(__file__)
+        source_file = testopen('data/test_publication.xml', 'r')
         xmlimport.importFromFile(
             source_file, self.root)
         source_file.close()
@@ -30,7 +35,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        source_file = open('data/test_folder.xml', 'r')
+        source_file = testopen('data/test_folder.xml', 'r')
         xmlimport.importFromFile(
             source_file, importfolder)
         source_file.close()
@@ -45,7 +50,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        source_file = open('data/test_link.xml', 'r')
+        source_file = testopen('data/test_link.xml', 'r')
         xmlimport.importFromFile(
             source_file, importfolder)
         source_file.close()
@@ -74,7 +79,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
         # import the ghost
-        source_file = open('data/test_autotoc.xml', 'r')
+        source_file = testopen('data/test_autotoc.xml', 'r')
         xmlimport.importFromFile(
             source_file,
             self.root)
@@ -90,13 +95,13 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_ghost_import(self):
         # import the ghost
-        source_file = open('data/test_link.xml', 'r')
+        source_file = testopen('data/test_link.xml', 'r')
         xmlimport.importFromFile(
             source_file,
             self.root)
         source_file.close()
 
-        source_file = open('data/test_ghost.xml', 'r')
+        source_file = testopen('data/test_ghost.xml', 'r')
         xmlimport.importFromFile(
             source_file,
             self.root)
@@ -133,7 +138,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         binding = metadata_service.getMetadata(haunted_folder)
         binding._setData({'creator': 'ghost dog'}, 'silva-extra')
         # import the ghost folder
-        source_file = open('data/test_ghost_folder.xml', 'r')
+        source_file = testopen('data/test_ghost_folder.xml', 'r')
         xmlimport.importFromFile(
             source_file,
             self.root)
@@ -172,7 +177,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
                 IContainer.isImplementedBy(obj))
 
     def test_indexer_import(self):
-        source_file = open('data/test_indexer.xml', 'r')
+        source_file = testopen('data/test_indexer.xml', 'r')
         xmlimport.importFromFile(
             source_file,
             self.root)
@@ -189,7 +194,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        zip_file = ZipFile('data/test_export.zip', 'r')
+        directory = os.path.dirname(__file__)
+        zip_file = ZipFile(
+            os.path.join(directory, 'data/test_export.zip'), 'r')
         test_info = xmlimport.ImportInfo()
         test_info.setZipFile(zip_file)
         bytes = zip_file.read('silva.xml')

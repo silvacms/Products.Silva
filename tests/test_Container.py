@@ -46,7 +46,7 @@ class ContainerBaseTestCase(SilvaTestCase.SilvaTestCase):
                   'subsubdoc', 'Subsubdoc')
         self.subdoc2 = subdoc2 = self.add_document(publication5,
                   'subdoc2', 'Subdoc2')
-        directory = os.getcwd() # XXX probably wrong, was: dirname(__file__)
+        directory = dirname(__file__)
         test_image_filename = join(directory,'data','testimage.gif')
         test_image = open(test_image_filename, 'r')
         self.image1 = self.add_image(self.root, 'image1', 'Image1',

@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import os, sys, time
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -15,7 +15,7 @@ from Products.Silva import Image, File
 # Constructing some testable zipfile
 import os
 from os.path import join
-directory = os.getcwd()
+directory = os.path.dirname(__file__)
 zipfile1 = open(join(directory,'data','test1.zip'))
 zipfile2 = open(join(directory,'data','test2.zip'))
 

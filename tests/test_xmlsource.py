@@ -20,7 +20,8 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
-        source_file = open("data/test_document.xml")
+        directory = os.path.dirname(__file__)
+        source_file = open(os.path.join(directory, "data/test_document.xml"))
         importer.importFromFile(
             source_file, result = importfolder,
             settings = test_settings, info = test_info)

@@ -207,7 +207,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'test_link',
             'This is a test link, you insensitive clod!',
             'http://www.snpp.com/')
-        directory = os.getcwd()
+        directory = os.path.dirname(__file__)
         zip_in = open(join(directory,'data','test1.zip'))
         adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
         succeeded, failed = adapter.importArchive(zip_in)
@@ -235,7 +235,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'test_link',
             'This is a test link, you insensitive clod!',
             'http://www.snpp.com/')
-        directory = os.getcwd()
+        directory = os.path.dirname(__file__)
         zip_in = open(join(directory,'data','test1.zip'))
         adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
         succeeded, failed = adapter.importArchive(zip_in)
@@ -246,10 +246,10 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         settings = xmlexport.ExportSettings()
         adapter = zipfileexport.getZipfileExportAdapter(testfolder)
         result = adapter.exportToZip(testfolder, settings)
-        f = open('test_export.zip', 'wb')
+        f = open(join(directory, 'test_export.zip'), 'wb')
         f.write(result)
         f.close()
-        f = open('test_export.zip', 'rb')
+        f = open(join(directory, 'test_export.zip'), 'rb')
         zip_out = ZipFile(f, 'r')
         namelist = zip_out.namelist()
         namelist.sort()
@@ -259,7 +259,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             namelist)
         zip_out.close()
         f.close()
-        os.remove('test_export.zip')
+        os.remove(join(directory, 'test_export.zip'))
 
 if __name__ == '__main__':
     framework()

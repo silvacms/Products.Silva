@@ -18,6 +18,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         from Products.Silva.adapters import zipfileexport
         from Products.Silva.Image import Image
         from zipfile import ZipFile, BadZipfile
+
+        directory = os.path.dirname(__file__)
+
         importfolder = self.add_folder(
             self.root,
             'importfolder',
@@ -25,7 +28,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             policy_name='Auto TOC')
         xmlimport.initializeXMLImportRegistry()
         importer = xmlimport.theXMLImporter
-        zip_file = ZipFile('data/test_export.zip', 'r')
+        zip_file = ZipFile(os.path.join(directory, 'data/test_export.zip'), 'r')
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
         test_info.setZipFile(zip_file)
@@ -56,10 +59,10 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         settings = xmlexport.ExportSettings()
         adapter = zipfileexport.getZipfileExportAdapter(testfolder)
         result = adapter.exportToZip(testfolder, settings)
-        f = open('test_export.zip', 'wb')
+        f = open(os.path.join(directory, 'test_export.zip', 'wb'))
         f.write(result)
         f.close()
-        f = open('test_export.zip', 'rb')
+        f = open(os.path.join(directory, 'test_export.zip', 'rb'))
         zip_out = ZipFile(f, 'r')
         namelist = zip_out.namelist()
         namelist.sort()
