@@ -25,6 +25,12 @@ Silva changes
 
       - Some fixes for the full-media import/export system.
 
+      - The 'get link reference' buttons in the forms-based editor now
+        return the new-style HTML subset references.
+
+      - The forms-based editor now highlights index items correctly in
+        nested lists and tables.
+
   1.1 beta 1
 
     Features added
