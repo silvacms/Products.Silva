@@ -41,13 +41,13 @@
     </tal:block>
     <tal:block condition="silva_permissions/ChangeSilvaContent">
       <input class="button" type="submit" name="add_object:method" value=" New:" title="Add a new item: alt-n" accesskey="n" />
-      <select name="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();"  title="Select a new item: alt-s" accesskey="s">
+      <select name="meta_type" id="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();"  title="Select a new item: alt-s">
         <option value="None">Select...</option>
         <tal:block tal:repeat="addable model/get_silva_addables">
         <option tal:attributes="value addable/name" tal:content="addable/name"></option>
         </tal:block>
       </select>
-      &nbsp;
+      <label for="meta_type" title="Access key: alt-s" accesskey="s">&nbsp;</label>
       <input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data: alt-i" accesskey="i" />&nbsp;
     </tal:block>
   </td>
@@ -190,9 +190,9 @@
 <span tal:replace="nothing"
   tal:define="global publishables python:model.get_ordered_publishables()">
   ______________ listing iteration ______________ </span>
+<!-- iteration over ordered publishables -->
 <rowset tal:omit-tag="" tal:repeat="item publishables">
 <cycle tal:omit-tag="" tal:define="oddrow repeat/item/odd">
-<!-- iteration over ordered publishables -->
 <tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
   <span tal:replace="nothing"> _______ position cell _______ </span>
   <td align="right" tal:content="repeat/item/number">
