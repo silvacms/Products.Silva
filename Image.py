@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1 2004/03/04 17:44:43 faassen Exp $
+# $Id: Image.py,v 1.50.4.2 2004/04/21 09:14:14 guido Exp $
 
 # Python
 import re, string 
@@ -320,7 +320,7 @@ class Image(Asset):
     
     def get_scaled_file_size(self):
         return self.image.get_size()
-    
+
 InitializeClass(Image)
     
 manage_addImageForm = PageTemplateFile(
