@@ -22,7 +22,6 @@
 <input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
 <input type="hidden" name="mode_asset:int" value="0"
   tal:attributes="value mode_asset" />
-<form action="tab_edit_rename_submit" method="POST">
 <table class="listing">
 <thead>
   <tr>
