@@ -206,7 +206,9 @@ class GhostTestCase(unittest.TestCase):
         # now break link
         self.sroot.action_delete(['doc1'])
         self.assertEquals('Ghost target is broken', ghost.get_title())
-        
+
+    # FIXME: ghost should do read access checks, test for it somehow?
+    
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(GhostTestCase, 'test'))

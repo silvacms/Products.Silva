@@ -66,7 +66,11 @@ class GhostVersion(SimpleItem.SimpleItem):
         if self._content_url is None:
             return None
         try:
-            return self.getPhysicalRoot().unrestrictedTraverse(self._content_url)
+            content = self.getPhysicalRoot().unrestrictedTraverse(self._content_url)
+            if not Interfaces.VersionedContent.isImplementedBy(content):
+                return None
+            else:
+                return content
         # FIXME: should this be a bare exception? should catch all traversal failures..
         except:
             return None
