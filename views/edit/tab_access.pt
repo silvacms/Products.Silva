@@ -17,6 +17,7 @@
     group_service view/service_groups | nothing;
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;
+    silva_permissions here/get_silva_permissions;
 ">
 
 <table class="columns columns3"
@@ -141,12 +142,14 @@
                       <option value="None" i18n:translate="select_role">
                         select role:
                       </option>
-                      <option value="role"
-                        tal:repeat="role model/sec_get_roles"
-                        tal:content="role"
-                        tal:attributes="value role">
-                        Role name
-                      </option>
+                      <tal:block repeat="role model/sec_get_roles">
+                        <option value="role"
+                          tal:content="role"
+                          tal:attributes="value role"
+                          tal:condition="python: role not in ['ChiefEditor', 'Manager'] or silva_permissions['ChangeSilvaViewRegistry']">
+                          Role name
+                        </option>
+                      </tal:block>
                     </select>
                     <input class="button"
                       name="access_assign_to_user:method"
@@ -286,13 +289,15 @@
                 i18n:translate="select_role">
                 select role:
               </option>
-              <option value="role"
-                tal:repeat="role model/sec_get_roles"
-                tal:content="role"
-                tal:attributes="value role; 
-                                selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
-                role name
-              </option>
+              <tal:block repeat="role model/sec_get_roles">
+                <option value="role"
+                  tal:content="role"
+                  tal:condition="python:role not in ['Manager', 'ChiefEditor'] or silva_permissions['ChangeSilvaViewRegistry']"
+                  tal:attributes="value role; 
+                                  selected python:test(role==request.form.get('assign_role'),'selected',nothing)">
+                  role name
+                </option>
+              </tal:block>
             </select>
             <input class="button"
               name="access_assign_to_user:method"
