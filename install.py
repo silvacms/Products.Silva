@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.108 2004/12/07 14:08:11 jw Exp $
+# $Id: install.py,v 1.109 2004/12/13 08:38:18 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -609,6 +609,7 @@ def setup_catalog(silva_root):
         ('path', 'PathIndex'),
         ('fulltext', 'ZCTextIndex'),        
         ('version_status', 'FieldIndex'),
+        ('haunted_path', 'FieldIndex'),
         ]
 
     for field_name, field_type in indexes:
