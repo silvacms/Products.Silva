@@ -21,7 +21,10 @@
             <alternate_name></alternate_name>
             <css_class>store</css_class>
             <default></default>
-            <description></description>
+            <description>
+              Set the subscribability for this content (Yes or No), or set it
+              to acquire the subscribability from above (the default).
+            </description>
             <enabled type="int">1</enabled>
             <external_validator></external_validator>
             <extra></extra>
@@ -48,7 +51,9 @@
             <alternate_name></alternate_name>
             <css_class>store</css_class>
             <default type="list">[]</default>
-            <description>List of email addresses (one per line) currently subscribed to this content.</description>
+            <description>
+              List of email addresses (one per line) currently subscribed to this content.
+            </description>
             <enabled type="int">1</enabled>
             <external_validator></external_validator>
             <extra></extra>
