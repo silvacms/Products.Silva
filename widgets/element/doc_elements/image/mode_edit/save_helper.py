@@ -9,7 +9,6 @@
 ##
 request = context.REQUEST
 node = request.node
-image_path = request['image_path']
 
 if request.has_key('alignment'):
     align_attribute = request['alignment']
@@ -18,13 +17,22 @@ if request.has_key('alignment'):
     else:
         node.removeAttribute('alignment')
 
-if request.has_key('image_link'):
-    link = request['image_link']
+if request.has_key('link'):
+    link = request['link']
     node.setAttribute('link', node.input_convert(link))
 else:
     node.removeAttribute('link')
-image = context.get_image(image_path)
+
+image_path = request['path']
+
+# Check for non existence of a "/" - fixes traversal
+# situation of Zope 2.5.1
+if '/' in image_path:
+    image = context.get_image(image_path)
+else:
+    image = getattr(node, image_path, None)
+
 if image is not None:
     image_path = '/'.join(image.getPhysicalPath())
-node.setAttribute('image_path', node.input_convert(image_path))
 
+node.setAttribute('path', node.input_convert(image_path))
