@@ -160,7 +160,30 @@ class Container(SilvaObject, Publishable):
         """
         pass
     
-    # cut copy paste?
+    def action_delete(self, ids):
+        """Delete ids in this container.
+        Cannot delete approved or published content.
+        """
+        pass
+
+    def action_cut(self, ids, REQUEST):
+        """Cut ids in this folder, putting them on clipboard in REQUEST.
+        Cannot cut approved or published content.
+        """
+        pass
+
+    def action_copy(self, ids, REQUEST):
+        """Copy ids in this folder, putting them on clipboard in REQUEST.
+        """
+        pass
+
+    def action_paste(self, REQUEST):
+        """Paste clipboard to this folder.
+        After paste, approved or published content is automatically
+        unapproved and/or closed.
+        """
+        pass
+    
     
     # ACCESSORS
 
