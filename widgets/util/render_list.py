@@ -18,12 +18,12 @@ elif type == 'none':
     tag = None
 
 if tag:
-    content = ''.join(['<li>%s</li>' % text for text in texts])
-    return '<%s class="frontend" type="%s">%s</%s>' % (
+    content = ''.join(['<li>%s</li>\n' % text for text in texts])
+    return '<%s class="frontend" type="%s">\n%s</%s>' % (
         tag, type, content, tag)
 else:
     if texts:
         content = '<br />\n'.join(texts)
-        return '<span class="li">%s</span>' % content
+        return '<p class="nobullet">\n%s\n</p>' % content
     else:
         return ''
