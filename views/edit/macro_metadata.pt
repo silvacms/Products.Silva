@@ -34,6 +34,7 @@
               ">
             <metal:block use-macro="here/macro_metadata/macros/?macro" />
           </tal:block>
+          </tal:condition>
 
           <tal:block 
             define="version python: model.implements_versioning() and model.get_viewable()"
@@ -320,7 +321,22 @@
         </tbody>
         <tfoot>
           <tr class="controls">
-            <td colspan="2">
+            <td class="align-right"
+              colspan="2">
+              <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
+              <tal:condition condition="python: not model.get_next_version()">
+                <form action="properties_make_copy"
+                  method="POST">
+                  <input class="button"
+                    style="margin-left:0;"
+                    type="submit"
+                    value="new version"
+                    title="create a new version of this content: alt-n"
+                    accesskey="n"
+                    i18n:attributes="value title"
+                 />
+               </form>
+             </tal:condition>
             </td>
           </tr>
         </tfoot>
