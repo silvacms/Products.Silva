@@ -5,8 +5,13 @@
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
 <tal:block condition="exists: model/layout_macro.html/macros/previewer"
-  tal:on-error="structure string:<div class='alert'>There is a problem in layout_macro.html, or in a script that's called in it.</div>">
+  tal:on-error="structure string:<div class='alert'>There is a problem in layout_macro.html, or in a script that's called in it. Use the 'Presentation preview' link to see what's wrong.</div>">
 <metal:preview use-macro="model/layout_macro.html/macros/previewer">
+
+<span tal:replace="nothing"> _______ closed message _______ </span>
+<div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
+  <b class="warning">This is a closed version. You see it, but the public won't!</b>
+</div>
 
 <!-- start Silva content -->
 <div metal:fill-slot="main" tal:omit-tag="" 
@@ -33,15 +38,14 @@
     <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
   </td>
   <td valign="top">
-    <span tal:replace="nothing"> _______ make this conditional on object meta type _______ </span>
-    <span tal:replace="nothing"> _______ link to see page in public/local style, if in use _______ </span>
-      <span class="widebody"><a tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank" style="float:right;">Presentation&nbsp;preview</a>&nbsp;</span>
-  <span tal:replace="nothing"> _______ closed message _______ </span>
-  <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
-    <b class="warning">This is a closed version. You see it, but the public won't!</b>
-  </div>
+    <span tal:replace="nothing"> _______ link to see page in public/local style _______ </span>
+    <span class="widebody"><a tal:attributes="href string:${model/absolute_url}/preview_html" target="_blank" style="float:right;">Presentation&nbsp;preview</a></span>
+    <span tal:replace="nothing"> _______ closed message _______ </span>
+    <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
+      <b class="warning">This is a closed version. You see it, but the public won't!</b>
+    </div>
   </td>
-  <td width="16">
+  <td width="4%">
     <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
   </td>
 </tr>
@@ -63,7 +67,7 @@
     </div>
     <br />
   </td>
-  <td width="16">
+  <td>
     <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
   </td>
 </tr>
