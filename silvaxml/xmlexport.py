@@ -10,7 +10,11 @@ from Products.Silva.interfaces import IPublication
 from Products.ParsedXML.DOM.Core import Node
 from DateTime import DateTime
 
-theXMLExporter = xmlexport.Exporter('http://infrae.com/ns/silva')
+NS_SILVA = 'http://infrae.com/ns/silva'
+NS_SILVA_CONTENT = 'http://infrae.com/namespaces/metadata/silva'
+NS_SILVA_EXTRA = 'http://infrae.com/namespaces/metadata/silva-extra'
+
+theXMLExporter = xmlexport.Exporter(NS_SILVA)
 
 def initializeXMLExportRegistry():
     """Here the actual content types are registered. Non-Silva-Core content
@@ -30,10 +34,10 @@ def initializeXMLExportRegistry():
     exporter = theXMLExporter
     exporter.registerNamespace(
         'silva-content',
-        'http://infrae.com/namespaces/metadata/silva')
+        NS_SILVA_CONTENT)
     exporter.registerNamespace(
         'silva-extra',
-        'http://infrae.com/namespaces/metadata/silva-extra')
+        NS_SILVA_EXTRA)
     exporter.registerProducer(SilvaExportRoot, SilvaExportRootProducer)
     exporter.registerProducer(Folder, FolderProducer)
     exporter.registerProducer(Link, LinkProducer)
@@ -61,8 +65,8 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
         set_ids.sort()
         for set_id in set_ids:
             prefix, namespace = binding.collection[set_id].getNamespace()
-            if (namespace != 'http://infrae.com/namespaces/metadata/silva' and
-                namespace != 'http://infrae.com/namespaces/metadata/silva-extra'):
+            if (namespace != NS_SILVA_CONTENT and
+                namespace != NS_SILVA_EXTRA):
                 self.handler.startPrefixMapping(prefix, namespace)
             self.startElement('set', {'id': set_id})
             keys = binding._getData(set_id).keys()
