@@ -403,14 +403,14 @@
       </tr>
       <tr>
         <td style="background:#c0dbe0;">
-          Extract a list of email addressses of all users working in this area. 
+          Extract a list of email addresses of all users working in this area. 
          </td>
       </tr>
       <tr class="controls" align="right">
         <td>
 	  <img src="pixel.gif" width="1px" height="14px"
 	    tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-          <a class="buttonlink" href="tab_access_authorized_below" title="Fetch a list of email addresses... - alt-e" accesskey="e">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Extract email addresses...&nbsp;&nbsp;&nbsp;</a>
+          <a class="buttonlink" href="tab_access_authorized_below" title="Fetch a list of email addresses - alt-l" accesskey="l">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List user email addresses...&nbsp;&nbsp;&nbsp;</a>
         </td>
       </tr>
     </table>
