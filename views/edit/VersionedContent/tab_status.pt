@@ -169,8 +169,9 @@ _______ manual close section here _______
 </check>
 
 
-<span tal:replace="nothing"> _____________________ export table _____________________ </span>
- <form action="." enctype="multipart/form-data" method="POST" tal:condition="python: model.meta_type == 'Silva Document'">
+<span tal:replace="nothing"> _____________________ export focus box _____________________ </span>
+ <form action="." enctype="multipart/form-data" method="POST" 
+   tal:condition="python: model.meta_type in ['Silva Document', 'Silva Article', 'Silva Agenda Item']">
    <input type="hidden" 
      name="refs:list"
      tal:attributes="value python: request['model'].create_ref(request['model'])" />
