@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.79.2.3 $
+# $Revision: 1.79.2.4 $
 # Zope
 
 from StringIO import StringIO
@@ -190,7 +190,8 @@ class DocumentVersion(CatalogedVersion):
         """
         if self.version_status() == 'unapproved':
             return ''
-        return self._flattenxml(self.content_xml())
+        # include title and text body
+        return [self.get_title(), self._flattenxml(self.content_xml())]
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'content_xml')

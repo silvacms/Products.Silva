@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.2.6
+
+    Bugs fixed
+ 
+        - also fulltext index title, not just XML content.
+
   0.9.2.5
 
     Features Added
