@@ -3,6 +3,15 @@ See also LICENSE.txt
 
 Silva changes
 
+  To be released
+
+    Bugs fixed
+
+      - batch.py now imports make_request from ZTUtils.Zope, seems to 
+        fix some test failures.
+
+      - layout service doesn't render pages when called from Python.
+
   1.2b1
 
     Features added
@@ -49,6 +58,7 @@ Silva changes
       - Fixed problem with vanishing paragraphs after a Kupu save.
 
       - Fixed case where XSLT renderer produced non-HTML tags.
+
 
   1.1.2
 
