@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -75,8 +75,7 @@ class EditorSupport:
             if child.nodeName == 'index':
                 result.append('<a class="index-element" name="%s">' %
                               output_convert(child.getAttribute('name')))
-                for subchild in child.childNodes:
-                    result.append(output_convert(subchild.data))
+                result.append(self.render_heading_as_html(child))
                 result.append('</a>')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
@@ -87,10 +86,6 @@ class EditorSupport:
     def render_text_as_editable(self, node):
         """Render textual content as editable text.
         """
-        retval = self._render_text_as_editable_helper(node)
-        return retval
-
-    def _render_text_as_editable_helper(self, node):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
@@ -155,29 +150,12 @@ class EditorSupport:
 
         return self.output_convert_editable(''.join(result))
 
-    '''
-    _strongStructure = ForgivingParser.Structure(['**', '**'])
-    _emStructure = ForgivingParser.Structure(['++', '++'])
-    _linkStructure = ForgivingParser.Structure(['((', '|', '))'])
-    _underlineStructure = ForgivingParser.Structure(['__', '__'])
-    _indexStructure = ForgivingParser.Structure(['[[', '|', ']]'])
-    #_personStructure = ForgivingParser.Structure(['{{', '}}'])
-
-    _parser = ForgivingParser.ForgivingParser([
-        _strongStructure,
-        _emStructure,
-        _linkStructure,
-        _underlineStructure,
-        _indexStructure])
-    '''
-    _indexStructure = ForgivingParser.Structure(['[[', '|', ']]'])
-    _headingParser = ForgivingParser.ForgivingParser([
-        _indexStructure])
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_text')
     def replace_text(self, node, st):
         """This is an alternative implementation of Martijn's textparser"""
+        st = self.replace_xml_entities(st)
+        st = st.replace('\r', '')
         st = st.replace('\n\n', '</p><p>')
         tags = {'__': 'underline', '**': 'strong', '++': 'em'}
         reg = re.compile(r"(_{2}|\*{2}|\+{2})(.*?)\1", re.S)
@@ -215,6 +193,35 @@ class EditorSupport:
         for child in newdom.childNodes:
             self._parse_into(doc, node, child)
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'replace_heading')
+    def replace_heading(self, node, st):
+        """This is an alternative implementation of Martijn's textparser"""
+        st = self.replace_xml_entities(st)
+        st = st.replace('\r', '')
+        reg_i = re.compile(r"\[{2}(.*?)\|(.*?)\]{2}", re.S)
+        while 1:
+            match = reg_i.search(st)
+            if not match:
+                break
+            st = st.replace(match.group(0), '<index name="%s">%s</index>' % (match.group(2), match.group(1)))
+
+        st = self.input_convert(st).encode('UTF8')
+        node = node._node
+        doc = node.ownerDocument
+
+        # remove all old subnodes of node
+        # FIXME: hack to make copy of all childnodes
+        children = [child for child in node.childNodes]
+        children.reverse()
+        for child in children:
+            node.removeChild(child)
+
+        newdom = ParsedXML(doc, '<h2>%s</h2>' % st)
+
+        for child in newdom.childNodes:
+            self._parse_into(doc, node, child)
+
     def _parse_into(self, doc, node, newdoc):
         """Method to recursively add all children of newdoc to node"""
         for child in newdoc.childNodes:
@@ -227,49 +234,6 @@ class EditorSupport:
                     newnode.setAttribute(child.attributes.item(i).name, child.attributes.item(i).value)
                 node.appendChild(newnode)
                 self._parse_into(doc, newnode, child)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'replace_heading')
-    def replace_heading(self, node, text):
-        """Replace text in a heading containing node.
-        """
-        # first preprocess the text, collapsing all whitespace
-        # FIXME: does it make sense to expect cp437, which is
-        # windows only?
-        text = self.input_convert(text)
-
-        # parse the data
-        result = self._headingParser.parse(text)
-
-        # get actual DOM node
-        node = node._node
-        doc = node.ownerDocument
-
-        # remove all old subnodes of node
-        # FIXME: hack to make copy of all childnodes
-        children = [child for child in node.childNodes]
-        children.reverse()
-        for child in children:
-            node.removeChild(child)
-
-        # now use tokens in result to add them to XML
-        for structure, data in result:
-            if structure is None:
-                # create a text node, data is plain text
-                newnode = doc.createTextNode(data)
-                node.appendChild(newnode)
-            elif structure is self._indexStructure:
-                index_text, index_name = data
-                newnode = doc.createElement('index')
-                newnode.appendChild(doc.createTextNode(index_text))
-                newnode.setAttribute('name', index_name)
-                node.appendChild(newnode)
-            #elif structure is self._personStructure:
-            #    newnode = doc.createElement('person')
-            #    newnode.appendChild(doc.createTextNode(data[0]))
-            #    node.appendChild(newnode)
-            else:
-                raise EditorSupportError, "Unknown structure: %s" % structure
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_pre')
@@ -315,6 +279,16 @@ class EditorSupport:
         else:
             i = _find_split_point(html, l/2)
         return html[:i], html[i:]
+
+    security.declarePublic('replace_xml_entities')
+    def replace_xml_entities(self, text):
+        """Replace all disallowed characters with XML-entities"""
+        text = text.replace('&', '&amp;')
+        text = text.replace('<', '&lt;')
+        text = text.replace('>', '&gt;')
+        text = text.replace('"', '&quot;')
+
+        return text
 
 # do never split at a heading, so h2/h3 not included
 tags = ['p', 'ol', 'ul', 'table']
