@@ -34,7 +34,7 @@ Attributes
 <th align="left">
 Content
 </th>
-<th align="left">
+<th align="left" width="35%">
 Notes
 </th>
 </tr>
@@ -62,7 +62,7 @@ title
 <td tal:content="structure python:field.render_from_request(request)">
 <input type="text" />
 </td>
-<td class="leadedbody" width="40%" tal:content="structure string:${field/description}&nbsp;">
+<td class="leadedbody" tal:content="structure string:${field/description}&nbsp;">
 id: no spaces or special characters besides an underscore (_).
 </td>
 </tr>
@@ -72,12 +72,12 @@ id: no spaces or special characters besides an underscore (_).
 
 <tr class="controls">
 <td colspan="2">
-<input class="cancelbutton" type="submit" name="add_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c" />
+<button class="cancel" type="submit" name="add_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c"> <u>C</u>ancel </button>
 </td>
 <td colspan="2" align="right">
-<input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
-&nbsp;&nbsp;<input class="button" type="submit" name="add_edit_submit" value="Add and edit" title="Access key: Alt-e" accesskey="e"
-  tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Add and enter ', ' Add and edit ')" />
+<button type="submit" name="add_submit" title="Access key: alt-a" accesskey="a"> <u>A</u>dd </button>
+&nbsp;&nbsp;<button type="submit" name="add_edit_submit" title="Access key: Alt-e" accesskey="e"
+  tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Add and enter ', ' Add and edit ')"> Add and <u>e</u>dit </button>
 </td>
 </tr>
 </table>

@@ -56,12 +56,13 @@
           <display_maxwidth></display_maxwidth>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <display_width type="int">20</display_width>
+          <display_width type="int">40</display_width>
           <css_class></css_class>
           <default></default>
           <title>Image</title>
           <description></description>
           <external_validator></external_validator>
+          <required type="int">1</required>
           <extra></extra>
         </values>
         <tales>
