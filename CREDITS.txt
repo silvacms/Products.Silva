@@ -1,0 +1,11 @@
+Silva is developed by Infrae (http://www.infrae.com) for the Erasmus
+University Rotterdam (http://www.eur.nl).
+
+Infrae Silva team:
+
+  Martijn Faassen <faassen@infrae.com>
+  Kit Blake <kitblake@infrae.com>
+  Jan-Wijbrand Kolman <jw@infrae.com>
+
+Many thanks go to Hans Verster <verster@daz.eur.nl> at the Erasmus
+University Rotterdam for his vision and support.
