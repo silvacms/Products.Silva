@@ -3,12 +3,12 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.8.4
+  Valid for:  Silva 0.8.5
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.12 $
+  CVS:        $Revision: 1.13 $
 
-Upgrading Silva 0.8.3 to 0.8.4
+Upgrading Silva 0.8.4 to 0.8.5
 
   This document applies to upgrading Silva only; if you are newly
   installing Silva please look at 'INSTALL.txt'.
@@ -16,17 +16,17 @@ Upgrading Silva 0.8.3 to 0.8.4
   NOTE: It makes of course sense to make a backup of Silva before
   trying to upgrade!
 
-  NOTE: We have not tested an upgrade from 0.8 to 0.8.4 directly; 
-  things may break if you try. To be safe you could first upgrade 
-  0.8 to 0.8.3 before upgrading to 0.8.4 (see the instructions in
-  Silva 0.8.3 for more information).
+  NOTE: We have not tested an upgrade from version before 0.8.4 to 0.8.5
+  directly; things may break if you try. To be safe you could first
+  upgrade 0.8 to 0.8.3 to 0.8.4 before upgrading to 0.8.5 (see the
+  instructions in Silva 0.8.4 for more information).
 
   Silva Filesystem Products
 
     First you need to upgrade the underlying Silva product. Download
     the new version here:
 
-      * "Silva-0.8.4.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.4.tgz
+      * "Silva-0.8.5.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.5.tgz
   
     The other required products (XMLWidgets, Formulator and ParsedXML)
     do not have to be updated.
@@ -34,7 +34,7 @@ Upgrading Silva 0.8.3 to 0.8.4
     To upgrade the Silva product, first remove the 'Silva' and
     directory in your Zope's Products directory (usually this is
     'lib/python/Products' in your Zope install). Now unpack
-    'Silva-0.8.4.tgz'.
+    'Silva-0.8.5.tgz'.
 
     If you are using Silva's LDAP support (turned off by default), you
     should consult the section in 'INSTALL.txt' to see how to
@@ -47,7 +47,7 @@ Upgrading Silva 0.8.3 to 0.8.4
     If you want to take advantage of Groups support, please download and
     install the Groups product, here:
   
-       * "Groups-0.1.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.1.tgz
+       * "Groups-0.2.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.2.tgz
 
     Groups support is optional; Silva should run without the Groups
     product installed. Groups use a rather hackish technique called
@@ -63,27 +63,27 @@ Upgrading Silva 0.8.3 to 0.8.4
 
   Silva services (ZODB)
     
-    Next, you need 'silva_upgrade_0.8.4.zexp.gz', which can be found
+    Next, you need 'silva_upgrade_0.8.5.zexp.gz', which can be found
     here:
 
-      * "silva_upgrade_0.8.4.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva_upgrade_0.8.4.zexp.gz
+      * "silva_upgrade_0.8.5.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva_upgrade_0.8.5.zexp.gz
 
-    You do not need 'silva-0.8.4.zexp.gz', as you are upgrading, not
+    You do not need 'silva-0.8.5.zexp.gz', as you are upgrading, not
     installing from scratch.
 
-    Unpack 'silva_upgrade_0.8.4.zexp.gz' and place it in your Zope's
+    Unpack 'silva_upgrade_0.8.5.zexp.gz' and place it in your Zope's
     'import' directory. Now import it into the same folder where you
     installed silva previously (i.e as a sibling to the silva root,
     not into the silva root itself). Usually this means importing it
     into your Zope's root, if you installed silva there.
 
-    You should now have a folder 'silva_upgrade_0.8.4'. This folder
+    You should now have a folder 'silva_upgrade_0.8.5'. This folder
     contains a script to upgrade your Silva install, called
-    'upgrade_from_0.8.3_to_0.8.4'. If you want to know in detail what
+    'upgrade_from_0.8.4_to_0.8.5'. If you want to know in detail what
     it does before executing it, see the section below.
 
-    Enter the 'silva_upgrade_0.8.4' folder and execute the script
-    'upgrade_from_0.8.3_to_0.8.4', by going to its 'Test' tab. It will
+    Enter the 'silva_upgrade_0.8.5' folder and execute the script
+    'upgrade_from_0.8.4_to_0.8.5', by going to its 'Test' tab. It will
     ask for a 'silva_root_id'; fill in the name of your silva root --
     usually this is just 'silva'. Then click on 'Run
     script'. Upgrading should now proceed. This will take a while.
@@ -103,7 +103,7 @@ Upgrading Silva 0.8.3 to 0.8.4
     with these, if you haven't modified them. Note that these default
     versions may contain some fixes compared to the versions delivered
     with the previous release, so it may be advisable to review them
-    in any case (there were only minor changes from 0.8.3 to 0.8.4).
+    in any case.
 
   What the upgrade script does.
 

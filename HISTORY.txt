@@ -1,8 +1,41 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.16 $
+$Revision: 1.17 $
 
 Silva changes
+
+  0.8.5
+
+    Featues Added
+
+      - New tab layout.
+
+      - Short title in Silva Document and Silva Folder metadata.
+
+      - Preformatted document element.      
+
+      - Access restriction proof of concept.
+
+      - Experimental editor support for nested markup. Replace
+      "EditorSupport.py" with "EditorSupportNested.py" to test it.
+
+    Bugs fixed
+
+      - Non existing "tab" for an object, redirects to default tab
+      ("tab_edit").
+
+      - Restriction on single column tables removed.
+
+      - Various character encoding related issues.
+
+      - Removed non functional button from "tab_publish".
+
+      - List title attribute migrated to title element in lists.
+
+      - Display an informational message, if some view is not properly
+      registered
+
+      - UI tweaks and fixes.
 
   0.8.4
 
