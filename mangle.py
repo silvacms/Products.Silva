@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.25 2004/11/23 12:29:43 guido Exp $
+# $Id: mangle.py,v 1.26 2004/11/25 17:47:35 guido Exp $
 # Python
 import string
 import re
@@ -15,6 +15,7 @@ from DateTime import DateTime as _DateTime
 # Silva
 from interfaces import ISilvaObject, IVersioning, IContainer, IAsset
 
+from Products.Silva.i18n import translate as _
 
 module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
@@ -135,7 +136,9 @@ class Id:
             except UnicodeError:
                 maybe_id = unicode(maybe_id, 'latin-1', 'replace')
         if type(maybe_id) != UnicodeType:
-            raise ValueError, "id must be str or unicode (%r)" % orig_id
+            msg = _("id must be str or unicode (${id})")
+            msg.set_mapping({'id': repr(orig_id)})
+            raise ValueError, msg
         if interface not in self._reserved_ids_for_interface.keys():
             interface = None
         self._folder = folder
@@ -305,7 +308,7 @@ class _Path:
         """
         if type(obj_context) == type(''):
             obj_context = obj_context.split('/')
-        assert type(obj_context) == type([]), "obj_context is not list type"
+        assert type(obj_context) == type([]), _("obj_context is not list type")
         obj_path = obj.getPhysicalPath()
         return '/'.join(self(obj_context, obj_path))
 

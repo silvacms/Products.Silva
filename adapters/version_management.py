@@ -7,6 +7,8 @@ from Products.Silva.Versioning import VersioningError
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 
+from Products.Silva.i18n import translate as _
+
 module_security = ModuleSecurityInfo('Products.Silva.adapters.version_management')
 
 class VersionManagementAdapter(adapter.Adapter):
@@ -76,7 +78,7 @@ class VersionManagementAdapter(adapter.Adapter):
 
         approved_version = self.getApprovedVersion()
         if approved_version is not None:
-            raise VersioningError, 'No unapproved version available'
+            raise VersioningError, _('No unapproved version available')
             
         current_version = self.getUnapprovedVersion()
         # move the current editable version to _previous_versions
@@ -84,7 +86,7 @@ class VersionManagementAdapter(adapter.Adapter):
             current_version_id = current_version.id
             status = self.getVersionStatus(current_version_id)
             if status in ('pending', 'approved'):
-                raise VersioningError, 'No unapproved version available'
+                raise VersioningError, _('No unapproved version available')
             
             version_tuple = self.context._unapproved_version 
             if self.context._previous_versions is None:
@@ -108,7 +110,7 @@ class VersionManagementAdapter(adapter.Adapter):
             a successful deletion).
         """
         if len(ids) == len(self.getVersionIds()):
-            raise VersioningError, 'Can not delete all versions'
+            raise VersioningError, _('Can not delete all versions')
         ret = []
         delids = []
         for id in ids:
@@ -252,8 +254,9 @@ class VersionManagementAdapter(adapter.Adapter):
                   for (vid, vpt, vet) in self.context._previous_versions:
                     if vid == versionid:
                       return 'closed'
-        raise VersioningError, 'no such version %s' % versionid
-
+        msg = _('no such version ${version}')
+        msg.set_mapping({'version': versionid})
+        raise VersioningError, msg
 
     def _createUniqueId(self):
         # for now we use self.context._version_count, we may

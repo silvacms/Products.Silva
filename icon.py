@@ -1,6 +1,6 @@
 # Copyright (c) 2003, 2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.6 2004/07/21 11:40:40 jw Exp $
+# $Id: icon.py,v 1.7 2004/11/25 17:47:35 guido Exp $
 
 """Sivla icon registry"""
 
@@ -14,6 +14,8 @@ import OFS.misc_
 # Silva
 from Products.Silva.interfaces import IIcon, IFile, ISilvaObject
 from Products.Silva.interfaces import IGhostContent, IGhostFolder
+
+from Products.Silva.i18n import translate as _
 
 class RegistryError(Exception):
     """thrown on any error in registry"""
@@ -50,7 +52,7 @@ class _IconRegistry:
                 # argument it will raise an AttributeError on __hash__
                 ISilvaObject.isImplementedByInstancesOf(object)
             except AttributeError:
-                raise RegistryError, "Icon not found"
+                raise RegistryError, _("Icon not found")
             else:
                 identifier = ('meta_type', object.meta_type)
         return self.getIconByIdentifier(identifier)
@@ -58,7 +60,9 @@ class _IconRegistry:
     def getIconByIdentifier(self, identifier):
         icon = self._icon_mapping.get(identifier, None)
         if icon is None:
-            raise RegistryError, "No icon for %r" % (identifier, )
+            msg = _("No icon for ${identifier}")
+            msg.set_mapping({'identifier': repr(identifier)})
+            raise RegistryError, msg
         return icon
 
     def registerIcon(self, identifier, icon, context):
@@ -77,7 +81,9 @@ class _IconRegistry:
         icon = Globals.ImageFile(icon, context)
         icon.__roles__ = None
         if not hasattr(OFS.misc_.misc_, product):
-            raise RegistryError, "The product %r doesn't exist" % product
+            msg = _("The product ${product} doesn't exist")
+            msg.set_mapping({'product': product})
+            raise RegistryError, msg
         getattr(OFS.misc_.misc_, product)[name] = icon
         self._icon_mapping[identifier] = 'misc_/%s/%s' % (product, name)
             
