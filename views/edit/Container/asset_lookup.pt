@@ -12,9 +12,6 @@
     Contents of <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
   </h2>
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
-<tr>
-  <td class="divider" width="3" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
-</tr>
 <span tal:replace="nothing"> ______________ framing table header ______________ </span>
 <tr class="topcontrols" valign="bottom"> 
   <!-- top row of complete table with sidebar -->
@@ -23,7 +20,7 @@
       tal:condition="python:model != model.get_root()"
       tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (model.aq_parent.get_publication().absolute_url(), filter)"><img width="16" height="16" border="0" alt="Up to containing Publication" hspace="3"
       tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%silva_root, '%s/globals/up_tree_gray.gif'%silva_root)" /></a>
-    <span class="back3">Publication</span>
+    <span class="tablehead3">Publication</span>
     <a href="../../edit/asset_lookup" title="Up one level"
       tal:attributes="href python:'../../edit/asset_lookup?filter=%s' % (filter)"
       tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
@@ -32,7 +29,7 @@
   <td>
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s" 
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    <span class="back3"><span tal:replace="model/id">id</span>
+    <span class="tablehead3"><span tal:replace="model/id">id</span>
   </td>
   <td align="right">
   </td>
@@ -44,15 +41,15 @@
 <table cellspacing="0" cellpadding="1" border="0" width="100%">
 <span tal:replace="nothing"> ______________ publication header ______________ </span>
 <tr>
-  <th align="left"
-    tal:attributes="class python:test(model == model.get_publication(), 'focus-light', nothing)">
+  <td align="left"
+    tal:attributes="class python:test(model == model.get_publication(), 'hilight', 'focus-fixed')">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" />
     <a href="top" title="Up to publication top" 
       tal:define="url python:model.get_publication().absolute_url()"
       tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><img tal:attributes="src string:${silva_root}/globals/silvapublication.gif" width="16" height="16" border="0" alt="Silva Publication" /></a>
       <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
         tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><span tal:replace="structure python:model.get_publication().get_title_html()">Publication top</span></a>
-  </th>
+  </td>
 </tr>
 
 <span tal:replace="nothing"> ______________ pub folders ______________ </span>
@@ -107,7 +104,7 @@ function setReference() {
 <tr>
   <th align="left" colspan="10">
     <tal:block condition="python:not len(assets)">No</tal:block> 
-    <tal:block content="string:${filter}(s)" />
+    <tal:block content="string:${filter}s" />
     <tal:block condition="python:not len(assets)">in this folder</tal:block>
   </th>
 </tr>
@@ -155,19 +152,25 @@ function setReference() {
 </tr>
 </tal:block>
 </tal:block>
-<tr class="controls"
-  tal:condition="python:len(assets)">
+<tr class="controls">
   <td colspan="4" align="left">
     <input type="button" class="cancelbutton" name="cancel" value="Cancel" title="Cancel Operation" 
       onclick="window.close();return false;" />
   </td>
   <td colspan="4" align="right">
-      <input type="button" class="button" name="place" value="Place Reference" title="Get a reference to this asset" 
-        onclick="setReference();return false;" />
+    <input type="button" class="button" name="place" value="Place reference" title="Insert a reference to this asset" 
+      onclick="setReference();return false;" 
+      tal:condition="python:len(assets)" />
   </td>
 </tr>
 </table>
 </form>
+</td>
+</tr>
+<tr>
+  <td class="divider" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="3" /></td>
+</tr>
+</table>
 </div>
 <!-- ___________________________ end index_html/slot main ____________________________ -->
 </metal:block>
