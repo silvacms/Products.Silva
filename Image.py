@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.9 2004/04/09 15:10:28 roman Exp $
+# $Id: Image.py,v 1.50.4.1.6.10 2004/04/11 15:07:41 roman Exp $
 
 # Python
 import re, string 
@@ -131,9 +131,8 @@ class Image(Asset):
     def cropImage(self, size, x, y):
         """crops the image
 
-            width (int): width of the cropped image
-            heigth (int): height of the cropped image
-            
+            size (str): eg. '25x25'
+            x, y (int): coordinates where the image should be cropped 
         """
         cropbbox = self.getCropBBox(size, x, y)
         try:
@@ -149,7 +148,7 @@ class Image(Asset):
         self.cropped = 1 
         self.image = OFS.Image.Image(
             'image', self.get_title(), web_image_data)
-   
+  
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
     def set_image(self, file):
@@ -421,7 +420,21 @@ class Image(Asset):
     def get_scaled_file_size(self):
         return self.image.get_size()
 
-    def get_transformation(self):
+    def getOrientation(self):
+        """ returns Image orientation (string) """
+
+        if self.cropped:
+            width, height = self.getCroppedSize()
+        else:
+            width, height = self.getDimensions()
+        if width == height:
+            return "Square"
+        elif width > height:
+            return "Landscape"
+        
+        return "Portrait"
+        
+    def getTransformation(self):
         """image cropped or scaled"""
         # maybe this isn't as good as I thought XXX
         if self.cropped:

@@ -6,7 +6,7 @@
     root_url model/get_root_url;
     title model/get_title_editable;
     vein string:editor;
-    transf model/get_transformation;
+    transf model/getTransformation;
     "
   i18n:domain="silva">
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
@@ -33,7 +33,8 @@
             tal:on-error="string: unknown"
           tal:replace="string:${img_width}x${img_height} pixels"
           />
-      </p> 
+      </p>
+
       <p tal:condition="model/hires_image">
         <span class="subhead">format</span><br />
         <span tal:replace="python: model.web_format.lower()">format</span> image
@@ -67,6 +68,12 @@
               tal:replace="string:${scale_width}x${scale_height} pixels"
               />
           </tal:condition>
+      </p>
+      <p tal:condition="model/hires_image" 
+        tal:define="orientation model/getOrientation">
+        <span class="subhead">image orientation</span><br />
+        <span tal:content="orientation" 
+          tal:attributes="class string:${orientation} orientation">Square</span>
       </p>
       <p>
         <span class="subhead">original</span><br />
