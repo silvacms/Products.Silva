@@ -31,27 +31,27 @@ class SilvaObjectTestCase(unittest.TestCase):
 
     def test_set_title(self):
         self.document.set_title('Document2')
-        self.assertEquals(self.document.title(), 'Document2')
+        self.assertEquals(self.document.get_title(), 'Document2')
         self.folder.set_title('Folder2')
-        self.assertEquals(self.folder.title(), 'Folder2')
-        self.assertEquals(self.folder.default.title(), 'Folder2')
+        self.assertEquals(self.folder.get_title(), 'Folder2')
+        self.assertEquals(self.folder.default.get_title(), 'Folder2')
         self.sroot.set_title('Root2')
-        self.assertEquals(self.sroot.title(), 'Root2')
+        self.assertEquals(self.sroot.get_title(), 'Root2')
         self.publication.set_title('Publication2')
-        self.assertEquals(self.publication.title(), 'Publication2')
+        self.assertEquals(self.publication.get_title(), 'Publication2')
 
         self.folder.default.set_title('Set by default')
-        self.assertEquals(self.folder.default.title(),
+        self.assertEquals(self.folder.default.get_title(),
                           'Set by default')
-        self.assertEquals(self.folder.title(),
+        self.assertEquals(self.folder.get_title(),
                           'Set by default')
         
     def test_title(self):
-        self.assertEquals(self.document.title(), 'Document')
-        self.assertEquals(self.folder.title(), 'Folder')
-        self.assertEquals(self.sroot.title(), 'Root')
-        self.assertEquals(self.publication.title(), 'Publication')
-        self.assertEquals(self.folder.default.title(), 'Folder')
+        self.assertEquals(self.document.get_title(), 'Document')
+        self.assertEquals(self.folder.get_title(), 'Folder')
+        self.assertEquals(self.sroot.get_title(), 'Root')
+        self.assertEquals(self.publication.get_title(), 'Publication')
+        self.assertEquals(self.folder.default.get_title(), 'Folder')
         
     def test_get_creation_datetime(self):
         pass

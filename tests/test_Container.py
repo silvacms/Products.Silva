@@ -34,7 +34,7 @@ class ContainerTestCase(unittest.TestCase):
 
     def test_get_default(self):
         doc = self.folder4.get_default()
-        self.assertEquals(doc.title(), 'Folder4')
+        self.assertEquals(doc.get_title(), 'Folder4')
         self.assert_(Interfaces.Content.isImplementedBy(doc),
                      'doc is not a Content object')
         self.assert_(doc.is_default(),
