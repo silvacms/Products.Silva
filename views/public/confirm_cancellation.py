@@ -9,8 +9,7 @@ try:
         request['ref'], request['emailaddress'], request['token'])
 except subscriptionerrors.SubscriptionError, e:
     return context.subscriptions(
-        message=_('Cancellation failed'), show_form=False)
-
+        message=_('Something went wrong in unsubscribing from this page. It might be that the link you followed was too old.'), 
+        show_form=False)
 return context.subscriptions(
-    message=_('Cancellation successful'), show_form=False)
-    
+    message=_('You have been successfully unsubscribed.'), show_form=False)
