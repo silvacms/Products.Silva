@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -10,6 +10,7 @@ from Products.Silva.SilvaObject import SilvaObject
 from Testing import makerequest
 from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
+from test_SilvaObject import hack_add_user
 
 def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
@@ -19,7 +20,10 @@ class ContainerBaseTestCase(unittest.TestCase):
     def setUp(self):
         get_transaction().begin()
         self.connection = Zope.DB.open()
-        self.root = self.connection.root()['Application']
+        self.root = makerequest.makerequest(self.connection.root()['Application'])
+        self.REQUEST = self.root.REQUEST
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_add_user(self.REQUEST)
         self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
         self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
         self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
@@ -232,6 +236,12 @@ class ContainerTestCase(ContainerBaseTestCase):
         # add default to root
         self.sroot.manage_addProduct['Silva'].manage_addDocument('index', 'Default')
         self.assertEquals(getattr(self.sroot, 'index'), self.sroot.get_default())
+        # issue 47: index created by test user
+        # XXX should strip the '(not in ldap)' if using LDAPUserManagement?
+        self.assertEquals('TestUser',
+                          self.folder4.index.sec_get_last_author_info()['cn'] )
+        self.assertEquals('TestUser',
+                          self.publication5.index.sec_get_last_author_info()['cn'] )
         # delete default object
         self.folder4.action_delete(['index'])
         self.assertEquals(None, self.folder4.get_default())
