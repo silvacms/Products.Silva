@@ -232,22 +232,22 @@
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
      <value key="input_style"></value>
      <value key="hidden"></value>
-     <value key="input_order"></value>
-     <value key="time_separator">string::</value>
      <value key="date_separator">string::</value>
      <value key="end_datetime"></value>
      <value key="external_validator"></value>
-     <value key="date_only"></value>
-     <value key="default_now"></value>
-     <value key="ampm_time_style"></value>
      <value key="required"></value>
-     <value key="allow_empty_time"></value>
      <value key="css_class"></value>
-     <value key="default">python: content.get_modification_datetime() or content.get_creation_datetime() or 'n/a'</value>
+     <value key="default">python: content.get_modification_datetime(update_status=0)</value>
      <value key="title"></value>
+     <value key="alternate_name"></value>
+     <value key="input_order"></value>
+     <value key="time_separator">string::</value>
+     <value key="date_only"></value>
+     <value key="ampm_time_style"></value>
+     <value key="allow_empty_time"></value>
+     <value key="default_now"></value>
      <value key="description"></value>
      <value key="start_datetime"></value>
    </field_tales>
@@ -295,22 +295,22 @@
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
+     <value key="alternate_name"></value>
      <value key="input_style"></value>
      <value key="hidden"></value>
+     <value key="input_order"></value>
+     <value key="time_separator">string::</value>
      <value key="date_separator">string::</value>
      <value key="end_datetime"></value>
      <value key="external_validator"></value>
+     <value key="date_only"></value>
+     <value key="default_now"></value>
+     <value key="ampm_time_style"></value>
      <value key="required"></value>
+     <value key="allow_empty_time"></value>
      <value key="css_class"></value>
      <value key="default">content/publication_datetime | nothing</value>
      <value key="title"></value>
-     <value key="alternate_name"></value>
-     <value key="input_order"></value>
-     <value key="time_separator">string::</value>
-     <value key="date_only"></value>
-     <value key="ampm_time_style"></value>
-     <value key="allow_empty_time"></value>
-     <value key="default_now"></value>
      <value key="description"></value>
      <value key="start_datetime"></value>
    </field_tales>
@@ -358,22 +358,22 @@
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
+     <value key="alternate_name"></value>
      <value key="input_style"></value>
      <value key="hidden"></value>
+     <value key="input_order"></value>
+     <value key="time_separator">string::</value>
      <value key="date_separator">string::</value>
      <value key="end_datetime"></value>
      <value key="external_validator"></value>
+     <value key="date_only"></value>
+     <value key="default_now"></value>
+     <value key="ampm_time_style"></value>
      <value key="required"></value>
+     <value key="allow_empty_time"></value>
      <value key="css_class"></value>
      <value key="default">content/expiration_datetime | nothing</value>
      <value key="title"></value>
-     <value key="alternate_name"></value>
-     <value key="input_order"></value>
-     <value key="time_separator">string::</value>
-     <value key="date_only"></value>
-     <value key="ampm_time_style"></value>
-     <value key="allow_empty_time"></value>
-     <value key="default_now"></value>
      <value key="description"></value>
      <value key="start_datetime"></value>
    </field_tales>
@@ -527,11 +527,11 @@
    <field_values>
         <value key="alternate_name" type="str" value="" />
         <value key="hidden" type="int" value="0" />
-        <value key="display_width" type="int" value="20" />
         <value key="unicode" type="int" value="1" />
         <value key="max_length" type="str" value="" />
         <value key="external_validator" type="str" value="" />
         <value key="display_maxwidth" type="str" value="" />
+        <value key="display_width" type="int" value="20" />
         <value key="required" type="int" value="0" />
         <value key="css_class" type="str" value="" />
         <value key="default" type="str" value="" />
@@ -550,11 +550,11 @@
      <value key="display_maxwidth"></value>
      <value key="display_width"></value>
      <value key="required"></value>
-     <value key="description"></value>
      <value key="css_class"></value>
      <value key="default">content/silva_object_url</value>
      <value key="title"></value>
      <value key="truncate"></value>
+     <value key="description"></value>
      <value key="whitespace_preserve"></value>
      <value key="extra"></value>
    </field_tales>

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 
 # Python
 from StringIO import StringIO
@@ -123,10 +123,10 @@ class VersionedContent(Content, Versioning, Folder.Folder):
                                         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
-    def get_modification_datetime(self):
+    def get_modification_datetime(self, update_status=1):
         """Get content modification date.
         """
-        version_id = self.get_next_version() or self.get_public_version()
+        version_id = self.get_next_version(update_status) or self.get_public_version(update_status)
         if version_id is not None:
             return getattr(self, version_id).bobobase_modification_time()
         else:
