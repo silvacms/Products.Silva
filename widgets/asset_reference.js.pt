@@ -21,21 +21,22 @@ function getAssetReference(url, format, form, element, append) {
   referenceFormat = format;
   doc = document.all ? document.all : document;
   textArea = eval('doc.'+form+'.'+element);
-  if (append) 
+  if (append)
     appendValue = true;
   // Open LookupWindow
   openAssetLookupWindow(url);
 }
 // Called from "asset lookup window"
-function insertAssetReference(id, reference) {
+function insertAssetReference(id, reference, wndw) {
   // Append to previously focused text area
   // FIXME: We'd like to make it work with selections in
   // the textarea.
   append_text = referenceFormat.replace('_id_', id).replace('_reference_', reference);
-  if (appendValue) 
+  if (appendValue)
     append_text = textArea.value + append_text;
   textArea.value = append_text;
+  textArea.focus();
   // Close LookupWindow
-  lookupWindow.close();
+  wndw.close();
 }
 //-->

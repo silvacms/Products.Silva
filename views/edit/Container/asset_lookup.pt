@@ -99,7 +99,7 @@ function setReference() {
   id = retrieved.substring(0, splitpos)
   value = retrieved.substring(splitpos + 2, retrieved.length);
   // Send back id and reference to calling window
-  opener.insertAssetReference(id, value);
+  opener.insertAssetReference(id, value, self);
 }
 //-->
 </script>
