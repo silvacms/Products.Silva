@@ -5,10 +5,6 @@ Silva changes
 
   0.9.3.5
 
-    Features added
-
-      - Preliminary Epoz (NG) integration for SilvaDocument.
-
     Bugs fixed
 
       - When run with Python 2.3 (at the point of writing not yet
