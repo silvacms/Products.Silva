@@ -243,6 +243,10 @@ div#kupu-fgcolorchooser div:hover {
     display: none;
 }
 
+#kupu-toolbox-characters {
+    display: none;
+}
+
 #kupu-toolbox-properties input {
   width: 16em;
 }
