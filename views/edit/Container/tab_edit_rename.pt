@@ -36,8 +36,8 @@
 
       <tbody>
         <tr>
-          <th class="align-right" i18n:translate="aspect">
-            aspect
+          <th class="align-right" i18n:translate="attribute">
+            attribute
           </th>
           <th i18n:translate="old">
             old

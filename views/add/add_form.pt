@@ -43,8 +43,8 @@
 <tbody>
   <tr>
     <th class="align-right"
-      i18n:translate="attributes">
-      attributes
+      i18n:translate="aspect">
+      aspect
     </th>
     <th style="width:50%;">
       <div class="fixIE6widget" i18n:translate="content">content</div>
