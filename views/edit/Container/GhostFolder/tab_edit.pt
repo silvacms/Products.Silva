@@ -61,15 +61,6 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="3">
-          <a class="navigation"  tal:replace="nothing"
-            style="float: right;"
-            href="../../edit/tab_edit_import"
-            title="import XML data - alt-i"
-            i18n:attributes="title"
-            accesskey="i"
-            >
-            <span i18n:translate="import">import</span>...
-          </a>
           <input class="button"
             type="submit" 
             name="convert_to_folder:method" 
@@ -104,15 +95,18 @@
         </th>
       </tr>
 
-      <tr class="even" valign="top">
+      <tr class="even">
         <td class="field-title">
-         <script type="text/javascript"
-           tal:content="structure here/reference.js" />
-
-          <input type="button" class="navigation" value="Path..."
+          <script type="text/javascript"
+            tal:content="structure here/reference.js" />
+          <input class="navigation" 
+            type="button" 
+            value="reference..."
+            title="Locate item to refer to: alt-r"
+            accesskey="r"
             tal:define="asset_context python:here.get_start_container();"
             tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Container&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
-            />
+            /><span class="warning">*</span>
         </td>
         <td>
           <input type="text"
