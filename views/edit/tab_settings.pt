@@ -19,7 +19,7 @@
   <div class="middleground"
     tal:define="
       isfolder python: type == 'Silva Folder';
-      ispublication python: type == 'Silva Publication';
+      ispublication python: type == 'Silva Publication' or type == 'Silva Root';
       isghostfolder python: type == 'Silva Ghost Folder';">
     <tal:block condition="python: isfolder and may_approve_content">
       <a class="button"
