@@ -14,6 +14,10 @@ Silva changes
       - Problem in Kupu transformations that made 'spurious' <p> elements 
         without content appear on the page.
 
+      - Problem in Kupu transformations that made <div>'s get removed 
+        completely from a document on save: now instead of removing it it's
+        contents get converted and added to the document.
+
   1.0 (release candidate 4)
 
     Bugs fixed
