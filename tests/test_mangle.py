@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.1 2003/08/07 14:52:30 zagy Exp $
+# $Id: test_mangle.py,v 1.2 2003/08/13 11:45:45 zagy Exp $
 
 import Zope
 Zope.startup()
@@ -14,7 +14,7 @@ from Products.Silva.tests.base import SilvaTestCase
 
 
 
-class MangleTest(SilvaTestCase):
+class MangleIdTest(SilvaTestCase):
 
     def setUp(self):
         SilvaTestCase.setUp(self)
@@ -60,9 +60,29 @@ class MangleTest(SilvaTestCase):
         id = mangle.Id(self.folder, 'index', instance=an_asset)
         self.assertEqual(id.validate(), id.RESERVED)
     
+
+class ManglePathTest(SilvaTestCase):
+
+    def test_path(self):
+        test_cases = [
+            ('/silva/foo', '/silva/foo/bar', 'bar'),
+            ('/silva/foo', '/silva/bar', '/silva/bar'),
+            ('/silva/foo', '/bar', '/bar'),
+           ]
+        for case in test_cases:
+            base_path, item_path, expected_result = case
+            base_path = base_path.split('/')
+            item_path = item_path.split('/')
+            expected_result = expected_result.split('/')
+            actual_result = mangle.Path(base_path, item_path)
+            __traceback_info__ = case
+            self.assertEquals(expected_result, actual_result)
+
+    
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(MangleTest))
+    suite.addTest(unittest.makeSuite(MangleIdTest))
+    suite.addTest(unittest.makeSuite(ManglePathTest))
     return suite
 
 def main():

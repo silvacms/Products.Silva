@@ -138,7 +138,7 @@
                 <tal:block define="
                   is_default python: item is default_document;
                   item_url item/absolute_url;
-                  identifier python:'%s||%s' % (item.id, here.obj_lookup_path_mangler(asset_context, item));
+                  identifier python:'%s||%s' % (item.id, mangle.Path.fromObject(asset_context, item));
                   status_style python:item.get_object_status()[1];
                   oddrow repeat/item/odd">
                   <tr tal:attributes="class python:oddrow and 'odd' or 'even'">
@@ -261,7 +261,7 @@
                 <tal:block define="
                   asset_url asset/absolute_url;
                   oddrow repeat/asset/odd;
-                  identifier python:'%s||%s' % (asset.id, here.obj_lookup_path_mangler(asset_context, asset));
+                  identifier python:'%s||%s' % (asset.id, mangle.Path.fromObject(asset_context, asset));
                   ">
                   <tr 
                     tal:define="title python:(asset.get_title())"

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.4 2003/08/06 06:39:20 zagy Exp $
+# $Id: mangle.py,v 1.5 2003/08/13 11:45:44 zagy Exp $
 
 # Python
 import string
@@ -248,4 +248,42 @@ class Id:
             
     def __str__(self):
         return self._maybe_id
+
+class _Path:
+    """mangle path
+    
+        SINGLETON
+    """
+    
+    __allow_access_to_unprotected_subobjects__ = 1
+    
+    def __call__(self, base_path, item_path):
+        """mangle path"""
+        i = 0
+        absolute = 0
+        for i in range(0, min(len(item_path), len(base_path))):
+            if item_path[i] != base_path[i]:
+                absolute = 1
+                break
+        if not absolute:
+            item_path = item_path[len(base_path):]
+        return item_path
+    
+    def fromObject(self, obj_context, obj):
+        """return mangled path from objec'ts context and object
+        
+            obj_context: str (path) or list
+            obj: instance
+
+            return str
+        """
+        if type(obj_context) == type(''):
+            obj_context = obj_context.split('/')
+        assert type(obj_context) == type([]), "obj_context is not list type"
+        obj_path = obj.getPhysicalPath()
+        return '/'.join(self(obj_context, obj_path))
+
+module_security.declarePublic('Path')
+Path = _Path()
+        
 
