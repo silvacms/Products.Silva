@@ -48,7 +48,7 @@
         method="POST">
         <h2 class="info">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Group')" />
-          Available groups
+	  <span i18n:translate="available_groups" tal:omit-tag="">Available groups</span>
         </h2>
         <table class="listing"
           style="margin-bottom:0.5em;">
