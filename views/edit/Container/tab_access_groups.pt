@@ -28,7 +28,7 @@
   <div class="worksheet">
   <h2>
      <img tal:replace="structure python:view.render_icon(model)" />
-     &nbsp; Group definitions for
+     <span tal:replace="group_definitions_for">Group definitions for</span>
      &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
    </h2>
    <h3 i18n:translate="group_definitions">
@@ -42,9 +42,9 @@
           Add a normal group
         </b>
         <br />
-        <i i18n:translate="group_defined_by_list_users">
-          (a group defined by a list of users)
-        </i>
+        (<i i18n:translate="group_defined_by_list_users">
+          a group defined by a list of users
+        </i>)
         <form name="focusbox" 
           action="add_object_submit" 
           method="POST" 
@@ -83,16 +83,16 @@
             <tr>
               <td colspan="3" align="right">
                 <input type="hidden" 
-		  name="meta_type" 
-		  value="Silva Group" />
+                  name="meta_type" 
+                  value="Silva Group" />
                 <input class="button" 
-		  type="submit" 
-		  name="add_submit" 
-		  value="add" 
-		  title="access key: alt-a" 
-		  accesskey="a" 
-		  i18n:attributes="title value"
-		/>
+                  type="submit" 
+                  name="add_submit" 
+                  value="add" 
+                  title="access key: alt-a" 
+                  accesskey="a" 
+                  i18n:attributes="title value"
+                />
               </td>
             </tr>
           </table>
@@ -145,17 +145,17 @@
             <tr>
               <td colspan="3" align="right">
                 <input type="hidden" 
-		  name="meta_type" 
-		  value="Silva Virtual Group"
-		/>
+                  name="meta_type" 
+                  value="Silva Virtual Group"
+                />
                 <input class="button" 
-		  type="submit" 
-		  name="add_submit" 
-		  value="add" 
-		  title="access key: alt-a" 
-		  accesskey="a" 
-		  i18n:attributes="value title"
-		/>
+                  type="submit" 
+                  name="add_submit" 
+                  value="add" 
+                  title="access key: alt-a" 
+                  accesskey="a" 
+                  i18n:attributes="value title"
+                />
               </td>
             </tr>
           </table>
@@ -247,8 +247,8 @@
                 value="delete"
                 onClick="return confirm('Really delete?')"
                 tal:condition="groups"
-		i18n:attributes="title value onClick"
-	      />
+                i18n:attributes="title value onClick"
+              />
             </td>
             <td align="right"
               colspan="2">
