@@ -8,10 +8,10 @@ Meta
 Copyright (c) 2002, 2003, 2004 Infrae. All rights reserved.  See also
 LICENSE.txt
 
-Valid for:  Silva 1.1.x
+Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.44 $
+CVS:        $Revision: 1.45 $
 
 Introduction
 ------------
@@ -28,7 +28,7 @@ Upgrades
 Minor upgrades
 --------------
 
-If you are upgrading Silva minor versions (1.0.1 to 1.0.2 for
+If you are upgrading Silva minor versions (1.1.1 to 1.1.2 for
 instance), you shouldn't need to do anything special; just install the
 updated Silva Products (the ``-all`` distribution) and restart
 Zope. 
@@ -78,6 +78,18 @@ Steps to take during a major Silva upgrade:
   refresh all installed Silva extensions as well as upgrade the Silva
   content that needs upgrading. Note that this will take a while if
   your site is large.
+
+Upgrading from Silva 1.1 to Silva 1.2
+-------------------------------------
+
+
+Upgrading Silva 1.1 to Silva 1.2 does not require a content
+upgrade. Although this is a major feature upgrade, the procedure for
+upgrading is therefore the same as for minor upgrades. A ``Refresh
+all`` in ``service_extensions`` is however required in this upgrade.
+
+If you want to enable the new (since 1.1) XSLT support, please see
+the section "XSLT Support" in INSTALL.txt.
 
 Upgrading from Silva 1.0 to Silva 1.1
 -------------------------------------

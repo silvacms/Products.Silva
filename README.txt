@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
   
-  Valid for:  Silva 1.1.x
+  Valid for:  Silva 1.2.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.14 $
+  CVS:        $Revision: 1.15 $
 
 Silva
 

@@ -8,10 +8,10 @@ Meta
 Copyright (c) 2002, 2003, 2004 Infrae. All rights reserved.
 See also LICENSE.txt
 
-Valid for:  Silva 1.1.x
+Valid for:  Silva 1.2.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.47 $
+CVS:        $Revision: 1.48 $
 
 Introduction
 ------------
@@ -29,10 +29,8 @@ Checklist for Zope administrators
 
 Here is a quick checklist what to do to install Silva:
 
-* You need Zope 2.7.x with Python 2.3.
-
-* Download and install PyXML_ for the Python that Zope uses. PyXML
-  0.8.3 works.
+* You need Zope 2.7.x with Python 2.3. Silva 1.2 has been tested to work
+  with Zope 2.7.4.
 
 * Download an appropriate Silva ``-all.tgz`` for the version you want
   from `the Silva download area`_ and unpack it into your
@@ -53,8 +51,6 @@ Here is a quick checklist what to do to install Silva:
 
 You should now be done installing Silva. In the next section we'll go
 into everything in much more detail.
-
-.. _PyXML: http://pyxml.sourceforge.net
 
 .. _`the Silva download area`: http://www.infrae.com/download/Silva
 

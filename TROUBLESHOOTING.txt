@@ -1,41 +1,5 @@
 Installation problems
 
-  The Silva (and XMLWidgets and ParsedXML) Product is broken after
-  installation.
-
-    Most of the installation problems do have their source in an
-    improper installation of the PyXML python module.
-
-    Usually this can be diagnosed by the following lines in the error
-    message one gets after a Zope start::
-
-      ImportError: cannot import name expat
-
-    Another symptom is that one gets the following error when trying
-    to add a Silva Root::
- 
-       Error Type: AttributeError
-       Error Value: StartDoctypeDeclHandler
-
-    This is a problem occurring frequently with binary distributions
-    of Zope; as the writing of this the corresponding issue in the
-    collector is still pending, see
-    http://collector.zope.org/Zope/678/view
-
-    You can test for a proper PyXML installation by typing in the
-    following lines into the python interpreter used to run Zope::
-
-       from xml.parsers import expat
-
-    (The full path to the python binary can be found in the shell
-    script or batch file used to start Zope.)
-
-    If the above statement fails with an ImportError, please try to
-    fix the PyXML installation. Usually getting the version from the
-    PyXML project home page http://pyxml.sourceforge.net helps fixing
-    the problem.
-
-
   After installing the Silva Product and restarting Zope, the server
   does not respond to HTTP request.
 
