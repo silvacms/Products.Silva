@@ -1,8 +1,9 @@
 <div class="margins"
   tal:define="
     view here;
-    model request/model;">
-  <tal:block condition="view/has_access">
+    model request/model;
+    has_access here/has_change_access_permission;">
+  <tal:block condition="has_access">
     <tal:block condition="model/isValid | nothing">
       <h3>
         <a href="tab_access"

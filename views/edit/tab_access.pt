@@ -13,9 +13,10 @@
     model_is_container model/implements_container | nothing;
     group_service view/service_groups | nothing;
     allow_subscription model/service_members/allow_subscription | nothing;
+    has_access here/has_change_access_permission;
   ">
   <table class="columns columns3"
-    tal:condition="view/has_access">
+    tal:condition="has_access">
     <tbody>
       <tr>
         <tal:block replace="nothing">

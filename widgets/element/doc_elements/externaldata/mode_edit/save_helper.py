@@ -1,12 +1,3 @@
-## Script (Python) "save_helper"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
 from Products.Formulator.Errors import FormValidationError, ValidationError
 
 request = context.REQUEST
@@ -53,10 +44,10 @@ if current_path == new_path:
         except ValidationError, e:
             errors[e.field_id] = e.error_text
         else:
-            # set parameter data from form.
+            # set parameter data from form. Form outputs unicode!
             child = node.createElement('parameter')
-            child.setAttribute('key', node.input_convert(field.id))
-            child.setAttribute('value', node.input_convert(value))
+            child.setAttribute('key', field.id)
+            child.setAttribute('value', value)
             node.appendChild(child)
 else:
     # different datasource path:
@@ -65,9 +56,10 @@ else:
         # get parameter defs.
         # throw away old param elements.
         # set new defaults.
+        # Form outputs unicode!
         child = node.createElement('parameter')
-        child.setAttribute('key', node.input_convert(name))
-        child.setAttribute('value', node.input_convert(default_value))
+        child.setAttribute('key', name)
+        child.setAttribute('value', default_value)
         node.appendChild(child)
 
 type = 'list'

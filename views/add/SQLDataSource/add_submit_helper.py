@@ -11,12 +11,14 @@
 sql_statement = result['sql_statement']
 parameters = result['parameters']
 connection_id = result['connection_id']
+data_encoding = result['data_encoding']
 
 model.manage_addProduct['Silva'].manage_addSQLDataSource(id, title)
 
 sqlobject = getattr(model, id)
 sqlobject.set_statement(sql_statement)
 sqlobject.set_connection_id(connection_id)
+sqlobject.set_data_encoding(data_encoding)
 
 parameters_dict = sqlobject.parameter_string_to_dict(parameters)
 for name, (type, default_value, description) in parameters_dict.items():

@@ -12,7 +12,11 @@
     global parent_screen_name string:access;
   ">
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
+<metal:block fill-slot="main"
+  tal:define="
+    no_entry string:-;
+    has_access here/has_change_access_permission;"
+  tal:condition="has_access">
 
 <script type="text/javascript" 
   tal:content="structure python:here.focus_editor('name')">
@@ -208,11 +212,6 @@
     </tr>
   </tbody>
 </table>
-
-<div tal:define="global no_entry string:-"
-  tal:condition="python:view.has_access()">
-</div>
-
 </metal:block>
 </metal:block>
 </html>

@@ -33,7 +33,15 @@ if current_title != new_title:
     model.set_title(new_title)
     changed.append(('title',
                     '%s to %s' % (escape_entities(current_title),
-                                  escape_entities(model.get_title()))))
+                                  escape_entities(model.get_title() ))))
+
+current_data_encoding = model.get_data_encoding()
+new_data_encoding = result['data_encoding']
+if current_data_encoding != new_data_encoding:
+    model.set_data_encoding(new_data_encoding)
+    changed.append(('data encoding',
+                    '%s to %s' % (escape_entities(new_data_encoding),
+                                  escape_entities(model.get_data_encoding() ))))
 
 new_parameters = model.parameter_string_to_dict(result['parameters'])
 current_parameters = model.parameters()

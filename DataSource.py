@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -33,10 +33,14 @@ class DataSource(Asset):
     meta_type = "Silva Data Source"
 
     security = ClassSecurityInfo()
+
+    # XXX class attribute to provide backwards compatibility
+    _data_encoding = 'ascii'
     
     def __init__(self, id, title):
         DataSource.inheritedAttribute('__init__')(self, id, title)
         self._parameters = {}
+        self._data_encoding = 'ascii'
     
     # ACCESSORS
     security.declareProtected(
@@ -54,7 +58,17 @@ class DataSource(Asset):
         """
         pass
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_data_encoding')
+    def get_data_encoding(self):
+        return self._data_encoding
+        
     # MODIFIERS
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_data_encoding')
+    def set_data_encoding(self, encoding):
+        self._data_encoding = encoding
+
     security.declareProtected(
             SilvaPermissions.ChangeSilvaContent, 'set_parameter')
     def set_parameter(self, name, type='string', default_value='', description=''):

@@ -1,13 +1,5 @@
-## Script (Python) "get_silva_permissions"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
 from AccessControl import getSecurityManager
+
 model = context.REQUEST.model
 security_manager = getSecurityManager()
 result = {}

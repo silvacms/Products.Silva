@@ -14,8 +14,10 @@
   ">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
-  tal:define="allow_subscription model/service_members/allow_subscription | nothing;"
-  tal:condition="view/has_access">
+  tal:define="
+    allow_subscription model/service_members/allow_subscription | nothing;
+    has_access here/has_change_access_permission;"
+  tal:condition="has_access">
 
 <table class="columns columns2">
   <tbody>
