@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.67 $
+# $Revision: 1.68 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -25,6 +25,8 @@ from Products.SilvaMetadata.Exceptions import BindingError
 
 LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
 
+# the order of this list should remain the same, since the list of roles
+# a user has (sec_get_all_roles_for_userid) is shown in this order.
 interesting_roles = ['Viewer', 'Reader', 'Author', 'Editor', \
                      'ChiefEditor', 'Manager']
 
@@ -366,6 +368,16 @@ class Security(AccessManager):
         """
         return [role for role in self.get_local_roles_for_userid(userid)
                 if role in interesting_roles]
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'sec_get_all_roles_for_userid')
+    def sec_get_all_roles_for_userid(self, userid):
+        """Returns all roles a user has in this context"""
+        roles = []
+        for role in interesting_roles[:]:
+            if self.REQUEST.AUTHENTICATED_USER.has_role(role, self):
+                roles.append(role)
+        return roles
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_defined_userids')
