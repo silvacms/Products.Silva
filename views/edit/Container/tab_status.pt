@@ -19,11 +19,10 @@
 <form action="." name="silvaObjects" method="POST">
 <table width="100%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="cellspacing container/table_cellspacing;
-                  cellpadding container/table_cellpadding;
-                  border container/table_border">
+                  cellpadding container/table_cellpadding;">
 <tr class="topcontrols">
 <td align="left" colspan="6">
-<input class="button" style="float:right;" type="submit" name="tab_status_export:method" value=" Export all..." title="Export all items in this overview: alt-e" accesskey="e" />
+<input class="button" style="float:right;" type="submit" name="tab_status_export:method" value=" Export..." title="Go to the export screen / export this folder: alt-e" accesskey="e" />
 <a href="treelink" title="Up to containing publication: alt-[" accesskey="["
   tal:condition="python:model != model.get_root()"
   tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/tab_status'">
@@ -276,7 +275,6 @@ if (document.forms[0]) {
   }
 //-->
 </script>
-<input class="button" type="submit" name="tab_status_export_selected_start:method" value="Export selected" title="Export selected files to XML: alt-p" accesskey="p" />
 </td>
 <tal:editors-tab condition="silva_permissions/ApproveSilvaContent">
 <td class="widebody" align="right" colspan="2">
@@ -295,21 +293,20 @@ if (document.forms[0]) {
 <span tal:replace="nothing"> ______________ new versions / publish time setting______________ </span>
 <tr class="controls" valign="top"
   tal:condition="python:len(objects) != 0 or model.get_default()">
-<td colspan="2">
-<input class="button" type="submit" name="tab_status_new_version:method" value="Create new versions" title="Create new versions of published docs: alt-n" accesskey="n" />
-</td>
-<tal:editors-tab condition="silva_permissions/ApproveSilvaContent">
-<td class="widebody" align="right" colspan="2">
+<td class="widebody" colspan="4"
+ tal:condition="silva_permissions/ApproveSilvaContent">
+<div style="float: right">
 <label title="Access key: alt-m (some platforms)" accesskey="m">Publish time:</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
+</div>
+<input class="button" type="submit" name="tab_status_new_version:method" value="Create new versions" title="Create new versions of published docs: alt-n" accesskey="n" />&nbsp;
+<input class="button" type="submit" name="tab_status_export_selected_start:method" value="Export selected..." title="Export selected files to XML: alt-p" accesskey="p" />
 </td>
-<td class="widebody" align="right" colspan="2"
-  tal:condition="silva_permissions/ApproveSilvaContent">
+<td class="widebody" align="right" colspan="2" nowrap="nowrap">
 <label for="publish_now_flag" title="Access key: alt-u" accesskey="u">P<u>u</u>blish&nbsp;right&nbsp;now?</label>
 <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
 </td>
-</tal:editors-tab>
 <td align="right" colspan="4"
   tal:condition="python:not silva_permissions['ApproveSilvaContent']">
 &nbsp;
