@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.99 $
+# $Revision: 1.100 $
 
 import Metadata
 import Folder, Root
@@ -111,13 +111,18 @@ def initialize(context):
         )
         
     # register xml import functions
-    # we let the xml import functionality of Publication handle any root elements, since a Silva instance can not import another root
-    importer_registry.register_tag('silva_root', Publication.xml_import_handler)
-    importer_registry.register_tag('silva_publication', Publication.xml_import_handler)
-    importer_registry.register_tag('silva_folder', Folder.xml_import_handler)
-    importer_registry.register_tag('silva_demoobject', DemoObject.xml_import_handler)
+    # we let the xml import functionality of Publication handle any
+    # root elements, since a Silva instance can not import another root
+    importer_registry.register_tag('silva_root',
+                                   Publication.xml_import_handler)
+    importer_registry.register_tag('silva_publication',
+                                   Publication.xml_import_handler)
+    importer_registry.register_tag('silva_folder',
+                                   Folder.xml_import_handler)
+    importer_registry.register_tag('silva_demoobject',
+                                   DemoObject.xml_import_handler)
     importer_registry.register_tag('silva_ghostfolder',
-        GhostFolder.xml_import_handler)
+                                   GhostFolder.xml_import_handler)
 
     # register the FileSystemSite directories
     registerDirectory('views', globals())
