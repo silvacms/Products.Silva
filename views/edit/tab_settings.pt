@@ -164,11 +164,69 @@
               </tr>
             </tbody>
           </table>
-              
         </td>            
         <td class="right">
         </td>
       </tr>
+
+      <!--layout metadata section-->
+      <tr>
+        <td class="main">
+          <tal:block 
+            define="category python: 'layout';"
+            condition="model/implements_versioning">
+            <tal:block 
+              define="content model/get_editable | nothing;"
+              condition="model/get_unapproved_version"
+              >
+              <!-- editable version metadata table, thus editable -->
+              <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
+                <h2 metal:fill-slot="table_title">
+                  layout
+                </h2>
+              </metal:block>
+            </tal:block>
+            
+            <tal:block 
+              define="content model/get_previewable | nothing;"
+              condition="model/get_approved_version">
+              <metal:block use-macro="here/macro_view_metadata/macros/metadata">
+                <h2 metal:fill-slot="table_title">
+                  layout
+                </h2>
+              </metal:block>
+            </tal:block>
+            
+            <tal:block 
+              define="
+                content model/get_viewable | nothing;
+                display_flag python:0"
+              condition="model/get_public_version">
+              <metal:block use-macro="here/macro_view_metadata/macros/metadata">
+                <h2 metal:fill-slot="table_title">
+                  layout
+                </h2>
+              </metal:block>
+            </tal:block>
+          </tal:block>
+          
+          <tal:block 
+            define="category python: 'layout';"
+            condition="not: model/implements_versioning">
+            <tal:block define="content model">
+              <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
+                <h2 metal:fill-slot="table_title">
+                  layout
+                </h2>
+              </metal:block>
+            </tal:block>
+          </tal:block>
+        </td>            
+        <td class="right">
+        </td>
+      </tr>
+      <!--end of layout metadata section-->
+      
     </tbody>
   </table>
 </metal:block>
