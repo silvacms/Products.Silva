@@ -357,6 +357,16 @@
                       _______ icon + id cell _______
                     </tal:block>
                     <td style="white-space: nowrap">
+                      <tal:block condition="python: hasattr(view, 'externalEditLink_')">
+                        <span style="float: right;"
+                          tal:define="
+                            id asset_info/asset_id;
+                            asset context/?id"
+                          tal:content="
+                            structure python: view.externalEditLink_(asset)"
+                        />
+                      </tal:block>
+                      
                       <a class="icon"
                         tal:attributes="
                           href asset_info/editor_link;
@@ -373,10 +383,6 @@
                       >
                         id
                       </a>
-
-                    <tal:block condition="python: hasattr(view, 'externalEditLink_')">
-                      <span tal:replace="structure python: view.externalEditLink_(asset_info)" />
-                    </tal:block>
 
                     </td>
                     <tal:block replace="nothing">
