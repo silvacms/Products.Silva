@@ -10,6 +10,8 @@
 model = context.REQUEST.model
 type = model.output_convert_html(type)
 
+tag = None
+
 if type in ['disc', 'square', 'circle']:
     tag = 'ul'
 elif type in ['1', 'I', 'i', 'A', 'a']:
@@ -28,7 +30,7 @@ elif type == 'none':
 classes_mapping = {'disc':'disc', 'square':'square', 'circle':'circle', 
                    '1':'decimal', 'I':'upper-roman', 'i':'lower-roman', 
                    'A':'upper-alpha', 'a':'lower-alpha', }
-mapped_class = classes_mapping[type]
+mapped_class = classes_mapping.get(type, 'disc')
 
 if tag:
     content = ''.join(['<li>%s</li>\n' % text for text in texts])
