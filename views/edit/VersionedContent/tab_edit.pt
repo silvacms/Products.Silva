@@ -104,7 +104,6 @@
 <tal:block condition="python: editor == 'epoz' and hasattr(view, 'epoz') and model.meta_type == 'Silva Document' and unapproved_version and not request_pending and not is_locked">
   <tal:block define="epozmacros view/epoz/epozmacros/macros">
 
-    <div style="width: 100%; text-align: right"><a tal:attributes="href python: '%s/edit?editor=field_editor' % model.absolute_url()">Edit with the builtin editor</a>&nbsp;</div>
 
     <script type="text/javascript" src="epoz/dom2_events"></script>
     <script type="text/javascript" src="epoz/sarissa"></script>
@@ -116,7 +115,7 @@
     <script type="text/javascript" src="epoz/epozcontextmenu"></script>
     <script type="text/javascript" src="epoz_silva/silva_epoz.js"></script>
 
-    <table width="100%" border="0">
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
     
     <tr>
     <td colspan="2">
@@ -367,6 +366,8 @@
     </tr>
 
     </table>
+
+    <div style="width:100%; text-align:right;"><a tal:attributes="href python: '%s/edit?editor=field_editor' % model.absolute_url()">Edit with the builtin editor</a>&nbsp;</div>
 
   </tal:block>
 </tal:block>

@@ -13,7 +13,7 @@
 div.epoz-fulleditor {
   font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
   border: solid 3px ButtonHighlight;
-  margin: 0.2em;
+  margin: 0em;
   height: 100%;
 }
 
@@ -22,19 +22,21 @@ div.epoz-fulleditor .epoz-editorframe {
 }
 
 div.epoz-smalleditor .epoz-editorframe {
-  margin-right: 0.2em;
+  margin-right: 0em;
 }
 
 div.epoz-smalleditor {
   font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
   border: solid 3px ButtonHighlight;
-  margin: 0.2em;
+  margin: 0em;
   height: 100%;
 }
 
 .epoz-tb {
-  padding: 3px;
-  margin-bottom: 0.4em;
+  background: #616d73;
+  padding: 0 0 0px 0;
+  margin-bottom: 0em;
+  border:1px #333 solid;
 }
 
 .epoz-tb-buttongroup {
@@ -94,13 +96,13 @@ span.epoz-tb-buttongroup button.epoz-redo {background-image: url("epoz/epozimage
 span.epoz-tb-buttongroup button.epoz-redo:hover {background-image: url("epoz/epozimages/redo.gif"); background-color: lightgray;}
 
 div.epoz-editorframe {
-  margin-left: 0.3em;
-  margin-bottom: 0.3em;
+  margin-left: 0em;
+  margin-bottom: 0em;
 }
 
 #epoz-editor {
   height: 450px;
-  width: 99%;
+  width: 100%;
   border: solid 2px #AACCCC;
 }
 
@@ -108,7 +110,7 @@ div.epoz-toolboxes {
   border: solid 2px #AACCCC;
   height: 100%;
   width: 25em;
-  margin-right: 0.3em;
+  margin-right: 0em;
   font-size: 1em;
   color: black;
 }
@@ -120,7 +122,7 @@ div.epoz-toolbox {
 
 div.epoz-toolbox h1 {
   text-align: left;
-  width: 99%;
+  width: 100%;
   background-color: #AACCCC;
   margin-top: 0;
   margin-bottom: 0em;
