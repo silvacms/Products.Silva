@@ -339,7 +339,6 @@ def convert_document_092(obj):
         used_ids.append(version)
         doc._update_publication_status()
             
-    used_ids = []
     for version in ['unapproved', 'approved', 'public', 'last_closed']:
         v = getattr(obj, 'get_%s_version' % version)()
         if v is not None:
@@ -360,12 +359,6 @@ def convert_document_092(obj):
             new_previous_versions.append((versionid, pdt, edt))
         obj._previous_versions = new_previous_versions
             
-    # remove all the unconverted versions
-    for o in obj.objectValues('Silva Document Version'):
-        if o not in used_ids:
-            #print 'Going to delete obsolete version', o.absolute_url()
-            obj.manage_deleteObjects([o.id])
-
 upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
 
 # converting the data of the object to unicode will mostly (if not only)
