@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.58 $
+# $Revision: 1.59 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -135,6 +135,9 @@ class Document(VersionedContent):
         is_cacheable = 1 
     
         viewable = self.get_viewable()
+
+        if viewable is None:
+            return 0
 
         # it should suffice to test the children of the root element only,
         # since currently the only non-cacheable elements are root elements
