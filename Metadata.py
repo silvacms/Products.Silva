@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.3 2003/05/20 15:13:46 hazmat Exp $    
+$Id: Metadata.py,v 1.4 2003/05/22 09:04:08 jw Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
@@ -56,12 +56,12 @@ def ghost_access_handler(tool, content_type, content, defer_mode):
         )
 
 def folder_initialize_handler(content, bind_data):
-    
-    bind_data[Binding.ObjectDelegateEditable]    = 'get_default_editable'
-    bind_data[Binding.ObjectDelegatePreviewable] = 'get_default_previewable'
-    bind_data[Binding.ObjectDelegateViewable]    = 'get_default_viewable'
+    pass
+    #bind_data[Binding.ObjectDelegateEditable]    = 'get_default_editable'
+    #bind_data[Binding.ObjectDelegatePreviewable] = 'get_default_previewable'
+    #bind_data[Binding.ObjectDelegateViewable]    = 'get_default_viewable'
 
-    return bind_data
+    #return bind_data
 
 #################################
 ### registration
@@ -130,5 +130,5 @@ def register_initialize_handlers():
     from Products.Silva.Folder import Folder
     from Products.Silva.Publication import Publication
     
-    registerInitHandler(Folder.meta_type, folder_initialize_handler)
-    registerInitHandler(Publication.meta_type, folder_initialize_handler)
+    #registerInitHandler(Folder.meta_type, folder_initialize_handler)
+    #registerInitHandler(Publication.meta_type, folder_initialize_handler)
