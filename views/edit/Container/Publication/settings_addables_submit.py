@@ -16,7 +16,7 @@ changed_metadata = []
 try:
     result = form.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return context.tab_metadata_addables(message_type="error", message='Input form errors %s' % context.render_form_errors(e))
+    return context.tab_metadata_addables(message_type="error", message='%s' % context.render_form_errors(e))
 
 currently_acquired = model.is_silva_addables_acquired()
 

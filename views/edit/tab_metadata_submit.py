@@ -16,9 +16,8 @@ changed_metadata = []
 try:
     result = form.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return context.tab_metadata(
-        message_type="error", 
-        message='Input form errors %s' % context.render_form_errors(e))
+    return context.tab_metadata(message_type="error", 
+        message='%s' % context.render_form_errors(e))
 
 for id, value in result.items():
     if value:

@@ -9,4 +9,4 @@
 ##
 import DateTime
 dt = DateTime.DateTime()
-return "%02d %s %04d %02d:%02d" % (dt.day(), dt.aMonth(), dt.year(), dt.hour(), dt.minute())
+return "%02d %s %04d %02d:%02d" % (dt.day(), dt.aMonth().lower(), dt.year(), dt.hour(), dt.minute())

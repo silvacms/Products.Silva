@@ -15,7 +15,7 @@
   />
   <label for="all"
     accesskey="a">
-    Select all
+    Select <u>a</u>ll
   </label>
   <script type="text/javascript"
     xml:space="preserve">

@@ -30,11 +30,9 @@
                 <tr>
                   <td class="top"
                     colspan="99">
-                    <h2>
+                    <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />
-                      publish contents of:
-                      <span tal:replace="
-                        structure string:${model/id} &nbsp;&#xab;${title}&#xbb;">
+                      <span tal:replace="structure string:${title}">
                         id
                       </span>
                     </h2>
@@ -54,14 +52,14 @@
                         value=""
                         tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
                         tal:attributes="
-                          value string:Export this ${type};
-                          title string:Export this ${type}: alt-e;" />
+                          value string:Export this ${type}...;
+                          title string:export this ${type}: alt-e;" />
                         <input class="navigation"
                           accesskey="p"
                           name="tab_status_export_selected_start:method"
-                          title="Export selected documents to XML: alt-p"
+                          title="export selected items: alt-p"
                           type="submit"
-                          value="Export selected" />
+                          value="Export selected..." />
                     </span>
                   </td>
                 </tr>
@@ -97,7 +95,7 @@
                       indent_depth python: '%spx' % str(obj['indent'] * 10);
                       obj_url obj/absolute_url;"
                     tal:attributes="
-                      class python: odd and 'odd' or 'even';">
+                      class python: odd and 'even' or 'odd';">
                     <td class="listing-left">
                       <input name="refs:list"
                         type="checkbox"
@@ -112,14 +110,13 @@
                     <td>
                       <div tal:attributes="style string:margin-left:${indent_depth}">
                         <div style="float: left;">
-                          <a title="Edit"
+                          <a title="edit"
                             tal:attributes="href string:${obj_url}/edit/tab_edit">
                             <img tal:replace="structure obj/icon" />
                           </a>
                         </div>
                         <div style="padding-left: 19px;">
-                          <a class="blacklink"
-                            title="Preview"
+                          <a title="preview"
                             tal:attributes="
                               class obj/status_style | default;
                               href string:${obj_url}/edit/tab_preview;">
@@ -137,13 +134,19 @@
                       _______ revision cell _______
                     </tal:block>
                     <td class="align-right">
-                      <a class="blacklink"
-                        title="Status tab of item"
+                      <a title="status"
                         tal:condition="obj/status | nothing"
                         tal:attributes="
                           class obj/status_style | default;
                           href string:${obj_url}/edit/tab_status;">
                         <tal:block replace="obj/status" />
+                      </a>
+                      <a class="closed"
+                        title="publish"
+                        tal:condition="is_container"
+                        tal:attributes="
+                          href string:${obj_url}/edit/tab_status;">
+                        n/a
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -152,9 +155,9 @@
                     <td style="white-space: nowrap;"
                       tal:define="public_status obj/public_status | nothing">
                       <a href="tab_status"
-                        title="Public version"
+                        title="public version"
                         tal:attributes="href obj_url;"
-                        tal:omit-tag="python: public_status == 'Closed'">
+                        tal:omit-tag="python: public_status == 'closed'">
                         <tal:block replace="public_status" />                                                
                       </a>                                            
                       <i
@@ -183,26 +186,29 @@
                 <tr tal:condition="objects">
                   <th class="controls listing-left"
                     colspan="99">
+                    <span style="float:right;">
+                      Date format: day/month/year
+                    </span>
                     <metal:block use-macro="view/macro_select_all/macros/select_all" />
                   </th>
                 </tr>
-                <tr class="controls">
+                <tr class="controls controls-1">
                   <tal:block replace="nothing">
                     ______________ expiration time controls ______________
                   </tal:block>
                   <td class="align-right"
                     colspan="99">
                     <label class="widebody"
-                      title="Access key: alt-i (some platforms)" 
+                      title="access key: alt-i" 
                       accesskey="i">
-                      Expiration time:
+                      expiration time:
                     </label>
                     <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render(REQUEST=request)" />
                     &nbsp;
                     <label class="widebody"
-                      title="Access key: alt-m (some platforms)" 
+                      title="access key: alt-m" 
                       accesskey="m">
-                      Publish time:
+                      publish time:
                     </label>
                     <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
                   </td>
@@ -216,45 +222,42 @@
                     <input class="button"
                       accesskey="j"
                       name="tab_status_reject:method"
-                      title="Reject request for approval of new versions: alt-j"
+                      title="reject request for approval of new versions: alt-j"
                       type="submit"
                       value="Reject request for approval" />
                     <input class="button"
                       accesskey="v"
                       name="tab_status_revoke:method"
-                      title="Withdraw approval of new versions: alt-v"
+                      title="withdraw approval of new versions: alt-v"
                       type="submit"
                       value="Revoke approval" />
-                    &nbsp;
-                    <input class="warningbutton"
+                    <input class="warning"
                       accesskey="c"
                       name="tab_status_close:method"
-                      title="Close published items: alt-c"
+                      title="close published items: alt-c"
                       type="submit"
                       value="Close public" />
-                    &nbsp;
                     <input class="button"
                       accesskey="s"
                       name="tab_status_change_settings:method"
-                      title="Change publish and expiration times: alt-s"
+                      title="change publish and expiration times: alt-s"
                       type="submit"
                       value="Change timings" />
                   </td>
                   <td class="align-right">
                     <label 
                       for="publish_now_flag" 
-                      title="Access key: alt-u" 
+                      title="access key: alt-u" 
                       accesskey="u">
                       <span class="widebody">
-                        P<u>u</u>blish&nbsp;now?
+                        p<u>u</u>blish&nbsp;now?
                       </span>
                     </label>
                     <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
-
                     <input class="button"
                       accesskey="o"
                       name="tab_status_approve:method"
-                      title="Approve or publish new versions: alt-o"
+                      title="approve or publish new versions: alt-o"
                       type="submit"
                       value="Approve" />
                   </td>
@@ -268,19 +271,19 @@
                     <input class="button"
                       accesskey="w"
                       name="tab_status_withdraw:method"
-                      title="Withdraw request for approval of new versions: alt-w"
+                      title="withdraw request for approval of new versions: alt-w"
                       type="submit"
                       value="Withdraw approval request" />
                     <input class="button"
                       accesskey="v"
                       name="tab_status_revoke:method"
-                      title="Revoke approval of new versions: alt-v"
+                      title="revoke approval of new versions: alt-v"
                       type="submit"
                       value="Revoke approval" />
                     <input class="button"
                       accesskey="r"
                       name="tab_status_request_approval:method"
-                      title="Request approval for new versions: alt-r"
+                      title="request approval for new versions: alt-r"
                       type="submit"
                       value="Request approval" />
                   </td>

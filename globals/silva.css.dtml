@@ -80,13 +80,13 @@ input:hover, textarea:hover {
 }
 
 select:focus { 
-  color : #bfffd3; 
-  background : #69878c; 
+  color : #bff1ff; 
+  background : #567275;
 }
 
 select:hover { 
-  color : #bfffd3; 
-  background : #69878c; 
+  color : #bff1ff; 
+  background : #567275;
 }
 
 input:focus:hover, textarea:focus:hover { 
@@ -94,16 +94,40 @@ input:focus:hover, textarea:focus:hover {
   background : #e3f0e4;
 }
 
+input.navigation[type="submit"]:hover, 
+button[type="button"]:hover { 
+  color : #bff1ff; 
+  background : #74748b; 
+}
+
+input.navigation[type="submit"]:focus, 
+button[type="button"]:focus { 
+  color : #bfffd3; 
+  background : #53538b;
+}
+
 input.button[type="submit"]:hover, 
 button[type="button"]:hover { 
   color : #bfffd3; 
-  background : #69878c; 
+  background : #668b69; 
 }
 
 input.button[type="submit"]:focus, 
 button[type="button"]:focus { 
   color : #bfffd3; 
-  background : #008a8a;
+  background : #538b58;
+}
+
+input.warning[type="submit"]:hover, 
+button[type="button"]:hover { 
+  color : #f0c0c0; 
+  background : #74748b; 
+}
+
+input.warning[type="submit"]:focus, 
+button[type="button"]:focus { 
+  color : #f0c0c0; 
+  background : #53538b;
 }
 
 input[type="submit"]:hover, 
@@ -142,10 +166,7 @@ input.warningbox {
   font-family : verdana, arial, helvetica, sans-serif;
   color : #3f4570;
   background : #ead5d3;
-  border-left : 1px solid #333333;
-  border-top : 1px solid #333333;
-  border-right : 1px solid #333333;
-  border-bottom : 1px solid #333333;
+  border : 1px solid #333333;
 }
 
 
@@ -223,20 +244,6 @@ a.published:hover {
   text-decoration : underline;
 }
 
-/* blacklink selectors */
-a.blacklink:link {
-  color : #444444;
-  text-decoration : none;
-}
-a.blacklink:visited {
-  color : #444444;
-  text-decoration : none;
-}
-a.blacklink:hover {
-  color : #444444;
-  text-decoration : underline;
-}
-
 /* closed (gray) selectors */
 a.closed:link {
   color : #777777;
@@ -248,6 +255,20 @@ a.closed:visited {
 }
 a.closed:hover {
   color : #777777;
+  text-decoration : underline;
+}
+
+/* blacklink selectors */
+a.blacklink:link {
+  color : #444444;
+  text-decoration : none;
+}
+a.blacklink:visited {
+  color : #444444;
+  text-decoration : none;
+}
+a.blacklink:hover {
+  color : #444444;
   text-decoration : underline;
 }
 
@@ -287,6 +308,8 @@ a.index-element {
 .punctuation {
   font-family : impact, verdana, arial, helvetica, sans-serif;
   font-size : 15px; 
+/* for all forms? */
+  color: #c9dfe2;
 }
 
 .required {
@@ -320,6 +343,10 @@ a.index-element {
   margin-bottom : 2px;
 }
 
+.idea {
+  font-size : 10px;
+  color : #634d82;
+}
 
 /* ____________________________________ forms editor rendering styles _____ */
 

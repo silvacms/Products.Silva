@@ -24,8 +24,9 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 
+/* darker870: cfd7e1; selected bac1cc; light d4dce6; */
 div.workspace {
-  background : &dtml-shade70;;
+  background : #a7adb5;
 }
 
 pre {
@@ -44,10 +45,10 @@ pre {
 /* _____________________________________________________________ tabs _____ */
 
 div.tabs {
-    background: &dtml-mainTabBackdrop;;
-    border-collapse: collapse;
-    padding: 0em 0em 0em 2em;
-    white-space: nowrap;
+    background-color: &dtml-mainTabBackdrop;;
+    background-image: url(/silva/globals/skyrise.gif);
+    background-repeat: repeat-x;
+    padding: 0em 0em 0em 15px;
 }
 
 div.tabs img {
@@ -57,7 +58,7 @@ div.tabs img {
 
 div.tabs a {
     /* The normal, unselected tabs. They are all links */
-    background: &dtml-mainTabBackgroundNotSelected;;
+    background: &dtml-mainTabBackground;;
     border-width: 1px;
     border-style: solid solid none solid;
     margin: 0;
@@ -65,27 +66,27 @@ div.tabs a {
 }
 
 div.tabs a:hover {
-    background: &dtml-mainTabBackground;;
+    background: &dtml-mainTabBackgroundSelected;;
   text-decoration: none;
 }
 
 div.tabs a.selected {
     /* The selected tab. There's only one of these */
-    background: &dtml-mainTabBackground;;
-    border-style: solid solid none solid;
-    border-bottom: &dtml-mainTabBackground; 1px solid;
+    background: &dtml-mainTabBackgroundSelected;;
+    border-style: none solid solid solid;
+    border-bottom: &dtml-mainTabBackgroundSelected; 1px solid;
 }
 
 div.tabs a.recede {
   /* The parent tab of a subscreen. There might be one of these :) */
   color: &dtml-mainTabFontColorSelected;;
-  background: #93a9a8;
+  background: #99a9c0;
   border-style: solid solid solid solid;
   border-bottom: &dtml-shade50; 1px solid;
 }
 
 div.tabs a.recede:hover {
-    background: &dtml-mainTabBackground;;
+    background: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.left {
@@ -110,7 +111,7 @@ div.tabs a.right:hover {
 }
 
 div.tabs a.normal {
-    color: &dtml-shade40;;
+    color: &dtml-shade72;;
     background: none;
     border: none;
     margin: 0;
@@ -124,12 +125,17 @@ div.tabs a.normal {
 
 div.pathBar {
   font-size: 90%;
-    background: &dtml-mainTabBackground;;
-    padding: 0.1em 16px;
+    color: &dtml-shade70;;
+    background-image: url(/silva/globals/sky.gif);
+    background-repeat: repeat-x;
+    background-color: #39424d;
+    padding: 0em 4px 0em 20px;
+    border: 0;
+    line-height: 130%;
 }
 
 div.pathBar a {
-	color: &dtml-mainLinkColor;;
+    color: &dtml-shade74;;
     font-weight: &dtml-mainTabFontWeight;;
     padding: 0 ! important;
     margin: 0 ! important;
@@ -141,12 +147,26 @@ div.pathBar a.visited {
 }
 
 div.pathBar a.manage {
-	color: &dtml-mainTabFontColor;;
+	color: &dtml-shade64;;
     margin-left: 0.5em ! important;
 }
 
 div.pathBar img {
-    vertical-align: middle;
+  vertical-align: top;
+  margin: 0em 2px 0em -20px;
+}
+
+div.pathBar a.idea {
+  color : #634d82;
+}
+
+
+/* ________________________________________________________ river bar _____ */
+
+div.riverBar {
+  font-size : 22%;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-bottom: &dtml-shade50; 1px solid;
 }
 
 
@@ -154,7 +174,7 @@ div.pathBar img {
 
 div.footer {
   font-size: 94%;
-    background: &dtml-mainTabBackground;;
+    background: #b3c1d4;
   margin: 0.5em 0em 0em 0em;
     padding: 0em 16px 0.1em 16px;
     border-top: &dtml-shade60; 1px solid;
@@ -178,7 +198,7 @@ img.icon {
 
 div.personalBar {
     text-align: left;
-    background: &dtml-mainTabBackdrop;;
+    background: #39424d;
   margin: 0em 0em 0em 0em;
     padding: 0.1em 16px 0.2em 16px;
   border-collapse: collapse;
@@ -199,7 +219,7 @@ div.personalBar img {
 /* ____________________________________________________ table columns _____ */
 
 table.columns {
-  margin-top : 1em;
+  margin-top : 7px;
 }
 
 /* 3 column table */
@@ -245,15 +265,15 @@ table.listing tfoot {
 }
 
 table.listing tr.controls {
-    background-color: &dtml-shade42;;
+  background-color: #567275;
 }
 
 table.listing tr.top-controls {
-    background-color: &dtml-shade50;;
+  background-color: #567275;
 }
 
 table.listing tr.controls-1 {
-    background-color: &dtml-shade50;;
+    background-color: #648589;
 }
 
 table.listing tr.fixed, td.fixed {
@@ -267,8 +287,9 @@ tr.divider, th.divider, td.divider {
 
 table.listing th {
     text-align: left;
-    color: #e8f3f5;
-    background-color: &dtml-shade60;;
+    color: #dbf3f6;
+    background: #71969a;
+/*    background-color: &dtml-listingHeaderBackground;; */
     padding-left: 0.6em;
     padding-right: 0.6em;
 }
@@ -276,15 +297,13 @@ table.listing th {
 table.listing th.listing-left {
   width: 4%;
   text-align: left;
+  padding-left: 0.4em;
 }
 
 table.listing th.listing-right {
   width: 4%;
   text-align: right;
-}
-
-table.listing th.controls {
-  padding: 0em 0.6em 0em 0.6em;
+  padding-right: 0.4em;
 }
 
 /* not in use? */
@@ -314,8 +333,8 @@ table.listing td {
 }
 
 table.listing td.top {
-  color: &dtml-shade86;;
-  background-color: &dtml-shade40;;
+  color: &dtml-shade40;;
+  background: #394b4d;
     border-top: &dtml-listingBorder; ! important;
     border-left: &dtml-listingBorder; ! important;
     border-right: &dtml-listingBorder; ! important;
@@ -325,7 +344,7 @@ table.listing td.top {
 }
 
 table.listing td.top h2 {
-  color: #d1e8e8;
+  color: #b8ccce;
     text-align: left;
     margin: 0em 0.5em 0.1em 0.4em;
     display: inline;
@@ -341,6 +360,7 @@ table.listing td.top div.addMenu {
 }
 
 table.listing td.top h2 img {
+    padding-right: 0.2em;
     vertical-align: top;
 }
 
@@ -351,7 +371,7 @@ table.listing tr.top-controls td {
 }
 
 table.listing tr.top-controls h3 {
-  color: #d3ebeb;
+  color: #c9dfe2;
   margin: 0em 0.2em 0.1em 0.2em;
   display: inline;
   border: none;
@@ -364,18 +384,23 @@ table.listing tr.top-controls div.buttons {
 
 table.listing td.listing-left {
   text-align: left;
-  padding: 0em 0.6em 0em 0.6em;
+  padding: 0em 0.4em 0em 0.4em;
   white-space: nowrap;
 }
 
 table.listing td.listing-right {
   text-align: right;
-  padding: 0em 0.6em 0em 0.6em;
+  padding: 0em 0.4em 0em 0.4em;
   white-space: nowrap;
 }
 
 table.listing tr.controls td, tr.controls-1 td {
   padding: 0em 0.4em 0em 0.4em;
+}
+
+/* rename */
+.widebody {
+  color: #c9dfe2;
 }
 
 /* experimental */
@@ -387,10 +412,11 @@ table.sublisting {
 /* ______________ sidebar navigation ______________ */
 
 table.listing th.top {
-    color: #e3eef0;
-    background: &dtml-mainTabBackgroundNotSelected;;
-    vertical-align: bottom;
-    text-align: center;
+  color: #e3eef0;
+  background: #71969a;
+  padding: 0 0 0.1px 0.1em;
+  vertical-align: middle;
+  text-align: left;
 }
 
 /* text of link follows the tab style */
@@ -409,11 +435,11 @@ table.listing th.top a.normal:hover {
 
 table.listing div.vein:hover { 
     color: &dtml-mainTabFontColorSelected;;
-    background: &dtml-mainTabBackground;;
+    background: &dtml-mainTabBackgroundSelected;;
 }
 
 table.listing a.top {
-    background: &dtml-mainTabBackgroundNotSelected;;
+    background: &dtml-mainTabBackground;;
     float: left;
     margin: 0em 0em 0em -0.6em;
     border-right: &dtml-listingBorder;;
@@ -422,7 +448,7 @@ table.listing a.top {
 }
 
 table.listing a.up {
-    background: &dtml-mainTabBackgroundNotSelected;;
+    background: &dtml-mainTabBackground;;
     float: right;
     margin: 0em -0.6em 0em 0em;
     border-left: &dtml-listingBorder;;
@@ -431,8 +457,8 @@ table.listing a.up {
 }
 
 table.listing a.top:hover {
-    color: &dtml-mainTabBackground;;
-    background: &dtml-mainTabBackground;;
+    color: &dtml-mainTabBackgroundSelected;;
+    background: &dtml-mainTabBackgroundSelected;;
     border-style: solid solid none none;
     padding-left: 0.2em;
     padding-right: 0.4em;
@@ -440,8 +466,8 @@ table.listing a.top:hover {
 }
 
 table.listing a.up:hover {
-    color: &dtml-mainTabBackground;;
-    background: &dtml-mainTabBackground;;
+    color: &dtml-mainTabBackgroundSelected;;
+    background: &dtml-mainTabBackgroundSelected;;
     border-style: solid none none solid;
     padding-left: 0.2em;
     padding-right: 0.4em;
@@ -456,7 +482,7 @@ table.listing a.button:link {
   font-weight: &dtml-buttonWeight;;
   color: &dtml-contextButtonFontColor;;
   background: &dtml-contextButtonBackground;;
-  border : 1px solid #a3ccb1;
+  border: &dtml-contextButtonBorder;;
   margin: 0.1em 0.2em;
   padding: 0em 2em 0.1em 2em;
   text-decoration : none;
@@ -467,7 +493,7 @@ table.listing a.button:visited {
   font-weight: &dtml-buttonWeight;;
   color: &dtml-contextButtonFontColor;;
   background: &dtml-contextButtonBackground;;
-  border : 1px solid #a3ccb1;
+  border: &dtml-contextButtonBorder;;
   margin: 0.1em 0.2em;
   padding: 0em 2em 0.1em 2em;
   text-decoration : none;
@@ -475,7 +501,7 @@ table.listing a.button:visited {
 }
 table.listing a.button:hover {
   color : #bfffd3; 
-  background : #606b80; 
+  background : #668b69; 
   cursor : pointer;
 }
 
@@ -486,7 +512,7 @@ table.listing a.navigation:link {
   font-weight: &dtml-buttonWeight;;
   color: &dtml-standaloneButtonFontColor;;
   background: &dtml-standaloneButtonBackground;;
-  border : 1px solid #a2c9cc;
+  border: &dtml-standaloneButtonBorder;;
   margin: 0.1em 0.2em;
   padding: &dtml-standaloneButtonPadding;;
   text-decoration : none;
@@ -497,7 +523,7 @@ table.listing a.navigation:visited {
   font-weight: &dtml-buttonWeight;;
   color: &dtml-standaloneButtonFontColor;;
   background: &dtml-standaloneButtonBackground;;
-  border : 1px solid #a2c9cc;
+  border: &dtml-standaloneButtonBorder;;
   margin: 0.1em 0.2em;
   padding: &dtml-standaloneButtonPadding;;
   text-decoration : none;
@@ -516,7 +542,8 @@ form.focus-box {
   /* for IE5 */
   width : 90%;
   max-width : 55em; 
-  margin : 1em 8px 0em 8px;
+  margin : 0em 8px 0em 8px;
+  padding-top: 8px;
 }
 
 form.compact {
@@ -526,15 +553,15 @@ form.compact {
 
 input {
   color : #333333;
-  background : #e3eef0;
-  border : 1px solid &dtml-shade60;;
+  background : #c3e6e6;
+  border : 1px solid &dtml-shade40;;
   margin-top: 1px;
 }
  
 textarea {
   color : #333333;  
-  background : #e3eef0;
-  border : 1px solid &dtml-shade60;;
+  background : #c3e6e6;
+  border : 1px solid &dtml-shade40;;
 }
 
 textarea.readable {
@@ -543,10 +570,20 @@ textarea.readable {
 
 select {
     color: &dtml-contextButtonFontColor;;
-  background: &dtml-shade36;;
+    background : &dtml-contextButtonBackground;;
   font-size: 90% ! important;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
+  line-height : 96%;
+}
+
+select.navigation {
+    color: &dtml-standaloneButtonFontColor;;
+    background : &dtml-standaloneButtonBackground;;
+  font-size: 90% ! important;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  line-height : 96%;
 }
 
 input[type="checkbox"] {
@@ -561,7 +598,7 @@ input.navigation {
     font-weight: &dtml-buttonWeight;;
   color: &dtml-standaloneButtonFontColor;;
   background: &dtml-standaloneButtonBackground;;
-  border : 1px solid #a2c9cc;
+  border: &dtml-standaloneButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
     cursor: pointer;
@@ -572,7 +609,7 @@ input.button {
     font-weight: &dtml-buttonWeight;;
     color: &dtml-contextButtonFontColor;;
   background : &dtml-contextButtonBackground;;
-  border: 1px solid #a3ccb1;
+  border: &dtml-contextButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
     cursor: pointer;
@@ -581,9 +618,9 @@ input.button {
 
 input.warning {
     font-weight: &dtml-buttonWeight;;
-  color : #f0c0c0; 
-  background : #4a4a4c;
-  border: 1px solid #d7acac;
+  color : &dtml-destructiveButtonFontColor;; 
+  background : &dtml-destructiveButtonBackground;;
+  border: &dtml-destructiveButtonBorder;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
     cursor: pointer;
@@ -609,16 +646,18 @@ div.feedback {
     color: #555555;
     background: #f3f3d9;
     border: &dtml-messageBorder;;
-    margin: 6px 8px -0.2em 8px;
-    padding: 0.2em 0.6em 0.4em 0.6em;
+    border-style: solid none solid none;
+    margin: 6px 0px -0.2em 0px;
+    padding: 0.2em 8px 0.4em 8px;
 }
 
 div.alert {
     color: #3c2d50;
     background: #f7d1d1;
     border: &dtml-messageBorder;;
-    margin: 6px 8px -0.2em 8px;
-    padding: 0.2em 0.6em 0.4em 0.6em;
+    border-style: solid none solid none;
+    margin: 6px 0px -0.2em 0px;
+    padding: 0.2em 8px 0.4em 8px;
 }
 
 div.feedback a {

@@ -56,16 +56,16 @@ class ViewCode:
             if next_status == 'no_next_version':
                 pass
             elif next_status == 'not_approved':
-                status = 'Draft'
+                status = 'draft'
             elif next_status == 'request_pending':
-                status = 'Pending'
+                status = 'pending'
             elif next_status == 'approved':
-                status = 'Approved'
+                status = 'approved'
 
             if public == 'published':
-                public_status = 'Published'               
+                public_status = 'published'               
             elif public == 'closed':
-                public_status = 'Closed'
+                public_status = 'closed'
 
             if not status: 
                 status_style = public_status.lower()

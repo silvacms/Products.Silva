@@ -43,9 +43,9 @@
       <tr>
         <td class="top"
           colspan="3">
-          <h2>
+          <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure python:view.render_icon(model)" />
-            settings for: <span tal:replace="structure string:${model/id}&amp;nbsp; &amp;#xab;${model/get_title_html}&amp;#xbb;">id</span>
+            <span tal:replace="structure string:${model/get_title_html}">id</span>
           </h2>
         </td>
       </tr>
@@ -60,7 +60,7 @@
             <tal:block condition="python:model.meta_type == 'Silva Folder'">
               <a class="button"
                 href="tab_edit_to_publication"
-                title="Change Folder into Publication: alt-c"
+                title="change Folder into Publication: alt-c"
                 accesskey="c">
                 Convert to publication
               </a>
@@ -68,7 +68,7 @@
             <tal:block condition="python:model.meta_type == 'Silva Publication'">
               <a class="button"
                 href="tab_edit_to_folder"
-                title="Change Publication into Folder: alt-c"
+                title="change Publication into Folder: alt-c"
                 accesskey="c">
                 Convert to folder
               </a>
@@ -80,7 +80,7 @@
           <div class="buttons">
             <a class="navigation"
               href="settings_addables"
-              title="Change the addables allowed in this publication: alt-a"
+              title="change the addables allowed in this publication: alt-a"
               accesskey="c"
               tal:condition="python:model.meta_type == 'Silva Publication'">
               Configure <u>a</u>ddables...
@@ -160,7 +160,7 @@
             type="submit"
             name="tab_metadata_submit:method"
             value=" Save metadata "
-            title="Access key: alt-s"
+            title="access key: alt-s"
             accesskey="s"
           />
         </td>

@@ -1,4 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html tal:omit-tag=""
   lang="en"
   xml:lang="en"
@@ -22,22 +21,22 @@
       <tr>
         <th class="top"
           tal:define="model_is_root python:model == root">
-          <a class="up"
+          <a class="up" tal:replace="nothing"
             href="../../edit/tab_edit"
-            title="Up one level: alt-]"
+            title="up one level: alt-]"
             accesskey="]"
-            tal:condition="not:model_is_root"
-            tal:attributes="href string:../../edit/{__vein_id__}">
+            condition="not:model_is_root"
+            tal:attributes="href string:../../edit/tab_edit">
             <img width="10"
               height="10"
               border="0"
               alt="Up one level"
               tal:attributes="src string:${root_url}/globals/up_level.gif" />
           </a>
-          <a class="top"
-            title="Up to containing publication: alt-["
+          <a class="top" tal:replace="nothing"
+            title="up to containing publication: alt-["
             accesskey="["
-            tal:condition="not:model_is_root"
+            condition="not:model_is_root"
             tal:attributes="href string:${containing_publication/absolute_url}/edit/{__vein_id__}"><img width="10"
             height="10"
             border="0"
@@ -45,6 +44,7 @@
             tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url" />
           </a>
           <a class="normal"
+            style="padding-left: 0.4em;"
             title="reload screen"
             tal:attributes="
               href string:${model/absolute_url}/edit/{__vein_id__};">
@@ -62,13 +62,13 @@
         <td class="{__class__}"
           style="padding-left: 0;">
           <a href="top"
-            title="Up to publication top"
+            title="up to top contents of publication"
             tal:attributes="href publication_url">
             <img tal:replace="structure python:here.render_icon(model.get_publication())" />
           </a>
           <a class="blacklink"
             href="top"
-            title="Up to publication top"
+            title="up to top of publication"
             tal:attributes="href publication_url"
             tal:content="structure publication/get_title_html">
             Publication
@@ -88,8 +88,8 @@
           <td class="{__class__}"
             tal:define="item_url string:${item/absolute_url}">
             <div tal:attributes="style python:'margin-left:'+str(indent * 10)+'px'">
-              <a title="See overview"
-                tal:attributes="href string:${item_url}/edit/{__vein_id__}">
+              <a title="contents"
+                tal:attributes="href string:${item_url}/edit/tab_edit">
                 <img tal:replace="structure python:here.render_icon(item)" />
               </a>
               <a class="blacklink"

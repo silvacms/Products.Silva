@@ -62,7 +62,7 @@
                     <div class="buttons">
                       <a class="navigation"
                         href="tab_metadata"
-                        title="Edit this publication's metadata: alt-c"
+                        title="edit this publication's metadata: alt-c"
                         accesskey="c"
                       >
                         Configure metadata...
@@ -132,7 +132,7 @@
                       type="submit"
                       name="form_submitted"
                       value="Save addables data"
-                      title="Save addable settings for this publication: alt-a"
+                      title="save addable settings for this publication: alt-a"
                       accesskey="a" 
                     />
                   </td>

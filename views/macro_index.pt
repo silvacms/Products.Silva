@@ -35,7 +35,7 @@
   tal:attributes="href string:${root_url}/globals/favicon.ico"
 />
 <!-- Temp Stylesheets -->
-<link href="globals/base.css"
+<link href="globals/base.css" tal:replace="nothing"
   rel="stylesheet"
   tal:attributes="href string:${root_url}/globals/base.css"
 />
@@ -146,9 +146,8 @@ _______ editor hooks _______
     <span tal:replace="structure msg">
       message
     </span>
-    &nbsp;&nbsp;
-    <span tal:replace="string:(${here/service_utils/backend_now_to_str})"
-      tal:condition="python:type != 'alert'">
+    <span tal:replace="structure string:&nbsp;&nbsp;(${here/service_utils/backend_now_to_str})"
+      tal:condition="python:type == 'feedback'">
       datetime
     </span>
   </div>

@@ -12,22 +12,43 @@ body {
   background: #aaabaa;
 }
 
+/* e6e6ee blue range e5e9ee; */
 div.workspace {
-  background: #e6e6ee;
+  background: #e5eeea;
 }
 
 div.pathBar{
-  background: #b3d4bf;
+    background-image: url(/silva/globals/sky.gif);
+    background-repeat: repeat-x;
+    background-color: #39424d;
 }
 
+div.tabs a {
+  background: #729b87;
+}
+
+/* yellowjacket b3d4bf */
+div.tabs a.interim {
+  background: #729b7b;
+}
+
+/* green b3d4c4; bg e5eeea; */
 div.tabs a.selected {
+  background: #b3d4c4;
+  border-bottom: #b3d4c4 1px solid;
+}
+
+div.tabs a.selectedNot {
   background: #b3d4bf;
   border-bottom: #b3d4bf 1px solid;
 }
 
 div.tabs a:hover {
   background: #b3d4bf;
+}
 
+div.riverBar {
+  background: #b3d4c4;
 }
 
 div.footer {

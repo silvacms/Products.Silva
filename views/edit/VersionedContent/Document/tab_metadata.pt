@@ -30,7 +30,7 @@
 
 <tbody>
   <tr>
-    <th class="right"
+    <th class="align-right"
       width="12%">
       Element
     </th>
@@ -46,7 +46,7 @@
   <tal:define define="oddrow repeat/field/odd">
   <tr valign="top"
     tal:attributes="class python:oddrow and 'odd' or 'even'">
-    <td class="right">
+    <td class="align-right">
       <span tal:replace="structure python: field.title().lower()">Title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
     </td>
     <td>
@@ -65,13 +65,13 @@
 
 <tfoot>
   <tr class="controls">
-    <td class="right"
+    <td class="align-right"
       colspan="3">
       <input class="button" 
         type="submit"
         name="form_submitted"
         value="Save metadata"
-        title="Access key: alt-s"
+        title="access key: alt-s"
         accesskey="s"
       />
     </td>
