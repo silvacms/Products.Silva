@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.80 $
+# $Revision: 1.81 $
 
 # Zope
 from OFS import SimpleItem
@@ -131,11 +131,11 @@ class GhostBase:
 
         # Now resolve it...
         target = traversal_root.unrestrictedTraverse(content_url, None)
-        if target is not None:
+        if target is None:
+            self._content_path = path_elements
+        else:
             # ...and get physical path for it
             self._content_path = target.getPhysicalPath()
-        else:
-            self._content_path = path_elements
        
     security.declareProtected(SilvaPermissions.View, 'get_haunted_url')
     def get_haunted_url(self):
@@ -145,10 +145,10 @@ class GhostBase:
             return None
 
         object = self.get_root().unrestrictedTraverse(self._content_path, None)
-        if object is not None:    
-            return '/' + object.absolute_url(1)
-        else:
+        if object is None:    
             return '/'.join(self._content_path)
+        else:
+            return '/' + object.absolute_url(1)
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
     def get_link_status(self, content=None):
