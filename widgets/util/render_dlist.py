@@ -12,7 +12,7 @@ if pairs:
     if type == 'normal':
         content += '>\n'
     else:
-        content += ' compact="compact">'
+        content += ' compact="compact">\n'
     for title, item in pairs:
         content += '<dt>%s</dt>\n<dd>%s</dd>\n' % (title, item)
     content += '</dl>'
