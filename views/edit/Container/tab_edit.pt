@@ -149,7 +149,7 @@
               <tal:block
                 repeat="item publishables">
                 <tal:block define="
-                  is_default python: item.id == 'index';
+                  is_default python: item is default_document;
                   item_url item/absolute_url;
                   status_style python:item.get_object_status()[1];
                   oddrow repeat/item/odd">
@@ -166,9 +166,17 @@
                           id item/id;"
                         onkeypress="handle_default_action(this, event, 'tab_edit_copy')"
                       />
-                      <label tal:content="repeat/item/index"
+                      <label 
+                        tal:condition="default_document"
+                        tal:content="repeat/item/index"
                         tal:attributes="for item/id">
-                        #
+                        # with default doc, starts at 0
+                      </label>
+                      <label 
+                        tal:condition="not: default_document"
+                        tal:content="repeat/item/number"
+                        tal:attributes="for item/id">
+                        # without default doc, starts at 1
                       </label>
                     </td>
                     <tal:block replace="nothing">
@@ -405,12 +413,13 @@
                       <div style="float: left; margin-left:0.2em;">
                         <select class="manipulator"
                           name="new_position"
-                          title="move selected items to">
+                          title="move selected items to"
+                          tal:define="length python: len(publishables) - test(default_document, 1, 0)">
                           <option value="Position">
                             <span i18n:translate="position">position</span>:
                           </option>
-                          <tal:block repeat="item publishables">
-                            <option value="0"
+                          <tal:block repeat="item python:range(length)">
+                            <option value="0"                              
                               tal:content="repeat/item/number"
                               tal:attributes="value repeat/item/number" />
                           </tal:block>
