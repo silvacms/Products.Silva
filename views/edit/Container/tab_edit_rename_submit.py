@@ -36,7 +36,7 @@ for item in items:
     if item[0] == item[1]:
         if item[2] is not None:
             obj = getattr(model, item[0])
-            obj.set_title(model.input_convert(item[2]))
+            obj.set_title(mangle.String.inputConvert(item[2]))
         message_type = 'feedback'
         messages.append('&#xab;%s&#xbb; renamed successfully' % item[0])
     else:
@@ -63,7 +63,7 @@ while 1:
             if item[0] != 'index':
                 if item[2] is not None:
                     obj = getattr(model, item[0])
-                    obj.set_title(model.input_convert(item[2]))
+                    obj.set_title(mangle.String.inputConvert(item[2]))
                 if not model.action_rename(item[0], item[1]):
                     message_type = 'error'
                     messages.append('&#xab;%s&#xbb; could not be renamed' % item[0])
@@ -83,7 +83,7 @@ while 1:
                     messages.append('&#xab;%s&#xbb; renamed successfully' % item[0])
                     if item[2] is not None:
                         obj = getattr(model, item[1])
-                        obj.set_title(model.input_convert(item[2]))
+                        obj.set_title(mangle.String.inputConvert(item[2]))
             objects_changed = 1
         else:
             not_renamed.append(item)
@@ -128,7 +128,7 @@ for item in renamed_now:
     obj = getattr(model, tmpid)
     if oldid != 'index':
         if item[0][2] is not None:
-            obj.set_title(model.input_convert(item[0][2]))
+            obj.set_title(mangle.String.inputConvert(item[0][2]))
     if not model.action_rename(tmpid, newid):
         message_type = 'error'
         messages.append('&#xab;%s&#xbb; could not be renamed' % oldid)
@@ -139,7 +139,7 @@ for item in renamed_now:
     if oldid == 'index' and item[0][2] is not None:
         # set title of new obj so the title of container does not get affected
         obj = getattr(model, newid)
-        obj.set_title(model.input_convert(item[0][2]))
+        obj.set_title(mangle.String.inputConvert(item[0][2]))
 
 # send the user back to the list
 return context.tab_edit(message_type=message_type, message=', '.join(messages))

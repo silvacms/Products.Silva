@@ -87,13 +87,6 @@ class ViewCode:
                 status_style = status.lower()
 
         return (status, status_style, public_status)
-       
-    security.declareProtected(SilvaPermissions.AccessContentsInformation, 'truncate')
-    def truncate(self, text, length):
-        if len(text) < length:
-            return text
-        else:
-            return '%s...' % text[:(length - 3)]
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'get_processed_status_tree')
     def get_processed_status_tree(self):
@@ -159,23 +152,4 @@ class ViewCode:
                     infodict['public_version_expiration_datetime'] = str_datetime
         return ret
     
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'input_convert')
-    def input_convert(self, s):
-        """Turn input to unicode. Assume it is UTF-8.
-        """
-        return unicode(' '.join(s.split()), 'utf-8')
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'input_convert2')
-    def input_convert2(self, s):
-        """Turn input to unicode. Assume it is UTF-8.
-        """
-        return unicode(s, 'utf-8')
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'reduce_whitespace')
-    def reduce_whitespace(self, text):
-        return ' '.join(text.split())
-
 InitializeClass(ViewCode)

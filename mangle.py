@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.12 2003/08/29 12:40:42 zagy Exp $
+# $Id: mangle.py,v 1.13 2003/09/02 14:26:52 jw Exp $
 
 # Python
 import string
@@ -399,4 +399,28 @@ module_security.declarePublic('Bytes')
 Bytes = _Bytes()
 
 
+class _String:
+    """ string manipulations and conversions
+    """
 
+    __allow_access_to_unprotected_subobjects__ = 1
+
+    _default_encoding = 'utf-8'
+
+    def inputConvert(self, text, preserve_whitespace=0):
+        """Turn input to unicode. Assume it is UTF-8.
+        """
+        if not preserve_whitespace:
+            text = ' '.join(text.split())
+        return unicode(text, self._default_encoding)
+
+    def reduceWhitespace(self, text):
+        return ' '.join(text.split())
+
+    def truncate(self, text, max_length):
+        if len(text) < max_length:
+            return text
+        return '%s...' % text[:(max_length - 3)]
+
+module_security.declarePublic('String')
+String = _String()
