@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.3
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.6 $
+  CVS:        $Revision: 1.7 $
 
 Upgrading Silva 0.8 to 0.8.3
 
@@ -52,7 +52,7 @@ Upgrading Silva 0.8 to 0.8.3
     Next, you need 'silva_upgrade_0.8.3.zexp.gz', which can be found
     here:
 
-      * 'silva_upgrade_0.8.3.zexp.gz':http://www.zope.org/Members/faassen/Silva/silva_upgrade_0.8.3.zexp.gz
+      * "silva_upgrade_0.8.3.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva_upgrade_0.8.3.zexp.gz
 
     You do not need 'silva-0.8.3.zexp.gz', as you are upgrading, not
     installing from scratch.
