@@ -186,7 +186,7 @@
                     <tal:block replace="nothing">
                       _______ id cell _______
                     </tal:block>
-                    <td>
+                    <td style="white-space: nowrap">
                       <a class="icon"
                         tal:attributes="
                           href d/editor_link;
@@ -347,7 +347,7 @@
                     <tal:block replace="nothing">
                       _______ icon + id cell _______
                     </tal:block>
-                    <td>
+                    <td style="white-space: nowrap">
                       <a class="icon"
                         tal:attributes="
                           href  d/editor_link;
