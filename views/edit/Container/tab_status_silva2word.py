@@ -14,6 +14,16 @@ model = request.model
 # if we don't call security_trigger here, the script will be called twice and the job will be started twice
 model.security_trigger()
 
+if not request.has_key('refs') or not request['refs']:
+    return view.tab_status(message_type='error', message='No items were selected, so nothing is exported')
+
+objects = []
+for ref in request['refs'].split('||'):
+    objects.append(model.resolve_ref(ref.strip()))
+
+# turn refs inot a list so tab_status_export can re-use it the refs from the request
+request.set('refs', request['refs'].split('||'))
+
 if request.has_key('with_sub_publications') and request['with_sub_publications']:
     with_sub_publications = 1
 
@@ -24,10 +34,10 @@ description = 'No description'
 if request.has_key('description') and request['description']:
     description = request['description']
 
-data = model.get_xml(with_sub_publications, export_last_version)
+data = model.get_xml_for_objects(objects, with_sub_publications, export_last_version)
 
 if not request['email']:
-    return view.tab_status_export(message_type='error', message='You have not entered your e-mail address')
+    return view.tab_status(message_type='error', message='You have not entered your e-mail address')
 
 ident, status = model.service_docma.silva2word(request['email'], data, request['template'], str(request.AUTHENTICATED_USER.getId()), description)
 

@@ -153,9 +153,8 @@ _______ manual close section here _______
       style="margin-top:1em;">
       <form action="." enctype="multipart/form-data" method="POST">
         <input type="hidden" 
-          name="refs"
-          tal:condition="view/REQUEST/refs | nothing" 
-          tal:attributes="value python: view.REQUEST['refs']" />
+          name="refs:list"
+          tal:attributes="value python: request['model'].create_ref(request['model'])" />
         <table class="listing">
           <thead>
             <tr tal:replace="nothing">
@@ -188,7 +187,7 @@ _______ manual close section here _______
               <td class="align-right">
                 <input class="button"
                   type="submit"
-                  name="download_xml:method"
+                  tal:attributes="name python: '%s/edit/tab_status_export:method' % '/'.join(request['model'].get_container().getPhysicalPath())"
                   value=" Export..."
                   title="access key: alt-e"
                   accesskey="e"

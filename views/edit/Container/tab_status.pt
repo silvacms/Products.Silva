@@ -235,16 +235,18 @@
                   </td>
                   <td class="align-right"
                     colspan="3">                    
-                    <label class="widebody"
-                      title="access key: alt-m" 
-                      accesskey="m">
-                      publish time:
-                    </label>
-                    <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
+                    <nobr>
+                      <label class="widebody"
+                        title="access key: alt-m" 
+                        accesskey="m">
+                        publish time:
+                      </label>
+                      <tal:block tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
+                    </nobr>
                   </td>
                   <td>
                     <div class="buttons" style="float:right;">
-                      <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+                      <tal:block tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
                     </div>
                       <label 
                         for="publish_nested_flag" 
@@ -269,12 +271,14 @@
                   </td>
                   <td class="align-right"
                     colspan="3">                    
-                    <label class="widebody"
-                      title="access key: alt-x" 
-                      accesskey="x">
-                      expiration time:
-                    </label>
-                    <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
+                    <nobr>
+                      <label class="widebody"
+                        title="access key: alt-x" 
+                        accesskey="x">
+                        expiration time:
+                      </label>
+                      <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
+                    </nobr>
                   </td>
                   <td class="align-right"
                     style="white-space:nowrap; vertical-align:middle;">

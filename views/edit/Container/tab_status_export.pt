@@ -7,12 +7,13 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    global breadcrumb_vein string:Status;
-    global active_tab string:tab_status;
-    global parent_screen_name string:Publish;
-    global view here;
-    global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
-    global lastclass string:focus-cycle;
+    breadcrumb_vein string:Status;
+    active_tab string:tab_status;
+    parent_screen_name string:Publish;
+    view here;
+    docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
+    lastclass string:focus-cycle;
+    refs request/refs | python:[request['model'].create_ref(request['model'])];
     ">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
@@ -33,6 +34,27 @@
       </td>
 
       <td class="main">
+        
+        <div class="feedback">
+          <b>Items selected for export:</b><br />
+          <table width="100%" border="0">
+            <tr tal:repeat="ref refs">
+              <tal:block define="obj python: request['model'].resolve_ref(ref); path python: '/'.join(obj.getPhysicalPath())">
+                <td width="1%" valign="top">
+                  <a class="blacklink" tal:attributes="href string:${path}/edit">
+                    <span tal:replace="python: test(len(obj.id) > 30, '%s...' % obj.id[:30], obj.id)" />
+                  </a>&nbsp;
+                </td>
+                <td valign="top">
+                  <a class="blacklink" tal:attributes="href string:${path}/edit/tab_preview">
+                    <b tal:content="structure obj/get_title_html" />
+                  </a>
+                </td>
+              </tal:block>
+            </tr>
+          </table>
+        </div>
+        <br />
 
         <span tal:replace="nothing">
           _____________________ inner import table  _____________________
@@ -40,8 +62,7 @@
         <form action="." enctype="multipart/form-data" method="POST">
           <input type="hidden" 
             name="refs"
-            tal:condition="view/REQUEST/refs | nothing" 
-            tal:attributes="value python: view.REQUEST['refs']" />
+            tal:attributes="value python: '||'.join(refs)" />
           <table class="listing">
             <thead>
               <tr tal:replace="nothing">
@@ -127,7 +148,7 @@
                 </td>
                 <td class="align-right"
                   colspan="2">
-                  <input class="button" type="submit" name="download_xml:method" value=" Export " title="access key: alt-e" accesskey="e" />
+                  <input class="button" type="submit" name="download_xml_selected:method" value=" Export " title="access key: alt-e" accesskey="e" />
                 </td>
               </tr>
             </tfoot>
@@ -163,10 +184,9 @@
     <td>
 
       <form action="." method="POST">
-      <input type="hidden" 
-        name="refs"
-        tal:condition="view/REQUEST/refs | nothing" 
-        tal:attributes="value python: view.REQUEST['refs']" />
+        <input type="hidden" 
+          name="refs"
+          tal:attributes="value python: '||'.join(refs)" />
         <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
           <tr>
@@ -242,6 +262,9 @@
     <td>
 
       <form action="." method="POST">
+        <input type="hidden" 
+          name="refs"
+          tal:attributes="value python: '||'.join(refs)" />
         <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
           <tr>
