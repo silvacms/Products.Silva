@@ -40,9 +40,9 @@
             href="#"
             title="reload to update the queue lists: alt-r"
             accesskey="r"
-            onClick="document.location = 'tab_edit_import?focus=queue'; return false;"
             i18n:attributes="title"
             i18n:translate="refresh_queue_lists"
+            tal:attributes="href string:${model/absolute_url}/edit/${template/id}"
           >
             <u>R</u>efresh queue lists
           </a>
