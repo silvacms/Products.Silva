@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.55 $
+# $Revision: 1.56 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -140,25 +140,6 @@ class Security(AccessManager):
         self._lock_info = None
 
     # ACCESSORS
-    # deprecated, use 'sec_is_closed_to_public' instead
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'sec_is_open_to_public')
-    def sec_is_open_to_public(self):
-        """Check whether this is opened.
-        """
-        # XXX ugh
-        while 1:
-            for role_info in self.rolesOfPermission('View'):
-                if (role_info['name'] == 'Viewer' and
-                    role_info['selected'] == 'SELECTED'):
-                    return 0
-            # we know now that on this particular object ther viewer role is not set as a minimum,
-            # but need to also know if that behaviour isn't acquired at this point. So let's walk through
-            # all parents
-            if self.meta_type == 'Silva Root':
-                return 1
-            self = self.aq_parent
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_is_closed_to_public')
     def sec_is_closed_to_public(self):
