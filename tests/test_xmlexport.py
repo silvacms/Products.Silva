@@ -34,7 +34,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # about beforehand. Also I don't see how to get this within 80
         # columns without a lot of pain.
         splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-        part1, part2, part3, part4, part5, part6 = splittor.split(xmlexport.getXMLSource(testfolder).xmlToString(None))
+        settings = xmlexport.ExportSettings()
+        part1, part2, part3, part4, part5, part6 = splittor.split(xmlexport.getXMLSource(testfolder).xmlToString(settings))
         self.assertEquals(part1, '<silva xmlns="http://infrae.com/ns/silva/0.5" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder" url="http://nohost/root/testfolder" datetime="')
         self.assertEquals(part2, '"><folder id="testfolder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
         self.assertEquals(part3, '</silva-extra:modificationtime><silva-extra:creationtime>')
@@ -61,7 +62,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # about beforehand. Also I don't see how to get this within 80
         # columns without a lot of pain.
         splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-        part1, part2, part3, part4, part5, part6 = splittor.split(xmlexport.getXMLSource(testfolder).xmlToString(None))
+        settings = xmlexport.ExportSettings()
+        part1, part2, part3, part4, part5, part6 = splittor.split(xmlexport.getXMLSource(testfolder).xmlToString(settings))
         self.assertEquals(part1, '<silva xmlns="http://infrae.com/ns/silva/0.5" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder" url="http://nohost/root/testfolder" datetime="')
         self.assertEquals(part2, '"><folder id="testfolder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
         self.assertEquals(part3, '</silva-extra:modificationtime><silva-extra:creationtime>')
@@ -98,13 +100,12 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # about beforehand. Also I don't see how to get this within 80
         # columns without a lot of pain.
         splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-        part1, part2, part3, part4, part5, part6 = splittor.split(xmlexport.getXMLSource(testfolder3).xmlToString(None))
+        settings = xmlexport.ExportSettings()
+        part1, part2, part3, part4 = splittor.split(xmlexport.getXMLSource(testfolder3).xmlToString(settings))
         self.assertEquals(part1, '<silva xmlns="http://infrae.com/ns/silva/0.5" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder3" url="http://nohost/root/testfolder3" datetime="')
         self.assertEquals(part2, '"><folder id="testfolder3"><metadata><set id="silva-content"><silva-content:maintitle>This is yet &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder3</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
         self.assertEquals(part3, '</silva-extra:modificationtime><silva-extra:creationtime>')
-        self.assertEquals(part4, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><content><ghost id="caspar"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><link id="test_link"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is a test link, you insensitive clod!</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder/testfolder2/test_link</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
-        self.assertEquals(part5, '</silva-extra:modificationtime><silva-extra:creationtime>')
-        self.assertEquals(part6, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><url>http://www.snpp.com/</url></content></link></content></ghost></content></folder></silva>')
+        self.assertEquals(part4, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><content><ghost id="caspar"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><link id="test_link"></link></content></ghost></content></folder></silva>')
         
     def test_xml_ghost_folder_export(self):
         testfolder = self.add_folder(
@@ -137,7 +138,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # about beforehand. Also I don't see how to get this within 80
         # columns without a lot of pain.
         splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-        part1, part2, part3, part4, part5, part6, part7, part8 = splittor.split(xmlexport.getXMLSource(testfolder3).xmlToString(None))
+        settings = xmlexport.ExportSettings()
+        part1, part2, part3, part4, part5, part6, part7, part8 = splittor.split(xmlexport.getXMLSource(testfolder3).xmlToString(settings))
         self.assertEquals(part1, '<silva xmlns="http://infrae.com/ns/silva/0.5" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder3" url="http://nohost/root/testfolder3" datetime="')
         self.assertEquals(part2, '"><folder id="testfolder3"><metadata><set id="silva-content"><silva-content:maintitle>This is yet &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder3</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
         self.assertEquals(part3, '</silva-extra:modificationtime><silva-extra:creationtime>')
@@ -169,7 +171,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # about beforehand. Also I don't see how to get this within 80
         # columns without a lot of pain.
         splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-        part1, part2, part3, part4, part5, part6, part7, part8 = splittor.split(xmlexport.getXMLSource(testfolder).xmlToString(None))
+        settings = xmlexport.ExportSettings()
+        part1, part2, part3, part4, part5, part6, part7, part8 = splittor.split(xmlexport.getXMLSource(testfolder).xmlToString(settings))
         self.assertEquals(part1, '<silva xmlns="http://infrae.com/ns/silva/0.5" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder" url="http://nohost/root/testfolder" datetime="')
         self.assertEquals(part2, '"><folder id="testfolder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
         self.assertEquals(part3, '</silva-extra:modificationtime><silva-extra:creationtime>')

@@ -208,6 +208,7 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
             for version in self.context.objectValues():
                 getXMLSource(version)._sax(reader, settings)
         else:
+            pass
             #XXX handle single version export
             
     def _metadata(self, reader, settings):
@@ -349,12 +350,12 @@ class ExportSettings:
         self._workflow = 1
         self._all_versions = 1
 
-    def setOnlyPublishedNoWorkflow():
+    def setOnlyPublishedNoWorkflow(self):
         self._workflow = 0
         self._all_versions = 0
 
-    def workflow():
+    def workflow(self):
         return self._workflow
 
-    def allVersions():
+    def allVersions(self):
         return self._all_versions
