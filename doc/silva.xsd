@@ -3,16 +3,16 @@
 
 
 <xsd:schema 
-  xmlns="http://www.infrae.com/xml/silva-0.8.6.xsd"
+  xmlns="http://www.infrae.com/xml/silva-0.9.1.xsd"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://www.infrae.com/xml/silva-0.8.6.xsd"
+  targetNamespace="http://www.infrae.com/xml/silva-0.9.1.xsd"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
   >
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      $Id: silva.xsd,v 1.12 2003/01/13 13:24:43 zagy Exp $
+      $Id: silva.xsd,v 1.13 2003/01/16 15:49:45 zagy Exp $
     
       Silva XML schema
       Copyright 2002 Infrae
@@ -131,8 +131,8 @@
         internally as text inside special elements.
 
         Text with markup is rendered by some hard boiled rendering methods in
-        EditorSupport.render_(text|heading)_as_html for public view and
-        EditorSupport.render_text_as_editable for the edit. view.
+        EditorSupportNested.render_(text|heading)_as_html for public view and
+        EditorSupportNested.render_text_as_editable for the edit. view.
 
         link -- a hyperlink; attribute url.  rendered public as a-tag with url
         as href attribute
@@ -159,6 +159,9 @@
         <xsd:element name="sub" type="Markup" />
         <xsd:element name="link" type="Link" />
         <xsd:element name="index" type="IndexItem" />
+        <xsd:element name="br">
+          <xsd:complexType />
+        </xsd:element> 
       </xsd:choice>
     </xsd:sequence>
   </xsd:complexType>
