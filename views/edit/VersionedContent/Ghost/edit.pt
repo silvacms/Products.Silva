@@ -5,7 +5,7 @@
     root_url model/get_root_url;
     global editable model/get_editable;
     title model/get_title_editable;
-    vein string:editor;
+    vein string:edit;
 ">
 <table class="columns columns3">
   <tbody>

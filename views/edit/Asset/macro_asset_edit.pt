@@ -4,7 +4,7 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    vein string:editor;
+    vein string:edit;
 ">
 
 <metal:define-macro define-macro="editor"

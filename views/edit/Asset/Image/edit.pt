@@ -5,7 +5,7 @@
     mangle modules/Products/Silva/mangle;
     root_url model/get_root_url;
     title model/get_title_editable;
-    vein string:editor;
+    vein string:edit;
     transf model/getTransformation;
     is_cropped model/cropped;
     "
