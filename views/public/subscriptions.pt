@@ -2,18 +2,6 @@
 <!-- _______ Silva version v1.0b _______ -->
 <tal:block define="here request/model;">
 <metal:block use-macro="request/model/layout_macro.html/macros/layout">
-<metal:block fill-slot="style">
-  <style>
-    div.feedback {
-    color: #555;
-    background: #f3f3d9;
-    margin: 0;
-    border: &dtml-inputBorder;;
-    padding: 0.4em 0.7em 0.7em 0.7em;
-    font-weight: bold;
-    }
-  </style>
-</metal:block>
 <metal:block fill-slot="main">
   <tal:block
     define="
