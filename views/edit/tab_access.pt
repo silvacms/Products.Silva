@@ -104,12 +104,13 @@
                   <td class="align-right"
                     tal:define="upward_roles python:model.sec_get_upward_roles_for_userid(userid)">
                     <tal:block repeat="upward upward_roles">
-                    <i tal:content="upward" /><br tal:condition="not:repeat/upward/end" />
+                    <i i18n:translate="" tal:content="upward" /><br tal:condition="not:repeat/upward/end" />
                     </tal:block>
                   </td>
                   <td class="align-right">
                     <tal:block repeat="local python:model.sec_get_local_roles_for_userid(userid)">
                       <label style="text-transform:none"
+                        i18n:translate=""
                         tal:content="local" 
                         tal:attributes="for string:revoke_${local}-${userid}">
                         local
@@ -228,7 +229,7 @@
                         name
                       </label>
                   </td>
-                  <td tal:content="requested_role">
+                  <td i18n:translate="" tal:content="requested_role">
                   </td>
                   <!--XXX: More i18n trouble:-->
                   <td tal:content="python: member.is_approved() and 'Yes' or 'No'" >
