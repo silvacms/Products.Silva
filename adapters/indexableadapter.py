@@ -8,17 +8,17 @@ class IndexableAdapter(adapter.Adapter):
     __implements__ = (interfaces.IIndexable,)
 
     def getTitle(self):
-        return self.context.get_title()
+        return self.getContext().get_title()
 
     def getPath(self):
-        return self.context.getPhysicalPath()
+        return self.getContext().getPhysicalPath()
 
     def getIndexes(self):
         return [] 
 
 class DocumentIndexesAdapter(IndexableAdapter):
     def getIndexes(self):
-        version = self.context.get_viewable()
+        version = self.getContext().get_viewable()
         if version is None:
             return []
         indexes = []
@@ -31,9 +31,9 @@ class DocumentIndexesAdapter(IndexableAdapter):
 
 class GhostIndexesAdapter(IndexableAdapter):
     def getIndexes(self):
-        if self.context == None:
+        if self.getContext() == None:
             return []
-        version = self.context.get_viewable()
+        version = self.getContext().get_viewable()
         if version is None:
             return []
         else:
@@ -44,7 +44,8 @@ class GhostIndexesAdapter(IndexableAdapter):
 
 class ContainerIndexesAdapter(IndexableAdapter):
     def getIndexes(self):
-        return getIndexableAdapter(self.context.index).getIndexes() 
+        index = self.getContext().index
+        return getIndexableAdapter(index).getIndexes() 
 
 def getIndexableAdapter(context):
     if context.meta_type == "Silva Document":
@@ -55,6 +56,5 @@ def getIndexableAdapter(context):
 
     if IContainer.isImplementedBy(context):
         return ContainerIndexesAdapter(context).__of__(context) 
-
+    
     return IndexableAdapter(context).__of__(context)
-

@@ -8,6 +8,8 @@ if __name__ == '__main__':
 import SilvaTestCase
 from DateTime import DateTime
 
+from Products.Silva import Ghost
+
 class IndexerTestCase(SilvaTestCase.SilvaTestCase):
                                                                                 
     def afterSetUp(self):
@@ -24,6 +26,15 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         self.kappa = kappa = self.add_document(self.pub, 'kappa', 'Kappa')
         self.ghost = ghost = self.add_ghost(
             self.pub, 'ghost', '/'.join(toghost.getPhysicalPath()))
+
+        self.foldertoghost = self.add_folder(
+            self.root, 'foldertoghost', 'Folder to Ghost')
+        self.foo = foo = self.add_document(self.foldertoghost, 'index', 'Index')
+        self.bar = bar = self.add_document(self.foldertoghost, 'bar', 'Barrr')
+        self.baz = baz = self.add_document(self.foldertoghost, 'baz', 'Bazzz')
+        self.ghostfolder = ghostfolder = Ghost.ghostFactory(
+            self.pub, 'ghostfolder', self.foldertoghost)
+        self.ghostfolder.haunt()
 
         self.broken_ghost = broken_ghost = self.add_ghost(
             self.pub, 'broken_ghost', '/this/object/does/not/exist')
@@ -44,12 +55,10 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             '<doc>'
             '<p><index name="subfolder" /></p>'
             '</doc>')
-
         getattr(toghost, '0').content.manage_edit(
             '<doc>'
             '<p><index name="ghost" /></p>'
             '</doc>')
- 
         getattr(gamma, '0').content.manage_edit(
             '<doc>'
             '<p>Foo bar <index name="a" /></p>'
@@ -75,10 +84,22 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             '<doc>'
             '<p>Dag <index name="c" /></p>'
             '</doc>')
+        getattr(foo, '0').content.manage_edit(
+            '<doc>'
+            '<p>Dag <index name="f" /></p>'
+            '</doc>')
+        getattr(bar, '0').content.manage_edit(
+            '<doc>'
+            '<p>Dag <index name="g" /></p>'
+            '</doc>')
+        getattr(baz, '0').content.manage_edit(
+            '<doc>'
+            '<p>Dag <index name="h" /></p>'
+            '</doc>')
 
         # publish documents
         for doc in [gamma, alpha, Alpha, beta, Beta, kappa, toghost, ghost,
-                    broken_ghost, subfolder.index]:
+                    broken_ghost, subfolder.index, foo, bar, baz]:
             doc.set_unapproved_version_publication_datetime(DateTime() - 1)
             # should now be published
             doc.approve_version()
@@ -106,7 +127,9 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         self.indexer.update()
         
     def test_getIndexNames(self):
-        self.assertEquals(['A', 'a', 'b', 'c', 'ghost', 'subfolder'], self.indexer.getIndexNames())
+        self.assertEquals(
+            ['A', 'a', 'b', 'c', 'f', 'g', 'ghost', 'h', 'subfolder'], 
+            self.indexer.getIndexNames())
 
     def test_getIndexEntry(self):
         expected = [('Alpha', ('', 'root', 'pub', 'alpha',)),
@@ -121,7 +144,13 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         expected['b'] = [(u'Beta', ('', 'root', 'pub', 'beta')), 
                         (u'Gamma', ('', 'root', 'pub', 'gamma'))]
         expected['c'] = [(u'Kappa', ('', 'root', 'pub', 'kappa')),]
+        expected['f'] = [(u'Folder to Ghost', ('', 'root', 'pub', 'ghostfolder')),]
+        expected['g'] = [(u'Barrr', ('', 'root', 'pub', 'ghostfolder', 'bar')),]
+        
         expected['ghost'] = [(u'To be Haunted', ('', 'root', 'pub', 'ghost')),]
+        
+        expected['h'] = [(u'Bazzz', ('', 'root', 'pub', 'ghostfolder', 'baz')),]
+
         expected['subfolder'] = [(u'Folder with indexable index document', 
                                  ('', 'root', 'pub', 'folder_with_index_doc')),]
  
@@ -130,7 +159,6 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         for indexName in result:
             self.assertEquals(expected[indexName],
                 self.indexer.getIndexEntry(indexName))
-        
     
 if __name__ == '__main__':
     framework()
