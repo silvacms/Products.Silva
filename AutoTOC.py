@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.2 2003/10/16 16:08:40 jw Exp $
+# $Id: AutoTOC.py,v 1.3 2003/10/18 20:40:08 kitblake Exp $
 
 # Zope
 from Globals import InitializeClass
@@ -22,7 +22,7 @@ from Products.Silva.helpers import add_and_edit
 icon = "www/silvageneric.gif"
 
 class AutoTOC(Content, SimpleItem):
-    """Automatically displays table of contents"""
+    """Automatically displays a table of contents when the folder is requested (e.g. http://www.x.yz/silva/myFolder/)."""
     security = ClassSecurityInfo()
 
     meta_type = "Silva AutoTOC"
