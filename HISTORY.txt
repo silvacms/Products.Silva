@@ -1,8 +1,17 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.50 $
+$Revision: 1.47.2.51 $
 
 Silva changes
+
+  0.9.1.13
+
+    Bugs Fixed
+
+      - Fixed acquisition for viewing locally defined roles on Silva
+        objects. (For instance: if user1 has editor role on pub1, and not
+        on pub2, viewing /pub1/pub2/foo/tab_access shouldn't show user1
+        as an editor, and now doesn't)
 
   0.9.1.12
 
