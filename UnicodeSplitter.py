@@ -19,7 +19,6 @@ class Splitter:
         for s in lst:
             result += self.rxGlob.findall(s)
         return result
-
 try:
     element_factory.registerFactory('Word Splitter',
         'Unicode Whitespace splitter', Splitter)

@@ -191,7 +191,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         directory (so including the escaped productname!!)
         """
         return None
-
+    
 Globals.InitializeClass(SimpleMemberService)
 
 manage_addSimpleMemberServiceForm = PageTemplateFile(

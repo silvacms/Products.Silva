@@ -71,6 +71,7 @@
 </form>
 
 </tal:block>
+
 <tal:block condition="python: not hasattr(here, 'service_members') or not here.service_members.allow_authentication_requests()">
   <span i18n:translate="requests_for_roles_not_allowed">This site does not allow requests for roles</span>.
 </tal:block>

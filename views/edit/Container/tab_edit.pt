@@ -20,7 +20,7 @@
     publishables python: default_doc_list + model.get_ordered_publishables();
     assets model/get_assets;
     iterate python: 0;
-">/
+   ">
 
 <form action="."
   method="POST"

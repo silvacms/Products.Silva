@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 
 # Python
 import os
@@ -13,6 +13,7 @@ from Globals import InitializeClass
 from mimetypes import guess_extension
 from helpers import add_and_edit
 from webdav.WriteLockInterface import WriteLockInterface
+
 # Silva
 from Asset import Asset
 from Products.Silva import mangle
@@ -38,7 +39,7 @@ class File(Asset):
     """
     security = ClassSecurityInfo()
     
-    meta_type = "Silva File"    
+    meta_type = "Silva File"
 
     __implements__ = (WriteLockInterface, IFile)
     

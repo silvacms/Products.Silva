@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.42 $
+# $Revision: 1.43 $
 
 # Python
 from StringIO import StringIO
@@ -274,54 +274,43 @@ class CatalogedVersionedContent(VersionedContent):
     default_catalog = 'service_catalog'
 
     def manage_afterAdd(self, item, container):
-        CatalogedVersionedContent.inheritedAttribute('manage_afterAdd')(self, item, container)
+        CatalogedVersionedContent.inheritedAttribute('manage_afterAdd')(
+            self, item, container)
         for version in self._get_indexable_versions():
-            # FIXME: what if e.g. version '0' got removed
-            # but there is a content object with the id '0' in the
-            # acquisition path? will this be indexed instead?
-            version_object = getattr(self, version, None)
-            if version_object is not None:
-                version_object.reindex_object()
+            version.index_object()
 
-    def manage_afterClone(self, item):
-        CatalogedVersionedContent.inheritedAttribute('manage_afterClone')(self, item)
-        for version in self._get_indexable_versions():
-            version_object = getattr(self, version, None)
-            if version_object is not None:
-                version_object.reindex_object()
-
-    # Override this method from superclasses so we can remove all versions from the catalog
     def manage_beforeDelete(self, item, container):
-        CatalogedVersionedContent.inheritedAttribute('manage_beforeDelete')(self, item, container)
+        CatalogedVersionedContent.inheritedAttribute('manage_beforeDelete')(
+            self, item, container)
         for version in self._get_indexable_versions():
-            version_object = getattr(self, version, None)
-            if version_object is not None:
-                version_object.unindex_object()
+            version.unindex_object()
 
     def _get_indexable_versions(self):
-        ret = []
-        for version in [self.get_unapproved_version(), 
-                        self.get_approved_version(), 
-                        self.get_public_version()
-                        ] + self.get_previous_versions():
-            if version:
-                ret.append(version)
-        return ret
+        version_ids = [self.get_next_version(),
+                       self.get_public_version()]
+        result = []
+        for version_id in version_ids:
+            if version_id is None:
+                continue
+            if hasattr(self.aq_base, version_id):
+                version = getattr(self, version_id, None)
+                result.append(version)
+        return result
 
-    def _index_version(self, version):
-        if version[0] is None:
-            return None
-        getattr(self, str(version[0])).index_object()
+    def _index_version(self, version_id):
+        version = getattr(self, version_id, None)
+        if version is not None:
+            version.index_object()
         
-    def _reindex_version(self, version):
-        if version[0] is None:
-            return None
-        getattr(self, str(version[0])).reindex_object()
+    def _reindex_version(self, version_id):
+        version = getattr(self, version_id, None)
+        if version is not None:
+            version.reindex_object()
 
-    def _unindex_version(self, version):
-        if version[0] is None:
-            return None
-        getattr(self, str(version[0])).unindex_object()
+    def _unindex_version(self, version_id):
+        version = getattr(self, version_id, None)
+        if version is not None:
+            version.unindex_object()
         
 InitializeClass(CatalogedVersionedContent)
 

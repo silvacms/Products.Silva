@@ -612,23 +612,28 @@ upgrade_registry.register('Silva SQL Data Source', replace_object_title_092, '0.
 upgrade_registry.register('Silva Indexer', replace_object_title_092, '0.9.2')
 
 def catalog_092(obj):
-    """Do initial catalogin of objects"""
-    #print 'Catalog', obj.getPhysicalPath()
-    if (IVersion.isImplementedBy(obj) and
-        obj.id not in obj.aq_parent._get_indexable_versions()):
-        return
-    #if hasattr(obj, 'content'):
-        #print 'Type of content:', type(obj.content_xml())
-        #print 'Fulltext:', type(obj.fulltext())
-        #print 'Title:', type(obj.title)
     obj.index_object()
     
-upgrade_registry.register('Silva Root', catalog_092, '0.9.2')
-upgrade_registry.register('Silva Folder', catalog_092, '0.9.2')
-upgrade_registry.register('Silva Publication', catalog_092, '0.9.2')
-upgrade_registry.register('Silva Document Version', catalog_092, '0.9.2')
-upgrade_registry.register('Silva DemoObject Version', catalog_092, '0.9.2')
-upgrade_registry.register('Silva Ghost Version', catalog_092, '0.9.2')
+def catalog_version_092(obj):
+    """Do initial catalogin of objects"""
+    if not ICatalogedVersion.isImplementedBy(obj):
+        return
+    if obj.version_status() in ['last_closed', 'closed']:
+        return
+    obj.index_object()
+    
+upgrade_registry.register('Silva Root',
+                          catalog_092, '0.9.2')
+upgrade_registry.register('Silva Folder',
+                          catalog_092, '0.9.2')
+upgrade_registry.register('Silva Publication',
+                          catalog_092, '0.9.2')
+upgrade_registry.register('Silva Document Version',
+                          catalog_version_092, '0.9.2')
+upgrade_registry.register('Silva DemoObject Version',
+                          catalog_version_092, '0.9.2')
+upgrade_registry.register('Silva Ghost Version',
+                          catalog_version_092, '0.9.2')
 
 # helper methods for no-bullet list conversion
 def get_text_from_node(node):

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.89 2003/07/21 13:29:38 zagy Exp $
+# $Id: SilvaObject.py,v 1.90 2003/08/01 15:54:53 faassen Exp $
 
 # python
 from types import StringType
@@ -57,12 +57,18 @@ class SilvaObject(Security, ViewCode):
 
     # MANIPULATORS
     def manage_afterAdd(self, item, container):
+        self._afterAdd_helper(item, container)
+
+    def _afterAdd_helper(self, item, container):
         container._add_ordered_id(item)
         if self.id == 'index':
             container = self.get_container()
             container._invalidate_sidebar(container)
-        
+    
     def manage_beforeDelete(self, item, container):
+        self._beforeDelete_helper(item, container)
+
+    def _beforeDelete_helper(self, item, container):
         container._remove_ordered_id(item)
         if self.id == 'index':
             container = self.get_container()

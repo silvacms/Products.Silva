@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.43 2003/07/31 11:22:17 zagy Exp $
+# $Id: Image.py,v 1.44 2003/08/01 15:54:53 faassen Exp $
 
 # Python
 import re, string 
@@ -14,6 +14,7 @@ from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from webdav.WriteLockInterface import WriteLockInterface
+
 # Silva
 import SilvaPermissions
 from Asset import Asset
@@ -304,6 +305,7 @@ class Image(Asset):
     def PUT(self, REQUEST, RESPONSE):
         """Handle HTTP PUT requests"""
         return self.image.PUT(REQUEST, RESPONSE)
+
 
 InitializeClass(Image)
     

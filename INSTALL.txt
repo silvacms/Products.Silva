@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.2
+  Valid for:  Silva 0.9.2.2
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.33 $
+  CVS:        $Revision: 1.34 $
 
 Installing Silva
 
@@ -39,7 +39,7 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.9.2)
+    Silva (0.9.2.2)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some basic
@@ -53,9 +53,9 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.9.2.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.2.tgz
+        "Silva-0.9.2.2.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.2.2.tgz
   
-    XMLWidgets (0.9)
+    XMLWidgets (0.10)
 
       A system that builds on top of ParsedXML to assist in the
       rendering of editor, as well as in the generation of the HTML
@@ -118,9 +118,9 @@ Installing Silva
   
         "FileSystemSite-1.2.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite/FileSystemSite-1.2.tgz
 
-    SilvaMetadata (0.6)
+    SilvaMetadata (0.7)
 
-      "SilvaMetadata-0.6.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.6.tgz
+      "SilvaMetadata-0.7.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.7.tgz
 
     ProxyIndex (1.1)
 

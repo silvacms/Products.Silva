@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27 $
+# $Revision: 1.28 $
 # Python
 from StringIO import StringIO
 # Zope
@@ -9,6 +9,7 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
+
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
@@ -180,7 +181,6 @@ def manage_addDemoObject(self, id, title, REQUEST=None):
     # add first version
     object.manage_addProduct['Silva'].manage_addDemoObjectVersion('0', title)
     object.create_version('0', None, None)
-    getattr(object, '0').index_object()
     add_and_edit(self, id, REQUEST)
     return ''
 
