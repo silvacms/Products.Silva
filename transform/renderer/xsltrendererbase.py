@@ -2,6 +2,7 @@
 
 import os
 import libxml2, libxslt
+import urllib
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -43,7 +44,8 @@ class XSLTRendererBase(Acquisition.Implicit):
     def stylesheet(self):
         if self._stylesheet is None:
             xslt_stylesheet = open(self._stylesheet_path).read()
-            xslt_stylesheet = xslt_stylesheet % {'url': os.path.dirname(os.path.abspath(__file__))}
+            base_xslt_path = os.path.dirname(os.path.abspath(__file__))
+            xslt_stylesheet = xslt_stylesheet % {'url': self._generateXSLTPath(base_xslt_path)}
             try:
                 styledoc = libxml2.parseDoc(xslt_stylesheet)
                 self._stylesheet = libxslt.parseStylesheetDoc(styledoc)
@@ -84,5 +86,16 @@ class XSLTRendererBase(Acquisition.Implicit):
     security.declareProtected("View", "getName")
     def getName(self):
         return self._name
+
+    def _generateXSLTPath(self, path):
+        """generate a path to the xslt file in a form that libxslt understands"""
+        if path.find('\\') > -1:
+            path = path.replace('\\', '/')
+        path = urllib.quote(path)
+        if path[0] != '/':
+            path = 'file:///%s' % path
+        else:
+            path = 'file://%s' % path
+        return path
 
 InitializeClass(XSLTRendererBase)
