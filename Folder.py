@@ -161,23 +161,19 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """Delete objects.
         """
         # check whether deletion is allowed
-        for id in ids:
-            if not self.is_delete_allowed(id):
-                return
-        self.manage_delObjects(ids)
-    
+        deletable_ids = [id for id in ids if self.is_deleted_allowed(id)]
+        self.manage_delObjects(deletable_ids)
+         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_cut')      
     def action_cut(self, ids, REQUEST):
         """Cut objects.
         """
         # check whether deletion is allowed
-        for id in ids:
-            if not self.is_delete_allowed(id):
-                return
+        deletable_ids = [id for id in ids if self.is_delete_allowed(id)]
         # FIXME: need to do unit tests for this
         # FIXME: would this lead to a sensible user interface?
-        self.manage_cutObjects(ids, REQUEST)
+        self.manage_cutObjects(deletable_ids, REQUEST)
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_copy')

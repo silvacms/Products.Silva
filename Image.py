@@ -28,7 +28,6 @@ class Image(Asset):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'image')
     
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
     def set_image(self, file):
