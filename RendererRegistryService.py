@@ -35,7 +35,7 @@ class RendererRegistryService(SimpleItem.SimpleItem):
 
         try:
             import libxslt
-        except ImportError:
+        except:
             return {'Silva Document Version' : renderers}
 
         from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
