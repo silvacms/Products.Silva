@@ -15,26 +15,25 @@
   <script type="text/javascript"
           tal:attributes="src view/cropping.js/absolute_url">
   </script>
-  <img style="margin-bottom:1em;"
-    tal:attributes="src string:${model/absolute_url}?thumbnail" />
   <div class="info">
     <h3>
       <img tal:replace="structure icon" /> image info
     </h3>
+    <img style="margin-top:0.3em;"
+      tal:attributes="src string:${model/absolute_url}?thumbnail" />
     <tal:block tal:condition="model/canScale">
       <p tal:condition="not: model/hires_image">
         <span class="subhead">format</span><br />
         <span tal:replace="python: model.web_format.lower()" /> image
         <br />
         <span class="subhead">dimensions</span><br />
-        <span 
-          tal:define="
-            img_width python: model.getDimensions()[0];
-            img_height python: model.getDimensions()[1];
-            "
-            tal:on-error="string: unknown"
+        <span tal:define="
+          img_width python: model.getDimensions()[0];
+          img_height python: model.getDimensions()[1];
+          "
+          tal:on-error="string: unknown"
           tal:replace="string:${img_width}x${img_height} pixels"
-          />
+        />
       </p>
 
       <p tal:condition="model/hires_image">
