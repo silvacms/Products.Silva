@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.58 $
+# $Revision: 1.59 $
 
 # Python
 from StringIO import StringIO
@@ -218,28 +218,9 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         data = self._get_cached_data(cache_key)
         if data is not None:
             return data
-
+                        
         # No cache or not valid anymore, so render.
-        content = self.get_viewable()
-        if content is None:
-            return "Sorry, this document is not published yet."
-        renderer_name = self.service_metadata.getMetadataValue(
-            content, "silva-extra", "renderer_name")
-
-        if not renderer_name or renderer_name == "(Default)":
-            renderer_name = self.service_renderer_registry.getDefaultRendererNameForMetaType(content.meta_type)
-            
-        if renderer_name and renderer_name != "Normal View (XMLWidgets)":
-            renderer = self.service_renderer_registry.getRendererByName(
-                renderer_name, 'Silva Document Version')
-            data = renderer.render(content)
-        else:
-            # XXX: a hack to call back into the old XML widgets way
-            # of rendering. done like so because the old system is
-            # hard to follow, and thus practicality does indeed trump
-            # purity sometimes. :)
-            data = VersionedContent.inheritedAttribute('view')(self, view_type)
-        
+        data = VersionedContent.inheritedAttribute('view')(self, view_type)
         # See if the previous cacheability check is still valid,
         # if not, see if we can cache at all.
         publicationtime = self.get_public_version_publication_datetime()
@@ -262,7 +243,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
                     del self._cached_data[cache_key]
                     self._p_changed = 1
         return data
-          
+    
     def _get_cached_data(self, cache_key):
         cached_data = self._cached_data.get(cache_key, None)
         if cached_data is not None:

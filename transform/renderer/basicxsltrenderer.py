@@ -1,9 +1,6 @@
 #!/usr/bin/python
 import os
 
-# Zope
-from Globals import InitializeClass
-
 # Silva
 from Products.Silva.transform.renderer.xsltrendererbase import XSLTRendererBase
 
@@ -16,5 +13,3 @@ class BasicXSLTRenderer(XSLTRendererBase):
             os.path.dirname(os.path.abspath(__file__)),
             "normal_view.xslt")
         self._stylesheet = None
-
-InitializeClass(BasicXSLTRenderer)

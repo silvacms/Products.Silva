@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.120 $
+# $Revision: 1.121 $
 
 import ContainerPolicy
 
@@ -26,6 +26,7 @@ def initialize(context):
     from Products.Silva.silvaxml import xmlexport, xmlimport
     from Products.FileSystemSite.FSDTMLMethod import FSDTMLMethod
     from Products.FileSystemSite.FSPageTemplate import FSPageTemplate
+    from Products.Silva.transform.renderer import defaultregistration     
 # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
     import Folder, Root
@@ -53,7 +54,6 @@ def initialize(context):
     import SidebarService
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
-    
     from Products.Silva.LayoutRegistry import layoutRegistry
     from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT
     from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT_DESCRIPTION
@@ -180,6 +180,12 @@ def initialize(context):
     
     xmlexport.initializeXMLExportRegistry()
     xmlimport.initializeXMLImportRegistry()
+    
+    #-------------------------------------
+    # Initialize the Renderer Registration
+    #-------------------------------------
+
+    defaultregistration.registerDefaultRenderers()
     
 #------------------------------------------------------------------------------
 # External Editor support

@@ -1,27 +1,34 @@
 from Products.Silva.transform.interfaces import IRendererRegistry
 
-try:
-    import libxslt
-    import libxml2
-except ImportError:
-    _REGISTRY = {}
-else:
-    from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
-    from Products.Silva.transform.renderer.basicxsltrenderer import BasicXSLTRenderer
-    _REGISTRY = {'Silva Document Version' : [ImagesOnRightRenderer(), BasicXSLTRenderer()]}
-
 class RendererRegistry(object):
 
     __implements__ = IRendererRegistry
 
     def __init__(self):
-        self._registry = _REGISTRY
+        self._renderers = {}
 
-    def getRendererByName(self, name, meta_type):
-        meta_type_renderers = self._registry.get(meta_type, None)
-        for r in meta_type_renderers:
-            if r.getName() == name:
-                return r
+    def registerRenderer(self, meta_type, renderer_name, renderer_class):
+        """Register a class as a renderer for a meta type under a name.
+        """
+        self._renderers.setdefault(meta_type, {})[renderer_name] = renderer_class
 
+    def unregisterRenderer(self, meta_type, renderer_name):
+        """Register a class as a renderer for a meta type under a name.
+        """
+        del self._renderers.setdefault(meta_type, {})[renderer_name]
+        
     def getRenderersForMetaType(self, meta_type):
-        return self._registry.get(meta_type, [])
+        """Return a dictionary of registered renderers for this meta type
+        """
+        return self._renderers.get(meta_type)
+    
+    def getMetaTypes(self):
+        """Return a list of all meta types for which nay renderers are are 
+        registered.
+        """
+        return self._renderers.keys()
+
+_REGISTRY = RendererRegistry()
+
+def getRendererRegistry():
+    return _REGISTRY

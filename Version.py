@@ -74,7 +74,16 @@ class Version(SimpleItem):
         if not short_title:
             return self.get_title()
         return short_title
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_renderer_name')
+    def get_renderer_name(self):
+        """Get the name of the renderer selected for object.
         
+        Returns None if default is used.
+        """
+        return getattr(self, '_renderer_name', None)
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'version_status')
     def version_status(self):

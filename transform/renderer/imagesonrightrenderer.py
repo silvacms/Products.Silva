@@ -1,9 +1,6 @@
 #!/usr/bin/python
 import os
 
-# Zope
-from Globals import InitializeClass
-
 # Silva
 from Products.Silva.transform.renderer.xsltrendererbase import XSLTRendererBase
 
@@ -21,4 +18,3 @@ class ImagesOnRightRenderer(XSLTRendererBase):
             "images_to_the_right.xslt")
         self._stylesheet = None
 
-InitializeClass(ImagesOnRightRenderer)

@@ -3,16 +3,20 @@ from Interface import Interface
 class IRenderable(Interface):
     """I'm implemented by objects that can be rendered."""
 
-    def getRendererId():
-        """Returns a string that is the ID of the renderer which will
-        be used to render the object."""
-
-    def setRendererId():
-        """Set the renderer to be used to display this object."""
-
-    def getMetaType():
-        """Return the meta type of this object."""
-
+    def preview():
+        """Display the preview of this object using the selected renderer.
+        
+        Returns the rendered content or None if no renderer can be
+        found.
+        """
+        
+    def view():
+        """Display the view of this object using the selected renderer.
+        
+        Returns the rendered content or None if no renderer can be
+        found.
+        """
+        
 class IXMLSource(Interface):
     """I'm implemented by objects that use XML as their source content."""
 
@@ -32,9 +36,15 @@ class IRendererRegistry(Interface):
     """I'm implemented by something that tracks the existence of
     renderers, and the meta types to which they can be applied."""
 
-    def getRenderersForMetaType(meta_type):
-        """Return a list of objects, each representing a factory
-        that can create an object to render the give meta_type."""
+    def registerRenderer(meta_type, renderer_name, renderer_class):
+        """Register a class as a renderer for a meta type under a name.
+        """
+        
+    def getRenderersForMetaType(self, meta_type):
+        """Return a dictionary of registered renderers for this meta type
+        """
 
-    def getRendererByName(name, meta_type):
-        """Return a renderer factory by its name."""
+    def getMetaTypes(self):
+        """Return a list of all meta types for which nay renderers are are 
+        registered.
+        """

@@ -1,25 +1,8 @@
 Known issues
 ============
 
-Known issues with Silva 1.1b1
+Known issues with Silva 1.1b2
 -----------------------------
-
-The XSLT-renderers 'Images On Right' and 'Normal View (XSLT)' contain these
-issues:
-
-- Tables are not rendered completely correctly: Column width and
-  alignment are ignored by the new renderers. This will be fixed ASAP.
-
-- Tables of Content are not rendered correctly at all.
-
-  For public sites that use these features, it is recommended to wait
-  for a fix to these two problems before switching the default
-  renderer to one of the new ones.
-
-  Note that the renderers of course do not change or remove
-  information in the document, so even if you use them, and create
-  content that is for now not displayed correctly, it will be once we
-  have a patch and you apply that.
 
 The full-media (.zip) import export system has some known bugs in the
 handling of workflow, and does not support SilvaExternalSources yet.

@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-$Id: serviceRendererRegistryDefaultRenderersEdit.zpt,v 1.2 2004/08/20 13:10:49 eric Exp $
+$Id: serviceRendererRegistryDefaultRenderersEdit.zpt,v 1.3 2004/09/09 18:27:48 eric Exp $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -12,12 +12,13 @@ $Id: serviceRendererRegistryDefaultRenderersEdit.zpt,v 1.2 2004/08/20 13:10:49 e
 
 <form action="manage_editDefaultRenderers" method="POST">
   <table>
-    <tr tal:repeat="meta_type here/getRegisteredContentTypes">
+    <tr tal:repeat="meta_type here/getRegisteredMetaTypes">
       <td><b tal:content="meta_type">Content Type</b></td>
       <td>
         <select tal:attributes="name python:meta_type.replace(' ', '_')">
+          <option value="(None)">Do Not Use New-Style Renderers</option>
           <option
-           tal:repeat="renderer_name python:[x.getName() for x in here.getRenderersForMetaType(meta_type)]"
+           tal:repeat="renderer_name python:[x for x in here.getRendererNamesForMetaType(meta_type)]"
            tal:content="renderer_name"
            tal:attributes="selected python:here.getDefaultRendererNameForMetaType(meta_type) == renderer_name">
             News Column Layout

@@ -5,63 +5,50 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
-from Interface.Verify import verifyClass
 from Products.Silva.transform.interfaces import IRendererRegistry
 from Products.Silva.RendererRegistryService import RendererRegistryService
 from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
-from Products.Silva.transform.renderer.widgetsrenderer import WidgetsRenderer
-from Interface.Exceptions import BrokenImplementation, DoesNotImplement, BrokenMethodImplementation
 
 class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
 
-    # XXX: this test needs to be corrected, but it's too risky to correct
-    #      on the eve of a deployment.
-##     def test_implements_renderer_interface(self):
-##         try:
-##             verifyClass(IRendererRegistry, RendererRegistryService)
-##         except (BrokenImplementation, DoesNotImplement, BrokenMethodImplementation), err:
-##             self.fail(
-##                 "RendererRegistry does not implement IRendererRegistry: %s" %
-##                 str(err))
-
     def test_renderers_registered_for_meta_type(self):
-        registry = self.root.service_renderer_registry
-        doc_version_renderers = registry.getRenderersForMetaType("Silva Document Version")
-        self.assertEquals(len(doc_version_renderers), 3)
-        self.assert_(isinstance(doc_version_renderers[0], WidgetsRenderer))
-        self.assertEquals(registry.getRenderersForMetaType("NotReal"), [])
+        registry_service = self.root.service_renderer_registry
+        doc_version_renderers = registry_service.getRendererNamesForMetaType("Silva Document")
+        self.assertEquals(len(doc_version_renderers), 2)
+        self.assertEquals(registry_service.getRendererNamesForMetaType("NotReal"), [])
 
     def test_get_renderer_by_name(self):
-        registry = self.root.service_renderer_registry
+        registry_service = self.root.service_renderer_registry
         self.assert_(
             isinstance(
-                registry.getRendererByName(
-                    name = 'Images on Right',
-                    meta_type = 'Silva Document Version'),
+                registry_service.getRenderer(
+                    'Silva Document',
+                    'Images on Right'
+                    ),
                 ImagesOnRightRenderer))
 
     def test_get_default_renderer_name_for_meta_type(self):
-        # XXX: unlike the above tests, this code is actually hitting
-        # the placeful registry. the problem here is that I meant for
-        # placeful registry code to be a very thin wrapper around the
-        # "normal" Python code, but things didn't actually work out
-        # that way.
-        #
-        # maybe a second file will have to be created for the testing
-        # of the service itself.
-        registry = self.root.service_renderer_registry
+        registry_service = self.root.service_renderer_registry
         self.assertEqual(
-            registry.getDefaultRendererNameForMetaType("Silva Document Version"),
-            "Normal View (XMLWidgets)")
+            registry_service.getDefaultRendererNameForMetaType("Silva Document"),
+            None)
         self.assertEqual(
-            registry.getDefaultRendererNameForMetaType("Foobar"),
+            registry_service.getDefaultRendererNameForMetaType("Foobar"),
+            None)
+        registry_service.registerDefaultRenderer('Silva Document', 'Images on Right')
+        self.assertEqual(
+            registry_service.getDefaultRendererNameForMetaType("Silva Document"),
+            'Images on Right')
+        registry_service.registerDefaultRenderer('Silva Document', None)
+        self.assertEqual(
+            registry_service.getDefaultRendererNameForMetaType("Silva Document"),
             None)
 
     def test_get_registered_content_types(self):
-        registry = self.root.service_renderer_registry
+        registry_service = self.root.service_renderer_registry
         self.assertEqual(
-            registry.getRegisteredContentTypes(), ['Silva Document Version'])
-
+            registry_service.getRegisteredMetaTypes(), ['Silva Document'])
+    
 if __name__ == '__main__':
     framework()
 else:

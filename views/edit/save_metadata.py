@@ -19,6 +19,9 @@ for set_name in binding.getSetNames():
     if errors:
         all_errors[set_name] = errors
 
+if request.form.has_key('renderer_name_select'):
+    model.set_renderer_name(request.form['renderer_name_select'])
+
 if all_errors:
     # There were errors...
     type = 'error'

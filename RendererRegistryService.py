@@ -6,7 +6,7 @@ from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
 # Silva
-from Products.Silva.transform.rendererreg import RendererRegistry
+from Products.Silva.transform.rendererreg import getRendererRegistry
 import SilvaPermissions
 from helpers import add_and_edit
 
@@ -14,37 +14,25 @@ class RendererRegistryService(SimpleItem.SimpleItem):
     """An addable Zope product which registers information
     about content renderers."""
 
+    security = ClassSecurityInfo()
+    
     meta_type = "Silva Renderer Registry Service"
-    manage_options = SimpleItem.SimpleItem.manage_options + (
-        {'label' : 'Default Renderers', 'action' : 'manage_default_renderers'},)
+    manage_options = (
+        {'label': 'Renderers', 'action': 'manage_renderers'},
+        ) + SimpleItem.SimpleItem.manage_options
 
+    security.declareProtected(
+        'View management screens', 'manage_renderers')
+    manage_renderers = PageTemplateFile(
+        'www/serviceRendererRegistryDefaultRenderersEdit', globals(), 
+        __name__='manage_renderers')
+        
     security = ClassSecurityInfo()
 
     def __init__(self, id, title):
         self.id = id
         self.title = title
-        self.default_renderer = {'Silva Document Version' : "Normal View (XMLWidgets)"}
-
-    def getRendererRegistry(self):
-        # XXX: nasty hack for now, because I can't assign the registry to a simple
-        # attribute of self, as it won't play nicely with the persistence machinery
-        #
-        # we might want to clean this up after the beta
-        from Products.Silva.transform.renderer.widgetsrenderer import WidgetsRenderer
-        renderers = [WidgetsRenderer().__of__(self)]
-
-        try:
-            import libxslt
-            import libxml2
-        except ImportError:
-            return {'Silva Document Version' : renderers}
-        else:
-            from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
-            from Products.Silva.transform.renderer.basicxsltrenderer import BasicXSLTRenderer
-            renderers.append(ImagesOnRightRenderer().__of__(self))
-            renderers.append(BasicXSLTRenderer().__of__(self))
-
-        return {'Silva Document Version' : renderers}
+        self._default_renderers = {}
 
     security.declareProtected(
         SilvaPermissions.ViewManagementScreens, 'manage_default_renderers')
@@ -52,40 +40,82 @@ class RendererRegistryService(SimpleItem.SimpleItem):
         "www/serviceRendererRegistryDefaultRenderersEdit", globals())
 
     security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getFormRenderersList')
+    def getFormRenderersList(self, meta_type):
+        result = ['(Default)']
+        for renderer_name in self.getRendererNamesForMetaType(meta_type):
+            result.append(renderer_name)
+        return result
+    
+    security.declareProtected(
         SilvaPermissions.ViewManagementScreens, 'manage_editDefaultRenderers')
     def manage_editDefaultRenderers(self, REQUEST=None):
         """Save the changes to the default renderers."""
-        if not hasattr(self, 'default_renderer'):
-                self.default_renderer = {'Silva Document Version' : "Normal View (XMLWidgets)"}
 
-        for meta_type in self.getRegisteredContentTypes():
+        for meta_type in self.getRegisteredMetaTypes():
             field_name = meta_type.replace(" ", "_")
-            self.default_renderer[meta_type] = REQUEST.get(field_name, None)
-            self._p_changed = 1
+            self.registerDefaultRenderer(meta_type, REQUEST.get(field_name, None))
 
         return self.manage_default_renderers()
 
-    security.declareProtected("View", "getRenderersForMetaType")
-    def getRenderersForMetaType(self, meta_type):
-        return self.getRendererRegistry().get(meta_type, [])
+    def registerDefaultRenderer(self, meta_type, renderer_name):
+        if renderer_name == '(None)':
+            renderer_name = None
+        self._default_renderers[meta_type] = renderer_name
+        self._p_changed = 1
+       
+    security.declarePrivate('getRenderer')
+    def getRenderer(self, meta_type, renderer_name):
+        """Get renderer registered for meta_type/renderer_name combination.
 
-    def getRendererByName(self, name, meta_type):
-        meta_type_renderers = self.getRenderersForMetaType(meta_type)
-        for r in meta_type_renderers:
-            if r.getName() == name:
-                return r
+        If renderer_name is None, the default renderer name is looked up
+        first.
+        
+        If no renderers can be found for meta_type, or specifically named
+        renderer cannot be found for this meta_type, None is returned.
+        """
+        if renderer_name is None:
+            renderer_name = self._default_renderers.get(meta_type)
+        renderer_dict = self._getRendererDict(meta_type)
+        if renderer_dict is None:
+            return None
+        return renderer_dict.get(renderer_name)
+              
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
+        "getRendererNamesForMetaType")
+    def getRendererNamesForMetaType(self, meta_type):
+        """Get a list of all renderer names registered for meta_type.
+        """
+        # XXX sorting alphabetically, might want to order this explicitly
+        renderer_names = self._getRendererDict(meta_type, {}).keys()
+        renderer_names.sort()
+        return renderer_names
+   
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
+        "getRendererNamesForMetaType")
+    def getRegisteredMetaTypes(self):
+        """Get a list of all meta types that have renderers registered.
+        """
+        meta_types = getRendererRegistry().getMetaTypes()
+        meta_types.sort()
+        return meta_types
 
-        return None
-
-    def getRegisteredContentTypes(self):
-        return self.getRendererRegistry().keys()
-
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+        "getDefaultRendererNameForMetaType")
     def getDefaultRendererNameForMetaType(self, meta_type):
-        if not hasattr(self, 'default_renderer'):
-            self.default_renderer = {'Silva Document Version' : "Normal View (XMLWidgets)"}
-            self._p_changed = 1
-        return self.default_renderer.get(meta_type, None)
+        """Get the default renderer registered for the meta type.
+        
+        If no default renderer is registered return None.
+        """
+        return self._default_renderers.get(meta_type)
 
+    # PRIVATE
+    def _getRendererDict(self, meta_type, default=None):
+        result = getRendererRegistry().getRenderersForMetaType(meta_type)
+        if result is None:
+            return default
+        return result
+    
 InitializeClass(RendererRegistryService)
 
 manage_addRendererRegistryServiceForm = PageTemplateFile(

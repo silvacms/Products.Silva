@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.103 2004/08/26 14:02:43 eric Exp $
+# $Id: SilvaObject.py,v 1.104 2004/09/09 18:27:47 eric Exp $
 
 # python
 from types import StringType
@@ -20,6 +20,7 @@ from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent
 # Silva adapters
 from Products.Silva.adapters import zipfileexport
+from Products.Silva.adapters.renderable import getRenderableAdapter
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 
 from Products.SilvaMetadata.Exceptions import BindingError
@@ -57,7 +58,7 @@ class SilvaObject(Security, ViewCode):
         self.id = id
         self._title = title
         self._v_creation_datetime = DateTime()
-
+        
     def __repr__(self):
         return "<%s instance %s>" % (self.meta_type, self.id)
 
@@ -124,6 +125,15 @@ class SilvaObject(Security, ViewCode):
             container = self.get_container()
             container._invalidate_sidebar(container)
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_renderer_name')
+    def set_renderer_name(self, renderer_name):
+        """Set the name of the renderer selected for object.
+        """
+        if renderer_name == '(Default)':
+            renderer_name = None
+        self.get_editable()._renderer_name = renderer_name
+            
     # ACCESSORS
 
     security.declareProtected(
@@ -267,11 +277,25 @@ class SilvaObject(Security, ViewCode):
         """
         return self
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_renderer_name')
+    def get_renderer_name(self):
+        """Get the name of the renderer selected for object.
+        
+        Returns None if default is used.
+        """
+        return getattr(self, '_renderer_name', None)
+    
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
     def preview(self, view_type='public'):
         """Render this as preview with the public view. If this is no previewable,
         should return something indicating this.
         """
+        content = self.get_previewable()
+        if content is not None:
+            result = getRenderableAdapter(content).preview()
+            if result is not None:
+                return result
         return self.service_view_registry.render_preview(view_type, self)
 
     security.declareProtected(SilvaPermissions.View, 'view')
@@ -279,6 +303,11 @@ class SilvaObject(Security, ViewCode):
         """Render this with the public view. If there is no viewable,
         should return something indicating this.
         """
+        content = self.get_viewable()
+        if content is not None:
+            result = getRenderableAdapter(content).view()
+            if result is not None:
+                return result
         return self.service_view_registry.render_view(view_type, self)
 
     # these help the UI that can't query interfaces directly
