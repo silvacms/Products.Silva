@@ -12,7 +12,7 @@ _____________________ Author requests approval _______________________________
 <th align="left">Notes</th>
 </tr>
 
-<tr class="focus" valign="top">
+<tr class="focus-cycle" valign="top">
 <td align="right">
 <span class="textarea">
 <field tal:replace="structure python:view.tab_status_form_author.message.render()" />

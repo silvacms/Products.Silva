@@ -16,7 +16,7 @@ if request.has_key('message'):
   view  = context.tab_status
 else:
   message = '''
-Withdraw request for approval via the edit tab. 
+Rejected request for approval via the publish tab. 
 (Automatically generated message)
 '''
   view = context.tab_edit
@@ -36,4 +36,4 @@ if not model.is_version_approval_requested():
 model.set_approval_request_message(message)
 model.withdraw_version_approval()
 
-return view(message_type="feedback", message="Withdrawn request for approval.")
+return view(message_type="feedback", message="Rejected/withdrew request for approval.")
