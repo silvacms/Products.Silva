@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36.8.2 $
+  CVS:        $Revision: 1.36.8.3 $
 
 Upgrading from 0.9.1 and below
 
@@ -95,7 +95,47 @@ Upgrading Silva 0.9.2.x to 0.9.3
     script encounters an object with a reserved id, the object is
     renamed. The renaming is logged to Zope's event log on the file system.
     You need to manually fix all links and references to those object,
-    since the upgrade script doesn't upgrade those!
+    since the upgrade script doesn't upgrade those! The reserved ids are
+    the following:
+
+        Members,
+        REQUEST,
+        acl_users,
+        cached,
+        cancel,
+        code_source,
+        content,
+        content.html,
+        delete,
+        edit,
+        elements,
+        form,
+        fulltext,
+        getBatch,
+        getDocmaFormatName,
+        globals,
+        index_html,
+        insert,
+        layout_macro.html,
+        logout,
+        lookup,
+        memberform,
+        override.html,
+        placeholder,
+        preview_html,
+        promptWindow,
+        quotify,
+        redirect,
+        render,
+        save,
+        search,
+        standard_error_message,
+        standard_unauthorized_message,
+        submit,
+        up
+
+    Also it's not allowed to have an id starting with 'aq', 'get', 'manage',
+    'service' and 'set'.
    
     If you were using the `access restriction by ip address' feature of
     Silva 0.9.2 you need to install Groups before upgrading. During upgrade
