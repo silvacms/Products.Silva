@@ -13,8 +13,8 @@
 Table of contents depth: 
 <select class="manipulator"
   name="toc_depth">
-  <option value="1" 
-    tal:attributes="selected python:test(toc_depth == 1, 'selected', nothing)">
+  <option value="0" 
+    tal:attributes="selected python:test(toc_depth == 1 - 1, 'selected', nothing)">
     1 level
   </option>
   <loop 
@@ -22,8 +22,8 @@ Table of contents depth:
     tal:repeat="ittr python:range(2,10)">
     <option 
       tal:attributes="
-        value ittr;
-        selected python:test(toc_depth == ittr, 'selected', nothing)">
+        value python:ittr - 1;
+        selected python:test(toc_depth == ittr - 1, 'selected', nothing)">
       <span tal:replace="ittr" />
       levels
     </option>
