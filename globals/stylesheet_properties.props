@@ -42,7 +42,7 @@ workspace:string=#dde5ee
 contentWorkspace:string=#eceeee
 
 mainFont:string=70% Verdana, Helvetica, Arial, sans-serif
-mainBackground:string=#808989
+mainBackground:string=#91989b
 mainFontColor:string=#2d374c
 mainLinkColor:string=#2d3c98
 

@@ -16,8 +16,8 @@
       <tr class="top-controls">
         <td width="25%">
         </td>
-        <td>
-          <h3 style="text-align:center ! important">
+        <td class="align-left">
+          <h3>
             Session timeout
           </h3>
         </td>

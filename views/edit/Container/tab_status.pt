@@ -121,7 +121,8 @@
                 <img tal:replace="structure obj/icon" />
               </a>
             </div>
-            <div style="padding-left: 19px;">
+            <div style="padding-left: 19px;"
+              tal:define="title obj/title">
               <a title="preview"
                 tal:attributes="
                   class obj/status_style | default;
@@ -129,10 +130,10 @@
                   <i tal:condition="obj/is_default | nothing">
                     index of
                   </i>
-                  <tal:block replace="nothing">
-                    ******* XXX Fixme: display 'no title' if no title *******
+                  <tal:block replace="title" />
+                  <tal:block condition="python:title == ''">
+                    <i>no title</i>
                   </tal:block>
-                  <tal:block replace="obj/title" />
               </a>
             </div>
           </div>
