@@ -43,6 +43,10 @@ for child in childNodes:
 # now add new items
 doc = node.ownerDocument
 
+# reduce multiple linebreaks to 2
+while data.find('\r\n\r\n\r\n') > -1:
+    data = data.replace('\r\n\r\n\r\n', '\r\n\r\n')
+
 items = data.split('\r\n\r\n')
 for item in items:
     pair = item.split('\r\n')
@@ -51,7 +55,7 @@ for item in items:
     node.appendChild(dt)
     dd = doc.createElement('dd')
     if len(pair) > 1:
-        model.replace_text(dd, pair[1])
+        model.replace_text(dd, ' '.join(pair[1:]))
     else:
         model.replace_text(dd, '')
     node.appendChild(dd)
