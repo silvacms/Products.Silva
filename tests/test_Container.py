@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.23 $
+# $Revision: 1.24 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -33,6 +33,10 @@ class ContainerBaseTestCase(unittest.TestCase):
         self.connection = Zope.DB.open()
         self.root = makerequest.makerequest(self.connection.root()['Application'])
         self.REQUEST = self.root.REQUEST
+        # make it work with SimpleMembership by creating a user. This way,
+        # member object will be automatically created, so that the last
+        # author username is indeed 'TestUser'
+        self.root.acl_users.userFolderAddUser('TestUser', 'TestUser', [], [])
         # awful hack: add a user who may own the 'index' of the test containers
         hack_add_user(self.REQUEST)
         self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
