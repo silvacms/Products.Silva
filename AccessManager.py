@@ -26,7 +26,7 @@ class AccessManager:
             raise Exception, 'No ChiefEditors available!'
         for role in roles:
             for ce in ces:
-                message = 'User with id %s request the %s role on object %s' % (userid, role, self.aq_inner.absolute_url())
+                message = 'User with id %s request the %s role on object %s.\nGo to %s/edit/tab_access to process the request.' % (userid, role, self.aq_inner.absolute_url(), self.aq_inner.absolute_url())
                 self.service_messages.send_message(userid, ce, 'Access request', message)
         self.service_messages.send_pending_messages()
 
