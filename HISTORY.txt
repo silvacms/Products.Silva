@@ -10,6 +10,9 @@ Silva changes
       - Removed problematic region from index_html Python script that in some
         situations broke custom LayoutServices.
 
+      - Fixed bug in Kupu transformations that broke tables with incomplete
+        alignment information.
+
   1.0 (release candidate 3)
 
     Bugs fixed
