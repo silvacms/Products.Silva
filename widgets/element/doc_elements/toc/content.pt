@@ -14,9 +14,9 @@
        tal:condition="python:indent &gt; 0"
        tal:attributes="width python:indent * 32;
       src string:${here/silva_root}/globals/pixel.gif" />
-  <a href="edit"
-     tal:attributes="href string:${item/absolute_url}/edit/tab_edit"><span
-    class="index-link" tal:content="structure title">title</span></a><br />
+  <a href="edit" class="toc-link"
+     tal:attributes="href string:${item/absolute_url}/edit/tab_edit"
+     tal:content="structure title">title</a><br />
   </loop>
   </toc>
 </p>
