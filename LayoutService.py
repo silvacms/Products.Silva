@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 
 # Zope
 from OFS import SimpleItem
@@ -42,20 +42,22 @@ class LayoutService(SimpleItem.SimpleItem):
     # MANIPULATORS
 
     security.declareProtected('View management screens', 'install')
-    def install(self, name):
+    def install(self, name, REQUEST=None):
         """Install layout
         """
         layoutRegistry.install(self.get_root(), name)
         msg = "%s installed" % name
-        return self.manage_main(manage_tabs_message=msg)
+        if REQUEST is not None:
+            return self.manage_main(manage_tabs_message=msg)
 
     security.declareProtected('View management screens', 'uninstall')
-    def uninstall(self, name):
+    def uninstall(self, name, REQUEST=None):
         """Uninstall extension
         """
         layoutRegistry.uninstall(self.get_root(), name)
         msg = "%s uninstalled" % name
-        return self.manage_main(manage_tabs_message=msg)
+        if REQUEST is not None:
+            return self.manage_main(manage_tabs_message=msg)
 
     security.declareProtected('View management screens', 'refresh')
 
