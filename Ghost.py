@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.40 $
+# $Revision: 1.41 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -88,6 +88,9 @@ class GhostVersion(SimpleItem.SimpleItem):
         # cut off anything after edit
         if len(steps) >= 2 and steps[-2] == 'edit':
             steps = steps[:-2]
+        # cut off initial slash
+        if steps[0] == '':
+            steps = steps[1:]
         content_url = '/'.join(steps)
         # now resolve it
         try:
@@ -102,6 +105,8 @@ class GhostVersion(SimpleItem.SimpleItem):
     def get_content_url(self):
         """Get content url.
         """
+        if self._content_path is None:
+            return None
         object = self.unrestrictedTraverse(self._content_path)
         return '/' + object.absolute_url(1)
 
