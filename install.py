@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.12 2004/05/11 15:36:37 faassen Exp $
+# $Id: install.py,v 1.97.4.9.4.13 2004/05/24 09:57:18 gst Exp $
 """Install for Silva Core
 """
 # Python
@@ -236,10 +236,6 @@ def configureProperties(root):
     """
     root.manage_changeProperties(title='Silva')
     property_info = [
-        ('table_width', '96%', 'string'),
-        ('table_cellspacing', '0', 'string'),
-        ('table_cellpadding', '3', 'string'),
-        ('table_border', '0', 'string'),
         ('help_url', '/%s/globals/accesskeys' % root.absolute_url(1), 'string'),
         ('comment', "This is just a place for local notes.", 'string'),
         ('access_restriction', 'allowed_ip_addresses: ALL', 'string'),
