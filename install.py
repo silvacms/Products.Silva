@@ -7,6 +7,9 @@ import os
 from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
 
+
+from ExtendedMembership import ExtendedMemberService
+
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.
     
@@ -228,6 +231,13 @@ def configureMembership(root):
     if 'service_members' not in ids:
         root.manage_addProduct['Silva'].manage_addExtendedMemberService(
             'service_members')
+    else:
+        # implicitely upgrade in case there is an older membership installed
+        if root.service_members.meta_type != ExtendedMemberService.meta_type:
+            root.manage_delObjects(['service_members'])
+            root.manage_addProduct['Silva'].manage_addExtendedMemberService(
+                'service_members')
+        
     if 'Members' not in ids:
         root.manage_addFolder('Members')
 
