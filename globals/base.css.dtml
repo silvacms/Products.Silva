@@ -780,8 +780,8 @@ h2.worksheet {
 .alert {
   font-size : 12px; 
   font-family : verdana, arial, helvetica, sans-serif;
-  color : #aa0000; 
-  background : #ffbaba;
+  color : #3c2d50; 
+  background : #f7d1d1;
   border:  1px solid #646464;
   margin-top : 10px;
   margin-left: 2%;
