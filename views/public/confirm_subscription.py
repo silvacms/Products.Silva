@@ -12,4 +12,4 @@ except subscriptionerrors.SubscriptionError, e:
         message=_('Subscription failed'), show_form=False)
 
 return context.subscriptions(
-    message=_('Subscription successful'), show_form=False)
+    message=_('You have been successfully subscribed. This means you will receive email notifications whenever a new version of these pages becomes available.'), show_form=False)
