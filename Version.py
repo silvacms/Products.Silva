@@ -2,8 +2,10 @@ from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
+from DateTime import DateTime
 
 from Products.Silva import SilvaPermissions
+from Products.SilvaMetadata.Exceptions import BindingError
 
 from interfaces import IVersion
 
@@ -19,7 +21,25 @@ class Version(SimpleItem):
     def __init__(self, id, title):
         self.id = id
         self._title = title
+        self._v_creation_datetime = DateTime()
         
+    def manage_afterAdd(self, item, container):
+        Version.inheritedAttribute('manage_afterAdd')(
+            self, item, container)
+        timings = {}
+        ctime = getattr(self, '_v_creation_datetime', None)
+        if ctime is None:
+            return
+        try:
+            binding = self.service_metadata.getMetadata(self)
+        except BindingError:
+            return
+        for elem in ('creationtime', 'modificationtime'):
+            old = binding.get('silva-extra', element_id=elem)
+            if old is None:
+                timings[elem] = ctime
+        binding.setValues('silva-extra', timings)
+            
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_title')
     def set_title(self, title):

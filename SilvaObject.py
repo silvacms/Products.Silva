@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.92 2003/08/29 12:41:05 zagy Exp $
+# $Id: SilvaObject.py,v 1.93 2003/09/29 11:59:18 zagy Exp $
 
 # python
 from types import StringType
@@ -19,6 +19,8 @@ from interfaces import ISilvaObject, IContent, IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent
 
+from Products.SilvaMetadata.Exceptions import BindingError
+
 class XMLExportContext:
     """Simple context class used in XML export.
     """
@@ -31,8 +33,6 @@ class SilvaObject(Security, ViewCode):
 
     # FIXME: this is for backward compatibility with old objects
     _title = "No title yet"
-    _creation_datetime = None
-    _modification_datetime = None
     
     # allow edit view on this object
     edit = ViewAttribute('edit', 'tab_edit')
@@ -50,7 +50,7 @@ class SilvaObject(Security, ViewCode):
     def __init__(self, id, title):
         self.id = id
         self._title = title
-        self._creation_datetime = self._modification_datetime = DateTime()
+        self._v_creation_datetime = DateTime()
         
     def __repr__(self):
         return "<%s instance %s>" % (self.meta_type, self.id)
@@ -58,6 +58,22 @@ class SilvaObject(Security, ViewCode):
     # MANIPULATORS
     def manage_afterAdd(self, item, container):
         self._afterAdd_helper(item, container)
+       
+        timings = {}
+        ctime = getattr(self, '_v_creation_datetime', None)
+        if ctime is None:
+            return
+        try:
+            binding = self.service_metadata.getMetadata(self)
+        except BindingError:
+            # Non metadata object, don't do anything
+            return
+        for elem in ('creationtime', 'modificationtime'):
+            old = binding.get('silva-extra', element_id=elem)
+            if old is None:
+                timings[elem] = ctime
+        binding.setValues('silva-extra', timings)
+        
 
     def _afterAdd_helper(self, item, container):
         container._add_ordered_id(item)

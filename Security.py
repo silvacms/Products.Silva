@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.68 $
+# $Revision: 1.69 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -310,7 +310,9 @@ class Security(AccessManager):
         if IContainer.isImplementedBy(self):
             return noneMember.__of__(self)
         version = self.get_previewable()
-        assert version is not None
+        if version is None:
+            # version can be None if this method is called from manage_afterAdd
+            return noneMember.__of__(self)
         binding = self.service_metadata.getMetadata(version)
         if binding is None:
             return noneMember.__of__(self)
