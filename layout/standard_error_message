@@ -1,7 +1,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="globals/base.css" />
-    <title>System problem</title>
+    <title>Message from system</title>
   </head>
   <body>
     <div class="margins" tal:condition="python:options.has_key('message_type')">
@@ -12,17 +12,38 @@
         <span class="error" tal:content="structure python:options['message']" />
       </div>
     </div>
+
     <div class="margins" tal:condition="python: (options['error_type'] == 'Unauthorized' and here.service_members.allow_subscription())">
-      You are not allowed to view this page without the right credentials. Choose one of the following options:<br /><br />
-      <div tal:condition="here/service_members/get_subscription_url">
-        <a tal:attributes="href string:service_resources/${here/service_members/get_subscription_url}" href="become_visitor" tal:condition="here/service_members/get_subscription_url">Click here to become a visitor to the site. As a visitor, you can view certain objects unauthenticated users can't view.</a><br /><br />
+      <h2>Silva Membership System</h2>
+      <p class="readable">
+        This page is only available to visitors with the right credentials.
+      </p>
+      <div class="readable" 
+        tal:condition="here/service_members/get_subscription_url">
+        <p>
+          You're welcome to apply for membership (and the form has only three fields). Your request will be sent to the responsible person who will grant (or possibly deny) access. Then you'll be informed via email.
+        </p>
+        <span class="subhead"><a href="become_visitor" tal:attributes="href string:service_resources/${here/service_members/get_subscription_url}">
+        Become a visitor to the site
+        </a><br /></span>
+        As a visitor, you can view certain objects that unauthenticated users are not allowed to see.<br /><br />
       </div>
-      <a href="public/request_roles">If you already are a visitor, click here to request a role which allows access to the current object. Note that you have to be a visitor to apply for roles.</a><br /><br />
-      <a href="#" onclick="document.location = document.location; return false">You can click here to retry logging in.</a><br /><br />
+      <h3>Visitor options</h3>
+      <span class="subhead"><a href="public/request_roles">Request a role which allows access to this location
+      </a><br /></span>
+      Note that you must already have visitor rights to apply for roles.
+      <br /><br />
+      <span class="subhead"><a href="#" onclick="document.location = document.location; return false">Try logging in again</a></span>
+      <br /><br />
     </div>
+
     <div class="margins" tal:condition="python: (options['error_type'] == 'Unauthorized' and not here.service_members.allow_subscription())">
-      <h2 class="error">Unauthorized</h2>
-      You are not allowed to view this page without the right credentials. <a href="#" onclick="document.location = document.location">Click here</a> to try logging in again.<br /><br />
+      <h2>Unauthorized access, login required</h2>
+      <p>
+      Sorry, this page is only available to visitors with the right credentials.  
+      <br /><br />
+      <span class="subhead"><a href="#" onclick="document.location = document.location">Try logging in again</a>
+      <br /><br />
     </div>
     <div class="margins" tal:condition="python: options['error_type'] != 'Unauthorized'">
 
@@ -35,8 +56,7 @@
         <hr noshade />
         <h4>Error Type: <span class="error" tal:content="structure options/error_type|string:unknwon">error_type</span></h4>
         <h4>Error Value: <span class="error" tal:content="structure options/error_value|string:unknown"></span></h4>
-
-        <h4>Zope reported an error for:</h4>
+        <h4>Error info:</h4>
         Path: <span class="error" tal:content="request/PATH_INFO|string:unknown">error</span> <br />
         URL: <span class="error" tal:content="request/SERVER_URL|string:unknown" /><span class="error" tal:content="request/PATH_INFO|string:unknown" /><span tal:replace="request/QUERY_STRING|string:unknown" />
         <br />
@@ -50,7 +70,6 @@
         <span class="error" tal:content="request/HTTP_REFERER|string:unknown">error</span>
         <br />
 
-        <hr noshade />
     </div>
   </body>
 </html>
