@@ -23,6 +23,10 @@ Silva changes
       - Performance improvements in contents screen for folders, icon
         presentation, and metadata system.
 
+      - Revision of the archive file import (i.e. zipfile import)
+        functionality. Mimetypes can be registered for specific Asset
+        types. The importer will create Assets depending on the mimetype.
+
     Bugs fixed
 
       - When run with Python 2.3 (at the point of writing not yet
