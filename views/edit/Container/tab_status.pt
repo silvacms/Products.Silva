@@ -49,11 +49,9 @@
                   <td colspan="6">
                     <span style="float:right;">
                       <input class="navigation"
-                        accesskey="e"
                         name="tab_status_export:method"
-                        title=""
                         type="submit"
-                        value=""
+                        accesskey="e"
                         tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
                         tal:attributes="
                           value string: Export...;
@@ -282,27 +280,27 @@
                     <input class="button"
                       accesskey="j"
                       name="tab_status_reject:method"
-                      title="reject request for approval of new versions: alt-j"
+                      title="reject request for approval from author: alt-j"
                       type="submit"
-                      value="Reject request for approval" />
+                      value="Reject" />
                     <input class="button"
                       accesskey="v"
                       name="tab_status_revoke:method"
                       title="withdraw approval of new versions: alt-v"
                       type="submit"
-                      value="Revoke approval" />
+                      value="Revoke" />
                     <input class="button" 
                       type="submit" 
                       name="tab_status_new_version:method" 
-                      value="Create new versions" 
-                      title="Create new versions of published docs: alt-n" 
+                      value="New versions" 
+                      title="create new versions of published docs: alt-n" 
                       accesskey="n" />
                     <input class="warning"
                       accesskey="c"
                       name="tab_status_close:method"
                       title="close published items: alt-c"
                       type="submit"
-                      value="Close public" />
+                      value="Close" />
                   </td>
                   <td class="align-right">
                     <input class="button"
@@ -338,7 +336,7 @@
                       name="tab_status_revoke:method"
                       title="revoke approval of new versions: alt-v"
                       type="submit"
-                      value="Revoke approval" />
+                      value="Revoke" />
                   </td>
                   <td class="align-right">
                     <input class="button"
