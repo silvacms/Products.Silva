@@ -121,7 +121,7 @@ def upgrade_memberobjects(obj):
                 o._last_author_info = service_members.get_cached_member(
                     info['uid'])
             else:
-                o._last_author_info = noneMember.__of__(o)
+                o._last_author_info = noneMember
         if IContainer.isImplementedBy(o):
             upgrade_memberobjects(o)
 
