@@ -1,0 +1,298 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:silva="http://xml.infrae.com/silva/1.0"
+         xmlns:doc="http://xml.infrae.com/silva/document/1.0"
+         xmlns:metadata_silva="http://xml.infrae.com/silva/metadata/silva/1.0"
+         xmlns:metadata_silva-extra="http://xml.infrae.com/silva/metadata/silva-extra/1.0">
+
+  <start>
+    <element name="silva:silva">
+      <!-- The starting point for the export/import. Can be 
+           a Silva Root, Publication, Folder or Document./-->
+      <attribute name="url"><text /></attribute>
+      <attribute name="path"><text /></attribute>
+      <attribute name="datetime"><text /></attribute>
+      <choice>
+        <ref name="SilvaRoot" />
+        <ref name="SilvaPublication" />
+        <ref name="SilvaFolder" />
+        <ref name="SilvaDocument" />
+      </choice>
+     </element>
+  </start>
+
+  <define name="SilvaRoot">
+    <!-- A Silva Root element. Can contain other Silva content/-->
+    <element name="silva:root">
+      <attribute name="id"><text /></attribute>
+      <ref name="metadata" /> 
+      <ref name="contained" />
+    </element>
+  </define>
+
+  <define name="SilvaFolder">
+    <!-- A Silva Root element. Can contain other Silva content/-->
+    <element name="silva:folder">
+      <attribute name="id"><text /></attribute>
+      <ref name="metadata" />
+      <ref name="contained" />
+    </element>
+  </define>
+
+  <define name="SilvaPublication">
+    <!-- A Silva Publiaction element. Can contain other Silva content/-->
+    <element name="silva:publication">
+      <attribute name="id"><text /></attribute>
+      <ref name="metadata" />
+      <ref name="contained" />
+    </element>
+  </define>
+
+  <define name="SilvaDocument">
+    <!-- A Silva Document element./-->
+    <element name="silva:document">
+      <attribute name="id"><text /></attribute>
+      <optional>
+        <ref name="workflow" />
+      </optional>
+      <element name="silva:versions">
+        <oneOrMore>
+          <element name="silva:content">
+            <attribute name="version_id"><text /></attribute>
+            <ref name="metadata" />
+            <ref name="document" />
+          </element>
+        </oneOrMore>
+      </element>
+    </element> 
+  </define>
+
+  <define name="SilvaLink">
+    <!-- A Silva Link element./-->
+    <element name="silva:link">
+      <attribute name="id"><text /></attribute>
+      <optional>
+        <ref name="workflow" />
+      </optional>
+      <oneOrMore>
+        <element name="silva:content">
+          <attribute name="id"><text /></attribute>
+          <ref name="metadata" />
+          <ref name="link" />
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="SilvaGhost">
+    <!-- A Silva Ghost element. Ghosts are really links to other content./-->
+    <element name="silva:ghost">
+      <attribute name="id"><text /></attribute>
+      <optional>
+        <ref name="workflow" />
+      </optional>
+      <oneOrMore>
+        <element name="silva:content">
+          <element name="silva:version">
+            <attribute name="id"><text /></attribute>
+            <ref name="metadata" />
+            <choice>
+              <ref name="SilvaDocument" />
+              <ref name="SilvaLink" />
+            </choice>
+          </element>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  
+  <define name="SilvaGhostFolder">
+    <!-- A Silva Ghost Folder element. Ghost Folders are really links to other folders./-->
+    <element name="silva:ghost_folder">
+      <attribute name="id"><text /></attribute>
+      <choice>
+        <ref name="SilvaPublication" />
+        <ref name="SilvaFolder" />
+      </choice>
+    </element>
+  </define>
+  
+  <define name="contained">
+    <element name="content">
+      <zeroOrMore>
+        <choice>
+          <ref name="SilvaPublication" />
+          <ref name="SilvaFolder" />
+          <ref name="SilvaGhostFolder" />
+          <ref name="SilvaDocument" />
+          <ref name="SilvaLink" />
+          <ref name="SilvaGhost" />
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="metadata">
+    <element name="silva:metadata">
+      <element name="silva:title"><text /></element>
+      <zeroOrMore>
+        <ref name="set" />
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="workflow">
+    <element name="workflow">
+      <zeroOrMore>
+        <element name="version">
+          <attribute name="id"><text /></attribute>
+          <element name="status"><text /></element>
+          <element name="publication_date"><text /></element>
+          <element name="expiration_date"><text /></element>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+    
+  <define name="set">
+    <element name="silva:set">
+      <zeroOrMore>
+        <ref name="anyElement" />
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="link">
+    <element name="url"><text /></element>
+  </define>
+  
+  <define name="document">
+    <zeroOrMore>
+      <choice>
+        <element name="doc:p">
+          <attribute name="type"><text /></attribute>
+          <ref name="inline" />
+        </element>
+        <element name="doc:list">
+          <attribute name="type"><text /></attribute>
+          <zeroOrMore>
+            <element name="doc:li">
+              <ref name="inline" />
+            </element>
+          </zeroOrMore>
+        </element>
+        <element name="doc:heading">
+          <attribute name="type"><text /></attribute>
+          <ref name="inline_heading" />
+        </element>
+        <element name="doc:toc">
+          <optional>
+            <attribute name="toc_depth"><text /></attribute>
+          </optional>
+        </element>
+        <element name="doc:dlist">
+          <attribute name="type"><text /></attribute>
+          <zeroOrMore>
+            <element name="doc:dt"><ref name="inline" /></element>
+            <element name="doc:dd"><ref name="inline" /></element>
+          </zeroOrMore>
+        </element>
+        <element name="doc:code">
+          <attribute name="path"><text /></attribute>
+        </element>
+        <element name="doc:pre"><text /></element>
+        <element name="doc:external_data">
+          <attribute name="path"><text /></attribute>
+          <optional>
+            <attribute name="type"><text /></attribute>
+          </optional>
+          <optional>
+            <attribute name="show_headings"><text /></attribute>
+          </optional>
+          <optional>
+            <attribute name="show_caption"><text /></attribute>
+          </optional>
+          <zeroOrMore>
+            <element name="doc:parameter">
+              <attribute name="key" />
+              <attribute name="value" />
+            </element>
+          </zeroOrMore>
+        </element>
+        <element name="doc:image">
+          <attribute name="path"><text /></attribute>
+          <optional>
+            <attribute name="alignment"><text /></attribute>
+          </optional>
+          <optional>
+            <attribute name="link"><text /></attribute>
+          </optional>
+        </element>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="inline">
+    <zeroOrMore>
+      <choice>
+        <text />
+        <element name="doc:strong">
+          <ref name="inline" />
+        </element>
+        <element name="doc:em">
+          <ref name="inline" />
+        </element>
+        <element name="doc:underline">
+          <ref name="inline" />
+        </element>
+        <element name="doc:super">
+          <ref name="inline" />
+        </element>
+        <element name="doc:sub">
+          <ref name="inline" />
+        </element>
+        <!-- can a link contain other inline text?? -->
+        <element name="doc:link">
+          <attribute name="url"><text /></attribute>
+          <optional>
+            <attribute name="target"><text /></attribute>
+          </optional>
+          <ref name="inline" />
+        </element>
+        <element name="doc:index">
+          <attribute name="name"><text /></attribute>
+          <ref name="inline" />
+        </element>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="inline_heading">
+    <zeroOrMore>
+      <choice>
+        <text />
+        <element name="doc:index">
+          <attribute name="name"><text /></attribute>
+          <text />
+        </element>
+      </choice>
+    </zeroOrMore>
+  </define>
+
+  <define name="anyElement">
+    <element>
+      <anyName/>
+      <zeroOrMore>
+        <attribute>
+          <anyName/>
+        </attribute>
+      </zeroOrMore>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="anyElement"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
+</grammar>
