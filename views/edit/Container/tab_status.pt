@@ -88,12 +88,12 @@
                 <tal:block repeat="obj objects">
                   <tr
                     tal:define="
-                      odd repeat/obj/odd;
+                      iterate repeat/obj/odd;
                       is_container obj/implements_container | nothing;
                       indent_depth python: '%spx' % str(obj['indent'] * 10);
                       obj_url obj/absolute_url;"
                     tal:attributes="
-                      class python: odd and 'even' or 'odd';">
+                      class python: iterate and 'odd' or 'even';">
                     <td class="listing-left">
                       <input name="refs:list"
                         type="checkbox"
@@ -186,9 +186,9 @@
                 <tr tal:condition="objects">
                   <th class="controls listing-left"
                     colspan="5">
-                    <span class="widebody" style="float: right;">
+                    <!-- span class="widebody" style="float: right;">
                     date format: day/month/year hours:minutes
-                    </span>
+                    </span -->
                     <metal:block use-macro="view/macro_select_all/macros/select_all" />
                   </th>
                   <th class="controls listing-left">
@@ -196,27 +196,22 @@
                 </tr>
                 <tr class="controls controls-1">
                   <tal:block replace="nothing">
-                    ______________ expiration time controls ______________
+                    ______________ publication time controls ______________
                   </tal:block>
                   <td class="align-right"
-                    colspan="5">
-                    <!-- span class="widebody" style="float: left;">
-                      format: day / month / year hour : minute <br />
-                      if content should expire, set expiration time
-                    </span -->
-                    
+                    colspan="2">
+                    <span class="widebody">
+                      Date format: day / month / year hours : minutes
+                    </span >
+                  </td>
+                  <td class="align-right"
+                    colspan="3">                    
                     <label class="widebody"
                       title="access key: alt-m" 
                       accesskey="m">
                       publish time:
                     </label>
-                    <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" /><br />
-                    <label class="widebody"
-                      title="access key: alt-i" 
-                      accesskey="i">
-                      expiration time:
-                    </label>
-                    <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
+                    <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
                   </td>
                   <td class="align-right"
                     style="white-space: nowrap;">
@@ -231,6 +226,29 @@
                       </label>
                       <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
                     </tal:block>
+                  </td>
+                </tr>
+                <tr class="controls controls-1">
+                  <tal:block replace="nothing">
+                    ______________ expiration time controls ______________
+                  </tal:block>
+                  <td class="align-right"
+                    colspan="2">
+                    <span class="widebody">
+                      If content should expire, set expiration time
+                    </span>
+                  </td>
+                  <td class="align-right"
+                    colspan="3">                    
+                    <label class="widebody"
+                      title="access key: alt-i" 
+                      accesskey="i">
+                      expiration time:
+                    </label>
+                    <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
+                  </td>
+                  <td class="align-right"
+                    style="white-space: nowrap;">
                   </td>
                 </tr>
                 <tal:block replace="nothing">

@@ -516,7 +516,7 @@ table.listing a.navigation:link {
   background: &dtml-standaloneButtonBackground;;
   border: &dtml-standaloneButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: 0em 2em 0.1em 2em;
+  padding: 0em 1em 0.1em 1em;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
 }
@@ -527,7 +527,7 @@ table.listing a.navigation:visited {
   background: &dtml-standaloneButtonBackground;;
   border: &dtml-standaloneButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: 0em 2em 0.1em 2em;
+  padding: 0em 1em 0.1em 1em;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
 }
@@ -571,8 +571,8 @@ textarea.readable {
 }
 
 select {
-    color: &dtml-contextButtonFontColor;;
-    background : &dtml-contextButtonBackground;;
+  color: &dtml-contextButtonFontColor;;
+  background : &dtml-contextButtonBackground;;
   font-size: 90% ! important;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
@@ -581,12 +581,26 @@ select {
 }
 
 select.navigation {
-    color: &dtml-standaloneButtonFontColor;;
-    background : &dtml-standaloneButtonBackground;;
+  color: &dtml-standaloneButtonFontColor;;
+  background : &dtml-standaloneButtonBackground;;
   font-size: 90% ! important;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
   line-height : 96%;
+}
+
+select.clipboard, select.clipboard:focus, select.clipboard:hover {
+  color: &dtml-contextButtonFontColor;;
+  background : &dtml-contextButtonBackground;;
+  font-size: 90% ! important;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  border : 5px solid &dtml-nightShade;;
+  line-height : 96%;
+
+  color : &dtml-nightShade;;;
+  background : &dtml-shade70;;
+  border : 1px solid &dtml-shade60;;
 }
 
 input[type="checkbox"] {

@@ -9,65 +9,77 @@
   >
 
 <metal:block define-macro="clipboard">
-  <div class="hilight borders top bottom left right"
-    style="padding: 0.5em; width: 23em; margin: 0em 0em 2em 1em;">
+  <div class="highlight"
+    style="padding: 0.5em; width: 18em; margin: 0em 0em 1em 1em;">
     <metal:block define-macro="clipboard_no_style">
       <form action="."
         method="POST"
         tal:define="
           clipboard_members python:view.lookup_get_selection().keys();">
-        <table border="0"
-          cellpadding="5"
-          cellspacing="0"
+        <table class="listing"
           width="100%">
-          <tr align="left">
-            <td colspan="2">
-              <div style="float: right;">
-                <metal:block define-slot="clipboard_lookup_action">
-                  <a class="buttonlink" 
-                    accesskey="l"
-                    title="Lookup users... - alt-l"
-                    style="float: right;"
-                    href="lookup">
-                    Lookup users...
-                  </a>
-                </metal:block>
-              </div>
-              <div>
-                <b>
+          <thead>
+            <tr>
+              <td class="top"
+                style="white-space: nowrap;">
+                <h2>
                   User lookup clipboard:
-                </b>
-              </div>
-            </td>
-          </tr>
-          <tr tal:repeat="userid python:clipboard_members">
-            <tal:block define="member python: model.sec_get_member(userid)">
-            <td width="1%">
-              <input name="userids:list"
-                type="checkbox"
-                value="userid"
-                tal:attributes="
-                  value member/userid;
-                  id string:lookup_${member/userid}" />
-            </td>
+                </h2>
+              </td>
+            </tr>
+          </thead>
+          <tr class="top-controls">
             <td>
-              <b><label tal:content="member/fullname"
-                tal:attributes="for string:lookup_${member/userid}">
-                Name
-              </label></b>
+              <metal:block define-slot="clipboard_lookup_action">
+                <a class="navigation" 
+                  accesskey="l"
+                  title="Lookup users... - alt-l"
+                  style="float: right;"
+                  href="lookup">
+                  Lookup users...
+                </a>
+              </metal:block>
             </td>
-            </tal:block>
           </tr>
-          <tr tal:condition="not:clipboard_members">
+          <tr class="odd">
+            <td style="padding: 0;">
+              <select class="clipboard"
+                style="width: 100%"
+                multiple="multiple"
+                name="groups:list"
+                size="10">
+                <tal:block condition="clipboard_members">
+                  <option disabled="disabled"
+                    value="None">
+                    Select user(s)...
+                  </option>
+                  <tal:block repeat="userid clipboard_members">
+                    <option value="userid"                  
+                      tal:define="member python: model.sec_get_member(userid);"
+                      tal:content="member/fullname"
+                      tal:attributes="value member/userid;">
+                      User
+                    </option>
+                  </tal:block>
+                </tal:block>
+                <option disabled="disabled"
+                  value="None"
+                  tal:condition="not:clipboard_members">
+                  No users on lookup clipboard
+                </option>
+              </select>
+            </td>
+          </tr>
+          <!-- tr class="controls controls-1 align-left">
             <td>
-              <i>
-                No users on "Lookup Clipboard"
-              </i>
+              <span class="widebody"
+                tal:condition="clipboard_members">
+                (Ctrl-mouseclick for a multi-select)
+              </span>
             </td>
-          </tr>
-          <tr valign="top">
-            <td align="left"
-              colspan="2">
+          </tr -->
+          <tr class="controls">
+            <td class="align-left">
               <tal:block condition="clipboard_members">
                 <metal:block define-slot="clipboard_actions" />
               </tal:block>

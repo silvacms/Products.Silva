@@ -40,9 +40,9 @@
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />
                       &nbsp;User Roles Management for
-                      <span tal:replace="structure string:${model/get_title_html}">
-                        id
-                      </span>
+                      &#xab;<span tal:replace="structure string:${model/get_title_html}">
+                        title
+                      </span>&#xbb;
                     </h2>
                   </td>
                 </tr>
@@ -55,7 +55,7 @@
                   </h3>
                 </td>
               </tr>
-              <tr align="left"
+              <tr class="align-left"
                 valign="top">
                 <th>
                   Username
@@ -70,11 +70,11 @@
               <tal:block repeat="member members">
                 <tr valign="top"
                   tal:define="
-                    odd repeat/member/odd;
+                    iterate repeat/member/odd;
                     userid member/userid;
                     fullname member/fullname;"
-                  tal:attributes="class python: odd and 'even' or 'odd';">
-                  <td align="left">
+                  tal:attributes="class python: iterate and 'odd' or 'even';">
+                  <td class="align-left">
                     <input name="userids:list"
                       type="checkbox"
                       value="userid"
@@ -82,10 +82,10 @@
                         value userid;
                         id fullname;" />
                       &nbsp;
-                      <b><label tal:content="fullname"
+                      <label tal:content="fullname"
                         tal:attributes="for fullname">
                         username
-                      </label></b>
+                      </label>
                   </td>
                   <td class="align-right"
                     tal:define="upward_roles python:model.sec_get_upward_roles_for_userid(userid)">
@@ -100,7 +100,7 @@
                         local
                       </label>
                       &nbsp;
-                      <input class="warningbox"
+                      <input class="warning"
                         name="revoke_roles:list"
                         type="checkbox"
                         value=""
@@ -120,7 +120,7 @@
                 </td>
               </tr>
               <tr class="controls">
-                <td align="left"
+                <td class="align-left"
                   colspan="2">
                   <tal:block tal:condition="members">
                     <select name="assign_role">
@@ -142,8 +142,8 @@
                       value="Assign role to user" />
                   </tal:block>
                 </td>
-                <td align="right">
-                  <input class="warningbutton"
+                <td class="align-right">
+                  <input class="warning"
                     name="access_revoke_from_user:method"
                     title="Revoke selected role(s) from selected user(s)."
                     type="submit"
@@ -163,39 +163,30 @@
                 cellspacing="0"
                 style="empty-cells:show;"
                 tal:define="requested_roles model/requested_roles">
-                <thead>
-                  <tr>
-                    <td class="top"
-                      colspan="99">
-                      <h2>Pending requests for roles</h2>
-                    </td>
-                  </tr>
-                </thead>
+                <tr class="top-controls">
+                  <td colspan="99">
+                    <h3>Pending requests for roles</h3>
+                  </td>
+                </tr>
                 <tr>
-                  <th align="left">
-                    <b>
-                      Username
-                    </b>
+                  <th class="align-left">
+                    Username
                   </th>
-                  <th align="left"
+                  <th class="align-left"
                     style="border-left: 1px solid black; border-right: 1px solid black;">
-                    <b>
-                      Requested role
-                    </b>
+                    Requested role
                   </th>
-                  <th align="left"
+                  <th class="align-left"
                     width="">
-                    <b>
-                      Is approved
-                    </b>
+                    Is approved
                   </th>
                 </tr>
                 <tal:block repeat="req requested_roles">
                   <tr tal:define="
-                    odd repeat/req/odd;
+                    iterate repeat/req/odd;
                     member python:model.sec_get_member(req[0]);
                     requested_role python:req[1];"
-                    tal:attributes="class python: odd and 'even' or 'odd';">
+                    tal:attributes="class python: iterate and 'odd' or 'even';">
                     <td style="border-left: 1px solid black; border-right: 1px solid black;"
                       valign="top">
                       <input name="requests:list"
@@ -203,10 +194,10 @@
                         tal:attributes="
                           value python: '|'.join(req);
                           id string:pending_${member/userid};" />
-                        <b><label tal:content="member/userid" 
+                        <label tal:content="member/userid" 
                           tal:attributes="for string:pending_${member/userid}">
                           name
-                        </label></b>
+                        </label>
                     </td>
                     <td style="border-left: 1px solid black; border-right: 1px solid black;"
                       tal:content="requested_role">
@@ -224,8 +215,7 @@
                     </i>
                   </td>
                 </tr>
-                <tr class="controls"
-                  align="right">
+                <tr class="controls align-right">
                   <td>
                     <input class="warningbutton"
                       name="tab_access_deny_access:method"
@@ -233,7 +223,7 @@
                       value="Deny role"
                       tal:condition="requested_roles" />
                   </td>
-                  <td align="right"
+                  <td class="align-right"
                     colspan="2">
                     <tal:block tal:condition="requested_roles">
                       <input class="button"
@@ -321,9 +311,9 @@
                         <h2 tal:attributes="title string:id: ${model/id}">
                           <img tal:replace="structure python:view.render_icon(model)" />
                           &nbsp;Group Roles Management for
-                          <span tal:replace="structure string:${model/get_title_html}">
-                            id
-                          </span>
+                          &#xab;<span tal:replace="structure string:${model/get_title_html}">
+                            title
+                          </span>&#xbb;
                         </h2>
                       </td>
                     </tr>
@@ -335,16 +325,16 @@
                       </h3>
                     </td>
                   </tr>
-                  <tr align="left"
+                  <tr class="align-left"
                     valign="top">
                     <th>
                       Groupname
                     </th>
-                    <th align="right"
+                    <th class="align-rigth"
                       style="border-left: 1px solid black; border-right: 1px solid black;">
                       Upward defined roles
                     </th>
-                    <th align="right">
+                    <th class="align-right">
                       Local roles
                     </th>
                   </tr>
@@ -352,9 +342,9 @@
                     <tr valign="top"
                       tal:define="
                         group python: unicode(ugroup, 'latin1', 'ignore');
-                        odd repeat/ugroup/odd"
-                      tal:attributes="class python: odd and 'even' or 'odd';">
-                      <td align="left">
+                        iterate repeat/ugroup/odd"
+                      tal:attributes="class python: iterate and 'odd' or 'even';">
+                      <td class="align-left">
                         <input name="groups:list"
                           type="checkbox"
                           value="group"
@@ -362,17 +352,17 @@
                             value group;
                             id group;" />
                           &nbsp;
-                          <b><label tal:content="group"
+                          <label tal:content="group"
                             tal:attributes="for group">
                             group
-                          </label></b>
+                          </label>
                           <tal:block 
                             condition="python: group.encode('latin1') not in group_service.listAllGroups()">
                             &lt;broken&gt; <!-- XXX replace this by something nice
                             -->
                           </tal:block>
                       </td>
-                      <td align="right"
+                      <td class="align-right"
                         style="border-left: 1px solid black; border-right: 1px solid black;">
                         <tal:block repeat="upward python:model.sec_get_upward_roles_for_group(group)">
                           <i tal:content="upward" />
@@ -380,14 +370,14 @@
                           <br tal:condition="not:repeat/upward/end" />
                         </tal:block>
                       </td>
-                      <td align="right">
+                      <td class="align-right">
                         <tal:block repeat="local python:model.sec_get_local_roles_for_group(group)">
                           <label tal:content="local" 
                             tal:attributes="for string:revoke_${group}">
                             local
                           </label>
                           &nbsp;
-                          <input class="warningbox"
+                          <input class="warning"
                             name="revoke_roles:list"
                             type="checkbox"
                             value=""
@@ -408,7 +398,7 @@
                   </tr>
                   <tr class="controls"
                     valign="top">
-                    <td align="left"
+                    <td class="align-left"
                       colspan="2">
                       <tal:block tal:condition="groups">
                         <select name="assign_role">
@@ -430,8 +420,8 @@
                           value="Assign role to group" />
                       </tal:block>
                     </td>
-                    <td align="right">
-                      <input class="warningbutton"
+                    <td class="align-right">
+                      <input class="warning"
                         name="access_revoke_from_group:method"
                         title="Revoke selected role(s) from selected group(s)."
                         type="submit"
@@ -444,14 +434,29 @@
             </tal:block>
           </tal:block>
         </td>
-        <td class="right">
-          <a class="buttonlink" 
-            accesskey="g"
-            title="Groups administration... - alt-g"
-            href="tab_access_groups"
-            tal:condition="python:model_is_container and group_service">
-            Groups administration
-          </a>
+        <td class="right">        
+          <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
+          <metal:block fill-slot="listing_actions">
+            <select name="assign_role">
+              <option value="None">
+                Select role...
+              </option>
+              <option define="lastclass string:focus-cycle"
+                value="role"
+                tal:repeat="role model/sec_get_roles"
+                tal:content="role"
+                tal:attributes="value role">
+                Role name
+              </option>
+            </select>
+            &nbsp;
+            <input class="button"
+              name="access_assign_to_group:method"
+              title="Assign selected role to selected group(s)."
+              type="submit"
+              value="Assign" />
+          </metal:block>
+        </metal:block>        
         </td>
       </tr>
       <tal:block replace="nothing">
@@ -465,7 +470,7 @@
               src="%s"
               width="16"
               tal:replace="structure python:view.render_icon(model)" />
-            &nbsp; Access Restrictions for
+            &nbsp; Public view access restrictions for
             <span class="folder-title"
               tal:content="
                 structure string:&amp;#xab;${model/get_title_or_id_html}&amp;#xbb;">
@@ -482,7 +487,7 @@
                 tal:define="
                   is_closed model/sec_is_closed_to_public;
                   minimal_role model/sec_minimal_view_role;">
-                <tr align="left">
+                <tr class="align-left">
                   <td>
                     <b>
                       Access restriction by Role
@@ -528,7 +533,7 @@
                 cellpadding="3"
                 cellspacing="0"
                 tal:define="definition_aquired python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
-                <tr align="left">
+                <tr class="align-left">
                   <td>
                     <b>
                       Define restriction by IP address
@@ -543,7 +548,7 @@
                   </td>
                 </tr>
                 <tr valign="top">
-                  <td align="right">
+                  <td class="align-right">
                     <textarea name="access_restriction"
                       tal:condition="python:model.hasProperty('access_restriction')"
                       tal:content="python:model.getProperty('access_restriction')" />
@@ -573,7 +578,7 @@
             <table border="0"
               cellpadding="3"
               cellspacing="0">
-              <tr align="left">
+              <tr class="align-left">
                 <td>
                   <b>
                     List user email addresses
@@ -596,7 +601,6 @@
           </div>          
         </td>
         <td class="right">
-          bla
         </td>
       </tr>
 
