@@ -1,9 +1,12 @@
 ##parameters=set_name,element_name
 from Products.SilvaMetadata.Exceptions import BindingError
 
+# Get the data for a particular element of a particular set for
+# the editable version of this object.
+
 request = context.REQUEST
 model = request.model
-content = model.get_viewable()
+content = model.get_editable()
 
 if content is None:
     return None
