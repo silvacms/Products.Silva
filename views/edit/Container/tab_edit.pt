@@ -93,7 +93,7 @@
                 <tal:block replace="nothing">
                   ______________ listing header ______________
                 </tal:block>
-                <tr tal:condition="default_document | publishables | assets">
+                <tr tal:condition="python:(default_document or publishables or assets)">
                   <th class="listing-right">
                     #&nbsp;
                   </th>
@@ -118,7 +118,7 @@
                   ______________ if no publishables in this folder ______________
                 </tal:block>
                 <tr class="focus"
-                  tal:condition="not:default_document | publishables | assets">
+                  tal:condition="python: not(default_document or publishables or assets)">
                   <td colspan="6">
                     There are no content objects in this folder.
                   </td>
@@ -354,7 +354,7 @@
                 <tal:block replace="nothing">
                   ______________ select all row ______________
                 </tal:block>
-                <tr tal:condition="default_document | publishables | assets">
+                <tr tal:condition="python:(default_document or publishables or assets)">
                   <th class="controls listing-left"
                     colspan="6">
                     <metal:block use-macro="view/macro_select_all/macros/select_all"/>
@@ -365,7 +365,7 @@
                     ______________ controls ______________
                   </tal:block>
                   <td colspan="99">
-                    <tal:block tal:condition="default_document | publishables | assets">
+                    <tal:block tal:condition="python:(default_document or publishables or assets)">
                       <tal:block condition="may_change_content">
                         <div style="float: left; background:#394e4e; margin-left:0.2em; padding:0 0px 0 2px;">
                           <select name="new_position"
