@@ -14,9 +14,15 @@
 <!-- ____________________________ start index_html/slot main ___________________________ -->
 
 <div class="margins">
-<h3><a href="tab_status" title="Up to Publish tab">Publish
-  <img tal:attributes="src string:${silva_root}/globals/up_gray.gif" width="16" height="11" border="0" alt="Up to top of Edit tab" /></a></h3>
-<h2 class="worksheet">Export options for <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_html}&#xbb;">title here</span></h2>
+<h3><a href="tab_status" title="Up to Publish tab">
+    <img tal:attributes="src string:${silva_root}/globals/up_gray.gif" width="9" height="9" border="0" alt="Up to top of Edit tab" />
+    Publish
+  </a>
+</h3>
+<h2 class="worksheet"><img src="%s" width="16" height="16" alt="%s"
+    tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+Export options for <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_html}&#xbb;">title here</span>
+</h2>
 
 <div class="worksheet borders top bottom left right">
 
@@ -237,6 +243,19 @@
 </table>
 
 </div>
+
+<h3 class="worksheet">
+  <a href="tab_edit_import"
+    title="Over to Import screen: alt-i"
+    accesskey="i">
+    <img alt="Over to Export screen"
+      border="0"
+      height="16"
+      width="16"
+      tal:attributes="src string:${silva_root}/globals/left.gif" />
+    Import
+  </a>
+</h3>
 
 </div>
 </div>

@@ -5,15 +5,18 @@
   <html metal:use-macro="here/macro_index/macros/master">
     <div class="margins" metal:fill-slot="main">
 
-      <h3><a href="tab_access" title="Up to top of Access tab">Access
-        <img width="16" height="11" border="0" alt="Up to top of Access tab"
-          tal:attributes="src string:${silva_root}/globals/up_gray.gif" /></a>
+      <h3><a href="tab_access" title="Up to top of Access tab">
+        <img width="9" height="9" border="0" alt="Up to top of Access tab"
+          tal:attributes="src string:${silva_root}/globals/up_gray.gif" />
+          Access
+        </a>
       </h3>
-      <h2>
+      <h2 class="worksheet"><img src="%s" width="16" height="16" alt="%s"
+        tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
         Authorized users below this level
       </h2>
       <div class="hilight borders top bottom left right"
-        style="padding: 0.5em; margin: 0em 0em 2em 1em;">
+        style="padding: 0.5em; margin: 1em 3%; 2em 3%;">
         <tal:check
           condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
           <tal:trigger
