@@ -104,14 +104,6 @@
         tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
         i18n:attributes="value title"
       />
-      <input class="button" tal:replace="nothing"
-        type="submit"
-        name="add_edit_index_submit"
-        value="save + edit index"
-        title="access key: alt-i"
-        accesskey="i"
-        tal:condition="python:here.id in ('Folder','Publication')"
-      />
       </tal:condition>
     </td>
   </tr>
