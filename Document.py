@@ -142,6 +142,42 @@ class Document(VersionedContent, EditorSupport):
         version.documentElement.writeStream(f)
         f.write('</silva_document>')
         
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'upgrade_xml')
+    def upgrade_xml(self):
+        """Upgrade xml.
+        """
+        # upgrade the public version, the last closed version, and the
+        # next version, if they exist
+        versions = [self.get_last_closed_version(),
+                    self.get_public_version(),
+                    self.get_next_version()]
+        for version in versions:
+            if version is None:
+                continue
+            doc = getattr(self, version)
+            self._upgrade_xml_helper(doc.documentElement)
+
+    def _upgrade_xml_helper(self, node):
+        nodeType = node.nodeType
+        if nodeType == node.TEXT_NODE:
+            data = node.data
+            if type(data) != type(u''):
+                node.replaceData(0, len(data), self.input_convert(data))
+            else:
+                print "text already unicode:", node.nodeName, repr(data)
+        elif nodeType == node.ELEMENT_NODE:
+            attribute_names = node.attributes.keys()
+            for name in attribute_names:
+                data = node.getAttribute(name)
+                if type(data) == type(u''):
+                    print "attr already unicode:", node.nodeName, name, repr(data)
+                    continue
+                node.setAttribute(name, self.input_convert(data))
+            for child in node.childNodes:
+                self._upgrade_xml_helper(child)
+                
+        
 #    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
 #                              'to_folder')
 #    def to_folder(self):

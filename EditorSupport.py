@@ -56,7 +56,7 @@ class EditorSupport:
             #        result.append(escape(subchild.data, 1))
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-        return self.normalize(''.join(result))
+        return self.output_convert_html(''.join(result))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'render_text_as_editable')
@@ -107,7 +107,7 @@ class EditorSupport:
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
             
-        return self.normalize(''.join(result))
+        return self.output_convert_editable(''.join(result))
     
     _strongStructure = ForgivingParser.Structure(['**', '**'])
     _emStructure = ForgivingParser.Structure(['++', '++'])
@@ -129,7 +129,9 @@ class EditorSupport:
         """Replace text in a text containing node.
         """
         # first preprocess the text, collapsing all whitespace
-        text = self.normalize(text)
+        # FIXME: does it make sense to expect cp437, which is
+        # windows only?
+        text = self.input_convert(text)
         
         # parse the data
         result = self._parser.parse(text)
@@ -181,8 +183,5 @@ class EditorSupport:
             #    node.appendChild(newnode)
             else:
                 raise EditorSupportError, "Unknown structure: %s" % structure
-
-    def normalize(self, s):
-        return ' '.join(s.split())
     
 InitializeClass(EditorSupport)

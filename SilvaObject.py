@@ -7,6 +7,16 @@ from DateTime import DateTime
 from Security import Security
 from StringIO import StringIO
 
+
+CONVERT_CHARS = (('\221', '&lsquo;', "'", u'\u2018'),
+                 ('\222', '&rsquo;', "'", u'\u2019'),
+                 ('\223', '&ldquo;', '"', u'\u201C'),
+                 ('\224', '&rdquo;', '"', u'\u201D'),
+                 ('\226', '&ndash;', '-', u'\u2013'),
+                 ('\227', '&mdash;', '-', u'\u2014'),
+                 ('\200', '&euro;',  'EUR', u'\u20AC'),
+                 )
+
 class SilvaObject(Security):
     """Inherited by all Silva objects.
     """
@@ -60,6 +70,16 @@ class SilvaObject(Security):
         """
         return self._title
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title_html')
+    def get_title_html(self):
+        return self.output_convert_html(self.get_title())
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_title_editable')
+    def get_title_editable(self):
+        return self.output_convert_editable(self.get_title())
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):
@@ -187,5 +207,35 @@ class SilvaObject(Security):
         """
         f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))
         
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'output_convert_html')
+    def output_convert_html(self, s, CONVERT_CHARS=CONVERT_CHARS):
+        """Turn unicode text to something displayable on the web.
+        """
+        # collapse whitespace
+        s = ' '.join(s.split())
+        # replace unicode chars with html_entities
+        for windows_char, html_entity, plain_char, unicode_char in CONVERT_CHARS:
+            s = s.replace(unicode_char, html_entity)
+        # now return latin 1
+        return s.encode('latin1')
         
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'output_convert_editable')
+    def output_convert_editable(self, s):
+        """Turn unicode text to something editable.
+        """
+        # use windows code page..
+        # FIXME: probably not right..
+        return ' '.join(s.split()).encode('cp1252')
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'input_convert')
+    def input_convert(self, s):
+        """Turn input to unicode.
+        """
+        # input will be from windows normally, so use that code page
+        # FIXME: Is this right?
+        return unicode(' '.join(s.split()), 'cp1252')
+    
 InitializeClass(SilvaObject)

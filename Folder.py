@@ -12,6 +12,7 @@ from Publishable import Publishable
 import Copying
 import Interfaces
 import SilvaPermissions
+import XMLImporter
 # misc
 import helpers
 import re
@@ -292,6 +293,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             item = item._getCopy(self)
             item._setId(paste_id)
             self._setObject(paste_id, item)
+
+    def action_import_xml(self, f):
+        XMLImporter.importFile(self, f)
         
     # ACCESSORS
 
@@ -515,6 +519,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         if default is not None:
             default.to_xml(f)
         for object in self.get_ordered_publishables():
+            if Interfaces.Publication.isImplementedBy(object):
+                continue
             object.to_xml(f)
         #for object in self.get_assets():
         #    pass
