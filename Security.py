@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -9,7 +9,7 @@ import Interfaces
 
 # Are groups available?
 try:
-    from ZGroups import ZGroupsMapping
+    from Products.Groups.ZGroups import ZGroupsMapping
     groups_enabled = 1
 except:
     groups_enabled = 0
@@ -348,7 +348,7 @@ class Security:
     def sec_get_local_roles_for_group(self, group):
         """Get a list of local roles that are defined for a group here.
         """
-        local_gropus = self.__ac_local_groups__
+        local_groups = self.__ac_local_groups__
         if local_groups is None:
             return []
         return local_groups.getMappings().get(group, [])
@@ -374,10 +374,12 @@ class Security:
         level of the tree.
         """
         parent = self.aq_inner.aq_parent
-        if not Interfaces.Container.isImplementedBy(parent):
-            return []
-        # XXX incorrect, should loop
-        return parent.sec_get_local_roles_for_group(group)
+        roles = {}
+        while Interfaces.Container.isImplementedBy(parent):
+            for role in parent.sec_get_local_roles_for_group(group):
+                roles[role] = 1
+            parent = parent.aq_parent
+        return roles.keys()
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_downward_defined_groups')
@@ -399,5 +401,30 @@ class Security:
                 item._sec_get_downward_defined_groups_helper(d)
             for item in self.get_assets():
                 item._sec_get_downward_defined_groups_helper(d)
-                
+
+    def sec_get_groupsmapping(self):
+        """Return the groupmappings for this object.
+        """
+        return self.__ac_local_groups__
+        
+    def sec_get_or_create_groupsmapping(self):
+        """Return the groupmappings for this object. Create one of currently
+        no mapping exists.
+        """
+        if not groups_enabled:
+            return None
+
+        if not self.__ac_local_groups__:
+            self.__ac_local_groups__ = ZGroupsMapping('acl_groups')
+        return self.sec_get_groupsmapping()
+
+    def sec_cleanup_groupsmapping(self):
+        """If called, check to see whether any mappings are defined in the
+        mappings object. If not, clear the __ac_local_groups__ attribute
+        for efficiency.
+        """
+        if groups_enabled and self.__ac_local_groups__:
+            if not self.__ac_local_groups__.getMappings():
+                self.__ac_local_groups__ = None
+
 InitializeClass(Security)
