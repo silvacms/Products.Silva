@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Mon Dec 20 16:39:05 2004\n"
-"PO-Revision-Date: 2004-12-21 10:33+0100\n"
+"PO-Revision-Date: 2004-12-21 13:18+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -708,11 +708,11 @@ msgstr "Zurück zum Ausgangspunkt..."
 #: /resources/sidebar_template.pt:25
 #: /resources/sidebar_template.pt:62
 msgid "slide to the publish screen"
-msgstr ""
+msgstr "Zum Publizieren-Schirm"
 
 #: /resources/sidebar_template.pt:31
 msgid "up to top contents of publication"
-msgstr ""
+msgstr "Zum Anfang der Publikation"
 
 #: /resources/sidebar_template.pt:37
 msgid "up to top of publication"
@@ -720,7 +720,7 @@ msgstr "zur Ausgangsebene"
 
 #: /resources/sidebar_template.pt:68
 msgid "slide to the contents screen"
-msgstr ""
+msgstr "Zum Inhalte-Schirm"
 
 #: /resources/sidebar_template.pt:78
 msgid "container"
@@ -1035,13 +1035,13 @@ msgstr "Ungültige Zeichen in der Id. Die Id darf nur Buchstaben, Ziffern und &#
 msgid ""
 "Sorry, ids starting with ${prefix} are reserved for\n"
 "        internal use.<br />Please use another id."
-msgstr ""
+msgstr "Ids die mit ${prefix} beginnen, sind für den internen Gebrauch reserviert. <br />Bitte wählen Sie eine andere Id."
 
 #: /views/add/get_id_status_text.py:29
 msgid ""
 "Sorry, the id ${id} is reserved for internal use.<br />\n"
 "        Please use another id."
-msgstr ""
+msgstr "Die Id ${id} ist für den internen Gebrauch reserviert. <br />Wählen Sie eine andere Id."
 
 #: /views/add/get_id_status_text.py:34
 msgid ""
@@ -1059,7 +1059,7 @@ msgstr "Asset mit Id ${id} in diesem Ordner bereits vergeben. Bitte eine andere 
 msgid ""
 "Sorry, the id ${id} ends with invalid characters.<br />\n"
 "        Please use another id."
-msgstr ""
+msgstr "Die Id ${id} endet mit ungültigen Zeichen. <br />Bitte wählen Sie andere Id."
 
 #: /views/add/get_id_status_text.py:50
 msgid ""
@@ -1234,11 +1234,11 @@ msgstr "IP-Adresse hinzufügen"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:135
 msgid "ip range<span class=\"warning\">*</span>"
-msgstr ""
+msgstr "IP-Bereich<span class=\"warning\">*</span>"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:145
 msgid "<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP-IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:&nbsp;10.1.1.0/255.255.255.0)."
-msgstr ""
+msgstr "<strong>Möglich:</strong><br />IP (z.B.: 10.1.1.1), <br />IP-IP (z.B.: 10.1.1.1-10.1.1.255) oder <br />IP/Netzmaske (z.B.: 10.1.1.0/255.255.255.0)."
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:157
 msgid "add an ip or an ip range"
@@ -1317,7 +1317,7 @@ msgstr "Aus virtuellen Gruppe(n) kopieren"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:52
 msgid "Virtual Group &#8216;members&#8217;"
-msgstr ""
+msgstr "Virtuelle Gruppe &#8216;Mitglieder&#8217;"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:65
 msgid "Group name"
@@ -1440,7 +1440,7 @@ msgstr "Anweisungen"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:125
 msgid "Drag the window below to the image region which should be cropped. You can resize the window with the handle on the lower right corner. If you're done, you can click the submit button below or double click in the window to set your coordinates and close the cropping tool."
-msgstr ""
+msgstr "Ziehen Sie das Fenster unten in die Bildregion die ausgeschnitten werden soll. Die Fenstergröße kann mit dem Griff in der rechten unteren Ecke verändert werden. Wenn Sie fertig sind, klicken Sie auf den Knopf oder doppel-klicken Sie im Fenster um die Koordinaten zu setzen und das Ausschneiden zu beenden."
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:133
 msgid "predefined sizes"
@@ -1744,7 +1744,7 @@ msgstr "In Ordner umwandeln"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:48
 msgid "convert this ghost folder to a normal publication: alt-p"
-msgstr ""
+msgstr "Diesen Ghost-Ordner in eine normale Publikation umwandeln: alt-p"
 
 # Default: "p"
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:48
@@ -1872,7 +1872,7 @@ msgstr "erworbenes Layout"
 
 #: /views/edit/Container/docma_queue.pt:100
 msgid "${estimated_time} &nbsp;seconds"
-msgstr ""
+msgstr "${estimated_time} &nbsp; Sekunden"
 
 #: /views/edit/Container/docma_queue.pt:113
 msgid "There are no jobs in the queue."
@@ -1962,7 +1962,7 @@ msgstr "Importieren"
 
 #: /views/edit/Container/docma_queue.pt:40
 msgid "reload to update the queue lists: alt-r"
-msgstr ""
+msgstr "Neuladen, um die Warteschlange aufzufrischen: alt-r"
 
 # Default: "r"
 #: /views/edit/Container/docma_queue.pt:40
@@ -2029,7 +2029,7 @@ msgstr "Wählen Sie eine Datei zum hochladen aus."
 
 #: /views/edit/Container/import_archive_file.py:26
 msgid "Something bad with the zipfile;"
-msgstr ""
+msgstr "Mit der ZIP-Datei stimmt etwas nicht;"
 
 #: /views/edit/Container/import_archive_file.py:32
 msgid "added ${succeeded}"
@@ -2037,7 +2037,7 @@ msgstr "Hinzugefügt ${succeeded}"
 
 #: /views/edit/Container/import_archive_file.py:39
 msgid "<span class=\"warning\">could not add: ${failed}</span>"
-msgstr ""
+msgstr "<span class=\"warning\">${failed} konnte nicht hinzugefügt werden.</span>"
 
 #: /views/edit/Container/import_archive_file.py:44
 msgid "Finished importing: ${msg}"
@@ -2049,7 +2049,7 @@ msgstr "Gruppe: Eine definiert als Liste von Benutzern"
 
 #: /views/edit/Container/tab_access_groups.pt:110
 msgid "Virtual Group: a group defined by a list of normal groups"
-msgstr ""
+msgstr "Virtuelle Gruppe: definiert als Liste normaler Gruppen."
 
 #: /views/edit/Container/tab_access_groups.pt:114
 msgid "IP Group: a group based on ip addresses"
@@ -2151,7 +2151,7 @@ msgstr "Es war nichts ausgewählt, folglich wurde nichts gelöscht."
 
 #: /views/edit/Container/tab_access_groups_delete.py:23
 msgid "Deleted ${deleted_ids}, <span class=\"error\">but could not delete ${not_deleted_ids}.</span>"
-msgstr ""
+msgstr "${deleted_ids} gelöscht, <span class=\"error\">aber ${not_deleted_ids} konnte nicht gelöscht werden.</span>"
 
 #: /views/edit/Container/tab_access_groups_delete.py:28
 #: /views/edit/Container/tab_edit_delete.py:37
@@ -2334,7 +2334,7 @@ msgstr "Es war nichts ausgewählt, folglich wurde nichts aktiviert."
 
 #: /views/edit/Container/tab_edit_activate.py:30
 msgid "Content ${activated} activated, <span class=\"error\">but could not activate ${not_activated}.</span>"
-msgstr ""
+msgstr "${activated} aktiviert, <span class=\"error\">aber ${not_activated} konnte nicht aktiviert werden.</span>"
 
 #: /views/edit/Container/tab_edit_activate.py:36
 msgid "Content ${activated} activated."
@@ -2358,15 +2358,15 @@ msgstr "Es war nichts ausgewählt, folglich wurde nichts ausgeschnitten."
 
 #: /views/edit/Container/tab_edit_cut.py:31
 msgid "Placed ${cut_ids} on clipboard for cutting, <span class=\"error\">but could not cut ${not_cut_ids}.</span>"
-msgstr ""
+msgstr "${cut_ids} zum Ausschneiden in der Zwischenablage abgelegt, <span class=\"error\">aber ${not_cut_ids} konnte nicht ausgeschnitten werden. </span>"
 
 #: /views/edit/Container/tab_edit_cut.py:37
 msgid "Placed ${cut_ids} on clipboard for cutting."
-msgstr ""
+msgstr "${cut_ids} zum Ausschneiden in der Zwischenablage abgelegt."
 
 #: /views/edit/Container/tab_edit_cut.py:40
 msgid "Could not place ${not_cut_ids} on clipboard for cutting."
-msgstr ""
+msgstr "${not_cut_ids} konnte nicht zum Ausschneiden in der Zwischenablage abgelegt werden."
 
 #: /views/edit/Container/tab_edit_deactivate.py:15
 msgid "Nothing was selected, so nothing is deactivated."
@@ -2374,23 +2374,23 @@ msgstr "Es war nichts ausgewählt, folglich wurde nichts deaktiviert."
 
 #: /views/edit/Container/tab_edit_deactivate.py:30
 msgid "Content ${deactivated} deactivated, <span class=\"error\">but could not deactivate ${not_deactivated}.</span>"
-msgstr ""
+msgstr "${deactivated} deaktivert, <span class=\"error\">aber ${not_deactivated} konnte nicht deaktiviert werden. </span>"
 
 #: /views/edit/Container/tab_edit_deactivate.py:36
 msgid "Content ${deactivated} deactivated."
-msgstr ""
+msgstr "${deactivated} deaktiviert."
 
 #: /views/edit/Container/tab_edit_deactivate.py:39
 msgid "Could not deactivate ${not_deactivated}."
-msgstr ""
+msgstr "${not_deactivated} konnte nicht deaktiviert werden."
 
 #: /views/edit/Container/tab_edit_delete.py:31
 msgid "Deleted ${deleted_ids}, <span class=\"error\">but could not delete ${not_deleted_ids}. Probably there is a published version that must be closed, or an approved version that needs to be revoked. Change the status in the Publish screen (alt-5).</span>"
-msgstr ""
+msgstr "${not_deleted_ids} konnte nicht gelöscht werden. Wahrscheinlich existiert eine publizierte Version, welche erst geschlossen werden muß.Oder das Dokument ist bewilligt (der Link ist grün), dann muß die Bewilligung erst zurückgenommen werden.Für Zustandsänderungen siehe Publizieren-Schirm (alt-5)."
 
 #: /views/edit/Container/tab_edit_delete.py:40
 msgid "Could not delete ${not_deleted_ids}. Possibly there is a published version, which must be closed before it can be deleted. Or, the document is approved (the link will be green), and approval needs to be revoked. Change the status in the Publish screen (alt-5)."
-msgstr ""
+msgstr "${not_deleted_ids} konnte nicht gelöscht werden. Wahrscheinlich existiert eine publizierte Version, welche erst geschlossen werden muß.Oder das Dokument ist bewilligt (der Link ist grün), dann muß die Bewilligung erst zurückgenommen werden.Für Zustandsänderungen siehe Publizieren-Schirm."
 
 #: /views/edit/Container/tab_edit_import.pt:102
 #: /views/edit/Container/tab_edit_import.pt:171
@@ -2405,7 +2405,7 @@ msgstr "Datei auf Festplatte suchen"
 
 #: /views/edit/Container/tab_edit_import.pt:112
 msgid "Locate an XML file to import (must be valid Silva XML)."
-msgstr ""
+msgstr "Wählen Sie eine XML-Datei zum Importieren aus (muß gültiges Silva-XML enthalten)."
 
 #: /views/edit/Container/tab_edit_import.pt:120
 #: /views/edit/VersionedContent/tab_status_macros.pt:354
@@ -2418,7 +2418,7 @@ msgstr "ZIP Archiv importieren und auspacken"
 
 #: /views/edit/Container/tab_edit_import.pt:181
 msgid "Locate a zip file containing Assets to import or a zip file created by a full media export."
-msgstr ""
+msgstr "Wählen Sie eine ZIP-Datei zum Hochladen aus, die Anlagen enthält oder vom Full-Meda-Export erzeugt wurde."
 
 #: /views/edit/Container/tab_edit_import.pt:189
 msgid "title for assets"
@@ -2430,7 +2430,7 @@ msgstr "Optionaler Titel für alle Anlagen"
 
 #: /views/edit/Container/tab_edit_import.pt:202
 msgid "Provide an optional title for all Assets created from the contents of a zip file with Assets."
-msgstr ""
+msgstr "Geben Sie einen optionalen Titel für alle Anlagen ein, die aus einer ZIP-Datei mit Anlagen erstellt werden."
 
 #: /views/edit/Container/tab_edit_import.pt:210
 msgid "subdirectories"
@@ -2438,7 +2438,7 @@ msgstr "Unterverzeichnisse"
 
 #: /views/edit/Container/tab_edit_import.pt:220
 msgid "Recreate the subdirectory structure of a zip file with Assets by adding Silva Folders."
-msgstr ""
+msgstr "Die Struktur der Unterverzeichnisse einer ZIP-Datei mit Anlagen durch die Erstellung von Silva-Ordnern wiederherstellen."
 
 # Default: "z"
 #: /views/edit/Container/tab_edit_import.pt:229
@@ -2462,15 +2462,15 @@ msgstr "Docma Icon"
 #: /views/edit/Container/tab_edit_import.pt:274
 #: /views/edit/Container/tab_status_export.pt:305
 msgid "docma facilities"
-msgstr ""
+msgstr "Docma Service"
 
 #: /views/edit/Container/tab_edit_import.pt:286
 msgid "upload a document in word format (.doc) for conversion"
-msgstr ""
+msgstr "Ein Dokument zum Konvertieren im Word-Format (.doc) hochladen"
 
 #: /views/edit/Container/tab_edit_import.pt:314
 msgid "Locate a Word file to upload. It'll be converted and appear in the list of processed items below. It can be imported anywhere in Silva."
-msgstr ""
+msgstr "Eine Worddatei zum Hochladen auswählen. Sie wird konvertiert und der Liste der bearbeiteten Einträge erscheinen. Das Resultat kann an jeder Stelle in Silva importiert werden."
 
 #: /views/edit/Container/tab_edit_import.pt:321
 #: /views/edit/Container/tab_status_export.pt:389
@@ -2483,12 +2483,12 @@ msgstr "E-Mail Adresse"
 #: /views/edit/Container/tab_edit_import.pt:331
 #: /views/edit/Container/tab_status_export.pt:399
 msgid "An e-mail will be sent to you when the item is processed."
-msgstr ""
+msgstr "Ihnen wird eine Email zugestellt, wenn der Eintrag bearbeitet wurde."
 
 #: /views/edit/Container/tab_edit_import.pt:345
 #: /views/edit/Container/tab_status_export.pt:437
 msgid "This description will be shown in the queue and the list of processed items."
-msgstr ""
+msgstr "Diese Beschreibung wird in der Warteschlange und in der Liste der bearbeiteten Einträge angezeigt."
 
 # Default: "u"
 #: /views/edit/Container/tab_edit_import.pt:353
@@ -2497,11 +2497,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:353
 msgid "upload a word document from your local drive: alt-u"
-msgstr ""
+msgstr "Hochladen eines Wod-Dokumentes: alt-u"
 
 #: /views/edit/Container/tab_edit_import.pt:62
 msgid "import in &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Importieren in &#xab;${title}&#xbb;"
 
 #: /views/edit/Container/tab_edit_import.pt:68
 msgid "over to the export screen: alt-e"
@@ -2792,7 +2792,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status.pt:352
 msgid "clear&nbsp;ex<u>p</u>iration"
-msgstr ""
+msgstr "Verfallsdatum löschen"
 
 #: /views/edit/Container/tab_status.pt:370
 msgid "reject pending request for approval: alt-j"
@@ -3287,7 +3287,7 @@ msgstr "Bevorzugter Editor"
 
 #: /views/edit/Member/SimpleMember/memberform.form:71
 msgid "Choose 'forms editor' for the forms-based editor, or 'kupu' for the Kupu WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1+)"
-msgstr ""
+msgstr "Wählen Sie 'Formular-Editor' um den formularbasierten Editor zu verwenden oder 'Kupu' für den WYSIWYG Editor (benötigt Internet Explorer 5.5+, Netscape 7+ oder Mozilla 1.3.1+)"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:27
 msgid "fullname updated"
@@ -3415,7 +3415,7 @@ msgstr "Jetzt &nbsp; Veröffentlichen"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:41
 msgid "publish the unapproved version: alt-o"
-msgstr ""
+msgstr "Publizieren der nicht genehmigten Version: alt-o"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:76
 msgid "${note} This object is already being edited by another user, and is temporarily locked."
