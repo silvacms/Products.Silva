@@ -1,12 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.42 $
+# $Revision: 1.43 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
-from Products.ParsedXML.ParsedXML import ParsedXML
 
 # Silva interfaces
 from IVersionedContent import IVersionedContent
@@ -138,30 +137,41 @@ class Document(VersionedContent, EditorSupport):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'store_xml')
     def store_xml(self, xml):
-        """Store xml in this object (must be utf8-encoded). 
+        """Store the Document from the xml-string in this object.  
+
+           the xml string is usually utf-8 encoded. Make sure
+           that the "encoding" in any xml-processing instruction
+           really matches the encoding of the string. 
+           Weird Errors can occur if they differ!
+
         """
+        from Products.ParsedXML.ExtraDOM import writeStream
+        from Products.ParsedXML.ParsedXML import createDOMDocument
+        from Products.ParsedXML.PrettyPrinter import _translateCdata
+
         version = self.get_editable()
         if version is None:
             # XXX should put in nicer exceptions (or just return)
             raise "Hey, no version to edit!"
 
-        dom = ParsedXML('dummy', xml)
-        title = None
-        content = None
+        dom = createDOMDocument(xml)
+        
+        title = content = None
         # hackish way to do this..
+
         for node in dom.documentElement.childNodes:
-            if node.nodeType != node.ELEMENT_NODE:
-                continue
-            if node.nodeName == 'title':
-                title = node.childNodes[0].data
-            if node.nodeName == 'doc':
-                # manage_edit needs latin1-encoding
-                content = node.writeStream().getvalue().encode('latin1')
+            if node.nodeType == node.ELEMENT_NODE:
+                if node.nodeName == 'title':
+                    title = node.childNodes[0].nodeValue
+                if node.nodeName == 'doc':
+                    content = writeStream(node).getvalue().encode('utf8')
+
         if title is None or content is None:
             # XXX should put in nicer exceptions (or just return)
             raise "Hey, title or content was empty! %s %s" % (repr(title), repr(content))
-        self.set_title(title)
-        version.manage_edit(content)
+
+        version.manage_edit(content)  # needs utf8-encoded string
+        self.set_title(title)         # needs unicode
 
 #    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
 #                              'to_folder')
