@@ -33,4 +33,4 @@ for item in request['storageids']:
 if errors:
     return view.tab_edit_import(message_type='error', message='The following errors have occured during import: %s' % ', '.join(errors))
 else:
-    return view.tab_edit_import(message_type='feedback', message='Finished importing')
+    return view.tab_edit(message_type='feedback', message='Finished importing')
