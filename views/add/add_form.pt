@@ -82,10 +82,10 @@
           <input class="button"
             type="submit"
             name="add_edit_submit"
-            value="Save and edit"
+            value="Save + edit"
             title="Access key: alt-e"
             accesskey="e"
-            tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Save and enter ', ' Save and edit ')"
+            tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Save + enter ', ' Save + edit ')"
           />
         </tal:block>
       </div>
