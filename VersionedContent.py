@@ -42,6 +42,17 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         self.create_version(new_version_id, None, None)
     
     # ACCESSORS
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_modification_datetime')
+    def get_modification_datetime(self):
+        """Get content modification date.
+        """
+        version_id = self.get_next_version() or self.get_public_version()
+        if version_id is not None:
+            return getattr(self, version_id).bobobase_modification_time()
+        else:
+            return None
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
     def get_editable(self):

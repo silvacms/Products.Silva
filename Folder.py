@@ -24,8 +24,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     __implements__ = Interfaces.Container
         
     def __init__(self, id, title):
-        self.id = id
-        self._title = title
+        Folder.inheritedAttribute('__init__')(self, id, title)
         self._ordered_ids = []
 
     # MANIPULATORS
@@ -184,6 +183,13 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         # NOTE: another dependency on hardcoded name 'default'
         return getattr(self, 'default', None)
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_modification_datetime')
+    def get_modification_datetime(self):
+        """Folders don't really have a modification datetime.
+        """
+        return None
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_ordered_publishables')
     def get_ordered_publishables(self):

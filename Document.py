@@ -1,7 +1,7 @@
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import DateTime
+from DateTime import DateTime
 from Globals import InitializeClass
 import SilvaPermissions
 
@@ -47,10 +47,9 @@ class Document(VersionedContent):
                                          __name__='manage_statusForm')
     manage_exitsForm = PageTemplateFile('www/dummy', globals(),
                                        __name__='manage_exitsForm')
+
     def __init__(self, id, title):
-        self.id = id
-        self._title = title
-        self._creation_datetime = DateTime.DateTime()
+        Document.inheritedAttribute('__init__')(self, id, title)
 
         self._metadata = {
             'document_title' : title,
@@ -116,28 +115,6 @@ class Document(VersionedContent):
             return self.get_container().get_title()
         else:
             return self._title
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_creation_datetime')
-    def get_creation_datetime(self):
-        """Get document creation date.
-        """
-        if hasattr(self, '_creation_datetime'):
-            return self._creation_datetime
-        else:
-            # hack
-            return DateTime.DateTime(2002, 1, 1, 12,  0)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_modification_datetime')
-    def get_modification_datetime(self):
-        """Get document modification date.
-        """
-        version_id = self.get_next_version() or self.get_public_version()
-        if version_id is not None:
-            return getattr(self, version_id).bobobase_modification_time()
-        else:
-            return None
                         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_metadata')

@@ -18,17 +18,14 @@ class Root(Publication):
 
     __implements__ = Interfaces.Container
     
-    def __init__(self, id, title):
-        Root.inheritedAttribute('__init__')(self, id, title)
-
     # MANIPULATORS
 
     def manage_afterAdd(self, item, container):
-        #self.inheritedAttribute('manage_afterAdd')(self, item, container)
+        # since we're root, we don't want to notify our container
         pass
         
     def manage_beforeDelete(self, item, container):
-        #self.inheritedAttribute('manage_beforeDelete')(self, item, container)
+        # since we're root, we don't want to notify our container
         pass
     
     # ACCESSORS

@@ -11,6 +11,8 @@ class Content(SilvaObject, Publishable):
     security = ClassSecurityInfo()
     
     __implements__ = Interfaces.Content
+
+    # use __init__ of SilvaObject
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                              'is_default')

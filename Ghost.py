@@ -21,8 +21,8 @@ class Ghost(VersionedContent):
     __implements__ = Interfaces.VersionedContent
     
     def __init__(self, id):
-        self.id = id
-    
+        Ghost.inheritedAttribute('__init__')(self, id, 'No title for ghost')
+        
     def set_title(self):
         # FIXME: what to do here?
         pass
@@ -35,16 +35,6 @@ class Ghost(VersionedContent):
         if ghost_version is None:
             return 'no title available'
         return ghost_version._get_content().get_title()
-
-    def get_creation_datetime(self):
-        """Get creation datetime.
-        """
-        return Datetime(2002, 1, 1, 12, 0)
-
-    def get_modification_datetime(self):
-        """Get modification datetime.
-        """
-        return DateTime(2002, 1, 1, 12, 0)
 
 InitializeClass(Ghost)
 

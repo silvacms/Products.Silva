@@ -18,8 +18,7 @@ class ContactInfo(Asset):
     __implements__ = Interfaces.Asset
 
     def __init__(self, id, title):
-        self.id = id
-        self._title = title
+        ContactInfo.inheritedAttribute('__init__')(id, title)
         self._data = {}
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,

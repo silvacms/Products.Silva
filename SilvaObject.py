@@ -3,26 +3,34 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
 from ViewRegistry import ViewAttribute
+from DateTime import DateTime
 
 class SilvaObject:
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()
+
+    # FIXME: this is for backward compatibility with old objects
     _title = "No title yet"
+    _creation_datetime = None
+    _modification_datetime = None
     
     # allow edit view on this object
     edit = ViewAttribute('edit')
-    
+
+    def __init__(self, id, title):
+        self.id = id
+        self._title = title
+        self._creation_datetime = self._modification_datetime = DateTime()
+        
     def __repr__(self):
         return "<%s instance %s>" % (self.meta_type, self.id)
 
     # MANIPULATORS
     def manage_afterAdd(self, item, container):
-        #self.inheritedAttribute('manage_afterAdd')(self, item, container)
         container._add_ordered_id(item)
         
     def manage_beforeDelete(self, item, container):
-        #self.inheritedAttribute('manage_beforeDelete')(self, item, container)
         container._remove_ordered_id(item)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -53,12 +61,14 @@ class SilvaObject:
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):
-        return None
+        """Return creation datetime."""
+        return self._creation_datetime
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
     def get_modification_datetime(self):
-        return None
+        """Return modification datetime."""
+        return self._modification_datetime
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
