@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.62 $
+# $Revision: 1.63 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -205,16 +205,16 @@ class Root(Publication):
             return 'No catalog found!'
         
         # first get all approved objects that should be published
-        query = {'publication_datetime': DateTime(),
-                 'publication_datetime_usage': 'range:max',
+        query = {'silva-extrapublicationtime': DateTime(),
+                 'silva-extrapublicationtime_usage': 'range:max',
                  'version_status': 'approved'
                 }
 
         result = self.service_catalog(query)
 
         # now get all published objects that should be closed
-        query = {'expiration_datetime': DateTime(),
-                 'expiration_datetime_usage': 'range:max',
+        query = {'silva-extraexpirationtime': DateTime(),
+                 'silva-extraexpirationtime_usage': 'range:max',
                  'version_status': 'public'
                 }
 
