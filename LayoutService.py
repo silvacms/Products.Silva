@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 
 # Zope
 from OFS import SimpleItem
@@ -121,13 +121,13 @@ class LayoutService(SimpleItem.SimpleItem):
 
     def setup_layout(self, layout, publication):
         newUsedLayout = layoutRegistry.setup_layout(self.get_root(), layout, publication)
-        if not publication.get_layout_key():
+        if not publication.get_own_layout_key():
             publication.set_layout_key(self._get_unique_layout_key())
-        self._used_layouts[publication.get_layout_key()] = newUsedLayout
+        self._used_layouts[publication.get_own_layout_key()] = newUsedLayout
         self._p_changed = 1
 
     def clone_layout(self, publication):
-        old_key = publication.get_layout_key()
+        old_key = publication.get_own_layout_key()
         if old_key:
             publication.set_layout_key(self._get_unique_layout_key())
             newUsedLayout = copy.copy(self._used_layouts[old_key])
@@ -135,7 +135,7 @@ class LayoutService(SimpleItem.SimpleItem):
         self._p_changed = 1
 
     def remove_layout(self, publication):
-        used_layout = self.get_used_layout(publication)
+        used_layout = self.get_own_used_layout(publication)
         if used_layout:
             if used_layout.copied:
                 layout_ids = [id for id in self.layout_ids(publication) if hasattr(publication.aq_base, id)]
@@ -154,8 +154,18 @@ class LayoutService(SimpleItem.SimpleItem):
     def has_layout(self, publication):
         return self._used_layouts.has_key(publication.get_layout_key())
 
+    def has_own_layout(self, publication):
+        return self._used_layouts.has_key(publication.get_own_layout_key())
+
     def get_layout_name(self, publication):
         used_layout = self.get_used_layout(publication)
+        if used_layout: 
+            return used_layout.name
+        else:
+            return ''
+
+    def get_own_layout_name(self, publication):
+        used_layout = self.get_own_used_layout(publication)
         if used_layout: 
             return used_layout.name
         else:
@@ -164,6 +174,12 @@ class LayoutService(SimpleItem.SimpleItem):
     def get_used_layout(self, publication):
         if self.has_layout(publication):
             return self._used_layouts[publication.get_layout_key()]
+        else:
+            return None
+
+    def get_own_used_layout(self, publication):
+        if self.has_own_layout(publication):
+            return self._used_layouts[publication.get_own_layout_key()]
         else:
             return None
 
@@ -176,6 +192,13 @@ class LayoutService(SimpleItem.SimpleItem):
                 return publication
         else:
             return None
+
+    def get_layout_description(self, publication):
+        if self.has_layout(publication):
+            layout_name = self.get_layout_name(publication)
+            return layoutRegistry.get_layout_description(self.get_root(), layout_name)
+        else:
+            return ''
 
     def layout_copied(self, publication):
         used_layout = self.get_used_layout(publication)

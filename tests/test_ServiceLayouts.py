@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_ServiceLayouts.py,v 1.8 2003/10/25 20:08:00 faassen Exp $
+# $Id: test_ServiceLayouts.py,v 1.9 2003/10/30 22:11:11 gotcha Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -75,30 +75,76 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.service_layouts = self.root.service_layouts
         self.service_layouts.install(layoutTest1['name'])
         self.service_layouts.install(layoutTest2['name'])
-
-    def testPublicationWithoutLayout(self):
         self.add_publication(self.root, 'pub', 'publication')
         self.pub = self.root.pub
-        self.failIf(self.pub.get_layout())     
-        self.failIf(self.pub.get_layout_folder())     
+
+    def checkNoLayout(self, pub):
+        self.failIf(self.service_layouts.has_layout(pub))
+        self.failIf(pub.get_layout())     
+        self.failIf(pub.get_layout_folder())     
+
+    def checkNoOwnLayout(self, pub):
+        self.failIf(self.service_layouts.has_own_layout(pub))
+        self.failIf(pub.get_own_layout())     
+
+    def checkLayout(self, pub, layoutTest):
+        self.assertEqual(self.service_layouts.get_layout_name(pub), layoutTest['name'])
+        self.failUnless(self.service_layouts.has_layout(pub))
+        self.assertEqual(pub.get_layout(), layoutTest['name']) 
+        self.assertEqual(pub.get_layout_description(), layoutTest['description']) 
+
+    def checkOwnLayout(self, pub, layoutTest):
+        self.failUnless(self.service_layouts.has_own_layout(pub))
+        self.assertEqual(pub.get_own_layout(), layoutTest['name']) 
+
+    def checkCopiedLayoutTest1Removed(self, pub):
+        self.failIf(self.service_layouts.has_layout(pub))
+        self.failIf(self.service_layouts.layout_ids(pub))     
+        for id in layoutTest1Items:
+            self.failIf(id in pub.objectIds())
+
+    def checkCopiedLayoutTest1(self, pub):
+        self.checkLayout(pub, layoutTest1)
+        for id in layoutTest1Items:
+            self.failUnless(id in pub.objectIds())
+        for id in layoutTest1Items:
+            self.failUnless(id in self.service_layouts.layout_ids(pub))
+    def testWithoutLayouts(self):
+        self.checkNoLayout(self.root)
+        self.checkNoOwnLayout(self.root)
+        self.checkNoLayout(self.pub)
+        self.checkNoOwnLayout(self.pub)
+        self.add_publication(self.pub, 'subpub', 'subpublication')
+        self.subpub = self.pub.subpub
+        self.checkNoLayout(self.subpub)
+        self.checkNoOwnLayout(self.subpub)
 
     def testSetupInPublication(self):
-        self.add_publication(self.root, 'pub', 'publication')
-        self.failUnless(self.root.pub)
-        self.pub = self.root.pub
         self.failIf(self.service_layouts.layout_ids(self.pub))     
         # setup layout
         self.service_layouts.setup_layout(layoutTest1['name'], self.pub)
-        self.assertEqual(self.service_layouts.get_layout_name(self.pub), layoutTest1['name'])
-        self.checkLayoutTest1(self.pub)
+        self.checkLayout(self.pub, layoutTest1)
+        self.checkOwnLayout(self.pub, layoutTest1)
         # remove layout
         self.service_layouts.remove_layout(self.pub)
-        self.checkLayoutTest1Removed(self.pub)
+        self.checkNoLayout(self.pub)
+
+    def testLayoutOnRoot(self):
+        self.root.set_layout(layoutTest2['name'])
+        self.checkLayout(self.root, layoutTest2) 
+        self.checkOwnLayout(self.root, layoutTest2)
+
+    def testChangeLayout(self):
+        self.pub.set_layout(layoutTest1['name'])
+        self.checkLayout(self.pub, layoutTest1) 
+        self.checkOwnLayout(self.pub, layoutTest1)
+        self.pub.set_layout(layoutTest2['name'])
+        self.checkLayout(self.pub, layoutTest2) 
+        self.checkOwnLayout(self.pub, layoutTest2)
+        self.pub.set_layout('')
+        self.checkNoLayout(self.pub) 
 
     def testSetupOnPublication(self):
-        self.add_publication(self.root, 'pub', 'publication')
-        self.failUnless(self.root.pub)
-        self.pub = self.root.pub
         self.failIf(self.pub.get_layout_key())
         self.assertEqual(self.service_layouts.get_layout_name(self.pub), '')
         self.pub.set_layout(layoutTest2['name'])
@@ -106,14 +152,13 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.assertEqual(self.service_layouts.get_layout_name(self.pub), layoutTest2['name'])
         self.pub.set_layout(layoutTest1['name'])
         self.failUnless(self.pub.get_layout_key())
-        self.checkLayoutTest1(self.pub)
+        self.checkLayout(self.pub, layoutTest1)
+        self.checkOwnLayout(self.pub, layoutTest1)
         self.pub.set_layout('')
-        self.checkLayoutTest1Removed(self.pub)
+        self.checkNoLayout(self.pub)
 
     def testLayoutCopied(self):
-        self.add_publication(self.root, 'pub', 'publication')
-        self.failUnless(self.root.pub)
-        self.pub = self.root.pub
+        #before customize
         self.pub.set_layout(layoutTest1['name'])
         self.failIf(self.service_layouts.layout_copied(self.pub), 'Layout has not been copied !')
         self.failIf(self.pub.layout_copied(), 'Layout has not been copied !')
@@ -124,43 +169,49 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
         self.service_layouts.remove_layout(self.pub)
         self.checkCopiedLayoutTest1Removed(self.pub)
 
-    def checkLayoutTest1Removed(self, pub):
-        self.failIf(self.service_layouts.has_layout(pub))
-
-    def checkCopiedLayoutTest1Removed(self, pub):
-        self.failIf(self.service_layouts.has_layout(pub))
-        self.failIf(self.service_layouts.layout_ids(pub))     
-        for id in layoutTest1Items:
-            self.failIf(id in pub.objectIds())
-
-    def checkLayoutTest1(self, pub):
-        self.failUnless(self.service_layouts.has_layout(pub))
-
-    def checkCopiedLayoutTest1(self, pub):
-        for id in layoutTest1Items:
-            self.failUnless(id in pub.objectIds())
-        self.failUnless(self.service_layouts.has_layout(pub))
-        for id in layoutTest1Items:
-            self.failUnless(id in self.service_layouts.layout_ids(pub))
-
-    def checkLayoutTest2(self, pub):
-        self.failUnless(self.service_layouts.has_layout(pub))
-
     def testCopyPaste(self):        
-        self.add_publication(self.root, 'pub', 'publication')
-        self.failUnless(self.root.pub)
-        self.pub = self.root.pub
         self.pub.set_layout(layoutTest1['name'])
-        self.checkLayoutTest1(self.pub)
+        self.checkLayout(self.pub, layoutTest1)
+        self.checkOwnLayout(self.pub, layoutTest1)
         self.root.action_copy(['pub'], self.app.REQUEST)
         self.root.action_paste(self.app.REQUEST)
         self.failUnless(self.root.copy_of_pub)
         self.copy_of_pub = self.root.copy_of_pub
+        self.checkLayout(self.copy_of_pub, layoutTest1)
+        self.checkOwnLayout(self.copy_of_pub, layoutTest1)
         self.copy_of_pub.set_layout(layoutTest2['name'])
-        self.checkLayoutTest1(self.pub)
-        self.checkLayoutTest2(self.copy_of_pub)
+        self.checkLayout(self.copy_of_pub, layoutTest2)
+        self.checkOwnLayout(self.copy_of_pub, layoutTest2)
+        self.checkLayout(self.pub, layoutTest1)
+        self.checkOwnLayout(self.pub, layoutTest1)
         self.pub.set_layout(layoutTest2['name'])
-        self.checkLayoutTest2(self.pub)
+        self.checkLayout(self.pub, layoutTest2)
+        self.checkOwnLayout(self.pub, layoutTest2)
+
+    def testSubPublication(self):
+        self.root.set_layout(layoutTest2['name'])
+        self.checkLayout(self.pub, layoutTest2) 
+        self.checkNoOwnLayout(self.pub)
+        self.add_publication(self.pub, 'subpub', 'subpublication')
+        self.failUnless(self.pub.subpub)
+        self.subpub = self.pub.subpub
+        self.checkLayout(self.subpub, layoutTest2) 
+        self.checkNoOwnLayout(self.subpub)
+        self.pub.set_layout(layoutTest1['name'])
+        self.checkLayout(self.subpub, layoutTest1) 
+        self.checkNoOwnLayout(self.subpub)
+        self.subpub.set_layout(layoutTest2['name'])
+        self.checkLayout(self.subpub, layoutTest2)
+        self.checkOwnLayout(self.subpub, layoutTest2)
+        self.subpub.set_layout(layoutTest1['name'])
+        self.checkLayout(self.subpub, layoutTest1) 
+        self.checkOwnLayout(self.subpub, layoutTest1)
+        self.root.set_layout('')
+        self.pub.set_layout('')
+        self.subpub.set_layout('')
+        self.checkNoLayout(self.subpub)
+        self.checkNoOwnLayout(self.subpub)
+        
 
 if __name__ == '__main__':
     framework()

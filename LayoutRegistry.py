@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 
 from Products.Silva import icon
 from Products.Silva.install import add_fss_directory_view
@@ -63,6 +63,13 @@ class LayoutRegistry:
             return getattr(root.service_resources.Layouts, folder_id)
         else:
             return None
+
+    def get_layout_description(self, root, name):
+        layout = self.get_layout(name)
+        if layout:
+            return layout.description
+        else:
+            return ''
 
     def layout_ids(self, root, name):
         folder = self.get_layout_folder(root, name)

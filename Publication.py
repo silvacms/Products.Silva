@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.55 $
+# $Revision: 1.56 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -53,7 +53,7 @@ class Publication(Folder.Folder):
         """Set template layout
         """
         service_layouts = self.get_root().service_layouts
-        if service_layouts.has_layout(self):
+        if service_layouts.has_own_layout(self):
             service_layouts.remove_layout(self)
         if layout_name:
             layout = service_layouts.setup_layout(layout_name, self)
@@ -67,7 +67,14 @@ class Publication(Folder.Folder):
         service_layouts = self.get_root().service_layouts
         layout = service_layouts.copy_layout(self)
     
-    def get_layout_key(self):
+    def get_layout_key(self, own=0):
+        layout_key = self.get_own_layout_key()
+        if layout_key or (self == self.get_root()):
+            return layout_key
+        else:
+            return self.get_publication().aq_parent.get_publication().get_layout_key()
+
+    def get_own_layout_key(self):
         return self.layout_key
 
     def set_layout_key(self, value):
@@ -101,12 +108,32 @@ class Publication(Folder.Folder):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_layout')
     def get_layout(self):
-        """Get template layout.
+        """Get template layout (own or acquired).
         """
         if not hasattr(self, "layout_key"):
             self.layout_key = None
         service_layouts = self.get_root().service_layouts
         return service_layouts.get_layout_name(self)
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_layout_description')
+    def get_layout_description(self):
+        """Get template layout description (own or acquired).
+        """
+        if not hasattr(self, "layout_key"):
+            self.layout_key = None
+        service_layouts = self.get_root().service_layouts
+        return service_layouts.get_layout_description(self)
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_own_layout')
+    def get_own_layout(self):
+        """Get own template layout (not acquired).
+        """
+        if not hasattr(self, "layout_key"):
+            self.layout_key = None
+        service_layouts = self.get_root().service_layouts
+        return service_layouts.get_own_layout_name(self)
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')
