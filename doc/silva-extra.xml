@@ -4,7 +4,7 @@
 <metadata_set id="silva-extra" ns_uri="http://infrae.com/namespaces/metadata/silva-extra" ns_prefix="silva-extra">
 <title></title>
 <description></description>
-  <metadata_element id="subject">
+ <metadata_element id="subject">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
    <field_type>TextAreaField</field_type>
@@ -28,12 +28,12 @@
         <value key="max_lines" type="str" value="" />
         <value key="width" type="int" value="40" />
         <value key="external_validator" type="str" value="" />
-        <value key="height" type="int" value="5" />
+        <value key="height" type="int" value="3" />
         <value key="required" type="int" value="0" />
         <value key="css_class" type="str" value="" />
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="Subject" />
-        <value key="description" type="str" value="Subject of this content area." />
+        <value key="description" type="str" value="Subject of content in this area." />
         <value key="max_length" type="str" value="" />
         <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="style=&quot;width: 100%&quot;" />
@@ -68,12 +68,12 @@
      <value key="doc_attr">proxy_value</value>
      <value key="index_type">Cosine Measure</value>
    </index_args>
-  </metadata_element>
-  <metadata_element id="comment">
+ </metadata_element>
+ <metadata_element id="comment">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
    <field_type>TextAreaField</field_type>
-   <acquire_p>1</acquire_p>
+   <acquire_p>0</acquire_p>
    <read_only_p>0</read_only_p>
    <read_guard>
      <roles></roles>
@@ -133,8 +133,8 @@
      <value key="doc_attr">proxy_value</value>
      <value key="index_type">Cosine Measure</value>
    </index_args>
-  </metadata_element>
-  <metadata_element id="creationtime">
+ </metadata_element>
+ <metadata_element id="creationtime">
    <index_type>DateIndex</index_type>
    <index_p>1</index_p>
    <field_type>DateTimeField</field_type>
@@ -164,8 +164,8 @@
         <value key="required" type="int" value="0" />
         <value key="allow_empty_time" type="int" value="0" />
         <value key="css_class" type="str" value="" />
-        <value key="title" type="str" value="Time of creation" />
-        <value key="description" type="str" value="Time of creation. Automatically set. Time format: yyyy/mm/dd hh:mm" />
+        <value key="title" type="str" value="creation time" />
+        <value key="description" type="str" value="Automatically set." />
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
@@ -174,7 +174,7 @@
      <value key="hidden"></value>
      <value key="input_order"></value>
      <value key="time_separator">string::</value>
-     <value key="date_separator">string::</value>
+     <value key="date_separator">string:/</value>
      <value key="end_datetime"></value>
      <value key="external_validator"></value>
      <value key="date_only"></value>
@@ -196,8 +196,8 @@
    </field_messages>
    <index_args>
    </index_args>
-  </metadata_element>
-  <metadata_element id="modificationtime">
+ </metadata_element>
+ <metadata_element id="modificationtime">
    <index_type>DateIndex</index_type>
    <index_p>1</index_p>
    <field_type>DateTimeField</field_type>
@@ -228,7 +228,7 @@
         <value key="allow_empty_time" type="int" value="0" />
         <value key="css_class" type="str" value="" />
         <value key="title" type="str" value="Modification time" />
-        <value key="description" type="str" value="Time of last modification. Automatically set. Time format: yyyy/mm/dd hh:mm" />
+        <value key="description" type="str" value="Automatically set." />
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
@@ -237,7 +237,7 @@
      <value key="hidden"></value>
      <value key="input_order"></value>
      <value key="time_separator">string::</value>
-     <value key="date_separator">string::</value>
+     <value key="date_separator">string:/</value>
      <value key="end_datetime"></value>
      <value key="external_validator"></value>
      <value key="date_only"></value>
@@ -260,7 +260,7 @@
    <index_args>
    </index_args>
   </metadata_element>
-  <metadata_element id="publicationtime">
+ <metadata_element id="publicationtime">
    <index_type>DateIndex</index_type>
    <index_p>1</index_p>
    <field_type>DateTimeField</field_type>
@@ -291,7 +291,7 @@
         <value key="allow_empty_time" type="int" value="0" />
         <value key="css_class" type="str" value="" />
         <value key="title" type="str" value="Publication time" />
-        <value key="description" type="str" value="Time of publication. Automatically set. Date format: yyyy:mm/dd hh:mm" />
+        <value key="description" type="str" value="Automatically set." />
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
@@ -300,7 +300,7 @@
      <value key="hidden"></value>
      <value key="input_order"></value>
      <value key="time_separator">string::</value>
-     <value key="date_separator">string::</value>
+     <value key="date_separator">string:/</value>
      <value key="end_datetime"></value>
      <value key="external_validator"></value>
      <value key="date_only"></value>
@@ -322,8 +322,8 @@
    </field_messages>
    <index_args>
    </index_args>
-  </metadata_element>
-  <metadata_element id="expirationtime">
+ </metadata_element>
+ <metadata_element id="expirationtime">
    <index_type>DateIndex</index_type>
    <index_p>1</index_p>
    <field_type>DateTimeField</field_type>
@@ -354,7 +354,7 @@
         <value key="allow_empty_time" type="int" value="0" />
         <value key="css_class" type="str" value="" />
         <value key="title" type="str" value="Expiration time" />
-        <value key="description" type="str" value="Time of expiration. Automatically set. Time format: yyyy/mm/dd hh:mm" />
+        <value key="description" type="str" value="Automatically set." />
         <value key="unicode" type="int" value="1" />
    </field_values>
    <field_tales>
@@ -363,7 +363,7 @@
      <value key="hidden"></value>
      <value key="input_order"></value>
      <value key="time_separator">string::</value>
-     <value key="date_separator">string::</value>
+     <value key="date_separator">string:/</value>
      <value key="end_datetime"></value>
      <value key="external_validator"></value>
      <value key="date_only"></value>
@@ -385,8 +385,8 @@
    </field_messages>
    <index_args>
    </index_args>
-  </metadata_element>
-  <metadata_element id="creator">
+ </metadata_element>
+ <metadata_element id="creator">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
    <field_type>StringField</field_type>
@@ -415,7 +415,7 @@
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="Creator" />
         <value key="truncate" type="int" value="0" />
-        <value key="description" type="str" value="Creator of this content. Automatically set." />
+        <value key="description" type="str" value="Automatically set." />
         <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="" />
    </field_values>
@@ -446,8 +446,8 @@
      <value key="doc_attr">proxy_value</value>
      <value key="index_type">Cosine Measure</value>
    </index_args>
-  </metadata_element>
-  <metadata_element id="lastauthor">
+ </metadata_element>
+ <metadata_element id="lastauthor">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
    <field_type>StringField</field_type>
@@ -476,7 +476,7 @@
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="Last author" />
         <value key="truncate" type="int" value="0" />
-        <value key="description" type="str" value="Author who last edited this content. Automatically set." />
+        <value key="description" type="str" value="User who last edited this content. Automatically set." />
         <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="" />
    </field_values>
@@ -507,8 +507,8 @@
      <value key="doc_attr">proxy_value</value>
      <value key="index_type">Cosine Measure</value>
    </index_args>
-  </metadata_element>
-  <metadata_element id="location">
+ </metadata_element>
+ <metadata_element id="location">
    <index_type>TextIndex</index_type>
    <index_p>1</index_p>
    <field_type>StringField</field_type>
@@ -565,8 +565,8 @@
    </field_messages>
    <index_args>
    </index_args>
-  </metadata_element>
-  <metadata_element id="contactname">
+ </metadata_element>
+ <metadata_element id="contactname">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
    <field_type>StringField</field_type>
@@ -626,8 +626,8 @@
      <value key="doc_attr">proxy_value</value>
      <value key="index_type">Cosine Measure</value>
    </index_args>
-  </metadata_element>
-  <metadata_element id="contactemail">
+ </metadata_element>
+ <metadata_element id="contactemail">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
    <field_type>EmailField</field_type>

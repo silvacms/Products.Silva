@@ -4,7 +4,7 @@
 <metadata_set id="silva-content" ns_uri="http://infrae.com/namespaces/metadata/silva" ns_prefix="silva">
 <title></title>
 <description></description>
-  <metadata_element id="maintitle">
+ <metadata_element id="maintitle">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
    <field_type>StringField</field_type>
@@ -28,8 +28,8 @@
         <value key="external_validator" type="str" value="" />
         <value key="display_maxwidth" type="str" value="" />
         <value key="display_width" type="int" value="20" />
-        <value key="required" type="int" value="1" />
-        <value key="description" type="str" value="Title of content object." />
+        <value key="required" type="int" value="0" />
+        <value key="description" type="str" value="Title of content." />
         <value key="css_class" type="str" value="" />
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="Title" />
@@ -64,8 +64,8 @@
      <value key="doc_attr">proxy_value</value>
      <value key="index_type">Cosine Measure</value>
    </index_args>
-  </metadata_element>
-  <metadata_element id="shorttitle">
+ </metadata_element>
+ <metadata_element id="shorttitle">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
    <field_type>StringField</field_type>
@@ -90,7 +90,7 @@
         <value key="display_maxwidth" type="str" value="" />
         <value key="display_width" type="int" value="20" />
         <value key="required" type="int" value="0" />
-        <value key="description" type="str" value="Short version of title of content object. Mostly used for purposes of navigation." />
+        <value key="description" type="str" value="Also known as &amp;#8216;navigation title&amp;#8217;." />
         <value key="css_class" type="str" value="" />
         <value key="default" type="str" value="" />
         <value key="title" type="str" value="Short title" />
