@@ -290,7 +290,7 @@ class SilvaObject(Security):
         """Turn unicode text to something displayable on the web.
         """
         # make sure HTML is quoted
-        return escape(s.encode('cp1252'), 1)
+        return escape(s.encode('cp1252', 'replace'), 1)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'output_convert_editable')
@@ -298,7 +298,7 @@ class SilvaObject(Security):
         """Turn unicode text to something editable.
         """
         # use windows code page..
-        return s.encode('cp1252')
+        return s.encode('cp1252', 'replace')
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'input_convert')
