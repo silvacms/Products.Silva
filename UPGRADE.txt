@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.3
+  Valid for:  Silva 0.9.3.x
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36.8.8 $
+  CVS:        $Revision: 1.36.8.9 $
 
 Upgrading from 0.9.1 and below
 
@@ -38,42 +38,25 @@ Upgrading Silva 0.9.2.x to 0.9.3
     Silva Documents are now in a separate package called
     SilvaDocument. This you need to have this Product too.
 
-    Silva:
-    
-        "Silva-0.9.3.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3.tgz
+      "Silva-0.9.3.3.tgz":http://www.zope.org/Members/infrae/Silva
 
-    SilvaDocument:
-    
-        "SilvaDocument-0.9.3.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3.tgz
+      "SilvaDocument-0.9.3.2.tgz":http://www.zope.org/Members/infrae/Silva
 
-    Formulator:
+      "Formulator-1.6.2.tgz":http://www.zope.org/Members/infrae/Formulator
 
-        "Formulator-1.6.1.tgz":http://www.zope.org/Members/infrae/Formulator/Formulator-1.6.1.tgz
+      "XMLWidgets-0.10.3.tgz":http://www.zope.org/Members/infrae/XMLWidgets
 
-    XMLWidgets:
+      "ProxyIndex-1.1.2.tgz":http://www.zope.org/Members/infrae/Silva
 
-        "XMLWidgets-0.10.3.tar.gz":http://www.zope.org/Members/infrae/XMLWidgets/XMLWidgets-0.10.3.tgz
+      "Annotations-0.4.3.tgz":http://www.zope.org/Members/infrae/Silva
 
-    ProxyIndex:
+      "SilvaMetadata-0.7.5.tgz":http://www.zope.org/Members/infrae/Silva
 
-        "ProxyIndex-1.1.2.tgz":http://www.zope.org/Members/infrae/Silva/ProxyIndex-1.1.2.tgz
-
-    Annotations:
-
-        "Annotations-0.4.3.tgz":http://www.zope.org/Members/infrae/Silva/Annotations-0.4.3.tgz
-
-    SilvaMetadata:
-
-        "SilvaMetadata-0.7.5.tgz":http://www.zope.org/Members/infrae/Silva/SilvaMetadata-0.7.5.tgz
-
-    SilvaViews:
-
-        "SilvaViews-0.9.tgz":http://www.zope.org/Members/infrae/Silva/SilvaViews-0.9.tgz
+      "SilvaViews-0.9.tgz":http://www.zope.org/Members/infrae/Silva
     
     Alternatively You can get a bundle of all required products at:
  
-         "Silva-0.9.3-all.tar.gz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3-all.tgz
-
+       "Silva-0.9.3.3-all.tgz":http://www.zope.org/Members/infrae/Silva
 
   Refreshing and upgrading the Silva product
 

@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.3
+  Valid for:  Silva 0.9.3.x
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.40.8.4 $
+  CVS:        $Revision: 1.40.8.5 $
 
 Installing Silva
 
@@ -40,7 +40,7 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.9.3)
+    Silva (0.9.3.3)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some
@@ -52,13 +52,9 @@ Installing Silva
 
         "Silva":http://www.zope.org/Members/infrae/Silva
 
-      or just download:
-
-        "Silva-0.9.3.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3/Silva-0.9.3.tgz
-  
-      or everything together:
-
-        "Silva-0.9.3-all.tgz":http://www.zope.org/Members/infrae/Silva/Silva-0.9.3/Silva-0.9.3-all.tgz
+      Also available there is a "all" tarball, which includes all required
+      Products for a Silva setup (but not including Groups, ExtFile, 
+      SilvaExternalSources and LDAP integration code).
 
     SilvaViews (0.9)
 
@@ -66,7 +62,7 @@ Installing Silva
 
         "SilvaViews":http://www.zope.org/Members/infrae/SilvaViews
 
-    Formulator (1.6.1)
+    Formulator (1.6.2)
 
       A system for the construction and validation of web forms, used
       by Silva's views.
@@ -75,7 +71,8 @@ Installing Silva
 
         "Formulator":http://www.zope.org/Members/faassen/Formulator
 
-    FileSystemSite (1.3)
+    FileSystemSite (1.4) - not released yet at the time writing, but
+    included in the "all" tarball.
 
       A system for keeping PageTemplates, PythonScripts and so on on
       the filesystem. This allows us to maintain the view code for
@@ -117,7 +114,7 @@ Installing Silva
 
         "Annotations":http://www.zope.org/Members/infrae/Annotations
 
-    SilvaDocument (0.9.3)
+    SilvaDocument (0.9.3.2)
 
       Silva Document contains the functionality implementing the Silva
       Document object and editor. It is optional, but in order to do
