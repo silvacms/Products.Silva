@@ -28,6 +28,9 @@ Silva changes
 
       - Newlines can be used instead of <br> in the forms editor.
 
+      - Markup and linebreaks within tables is no longer removed in the
+        xslt renderers.
+
   1.1
 
     Features added
