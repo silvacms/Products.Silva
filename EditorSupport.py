@@ -2,7 +2,6 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
 import ForgivingParser
-from cgi import escape
 
 class EditorSupportError(Exception):
     pass
@@ -18,45 +17,46 @@ class EditorSupport:
         """Render textual content as HTML.
         """
         result = []
+        output_convert = self.output_convert_html
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(escape(child.data, 1))
+                result.append(output_convert(child.data))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
             if child.nodeName == 'strong':
                 result.append('<strong>')
                 for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
+                    result.append(output_convert(subchild.data))
                 result.append('</strong>')
             elif child.nodeName == 'em':
                 result.append('<em>')
                 for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
+                    result.append(output_convert(subchild.data))
                 result.append('</em>')
             elif child.nodeName == 'link':
                 result.append('<a href="%s">' %
-                              escape(child.getAttribute('url'), 1))
+                              output_convert(child.getAttribute('url')))
                 for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
+                    result.append(output_convert(subchild.data, 1))
                 result.append('</a>')
             elif child.nodeName == 'underline':
                 result.append('<u>')
                 for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
+                    result.append(output_convert(subchild.data))
                     result.append('</u>')
             elif child.nodeName == 'index':
                 result.append('<a name="%s">' %
-                              escape(child.getAttribute('name'), 1))
+                              output_convert(child.getAttribute('name')))
                 for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
+                    result.append(output_convert(subchild.data))
                 result.append('</a>')
             #elif child.nodeName == 'person':
             #    for subchild in child.childNodes:
-            #        result.append(escape(subchild.data, 1))
+            #        result.append(output_convert(subchild.data, 1))
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
-        return self.output_convert_html(''.join(result))
+        return ''.join(result)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'render_text_as_editable')

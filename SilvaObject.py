@@ -6,15 +6,16 @@ from ViewRegistry import ViewAttribute
 from DateTime import DateTime
 from Security import Security
 from StringIO import StringIO
+from cgi import escape
 
-
-CONVERT_CHARS = (('\221', '&lsquo;', "'", u'\u2018'),
-                 ('\222', '&rsquo;', "'", u'\u2019'),
-                 ('\223', '&ldquo;', '"', u'\u201C'),
-                 ('\224', '&rdquo;', '"', u'\u201D'),
-                 ('\226', '&ndash;', '-', u'\u2013'),
-                 ('\227', '&mdash;', '-', u'\u2014'),
+CONVERT_CHARS = (('\221', '&lsquo;', "'",   u'\u2018'),
+                 ('\222', '&rsquo;', "'",   u'\u2019'),
+                 ('\223', '&ldquo;', '"',   u'\u201C'),
+                 ('\224', '&rdquo;', '"',   u'\u201D'),
+                 ('\226', '&ndash;', '-',   u'\u2013'),
+                 ('\227', '&mdash;', '-',   u'\u2014'),
                  ('\200', '&euro;',  'EUR', u'\u20AC'),
+                 ('\203', '&fnof;',  'NLG', u'\u0192'),
                  )
 
 class SilvaObject(Security):
@@ -212,13 +213,15 @@ class SilvaObject(Security):
     def output_convert_html(self, s, CONVERT_CHARS=CONVERT_CHARS):
         """Turn unicode text to something displayable on the web.
         """
-        # collapse whitespace
-        s = ' '.join(s.split())
-        # replace unicode chars with html_entities
-        for windows_char, html_entity, plain_char, unicode_char in CONVERT_CHARS:
-            s = s.replace(unicode_char, html_entity)
+        # make sure HTML is quoted
+        for c, html_entity in [('<', '&lt;'), ('>', '&gt;')]:
+            s = s.replace(c, html_entity)
+        # then replace unicode chars with html_entities
+        #for windows_char, html_entity, plain_char, unicode_char in CONVERT_CHARS:
+        #    s = s.replace(unicode_char, html_entity)
+
         # now return latin 1
-        return s.encode('latin1')
+        return s.encode('cp1252')
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'output_convert_editable')
@@ -226,8 +229,9 @@ class SilvaObject(Security):
         """Turn unicode text to something editable.
         """
         # use windows code page..
-        # FIXME: probably not right..
-        return ' '.join(s.split()).encode('cp1252')
+        # FIXME: icky
+        s = escape(s, 1)
+        return s.encode('cp1252')
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'input_convert')
@@ -236,6 +240,31 @@ class SilvaObject(Security):
         """
         # input will be from windows normally, so use that code page
         # FIXME: Is this right?
+        # get rid of any weird characters, such as bullets
+        for c in ['\237', '\247', '\267']:
+            s = s.replace(c, '')
         return unicode(' '.join(s.split()), 'cp1252')
+
+    def _upgrade_xml_helper(self, node):
+        nodeType = node.nodeType
+        if nodeType == node.TEXT_NODE:
+            data = node.data
+            if type(data) != type(u''):
+                print "text replacing:", repr(data)
+                node.replaceData(0, len(data), self.input_convert(data))
+            else:
+                print "text already unicode:", node.nodeName, repr(data)
+        elif nodeType == node.ELEMENT_NODE:
+            attribute_names = node.attributes.keys()
+            for name in attribute_names:
+                data = node.getAttribute(name)
+                if type(data) == type(u''):
+                    print "attr already unicode:", name, repr(data)
+                else:
+                    print "attr replacing:", repr(data)
+                    node.removeAttribute(name)
+                    node.setAttribute(name, self.input_convert(data))
+            for child in node.childNodes:
+                self._upgrade_xml_helper(child)
     
 InitializeClass(SilvaObject)

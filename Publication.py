@@ -18,7 +18,26 @@ class Publication(Folder):
 
     __implements__ = Interfaces.Publication
 
-
+    # MANIPULATORS
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_folder')
+    def to_folder(self):
+        """Publication becomes a folder instead.
+        """
+        # first create new folder
+        container = self.get_container()
+        container.manage_addProduct['Silva'].manage_addFolder(
+            'convert__%s' % self.id, self.get_title(), create_default=0)
+        # copy all contents into new folder
+        cp = self.manage_copyObjects(self.objectIds())
+        # copy over all properties
+        for key, value in self.propertyItems():
+            self.manage_addProperty(key, value, self.getPropertyKey(key))
+        # copy over authorization info
+        for userid in self.sec_get_userids():
+            pass
+        
+    # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')
     def get_publication(self):
@@ -40,7 +59,8 @@ class Publication(Folder):
         f.write('<silva_publication id="%s">' % self.id)
         self._to_xml_helper(f)
         f.write('</silva_publication>')
-        
+
+
 InitializeClass(Publication)
 
 manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),

@@ -55,6 +55,11 @@ class Ghost(VersionedContent):
         if content is None:
             return
         content.to_xml(f)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'upgrade_xml') 
+    def upgrade_xml(self):
+        pass
         
 InitializeClass(Ghost)
 

@@ -524,7 +524,24 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             object.to_xml(f)
         #for object in self.get_assets():
         #    pass
-        
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'upgrade_xml')
+    def upgrade_xml(self):
+        """Upgrade xml.
+        """
+        title = self.get_title()
+        if type(title) != type(u''):
+            self.set_title(self.input_convert(title))    
+        # upgrade everything in the folder
+        default = self.get_default()
+        if default is not None:
+            default.upgrade_xml()
+        for obj in self.get_ordered_publishables():
+            obj.upgrade_xml()
+        for obj in self.get_nonactive_publishables():
+            obj.upgrade_xml()
+            
 InitializeClass(Folder)
 
 

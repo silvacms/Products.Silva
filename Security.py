@@ -109,7 +109,31 @@ class Security:
                 item._sec_get_userids_deep_helper(l)
             for item in self.get_assets():
                 item._sec_get_userids_deep_helper(l)
-        
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'sec_get_nearest_of_role')
+    def sec_get_nearest_of_role(self, role):
+        """Get a list of userids that have a role in this context. This
+        goes up the tree and finds the nearest user(s) that can be found.
+        """
+        obj = self.aq_inner
+        while 1:
+            # get all users defined on this object
+            userids = obj.sec_get_userids()
+            if userids:
+                result = []
+                for userid in userids:
+                    if role in obj.sec_get_roles_for_userid(userid):
+                        result.append(userid)
+                if result:
+                    return result
+                
+            # XXX: this is depending on meta type, but should be unique..
+            if obj.meta_type == 'Silva Root':
+                break
+            obj = obj.aq_parent
+        return []
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_get_roles_for_userid')
     def sec_get_roles_for_userid(self, userid):

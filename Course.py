@@ -82,7 +82,32 @@ class Course(VersionedContent, EditorSupport):
         version.content.documentElement.writeStream(f)
         f.write('</goal>')
         f.write('</silva_course>')
-        
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'upgrade_xml')
+    def upgrade_xml(self):
+        """Upgrade xml.
+        """
+        title = self.get_title()
+        if type(title) != type(u''):
+            self.set_title(self.input_convert(title))
+        # upgrade the public version, the last closed version, and the
+        # next version, if they exist
+        versions = [self.get_last_closed_version(),
+                    self.get_public_version(),
+                    self.get_next_version()]
+        for version in versions:
+            if version is None:
+                continue
+            course = getattr(self, version)
+            self._upgrade_xml_helper(course.goal.documentElement)   
+            self._upgrade_xml_helper(course.content.documentElement)
+            data = course.get_data()
+            for key, value in data.items():
+                if type(value) != type(u''):
+                    data[key] = self.input_convert(value)
+            course.set_data(data)
+            
 InitializeClass(Course)
 
 class CourseVersion(SimpleItem.SimpleItem):
@@ -106,9 +131,9 @@ class CourseVersion(SimpleItem.SimpleItem):
         """
         self._data = dict
 
-    def set_data_entry(self, name, value):
-        self._data[name] = value
-        self._data = self._data
+    #def set_data_entry(self, name, value):
+    #    self._data[name] = value
+    #    self._data = self._data
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_data')
@@ -116,6 +141,8 @@ class CourseVersion(SimpleItem.SimpleItem):
         """Get the data dictionary.
         """
         return self._data
+
+
     
 InitializeClass(CourseVersion)
 
