@@ -13,8 +13,12 @@ class LDAPUserManagement:
         return ldap_search(object.acl_users, 'cn=*%s*' % search_string)
         
     def get_user_info(self, object, userid):
-        return ldap_search(object.acl_users, 'uid=%s' % userid)
-
+        result = ldap_search(object.acl_users, 'uid=%s' % userid)
+        if not result:
+            return {'uid': userid, 'cn': "%s (not in ldap)" % userid}  
+        else:
+            return result[0]
+ 
 user_management = LDAPUserManagement()
 
 def ldap_search(user_folder, search_string, attrs=None):
