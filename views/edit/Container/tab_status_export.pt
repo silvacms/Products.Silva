@@ -384,7 +384,7 @@
           value="Export to Docma"
           title="export the selection to Word: alt-d"
           accesskey="d"
-          i18n:attributes="value title accesskey:key-export_to_word"
+          i18n:attributes="value title"
         />
         </tal:block>
         </td>
@@ -409,7 +409,7 @@
     title="there's no undo: alt-x"
     type="submit"
     value="remove" 
-    i18n:attributes="onClick value title"
+    i18n:attributes="onclick value title"
   />
 </metal:fill-slot>
 </metal:use-macro>
