@@ -18,10 +18,12 @@ div.workspace {
   background: &dtml-contentWorkspace;;
 }
 
+/*
 div.tabs {
     background-image: url(/silva/globals/skyrise.gif);
     background-repeat: repeat-x;
 }
+*/
 
 div.tabs a {
   background: &dtml-contentTabBackground;;

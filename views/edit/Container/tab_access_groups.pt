@@ -188,10 +188,7 @@
               <tr class="even">
                 <td class="align-right"
                   width="10%">
-                  id
-                  <span class="warning">
-                    *
-                  </span>
+                  id<span class="warning">*</span>
                 </td>
                 <td style="width: 20em;">
                   <input size="20" 
@@ -271,10 +268,7 @@
               <tr class="even">
                 <td class="align-right"
                   width="10%">
-                  id
-                  <span class="warning">
-                    *
-                  </span>
+                  id<span class="warning">*</span>
                 </td>
                 <td style="width: 20em;">
                   <input size="20" 
