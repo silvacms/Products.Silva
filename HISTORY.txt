@@ -45,6 +45,8 @@ Silva changes
 
       - Fixed problem with vanishing paragraphs after a Kupu save.
 
+      - Fixed case where XSLT renderer produced non-HTML tags.
+
   1.1.2
 
   1.1.1
