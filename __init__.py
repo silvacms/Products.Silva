@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.82 $
+# $Revision: 1.83 $
 
 import Metadata
 import Folder, Root
@@ -103,6 +103,8 @@ def initialize(context):
     importer_registry.register_tag('silva_publication', Publication.xml_import_handler)
     importer_registry.register_tag('silva_folder', Folder.xml_import_handler)
     importer_registry.register_tag('silva_demoobject', DemoObject.xml_import_handler)
+    importer_registry.register_tag('silva_ghostfolder',
+        GhostFolder.xml_import_handler)
 
     # register the FileSystemSite directories
     registerDirectory('views', globals())
