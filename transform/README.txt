@@ -5,16 +5,17 @@ How To Make Your Own Renderer For Silva Documents.
 :Author: Eric Casteleijn
 
 
-1. The stylesheet. 
-==================
+1. The Stylesheet
+=================
 
-This is 90% of the work really, and should be handled
-with care. Stylesheets that are syntactically incorrect may in some
-cases cause strange behaviour in Python/Zope, since the bindings for
-libxml2/libxslt are not as robust on error handling as we'd like them
-to be. When you want to test your stylesheet for the first time, it may
-be a good idea to validate it outside of Zope first, and maybe even 
-run a test tarnsformation on an export of a Silva Document with xsltproc.
+This is 90% of the work really, and should be handled with
+care. Stylesheets that are syntactically incorrect may in some cases
+cause strange behaviour in Python/Zope, since the bindings for
+libxml2/libxslt are not as robust at error handling as we'd like them
+to be. When you want to test your stylesheet for the first time, it
+may be a good idea to validate it outside of Zope first, and perhaps
+even to run a test transformation on an export of a Silva Document
+with xsltproc.
 
 Building the stylesheet can be very simple or very complicated depending
 on what you want it to do. For a relatively simple documented example
@@ -28,15 +29,15 @@ see images_to_the_right.xslt::
   xmlns:silva="http://infrae.com/ns/silva"
   xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
   version="1.0">
-  
+
  <!--
   An example of an alternative stylesheet for rendering Silva Documents.
   The above namespaces should not be changed. They could be added to for
   those who have extended Silva Document XML and used their own namespace.
   -->
-  
 
- <!--  
+
+ <!--
   This is hackish, but no other way was found to get the relative
   url of the two stylesheets right. The xsl:import is weird in this, IMHO.
   Python uses a string interpolation to get the right url. This also
@@ -48,13 +49,13 @@ see images_to_the_right.xslt::
 
   <xsl:import href="%(url)s/doc_elements.xslt"/>
 
- <!-- 
+ <!--
   In this example we want to render all content in in two table cells.
   The right one containing all images in order, and the left one containing
-  everything else. The match="/" matches the document element of the 
+  everything else. The match="/" matches the document element of the
   Silva xml (usually <silva>) and starts to build the html from there.
   -->
-  
+
   <xsl:template match="/">
     <table>
       <tr>
@@ -72,7 +73,7 @@ see images_to_the_right.xslt::
   Nothing special needs to be done with silva_document or content for our
   purposes here but it could for your own renderer.
   -->
-  
+
   <xsl:template match="silva:silva_document">
     <xsl:apply-templates />
   </xsl:template>
@@ -90,7 +91,7 @@ see images_to_the_right.xslt::
   </xsl:template>
 
  <!--
-  The metadata is ignored, except for the title. You can access all 
+  The metadata is ignored, except for the title. You can access all
   metadata fields here in the same manner.
   -->
 
@@ -112,7 +113,7 @@ see images_to_the_right.xslt::
   cell, all text() nodes are ignored, and the images are shown, as
   links if they have a link attribute, as plain images, if not.
   -->
-  
+
   <xsl:template match="text()" mode="images">
   </xsl:template>
 
@@ -130,22 +131,22 @@ see images_to_the_right.xslt::
  <!--
   These are all the overrides needed, but one could quite easily pick
   certain elements and override them to render them differently. I would
-  start with copying the xsl:template for the element from 
+  start with copying the xsl:template for the element from
   doc_elements.xslt to your own stylesheet, and modify it there until
-  it does what you want. 
+  it does what you want.
   -->
-  
+
  </xsl:stylesheet>
 
-(To see how the normal rendering is done with xslt, have a look at
+(To see how the normal rendering is done with XSLT, have a look at
 normal_view.xslt.)
 
-For your own stylesheet I'd suggest making a copy of either 
-images_to_the_right.xslt or normal_view.xslt and playing around with
-that. Do not modify doc_elements.xslt as that could break your renderer
-in future versions of Silva, when new elements may be added.
+To create your own stylesheet, it may be useful to use
+images_to_the_right.xslt or normal_view.xslt as starting points. Do
+not modify doc_elements.xslt as that could break your renderer in
+future versions of Silva, when new elements may be added.
 
-There is plenty of good documentation on writing xslt-stylesheets on
+There is plenty of good documentation on writing XSLT stylesheets on
 the web and in print, and it really isn't all that hard.
 
 
@@ -168,7 +169,7 @@ it. For example take a look at imagesonrightrenderer.py::
      def __init__(self):
          XSLTRendererBase.__init__(self)
 
-         # for creating your own renderer, copying this file, and 
+         # for creating your own renderer, copying this file, and
          # modifying the self._name and the filename of the stylesheet
          # should be enough
 
@@ -180,14 +181,14 @@ it. For example take a look at imagesonrightrenderer.py::
 
  InitializeClass(ImagesOnRightRenderer)
 
-All this really does is make a 'wrapper' for you stylesheet and give
+All this really does is make a 'wrapper' for your stylesheet and gives
 it a name to use in Silva, so that it can be registered.
 
 
 3. Registering the Renderer
 ===========================
 
-All you have to do now is register that renderer with Silva. This 
+All you have to do now is register the renderer with Silva. This
 happens in rendererreg.py. Add an import statement like::
 
  from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
@@ -197,23 +198,24 @@ for your own renderer and modify the line::
  _REGISTRY = {'Silva Document Version' : [ImagesOnRightRenderer(), BasicXSLTRenderer()]}
 
 
-4. Using the Renderer.
-======================
+4. Using the Renderer
+=====================
 
-There are two ways to use your renderer in Silva. For a specific document
-you can switch between renderers in it's metadata-field 'content renderer'.
-The preview, public preview and public view will start using the selected
-renderer.
+There are two ways to use your renderer in Silva. For a specific
+document you can switch between renderers in its metadata field
+'content renderer'.  The preview, public preview and public view will
+start using the selected renderer.
 
-If you want all instances of a contenttype to start using your new
-renderer, you can set the default renderer by going to the 'services' 
-tab in your Silva root, clicking on 'service renderer registry' and then
-the tab 'Default Renderers'. Switching the default renderer will affect
-all content of that type in your Silva instance. 
+Content can also use a default renderer. You can set the default
+renderer by going to the 'services' tab in your Silva root, clicking
+on 'service renderer registry' and then the tab 'Default
+Renderers'. Switching the default renderer for a type will affect all
+content of that type in your Silva instance, for which "(Default)" is
+the selected renderer.
 
-I suggest you try switching the default renderer for Silva Document 
-Version from 'Normal View (XMLWidgets)', that uses the old XMLwidget 
-rendering system to 'Normal View (XSLT)', that uses the fancy newfangled
-XSLT rendering. The results should look 100% identical, but you may find 
-that the latter gives you a significant speed improvement, especially for
-larger documents.
+Try switching the default renderer for Silva Document Version from
+'Normal View (XMLWidgets)', that uses the old XMLWidget rendering
+system to 'Normal View (XSLT)', that uses the fancy newfangled XSLT
+rendering. The results should look 100% identical, but you may find
+that the latter gives you a significant speed improvement, especially
+for larger documents.
