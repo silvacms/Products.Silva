@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.58 $
+# $Revision: 1.59 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -133,7 +133,7 @@ class GhostVersion(CatalogedVersion):
        public_version = target.get_viewable()
        if public_version and hasattr(public_version.aq_inner, 'fulltext'):
            return public_version.fulltext()
-       return None
+       return ""
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_content_url')
