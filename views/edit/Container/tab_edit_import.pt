@@ -44,7 +44,7 @@
             <th align="left">
               Content
             </th>
-            <th align="left" width="30%">
+            <th align="left" width="40%">
               Note
             </th>
           </tr>
@@ -82,8 +82,10 @@
   </tr>
 
 </table>
+
 <br />
 <br />
+
 <table width="100%" cellspacing="0" cellpadding="5" border="0" tal:condition="docma_running">
   <tr>
     <td>
@@ -110,7 +112,7 @@
             <th align="left">
               Content
             </th>
-            <th align="left" width="30%">
+            <th align="left" width="40%">
               Note
             </th>
           </tr>
@@ -298,7 +300,7 @@
               <!--
                 if (document.forms[0])
                 {
-                  document.write('<input class="button" type="submit" value="submit" value="submit" name="selectButton" value="Select all" title="Select all items in this folder" onClick="toggleSelect(); return false">');
+                  document.write('<input class="button" type="submit" value="Select all..." value="submit" name="selectButton" value="Select all" title="Select all items in this folder" onClick="toggleSelect(); return false">');
                 }
               //-->
             </script>
