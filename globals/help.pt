@@ -14,23 +14,22 @@
 
 <body>
 <a href="http://www.infrae.com/products/silva" 
-  title="Silva info: alt-s"
-  accesskey="s">
+  title="Silva info: alt-i"
+  accesskey="i">
   <img src="silva_icon_32.gif" width="32" height="32" border="0" alt="Silva" />
 </a>
 
 <div class="public">
-
 <h2>
   Silva access keys
 </h2>
 
 <ul class="square">
   <li>
-    The access key on your system may be &#8216;alt&#8217; or something else. (IE users have to to hit the access key and then return for hyperlinks.)
+    The access key on your system may be &#8216;alt&#8217; or something else. On the Macintosh it&#8217;s &#8216;ctrl&#8217;. 
   </li>
   <li>
-    Hover over the link or button to see a tool tip with the key.
+    Hover over the link or button to see a tooltip with the access key.
   </li>
 </ul>
   
@@ -136,7 +135,7 @@ The Metadata, Access, and Status screens as well as their subscreens (such as Lo
 
 <h4>Notes</h4>
 
-<ul class="tips">
+<ul class="square">
   <li>
     Some access keys can conflict with browser menus. However the key works if the focus is in the page (a form element is active or just click in the page).
   </li>
@@ -147,7 +146,6 @@ The Metadata, Access, and Status screens as well as their subscreens (such as Lo
     Don&#8216;t forget that most browsers use alt-left arrow to go back, and alt-right arrow to go forward.
   </li>
 </ul>
-
 <p>
   <span class="subhead">Tip for Mozilla/Netscape users</span><br />
   Using the &#8220;Find As You Type&#8221; feature will make keyboard navigation to hyperlinks &#8211; such as object names &#8211; remarkably easy. See:<br />
@@ -164,7 +162,7 @@ The Metadata, Access, and Status screens as well as their subscreens (such as Lo
   The same documentation is included in the Silva product in &#8216;plain&#8217; structured text, gracefully degraded for text mode (no links, unicode entities, etc.).
 </p>
 <p>
-  If you wish to create additional docs, the hyperlink of the Silva help link can be changed by altering the the help_url property in the Silva root. See the propeties tab in the ZopeManagementInterface.
+  If you wish to create additional docs, the hyperlink of the Silva help link can be changed by altering the the 'help_url' property in the Silva root. See the properties tab in the Zope Management Interface.
 </p>
 <p>
   <br />
