@@ -4,7 +4,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
 # Author: Jan-Wijbrand Kolman (jw@infrae.com)
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 #
 # Issues:
 #  * Testing, testing, testing. It would be rather horrible to 
@@ -51,6 +51,10 @@ NEWLINE_SURROUNDED_ELEMENTS = [
     'table', 
     'tal:block',
     'form',
+    ]
+NO_INDENT_ON = [
+    'head',
+    'body',
     ]
 FIRST_ATTR_ON_NEWLINE = 0
 PUT_CLASS_ATTR_ON_TOP = 1
@@ -99,8 +103,9 @@ class PrettyZPT(saxutils.DefaultHandler):
             if element['data']:
                 self.printCharacters(element['data'])
                 element['data'] = ''
-        
-        self._indent_level += 1
+
+        if not name in NO_INDENT_ON:
+            self._indent_level += 1
         self.printStartingStartElement(name, attrs)
         #append to data stack
         self._data.append(
@@ -123,7 +128,7 @@ class PrettyZPT(saxutils.DefaultHandler):
             self.printEndingStartElement(element['name'], element['attrs'])        
 
     def resolveEntity(self, publicId, systemId):
-        print publicId, systemId
+        sys.stderr.write('resolve: %s %s' % (publicId, systemId))
         return systemId
 
     ####################
@@ -210,7 +215,7 @@ class PrettyZPT(saxutils.DefaultHandler):
             lines = []
             for value in values:
                 lines.append(NEWLINE + multi_indent + value + ';')
-                return ''.join(lines)
+            return ''.join(lines)
 
     def _attributesHelper(self, attrs):
         nonNS_keys = []
@@ -252,7 +257,9 @@ def write(ch):
 
 def main(options, files):
     parser = make_parser()
-    parser.setContentHandler(PrettyZPT())
+    handler = PrettyZPT()
+    parser.setContentHandler(handler)
+    parser.setEntityResolver(handler)
     #parser.setErrorHandler(saxutils.ErrorPrinter())
     xml = StringIO(sys.stdin.read())
     parser.parse(xml)
