@@ -102,24 +102,6 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         versionids_zope.sort(sort_strings_as_ints)
         self.assertEquals(versionids, versionids_zope)
 
-    def test_deleteVersion(self):
-        self.adapter.deleteVersion('9')
-        self.assert_('9' not in self.doc.objectIds('Silva Document Version'))
-        # try to delete a non-existent version
-        self.assertRaises(BadRequest, self.adapter.deleteVersion, '14')
-        # try to delete an approved version
-        self.doc.set_unapproved_version_publication_datetime(DateTime() + 1)
-        self.doc.approve_version()
-        id = self.adapter.getApprovedVersion().id
-        self.assertEquals(id, '10')
-        self.assertRaises(VersioningError, self.adapter.deleteVersion, '10')
-        self.doc.unapprove_version()
-        self.doc.set_unapproved_version_publication_datetime(DateTime())
-        self.doc.approve_version()
-        id = self.adapter.getPublishedVersion().id
-        self.assertEquals(id, '10')
-        self.assertRaises(VersioningError, self.adapter.deleteVersion, '10')
-
     def test_deleteVersions(self):
         self.adapter.deleteVersions(['0', '1'])
         self.assert_('0' not in self.adapter.getVersionIds())
@@ -206,11 +188,10 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(len(current_public), 1)
         self.assertEquals(current_public[0].id, '10')
 
-
     # XXX Integrity checks, these will fail as soon as something
     # in the underlying implementation changes
-    def test_deleteVersion_integrity(self):
-        self.adapter.deleteVersion('9')
+    def test_deleteVersions_integrity(self):
+        self.adapter.deleteVersions(['9'])
         self.assertEquals(self.doc.get_last_closed_version(), '8')
         self.assertEquals(len(self.doc._previous_versions), 9)
 
