@@ -48,7 +48,7 @@ Tab Name
 <span tal:replace="nothing"> _______ tabs lower edge _______ </span>
 <tr>
 <tal:block tal:omit-tag="" tal:repeat="item tabs">
-<tal:block tal:define="is_selected_tab python:item[1] == template.id or item[1] == active_tab">
+<tal:block tal:define="is_selected_tab python:item[1] == template.id">
 <td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
 <td class="tab-edge"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
 <td class="tab-up"
