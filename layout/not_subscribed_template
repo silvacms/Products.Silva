@@ -5,9 +5,12 @@ Content-Type: text/plain; charset=utf-8; format=flowed
 
 
 You (or someone using your email address) requested a cancellation for 
-receiving change notifications for:
+receiving change notifications for the page:
 
-  %(contenttitle)s: %(contenturl)s
+title: %(contenttitle)s
+URL:
+
+%(contenturl)s
 
 However, the supplied emailaddres is currently *not" subscribed. No further
 action is taken.

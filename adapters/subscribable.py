@@ -33,7 +33,9 @@ class Subscription:
         return self._contentsubscribedto
     
 class Subscribable(adapter.Adapter):
-    """
+    """Subscribable adapters potentially subscribable content and container
+    Silva objects and encapsulates the necessary API for 
+    handling subscriptions.
     """
     
     __implements__ = (interfaces.ISubscribable, )
@@ -52,7 +54,7 @@ class Subscribable(adapter.Adapter):
     # ACCESSORS FOR UI
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'isSubscribable')
+        SilvaPermissions.ApproveSilvaContent, 'isSubscribable')
     def isSubscribable(self):
         if self.context.__subscribability__ == NOT_SUBSCRIBABLE:
             return False
@@ -60,12 +62,12 @@ class Subscribable(adapter.Adapter):
         return bool(subscribables)
     
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'subscribability')
+        SilvaPermissions.ApproveSilvaContent, 'subscribability')
     def subscribability(self):
         return self.context.__subscribability__
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getSubscribedEmailaddresses')
+        SilvaPermissions.ApproveSilvaContent, 'getSubscribedEmailaddresses')
     def getSubscribedEmailaddresses(self):
         emailaddresses = list(self.context.__subscriptions__.keys())
         return emailaddresses
@@ -126,18 +128,18 @@ class Subscribable(adapter.Adapter):
     # MODIFIERS
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'setSubscribability')
+        SilvaPermissions.ApproveSilvaContent, 'setSubscribability')
     def setSubscribability(self, flag):
         self.context.__subscribability__ = flag
     
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'subscribe')
+        SilvaPermissions.ApproveSilvaContent, 'subscribe')
     def subscribe(self, emailaddress):
         subscriptions = self.context.__subscriptions__
         subscriptions[emailaddress] = None
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'unsubscribe')
+        SilvaPermissions.ApproveSilvaContent, 'unsubscribe')
     def unsubscribe(self, emailaddress):
         subscriptions = self.context.__subscriptions__
         if subscriptions.has_key(emailaddress):
@@ -217,7 +219,7 @@ __allow_access_to_unprotected_subobjects__ = True
 module_security = ModuleSecurityInfo('Products.Silva.adapters.subscribable')
     
 module_security.declareProtected(
-    SilvaPermissions.ChangeSilvaContent, 'getSubscribable')
+    SilvaPermissions.ApproveSilvaContent, 'getSubscribable')
 def getSubscribable(context):
     if interfaces.IRoot.isImplementedBy(context):
         return SubscribableRoot(context).__of__(context)

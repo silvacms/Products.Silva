@@ -95,14 +95,10 @@ class SubscriptionService(Folder.Folder):
     # Called from subscription UI
     
     security.declareProtected(SilvaPermissions.View, 'requestSubscription')
-    def requestSubscription(self, path, emailaddress):
+    def requestSubscription(self, content, emailaddress):
         # Send out request for subscription
         # NOTE: no doc string, so, not *publishable* TTW        
         #
-        # does path lead to accessible content
-        content = self.restrictedTraverse(path, None)
-        if content is None:
-            raise errors.SubscriptionError('path does not lead to a content object')
         adapted = subscribable.getSubscribable(content)
         # see if content is subscribable
         if adapted is None or not adapted.isSubscribable(): 
@@ -126,14 +122,10 @@ class SubscriptionService(Folder.Folder):
             'subscription_confirmation_template', 'confirm_subscription')
     
     security.declareProtected(SilvaPermissions.View, 'requestCancellation')
-    def requestCancellation(self, path, emailaddress):
+    def requestCancellation(self, content, emailaddress):
         # Send out request for cancellation of the subscription
         # NOTE: no doc string, so, not *publishable* TTW        
         #
-        # does path lead to accessible content
-        content = self.restrictedTraverse(path, None)
-        if content is None:
-            raise errors.SubscriptionError('path does not lead to a content object')
         adapted = subscribable.getSubscribable(content)
         # see if content is subscribable
         if adapted is None:
@@ -192,8 +184,10 @@ class SubscriptionService(Folder.Folder):
         if not self._enabled:
             return
         data = {}
-        data['contenttitle'] = content.get_title().encode('utf-8')
         data['contenturl'] = content.absolute_url()
+        data['contenttitle'] = content.get_title().encode('utf-8')
+        data['subject'] = self._metadata(content, 'silva-extra', 'subject')
+        data['description'] = self._metadata(content, 'silva-extra', 'content_description')
         adapted = subscribable.getSubscribable(content)
         assert adapted # content should support subscriptions
         template = str(self['publication_event_template'])
@@ -208,6 +202,13 @@ class SubscriptionService(Folder.Folder):
     
     # Helpers
                 
+    def _metadata(self, content, setname, fieldname):
+        metadata_service = content.service_metadata
+        value = metadata_service.getMetadataValue(content, setname, fieldname)
+        if type(value) == type(u''):
+            value = value.encode('utf-8')
+        return value
+    
     _emailpattern = re.compile(
         '^[0-9a-zA-Z_&.%+-]+@([0-9a-zA-Z]([0-9a-zA-Z-]*[0-9a-zA-Z])?\.)+[a-zA-Z]{2,6}$')
     

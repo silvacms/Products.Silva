@@ -1,6 +1,6 @@
-# Copyright (c) 2004 Infrae. All rights reserved.
+
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -39,36 +39,28 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
     def test_requestSubscription(self):
         # XXX only test the exception-raising code paths, since I don't
         # yet know how to test the email sending
-        path = self.doc.getPhysicalPath() + ('foobar', )
-        emailaddress = "foo@localhost"
-        self._testException(
-            errors.SubscriptionError, 
-            'path does not lead to a content object',
-            self.service.requestSubscription, path, emailaddress)
-        path = self.service.getPhysicalPath() # use something not subscribable
+        #
+        # first use something not subscribable at all
         emailaddress = "foo@localhost"
         self._testException(
             errors.SubscriptionError, 
             'content is not subscribable',
-            self.service.requestSubscription, path, emailaddress)
+            self.service.requestSubscription, self.service, emailaddress)
         # even if all parameters are correct, content has to have its subscribability set
-        path = self.doc.getPhysicalPath()
         emailaddress = "foo@localhost"
         self._testException(
             errors.SubscriptionError, 
             'content is not subscribable',
-            self.service.requestSubscription, path, emailaddress)
+            self.service.requestSubscription, self.doc, emailaddress)
         # Set subscribability, invalid emailaddress though
-        path = self.doc.getPhysicalPath()
         emailaddress = "foo bar baz"
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
         self._testException(
             errors.EmailaddressError, 
             'emailaddress not valid',
-            self.service.requestSubscription, path, emailaddress)
+            self.service.requestSubscription, self.doc, emailaddress)
         # emailaddress already subscribed
-        path = self.doc.getPhysicalPath()
         emailaddress = "foo@localhost.com"
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
@@ -76,37 +68,30 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         self._testException(
             errors.EmailaddressError, 
             'emailaddress already subscribed',
-            self.service.requestSubscription, path, emailaddress)
+            self.service.requestSubscription, self.doc, emailaddress)
 
     def test_requestCancellation(self):
         # XXX only test the exception-raising code paths, since I don't
         # yet know how to test the email sending
-        path = self.doc.getPhysicalPath() + ('foobar', )
-        emailaddress = "foo@localhost"
-        self._testException(
-            errors.SubscriptionError, 
-            'path does not lead to a content object',
-            self.service.requestCancellation, path, emailaddress)
-        path = self.service.getPhysicalPath() # use something not subscribable
+        #
+        # first use something not subscribable at all
         emailaddress = "foo@localhost"
         self._testException(
             errors.SubscriptionError, 
             'content does not support subscriptions',
-            self.service.requestCancellation, path, emailaddress)
+            self.service.requestCancellation, self.service, emailaddress)
         # invalid emailaddress
-        path = self.doc.getPhysicalPath()
         emailaddress = "foo bar baz"
         self._testException(
             errors.EmailaddressError, 
             'emailaddress not valid',
-            self.service.requestCancellation, path, emailaddress)
+            self.service.requestCancellation, self.doc, emailaddress)
         # emailaddress was not subscribed
-        path = self.doc.getPhysicalPath()
         emailaddress = "foo@localhost.com"
         self._testException(
             errors.EmailaddressError, 
             'emailaddress was not subscribed',
-            self.service.requestCancellation, path, emailaddress)
+            self.service.requestCancellation, self.doc, emailaddress)
             
     def _testException(self, klass, message, method, *args, **kwargs):
         try:
