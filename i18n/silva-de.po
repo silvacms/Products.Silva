@@ -144,9 +144,6 @@ msgstr "Dieser Inhalt war veröffentlicht, wurde aber geschlossen.<br/>"
 "Auf Wunsch kann im <a href=\"tab_edit\" title=\"editor\">Editor</a> an"
 " einer Kopie weiter gearbeitet werden."
 
-msgid "select_all"
-msgstr "<u>a</u>lles auswählen"
-
 msgid "reject"
 msgstr "Ablehnen"
 
@@ -228,11 +225,11 @@ msgstr "vorhandene veröffentlichte Version"
 
 msgid "existing_pub_version_description"
 msgstr "Hinweis: <span class=\"warning\">Eine ältere Version diesen Inhalts"
-" ist zur Zeit veröffentlicht.</span><br \> Durch veröffentlichen dieser"
+" ist zur Zeit veröffentlicht.</span><br /> Durch veröffentlichen dieser"
 " Version wird die derzeit öffentliche Version überschrieben."
 
 msgid "revert_previous"
-msgstr "Arbeitskopie mit veröffentlichte Version ersetzen"
+msgstr "Arbeitskopie mit veröffentlichter Version ersetzen"
 
 msgid "revert_previous_description"
 msgstr "Die derzeit bearbeitete Version kann durch die ältere"
@@ -250,15 +247,6 @@ msgstr "und anlegen einer neuen Version"
 
 msgid "approve_request_closed"
 msgstr "und schließen der Version"
-
-msgid "draft"
-msgstr "Entwurf"
-
-msgid "pending"
-msgstr "wartend"
-
-msgid "approved"
-msgstr "genehmigt"
 
 msgid "export..."
 msgstr "Exportieren"
@@ -826,8 +814,6 @@ msgstr "Kurzwahl: alt-l"
 msgid "access key: alt-o"
 msgstr "Kurzwahl: alt-o"
 
-msgid "access key: alt-e"
-msgstr "Kurzwahl: alt-e"
 #.   <h3>
 #.                        Access restriction by Role
 #.                       </h3>
@@ -943,13 +929,6 @@ msgstr "Vorlage auswählen"
 #, fuzzy
 msgid "choose_roles"
 msgstr "Rollen für Anfrage auswählen"
-
-#.   <span define="global new_versionables python: closed and 1 or new_versionables;">
-#.                 closed
-#.               </span>
-#: from ../Silva/views/edit/Container/tab_status.pt
-msgid "closed"
-msgstr "geschlossen"
 
 #.   <b class="warning">This is a closed version. You see it, but the public won't!</b>
 #: from ../Silva/views/edit/tab_preview.pt
@@ -1757,11 +1736,6 @@ msgstr "zurück zum vorherigen Bildschirm"
 msgid "s"
 msgstr "s"
 
-#.   <span>scaled</span>
-#: from ../Silva/views/edit/Asset/Image/edit.pt
-msgid "scaled"
-msgstr "skaliert"
-
 #.   <h3>
 #.                       Search results
 #.                     </h3>
@@ -1868,6 +1842,15 @@ msgstr "Rollen aktueller Ebene"
 msgid "access_public_open"
 msgstr "Öffentlich zugänglich"
 
+msgid "Default"
+msgstr "Vorgabe"
+
+msgid "(Default)"
+msgstr "(Vorgabe)"
+
+msgid "Anonymous"
+msgstr "Anonym"
+
 msgid "Viewer"
 msgstr "Betrachter"
 
@@ -1895,32 +1878,17 @@ msgstr "Rolle wählen:"
 msgid "assign_role"
 msgstr "Rolle zuweisen"
 
-msgid "select a role to assign"
-msgstr "Rolle für die Zuweisung auswählen."
-
 msgid "assign"
 msgstr "zuweisen"
 
 msgid "Assign role"
-msgstr "Rolle der Gruppe zuweisen"
+msgstr "Rolle zuweisen"
 
 msgid "Assign role to group"
 msgstr "Rolle der Gruppe zuweisen"
 
-msgid "assign role"
-msgstr "Rolle zuweisen"
-
-msgid "assign a local role to selected user(s)"
-msgstr "Rolle ausgewählten Benutzern zuweisen."
-
-msgid "revoke role"
-msgstr "Zuweisung zurücksetzen"
-
 msgid "revoke selected role(s) from selected user(s)"
 msgstr "Rollenzuweisung für ausgewählte Benutzer zürucksetzen."
-#, Fuzzy
-msgid "select a role to assign"
-msgstr "Rolle für die Zuweisung auswählen."
 
 msgid "restrict access to users with a specific role"
 msgstr "Zugangsbeschränkung für bestimmte Benutzerrollen."
