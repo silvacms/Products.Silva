@@ -7,6 +7,10 @@ Silva changes
 
     Features Added
 
+        - New metadata architecture, which provides multiple configurable
+          metadata sets. Sets can defined on a per object type basis and
+          uses the catalog to make this metadata searchable.
+
         - Unicode support. All content and meta data can contain any character
           defined by the unicode standard. On upgrade you have replace or
           update your index_html set the the correct encoding; the default
