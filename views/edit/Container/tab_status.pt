@@ -25,7 +25,7 @@
 <tr class="topcontrols">
 <td align="left" colspan="6">
 <input class="button" type="submit" name="tab_status_export:method" value=" Export all..." title="Export all items in this overview" style="float:right;"/>
-<a href="treelink" title="Up to containing publication"
+<a href="treelink" title="Up to containing publication - alt-[" accesskey="["
   tal:condition="python:model != model.get_root()"
   tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/tab_status'">
 <img width="16" height="16" border="0" alt="Up to containing Publication" hspace="2"
@@ -34,7 +34,7 @@
 <span class="tablehead3">Publication
 <span tal:condition="python:model != model.get_publication()"
   tal:omit-tag="">branch</span></span>
-<a href="../../edit/tab_status" title="Up one level"
+<a href="../../edit/tab_status" title="Up one level - alt-]" accesskey="]"
   tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="3" /></a>
 </td>
 </tr>

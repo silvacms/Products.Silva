@@ -1,5 +1,7 @@
 <!-- ___________________________ start index_html ___________________________ -->
-<tal:block define="global breadcrumb_vein string:Contents;" />
+<tal:block define="global breadcrumb_vein string:Contents;
+                   global active_tab string:tab_edit;
+                   " />
 <html metal:use-macro="here/macro_index/macros/master">
 
 <div class="margins" metal:fill-slot="main">
@@ -53,7 +55,7 @@ Notes
 <input tal:condition="python: object.getId() == 'index'" type="text" name="name" style="width: 100%" tal:attributes="name string:title_${object/getId}; value object/get_title_editable" />
 </td>
 <td>
-<span tal:condition="python: object.getId() == 'index'" style="color:red;">
+<span class="error" tal:condition="python: object.getId() == 'index'">
 Changes the title of the folder!
 </span>
 </td>
@@ -64,10 +66,10 @@ Changes the title of the folder!
 
 <tr class="controls">
 <td colspan="1">
-<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" />
+<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
 </td>
 <td colspan="4" align="right">
-<input class="button" type="submit" value=" Rename " />
+<input class="button" type="submit" value=" Rename " title="Access key: alt-r" accesskey="r" />
 </td>
 </tr>
 </table>

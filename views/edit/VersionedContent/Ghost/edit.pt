@@ -26,7 +26,7 @@ Notes
 
 <tr class="focus" valign="top">
 <td align="right">
-Url:
+Path:
 </td>
 <td align="right">
 <span class="required">*</span>
@@ -36,7 +36,7 @@ Url:
   tal:attributes="value content_url"/>
 </td>
 <td class="leadedbody">
-Url: location of originating content.
+Path to original (starts with a slash).
 </td>
 </tr>
 
@@ -55,7 +55,7 @@ Link:
 </a>
 </td>
 <td class="leadedbody">
-&nbsp;
+&nbsp;<span tal:replace="nothing"> _______ FIXME: add 'Locate original' button _______ </span>
 </td>
 </tr>
 
@@ -75,10 +75,10 @@ Problem:
 
 <tr class="controls">
 <td colspan="2">
-<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" />
+<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c" onClick="history.back()" />
 </td>
 <td align="right" colspan="2">
-<input class="button" type="submit" name="add_submit" value=" Save ghost " />
+<input class="button" type="submit" name="add_submit" value=" Save ghost "  title="Access key: alt-s" accesskey="s" />
 </td>
 </tr>
 </table>

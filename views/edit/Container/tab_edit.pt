@@ -20,12 +20,12 @@
 <tr class="topcontrols" valign="bottom">
   <!-- top row of complete table with sidebar -->
   <td width="22%" nowrap="1">
-    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication"
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication - alt-[" accesskey="["
       tal:condition="python:model != model.get_root()"
       tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/tab_edit'"><img width="16" height="16" border="0" alt="Up to containing Publication" hspace="3"
       tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%silva_root, '%s/globals/up_tree_gray.gif'%silva_root)" /></a>
     <span class="tablehead3">Publication</span>
-    <a href="../../edit/tab_edit" title="Up one level"
+    <a href="../../edit/tab_edit" title="Up one level - alt-]" accesskey="]"
       tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
   </td>
   <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>

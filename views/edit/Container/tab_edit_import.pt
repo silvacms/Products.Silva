@@ -1,7 +1,7 @@
 <init tal:omit-tag=""
   tal:define="global view here;
               global active_tab string:tab_edit;
-              global breadcrumb_vein string:Contents;
+              global breadcrumb_vein string:Import;
               global lastclass string:focus-cycle;
               global silva_permissions here/get_silva_permissions;
               global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
@@ -14,8 +14,9 @@
 <!-- ____________________________ start index_html/slot main ___________________________ -->
 
 <div class="margins">
-<h2>Import options for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
-<a href="#" onClick="document.location = 'tab_edit_import'; return false;">&lt;&lt; refresh this page &gt;&gt;</a><br />
+<h3><a href="tab_edit" title="Up to top of Edit tab">Contents
+  <img tal:attributes="src string:${silva_root}/globals/up_gray.gif" width="16" height="11" border="0" alt="Up to top of Edit tab" /></a></h3>
+<h2 class="worksheet">Import options for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
 
 <div class="worksheet borders top bottom left right">
 
@@ -29,9 +30,7 @@
           <tr>
             <td colspan="3">
               <h3>Import Silva XML (.slv)
-                <img src="pixel.gif" width="1px" height="14px"
-                     tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-              </h3>
+	      </h3>
             </td>
           </tr>
 
@@ -44,11 +43,11 @@
           </tr>
 
           <tr class="focus-cycle" valign="top">
-            <td align="left" width="20%">
+            <td align="left">
                 File to upload:
             </td>
             <td align="left">
-                <input type="file" name="importfile" />
+                <input type="file" size="40" name="importfile" />
             </td>
             <td align="right" width="35%">
                 Choose an XML file to import (must be valid Silva XML)
@@ -56,8 +55,11 @@
           </tr>
 
           <tr class="controls">
-            <td colspan="3" align="right">
-                <input class="button" type="submit" name="tab_edit_import_xml:method" value=" Import " />
+            <td>
+                <input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
+            </td>
+            <td colspan="2" align="right">
+                <input class="button" type="submit" name="tab_edit_import_xml:method" value=" Import " title="Access key: alt-i" accesskey="i" />
             </td>
           </tr>
         </table>
@@ -68,7 +70,9 @@
   </tr>
 
 </table>
-
+<br />
+&nbsp;<a href="#" onClick="document.location = 'tab_edit_import'; return false;">&lt;&lt; refresh this page &gt;&gt;</a><br />
+<br />
 <table width="100%" cellspacing="0" cellpadding="5" border="0" tal:condition="docma_running">
   <tr>
     <td>
