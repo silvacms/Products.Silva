@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53 $
+# $Revision: 1.54 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -14,11 +14,13 @@ import SimpleMembership
 import ExtendedMembership
 import DocmaService
 import Group
+import VirtualGroup
 import EditorSupportNested
 # enable Formulator support for FileSystemSite
 from Products.Formulator import FSForm
 # so we can register directories for FileSystemSite
-from Products.FileSystemSite.DirectoryView import registerDirectory, registerFileExtension
+from Products.FileSystemSite.DirectoryView import registerDirectory, \
+    registerFileExtension
 from Products.FileSystemSite.FSImage import FSImage
 # enable .ico support for FileSystemSite
 registerFileExtension('ico', FSImage)
@@ -27,7 +29,7 @@ def initialize(context):
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
         Document, Folder, Root, Publication, Ghost, Image, File,
-        DemoObject, Indexer, SQLDataSource, Group],
+        DemoObject, Indexer, SQLDataSource, Group, VirtualGroup],
         install, depends_on=None)
 
     context.registerClass(
