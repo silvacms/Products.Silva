@@ -22,13 +22,13 @@ class XMLSourceRegistry:
     def __init__(self):
         self._mapping = {}
         self._fallback = None
-        
+
     def registerFallbackXMLSource(self, fallback):
         self._fallback = fallback
-        
+
     def registerXMLSource(self, klass, xml_source):
         self._mapping[klass] = xml_source
-        
+
     def getXMLSource(self, context):
         xmlsource = self._mapping.get(context.__class__, None)
         if xmlsource is None:
@@ -61,7 +61,7 @@ def initializeXMLSourceRegistry():
     # XXX move to SilvaDocument
     reg.registerXMLSource(Document, DocumentXMLSource)
     reg.registerXMLSource(DocumentVersion, DocumentVersionXMLSource)
-    
+
 class BaseXMLSource:
     def __init__(self, context):
         self.context = context
@@ -74,25 +74,25 @@ class BaseXMLSource:
         result = f.getvalue()
         f.close()
         return result
-    
+
     def xmlToFile(self, file, settings):
         """Output the XML to a file
         """
-        reader = saxutils.XMLGenerator(file, 'UTF-8')
+        reader = saxutils.XMLGenerator(file, 'utf-8')
         self.xmlToSax(reader, settings)
-        
+
     def xmlToSax(self, reader, settings):
-        """Export self.context to XML Sax-events 
+        """Export self.context to XML Sax-events
         """
         reader.startPrefixMapping(None, self.ns_default)
         reader.startPrefixMapping('doc', SilvaDocumentNS)
         mappings = settings.getMappings()
         for prefix in mappings.keys():
             reader.startPrefixMapping(prefix, mappings[prefix])
-        for set in self.context.service_metadata.collection.getMetadataSets(
-            ):
+        for set in self.context.service_metadata.collection.getMetadataSets():
             reader.startPrefixMapping(set.id, set.metadata_uri)
         # XXX start all registered prefixmappings here
+        reader.startDocument()
         self._startElement(
             reader,
             'silva',
@@ -133,7 +133,7 @@ class BaseXMLSource:
         optional attributes
         """
         d = {}
-        
+
         if attrs is not None:
             for key, value in attrs.items():
                 d[(None, key)] = value
@@ -141,25 +141,25 @@ class BaseXMLSource:
             (ns, name),
             None,
             d)
-        
+
     def _endElementNS(self, reader, ns, name):
         """Ends a named element in the provided namespace
         """
         reader.endElementNS(
             (ns, name),
             None)
-        
+
     def _startElement(self, reader, name, attrs=None):
         """Starts a named XML element in the default namespace with optional
         attributes
         """
         self._startElementNS(reader, self.ns_default, name, attrs)
-        
+
     def _endElement(self, reader, name):
         """Ends a named element in the default namespace
         """
         self._endElementNS(reader, self.ns_default, name)
-            
+
 class SilvaBaseXMLSource(BaseXMLSource):
     """Base class to declare the Silva namespace.
     """
@@ -168,7 +168,7 @@ class SilvaBaseXMLSource(BaseXMLSource):
 class VersionXMLSource(SilvaBaseXMLSource):
     """Base class for Versions. May have its own methods in the future.
     """
-    
+
 class VersionedContentXMLSource(SilvaBaseXMLSource):
     """Base Class for all versioned content
     """
@@ -216,7 +216,7 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
                 reader.characters(unicode(str(expiration_datetime)))
         self._endElement(reader, 'expiration_datetime')
         self._endElement(reader, 'version')
-        
+
     def _versions(self, reader, settings):
         """Export the XML of the versions themselves.
         """
@@ -229,15 +229,15 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
             # guess version?
             getXMLSource(
                 self.context.get_previewable())._sax(reader, settings)
-            
+
     def _metadata(self, reader, settings):
         """Versioned Content has no metadata, the metadata is all on the
         versions themselves.
         """
-        return 
-    
+        return
+
 class FileXMLSource(SilvaBaseXMLSource):
-    """Export a Silva File object to XML. 
+    """Export a Silva File object to XML.
     """
     # XXX This needs to change or be removed. It's completely useless as is.
     def _sax(self, reader, settings):
@@ -256,7 +256,7 @@ class FolderXMLSource(SilvaBaseXMLSource):
         self._metadata(reader, settings)
         self._startElement(reader, 'content', {})
         for object in self.context.get_ordered_publishables():
-            if (IPublication.isImplementedBy(object) and 
+            if (IPublication.isImplementedBy(object) and
                     not self.context.with_sub_publications):
                 continue
             getXMLSource(object)._sax(reader, settings)
@@ -271,13 +271,13 @@ class PublicationXMLSource(SilvaBaseXMLSource):
         self._metadata(reader, settings)
         self._startElement(reader, 'content', {})
         for object in self.context.get_ordered_publishables():
-            if (IPublication.isImplementedBy(object) and 
+            if (IPublication.isImplementedBy(object) and
                     not self.context.with_sub_publications):
                 continue
             getXMLSource(object)._sax(reader, settings)
         self._endElement(reader, 'content')
         self._endElement(reader, 'publication')
-    
+
 class LinkXMLSource(VersionedContentXMLSource):
     """Export a Silva Link object to XML.
     """
@@ -328,7 +328,7 @@ class GhostVersionXMLSource(VersionXMLSource):
             self._endElement(reader, 'haunted_url')
             getXMLSource(content)._sax(reader, settings)
         self._endElement(reader, 'content')
-        
+
 class GhostFolderXMLSource(SilvaBaseXMLSource):
     """Export a Silva Ghost Folder object to XML.
     """
@@ -348,13 +348,13 @@ class GhostFolderXMLSource(SilvaBaseXMLSource):
             return
         self._startElement(reader, 'content', {})
         for object in content.get_ordered_publishables():
-            if (IPublication.isImplementedBy(object) and 
+            if (IPublication.isImplementedBy(object) and
                     not self.context.with_sub_publications):
                 continue
             getXMLSource(object)._sax(reader, settings)
-        self._endElement(reader, 'content')      
-        self._endElement(reader, 'content')      
-        self._endElement(reader, 'ghost_folder')      
+        self._endElement(reader, 'content')
+        self._endElement(reader, 'content')
+        self._endElement(reader, 'ghost_folder')
 
 # XXX Move to SilvaDocument
 
@@ -398,13 +398,13 @@ class DocumentVersionXMLSource(VersionXMLSource):
             if node.nodeValue:
                 reader.characters(node.nodeValue)
         self._endElementNS(reader, SilvaDocumentNS, node.nodeName)
-        
+
 class ExportSettings:
     def __init__(self):
         self._workflow = 1
         self._all_versions = 1
         self._mappings = {}
-        
+
     def setOnlyPublishedNoWorkflow(self):
         self._workflow = 0
         self._all_versions = 0
@@ -414,10 +414,9 @@ class ExportSettings:
 
     def allVersions(self):
         return self._all_versions
-    
+
     def setMappings(self, mappings):
         self._mappings = mappings
-        
+
     def getMappings(self):
         return self._mappings
-    
