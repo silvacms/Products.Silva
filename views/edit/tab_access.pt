@@ -218,7 +218,7 @@
                   </tr>
                 </tal:block>
                 <tal:block replace="nothing"> 
-                 _____ shouldn't be needed, since the entire form is conditioned _____
+                  <!-- shouldn't be needed, since the entire form is conditioned -->
                 </tal:block>
                 <tr class="even"
                   tal:condition="not:requested_roles">
