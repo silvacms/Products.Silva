@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.47 $
+# $Revision: 1.48 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -211,20 +211,24 @@ class SilvaObject(Security):
         """
         pass
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_xml')
     def get_xml(self, with_sub_publications=0, last_version=0):
-        """Get XML for object and everything under it.
+        """Get XML-Document in UTF8-Encoding for object (recursively).
+
+        Note that you get a full document with a processing instruction.
+        if you want to get "raw" xml, use the 'to_xml' machinery.
         """
         context = XMLExportContext()
         context.f = StringIO()
-        context.f.write(u'<?xml version="1.0" ?>\n')
         context.with_sub_publications = with_sub_publications
         context.last_version = last_version
+
+        # construct xml and return UTF8-encoded string
+        context.f.write(u'<?xml version="1.0" encoding="UTF-8" ?>\n')
         self.to_xml(context)
-        # XXX HACK
         result = context.f.getvalue()
-        return result.encode('UTF-8') #return f.getvalue()
+        return result.encode('UTF-8') 
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml') 
