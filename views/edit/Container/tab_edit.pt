@@ -55,14 +55,7 @@
                 </tal:block>
                 <tr class="top-controls">
                   <td colspan="6">
-                    <a class="navigation"
-                      style="float: right;"
-                      href="tab_edit_import"
-                      title="import XML data - alt-i"
-                      accesskey="i"
-                      >
-                      Import...
-                    </a>
+                    <div style="float: left; margin-left:0.2em; padding:0 0px 0 2px;">
                     <input class="navigation"
                       name="add_object:method"
                       type="submit"
@@ -85,6 +78,16 @@
                           tal:attributes="value addable/name" />
                       </tal:block>
                     </select>
+                    </div>
+                    <a class="navigation"
+                      style="float: right;"
+                      href="tab_edit_import"
+                      title="import XML data - alt-i"
+                      accesskey="i"
+                      >
+                      Import...
+                    </a>
+
                   </td>
                 </tr>
               </thead>
@@ -367,7 +370,7 @@
                   <td colspan="99">
                     <tal:block tal:condition="python:(default_document or publishables or assets)">
                       <tal:block condition="may_change_content">
-                        <div style="float: left; background:#394e4e; margin-left:0.2em; padding:0 0px 0 2px;">
+                        <div style="float: left; margin-left:0.2em; padding:0 0px 0 2px;">
                           <select name="new_position"
                             title="move selected items to">
                             <option value="Position">

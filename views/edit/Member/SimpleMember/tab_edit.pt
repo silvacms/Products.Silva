@@ -58,7 +58,7 @@
       <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')">&nbsp;</span>
       <input class="button" type="submit" name="approve_visitor:method" value="Approve now"
         title="Approve member: alt-a" accesskey="a"
-        tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != request.AUTHENTICATED_USER.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()" />
+        tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != user.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()" />
       </span>
     </td>
   </tr>
@@ -83,7 +83,7 @@
 </tal:block>
 
 <tal:block condition="not:silva_permissions/ChangeSilvaAccess">
-  <h3>Dear <span tal:content="python:request.AUTHENTICATED_USER.getId()" /><br />
+  <h3>Dear <span tal:content="python:user.getId()" /><br />
 You are not allowed to edit membership data of member <span tal:content="model/id" /></h3>
   <tal:comment condition="nothing">Add read only view here?</tal:comment>
 </tal:block>

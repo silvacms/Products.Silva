@@ -26,7 +26,7 @@
       <div class="hilight borders top bottom left right"
         style="padding: 0.5em; margin: 1em 3%; 2em 3%;">
         <tal:check
-          condition="python:request.AUTHENTICATED_USER.has_permission('Change Silva access', model)">
+          condition="python:user.has_permission('Change Silva access', model)">
           <!-- this form deliberately has no submit button -->
           <form action="." method="POST">
             <table cellspacing="0" cellpadding="3" border="0">

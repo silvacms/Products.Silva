@@ -58,7 +58,7 @@
       </tal:block>
     </tal:block>
 
-    <tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'], object=model)">
+    <tal:block condition="python:user.has_role(['Manager'], object=model)">
       <a class="manage"
         title="Zope manage_main: alt-."
         accesskey="."

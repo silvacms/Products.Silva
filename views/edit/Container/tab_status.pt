@@ -213,12 +213,26 @@
                     <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
                   </td>
                 </tr>
+                <tal:block replace="nothing">
+                  ______________ editor controls ______________
+                </tal:block>
+                <tr class="controls controls-1">
+                  <td class="align-right"
+                    colspan="99">
+                    <label 
+                      for="publish_now_flag" 
+                      title="access key: alt-u" 
+                      accesskey="u">
+                      <span class="widebody">
+                        p<u>u</u>blish&nbsp;now?
+                      </span>
+                    </label>
+                    <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+                  </td>
+                </tr>
                 <tr class="controls"
                   tal:condition="may_approve_content">
-                  <tal:block replace="nothing">
-                    ______________ editor controls ______________
-                  </tal:block>
-                  <td colspan="5">
+                  <td colspan="4">
                     <input class="button"
                       accesskey="j"
                       name="tab_status_reject:method"
@@ -244,16 +258,8 @@
                       type="submit"
                       value="Change timings" />
                   </td>
-                  <td class="align-right">
-                    <label 
-                      for="publish_now_flag" 
-                      title="access key: alt-u" 
-                      accesskey="u">
-                      <span class="widebody">
-                        p<u>u</u>blish&nbsp;now?
-                      </span>
-                    </label>
-                    <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+                  <td class="align-right"
+                    colspan="2">
                     <input class="button"
                       accesskey="o"
                       name="tab_status_approve:method"
