@@ -104,9 +104,10 @@
             <td align="left">
               <input class="warningbutton"
                 name="remove_users_from_group:method"
-                title="Remove selected user(s) from this group."
                 type="submit"
                 value="Remove users"
+                title="Remove selected user(s) from this group: alt-r"
+                accesskey="r"
                 onClick="return confirm('Really remove?')"
                 tal:condition="userids" />
             </td>
