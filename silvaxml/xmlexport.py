@@ -25,6 +25,7 @@ def initializeXMLExportRegistry():
     from Products.Silva.Link import Link, LinkVersion
     from Products.Silva.Image import Image
     from Products.Silva.AutoTOC import AutoTOC
+    from Products.Silva.Indexer import Indexer
     exporter = theXMLExporter
     exporter.registerNamespace('silva-content', 'http://infrae.com/namespaces/metadata/silva')
     exporter.registerNamespace('silva-extra', 'http://infrae.com/namespaces/metadata/silva-extra')
@@ -40,6 +41,7 @@ def initializeXMLExportRegistry():
     exporter.registerProducer(FileSystemFile, FileProducer)
     exporter.registerProducer(Image, ImageProducer)
     exporter.registerProducer(AutoTOC, AutoTOCProducer)
+    exporter.registerProducer(Indexer, IndexerProducer)
     exporter.registerFallbackProducer(ZexpProducer)
 
 class SilvaBaseProducer(xmlexport.BaseProducer):
@@ -230,16 +232,14 @@ class GhostVersionProducer(SilvaBaseProducer):
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
         content = self.context.get_haunted_unrestricted()
-        if content is not None:
-            meta_type = content.meta_type
-            self.startElement('metatype')
-            self.handler.characters(meta_type)
-            self.endElement('metatype')
-            content = content.get_viewable()
-            self.startElement('haunted_url')
-            self.handler.characters(self.context.get_haunted_url())
-            self.endElement('haunted_url')
-            self.subsax(content)
+        meta_type = content is not None and content.meta_type or "" 
+        haunted_url = self.context.get_haunted_url()
+        self.startElement('metatype')
+        self.handler.characters(meta_type)
+        self.endElement('metatype')
+        self.startElement('haunted_url')
+        self.handler.characters(haunted_url)
+        self.endElement('haunted_url')
         self.endElement('content')
 
 class GhostFolderProducer(SilvaBaseProducer):
@@ -250,11 +250,12 @@ class GhostFolderProducer(SilvaBaseProducer):
         self.startElement('content')
         content = self.context.get_haunted_unrestricted()
         meta_type = content is not None and content.meta_type or "" 
+        haunted_url = self.context.get_haunted_url()
         self.startElement('metatype')
         self.handler.characters(meta_type)
         self.endElement('metatype')
         self.startElement('haunted_url')
-        self.handler.characters(self.context.get_haunted_url())
+        self.handler.characters(haunted_url)
         self.endElement('haunted_url')
         if content is None:
             return
@@ -319,6 +320,14 @@ class ImageProducer(SilvaBaseProducer):
         self.handler.characters(self.getInfo().getAssetPathId(path))
         self.endElement('asset_id')
         self.endElement('image_asset')
+
+class IndexerProducer(SilvaBaseProducer):
+    """Export an IndexerProducer to XML.
+    """
+    def sax(self):
+        self.startElement('indexer', {'id': self.context.id})
+        self.metadata()
+        self.endElement('indexer')
 
 class ZexpProducer(SilvaBaseProducer):
     """Export any unknown content type to a zexp in the zip-file.
