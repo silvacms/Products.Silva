@@ -11,22 +11,9 @@
   global silva_permissions here/get_silva_permissions;
   dummy model/security_trigger;" />
 
-<div class="margins">
-
-<h2>
-<img src="%s" width="16" height="16" alt="%s"
- tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-  Silva objects available at <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
-</h2>
-</div>
-
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
 <span tal:replace="nothing"> ______________ framing table header ______________ </span>
-<tr tal:replace="nothing">
-  <td class="divider" colspan="3"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></td>
-</tr>
-
-<tr class="topcontrols" valign="bottom">
+<tr class="controls" valign="bottom">
   <td width="22%" nowrap="1">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication: alt-[" accesskey="["
       tal:condition="python:model != model.get_root()"
@@ -36,9 +23,8 @@
     <a href="../../edit/tab_edit_new" title="Up one level: alt-]" accesskey="]"
       tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
   </td>
-  <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
+  <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" /></td>
   <td class="transparent">
-    <span class="back3" style="margin-left:20px;">&nbsp;Object descriptions</span>  
   </td>
   <td tal:replace="nothing">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s"
@@ -94,11 +80,19 @@
   <td class="transparent">
   <span tal:replace="nothing"> _____________________ objects subtable _____________________ </span>
 
+<h2 style="margin-left:24px;">
+<img src="%s" width="16" height="16" alt="%s"
+ tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+  Silva objects available at <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
+</h2>
+
+<span class="back3" style="margin-left:24px;">Object descriptions</span>  
+
 <table cellspacing="0" cellpadding="4" border="0" width="96%" style="margin-left:20px;margin-right:20px;"
   tal:condition="silva_permissions/ChangeSilvaContent">
 <tr valign="top">
   <td colspan="2">
-    <p class="readable" style="margin-top:0.5em;">
+    <p class="readable" style="margin-top:0.3em;">
       Following are descriptions of Silva objects that can be added at this location. Click a name to add it. For additional information about the item see the Silva documentation.
       <br />
     </p>
@@ -109,10 +103,10 @@
 <tal:repeat repeat="addable model/get_silva_addables">
 
 <tr valign="bottom">
-  <td width="16"><img src="%s" width="16" height="16" alt="%s"
-    tal:replace="structure python:view.render_icon(addable['name'])" /></td>
-  <td>
-    <div class="back4" style="margin-top:0.5em;">
+  <td  colspan="2">
+    <div class="back4" style="margin-top:0.2em;">
+      <img src="%s" width="16" height="16" alt="%s"
+        tal:replace="structure python:view.render_icon(addable['name'])" />&nbsp;
       <a href="#"
         tal:content="addable/name" 
         tal:attributes="href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+')">Addable
@@ -122,7 +116,7 @@
 </tr>
 
 <tr valign="top">
-  <td>
+  <td width="16">
   </td>
   <td>
     <p class="readable"
@@ -146,7 +140,8 @@
 </tr>
 
 <tr>
-  <td class="divider" colspan="2"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></td>
+  <td class="divider" colspan="2"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+  <td></td>
 </tr>
 </table>
 
