@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.46 $
+# $Revision: 1.47 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -93,14 +93,11 @@ class Security:
         #self.manage_permission('Access contents information',
         #                       roles=[],
         #                       acquire=1)
-        print "Role info:", self.rolesOfPermission('View')
-        print "Going to open to public"
         allowed_roles = ['Anonymous', 'Authenticated', 'Viewer', 'Reader', 'Author', 'Editor',
                          'ChiefEditor', 'Manager']
         self.manage_permission('View',
                                roles=allowed_roles,
                                acquire=1)
-        print "Role info:", self.rolesOfPermission('View')
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_close_to_public')
