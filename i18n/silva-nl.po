@@ -2436,7 +2436,7 @@ msgstr "nieuwe versies goedkeuren of publiceren: alt-o"
 #: /views/edit/Container/tab_status.pt:415
 #: /views/edit/VersionedContent/tab_status_macros.pt:373
 msgid "open to public"
-msgstr "openzetten voor publiek"
+msgstr "publiek toegankelijk maken"
 
 #: /views/edit/Container/tab_status.pt:433
 msgid "withdraw pending request for approval: alt-w"
@@ -2997,7 +2997,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:41
 msgid "open&nbsp;to&nbsp;public&nbsp;now..."
-msgstr "nu&nbsp;voor&nbsp;publiek&nbsp;openstellen..."
+msgstr "nu&nbsp;publiceren..."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:41
 msgid "publish the unapproved version: alt-:"
