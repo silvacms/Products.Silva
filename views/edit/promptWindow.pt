@@ -18,25 +18,35 @@
         <td class="align-left"
           colspan="2">
           <h3 i18n:translate="session_timeout">
-            Session timeout
+            session timeout
           </h3>
         </td>
       </tr>
-
       <tr class="even">
         <td class="feedback"
           colspan="2"
           i18n:translate="working_session_is_going_to_expire">
-          In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; to save any changes, or &#8216;cancel&#8217; to go back to the editor and save manually (or not at all).
+          In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;cancel&#8217; (alt-c) to do nothing, or save manually.
         </td>
       </tr>
-
       <tr class="controls">
         <td>
-          <input class="cancel" type="button" value="cancel" onClick="window.close()" />
+          <input class="cancel"
+            type="button" 
+            value="cancel"
+            title="cancel the automatic save action: alt-c"
+            accesskey="c"
+            onClick="window.close()"
+          />
         <td class="align-right">
-        <input class="button" type="button" value=" save " onClick="window.opener.saveHelper(); window.close()" 
-	       i18n:attributes="value"/>
+          <input class="button"
+            type="button"
+            value=" save "
+            title="save the document you were working on: alt-s"
+            accesskey="s"
+            onClick="window.opener.saveHelper(); window.close()" 
+            i18n:attributes="value" 
+          />
         </td>
       </tr>
     </tbody>
