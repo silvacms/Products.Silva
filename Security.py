@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.59 $
+# $Revision: 1.60 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -306,9 +306,11 @@ class Security(AccessManager):
         # containers have no author
         if IContainer.isImplementedBy(self):
             return noneMember.__of__(self)
-        
+        binding = self.service_metadata.getMetadata(self.get_editable())
+        userid = binding.get('silva-extra', element_id='lastauthor',
+            no_defaults=1)
         # get cached author info (may be None)
-        info = self._last_author_info
+        info = self.sec_get_member(userid).aq_base
         if info is None:
             return noneMember.__of__(self)
         else:
@@ -321,8 +323,12 @@ class Security(AccessManager):
         """
         userid = self._last_author_userid = (self.REQUEST.
                                              AUTHENTICATED_USER.getUserName())
-        # This will already give a cached member
-        self._last_author_info = self.sec_get_member(userid).aq_base
+        binding = self.service_metadata.getMetadata(self.get_editable())
+        binding.setValues(
+            'silva-extra', {
+                'lastauthor': userid,
+                'modificationtime': DateTime(),
+            })
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_userids')
