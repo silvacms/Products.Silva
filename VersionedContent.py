@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 from Content import Content
 from Versioning import Versioning, VersioningError
 from OFS import Folder
@@ -120,7 +120,13 @@ class CatalogedVersionedContent(Versioning, VersionedContent):
         for version in [self.get_unapproved_version(), self.get_approved_version(), self.get_public_version()] + self.get_previous_versions():
             if version:
                 getattr(self, version).reindex_object()
-                
+
+    def manage_afterClone(self, item):
+        CatalogedVersionedContent.inheritedAttribute('manage_afterClone')(self, item)
+        for version in [self.get_unapproved_version(), self.get_approved_version(), self.get_public_version()] + self.get_previous_versions():
+            if version:
+                getattr(self, version).reindex_object()
+
     # Override this method from superclasses so we can remove all versions from the catalog
     def manage_beforeDelete(self, item, container):
         CatalogedVersionedContent.inheritedAttribute('manage_beforeDelete')(self, item, container)
