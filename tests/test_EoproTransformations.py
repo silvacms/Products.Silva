@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 import unittest
 
 # 
@@ -328,6 +328,21 @@ class RoundtripWithTidy(unittest.TestCase):
         self.assert_(a.attrs.get('href')=='http://www.heise.de')
         self.assert_(a.content.asBytes()=='linktext')
 
+    def test_image(self):
+        """ check that the image works"""
+        silvadoc = '''<silva_document id="test"><title>title</title>
+                        <doc><p type="normal">
+                             <image image_path="/path/to/image"></image>
+                             </p>
+                        </doc>
+                      </silva_document>''' 
+        htmlnode = self._check(silvadoc)
+        body = htmlnode.find('body')[0]
+        p = body.find('p')[0]
+        img = p.find('img')
+        self.assert_(len(img)==1)
+        img = img[0]
+        self.assert_(img.attrs.get('src')=='/path/to/image')
 
     def _checkhtml(self, html):
         cmd = 'tidy -eq -utf8'

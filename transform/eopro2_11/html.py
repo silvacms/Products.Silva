@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.4 $'
+__version__='$Revision: 1.5 $'
 
 try:
     from transform.base import Element, Text
@@ -196,6 +196,15 @@ class a(Element):
             self.content.convert(*args, **kwargs),
             url=self.attrs['href']
             )
+
+class img(Element):
+    def convert(self, *args, **kwargs):
+        return silva.image(
+            self.content.convert(*args, **kwargs),
+            image_path=self.attrs['src']
+            )
+
+
 
 """
 current mapping of tags with silva
