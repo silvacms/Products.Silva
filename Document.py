@@ -141,7 +141,7 @@ class Document(Content, Folder.Folder, Versioning):
             return self.get_folder().title()
         else:
             return self._title
-
+    
     def is_published(self):
         """Return true if this is published.
         """

@@ -71,6 +71,7 @@ class Publishable(SilvaObject):
     
     # ACCESSORS
 
+
     def is_published(self):
         """Return true if this object is visible to the public.
         """
@@ -82,6 +83,12 @@ class Publishable(SilvaObject):
         """
         pass
 
+    def can_activate(self):
+        pass
+
+    def can_deactivate(self):
+        pass
+    
 class Asset(SilvaObject):
     """An object that does not appear in the publication's
     table of content directly.
@@ -354,7 +361,11 @@ class Versioning(Interface.Base):
         """
         pass
     
-
+    def can_approve(self):
+        """Returns true if approval is allowed.
+        """
+        pass
+    
 class VersionedContent(Versioning, Content):
     """This is a content object that is versioned. Presumed is that
     upon creation of the content object it is assigned a version id

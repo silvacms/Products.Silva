@@ -12,3 +12,6 @@ class SilvaObject:
     def manage_beforeDelete(self, item, container):
         #self.inheritedAttribute('manage_beforeDelete')(self, item, container)
         container._refresh_ordered_ids(item)
+
+    # ACCESSORS
+    
