@@ -100,7 +100,7 @@ This message will remain visible in the status screen for other authors and edit
 </td>
 </tr>
 
-<tr class="even">
+<tr class="inter-controls">
 <td class="align-right"
  style="vertical-align:bottom;">
 <label title="access key: alt-m" accesskey="m">content publish ti<u>m</u>e:</label>
@@ -111,7 +111,7 @@ day/month/year 23:59
 </td>
 </tr>
 
-<tr class="odd">
+<tr class="inter-controls">
   <td class="align-right">
     <label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time:</label>&nbsp;
     <field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
