@@ -184,12 +184,15 @@ function handle_default_action(element, event, action)
 <!-- ______________ page info ______________ -->
 </span>
 <div class="footer">
-  <div style="float: left;">
+  <div style="float: left;"
+    tal:define="
+      name python: view.get_metadata_element('silva-extra', 'contactname') or nothing;
+      email python: view.get_metadata_element('silva-extra', 'contactemail') or nothing
+      ">     
     contact:
     <a shape="rect"
-      tal:attributes="href python:'mailto:%s' % getattr(model, 'contact_email', None)"
-    >
-      <span tal:replace="model/contact_name | string:no name" />
+      tal:attributes="href python:'mailto:%s' % email">
+      <span tal:replace="python: name or 'no name'" />
     </a>
   </div>
   <div style="float: right;">
