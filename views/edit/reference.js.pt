@@ -6,8 +6,8 @@ appendValue = false;
 // Called from getAssetReference
 function openAssetLookupWindow(url_to_open) {
   // Do the opening
-  width = 660;
-  height = 400;
+  width = 760;
+  height = 500;
   leftPos = (screen.width - width) / 2;
   topPos = (screen.height - height) / 2;
   aspects = 'toolbar=yes,status=yes,scrollbars=yes,resizable=yes,width='+width+',height='+height+',left='+leftPos+',top='+topPos;

@@ -201,7 +201,7 @@
                         tal:attributes="
                           href item_url;
                           class status_style;"
-                        tal:define="title python:(item.get_title() or item.get_title_editable() or default)"
+                        tal:define="title python: item.get_title_editable() or default"
                         tal:content="title">
                         <i i18n:translate="no_title">no title</i>
                       </a>
@@ -287,7 +287,6 @@
                     </tal:block>
                     <td>
                       <label style="text-transform:none;"
-                        title="select this asset"
                         tal:attributes="
                           for identifier;
                           title string:choose this ${asset/meta_type};
@@ -304,7 +303,7 @@
                     <td>
                       <a class="blacklink"
                         title="preview"
-                        tal:content="python: asset.get_title() == '' and default or asset.get_title()"
+                        tal:content="python: asset.get_title_editable() or default"
                         tal:attributes="
                           href string:${asset_url}/edit/tab_preview;
                           class python: asset.get_title() == '' and 'closed' or 'blacklink'"
