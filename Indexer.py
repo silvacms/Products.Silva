@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -14,6 +14,7 @@ from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 # misc
 from Products.Silva.helpers import add_and_edit
+from IContainer import IContainer
 # try to import xpath
 try:
     from xml import xpath
@@ -53,14 +54,11 @@ class Indexer(Content, SimpleItem):
             print "Silva Indexer: cannot update index as xml.xpath not installed."
             return
         result = {}
-        # get status tree from folder by acquisition
-        # XXX perhaps get_status_tree() should be renamed or some
-        # new method should be created for this use
-        # XXX does not index 'index' documents!
-        items = self.get_status_tree()
+        # get tree of all subobjects
+        items = self._get_tree()
         # now go through all ParsedXML documents given as indexable and
         # index them
-        for ident, item in items:
+        for item in items:
             self._indexObject(result, item)
         # now massage into final index structure
         index = []
@@ -83,6 +81,22 @@ class Indexer(Content, SimpleItem):
                 result.setdefault(node.getAttribute('name'), {})[
                     object.content_url()] = object.get_content()
 
+    def _get_tree(self):
+        l = []
+        self._get_tree_helper(l, self.get_container())
+        return l
+
+    # XXX should be a helper method on folder that does this..
+    def _get_tree_helper(self, l, item):
+        default = item.get_default()
+        if default is not None:
+            l.append(default)
+        for child in item.get_ordered_publishables():
+            if IContainer.isImplementedBy(child):
+                self._get_tree_helper(l, child)
+            else:
+                l.append(child)
+                
 InitializeClass(Indexer)
 
 manage_addIndexerForm = PageTemplateFile("www/indexerAdd", globals(),

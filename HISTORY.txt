@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.30 $
+$Revision: 1.31 $
 
 Silva changes
 
@@ -56,7 +56,8 @@ Silva changes
 
         - Indexer is now addable by editor and up (used to be 
           manager only). Added note in UI that indexer works for published
-          content only.
+          content only. Also fixed a bug in the Indexer; it now
+          also indexes 'index' (default) documents.
 
         - Demo index document gets automatically added to new Silva root.
 
