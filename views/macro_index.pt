@@ -43,7 +43,7 @@
 
   document.timeout = '${rft}'; 
   document.refresh_url = '${destination_path}tab_preview';
-  document.prompt_url = '${destination_path}promptwindow';
+  document.prompt_url = '${destination_path}promptWindow';
 
 " />
 <script language="JavaScript">
