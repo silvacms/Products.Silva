@@ -1,4 +1,4 @@
-# Version: $Revision: 1.20 $
+# Version: $Revision: 1.21 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -54,6 +54,14 @@ class Root(Publication):
         """
         return self.aq_inner
 
+    # FIXME: should be renamed to something else, indicating we get a url
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'silva_root')
+    def silva_root(self):
+        """Get url of root of site.
+        """
+        return self.aq_inner.absolute_url()
+    
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
     def to_xml(self, f):
