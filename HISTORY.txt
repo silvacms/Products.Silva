@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.10 $
+$Revision: 1.47.2.11 $
 
 Silva changes
 
@@ -26,7 +26,7 @@ Silva changes
           tab_preview.
 
         - Fixed location of closed message in tab_preview so it shows
-          up regardless of which layout (public or default) get used.
+          up regardless of which layout (public or default) gets used.
           Aligned presentation preview link better in default layout.
 
         - Fix where the Groups administration button was shown, even
