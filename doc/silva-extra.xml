@@ -510,7 +510,7 @@
   </metadata_element>
   <metadata_element id="location">
    <index_type>TextIndex</index_type>
-   <index_p>1</index_p>
+   <index_p>0</index_p>
    <field_type>StringField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>1</read_only_p>
