@@ -1,0 +1,8 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+<p tal:replace="structure here/preview">HTML preview</p>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>

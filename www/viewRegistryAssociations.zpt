@@ -1,0 +1,16 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+<table border="1">
+<div tal:repeat="view_type here/get_view_types" tal:omit-tag="">
+  <tr><td colspan="3" align="center" tal:content="view_type">view_type</td></tr>
+  <tr tal:repeat="meta_type python: here.get_meta_types(view_type)">
+  <td tal:content="meta_type">meta_type</td>
+  <td tal:content="python: here.get_view_id(view_type, meta_type)">view_id</td>
+  </tr>
+</div>
+</table>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>
