@@ -28,8 +28,9 @@ Silva changes
 
     Bugs Fixed
 
-        - Datasource parameters store empty srtings instead of None
-          for default values.
+	- Changed from absolute_url(1) to getPhysicalPath() for	  
+          code elements - this should make code elements work in a	  
+          virtual host setup.
 
         - Fixed bug where the title of a SQLDatasource Asset was not set 
           in the edit tab.

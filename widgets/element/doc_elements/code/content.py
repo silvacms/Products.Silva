@@ -19,5 +19,5 @@ if path:
 else:
     return '<span class="warning">[No code element selected]</span>'
 
-return 'Code element: %s at %s' % (code.title_or_id(), path)
+return 'Code element: %s at %s' % (code.get_title_or_id_html(), path)
 
