@@ -78,16 +78,13 @@
 </span>
 <div class="tabs">
   <a class="normal"
-    title="Silva help: alt-h"
+    title="Silva access keys: alt-?"
     i18n:attributes="title"
-    accesskey="h"
-    target="_blank"
+    accesskey="?"
     tal:condition="exists:here/help_url"
     tal:attributes="href string:${here/help_url}"
     i18n:translate=""
-    >
-    help
-  </a>
+    ></a>
  
   <tal:repeat tal:repeat="item tabs">
     <tal:define define="
