@@ -21,32 +21,14 @@ class Document(VersionedContent, EditorSupport):
     meta_type = "Silva Document"
 
     __implements__ = Interfaces.VersionedContent
-         
-    manage_options = (
-        ( {'label':'Edit', 'action':'manage_editForm'},
-          {'label':'Preview', 'action':'manage_previewForm'},
-          {'label':'Contents', 'action':'manage_main'},
-          {'label':'Undo', 'action':'manage_undoForm'},
-          {'label':'Export', 'action':'manage_exportForm'},    
-          {'label':'Metadata', 'action':'manage_metadataForm'},
-          {'label':'Status', 'action':'manage_statusForm'},
-          {'label':'Exits', 'action':'manage_exitsForm'})
-        )
     
-    manage_editForm = PageTemplateFile('www/documentEdit', globals(),
-                                       __name__='manage_main')
-    manage_previewForm = PageTemplateFile('www/documentPreview', globals(),
-                                          __name__='manage_previewForm')
-    manage_undoForm = PageTemplateFile('www/dummy', globals(),
-                                       __name__='manage_undoForm')
-    manage_exportForm = PageTemplateFile('www/dummy', globals(),
-                                         __name__='manage_exportForm')
-    manage_metadataForm = PageTemplateFile('www/dummy', globals(),
-                                           __name__='manage_metadataForm')
-    manage_statusForm = PageTemplateFile('www/dummy', globals(),
-                                         __name__='manage_statusForm')
-    manage_exitsForm = PageTemplateFile('www/dummy', globals(),
-                                       __name__='manage_exitsForm')
+    # A hackish way, to get a Silva tab in between the standard ZMI tabs
+    inherited_manage_options = VersionedContent.manage_options
+    manage_options=(
+        (inherited_manage_options[0],)+
+        ({'label':'Silva /edit...', 'action':'edit'},)+
+        inherited_manage_options[1:]
+        )
 
     def __init__(self, id, title):
         Document.inheritedAttribute('__init__')(self, id, title)

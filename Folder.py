@@ -24,6 +24,14 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     
     meta_type = "Silva Folder"
 
+    # A hackish way, to get a Silva tab in between the standard ZMI tabs
+    inherited_manage_options = Folder.Folder.manage_options
+    manage_options=(
+        (inherited_manage_options[0],)+
+        ({'label':'Silva /edit...', 'action':'edit'},)+
+        inherited_manage_options[1:]
+        )
+
     __implements__ = Interfaces.Container
         
     def __init__(self, id, title):
