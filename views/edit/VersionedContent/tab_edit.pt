@@ -37,34 +37,37 @@
 
   function handleTimeout()
   {
-  if (document.promptWindow)
-  {
-  document.promptWindow.close();
-  }
+    if (document.promptWindow)
+    {
+      document.promptWindow.close();
+    }
 
-  loc = document.location.toString();
-  editurl = loc.substring(0, loc.indexOf('/edit/'));
+    loc = document.location.toString();
+    editurl = loc.substring(0, loc.indexOf('/edit/'));
 
-  document.location = document.refresh_url;
+    document.location = document.refresh_url;
   }
 
   function setAutoSave(submit)
   {
-  if (! document.autoSaveFormSubmit)
-  {
-  document.autoSaveFormSubmit = document.getElementById('default_submit');
-  setTimeout('savePrompt()', document.timeout * 1000 / 4 * 3, '');
-  }
+    if (! document.autoSaveFormSubmit)
+    {
+      document.autoSaveFormSubmit = document.getElementById('default_submit');
+      setTimeout('savePrompt()', document.timeout * 1000 / 4 * 3, '');
+    }
   }
 
   function savePrompt()
   {
-  document.promptWindow = window.open(document.prompt_url, 'promptWindow');
+    leftPos = screen.width / 2 - 175;
+    topPos = screen.height / 2 - 100;
+    document.promptWindow = window.open(document.prompt_url, 'promptWindow', "height=200,width=350");
+    document.promptWindow.focus();
   }
 
   function saveHelper()
   {
-  document.autoSaveFormSubmit.click();
+    document.autoSaveFormSubmit.click();
   }
 
   setTimeout('handleTimeout()', document.timeout * 1000, '');
