@@ -7,6 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   i18n:domain="silva">
+
 <!-- Read only table -->
 <metal:block define-macro="view_table">
   <tal:block define="
@@ -229,7 +230,7 @@
                 <input class="button" 
                   type="submit"
                   name="save_metadata:method"
-                  value=" Save metadata "
+                  value="save metadata"
                   title="access key: alt-s"
                   accesskey="s"
                   i18n:attributes="value title"

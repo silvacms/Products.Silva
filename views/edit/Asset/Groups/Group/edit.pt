@@ -5,9 +5,9 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    breadcrumb_vein string:Editor;
+    vein string:editor;
     active_tab string:../../edit/tab_access_groups;
-    parent_screen_name string:Groups;
+    parent_screen_name string:groups;
     has_access here/has_change_access_permission;">
   
 <table class="columns columns3">

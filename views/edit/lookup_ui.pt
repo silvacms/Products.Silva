@@ -8,14 +8,15 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
     global active_tab string:tab_access;
-    global breadcrumb_vein string:Lookup;
+    global vein string:lookup;
     global parent_screen_name string:access;
   "
   i18n:domain="silva">
+
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="meta">
-<meta http-equiv="refresh"
-  tal:attributes="content string:900;; url=${model/absolute_url}/edit/tab_access" />
+  <metal:block fill-slot="meta">
+    <meta http-equiv="refresh"
+      tal:attributes="content string:900;; url=${model/absolute_url}/edit/tab_access" />
 </metal:block>
 <metal:block fill-slot="main"
   tal:define="
@@ -103,7 +104,7 @@
                    colspan="2">
                   <input class="button"
                     type="submit"
-                    value="Search"
+                    value="search"
                     accesskey="s"                      
                     title="access key: alt-s"
                     i18n:attributes="value title"
@@ -168,7 +169,7 @@
                 <td align="left"
                   colspan="2">
                   <i i18n:translate="no_search_results">
-                    No search results
+                    No search results.
                   </i>
                 </td>
               </tr>
@@ -180,7 +181,7 @@
                   colspan="2">
                   <input class="button"
                     type="submit"
-                    value="Add to clipboard"
+                    value="add to clipboard"
                     title="add checked users to clipboard: alt-a"
                     accesskey="a"
                     i18n:attributes="value title"
@@ -204,7 +205,7 @@
               href="lookup_back_link"
               tal:attributes="href here/lookup_back_link"
               i18n:translate="use_clipboard">
-              <u>U</u>se clipboard...
+              <u>u</u>se clipboard...
             </a>
           </metal:block>
           <metal:block fill-slot="clipboard_actions">

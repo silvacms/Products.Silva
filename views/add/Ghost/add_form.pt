@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global breadcrumb_vein string:Add;
+    global vein string:add;
     global active_tab string:tab_edit;
     global mode_asset request/mode_asset | python:0;
     global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]"
@@ -38,13 +38,13 @@
 <tbody>
   <tr>
     <th class="align-right" i18n:translate="attributes">
-      Attributes
+      attributes
     </th>
     <th style="width:50%;" i18n:translate="content">
-      Content
+      content
     </th>
     <th i18n:translate="notes">
-    Notes
+      notes
     </th>
   </tr>
 
@@ -84,16 +84,16 @@
         style="float:left;"
         type="submit"
         name="add_cancel"
-        value=" Cancel "
-        title="Access key: alt-c"
+        value="cancel"
+        title="sccess key: alt-c"
         accesskey="c"
         i18n:attributes="value title"
       />
       <input class="button"
         type="submit"
         name="add_submit"
-        value=" Save "
-        title="Access key: alt-s"
+        value="save"
+        title="access key: alt-s"
         i18n:attributes="value title"
         accesskey="s"
       />
@@ -101,8 +101,8 @@
       <input class="button"
         type="submit"
         name="add_edit_submit"
-        value="Save + edit"
-        title="Access key: alt-e"
+        value="save + edit"
+        title="access key: alt-e"
         accesskey="e"
         tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Save + enter ', ' Save + edit ')"
       />

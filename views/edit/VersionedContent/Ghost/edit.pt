@@ -5,7 +5,7 @@
     root_url model/get_root_url;
     global editable model/get_editable;
     title model/get_title_editable;
-    breadcrumb_vein string:Editor;
+    vein string:editor;
 ">
 <table class="columns columns3">
   <tbody>
@@ -53,13 +53,13 @@
       <tr>
         <th class="align-right"
           width="15%">
-          Attributes
+          attributes
         </th>
         <th>
-          Content
+          content
         </th>
         <th width="30%">
-          Note
+          note
         </th>
       </tr>
 
@@ -86,14 +86,14 @@
           />
         </td>
         <td>
-          Path to original (begins with &#8216;/&#8217;).
+          path to original (begins with &#8216;/&#8217;).
         </td>
       </tr>
 
       <tr class="odd"
         tal:condition="not:link_status">
         <td class="field-title">
-          Link
+          link
         </td>
         <td>
           <a href="original"
@@ -110,7 +110,7 @@
       <tr class="odd"
         tal:condition="link_status">
         <td class="field-title">
-          Problem
+          problem
         </td>
         <td class="alert">
           <span class="error"

@@ -8,8 +8,8 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
     active_tab string:tab_access;
-    breadcrumb_vein string:Emails;
-    global parent_screen_name string:Access;"
+    vein string:emails;
+    global parent_screen_name string:access;"
     i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
@@ -27,7 +27,7 @@
         </tal:block >
         <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access_authorized_below', breadcrumb_vein)" />
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access_authorized_below', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
 
@@ -85,15 +85,10 @@
   </tfoot>
 </table>
 
-
       </td>
     </tr>
   </tbody>
 </table>
-
-
-
-
 
 </metal:block>
 </metal:block>

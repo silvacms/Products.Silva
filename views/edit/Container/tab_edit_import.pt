@@ -9,7 +9,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global view here;
-    global breadcrumb_vein string:Import;
+    global vein string:import;
     global active_tab string:tab_edit;
     global parent_screen_name string:Contents;
     global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
@@ -42,7 +42,7 @@
         </tal:block >
         <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit_import', breadcrumb_vein)" />
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit_import', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -82,7 +82,7 @@
             Export...
           </a>
           <h3 i18n:translate="import_silva_xml">
-            import Silva XML (.slv)
+            import Silva xml (.slv)
           </h3>
         </td>
       </tr>
@@ -231,8 +231,7 @@
           />
         </td>
         <td i18n:translate="recreate_subdirs_with_silva_folders">
-          Recreate the subdirectory structure of the zip file by adding
-          Silva Folders.
+          Recreate the subdirectory structure of the zip file by adding Silva Folders.
         </td>
       </tr>
 
@@ -297,7 +296,7 @@
       <tr class="top-controls">
         <td colspan="3">
           <h3 i18n:translate="upload_word_document">
-            upload MSWord document (.doc) for conversion
+            upload a document in word format (.doc) for conversion
           </h3>
         </td>
       </tr>
@@ -367,7 +366,7 @@
             type="submit" 
             value="upload" 
             name="tab_edit_import_docma:method" 
-            title="upload a Word document from your local drive: alt-u" 
+            title="upload a word document from your local drive: alt-u" 
             accesskey="u"
             i18n:attributes="value title"
           />

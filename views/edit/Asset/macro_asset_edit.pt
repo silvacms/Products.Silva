@@ -4,7 +4,7 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    breadcrumb_vein string:Edit;
+    vein string:editor;
 ">
 
 <metal:define-macro define-macro="editor"
@@ -58,7 +58,8 @@
     <tbody tal:define="fields view/form/get_fields">
       <tr>
         <th class="align-right"
-          width="12%" i18n:translate="element">
+          width="12%"
+          i18n:translate="element">
           element
         </th>
         <th i18n:translate="content">
@@ -71,7 +72,7 @@
       <tr tal:attributes="class python:iterate and 'even' or 'odd'">
       <td class="field-title">
         <span tal:replace="python:field['title']">
-          Title</span><span class="warning"
+          title</span><span class="warning"
           tal:condition="python:field.is_required()">*</span>
       </td>
       <td>
@@ -91,8 +92,8 @@
             name="submit:method"
             value="Save properties"
             title="access key: alt-s"
-	    i18n:attributes="title value"
             accesskey="s"
+            i18n:attributes="title value"
           />
         </td>
       </tr>
@@ -144,7 +145,8 @@
         <th class="align-right"
           width="12%">
         </th>
-        <th colspan="2" i18n:translate="content">
+        <th colspan="2"
+          i18n:translate="content">
           content
         </th>
       </tr>
@@ -154,7 +156,7 @@
       <tr tal:attributes="class python: iterate and 'even' or 'odd'">
       <td class="field-title">
         <span tal:replace="python:field['title']">
-          Title</span><span class="warning"
+          title</span><span class="warning"
           tal:condition="python:field.is_required()">*</span>
       </td>
       <td>
@@ -174,8 +176,8 @@
             name="upload_submit:method"
             value="Upload file"
             title="access key: alt-u"
-		 i18n:attributes="title"
             accesskey="u"
+            i18n:attributes="title"
           />
         </td>
       </tr>

@@ -2,12 +2,10 @@
   tal:define="
     view here;
     model request/model;
-
     mangle modules/Products/Silva/mangle;
-
     root_url model/get_root_url;
     title model/get_title_editable;
-    breadcrumb_vein string:Editor;
+    vein string:editor;
 ">
 
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">

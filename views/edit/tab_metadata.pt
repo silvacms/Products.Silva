@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    global breadcrumb_vein string:Metadata;"
+    global vein string:metadata;"
     i18n:domain="silva">
 
 <!-- tab_metadata for content (non-Container) objects -->
@@ -45,8 +45,8 @@
                 <img tal:replace="structure python:view.render_icon(model)" />
                 metadata
                 <span tal:condition="not: model/implements_container">
-		    <span i18n:translate="for_public_version_of">for public version of</span>
-		    &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                  <span i18n:translate="for_public_version_of">for public version of</span>
+                  &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
                 </span>
               </h2>
             </metal:block>

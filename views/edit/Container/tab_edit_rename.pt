@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global breadcrumb_vein string:Rename;
+    global vein string:rename;
     global active_tab string:tab_edit;
     "
   i18n:domain="silva">
@@ -17,7 +17,6 @@
   tal:define="objects view/REQUEST/ids">
 
 <tal:condition condition="python:view.REQUEST.has_key('ids')">
-
 <div class="focus-rectangle">
   <form action="tab_edit_rename_submit" method="POST">
     <table class="listing">
@@ -110,26 +109,25 @@
       <tfoot>
         <tr class="controls">
           <td colspan="4">
-            <input class="button" style="float:right;" type="submit" value=" Rename " title="access key: alt-r" accesskey="r" />
-            <input class="cancel" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="access key: alt-c" accesskey="c" />
+            <input class="button"
+              style="float:right;"
+              type="submit"
+              value="rename"
+              title="access key: alt-r"
+              accesskey="r"
+            />
+            <input class="cancel"
+              type="button"
+              name="edit_cancel"
+              value="cancel"
+              onClick="history.back()" title="access key: alt-c" accesskey="c"
+            />
           </td>
         </tr>
       </tfoot>
     </table>
   </form>
 </div>
-
-</tal:condition>
-
-<tal:condition condition="python: not here.REQUEST.has_key('ids')">
-  <span i18n:translate="no_items_to_rename">
-    No items to rename!
-  </span>
-  <br />
-  <a href="#" tal:attributes="href python:'/'.join(model.getPhysicalPath()) + '/edit'"
-    i18n:translate="edit">
-    edit
-  </a>
 </tal:condition>
 
 </metal:block>

@@ -25,7 +25,7 @@
                 <a href="parent screen"
                   title="up to parent screen: alt-u"
                   accesskey="u"
-		  i18n:attributes="title"
+                  i18n:attributes="title"
                   tal:attributes="href active_tab">
                   <div class="navigation-border"
                     tal:content="structure string:<u>u</u>p to ${parent_screen_name}...">
@@ -61,33 +61,33 @@
                     href="../../edit/tab_edit"
                     title="up one level: alt-]"
                     accesskey="]"
-		    i18n:attributes="title"
+                    i18n:attributes="title"
                     tal:condition="not: model_is_root"
                     tal:attributes="href string:../../edit/${vein_id}">
                     <img width="9"
                       height="9"
                       border="0"
                       alt="Up one level"
-		      i18n:attributes="alt"
+                      i18n:attributes="alt"
                       tal:attributes="src string:${root_url}/globals/up_level.gif" />
                   </a>
                   <a class="top"
                     title="up to containing publication: alt-["
                     accesskey="["
-		    i18n:attributes="title"
+                    i18n:attributes="title"
                     tal:condition="not: model_is_root"
                     tal:attributes="href python: model_is_publication and (containing_publication.absolute_url() + '/edit/' + vein_id) or (publication.absolute_url() + '/edit/' + vein_id)">
                     <img width="9"
                     height="9"
                     border="0"
                     alt="Up to containing Publication"
-		    i18n:attributes="alt"
+                    i18n:attributes="alt"
                     tal:attributes="src python: model_is_publication and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
                   </a>
                   <a class="normal"
                     style="padding: 0 1em;"
                     title="reload screen"
-                    tal:content="breadcrumb_vein"
+                    tal:content="vein"
                     tal:attributes="href vein_id">
                     vein
                   </a>

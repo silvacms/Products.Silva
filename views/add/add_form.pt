@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global breadcrumb_vein string:Add;
+    global vein string:add;
     global active_tab string:tab_edit;
     global mode_asset request/mode_asset | python:0;
     global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]"

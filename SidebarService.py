@@ -52,7 +52,7 @@ class SidebarService(SimpleItem):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render')
-    def render(self, obj, tab_name, breadcrumb_vein):
+    def render(self, obj, tab_name, vein):
         """Returns the rendered PT
 
         Checks whether the PT is already available cached, if so
@@ -80,7 +80,7 @@ class SidebarService(SimpleItem):
             mapping[ph_path] = abs_urls
 
         return self._finalize_template(
-            cached_template, obj, tab_name, breadcrumb_vein)
+            cached_template, obj, tab_name, vein)
 
     security.declareProtected(SilvaPermissions.ViewAuthenticated,
                               'invalidate')
@@ -123,7 +123,7 @@ class SidebarService(SimpleItem):
         request.set('model', model)
         return rendered
 
-    def _finalize_template(self, template, obj, tab_name, breadcrumb_vein):
+    def _finalize_template(self, template, obj, tab_name, vein):
         """Add the tab_name and the focus class to the template
         """
         # XXX ugly hack: we're putting in the focus class into the string by searching
@@ -137,7 +137,7 @@ class SidebarService(SimpleItem):
 
         template = template.replace('{__class__}', 'unselected')
         template = template.replace('{__vein_id__}', tab_name)
-        template = template.replace('{__breadcrumb_vein__}', breadcrumb_vein)
+        template = template.replace('{__vein__}', vein)
         template = template.replace('{__absolute_url__}', self.REQUEST.URL)
 
         return template

@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="global breadcrumb_vein string:Contents;"
+  tal:define="global vein string:hyperlink;"
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_no_tabs/macros/master">
@@ -30,7 +30,7 @@
         style="padding:0;">
         <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'hyperlink_lookup', breadcrumb_vein)" />
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'hyperlink_lookup', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -188,7 +188,7 @@
                           is_approved item/is_version_approved | nothing"
                         tal:condition="python:is_published or is_approved"
                         tal:attributes="src string:${root_url}/globals/checkmark.gif" 
-			i18n:attributes="title"/>
+                        i18n:attributes="title"/>
 
                     </td>
                     <tal:block replace="nothing">
@@ -347,19 +347,19 @@
                   style="float:left;"
                   type="button"
                   name="cancel"
-                  value="Cancel"
+                  value="cancel"
                   title="cancel operation - alt-c"
                   accesskey="c"
-		  i18n:attributes="title value"
+                  i18n:attributes="title value"
                   onclick="window.close();return false;"
                 />
                 <input class="button"
                   type="button"
                   name="place"
-                  value="Place reference"
+                  value="place reference"
                   title="insert a reference to this asset - alt-p"
                   i18n:attributes="title value"
-		  accesskey="p" 
+                  accesskey="p" 
                   onclick="setReference();return false;" 
                   tal:condition="publishables"
                 />

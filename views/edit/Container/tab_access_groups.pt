@@ -8,9 +8,9 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global breadcrumb_vein string:Groups;
+    global vein string:Groups;
     global active_tab string:tab_access;
-    global parent_screen_name string:Access;
+    global parent_screen_name string:access;
     "
   i18n:domain="silva">
 
@@ -38,7 +38,7 @@
         </tal:block >
         <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access_groups', breadcrumb_vein)" />
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access_groups', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -152,10 +152,9 @@
       <tr class="even">
         <td colspan="5"
           tal:condition="not:groups">
-          <span i18n:translate="no_groups_defined_in_folder"
-            tal:omit-tag="">
+          <i i18n:translate="no_groups_defined_in_folder">
             No groups have been defined in this location.
-          </span>
+          </i>
         </td>
       </tr>
     </tbody>

@@ -4,7 +4,7 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    breadcrumb_vein string:Edit;
+    vein string:editor;
 ">
 
 <table class="columns columns2">
@@ -21,6 +21,8 @@
       <tal:block replace="nothing">
         _____________________ main _____________________
       </tal:block>
+    </tr>
+  </tbody>
 </table>
 
 </html>

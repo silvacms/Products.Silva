@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global breadcrumb_vein string:Contents;
+    global vein string:contents;
     "
   i18n:domain="silva">
 
@@ -34,7 +34,7 @@
         <td class="left">
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', breadcrumb_vein)" />
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />
             </metal:fill-slot>
           </metal:use-macro>
         </td>

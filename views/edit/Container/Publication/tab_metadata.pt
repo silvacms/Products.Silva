@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    global breadcrumb_vein string:Settings;
+    global vein string:settings;
     ">
 
 <!-- settings (aka tab_metadata) for Container objects -->

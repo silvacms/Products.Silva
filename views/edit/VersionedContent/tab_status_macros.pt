@@ -129,7 +129,7 @@ This message will remain visible in the status screen for other authors and edit
 <field tal:replace="structure python:view.tab_status_form_author.publish_datetime.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)" />
 </td>
 <td style="vertical-align:middle;">
-day/month/year 23:59
+day/month/year &nbsp;23:59
 </td>
 </tr>
 
@@ -139,7 +139,7 @@ day/month/year 23:59
 <field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
 </td>
 <td style="vertical-align:middle;">
-If this content should expire, set the time.&nbsp;
+If this content should expire, set the time.
 </td>
 </tr>
 
@@ -189,7 +189,7 @@ notes
 <field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
 </td>
 <td style="vertical-align:middle;">
-If this content should expire, set the time.&nbsp;
+If this content should expire, set the time.
 </td>
 </tr>
 
@@ -250,7 +250,7 @@ notes
 <field tal:replace="structure python:view.tab_status_form_editor.publish_datetime.render(REQUEST=request)" />
 </td>
 <td>
-day/month/year 23:59
+day/month/year &nbsp;23:59
 </td>
 </tr>
 
@@ -448,7 +448,5 @@ If necessary, the published version of this content can be manually closed (take
 </table>
 </form>
 </div>
-<span tal:replace="nothing"> _______ / Manual close _______ </span>
-
 
 </html>

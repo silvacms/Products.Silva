@@ -5,7 +5,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-  breadcrumb_vein string:Publish;
+  vein string:publish;
   "
   i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
@@ -36,7 +36,7 @@
         <td class="left">
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_status', breadcrumb_vein)" />
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_status', vein)" />
             </metal:fill-slot>
           </metal:use-macro>
         </td>
@@ -74,7 +74,7 @@
           accesskey="e"
           tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
           tal:attributes="
-            value string: Export...;
+            value string: export...;
             title string:export this ${type}: alt-e;"
 	       />
       </td>
@@ -274,7 +274,7 @@
         colspan="5">
         <label title="access key: alt-m" 
           accesskey="m">
-          publish time:
+          publish time
         </label>
         <tal:block
           condition="redisplay_timing_form"
@@ -316,7 +316,7 @@
         colspan="5">
         <label title="access key: alt-x" 
           accesskey="x">
-          expiration time:
+          expiration time
         </label>
         <tal:block 
           condition="redisplay_timing_form"

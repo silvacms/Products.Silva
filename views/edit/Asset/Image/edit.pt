@@ -1,13 +1,11 @@
 <html tal:omit-tag=""
   tal:define="
     view here;
-    model request/model;
-    
+    model request/model;    
     mangle modules/Products/Silva/mangle;
-
     root_url model/get_root_url;
     title model/get_title_editable;
-    breadcrumb_vein string:Editor;
+    vein string:editor;
     "
   i18n:domain="silva">
 
@@ -137,7 +135,7 @@
             <tr tal:attributes="class python:iterate and 'even' or 'odd'">
               <td class="field-title">
                 <span tal:replace="python:field['title']">
-                  Title</span><span class="warning"
+                  title</span><span class="warning"
                   tal:condition="python:field.is_required()">*</span>
               </td>
               <td>

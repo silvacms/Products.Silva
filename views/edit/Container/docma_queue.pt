@@ -44,7 +44,7 @@
             i18n:translate="refresh_queue_lists"
             tal:attributes="href string:${model/absolute_url}/edit/${template/id}"
           >
-            <u>R</u>efresh queue lists
+            <u>r</u>efresh queue lists
           </a>
           <h3 i18n:translate="queue_of_items">
             queue of items to process
@@ -87,22 +87,22 @@
           tal:attributes="class python: iterate and 'odd' or 'even'">
           <td class="align-right"
             tal:content="job">
-            JobId
+            job id
           </td>
           <td tal:content="python: view.service_members.get_member(view.service_docma.get_ident_owner(job)).fullname()">
-            Owner
+            owner
           </td>
           <td  tal:content="python: view.service_docma.get_ident_description(job)">
-            Description
+            description
           </td>
           <td>
             <span tal:content="python: view.service_docma.get_estimated_time_for_ident(job)">
-            Estimated time</span>
+            estimated time</span>
             &nbsp;<span i18n:translate="seconds">seconds</span>
           </td>
           <td class="align-right"
             tal:content="python: view.service_docma.get_status(job)">
-            Status
+            status
           </td>
         </tr>
       </tal:repeat>
@@ -111,7 +111,7 @@
         tal:condition="not: qls">
         <td colspan="5"
           i18n:translate="no_jobs_in_queue">
-          There are no jobs in the queue
+          There are no jobs in the queue.
         </td>
       </tr>
     </tbody>
@@ -141,7 +141,7 @@
         <td colspan="4">
           <h3>
             <span i18n:translate="list_processed_items">
-              List of processed items
+              list of processed items
             </span>
             <tal:condition condition="python: format is not None">
               (<tal:replace replace="python:here.getDocmaFormatName(format)" />)
@@ -203,7 +203,7 @@
         <td align="left"
           colspan="4"
           i18n:translate="no_processed_jobs">
-          There are no processed jobs
+          There are no processed jobs.
         </td>
       </tr>
     </tbody>

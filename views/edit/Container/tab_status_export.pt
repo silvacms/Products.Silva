@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
     view here;
-    breadcrumb_vein string:Export;
+    vein string:export;
     active_tab string:tab_status;
     parent_screen_name string:Publish;
     docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
@@ -36,7 +36,7 @@
         </tal:block>
         <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_status_export', breadcrumb_vein)" />
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_status_export', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -99,7 +99,7 @@
                       <span i18n:translate="import">import</span>...
                     </a>
                   <h3 i18n:translate="export_to_silva_xml">
-                    export to Silva XML (.slv)
+                    export to Silva xml (.slv)
 	                </h3>
                 </td>
               </tr>
@@ -139,7 +139,7 @@
                 <td class="align-right">
                   <label for="export_last_version"
                     i18n:translate="export_newest_versions?">
-                    Export newest versions?
+                    export newest versions?
                   </label>
                 </td>
                 <td class="align-center">
@@ -157,7 +157,7 @@
                 <td class="align-right">
                   <label for="export_closed_content"
                     i18n:translate="export_closed_content?">
-                    Export closed content?
+                    export closed content?
                   </label>
                 </td>
                 <td class="align-center">
@@ -191,7 +191,7 @@
                   <input class="button"
                     type="submit"
                     name="download_xml_selected:method"
-                    value=" Export "
+                    value="export"
                     title="access key: alt-e"
                     accesskey="e"
                     i18n:attributes="value title"
@@ -269,7 +269,7 @@
         <td class="align-right">
           <label for="docma_with_sub_publications"
             i18n:translate="include_sub_publications?">
-            Include sub publications?
+            include sub publications?
           </label>
         </td>
         <td>
@@ -286,7 +286,7 @@
         <td class="align-right">
           <label for="docma_export_last_version"
             i18n:translate="export_newest_versions?">
-            Export newest versions?
+            export newest versions?
           </label>
         </td>
         <td>
@@ -304,7 +304,7 @@
         <td class="align-right">
           <label for="docma_export_closed_content"
             i18n:translate="export_closed_content?">
-            Export closed content?
+            export closed content?
           </label>
         </td>
         <td>
@@ -381,8 +381,8 @@
           <input class="button"
           type="submit"
           name="tab_status_silva2word:method"
-          value="Export to Docma"
-          title="export the selection to Word: alt-d"
+          value="export to Docma"
+          title="export the selection to word: alt-d"
           accesskey="d"
           i18n:attributes="value title"
         />

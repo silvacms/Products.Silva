@@ -8,7 +8,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    global breadcrumb_vein string:Edit;
+    global vein string:editor;
     refresh_time python:19 * 60;
     dummy python: here.set_content_type();
   ">

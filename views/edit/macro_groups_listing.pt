@@ -7,7 +7,8 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   >
-<!-- start of 4 Funky macro definitions to reuse the listing -->
+
+  <!-- start of 4 Funky macro definitions to reuse the listing -->
 <metal:block define-macro="normal_groups_listing">
   <tal:block define="groups view/service_groups/listNormalGroups | nothing">
     <metal:block use-macro="here/macro_groups_listing/macros/listing">
@@ -76,7 +77,7 @@
                     accesskey="g"
                     i18n:attributes="title"
                     i18n:translate="groups_admin">
-                    <u>G</u>roups admin...
+                    <u>g</u>roups admin...
                   </a>
                 </metal:block>
               </td>
@@ -107,7 +108,7 @@
                       tal:repeat="group groups"
                       tal:content="group"
                       tal:attributes="value group">
-                      Group
+                      group
                     </option>
                   </tal:block>
                   <option class="disabled"

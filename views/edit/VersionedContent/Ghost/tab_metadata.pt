@@ -7,8 +7,8 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
-    global breadcrumb_vein string:Metadata;
-    ">
+    global vein string:metadata;
+">
 
 <!-- tab_metadata for Ghost objects -->
 <metal:block use-macro="here/macro_index/macros/master">

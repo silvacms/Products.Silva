@@ -6,8 +6,9 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  tal:define="global breadcrumb_vein string:Access;"
+  tal:define="global vein string:access;"
   i18n:domain="silva">
+
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="
@@ -15,7 +16,8 @@
     group_service view/service_groups | nothing;
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;
-  ">
+">
+
 <table class="columns columns3"
   tal:condition="has_access">
   <tbody>
@@ -26,7 +28,7 @@
       <td class="left" rowspan="99">
         <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -122,8 +124,10 @@
               </tal:block>
               <tr class="even"
                 tal:condition="not:members">
-                <td colspan="3" i18n:translate="no_users_with_local_roles">
-                  No users with local roles
+                <td colspan="3">
+                  <i i18n:translate="no_users_with_local_roles">
+                    No users with local roles
+                  </i>
                 </td>
               </tr>
               <tr class="controls">
@@ -216,7 +220,7 @@
                   <td tal:content="requested_role">
                   </td>
                   <td tal:content="python: test(member.is_approved(), here.gettext('Yes'),here.gettext('No'))">
-                    Yes or No
+                    yes or no
                   </td>
                 </tr>
               </tal:block>
@@ -225,8 +229,10 @@
               </tal:block>
               <tr class="even"
                 tal:condition="not:requested_roles">
-                <td colspan="3" i18n:translate="no_roles_requested">
-                  No roles requested
+                <td colspan="3">
+                  <i i18n:translate="no_roles_requested">
+                    No roles have been requested.
+                  </i>
                 </td>
               </tr>
               <tr class="controls align-right">
@@ -414,7 +420,7 @@
                   tal:condition="not:groups">
                   <td colspan="3">
                     <i i18n:translate="no_groups_with_local_roles">
-                      No groups with (local) roles
+                      No groups with (local) roles.
                     </i>
                   </td>
                 </tr>
@@ -701,6 +707,7 @@
     </tr>
   </tbody>
 </table>
+
 </metal:block>
 </metal:block>
 </html>

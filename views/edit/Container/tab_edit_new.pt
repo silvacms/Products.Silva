@@ -7,7 +7,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global breadcrumb_vein string:New;
+    global vein string:new;
     global active_tab string:tab_edit;
     global parent_screen_name string:contents"
     tal:omit-tag=""
@@ -35,7 +35,7 @@
         </tal:block >
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit_new', breadcrumb_vein)" />
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit_new', vein)" />
             </metal:fill-slot>
           </metal:use-macro>
       </td>

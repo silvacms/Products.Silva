@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global breadcrumb_vein string:Addables;
+    global vein string:addables;
     global active_tab string:tab_metadata;
     global parent_screen_name string:settings;
     "
@@ -42,7 +42,7 @@
           </tal:block >
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'settings_addables', breadcrumb_vein)" />
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'settings_addables', vein)" />
             </metal:fill-slot>
           </metal:use-macro>
         </td>
@@ -71,13 +71,13 @@
               <tbody>
                 <tr>
                   <th i18n:translate="element" class="align-right" width="12%">
-                    Element
+                    element
                   </th>
                   <th i18n:translate="content">
-                    Content
+                    content
                   </th>
                   <th i18n:translate="note" width="30%">
-                    Note
+                    note
                   </th>
                 </tr>
 
@@ -86,7 +86,7 @@
                     <tr valign="top"
                       tal:attributes="class python:oddrow and 'even' or 'odd'">
                       <td class="align-right">
-                        <span tal:replace="structure python: field.title().lower()">Title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
+                        <span tal:replace="structure python: field.title().lower()">title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
                       </td>
                       <td>
                         <input tal:replace="structure python:field.render(value=model.getProperty(field.id))" />
@@ -109,7 +109,7 @@
                     <input class="button"
                       type="submit"
                       name="form_submitted"
-                      value="Save addables data"
+                      value="save addables settings"
                       title="save addable settings for this publication: alt-a"
                       accesskey="a"
                       i18n:attributes="value title accesskey"

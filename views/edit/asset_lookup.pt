@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="global breadcrumb_vein string:Contents;"
+  tal:define="global vein string:contents;"
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_no_tabs/macros/master">
@@ -34,7 +34,7 @@
           tal:define="query_string string:?filter=${filter}">
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'asset_lookup?filter=%s' % filter, breadcrumb_vein)" />
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'asset_lookup?filter=%s' % filter, vein)" />
             </metal:fill-slot>
           </metal:use-macro>
         </td>
@@ -82,7 +82,7 @@
                       title="add a new item: alt-n"
                       accesskey="n" 
                       tal:attributes="value string: New ${filter} "
-		      i18n:attributes="title"
+                      i18n:attributes="title"
                       />
                     <input type="hidden"
                       id="meta_type"
@@ -171,7 +171,7 @@ function setReference() {
                 <td nowrap="1">
                   <label style="text-transform:none;"
                     title="select this asset"
-		    i18n:attributes="title"
+                    i18n:attributes="title"
                     tal:attributes="for identifier"><img tal:replace="structure python:view.render_icon(asset)" />
                     <tal:block tal:replace="asset/id">id</tal:block>
                   </label>
@@ -218,19 +218,19 @@ function setReference() {
                  style="float:left;"
                  type="button"
                  name="cancel"
-                 value="Cancel"
+                 value="cancel"
                  title="cancel operation - alt-c"
                  accesskey="c"
-		 i18n:attributes="title value"
+                 i18n:attributes="title value"
                  onclick="window.close();return false;"
                 />
                <input class="button"
                  type="button"
                  name="place"
-                 value="Place reference"
+                 value="place reference"
                  title="insert a reference to this asset - alt-p"
                  accesskey="p"
-		 i18n:attributes="title value"
+                 i18n:attributes="title value"
                  onclick="setReference();return false;" 
                  tal:condition="not: empty"
                 />
