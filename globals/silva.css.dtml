@@ -51,9 +51,13 @@ dd {
   margin-left : 2.5em;
 }
 
+ul {
+  list-style-type : circle;
+  list-style-image: none
+}
+
 ul.tips {
   list-style-type : square;
-  list-style-image: none; 
   margin-left : 0.1em;
   margin-top : 0.2em;
   padding-left : 1em;
@@ -62,7 +66,6 @@ ul.tips {
 
 ul.tips-nested {
   list-style-type : circle;
-  list-style-image: none; 
   margin-left : 0.5em;
   padding-left : 1em;
   line-height : 130%;
