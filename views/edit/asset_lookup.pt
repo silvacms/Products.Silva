@@ -20,6 +20,7 @@
     asset_context request/asset_context | request/SESSION/asset_context | string:/;
     dummy python: request.SESSION.set('filter', filter);
     dummy python: request.SESSION.set('asset_context', asset_context);
+    mangle python:modules['Products'].Silva.mangle;
 ">
 
 <table class="columns columns2">
@@ -181,10 +182,11 @@ function setReference() {
                   </a>
                 </td>
                 <tal:block tal:replace="nothing"> _______ modification date cell _______ </tal:block>
-                <td>
-                  <span tal:condition="python:asset.get_modification_datetime() != None"
-                    tal:replace="structure python:view.service_utils.backend_short_datetime_to_str(asset.get_modification_datetime())">21 oct 2001 18:18</span>
-                  <span tal:condition="python:asset.get_modification_datetime() == None" tal:omit-tag="">&nbsp;</span>
+                <td
+                    tal:define="mtime asset/get_modification_datetime">
+                  <span tal:condition="python:mtime != None"
+                    tal:replace="structure python:mangle.DateTime(mtime).toShortStr()">21 oct 2001 18:18</span>
+                  <span tal:condition="python:mtime == None" tal:omit-tag="">&nbsp;</span>
                 </td>
                 <tal:block tal:replace="nothing"> _______ author cell _______ </tal:block>
                 <td tal:content="python:asset.sec_get_last_author_info().fullname()">

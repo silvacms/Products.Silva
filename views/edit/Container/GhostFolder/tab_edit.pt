@@ -351,7 +351,7 @@
             <a class="blacklink" title="metadata"
               tal:condition="modification_time"
               tal:attributes="href string:${item_url}/edit/tab_metadata"
-              tal:content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)"
+              tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
               >
               date
             </a>
@@ -508,7 +508,7 @@
             <a class="blacklink" title="metadata"
               tal:condition="modification_time"
               tal:attributes="href string:${asset_url}/edit/tab_metadata"
-              tal:content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)"
+              tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
               >
               date
             </a>
