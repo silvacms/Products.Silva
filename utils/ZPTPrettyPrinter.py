@@ -4,7 +4,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
 # Author: Jan-Wijbrand Kolman (jw@infrae.com)
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 #
 # Issues:
 #  * Testing, testing, testing. It would be rather horrible to 
@@ -39,11 +39,13 @@ except ImportError:
 
 from xml.sax import make_parser
 from xml.sax import saxutils
-from xml.sax import parseString
-from xml.sax.handler import feature_namespaces
+from xml.sax import saxlib
 
 
 ### Configurable options: ###
+XHTML_DECLARATION = \
+'''<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'''
 INDENTDEPTH = 2
 INDENTCHAR = ' '
 NEWLINE = '\n'
@@ -57,9 +59,8 @@ NO_INDENT_ON = [
     'body',
     ]
 FIRST_ATTR_ON_NEWLINE = 0
+CLOSE_ELEMENT_ON_NEWLINE = 1
 PUT_CLASS_ATTR_ON_TOP = 1
-XHTML_DECLARATION = \
-    '''<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'''
 TAL_ORDER = [
     'define',
     'condition',
@@ -70,7 +71,7 @@ TAL_ORDER = [
     'omit-tag',
     ]
 
-### Tricks (hands off!) ###
+### Tricks ###
 # extend list to contain both namespaced and
 # non-namespaced TAL attributes
 TAL_ORDER += ['tal:%s' % item for item in TAL_ORDER]
@@ -79,17 +80,16 @@ TAL_ORDER += ['tal:%s' % item for item in TAL_ORDER]
 class PrettyZPT(saxutils.DefaultHandler):
     """
     """
-    def __init__(self):
-        pass
-
-    ######################
-    # SAX event handlers #
-    def startDocument(self, writer=None):
-        self._data = []
-        self._indent_level = -1
+    def __init__(self, writer=None):
         if not writer:
             self._write = write
         self._write(XHTML_DECLARATION + NEWLINE)
+
+    ######################
+    # SAX event handlers #
+    def startDocument(self):
+        self._data = []
+        self._indent_level = -1
 
     def endDocument(self):
         pass
@@ -101,7 +101,7 @@ class PrettyZPT(saxutils.DefaultHandler):
             if element['childs'] == 1 and not element['textnodes']:
                 self.printEndingStartElement(element['name'], element['attrs'])
             if element['data']:
-                self.printCharacters(element['data'])
+                self.printCharacters(element['name'], element['data'])
                 element['data'] = ''
 
         if not name in NO_INDENT_ON:
@@ -115,7 +115,7 @@ class PrettyZPT(saxutils.DefaultHandler):
         #pop from stack
         element = self._data.pop()
         if element['data']:
-            self.printCharacters(element['data'])
+            self.printCharacters(element['name'], element['data'])
         self.printEndElement(name, element['attrs'], element['childs'], element['textnodes'])
         if not name in NO_INDENT_ON:
             self._indent_level -= 1
@@ -128,38 +128,44 @@ class PrettyZPT(saxutils.DefaultHandler):
         if element['textnodes'] == 1 and not element['childs']:
             self.printEndingStartElement(element['name'], element['attrs'])        
 
-    def resolveEntity(self, publicId, systemId):
-        sys.stderr.write('resolve: %s %s' % (publicId, systemId))
-        return systemId
+    #def resolveEntity(self, publicId, systemId):
+    #    self._write('resolve: %s %s' % (publicId, systemId))
+    #    return systemId
+    
+    def comment(self, content):
+        self.printComment(content)
 
+        
     ####################
     # Printing methods #
-    def printCharacters(self, ch):
-        indent = self._indent() + (INDENTCHAR * INDENTDEPTH)
-        ch = ' '.join(ch.split())
+    def printCharacters(self, name, ch):
+        ch = ' '.join(ch.strip().split())
         if ch:
-            self._write(indent + ch + NEWLINE)
+            self._write(NEWLINE + self._indent() + (INDENTCHAR * INDENTDEPTH) + ch)
 
     def printStartingStartElement(self, name, attrs):
         if name in NEWLINE_SURROUNDED_ELEMENTS:
             self._write(NEWLINE)
-        self._write(self._indent() + '<%s' % name)
+        self._write(NEWLINE + self._indent() + '<%s' % name)
         self.printAttributes(name, attrs)
 
     def printEndingStartElement(self, name, attrs):
         if attrs.getLength() > 1:
-            self._write(self._indent())
-        self._write('>' + NEWLINE)
+            if CLOSE_ELEMENT_ON_NEWLINE:
+                self._write(NEWLINE)
+                self._write(self._indent())
+        self._write('>')
 
     def printEndElement(self, name, attrs, childs, txtnodes):
         if childs or txtnodes:
-            self._write(self._indent() + '</%s>' % name  + NEWLINE)
-        else:
-            if attrs.getLength() == 1:
-                self._write(' ')
-            if attrs.getLength() > 1:
+            self._write(NEWLINE + self._indent() + '</%s>' % name)
+        else:                                
+            if attrs.getLength() > 1 and CLOSE_ELEMENT_ON_NEWLINE:
+                self._write(NEWLINE)
                 self._write(self._indent())
-            self._write('/>'  + NEWLINE)
+            else:
+                self._write(' ') # e.g. for <br />
+            self._write('/>')
         if name in NEWLINE_SURROUNDED_ELEMENTS:
             self._write(NEWLINE)
 
@@ -192,12 +198,15 @@ class PrettyZPT(saxutils.DefaultHandler):
             else:
                 key = keys[0]
                 value = self._attributeValues(attrs[key])
-                self._write(' %s="%s"' % (key, value) + NEWLINE)
+                self._write(' %s="%s"' % (key, value))
                 keys = keys[1:]
 
             for key in keys:
                 value = self._attributeValues(attrs[key])
-                self._write(indent + '%s="%s"' % (key, value) + NEWLINE)
+                self._write(NEWLINE + indent + '%s="%s"' % (key, value))
+
+    def printComment(self, content):
+        self._write(NEWLINE + self._indent() + '<!-- ' + content + ' -->' + NEWLINE)
 
     def _attributeValues(self, value):
         multi_indent = self._indent() + (INDENTCHAR * INDENTDEPTH) * 2
@@ -215,7 +224,8 @@ class PrettyZPT(saxutils.DefaultHandler):
             # begin values on newline, indent even more
             lines = []
             for value in values:
-                lines.append(NEWLINE + multi_indent + value + ';')
+                if value:
+                    lines.append(NEWLINE + multi_indent + value + ';')
             return ''.join(lines)
 
     def _attributesHelper(self, attrs):
@@ -261,8 +271,14 @@ def main(options, files):
     handler = PrettyZPT()
     parser.setContentHandler(handler)
     parser.setEntityResolver(handler)
-    #parser.setErrorHandler(saxutils.ErrorPrinter())
-    xml = StringIO(sys.stdin.read())
+
+    lh = saxlib.LexicalHandler()    
+    #Trick to get comment "events" handled by the PrettyZPT handler
+    lh.comment = handler.comment
+    parser.setProperty(saxlib.property_lexical_handler, lh)
+
+    #Replace to not get the entities parsed
+    xml = StringIO(sys.stdin.read().replace('&', '&amp;'))
     parser.parse(xml)
 
 if __name__ == '__main__':
