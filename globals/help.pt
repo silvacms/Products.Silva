@@ -120,11 +120,11 @@ Don't forget that most browsers use alt-left arrow to go back, and alt-right arr
 <h2>Installing documentation for Silva</h2>
 
 <p class="leadedbody">
-The most up to date documentation is at:<br />
+The most up to date documentation can be read at:<br />
 <a href="http://www.infrae.com/products/silva/docs">http://www.infrae.com/products/silva/docs</a>
 </p>
 <p class="leadedbody">
-Documentation can also be installed 'here'. Here is in the 'globals' folder, which is on the file system. If you wish to install docs (your own or Silva documentation), you should put them elsewhere, since 'globals' will be overwritten in an upgrade.
+If you are working offline, documentation can also be installed 'here'. Here is in the 'globals' folder, which is on the file system. If you wish to install docs (your own or Silva documentation), you should put them elsewhere, since 'globals' will be overwritten in an upgrade.
 </p>
 <p class="leadedbody">
 In Zope, create a folder in the Silva root (we'll call it 'help' in this example). Put the documentation in it, and then change the <tt>help_url</tt> property in the Silva root. Go to the Silva instance in the ZMI and click the properties tab and (assuming your Silva instance is called 'silva') change the <tt>help_url</tt> property to:<br />
