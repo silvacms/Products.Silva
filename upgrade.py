@@ -115,6 +115,7 @@ class UpgradeRegistry:
                 if hasattr(o.aq_base, 'objectValues'):
                     if o.meta_type == "Parsed XML":
                         #print '#### Skip the Parsed XML object'
+                        pass
                     else:
                         object_list.extend(o.objectValues())
                         stats['maxqueue'] = max(stats['maxqueue'],
@@ -128,6 +129,7 @@ class UpgradeRegistry:
                         o._p_jar.cacheGC()
                     else:
                         #print 'No _p_jar, or it is None for', repr(o)
+                        pass
                     stats['threshold'] = 0
             stats['endtime'] = DateTime.DateTime()
             self.tearDown(root, version)
@@ -196,5 +198,5 @@ def check_reserved_ids(obj):
         o.aq_parent.manage_renameObject(old_id, str(id))
         zLOG.LOG("Silva", zLOG.INFO,
             'Invalid id %s found. Renamed to %s' % (repr(old_id), repr(id)),
-            'Location: %s' % o.absolute_url()
+            'Location: %s' % o.absolute_url())
 
