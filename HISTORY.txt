@@ -17,7 +17,7 @@ Silva changes
       - A new XML export/system that can also export and import asset
         data.
 
-      - abbrev and acronym support for both forms editor and Kupu.
+      - abbr and acronym support for both forms editor and Kupu.
 
       - Implemented get_public_tree_all(depth) method.
 
@@ -31,11 +31,21 @@ Silva changes
 
       - Properties tab for Ghost Folder works again.
 
+      - Fixed bug in images that caused a ZODB transaction on every public
+        view.
+
+      - Fixed kupu transformation bug that made paragraph type not
+        come through on save.
+
+      - The target attribute was not taken into account in the silva
+        xml -> kupu html transformation. Fixed.
+
       - Fixed unicode issues in Groups support. This is only an issue
         for Membership extensions that allow non-ascii characters in
         their group names, for instance the ones based on LDAP. Core
         groups support is not affected by this change.
 
+>>>>>>> 1.117
   1.0 final
   
     Bugs fixed
