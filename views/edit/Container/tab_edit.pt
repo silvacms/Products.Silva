@@ -29,7 +29,7 @@
     <a href="../../edit/tab_edit" title="Up one level: alt-]" accesskey="]"
       tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
   </td>
-  <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
+  <td><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
   <td>
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
@@ -109,7 +109,7 @@
 <table cellspacing="0" cellpadding="3" border="0" width="100%">
 <span tal:replace="nothing"> ______________ listing header ______________ </span>
 <tr tal:condition="python:len(objects) != 0 or model.get_default()">
-  <th align="left" width="1%">
+  <th align="right" width="1%">
     #
   </th>
   <th align="left" width="2%">
@@ -193,7 +193,7 @@
 <rowset tal:omit-tag="" tal:repeat="item publishables">
 <cycle tal:omit-tag="" tal:define="oddrow repeat/item/odd">
 <!-- iteration over ordered publishables -->
-<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
   <span tal:replace="nothing"> _______ position cell _______ </span>
   <td align="right" tal:content="repeat/item/number">
     #
@@ -268,7 +268,7 @@
 </rowset>
 
 <span tal:replace="nothing"> ______________ if no active publishables in this folder ______________ </span>
-<tr class="focus-light"
+<tr class="focus"
   tal:condition="python:len(objects) == 0 and not model.get_default()">
 <td colspan="6">
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" />&nbsp;
@@ -279,8 +279,8 @@ There are no active content objects in this folder.
 <span tal:replace="nothing"> ______________ move ______________ </span>
 <tr class="controls-cycle"
   tal:condition="python:len(publishables)">
-  <td colspan="8">
-    <tal:block condition="python:len(publishables) > 1 and silva_permissions['ApproveSilvaContent']"><span class="widebody"><label for="new_position" title="Access key: alt-p" accesskey="p">Move selected items to <u>p</u>osition:</label></span>
+  <td colspan="8"
+    tal:condition="python:len(publishables) >= 2 and silva_permissions['ApproveSilvaContent']"><span class="widebody"><label for="new_position" title="Access key: alt-p" accesskey="p">Move selected items to <u>p</u>osition:</label></span>
     <select name="new_position" id="new_position" title="Choose new position: alt-p">
       <tal:block repeat="item publishables">
       <option value="0" tal:attributes="value repeat/item/number"
@@ -291,12 +291,10 @@ There are no active content objects in this folder.
     </select>&nbsp;&nbsp;
     <input tal:condition="silva_permissions/ApproveSilvaContent" class="button" type="submit" 
       name="tab_edit_move_to:method" value=" Move " title="Move items into selected position: alt-m" accesskey="m" />&nbsp;
-    </tal:block>
-    <span tal:condition="python:not(len(publishables) > 1)">&nbsp;</span>
   </td>
 </tr>
 
-<span tal:replace="nothing"> _____________________ deactivated _____________________ </span>
+<span tal:replace="nothing"> _____________________ deactivated (and deprecated)_____________________ </span>
 
 <span tal:replace="nothing"
   tal:define="global nonactives python:model.get_nonactive_publishables()">
@@ -387,7 +385,7 @@ There are no active content objects in this folder.
 
 <rowset tal:omit-tag="" tal:repeat="asset assets">
 <cycle tal:omit-tag="" tal:define="oddrow repeat/asset/odd">
-<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
   <td>
     &nbsp;
   </td>

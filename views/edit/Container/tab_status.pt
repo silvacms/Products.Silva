@@ -121,7 +121,7 @@
   tal:define="indent python:obj[0];
               item python:obj[1];
               ref python:model.create_ref(item)"
-  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+  tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
 
 <span tal:replace="nothing"> _______ checkbox + icon _______ </span>
 <td align="right" nowrap="1">
@@ -255,7 +255,7 @@
 
 <span tal:replace="nothing"> ______________ if no records ______________ </span>
 <check tal:condition="python:len(objects) == 0 and not model.get_default()">
-<tr class="focus-light">
+<tr class="focus">
 <td colspan="6">
 There are no publishable objects in this folder.
 </td>
@@ -285,7 +285,7 @@ if (document.forms[0]) {
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
 </td>
 <td class="widebody" align="right" colspan="2" nowrap="nowrap">
-<label for="expires_flag" title="Access key: alt-x" accesskey="x">Set&nbsp;e<u>x</u>piration&nbsp;time?&nbsp;</label>
+<label for="expires_flag" title="Access key: alt-x" accesskey="x">Set&nbsp;e<u>x</u>piration&nbsp;time?</label>
 <field tal:replace="structure python:view.tab_status_form.expires_flag.render(REQUEST=request)" />
 </td>
 </tal:editors-tab>
@@ -306,7 +306,7 @@ if (document.forms[0]) {
 </td>
 <td class="widebody" align="right" colspan="2"
   tal:condition="silva_permissions/ApproveSilvaContent">
-<label for="publish_now_flag" title="Access key: alt-u" accesskey="u">P<u>u</u>blish&nbsp;right&nbsp;now?&nbsp;</label>
+<label for="publish_now_flag" title="Access key: alt-u" accesskey="u">P<u>u</u>blish&nbsp;right&nbsp;now?</label>
 <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
 </td>
 </tal:editors-tab>
