@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.87.2.7 $
+# $Revision: 1.87.2.8 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -760,10 +760,45 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def url_encode(self, string):
         """A wrapper for the urllib.quote function to be used in Python scripts and PT's"""
         return urllib.quote(string)
+    
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'delete_old_versions')
+    def delete_old_versions(self):
+        """Delete all versions from the current location downward"""
+        for descendant in self.get_all_descendants():
+            pvs = descendant._previous_versions
+            if pvs is None:
+                continue
+                
+            removable_versions = pvs[:-1] # get older versions
+            descendant._previous_versions = pvs[-1:] # keep the last one
+            
+            contained_ids = descendant.objectIds()            
+            removable_version_ids = [
+                str(version[0]) for version in removable_versions
+                if version[0] in contained_ids]
+                
+            if removable_version_ids:
+                print 'Removed old versions %s %s' %  (
+                    descendant.absolute_url(), removable_versions)
+                descendant.manage_delObjects(removable_version_ids)                        
+                
+        return 'Done!'
+
+    def get_all_descendants(self):
+        """Returns a list of all descendants"""
+        descendants = []
+        self._get_descendants_helper(self, descendants)        
+        return descendants
+        
+    def _get_descendants_helper(self, obj, descendants):
+        for i in obj.objectValues():            
+            if IVersionedContent.isImplementedBy(i):
+                descendants.append(i)
+            if IContainer.isImplementedBy(i):
+                self._get_descendants_helper(i, descendants)    
 
 InitializeClass(Folder)
-
-
 
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
                                         __name__='manage_addFolderForm')
