@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import os, sys, time
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -108,6 +108,7 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
         # There's probably a better way: I set the publication time to 
         # approx. 5 seconds from now...
         self.test.set_unapproved_version_publication_datetime(now + 0.00005)
+        # and the expiration to about 10 seconds from now...
         self.test.set_unapproved_version_expiration_datetime(now + 0.00010)
         self.test.approve_version()
         self.assertEquals(1, not not version.is_version_approved())
