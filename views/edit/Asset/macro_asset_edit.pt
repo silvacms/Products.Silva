@@ -111,6 +111,8 @@
 <metal:define-slot define-slot="additional_tools">
 </metal:define-slot>
 
+      </td>
+    </tr>
   </tbody>
 </table>
 </metal:define-macro>
