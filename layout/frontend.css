@@ -1,4 +1,4 @@
-/* _________ Stylesheet for Silva version 0.9.3.0 frontend ____________ */
+/* _________ Stylesheet for Silva version 1.0b frontend _______________ */
 /* _________ Silva users can insert their own frontend styles _________ */
 /* _________ Styles modified here will affect the Silva preview  ______ */
 /*
@@ -24,7 +24,7 @@ body {
 
 h1, h2, h3, h4, h5 {
   color : #455885;
-  margin : 1.4em 0em 0em 0em;
+  margin : 1em 0em 0em 0em;
   padding: 0;
 }
 
@@ -322,11 +322,16 @@ div.header a.icon {
 .public {
   margin-left : 7em;
   padding-top : 2.3em;
-  max-width : 44em;
   /* for IE5 */
   width : 512px;
 }
 
+/* this selector works only for standards compatible browsers like mozilla */
+/* IE ignores this definition below */
+body>div.public {
+  width : 44em;
+}
+  
 /*___________________________________________ different table layouts _____ */ 
 
 table.black_border td,
