@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.112.6.6.6.4 $
+# $Revision: 1.112.6.6.6.5 $
 
 import ContainerPolicy
 
@@ -19,10 +19,6 @@ def initialize(context):
     from Products.FileSystemSite.FSPageTemplate import FSPageTemplate
 # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
-# enable some extensions for kupu
-    registerFileExtension('js', FSDTMLMethod)
-    registerFileExtension('css', FSDTMLMethod)
-    registerFileExtension('html', FSPageTemplate)
     import Folder, Root
     import Publication, Ghost, Image, File, SimpleContent, Link
     import Indexer
