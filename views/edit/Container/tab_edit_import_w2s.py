@@ -17,14 +17,18 @@ if not request.has_key('storageids') or not request['storageids']:
 errors = []
 for item in request['storageids']:
     sid, doctype = item.split('|')
-    data = model.service_docma.get_finished_job(str(request['AUTHENTICATED_USER']), int(sid))
-    if doctype == 'silva':
-        try:
-            model.xml_import(data)
-        except Exception, e:
-            errors.append('<<%s>> - %s' % (sid, e))
+    try:
+        data = model.service_docma.get_finished_job(str(request['AUTHENTICATED_USER']), int(sid))
+    except Exception, e:
+        errors.append(e)
     else:
-        model.manage_addProduct['Silva'].manage_addFile('doc_%s.doc' % sid, 'Docma Word Document %s' % sid, data)
+        if doctype == 'silva':
+            try:
+                model.xml_import(data)
+            except Exception, e:
+                errors.append('<<%s>> - %s' % (sid, e))
+        else:
+            model.manage_addProduct['Silva'].manage_addFile('doc_%s.doc' % sid, 'Docma Word Document %s' % sid, data)
 
 if errors:
     return view.tab_edit_import(message_type='error', message='The following errors have occured during import: %s' % ', '.join(errors))
