@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 import Globals, AccessControl, Products
 from AccessControl import Permissions
 
@@ -28,7 +28,14 @@ def setDefaultRoles(permission, roles):
 
 # Silva permissions
 ViewAuthenticated = 'View Authenticated'
-setDefaultRoles(ViewAuthenticated, ('Authenticated',))
+setDefaultRoles(ViewAuthenticated, ('Manager', 'ChiefEditor',
+                                    'Editor', 'Author', 'Reader',
+                                    'Viewer', 'Authenticated'))
+
+ViewRestrictedContent = 'View Restricted content'
+setDefaultRoles(ViewRestrictedContent, ('Manager', 'ChiefEditor',
+                                        'Editor', 'Author', 'Reader'
+                                        'Viewer'))
 
 ReadSilvaContent = 'Read Silva content'
 setDefaultRoles(ReadSilvaContent, ('Manager', 'ChiefEditor',
