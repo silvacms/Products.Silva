@@ -90,7 +90,7 @@ Problems when using Silva
     environment variable LOCALIZER_USE_ZOPE_UNICODE in the script
     starting Zope. This may break other products relying on Localizer do
     apply its unicode patches, however.
-		For PlacelessTranslationService setting the environment variable as
+    For PlacelessTranslationService setting the environment variable as
     above has no effect and at the time of writing this (with PTS-1.0rc8
     released) one needs to uninstall that product to get rid of the error.
 
