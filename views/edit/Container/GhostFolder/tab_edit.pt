@@ -61,16 +61,6 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="3">
-          <input class="navigation"
-            style="float:right;"
-            name="tab_status_export:method"
-            type="submit"
-            accesskey="e"
-            tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
-            tal:attributes="
-              value string: Export...;
-              title string:export this ${type}: alt-e;"
-          />
           <input class="button"
             type="submit" 
             name="convert_to_folder:method" 
