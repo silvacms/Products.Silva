@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.3 $
+CVS:        $Revision: 1.4 $
 
 Introduction
 ------------
@@ -26,22 +26,22 @@ C - Core, essential for the operation of Silva.
 I - Usable independently of Silva.
 E - Silva extension.
 
-Silva 1.0 (DC)
+Silva 1.1 (DC)
 --------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
 such as Folders, Publications, and Ghosts.
 
-http://www.zope.org/Members/infrae/Silva
+http://www.infrae.com/download/Silva
 
-http://www.zope.org/Members/infrae/SilvaWindowsInstaller
+http://www.infrae.com/download/SilvaWindowsInstaller
 
 SilvaViews 0.9 (DCI)
 --------------------
 
 The infrastructure used by Silva to attach views to content objects.
 
-http://www.zope.org/Members/infrae/SilvaViews
+http://www.infrae.com/download/SilvaViews
 
 FileSystemSite 1.4 (DCI)
 ------------------------
@@ -52,7 +52,7 @@ filesystem, which makes for easier development, distribution and
 installation. Silva and extensions use this for the view
 system. SilvaDocument also uses it for the forms-based editor.
 
-http://www.zope.org/Members/infrae/FileSystemSite
+http://www.infrae.com/download/FileSystemSite
 
 Formulator 1.6.2 (DCI)
 ----------------------
@@ -61,7 +61,7 @@ Formulator is a Zope extension for the easy construction, display and
 validation of web forms. Silva and various extension use this for the
 display of forms. Also used by SilvaMetadata.
 
-http://www.zope.org/Members/infrae/Formulator
+http://www.infrae.com/download/Formulator
 
 SilvaMetadata 0.7.6 (DCI)
 -------------------------
@@ -72,7 +72,7 @@ automatically.
 
 Uses Formulator, Annotation and ProxyIndex.
 
-http://www.zope.org/Members/infrae/SilvaMetadata
+http://www.infrae.com/download/SilvaMetadata
 
 Annotations 0.4.3 (DCI)
 -----------------------
@@ -80,7 +80,7 @@ Annotations 0.4.3 (DCI)
 A system for attaching information to Zope objects without changing
 them. Used by SilvaMetadata.
 
-http://www.zope.org/Members/infrae/Annotations
+http://www.infrae.com/download/Annotations
 
 ProxyIndex 1.1.2 (DCI)
 ----------------------
@@ -90,7 +90,7 @@ instead of an attribute lookup/call to retrieve the value to index
 from an object. The value retrieved can then be indexed by any
 available plugin index. Used by SilvaMetadata.
 
-http://www.zope.org/Members/infrae/ProxyIndex
+http://www.infrae.com/download/ProxyIndex
 
 SilvaDocument 1.1 (DE)
 ----------------------
@@ -100,7 +100,7 @@ editing system for them. This is shipped along with the core, though
 strictly speaking it is optional. Uses XMLWidgets and ParsedXML. Can
 optionally be extended with SilvaExternalSources.
 
-http://www.zope.org/Members/infrae/SilvaDocument
+http://www.infrae.com/download/SilvaDocument
 
 XMLWidgets 0.10.3 (DI)
 ----------------------
@@ -108,7 +108,7 @@ XMLWidgets 0.10.3 (DI)
 A system used to construct the forms-based editor for XML used by
 SilvaDocument. Integrates with ParsedXML.
 
-http://www.zope.org/Members/infrae/XMLWidgets
+http://www.infrae.com/download/XMLWidgets
 
 ParsedXML 1.3.1 (DI)
 --------------------
@@ -116,7 +116,7 @@ ParsedXML 1.3.1 (DI)
 A DOM-compliant storage for XML documents. Used by
 SilvaDocument. XMLWidgets integrates with it.
 
-http://www.zope.org/Members/faassen/ParsedXML
+http://www.infrae.com/download/ParsedXML
 
 Groups 0.4 (I)
 --------------
@@ -135,7 +135,7 @@ needed. Once the Groups Filesystem Product is installed, such a
 service can be added to the Silva Root via the ZMI. This service
 should have ``service_groups`` for its id.
 
-http://www.zope.org/Members/infrae/Groups
+http://www.infrae.com/download/Groups
 
 ExtFile 1.4.2 (I)
 -----------------
@@ -154,7 +154,7 @@ External Sources can integrate with SilvaDocument so that data coming
 from arbitrary Python sources, SQL databases or CSV (comma separated
 values) can be shown inside SilvaDocuments.
 
-http://www.zope.org/Members/infrae/SilvaExternalSources
+http://www.infrae.com/download/SilvaExternalSources
 
 SilvaNews 1.0 (E)
 -----------------
@@ -167,7 +167,7 @@ site. It also contains RSS export and import facilities.
 NOTE: At the time of this writing, we haven't yet released a version of
 SilvaNews that has been fully tested with Silva 1.0.
 
-http://www.zope.org/Members/infrae/SilvaNews
+http://www.infrae.com/download/SilvaNews
 
 Docma Server 0.7
 ----------------
@@ -176,6 +176,6 @@ A separate system that can sit on a Windows machine and translate
 Silva XML to MS Word documents, and back. This can be integrated into
 the Silva UI by enabling service_docma.
 
-http://www.zope.org/Members/infrae/DocmaServer
+http://www.infrae.com/download/DocmaServer
 
-http://www.zope.org/Members/infrae/DocmaWindowsInstaller
+http://www.infrae.com/download/DocmaWindowsInstaller
