@@ -37,3 +37,10 @@ def unapprove_close_helper(object):
     if Interfaces.Container.isImplementedBy(object):
         for item in object.get_ordered_publishables():
             unapprove_close_helper(item)
+
+# this is a bit of a hack; using implementation details of ParsedXML..
+from Products.ParsedXML.PrettyPrinter import _translateCdata, _translateCdataAttr
+
+translateCdata = _translateCdata
+translateCdataAttr = _translateCdataAttr
+

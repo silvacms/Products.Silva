@@ -12,7 +12,7 @@ import Interfaces
 from Products.ParsedXML.ParsedXML import ParsedXML
 
 # misc
-from helpers import add_and_edit
+from helpers import add_and_edit, translateCdata
 from cgi import escape
 
 class Course(VersionedContent, EditorSupport):
@@ -72,9 +72,9 @@ class Course(VersionedContent, EditorSupport):
         if version_id is None:
             return
         version = getattr(self, version_id)
-        f.write('<silva_course>')
+        f.write('<silva_course id="%s">' % self.id)
         for key, value in version._data.items():
-            f.write('<%s>%s</%s>' % (key, value, key))
+            f.write('<%s>%s</%s>' % (key, translateCdata(value), key))
         f.write('<content>')
         version.content.documentElement.writeStream(f)
         f.write('</content>')

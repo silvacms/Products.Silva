@@ -11,7 +11,7 @@ import Interfaces
 from EditorSupport import EditorSupport
 
 # misc
-from helpers import add_and_edit
+from helpers import add_and_edit, translateCdata
 
 class Document(VersionedContent, EditorSupport):
     """Silva Document.
@@ -135,10 +135,10 @@ class Document(VersionedContent, EditorSupport):
         if version_id is None:
             return
         version = getattr(self, version_id)
-        f.write('<silva_document>')
-        f.write('<title>%s</title>' % self.get_title())
-        for key, value in self._metadata.items():
-            f.write('<%s>%s</%s>' % (key, value, key))            
+        f.write('<silva_document id="%s">' % self.id)
+        f.write('<title>%s</title>' % translateCdata(self.get_title()))
+        #for key, value in self._metadata.items():
+        #    f.write('<%s>%s</%s>' % (key, translateCdata(value), key))            
         version.documentElement.writeStream(f)
         f.write('</silva_document>')
         

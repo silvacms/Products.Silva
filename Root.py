@@ -43,7 +43,7 @@ class Root(Publication):
     def to_xml(self, f):
         """Render object to XML.
         """
-        f.write('<silva_root>')
+        f.write('<silva_root id="%s">' % self.id)
         self._to_xml_helper(f)
         f.write('</silva_root>')
 

@@ -185,7 +185,7 @@ class SilvaObject(Security):
     def to_xml(self, f):
         """Handle unknown objects. (override in subclasses)
         """
-        f.write('<unknown>%s</unknown>' % self.meta_type)
+        f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))
         
         
 InitializeClass(SilvaObject)

@@ -505,12 +505,15 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def to_xml(self, f):
         """Render object to XML.
         """
-        f.write('<silva_folder>')
+        f.write('<silva_folder id="%s">' % self.id)
         self._to_xml_helper(f)
         f.write('</silva_folder>')
 
     def _to_xml_helper(self, f):
-        f.write('<title>%s</title>' % self.get_title())
+        f.write('<title>%s</title>' % helpers.translateCdata(self.get_title()))
+        default = self.get_default()
+        if default is not None:
+            default.to_xml(f)
         for object in self.get_ordered_publishables():
             object.to_xml(f)
         #for object in self.get_assets():

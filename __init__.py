@@ -6,14 +6,14 @@ def initialize(context):
           Document.Document,
           constructors = (Document.manage_addDocumentForm,
                           Document.manage_addDocument),
-          icon="www/silva_document.gif"
+          icon="www/silvadoc.gif"
           )
      
      context.registerClass(
           Folder.Folder,
           constructors = (Folder.manage_addFolderForm,
                           Folder.manage_addFolder),
-          icon="www/silva_folder.gif" 
+          icon="www/silvafolder.gif" 
           )  
 
      context.registerClass(
@@ -25,19 +25,22 @@ def initialize(context):
      context.registerClass(
           Publication.Publication,
           constructors = (Publication.manage_addPublicationForm,
-                          Publication.manage_addPublication)
+                          Publication.manage_addPublication),
+	  icon="www/silvapublication.gif"
           )
 
      context.registerClass(
           Ghost.Ghost,
           constructors = (Ghost.manage_addGhostForm,
-                          Ghost.manage_addGhost)
+                          Ghost.manage_addGhost),
+	  icon="www/silvaghost.gif"
           )
 
      context.registerClass(
           Course.Course,
           constructors = (Course.manage_addCourseForm,
-                          Course.manage_addCourse)
+                          Course.manage_addCourse),
+	  icon="www/silvacourse.gif"
           )
      
      context.registerClass(
@@ -50,13 +53,15 @@ def initialize(context):
      context.registerClass(
           ContactInfo.ContactInfo,
           constructors = (ContactInfo.manage_addContactInfoForm,
-                          ContactInfo.manage_addContactInfo)
+                          ContactInfo.manage_addContactInfo),
+	  icon="www/silvacontactinfo.gif"
           )
      
      context.registerClass(
           Image.Image,
           constructors = (Image.manage_addImageForm,
-                          Image.manage_addImage)
+                          Image.manage_addImage),
+	  icon="www/silvaimage.gif"
           )
 
      context.registerClass(

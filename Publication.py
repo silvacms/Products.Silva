@@ -37,7 +37,7 @@ class Publication(Folder):
     def to_xml(self, f):
         """Render object to XML.
         """
-        f.write('<silva_publication>')
+        f.write('<silva_publication id="%s">' % self.id)
         self._to_xml_helper(f)
         f.write('</silva_publication>')
         
