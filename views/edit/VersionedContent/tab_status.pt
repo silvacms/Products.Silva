@@ -281,13 +281,13 @@ _______ manual close section here _______
                   </label>
                 </td>
                 <td style="white-space: nowrap"
-                    tal:content="python: mangle.DateTime(modificationtime).toStr()">
+                    tal:content="python: mangle.DateTime(modificationtime).toStr() or '-'">
                   modificationtime
                 </td>
-                <td style="white-space: nowrap" tal:content="python: mangle.DateTime(publicationtime).toStr()">
+                <td style="white-space: nowrap" tal:content="python: mangle.DateTime(publicationtime).toStr() or '-'">
                   publicationtime
                 </td>
-                <td style="white-space: nowrap" tal:content="python: mangle.DateTime(expirationtime).toStr()">
+                <td style="white-space: nowrap" tal:content="python: mangle.DateTime(expirationtime).toStr() or '-'">
                   expirationtime
                 </td>
                 <td style="white-space: nowrap" tal:content="lastauthor">
