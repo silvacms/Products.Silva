@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.15.2.2 $'
+__version__='$Revision: 1.15.2.3 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -130,7 +130,18 @@ class h6(h3):
         """
         result = silva.heading(
             self.content.convert(context),
-            type="sub",
+            type="paragraph",
+            )
+        return self.process_result(result, context)
+    
+class h7(h3):
+    def convert(self, context):
+        """ this only gets called if the user erroronaously
+            used h6 somewhere 
+        """
+        result = silva.p(
+            self.content.convert(context),
+            type="normal",
             )
         return self.process_result(result, context)
 

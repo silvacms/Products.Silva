@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.18.8.2 $
+# $Revision: 1.18.8.3 $
 import unittest
 
 # 
@@ -136,27 +136,48 @@ class HTML2XML(Base):
         self.assert_(headings[0].attrs['type']=='normal')
         self.assert_(headings[1].attrs['type']=='sub')
 
-    def test_default_heading_conversion(self):
-        html_frag="""<body><h1>eins</h1><h2>zwei</h2><h3>drei</h3>
-                     <h4>vier</h4><h5>fuenf</h5><h6>sechs</h6></body>"""
+    def _check_heading(self, htag, stype, htag_back=None):
+        if htag_back is None:
+            htag_back = htag
+
+        html_frag = "<body><%(htag)s>eins</%(htag)s></body>" % locals()
+        htmlnode = self.transformer.target_parser.parse(html_frag)
+        node = htmlnode.convert(context={'id':u'id', 'title':u'title'})
+        doc = node.find('silva_document')[0].find('doc')[0]
+
+        heading = doc.find('heading')
+        self.assertEquals(len(heading), 1)
+        heading = heading[0]
+        self.assertEquals(heading.attrs.get('type'), stype)
+
+        s = node.asBytes()
+        silvanode = self.transformer.source_parser.parse(s)
+        node = silvanode.conv()
+        doc = node.find('body')[0]
+        hx = doc.find(htag_back)
+        self.assertEquals(len(hx), 1)
+
+    def test_h3(self):
+        self._check_heading('h3', 'normal')
+
+    def test_h4(self):
+        self._check_heading('h4', 'sub')
+
+    def test_h5(self):
+        self._check_heading('h5', 'subsub')
+
+    def test_h6(self):
+        self._check_heading('h6', 'paragraph')
+
+    def test_default_heading_conversion_h1(self):
+        html_frag="""<body><h1>eins</h1></body>"""
         htmlnode = self.transformer.target_parser.parse(html_frag)
         self.assert_(not self.transformer.target_parser.unknown_tags)
-
         node = htmlnode.convert(context={'id':u'', 'title':u''})
-
         doc = node.find('silva_document')[0].find('doc')[0]
-        self.assert_(len(doc.find('heading'))==5)
-        num_sub = num_normal = num_subsub = 0
-        for heading in doc.find('heading'):
-            if heading.attrs._type=='normal':
-                num_normal+=1
-            elif heading.attrs._type=='sub':
-                num_sub+=1
-            elif heading.attrs._type=='subsub':
-                num_subsub+=1
-        self.assert_(num_normal==2) # h2 gets document title
-        self.assert_(num_subsub==1)
-        self.assert_(num_sub==2)
+        heading = doc.find('heading')
+        self.assertEquals(len(heading), 1)
+        self.assertEquals(heading[0].attrs.get('type'), 'normal')
 
     def test_ol_list_conversion(self):
         html_frag="""<ol><li>eins</li><li>zwei</li></ol>"""
