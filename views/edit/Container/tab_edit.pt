@@ -14,7 +14,7 @@
   </h2>
 </div>
 
-<form action="." name="silvaObjects" method="POST">
+<form action="add_object" name="silvaObjects" method="POST">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
   <tr>
     <td class="divider" width="3" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
@@ -39,12 +39,12 @@
     <span class="back3"><span tal:replace="model/id">id</span>
   </td>
   <td align="right">
-    <select name=":action"
-      tal:attributes="onChange string:location.href='${model/absolute_url}/edit/'+this.options[this.selectedIndex].value">
+    <select name="meta_type"
+      tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value">
       <option value="" disabled>Select...</option>
       <tal:block tal:repeat="addable model/get_silva_addables">
-        <option value="add" tal:condition="python:here.service_view_registry.has_view('add', addable['name'])" 
-               tal:attributes="value python:'/'.join(here.service_view_registry.get_view_path('add', addable['name'])) + '/add'" tal:content="addable/name"></option>
+        <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])" 
+               tal:attributes="value addable/name" tal:content="addable/name"></option>
        </tal:block>
     </select>
     &nbsp;

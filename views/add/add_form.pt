@@ -7,9 +7,10 @@
 <div class="margins" metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<h2>Add new <span tal:replace="here/title" /></h2>
+<h2>Add new <span tal:replace="request/meta_type" /></h2>
 
-<form name="focusbox" action="add_submit" method="POST" enctype="multipart/form-data">
+<form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
+<input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
 <table width="96%" cellspacing="0" cellpadding="5" border="0"
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
                   cellpadding container/table_cellpadding; border container/table_border">
