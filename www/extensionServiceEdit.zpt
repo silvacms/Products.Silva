@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.2 $
+Version of this file: $Revision: 1.3 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -22,10 +22,14 @@ Version of this file: $Revision: 1.2 $
       tal:attributes="value module_name" />
     <input type="submit" name="install:method" value="install"
       tal:define="blerk python:test(here.is_installed(module_name), 'uninstall', 'install')"
-      tal:attributes="name string:${blerk}:method; value blerk;" />    
+      tal:attributes="name string:${blerk}:method; value blerk;" />
+    <input type="submit" name="refresh:method" value="refresh" tal:condition="python:here.is_installed(module_name)" />    
   </form>
   <form action="." method="POST" tal:condition="python:module_name =='Silva'">
+    <input type="hidden" name="name" value="value"
+      tal:attributes="value module_name" />
     <input type="submit" name="install_layout:method" value="install default layout" />
+    <input type="submit" name="refresh:method" value="refresh" />
   </form>
 
 </div>

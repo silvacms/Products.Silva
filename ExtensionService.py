@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
@@ -51,13 +51,22 @@ class ExtensionService(SimpleItem.SimpleItem):
         root.service_view_registry.set_trees(self.get_installed_names())
         return self.manage_main(manage_tabs_message='%s uninstalled' % name)
 
+    security.declareProtected('View management screens', 'refresh')
+    def refresh(self, name):
+        """Refresh (uninstall/install) extension.
+        """
+        self.uninstall(name)
+        self.install(name)
+        return self.manage_main(manage_tabs_message='%s refreshed' % name)
+    
     security.declareProtected('View management screens', 'install_layout')
     def install_layout(self):
         """Install core layout.
         """
         root = self.aq_inner.aq_parent
         install.configureLayout(root, 1)
-    
+        return self.manage_main(manage_tabs_message='Default layout code installed')
+            
     # ACCESSORS
 
     security.declareProtected('View management screens', 'get_names')

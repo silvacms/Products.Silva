@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -88,7 +88,7 @@ def manage_addRoot(self, id, title, REQUEST=None):
     object = getattr(self, id)
 
     # now set it all up
-    install.install(object)
+    install.installFromScratch(object)
 
     add_and_edit(self, id, REQUEST)
     return ''

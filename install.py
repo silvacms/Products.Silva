@@ -5,20 +5,29 @@ from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Globals import package_home
 import os
 
-def install(root):
+def installFromScratch(root):
     configureProperties(root)
     configureCoreFolders(root)
     configureViews(root)
     configureXMLWidgets(root)
     configureLayout(root)
+    # now do the uinstallable stuff (views)
+    install(root)
+    
+# silva core install/uninstall are really only used at one go in refresh
+def install(root):
+    # create the core views from filesystem
+    manage_addDirectoryView(root.service_views,
+                            'Products/Silva/views', 'Silva')
+    # also register views
+    registerViews(root.service_view_registry)
     
 def uninstall(root):
-    # Silva Core cannot be uninstalled
-    pass
+    unregisterViews(root.service_view_registry)
+    root.service_views.manage_delObjects(['Silva'])  
 
 def is_installed(root):
-    # should always be installed
-    return 1
+    return hasattr(root.service_views, 'Silva')
 
 def configureProperties(root):
     """Configure properties on the root folder.
@@ -56,11 +65,6 @@ def configureViews(root):
         'service_extensions')
     # folder contains the various view trees
     root.manage_addFolder('service_views')
-    # create the core views from filesystem
-    manage_addDirectoryView(root.service_views,
-                            'Products/Silva/views', 'Silva')
-    # also register views
-    registerViews(root.service_view_registry)
     # and set Silva tree XXX should be more polite to extension packages
     root.service_view_registry.set_trees(['Silva'])
     
@@ -147,6 +151,16 @@ def registerViews(reg):
     reg.register('add', 'Silva DemoObject', ['add', 'DemoObject'])
     reg.register('add', 'Silva File', ['add', 'File'])
     reg.register('add', 'Silva Index', ['add', 'Index'])
+
+def unregisterViews(reg):
+    for meta_type in ['Silva Folder', 'Silva Document',
+                      'Silva Publication', 'Silva Ghost', 'Silva Image',
+                      'Silva DemoObject', 'Silva File', 'Silva Index']:
+        reg.unregister('edit', meta_type)
+        reg.unregister('public', meta_type)
+        reg.unregister('add', meta_type)
+    reg.unregister('edit', 'Silva Root')
+    reg.unregister('public', 'Silva Root')
     
 def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'
