@@ -31,6 +31,7 @@ class XMLSourceRegistry:
 
     def getXMLSource(self, context):
         xmlsource = self._mapping.get(context.__class__, None)
+        print context.__class__, xmlsource
         if xmlsource is None:
             if self._fallback is not None:
                 return self._fallback(context)
@@ -50,7 +51,6 @@ def initializeXMLSourceRegistry():
     __init__.pies
     """
     reg = theXMLSourceRegistry
-    reg.registerXMLSource(File, FileXMLSource)
     reg.registerXMLSource(Folder, FolderXMLSource)
     reg.registerXMLSource(Link, LinkXMLSource)
     reg.registerXMLSource(LinkVersion, LinkVersionXMLSource)
@@ -237,18 +237,6 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
         """
         return
 
-class FileXMLSource(SilvaBaseXMLSource):
-    """Export a Silva File object to XML.
-    """
-    # XXX This needs to change or be removed. It's completely useless as is.
-    def _sax(self, reader, settings):
-        self._startElement(
-            reader,
-            'file',
-            {'id':self.context.id, 'url':self.context.get_download_url()})
-        reader.characters(self.context.title)
-        self._endElement(reader, 'file')
-
 class FolderXMLSource(SilvaBaseXMLSource):
     """Export a Silva Folder object to XML.
     """
@@ -260,6 +248,8 @@ class FolderXMLSource(SilvaBaseXMLSource):
             if (IPublication.isImplementedBy(object) and
                     not self.context.with_sub_publications):
                 continue
+            getXMLSource(object)._sax(reader, settings)
+        for object in self.context.get_assets():
             getXMLSource(object)._sax(reader, settings)
         self._endElement(reader, 'content')
         self._endElement(reader, 'folder')
@@ -275,6 +265,8 @@ class PublicationXMLSource(SilvaBaseXMLSource):
             if (IPublication.isImplementedBy(object) and
                     not self.context.with_sub_publications):
                 continue
+            getXMLSource(object)._sax(reader, settings)
+        for object in self.context.get_assets():
             getXMLSource(object)._sax(reader, settings)
         self._endElement(reader, 'content')
         self._endElement(reader, 'publication')

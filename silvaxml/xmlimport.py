@@ -144,9 +144,9 @@ class BaseHandler:
 
     def setWorkflowVersion(
         self, version_id, publicationtime, expirationtime, status):
-        if publicationtime is not None:
+        if publicationtime:
             publicationtime = DateTime(publicationtime)
-        if expirationtime is not None:
+        if expirationtime:
             expirationtime = DateTime(expirationtime)
             
         self._parent_handler._workflow[version_id] = (
