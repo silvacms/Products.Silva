@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.36 $
+# $Revision: 1.37 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -171,7 +171,7 @@ class Document(VersionedContent, EditorSupport):
         version = self.get_viewable()
         if version is None:
             return []
-        return version
+        return [version]
     
 
 InitializeClass(Document)

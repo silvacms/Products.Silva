@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -42,7 +42,7 @@ class EditorSupport:
                 result.append('<a href="%s">' %
                               output_convert(child.getAttribute('url')))
                 for subchild in child.childNodes:
-                    result.append(output_convert(subchild.data, 1))
+                    result.append(output_convert(subchild.data))
                 result.append('</a>')
             elif child.nodeName == 'underline':
                 result.append('<u>')
@@ -57,7 +57,7 @@ class EditorSupport:
                 result.append('</a>')
             #elif child.nodeName == 'person':
             #    for subchild in child.childNodes:
-            #        result.append(output_convert(subchild.data, 1))
+            #        result.append(output_convert(subchild.data))
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
         return ''.join(result)
