@@ -246,6 +246,11 @@ dd {
 
 /* _________________________________________________ silva table styles _____ */
 
+td {
+    border-style: solid;
+    border-width: 1px;
+};
+
 table.silvatable {
   empty-cells: show;
   border-collapse: collapse;
