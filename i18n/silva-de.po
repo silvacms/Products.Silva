@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-16 14:31+0100\n"
+"PO-Revision-Date: 2004-12-16 15:33+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -422,7 +422,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:158
 msgid "The Properties, Access, and Publish screens as well as their subscreens (such as Lookup, Import, and Export) have access keys for most buttons. Usually the first letter of the button is the access key. You can always hover over the button to see the tooltip."
-msgstr ""
+msgstr "Die Eingenschaften-, Zugriff- und Publizierenschirme haben, ebenso wie ihre Unterschirme (wie Nachschlagen, Import und Export), Kurzwahlen für die meisten ihrer Knöpfe. Üblicherweise ist der erste Buchstabe im Knopf die Kurzwahl. Sie kann aber immer durch ein Ansteuern desKnopfes mit der Maus angezeigt werden."
 
 #: /globals/accesskeys.pt:161
 msgid "If there are two buttons with the same name, the access key for the second is usually the first letter of the second word (e.g. for &#8220;get image reference&#8221; and &#8220;get link reference&#8221;, the access keys are &#8216;g&#8217; and &#8216;l&#8217;). Sometimes there are multiples of the same button, in which case only the first has an access key."
@@ -475,7 +475,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:186
 msgid "Tip: one click editing"
-msgstr ""
+msgstr "Tipp: Ein-Klick Bearbeitung"
 
 #: /globals/accesskeys.pt:190
 msgid "When viewing a public Silva page, switching to the SMI is is easiest if there's a bookmark on your toolbar. Add a bookmark with the following javascript:"
