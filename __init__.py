@@ -7,7 +7,7 @@ def initialize(context):
           constructors = (Document.manage_addDocumentForm,
                           Document.manage_addDocument),
           icon="www/silvadoc.gif",
-	  visible=None
+	  visibility=None
           )
      
      context.registerClass(
@@ -15,7 +15,7 @@ def initialize(context):
           constructors = (Folder.manage_addFolderForm,
                           Folder.manage_addFolder),
           icon="www/silvafolder.gif",
-	  visible=None
+	  visibility=None
           )  
 
      context.registerClass(
@@ -29,7 +29,7 @@ def initialize(context):
           constructors = (Publication.manage_addPublicationForm,
                           Publication.manage_addPublication),
 	  icon="www/silvapublication.gif",
-	  visible=None
+	  visibility=None
           )
 
      context.registerClass(
@@ -37,7 +37,7 @@ def initialize(context):
           constructors = (Ghost.manage_addGhostForm,
                           Ghost.manage_addGhost),
 	  icon="www/silvaghost.gif",
-	  visible=None
+	  visibility=None
           )
 
      context.registerClass(
@@ -45,7 +45,7 @@ def initialize(context):
           constructors = (Course.manage_addCourseForm,
                           Course.manage_addCourse),
 	  icon="www/silvacourse.gif",
-	  visible=None
+	  visibility=None
           )
      
      context.registerClass(
@@ -53,7 +53,7 @@ def initialize(context):
           constructors = (ViewRegistry.manage_addViewRegistryForm,
                           ViewRegistry.manage_addViewRegistry),
           icon="www/silva_view_registry.gif",
-	  visible=None
+	  visibility=None
           )
      
      context.registerClass(
@@ -61,7 +61,7 @@ def initialize(context):
           constructors = (ContactInfo.manage_addContactInfoForm,
                           ContactInfo.manage_addContactInfo),
 	  icon="www/silvacontactinfo.gif",
-	  visible=None
+	  visibility=None
           )
      
      context.registerClass(
@@ -69,7 +69,7 @@ def initialize(context):
           constructors = (Image.manage_addImageForm,
                           Image.manage_addImage),
 	  icon="www/silvaimage.gif",
-	  visible=None
+	  visibility=None
           )
 
      context.registerClass(
