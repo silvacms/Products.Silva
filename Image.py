@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.47 2003/08/25 08:33:29 zagy Exp $
+# $Id: Image.py,v 1.48 2003/09/16 11:51:31 zagy Exp $
 
 # Python
 import re, string 
@@ -37,6 +37,7 @@ except ImportError:
 from interfaces import IAsset
 
 icon = "www/silvaimage.gif"
+addable_priority = 1
 
 class Image(Asset):
     """Web graphics (gif, jpg, png) can be uploaded and inserted in Silva

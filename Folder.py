@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.135 $
+# $Revision: 1.136 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -11,6 +11,7 @@ from OFS.CopySupport import _cb_decode # HACK
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
+from Products.Silva.ExtensionRegistry import extensionRegistry
 from SilvaObject import SilvaObject
 from Publishable import Publishable
 import Copying
@@ -37,6 +38,7 @@ from interfaces import IVersionedContent, ISilvaObject, IAsset
 from interfaces import IContainer, IPublication, IRoot
 
 icon="www/silvafolder.gif"
+addable_priority = -.5
 
 class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     """The presentation of the information within a
@@ -546,7 +548,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """
         result = []
         allowed = self.get_silva_addables_allowed()
-        for addable_dict in self.filtered_meta_types():
+        for addable_dict in extensionRegistry.get_addables():
             meta_type = addable_dict['name']
             if allowed and meta_type not in allowed:
                 continue
@@ -562,9 +564,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                               'get_silva_addables_all')
     def get_silva_addables_all(self):
         result = [addable_dict['name']
-                  for addable_dict in self.filtered_meta_types()
+                  for addable_dict in extensionRegistry.get_addables()
                   if self._is_silva_addable(addable_dict)]
-        result.sort()
         return result
 
     def _is_silva_addable(self, addable_dict):

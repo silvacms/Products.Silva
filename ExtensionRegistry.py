@@ -1,20 +1,39 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
+
+from bisect import insort_right
+
+import Products
 
 from Products.Silva import icon
+from Products.Silva.interfaces import ISilvaObject
 
+
+class Addable:
+
+    def __init__(self, meta_type, priority=0.0):
+        self._meta_type = meta_type
+        self.priority = priority
+        
+    def __cmp__(self, other):
+        sort = cmp(self.priority, other.priority)
+        if sort == 0:
+            sort = cmp(self._meta_type['name'], other._meta_type['name'])
+        return sort
+        
 
 class ExtensionRegistry:
 
     def __init__(self):
         self._extensions_order = []
         self._extensions = {}
+        self._silva_addables = []
 
     # MANIPULATORS
 
     def register(
-        self, name, description, context, modules, install_module, 
+        self, name, description, context, modules, install_module,
         depends_on='Silva'):
 
         self._extensions[name] = (description, install_module, depends_on)
@@ -27,11 +46,14 @@ class ExtensionRegistry:
     def registerClass(self, context, module):
         # We assume the class name to be identical to the module name
         classname = module.__name__.split('.')[-1]
+        klass = getattr(module, classname)
         version_classname = classname + 'Version'
         __traceback_info__ = (module, classname, version_classname)
+        meta_type = klass.meta_type
+        priority = getattr(module, 'addable_priority', 0)
         # Register Silva Addable
         context.registerClass(
-            getattr(module, classname),
+            klass,
             constructors = (
                 getattr(module, 'manage_add%sForm' % classname),
                 getattr(module, 'manage_add%s' % classname)),
@@ -48,11 +70,16 @@ class ExtensionRegistry:
         icon_path = getattr(module, 'icon', None)
         if icon_path:
             icon.registry.registerIcon(
-                ('meta_type', getattr(module, classname).meta_type),
+                ('meta_type', meta_type),
                 icon_path,
                 module.__dict__)
-                
-    
+        if ISilvaObject.isImplementedByInstancesOf(klass):
+            meta_types = Products.meta_types
+            for mt_dict in meta_types:
+                if mt_dict['name'] == meta_type:
+                    insort_right(self._silva_addables, Addable(mt_dict,
+                        priority))
+   
     def _orderExtensions(self):
         """Reorder extensions based on depends_on constraints.
         """
@@ -96,5 +123,8 @@ class ExtensionRegistry:
     def get_depends_on(self, name):
         return self._extensions[name][2]
 
+    def get_addables(self):
+        return [ addable._meta_type for addable in self._silva_addables ]
 
 extensionRegistry = ExtensionRegistry()
+

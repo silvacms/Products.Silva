@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 # Zope
 from Globals import InitializeClass
 from OFS import SimpleItem
@@ -16,6 +16,7 @@ import SilvaPermissions
 from interfaces import ISQLDataSource
 
 icon="www/silvasqldatasource.png"
+addable_priority = 1
 
 class SQLDataSource(DataSource):
     __implements__ = ISQLDataSource

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Revision: 1.29 $
 # Python
 from StringIO import StringIO
 # Zope
@@ -26,6 +26,7 @@ from Products.ParsedXML.ExtraDOM import writeStream
 from interfaces import IVersionedContent, IVersion
 
 icon="www/silvageneric.gif"
+addable_priority = 2
 
 class DemoObject(CatalogedVersionedContent):
     """Developers can create 'pluggable' Silva objects,

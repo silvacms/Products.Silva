@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.45 $
+# $Revision: 1.46 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -19,6 +19,7 @@ from Products.Silva import mangle
 from interfaces import IPublication
 
 icon="www/silvapublication.gif"
+addable_priority = -0.5
 
 class Publication(Folder.Folder):
     """These containers function as the major organizing blocks of a 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.93 $
+# $Revision: 1.94 $
 
 import Metadata
 import Folder, Root
@@ -14,7 +14,7 @@ import install
 import helpers # to execute the module_permission statements
 import mangle, batch
 from Products.Silva.ImporterRegistry import importer_registry
-from ExtensionRegistry import extensionRegistry
+from Products.Silva.ExtensionRegistry import extensionRegistry
 import ExtensionService
 import SimpleMembership
 import EmailMessageService
