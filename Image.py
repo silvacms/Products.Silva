@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.17 2004/04/27 10:55:44 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.18 2004/04/27 11:10:37 zagy Exp $
 
 # Python
 import re, string 
@@ -191,8 +191,8 @@ class Image(Asset):
         if m is None:
             m = self.re_percentage.match(scale)
             if m is None:
-                raise ValueError, "'%s' is not a valid scale identifier. "+\
-                    "Probably a percent symbol is missing." % (scale, )
+                raise ValueError, ("'%s' is not a valid scale identifier. "
+                    "Probably a percent symbol is missing.") % (scale, )
             percentage = float(m.group(1))/100.0
             width, height = self.getDimensions()
             width = int(width * percentage)
@@ -202,8 +202,8 @@ class Image(Asset):
             width = m.group(1)
             height = m.group(2)
             if width == height == '*':
-                raise ValueError, "'%s' is not a valid scale identifier. " +\
-                    "At least one number is required." % (scale, )
+                raise ValueError, ("'%s' is not a valid scale identifier. "
+                    "At least one number is required.") % (scale, )
             if width == '*':
                 height = int(height)
                 width = img_w * height / img_h
