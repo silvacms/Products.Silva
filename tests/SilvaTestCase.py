@@ -160,7 +160,8 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
 
     def _add_helper(self, object, typename, id, title, **kw):
-        getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title, **kw)
+        getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(
+            id, title, **kw)
         return getattr(object, id)
 
     def add_folder(self, object, id, title):
