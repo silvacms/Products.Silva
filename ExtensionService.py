@@ -1,7 +1,7 @@
 
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -78,8 +78,8 @@ class ExtensionService(SimpleItem.SimpleItem):
         """
         # first refresh all the installed products so the upgrade can be performed without any problems
         self.refresh_all()
-        self.get_root().upgrade_silva()
-        return self.manage_main(manage_tabs_message='All Silva content objects have been upgraded')
+        msg = self.get_root().upgrade_silva()
+        return self.manage_main(manage_tabs_message=msg)
     
     security.declareProtected('View management screens', 'install_layout')
     def install_layout(self):
