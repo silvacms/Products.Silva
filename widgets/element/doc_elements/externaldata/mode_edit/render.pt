@@ -81,11 +81,11 @@
           <td colspan="2" align="left"
             tal:define="show_caption python:node.getAttribute('show_caption')">
             Yes:&nbsp;
-            <input type="radio" name="show_caption" value="yes"
-              tal:attributes="checked python:test(show_caption == 'yes', 'checked', nothing)" />&nbsp;
+            <input type="radio" name="show_caption" value="true"
+              tal:attributes="checked python:test(show_caption == 'true', 'checked', nothing)" />&nbsp;
             No:&nbsp;
-            <input type="radio" name="show_caption" value="no" 
-              tal:attributes="checked python:test(show_caption == 'no', 'checked', nothing)"/>&nbsp;
+            <input type="radio" name="show_caption" value="false" 
+              tal:attributes="checked python:test(show_caption == 'false', 'checked', nothing)"/>&nbsp;
           </td>
         </tr>
         <tr>
@@ -95,11 +95,11 @@
           <td colspan="2" align="left"
             tal:define="show_headings python:node.getAttribute('show_headings')">
             Yes:&nbsp;
-            <input type="radio" name="show_headings" value="yes"
-              tal:attributes="checked python:test(show_headings == 'yes', 'checked', nothing)" />&nbsp;
+            <input type="radio" name="show_headings" value="true"
+              tal:attributes="checked python:test(show_headings == 'true', 'checked', nothing)" />&nbsp;
             No:&nbsp;
-            <input type="radio" name="show_headings" value="no" 
-              tal:attributes="checked python:test(show_headings == 'no', 'checked', nothing)"/>&nbsp;
+            <input type="radio" name="show_headings" value="false" 
+              tal:attributes="checked python:test(show_headings == 'false', 'checked', nothing)"/>&nbsp;
           </td>
         </tr>
         <tr>

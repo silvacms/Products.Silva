@@ -70,12 +70,12 @@ if request.has_key('element_type'):
     type = request['element_type']
 node.setAttribute('type', type)
 
-show_headings = 'yes'
+show_headings = 'true'
 if request.has_key('show_headings'):
     show_headings = request['show_headings']
 node.setAttribute('show_headings', show_headings)
 
-show_caption = 'yes'
+show_caption = 'true'
 if request.has_key('show_caption'):
     show_caption = request['show_caption']
 node.setAttribute('show_caption', show_caption)
