@@ -129,12 +129,13 @@ class ContainerTestCase(ContainerBaseTestCase):
                           l)
         
     def test_get_status_tree(self):
-        l = [(0, self.root.index), (0, self.doc1), (0, self.doc2), (0, self.doc3),
+        # XXX (0, self.root.index) was at the top of this list,
+        # but root doesn't come with an index at this point
+        l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
              (0, self.folder4), (1, self.folder4.index), (1, self.subdoc),
              (1, self.subfolder), (2, self.subfolder.index), (2, self.subfolder.subsubdoc),
              (0, self.root.publication5)]
-        self.assertEquals(self.root.get_status_tree(),
-                          l)
+        self.assertEquals(self.root.get_status_tree(), l)
         
     def test_move_object_up(self):
         r = self.root.move_object_up('doc2')
@@ -242,19 +243,19 @@ class ContainerTestCase(ContainerBaseTestCase):
                           l)
 
     def test_is_id_valid(self):
-        r = self.root.manage_addProduct['Silva'].manage_addDocument('__this_is_wrong', 'Wrong')
+        r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument('__this_is_wrong', 'Wrong')
         self.assert_(not hasattr(self.root, '__this_is_wrong'))
-        r = self.root.manage_addProduct['Silva'].manage_addDocument('this is wrong too', 'This is wrong')
+        r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument('this is wrong too', 'This is wrong')
         self.assert_(not hasattr(self.root, 'this is wrong too'))
         r = self.root.manage_addProduct['Silva'].manage_addFolder('this$iswrong', 'This is wrong too')
         self.assert_(not hasattr(self.root, 'this$iswrong'))
         r = self.root.manage_addProduct['Silva'].manage_addFolder('.this__', 'Cannot be')
         self.assert_(not hasattr(self.root, '.this__'))
-        r = self.root.manage_addProduct['Silva'].manage_addDocument('.foo_', 'This should not work')
+        r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument('.foo_', 'This should not work')
         self.assert_(not hasattr(self.root, '.foo_'))
         # issues189/321
         for bad_id in ('service_foo', 'edit', 'manage_main', 'index_html'):
-            r = self.root.manage_addProduct['Silva'].manage_addDocument(bad_id, 'This should not work')
+            r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument(bad_id, 'This should not work')
             obj = getattr(self.root, bad_id, None)            
             self.assert_(not IVersionedContent.isImplementedBy(obj),
                          'should not have created document with id '+bad_id)
