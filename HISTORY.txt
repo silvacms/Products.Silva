@@ -1,6 +1,15 @@
-Version of this document: $Revision: 1.4 $
+Version of this document: $Revision: 1.5 $
 
 Silva changes
+ 
+  0.8.1
+
+    Features Added
+   
+     - Beginnings of separating out the Course object from Silva core.
+
+     - Some utility code in EditorSupport to support multi-column
+       rendering.
 
   0.8
 
