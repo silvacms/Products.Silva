@@ -105,7 +105,10 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(part4, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><content><ghost id="caspar"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><link id="test_link"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is a test link, you insensitive clod!</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder/testfolder2/test_link</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
         self.assertEquals(part5, '</silva-extra:modificationtime><silva-extra:creationtime>')
         self.assertEquals(part6, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><url>http://www.snpp.com/</url></content></link></content></ghost></content></folder></silva>')
-
+        f = open('test_ghost.xml', 'w')
+        xmlexport.getXMLSource(testfolder3).xmlToFile(f, None)
+        f.close()
+        
     def test_xml_ghost_folder_export(self):
         testfolder = self.add_folder(
             self.root,
@@ -146,6 +149,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(part6, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><content><link id="test_link"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is a test link, you insensitive clod!</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder/testfolder2/test_link</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
         self.assertEquals(part7, '</silva-extra:modificationtime><silva-extra:creationtime>')
         self.assertEquals(part8, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><url>http://www.snpp.com/</url></content></link></content></folder></content></ghost_folder></content></folder></silva>')
+        f = open('test_ghost_folder.xml', 'w')
+        xmlexport.getXMLSource(testfolder3).xmlToFile(f, None)
+        f.close()
 
     def test_xml_link_export(self):
         testfolder = self.add_folder(

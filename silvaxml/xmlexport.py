@@ -165,6 +165,8 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
     def _workflow(self, reader, settings):
         """Export the XML for the versioning workflow
         """
+        if not settings.workflow():
+            return
         self._startElement(reader, 'workflow', {})
         version = self.context.get_unapproved_version_data()
         if version[0]:
@@ -202,9 +204,12 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
     def _versions(self, reader, settings):
         """Export the XML of the versions themselves.
         """
-        for version in self.context.objectValues():
-            getXMLSource(version)._sax(reader, settings)
-
+        if settings.allVersions():
+            for version in self.context.objectValues():
+                getXMLSource(version)._sax(reader, settings)
+        else:
+            #XXX handle single version export
+            
     def _metadata(self, reader, settings):
         """Versioned Content has no metadata, the metadata is all on the
         versions themselves.
@@ -315,13 +320,15 @@ class GhostVersionXMLSource(VersionXMLSource):
     def _sax(self, reader, settings):
         self._startElement(
             reader, 'content', {'version_id': self.context.id})
-        # XXX aha! will the versions themselves have metadata or just the
-        # haunted objects? Right now, they don't apparently.
-        # self._metadata(reader, settings)
         content = self.context.get_haunted_unrestricted()
         if content is None:
             return
-        getXMLSource(content)._sax(reader, settings)
+        if settings is None:
+            new_settings = ExportSettings()
+        else:
+            new_settings = settings
+        new_settings.setOnlyPublishedNoWorkflow()
+        getXMLSource(content)._sax(reader, new_settings)
         self._endElement(reader, 'content')
         
 class GhostFolderXMLSource(SilvaBaseXMLSource):
@@ -336,4 +343,18 @@ class GhostFolderXMLSource(SilvaBaseXMLSource):
         getXMLSource(content)._sax(reader, settings)
         self._endElement(reader, 'content')      
         self._endElement(reader, 'ghost_folder')      
-        
+
+class ExportSettings:
+    def __init__(self):
+        self._workflow = 1
+        self._all_versions = 1
+
+    def setOnlyPublishedNoWorkflow():
+        self._workflow = 0
+        self._all_versions = 0
+
+    def workflow():
+        return self._workflow
+
+    def allVersions():
+        return self._all_versions
