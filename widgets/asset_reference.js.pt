@@ -6,11 +6,11 @@ appendValue = false;
 // Called from getAssetReference
 function openAssetLookupWindow(url_to_open) {
   // Do the opening
-  width = 560;
-  height = 280;
+  width = 585;
+  height = 300;
   leftPos = (screen.width - width) / 2;
   topPos = (screen.height - height) / 2;
-  aspects = 'toolbar=yes,status=yes,scrollbars=yes,width='+width+',height='+height+',left='+leftPos+',top='+topPos;
+  aspects = 'toolbar=yes,status=yes,scrollbars=yes,resizable=yes,width='+width+',height='+height+',left='+leftPos+',top='+topPos;
   lookupWindow = window.open(
     url_to_open, 'AssetLookupWindow', aspects);
   lookupWindow.focus();
