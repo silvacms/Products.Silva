@@ -55,6 +55,24 @@ If you wish you can make an editable copy by going to the <a href="tab_edit"><sp
 <br />
 </p>
 
+<span tal:replace="nothing"> _______ public version: publication datetime _______ </span>
+<p
+  tal:define="
+    date2str nocall: view/service_utils/backend_datetime_to_str;
+    start_time model/get_public_version_publication_datetime | nothing;
+    end_time model/get_public_version_expiration_datetime | nothing;
+    "
+  tal:condition="start_time">
+  <span class="subhead">Publication
+    <tal:block condition="end_time">
+      and expiration
+    </tal:block>
+    time of public version:
+  </span>
+  <br />
+  <tal:block
+    replace="structure python: '%s%s' % (date2str(start_time), test(end_time, ' - %s' % date2str(end_time), ''))" />
+</p>
 
 <span tal:replace="nothing"> _______ Author requests approval _______ </span>
 <check tal:condition="python:not silva_permissions['ApproveSilvaContent'] and unapproved and not request_pending"
