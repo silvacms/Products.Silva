@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.1.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.9 $
+CVS:        $Revision: 1.10 $
 
 Introduction
 ------------
@@ -157,8 +157,8 @@ for more details).
 
 http://www.zope.org/Members/shh/ExtFile
 
-SilvaExternalSources 0.9 (E)
-----------------------------
+SilvaExternalSources 0.9.1 (E)
+------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
 from arbitrary Python sources, SQL databases or CSV (comma separated
