@@ -7,6 +7,10 @@ Silva changes
 
     Bugs fixed
 
+        - In the Docma queues, the fullname of the job owner is now shown
+          instead of the userid, which was seen as a security issue by
+          some customers.
+
         - Fixed two issues with the SQLDataSource and integer fields: 
           the code doesn't try to convert the contents of the field to
           unicode anymore if it's not a plain string (fails with integers)
