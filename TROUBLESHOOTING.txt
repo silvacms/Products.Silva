@@ -112,6 +112,11 @@ Installation problems
 
 Problems when using Silva 
 
+  Error when Adding a Silva Document
+    
+    After 0.9.2, Silva Document has been taken out of Silva in its own Product.
+    You need to ensure you have no trailing empty directories in Silva Product.
+    or with a cvs up -dP or by deleting them manually.
 
   Errors when editing a Silva Document via the SMI
 
