@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.81 2003/06/03 14:31:59 jw Exp $
+# $Id: SilvaObject.py,v 1.82 2003/06/06 12:01:38 guido Exp $
 
 # python
 from types import StringType
@@ -318,7 +318,7 @@ class SilvaObject(Security, ViewCode):
         return result.encode('UTF-8') 
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_xml_form_objects')
+                              'get_xml_for_objects')
     def get_xml_for_objects(self, objects, with_sub_publications=0, last_version=0):
         """Get XML-Document in UTF8-Encoding for a list of object references
 
