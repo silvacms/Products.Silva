@@ -1,11 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.2 2003/07/17 13:28:34 zagy Exp $
+# $Id: mangle.py,v 1.3 2003/07/24 13:04:18 zagy Exp $
 
 # Python
 import string
 import re
-from types import StringType, UnicodeType
+from types import StringType, UnicodeType, InstanceType
 
 # Zope
 from AccessControl import ModuleSecurityInfo
@@ -97,19 +97,39 @@ class Id:
         'up',
          )
 
+    _reserved_ids_for_interface = {
+        IAsset: ('index', )
+    }
+
     _bad_chars = r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?ÄÅÁÀÂÃäåáàâãÇçÉÈÊËÆéèêëæÍÌÎÏíìîïÑñÖÓÒÔÕØöóòôõøŠšßÜÚÙÛüúùûİŸıÿ"""
     _good_chars = r"""_____________________________AAAAAAaaaaaaCcEEEEEeeeeeIIIIiiiiNnOOOOOOooooooSssUUUUuuuuYYyyZz"""
     _char_transmap = string.maketrans(_bad_chars, _good_chars)
 
     _validation_result = None
 
-    def __init__(self, folder, maybe_id, allow_dup=0, file=None):
+    def __init__(self, folder, maybe_id, allow_dup=0, file=None, instance=None,
+            interface=None):
+        """
+            folder: container where the id should be valid
+            maybe_id: the id (str) to be mangled
+            allow_dup: if true an already existing id will be valid aswell
+            file: file like object, allows to generate an id from it's filename
+            instance: addtional tests for interfaces implemented by this 
+                instance will be processed
+            interface: an interface, additional tests regarding this interface
+                will be processed
+        """
+            
         if type(maybe_id) == UnicodeType:
             maybe_id = maybe_id.encode('us-ascii', 'replace')
+        if interface not in self._reserved_ids_for_interface.keys():
+            interface = None
         self._folder = folder
         self._maybe_id = maybe_id
         self._allow_dup = allow_dup
         self._file = file
+        self._instance = instance
+        self._interface = interface
 
     def cook(self):
         """makes the id valid
@@ -150,6 +170,16 @@ class Id:
 
         if maybe_id in self._reserved_ids:
             return self.RESERVED
+        
+        if self._instance is not None:
+            for interface, prefixes in \
+                    self._reserved_ids_for_interface.items():
+                if interface.isImplementedBy(self._instance):
+                    if maybe_id in prefixes:
+                        return self.RESERVED
+        if self._interface is not None:
+            if maybe_id in self._reserved_ids_for_interface[self._interface]:
+                return self.RESERVED
 
         attr = getattr(folder.aq_inner, maybe_id, _marker)
         if attr is not _marker:
@@ -217,8 +247,4 @@ class Id:
             
     def __str__(self):
         return self._maybe_id
-
-
-class Title:
-    pass
 

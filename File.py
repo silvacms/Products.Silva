@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 
 # Python
 import os
@@ -25,7 +25,7 @@ try:                                             #
 except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
-from interfaces import IFile
+from interfaces import IFile, IAsset
 
 icon="www/silvafile.png"
 
@@ -210,11 +210,11 @@ TRANSMAP = string.maketrans(bad_chars, good_chars)
 def manage_addFile(self, id, title, file):
     """Add a File
     """
-    # Copy code from ExtFile, but we don't want a dependency per se:
-    id, _title = Image.cookId(id, title, file)
-    id = string.translate(id.encode('ascii', 'replace'), TRANSMAP)
-    if not mangle.Id(self, id).isValid():
+    id = mangle.Id(self, id, file=file, interface=IAsset)
+    id.cook()
+    if not id.isValid():
         return 
+    id = str(id)
 
     # Switch storage type:
     service_files = getattr(self.get_root(), 'service_files', None)

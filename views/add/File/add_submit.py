@@ -1,4 +1,5 @@
 from Products.Silva import mangle
+from Products.Silva.interfaces import IAsset
 
 model = context.REQUEST.model
 view = context
@@ -21,7 +22,8 @@ except FormValidationError, e:
     return view.add_form(message_type="error",
         message=view.render_form_errors(e))
 
-id = mangle.Id(model, result['object_id'], file=result['file'])
+id = mangle.Id(model, result['object_id'], file=result['file'], 
+    interface=IAsset)
 file = result['file']
 
 # do some additional validation

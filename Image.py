@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.40 2003/07/18 12:05:33 zagy Exp $
+# $Id: Image.py,v 1.41 2003/07/24 13:04:18 zagy Exp $
 
 # Python
 import re, string 
@@ -309,13 +309,11 @@ TRANSMAP = string.maketrans(bad_chars, good_chars)
 
 def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image."""
-
-    # Copy code from ExtFile, but we don't want a dependency per se:
-    id, _title = OFS.Image.cookId(id, title, file)
-    id = string.translate(id.encode('ascii', 'replace'), TRANSMAP)
-
-    if not mangle.Id(context, id).isValid():
+    id = mangle.Id(context, id, file=file, interface=IAsset)
+    id.cook()
+    if id.isValid():
         return
+    id = str(id)
     img = Image(id, title)
     context._setObject(id, img)
     img = getattr(context, id)
