@@ -12,7 +12,14 @@ if p:
             return "SQL Data Source &#xab;%s&#xbb; needs parameter &#xab;%s&#xbb; to have a default value." % (title, name)
         parameters[name] = default
 
-data = datasource.get_data(parameters)
+try:
+    data = datasource.get_data(parameters)
+except Exception, e:
+    return u'<div class="error">[SQL Data Source raises an exception] %s</div>' % e
+except:
+    # XXX: Ugh, bare except. However the ZSQLMethod seems to raise
+    # string type exceptions which I cannot catch here..
+    return u'<div class="error">[SQL Data Source is broken]</div>'
 
 # FIXME: Using CSS this hairball is slightly less hairy
 # than is used to be
@@ -34,7 +41,9 @@ for row in data:
     row_data = []
     col = 0
     for field in row:
-        col += 1
+        if field is None:
+            field = ''
+        col += 1        
         row_data.append(
             u"""<td align="%s">\n  %s\n</td>""" % (u'left', unicode(field, data_encoding, 'replace') ))
     rownr += 1

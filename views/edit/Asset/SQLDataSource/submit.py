@@ -31,7 +31,7 @@ new_data_encoding = result['data_encoding']
 if current_data_encoding != new_data_encoding:
     model.set_data_encoding(new_data_encoding)
     changed.append(('data encoding',
-                    '%s to %s' % (escape_entities(new_data_encoding),
+                    '%s to %s' % (escape_entities(current_data_encoding),
                                   escape_entities(model.get_data_encoding() ))))
 
 new_parameters = model.parameter_string_to_dict(
