@@ -50,10 +50,10 @@
 	</icon>
 	
 	<separator />
-<!--
 	<icon paramname="LINK">
 		<iconfile>icons/link.gif</iconfile>
 	</icon>
+<!--
 	<icon paramname="BOOKMARK">
 		<iconfile>icons/bookmark.gif</iconfile>
 	</icon>

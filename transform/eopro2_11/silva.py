@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -141,6 +141,12 @@ class em(SilvaElement):
         return html.i(
             self.content.convert(context)
             )
+class link(SilvaElement):
+    def convert(self, context):
+        return html.a(
+            self.content.convert(context),
+            href=self.attrs['url']
+        )
 
 """ current mapping of silva
 h1  :  not in use, reserved for (future) Silva publication

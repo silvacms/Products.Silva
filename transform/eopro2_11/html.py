@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 try:
     from transform.base import Element, Text
@@ -188,6 +188,13 @@ class u(Element):
     def convert(self, *args, **kwargs):
         return silva.underline(
             self.content.convert(*args, **kwargs),
+            )
+
+class a(Element):
+    def convert(self, *args, **kwargs):
+        return silva.link(
+            self.content.convert(*args, **kwargs),
+            url=self.attrs['href']
             )
 
 """

@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import unittest
 
 # 
@@ -310,6 +310,24 @@ class RoundtripWithTidy(unittest.TestCase):
 
     def test_modifier_underline(self):
         self._check_modifier('u','underline')
+
+    def test_link_with_absolute_url(self):
+        """ check that a link works """
+        silvadoc = '''<silva_document id="test"><title>title</title>
+                        <doc><p type="normal">
+                             <link url="http://www.heise.de">linktext</link>
+                             </p>
+                        </doc>
+                      </silva_document>''' 
+        htmlnode = self._check(silvadoc)
+        body = htmlnode.find('body')[0]
+        p = body.find('p')[0]
+        a = p.find('a')
+        self.assert_(len(a)==1)
+        a = a[0]
+        self.assert_(a.attrs.get('href')=='http://www.heise.de')
+        self.assert_(a.content.asBytes()=='linktext')
+
 
     def _checkhtml(self, html):
         cmd = 'tidy -eq -utf8'
