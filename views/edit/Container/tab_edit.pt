@@ -161,7 +161,7 @@
                   editable python: item.get_editable() or item.get_previewable();
                   binding python:editable and view.service_metadata.getMetadata(editable) or None;
                   title_editable python: binding and binding.get('silva-content', 'maintitle') or default;
-                  author_info python: binding and binding.get('silva-extra', 'lastauthor') or default;
+                  author_info python: editable.sec_get_last_author_info().fullname() or default;
                   modification_time python: binding and binding.get('silva-extra', 'modificationtime') or None;
                   ">
                   <tr tal:attributes="class python: iterate and 'odd' or 'even'">
@@ -337,7 +337,7 @@
                   iterate repeat/asset/?odd_even;
                   binding python: view.service_metadata.getMetadata(asset) or None;
                   title python: binding and binding.get('silva-content', 'maintitle') or default;
-                  author_info python: binding and binding.get('silva-extra', 'lastauthor') or default;
+                  author_info python: asset.sec_get_last_author_info().fullname() or default;
                   modification_time python: binding and binding.get('silva-extra', 'modificationtime') or default;
                   ">
                   <tr 
