@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3
   Author:     Martijn Faassen, Jan-Wijbrand Kolman
   Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.36.8.7 $
+  CVS:        $Revision: 1.36.8.8 $
 
 Upgrading from 0.9.1 and below
 
@@ -196,7 +196,7 @@ Upgrading Silva 0.9.2.x to 0.9.3
     For this you need to register an Upgrader associated with
     the meta type of your content type class at the
     'upgrade.registry', before you upgrade. To achieve this, create
-    an 'upgrade_0.9.3.py' in your product containing 
+    an 'upgrade_093.py' in your product containing 
     something along the lines of the following code:: 
 
 			 from Products.Silva.upgrade import registry, IUpgrader
