@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.94 $
+# $Revision: 1.95 $
 
 import Metadata
 import Folder, Root
@@ -92,12 +92,12 @@ def initialize(context):
         SidebarService.SidebarService,
         constructors = (SidebarService.manage_addSidebarServiceForm, 
                         SidebarService.manage_addSidebarService),
-        icon = ""
+        icon = "www/service_sidebar.gif"
         )
     context.registerClass(
         ContainerPolicy.ContainerPolicyRegistry,
         constructors = (ContainerPolicy.manage_addContainerPolicyRegistry, ),
-        icon = ""
+        icon = "www/service.png"
         )
         
     # register xml import functions
