@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 # Zope
 import Acquisition
 from OFS import SimpleItem, PropertyManager
@@ -50,8 +50,12 @@ class MultiViewRegistry(SimpleItem.SimpleItem):
     def unregister(self, view_type, meta_type):
         """Unregister view_type, meta_type
         """
-        del self.view_types[view_type][meta_type]
-        self.view_types = self.view_types
+        try:
+            del self.view_types[view_type][meta_type]
+            self.view_types = self.view_types
+        except KeyError:
+            # is not registered: ignore
+            pass
 
     security.declareProtected(SilvaPermissions.ChangeSilvaViewRegistry,
                               'set_trees')
