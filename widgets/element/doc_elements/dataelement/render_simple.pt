@@ -1,4 +1,0 @@
-<tal:block 
-  define="global image here/content"
-  condition="image"
-  replace="structure python:image.image.tag()" />
