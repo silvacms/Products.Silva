@@ -128,6 +128,13 @@ class VersionManagementAdapter(adapter.Adapter):
                 versions = versions[:-number_to_keep]
             self.context.manage_delObjects(versions)
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'getVersionModificationTime')
+    def getVersionModificationTime(self, versionid):
+        version = getattr(self.context, versionid)
+        binding = self.context.service_metadata.getMetadata(version)
+        return binding['silva-extra']['modificationtime']
+
     # XXX currently the following 2 methods have a very non-optimal 
     # implementation, hopefully in the future we can change the underlying
     # Versioning and VersionedContent layers and store these times on the
@@ -192,6 +199,9 @@ class VersionManagementAdapter(adapter.Adapter):
         return newid
     
 Globals.InitializeClass(VersionManagementAdapter)
+
+def __allow_access_to_unprotected_subobjects__(name, value=None):
+    return name in ('getVersionManagementAdapter')
 
 module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                   'getVersionManagementAdapter')

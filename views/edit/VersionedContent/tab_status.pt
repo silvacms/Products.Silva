@@ -21,6 +21,7 @@
     published python:model.get_public_version() is not None;
     closed python:model.get_public_version_status() == 'closed';
     next python:model.get_next_version() is not None;
+    vmadapter python:modules['Products'].Silva.adapters.version_management.getVersionManagementAdapter(model);
     mangle modules/Products/Silva/mangle;
 ">
 
@@ -259,13 +260,12 @@ _______ manual close section here _______
               <th>version status</th>
             </tr>
             <tr  tal:repeat="version versions">
-              <tal:block define="times python: here.tab_status_version_times(version);
-                                  modificationtime python: times[0];
-                                  publicationtime python:times[1];
-                                  expirationtime python: times[2];
-                                  userinfos python: here.tab_status_version_user_infos(version);
-                                  lastauthor python: userinfos[0].fullname();
-                                  creator python: userinfos[1].fullname();
+              <tal:block define="versionid version/id;
+                                  modificationtime python: vmadapter.getVersionModificationTime(versionid);
+                                  publicationtime python: vmadapter.getVersionPublicationTime(versionid);
+                                  expirationtime python: vmadapter.getVersionExpirationTime(versionid);
+                                  lastauthor python: vmadapter.getVersionLastAuthorInfo(versionid).fullname();
+                                  creator python: vmadapter.getVersionCreatorInfo(versionid).fullname();
               ">
                 <td style="white-space: nowrap">
                   <input type="checkbox" 
@@ -277,16 +277,16 @@ _______ manual close section here _______
                   </label>
                 </td>
                 <td style="white-space: nowrap">
-                  <a tal:content="modificationtime" 
+                  <a tal:content="python: mangle.DateTime(modificationtime).toStr()" 
                       tal:attributes="href python:('%s/edit/tab_status_view_version?version=%s' % 
                                                     (model.absolute_url(), version.id))">
                     modificationtime
                   </a>
                 </td>
-                <td style="white-space: nowrap" tal:content="publicationtime">
+                <td style="white-space: nowrap" tal:content="python: mangle.DateTime(publicationtime).toStr()">
                   publicationtime
                 </td>
-                <td style="white-space: nowrap" tal:content="expirationtime">
+                <td style="white-space: nowrap" tal:content="python: mangle.DateTime(expirationtime).toStr()">
                   expirationtime
                 </td>
                 <td style="white-space: nowrap" tal:content="lastauthor">

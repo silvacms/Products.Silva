@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.124 $
+# $Revision: 1.125 $
 
 import ContainerPolicy
 
@@ -206,7 +206,7 @@ else:
 
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
-    return name in ('mangle', 'batch')
+    return name in ('mangle', 'batch', 'adapters', 'version_management')
 
 from AccessControl import allow_module
 
