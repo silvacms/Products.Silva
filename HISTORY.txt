@@ -12,6 +12,9 @@ Silva changes
 
     Bugs Fixed
 
+        - Fix bug where viewing content normally restricted by an
+          AccessRestriction, could be viewed via a Ghost.
+
         - Pressing upgrade more than once now doesn't mess up object titles
           anymore
 
