@@ -309,7 +309,6 @@ There are no active content objects in this folder.
       tal:attributes="href string:${item/absolute_url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
   </td>
    <td>
- jw 
     <a title="Edit"
       tal:attributes="href string:${item/absolute_url}/edit/tab_edit; 
       class python:view.get_status_style(item)">
@@ -324,7 +323,7 @@ There are no active content objects in this folder.
   <span tal:replace="nothing"> _______ title cell _______ </span>
   <td>
     <a class="blacklink" title="Preview"
- jw 
+ 
       tal:attributes="href string:${item/absolute_url}/edit/tab_preview">
       <span tal:replace="structure item/get_title_html"
         tal:condition="python:item.get_title_html() != ''">title</span>
@@ -338,8 +337,7 @@ There are no active content objects in this folder.
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
   <td tal:content="python:item.sec_get_last_author_info()['cn']">    
-    author name
- jw 
+    author name 
   </td>
   <td>
     &nbsp;
@@ -353,8 +351,7 @@ There are no active content objects in this folder.
   <td colspan="8">
     <input tal:condition="silva_permissions/ApproveSilvaContent"
       class="button" type="submit" name="tab_edit_activate:method" value="Activate" title="Return items to the publication Table of Contents" />
-  </td>
- jw 
+  </td> 
 </tr>
 
 </rowgroup>
