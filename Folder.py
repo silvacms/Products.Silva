@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.107 $
+# $Revision: 1.108 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -63,8 +63,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
     __implements__ = IContainer
         
     def __init__(self, id):
-        Folder.inheritedAttribute('__init__')(self, id,
-                                              "[Containers have no titles, this is a bug]")
+        Folder.inheritedAttribute('__init__')(
+            self, id, "[Containers have no titles, this is a bug]")
         self._ordered_ids = []
 
     def manage_afterAdd(self, item, container):

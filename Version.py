@@ -25,6 +25,9 @@ class Version(SimpleItem):
     def set_title(self, title):
         """Set title of version.
         """
+        # FIXME: Ugh. I get unicode from formulator but this will not validate
+        # when using the metadata system. So first make it into utf-8 again..
+        title = title.encode('utf-8')
         binding = self.service_metadata.getMetadata(self)
         binding.setValues(
             'silva-content', {'maintitle': title})

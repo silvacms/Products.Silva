@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.70 $
+# $Revision: 1.71 $
 import Metadata
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
@@ -8,7 +8,7 @@ import Publication, Ghost, Image, File
 import DemoObject, CatalogedDemoObject, Indexer
 import SQLDataSource
 import install
-import helpers # to execute the module_permission statemente
+import helpers # to execute the module_permission statements
 from Products.Silva.ImporterRegistry import importer_registry
 from ExtensionRegistry import extensionRegistry
 import ExtensionService
@@ -20,6 +20,7 @@ import VirtualGroup
 import EditorSupportNested
 import SidebarCache
 import SidebarService
+import UnicodeSplitter # To make the splitter register itself
 
 # enable Formulator support for FileSystemSite
 from Products.Formulator import FSForm

@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.4 2003/05/22 09:04:08 jw Exp $    
+$Id: Metadata.py,v 1.5 2003/05/23 14:15:17 jw Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
@@ -54,14 +54,6 @@ def ghost_access_handler(tool, content_type, content, defer_mode):
         content._get_content(),
         defer_mode
         )
-
-def folder_initialize_handler(content, bind_data):
-    pass
-    #bind_data[Binding.ObjectDelegateEditable]    = 'get_default_editable'
-    #bind_data[Binding.ObjectDelegatePreviewable] = 'get_default_previewable'
-    #bind_data[Binding.ObjectDelegateViewable]    = 'get_default_viewable'
-
-    #return bind_data
 
 #################################
 ### registration
@@ -124,11 +116,20 @@ def register_access_handlers():
     registerAccessHandler(GhostVersion.meta_type, ghost_access_handler)
 
 def register_initialize_handlers():
+    """Set initialize handlers which set mutation triggers on everything
+    for the silva-content set. This takes care of sidebar cache invalidation 
+    upon (short)title changes. 
     """
-    deal with silva containers and index deferal
-    """
-    from Products.Silva.Folder import Folder
-    from Products.Silva.Publication import Publication
-    
-    #registerInitHandler(Folder.meta_type, folder_initialize_handler)
-    #registerInitHandler(Publication.meta_type, folder_initialize_handler)
+    # use None for content type registers initializer for all content
+    # types
+    registerInitHandler(None, _initialize_handler)
+
+def _initialize_handler(object, bind_data):
+    print '_initialize_handler called for', object, bind_data
+    set_id = 'silva-content'
+    set_triggers = {
+        'maintitle': 'titleMutationTrigger',
+        'shortitle': 'titleMutationTrigger',
+        }
+
+    bind_data[Binding.MutationTrigger] = {set_id: set_triggers}

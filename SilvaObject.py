@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.79 2003/05/20 17:31:08 jw Exp $
+# $Id: SilvaObject.py,v 1.80 2003/05/23 14:15:17 jw Exp $
 
 # python
 from types import StringType
@@ -81,15 +81,26 @@ class SilvaObject(Security, ViewCode):
     def set_title(self, title):
         """Set the title of the silva object.
         """
-        # legacy
-        self._title = title
-        # new
+        # FIXME: Ugh. I get unicode from formulator but this will not validate
+        # when using the metadata system. So first make it into utf-8 again..
+        title = title.encode('utf-8')
         binding = self.service_metadata.getMetadata(self)
         binding.setValues(
             'silva-content', {'maintitle': title})
         if self.id == 'index':
-            self.get_container()._invalidate_sidebar(container)
-        
+            container = self.get_container()
+            container._invalidate_sidebar(container)
+
+    security.declarePrivate('titleMutationTrigger')
+    def titleMutationTrigger(self):
+        """This trigger is called upon save of Silva Metadata. More
+        specifically, when the silva-content - defining titles - set is 
+        being editted for this object.
+        """
+        if self.id == 'index':
+            container = self.get_container()
+            container._invalidate_sidebar(container)
+
     # ACCESSORS
 
     security.declareProtected(

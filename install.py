@@ -730,30 +730,54 @@ def registerTableViewer(root):
         wr.addWidget(name, ('service_widgets', 'element', 'table_elements',
                                  name, 'mode_view'))
 
+class El:
+    """Helper class to initialize the catalog lexicon
+    """
+    def __init__(self, **kw):
+        self.__dict__.update(kw)
+
 def setup_catalog(silva_root):
-    """Sets the ZCatalog up"""
-    from Products.ZCTextIndex.ZCTextIndex import PLexicon
-    from Products.ZCTextIndex.HTMLSplitter import HTMLWordSplitter
-    from Products.ZCTextIndex.Lexicon import CaseNormalizer, StopWordRemover
-    
-    if hasattr(silva_root, 'service_catalog'):
-        catalog = silva_root.service_catalog
-        if hasattr(catalog, 'UnicodeVocabulary'):
-            catalog.manage_delObjects(['UnicodeVocabulary'])
-    else:
-        silva_root.manage_addProduct['ZCatalog'].manage_addZCatalog('service_catalog', 'Silva Service Catalog')
-        catalog = silva_root.service_catalog
+    """Sets up the ZCatalog
+    """
+    # See if catalog exists, if not create one
+    if not hasattr(silva_root, 'service_catalog'):
+        silva_root.manage_addProduct['ZCatalog'].manage_addZCatalog(
+            'service_catalog', 'Silva Service Catalog')
 
-    if not 'silva_lexicon' in catalog.objectIds():
-        catalog._setObject('silva_lexicon',
-                           PLexicon('silva_lexicon', '', HTMLWordSplitter(), CaseNormalizer(), StopWordRemover())
-                           )
+    catalog = silva_root.service_catalog
+    lexicon_id = 'silva_lexicon'
 
-    catalog.manage_addProduct['ZCatalog'].manage_addVocabulary('UnicodeVocabulary', 'UnicodeVocabulary', 1, splitter='UnicodeSplitter')
+    # Add lexicon with right splitter (Silva.UnicodeSplitter.Splitter 
+    # registers under "Unicode Whitespace splitter")
+    if not lexicon_id in catalog.objectIds():
+        # XXX ugh, hardcoded dependency on names in ZCTextIndex
+        catalog.manage_addProduct['ZCTextIndex'].manage_addLexicon(
+            lexicon_id, 
+            elements=[
+            El(group='Case Normalizer', name='Case Normalizer'),
+            El(group='Stop Words', name=" Don't remove stop words"),
+            El(group='Word Splitter', name="Unicode Whitespace splitter"),
+            ]
+            )
 
-    columns = ['expiration_datetime', 'id', 'meta_type', 'object_path', 'publication_datetime',
-                'title', 'version_status', 'object_type']
+    existing_columns = catalog.schema()
+    columns = [
+        'id', 
+        'meta_type', 
+        'object_path', 
+        'publication_datetime',
+        'expiration_datetime', 
+        'title', 
+        'version_status', 
+        'object_type'
+        ]
 
+    for column_name in columns:
+        if column_name in existing_columns:
+            continue
+        catalog.addColumn(column_name)
+
+    existing_indexes = catalog.indexes()
     indexes = [
         ('id', 'FieldIndex'),
         ('meta_type', 'FieldIndex'),
@@ -766,18 +790,10 @@ def setup_catalog(silva_root):
         ('object_type', 'FieldIndex')
         ]
 
-    existing_columns = catalog.schema()
-    existing_indexes = catalog.indexes()
-
-    for column_name in columns:
-        if column_name in existing_columns:
-            continue
-        catalog.addColumn(column_name)
-
-
     for field_name, field_type in indexes:
-
         # drop silva defined text indexes in deference to zctextindex
+        # XXX: what does this do?? If a TextIndex is found in the indexes to
+        # create, it is dropped from the catalog?? 
         if field_type in ('TextIndex',):
             catalog.delIndex(field_name)
 

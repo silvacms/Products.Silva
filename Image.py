@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.29 2003/05/20 17:31:08 jw Exp $
+# $Id: Image.py,v 1.30 2003/05/23 14:15:17 jw Exp $
 
 # Python
 import re
@@ -66,7 +66,8 @@ class Image(Asset):
         Overrides SilvaObject set_title() to accomodate the OFS.Image.Image 
         title attribute - which in turn is used in the tag() method.
         """
-        self._title = title
+        self._title = title # legacy I guess
+        Image.inheritedAttribute('set_title')(self, title)
         if self.image:
             # have to encode as otherwise unicode will blow up 
             # image rendering code
