@@ -50,7 +50,7 @@ class Course(VersionedContent):
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'xml_url')
-    def xml_url(self):
+    def xml_url2(self):
         """Get URL for xml data.
         """
         return self.absolute_url() + '/' + self.get_unapproved_version()
@@ -84,9 +84,14 @@ class CourseVersion(SimpleItem.SimpleItem):
         self.id = id
         self.title = title 
         self._data = { 'course_title' : title}
-        self._goal = ParsedXML(id, '<doc></doc>')
-        self._content = ParsedXML(id, '<doc></doc>')
-        
+        self.goal = ParsedXML(id, '<doc></doc>')
+        self.content = ParsedXML(id, '<doc></doc>')
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'goal')
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'content')
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_data')
     def set_data(self, dict):

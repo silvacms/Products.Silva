@@ -92,7 +92,7 @@ class Document(VersionedContent):
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'xml_url')
-    def xml_url(self):
+    def xml_url2(self):
         """Get URL for xml data.
         """
         return self.absolute_url() + '/' + self.get_unapproved_version()
