@@ -1,6 +1,8 @@
 #Almost identical to add_submit in the add views,
 # but no other way to override then to copy code *ugh*.
 
+from Products.Silva.helpers import check_valid_id, IdCheckValues
+
 model = context.REQUEST.model
 view = context
 REQUEST = context.REQUEST
@@ -31,20 +33,19 @@ else:
     title = ""
 
 # if we don't have the right id, reject adding
-if model.is_id_valid(id):
-    if groups_service.isGroup(id):
-        return view.add_form(
-            message_type="error", 
-            message=\
+id_check = check_valid_id(model, id)
+if not id_check == IdCheckValues.ID_OK:
+    return view.add_form(message_type="error", message=view.get_id_status_text(id, id_check))
+
+if groups_service.isGroup(id):
+    return view.add_form(
+        message_type="error", 
+        message=\
 """There's already a (Virtual) Group with the name %s in this Silva site. 
 <br />
 <br />
-In contrast to other Silva Ojects, (Virtual) Group IDs must be unique 
+In contrast to other Silva Objects, (Virtual) Group IDs must be unique 
 within a complete Silva instance.""" % view.quotify(id))
-else:
-    return view.add_form(
-        message_type="error", 
-        message="%s is not a valid id." % view.quotify(id))
 
 # process data in result and add using validation result
 object = context.add_submit_helper(model, id, title, result)
