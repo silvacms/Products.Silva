@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.25 2003/11/03 06:31:59 kitblake Exp $
+# $Id: GhostFolder.py,v 1.26 2003/11/08 14:17:35 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -18,7 +18,6 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Ghost import GhostBase
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
-from Products.Silva.Metadata import export_metadata
 from Products.Silva.Publishable import Publishable
 from Products.Silva.Versioning import VersioningError
 from Products.Silva.icon import Adapter
@@ -64,22 +63,27 @@ class Sync:
 
 class SyncFolder(Sync):
 
-    def _do_update(self):
-        pass
-
-    def _do_create(self):
-        self.g_container.manage_addProduct['Silva'].manage_addFolder(
-            self.h_id, self.h_id, 0)
-
-
-class SyncPublication(Sync):
+    factory = 'manage_addFolder'
 
     def _do_update(self):
-        pass
+        self._update_annotations()
 
     def _do_create(self):
-        self.g_container.manage_addProduct['Silva'].manage_addPublication(
-            self.h_id, self.h_id, 0)
+        getattr(self.g_container.manage_addProduct['Silva'], self.factory)(
+            self.h_id, '[no title]', 0)
+        self.g_ob = self.g_container._getOb(self.h_id)
+
+    def _update_annotations(self):
+        marker = []
+        a_attr = '_portal_annotations_'
+        annotations = getattr(self.h_ob, a_attr, marker)
+        if annotations is marker:
+            return
+        setattr(self.g_ob, a_attr, annotations)
+
+class SyncPublication(SyncFolder):
+
+    factory = 'manage_addPublication'
 
 
 class SyncGhost(Sync):
