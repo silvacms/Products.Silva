@@ -7,7 +7,7 @@
   <enctype>None</enctype>
   <method>POST</method>
   <i18n_domain>silva</i18n_domain>
-  <i18n>add_form</i18n>
+  <i18n>form_add_ghost</i18n>
 
   <groups multiple="true">
     <group>
