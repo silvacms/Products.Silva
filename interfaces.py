@@ -1,10 +1,10 @@
-import Interface
+from Interface import Interface
 
 from AccessControl import ModuleSecurityInfo
 module_security = ModuleSecurityInfo('Products.Silva.interfaces')
 __allow_access_to_unprotected_subobjects__ = 1
 
-class IAccessManager(Interface.Base):
+class IAccessManager(Interface):
     """Mixin class for objects to request local roles on the object"""
 
     def request_role(self, userid, role):
@@ -17,7 +17,7 @@ class IAccessManager(Interface.Base):
     def deny_role(self, userid, role):
         """Denies the role and send an e-mail to the user"""
 
-class ISecurity(Interface.Base):
+class ISecurity(Interface):
     """Can be mixed in with an object to support Silva security.
     (built on top of Zope security)
     Methods prefixed with sec_ so as not to disrupt similarly named
@@ -290,7 +290,7 @@ class ISilvaObject(ISecurity):
     def implements_versioned_content():
         """This object implements IVersionedContent."""
 
-class IPublishable(Interface.Base):
+class IPublishable(Interface):
     # MANIPULATORS
     def activate():
         """Make this publishable item active.
@@ -555,7 +555,7 @@ class IContent(ISilvaObject, IPublishable):
         """
         pass
 
-class IVersioning(Interface.Base):
+class IVersioning(Interface):
     """Can be mixed in with an object to support simple versioning.
     This interface only keeps a reference id to the version and the
     various datetimes. The versioned objects themselves are not
@@ -806,7 +806,7 @@ class IVersionedContent(IVersioning, IContent):
         public version.
         """
         
-class IVersion(Interface.Base):
+class IVersion(Interface):
     """Version of a versioned object
     """
 
@@ -968,7 +968,7 @@ class IFile(IAsset):
         """
         pass
 
-class IMember(Interface.Base):
+class IMember(Interface):
     # ACCESSORS
     def userid():
         """Return unique id for member/username
@@ -991,7 +991,7 @@ class IMember(Interface.Base):
         may face restrictions on the Silva site.
         """
 
-class IMemberService(Interface.Base):
+class IMemberService(Interface):
     def find_members(search_string):
         """Return all users with a full name containing search string.
         """
@@ -1021,7 +1021,7 @@ class IMemberService(Interface.Base):
 # object (if they have the permissions to do so, but the user associated
 # with the member should do so)
 
-class IMessageService(Interface.Base):
+class IMessageService(Interface):
     
     def send_message(from_memberid, to_memberid, subject, message):
         """Send a message from one member to another.
@@ -1034,7 +1034,7 @@ class IMessageService(Interface.Base):
         messages pending may be lost.
         """
     
-class ISidebarService(Interface.Base):
+class ISidebarService(Interface):
     def render(obj, tab_name):
         """Returns the rendered PT
 
