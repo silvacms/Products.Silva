@@ -1,8 +1,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.73 $
+# $Revision: 1.74 $
 import Metadata
-import ViewRegistry, MultiViewRegistry
 import Folder, Root
 import Publication, Ghost, Image, File
 import DemoObject, Indexer
@@ -38,24 +37,10 @@ def initialize(context):
         install, depends_on=None)
 
     context.registerClass(
-        ViewRegistry.ViewRegistry,
-        constructors = (ViewRegistry.manage_addViewRegistryForm,
-                        ViewRegistry.manage_addViewRegistry),
-        icon = "www/silva_view_registry.gif"
-        )
-
-    context.registerClass(
-        MultiViewRegistry.MultiViewRegistry,
-        constructors = (MultiViewRegistry.manage_addMultiViewRegistryForm,
-                        MultiViewRegistry.manage_addMultiViewRegistry),
-        icon = "www/silva_multi_view_registry.gif"
-        )
-
-    context.registerClass(
         ExtensionService.ExtensionService,
         constructors = (ExtensionService.manage_addExtensionServiceForm,
                         ExtensionService.manage_addExtensionService),
-        icon = "www/silva_view_registry.gif"
+        icon = "www/extension_service.gif"
         )
 
     context.registerClass(

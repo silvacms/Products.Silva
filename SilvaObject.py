@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.83 2003/06/12 12:19:08 jw Exp $
+# $Id: SilvaObject.py,v 1.84 2003/07/02 11:43:43 faassen Exp $
 
 # python
 from types import StringType
@@ -21,7 +21,7 @@ from IVersioning import IVersioning
 from IVersionedContent import IVersionedContent
 # Silva
 import SilvaPermissions
-from ViewRegistry import ViewAttribute
+from Products.SilvaViews.ViewRegistry import ViewAttribute
 from Security import Security
 from ViewCode import ViewCode
 # misc

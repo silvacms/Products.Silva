@@ -1,6 +1,5 @@
 """Install for Silva Core
 """
-
 from Globals import package_home
 import os
 
@@ -228,7 +227,7 @@ def configureViews(root):
     """The view infrastructure for Silva.
     """
     # view registry
-    root.manage_addProduct['Silva'].manage_addMultiViewRegistry(
+    root.manage_addProduct['SilvaViews'].manage_addMultiViewRegistry(
         'service_view_registry')
     root.manage_addProduct['Silva'].manage_addExtensionService(
         'service_extensions', 'Silva Product Extension Configuration')
