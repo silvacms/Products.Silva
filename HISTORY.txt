@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.36 $
+$Revision: 1.37 $
 
 Silva changes
 
@@ -18,6 +18,14 @@ Silva changes
         - Asset reference fix where it didn;t work in virtual host
         setups.
 
+	- Fix some unicode issue related to tables (issue184)
+
+	- Silva does no longer display non-installed content types
+	  in list of addables (issue159)
+
+	- Modification time of assets should now be updated properly
+	  (issue147)
+	  
   0.9
 
     Features Added
