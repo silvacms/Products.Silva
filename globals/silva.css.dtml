@@ -89,7 +89,6 @@ div.pathBar img {
 
 div.tabs {
   display : block;
-  width : 100%;
   height : 1.2em;
     background-image: url(<dtml-var root>/globals/skyrise.gif);
     background-repeat: repeat-x;
@@ -99,6 +98,7 @@ div.tabs {
     border-bottom-width: 1px;
   margin : 0;
     padding: 0 0 0 15px;
+  border-collapse : collapse;
 }
 
 div.tabs a {
@@ -111,11 +111,18 @@ div.tabs a {
     background: &dtml-mainTabBackground;;
   border : &dtml-mainTabBorderColor; 1px solid;
     border-bottom-color: #8b939b;
-    margin: 0;
-    padding: 0;
+    margin: 0 0 -1px 0;
+    padding: 0 ! important;
+  border-collapse : collapse;
+}
+
+div.tabs a:visited {
+  color: &dtml-mainTabFontColor;;
+  background: &dtml-mainTabBackground;;
 }
 
 div.tabs a:hover {
+  color: &dtml-mainTabFontColorSelected;;
     background: &dtml-mainTabBackgroundSelected;;
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
   text-decoration: none;
@@ -125,6 +132,12 @@ div.tabs a.selected {
     /* The selected tab. There's only one of these */
     background: &dtml-mainTabBackgroundSelected;;
     border-bottom-color: &dtml-mainTabBackgroundSelected;;
+}
+
+div.tabs a.selected:visited {
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.recede {
@@ -163,18 +176,20 @@ div.tabs a.right:hover {
 
 /* help */
 div.tabs a.normal {
+  float : right;
+  width : 5em;
     font-size: 100%;
     color: &dtml-shade46;;
     background: transparent;
-    border: none;
-    margin: 0 9px 0 0;
-    padding: 0;
+  border : none;
 }
 div.tabs a.normal:visited {
   color: &dtml-shade46;;
+  background : transparent;
 }
 div.tabs a.normal:hover {
   color: &dtml-shade36;;
+  background: transparent;
   text-decoration: underline;
 }
 
@@ -1240,18 +1255,18 @@ input.warning-checkbox {
 /* ____________________________________________________________ links _____ */
 
 a:link {
-  color : #000040;
+  color : #0000aa;
   text-decoration : none;
 }
 a:visited {
-  color : #000040;
+  color : #5900b2;
   text-decoration : none;
 }
 a:active {
   color : #3399cc;
 }
 a:hover {
-  color : #000030;
+  color : #0000aa;
   text-decoration : underline;
 }
 
@@ -1283,74 +1298,10 @@ a.underline:hover {
   text-decoration : none;
 }
 
-.idea {
-  color : #634d82;
-}
-
-
-/* _____________________________________________________ local styles _____ */
-
 /* highlighting index links */
 a.index-element {
   background-color : #e9ff97;
   text-decoration : none;
-}
-
-/* was ebebeb e9e5ec */
-.hilite {
-  background : #ebecef;
-}
-
-/* form datetime field punctuation */
-.punctuation {
-  font-family : impact, verdana, arial, helvetica, sans-serif;
-  font-size : 15px; 
-}
-
-.required {
-  font-family : impact, verdana, arial, helvetica, sans-serif;
-  font-size : 18px;
-  color: #cc0000;
-}
-
-.warning {
-  color : #aa0000;
-}
-
-.error {
-  color : #cc0000;
-    /* negate plone error selector */
-    background: none;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    width: 100% ! important;
-}
-
-.fault {
-  color : #ff1111;
-}
-
-.subhead {
-  font-size : 100%;
-  font-weight : bold;  
-  font-family : verdana, arial, helvetica, sans-serif;
-  color : #444444; 
-  color: #333767;
-  text-align : left;
-  line-height : 1.6em;
-} 
-
-.control-label {
-  font-size : 90%;
-  font-family : verdana, arial, helvetica, sans-serif;
-  text-align : left;
-  color : #dddddd; 
-} 
-
-.idea {
-  font-size : 10px;
-  color : #634d82;
 }
 
 /* draft (red) selectors */
@@ -1448,6 +1399,61 @@ a.closed:hover {
   text-decoration : underline;
 }
 
+
+/* _____________________________________________________ local styles _____ */
+
+/* was ebebeb e9e5ec */
+.hilite {
+  background : #ebecef;
+}
+
+/* form datetime field punctuation */
+.punctuation {
+  font-family : impact, verdana, arial, helvetica, sans-serif;
+  font-size : 15px; 
+}
+
+.required {
+  font-family : impact, verdana, arial, helvetica, sans-serif;
+  font-size : 18px;
+  color: #cc0000;
+}
+
+.warning {
+  color : #aa0000;
+}
+
+.error {
+  color : #cc0000;
+    /* negate plone error selector */
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: 100% ! important;
+}
+
+.fault {
+  color : #ff1111;
+}
+
+.subhead {
+  font-weight : bold;  
+  font-family : verdana, arial, helvetica, sans-serif;
+  color: #333767;
+  line-height : 1.8em;
+} 
+
+.control-label {
+  font-size : 90%;
+  font-family : verdana, arial, helvetica, sans-serif;
+  text-align : left;
+  color : #dddddd; 
+} 
+
+.idea {
+  color : #634d82;
+}
 
 /* defines the width of the text in help, etc */
 .readable {

@@ -72,6 +72,11 @@ td.invisible {
   border: none ! important;
 }
 
+td.invisible a {
+  text-decoration : underline;
+}
+
+
 /* ______________ silva table styles ______________ */
 /* _______ these are duplicated in frontend.css for overriding ______ */
 

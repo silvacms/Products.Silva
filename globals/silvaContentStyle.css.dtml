@@ -10,10 +10,6 @@
 
 <dtml-with stylesheet_properties>
 
-body {
-/*  background: #aaabaa; */
-}
-
 div.workspace {
   background: &dtml-contentWorkspace;;
 }
@@ -22,9 +18,20 @@ div.tabs a {
   background: &dtml-contentTabBackground;;
 }
 
+div.tabs a:visited {
+  color:  &dtml-contentTabFontColor;;
+  background: &dtml-contentTabBackground;;
+}
+
 div.tabs a.selected {
   background: &dtml-contentTabBackgroundSelected;;
   border-bottom: &dtml-contentTabBackgroundSelected; 1px solid;
+}
+
+div.tabs a.selected:visited {
+  color: &dtml-contentTabFontColorSelected;;
+  background: &dtml-contentTabBackgroundSelected;;
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
 }
 
 div.tabs a.recede {
@@ -33,7 +40,12 @@ div.tabs a.recede {
 }
 
 div.tabs a:hover {
+  color: &dtml-contentTabFontColorSelected;;
   background: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a.normal:visited {
+  background: transparent;
 }
 
 div.flowBar {
