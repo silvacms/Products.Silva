@@ -31,14 +31,10 @@ Type:
 <ul class="tips">
   <li><b>Tip:</b> Tab to the save button.</li>
   <li>Multiple paragraphs can be entered in one step by adding an empty line space.</li>
-  <li>Text can be formatted (in <i>italic</i>, <b>bold</b>, etc) with markup,&nbsp;e.g.:
+  <li>Text can be formatted (in <i>italic</i>, <b>bold</b>, etc) with markup:
     <ul class="tips-nested">
-      <li>**this will be bold**</li>
-      <li>++this will be italic++</li>
-      <li>__this will be underlined__</li>
-      <li>^^this will be superscript^^</li>
-      <li>~~this will be subscript~~</li>
-      <li>((link text|http://www.x.yz))</li>
+      <li>**bold** ++italic++ __underlined__ ^^superscript^^ ~~subscript~~</li>
+      <li>((link text|http://www.x.yz)) ((target|http://www.x.yz|name)) if name is empty a new window opens</li>
       <li>[[index item|item as shown in index]]</li>
       <li tal:replace="nothing">{{name of person|name in index}}</li>
     </ul>
