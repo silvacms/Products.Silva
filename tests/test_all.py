@@ -6,6 +6,7 @@ from Products.Silva.tests import test_VersionedContent
 from Products.Silva.tests import test_SilvaObject
 from Products.Silva.tests import test_Container
 from Products.Silva.tests import test_Publishable
+from Products.Silva.tests import test_Ghost
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -14,6 +15,7 @@ def test_suite():
     suite.addTest(test_SilvaObject.test_suite())
     suite.addTest(test_Container.test_suite())
     suite.addTest(test_Publishable.test_suite())
+    suite.addTest(test_Ghost.test_suite())
     return suite
 
 def main():
