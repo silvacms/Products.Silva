@@ -286,7 +286,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """Resolve reference to object.
         """
         return Copying.resolve_ref(self.getPhysicalRoot(), ref)
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_rename')
     def action_rename(self, ref, id, title):
         """Rename object moniker refers to.
         """
@@ -297,71 +299,35 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             parent.manage_renameObject(object.id, id)
         # now change title
         object.set_title(title)
-    
-    def action_delete(self, refs):
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_delete')
+    def action_delete(self, ids):
         """Delete objects monikers refer to.
         """
-        Copying.delete(self.getPhysicalRoot(), refs)
-
-    def action_cut(self, refs, REQUEST):
+        self.manage_delObjects(ids)
+    
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_cut')      
+    def action_cut(self, ids, REQUEST):
         """Cut objects.
         """
-        Copying.cut(self.getPhysicalRoot(), refs, REQUEST)
+        self.manage_cutObjects(ids, REQUEST)
         
-    def action_copy(self, refs, REQUEST):
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_copy')
+    def action_copy(self, ids, REQUEST):
         """Copy objects.
         """
-        Copying.copy(self.getPhysicalRoot(), refs, REQUEST)
-
+        self.manage_copyObjects(ids, REQUEST)
+        
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'action_paste')
     def action_paste(self, REQUEST):
         """Paste objects on clipboard.
         """
-        if self.can_paste(REQUEST):
-            Copying.paste(self, REQUEST=REQUEST)
+        self.manage_pasteObjects(REQUEST=REQUEST)
     
-    def action_paste_to(self, ref, REQUEST):
-        """Paste objects on clipboard to ref.
-        """
-        obj = Copying.resolve_ref(self.getPhysicalRoot(), ref)
-        obj.action_paste(REQUEST)
-
-    def action_dedent(self, ref):
-        """Dedent object.
-        """
-        # get object to dedent
-        root = self.getPhysicalRoot()
-        object = Copying.resolve_ref(root, ref)
-        # folder we're dedenting from
-        from_folder = object.aq_parent
-        # folder we're dedenting to
-        to_folder = from_folder.aq_parent
-        # can't move to something that is not a normal folder
-        if not Interfaces.Container.isImplementedBy(to_folder):
-            return None
-        # can't dedent anything not in _toc_ids
-        toc_ids = from_folder._toc_ids
-        if object.id not in toc_ids:
-            return None
-        # can't dedent 'default'
-        if object.id == 'default':
-            return None
-        # now cut & paste object
-        cb = Copying.cut(root, [ref])
-        Copying.paste(to_folder, cb_copy_data=cb)
-        # find position of from_folder in to_folder
-        toc_ids = to_folder._toc_ids
-        i = toc_ids.index(from_folder.id)
-        # add object to toc_ids of to_folder,
-        # just after position of from_folder
-        toc_ids.remove(object.id)
-        toc_ids.insert(i + 1, object.id)
-        to_folder._toc_ids = toc_ids
-        return 1
-    
-    def can_paste(self, REQUEST):
-        """Can we paste what is in clipboard to this object?"""
-        return 1
-        
 InitializeClass(Folder)
 
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),

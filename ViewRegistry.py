@@ -31,11 +31,11 @@ class ViewRegistry(Folder.Folder):
         self.view_types = {}
 
     # MANIPULATORS
-    def register(self, view_type, meta_type, view_id):
-        """Register a view id with the registry. Can also be used
-        to change what view_id is registered.
+    def register(self, view_type, meta_type, view_path):
+        """Register a view path with the registry. Can also be used
+        to change what view path is registered.
         """
-        self.view_types.setdefault(view_type, {})[meta_type] = view_id
+        self.view_types.setdefault(view_type, {})[meta_type] = view_path
         self.view_types = self.view_types
 
     def unregister(self, view_type, meta_type):
@@ -60,27 +60,37 @@ class ViewRegistry(Folder.Folder):
         result.sort()
         return result
 
-    def get_view_id(self, view_type, meta_type):
-        """Get view id used for view_type/meta_type combination.
+    def get_view_path(self, view_type, meta_type):
+        """Get view path used for view_type/meta_type combination.
         """
         return self.view_types[view_type][meta_type]
 
+    def _get_view(self, view_type, meta_type):
+        found = self
+        for view_id in self.view_types[view_type][meta_type]:
+            found = getattr(found, view_id)
+        return found
+    
     def render_preview(self, view_type, obj):
         """Render preview of object using view_registry. This calls
         the render_preview() method defined on the view in the registry.
         """
-        return (getattr(self,
-                        self.view_types[view_type][obj.meta_type]).
-                __of__(obj).render_preview())
-
+        self.REQUEST['model'] = obj
+        return self._get_view(view_type,
+                              obj.meta_type).render_preview()
     
     def render_view(self, view_type, obj):
         """Render view of object using view_registry. This calls
         the render_preview() method defined on the view in the registry.
         """
-        return (getattr(self,
-                        self.view_types[view_type][obj.meta_type]).
-                __of__(obj).render_view())
+        self.REQUEST['model'] = obj
+        return self._get_view(view_type,
+                              obj.meta_type).render_view()
+
+    def get_method_on_view(self, view_type, obj, name):
+        """Get a method on the view for the object.
+        """
+        return getattr(self._get_view(view_type, obj.meta_type), name)
     
     #def wrap(self, view_type, obj):
     #    """Wrap object in view (wrapping skin)
@@ -113,10 +123,6 @@ class ViewAttribute(Acquisition.Implicit):
         """
         """
         self.REQUEST['model'] = model = self.aq_parent
-        view_registry = self.service_view_registry
-        result = getattr(view_registry,
-                         view_registry.view_types[self._view_type][model.meta_type])
-        return getattr(result, name)
-    
-        #return getattr(self.get_view(self._view_type, self.aq_parent), name)
-
+        return self.service_view_registry.get_method_on_view(
+            self._view_type, model, name)
+ 
