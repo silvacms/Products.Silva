@@ -1,0 +1,96 @@
+Installing Silva
+
+Silva depends on a set of file-system Python products for Zope for
+its core functionality, as well as a set of services which are stored
+in the Zope Object Database for the particular look & feel of the
+system.
+
+Core Silva Zope Products
+
+  Silva
+
+    Silva implements the behavior for the Silva objects, such as
+    Folders, Publications, and Documents. Also implements some basic
+    functionality for the editing of Silva documents.
+  
+  XMLWidgets
+
+    A system that builds on top of ParsedXML to assist in the
+    rendering of editor, as well as in the generation of the HTML for
+    the public pages.
+
+  These Silva products come as .tgz files, and need to be unpacked in
+  the Zope's lib/python/Products directory, and then restart Zope.
+
+Dependencies
+
+  ParsedXML
+
+    A system that allows the storage of XML documents in the Zope
+    Object Database. Allows DOM access as well as ways to construct
+    references to individual nodes. Silva Document and Silva Course
+    use this to store their data.
+
+    ParsedXML depends on the PyXML library for some of its operation;
+    the Python interpreter that is used to run Zope must have access
+    to a recent version of PyXML (0.7 and up should work).
+
+  Formulator
+
+    A system for the construction and validation of web forms, used by
+    Silva's views.
+
+  These products, like the core products, come as .tgz files, and need
+  to be unpacked in the Zope's lib/python/Products directory, and then
+  restart Zope.
+
+Silva services (ZODB)
+
+  service_view_registry
+
+    Page templates and python scripts to determine the look & feel of
+    the Silva objects, both in edit mode and also for their
+    public/preview mode. This uses the Silva product.
+
+  service_widgets and editor/viewer services
+
+    These objects define the actual editors and viewers of Silva
+    Documents and Silva Courses. This uses XMLWidgets.
+
+  These services are contained in a Silva Root object; this will also
+  contain the Silva content when it is added by the authors. It is
+  packaged as a silva.zexp file, which can be imported into Zope after
+  installing the previous products. Place the silva.zexp in your
+  Zope's 'import' directory, and then import this through the Zope
+  management interface into your Zope's root. This can be done by
+  using the 'import/export' button on the Zope's management screen.
+
+Installing Silva with LDAP support
+
+  Silva can work together with LDAPUserFolder so that users in an LDAP
+  database can be looked up and authorized as Silva authors and
+  editors. In order to do enable this, add and configure a
+  LDAPUserFolder in your Silva root (as acl_users). Then go to the file
+  UserManagement.py in the lib/python/Products/Silva directory, and
+  change UserManagement.py to contain the line::
+
+    from LDAPUserManagement import user_management
+
+  and comment out this line::
+
+    from SimpleUserManagement import user_management
+
+  and then restarting Zope to make these changes take effect.
+
+Installing Silva on a ZEO cluster
+
+  In this case, the products need to be installed for all nodes of the
+  cluster. For LDAP support, the above change needs to be made in all
+  installations of the Silva product. For importing the .zexp, put a
+  copy of 'silva.zexp' in the 'import' directory of all cluster nodes.
+ 
+  Since Silva depends heavily on sessions, these also need to be
+  shared throughout the cluster; this can be done by mounting a
+  non-undoable storage into the main storage that will be used
+  specifically as a store for session data. [see other document]
+

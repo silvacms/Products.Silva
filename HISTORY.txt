@@ -1,64 +1,7 @@
-Silva020415
- 
-  Features Added
+Silva changes
 
-    - Paragraph and Lists now automatically adjust their size according 
-      to their contents.
- 
-    - Rename now also allows changing title.
+  0.8
 
-    - There is now a warning when deleting objects.
+    Initial Release
 
-    - All content objects now have an 'Edit' tab.
-
-    - 'default' is now 'index' and all current 'default' is renamed to
-      'index'.
-
-  Bugs Fixed
-    
-    - bold, italic etc work again.
-   
-    - Bug fixes in add code; can now add objects that have the same 
-      id as objects higher in the hierarchy.
-
-    - Pressing enter in paragraph editor now does not trigger delete.
-
-Silva020403
-
-  Features Added
-
-    - Access tab to assign author/editor roles.
-
-    - Lookup screen to find users in LDAP database.
-
-    - Simple lookup screen can be configured to work without LDAP
-      (for local testing).
-
-Silva020402
-
-  Features Added
-
-    - Created simple import/export scripts for upgrades of running Silva.
-
-    - Ghosts now display a link to the original document they are ghosting.
-
-    - Lots of small interface improvements (icons are links, etc).
-
-    - First stab at dynamic element switchers (not fully functional yet,
-      but present in the interface).
-
-  Bugs Fixed
-            
-    - Can see access tab now if you have the right roles. Access tab
-      doesn't work properly with LDAP yet, though.                  
-
-    - Deleting folders without default now works. Some other fixes for
-      folders without default documents.
-                                        
-    - Authoring tool now allows multi-line list titles.
-
-  Unresolved
-            
-    - Tested 'Add and edit' on ariel with folder, document, etc, but
-      cannot reproduce multiple login effect yet.
-
+      - initial public release of Silva
