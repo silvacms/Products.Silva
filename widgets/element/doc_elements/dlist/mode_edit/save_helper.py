@@ -7,7 +7,7 @@
 ##parameters=
 ##title=
 ##
-# $Id: save_helper.py,v 1.5 2003/02/04 11:17:58 guido Exp $
+# $Id: save_helper.py,v 1.6 2003/05/13 12:59:02 guido Exp $
 request = context.REQUEST
 node = request.node
 model = node.get_content()
@@ -31,7 +31,7 @@ data = data.rstrip()
 if element_type not in ['normal', 'compact']:
     return
 
-node.setAttribute('type', element_type)
+node.setAttribute('type', node.input_convert(element_type))
 
 # remove previous items, except for the title node
 childNodes = [ child 

@@ -22,7 +22,7 @@ info = result['info']
 number = result['number']
 date = result['date']
 
-model.set_title(model.input_convert(result['object_title']))
+model.set_title(result['object_title'])
 model.get_editable().set_demo_data(info, number, date)
 model.sec_update_last_author_info()
 

@@ -20,7 +20,7 @@ changed = []
 old_title = model.get_title_html()
 
 model.sec_update_last_author_info()
-model.set_title(model.input_convert(result['file_title']))
+model.set_title(result['file_title'])
 
 changed.append(('title', '%s to %s' % (old_title, model.get_title_html())))
 

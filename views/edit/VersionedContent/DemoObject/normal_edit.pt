@@ -1,4 +1,4 @@
-<init tal:define="global root_url here/root_url;
+<init tal:define="global root_url here/get_root_url;
   global model request/model; 
   global editable model/get_editable;
   global view here;

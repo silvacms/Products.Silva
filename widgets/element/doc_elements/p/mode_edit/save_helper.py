@@ -32,4 +32,4 @@ if len(items) > 1:
         editorsupport.replace_text(p, item)
         node.parentNode.insertBefore(p, next)
 
-node.setAttribute('type', type)
+node.setAttribute('type', node.input_convert(type))

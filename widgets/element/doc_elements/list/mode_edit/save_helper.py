@@ -31,7 +31,7 @@ if element_type not in ['circle', 'square', 'disc',
                         '1', 'A', 'a', 'I', 'i', 'none']:
     return
 
-node.setAttribute('type', element_type)
+node.setAttribute('type', node.input_convert(element_type))
 
 # remove previous items, except for the title node
 childNodes = [ child for child in  node.childNodes if child.nodeName=='li' ]

@@ -29,4 +29,4 @@ if getattr(request,'element_switched',None):
       editor.replace_heading(p, title)
       node.parentNode.insertBefore(p, node)
 
-node.setAttribute('type', type)
+node.setAttribute('type', node.input_convert(type))

@@ -36,7 +36,7 @@ if not new_path:
     removeParameterElements(node)
     return
 
-node.setAttribute('path', new_path)
+node.setAttribute('path', node.input_convert(new_path))
 datasource = context.get_datasource()
 datasource_parameters = datasource.parameters()
 
@@ -55,8 +55,8 @@ if current_path == new_path:
         else:
             # set parameter data from form.
             child = node.createElement('parameter')
-            child.setAttribute('key', field.id)
-            child.setAttribute('value', value)
+            child.setAttribute('key', node.input_convert(field.id))
+            child.setAttribute('value', node.input_convert(value))
             node.appendChild(child)
 else:
     # different datasource path:
@@ -66,21 +66,21 @@ else:
         # throw away old param elements.
         # set new defaults.
         child = node.createElement('parameter')
-        child.setAttribute('key', name)
-        child.setAttribute('value', default_value)
+        child.setAttribute('key', node.input_convert(name))
+        child.setAttribute('value', node.input_convert(default_value))
         node.appendChild(child)
 
 type = 'listing'
 if request.has_key('element_type'):
     type = request['element_type']
-node.setAttribute('type', type)
+node.setAttribute('type', node.input_convert(type))
 
 show_headings = 'true'
 if request.has_key('show_headings'):
     show_headings = request['show_headings']
-node.setAttribute('show_headings', show_headings)
+node.setAttribute('show_headings', node.input_convert(show_headings))
 
 show_caption = 'true'
 if request.has_key('show_caption'):
     show_caption = request['show_caption']
-node.setAttribute('show_caption', show_caption)
+node.setAttribute('show_caption', node.input_convert(show_caption))

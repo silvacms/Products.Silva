@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 
 # Python
 import os
@@ -202,7 +202,7 @@ def manage_addFile(self, id='', title='', file=''):
     #    +-- The cooked title is not used for creating file objects.
     
     # Copy code from ExtFile, but we don't want a dependency per se:
-    id = string.translate(id, TRANSMAP)
+    id = string.translate(id.encode('ascii'), TRANSMAP)
     if not self.is_id_valid(id):
         return None 
 

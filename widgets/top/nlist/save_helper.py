@@ -10,7 +10,7 @@
 request = context.REQUEST
 node = request.node
 
-node.setAttribute('type', request['element_type'])
+node.setAttribute('type', node.input_convert(request['element_type']))
 
 # process all elements (note that we make a tuple of childNodes so it won't change anymore,
 # even if we insert stuff)

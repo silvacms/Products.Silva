@@ -30,7 +30,7 @@ except FormValidationError, e:
     return view.add_form(message_type="error", 
         message=view.render_form_errors(e))
 
-id = result['object_id']
+id = result['object_id'].encode('ascii')
 file = result['file']
 
 # do some additional validation
@@ -47,7 +47,7 @@ if not id_check == IdCheckValues.ID_OK:
 
 # try to cope with absence of title in form (happens for ghost)
 if result.has_key('object_title'):
-    title = model.input_convert(result['object_title'])
+    title = result['object_title']
     del result['object_title']
 else:
     title = ""

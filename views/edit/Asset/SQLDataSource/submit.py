@@ -27,7 +27,7 @@ if current_connection_id != new_connection_id:
         current_connection_id, new_connection_id)))
 
 current_title = model.get_title_html()
-new_title = model.input_convert(result['object_title'])
+new_title = result['object_title']
 if current_title != new_title:
     model.set_title(new_title)
     changed.append(('title', '%s to %s' % (
