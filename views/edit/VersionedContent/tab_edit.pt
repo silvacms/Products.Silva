@@ -185,29 +185,31 @@
           }
         "></script>
 
-        <h1>Link</h1>
+        <h1>link</h1>
 
         <div id="epoz-toolbox-addlink"></div>
         <div id="epoz-toolbox-editlink"></div>
-        <div style="text-align: center">
+        <div class="epoz-tooltray">
 
           <form name="epoz_link_form" onsubmit="return false;">
           <input type="button" class="transport" onclick="getLink(); return false;" value="get link reference..." />
-          <input type="text" id="epoz-link-input" name="epoz_link_href" style="width: 96%" />
-          <input type="button" class="button" value="insert link" id="epoz-link-button" />
-          </form><br />
+          <input type="text" id="epoz-link-input" name="epoz_link_href" style="width: 97%" />
+          <input type="button" class="button" style="float:right;" value="insert link" id="epoz-link-button" />
+          </form>
+          <br style="clear:all;" />
 
         </div>
 
 
-        <h1>Index item</h1>
+        <h1>index item</h1>
 
-        <div style="text-align: center">
+        <div class="epoz-tooltray">
 
           <form name="epoz_index_form" onsubmit="return false;">
           <input type="text" id="epoz-index-input" name="epoz_index_href" style="width: 96%" />
-          <input type="button" class="button" value="insert index" id="epoz-index-button" />
+          <input type="button" class="button" style="float:right;" value="insert index" id="epoz-index-button" />
           </form>
+          <br style="clear:all;" />
 
         </div>
 
@@ -252,10 +254,10 @@
         "></script>
 
 
-        <h1>Image</h1>
+        <h1>image</h1>
 
-        <div style="text-align: center">
-        
+        <div class="epoz-tooltray">
+
           <form name="epoz_image_form">
             <input type="button" class="transport" onclick="getImage()" value="get image reference..." />
           </form>
@@ -267,37 +269,46 @@
       <div class="epoz-toolbox" id="epoz-toolbox-tables" metal:fill-slot="epoz_toolbox_tables">
         <!-- start epoz toolbox tables -->
         
-        <h1 i18n:translate="table-inspector">Table</h1>
+        <h1 i18n:translate="table-inspector">table</h1>
 
-        <table width="100%" style="color: black">
+        <div class="epoz-tooltray">
+
+        <table width="100%" style="color:black;" cellpadding="0">
           <tbody>
             <tr>
-              <td>Table class</td>
               <td>
-                <select class="manipulator" id="epoz-table-classchooser">
-                  <option value="plain">plain</option>
-                  <option value="list">list</option>
-                  <option value="grid">grid</option>
-                  <option value="datagrid">datagrid</option>
-                </select>
+                  <table width="100%" style="color: black;">
+                    <tr>
+                      <td class="align-right" width="30%">table class</td>
+                      <td>
+                        <select class="manipulator" id="epoz-table-classchooser">
+                          <option value="plain">plain</option>
+                          <option value="list">list</option>
+                          <option value="grid">grid</option>
+                          <option value="datagrid">datagrid</option>
+                        </select>
+                      </td>
+                    <tr>
+                  </table>
               </td>
             </tr>
             <tr>
               <td colspan="2">
                 <div id="epoz-toolbox-addtable">
-                  <table width="100%" style="color: black">
+                  <table width="100%" style="color: black;">
                     <tr>
-                      <td>Rows</td>
+                      <td class="align-right" width="30%">rows</td>
                       <td><input id="epoz-table-newrows"/></td>
                     </tr>
                     <tr>
-                      <td>Columns</td>
+                      <td class="align-right">columns</td>
                       <td><input id="epoz-table-newcols"/></td>
                     </tr>
                     <tr>
-                      <td>Headings</td>
+                      <td class="align-right">heading</td>
                       <td>
-                        <input id="epoz-table-makeheader" type="checkbox"/> Create
+                        <input id="epoz-table-makeheader" type="checkbox"/>
+                          <label for="epoz-table-makeheader">create</label>
                       </td>
                     </tr>
                     <tr>
@@ -307,9 +318,9 @@
                   </table>
                 </div>
                 <div id="epoz-toolbox-edittable">
-                  <table width="100%" style="color: black">
+                  <table width="100%" style="color: black;">
                     <tr>
-                      <td>Column align</td>
+                      <td class="align-right" style="padding-right:0.3em" width="30%">column align</td>
                       <td>
                         <select class="manipulator" id="epoz-table-alignchooser">
                           <option value="left">left</option>
@@ -319,20 +330,20 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>Column</td>
+                      <td class="align-right">column</td>
                       <td>
                           <button class="button" id="epoz-table-addcolumn-button">add</button>
                           <button class="button" id="epoz-table-delcolumn-button">remove</button>
                       </td>
                     </tr>
                     <tr>
-                      <td>Row</td>
+                      <td class="align-right">row</td>
                       <td>
                         <button class="button" id="epoz-table-addrow-button">add</button> 
                         <button class="button" id="epoz-table-delrow-button">remove</button></td>
                     </tr>
                     <tr>
-                      <td>Cleanup</td>
+                      <td class="align-right">cleanup cells</td>
                       <td>
                         <button class="button" id="epoz-table-fix-button">fix</button>
                       </td>
@@ -342,6 +353,8 @@
             </tr>
           </tbody>
         </table>
+        
+        </div>
 
         <!-- end epoz toolbox tables -->
       </div>

@@ -109,21 +109,34 @@ div.epoz-toolboxes {
   height: 100%;
   width: 25em;
   margin-right: 0.3em;
-  margin-bottom: 0.3em;
   font-size: 1em;
   color: black;
 }
 
 div.epoz-toolbox {
-  margin-bottom: 1em;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 div.epoz-toolbox h1 {
-  text-align: center;
-  width: 100%;
+  text-align: left;
+  width: 99%;
   background-color: #AACCCC;
   margin-top: 0;
+  margin-bottom: 0em;
+  padding-left: 0.4em;
   font-size: 1.1em;
+}
+
+div.epoz-toolbox td.align-right {
+  text-align: right;
+  padding-right: 0.3em;
+}
+
+div.epoz-tooltray {
+  background: #cedae8;
+  margin: 0;
+  padding: 0.6em 0.3em 1.2em 0.3em; 
 }
 
 div.epoz-toolbox-label, span.epoz-toolbox-searchterm, 
