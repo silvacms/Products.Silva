@@ -67,7 +67,7 @@
 </metal:block>
   
 <metal:block fill-slot="main">
-    <table class="columns columns3"
+    <table class="columns columns2"
       tal:define="icon python:view.render_icon(model)">
       <tbody>
         <tr>
@@ -166,8 +166,6 @@
             </table>
             </form>
         </td>            
-        <td class="right">
-        </td>
       </tr>
 
       <tal:block replace="nothing">layout settings</tal:block>
@@ -183,7 +181,10 @@
               <!-- editable version metadata table, thus editable -->
               <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
-                  layout
+                  <img tal:replace="structure icon" />
+                  <span i18n:translate=""> layout settings for &#xab;<tal:block 
+                    content="title"
+                    i18n:name="title" />&#xbb;</span>
                 </h2>
               </metal:block>
             </tal:block>
@@ -194,7 +195,10 @@
               condition="model/get_approved_version">
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
-                  layout
+                  <img tal:replace="structure icon" />
+                  <span i18n:translate=""> layout settings for &#xab;<tal:block 
+                    content="title"
+                    i18n:name="title" />&#xbb;</span>
                 </h2>
               </metal:block>
             </tal:block>
@@ -207,7 +211,10 @@
               condition="model/get_public_version">
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
-                  layout
+                  <img tal:replace="structure icon" />
+                  <span i18n:translate=""> layout settings for &#xab;<tal:block 
+                    content="title"
+                    i18n:name="title" />&#xbb;</span>
                 </h2>
               </metal:block>
             </tal:block>
@@ -220,14 +227,15 @@
             <tal:block define="content model">
               <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
-                  layout
+                  <img tal:replace="structure icon" />
+                  <span i18n:translate=""> layout settings for &#xab;<tal:block 
+                    content="title"
+                    i18n:name="title" />&#xbb;</span>
                 </h2>
               </metal:block>
             </tal:block>
           </tal:block>
         </td>            
-        <td class="right">
-        </td>
       </tr>
       
     </tbody>

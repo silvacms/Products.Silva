@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.29 2005/01/19 14:26:09 faassen Exp $
+# $Id: mangle.py,v 1.30 2005/03/14 15:37:55 jw Exp $
 # Python
 import string
 import re
@@ -344,7 +344,7 @@ Path = _Path()
         
 
 class _Entities:
-    """escape entities)"""
+    """escape entities"""
     
     def __call__(self, text):
         """return text with &, >, < and " escaped by their html entities"""
@@ -459,7 +459,6 @@ class _Bytes:
 module_security.declarePublic('Bytes')
 Bytes = _Bytes()
 
-
 class _String:
     """ string manipulations and conversions
     """
@@ -510,3 +509,4 @@ def generateAnchorName(s):
     # we prefix everything with a capital A
     return 'A' + md5.new(s).hexdigest()
 
+module_security.declarePublic('generateAnchorName')

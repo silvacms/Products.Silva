@@ -24,7 +24,9 @@
       <tal:block tal:define="indexEntry python: model.getIndexEntry(indexName)">
   	<td tal:content="indexName">
     </td>
-    <td tal:content="structure python:view.render_links(indexEntry)">
+    <td 
+      tal:content="structure python:view.render_links(indexName, indexEntry)"
+      >
     </td>
       </tal:block>
   </tr>
