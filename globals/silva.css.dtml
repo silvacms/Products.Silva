@@ -1363,7 +1363,7 @@ input[type="checkbox"]:hover, input[type="radio"]:hover {
 
 a:link {
   color : #0000aa;
-  text-decoration: underline;
+  text-decoration : none;
 }
 a:visited {
   color : #5900b2;
@@ -1374,6 +1374,7 @@ a:active {
 }
 a:hover {
   color : #0000aa;
+  text-decoration : underline;
 }
 
 /* blacklink selectors */

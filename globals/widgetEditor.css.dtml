@@ -172,6 +172,9 @@ ol.lower-alpha {
   border-right: none ! important;
 }
 
+.post-focus a:link {
+  text-decoration: underline;
+}
 
 /* header-like elements for table cells in editor, prevents extra line space */
 /* in lousy browsers */
