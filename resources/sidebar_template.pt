@@ -54,7 +54,7 @@
           onclick string:javascript:window.location='${item_url}/edit/{__vein_id__}'">
         <a class="icon"
           title="contents"
-          tal:attributes="href string:${item_url}/edit/tab_edit">
+          tal:attributes="href string:${item_url}/edit/{__vein_id__}">
           <img tal:replace="structure python:here.render_icon(item)" />
         </a>
         <a class="blacklink"
