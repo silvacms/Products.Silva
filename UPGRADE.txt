@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.1.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.44 $
+CVS:        $Revision: 1.44.2.1 $
 
 Introduction
 ------------
@@ -78,6 +78,17 @@ Steps to take during a major Silva upgrade:
   refresh all installed Silva extensions as well as upgrade the Silva
   content that needs upgrading. Note that this will take a while if
   your site is large.
+
+Upgrading from Silva 1.1 to Silva 1.1.1
+---------------------------------------
+
+Upgrading Silva 1.1 to Silva 1.1.1 does not require a content
+upgrade. Pressing ``Refresh all`` in ``service_extensions`` should
+be enough to get Silva upgraded.
+
+Note that new versions of both the Sprout (0.5.1) and Kupu (1.1.2)
+packages must be installed, for a full list of all packages required 
+to run Silva see PRODUCTS.txt.
 
 Upgrading from Silva 1.0 to Silva 1.1
 -------------------------------------
