@@ -8,6 +8,27 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   >
 
+<metal:block define-macro="datetime_info"
+  tal:define="
+    start_time python: mangle.DateTime(model.get_public_version_publication_datetime()).toStr();
+    end_time python: mangle.DateTime(model.get_public_version_expiration_datetime()).toStr();
+    "
+  tal:condition="start_time"
+  >
+  <br />
+  <span class="subhead">
+    Publication
+    <tal:block condition="end_time">
+      and expiration
+    </tal:block>
+    time of public version:
+  </span>
+  <br />
+  <tal:block
+    replace="
+      structure python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))" />
+</metal:block>
+  
 <span tal:replace="nothing"> _______ messages _______ </span>
 <div tal:omit-tag=""
   tal:condition="python:model.get_approval_request_message()"
@@ -102,7 +123,7 @@ This message will remain visible in the status screen for other authors and edit
 
 <tr class="inter-controls">
 <td class="align-right"
- style="vertical-align:bottom;">
+ style="vertical-align:bottom; white-space: nowrap;'">
 <label title="access key: alt-m" accesskey="m">content publish ti<u>m</u>e:</label>
 <field tal:replace="structure python:view.tab_status_form_author.publish_datetime.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)" />
 </td>
@@ -112,13 +133,13 @@ day/month/year 23:59
 </tr>
 
 <tr class="inter-controls">
-  <td class="align-right">
-    <label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time:</label>&nbsp;
-    <field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
-  </td>
-  <td style="vertical-align:middle;">
-    If this content should expire, set the time.&nbsp;
-  </td>
+<td class="align-right" style="white-space: nowrap;">
+<label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time:</label>&nbsp;
+<field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
+</td>
+<td style="vertical-align:middle;">
+If this content should expire, set the time.&nbsp;
+</td>
 </tr>
 
 <tr class="controls">
@@ -152,7 +173,7 @@ Notes
 </tr>
 
 <tr class="odd">
-<td class="align-right">
+<td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-m (some platforms)" accesskey="m">publish ti<u>m</u>e:</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_change_settings.publish_datetime.render(model.get_next_version_publication_datetime())" />
 </td>
@@ -162,7 +183,7 @@ Notes
 </tr>
 
 <tr class="even">
-<td class="align-right">
+<td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-i (some platforms)" accesskey="i">expiratio<u>n</u> time:</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_change_settings.expiration_datetime.render(model.get_next_version_expiration_datetime())" />
 </td>
@@ -222,7 +243,7 @@ Notes
 </tr>
 
 <tr class="even">
-<td class="align-right">
+<td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-m"
   accesskey="m">content publish ti<u>m</u>e:</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_editor.publish_datetime.render(REQUEST=request)" />
@@ -233,7 +254,7 @@ day/month/year 23:59
 </tr>
 
 <tr class="odd">
-<td class="align-right">
+<td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-i" accesskey="i">expiratio<u>n</u> time:</label>&nbsp;
 <field tal:replace="structure python:view.tab_status_form_editor.expiration_datetime.render(REQUEST=request)" />
 </td>

@@ -15,18 +15,17 @@ except FormValidationError, e:
     return view.tab_status(
         message_type="error", message=view.render_form_errors(e))
 
+expiration = result['expiration_datetime']
+clear_expiration_flag = result['clear_expiration']
+if expiration:
+    model.set_approved_version_expiration_datetime(expiration)
+elif clear_expiration_flag:
+    model.set_approved_version_expiration_datetime(None)
+        
 if result['publish_now_flag']:
     model.set_approved_version_publication_datetime(DateTime.DateTime())
 else:
     model.set_approved_version_publication_datetime(result['publish_datetime'])
-
-expiration = result['expiration_datetime']
-if expiration:
-    model.set_approved_version_expiration_datetime(expiration)
-
-clear_expiration_flag = result['clear_expiration']
-if clear_expiration_flag:
-    model.set_approved_version_expiration_datetime(None)
 
 return view.tab_status(
     message_type="feedback", message="Changed publication settings.")
