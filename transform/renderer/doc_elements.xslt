@@ -224,19 +224,19 @@
   </xsl:template>
 
   <xsl:template match="doc:toc">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:copy-of select="./doc:rendered_html/*" />
   </xsl:template>
   
   <xsl:template match="doc:external_data">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:copy-of select="./doc:rendered_html/*" />
   </xsl:template>
   
   <xsl:template match="doc:code">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:copy-of select="./doc:rendered_html/*" />
   </xsl:template>
 
   <xsl:template match="doc:source">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:copy-of select="./doc:rendered_html/*" />
   </xsl:template>
   
   <xsl:template match="doc:br" mode="text-content">
