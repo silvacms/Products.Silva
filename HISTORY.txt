@@ -14,6 +14,9 @@ Silva changes
         subset instead of the old-style method using special
         characters.
 
+      - A new XML export/system that can also export and import asset
+        data.
+
       - abbrev and acronym support for both forms editor and Kupu.
 
       - Implemented get_public_tree_all(depth) method.
