@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.1 beta
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26 $
+  CVS:        $Revision: 1.26.2.1 $
  
 Upgrading from 0.8.6 and below
 
@@ -123,7 +123,31 @@ Upgrading Silva 0.9.0.x to 0.9.1
   Upgrading Custom Content Types.
 
     If you have custom content types in a separate Zope Product,
-    you will need to export the views in the 'service_view_registry' to
-    the file system and register them with the new views structure.
-    There is detailed information about how to achieve this
-    in the docs/Filesystem.stx
+    and these content types use same the XML as the Silva Document,
+    you should include the objects of your content types in the upgrade
+    process.
+
+    For this you need to register an upgrade function associated
+    with the meta type of Your content type class at the
+    'upgrade_registry', before you upgrade. to achieve this 
+    place something along the lines of
+    the following code in the '__init__.py' of your product::
+
+       from Products.Silva.upgrade import upgrade_registry, upgrade_list_titles_in_parsed_xml
+
+       def upgrade_sampledoc(obj):
+		       for o in obj.objectValues():				
+			         upgrade_list_titles_in_parsed_xml(o.documentElement)
+
+      upgrade_registry.register('Silva Sample Document', upgrade_sampledoc)
+
+    The helper function 'upgrade_list_titles_in_parsed_xml' actually
+    does all the XML upgrades mentioned in the section above.
+
+    If you only need to update the "last author" information,
+    you do not need to take any action; the upgrade process will do this
+    automatically for you.
+
+    You also may want to take a look at the most current version of the
+    "SilvaDemoExtension Product":http://cvs.infrae.com/SilvaDemoExtension/
+    for an example of upgrading a custom content type.
