@@ -79,7 +79,7 @@ def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.
     """
     # add the appropriate roles if necessary
-    roles = ['Reader', 'Author', 'Editor', 'ChiefEditor']
+    roles = ['Viewer', 'Reader', 'Author', 'Editor', 'ChiefEditor']
     userdefined_roles = root.userdefined_roles()
     request = root.REQUEST
     for role in roles:
@@ -107,7 +107,15 @@ def configureSecurity(root):
     
     for add_permission in add_permissions:
         root.manage_permission(add_permission, all_author)
-    
+
+    # everybody may view root by default XXX (is this bad in case of upgrade/refresh)
+    root.manage_permission('View',
+                           all_reader + ['Anonymous', 'Authenticated', 'Viewer'])
+    # person with viewer role can do anything that anonymous does + has
+    # additional right to view when anonymous can't. This means zope
+    # should fall back on permissions for anonymous in case viewer does
+    # not have these permissions. That's why we don't have to assign them
+    # to viewer.
     root.manage_permission('Add Silva Publications', all_editor)
     root.manage_permission('Approve Silva content', all_editor)
     root.manage_permission('Change Silva access', all_chief)
