@@ -1,3 +1,4 @@
+<!-- ______________ Silva 0.9.1.0b ______________ -->
 <html metal:use-macro="here/index_macro/macros/master">
 <title metal:fill-slot="title">Silva help</title>
 <div class="readable" metal:fill-slot="main">
@@ -116,6 +117,12 @@ Mozilla and Internet Explorer handle access keys for hyperlinks differently. Moz
 Don't forget that most browsers use alt-left arrow to go back, and alt-right arrow to go forward.
 </li>
 </ul>
+
+<p class="leadedbody">
+<span class="subhead">Tip for Mozilla/Netscape users</span><br />
+Using the Find As You Type feature will make keyboard navigation to hyperlinks - such as object names - remarkably easy. See:<br />
+<a href="http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html">http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html</a>
+</p>
 
 <h2>Installing documentation for Silva</h2>
 
