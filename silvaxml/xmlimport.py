@@ -42,6 +42,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
             info
             )
         self._metadata_set = None
+        self._info = info
         self._metadata_key = None
         self._metadata_type = None
         self._metadata = {}
@@ -150,10 +151,18 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
             previous_versions.append(previous_version)
             self.parent()._previous_versions = previous_versions
                     
-    def set_maintitle(self):
+    def setMaintitle(self):
         main_title = self.getMetadata('silva-content', 'maintitle')
         if main_title is not None:
             self.result().set_title(main_title)
+
+    def syncGhostfolders(self):
+        syncTargets = self._info.getSyncTargets()
+        if syncTargets:
+            # pop() doesn't seem to work here
+            for folder in syncTargets:
+                folder.haunt()
+                syncTargets.remove(folder)
 
 class SilvaExportRootHandler(SilvaBaseHandler):
     pass
@@ -170,8 +179,9 @@ class FolderHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
 
-            self.set_maintitle()
+            self.setMaintitle()
             self.storeMetadata()
+            self.syncGhostfolders()
 
 class PublicationHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
@@ -184,8 +194,9 @@ class PublicationHandler(SilvaBaseHandler):
                 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'publication'):
-            self.set_maintitle()
+            self.setMaintitle()
             self.storeMetadata()
+            self.sync_ghostfolders()
 
 class AutoTOCHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
@@ -198,7 +209,7 @@ class AutoTOCHandler(SilvaBaseHandler):
             
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'auto_toc'):
-            self.set_maintitle()
+            self.setMaintitle()
             self.storeMetadata()
             
 class VersionHandler(SilvaBaseHandler):
@@ -299,6 +310,7 @@ class GhostFolderHandler(SilvaBaseHandler):
             self.parent()._setObject(id, object)
             object = getattr(self.parent(), uid)
             self.setResult(object)
+            self._info.addSyncTarget(object)
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
@@ -349,7 +361,7 @@ class LinkContentHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
             self.result().set_url(self.getData('url'))
-            self.set_maintitle()
+            self.setMaintitle()
             self.storeMetadata()
             self.storeWorkflow()
 
@@ -467,6 +479,8 @@ class ImportInfo:
     def addSyncTarget(self, ghostfolder):
         self._ghostfolders.append(ghostfolder)
 
+    def getSyncTargets(self):
+        return self._ghostfolders
     
 def generateUniqueId(org_id, context):
         i = 0

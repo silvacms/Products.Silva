@@ -103,6 +103,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'testfolder2',
             'This is <boo>a</boo> haunted testfolder',
             policy_name='Auto TOC')
+        metadata_service = haunted_folder.service_metadata
+        binding = metadata_service.getMetadata(haunted_folder)
+        binding._setData({'creator': 'ghost dog'}, 'silva-extra')
         importer = xmlimport.theXMLImporter
         # import the ghost folder
         test_settings = xmlimport.ImportSettings()
@@ -130,6 +133,18 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'Silva Ghost Folder',
             version.meta_type
             )
+
+        # test if sync has been done
+        haunted_ids = list(haunted_folder.objectIds())
+        ghost_ids = list(version.objectIds())
+        self.assertEquals(haunted_ids.sort(), ghost_ids.sort())
+        metadata_service = version.service_metadata
+        binding = metadata_service.getMetadata(version)
+        self.assertEquals(
+           'ghost dog',
+            binding._getData(
+                'silva-extra').data['creator'])
+
 
     def test_zip_import(self):
         from StringIO import StringIO
