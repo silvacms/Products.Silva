@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.54 $
+# $Revision: 1.54.2.1 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -199,8 +199,8 @@ class Document(VersionedContent):
             version = self.get_editable()
             if version is None:
                 raise "Hey, no version to store to!"
-            conv_context = {'id': self.id,
-                            'title': self.get_title()}
+
+            conv_context = {'id': self.id, 'title': self.get_title()}
 
             silvanode = transformer.to_source(targetobj=string,
                                               context=conv_context

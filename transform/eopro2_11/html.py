@@ -5,7 +5,7 @@ module for conversion from current
    
        to
 
-   silva (0.8.5) 
+   silva (0.9.1) 
 
 This transformation tries to stay close to
 how silva maps its xml to html. I am not sure, though,
@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.15 $'
+__version__='$Revision: 1.15.2.1 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -32,33 +32,6 @@ except ImportError:
 import silva
 
 DEBUG=0
-
-def move_h5_into_list(self):
-    """ tries to find h5-tags in front of html lists 
-        and puts them into the html list tag if it finds a h5.  
-        a moved h5 has a 'moved' attribute so that it doesn't get
-        moved again. 
-    """
-    for pre, tag, post in self.find_all_partitions(tag=('ul','ol')):
-        h5 = pre.find('h5')
-
-        h5 = h5 and h5[-1]
-        container = self.content
-
-        if not h5 or hasattr(h5, 'moved'):
-            if not self._matches( ('ul','ol')):
-                continue
-            li = pre.find('li')
-            if li:
-                h5 = li[-1].find('h5')
-                h5 = h5 and h5[-1]
-                container = li[-1].content
-
-        if h5 and not hasattr(h5, 'moved'):
-            h5 = container.pop(container.index(h5))
-            h5.moved = 1
-            tag.content.insert(0,h5)
-            #print "moved h5=",h5.asBytes(), "into", tag.asBytes()#name()
 
 class html(Element):
     def convert(self, context):
@@ -79,16 +52,15 @@ class body(Element):
             or from the context (where silva should have
             filled in title and id as key/value pairs)
         """
-        move_h5_into_list(self)
         h2_tag = self.find(tag=h2)
         if not h2_tag:
             rest = self.find()
-            title, id = context['title'], context['id']
+            title, id = context.title, context.id
         else:
             h2_tag=h2_tag[0]
             title = h2_tag.content
             rest = self.find(ignore=h2_tag.__eq__) 
-            id = h2_tag.attrs.get('silva_id') or context['id']
+            id = h2_tag.attrs.get('silva_id') or context.id
 
         return silva.silva_document(
                 silva.title(title),
@@ -116,20 +88,28 @@ class h2(Element):
 class h3(Element):
     ""
     def convert(self, context):
-        return silva.heading(
+        result = silva.heading(
             self.content.convert(context),
             type="normal"
             )
+        return self.process_result(result, context)
 
-class h4(Element):
+    def process_result(self, result, context):
+        if hasattr(context, 'toplist_result'):
+            context.toplist_result.append(result)
+        else:
+            return result
+
+class h4(h3):
     ""
     def convert(self, context):
-        return silva.heading(
+        result = silva.heading(
             self.content.convert(context),
             type="sub"
             )
+        return self.process_result(result, context)
 
-class h5(Element):
+class h5(h3):
     """ List heading """
     def convert(self, context):
         """ return a normal heading. note that the h5-to-title
@@ -137,20 +117,22 @@ class h5(Element):
             Thus h5.convert is only called if there is no
             list context and therefore converted to a subheading.
         """
-        return silva.heading(
+        result = silva.heading(
             self.content.convert(context),
             type="sub",
             )
+        return self.process_result(result, context)
 
-class h6(Element):
+class h6(h3):
     def convert(self, context):
         """ this only gets called if the user erroronaously
             used h6 somewhere 
         """
-        return silva.heading(
+        result = silva.heading(
             self.content.convert(context),
             type="sub",
             )
+        return self.process_result(result, context)
 
 class p(Element):
     """ the html p element can contain nodes which are "standalone"
@@ -189,29 +171,31 @@ class ul(Element):
     default_types = ('disc','circle','square','none')
 
     def convert(self, context):
-        move_h5_into_list(self)
+        hadctx = hasattr(context, 'toplist_result')
+        if not hadctx:
+            context.toplist_result = context.resultstack[-1]
 
         if self.is_dlist(context):
-            return self.convert_dlist(context)
+            result = self.convert_dlist(context)
         elif self.is_nlist(context):
-            return self.convert_nlist(context)
+            result = self.convert_nlist(context)
         else:
-            return self.convert_list(context)
+            result = self.convert_list(context)
+
+        if not hadctx:
+            del context.toplist_result 
+        return result
 
     def is_nlist(self, context):
-        for i in self.find(ignore=lambda x: x.name()=='h5').compact():
+        for i in self.find().compact():
             if i.name()!='li':
                 return 1
 
     def convert_list(self, context):
         type = self.get_type()
 
-        h5, title = self.get_title(context)
-        ignorefunc= h5 and h5.__eq__ or None
-
         return silva.list(
-            title,
-            self.find(ignore=ignorefunc).convert(context),
+            self.content.convert(context),
             type=type
         )
 
@@ -219,44 +203,34 @@ class ul(Element):
     def convert_nlist(self, context):
 
         type = self.get_type()
-        h5, title = self.get_title(context)
-        ignorefunc= h5 and h5.__eq__ or None
-
-        #res = silva.nlist(
-        #    title,
-        #    self.find(ignore=ignorefunc).convert(context),
-        ##    type=type
-        #)
 
         lastli = None
         content = Frag()
-        for tag in self.find(ignore=ignorefunc).convert(context):
+        for tag in self.content.convert(context):
             name = tag.name()
             if name == 'li':
                 lastli = tag
                 tag.content = silva.mixin_paragraphs(tag.content)
-            elif name != 'title' and tag.compact():
-                if not lastli:
-                    tag = silva.li(tag)
-                else:
-                    lastli.content.append(tag)
-                    lastli = None
-                    continue
+            elif tag.compact():
+                #if not lastli:
+                tag = silva.li(tag)
+                #else:
+                #    lastli.content.append(tag)
+                #    lastli = None
+                #    continue
             content.append(tag)
 
-        return silva.nlist(
-            title,
+        res = silva.nlist(
             content,
             type=type)
+        return res
                     
 
         # corrections to the resulting xml 
         lastli = None
         for count in xrange(len(res.content)):
             tag = res.content[count]
-            if tag.name()=='title':
-                continue
-            elif tag.name()=='li':
+            if tag.name()=='li':
                 lastli=tag
                 tag.content = silva.mixin_paragraphs(tag.content)
             elif tag.compact():
@@ -279,24 +253,6 @@ class ul(Element):
             type = self.default_types[0]
         return type
 
-    def get_title(self, context):
-        h5_tag = self.find(tag=h5)
-        #print "found h5 in", self.name(), ":", h5_tag.asBytes()
-        if not h5_tag:
-            li = self.find('li')
-            if li:
-                li = li[0]
-                h5_tag = li.find('h5')
-                if h5_tag:
-                    h5_tag = h5_tag[0]
-                    li.content.remove(h5_tag)
-                    if not li.extract_text().strip():
-                        self.content.remove(li)
-                    return h5_tag, silva.title(h5_tag.content.convert(context))
-            return None, silva.title()
-        else:
-            return h5_tag[0], silva.title(h5_tag[0].content.convert(context))
-
     def is_dlist(self, context):
         for item in self.find('li'):
             font = item.find('font')
@@ -305,7 +261,6 @@ class ul(Element):
         
     def convert_dlist(self, context):
         tags = []
-        h5, title = self.get_title(context)
         for item in self.find('li'):
             pre,font,post = item.find_and_partition('font')
             if font and font.attrs['color']=='green':
@@ -322,7 +277,6 @@ class ul(Element):
             tags.append(silva.dd(post.convert(context)))
 
         return silva.dlist(
-            title,
             type='normal',
             *tags
             )
@@ -334,7 +288,6 @@ class ol(ul):
 
 class li(Element):
     def convert(self, context):
-        move_h5_into_list(self)
 
         return silva.li(
             self.content.convert(context),
@@ -384,11 +337,15 @@ class img(Element):
         from urlparse import urlparse
         src = self.attrs['src'].content
         src = urlparse(src)[2]
+        link = self.attrs.get('link')
         if src.endswith('/image'):
             src = src[:-len('/image')]
+        alignment=self.attrs.get('align')
         return silva.image(
             self.content.convert(context),
-            image_path=src
+            path=src,
+            link=link,
+            alignment=alignment,
             )
 
 class br(Element):
