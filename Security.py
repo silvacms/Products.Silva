@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.40 $
+# $Revision: 1.41 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -161,18 +161,18 @@ class Security:
         """
         # XXX ugh
         i = 0
+        curobj = self
         while 1:
             i += 1
-            for role_info in self.rolesOfPermission('View'):
-                if (role_info['name'] == 'Viewer' and
-                    role_info['selected'] == 'SELECTED'):
-                    return i
+            rop = curobj.rolesOfPermission('View')
+            if {'selected': 'SELECTED', 'name': 'Viewer'} in rop and not {'selected': 'SELECTED', 'name': 'Anonymous'} in rop:
+                return i
             # we know now that on this particular object ther viewer role is not set as a minimum,
             # but need to also know if that behaviour isn't acquired at this point. So let's walk through
             # all parents
-            if self.meta_type == 'Silva Root':
+            if curobj.meta_type == 'Silva Root':
                 return 0
-            self = self.aq_parent
+            curobj = curobj.aq_parent
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_is_locked')
