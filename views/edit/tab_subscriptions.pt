@@ -12,7 +12,9 @@
 
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
-  <table class="columns columns3">
+  <table class="columns columns3"
+    tal:condition="may_approve_content"
+    >
     <tbody>
       <tr>
         <tal:block replace="nothing">
