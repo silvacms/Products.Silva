@@ -342,11 +342,13 @@
                     <td>
                       <a class="blacklink"
                         title="preview"
-                        tal:content="asset/get_title"
-                        tal:attributes="href string:${asset_url}/edit/tab_preview"
+                        tal:content="python: asset.get_title() == '' and default or asset.get_title()"
+                        tal:attributes="
+                          href string:${asset_url}/edit/tab_preview;
+                          class python: asset.get_title() == '' and 'closed' or 'blacklink'"
                         i18n:attributes="title"
                       >
-                        title
+                        <i>view</i>
                       </a>
                     </td>
                     <tal:block replace="nothing">

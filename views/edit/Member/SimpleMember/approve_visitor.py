@@ -14,7 +14,7 @@ next_view = '%s/edit' % model.absolute_url()
 
 if not model.email() or not model.fullname():
     request.SESSION['message_type'] = 'error'
-    request.SESSION['message'] = 'At least the full name and e-mail address are required to approve someone!'
+    request.SESSION['message'] = '<dl>\n<dt>Sorry, content is missing:\n<dd><span class="error">Both a name and e-mail address are required to approve someone</span>.</dd>\n</dl>'
     request.RESPONSE.redirect(next_view)
     return
 

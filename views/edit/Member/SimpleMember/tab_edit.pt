@@ -6,26 +6,138 @@
     xmlns:notal="http://www.infrae.com/silva/notal"
     xmlns:tal="http://xml.zope.org/namespaces/tal" 
     metal:use-macro="here/macro_no_tabs/macros/master">
-<metal:slot fill-slot="main">
-<tal:block define="
+    
+<metal:slot fill-slot="main"
+  tal:define="
     view here;
     dummy view/security_trigger;
     fields view/memberform/get_fields;
     message_type request/SESSION/message_type | nothing;
-    message request/SESSION/message | nothing;
+    notice request/SESSION/message | nothing;
     dummy view/clear_message;
 ">
 
-<tal:block condition="message">
-<div class="feedback" tal:condition="python:message_type == 'feedback'">
-  <span tal:replace="structure string:Status: ${message}">message</span>&nbsp;&nbsp;<span tal:replace="string:(${here/service_utils/backend_now_to_str})">datetime</span>
-</div>
-<div class="feedback" tal:condition="python:message_type == 'error'">
-  <span class="error" tal:content="structure message">message</span>
-</div>
-</tal:block>
+<tal:condition condition="notice">
+  <div class="feedback"
+    style="margin-bottom:0;"
+    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'">
+    <span tal:replace="structure notice">
+      message
+    </span>
+    <span tal:replace="structure string:&nbsp;&nbsp;(${here/service_utils/backend_now_to_str})"
+      tal:condition="python:type == 'feedback'">
+      datetime
+    </span>
+  </div>
+</tal:condition>
 
-<div class="margins">
+<form action="." method="POST"
+  tal:attributes="action python:model.absolute_url()+'/edit'" accepted-charset="UTF-8"
+  tal:condition="may_change_content">
+  <table class="listing"
+    style="margin-bottom:0;">
+    <thead>
+      <tal:block replace="nothing">
+        ______________ vein + title row ______________
+      </tal:block>
+      <tr>
+        <td class="top"
+          colspan="2">
+          <h2 tal:attributes="title string:id: ${model/id}">
+            <img tal:replace="structure python:view.render_icon(model)" />
+            member data of &#xab;<span tal:replace="title">title</span>&#xbb;
+          </h2>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <th class="align-right">
+          Characteristic
+        </th>
+        <th>
+          Content
+        </th>
+      </tr>
+
+      <tal:repeat repeat="field fields">
+      <tal:define define="iterate repeat/field/odd">
+      <tr tal:attributes="class python:iterate and 'even' or 'odd'">
+      <td class="field-title">
+        <span tal:replace="python:field['title']">
+          Title</span><span class="warning"
+          tal:condition="python:field.is_required()">*</span>
+      </td>
+      <td>
+        <input tal:replace="structure python: field.render(getattr(model, field.id)())" />
+      </td>
+      </tr>
+      </tal:define>
+      </tal:repeat>
+    </tbody>
+
+    <tfoot>
+      <tr class="inter-controls">
+        <td>
+          &nbsp;
+        </td>
+        <td class="align-right">
+          Approved member?&nbsp;
+          <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')">&nbsp;</span>
+          <input class="button"
+            type="submit"
+            name="approve_visitor:method"
+            value="Approve now"
+            title="approve member: alt-a"
+            accesskey="a"
+            tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != user.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()"
+          />
+        </td>
+      </tr>
+
+      <tr class="controls">
+        <td class="align-right"
+          colspan="2">
+          <input class="cancel"
+            style="float:left;"
+            type="button"
+            name="edit_cancel"
+            value="Cancel"
+            title="close window: alt-c"
+            accesskey="c"
+            onclick="window.close();return false;" 
+          />
+          <input class="button"
+            type="submit"
+            name="save_memberdata:method"
+            value=" Save "
+            title="save member data: alt-s"
+            accesskey="s"
+          />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+
+<div class="info" tal:condition="not:silva_permissions/ChangeSilvaAccess">
+  <h3 class="info">Dear <span tal:content="python:user.getId()" /><br />
+    You are not allowed to edit membership data of member <span tal:content="model/id" />
+  </h3>
+  <tal:comment condition="nothing">Add read only view here?</tal:comment>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="margins"                           tal:replace="nothing">
 
 <h2>Member data of &#xab;<span tal:replace="model/id" />&#xbb;</h2>
 
@@ -70,7 +182,8 @@
     </td>
     <td align="right">
       <input class="button" type="submit" 
-             name="save_memberdata:method" value="   Save   "
+             name="save_memberdata:method"
+             value="   Save   "
              title="Save member data: alt-s" accesskey="s"
       />
     </td>
@@ -86,6 +199,5 @@ You are not allowed to edit membership data of member <span tal:content="model/i
   <tal:comment condition="nothing">Add read only view here?</tal:comment>
 </tal:block>
 </div>
-</tal:block>
 </metal:slot>
 </html>

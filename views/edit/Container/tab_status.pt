@@ -35,346 +35,348 @@
         </tal:block>
         <td class="main">
 
-          <table class="listing">
-            <thead>
-              <tr tal:replace="nothing">
-                ______________ vein + title row ______________
-              </tr>
-              <tr>
-                <td class="top"
-                  colspan="6">
-                  <h2 tal:attributes="title string:id: ${model/id}">
-                    <img tal:replace="structure python:view.render_icon(model)" />
-                    &#xab;<span tal:replace="title">title</span>&#xbb;
-                  </h2>
-                </td>
-              </tr>
-              <tal:block replace="nothing">
-                ______________ top controls row ______________
-              </tal:block>
-              <tr class="top-controls">
-                <td colspan="6">
-                  <span style="float:right;">
-                    <input class="navigation"
-                      name="tab_status_export:method"
-                      type="submit"
-                      accesskey="e"
-                      tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
-                      tal:attributes="
-                        value string: Export...;
-                        title string:export this ${type}: alt-e;" />
-                      <input class="navigation" tal:replace="nothing"
-                        accesskey="p"
-                        name="tab_status_export_selected_start:method"
-                        title="export selected items: alt-p"
-                        type="submit"
-                        value="Export selected..." />
-                  </span>
-                  <h3>
-                    Publishing options
-                  </h3>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              <tal:block replace="nothing">
-                ______________ iteration ______________
-              </tal:block>
-              <tr>
-                <th class="listing-left">
-                </th>
-                <th>
-                  Edit / Preview
-                </th>
-                <th class="align-right">
-                  Revision
-                </th>
-                <th class="align-right">
-                  Publication due
-                </th>
-                <th class="align-right">
-                  Expiration due
-                </th>
-                <th class="align-right">
-                  Published
-                </th>
-              </tr>
-              <tal:block repeat="obj objects">
-                <tr
-                  tal:define="
-                    iterate repeat/obj/odd;
-                    is_container obj/implements_container | nothing;
-                    indent_depth python: '%spx' % str(obj['indent'] * 10);
-                    obj_url obj/absolute_url;"
-                  tal:attributes="
-                    class python: iterate and 'odd' or 'even';">
-                  <td class="listing-left">
-                    <input name="refs:list"
-                      type="checkbox"
-                      value="value"
-                      tal:define="ref obj/ref | nothing"
-                      tal:condition="ref"
-                      tal:attributes="value ref;" />
-                  </td>
+<table class="listing">
+  <thead>
+    <tal:block replace="nothing">
+      ______________ vein + title row ______________
+    </tal:block>
+    <tr>
+      <td class="top"
+        colspan="6">
+        <h2 tal:attributes="title string:id: ${model/id}">
+          <img tal:replace="structure python:view.render_icon(model)" />
+          &#xab;<span tal:replace="title">title</span>&#xbb;
+        </h2>
+      </td>
+    </tr>
+    <tal:block replace="nothing">
+      ______________ top controls row ______________
+    </tal:block>
+    <tr class="top-controls">
+      <td colspan="6">
+        <span style="float:right;">
+          <input class="navigation"
+            name="tab_status_export:method"
+            type="submit"
+            accesskey="e"
+            tal:define="type python:test(model.meta_type == 'Silva Folder', 'Folder', 'Publication')"
+            tal:attributes="
+              value string: Export...;
+              title string:export this ${type}: alt-e;" />
+            <input class="navigation" tal:replace="nothing"
+              accesskey="p"
+              name="tab_status_export_selected_start:method"
+              title="export selected items: alt-p"
+              type="submit"
+              value="Export selected..." />
+        </span>
+        <h3>
+          Publishing options
+        </h3>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="listing-left">
+        &nbsp;
+      </th>
+      <th>
+        Edit / Preview
+      </th>
+      <th class="align-right">
+        Revision
+      </th>
+      <th class="align-right">
+        Publication due
+      </th>
+      <th class="align-right">
+        Expiration due
+      </th>
+      <th class="align-right">
+        Published
+      </th>
+    </tr>
+    <tal:block replace="nothing">
+      ______________ iteration ______________
+    </tal:block>
+    <tal:block repeat="obj objects">
+      <tr
+        tal:define="
+          iterate repeat/obj/odd;
+          is_container obj/implements_container | nothing;
+          indent_depth python: '%spx' % str(obj['indent'] * 10);
+          obj_url obj/absolute_url;"
+        tal:attributes="
+          class python: iterate and 'odd' or 'even';">
+        <td class="listing-left">
+          <input name="refs:list"
+            type="checkbox"
+            value="value"
+            tal:define="ref obj/ref | nothing"
+            tal:condition="ref"
+            tal:attributes="value ref;" />
+        </td>
+        <tal:block replace="nothing">
+          _______ title cell _______
+        </tal:block>
+        <td>
+          <div tal:attributes="style string:margin-left:${indent_depth}">
+            <div style="float: left;">
+              <a title="edit"
+                tal:attributes="href string:${obj_url}/edit/tab_edit">
+                <img tal:replace="structure obj/icon" />
+              </a>
+            </div>
+            <div style="padding-left: 19px;">
+              <a title="preview"
+                tal:attributes="
+                  class obj/status_style | default;
+                  href string:${obj_url}/edit/tab_preview;">
+                  <i tal:condition="obj/is_default | nothing">
+                    index of
+                  </i>
                   <tal:block replace="nothing">
-                    _______ title cell _______
+                    ******* XXX Fixme: display 'no title' if no title *******
                   </tal:block>
-                  <td>
-                    <div tal:attributes="style string:margin-left:${indent_depth}">
-                      <div style="float: left;">
-                        <a title="edit"
-                          tal:attributes="href string:${obj_url}/edit/tab_edit">
-                          <img tal:replace="structure obj/icon" />
-                        </a>
-                      </div>
-                      <div style="padding-left: 19px;">
-                        <a title="preview"
-                          tal:attributes="
-                            class obj/status_style | default;
-                            href string:${obj_url}/edit/tab_preview;">
-                            <i tal:condition="obj/is_default | nothing">
-                              index of
-                            </i>
-                            <tal:block replace="nothing">
-                              ******* XXX Fixme: display 'no title' if no title *******
-                            </tal:block>
-                            <tal:block replace="obj/title" />
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                  <tal:block replace="nothing">
-                    _______ revision cell _______
-                  </tal:block>
-                  <td class="align-right">
-                    <a title="status"
-                      tal:condition="obj/status | nothing"
-                      tal:attributes="
-                        class obj/status_style | default;
-                        href string:${obj_url}/edit/tab_status;">
-                      <tal:block replace="obj/status" />
-                    </a>
-                    <a class="closed"
-                      title="publish"
-                      tal:condition="is_container"
-                      tal:attributes="
-                        href string:${obj_url}/edit/tab_status;">
-                      n/a
-                    </a>
-                  </td>
-                  <tal:block replace="nothing">
-                    _______ publication datetime cell _______
-                  </tal:block>
-                  <td class="align-right"
-                    tal:content="structure obj/next_version_publication_datetime | nothing">
-                    21 oct 2001 18:18
-                  </td>
-                  <tal:block replace="nothing">
-                    _______ closing datetime cell _______
-                  </tal:block>
-                  <td class="align-right"
-                    tal:content="structure obj/next_version_expiration_datetime | nothing">
-                    21 oct 2001 18:18
-                  </td>
-                  <tal:block replace="nothing">
-                    _______ public version cell _______
-                  </tal:block>
-                  <td class="align-right"
-                    tal:define="
-                      public_status obj/public_status | nothing;
-                      start_time obj/public_version_publication_datetime | nothing;
-                      end_time obj/public_version_expiration_datetime | nothing">
-                    <a href="tab_status"
-                      title="public version"
-                      tal:attributes="href obj_url;"
-                      tal:condition="python: public_status == 'published'">
-                    <span tal:condition="start_time" 
-                      tal:replace="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
-                    </span>
-                    </a>
-                    <span tal:condition="python: public_status == 'closed'"
-                      tal:omit-tag=""> 
-                      closed
-                    </span>
-                  </td>
-                  <td style="white-space: nowrap;"           tal:replace="nothing"
-                    tal:define="
-                      public_status obj/public_status | nothing;
-                      start_time obj/public_version_publication_datetime | nothing;
-                      end_time obj/public_version_expiration_datetime | nothing">
-                    <a href="tab_status"
-                      title="public version"
-                      tal:attributes="href obj_url;"
-                      tal:omit-tag="python: public_status == 'closed'">
-                      <tal:block replace="public_status" />
-                    </a>
-                    <span tal:condition="start_time" 
-                      tal:content="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))"
-                    />
-                  </td>
-                </tr>
-              </tal:block>
-            </tbody>
-            <tfoot tal:condition="may_change_content">
-              <tr tal:condition="objects">
-                <th class="listing-left"
-                  colspan="2">
-                  <tal:define define="select_id string:refs">
-                    <metal:block use-macro="view/macro_select_all/macros/select_all" />
-                  </tal:define>
-                </th>
-                <th class="align-right"
-                  colspan="3">
-                  day / month / year &nbsp;23:59
-                </th>
-                <th>
-                </th>
-              </tr>
-              <tr class="controls inter-controls">
-                <tal:block replace="nothing">
-                  ______________ publication time controls ______________
-                </tal:block>
-                <td class="align-right"
-                  colspan="5">                    
-                  <label title="access key: alt-m" 
-                    accesskey="m">
-                    publish time:
-                  </label>
-                  <tal:block tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
-                </td>
-                <td class="align-right"
-                  style="vertical-align:bottom; line-height:160%; padding-bottom:0.3em;"
-                  rowspan="2">
-                  <tal:block condition="may_approve_content">
-                    <label 
-                      for="publish_now_flag" 
-                      title="access key: alt-u" 
-                      accesskey="u">
-                      p<u>u</u>blish&nbsp;now?
-                    </label>
-                    <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
-                  </tal:block>
-                </td>
-              </tr>
-              <tr class="controls inter-controls">
-                <tal:block replace="nothing">
-                  ______________ expiration time controls ______________
-                </tal:block>
-                <td class="align-right"
-                  colspan="5">
-                  <label title="access key: alt-x" 
-                    accesskey="x">
-                    expiration time:
-                  </label>
-                  <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
-                </td>
-                <td class="align-right"       tal:replace="nothing"
-                  style="vertical-align:middle;">
-                  <tal:block condition="may_approve_content">
-                    <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
-                  </tal:block>
-                </td>
-              </tr>
-              <tal:block replace="nothing">
-                ______________ editor controls ______________
-              </tal:block>
-              <tr class="controls"
-                tal:condition="may_approve_content">
-                <td colspan="4">
-                  <input class="button"
-                    style="background:#8f7f01;"
-                    type="submit"
-                    name="tab_status_reject:method"
-                    value="Reject" 
-                    accesskey="j"
-                    title="reject pending request for approval: alt-j"
-                  />
-                  <input class="button"
-                    style="background:#007746;"
-                    type="submit"
-                    name="tab_status_revoke:method"
-                    value="Revoke"
-                    title="withdraw approval of approved versions: alt-v"
-                    accesskey="v"
-                  />
-                  <input class="button"
-                    style="background:#202080;"
-                    type="submit"
-                    name="tab_status_close:method"
-                    value="Close"
-                    title="close published items: alt-c"
-                    accesskey="c"
-                  />
-                  <input class="button" 
-                    type="submit" 
-                    name="tab_status_new_version:method" 
-                    value="New version" 
-                    title="create new versions of published docs: alt-n" 
-                    accesskey="n"
-                  />
-                </td>
-                <td class="align-right">
-                  <input class="button"
-                    name="tab_status_change_settings:method"
-                    type="submit"
-                    value="Set timings"
-                    title="change publish and expiration times: alt-s"
-                    accesskey="s"
-                  />
-                </td>
-                <td class="align-right">
-                  <input class="button"
-                    name="tab_status_approve:method"
-                    type="submit"
-                    value="Approve"
-                    title="approve or publish new versions: alt-o"
-                    accesskey="o"
-                  />
-                </td>
-              </tr>
-              <tr class="controls"                  
-                tal:condition="not:may_approve_content">
-                <tal:block replace="nothing">
-                  ______________ author controls ______________
-                </tal:block>
-                <td colspan="4">
-                  <input class="button"
-                    style="background:#8f7f01;"
-                    type="submit"
-                    name="tab_status_withdraw:method"
-                    value="Withdraw"
-                    title="withdraw pending request for approval: alt-w"
-                    accesskey="w"
-                  />
-                  <input class="button"
-                    style="background:#007746;"
-                    accesskey="v"
-                    name="tab_status_revoke:method"
-                    title="revoke approval of approved versions: alt-v"
-                    type="submit"
-                    value="Revoke"
-                  />
-                  <input class="button" 
-                    type="submit" 
-                    name="tab_status_new_version:method" 
-                    value="New version" 
-                    title="create new versions of published docs: alt-n" 
-                    accesskey="n"
-                  />
-                </td>
-                <td class="align-right"
-                  colspan="2">
-                  <input class="button"
-                    type="submit"
-                    name="tab_status_request_approval:method"
-                    value="Request approval"
-                    title="request approval for new versions: alt-r"
-                    accesskey="r"
-                  />
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+                  <tal:block replace="obj/title" />
+              </a>
+            </div>
+          </div>
+        </td>
+        <tal:block replace="nothing">
+          _______ revision cell _______
+        </tal:block>
+        <td class="align-right">
+          <a title="status"
+            tal:condition="obj/status | nothing"
+            tal:attributes="
+              class obj/status_style | default;
+              href string:${obj_url}/edit/tab_status;">
+            <tal:block replace="obj/status" />
+          </a>
+          <a class="closed"
+            title="publish"
+            tal:condition="is_container"
+            tal:attributes="
+              href string:${obj_url}/edit/tab_status;">
+            n/a
+          </a>
+        </td>
+        <tal:block replace="nothing">
+          _______ publication datetime cell _______
+        </tal:block>
+        <td class="align-right"
+          tal:content="structure obj/next_version_publication_datetime | nothing">
+          21 oct 2001 18:18
+        </td>
+        <tal:block replace="nothing">
+          _______ closing datetime cell _______
+        </tal:block>
+        <td class="align-right"
+          tal:content="structure obj/next_version_expiration_datetime | nothing">
+          21 oct 2001 18:18
+        </td>
+        <tal:block replace="nothing">
+          _______ public version cell _______
+        </tal:block>
+        <td class="align-right"
+          tal:define="
+            public_status obj/public_status | nothing;
+            start_time obj/public_version_publication_datetime | nothing;
+            end_time obj/public_version_expiration_datetime | nothing">
+          <a href="tab_status"
+            title="public version"
+            tal:attributes="href obj_url;"
+            tal:condition="python: public_status == 'published'">
+          <span tal:condition="start_time" 
+            tal:replace="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
+          </span>
+          </a>
+          <span tal:condition="python: public_status == 'closed'"
+            tal:omit-tag=""> 
+            closed
+          </span>
+        </td>
+        <td style="white-space: nowrap;"           tal:replace="nothing"
+          tal:define="
+            public_status obj/public_status | nothing;
+            start_time obj/public_version_publication_datetime | nothing;
+            end_time obj/public_version_expiration_datetime | nothing">
+          <a href="tab_status"
+            title="public version"
+            tal:attributes="href obj_url;"
+            tal:omit-tag="python: public_status == 'closed'">
+            <tal:block replace="public_status" />
+          </a>
+          <span tal:condition="start_time" 
+            tal:content="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))"
+          />
+        </td>
+      </tr>
+    </tal:block>
+  </tbody>
+  <tfoot tal:condition="may_change_content">
+    <tr tal:condition="objects">
+      <th class="listing-left"
+        colspan="2">
+        <tal:define define="select_id string:refs">
+          <metal:block use-macro="view/macro_select_all/macros/select_all" />
+        </tal:define>
+      </th>
+      <th class="align-right"
+        colspan="3">
+        day / month / year &nbsp;23:59
+      </th>
+      <th>
+      </th>
+    </tr>
+    <tr class="controls inter-controls">
+      <tal:block replace="nothing">
+        ______________ publication time controls ______________
+      </tal:block>
+      <td class="align-right"
+        colspan="5">                    
+        <label title="access key: alt-m" 
+          accesskey="m">
+          publish time:
+        </label>
+        <tal:block tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
+      </td>
+      <td class="align-right"
+        style="vertical-align:bottom; line-height:160%; padding-bottom:0.3em;"
+        rowspan="2">
+        <tal:block condition="may_approve_content">
+          <label 
+            for="publish_now_flag" 
+            title="access key: alt-u" 
+            accesskey="u">
+            p<u>u</u>blish&nbsp;now?
+          </label>
+          <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+        </tal:block>
+      </td>
+    </tr>
+    <tr class="controls inter-controls">
+      <tal:block replace="nothing">
+        ______________ expiration time controls ______________
+      </tal:block>
+      <td class="align-right"
+        colspan="5">
+        <label title="access key: alt-x" 
+          accesskey="x">
+          expiration time:
+        </label>
+        <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
+      </td>
+      <td class="align-right"       tal:replace="nothing"
+        style="vertical-align:middle;">
+        <tal:block condition="may_approve_content">
+          <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
+        </tal:block>
+      </td>
+    </tr>
+    <tal:block replace="nothing">
+      ______________ editor controls ______________
+    </tal:block>
+    <tr class="controls"
+      tal:condition="may_approve_content">
+      <td colspan="4">
+        <input class="button"
+          style="background:#8f7f01;"
+          type="submit"
+          name="tab_status_reject:method"
+          value="Reject" 
+          accesskey="j"
+          title="reject pending request for approval: alt-j"
+        />
+        <input class="button"
+          style="background:#007746;"
+          type="submit"
+          name="tab_status_revoke:method"
+          value="Revoke"
+          title="withdraw approval of approved versions: alt-v"
+          accesskey="v"
+        />
+        <input class="button"
+          style="background:#202080;"
+          type="submit"
+          name="tab_status_close:method"
+          value="Close"
+          title="close published items: alt-c"
+          accesskey="c"
+        />
+        <input class="button" 
+          type="submit" 
+          name="tab_status_new_version:method" 
+          value="New version" 
+          title="create new versions of published docs: alt-n" 
+          accesskey="n"
+        />
+      </td>
+      <td class="align-right">
+        <input class="button"
+          name="tab_status_change_settings:method"
+          type="submit"
+          value="Set timings"
+          title="change publish and expiration times: alt-s"
+          accesskey="s"
+        />
+      </td>
+      <td class="align-right">
+        <input class="button"
+          name="tab_status_approve:method"
+          type="submit"
+          value="Approve"
+          title="approve or publish new versions: alt-o"
+          accesskey="o"
+        />
+      </td>
+    </tr>
+    <tr class="controls"                  
+      tal:condition="not:may_approve_content">
+      <tal:block replace="nothing">
+        ______________ author controls ______________
+      </tal:block>
+      <td colspan="4">
+        <input class="button"
+          style="background:#8f7f01;"
+          type="submit"
+          name="tab_status_withdraw:method"
+          value="Withdraw"
+          title="withdraw pending request for approval: alt-w"
+          accesskey="w"
+        />
+        <input class="button"
+          style="background:#007746;"
+          accesskey="v"
+          name="tab_status_revoke:method"
+          title="revoke approval of approved versions: alt-v"
+          type="submit"
+          value="Revoke"
+        />
+        <input class="button" 
+          type="submit" 
+          name="tab_status_new_version:method" 
+          value="New version" 
+          title="create new versions of published docs: alt-n" 
+          accesskey="n"
+        />
+      </td>
+      <td class="align-right"
+        colspan="2">
+        <input class="button"
+          type="submit"
+          name="tab_status_request_approval:method"
+          value="Request approval"
+          title="request approval for new versions: alt-r"
+          accesskey="r"
+        />
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
         </td>
       </tr>
     </tbody>

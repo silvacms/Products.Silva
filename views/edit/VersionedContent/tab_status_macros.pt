@@ -211,7 +211,7 @@ If this content should expire, set the time.&nbsp;
 <table class="listing sublisting">
 <tr class="top-controls">
 <td colspan="2">
-<h3>Approve request for approval<span tal:condition="python:may_change_content and unapproved and published"> of new version</span></h3>
+<h3>Approve <span tal:condition="not: closed">request for approval</span><span tal:condition="python:may_change_content and unapproved and published"> of new version</span><span tal:condition="closed">closed version</span></h3>
 </td>
 </tr>
 
@@ -281,7 +281,7 @@ Empty indicates no expiration.
 <span tal:replace="nothing"> _______ / Editor approves _______ </span>
 
 
-<span tal:replace="nothing"> _______ Author/Editor withdraws/rejects request for  approval _______ </span>
+<span tal:replace="nothing"> _______ Author/Editor withdraws/rejects request for approval _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="withdraw_request_approval">
 <form action="tab_status_withdraw" method="POST">
@@ -320,7 +320,7 @@ Notes
 </span>
 </td>
 <td width="40%">
-The message may be viewed by interested authors.
+The message may be viewed by local users.
 </td>
 </tr>
 

@@ -116,7 +116,7 @@ change settings section here
 <span tal:replace="nothing"> ______________ sub tables ______________ </span>
 
 <span tal:replace="nothing"> _______ Editor considers approval _______ </span>
-<check tal:condition="python:may_approve_content and unapproved"
+<check tal:condition="python:may_approve_content and unapproved or closed"
   tal:omit-tag="">
 <metal:block use-macro="view/tab_status_macros/macros/approve_new">
 approval section here

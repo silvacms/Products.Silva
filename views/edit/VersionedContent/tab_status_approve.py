@@ -15,8 +15,9 @@ if model.get_unapproved_version() is None:
     return view.tab_status(message_type="error", message="There is no unapproved version to approve.")
 
 if not model.can_approve():
-    # XXX other reasons why this may fail?
-    return view.tab_status(message_type="error", message="You cannot approve this content; it is closed.")
+    # XXX other reasons why this may fail? Now closed content can be
+    # approved without making a new version.
+    return view.tab_status(message_type="error", message="This content can't be approved because it's closed. First make a new version. (Yes, dear....)")
 
 try:
     result = view.tab_status_form_editor.validate_all(context.REQUEST)

@@ -188,12 +188,12 @@ _______ editor hooks _______
 </span>
 <tal:block define="
   type options/message_type | request/message_type | nothing;
-  msg options/message | request/message | nothing;"
+  notice options/message | request/message | nothing;"
   condition="type">
   <div class="feedback"
     style="margin-bottom:0;"
     tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'">
-    <span tal:replace="structure msg">
+    <span tal:replace="structure notice">
       message
     </span>
     <span tal:replace="structure string:&nbsp;&nbsp;(${here/service_utils/backend_now_to_str})"
@@ -291,7 +291,7 @@ _______ editor hooks _______
     <a title="Change your settings: alt-~"
        accesskey="~"
       tal:attributes="
-        onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=350, resizable=no');;
+        onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
         userWindow.focus();;
         return false;;"
     >

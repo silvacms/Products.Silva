@@ -9,13 +9,13 @@
 ##
 result = []
 for error in validation_error.errors:
-    result.append("<li>%s: %s</li>" % (error.field['title'], error.error_text))
+    result.append('<li class="error">%s: %s</li>' % (error.field['title'].lower(), error.error_text))
 
 return """
 <dl>
 <dt>Sorry, errors in form:</dt>
 <dd>
-<ul class="error">
+<ul class="tips">
 %s
 </ul>
 </dd>
