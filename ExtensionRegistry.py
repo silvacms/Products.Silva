@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 
 from bisect import insort_right
 
@@ -74,6 +74,10 @@ class ExtensionRegistry:
                 icon_path,
                 module.__dict__)
         if ISilvaObject.isImplementedByInstancesOf(klass):
+            for i in range(len(self._silva_addables)):
+                if self._silva_addables[i]._meta_type['name'] == meta_type:
+                    del(self._silva_addables[i])
+                    break
             meta_types = Products.meta_types
             for mt_dict in meta_types:
                 if mt_dict['name'] == meta_type:
