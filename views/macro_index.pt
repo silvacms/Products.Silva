@@ -36,7 +36,7 @@
 </script>
 <script type="text/javascript" language="JavaScript"
   tal:condition="python: template.id == 'tab_edit_eopro'"
-  tal:content="python: template.tab_edit_eopro_js()">
+  tal:content="structure python: template.tab_edit_eopro_js()">
 </script>
 </head>
 <body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
