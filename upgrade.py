@@ -12,7 +12,7 @@ def check_reserved_ids(obj):
     """
     illegal_urls = []
     for o in obj.objectValues():
-        if not check_valid_id(obj, o.id, 1):
+        if not check_valid_id(obj, str(o.id), 1):
             illegal_urls.append(o.absolute_url())
         if hasattr(o, 'objectValues'):
             illegal_urls += check_reserved_ids(o)
