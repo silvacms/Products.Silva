@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.67 2003/03/14 18:23:07 zagy Exp $
+# $Id: SilvaObject.py,v 1.68 2003/03/18 10:55:18 guido Exp $
 
 # python
 from types import StringType
@@ -201,20 +201,22 @@ class SilvaObject(Security):
         should return something indicating this.
         """
         # XXX hack to make cache only work with view_type public
-        if view_type == 'public':
+        data = None
+        is_cacheable = self.is_cacheable()
+        if view_type == 'public' and is_cacheable:
             data = self._get_cached_data()
             # if cached data was found, return it
             if data is not None:
-                # print "fetched data from cache!", self.absolute_url()
                 return data
+        
         # okay, no data in cache, so render
         data = self.service_view_registry.render_view(view_type, self)
-        # if we're cacheable, store data with datetime, otherwise erase cache
-        if self.is_cacheable():
+        
+        # if we're cacheable, store data with datetime
+        if is_cacheable:
             self._cached_datetime = DateTime()
             self._cached_data = data
-        else:
-            self._cached_data = None
+
         # finally return rendered data
         return data
 
@@ -388,5 +390,5 @@ class SilvaObject(Security):
         """Turn input to unicode.
         """
         return unicode(s, 'utf-8')
-   
+        
 InitializeClass(SilvaObject)
