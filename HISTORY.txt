@@ -48,6 +48,9 @@ Silva changes
 
     Bugs Fixed
 
+        - Indexer objects now render the correct URLs in virtual host
+          situations.
+
         - (SQL)Datasources can now only be placed by ChiefEditors and up
           (using a Datasource in a document is not affected by this), and
           (SQL)Datasources now work with unicode.
