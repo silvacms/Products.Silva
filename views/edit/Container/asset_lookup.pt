@@ -89,6 +89,8 @@
         }
       }
     } else {
+      // Just one radio button available. So element itself and not
+      // a NodeList returned *sigh*.
       reference = doc.mumble_form.mumble;      
     }    
     opener.insertAssetReference(reference.value);
@@ -155,7 +157,11 @@
 </tal:block>
 <tr class="controls"
   tal:condition="python:len(assets)">
-  <td colspan="8" align="right">
+  <td colspan="4" align="left">
+    <input type="button" class="cancelbutton" name="cancel" value="Cancel" title="Cancel Operation" 
+      onclick="window.close();return false;" />
+  </td>
+  <td colspan="4" align="right">
       <input type="button" class="button" name="place" value="Place Reference" title="Get a reference to this asset" 
         onclick="setReference();return false;" />
   </td>
