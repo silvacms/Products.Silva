@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.46 $
+# $Revision: 1.47 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -16,6 +16,8 @@ import SilvaPermissions
 # misc
 from helpers import add_and_edit
 import urlparse
+
+icon = "www/silvaghost.gif"
 
 class Ghost(VersionedContent):
     """Ghost object.

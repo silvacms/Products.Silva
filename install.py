@@ -1,14 +1,22 @@
-"""Contains a fairly dumb setup system to configure the Silva root.
+"""Install for Silva Core
 """
 
 from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 
-def configure(root):
+def install(root):
     configureProperties(root)
     configureCoreFolders(root)
     configureViews(root)
     configureXMLWidgets(root)
     
+def uninstall(root):
+    # Silva Core cannot be uninstalled
+    pass
+
+def is_installed(root):
+    # should always be installed
+    return 1
+
 def configureProperties(root):
     """Configure properties on the root folder.
     XXX Probably we'll get rid of most properties in the future.
@@ -41,6 +49,8 @@ def configureViews(root):
     # view registry
     root.manage_addProduct['Silva'].manage_addMultiViewRegistry(
         'service_view_registry')
+    root.manage_addProduct['Silva'].manage_addExtensionService(
+        'service_extensions')
     # folder contains the various view trees
     root.manage_addFolder('service_views')
     # create the core views from filesystem
@@ -300,3 +310,6 @@ def registerTableViewer(root):
     
     for name in ['row', 'row_heading']:
         wr.addWidget(name, ('service_widgets', 'element', 'table_elements', name, 'mode_view'))
+
+if __name__ == '__main__':
+    print """This module is not an installer. You don't have to run it."""

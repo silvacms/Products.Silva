@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
@@ -24,6 +24,8 @@ except:                                          # available for import
 
 INDIRECT = 0
 DIRECT = 1
+
+icon="www/silvageneric.gif"
 
 class File(Asset):
     """Abstract base class. Depends on a _file attribute and various 
@@ -230,9 +232,11 @@ class FilesService(SimpleItem.SimpleItem):
         {'label':'Edit', 'action':'manage_filesServiceEditForm'},
         ) + SimpleItem.SimpleItem.manage_options
 
+    security.declareProtected('View management screens', 'manage_filesServiceEditForm')
     manage_filesServiceEditForm = PageTemplateFile(
             'www/filesServiceEdit', globals(),  __name__='manage_filesServiceEditForm')
 
+    security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_filesServiceEditForm # used by add_and_edit()
 
     def __init__(self, id, title):
@@ -260,7 +264,7 @@ class FilesService(SimpleItem.SimpleItem):
         return self._filesystem_path
 
     # MANIPULATORS
-
+    security.declareProtected('View management screens', 'manage_filesServiceEdit')
     def manage_filesServiceEdit(self, title='', filesystem_storage_enabled=0, filesystem_path=''):
         """Sets storage type/path for this site.
         """
@@ -281,7 +285,7 @@ manage_addFilesServiceForm = PageTemplateFile(
     "www/filesServiceAdd", globals(), __name__='manage_addFilesServiceForm')
 
 def manage_addFilesService(
-    self, id, title, filesystem_storage_enabled=0, filesystem_path='', REQUEST=None):    
+    self, id, title='', filesystem_storage_enabled=0, filesystem_path='', REQUEST=None):    
     """Add files service."""
     object = FilesService(id, title)    
     self._setObject(id, object)

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -20,6 +20,8 @@ from cgi import escape
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 from Products.ParsedXML.ExtraDOM import writeStream
+
+icon="www/silvageneric.gif"
 
 class DemoObject(VersionedContent, EditorSupport):
     """Silva DemoObject.
