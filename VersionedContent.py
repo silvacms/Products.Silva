@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 
 # Python
 from StringIO import StringIO
@@ -8,7 +8,7 @@ from StringIO import StringIO
 # Zope
 from OFS import Folder
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+from Globals import InitializeClass, DevelopmentMode
 from DateTime import DateTime
 
 # Silva
@@ -176,7 +176,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     def view(self, view_type='public'):
         """
         """
-        if view_type != 'public':
+        if (view_type != 'public') or (DevelopmentMode is not None):
             return VersionedContent.inheritedAttribute('view')(self, view_type)
 
         if (self._cached_datetime is None or
