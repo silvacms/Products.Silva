@@ -25,7 +25,7 @@
           <default></default>
           <title>id</title>
           <truncate type="int">0</truncate>
-          <description>Don't use spaces or special characters besides "_" or "-" or "."</description>
+          <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
           <extra>style="width:100%;"</extra>
           <unicode>1</unicode>
         </values>
@@ -130,7 +130,7 @@
           <default></default>
           <title>SQL Query</title>
           <description>
-            SQL Query. See "Z SQL Methods" for syntax. &lt;br /&gt;
+            SQL Query. See &amp;#8220;ZSQL Methods&amp;#8221; for syntax. &lt;br /&gt;
             Pay special attention to &lt;code&gt;&amp;lt;dtml-var&amp;gt;&lt;/code&gt; vs. 
             &lt;code&gt;&amp;lt;dtml-sqlvar&amp;gt;&lt;/code&gt; usage.
           </description>

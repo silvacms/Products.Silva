@@ -25,7 +25,7 @@
           <default></default>
           <title>Id</title>
           <truncate type="int">0</truncate>
-          <description>Don't use spaces or special characters besides "_" or "-" or "."</description>
+          <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
           <extra>style="width:100%;"</extra>
           <unicode>1</unicode>
         </values>
@@ -64,7 +64,7 @@
           <title>Image</title>
           <description>
             &lt;b&gt;Tip:&lt;/b&gt; You don't have to fill in the id and 
-            title fields.
+            title.
           </description>
           <external_validator></external_validator>
           <required type="int">1</required>

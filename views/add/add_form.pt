@@ -25,7 +25,7 @@
 <table class="listing">
 <thead>
   <tr>
-    <td class="top location" colspan="4">
+    <td class="top location" colspan="3">
     <h2>
       <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />&nbsp;
         create new <span tal:replace="request/meta_type" />
@@ -39,7 +39,7 @@
     <th class="align-right">
       Attributes
     </th>
-    <th style="width:40%;">
+    <th style="width:50%;">
       Content
     </th>
     <th>
