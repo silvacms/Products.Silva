@@ -16,6 +16,10 @@ if not request.has_key('importfile') or not request['importfile']:
 
 data = request['importfile'].read()
 
+if not model.xml_validate(data):
+    return view.tab_edit(message_type='error',
+                         message='Data is not valid Silva XML')
+
 model.xml_import(data)
 
 return view.tab_edit(message_type='feedback', message='Finished importing')

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.116 $
+# $Revision: 1.117 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -15,6 +15,7 @@ from SilvaObject import SilvaObject
 from Publishable import Publishable
 import Copying
 import SilvaPermissions
+import validate
 # misc
 import helpers
 import re
@@ -880,6 +881,13 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
             if IContainer.isImplementedBy(object):
                 object.update()
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'xml_validate')
+    def xml_validate(self, xml):
+        """Return true if XML is valid.
+        """
+        return validate.validate(xml)
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
         'xml_import')
     def xml_import(self, xml):
