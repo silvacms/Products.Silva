@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-16 11:59+0100\n"
+"PO-Revision-Date: 2004-12-16 12:45+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -1066,7 +1066,7 @@ msgid ""
 "(Internal Error): An invalid status ${status_code} occured \n"
 "    while checking the id ${id}.<br />Please contact the person responsible \n"
 "    for this Silva installation or file a bug report."
-msgstr ""
+msgstr "(Interner Fehler): Ein ungültiger Status ${status_code} ist während der Überprüfung von ${id} aufgetreten. <br />Kontaktieren Sie bitte den Verwortlichen für diese Silvainstallation oder schreiben Sie einen Fehlerbericht."
 
 #: /views/edit/Asset/File/edit.pt:18
 msgid "file info"
@@ -1146,7 +1146,7 @@ msgstr ""
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:170
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:120
 msgid "\"Things to do when virtual groups is not in its original location\""
-msgstr ""
+msgstr "\"Dinge die zu tun sind, wenn Virtual Groups nicht am ursprünglichen Ort ist.\""
 
 # Default: "a"
 #: /views/edit/Asset/Groups/Group/edit.pt:138
@@ -1274,21 +1274,21 @@ msgstr "Bereich(e) ${removed} wurden aus der Gruppe entfernt."
 
 #: /views/edit/Asset/Groups/VirtualGroup/add_groups_from_virtualgroup_to_virtualgroup.py:13
 msgid "No group(s) selected, so nothing to use to add groups."
-msgstr ""
+msgstr "Keine Gruppe(n) ausgewählt, folglich war nichts zum hinzufügen zu den Gruppen vorhanden."
 
 #: /views/edit/Asset/Groups/VirtualGroup/add_groups_from_virtualgroup_to_virtualgroup.py:17
 #: /views/edit/Asset/Groups/VirtualGroup/add_groups_to_virtualgroup.py:22
 msgid "Group(s) ${added} added to group."
-msgstr ""
+msgstr "Gruppe(n) ${added} zur Gruppe hinzugefügt."
 
 #: /views/edit/Asset/Groups/VirtualGroup/add_groups_from_virtualgroup_to_virtualgroup.py:20
 #: /views/edit/Asset/Groups/VirtualGroup/add_groups_to_virtualgroup.py:25
 msgid "No other groups added (were they already in this virtual group?)"
-msgstr ""
+msgstr "Keine weiteren Gruppen hinzugefügt (waren sie bereits in dieser virtuellen Gruppe?)"
 
 #: /views/edit/Asset/Groups/VirtualGroup/add_groups_to_virtualgroup.py:11
 msgid "No groups selected, so none added."
-msgstr ""
+msgstr "Keine Gruppe ausgewählt, es wurde nichts hinzugefügt."
 
 # Default: "r"
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:104
@@ -1297,23 +1297,23 @@ msgstr ""
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:104
 msgid "remove selected group(s) from this virtual group: alt-r"
-msgstr ""
+msgstr "Die ausgewählten Gruppe(n) aus dieser virtuellen Gruppe entfernen: alt-r"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:104
 msgid "remove group"
-msgstr ""
+msgstr "Gruppe entfernen"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:140
 msgid "add group(s) to this virtual group."
-msgstr ""
+msgstr "Gruppe(n) zu dieser virtuellen Gruppe hinzufügen."
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:160
 msgid "transfer groups defined in other virtual groups"
-msgstr ""
+msgstr "Gruppen die in anderen virtuellen Gruppen definiert sind übertragen"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:160
 msgid "copy from virtual group(s)"
-msgstr ""
+msgstr "Aus virtuellen Gruppe(n) kopieren"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:52
 msgid "Virtual Group &#8216;members&#8217;"
@@ -1321,7 +1321,7 @@ msgstr ""
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:65
 msgid "Group name"
-msgstr ""
+msgstr "Gruppenname"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:97
 msgid "This Virtual Group does not have any &#8216;member groups&#8217;."
@@ -1329,11 +1329,11 @@ msgstr ""
 
 #: /views/edit/Asset/Groups/VirtualGroup/remove_groups_from_virtualgroup.py:11
 msgid "No groups selected, so none removed."
-msgstr ""
+msgstr "Keine Gruppen ausgewählt, es wurde nichts entfernt."
 
 #: /views/edit/Asset/Groups/VirtualGroup/remove_groups_from_virtualgroup.py:18
 msgid "Group(s) ${removed} removed from group."
-msgstr ""
+msgstr "Gruppe(n) ${removed} aus der Gruppe entfernt."
 
 #: /views/edit/Asset/Groups/get_tabs.py:14
 #: /views/edit/Asset/get_tabs.py:14
@@ -1350,7 +1350,7 @@ msgstr "Bearbeiten"
 
 #: /views/edit/Asset/Groups/get_tabs.py:15
 msgid "groups"
-msgstr ""
+msgstr "Gruppen"
 
 #: /views/edit/Asset/Image/edit.pt:105
 msgid "scaled"
@@ -1358,11 +1358,11 @@ msgstr "skaliert"
 
 #: /views/edit/Asset/Image/edit.pt:132
 msgid "format and scaling"
-msgstr ""
+msgstr "Format und Skalierung"
 
 #: /views/edit/Asset/Image/edit.pt:176
 msgid "set crop coordinates..."
-msgstr ""
+msgstr "Beschneidungskoordinaten setzen..."
 
 #: /views/edit/Asset/Image/edit.pt:176
 msgid "specify the center of the area to crop by clicking in the image: alt-o"
@@ -1375,7 +1375,7 @@ msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:187
 msgid "change"
-msgstr ""
+msgstr "ändern"
 
 # Default: "c"
 #: /views/edit/Asset/Image/edit.pt:187
@@ -1384,17 +1384,17 @@ msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:20
 msgid "image info"
-msgstr ""
+msgstr "Bildinformation"
 
 #: /views/edit/Asset/Image/edit.pt:24
 #: /views/edit/Asset/Image/edit.pt:38
 msgid "format"
-msgstr ""
+msgstr "Format"
 
 #: /views/edit/Asset/Image/edit.pt:27
 #: /views/edit/Asset/Image/edit.pt:48
 msgid "dimensions"
-msgstr ""
+msgstr "Dimensionen"
 
 #: /views/edit/Asset/Image/edit.pt:40
 #: /views/add/Image/form.form:66
@@ -1403,15 +1403,15 @@ msgstr " "
 
 #: /views/edit/Asset/Image/edit.pt:57
 msgid "<br /> scaled to ${WxH} pixels"
-msgstr ""
+msgstr "<br /> skaliert auf ${WxH} Punkte"
 
 #: /views/edit/Asset/Image/edit.pt:66
 msgid "original"
-msgstr ""
+msgstr "Original"
 
 #: /views/edit/Asset/Image/edit.pt:67
 msgid "view the original image"
-msgstr ""
+msgstr "Das ursprüngliche Bild ansehen"
 
 # Default: "v"
 #: /views/edit/Asset/Image/edit.pt:67
@@ -1420,7 +1420,7 @@ msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:74
 msgid "<br /> view unscaled image"
-msgstr ""
+msgstr "<br /> nicht skaliertes Bild ansehen"
 
 #: /views/edit/Asset/Image/edit.pt:81
 msgid "orientation"
@@ -1428,7 +1428,7 @@ msgstr "Ausrichtung"
 
 #: /views/edit/Asset/Image/edit.pt:88
 msgid "Note: Silva can provide image scaling and conversion with the help of PIL"
-msgstr ""
+msgstr "Anmerkung: Silva kann mit der Hilfe von PIL Bildskalierung und -umwandlung anbieten"
 
 #: /views/edit/Asset/Image/edit.pt:90
 msgid "PIL doesn't seem to be installed."
@@ -1448,35 +1448,35 @@ msgstr "Vordefinierte Größen"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:136
 msgid "50x50 pixel"
-msgstr ""
+msgstr "50x50 Punkte"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:136
 msgid "50x50 pixels"
-msgstr ""
+msgstr "50x50 Punkte"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
 msgid "75x75 pixels"
-msgstr ""
+msgstr "75x75 Punkte"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:145
 msgid "75x75 pixel"
-msgstr ""
+msgstr "75x75 Punkte"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:154
 msgid "100x100 pixels"
-msgstr ""
+msgstr "100x100 Punkte"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:154
 msgid "100x100 pixel"
-msgstr ""
+msgstr "100x100 Punkte"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:163
 msgid "250x250 pixels"
-msgstr ""
+msgstr "250x250 Punkte"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:163
 msgid "250x250 pixel"
-msgstr ""
+msgstr "250x250 Punkte"
 
 # Default: "u"
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:173
@@ -1489,19 +1489,19 @@ msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:173
 msgid "use coordinates..."
-msgstr ""
+msgstr "Koordination verwenden..."
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:185
 msgid "drag window"
-msgstr ""
+msgstr "Fenster ziehen"
 
 #: /views/edit/Asset/Image/scale_form.form:25
 msgid "web format"
-msgstr ""
+msgstr "WEB-format"
 
 #: /views/edit/Asset/Image/scale_form.form:29
 msgid "Image format for web."
-msgstr ""
+msgstr "Bildformat für das WEB."
 
 #: /views/edit/Asset/Image/scale_form.form:49
 msgid "scaling"
@@ -1597,7 +1597,7 @@ msgstr "hochladen"
 
 #: /views/edit/Asset/macro_asset_edit.pt:178
 msgid "upload file"
-msgstr ""
+msgstr "Datei hochladen"
 
 # Default: "u"
 #: /views/edit/Asset/macro_asset_edit.pt:178
@@ -1620,7 +1620,7 @@ msgstr "Charakterisierung"
 
 #: /views/edit/Asset/upload_form.form:26
 msgid "Locate a file."
-msgstr ""
+msgstr "Eine Datei lokalisieren."
 
 #: /views/edit/Container/Folder/placeholder.py:3
 msgid "This is just a placeholder so this directory won't get pruned."
