@@ -20,7 +20,9 @@ class CatalogUpgrade:
     __implements__ = IUpgrader
 
     def upgrade(self, silvaroot):
-        zLOG.LOG('Silva', zLOG.INFO, "Make sure the Catalog's indeces are up to date") 
+        zLOG.LOG(
+            'Silva', zLOG.INFO, 
+            "Make sure the Catalog's indeces are up to date") 
         from Products.Silva import install
         install.setup_catalog(silvaroot)
         return silvaroot
@@ -28,13 +30,15 @@ class CatalogUpgrade:
 class ReindexHauntedPath:
     """After the Catalog's indeces are updated, reindex the hauted_path
     index. This is to make sure existing Ghosts will work with the
-    subscriptions feature.
+    subscriptions feature - This reindexing is an expensive operation!
     """
     
     __implements__ = IUpgrader
     
     def upgrade(self, silvaroot):
-        zLOG.LOG('Silva', zLOG.INFO, "Reindex the hauted_path index - may take a while")
+        zLOG.LOG(
+            'Silva', zLOG.INFO, 
+            "Reindex the hauted_path index - may take a while")
         catalog = silvaroot.service_catalog
         catalog.reindexIndex('haunted_path', None)
         return silvaroot
@@ -53,4 +57,3 @@ def initialize():
     upgrade.registry.registerUpgrader(CatalogUpgrade(), '1.2', 'Silva Root')
     upgrade.registry.registerUpgrader(ReindexHauntedPath(), '1.2', 'Silva Root')
     upgrade.registry.registerUpgrader(RefreshAll(), '1.2', 'Silva Root')
-
