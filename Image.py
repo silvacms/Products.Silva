@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.39 2003/07/17 13:28:34 zagy Exp $
+# $Id: Image.py,v 1.40 2003/07/18 12:05:33 zagy Exp $
 
 # Python
 import re, string 
@@ -314,7 +314,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     id, _title = OFS.Image.cookId(id, title, file)
     id = string.translate(id.encode('ascii', 'replace'), TRANSMAP)
 
-    if not mangle.Id(self, id).isValid():
+    if not mangle.Id(context, id).isValid():
         return
     img = Image(id, title)
     context._setObject(id, img)

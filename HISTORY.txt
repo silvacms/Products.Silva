@@ -7,6 +7,8 @@ Silva changes
 
     Features Added
 
+        - Checks for valid IDs are all moved to a separate module.
+
         - Removed Silva Document and editor functionality from the core
           into its own product, SilvaDocument.
 
