@@ -1,4 +1,4 @@
-## Script (Python) "tab_docma_import_and_delete"
+## Script (Python) "tab_edit_import_delete.py"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -14,10 +14,10 @@ model = request.model
 model.security_trigger()
 
 if not request.has_key('storageids') or not request['storageids']:
-    return view.tab_docma(message_type='error', message='Select one or more jobs to delete')
+    return view.tab_edit_import(message_type='error', message='Select one or more jobs to delete')
 
 for item in request['storageids']:
     sid, doctype = item.split('|')
     model.service_docma.delete_finished_job(str(request['AUTHENTICATED_USER']), int(sid))
 
-return view.tab_edit_import(message_type='feedback', message='Deletion successful')
+return view.tab_edit_import(message_type='feedback', message='Job deleted')
