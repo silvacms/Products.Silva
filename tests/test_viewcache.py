@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -12,7 +12,8 @@ from DateTime import DateTime
 from Products.Silva.SilvaObject import SilvaObject
 from Products.SilvaDocument.Document import Document, DocumentVersion
 
-SECOND = 1.0 / (24 * 60 * 60)
+SECOND_IN_DAYS = 1.0 / (24 * 60 * 60)
+SECOND = 1
 
 class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
@@ -139,13 +140,13 @@ class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
         doc.create_copy()
         dom2 = doc.get_editable().content
         dom2.documentElement.appendChild(dom2.createElement('heading'))
-        doc.set_unapproved_version_publication_datetime(now + SECOND/5.0)
+        doc.set_unapproved_version_publication_datetime(now + SECOND_IN_DAYS/5.0)
         doc.approve_version()        
         self.assert_(doc.is_cached())
         self.assertEquals(data, doc.view())
-        #time.sleep(SECOND)
-        #self.assert_(not doc.is_cached())
-        #self.assertNotEquals(data, doc.view())
+        time.sleep(SECOND/4.0)
+        self.assert_(not doc.is_cached())
+        self.assertNotEquals(data, doc.view())
         
 if __name__ == '__main__':
     framework()
