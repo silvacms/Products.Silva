@@ -44,7 +44,7 @@
   <tr tal:define="
     item python:indent_item[1];
     indent python:indent_item[0];
-    oddrow repeat/indent_item/odd;">
+    ">
     <td class="{__class__}"
       tal:define="
         item_url string:${item/absolute_url};
@@ -70,8 +70,8 @@
             title string:id: ${item/id};"
           tal:condition="python:title == ''"
           tal:content="item/id"
-	    i18n:translate="no_title">
-          no title
+          i18n:translate="no_title">
+            no title
         </a>
       </div>
     </td>
