@@ -41,17 +41,15 @@ class Ghost(TocSupport, SimpleItem.Item):
         """
         return DateTime.DateTime(2002, 1, 1, 12, 0)
 
+    def preview(self):
+        """Preview ghosted object.
+        """
+        pass
+    
     def view(self):
-        """View document as HTML.
+        """View ghosted object. .
         """
         return self._get_document().view()
-
-    def public(self):
-        """Get version open to the public.
-        """
-        return self._get_document().view()
-
-    def 
     
 Globals.InitializeClass(Ghost)
 
