@@ -2,7 +2,7 @@
 <metal:block fill-slot="edit_input">
   <script type="text/javascript"
     tal:content="structure here/asset_reference.js" />
-  <tal:block define="global alignment python:node.getAttribute('alignment')" />
+  <tal:block define="global alignment python:node.output_convert_editable(node.getAttribute('alignment'))" />
   <div class="margins">
   <table cellpadding="2" border="0" width="100%">
     <tr>
@@ -10,7 +10,7 @@
         <input type="button" class="button" name="" value="Get image reference"
           tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Image\', \'_reference_\', \'focusbox\', \'image_path\');;return false;;' % here.get_start_container().absolute_url();" />
         <input style="width:50%;" type="text" name="image_path" value=""
-          tal:attributes="value python:node.getAttribute('image_path');"  />
+          tal:attributes="value python:node.output_convert_editable(node.getAttribute('image_path'));"  />
       </td>
     </tr>
     <tr>

@@ -13,7 +13,7 @@ image = context.content()
 if not image:
     return '<div class="error">[image reference is broken]</div>'
 
-alignment = node.getAttribute('alignment')
+alignment = node.output_convert_editable(node.getAttribute('alignment'))
 if alignment == '':    
     return image.image.tag()
 elif alignment.startswith('image-'):
