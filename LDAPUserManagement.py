@@ -9,11 +9,24 @@ except ImportError:
     _ldap = ldap
 
 class LDAPUserManagement:
+    def _get_user_folder(self, object):
+        # XXX hack...relatively inefficient
+        while 1:
+            if (hasattr(object.aq_base, 'acl_users') and
+                object.acl_users.meta_type == 'LDAPUserFolder'):
+                return object.acl_users
+            if object.meta_type == 'Silva Root':
+                break
+            object = object.aq_parent
+        return None
+    
     def find_users(self, object, search_string):
-        return ldap_search(object.acl_users, 'cn=*%s*' % search_string)
+        acl_users = self._get_user_folder(object)
+        return ldap_search(acl_users, 'cn=*%s*' % search_string)
         
     def get_user_info(self, object, userid):
-        result = ldap_search(object.acl_users, 'uid=%s' % userid)
+        acl_users = self._get_user_folder(object)
+        result = ldap_search(acl_users, 'uid=%s' % userid)
         if not result:
             return {'uid': userid, 'cn': "%s (not in ldap)" % userid}  
         else:
