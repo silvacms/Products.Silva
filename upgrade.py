@@ -111,7 +111,7 @@ class UpgradeRegistry:
                 o = object_list[-1]
                 del object_list[-1]
                 #print 'Upgrading object', o.absolute_url(), '(still %s objects to go)' % len(object_list)
-                self.upgradeObject(o, version)
+                o = self.upgradeObject(o, version)
                 if hasattr(o.aq_base, 'objectValues'):
                     if o.meta_type == "Parsed XML":
                         #print '#### Skip the Parsed XML object'
