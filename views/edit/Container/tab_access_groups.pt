@@ -108,7 +108,7 @@
                 tal:attributes="value group/id;"
               />
               <a class="icon"
-                title="Edit"
+                title="edit"
                 tal:attributes="
                   href string:${group/absolute_url}/edit;
                   title group/meta_type">
@@ -200,8 +200,8 @@
           width="10%">
           id<span class="warning">*</span>
         </td>
-        <td style="width: 20em;">
-          <input style="width:100%;"
+        <td style="width: 50%;">
+          <input class="store"
             type="text" 
             value="" 
             name="field_object_id" 
@@ -217,7 +217,8 @@
           type<span class="warning">*</span>
         </td>
         <td>
-          <select name="meta_type">
+          <select class="store"
+            name="meta_type">
             <option value="Silva Group">
               Group: a group defined by a list of users
             </option>
