@@ -37,6 +37,10 @@
                   accesskey="k"
                   tal:attributes="href here/lookup_back_link">
                   <div class="navigation-border">
+                    <img alt="Return to previous screen"
+                      height="9"
+                      width="9"
+                      tal:attributes="src string:${root_url}/globals/ascending.gif" />
                     bac<u>k</u>...
                   </div>
                 </a>

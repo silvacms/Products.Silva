@@ -21,9 +21,14 @@
                   title="up to parent screen: alt-u"
                   accesskey="u"
                   tal:attributes="href active_tab">
-                  <div class="navigation-border"
-                    tal:content="structure string:&nbsp;<u>u</u>p to ${parent_screen_name}...">
-                    parent screen
+                  <div class="navigation-border">
+                    <img alt="Return to previous screen"
+                      height="9"
+                      width="9"
+                      tal:attributes="src string:${root_url}/globals/ascending.gif" />
+                    <span tal:replace="structure string:<u>u</u>p to ${parent_screen_name}...">
+                      parent screen
+                    </span>
                   </div>
                 </a>
               </td>
