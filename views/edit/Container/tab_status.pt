@@ -38,7 +38,7 @@
                     colspan="6">
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />
-                      &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                      &#xab;<span tal:replace="title">title</span>&#xbb;
                     </h2>
                   </td>
                 </tr>
@@ -131,7 +131,7 @@
                               <tal:block replace="nothing">
                                 ******* XXX Fixme: display 'no title' if no title *******
                               </tal:block>
-                              <tal:block replace="structure obj/title_html" />
+                              <tal:block replace="obj/title_html" />
                           </a>
                         </div>
                       </div>

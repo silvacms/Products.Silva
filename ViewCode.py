@@ -107,7 +107,7 @@ class ViewCode:
                 continue
             
 
-            infodict['title_html'] = obj.get_title_or_id_html()
+            infodict['title_html'] = obj.get_title_or_id()
             infodict['meta_type'] = obj.meta_type
             infodict['absolute_url'] = obj.absolute_url()
             infodict['icon'] = self.render_icon(obj)            
