@@ -7,7 +7,7 @@
 
   <body>
 
-    <div class="margins" tal:condition="python:options.has_key('message_type')">
+    <div tal:condition="python:options.has_key('message_type')">
       <div class="feedback" tal:condition="python:options['message_type'] == 'feedback'">
         <span tal:replace="structure python:options['message']" />&nbsp;&nbsp;(<span tal:replace="python:mangle.Now().toStr()">datetime</span>)
       </div>
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="margins">
+    <div>
       <h2>System problem</h2>
       <p>Something went wrong. If you're testing, the information below is important. <br />
         <span class="error">Please note what you were doing when this error occured.</span></p>
