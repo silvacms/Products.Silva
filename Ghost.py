@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.45 $
+# $Revision: 1.46 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -9,6 +9,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 # Silva interfaces
 from IVersionedContent import IVersionedContent
+from IContainer import IContainer
 # Silva
 from VersionedContent import VersionedContent
 import SilvaPermissions
@@ -88,15 +89,28 @@ class GhostVersion(SimpleItem.SimpleItem):
     """Ghost version.
     """
     meta_type = 'Silva Ghost Version'
+
+    security = ClassSecurityInfo()
+
+    # status codes:
+    LINK_OK = None   # link is ok
+    LINK_EMPTY = 1   # no link entered (XXX this cannot happen)
+    LINK_VOID = 2    # object pointed to does not exist
+    LINK_FOLDER = 3  # link points to folder
+    LINK_GHOST = 4   # link points to another ghost
+    LINK_NO_CONTENT = 5 # link points to something which is not a content
     
+
     def __init__(self, id):
         self.id = id
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_content_url')
     def set_content_url(self, content_url):
         """Set content url.
         """
         # FIXME: should never ever be allowed to point to a ghost
-        # or a container - do a lot of tests
+        # or a container - do a lot of tests (actually done in get_content_object)
         # simplify url
         scheme, netloc, path, parameters, query, fragment = \
                 urlparse.urlparse(content_url)
@@ -111,12 +125,12 @@ class GhostVersion(SimpleItem.SimpleItem):
         # now resolve it
         try:
             object = self.unrestrictedTraverse(content_url)
+            # and get physical path for it
+            self._content_path = object.getPhysicalPath()
         except:
-            # in case of errors, set it to None
-            self._content_path = None
-            return
-        # and get physical path for it
-        self._content_path = object.getPhysicalPath()
+            # in case of errors, set it to the raw input
+            steps.insert(0,'')
+            self._content_path = steps
         
     def get_content_url(self):
         """Get content url.
@@ -128,7 +142,32 @@ class GhostVersion(SimpleItem.SimpleItem):
             return '/' + object.absolute_url(1)
 	except KeyError:
 	    # KeyError is what unrestrictedTraverse raises if it cannot find the object
-	    return None
+	    return '/'.join(self._content_path)
+
+    security.declareProtected(SilvaPermissions.View,'get_link_status')
+    def get_link_status(self):
+        """return an error code if this version of the ghost is broken.
+        returning None means the ghost is Ok.
+        """
+        if self._content_path is None:
+            return self.LINK_EMPTY
+        try: 
+            content = self.unrestrictedTraverse(self._content_path)
+	except KeyError:
+            return self.LINK_VOID
+            return "The object &laquo;%s&raquo; the ghost points to does no longer exist" % '/'.join(self._content_path)
+        if IContainer.isImplementedBy(content):
+            return self.LINK_FOLDER
+            return "The object &laquo;%s&raquo; the ghost points to is a container." % '/'.join(self._content_path)
+        if not IVersionedContent.isImplementedBy(content):
+            return self.LINK_NO_CONTENT
+            return "The object &laquo;%s&raquo; the ghost points to is not a content object." % '/'.join(self._content_path)
+        if content.meta_type == 'Silva Ghost':
+            return self.LINK_GHOST
+            return "The object &laquo;%s&raquo; the ghost points to is itself a ghost." % '/'.join(self._content_path)
+
+        return self.LINK_OK
+
 
     def _get_content_object(self, path):
         """Get content object for a url.
