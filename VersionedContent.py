@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 from Content import Content
 from Versioning import Versioning, VersioningError
 from OFS import Folder
@@ -94,6 +94,8 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             version_id = self.get_public_version()
             if version_id is None:
                 version_id = self.get_last_closed_version()
+                if version_id is None:
+                    return None
         return getattr(self, version_id)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
