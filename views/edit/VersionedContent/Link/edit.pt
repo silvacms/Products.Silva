@@ -7,6 +7,11 @@
     vein string:editor;
 ">
 
+<script type="text/javascript" 
+  tal:content="structure python:here.focus_editor('url')">
+  focus cursor
+</script>
+
 <table class="columns columns3">
   <tbody>
     <tr>
@@ -60,7 +65,8 @@
           link url
         </td>
         <td>
-          <input style="width:100%;"
+          <input class="inputter"
+            style="width:100%;"
             type="text"
             name="url"
             tal:attributes="value python:request.model.get_editable().get_url()"
@@ -87,6 +93,7 @@
 </form>
 
       </td>
+
       <tal:block replace="nothing">
         _____________________ right column _____________________ 
       </tal:block>
