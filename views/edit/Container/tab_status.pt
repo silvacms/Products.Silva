@@ -30,7 +30,7 @@
 <img width="16" height="16" border="0" alt="Up to containing Publication" hspace="2"
   tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%silva_root, '%s/globals/up_tree_gray.gif'%silva_root)" />
 </a>
-<span class="back3">Publication
+<span class="tablehead3">Publication
 <span tal:condition="python:model != model.get_publication()"
   tal:omit-tag="">branch</span></span>
 <a href="../../edit/tab_status" title="Up one level"
@@ -49,7 +49,7 @@
 </tr>
 
 <span tal:replace="nothing"> ______________ local default row ______________ </span>
-<tr class="focus"
+<tr class="focus-fixed"
   tal:condition="model/get_default">
 <span tal:replace="nothing"> _______ checkbox + icon _______ </span>
 <td nowrap="1">
@@ -62,13 +62,14 @@
 </td>
 <span tal:replace="nothing"> _______ id cell _______ </span>
 <td>
-<span class="back3"><a href="../index/edit/tab_edit" title="Edit..."
+<a href="../index/edit/tab_edit" title="Edit..."
   tal:attributes="class python:view.get_status_style(model.get_default())">index of...
-</a></span>
+</a>
 </td>
 <span tal:replace="nothing"> _______ title cell _______ </span>
 <td>
-<a href="../index/edit/tab_preview" title="Preview..."><span class="back3" tal:content="structure model/get_title_html">Title</span>
+<a href="../index/edit/tab_preview" title="Preview..."
+  tal:content="structure model/get_title_html">Title
 </a>
 </td>
 <span tal:replace="nothing"> _______ version cell _______ </span>
@@ -119,7 +120,7 @@
   tal:define="indent python:obj[0];
               item python:obj[1];
               ref python:model.create_ref(item)"
-  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+  tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
 
 <span tal:replace="nothing"> _______ checkbox + icon _______ </span>
 <td nowrap="1">
@@ -262,7 +263,7 @@ There are no publishable objects in this folder.
 <!-- /iteration -->
 
 <span tal:replace="nothing"> ______________ select all / expiration time setting ______________ </span>
-<tr class="controls" valign="top"
+<tr class="controls-cycle" valign="top"
   tal:condition="python:len(objects) != 0 or model.get_default()">
 <td colspan="2">
 <script type="text/javascript">
@@ -273,29 +274,29 @@ if (document.forms[0]) {
 //-->
 </script>
 </td>
-<td align="right" colspan="2">
+<td class="widebody" align="right" colspan="2">
 Expiration time:&nbsp;
 <field tal:replace="structure python:view.tab_status_form.expiration_datetime.render()" />
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
 </td>
-<td align="right" colspan="2">
+<td class="widebody" align="right" colspan="2">
 Set expiration time?&nbsp;
 <field tal:replace="structure python:view.tab_status_form.expires_flag.render()" />
 </td>
 </tr>
 
 <span tal:replace="nothing"> ______________ export all / publish time setting______________ </span>
-<tr class="controls-cycle" valign="top"
+<tr class="controls" valign="top"
   tal:condition="python:len(objects) != 0 or model.get_default()">
 <td colspan="2">
 <input class="button" type="submit" name="tab_status_export:method" value="Export all..." title="Export all items in this overview" />
 </td>
-<td align="right" colspan="2">
+<td class="widebody" align="right" colspan="2">
 Publish time:&nbsp;
 <field tal:replace="structure python:view.tab_status_form.publish_datetime.render()" />
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
 </td>
-<td align="right" colspan="2"
+<td class="widebody" align="right" colspan="2"
   tal:condition="silva_permissions/ApproveSilvaContent">
 Publish right now?&nbsp;
 <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
@@ -332,7 +333,7 @@ function toggleSelect() {
 </script>
 
 <span tal:replace="nothing"> ______________ controls for editor ______________ </span>
-<tr class="controls"
+<tr class="divider"
   tal:condition="silva_permissions/ApproveSilvaContent">
 <td colspan="3">
 <input class="button" type="submit" name="tab_status_withdraw:method" value="Reject approval request" title="Reject request for approval of new versions" />
@@ -352,7 +353,7 @@ function toggleSelect() {
 </tr>
 
 <span tal:replace="nothing"> ______________ controls for author ______________ </span>
-<tr class="controls"
+<tr class="divider"
   tal:condition="python:silva_permissions['ChangeSilvaContent'] and not silva_permissions['ApproveSilvaContent']">
 <td colspan="3">
 <input class="button" type="submit" name="tab_status_withdraw:method" value="Withdraw approval request" title="Withdraw request for approval of new versions" />
