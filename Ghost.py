@@ -68,7 +68,7 @@ class GhostVersion(SimpleItem.SimpleItem):
             return None
         try:
             content = self.getPhysicalRoot().unrestrictedTraverse(self._content_url)
-            if not Interfaces.VersionedContent.isImplementedBy(content):
+            if not Interfaces.VersionedContent.isImplementedBy(content) or content.meta_type == 'Silva Ghost':
                 return None
             else:
                 return content

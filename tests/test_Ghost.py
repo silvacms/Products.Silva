@@ -208,7 +208,17 @@ class GhostTestCase(unittest.TestCase):
         self.assertEquals('Ghost target is broken', ghost.get_title())
 
     # FIXME: ghost should do read access checks, test for it somehow?
-    
+
+    def test_ghost_points(self):
+        # test that the ghost cannot point to the wrong thing;
+        # only non-ghost versioned content
+        self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
+                                                              '/root/folder4')
+        ghost = getattr(self.sroot, 'ghost1')
+        self.assertEquals('Ghost is broken', ghost.preview())
+        ghost.get_editable().set_content_url('/root/ghost1')
+        self.assertEquals('Ghost is broken', ghost.preview())
+        
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(GhostTestCase, 'test'))
