@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.18.8.1 $
+# $Revision: 1.18.8.2 $
 import unittest
 
 # 
@@ -146,15 +146,17 @@ class HTML2XML(Base):
 
         doc = node.find('silva_document')[0].find('doc')[0]
         self.assert_(len(doc.find('heading'))==5)
-        num_sub = 0
-        num_normal = 0
+        num_sub = num_normal = num_subsub = 0
         for heading in doc.find('heading'):
             if heading.attrs._type=='normal':
                 num_normal+=1
-            if heading.attrs._type=='sub':
+            elif heading.attrs._type=='sub':
                 num_sub+=1
+            elif heading.attrs._type=='subsub':
+                num_subsub+=1
         self.assert_(num_normal==2) # h2 gets document title
-        self.assert_(num_sub==3)
+        self.assert_(num_subsub==1)
+        self.assert_(num_sub==2)
 
     def test_ol_list_conversion(self):
         html_frag="""<ol><li>eins</li><li>zwei</li></ol>"""
@@ -323,6 +325,7 @@ class RoundtripWithTidy(unittest.TestCase):
            <p type="lead">lead paragraph</p>
            <heading type="sub">sub title</heading>
            <p type="normal">normal paragraph</p>
+           <heading type="subsub">subsub title</heading>
         </doc>
         </silva_document>'''
         self._check_doc(simple)
