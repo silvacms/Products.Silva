@@ -28,7 +28,6 @@ from AccessControl.User import User
 from Acquisition import aq_base
 import time
 
-
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
     _configure_root = 1
@@ -104,7 +103,6 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         uf = self.root.acl_users
         uf._doAddUser(_user_name, 'secret', ['ChiefEditor'], [])
 
-
     def _clear(self, call_close_hook=0):
         '''Clears the fixture.'''
         if self._configure_root:
@@ -148,6 +146,11 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
             context = self.root
         context.manage_role(role, permissions)
 
+    def installExtension(self, extension):
+        """Installs a Silva extension""" 
+        ZopeTestCase.installProduct(extension)
+        self.getRoot().service_extensions.install(extension)
+
     def login(self, name=_user_name):
         '''Logs in as the specified user.'''
         uf = self.root.acl_users
@@ -157,7 +160,6 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def logout(self):
         '''Logs out.'''
         noSecurityManager()
-
 
     def _add_helper(self, object, typename, id, title, **kw):
         getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(
@@ -179,7 +181,6 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
     def add_image(self, object, id, title, **kw):
         return self._add_helper(object, 'Image', id, title, **kw)
-
 
 def setupSilvaRoot(app, id='root', quiet=0):
     '''Creates a Silva root.'''
@@ -203,8 +204,6 @@ def setupSilvaRoot(app, id='root', quiet=0):
         get_transaction().commit()
         if not quiet:
             ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
-
-
 
 # Create a Silva site in the test (demo-) storage
 app = ZopeTestCase.app()
