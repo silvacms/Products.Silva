@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.10 2003/08/08 07:33:47 zagy Exp $
+# $Id: GhostFolder.py,v 1.11 2003/08/08 09:13:14 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -24,7 +24,7 @@ from Products.Silva.Versioning import VersioningError
 
 from Products.Silva.interfaces import \
     IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
-    IPublication
+    IPublication, ISilvaObject
 
 icon = 'www/silvaghostfolder.gif'
 
@@ -174,7 +174,9 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
 
     def implements_publication(self):
         content = self._get_content()
-        return content.implements_publication()
+        if ISilvaObject.isImplementedBy(content):
+            return content.implements_publication()
+        return 0
 
     # Publishable 
     
