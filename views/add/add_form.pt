@@ -45,7 +45,7 @@ Notes
   tal:define="oddrow repeat/field/odd">
 
 <tr class="focus" valign="top"
-  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+  tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
 <td align="right" width="10%" tal:content="python:field['title']">
 title
 </td>
