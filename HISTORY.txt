@@ -10,6 +10,9 @@ Silva changes
         - The metadata tab wouldn't show the metadata set's title when it
           was available.
 
+        - Be less aggressive about trying to add a Unicode Whitespace
+          splitter, and accept is one is already there.
+
   0.9.2.1
 
     Features added

@@ -20,9 +20,12 @@ class Splitter:
             result += self.rxGlob.findall(s)
         return result
 
-element_factory.registerFactory('Word Splitter',
-                                'Unicode Whitespace splitter',
-                                Splitter)
+splitter_name = 'Unicode Whitespace splitter'
+
+if splitter_name not in element_factory.getFactoryNames('Word Splitter'):
+    element_factory.registerFactory('Word Splitter',
+                                    splitter_name,
+                                    Splitter)
 
 if __name__ == "__main__":
     import sys
