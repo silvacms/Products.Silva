@@ -39,6 +39,7 @@ class ZipfileImportAdapter(adapter.Adapter):
         from zipfile import ZipFile
         from Products.Silva.silvaxml import xmlimport
 
+        existing_objects = container.objectIds()
         importer = xmlimport.theXMLImporter
         archive = ZipFile(zipfile, 'r')
         settings = xmlimport.ImportSettings()
@@ -46,7 +47,7 @@ class ZipfileImportAdapter(adapter.Adapter):
         info.setZipFile(archive)
         bytes = archive.read('silva.xml')
         source_file = StringIO(bytes)
-        importer.importFromFile(
+        result = importer.importFromFile(
             source_file,
             result=container,
             settings=settings,
@@ -56,6 +57,9 @@ class ZipfileImportAdapter(adapter.Adapter):
 
         succeeded = []
         failed = []
+        for id in result.objectIds():
+            if id not in existing_objects:
+               succeeded.append(id)
         return succeeded, failed
         
 Globals.InitializeClass(ZipfileImportAdapter)
