@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import unittest
 import Zope
 from Products.Silva.SilvaObject import SilvaObject
@@ -53,7 +53,7 @@ def _getCopyParsedXML(self, container):
     return ParsedXML(self.id, self.index_html())
 
 def _getCopyGhostVersion(self, container):
-    return GhostVersion(self.id, self.get_content_url())
+    return GhostVersion(self.id)
 
 def _verifyObjectPaste(self, ob):
     return
