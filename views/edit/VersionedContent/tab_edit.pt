@@ -153,13 +153,14 @@
       <input class="button"
         style="margin-left:0;"
         type="submit"
-        value="create new version"
-        title="work on a new version while the previous one stays online: alt-c"
-        accesskey="c"
-        i18n:attributes="value title"/>
-        <tal:block i18n:translate="publish_create_newversion">
-      <b>Note: </b>there is already a published (or closed) version of this
-      content. Changes can only be made in a new version.
+        value="new version"
+        title="work on a new version while the previous one stays online: alt-n"
+        accesskey="n"
+        i18n:attributes="value title"
+      />
+      <tal:block i18n:translate="publish_create_newversion">
+        <b>Note: </b>there is already a published or closed version of this
+        content. Changes can only be made in a new version.
       </tal:block>
     </div>
   </form>
