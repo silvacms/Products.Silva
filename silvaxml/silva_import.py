@@ -7,9 +7,9 @@ from Products.Silva.Link import Link, LinkVersion
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
 
-NS_URI = 'http://infrae.com/ns/silva/0.5'
+NS_URI = 'http://infrae.com/ns/silva'
 # XXX Move to SilvaDocument
-DOC_NS_URI = 'http://infrae.com/ns/silva_document/1.0'
+DOC_NS_URI = 'http://infrae.com/ns/silva_document'
 
 def initializeElementRegistry():
     """Here the importable (namespaced!) xml elements are registered. 
