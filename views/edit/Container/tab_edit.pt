@@ -23,7 +23,6 @@
     default_doc_list python: test(default_document, [default_document], []);
     publishables python: default_doc_list + model.get_ordered_publishables();
     assets model/get_assets;
-    iterate python: 0;
     ">
   <table class="columns columns2">
     <tbody>
@@ -154,7 +153,7 @@
                   is_default python: item is default_document;
                   item_url item/absolute_url;
                   status_style python:item.get_object_status()[1];
-                  global iterate repeat/item/odd">
+                  iterate repeat/item/odd">
                   <tr tal:attributes="class python: iterate and 'odd' or 'even'">
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
@@ -300,7 +299,14 @@
                       </tal:block>
                     </td>
                   </tr>
+                  <tal:block replace="nothing">
+                    ______________ sync cycling of row colors ______________
+                  </tal:block>
+                  <tal:condition condition="repeat/item/end">
+                    <tal:define define="global iterate python:iterate == 1 and 'odd' or 'even'" />
+                  </tal:condition>
                 </tal:define>
+
               </tal:repeat>
 
               <tal:block replace="nothing">
