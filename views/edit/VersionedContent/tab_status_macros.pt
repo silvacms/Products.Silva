@@ -10,8 +10,9 @@
 
 <metal:block define-macro="datetime_info"
   tal:define="
-    start_time python: mangle.DateTime(model.get_public_version_publication_datetime()).toStr();
-    end_time python: mangle.DateTime(model.get_public_version_expiration_datetime()).toStr();
+    toStr nocall: here/service_utils/backend_datetime_to_str;
+    start_time python: toStr(model.get_public_version_publication_datetime());
+    end_time python: toStr(model.get_public_version_expiration_datetime());
     "
   tal:condition="start_time"
   >
