@@ -194,15 +194,15 @@ div.tabs a.right:hover {
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
-/* help */
+/* help (accesskey link) */
 div.tabs a.normal {
   float : right;
-  width : 3em;
-    font-size: 100%;
+  width : 0em;
     color: &dtml-shade46;;
     background: transparent;
   border : none;
   text-align : right;
+  display: none;
 }
 div.tabs a.normal:visited {
   color: &dtml-shade46;;
