@@ -20,7 +20,7 @@ name = name.strip()
 if name == '':
     return view.tab_access_lookup(message_type="error", message="No search string supplied.")
 
-if len(name) < 3:
+if len(name) < 2:
     return view.tab_access_lookup(message_type="error", message="Search string '%s' is too short. Please try a longer search string." % name)       
 
 if name != view.lookup_get_query():
