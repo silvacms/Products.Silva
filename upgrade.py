@@ -42,6 +42,8 @@ def from091to092(self, root):
         Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
     Document.manage_beforeDelete = manage_beforeDelete_old_style_docs
 
+    print 'Going to check ids'
+
     # first check the object tree for illegal ids, since they will break the upgrade
     illegal_urls = check_reserved_ids(root)
 
@@ -50,6 +52,8 @@ def from091to092(self, root):
         for url in illegal_urls:
             urllist.append('<a href="%(url)s">%(url)s</a><br />' % {'url': url})
         return illegal_url_template % '\n'.join(urllist)
+
+    print 'Going to upgrade'
 
     # set the '_allow_subscription' attribute on servce_members if it isn't there yet
     sm = getattr(root, 'service_members', None)
