@@ -154,7 +154,7 @@ tr.border, td.border {
 
 tr.divider, th.divider, td.divider {
   font-size : 4px; 
-  background : #646568;
+  background : #58595b;
 }
 
 th {
