@@ -52,18 +52,6 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
             </th>
           </tr>
 
-          <tr class="focus" valign="top">
-            <td align="right" width="50%">
-              Include sub publications?
-            </td>
-            <td>
-              <input type="checkbox" name="with_sub_publications" />
-            </td>
-            <td>
-              &nbsp;
-            </td>
-          </tr>
-
           <tr class="focus-cycle" valign="top">
             <td align="right">
               Export newest version?
@@ -123,15 +111,6 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
             <th align="right" colspan="2">
               Notes
             </th>
-          </tr>
-
-          <tr class="focus" valign="top">
-            <td align="right" width="50%">
-              Include sub publications?
-            </td>
-            <td align="left" colspan="2">
-              <input type="checkbox" name="with_sub_publications" />
-            </td>
           </tr>
 
           <tr class="focus-cycle" valign="top">

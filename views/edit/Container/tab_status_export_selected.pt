@@ -31,7 +31,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
     <td>
 
       <form action="." method="POST">
-      <input type="hidden" name="refs" tal:attributes="value python: view.REQUEST['refs']" tal:condition="view/REQUEST/refs" />
+        <input type="hidden" name="refs" tal:attributes="value python: '||'.join(view.REQUEST['refs'])" tal:condition="view/REQUEST/refs" />
         <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
           <tr>
@@ -81,7 +81,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
                 <input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
             </td>
             <td colspan="2" align="right">
-                <input class="button" type="submit" name="download_xml:method" value=" Export " title="Access key: alt-e" accesskey="e" />
+                <input class="button" type="submit" name="download_xml_selected:method" value=" Export " title="Access key: alt-e" accesskey="e" />
             </td>
           </tr>
         </table>
@@ -107,6 +107,7 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
     <td>
 
       <form action="." method="POST">
+        <input type="hidden" name="refs" tal:attributes="value python: '||'.join(view.REQUEST['refs'])" tal:condition="view/REQUEST/refs" />
         <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
           <tr>
