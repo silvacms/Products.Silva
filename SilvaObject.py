@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.98.4.2.14.2 2004/04/25 05:28:57 kitblake Exp $
+# $Id: SilvaObject.py,v 1.98.4.2.14.3 2004/04/29 16:27:04 jw Exp $
 
 # python
 from types import StringType
@@ -202,7 +202,9 @@ class SilvaObject(Security, ViewCode):
                               'get_creation_datetime')
     def get_creation_datetime(self):
         """Return creation datetime."""
-        return self._creation_datetime
+        version = self.get_previewable()
+        return self.service_metadata.getMetadataValue(
+            version, 'silva-extra', 'creationtime')
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
