@@ -13,13 +13,13 @@
 
 <metal:fill-slot fill-slot="info">
   <div class="alert">
-      <span class="subhead"><span class="warning">Deprecated object</span></span><br />
-      You are seeing this message because the Silva SQL Data Source has
-      been deprecated, in favor of the new Silva External Sources
-      extension. Please convert this to an external source. There is
-      documentation available on <a class="underline"
-      href="http://www.infrae.com/products/silva/docs">the Infrae
-      site</a>. 
+    <span class="subhead"><span class="warning">Deprecated object</span></span><br />
+    You are seeing this message because the Silva SQL Data Source has
+    been deprecated, in favor of the new Silva External Sources
+    extension. Please convert this to an external source. There is
+    documentation available on <a class="underline"
+    href="http://www.infrae.com/products/silva/docs">the Infrae
+    site</a>. 
   </div>
 </metal:fill-slot>
 
