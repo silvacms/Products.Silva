@@ -115,16 +115,15 @@
 
 <tr class="focus-cycle" valign="bottom"
  tal:attributes="class python:test(oddrow, None, None)">
-  <td width="16">
-    <img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(addable['name'])" />
-  </td>
+  <td width="16"><img src="%s" width="16" height="16" alt="%s"
+      tal:replace="structure python:view.render_icon(addable['name'])" /></td>
   <td>
-    <h4><a href="#"
+    <span class="back4">
+      <a href="#"
           tal:content="addable/name" 
           tal:attributes="href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+')">Addable
          </a>
-    </h4>
+    </span>
   </td>
 </tr>
 
@@ -156,62 +155,6 @@
   <td class="divider" colspan="2"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></td>
 </tr>
 </table>
-
-<div class="margins" tal:replace="nothing">
-
-<h2><img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-  Silva objects available at <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
-</h2>
-
-<p style="width: 70%">
-Following are descriptions of Silva objects that can be added at this location.
-Click the name to add it. For more information about the item see the documentation.
-</p>
-
-<table cellspacing="0" cellpadding="3" border="0" width="67%" style="margin-left:3%"
-  tal:condition="silva_permissions/ChangeSilvaContent">
-<span tal:replace="nothing"> ______________ listing iteration ______________ </span>
-<rowset tal:omit-tag="" tal:repeat="addable model/get_silva_addables">
-<cycle tal:omit-tag="" tal:define="oddrow repeat/addable/odd">
-
-<tr class="focus-cycle" valign="top" tal:attributes="class python:test(oddrow, None, None)">
-  <td width="16">
-    <img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model.meta_type)" />
-  </td>
-  <td>
-    <h3><a href="#" tal:content="addable/name">Addable</a></h3>
-  </td>
-  <td align="right" tal:replace="nothing">
-  </td>
-</tr>
-
-<tr class="focus-cycle" valign="top"
-  tal:attributes="class python:test(oddrow, None, None)">
-  <td>
-  </td>
-  <td>
-    <p>
-    Description lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-    <br />
-    <br />
-    </p>
-  </td>
-  <td align="right" tal:replace="nothing">
-    <input class="button" type="submit" name="add_object:method" value=" Add " title="Add a new item: alt-n" accesskey="n" />
-  </td>
-</tr>
-</cycle>
-</rowset>
-</table>
-
-<tal:block condition="not:silva_permissions/ChangeSilvaContent">
-You can't do anything here.
-</tal:block>
-
-</div>
-
 
 <!-- ___________________________ end index_html/slot main ____________________________ -->
 </div>
