@@ -54,9 +54,6 @@
      <value key="extra"></value>
    </field_tales>
    <field_messages>
-     <message name="external_validator_failed">The input failed the external validator.</message>
-     <message name="required_not_found">Input is required but no input given.</message>
-     <message name="too_long">Too much input was given.</message>
    </field_messages>
    <index_args>
      <value key="lexicon_id">silva_lexicon</value>
@@ -115,9 +112,6 @@
      <value key="extra"></value>
    </field_tales>
    <field_messages>
-     <message name="external_validator_failed">The input failed the external validator.</message>
-     <message name="required_not_found">Input is required but no input given.</message>
-     <message name="too_long">Too much input was given.</message>
    </field_messages>
    <index_args>
      <value key="lexicon_id">silva_lexicon</value>
