@@ -280,7 +280,7 @@
               width="16"
               height="16"
               alt="docma icon" 
-              tal:attributes="src string:${root_url}/globals/docma.gif"
+              tal:attributes="src string:${root_url}/globals/docma.png"
               i18n:attributes="alt"
             />
             <span i18n:translate="docma_facilities">docma facilities</span>

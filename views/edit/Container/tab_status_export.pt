@@ -48,7 +48,8 @@
         <span tal:replace="nothing">
           ______________ export feedback ______________
         </span>
-        <div class="feedback">
+        <div class="feedback"
+          style="margin-bottom:1em;">
           <span class="subhead"
             i18n:translate="items_selected_for_export">items to export:</span><br />
           <table width="100%" border="0">
@@ -233,7 +234,7 @@
               width="16"
               height="16"
               alt="docma icon" 
-              tal:attributes="src string:${root_url}/globals/docma.gif"
+              tal:attributes="src string:${root_url}/globals/docma.png"
               i18n:attributes="alt"
             />
             <span i18n:translate="docma_facilities">docma facilities</span>
