@@ -7,8 +7,8 @@ class SilvaObject:
     # MANIPULATORS
     def manage_afterAdd(self, item, container):
         #self.inheritedAttribute('manage_afterAdd')(self, item, container)
-        container._add_silva_object(item)
+        container._refresh_ordered_ids(item)
         
     def manage_beforeDelete(self, item, container):
         #self.inheritedAttribute('manage_beforeDelete')(self, item, container)
-        container._remove_silva_object(item)
+        container._refresh_ordered_ids(item)

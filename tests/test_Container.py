@@ -2,7 +2,7 @@ import unittest
 import Zope
 #import ZODB
 #import OFS.Application
-from Products.Silva import Document, Folder, Root #, Ghost, Publication
+#from Products.Silva import Document, Folder, Root #, Ghost, Publication
 from Products.Silva import Interfaces
 
 def add_helper(object, typename, id, title):

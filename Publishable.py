@@ -1,6 +1,7 @@
 import Interfaces
+from SilvaObject import SilvaObject
 
-class Publishable:
+class Publishable(SilvaObject):
     __implements__ = Interfaces.Publishable
 
     _active_flag = 1
@@ -8,16 +9,14 @@ class Publishable:
     def activate(self):
         if self._active_flag:
             return
-        # should make publishable active before we can add it
         self._active_flag = 1
-        self.get_folder()._add_silva_object(self)
+        self.get_folder()._refresh_ordered_ids(self)
   
     def deactivate(self):
         if not self._active_flag:
             return
-        self.get_folder()._remove_silva_object(self)
-        # can only deactivate after removing it from list
         self._active_flag = 0
+        self.get_folder()._refresh_ordered_ids(self)
         
     # ACCESSORS
     def is_active(self):

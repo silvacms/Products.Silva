@@ -26,7 +26,24 @@ class SilvaObject(Interface.Base):
         """
         pass
 
-class Publishable(Interface.Base):
+    def get_editable(self):
+        """Get the editable version (may be object itself if no versioning).
+        """
+        pass
+
+    def get_previewable(self):
+        """Get the previewable version (may be the object itself if no
+        versioning).
+        """
+        pass
+
+    def get_viewable(self):
+        """Get the publically viewable version (may be the object itself if
+        no versioning).
+        """
+        pass
+
+class Publishable(SilvaObject):
     # MANIPULATORS
     def manage_afterAdd(self, item, container):
         """Hook called by Zope just after the item was added to
@@ -71,7 +88,7 @@ class Asset(SilvaObject):
     """
     pass
 
-class Content(SilvaObject, Publishable):
+class Content(Publishable):
     """An object that can be published directly and would appear
     in the table of contents. Can be ordered.
     """
@@ -81,28 +98,70 @@ class Content(SilvaObject, Publishable):
         the folder.
         """
         pass
-
-class Information(Content):
-    """Information that does not appear in the official contents of a publication,
-    but can be referred to from documents and can be included
-    (images, contactinfo, etc)'
-    """
-    def get_editing_state(self):
-        pass
     
-    def editor(self):
-        """Show content in editor mode.
+class Container(Publishable):
+    
+    # MANIPULATORS
+    def move_object_up(self, id):
+        """Move object with id up in the list of ordered publishables.
+        Return true in case of success.
         """
         pass
 
-    def preview(self):
-        """See the information as the user would see it.
+    def move_object_down(self, id):
+        """Move object with id down in the list of ordered publishables.
+        Return true in case of success.
         """
         pass
 
+    def move_to(self, move_ids, index):
+        """Move ids just before index.
+        Return true in case success.
+        """
+        pass
     
-    def view(self):
-        """Use the information in context.
+    # cut copy paste?
+    
+    # ACCESSORS
+
+    def is_transparent(self):
+        """Show this subtree in get_tree().
+        """
+        pass
+    
+    def get_default(self):
+        """Get the default content object of the folder. If
+        no default is available, return None.
+        """
+        pass
+
+    def get_ordered_publishables(self):
+        """Get list of active publishables of this folder, in
+        order.
+        """
+        pass
+    
+    def get_nonactive_publishables(self):
+        """Get a list of nonactive publishables. This is not in
+        any fixed order.
+        """
+        pass
+    
+    def get_assets(self):
+        """Get a list of non-publishable objects in this folder.
+        (not in any order).
+        """
+        pass
+    
+    def get_tree(self):
+        """Get flattened tree of all active publishables.
+        This is a list of indent, object tuples.
+        """
+        pass
+
+    def get_container_tree(self):
+        """Get flattened tree of all sub-containers.
+        This is a list of indent, object tuples.
         """
         pass
     
@@ -142,7 +201,6 @@ class Security(Interface.Base):
     def add_role_to_group(self, userid, role):
         pass
     
-
 class Versioning(Interface.Base):
     """Can be mixed in with an object to support simple versioning.
     This interface only keeps a reference id to the version and the
@@ -296,6 +354,7 @@ class Versioning(Interface.Base):
         """
         pass
     
+
 class VersionedContent(Versioning, Content):
     """This is a content object that is versioned. Presumed is that
     upon creation of the content object it is assigned a version id
@@ -311,70 +370,3 @@ class VersionedContent(Versioning, Content):
         operation will fail.
         """
         pass
-    
-class Container(SilvaObject, Publishable):
-    
-    # MANIPULATORS
-    def move_object_up(self, id):
-        """Move object with id up in the list of ordered publishables.
-        Return true in case of success.
-        """
-        pass
-
-    def move_object_down(self, id):
-        """Move object with id down in the list of ordered publishables.
-        Return true in case of success.
-        """
-        pass
-
-    def move_to(self, move_ids, index):
-        """Move ids just before index.
-        Return true in case success.
-        """
-        pass
-    
-    # cut copy paste?
-    
-    # ACCESSORS
-
-    def is_transparent(self):
-        """Show this subtree in get_tree().
-        """
-        pass
-    
-    def get_default(self):
-        """Get the default content object of the folder. If
-        no default is available, return None.
-        """
-        pass
-
-    def get_ordered_publishables(self):
-        """Get list of active publishables of this folder, in
-        order.
-        """
-        pass
-    
-    def get_nonactive_publishables(self):
-        """Get a list of nonactive publishables. This is not in
-        any fixed order.
-        """
-        pass
-    
-    def get_assets(self):
-        """Get a list of non-publishable objects in this folder.
-        (not in any order).
-        """
-        pass
-    
-    def get_tree(self):
-        """Get flattened tree of all active publishables.
-        This is a list of indent, object tuples.
-        """
-        pass
-
-    def get_container_tree(self):
-        """Get flattened tree of all sub-containers.
-        This is a list of indent, object tuples.
-        """
-        pass
-    

@@ -14,7 +14,7 @@ import Interfaces
 # misc
 from helpers import add_and_edit
 
-class Folder(SilvaObject, Publishable, Folder.Folder):
+class Folder(Publishable, Folder.Folder):
     """Silva Folder.
     """
     meta_type = "Silva Folder"
@@ -88,24 +88,22 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         self._ordered_ids = ids
         return 1
     
-    def _add_silva_object(self, item):
-        if not item.is_active():
-            return
-        if Interfaces.Asset.isImplementedBy(item):
-            return
-        if Interfaces.Content.isImplementedBy(item) and item.is_default():
-            return
-        self._ordered_ids.append(item.id)
-            
-    def _remove_silva_object(self, item):
-        if not item.is_active():
-            return
-        if Interfaces.Asset.isImplementedBy(item):
+    def _refresh_ordered_ids(self, item):
+        """Make sure item is in ordered_ids when it should be.
+        """
+        if not Interfaces.Publishable.isImplementedBy(item):
             return
         if Interfaces.Content.isImplementedBy(item) and item.is_default():
             return
-        self._ordered_ids.remove(item.id)
-    
+        ids = self._ordered_ids
+        id = item.id
+        if item.is_active() and id not in ids:
+            ids.append(id)
+            self._ordered_ids = ids
+        if not item.is_active() and id in ids:
+            ids.remove(id)
+            self._ordered_ids = ids
+              
     # ACCESSORS
 
     def get_folder(self):

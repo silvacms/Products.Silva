@@ -2,7 +2,7 @@ import unittest
 import Zope
 #import ZODB
 #import OFS.Application
-from Products.Silva import Document, Folder, Root #, Ghost, Publication
+#from Products.Silva import Document, Folder, Root #, Ghost, Publication
 
 class SilvaObjectTestCase(unittest.TestCase):
     """Test the SilvaObject interface.
