@@ -4,7 +4,7 @@ class SimpleUserManagement:
         pass
 
     def find_users(self, object, search_string):
-        userids = object.acl_users.getUserNames()
+        userids = object.get_valid_userids()
         result = []
         for userid in userids:
             if userid.find(search_string) != -1:
