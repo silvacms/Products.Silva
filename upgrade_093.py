@@ -255,8 +255,8 @@ class UpgradeTime:
         except BindingError:
             return obj
         if binding is None:
-            # hmm, maybe broken ghost version ?
-            zLOG.LOG('s-up',100,'cannot upgrade meta data of '+obj.absolute_url())
+            zLOG.LOG('Silva', zLOG.BLATHER,
+                     'cannot upgrade meta data of '+obj.absolute_url())
             return obj
         mtime = getattr(obj, '_modification_datetime',
             obj.bobobase_modification_time())
