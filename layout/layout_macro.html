@@ -27,27 +27,26 @@
   <!-- page_header slot -->
 </metal:block>
 
-<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
-<tr valign="top" height="1%">
-  <td width="1%" bgcolor="#d1d4d8">
-    <img src="globals/silva_icon_32.gif" tal:attributes="src here/globals/silva_icon_32.gif/absolute_url" height="32" width="32" />
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr valign="top">
+  <td width="32" bgcolor="#d1d4d8">
+    <img tal:attributes="src here/globals/silva_icon_32.gif/absolute_url" height="32" width="32" />
   </td>
   <td width="16" bgcolor="#dde1e4">
-    <img src="globals/pixel.gif" tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
+    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
   </td>
   <td width="12">
-    <img src="globals/pixel.gif" tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
+    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
   </td>
-  <td width="512">
-    <metal:block define-slot="navigation">
-      <!-- navigation slot -->
-    </metal:block>
-  </td>
-  <td>
+  <td valign="top">
     &nbsp;
   </td>
+  <td width="4%">
+    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
+  </td>
 </tr>
-<tr valign="top" height="100%">
+
+<tr valign="top">
   <td bgcolor="#d1d4d8">
     &nbsp;
   </td>
@@ -55,19 +54,22 @@
     &nbsp;
   </td>
   <td>
-    &nbsp;
+    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="12" />
   </td>
-  <td width="512">
+  <span tal:replace="nothing"> _______ content cell, here the XML is rendered in HTML _______ </span>
+  <td valign="top">
     <metal:block define-slot="table_of_contents">
       <!-- table_of_contents slot -->
     </metal:block>
-    <metal:block define-slot="main">
-      <!-- main slot -->
-    </metal:block>
+    <div class="readable">
+      <metal:block define-slot="main">
+        <!-- main slot -->
+      </metal:block>
+    </div>
     <br />
   </td>
   <td>
-    &nbsp;
+    <img tal:attributes="src here/globals/pixel.gif/absolute_url" height="1" width="16" />
   </td>
 </tr>
 </table>
