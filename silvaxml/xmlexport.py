@@ -81,6 +81,8 @@ class BaseXMLSource:
         """Export self.context to XML Sax-events 
         """
         reader.startPrefixMapping(None, self.ns_default)
+        for set in self.context.service_metadata.collection.getMetadataSets():
+            reader.startPrefixMapping(set.metadata_prefix, set.metadata_uri)
         # XXX start all registered prefixmappings here
         self._startElement(
             reader,
@@ -102,29 +104,22 @@ class BaseXMLSource:
         metadata_service = getToolByName(self.context, 'portal_metadata')
         binding = metadata_service.getMetadata(self.context)
         self._startElement(reader, 'metadata', {})
-        self._startElement(reader, 'title', {})
-        reader.characters(self.context.title)
-        self._endElement(reader, 'title')
         for set_id in binding.collection.keys():
             prefix, namespace = binding.collection[set_id].getNamespace()
-            prefix = self.ns_default
-            self.ns_default = namespace
-            reader.startPrefixMapping(None, namespace)
-            self._startElement(reader, 'set', {})
+            self._startElement(reader, 'set', {'id': prefix})
             for key, value in binding._getData(set_id).items():
-                self._startElement(reader, key, {})
+                self._startElementNS(reader, namespace, key, {})
                 if value:
                     if type(value) == type(DateTime()):
                         reader.characters(str(value.HTML4()))
                     else:
                         reader.characters(unicode(str(value)))
-                self._endElement(reader, key)
+                self._endElementNS(reader, namespace, key)
             self._endElement(reader, 'set')
-            self.ns_default = prefix
         self._endElement(reader, 'metadata')
-        
-    def _startElement(self, reader, name, attrs=None):
-        """Starts a named XML element in the default namespace with optional
+
+    def _startElementNS(self, reader, ns, name, attrs=None):
+        """Starts a named XML element in the provided namespace with optional
         attributes
         """
         d = {}
@@ -133,17 +128,28 @@ class BaseXMLSource:
             for key, value in attrs.items():
                 d[(None, key)] = value
         reader.startElementNS(
-            (self.ns_default, name),
+            (ns, name),
             None,
             d)
+        
+    def _endElementNS(self, reader, ns, name):
+        """Ends a named element in the provided namespace
+        """
+        reader.endElementNS(
+            (ns, name),
+            None)
+        
+    def _startElement(self, reader, name, attrs=None):
+        """Starts a named XML element in the default namespace with optional
+        attributes
+        """
+        self._startElementNS(reader, self.ns_default, name, attrs)
         
     def _endElement(self, reader, name):
         """Ends a named element in the default namespace
         """
-        reader.endElementNS(
-            (self.ns_default, name),
-            None)
-
+        self._endElementNS(reader, self.ns_default, name)
+            
 class SilvaBaseXMLSource(BaseXMLSource):
     """Base class to declare the Silva namespace.
     """
