@@ -52,11 +52,11 @@
       <tbody>
         <tr>
           <td class="preview_compare_left">
-            <h3 i18n:translate="">Older version (<tal:block i18n:name="version_id" tal:content="version2/id" />)</h3>
+            <strong i18n:translate="">Older version (<tal:block i18n:name="version_id" tal:content="version2/id" />)</strong>
             <tal:block content="structure python: model.view_version('preview', version2)" />
           </td>
           <td class="preview_compare_right">
-            <h3 i18n:translate="">Newer version (<tal:block i18n:name="version_id" tal:content="version1/id" />)</h3>
+            <strong i18n:translate="">Newer version (<tal:block i18n:name="version_id" tal:content="version1/id" />)</strong>
             <tal:block content="structure python: model.view_version('preview', version1)" />
           </td>
         </tr>
