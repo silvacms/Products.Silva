@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.23 $
+$Revision: 1.24 $
 
 Silva changes
 
@@ -47,6 +47,12 @@ Silva changes
         - Indexer is now addable by editor and up (used to be 
           manager only). Added note in UI that indexer works for published
           content only.
+
+        - Demo index document gets automatically added to new Silva root.
+
+        - 'Authorized users below this level' moved to sub screen of
+          access, to make container tab_metadata scale better (this
+          could be very slow on large sites).
 
   0.8.6.1
 
