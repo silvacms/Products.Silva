@@ -280,6 +280,7 @@
                   asset_url asset/absolute_url;
                   odd_even python: iterate == 'odd' and 'odd' or 'even';
                   iterate repeat/asset/?odd_even;
+                  identifier python:'%s||%s' % (asset.id, mangle.Path.fromObject(folder_context, asset));
                   ">
                   <tr 
                     tal:define="
@@ -295,8 +296,8 @@
                       <input name="mumble"
                         type="radio"
                         tal:attributes="
-                          value asset/id;
-                          id asset/id;"
+                          value identifier;
+                          id identifier;"
                       />
                       <label 
                         tal:condition="default_document"
