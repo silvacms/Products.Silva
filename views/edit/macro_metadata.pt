@@ -9,13 +9,12 @@
 >
 <!-- Read only table -->
 <metal:block define-macro="view_table">
-  <form method="POST" name="form" action="."
-    tal:define="
-      content python: model.get_viewable();
-      binding python: view.get_metadata_binding(content) or nothing;
-      is_container request/model/implements_container | nothing;
-      form_errors options/form_errors | nothing;
-      ">
+  <tal:block define="
+    content python: model.get_viewable();
+    binding python: view.get_metadata_binding(content) or nothing;
+    is_container request/model/implements_container | nothing;
+    form_errors options/form_errors | nothing;
+    ">
     <table class="listing"
       tal:condition="binding">
       <thead>
@@ -34,104 +33,54 @@
       </thead>
       <tbody>
         <tal:block repeat="set_name binding/setNames">
-          <tal:block define="set_errors form_errors/?set_name | nothing">
-            <tr tal:condition="not:repeat/set_name/start">
-              <td class="top divider"
-                colspan="99">
+          <tr tal:condition="not:repeat/set_name/start">
+            <td class="top divider"
+              colspan="99">
+            </td>
+          </tr>
+          <tr tal:replace="nothing">
+            ______________ top controls row ______________
+          </tr>
+          <tr class="top-controls">
+            <td colspan="99">
+              <h3>
+                Metadata set &#xab;<tal:block replace="set_name" />&#xbb;
+              </h3>
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Element
+            </th>
+            <th>
+              Content
+            </th>
+          </tr>
+          <tal:block repeat="element_name binding/?set_name/elementNames">
+            <tr 
+              tal:define="
+                element binding/?set_name/?element_name;                  
+                iterate repeat/element_name/odd;"
+              tal:attributes="
+                class python: iterate and 'odd' or 'even';">
+              <tal:block replace="nothing">
+                ___ element name column ___
+              </tal:block>
+              <td tal:content="element/title">
+                Element name
+              </td>
+              <tal:block replace="nothing">
+                ___ element widget column ___
+              </tal:block>
+              <td tal:content="structure element/view">
+                Element content view
               </td>
             </tr>
-            <tr tal:replace="nothing">
-              ______________ top controls row ______________
-            </tr>
-            <tr class="top-controls">
-              <td colspan="99">
-                <h3>
-                  Metadata set &#xab;<tal:block replace="set_name" />&#xbb;
-                </h3>
-              </td>
-            </tr>
-            <tr>
-              <th width="12%">
-                Element
-              </th>
-              <th>
-                Content
-              </th>
-              <th>
-                Acquired content
-              </th>
-              <th width="30%">
-                Note
-              </th>
-            </tr>
-            <tal:block repeat="element_name binding/?set_name/elementNames">
-              <tr 
-                tal:define="
-                  element binding/?set_name/?element_name;
-                  element_error form_errors/?set_name/?element_name | nothing;
-                  iterate repeat/element_name/odd;"
-                tal:attributes="
-                  class python:element_error and 'alert' or iterate and 'odd' or 'even';">
-                <tal:block replace="nothing">
-                  ___ element name column ___
-                </tal:block>
-                <td tal:content="element/title">
-                  Element name
-                  <span class="warning"
-                    tal:condition="element/isRequired">
-                    *
-                  </span>
-                </td>
-                <tal:block replace="nothing">
-                  ___ element widget column ___
-                </tal:block>
-                <td tal:content="structure element/render">
-                  Element edit widget
-                </td>
-                <tal:block replace="nothing">
-                  ___ element acquired value column ___
-                </tal:block>
-                <td>
-                  <tal:block 
-                    condition="element/isAcquired"
-                    replace="structure element/view" />
-                  <tal:block condition="not: element/isAcquired">
-                    &nbsp;
-                  </tal:block>
-                </td>
-                <tal:block replace="nothing">
-                  ___ element desc. column ___
-                </tal:block>
-                <td>
-                  <tal:block content="structure element/description">
-                    Element description
-                  </tal:block>
-                  <span class="error"
-                    tal:condition="element_error"
-                    tal:content="element_error">
-                  </span>
-                </td>
-              </tr>
-            </tal:block>
           </tal:block>
         </tal:block>
       </tbody>
-      <tfoot>
-        <tr class="controls">
-          <td class="align-right"
-            colspan="99">
-            <input class="button" 
-              type="submit"
-              name="save_metadata:method"
-              value=" Save metadata "
-              title="access key: alt-s"
-              accesskey="s"
-            />
-          </td>
-        </tr>
-      </tfoot>
     </table>
-  </form>
+  </tal:block>
 </metal:block>
 
 <!-- Edit table -->
@@ -178,7 +127,7 @@
             </td>
           </tr>
           <tr>
-            <th width="12%">
+            <th>
               Element
             </th>
             <th>
@@ -187,7 +136,7 @@
             <th>
               Acquired content
             </th>
-            <th width="30%">
+            <th width="25%">
               Note
             </th>
           </tr>

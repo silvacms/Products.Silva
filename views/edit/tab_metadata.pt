@@ -14,8 +14,11 @@
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 
-<div class="focus-box">
-  <metal:block use-macro="here/macro_metadata/macros/edit_table" />
+<div class="focus-box"
+  tal:define="
+    macro python: model.get_editable() and 'edit_table' or 'view_table';
+    ">
+  <metal:block use-macro="here/macro_metadata/macros/?macro" />
 </div>
 
 </metal:block>
