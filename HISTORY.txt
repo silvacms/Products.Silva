@@ -3,6 +3,15 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.3.2
+
+    Bugs fixed
+
+      - Fixed the silva parser where a specific portnumber in the URL
+        would not get recognized.
+
+      - Improved link parser for anchors and query fragments.
+
   0.9.3.1
 
     Bugs fixed
