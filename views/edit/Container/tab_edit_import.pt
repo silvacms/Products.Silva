@@ -159,7 +159,7 @@
       <tr class="top-controls">
         <td colspan="3">
           <h3 i18n:translate="import_silva_xml">
-            import zip archive file (.zip)
+            import and extract zip archive file (.zip)
           </h3>
         </td>
       </tr>
@@ -196,7 +196,8 @@
           />
         </td>
         <td i18n:translate="choose_archive_file_to_import">
-          Choose a zip file to import and convert to Assets.
+          Choose a zip file to import and convert to Assets
+          (file names will become ids).
         </td>
       </tr>
 
@@ -215,8 +216,8 @@
           />
         </td>
         <td i18n:translate="choose_archive_file_to_import">
-          Provide a title for all Assets created
-          from the contents of the zip file (optional).
+          Provide an optional title for all Assets created
+          from the contents of the zip file.
         </td>
       </tr>
 
