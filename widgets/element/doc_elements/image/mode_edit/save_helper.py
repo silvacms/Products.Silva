@@ -7,6 +7,7 @@
 ##parameters=
 ##title=
 ##
+# $Id: save_helper.py,v 1.12 2003/03/14 17:28:34 zagy Exp $
 request = context.REQUEST
 node = request.node
 
@@ -24,15 +25,5 @@ else:
     node.removeAttribute('link')
 
 image_path = request['path']
-
-# Check for non existence of a "/" - fixes traversal
-# situation of Zope 2.5.1
-if '/' in image_path:
-    image = context.get_image(image_path)
-else:
-    image = getattr(node, image_path, None)
-
-if image is not None:
-    image_path = '/'.join(image.getPhysicalPath())
-
 node.setAttribute('path', node.input_convert(image_path))
+

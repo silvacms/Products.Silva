@@ -6,7 +6,9 @@
   global objects python:model.get_tree();
   global silva_permissions here/get_silva_permissions;
   global filter request/filter | request/SESSION/filter | string:Asset;
+  global asset_context request/asset_context | request/SESSION/asset_context | string:/;
   dummy python: request.SESSION.set('filter', filter);
+  dummy python: request.SESSION.set('asset_context', asset_context);
   " />
 <div class="margins">
   <h2><img src="%s" width="16" height="16" alt="%s" 
@@ -140,7 +142,7 @@ function setReference() {
 <span tal:replace="nothing"> _______ icon cell _______ </span>
   <td nowrap="1">
     <input type="radio" name="mumble" value=""
-      tal:attributes="value python:'%s||%s' % (asset.id, ('/').join(asset.getPhysicalPath()))" />
+      tal:attributes="value python:'%s||%s' % (asset.id, here.asset_lookup_path_mangler(asset_context, asset))" />
     <a href="asset" title="View this asset"
       tal:attributes="href string:${asset/absolute_url}"><img tal:replace="structure python:view.render_icon(asset.meta_type)" /></a>
   </td>

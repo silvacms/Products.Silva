@@ -10,4 +10,4 @@
 node = context.REQUEST.node
 image_path = node.output_convert_html(node.getAttribute('path'))
 
-return context.get_image(image_path)
+return context.get_image(node, image_path)

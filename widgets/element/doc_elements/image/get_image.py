@@ -4,11 +4,11 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=image_path
+##parameters=image_context, image_path
 ##title=
 ##
 try:
-    image = context.restrictedTraverse(str(image_path))
+    image = image_context.restrictedTraverse(str(image_path))
 except (KeyError, AttributeError, ValueError, IndexError):
     # image reference is broken (i.e. renamed)
     image = None
