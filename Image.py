@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.44 2003/08/01 15:54:53 faassen Exp $
+# $Id: Image.py,v 1.45 2003/08/04 09:25:14 zagy Exp $
 
 # Python
 import re, string 
@@ -306,7 +306,12 @@ class Image(Asset):
         """Handle HTTP PUT requests"""
         return self.image.PUT(REQUEST, RESPONSE)
 
-
+    def get_file_size(self):
+        return self.hires_image.get_size()
+    
+    def get_scaled_file_size(self):
+        return self.image.get_size()
+    
 InitializeClass(Image)
     
 manage_addImageForm = PageTemplateFile(
