@@ -58,7 +58,6 @@
       <input class="button" type="submit" name="approve_visitor:method" value="Approve now"
         title="Approve member: alt-a" accesskey="a"
         tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != user.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()" />
-      </span>
     </td>
   </tr>
 
