@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 class ExtensionRegistry:
 
@@ -25,6 +25,7 @@ class ExtensionRegistry:
         # We assume the class name to be identical to the module name
         classname = module.__name__.split('.')[-1]
         version_classname = classname + 'Version'
+        __traceback_info__ = (module, classname, version_classname)
         # Register Silva Addable
         context.registerClass(
             getattr(module, classname),
