@@ -83,7 +83,7 @@
                       name="add_object:method" 
                       title="add a new item: alt-n"
                       accesskey="n" 
-                      tal:attributes="value string: new ${base_type} "
+                      tal:attributes="value string: new ${base_type}..."
                       i18n:attributes="title"
                       />
                     <input type="hidden"
@@ -230,7 +230,7 @@ function setReference() {
                  i18n:attributes="title value"
                  onclick="window.close();return false;"
                 />
-               <input class="navigation"
+               <input class="button"
                  type="button"
                  name="place"
                  value="place reference"
