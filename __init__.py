@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.84 $
+# $Revision: 1.85 $
 
 import Metadata
 import Folder, Root
@@ -25,6 +25,8 @@ import SidebarCache
 import SidebarService
 import UnicodeSplitter # To make the splitter register itself
 import ContainerPolicy
+
+from Products.Silva import icon
 
 # enable Formulator support for FileSystemSite
 from Products.Formulator import FSForm
@@ -117,6 +119,7 @@ def initialize(context):
     #  register the metadata xml import initializers
     #  register a special accessor for ghosts
     Metadata.initialize_metadata()
+    initialize_icons()
 
 #------------------------------------------------------------------------------
 # External Editor support
@@ -141,4 +144,13 @@ def __allow_access_to_unprotected_subobjects__(name, value=None):
         return 1
     return 0
 
+
+def initialize_icons():
+    icon.registry.registerAdapter(icon.MetaTypeClassAdapter, 0)
+    icon.registry.registerAdapter(icon.MetaTypeAdapter, 5)
+    icon.registry.registerAdapter(icon.SilvaFileAdapter, 10)
+    mimeicons = [('application/pdf', 'pdficon1.gif')]
+    for mimetype, icon_name in mimeicons:
+        icon.registry.registerIcon(('mime_type', mimetype),
+            'www/%s' % icon_name, File.__dict__)
 
