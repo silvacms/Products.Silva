@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: virtualhosting.py,v 1.4 2003/11/06 14:40:47 jw Exp $
+# $Id: virtualhosting.py,v 1.5 2003/12/01 15:55:31 jw Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
@@ -38,7 +38,9 @@ class VirtualHostingAdapter(adapter.Adapter):
     
         If there is no virtual hosting, return None.
         """
-        return self.getVirtualRootPhysicalPath()
+        # See also OFS/Traversable.py, line 31
+        request = self.context.REQUEST
+        return (request['SERVER_URL'], tuple(request._script))
 
     def getVirtualRoot(self):
         """ Get the virtual host root object.
