@@ -34,26 +34,20 @@
         <icon paramname="UNORDEREDLIST"> 
         	<iconfile>icons/disculist.gif</iconfile> 
         	<subicon paramname="DISCUNORDEREDLIST"> 
-                   <iconfile>icons/disculist.gif</iconfile>
                 </subicon> 
                 <subicon paramname="CIRCLEUNORDEREDLIST"> 
-                    <iconfile>icons/circleulist.gif</iconfile>
 		</subicon> 
 		<subicon paramname="SQUAREUNORDEREDLIST"> 
-			<iconfile>icons/squareulist.gif</iconfile> 
 		</subicon> 
 	</icon>
 
 	<icon paramname="ORDEREDLIST"> 
 		<iconfile>icons/numberolist.gif</iconfile> 
 		<subicon paramname="LOWERALPHAORDEREDLIST"> 
-			<iconfile>icons/lowerolist.gif</iconfile> 
 		</subicon> 
 		<subicon paramname="UPPERALPHAORDEREDLIST"> 
-			<iconfile>icons/upperolist.gif</iconfile> 
 		</subicon> 
 		<subicon paramname="NUMBEREDORDEREDLIST"> 
-			<iconfile>icons/numberolist.gif</iconfile> 
 		</subicon> 
 	</icon>
 
