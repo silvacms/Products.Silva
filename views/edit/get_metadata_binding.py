@@ -3,6 +3,10 @@ request = context.REQUEST
 model = request.model
                              
 editable = model.get_editable()
+if editable is None:
+    # No editable version
+    return None
+
 binding = ms.getMetadata(editable)
 
 renderEdit = binding.renderElementEdit
@@ -13,12 +17,6 @@ def isAcquired(set_name, element_name):
     if (set_name, element_name) in aquired_items:
         return 1
     return 0
-
-#aquirable_items = binding.listAcquirable()
-#def isAcquirable(set_name, element_name):
-#    if (set_name, element_name) in aquirable_items:
-#        return 1
-#    return 0
 
 isViewable = binding.isViewable
 isEditable = binding.isEditable

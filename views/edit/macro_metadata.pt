@@ -15,7 +15,8 @@
     is_container request/model/implements_container;
     form_errors options/form_errors | nothing;
   ">
-  <table class="listing">
+  <table class="listing"
+    tal:condition="binding">
     <thead>
       <tr tal:replace="nothing">
         ______________ vein + title row ______________
