@@ -339,7 +339,7 @@ img.icon {
 
 div.personalBar {
   text-align: center;
-  background: &dtml-topBackground;;
+  background: &dtml-listingTopControlsBackground;;
   margin: 0em 0em 0em 0em;
   padding: 0.1em 16px 0.2em 16px;
   border-collapse: collapse;
@@ -599,23 +599,23 @@ table.listing th.top a.normal:hover {
     text-decoration: none;
 }
 
-td.unselected {
-  background: &dtml-evenRowBackground;;
-  border-top: 1px solid &dtml-evenRowBackground;;
-  border-bottom: px solid &dtml-evenRowBackground;;
-}
-
 td.selected {
   background: #cde0f2;
   border-top: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
 }
 
-/* bad idea
-table.listing div.vein:hover { 
-    color: &dtml-mainTabFontColorSelected;;
-    background: &dtml-mainTabBackgroundSelected;;
-} */
+td.unselected {
+  background: &dtml-evenRowBackground;;
+  border-top: 1px solid &dtml-evenRowBackground;;
+  border-bottom: px solid &dtml-evenRowBackground;;
+}
+
+td.unselected:hover { 
+  color: &dtml-mainTabFontColorSelected;;
+  background: #cde0f2;
+  cursor : pointer;
+} 
 
 /* _______ uplinks _______ */
 table.listing a.top {

@@ -17,11 +17,12 @@
 </tr>
 <tr>
   <td class="{__class__}"
-    style="padding-left: 0;">
+    style="padding-left: 0;"
+    tal:attributes="onclick string:javascript:window.location='${publication/absolute_url}/edit'">
     <a href="top"
       title="up to top contents of publication"
-      tal:attributes="href string:${publication/absolute_url}/edit/tab_edit"
-       i18n:attributes="title">
+      tal:attributes="href string:${publication/absolute_url}/edit;"
+      i18n:attributes="title">
       <img tal:replace="structure python:here.render_icon(model.get_publication())" />
     </a>
     <a class="blacklink"
@@ -48,7 +49,10 @@
       tal:define="
         item_url string:${item/absolute_url};
         title item/get_short_title_editable">
-      <div tal:attributes="style python:'margin-left:'+str(indent * 10)+'px'">
+      <div tal:attributes="
+          style python:'margin-left:'+str(indent * 10)+'px';
+          onclick string:javascript:window.location='${item_url}/edit/{__vein_id__}'
+          ">
         <a title="contents"
           tal:attributes="href string:${item_url}/edit/tab_edit">
           <img tal:replace="structure python:here.render_icon(item)" />

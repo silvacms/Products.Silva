@@ -47,7 +47,7 @@ mainFontColor:string=#2d374c
 mainLinkColor:string=#2d3c98
 
 pathBarBackground:string=#b0c4d8
-pathBarLinkColor:string=#000000
+pathBarLinkColor:string=#000
 
 mainTabBackdrop:string=#d7e8f0
 mainTabBackground:string=#7a90a6
@@ -58,7 +58,7 @@ mainTabBorderColorSelected:string=#26334c
 mainTabFontWeight:string=normal
 mainTabFontColor:string=#e3ecff
 mainTabFontColorSelected:string=#424244
-mainTabBackgroundNotSelected:string=#000000
+mainTabBackgroundNotSelected:string=#000
 
 subTabBackground:string=#66798c
 subTabBackgroundSelected:string=#cde0f2
@@ -76,29 +76,29 @@ headingSize6:string=100%
 descriptionFont:string=bold 80% Verdana, Helvetica, Arial, sans-serif
 
 contentFont:string=80% Verdana, Helvetica, Arial, sans-serif
-contentBackground:string=#000000
-contentImageBorder:string=#000000
-contentLinkActiveColor:string=#000000
-contentLinkVisitedColor:string=#000000
-contentTabBorder:string=1px solid #000000
-contentTabBackgroundNotSelected:string=#000000
-contentTabBackdrop:string=#000000
+contentBackground:string=#000
+contentImageBorder:string=#000
+contentLinkActiveColor:string=#000
+contentLinkVisitedColor:string=#000
+contentTabBorder:string=1px solid #000
+contentTabBackgroundNotSelected:string=#000
+contentTabBackdrop:string=#000
 contentTabFontWeight:string=normal
-contentTabFontColorSelected:string=#000000
+contentTabFontColorSelected:string=#000
 
 contentTabBackground:string=#729b87
 contentTabBackgroundRecede:string=#8fb39e
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
-preBorder:string=1px solid #000000
+preBorder:string=1px solid #000
 preBackground:string=#eaf3f5
 
 messageFont:string=bold 100% Verdana, Helvetica, Arial, sans-serif
 messageBackground:string=#d9f4eb
 messageBorder:string=1px solid #555577
 
-groupBorder:string=1px solid #000000
+groupBorder:string=1px solid #000
 requiredField:string=url(required.gif) right no-repeat
 
 textTransform:string=lowercase
@@ -134,14 +134,14 @@ cancelButtonPadding:string=0em
 cancelButtonBorder:string=1px solid #b9c2c1
 cancelButtonFontColor:string=#ccd7d6
 
-boxBorder:string=1px solid #000000
-boxHeaderBackground:string=#000000
-boxHeaderFontColor:string=#000000
+boxBorder:string=1px solid #000
+boxHeaderBackground:string=#000
+boxHeaderFontColor:string=#000
 boxLinkBackground:string=url(linkTransparent.gif) -0.5em 0px no-repeat
 boxLinkColor:string=Black
-boxEvenBackground:string=#000000
-boxOddBackground:string=000000
-boxHighlight:string=2px solid #000000
+boxEvenBackground:string=#000
+boxOddBackground:string=000
+boxHighlight:string=2px solid #000
 
 
 
@@ -165,7 +165,7 @@ listingTopBackgroundContent:string=#c5d4ca
 listingTopHeadingColorContent:string=#51545c
 listingTopControlsHeadingColorContent:string=#ddeee3
 
-topBackground:string=#6c7f7f
+topBackground:string=#000
 topMargin:string=0
 topPadding:string=0
 
@@ -174,10 +174,10 @@ logoPadding:string=0
 
 searchMargin:string=0
 searchPadding:string=0
-searchFontColor:string=#000000
+searchFontColor:string=#000
 
-footerBackground:string=#000000
-footerBorder:string=1px solid #000000
+footerBackground:string=#000
+footerBorder:string=1px solid #000
 
 
 
