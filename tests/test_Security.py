@@ -75,7 +75,7 @@ class SecurityTestCase(unittest.TestCase):
                                self.doc1.sec_get_roles_for_userid('foo'))
         self.assertSameEntries(['foo'],
                                self.doc1.sec_get_userids())
-        self.doc1.sec_remove('foo')
+        self.doc1.sec_revoke('foo', ['Author'])
         self.assertSameEntries([],
                                self.doc1.sec_get_roles_for_userid('foo'))
         self.assertSameEntries([],
