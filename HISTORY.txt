@@ -28,6 +28,8 @@ Silva changes
 
         - Single Document import/export
 
+        - Markup character escapes (entities)
+
     Bugs Fixed
 
         - Fixed some bugs with copy/cut and paste: when an object is not
