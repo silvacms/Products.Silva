@@ -61,11 +61,12 @@ comments here (field description)
 
 <tr class="controls">
 <td colspan="2">
-<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" />
+<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c"
+  onClick="history.back()" />
 </td>
 <td colspan="2" align="right">
-<input class="button" type="submit"
-       name="submit:method" value=" Save settings " />
+<input class="button" type="submit" title="Access key: alt-s" accesskey="s"
+  name="submit:method" value=" Save settings " />
 </td>
 </tr>
 </table>

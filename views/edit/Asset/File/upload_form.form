@@ -17,13 +17,13 @@
           <display_maxwidth></display_maxwidth>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <display_width type="int">30</display_width>
+          <display_width type="int">33</display_width>
           <css_class></css_class>
           <default></default>
           <title>File</title>
           <description></description>
           <external_validator></external_validator>
-          <extra></extra>
+          <extra>title="Access key: alt-f" accesskey="fo"</extra>
         </values>
         <tales>
         </tales>

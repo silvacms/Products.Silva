@@ -63,11 +63,12 @@ comments here (field description)
 
 <tr class="controls">
 <td colspan="2">
-<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" />
+<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c"
+  onClick="history.back()" />
 </td>
 <td colspan="2" align="right">
-<input class="button" type="submit"
-       name="properties_submit:method" value=" Save image properties " />
+<input class="button" type="submit" title="Access key: alt-s" accesskey="s"
+  name="properties_submit:method" value=" Save image properties " />
 </td>
 </tr>
 </table>
@@ -134,11 +135,12 @@ comments here (field description)
 
 <tr class="controls">
 <td colspan="2">
-<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" />
+<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c"
+  onClick="history.back()" />
 </td>
 <td colspan="2" align="right">
-<input class="button" type="submit"
-       name="upload_submit:method" value=" Upload image " />
+<input class="button" type="submit" title="Access key: alt-u" accesskey="u"
+  name="upload_submit:method" value=" Upload image " />
 </td>
 </tr>
 </table>
