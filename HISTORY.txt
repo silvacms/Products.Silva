@@ -1,12 +1,15 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.19 $
+$Revision: 1.47.2.20 $
 
 Silva changes
 
   0.9.1.1
 
     Bugs Fixed
+
+        - UI bug where the cursor would behave inconsistently when
+          hoovering buttons and buttonlinks.
 
         - Membership now supports member objects that have different ids
 	  than the userids. This is useful in LDAP setups where the
