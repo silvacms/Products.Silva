@@ -1,16 +1,18 @@
 <silva xmlns="http://infrae.com/ns/silva/0.5"
+  xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
+  xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra"
   path="/root/testfolder"
   url="http://nohost/root/testfolder"
   datetime="2004-04-08T16:34:44Z">
   <folder id="testfolder">
     <metadata>
-      <set id="silva_metadata" xmlns:silva_metadata="http://infrae.com/namespaces/metadata/silva">
-        <silva_metadata:maintitle>foldertitle</silva_metadata:maintitle>
-        <silva_metadata:shorttitle>fldrttl</silva_metadata:shorttitle>
+      <set id="silva-content">
+        <silva-content:maintitle>foldertitle</silva-content:maintitle>
+        <silva-content:shorttitle>fldrttl</silva-content:shorttitle>
       </set>
-      <set id="silva_extra" xmlns:silva_extra="http://infrae.com/namespaces/metadata/silva-extra">
-        <silva_extra:lastauthor>unknown user</silva_extra:lastauthor>
-        <silva_extra:creator>test_user_1_</silva_extra:creator>            
+      <set id="silva-extra">
+        <silva-extra:lastauthor>unknown user</silva-extra:lastauthor>
+        <silva-extra:creator>test_user_1_</silva-extra:creator>            
       </set>
     </metadata>
     <content>
@@ -24,13 +26,13 @@
         </workflow>
         <content version_id="0">
           <metadata>
-            <set id="silva_metadata" xmlns:silva_metadata="http://infrae.com/namespaces/metadata/silva">
-              <silva_metadata:maintitle>linktitle</silva_metadata:maintitle>
-              <silva_metadata:shorttitle>lnkttl</silva_metadata:shorttitle>
+            <set id="silva-content">
+              <silva-content:maintitle>linktitle</silva-content:maintitle>
+              <silva-content:shorttitle>lnkttl</silva-content:shorttitle>
             </set>
-            <set id="silva_extra" xmlns:silva_extra="http://infrae.com/namespaces/metadata/silva-extra">
-              <silva_extra:lastauthor>unknown user</silva_extra:lastauthor>
-              <silva_extra:creator>test_user_2_</silva_extra:creator>            
+            <set id="silva-extra">
+              <silva-extra:lastauthor>unknown user</silva-extra:lastauthor>
+              <silva-extra:creator>test_user_2_</silva-extra:creator>            
             </set>
           </metadata>
           <url>http://www.infrae.com</url>

@@ -8,10 +8,13 @@ import SilvaTestCase
 from Products.SilvaDocument.Document import manage_addDocument
 from Products.Silva.Ghost import manage_addGhost
 from Products.Silva.GhostFolder import manage_addGhostFolder
+from Products.Silva.Folder import manage_addFolder
 from Products.Silva.silvaxml.xmlimport import SaxImportHandler, BaseHandler
-from Products.Silva.Link import manage_addLink
+from Products.Silva.Link import Link
 from Products.ParsedXML.ParsedXML import ParsedXML
-from Compatibility import getToolByName
+from Products.Silva import mangle
+from Products.Silva.Metadata import export_metadata
+from Products.SilvaMetadata.Compatibility import getToolByName
 
 NS_URI = 'http://infrae.com/ns/silva/0.5'
 
@@ -21,28 +24,29 @@ class SilvaHandler(BaseHandler):
 class FolderHandler(BaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'folder'):
-            folder_object = self._parent.manage_addFolder(
-                attrs[(None, 'id')], ''
-                )
-            self._result = folder_object
-
+            id = str(attrs[(None, 'id')])
+            self._parent.manage_addProduct['Silva'].manage_addFolder(
+                id, '')
+            self._result = getattr(self._parent, id)
+                
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
             self._result.set_title(
-                self._metadata['silva_metadata']['maintitle']
+                self._metadata['silva']['maintitle']
                 )
-            self.processMetadata()
+            self.storeMetadata()
                 
 class VersionHandler(BaseHandler):
     def getOverrides(self):
         return {
             (NS_URI, 'status'): StatusHandler,
-            (NS_URI, 'publication_date'): PublicationDateHandler,
-            (NS_URI, 'expiration_date'): ExpirationDateHandler
+            (NS_URI, 'publication_datetime'): PublicationDateTimeHandler,
+            (NS_URI, 'expiration_datetime'): ExpirationDateTimeHandler
             }
 
     def startElementNS(self, name, qname, attrs):
-        self._id = attrs[(None, 'id')]
+        if name == (NS_URI, 'version'):
+            self._id = attrs[(None, 'id')]
 
     def endElementNS(self, name, qname):
         status = self.getData('status')
@@ -90,7 +94,7 @@ class SetHandler(BaseHandler):
     def characters(self, chrs):
         if self._metadata_key is not None:
             self._parent_handler._metadata[
-                self._metadata_set][self._metadata_key] = chrs
+                 self._metadata_set][self._metadata_key] = chrs
         
     def endElementNS(self, name, qname):
         self._metadata_key = None
@@ -131,10 +135,13 @@ class LinkHandler(BaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'link'):
-            link_object = Link(attrs[(None, 'id')])
-            self._parent.addItem(link_object)
-            self._result = link_object
-            
+            id = attrs[(None, 'id')].encode('utf-8')
+            if not mangle.Id(self._parent, id).isValid():
+                return
+            object = Link(id)
+            self._parent._setObject(id, object)
+            self._result = getattr(self._parent, id)
+        
 class LinkContentHandler(BaseHandler):
     def getOverrides(self):
         return {
@@ -143,29 +150,28 @@ class LinkContentHandler(BaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'content'):
-            if attrs.has_key((None, 'version_id')):
-                id = attrs[(None, 'version_id')]
-                version = LinkContent(id)
-                self._parent.addVersion(version)
-                self._result = version
+            id = attrs[(None, 'version_id')].encode('utf-8')
+            self._parent.manage_addProduct['Silva'].manage_addLinkVersion(
+                id, '', '')
+            self._result = getattr(self._parent, id)
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
-            self._result.setUrl(self.getData('url'))
-            self._result.setTitle(
-                self._metadata['silva_metadata']['maintitle'])
+            self._result.set_url(self.getData('url'))
+            self._result.set_title(
+                self._metadata['silva']['maintitle'])
 
 class StatusHandler(BaseHandler):
     def characters(self, chrs):
         self._parent_handler.setData('status', chrs)
 
-class PublicationDateHandler(BaseHandler):
+class PublicationDateTimeHandler(BaseHandler):
     def characters(self, chrs):
-        self._parent_handler.setData('publication_date', chrs)
+        self._parent_handler.setData('publication_datetime', chrs)
 
-class ExpirationDateHandler(BaseHandler):
+class ExpirationDateTimeHandler(BaseHandler):
     def characters(self, chrs):
-        self._parent_handler.setData('expiration_date', chrs)
+        self._parent_handler.setData('expiration_datetime', chrs)
 
 class TitleHandler(BaseHandler):
     def characters(self, chrs):
@@ -177,9 +183,9 @@ class URLHandler(BaseHandler):
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_link_import(self):
-        testfolder = self.add_folder(
+        importfolder = self.add_folder(
             self.root,
-            'testfolder',
+            'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
         handler_map = {
@@ -192,13 +198,17 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             (NS_URI, 'set'): SetHandler,
             }
         source_file = open('data/test_link.xml', 'r')
-        handler = SaxImportHandler(testfolder, handler_map)
+        handler = SaxImportHandler(importfolder, handler_map)
         parser = xml.sax.make_parser()
         parser.setFeature(feature_namespaces, 1)
         parser.setContentHandler(handler)
-#        parser.parse(source_file)
+        parser.parse(source_file)
         source_file.close()
-    
+        print dir(importfolder.testfolder.link.get_editable())
+        metadata_service = getToolByName(importfolder.testfolder.link.get_editable(), 'portal_metadata')
+        binding = metadata_service.getMetadata(importfolder.testfolder.link.get_editable())
+        print binding.collection['silva-content'], dir(binding.collection['silva-content'])
+        
 if __name__ == '__main__':
     framework()
 else:
