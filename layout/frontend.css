@@ -316,15 +316,16 @@ div.header a.icon {
 
 /* definitions for batching */
 div.listingBar {
-  margin-bottom: 2em;
+  width: 60em;
+  margin: 2em 0;
 }
 
 div.listingBar .next {
-  padding-left: 5em;
+  margin-left: 5em;
 } 
 
 div.listingBar .previous {
-  padding-right: 5em;
+  margin-right: 5em;
 }
 </dtml-let>
 
