@@ -204,6 +204,67 @@ Problems when using Silva
     to reproduce this with the standard layout. Ask your site admin for
     assistance if necessary.
 
+   
+    As the source of the problem is often quite obscure and these bugs
+    are sometimes scary to the user some short description what is going
+    on:
+
+    When rendering a page (no matter if it is a public view or an edit
+    formular page) Zope basically created an HTML representation of
+    all parts of the present content and design elements, and then
+    joins these HTML-snippets into the complete HTML page. 
+     
+    As Silva content is stored internally as 16-bit Unicode string to support
+    a wide range of character inputs, the HTML representation snippets
+    of all content representations will be unicode strings by default.
+
+    However such a unicode representation cannot be send over the net
+    successfully; instead a special 8-bit encoding is needed. Silva
+    uses the UTF-8 encoding for this.
+    Earlier versions of Silva converted the snippets manually 
+    to an 8-bit encoding, and Zope had to join the 8-bit strings
+    together. Since Zope2.6.1 it is longer necessary to do the
+    conversion on the snippet level; instead one could Zope let do the
+    conversion on the complete result, which is much less error prone.
+
+    The conversion error may happen, if some of the HTML snippets to be
+    joined does not contain unicode. Actually Zope will implicitely
+    convert these snippets to unicode, assuming some standard encoding
+    for the conversion. Which encoding is chosen depends in the
+    installation; usually it is the least common denominator, i.e. the
+    ASCII character set. The bad thing about this is that the conversion
+    table only contains the 128 ASCII characters; anything outside of
+    this range cannot not be converted. (Thus the somewhat obscure
+    "ordinal not in range(128)" message.)
+
+    The final piece of the puzzle is now the source of the non-unicode
+    snippets. There are two possible sources:
+
+     - some of the old conversion code in Silva did still survive
+       and buggily converted a content HTML snipped from unicode.
+     
+     - a custom layout template contains some hard boiled strings
+       outside the ascii character range in the rendering code.
+
+    Especially in the first case the bug seems to occur quite
+    spontaneous and irreproducible to people in the latin1-world,
+    because they mostly use characters from the ASCII set, and thus
+    the bug does not appear as long as they edit inside this character
+    set, as there are no encoding problems with ASCII characters. Only
+    when inserting "special" characters (with accents, umlauts, etc) the
+    bug appears.
+    People outside the latin1-world will find these bugs much easier to
+    reproduce, if they happen. :-/
+
+    If the content object triggering the problem is no longer accessible
+    for edits via the SMI as the bug appears permanently a temporarly
+    workaround is to edit the XML representation via the ZMI and remove
+    the XML element triggering the bug manually. This will be most
+    probably the element which has been edited when the bug has been
+    triggered. Of course this is a highly unsatisfying solution, so
+    please send us a bug report as described above for we can fix the
+    problem soon.
+
 
   Exporting Silva objects in XML format via the ZMI fails:
   "TypeError: object has read-only attributes"
