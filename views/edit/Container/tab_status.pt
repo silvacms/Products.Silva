@@ -342,7 +342,7 @@ function toggleSelect() {
 &nbsp;
 <input class="warningbutton" type="submit" name="tab_status_close:method" value="Close" title="Close published items" />
 &nbsp;
-<input class="button" type="submit" name="tab_status_new_version:method" value="Create new versions" title="Create new versions of published docs" />
+<input class="button" type="submit" name="tab_status_new_version:method" value="New versions" title="Create new versions of published docs" />
 </td>
 
 <td align="right" colspan="3" nowrap="1">
@@ -360,7 +360,7 @@ function toggleSelect() {
 &nbsp;
 <input class="button" type="submit" name="tab_status_revoke:method" value="Revoke approval" title="Revoke approval of new versions" />
 &nbsp;
-<input class="button" type="submit" name="tab_status_new_version:method" value="Create new versions" title="Create new versions of published docs" />
+<input class="button" type="submit" name="tab_status_new_version:method" value="New versions" title="Create new versions of published docs" />
 </td>
 <td align="right" colspan="3" nowrap="1">
 <input tal:replace="nothing" class="button" type="submit" name="tab_status_edit_metadata:method" value="Edit metadata..." title="Change metadata in a bulk operation" />
