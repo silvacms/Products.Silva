@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 from ISilvaObject import ISilvaObject
 from IPublishable import IPublishable
 
@@ -24,3 +24,11 @@ class IContent(ISilvaObject, IPublishable):
         the folder.
         """
         pass
+
+    def get_indexables():
+        """Return a list of ParsedXML documents (that can be indexed
+        in various ways). May return the empty list if there is nothing
+        to index.
+        """
+        pass
+    

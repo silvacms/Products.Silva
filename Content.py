@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -37,4 +37,8 @@ class Content(SilvaObject, Publishable):
         """Get content URL."""
         return self.absolute_url()
 
+    security.declarePrivate('get_indexables')
+    def get_indexables(self):
+        return []
+    
 InitializeClass(Content)
