@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27.8.1.6.2 $
+# $Revision: 1.27.8.1.6.3 $
 
 # Python
 import os
@@ -70,6 +70,34 @@ class File(Asset):
         """
         """
         return self._file.content_type
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_download_url')
+    def get_download_url(self):
+        """Obtain the public URL the public could use to download this file
+        """
+        return self.absolute_url()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_download_link')
+    def get_download_link(
+        self, title_attr='', name_attr='', class_attr='', style_attr=''):
+        """Obtain a complete HTML hyperlink by which the public can download
+        this file. FIXME: Is this method really needed?
+        """
+        attrs = []
+        if title_attr:
+            attrs.append('title="%s"' % title_attr)
+        if name_attr:
+            attrs.append('name="%s"' % name_attr)
+        if class_attr:
+            attrs.append('class="%s"' % class_attr)
+        if style_attr:
+            attrs.append('style="%"' % style_attr)
+        attrs = ' '.join(attrs)
+        link_text = self.get_title() or self.id
+        return '<a %s href="%s">%s</a>' % (
+            attrs, self.get_download_url(), link_text)
 
     # Overide SilvaObject.to_xml().
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'to_xml')
