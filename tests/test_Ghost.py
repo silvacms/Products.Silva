@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
+# $Revision: 1.31.20.1 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -98,6 +98,10 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
             ghost.view())
 
+        # since both the ghost and the doc are published, is_published()
+        # should return true
+        self.assert_(ghost.is_published())
+
         # create new version of ghost
         ghost.create_copy()
         ghost.get_editable().set_haunted_url('/root/doc2')
@@ -136,6 +140,10 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
             ghost.preview())
         self.assertEquals("This 'ghost' document is broken. Please inform the"
             " site administrator.", ghost.view())
+
+        # since the version isn't published is_published() should return
+        # false
+        self.assert_(not ghost.is_published())
         
     def test_broken_link1(self):
         # add a ghost
@@ -237,7 +245,29 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(metadata_gf.get('silva-content', 'maintitle'),
             'snafu')
 
-        
+        gfpub.haunt()
+
+        # the publication's 'subdoc2' document is not published, so the ghost 
+        # folder should say it's not published either no matter what the
+        # status of the contained ghost that points to the doc
+        self.assert_(not gfpub.is_published())
+
+        # the ghost's documents are published on creation, so if we publish
+        # the haunted document is_published() should return true
+        doc = self.subdoc2
+        doc.set_unapproved_version_publication_datetime(DateTime())
+        doc.approve_version()
+
+        self.assert_(gfpub.is_published())
+
+        # now if we close the haunted document, is_published() should return
+        # false again
+        ghostdoc = gfpub.subdoc2
+        ghostdoc.close_version()
+
+        self.assert_(not gfpub.is_published())
+
+
     def test_ghostfolder_topub(self):
         gfpub = self.addObject(self.root, 'GhostFolder', 'gf1',
                                content_url='/root/publication5')
