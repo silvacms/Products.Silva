@@ -14,7 +14,7 @@
   _______ for subscreens that need an obvious link up to parent (import, export, etc.) _______
 </tal:block>
 <metal:block define-macro="parent">
-  <table class="listing"
+  <table class="listing"                    tal:replace="nothing"
     style="margin-bottom:0;">
     <thead>
       <tr tal:replace="nothing">
