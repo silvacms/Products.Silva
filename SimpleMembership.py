@@ -1,16 +1,23 @@
-import string, smtplib
-from IMembership import IMember, IMemberService, IMemberMessageService
+# python
+import sys, string, smtplib
+
+# zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+import Globals, zLOG
+
+# silva
+from IMembership import IMember, IMemberService, IMemberMessageService
 from Membership import cloneMember
-import Globals
 import SilvaPermissions
 from helpers import add_and_edit
 
+# other products
 from Products.Formulator.Form import ZMIForm
 from Products.Formulator.Errors import FormValidationError
 from Products.Formulator import StandardFields
+
 
 class SimpleMember(SimpleItem.SimpleItem):
     __implements__ = IMember
@@ -262,25 +269,55 @@ class EmailMessageService(SimpleItem.SimpleItem):
         for to_memberid, message_dict in self._v_messages.items():
             to_email = get_member(to_memberid).email()
             if to_email is None:
-                if self._debug:
-                    print "messages: no email for: %s" % to_memberid
+                self._debug_log("no email for: %s" % to_memberid)
                 continue
             lines = []
+            # XXX usually all messages have the same subject yet,
+            # but this can be assumed here per se.
+            common_subject=None
+            reply_to = {}
             for from_memberid, messages in message_dict.items():
                 if self._debug:
-                    print "From memberid:", from_memberid
+                    self._debug_log("From memberid: %s " % from_memberid)
                 from_email = get_member(from_memberid).email()
-                # XXX what if no from_email?
-                lines.append("Message from: %s %s" %
-                             (from_memberid, from_email))
+                if from_email is not None:
+                    reply_to[from_email] = 1
+                    lines.append("Message from: %s (email: %s)" %
+                                 (from_memberid, from_email))
+                else:
+                    lines.append("Message from: %s (no email available)" %
+                                 from_memberid)
                 for subject, message in messages:
                     lines.append(subject)
                     lines.append('')
                     lines.append(message)
                     lines.append('')
+                    if common_subject is None:
+                        common_subject = subject
+                    else:
+                        if common_subject != subject:
+                            # XXX this is very stupid, but what else?
+                            # maybe leave empty?
+                            common_subject = 'Notification on status change'
+
             text = '\n'.join(lines)
-            self._send_email(to_email, text)
+            header = {}
+            if common_subject is not None:
+                header['Subject'] = common_subject
+            if reply_to:
+                header['Reply-To'] = ', '.join(reply_to.keys())
+                # XXX set from header ?
+            self._send_email(to_email, text, header=header)
+
+        # XXX if above raises exception: mail queue is not flushed
+        # as this line is not reached. bug or feature ?
         self._v_messages = {}
+
+
+    def _debug_log(self, message, details=''):
+        """ simple helper for logging """
+        if self._debug:
+            zLOG.LOG('Silva messages',zLOG.BLATHER, message, details)
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
@@ -317,15 +354,38 @@ class EmailMessageService(SimpleItem.SimpleItem):
     def send_email_enabled(self):
         return self._send_email_enabled
     
-    def _send_email(self, toaddr, msg):
-        msg = 'From: %s\r\nTo: %s\r\n\r\n%s' % (self._fromaddr, toaddr, msg)
-        if self._debug:
-            print "messages:"
-            print msg
+    def _send_email(self, toaddr, msg, header={}):
+        header['To'] = toaddr
+        if not header.has_key('From'):
+            header['From'] = self._fromaddr
+        if not header.has_key('Sender'):
+            header['Sender'] = self._fromaddr
+
+        msg_lines = [ '%s: %s' % (k,v) for k,v in header.items() ]
+        msg_lines.append('')
+        msg_lines.append(msg)
+        msg = '\r\n'.join(msg_lines)
+        self._debug_log(msg)
         if self._send_email_enabled:
-            server = smtplib.SMTP(self._host, self._port)
-            server.sendmail(self._fromaddr, [toaddr], msg)
-            server.quit()
+            try:
+                server = smtplib.SMTP(self._host, self._port)
+                failures = server.sendmail(self._fromaddr, [toaddr], msg)
+                server.quit()
+                if failures:
+                    # next line raises KeyError if toaddr is no key
+                    # in failures -- however this should not happen
+                    zLOG.LOG('Silva service_messages',zLOG.PROBLEM,
+                             'could not send mail to %s' % toaddr,
+                             details=('error[%s]: %s' % failures[toaddr]) )
+                             
+            except smtplib.SMTPException:
+                # XXX seems the documentation failes here
+                # if e.g. connection is refused, this raises another
+                # kind of exception but smtplib.SMTPException
+                zLOG.LOG('Silva service_messages',zLOG.PROBLEM,
+                         'sending mail failed', sys.exc_info())
+                # XXX how to notify user? do it the hard way for now:
+                raise
 
 Globals.InitializeClass(EmailMessageService)
 
