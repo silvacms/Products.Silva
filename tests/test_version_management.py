@@ -120,6 +120,26 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(id, '10')
         self.assertRaises(VersioningError, self.adapter.deleteVersion, '10')
 
+    def test_deleteVersions(self):
+        self.adapter.deleteVersions(['0', '1'])
+        self.assert_('0' not in self.adapter.getVersionIds())
+        self.assert_('1' not in self.adapter.getVersionIds())
+
+        # test a delete of a set of documents of which one can't be
+        # deleted (published)
+        self.doc.set_unapproved_version_publication_datetime(DateTime())
+        self.doc.approve_version()
+        published_id = self.adapter.getPublishedVersion().id
+        self.assertEquals(published_id, '10')
+
+        ids = self.adapter.getVersionIds()
+        self.assert_('10' in ids)
+        self.assert_('9' in ids)
+        self.adapter.deleteVersions(['9', '10'])
+        ids = self.adapter.getVersionIds()
+        self.assert_('10' in ids)
+        self.assert_('9' not in ids)
+
     def test_deleteOldVersions(self):
         # there should be 10 versions that *can* be deleted
         # first try to remove the last 2, so keep 8
