@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.66 $
+# $Revision: 1.67 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -8,7 +8,8 @@ from DateTime import DateTime
 from Globals import InitializeClass
 
 # Silva interfaces
-from IVersionedContent import IVersionedContent
+from IVersionedContent import IVersionedContent, ICatalogedVersionedContent
+from IVersion import IVersion, ICatalogedVersion
 
 # Silva
 import SilvaPermissions
@@ -39,7 +40,7 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    __implements__ = IVersionedContent
+    __implements__ = IVersionedContent, ICatalogedVersionedContent
 
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = CatalogedVersionedContent.manage_options
@@ -249,6 +250,7 @@ class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
     meta_type = "Silva Document Version"
+    __implements__ = IVersion, ICatalogedVersion
 
 InitializeClass(DocumentVersion)
 
@@ -294,8 +296,8 @@ def xml_import_handler(object, node):
             version = getattr(newdoc, '0')
             childxml = writeStream(child).getvalue().encode('utf8')
             version.content.manage_edit(childxml) # expects utf8
-        elif hasattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252')) \
+        elif hasattr(newdoc, 'set_%s' % child.nodeName.encode('utf8')) \
                 and child.nodeValue:
-            getattr(newdoc, 'set_%s' % child.nodeName.encode('cp1252'))(
-                child.nodeValue.encode('utf-8'))
+            getattr(newdoc, 'set_%s' % child.nodeName.encode('utf8'))(
+                child.nodeValue.encode('utf8'))
 

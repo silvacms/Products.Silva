@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 from IVersioning import IVersioning
 from IContent import IContent
@@ -20,3 +20,16 @@ class IVersionedContent(IVersioning, IContent):
         operation will fail.
         """
         pass
+
+class ICatalogedVersionedContent(IVersionedContent):
+    """Cataloged version of VersionedContent
+    """
+    
+    def _index_version(version):
+        """Index this version"""
+
+    def _reindex_version(version):
+        """Reindex this version"""
+
+    def _unindex_version(version):
+        """Unindex this version"""

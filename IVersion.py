@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import Interface
         
 class IVersion(Interface.Base):
@@ -31,3 +31,6 @@ class IVersion(Interface.Base):
     def expiration_datetime():
         """Returns the version's expiration datetime
         """
+
+class ICatalogedVersion(IVersion):
+    """Cataloged version of IVersion"""
