@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 from Products.Silva import icon
 from Products.Silva.install import add_fss_directory_view
@@ -13,10 +13,9 @@ class LayoutRegistry:
 
     # MANIPULATORS
 
-    def register(
-        self, name, description, module, template_directory):
-
-        self._layouts[name] = Layout(name, description, module, template_directory)
+    def register(self, name, description, module, template_directory):
+        self._layouts[name] = Layout(
+            name, description, module, template_directory)
 
     def install(self, name, root):
         self._layouts[name].install(root)
@@ -50,7 +49,8 @@ class Layout:
         return hasattr(root, self.directory)
 
     def install(self, root):
-        add_fss_directory_view(root, self.directory, self.module, self.directory)
+        add_fss_directory_view(
+            root, self.directory, self.module, self.directory)
 
     def uninstall(self, root):
         root.manage_delObjects([self.directory])
@@ -58,7 +58,8 @@ class Layout:
     def setup(self, root, folder):
         template = getattr(root.service_resources.Layouts, self.directory)
         items = template.objectValues()
-        folder_path = '/'.join(folder.getPhysicalPath()[len(root.getPhysicalPath()):])
+        folder_path = '/'.join(
+            folder.getPhysicalPath()[len(root.getPhysicalPath()):])
         for item in items:
             item.manage_doCustomize(folder_path, root=root)
 
