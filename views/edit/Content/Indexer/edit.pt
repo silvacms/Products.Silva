@@ -80,7 +80,7 @@
 
       </td>
       <tal:block replace="nothing">
-        _____________________ right column _____________________
+        _____________________ right column _____________________ 
       </tal:block>
       <td class="right">        
         &nbsp;
