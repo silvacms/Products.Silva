@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.60 2004/12/02 10:23:55 walco Exp $
+# $Id: Image.py,v 1.61 2004/12/13 13:46:58 jw Exp $
 
 # Python
 import re, string
@@ -724,7 +724,7 @@ class ImageStorageConverter:
             data = open(image.get_fsname(), 'rb')
         else:
             raise RuntimeError, 'Invalid asset at %s' % asset.absolute_url()
-            ct = image.getContentType()
+        ct = image.getContentType()
         asset._image_factory(id, data, ct)
 
 # Register Image factory for image mimetypes

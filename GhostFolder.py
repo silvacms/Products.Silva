@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.35 2004/12/03 18:57:40 guido Exp $
+# $Id: GhostFolder.py,v 1.36 2004/12/13 13:46:58 jw Exp $
 
 from __future__ import nested_scopes
 
@@ -389,7 +389,38 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     def _factory(self, container, id, content_url):
         return container.manage_addProduct['Silva'].manage_addGhostFolder(id,
             content_url)
-       
+
+    default_catalog = 'service_catalog'
+
+    def manage_afterAdd(self, item, container):
+        GhostFolder.inheritedAttribute('manage_afterAdd')(self, item, container)
+        self.index_object()
+
+    def manage_beforeDelete(self, item, container):
+        GhostFolder.inheritedAttribute('manage_beforeDelete')(self, item, container)
+        self.unindex_object()
+    
+    def index_object(self):
+        """Index"""
+        catalog = getattr(self, 'service_catalog', None)
+        if catalog is not None:
+            catalog.catalog_object(self, self.getPath())
+
+    def unindex_object(self):
+        """Unindex"""
+        catalog = getattr(self, 'service_catalog', None)
+        if catalog is not None:
+            catalog.uncatalog_object(self.getPath())
+
+    def reindex_object(self):
+        """Reindex."""
+        catalog = getattr(self, 'service_catalog', None)
+        if catalog is None:
+            return 
+        path = self.getPath()
+        catalog.uncatalog_object(path)
+        catalog.catalog_object(self, path)
+            
 InitializeClass(GhostFolder)
 
     
