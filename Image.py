@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.55 2004/09/30 08:20:57 jw Exp $
+# $Id: Image.py,v 1.56 2004/09/30 13:46:43 jw Exp $
 
 # Python
 import re, string
@@ -24,7 +24,7 @@ from Asset import Asset
 from Products.Silva import mangle
 from Products.Silva import upgrade
 # misc
-from helpers import add_and_edit
+from helpers import add_and_edit, fix_content_type_header
 
 try:
     import PIL.Image

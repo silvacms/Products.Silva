@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_icon.py,v 1.5 2004/07/21 11:40:41 jw Exp $
+# $Id: test_icon.py,v 1.6 2004/09/30 13:46:43 jw Exp $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -21,8 +21,8 @@ class RegistryTest(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
         fields = R()
-        fields.filename = 'afilename'
-        fields.headers = {'content-type': 'application/mytype'}
+        fields.filename = 'afilename.pdf'
+        fields.headers = {}
         fields.file = StringIO("a nice pdf ;)")
         upload = FileUpload(fields)
         self.silva.manage_addProduct['Silva'].manage_addFile('fileasset',
@@ -37,14 +37,14 @@ class RegistryTest(SilvaTestCase.SilvaTestCase):
     
     def test_registry(self):
         self.assertEquals(self.silva.fileasset.get_mime_type(),
-            'application/mytype')
+            'application/pdf')
         r = _IconRegistry()
         
         r.registerIcon(('meta_type', 'Silva Root'),
             'www/members.png', Root.__dict__)
         r.registerIcon(('mime_type', 'application/octet-stream'),
             'www/silvafile.png', Root.__dict__)
-        r.registerIcon(('mime_type', 'application/mytype'),
+        r.registerIcon(('mime_type', 'application/pdf'),
             'www/user.png', Root.__dict__)
             
         icon = r.getIcon(self.silva)
