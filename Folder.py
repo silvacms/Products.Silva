@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.124 $
+# $Revision: 1.125 $
 # Zope
 from OFS import Folder, SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -798,7 +798,14 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
         if IContainer.isImplementedBy(self):
             default = self.get_default()
             if default is not None:
-                l.append((indent, default))
+                # XXX have to access the view layer here which I don't like.
+                # But in fact I think this whole method is view code.
+                view_registry = self.service_view_registry
+                view = view_registry.get_view('public', default.meta_type)
+                # if there is *NO* visibility info, the document *IS* visible
+                visible = getattr(view, 'visible', lambda x: 1)
+                if visible(default):
+                    l.append((indent, default))
 
         for item in self.get_ordered_publishables():
             l.append((indent, item))
