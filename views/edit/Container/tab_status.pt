@@ -395,7 +395,7 @@
         <input class="button"
           name="tab_status_approve:method"
           type="submit"
-          value="approve"
+          value="open to public"
           title="approve or publish new versions: alt-o"
           accesskey="o"
           tal:condition="python: approveables or rejectables"

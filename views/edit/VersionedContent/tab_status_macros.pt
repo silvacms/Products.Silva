@@ -278,9 +278,9 @@ Empty indicates no expiration.
   colspan="2">
 <input class="button"
   type="submit"
-  value="approve content"
-  title="access key: alt-a"
-  accesskey="a"
+  value="open to public"
+  title="access key: alt-o"
+  accesskey="o"
 />
 </td> 
 </tr>
