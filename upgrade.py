@@ -563,11 +563,11 @@ def replace_object_title_092(obj):
     title = obj.aq_inner._title
     short_title = obj.getProperty('short_title')
     if not short_title:
-        short_title = getattr(obj, 'short_title', None)
-    if short_title is not None and type(short_title) != type(u''):
-        short_title = unicode(short_title, 'cp1252', 'replace')
+        short_title = getattr(obj.aq_inner, 'short_title', None)
         if short_title is not None:
             del obj.short_title
+    if short_title is not None and type(short_title) != type(u''):
+        short_title = unicode(short_title, 'cp1252', 'replace')
     #print 'Title:', title.encode('ascii', 'replace')
     #print 'Plain title attribute:', obj.aq_inner.title
     #print dir(obj.aq_inner)
