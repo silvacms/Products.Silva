@@ -646,9 +646,9 @@ input.warning {
 
 input.cancel {
     font-weight: &dtml-buttonWeight;;
-  color : #dddddd; 
-  background : #676767;
-  border : 1px solid #cccccc;
+  color : &dtml-shade88;; 
+  background : #666668;
+  border : 1px solid &dtml-shade76;;
     margin: 0.2em 0.2em 0.1em 0.2em;
     padding: &dtml-contextButtonPadding;;
     cursor: pointer;

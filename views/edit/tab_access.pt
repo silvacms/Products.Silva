@@ -115,7 +115,7 @@
                 tal:condition="not:members">
                 <td colspan="3">
                   <i>
-                    No users with (local) roles
+                    No users with (local) roles.
                   </i>
                 </td>
               </tr>
@@ -245,6 +245,12 @@
           <!-- Clipboard -->
           <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
             <metal:block fill-slot="clipboard_actions">
+              <input class="button"
+                style="float:right;"
+                name="access_assign_to_user:method"
+                title="Assign a local role to selected user(s)."
+                type="submit"
+                value="Assign" />
               <select name="assign_role">
                 <option value="None">
                   Select role...
@@ -257,11 +263,6 @@
                 </option>
               </select>
               &nbsp;
-              <input class="button"
-                name="access_assign_to_user:method"
-                title="Assign a local role to selected user(s)."
-                type="submit"
-                value="Assign" />
             </metal:block>
           </metal:block>          
         </td>
@@ -283,7 +284,7 @@
                   </b>
                 </p>
                 <p>
-                  You are seeing this message, because the Groups Silva 
+                  You are seeing this message because the Silva Groups  
                   extension is installed but there's currently no Groups 
                   Service available. This service should have
                   <code>
@@ -437,6 +438,12 @@
         <td class="right">        
           <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
           <metal:block fill-slot="listing_actions">
+            <input class="button"
+              style="float:right;"
+              name="access_assign_to_group:method"
+              title="Assign selected role to selected group(s)."
+              type="submit"
+              value="Assign" />
             <select name="assign_role">
               <option value="None">
                 Select role...
@@ -450,11 +457,6 @@
               </option>
             </select>
             &nbsp;
-            <input class="button"
-              name="access_assign_to_group:method"
-              title="Assign selected role to selected group(s)."
-              type="submit"
-              value="Assign" />
           </metal:block>
         </metal:block>        
         </td>

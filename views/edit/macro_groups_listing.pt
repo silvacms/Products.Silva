@@ -53,7 +53,7 @@
         method="POST">
         <h2>
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Group')" />
-          Available groups:
+          Available groups
         </h2>
 
         <table class="listing">
@@ -77,7 +77,7 @@
                   title="Groups administration... - alt-g"
                   href="tab_access_groups"
                   tal:condition="python:model_is_container and group_service">
-                  Groups administration
+                  Groups administration...
                 </a>
               </metal:block>
             </td>
@@ -94,6 +94,10 @@
                   <option disabled="disabled"
                     value="None">
                     Select group(s)...
+                  </option>
+                  <option disabled="disabled"
+                    value="None">
+                    Ctrl-click for multi-select...
                   </option>
                   <option value="group"
                     tal:repeat="group groups"

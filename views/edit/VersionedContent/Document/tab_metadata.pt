@@ -12,8 +12,7 @@
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 
-<tal:block tal:omit-tag=""
-  tal:define="global fields python:view.tab_metadata_form.get_fields()" />
+<tal:define define="global fields python:view.tab_metadata_form.get_fields()" />
 
 <form class="focus-box" method="POST" name="form" action="tab_metadata_submit">
 <table class="listing">
@@ -22,7 +21,7 @@
     <td class="top location" colspan="3">
     <h2>
       <img tal:replace="structure python:view.render_icon(model)" />
-      Metadata for <span class="document-title" tal:content="structure string:&amp;#xab;${model/get_title_or_id_html}&amp;#xbb;">title here</span>
+      Metadata for <span tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title</span>
     </h2>
     </td>
   </tr>
