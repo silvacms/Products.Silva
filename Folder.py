@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.81 $
+# $Revision: 1.82 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -689,18 +689,23 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             if IContainer.isImplementedBy(object):
                 object.update()
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'xml_import')
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
+        'xml_import')
     def xml_import(self, xml):
         """Import XML"""
         dom = createDOMDocument(xml)
-        # since some exceptions raised are strings or so, we're going to convert them to 'Exception' here
-        try:
-            xml_import_helper(self, dom.childNodes[0])
-        except Exception:
-            raise
-        except:
-            obj, info, tb = exc_info()
-            raise Exception, info, tb
+        import_root = dom.documentElement.firstChild
+        while import_root:
+            # since some exceptions raised are strings or so, we're going to      
+            # convert them to 'Exception' here
+            try:
+                xml_import_helper(self, import_root)
+            except Exception:
+                raise
+            except:
+                obj, info, tb = exc_info()
+                raise Exception, info, tb
+            import_root = import_root.nextSibling
 
     security.declarePublic('url_encode')
     def url_encode(self, string):

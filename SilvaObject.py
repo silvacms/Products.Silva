@@ -1,6 +1,3 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
-# See also LICENSE.txt
-# $Revision: 1.55 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -46,6 +43,10 @@ class SilvaObject(Security):
 
     # whether the object should be shown in the addables-pulldown
     _is_allowed_in_publication = 1
+
+    # locateion of the xml schema
+    _xml_namespace = "http://www.infrae.com/xml"
+    _xml_schema = "silva-0.9.1.xsd"
 
     def __init__(self, id, title):
         self.id = id
@@ -236,10 +237,15 @@ class SilvaObject(Security):
         context.f = StringIO()
         context.with_sub_publications = with_sub_publications
         context.last_version = not not last_version
-
+        w = context.f.write
         # construct xml and return UTF8-encoded string
-        context.f.write(u'<?xml version="1.0" encoding="UTF-8" ?>\n')
+        w(u'<?xml version="1.0" encoding="UTF-8" ?>\n')
+        w(u'<silva xmlns="%s" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'xsi:schemaLocation="%s %s">' % (self._xml_namespace,
+                self._xml_namespace, self._xml_schema))
         self.to_xml(context)
+        w(u'</silva>')
         result = context.f.getvalue()
         return result.encode('UTF-8') 
     
