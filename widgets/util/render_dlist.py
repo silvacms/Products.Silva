@@ -14,7 +14,7 @@ if pairs:
     else:
         content += ' compact="compact">\n'
     for title, item in pairs:
-        content += '<dt>%s</dt>\n<dd>%s</dd>\n' % (title, item)
+        content += '<dt>%s</dt>\n  <dd>%s</dd>\n' % (title, item)
     content += '</dl>'
 else:
     content = ''
