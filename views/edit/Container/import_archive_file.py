@@ -7,7 +7,9 @@ if not request.has_key('importfile') or not request['importfile']:
         message_type='error', message='Select a file for upload')
 
 feedback = model.archive_file_import(
-    request.get('importfile'), request.get('title', ''))
+    request.get('importfile'), 
+    request.get('title', ''),
+    request.get('recreate_dirs', ''))
 
 try:
     succeeded, failed = feedback

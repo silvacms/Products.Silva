@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.45 $
+# $Revision: 1.46 $
 
 # Python
 from StringIO import StringIO
@@ -62,57 +62,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         which do not have cache yet.
         """
         self._cached_data = {}
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'create_copy')
-    def create_copy(self):
-        """Create new version of public version.
-        """
-        if self.get_next_version() is not None:
-            return    
-        # get id of public version to copy
-        version_id_to_copy = self.get_public_version()
-        # if there is no public version, get id of last closed version
-        # (which should always be there)
-        if version_id_to_copy is None:
-            version_id_to_copy = self.get_last_closed_version()
-            # there is no old version left!
-            if version_id_to_copy is None:
-                # FIXME: could create new empty version..
-                raise  VersioningError, "Should never happen!"
-        # copy published version
-        new_version_id = str(self._version_count)
-        self._version_count = self._version_count + 1
-        # FIXME: this only works if versions are stored in a folder as
-        # objects; factory function for VersionedContent objects should
-        # create an initial version with name '0', too.
-        # only testable in unit tests after severe hacking..
-        self.manage_clone(getattr(self, version_id_to_copy),
-                          new_version_id, self.REQUEST)
-        self.create_version(new_version_id, None, None)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'revert_to_previous')
-    def revert_to_previous(self):
-        """Create a new version of public version, throw away the current one
-        """
-        # get the id of the version to revert to
-        version_id_to_copy = (self.get_public_version() or
-                              self.get_last_closed_version())
-        if version_id_to_copy is None:
-            raise VersioningError, "Should never happen!"
-        # get the id of the current version
-        current_version_id = self.get_unapproved_version()
-        if current_version_id is None:
-            raise VersioningError, "No unapproved version available"
-        self._unindex_version((current_version_id,))
-        # delete the current version
-        self.manage_delObjects([current_version_id])
-        # and copy the previous using the current id
-        self.manage_clone(getattr(self, version_id_to_copy),
-                          current_version_id, self.REQUEST)
-        self._index_version((current_version_id,))
-
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

@@ -218,6 +218,24 @@
         </td>
       </tr>
 
+      <tr class="even">
+        <td class="align-right">
+          <span i18n:translate="recreate_subdirs">
+            subdirectories
+          </span>
+        </td>
+        <td>
+          <input type="checkbox"
+            name="recreate_dirs"
+            checked="checked"
+          />
+        </td>
+        <td i18n:translate="recreate_subdirs_with_silva_folders">
+          Recreate the subdirectory structure of the zip file by adding
+          Silva Folders.
+        </td>
+      </tr>
+
       <tr class="controls">
         <td class="align-right"
           colspan="3">
