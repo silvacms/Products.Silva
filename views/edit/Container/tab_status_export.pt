@@ -16,7 +16,7 @@
 <div class="margins">
 <h3><a href="tab_status" title="Up to Publish tab">Publish
   <img tal:attributes="src string:${silva_root}/globals/up_gray.gif" width="16" height="11" border="0" alt="Up to top of Edit tab" /></a></h3>
-<h2 class="worksheet">Export options for <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span></h2>
+<h2 class="worksheet">Export options for <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_html}&#xbb;">title here</span></h2>
 
 <div class="worksheet borders top bottom left right">
 

@@ -16,7 +16,7 @@ p = datasource.parameters()
 if p:
     for name, (type, default, description) in p.items():
         if not default:
-            return "SQL Data Source &laquo;%s&raquo; needs parameter &laquo;%s&raquo; to have a default value." % (title, name)
+            return "SQL Data Source &#xab;%s&#xbb; needs parameter &#xab;%s&#xbb; to have a default value." % (title, name)
         parameters[name] = default
 
 data = datasource.get_data(parameters)

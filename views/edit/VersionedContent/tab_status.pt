@@ -7,7 +7,7 @@
 
 <h2><img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-  Status of <span class="document-title" tal:content="structure string:&laquo;${model/get_title_or_id_html}&raquo;">title here</span>
+  Status of <span class="document-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
 </h2>
 
 <tal:block define="

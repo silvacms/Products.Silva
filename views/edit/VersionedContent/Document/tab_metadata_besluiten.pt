@@ -5,7 +5,7 @@
   metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
-<h2>Metadata for <span class="document-title" tal:content="structure string:&raquo;${model/get_title_html}&laquo;">title here</span></h2>
+<h2>Metadata for <span class="document-title" tal:content="structure string:&#xbb;${model/get_title_html}&#xab;">title here</span></h2>
 
 <init tal:omit-tag=""
   tal:define="global fields python:view.tab_metadata_besluiten_form.get_fields()" />

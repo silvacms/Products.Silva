@@ -7,7 +7,7 @@
 ##parameters=input
 ##title=
 ##
-left_quote = '&laquo;'
-right_quote = '&raquo;'
+left_quote = '&#xab;'
+right_quote = '&#xbb;'
 
 return '%s%s%s' % (left_quote, input, right_quote)

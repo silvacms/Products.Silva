@@ -16,8 +16,8 @@
       &nbsp; Access Settings for
       <span class="folder-title"
         tal:content="
-          structure string:&laquo;
-          ${model/get_title_or_id_html}&raquo;">
+          structure string:&#xab;
+          ${model/get_title_or_id_html}&#xbb;">
         title
       </span>
     </h2>
@@ -416,8 +416,8 @@
       &nbsp; Access Restrictions for
       <span class="folder-title"
         tal:content="
-          structure string:&laquo;
-          ${model/get_title_or_id_html}&raquo;">
+          structure string:&#xab;
+          ${model/get_title_or_id_html}&#xbb;">
         title
       </span>
     </h2>
