@@ -31,23 +31,22 @@
   </td>
   <td><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
   <td>
-    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    <span class="tablehead3"><span tal:replace="model/id">id</span></span>
-  </td>
-  <td align="right">
     <tal:block condition="not:silva_permissions/ChangeSilvaContent">
     &nbsp;
     </tal:block>
-    <tal:block condition="silva_permissions/ChangeSilvaContent">
-      <input class="button" type="submit" name="add_object:method" value=" New:" title="Add a new item: alt-n" accesskey="n" />
+    <tal:block condition="silva_permissions/ChangeSilvaContent">&#8201;
+      <input class="button" type="submit" name="add_object:method" value=" New..." title="Add a new item: alt-n" accesskey="n" />
+      <label for="meta_type" title="Access key: alt-s" accesskey="s"> </label>
       <select name="meta_type" id="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();"  title="Select a new item: alt-s">
-        <option value="None">Select...</option>
+        <option value="None">Add:</option>
         <tal:block tal:repeat="addable addables">
         <option tal:attributes="value addable/name" tal:content="addable/name"></option>
         </tal:block>
       </select>
-      <label for="meta_type" title="Access key: alt-s" accesskey="s">&nbsp;</label>
+    </tal:block>
+  </td>
+  <td align="right">
+    <tal:block condition="silva_permissions/ChangeSilvaContent">
       <input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data: alt-i" accesskey="i" />&nbsp;
     </tal:block>
   </td>
