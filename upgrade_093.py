@@ -57,9 +57,6 @@ class MovedDocument:
             'service_table_viewer'])
         return root
 
-upgrade.registry.registerUpgrader(MovedDocument(), '0.9.3', 'Silva Root')
-
-            
             
 class UpgradeAccessRestriction:
     """upgrade access restrction
@@ -304,6 +301,17 @@ class Reindex:
             obj.reindex_object()
         return obj
 
+class GroupsService:
+
+    __implements__ = IUpgrader
+
+    def upgrade(self, obj):
+        assert obj.meta_type == 'Groups Service'
+        if not hasattr(obj, '_ip_groups'):
+            obj._ip_groups = {}
+        if not hasattr(obj, '_iprange_to_group'):
+            obj._iprange_to_group = {}
+
 def initialize():
     home = package_home(globals())
     xml_home = os.path.join(home, 'doc')
@@ -321,4 +329,8 @@ def initialize():
     upgrade.registry.registerUpgrader(UpgradeAccessRestriction(), '0.9.3',
         upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(Reindex(), '0.9.3', upgrade.AnyMetaType)
+    upgrade.registry.registerUpgrader(MovedDocument(), '0.9.3', 'Silva Root')
+    upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
+        'Groups Service')
 
+            
