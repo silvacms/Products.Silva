@@ -173,8 +173,10 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         if hasattr(self, '_allow_subscription'):
             self._allow_authentication_requests = self._allow_subscription
             del self._allow_subscription
+        if not hasattr(self, '_allow_authentication_requests'):
+            self._allow_authentication_requests = 0
         return self._allow_authentication_requests
-
+        
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'allow_subscription')
     allow_subscription = allow_authentication_requests
