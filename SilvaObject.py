@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.90 2003/08/01 15:54:53 faassen Exp $
+# $Id: SilvaObject.py,v 1.91 2003/08/11 00:41:59 clemens Exp $
 
 # python
 from types import StringType
@@ -16,7 +16,7 @@ from Security import Security
 from ViewCode import ViewCode
 
 from interfaces import ISilvaObject, IContent, IPublishable, IAsset
-from interfaces import IContent, IContainer, IPublication
+from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent
 
 class XMLExportContext:
@@ -270,6 +270,11 @@ class SilvaObject(Security, ViewCode):
                               'implements_publication')
     def implements_publication(self):
         return IPublication.isImplementedBy(self)
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'implements_root')
+    def implements_root(self):
+        return IRoot.isImplementedBy(self)
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_versioning')

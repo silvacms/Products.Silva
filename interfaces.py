@@ -287,6 +287,9 @@ class ISilvaObject(ISecurity):
     def implements_publication():
         """This object implements IPublication."""
 
+    def implements_root():
+        """This object implements IRoot."""
+
     def implements_versioned_content():
         """This object implements IVersionedContent."""
 
