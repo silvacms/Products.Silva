@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: cleanup.py,v 1.4 2004/09/30 12:24:59 guido Exp $
+# $Id: cleanup.py,v 1.5 2004/09/30 13:55:52 guido Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
@@ -16,6 +16,7 @@ from types import ListType
 
 module_security = ModuleSecurityInfo('Products.Silva.adapters.cleanup')
 
+# when calling 'cleanup_all_old' this will have another element, 'last_closed'
 statistics_template = {
     'total': 0,
     'total_versions': 0,
@@ -23,7 +24,7 @@ statistics_template = {
     'threshold': 0,
     'max_versions': 0,
     'starttime': DateTime(),
-    'endtime': DateTime(),    
+    'endtime': DateTime(),
     }
     
 threshold = 500 # commit sub transaction after having touched this many objects
@@ -36,8 +37,18 @@ class CleanupAdapter(adapter.Adapter):
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                                 'cleanup')
     def cleanup(self):
+        """Removes all closed versions but the one that's 'last_closed'"""
         pass
 
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                                'cleanup_all_old')
+    def cleanup_all_old(self):
+        """Removes all closed versions, if possible
+        
+            this leaves the last closed alone if it's the only version of
+            the VersionedContent object, if not it removes that too
+        """
+    
 Globals.InitializeClass(CleanupAdapter)
 
 class VersionedContentCleanupAdapter(CleanupAdapter):
@@ -50,7 +61,7 @@ class VersionedContentCleanupAdapter(CleanupAdapter):
         
         pvs = self.context._previous_versions        
         if pvs is None:
-            return
+            return statistics
                 
         removable_versions = pvs[:-1] # get older versions
         self._previous_versions = pvs[-1:] # keep the last one
@@ -76,11 +87,41 @@ class VersionedContentCleanupAdapter(CleanupAdapter):
         statistics['endtime'] = DateTime()            
         return statistics
 
+    def cleanup_all_old(self, statistics=None):
+        stats = self.cleanup(statistics)
+        if not stats.has_key('last_closed'):
+            stats['last_closed'] = 0
+        if self.context.get_previewable():
+            # we can remove last_closed too
+            lc = self.context.get_last_closed()
+            if lc is not None:
+                print ('removing last closed version of', 
+                        '\n'.join(self.context.getPhysicalPath()))
+                self.context.manage_delObjects([lc.id])
+                # any other closed versions should have been removed
+                # by self.cleanup() so we can safely remove the whole
+                # list of previous versions
+                self.context._previous_versions = None
+                stats['last_closed'] += 1
+        return stats
+
 class ContainerCleanupAdapter(CleanupAdapter):
     """ Delete all versions from the current location downward
     """
     
-    def cleanup(self, statistics=None):
+    def cleanup(self, statistics=None, all_old=False):
+        """remove all but last closed versions"""
+        return self._cleanup(statistics)
+
+    def cleanup_all_old(self, statistics=None):
+        """remove all old versions, if possible
+
+            leaves the last closed version in tact if it's the only contained
+            version
+        """
+        return self._cleanup(statistics, 'cleanup_all_old')
+    
+    def _cleanup(self, statistics, remove_method='cleanup'):
         if statistics is None:
             statistics = statistics_template.copy()
         
@@ -92,11 +133,11 @@ class ContainerCleanupAdapter(CleanupAdapter):
                     get_transaction().commit(1)
                     self.context._p_jar.cacheGC()
                     statistics['threshold'] = 0
-                adapter.cleanup(statistics)
+                getattr(adapter, remove_method)(statistics)
                 
         statistics['endtime'] = DateTime()
         return statistics
-    
+
 module_security.declareProtected(SilvaPermissions.ViewManagementScreens, 
                                     'getCleanupVersionsAdapter')    
 def getCleanupVersionsAdapter(context):
