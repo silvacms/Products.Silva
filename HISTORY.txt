@@ -48,6 +48,10 @@ Silva changes
 
     Bugs Fixed
 
+        - (SQL)Datasources can now only be placed by ChiefEditors and up
+          (using a Datasource in a document is not affected by this), and
+          (SQL)Datasources now work with unicode.
+
         - The widgets cache would be cleared correctly upon Document
           deletion. This could result in inconsistent Document editor states
           if this Document has an id earlier held by a Document now deleted.
