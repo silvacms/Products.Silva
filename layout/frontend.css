@@ -113,6 +113,7 @@ td.even table td {
 
 /* __________________________________________________ silva list styles _____ */
 
+/* override plone image bullets */
 ul {
     list-style-image: none; 
 }
@@ -128,7 +129,11 @@ ul.square {
 ul.circle {
   list-style-type : circle;
 } 
-  
+
+ul.nobullet { 	 
+   list-style-type: none; 	 
+ }
+
 ol.decimal {
   list-style-type : decimal;
 } 
