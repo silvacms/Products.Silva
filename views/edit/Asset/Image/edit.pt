@@ -20,12 +20,6 @@
     <h3 i18n:translate="image_info">
       <img tal:replace="structure icon" /> image info
     </h3>
-    <img style="margin-top:0.3em;"
-      tal:condition="not: model/cropped"
-      tal:attributes="src string:${model/absolute_url}?thumbnail" />
-    <img style="margin-top:0.3em;"
-      tal:condition="model/cropped"
-      tal:attributes="src string:${model/absolute_url}" />
     <tal:block tal:condition="model/canScale">
       <p tal:condition="not: model/hires_image">
         <span class="subhead">format</span><br />
@@ -75,7 +69,10 @@
         </tal:condition>
       </p>
       <p>
-        <span class="subhead">original</span><br />
+      <span class="subhead">original</span><br />
+        <img style="margin-top:0.3em;"
+          tal:condition="model/thumbnail_image"
+          tal:attributes="src string:${model/absolute_url}?thumbnail" /><br />
         <a href="" class="underline"
           title="see the original image"
           accesskey="v"

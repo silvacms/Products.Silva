@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.14 2004/04/16 09:29:59 kitblake Exp $
+# $Id: Image.py,v 1.50.4.1.6.15 2004/04/22 18:21:00 roman Exp $
 
 # Python
 import re, string 
@@ -310,12 +310,7 @@ class Image(Asset):
             # the bbox should be a square
             height = width
         
-        # the users gave us the upper left corner, but he wants the middle
-        # of the cropping box
-        width = width/2
-        height = height/2
-        
-        return [x - width, y - width, x + width, y + height]
+        return [x, y, x + width, y + height]
     
     security.declareProtected(SilvaPermissions.View, 'canScale')
     def canScale(self):

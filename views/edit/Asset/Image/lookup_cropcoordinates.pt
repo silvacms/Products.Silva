@@ -12,41 +12,46 @@
 
   <metal:block use-macro="here/macro_no_tabs/macros/master">
     <metal:block fill-slot="extension_css">
-      <style type="text/css">
+  <style type="text/css">
+    #draggable {
+      background-color: white;
+      position: absolute;
+      z-index: 1;
+      border: 1px dashed black;
+      -moz-opacity: 0.5;
+    }
 
-        #draggable {
-          position: absolute;
-          border: 1px dotted black;
-          z-index: 1;
-          -moz-opacity: 0.6;
-        }
+    #dragbar table {
+      border: 1px solid black;
+    }
+    
+    #dragbar {
+      background-color: #91989b;
+      border: 1px solid black;
+      color: white;
+      text-align: center;
+      cursor: move;
+      z-index: 5;
+      -moz-opacity: 1;
+    }
 
-        #dragbar {
-          background-color: #91989b;
-          border: 1px solid black;
-          color: white;
-          text-align: center;
-          cursor: default;
-          z-index: 5;
-          -moz-opacity: 1;
-        }
+    #dragbar:active {
+      background-color: red;
+    }
 
-        #dragbar:active {
-          background-color: red;
-        }
-
-        #handle {
-          cursor: se-resize;
-          border-right: 2px solid black;
-          border-bottom: 2px solid black;
-        }
-        
-        #handle:active {
-          border-right: 2px solid red;
-          border-bottom: 2px solid red;
-        }
-        
-      </style>
+    #handle {
+      cursor: se-resize;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      z-index: 5;
+    }
+    
+    #handle:active {
+      border-right: 2px solid red;
+      border-bottom: 2px solid red;
+    }
+    
+  </style>
     </metal:block>
     <metal:block fill-slot="main"
       tal:define="model python:request.model;">
@@ -66,24 +71,73 @@
         //]]>
       </script>
       <div style="position: absolute; top: 0px; left: 0px;">
-        <div id="draggable" style="position: absolute; width: 150px; height: 100px; top: 10px; left: 10px">
-          <table class="foobar" width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-            <tbody>
-            <tr><td colspan="2" valign="top"><div id="dragbar" style="height: 20px;">Drag the window</div></td></tr>
-            <tr><td colspan="2" id="additional_draggable">&nbsp;</td></tr>
+        <ul style="position: absolute;">
+          <li>
+            <a href="#"
+              onclick="setDraggableSize(75, 75)"
+              title="Resize to 75x75 pixels">
+              set window to 75x75 Pixel
+            </a>
+          </li>
+          <li>
+            <a href="#" 
+              onclick="setDraggableSize(100, 100)" 
+              title="Resize to 100x100 pixels">
+              set window to 100x100
+            </a>
+          </li>
+          <li>
+            <a href="#" 
+              onclick="setDraggableSize(250, 250)" 
+              title="Resize to 250x250 pixels">
+              set to 250x250
+            </a>
+          </li>
+          <li>
+            <input 
+            type="button" 
+            onclick="opener.insertCropCoords(cropper.width(),
+            cropper.height(), cropper.left(), cropper.top(), self)"
+            value="set coordinates"
+            />
+          </li>
+        </ul>
+      <div id="draggable" 
+        style="position: absolute; 
+          min-width: 25px;
+          width: 150px; 
+          min-height: 25px; 
+          height: 100px;
+          top: 10px; 
+          left: 10px">
+          <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+            <thead>
             <tr>
-              <td width="100%">&nbsp;</td>
-              <td height="1%" valign="bottom"><div style="width: 10px; height: 10px;" id="handle">&nbsp;</div></td>
+              <th colspan="2" id="dragbar" 
+                style="height: 20px; line-height: 20px;" 
+                onclick="this.blur()">
+                Drag
+              </th>
+          </tr>
+            <tr><td colspan="2" id="additional_draggable">&nbsp;</td></tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td colspan="2" height="100%" valign="top">
+                &nbsp;
+              </td>
             </tr>
-            </tbody>
+            <tr>
+              <td>&nbsp;</td>
+              <td width="14" height="14" style="line-height: 10px; padding: 0px">
+                <div id="handle" style="width: 10px; height: 10px;">&nbsp;</div></td>
+            </tr>
+          </tbody>
           </table>
         </div>
         
         <img id="image" tal:attributes="src string:${model/absolute_url}/hires_image;
         alt model/title_or_id" /> 
-        <!-- 
-        onclick="getCoordinates()" id="image" style="cursor: crosshair"/>-->
-        
       </div>
 
       <script type="text/javascript">

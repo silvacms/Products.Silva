@@ -17,20 +17,20 @@
       <title>Default</title>
       <fields>
 
-        <field><id>size</id> <type>ListField</type>
+        <field><id>size</id> <type>StringField</type>
         <values>
           <alternate_name></alternate_name>
-          <css_class></css_class>
-          <default type="list">[]</default>
+          <css_class>store</css_class>
+          <default></default>
           <description>Crop the image with the specified dimensions.</description>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">12</display_width>
           <enabled type="int">1</enabled>
+          <end></end>
+          <extra>id="size"</extra>
           <external_validator></external_validator>
-          <extra></extra>
-          <extra_item></extra_item>
           <hidden type="int">0</hidden>
-          <items type="list">[('25x25', '25x25'), ('50x50', '50x50'), ('75x75', '75x75'), ('100x100', '100x100')]</items>
           <required type="int">1</required>
-          <size type="int">1</size>
           <title>dimensions</title>
           <unicode type="int">0</unicode>
           <view_separator></view_separator>
@@ -46,7 +46,7 @@
       <field><id>x</id> <type>IntegerField</type>
         <values>
           <alternate_name></alternate_name>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default>0</default>
           <description>The x coordinate of the center of the area to crop.</description>
           <display_maxwidth></display_maxwidth>
@@ -73,7 +73,7 @@
       <field><id>y</id> <type>IntegerField</type>
         <values>
           <alternate_name></alternate_name>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default>0</default>
           <description>The y coordinate for cropping.</description>
           <display_maxwidth></display_maxwidth>
