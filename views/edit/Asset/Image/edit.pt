@@ -74,13 +74,6 @@
           />
         </tal:condition>
       </p>
-      <p tal:condition="model/hires_image" 
-        tal:define="orientation model/getOrientation">
-        <span class="subhead" i18n:translate="image_orientation">image orientation</span><br />
-        <span tal:content="orientation" 
-          i18n:attributes="orientation"
-          tal:attributes="class string:${orientation} orientation">Square</span>
-      </p>
       <p>
         <span class="subhead">original</span><br />
         <a href="" class="underline"
