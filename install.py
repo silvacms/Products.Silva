@@ -1,17 +1,48 @@
 """Install for Silva Core
 """
 
-from Products.FileSystemSite.DirectoryView import manage_addDirectoryView, minimalpath
 from Globals import package_home
 import os
 
-# we can't guess how FileSystemSite cuts pathes so we probe it
-base = os.path.dirname(__file__)
-base = minimalpath(base)
+from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
+from Products.FileSystemSite.utils import minimalpath, expandpath
 
-def fss_register_dir(name, obj, *args):
-    """ register FSS-DirectoryViews for silva-subdirectories"""
-    path = os.path.join(base, *args)
+def add_fss_directory_view(obj, name, base, *args):
+    """ register a FSS-DirectoryView  for silva-subdirectories.
+    
+    obj         where the new directory-object will be accessible
+    name        id of the new zope object
+    base        dirname(base) is taken as base for the following relative path
+    *args       directory names which form the relative path to our content directory
+
+    This method tries to provide a sane interface independent of FSS
+    path munging.
+
+    """
+    from os.path import isdir, dirname, join, samefile
+
+    base = dirname(base)
+
+    # --- sanity checks ---
+    if not isdir(base):
+        raise ValueError, "base %s not an existing directory" % base
+    abs_path = join(base, *args)
+    if not isdir(abs_path):
+        raise ValueError, "path %s not a directory" % abs_path
+    # --- end sanity checks ---
+
+    # we probe FSS to get the correct 'short path' to use
+    fss_base = minimalpath(base)
+    path = join(fss_base, *args)
+
+    # -- sanity check --
+    exp_path = expandpath(path)
+    if not samefile(exp_path, abs_path):
+        raise ValueError, "detected FSS error, real path: %s, FSS path: %s" % (
+            abs_path, exp_path )
+    # -- end sanity check --
+
+    # FSS should eat the path now and work correctly with it
     manage_addDirectoryView(obj, path, name)
 
 def installFromScratch(root):
@@ -27,7 +58,7 @@ def installFromScratch(root):
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
     # create the core views from filesystem
-    fss_register_dir('Silva', root.service_views, 'views')
+    add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     # also register views
     registerViews(root.service_view_registry)
     # also re-configure security (XXX should this happen?)
@@ -65,9 +96,9 @@ def configureCoreFolders(root):
     """A bunch of core directory views.
     """
     # images, stylesheets, etc
-    fss_register_dir('globals', root, 'globals')
+    add_fss_directory_view(root, 'globals', __file__, 'globals')
     # commonly used python scripts (XXX probably should go away)
-    fss_register_dir('service_utils', root, 'service_utils')
+    add_fss_directory_view(root, 'service_utils', __file__, 'service_utils')
 
 def configureViews(root):
     """The view infrastructure for Silva.
@@ -244,7 +275,7 @@ def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'
     """
     # create the core widgets from the filesystem
-    fss_register_dir('service_widgets', root, 'widgets')
+    add_fss_directory_view(root, 'service_widgets', __file__, 'widgets')
 
     # create the editor service
     root.manage_addProduct['XMLWidgets'].manage_addEditorService(
