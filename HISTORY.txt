@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.0.4 
+
+    Bugs fixed
+
+      - The xmlimport didn't handle the case where a text node was handled
+        spread over multiple characters() events.
+
   1.0.3
 
     Bugs fixed
