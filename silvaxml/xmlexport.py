@@ -161,7 +161,7 @@ class BaseXMLSource:
 class SilvaBaseXMLSource(BaseXMLSource):
     """Base class to declare the Silva namespace.
     """
-    ns_default = 'http://infrae.com/ns/silva/0.5'
+    ns_default = 'http://infrae.com/ns/silva'
 
 class VersionXMLSource(SilvaBaseXMLSource):
     """Base class for Versions. May have its own methods in the future.
