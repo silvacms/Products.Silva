@@ -21,11 +21,11 @@
 <tal:condition condition="notice">
   <div class="feedback"
     style="margin-bottom:0;"
-    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'">
+    tal:attributes="class python: message_type == 'feedback' and 'feedback' or 'alert'">
     <span tal:replace="structure notice">
       message
     </span>
-    <tal:block tal:condition="python:type == 'feedback'">
+    <tal:block tal:condition="python: message_type == 'feedback'">
       &nbsp;&nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
     </tal:block>
   </div>
