@@ -4,7 +4,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
 # Author: Jan-Wijbrand Kolman (jw@infrae.com)
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 #
 # Issues:
 #  * Testing, testing, testing. It would be rather horrible to 
@@ -63,6 +63,10 @@ NO_INDENT_ON = [
 FIRST_ATTR_ON_NEWLINE = 0
 CLOSE_ELEMENT_ON_NEWLINE = 1
 PUT_CLASS_ATTR_ON_TOP = 1
+SPLIT_ATTR_VALUES_ON = [
+    'define',
+    'attributes',
+    ]
 TAL_ORDER = [
     'define',
     'condition',
@@ -74,9 +78,10 @@ TAL_ORDER = [
     ]
 
 ### Tricks ###
-# extend list to contain both namespaced and
-# non-namespaced TAL attributes
+# extend lists to contain both namespaced and
+# non-namespaced TALs
 TAL_ORDER += ['tal:%s' % item for item in TAL_ORDER]
+SPLIT_ATTR_VALUES_ON += ['tal:%s' % item for item in TAL_ORDER]
 
 
 class PrettyZPT(saxutils.DefaultHandler):
@@ -175,7 +180,7 @@ class PrettyZPT(saxutils.DefaultHandler):
         if attrs.getLength() == 1:
             key = attrs.keys()[0]
             value = attrs.values()[0]
-            self._write(' %s="%s"' % (key, self._attributeValues(value)))
+            self._write(' %s="%s"' % (key, self._attributeValues(name, key, value)))
         elif attrs.getLength() > 1:
             html_keys = []
             tal_keys = []
@@ -199,23 +204,27 @@ class PrettyZPT(saxutils.DefaultHandler):
                 self._write(NEWLINE)
             else:
                 key = keys[0]
-                value = self._attributeValues(attrs[key])
+                value = self._attributeValues(name, key, attrs[key])
                 self._write(' %s="%s"' % (key, value))
                 keys = keys[1:]
 
             for key in keys:
-                value = self._attributeValues(attrs[key])
+                value = self._attributeValues(name, key, attrs[key])
                 self._write(NEWLINE + indent + '%s="%s"' % (key, value))
 
     def printComment(self, content):
         self._write(NEWLINE + self._indent() + '<!-- ' + content + ' -->')
 
-    def _attributeValues(self, value):
+    def _attributeValues(self, name, attr, value):
         multi_indent = self._indent() + (INDENTCHAR * INDENTDEPTH) * 2
-        # split on ';' (in case of e.g. tal:define and tal:attributes), and
-        # strip whitespace from each element
-        # FIXME: what about javascript?
-        values = map(lambda s: s.strip(), value.split(';'))
+
+        if attr in SPLIT_ATTR_VALUES_ON:
+            # split on ';' (in case of e.g. tal:define and tal:attributes), and
+            # strip whitespace from each element
+            # FIXME: what about javascript?
+            values = map(lambda s: s.strip(), value.split(';'))
+        else:
+            values = [value,]
         # split on whitespace, and join again with one space. This gets rid 
         # of newlines and manual indentation
         values = map(lambda s: ' '.join(s.split()) , values)
