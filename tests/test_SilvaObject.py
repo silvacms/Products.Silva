@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.15.2.1 $
 import unittest
 import Zope
 #import ZODB
@@ -8,6 +8,7 @@ import Zope
 from Testing import makerequest
 # access "internal" class to fake request authentification
 from AccessControl.User import SimpleUser
+from AccessControl.SecurityManagement import newSecurityManager
 #from Products.Silva import Document, Folder, Root #, Ghost, Publication
 
 # Awful hack: add an authenticated user into the request.
@@ -15,11 +16,14 @@ def hack_create_user(root):
     if not hasattr(root, 'acl_users'):
         root.manage_addUserFolder()
     # maybe add some testing roles here ?
-    root.acl_users.userFolderAddUser(name='TestUser', password='TestUserPasswd', roles=(), domains=())
-    
+    root.acl_users.userFolderAddUser(name='TestUser', password='TestUserPasswd',
+                                     roles=(), domains=())
+    root.manage_addLocalRoles('TestUser', ['Manager'])
     REQUEST = root.REQUEST
+    user = root.acl_users.getUser('TestUser')
+    user = user.__of__(root.acl_users)
+    newSecurityManager(None, user)
     REQUEST.AUTHENTICATED_USER=root.acl_users.getUser('TestUser')
-
     
 
 class SilvaObjectTestCase(unittest.TestCase):
