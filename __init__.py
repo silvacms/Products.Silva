@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.95 $
+# $Revision: 1.96 $
 
 import Metadata
 import Folder, Root
@@ -78,7 +78,7 @@ def initialize(context):
         EmailMessageService.EmailMessageService,
         constructors = (EmailMessageService.manage_addEmailMessageServiceForm,
                         EmailMessageService.manage_addEmailMessageService),
-        icon = "www/message_service.gif"
+        icon = "www/message_service.png"
         )
 
     context.registerClass(

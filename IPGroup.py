@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: IPGroup.py,v 1.1 2003/08/29 12:42:00 zagy Exp $
+# $Id: IPGroup.py,v 1.2 2003/09/21 08:26:56 kitblake Exp $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -14,7 +14,7 @@ from helpers import add_and_edit
 
 from interfaces import ISilvaObject
 
-#icon = "www/ipgroup.png"
+icon = "www/ip_group.png"
 
 class IPGroup(SilvaObject, SimpleItem):
     """Silva IP Group"""
