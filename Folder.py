@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.134 $
+# $Revision: 1.135 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -464,9 +464,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     def _ghost_paste(self, paste_id, item, REQUEST):
         if canBeHaunted(item):
             ghost = ghostFactory(self, paste_id, item)
-            #if IContainer.isImplementedBy(item):
-            #for object in item.get_assets():
-            #    ghost._ghost_paste(object.id, object, REQUEST)
+            if ghost.meta_type == 'Silva Ghost Folder':
+                ghost.haunt()
         elif IGhost.isImplementedBy(item):
             content_url = item.get_content_url()
             item._factory(self, paste_id, content_url)
