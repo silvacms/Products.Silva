@@ -1,0 +1,81 @@
+<html metal:define-macro="master"
+  tal:define="
+    global silva_root here/silva_root;
+    view here;
+    model request/model">
+<head>
+<title tal:content="structure python:model.get_title_html()">Title</title>
+<link rel="shortcut icon" href="globals/favicon.ico" tal:attributes="href here/globals/favicon.ico/absolute_url" />
+<link rel="stylesheet" href="globals/base.css" tal:attributes="href here/globals/base.css/absolute_url" />
+<link rel="stylesheet" href="globals/silva.css" tal:attributes="href here/globals/silva.css/absolute_url" />
+<link rel="stylesheet" href="frontend.css" tal:attributes="href here/frontend.css/absolute_url"
+  tal:condition="python:template.id == 'tab_preview'" />
+<style type="text/css" media="all"
+  tal:content="string:
+    @import url(${here/globals/extra.css/absolute_url});
+    ">  
+</style>
+<script tal:replace="nothing"> _______ application specific stylesheet extension _______ </script>
+<link rel="stylesheet" href="ext_stylesheet"
+  tal:condition="python:hasattr(here, 'extension_style_url')" 
+    tal:attributes="href python:here.extension_style_url()" />
+
+<script type="text/javascript"
+  tal:condition="not:exists:template/focus_field">
+<!--
+function focusCursor() {
+  if (document && document.focusbox && document.focusbox.data) {
+    document.focusbox.data.focus();
+  }
+}
+// -->
+</script> 
+<script type="text/javascript"
+  tal:condition="exists:template/focus_field">
+<!--
+function focusCursor() {
+  if (document && document.focusbox && document.focusbox.field_object_id) {
+    document.focusbox.field_object_id.focus();
+  }
+}
+// -->
+</script> 
+<style tal:replace="structure view/local_style">if</style>
+<script type="text/javascript" language="JavaScript"
+  tal:condition="python: template.id == 'tab_edit_bxe'"
+  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url">
+</script>
+<script type="text/javascript" language="JavaScript"
+  tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
+  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url">
+</script>
+</head>
+<body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
+  tal:attributes="onload python: test(template.id == 'tab_edit_bxe',
+                                 'BX_load(\'%s/bxe/bxe_config.xml\')' % (model.absolute_url()),
+                                 test(view.has_focus_box(template.id), 
+                                 'focusCursor()', 
+                                 nothing))">
+    <tal:block replace="nothing">Previous onload tests facilitate Bitflux editor support</tal:block>
+<span class="halfline"
+  tal:condition="python:template.id != 'tab_preview'"><br /></span>
+<!-- __________________________ start feedback _________________________ -->
+<tal:block
+  define="type options/message_type | request/message_type | nothing;
+          msg options/message | request/message | nothing"
+  condition="type">
+<div class="feedback" tal:condition="python:type == 'feedback'">
+<span tal:replace="structure msg">message</span>&nbsp;&nbsp;<span tal:replace="string:(${here/service_utils/backend_now_to_str})">datetime</span>
+</div>
+<div class="feedback" tal:condition="python:type == 'error'">
+<span class="error" tal:content="structure msg">message</span>
+</div>
+</tal:block>
+<!-- __________________________ end feedback __________________________ -->
+<!-- ____________________________ main start ___________________________ -->
+<div metal:define-slot="main">
+Here the local content (a.k.a. "model") is inserted (this text will be replaced).
+</div>
+<!-- ____________________________ main ends ____________________________ -->
+</body>
+</html>

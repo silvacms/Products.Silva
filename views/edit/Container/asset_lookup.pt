@@ -1,0 +1,165 @@
+<!-- ___________________________ start index_html ______________________ -->
+<html metal:use-macro="here/macro_no_tabs/macros/master">
+<metal:block fill-slot="main">
+<!-- ___________________________ start index_html/slot main ____________________________ -->
+<tal:block define="
+  global objects python:model.get_tree();
+  global silva_permissions here/get_silva_permissions" />
+<div class="margins">
+  <h2><img src="%s" width="16" height="16" alt="%s" 
+        tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    Contents of <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
+  </h2>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+  <td class="divider" width="3" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+</tr>
+<span tal:replace="nothing"> ______________ framing table header ______________ </span>
+<tr class="topcontrols" valign="bottom"> 
+  <!-- top row of complete table with sidebar -->
+  <td width="32%" nowrap="nowrap">
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><a href="treelink" title="Up to containing publication"
+      tal:condition="python:model != model.get_root()"
+      tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/asset_lookup'"><img width="16" height="16" border="0" alt="Up to containing Publication" hspace="3"
+      tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%silva_root, '%s/globals/up_tree_gray.gif'%silva_root)" /></a>
+    <span class="back3">Publication</span>
+    <a href="../../edit/asset_lookup" title="Up one level"
+      tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
+  </td>
+  <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
+  <td>
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s" 
+      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    <span class="back3"><span tal:replace="model/id">id</span>
+  </td>
+  <td align="right">
+  </td>
+</tr>
+<span tal:replace="nothing"> _____________________ sidebar _____________________ </span>
+<tr class="focus" valign="top">
+  <td>
+    <!-- inner table for sidebar -->
+<table cellspacing="0" cellpadding="1" border="0" width="100%">
+<span tal:replace="nothing"> ______________ publication header ______________ </span>
+<tr>
+  <th align="left"
+    tal:attributes="class python:test(model == model.get_publication(), 'focus-light', nothing)">
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" />
+    <a href="top" title="Up to publication top" 
+      tal:define="url python:model.get_publication().absolute_url()"
+      tal:attributes="href string:${url}/edit/asset_lookup"><img tal:attributes="src string:${silva_root}/globals/silvapublication.gif" width="16" height="16" border="0" alt="Silva Publication" /></a>
+      <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
+        tal:attributes="href string:${url}/edit/asset_lookup"><span tal:replace="structure python:model.get_publication().get_title_html()">Publication top</span></a>
+  </th>
+</tr>
+
+<span tal:replace="nothing"> ______________ pub folders ______________ </span>
+<tal:block repeat="indent_item python:model.get_publication().get_container_tree()">
+  <tr tal:define="item python:indent_item[1]; indent python:indent_item[0]; 
+    oddrow repeat/indent_item/odd">
+    <td class="highlight"
+      tal:attributes="class python:test(model == item, 'focus-light', 'focus')">
+      <img width="5" height="5" tal:attributes="width python:indent * 16 + 5; src string:${silva_root}/globals/pixel.gif" />
+      <span no-class="position-relative"
+        no-tal:attributes="style python:'left:%s%%' % str(indent*3)">
+        <a href="folder" title="Manage folder"
+          tal:attributes="href string:${item/absolute_url}/edit/asset_lookup"><img src="%s" width="16" height="16" alt="%s" 
+          tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
+          <a class="blacklink" href="title" title="id"
+            tal:attributes="href string:${item/absolute_url}/edit/asset_lookup;
+              title string:id: ${item/id}">
+            <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_html()">no title</span>
+          </a>
+      </span>
+    </td>
+  </tr>
+</tal:block>
+</table>
+</td>
+<td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+<script language="JavaScript"><!--
+  function setReference() {
+    doc = document.all ? document.all : document;
+    l = doc.mumble_form.mumble.length;
+    for (i=0; i<l; i++) {
+      if (doc.mumble_form.mumble[i].checked) {
+        reference = doc.mumble_form.mumble[i];
+        break;
+      }
+    }    
+    opener.insertAssetReference(reference.value);
+  }
+//--></script>
+<td class="focus-cycle" colspan="2">
+  <!-- inner table with folder view -->
+<form name="mumble_form" id="mumble_form">
+<table cellspacing="0" cellpadding="3" border="0" width="100%"
+ tal:define="global assets python:model.get_assets()">
+<tr>
+  <th align="left" colspan="10"
+    tal:condition="python:len(assets)">
+    Assets
+  </th>
+  <th align="left"
+    tal:condition="python:not len(assets)">
+    No Assets in this folder
+  </th>
+</tr>
+<tal:block repeat="asset assets">
+<tal:block define="oddrow repeat/asset/odd">
+<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+  <td>
+    &nbsp;
+  </td>
+<span tal:replace="nothing"> _______ icon cell _______ </span>
+  <td nowrap="1">    
+    <input type="radio" name="mumble" value=""
+      tal:attributes="value string:((${asset/get_title_or_id_html}|${asset/absolute_url}))" />
+    <a href="asset" title="View this asset"
+      tal:attributes="href string:${asset/absolute_url}"><img tal:replace="structure python:view.render_icon(asset.meta_type)" /></a>
+  </td>
+<span tal:replace="nothing"> _______ id + title cell _______ </span>
+  <td> 
+    <a class="blacklink" href="asset" title="View this asset"
+      tal:attributes="href string:${asset/absolute_url}">
+      <span tal:replace="asset/id">id</span>
+    </a>
+  </td>
+<span tal:replace="nothing"> _______ title cell _______ </span>
+  <td>
+    <a class="blacklink" title="Preview"
+      tal:attributes="href string:${asset/absolute_url}/edit/tab_preview">
+      <span tal:replace="structure asset/get_title_html"
+        tal:condition="python:asset.get_title_html() != ''">title</span>
+    </a>
+  </td>
+<span tal:replace="nothing"> _______ modification date cell _______ </span>
+  <td>
+    <span tal:condition="python:asset.get_modification_datetime() != None"
+      tal:replace="structure python:view.service_utils.backend_short_datetime_to_str(asset.get_modification_datetime())">21 oct 2001 18:18</span>
+    <span tal:condition="python:asset.get_modification_datetime() == None" tal:omit-tag="">&nbsp;</span>
+  </td>
+<span tal:replace="nothing"> _______ author cell _______ </span>
+  <td tal:content="python:asset.sec_get_last_author_info()['cn']">
+    author name
+  </td>
+  <td>
+    &nbsp;
+  </td>
+</tr>
+</tal:block>
+</tal:block>
+<tr class="controls"
+  tal:condition="python:len(assets)">
+  <td colspan="8" align="right">
+      <input type="button" class="button" name="place" value="Place Reference" title="Get a reference to this asset" 
+        onclick="setReference();return false;" />
+  </td>
+</tr>
+</table>
+</form>
+</div>
+<!-- ___________________________ end index_html/slot main ____________________________ -->
+</metal:block>
+</html>
+<!-- ___________________________ end index_html ______________________________________ -->

@@ -1,0 +1,32 @@
+<!-- Asset Reference Lookup Window Opener
+lookupWindow = null;
+focusedTextArea = null;
+currentSelection = null;
+// Called from getAssetReference
+function openAssetLookupWindow(url_to_open) {
+  // Do the opening
+  width = 560;
+  height = 280;
+  aspects = 'toolbar=yes,status=yes,scrollbars=yes,width='+width+',height='+height
+  lookupWindow = window.open(
+    url_to_open, 'AssetLookupWindow', aspects);
+  lookupWindow.focus();
+}
+// Called from "pagetemplate"
+function getAssetReference(url_to_open) {
+  // Store reference to focused text area
+  doc = document.all ? document.all : document;
+  focusedTextArea = doc.focusbox.data;
+  // Open LookupWindow
+  openAssetLookupWindow(url_to_open);
+}
+// Called from "asset lookup window"
+function insertAssetReference(append_text) {
+  // Append [append_text] to previously focused text area
+  // FIXME: We'd like to make it work with selections in
+  // the textarea.
+  focusedTextArea.value = focusedTextArea.value + ' ' + append_text;
+  // Close LookupWindow (?)
+  lookupWindow.close();
+}
+//-->
