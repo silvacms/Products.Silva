@@ -75,10 +75,9 @@ for ref in refs:
         obj.set_unapproved_version_expiration_datetime(expiration_datetime)
 
 
-    message = _('''\
-Request for approval via a bulk request in the publish screen of /${url}
-(automatically generated message)''') 
-    message.set_mapping({'url': model.absolute_url(1)})
+    message = ('Request for approval via a bulk request in the publish '
+                'screen of /%s (automatically generated message)'
+                ) % model.absolute_url(1)
     obj.request_version_approval(message)    
     approved_ids.append(get_name(obj))
 

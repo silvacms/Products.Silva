@@ -32,10 +32,9 @@ for ref in refs:
         not_approved.append((get_name(obj), _('no approval requested')))
         not_approved_refs.append(ref)
         continue
-    message = _('''\
-Request for approval was withdrawn via a bulk operation in the publish screen of /${url}
-(automatically generated message)''')
-    message.set_mapping({'url': model.absolute_url(1)})
+    message = ('Request for approval was withdrawn via a bulk operation in '
+                'the publish screen of /%s (automatically generated message)'
+                ) % model.absolute_url(1)
     obj.withdraw_version_approval(message)
     approved_ids.append(obj.id)
 

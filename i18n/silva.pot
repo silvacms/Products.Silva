@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue Nov 30 11:55:14 2004\n"
+"POT-Creation-Date: Tue Nov 30 12:13:24 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -2540,17 +2540,11 @@ msgstr ""
 msgid "no approval requested"
 msgstr ""
 
-#: /views/edit/Container/tab_status_reject.py:44
-msgid ""
-"Request for approval was rejected via a bulk operation in the publish screen of /${url}\n"
-"(automatically generated message)"
-msgstr ""
-
-#: /views/edit/Container/tab_status_reject.py:53
+#: /views/edit/Container/tab_status_reject.py:52
 msgid "Rejected request for approval for: ${ids}"
 msgstr ""
 
-#: /views/edit/Container/tab_status_reject.py:58
+#: /views/edit/Container/tab_status_reject.py:57
 msgid "Not rejected: ${ids}"
 msgstr ""
 
@@ -2564,12 +2558,6 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_request_approval.py:68
 msgid "no publication time set"
-msgstr ""
-
-#: /views/edit/Container/tab_status_request_approval.py:78
-msgid ""
-"Request for approval via a bulk request in the publish screen of /${url}\n"
-"(automatically generated message)"
 msgstr ""
 
 #: /views/edit/Container/tab_status_revoke.py:15
@@ -2606,17 +2594,11 @@ msgstr ""
 msgid "Nothing was selected, so no approval was withdrawn."
 msgstr ""
 
-#: /views/edit/Container/tab_status_withdraw.py:35
-msgid ""
-"Request for approval was withdrawn via a bulk operation in the publish screen of /${url}\n"
-"(automatically generated message)"
-msgstr ""
-
-#: /views/edit/Container/tab_status_withdraw.py:44
+#: /views/edit/Container/tab_status_withdraw.py:43
 msgid "Withdrawn request for approval for: ${list}"
 msgstr ""
 
-#: /views/edit/Container/tab_status_withdraw.py:49
+#: /views/edit/Container/tab_status_withdraw.py:48
 msgid "Not withdrawn: ${list}"
 msgstr ""
 
