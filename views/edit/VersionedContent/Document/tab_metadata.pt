@@ -153,8 +153,7 @@ comments here (field description)
   </td>
   <td>&nbsp;</td>
   <td colspan="2">
-    <a href="http://www.eur.nl/bread/crumb/trail" tal:attributes="href model/absolute_url" tal:content="model/absolute_url">http://www.eur.nl/bread/crumb/trail
-    </a>
+    <a tal:attributes="href model/absolute_url" tal:content="model/absolute_url"></a>
   </td>
 </tr>
 <span tal:replace="nothing"> _______ fixme: show Publisher after metadata refactoring _______ </span>
@@ -164,7 +163,7 @@ comments here (field description)
   </td>
   <td>&nbsp;</td>
   <td>
-    Erasmus University Rotterdam
+    Publisher name
   </td>
   <td>&nbsp;</td>
 </tr>
