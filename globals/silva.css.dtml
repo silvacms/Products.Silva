@@ -423,6 +423,12 @@ table.listing td {
   text-align: left;
 }
 
+/* cycle text color */
+table.listing tr.even td {
+  color: #333;
+  background: &dtml-listingEvenBackground;;
+}
+
 /* _______ title cell _______ */
 table.listing td.top {
   color: &dtml-shade40;;
