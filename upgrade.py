@@ -529,7 +529,7 @@ def replace_container_title_092(obj):
     removed
     """
     #print 'Replace container'
-    if not '_title' in obj.aq_base.__dict__.keys():
+    if not '_title' in obj.aq_inner.__dict__.keys():
         return
     title = obj._title
     del obj._title
@@ -576,6 +576,9 @@ def replace_object_title_092(obj):
         title = unicode(title, 'cp1252', 'replace')
     objects = get_versions_or_self(obj)
     for object in objects:
+        binding = ms.getMetadata(object)
+        if object.get_title():
+            continue
         #print 'Going to replace title of version', object.getPhysicalPath()
         #print 'New title:', title.encode('ascii', 'replace')
         object.set_title(title)
@@ -585,7 +588,6 @@ def replace_object_title_092(obj):
         if short_title is not None:
             set_name = 'silva-content'
             values = {'shorttitle': short_title}
-            binding = ms.getMetadata(object)
             if binding is None:
                 #print 'Binding object:', object.meta_type
                 continue
