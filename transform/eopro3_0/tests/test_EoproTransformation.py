@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 import unittest
 
 # 
@@ -285,6 +285,29 @@ class RoundtripWithTidy(Base):
         htmlnode = silvanode.conv()
         p = htmlnode.find_one('p')
         self.assertEquals(p.extract_text(), ' ')
+
+    def test_workaround_eonpro_corrupt_document(self):
+        doc = """
+           <html>
+              <body>
+                 <html>
+                    <head>
+                       <title>test</title>
+                    </head>
+                    <body>
+                       <p>one</p>
+                    </body>
+                 </html>
+              <p>two</p>
+              </body>
+           </html>"""
+        node = self.transformer.target_parser.parse(doc)
+        node = node.find_one('html')
+        htmlnode = html.fix_document(node)
+        head = htmlnode.find_one('head')
+        body = htmlnode.find_one('body')
+        p = body.find('p')
+        self.assertEquals(len(p), 2)
 
     def test_image_simple(self):
 

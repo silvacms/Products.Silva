@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.6 $'
+__version__='$Revision: 1.7 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -36,6 +36,8 @@ DEBUG=0
 class html(Element):
     def convert(self, context):
         """ forward to the body element ... """
+        fix_document(self)
+
         headtag = self.find_one('head')
         bodytag = self.find_one('body')
         headtag.convert(context)
@@ -447,3 +449,20 @@ h3  :  heading
 h4  :  subhead
 h5  :  list title
 """
+
+def fix_document(html):
+    """ this fixes eonpro 3-1-181 duplication corruption 
+        of html/head documents 
+    """
+
+    try:
+        body = html.find_one('body')
+        pre, html2, post = body.find_and_partition('html')
+        fix_document(html2)
+        head = html2.find_one('head')
+        body2 = html2.find_one('body')
+        body2.content.append(*post)
+        html.content = Frag(head, body2)
+        return html
+    except ValueError:
+        pass
