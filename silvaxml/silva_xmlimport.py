@@ -37,8 +37,8 @@ class VersionHandler(BaseHandler):
             self.getData('expiration_date'))
 
 class SetHandler(BaseHandler):
-    def __init__(self, parent, parent_handler):
-        BaseHandler.__init__(self, parent, parent_handler)
+    def __init__(self, parent, parent_handler, options={}):
+        BaseHandler.__init__(self, parent, parent_handler, options)
         self._metadata_key = None
         
     def startElementNS(self, name, qname, attrs):

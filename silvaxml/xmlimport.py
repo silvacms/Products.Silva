@@ -36,11 +36,12 @@ class XMLOverridableElementRegistry:
             return None
     
 class SaxImportHandler(ContentHandler):
-    def __init__(self, start_object, handler_map):
+    def __init__(self, start_object, handler_map, options={}):
         self._registry = XMLOverridableElementRegistry(handler_map)
         self._handler_stack = []
         self._depth_stack = []
         self._object = start_object
+        self._options = options
         # XXX Might need this later for context sensitive parsing
         self._depth = 0
         
@@ -65,7 +66,7 @@ class SaxImportHandler(ContentHandler):
             else:
                 parent_handler = None
                 object = self._object
-            handler = factory(object, parent_handler)   
+            handler = factory(object, parent_handler, self._options)   
             self._registry.pushOverrides(handler.getOverrides())
             self._handler_stack.append(handler)
             self._depth_stack.append(self._depth)
@@ -86,7 +87,7 @@ class SaxImportHandler(ContentHandler):
         handler.characters(chrs)
     
 class BaseHandler:
-    def __init__(self, parent, parent_handler):
+    def __init__(self, parent, parent_handler, options={}):
         # it is essential NOT to confuse self._parent and
         # self._parent_handler. The is the parent object as it is being
         # constructed from the import, the latter is the handler that is 
@@ -98,6 +99,7 @@ class BaseHandler:
         self._metadata_set = None
         self._metadata_key = None
         self._metadata = {}
+        self._options = options
         
     def getOverrides(self):
         """Returns a dictionary of overridden handlers for xml elements. 
