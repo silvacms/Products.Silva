@@ -20,7 +20,7 @@
 <table border="0" width="100%" cellspacing="0">
 <tr class="inter-controls">
   <td style="text-transform:lowercase;"
-     align="center" tal:repeat="info columns_info" tal:attributes="align info/align; width info/html_width">
+     align="center" tal:repeat="info columns_info" tal:attributes="class string:align-${info/align}; width info/html_width">
      <div tal:omit-tag="" tal:define="align_name string:column_align_${repeat/info/index};
                                       width_name string:column_width_${repeat/info/index};
                                       align info/align">
