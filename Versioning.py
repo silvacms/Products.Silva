@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.37.2.2 $
+# $Revision: 1.37.2.3 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -406,6 +406,8 @@ class Versioning:
         version_id, publication_datetime, expiration_datetime = \
                     self._approved_version
         self._approved_version = version_id, dt, expiration_datetime
+        # Redundant reindex?
+        self._reindex_version(self._approved_version[0])
         # may become published, update publication status
         self._update_publication_status()
 
@@ -421,6 +423,22 @@ class Versioning:
                     self._approved_version
         self._approved_version = version_id, publication_datetime, dt
         self._reindex_version(self._approved_version[0])
+
+    security.declareProtected(
+        SilvaPermissions.ApproveSilvaContent, 'set_public_version_expiration_datetime')
+    def set_public_version_expiration_datetime(self, dt):
+        """Set expiration datetime, or None for no expiration.
+        """
+        if self._public_version == empty_version:
+            raise VersioningError,\
+                  'No public version.'
+        version_id, publication_datetime, expiration_datetime = \
+            self._public_version
+        self._public_version = version_id, publication_datetime, dt
+        # Redundant reindex?
+        self._reindex_version(self._public_version[0])
+        # may become closed, update publication status
+        self._update_publication_status()
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_next_version_publication_datetime')
