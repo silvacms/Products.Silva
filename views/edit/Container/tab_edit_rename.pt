@@ -68,8 +68,13 @@
             title
           </td>
           <td>
-            <span tal:replace="
-              object/get_title_editable | object/get_title | object/getId"
+            <span               
+              tal:define="
+                title object/get_title_editable | object/get_title | object/getId"
+              tal:content="
+                python: mangle.String.centeredTruncate(title, 30)"
+              tal:attributes="
+                title title"
             />
           </td>
           <td tal:define="
