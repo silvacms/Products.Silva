@@ -191,11 +191,11 @@ def setupSilvaRoot(app, id='root', quiet=0):
         uf._doAddUser('SilvaTestCase', '', ['Manager'], [])
         user = uf.getUserById('SilvaTestCase').__of__(uf)
         newSecurityManager(None, user)
+        factory = app.manage_addProduct['TemporaryFolder']
+        factory.constructTemporaryFolder('temp_folder', '')
         factory = app.manage_addProduct['Silva']
         factory.manage_addRoot(id, '')
         root = app.root
-        factory = app.manage_addProduct['TemporaryFolder']
-        factory.constructTemporaryFolder('temp_folder', '')
         noSecurityManager()
         # work around for issue 611:
         get_transaction().commit()

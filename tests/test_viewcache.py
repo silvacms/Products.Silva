@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -163,13 +163,14 @@ class ViewCacheVirtualHostTestCase(ViewCacheTestCase):
         self.add_folder(
             self.root.level1.level2.vhost2, 'level3', 'Level Three')
         for container in [
-            self.root,
-            self.root.vhost1, 
-            self.root.level1,
-            self.root.level1.level2,
-            self.root.level1.level2.vhost2]:
-            self.add_document(
-                container, 'index', 'Index of %s' % container.id)
+                self.root,
+                self.root.vhost1, 
+                self.root.level1,
+                self.root.level1.level2,
+                self.root.level1.level2.vhost2]:
+            if not 'index' in container.objectIds():
+                self.add_document(
+                    container, 'index', 'Index of %s' % container.id)
         self.add_document(
             container, 'anotherdoc', 'Another doc of %s' % container.id)                
         # Get REQUEST in shape

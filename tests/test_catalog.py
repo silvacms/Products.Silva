@@ -50,8 +50,8 @@ class CatalogTestCase(SilvaTestCase.SilvaTestCase):
     def assertPristineCatalog(self):
         # the pristine catalog has no documents, just root
         results = self.catalog.searchResults()
-        # the root itself and the index document 
-        self.assertEquals(1, len(results))
+        # the root itself and its index document 
+        self.assertEquals(2, len(results))
         
 class VersionCatalogTestCase(CatalogTestCase):
 

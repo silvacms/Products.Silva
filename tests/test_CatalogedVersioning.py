@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 import os, sys, time
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -56,9 +56,14 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
 
     def assertCatalogEmptyResult(self, **kw):
         result = self.service_catalog.searchResults(**kw)
-        # only result that should exist is root
-        if len(result) != 1:
-            self.fail('Catalog results where none expected.')
+        # only result that should exist is root and maybe its index document
+        sd_installed = 'SilvaDocument' in self.root.service_extensions.\
+            get_installed_names()
+        expeceted_items = 1
+        if sd_installed:
+            expeceted_items = 2
+        self.assertEquals(len(result), expeceted_items,
+            'Catalog results where none expected.')
             
     def test_add(self):
         version = self.test.get_editable()

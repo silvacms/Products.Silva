@@ -132,12 +132,10 @@ class ContainerTestCase(ContainerBaseTestCase):
                           l)
         
     def test_get_status_tree(self):
-        # XXX (0, self.root.index) was at the top of this list,
-        # but root doesn't come with an index at this point
-        l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
-             (0, self.folder4), (1, self.folder4.index), (1, self.subdoc),
-             (1, self.subfolder), (2, self.subfolder.index), (2, self.subfolder.subsubdoc),
-             (0, self.root.publication5)]
+        l = [(0, self.root.index), (0, self.doc1), (0, self.doc2),
+            (0, self.doc3), (0, self.folder4), (1, self.folder4.index),
+            (1, self.subdoc), (1, self.subfolder), (2, self.subfolder.index),
+            (2, self.subfolder.subsubdoc), (0, self.root.publication5)]
         self.assertEquals(self.root.get_status_tree(), l)
         
     def test_move_object_up(self):
@@ -306,8 +304,11 @@ class ContainerTestCase(ContainerBaseTestCase):
 
     def test_get_default(self):
         # add default to root
-        self.root.manage_addProduct['Silva'].manage_addDocument('index', 'Default')
-        self.assertEquals(getattr(self.root, 'index'), self.root.get_default())
+        index = getattr(self.root, 'index', None)
+        if index is None:
+            self.root.manage_addProduct['Silva'].manage_addGhost('index', 'Default')
+            index = self.root.index
+        self.assertEquals(index, self.root.get_default())
         # issue 47: index created by test user
         # XXX should strip the '(not in ldap)' if using LDAPUserManagement?
         self.assertEquals('test_user_1_',

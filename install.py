@@ -1,22 +1,27 @@
+# Copyright (c) 2002-2003 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id: install.py,v 1.97 2003/12/01 12:38:57 zagy Exp $
 """Install for Silva Core
 """
-from Globals import package_home
+# Python
 import os
 
+# Zope
+from Globals import package_home
 import zLOG
 from OFS.Uninstalled import BrokenClass
-
-import File
-from Products.Silva.fssite import manage_addDirectoryView
-from Products.Silva.fssite import minimalpath, expandpath
+from DateTime import DateTime
 
 from Products.ProxyIndex.ProxyIndex import RecordStyle
-    
-from Products.Silva.ContainerPolicy import NothingPolicy 
+
+# sibling
+from Products.Silva.fssite import manage_addDirectoryView
+from Products.Silva.fssite import minimalpath, expandpath
+from Products.Silva.ContainerPolicy import NothingPolicy
 from Products.Silva.AutoTOC import AutoTOCPolicy
 from Products.Silva import roleinfo
-
-from SimpleMembership import SimpleMemberService
+from Products.Silva.SimpleMembership import SimpleMemberService
+from Products.Silva import File
 
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.
@@ -595,8 +600,20 @@ def installSilvaDocument(root):
     # installs Silva Document if available
     # see issue #536 and #611
     from Products.Silva.ExtensionRegistry import extensionRegistry
-    if 'SilvaDocument' in extensionRegistry.get_names():
-        root.service_extensions.install('SilvaDocument')
+    if 'SilvaDocument' not in extensionRegistry.get_names():
+        return 
+    root.service_extensions.install('SilvaDocument')
+    # create the demo content:
+    root.sec_update_last_author_info()
+    root.manage_addProduct['SilvaDocument'].manage_addDocument('index',
+        'Welcome to Silva!')
+    doc = root.index
+    doc.sec_update_last_author_info()
+    version = doc.get_editable()
+    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p></doc>')
+    doc.set_unapproved_version_publication_datetime(DateTime())
+    doc.approve_version()
+
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
