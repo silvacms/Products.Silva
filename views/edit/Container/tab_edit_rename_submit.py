@@ -48,11 +48,11 @@ while 1:
             if item[0] != 'index':
                 obj = getattr(model, item[0])
                 obj.set_title(model.input_convert(item[2]))
-                model.manage_renameObject(item[0], item[1])
+                model.action_rename(item[0], item[1])
             else:
                 # for the index, if the title is set before the id is changed, the title of the container is changed instead...
                 obj = getattr(model, item[0])
-                model.manage_renameObject(item[0], item[1])
+                model.action_rename(item[0], item[1])
                 obj = getattr(model, item[1])
                 obj.set_title(model.input_convert(item[2]))
             objects_changed = 1
@@ -80,7 +80,7 @@ for i in range(len(not_renamed)):
 
 # now change the ids to unique ones
 for item in not_renamed:
-    model.manage_renameObject(item[0][0], item[1])
+    model.action_rename(item[0][0], item[1])
 
 # and the unique ones to the new ones
 for item in not_renamed:
@@ -93,7 +93,7 @@ for item in not_renamed:
     obj = getattr(model, tmpid)
     if oldid != 'index':
         obj.set_title(model.input_convert(item[0][2]))
-    model.manage_renameObject(tmpid, newid)
+    model.action_rename(tmpid, newid)
     if oldid == 'index':
         # set title of new obj so the title of container does not get affected
         obj = getattr(model, newid)

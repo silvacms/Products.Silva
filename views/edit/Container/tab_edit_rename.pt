@@ -1,4 +1,5 @@
 <!-- ___________________________ start index_html ___________________________ -->
+<tal:block define="global location string:Contents;" />
 <html metal:use-macro="here/macro_index/macros/master">
 
 <div class="margins" metal:fill-slot="main">
