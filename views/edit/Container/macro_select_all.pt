@@ -13,7 +13,7 @@
     value="whatever"
     id="all"
     title="select all: alt-a"
-    tal:attributes="onChange string:toggleSelect('${sid}');;"
+    tal:attributes="onclick string:toggleSelect(this, '${sid}');;"
     i18n:attributes="title"
   />
   </tal:block>
@@ -24,34 +24,32 @@
   <script type="text/javascript"
     xml:space="preserve">
     <!--
-    isSelected = false;
-
-    function toggleSelect(id) {
-      if (isSelected == false) {
-        for (i = 0; i < document.silvaObjects.length; i++)
+    
+    function toggleSelect(checkbox, id) 
+    {
+      if (checkbox.checked) 
+      {
+        for (i = 0; i < checkbox.form.elements.length; i++)
         {
-          obj = document.silvaObjects.elements[i];
+          obj = checkbox.form.elements[i];
           if (!id || obj.name.indexOf(id) > -1)
           {
             obj.checked = true;
           }
         }
-        isSelected = true;
-        //document.silvaObjects.selectButton.value = "Deselect all";
-        return isSelected;
+        //checkbox.form.selectButton.value = "Deselect all";
       }
-      else {
-        for (i = 0; i < document.silvaObjects.length; i++)
+      else 
+      {
+        for (i = 0; i < checkbox.form.elements.length; i++)
         {
-          obj = document.silvaObjects.elements[i];
+          obj = checkbox.form.elements[i];
           if (!id || obj.name.indexOf(id) > -1)
           {
             obj.checked = false;
           }
         }
-        isSelected = false;
-        //document.silvaObjects.selectButton.value = "Select all";
-        return isSelected;
+        //checkbox.form.selectButton.value = "Select all";
       }
     }
     //-->

@@ -361,7 +361,9 @@
                 <tr tal:condition="python:(default_document or publishables or assets)">
                   <th class="controls listing-left"
                     colspan="6">
-                    <metal:block use-macro="view/macro_select_all/macros/select_all"/>
+                    <tal:block define="select_id string:ids">
+                      <metal:block use-macro="view/macro_select_all/macros/select_all"/>
+                    </tal:block>
                   </th>
                 </tr>
                 <tal:block replace="nothing">
