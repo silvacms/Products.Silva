@@ -223,7 +223,7 @@ def configureCoreFolders(root):
     add_fss_directory_view(root, 'service_utils', __file__, 'service_utils')
 
     # folder containing some extra views and resources
-    root.manage_addFolder('service_resources')
+    root.manage_addFolder('service_resources', 'Silva Product Resources')
 
 def configureViews(root):
     """The view infrastructure for Silva.
@@ -232,9 +232,9 @@ def configureViews(root):
     root.manage_addProduct['Silva'].manage_addMultiViewRegistry(
         'service_view_registry')
     root.manage_addProduct['Silva'].manage_addExtensionService(
-        'service_extensions')
+        'service_extensions', 'Silva Product Extension Configuration')
     # folder contains the various view trees
-    root.manage_addFolder('service_views')
+    root.manage_addFolder('service_views', 'Silva View Machinery')
     # and set Silva tree
     # (does not need to be more polite to extension packages;
     #  they will be installed later on)
@@ -251,7 +251,7 @@ def configureMiscServices(root):
     # do the same for the sidebar service
     if not hasattr(root, 'service_sidebar'):
         root.manage_addProduct['Silva'] \
-            .manage_addSidebarService('service_sidebar', '')
+            .manage_addSidebarService('service_sidebar', 'Silva Content Tree Navigation')
 
 
 def configureSecurity(root):
@@ -348,14 +348,14 @@ def configureMembership(root):
     ids = root.objectIds()
     if 'service_members' not in ids:
         root.manage_addProduct['Silva'].manage_addSimpleMemberService(
-            'service_members')
+            'service_members', 'Silva Membership Service')
         
     if 'Members' not in ids:
         root.manage_addFolder('Members')
 
     if 'service_messages' not in ids:
         root.manage_addProduct['Silva'].manage_addEmailMessageService(
-            'service_messages', 'Service for Messages')
+            'service_messages', 'Silva Message Service')
 
 # helpers to add various objects to the root from the layout directory
 # these won't add FS objects but genuine ZMI managed code
