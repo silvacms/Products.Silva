@@ -23,9 +23,13 @@ for ref in request['refs'].split('||'):
 
 data = model.get_xml_for_objects(objects, with_sub_publications, export_last_version)
 
+filename = model.id
+if len(objects) == 1:
+    filename = objects[0].id
 RESPONSE.setHeader('Content-Type', 'application/download')
 RESPONSE.setHeader('Content-Length', len(data))
 RESPONSE.setHeader('Content-Disposition',
-                   'attachment;filename=%s_export_%s.slv' % (model.id, DateTime().strftime('%Y-%m-%d')))
+    'attachment;filename=%s_export_%s.slv' % (filename,
+    DateTime().strftime('%Y-%m-%d')))
 
 return data
