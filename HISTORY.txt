@@ -1,8 +1,16 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.48 $
+$Revision: 1.49 $
 
 Silva changes
+  
+  xxx
+
+    Features Added
+
+        - High resolution image support. If you have PIL installed images can
+          be both converted to JPEG or PNG and arbitary scaled for web
+          presentation. The high resolution image can be used for printing. 
 
   0.9.1 beta
 

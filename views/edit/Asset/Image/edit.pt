@@ -5,6 +5,25 @@
 <init tal:omit-tag=""
   tal:define="global fields python:view.properties_form.get_fields()" />
 
+<tal:block tal:condition="model/canScale">
+  <span 
+    tal:on-error="string: unknown"
+    tal:replace="model/getDimensions"
+    />
+  <span tal:replace="model/getFormat" /> image  scaled to 
+    <span    
+      tal:on-error="string: unknown"
+      tal:replace="model/getCanonicalWebScale"
+      /> <span tal:replace="model/web_format" /> image.
+</tal:block>
+<tal:block tal:condition="not: model/canScale">
+  No PIL installed, no scaling or converting is possible. The uploaded image
+  will be displayed as is.
+</tal:block>
+  
+
+
+  
 <h3>Property</h3>
 
 <form method="POST" name="form" action=".">
@@ -48,8 +67,18 @@ Note
 </span>
 </td>
 <td align="left">
-<span tal:replace="nothing">This will go utterly wrong as soon as image grows more than one property</span>
-<input tal:replace="structure python:field.render(model.get_title_editable())" />
+    <input 
+        tal:condition="python: field.id == 'image_title'"
+        tal:replace="structure python:field.render(model.get_title_editable())" 
+     />
+    <input 
+        tal:condition="python: field.id == 'web_format'"
+        tal:replace="structure python:field.render(model.web_format)" 
+     />
+    <input 
+        tal:condition="python: field.id == 'web_scaling'"
+        tal:replace="structure python:field.render(model.web_scale)" 
+     />
 </td>
 <td>
 <span tal:replace="python:field.get_value('description')">
