@@ -131,7 +131,7 @@ comments here (field description)
   </td>
   <td>&nbsp;</td>
   <td>
-    <span tal:replace="python:', '.join([ch['cn'] for ch in here.get_nearest_chiefeditors()])" />
+    <span tal:replace="python:', '.join([ch.fullname() for ch in here.get_nearest_chiefeditors()])" />
   </td>
   <td>&nbsp;</td>
 </tr>
@@ -141,7 +141,7 @@ comments here (field description)
   </td>
   <td>&nbsp;</td>
   <td>
-    <span tal:replace="python:', '.join([m['cn'] for m in here.get_nearest_managers()])" /> <br />
+    <span tal:replace="python:', '.join([m.fullname() for m in here.get_nearest_managers()])" /> <br />
   </td>
   <td>
     Only in emergencies.
