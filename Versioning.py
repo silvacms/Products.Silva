@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Revision: 1.29 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -43,11 +43,6 @@ class Versioning:
     _previous_versions = None
     _request_for_approval_info = empty_request_for_approval_info
     
-    def manage_afterAdd(self, item, container):
-        #Versioning.inheritedAttribute('manage_afterAdd')
-        #  (self, item, container)
-        self.reindex_object()
-
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'create_version')
@@ -184,7 +179,7 @@ class Versioning:
         # remove it from the catalog (if required)
         # this way the catalog only contains unapproved, approved 
         # and public versions
-        self._unindex_version(last_closed_version)
+        self._unindex_version(self._previous_versions[-1])
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'create_copy')
