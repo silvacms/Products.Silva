@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.22 2004/05/12 07:32:01 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.23 2004/05/13 07:24:25 zagy Exp $
 
 # Python
 import re, string
@@ -103,13 +103,38 @@ class Image(Asset):
             kw['REQUEST'] = REQUEST
         return img.index_html(*args, **kw)
 
+    def manage_afterAdd(self, item, container):
+        for id in ('hires_image', 'image', 'thumbnail_image'):
+            img = getattr(self, id, None)
+            if img is None:
+                continue
+            # fake it, to get filename correct
+            img.id = self.id
+            img.manage_afterAdd(img, self)
+            img.id = id
+        return Image.inheritedAttribute('manage_afterAdd')(self, item,
+            container)
+
     def manage_beforeDelete(self, item, container):
         """explicitly remove the images"""
         for id in ('hires_image', 'image', 'thumbnail_image'):
             self._remove_image(id)
         return Image.inheritedAttribute('manage_beforeDelete')(self, item,
             container)
-    
+
+    def manage_afterClone(self, item):
+        "copy support"
+        for id in ('image', 'hires_image', 'thumbnail_image'):
+            img = getattr(self, id, None)
+            if img is None:
+                continue
+            # fake it, to get filename correct
+            img.id = self.id
+            img.manage_afterClone(item)
+            img.id = id
+        return Image.inheritedAttribute('manage_afterClone')(self, item)
+        
+        
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
@@ -434,15 +459,18 @@ class Image(Asset):
     def _image_factory(self, id, title, file, content_type):
         repository = self._useFSStorage()
         image = getattr(self, id, None)
+        created = 0
         if repository is None:
             image = OFS.Image.Image(id, title, file,
                 content_type=content_type)
+            created = 1
         else:
             if image is not None and image.meta_type != 'ExtImage':
                 self._remove_image(id)
                 image = None
             if image is None:
                 image = ExtImage(self.getId(), title)
+                created = 1
                 image._repository = repository
                 image = image.__of__(self)
             # self.getId() is used to get a `normal' file name. We restore
@@ -454,6 +482,8 @@ class Image(Asset):
             # set the actual id (so that absolute_url works)
             image.id = id
         setattr(self, id, image)
+        if created:
+            image.manage_afterAdd(image, self)
         return image
     
     def _useFSStorage(self):
