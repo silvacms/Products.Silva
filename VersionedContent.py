@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.38.2.2 $
+# $Revision: 1.38.2.3 $
 
 # Python
 from StringIO import StringIO
@@ -255,16 +255,25 @@ class CatalogedVersionedContent(VersionedContent):
         return result
 
     def _index_version(self, version_id):
+        # python2.2 and up compatibility check:
+        if version_id is None:
+            return
         version = getattr(self, version_id, None)
         if version is not None:
             version.index_object()
-        
+
     def _reindex_version(self, version_id):
+        # python2.2 and up compatibility check:
+        if version_id is None:
+            return
         version = getattr(self, version_id, None)
         if version is not None:
             version.reindex_object()
 
     def _unindex_version(self, version_id):
+        # python2.2 and up compatibility check:
+        if version_id is None:
+            return
         version = getattr(self, version_id, None)
         if version is not None:
             version.unindex_object()

@@ -84,7 +84,7 @@
                   <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
                     <span i18n:translate="export_from">export from</span> 
-                    &#xab;<tal:block content="model/get_title_editable" />&#xbb;
+                    &#xab;<tal:block content="title" />&#xbb;
                   </h2>
                 </td>
               </tr>
@@ -95,9 +95,8 @@
                       href="tab_edit_import"
                       title="over to the import screen: alt-i"
                       accesskey="i"
-                      i18n:attributes="title"
-                      i18n:translate="import">
-                      Import...
+                      i18n:attributes="title">
+                      <span i18n:translate="import">import</span>...
                     </a>
                   <h3 i18n:translate="export_to_silva_xml">
                     Export to Silva XML (.slv)
@@ -332,7 +331,7 @@
           />
         </td>
         <td i18n:translate="email_will_be_sent">
-          An email will be sent when the item is processed.
+          An e-mail will be sent to you when the item is processed.
         </td>
       </tr>
 
@@ -385,7 +384,7 @@
           value="Export to Docma"
           title="export the selection to Word: alt-d"
           accesskey="d"
-          i18n:attributes="value title accesskey:key-export_to_word"
+          i18n:attributes="value title"
         />
         </tal:block>
         </td>
@@ -410,7 +409,7 @@
     title="there's no undo: alt-x"
     type="submit"
     value="remove" 
-    i18n:attributes="onClick value title"
+    i18n:attributes="onclick value title"
   />
 </metal:fill-slot>
 </metal:use-macro>

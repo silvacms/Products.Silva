@@ -29,7 +29,7 @@ if not publish_datetime and not expiration_datetime \
         and not clear_expiration_flag and not publish_now_flag:
     return view.tab_status(
         message_type='error', 
-        message='No publication nor expiration time set.')
+        message='No publication nor expiration time nor any of the flags set.')
 
 now = DateTime()
 
@@ -48,35 +48,47 @@ for ref in refs:
         not_changed.append((get_name(obj), 'not a versionable object'))
         continue
     # HUGE check to see what actually may or can be changed...
-    if silva_permissions['ApproveSilvaContent']:
+    if silva_permissions['ApproveSilvaContent']:        
         if not obj.get_next_version():
-            not_changed.append((get_name(obj), 'no next version available'))
-            continue
-        if publish_datetime:
-            obj.set_next_version_publication_datetime(publish_datetime)
-        # publish
-        if publish_now_flag:
-            obj.set_next_version_publication_datetime(now)
-        # expire
-        if expiration_datetime:
-            obj.set_next_version_expiration_datetime(expiration_datetime)
-        if clear_expiration_flag:
-            obj.set_next_version_expiration_datetime(None)
+            # No next version, so start looking for the published version
+            # since we can change the expiration time for published content.
+            if not obj.get_public_version():
+                not_changed.append((get_name(obj), 'no next- or public version available'))
+                continue
+            # cannot publish
+            if publish_now_flag or publish_datetime:
+                not_changed.append((get_name(obj), 'cannot change publication time of version already public'))
+            # expire
+            if clear_expiration_flag:
+                obj.set_public_version_expiration_datetime(None)
+            elif expiration_datetime:
+                obj.set_public_version_expiration_datetime(expiration_datetime)
+        else:
+            # publish
+            if publish_now_flag:
+                obj.set_next_version_publication_datetime(now)
+            elif publish_datetime:
+                obj.set_next_version_publication_datetime(publish_datetime)
+            # expire
+            if clear_expiration_flag:
+                obj.set_next_version_expiration_datetime(None)
+            elif expiration_datetime:
+                obj.set_next_version_expiration_datetime(expiration_datetime)
         changed_ids.append(get_name(obj))
     else:
         if not obj.get_unapproved_version():
             not_changed.append((get_name(obj), 'no unapproved version'))
             continue
         # publish
-        if publish_datetime:
-            obj.set_unapproved_version_publication_datetime(publish_datetime)
         if publish_now_flag:
             obj.set_unapproved_version_publication_datetime(now)
+        elif publish_datetime:
+            obj.set_unapproved_version_publication_datetime(publish_datetime)
         # expire
-        if expiration_datetime:
-            obj.set_unapproved_version_expiration_datetime(expiration_datetime)
         if clear_expiration_flag:
             obj.set_unapproved_version_expiration_datetime(None)
+        elif expiration_datetime:
+            obj.set_unapproved_version_expiration_datetime(expiration_datetime)
         changed_ids.append(get_name(obj))
 
 if changed_ids:

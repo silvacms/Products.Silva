@@ -25,10 +25,10 @@ publish_now_flag = result['publish_now_flag']
 expiration_datetime = result['expiration_datetime']
 clear_expiration_flag = result['clear_expiration']
 
-if not publish_now_flag and not publish_datetime:
-    return view.tab_status(
-        message_type='error', 
-        message='No publication datetime set.')
+#if not publish_now_flag and not publish_datetime:
+#    return view.tab_status(
+#        message_type='error', 
+#        message='No publication datetime set.')
  
 now = DateTime()
 
@@ -49,7 +49,7 @@ for ref in refs:
         not_approved.append((get_name(obj), 'version already approved'))
         continue
     if not obj.can_approve():
-        not_approved.append((get_name(obj), 'content object is closed'))
+        not_approved.append((get_name(obj), 'content object or one of its containers is deactivated'))
         continue
     if not obj.get_unapproved_version():
     # SHORTCUT: To allow approval of closed docs with no new version available,
@@ -66,13 +66,17 @@ for ref in refs:
     # publish
     if publish_now_flag:
         obj.set_unapproved_version_publication_datetime(now)
-    else:
+    elif publish_datetime:
         obj.set_unapproved_version_publication_datetime(publish_datetime)
+    elif not obj.get_unapproved_version_publication_datetime():
+        # no date set, neither on unapproved version nor in tab_status form
+        not_approved.append((get_name(obj), 'no publication time set'))
+        continue
     # expire
-    if expiration_datetime:
-        obj.set_unapproved_version_expiration_datetime(expiration_datetime)
     if clear_expiration_flag:
         obj.set_unapproved_version_expiration_datetime(None)
+    elif expiration_datetime:
+        obj.set_unapproved_version_expiration_datetime(expiration_datetime)
 
     obj.approve_version()
     approved_ids.append(get_name(obj))

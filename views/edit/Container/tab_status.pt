@@ -9,19 +9,17 @@
   "
   i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block tal:define="
-  default_doc model/get_default;
-  default_doc_url default_doc/absolute_url | nothing;
-  objects model/get_processed_status_tree;
-  refs request/refs | options/refs | python: [];
-  redisplay_timing_form request/redisplay_timing_form | options/redisplay_timing_form | python: 1;
-  "
-  fill-slot="main">
+<metal:block fill-slot="main">
 
 <form action="."
   method="POST"
   name="silvaObjects"
   tal:define="
+    objects model/get_processed_status_tree;
+    
+    refs request/refs | options/refs | python: [];
+    redisplay_timing_form request/redisplay_timing_form | options/redisplay_timing_form | python: 1;
+
     global approveables nothing;
     global rejectables nothing;
     global revokeables nothing;
@@ -138,24 +136,27 @@
         <td>
           <div tal:attributes="style string:margin-left:${indent_depth}">
             <div style="float: left;">
-              <a title="edit"
-                tal:attributes="href string:${obj_url}/edit/tab_edit">
+              <a 
+                tal:attributes="href string:${obj_url}/edit/tab_edit;
+                title string:edit: ${obj/id};
+                ">
                 <img tal:replace="structure obj/icon" />
               </a>
             </div>
             <div style="padding-left: 19px;"
               tal:define="title obj/title">
               <a class="blacklink"
-                title="preview"
                 tal:attributes="
                   class obj/status_style | default;
-                  href string:${obj_url}/edit/tab_preview;">
+                  href string:${obj_url}/edit/tab_preview;
+                  title string:preview: ${obj/id};
+                  ">
                   <i tal:condition="obj/is_default | nothing">
                     index of
                   </i>
                   <tal:block replace="title"  />
                   <tal:block condition="python:title == ''">
-                    <i>no title</i>
+                    <i tal:content="obj/id">id</i>
                   </tal:block>
               </a>
             </div>
@@ -212,7 +213,7 @@
             <tal:block
               define="
                 global closeables python: 1;
-                global new_versionables python: 1"
+                global new_versionables python: state != 'pending' and state != 'approved'"
               condition="start_time"
               replace="
                 python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
@@ -221,7 +222,8 @@
           <tal:block 
             condition="python: public_status == 'closed'"> 
             <span i18n:translate="closed"
-              define="global new_versionables python: closed and 1 or new_versionables;">
+              define="
+                global new_versionables python: closed and (state != 'pending' and state != 'approved') or new_versionables;">
               closed
             </span>
           </tal:block>
@@ -249,17 +251,22 @@
       </th>
       <th class="align-right"
         colspan="3">
-        day / month / year &nbsp;23:59
+        <span tal:condition="
+          python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)">
+          day / month / year &nbsp;23:59
+        </span>
       </th>
       <th>
       </th>
     </tr>
     <tr class="controls inter-controls"
-      tal:condition="python:approveables or revokeables">
+      tal:condition="
+        python: approveables or ((revokeables or rejectables) and may_approve_content)">
       <tal:block replace="nothing">
         ______________ publication time controls ______________
       </tal:block>
       <td class="align-right"
+        style="padding-right:0.5em;"
         colspan="5">
         <label title="access key: alt-m" 
           accesskey="m">
@@ -295,11 +302,13 @@
       </td>
     </tr>
     <tr class="controls inter-controls"
-      tal:condition="python:approveables or revokeables or closeables">
+      tal:condition="
+        python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)">
       <tal:block replace="nothing">
         ______________ expiration time controls ______________
       </tal:block>
       <td class="align-right"
+         style="padding-right:0.5em;"
         colspan="5">
         <label title="access key: alt-x" 
           accesskey="x">
@@ -368,15 +377,18 @@
         />
       </td>
       <td class="align-right"
-        colspan="3">
+        colspan="2">
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
           value="Change timings"
           title="change publish and expiration times for selected objects: alt-s"
           accesskey="s"
-          tal:condition="python:approveables or revokeables or closeables"
+          tal:condition="
+            python: approveables or closeables or revokeables or rejectables"
         />
+      </td>
+      <td class="align-right">
         <input class="button"
           name="tab_status_approve:method"
           type="submit"
@@ -392,7 +404,7 @@
       <tal:block replace="nothing">
         ______________ author controls ______________
       </tal:block>
-      <td colspan="4"
+      <td colspan="3"
         style="border-style:none;">
         <input class="reject"
           type="submit"
@@ -421,6 +433,16 @@
       </td>
       <td class="align-right"
         colspan="2">
+        <input class="button"
+          name="tab_status_change_settings:method"
+          type="submit"
+          value="Change timings"
+          title="change publish and expiration times for selected objects: alt-s"
+          accesskey="s"
+          tal:condition="python: approveables"
+        />
+      </td>
+      <td class="align-right">
         <input class="button"
           type="submit"
           name="tab_status_request_approval:method"
