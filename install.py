@@ -8,15 +8,20 @@ from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
 
 def add_fss_directory_view(obj, name, base, *args):
-    """ register a FSS-DirectoryView  for silva-subdirectories.
+    """ add a FSS-DirectoryView object.
     
     obj         where the new directory-object will be accessible
-    name        id of the new zope object
-    base        dirname(base) is taken as base for the following relative path
+    name        name of the new zope object
+    base        dirname(base) is taken as the base for the following relative path
     *args       directory names which form the relative path to our content directory
 
     This method tries to provide a sane interface independent of FSS
     path munging.
+
+    Note that the the resulting path (joined from base and *args) must be
+    below an already registered FSS-path (i.e. you must have issued
+    a 'registerDirectory' on the to-be-registered directory or on one
+    of its parents). 
 
     """
     from os.path import isdir, dirname, join, samefile
