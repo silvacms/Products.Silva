@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 import unittest
 import Zope
 from Products.Silva.SilvaObject import SilvaObject
@@ -178,11 +178,16 @@ class GhostTestCase(unittest.TestCase):
         self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
                                                               '/root/doc1')
         ghost = getattr(self.sroot, 'ghost1')
+        
+        # issue 41: test if get_content_url works now
+        self.assertEquals('/root/doc1', ghost.get_editable().get_content_url())
         # now delete doc1
         self.sroot.action_delete(['doc1'])
         # ghost should say 'This ghost is broken'
         self.assertEquals('Ghost is broken', ghost.preview())
-
+        # issue 41: test get_content_url; should catch KeyError and return None
+        self.assertEquals(None, ghost.get_previewable().get_content_url())
+        
         # now make ghost point to doc2, and publish ghost and doc2
         self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc2.approve_version()
@@ -194,6 +199,9 @@ class GhostTestCase(unittest.TestCase):
         self.doc2.close_version()
         self.sroot.action_delete(['doc2'])
         self.assertEquals('Ghost is broken', ghost.view())
+        # issue 41: test get_content_url; should catch KeyError and return None
+        self.assertEquals(None, ghost.get_previewable().get_content_url())
+
 
     def test_ghost_title(self):
         self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
