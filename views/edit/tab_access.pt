@@ -287,7 +287,7 @@
   <td colspan="2" align="right">
     <input type="submit" class="button" name="tab_access_groups:method" value="Groups admin..."
     title="Go to Groups administration - alt-g" accesskey="g" />
-  </td> define="lastclass string:focus-cycle"
+  </td>
 </tr>
 <tr class="topcontrols">
   <td style="background:#b0cbd0;" align="right" colspan="3">
