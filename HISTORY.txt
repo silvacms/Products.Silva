@@ -3,6 +3,17 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.2.4
+
+    Bugs fixed
+
+        - SilvaMetadata contained a bug which actually made metadata
+          cataloging fail. This has been fixed in SilvaMetadata
+          0.7.2, so the only upgrade necessary is in fact of this
+          dependency. For convenience we've also done a new Silva
+          release, but the only thing it contains is one new test for
+          getting metadata.
+
   0.9.2.3
 
     Bugs fixed
