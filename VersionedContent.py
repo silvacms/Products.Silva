@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.59 $
+# $Revision: 1.60 $
 
 # Python
 from StringIO import StringIO
@@ -132,22 +132,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             return "[No (short) title available]"
         return previewable.get_short_title()
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'sec_get_last_author_userid')
-    def sec_get_last_author_userid(self):
-        """Ask last userid of current transaction under edit.
-        If it doesn't exist, get published version, or last closed.
-        """
-        version_id = (self.get_next_version() or
-                      self.get_public_version() or
-                      self.get_last_closed_version())
-        # get the last transaction
-        last_transaction = getattr(self,
-                                   version_id).undoable_transactions(0, 1)
-        if len(last_transaction) == 0:
-            return None
-        return last_transaction[0]['user_name']
-                                        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
     def get_editable(self):
