@@ -224,19 +224,43 @@
   </xsl:template>
 
   <xsl:template match="doc:toc">
-    <xsl:copy-of select="./doc:rendered_html/*" />
+    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+  </xsl:template>
+
+  <xsl:template match="doc:cite">
+    <div class="citation">
+      <xsl:apply-templates mode="citation" />
+    </div>
+  </xsl:template>
+
+  <xsl:template match="doc:p" mode="citation">
+    <p class="{@silva_type}">
+      <xsl:apply-templates />
+    </p>
+  </xsl:template>
+
+  <xsl:template match="doc:source" mode="citation">
+    <p class="source">
+      <xsl:apply-templates />
+    </p>
+  </xsl:template>
+
+  <xsl:template match="doc:author">
+    <p class="author">
+      <xsl:apply-templates />
+    </p>
   </xsl:template>
   
   <xsl:template match="doc:external_data">
-    <xsl:copy-of select="./doc:rendered_html/*" />
+    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
   </xsl:template>
   
   <xsl:template match="doc:code">
-    <xsl:copy-of select="./doc:rendered_html/*" />
+    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
   </xsl:template>
 
   <xsl:template match="doc:source">
-    <xsl:copy-of select="./doc:rendered_html/*" />
+    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
   </xsl:template>
   
   <xsl:template match="doc:br" mode="text-content">
