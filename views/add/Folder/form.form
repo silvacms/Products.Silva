@@ -57,7 +57,6 @@
         <values>
           <alternate_name></alternate_name>
           <css_class></css_class>
-          <default type="list">['Silva Document']</default>
           <description>What type of object should be added after creating the folder.</description>
           <external_validator></external_validator>
           <extra></extra>
@@ -69,6 +68,7 @@
           <title>First item</title>
           <unicode type="int">0</unicode>
           <view_separator><br /></view_separator>
+          <first_item type="int">1</first_item>
         </values>
         <tales>
           <items>form/service_containerpolicy/listPolicies</items>
