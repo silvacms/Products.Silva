@@ -141,7 +141,7 @@
    global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid));
    global processingident view/service_docma/get_processing_ident;"
  tal:condition="python: processingident != 0">
- <span i18n:translate="current_job">urrent&nbsp;job</span>: <span tal:replace="processingident" /><br />
+ <span i18n:translate="current_job">Current&nbsp;job</span>: <span tal:replace="processingident" /><br />
  <span i18n:translate="owner">Owner</span>: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /><br />
  <span i18n:translate="description">Description</span>: <span tal:replace="python: view.service_docma.get_ident_description(processingident)" />
 </div>
