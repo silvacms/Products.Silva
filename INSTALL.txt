@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.4
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.16 $
+  CVS:        $Revision: 1.17 $
 
 Installing Silva
 
@@ -38,7 +38,7 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.8.3.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.4.tgz
+        "Silva-0.8.4.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.4.tgz
   
     XMLWidgets (0.8.1)
 
@@ -102,6 +102,21 @@ Installing Silva
       strange behavior, removing the Groups product and restarting Zope
       will safely remove it.
 
+
+    ExtFile (1.1.3)
+
+      If you plan to manage large upload files with Silva, which
+      should not me stroed in the ZODB but the plain file system, you
+      may consider installing the ExtFile product from here:
+
+       "ExtFile":http://www.zope.org/Members/MacGregor/ExtFile/ExtFile-1.1.3.tgz
+
+      This product is optional; see "Installing Silva with ExtFile" below.
+      You may want to look into the README.txt of ExtFile at
+      installation time, and possibly adapt the undo handling. (This
+      should not be changed afterwards.)
+
+
   Silva services (ZODB)
 
     service_view_registry
@@ -163,6 +178,31 @@ Installing Silva
 
     and then restarting Zope to make these changes take effect.
 
+ 
+  Installing Silva with ExtFile support.
+
+    If the ExtFile product is properly installed, Silva can use it
+    to store Silva File objects in the file system instead of the ZODB.
+    To let Silva use the ExtFile product, You may edit the file
+    config.py in the lib/python/Products/Silva directory by changing::
+
+      FILESYSTEM_STORAGE_ENABLED = 0
+
+    to::
+
+      FILESYSTEM_STORAGE_ENABLED = 1
+
+    You may want to adjust the 'FILESYSTEM_PATH' as well.
+
+    Note that enabling/disabling ExtFile storage does not change the
+    storage of the already present Silve File objects. It has no effect
+    toe the Silva Image objects either, as they are stored in the ZODB
+    in any case. More intofomation is available in the 'docs/FileObject.stx'.
+
+ 
+
+
+
   Installing Silva on a ZEO cluster
 
     In this case, the products need to be installed for all nodes of
@@ -175,4 +215,4 @@ Installing Silva
     shared throughout the cluster; this can be done by mounting a
     non-undoable storage into the main storage that will be used
     specifically as a store for session data. For more information on
-    this, see 'doc/zeo_cluster_notes'.
+    this, see 'docs/ZeoClusterNotes.stx'.
