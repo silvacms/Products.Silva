@@ -39,7 +39,7 @@
 <td class="align-right"
     style="border-left:1px solid #617681;"><div metal:define-slot="element_controls">&nbsp;</div></td>
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_controls" tal:omit-tag="" />
-<div metal:use-macro="container/macro_helpers/macros/element_buttons" />
+<div metal:use-macro="container/macro_helpers/macros/empty_buttons" />
 </tr>
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_end" tal:omit-tag="" />
 </table>
