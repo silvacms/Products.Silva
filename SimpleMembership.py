@@ -115,7 +115,12 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
                               'default_editor')
     def default_editor(self):
         """Return the id of the default editor"""
-        return 'field editor'
+        try:
+            from Products import kupu
+        except ImportError:
+            return 'field editor'
+        else:
+            return 'kupu'
 
 Globals.InitializeClass(SimpleMember)
 
