@@ -39,7 +39,7 @@
     &nbsp;
     </tal:block>
     <tal:block condition="silva_permissions/ChangeSilvaContent">
-    &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value="Import..." title="Import XML data" />&nbsp;&nbsp;
+    &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data" />&nbsp;&nbsp;&nbsp;
     <select name="meta_type"
       tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value.replace(' ', '+')">
       <option value="" disabled>Select...</option>
@@ -229,16 +229,17 @@
     <span tal:condition="python:item.get_modification_datetime() != None"
       tal:replace="structure python:view.service_utils.backend_short_datetime_to_str(item.get_modification_datetime())">21 oct 2001 18:18</span>
     <span tal:condition="python:item.get_modification_datetime() == None" tal:omit-tag="">
-<a class="graylink" title="Down to Publish tab of publication"
-  tal:attributes="href string:${item/absolute_url}/edit/tab_status">
-<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" alt="Down to Publish tab of folder" /></a>
-</span>
+    &nbsp;
+    </span>
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
   <td>
     <span tal:content="python:item.sec_get_last_author_info()['cn']">
     author&nbsp;name</span>
-    <span tal:condition="python:item.sec_get_last_author_info()['cn'] == ''">&nbsp;</span>
+    <span tal:condition="python:item.sec_get_last_author_info()['cn'] == ''">
+      <a class="graylink" title="Down to Publish tab of container"
+        tal:attributes="href string:${item/absolute_url}/edit/tab_status">Publish</a>
+    </span>
   </td>
   <span tal:replace="nothing"> _______ shift _______ </span>
   <td width="36px" align="right" tal:condition="silva_permissions/ApproveSilvaContent">
@@ -262,7 +263,7 @@ There are no active content objects in this folder.
 </td>
 </tr>
 
-<span tal:replace="nothing"> ______________ deactivate + move + P <-> F ______________ </span>
+<span tal:replace="nothing"> ______________ deactivate + move ______________ </span>
 <tr class="controls-cycle"
   tal:condition="python:len(publishables)">
   <td colspan="8">
@@ -441,7 +442,7 @@ There are no active content objects in this folder.
   </tal:block>
   <tal:block condition="python:request.has_key('__cp') and silva_permissions['ChangeSilvaContent']">
   &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste:method" value="Paste" title="Paste items" />
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste_to_ghost:method" value="Paste as ghost" title="Paste (items on clipboard) as ghost objects" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste_to_ghost:method" value="Paste ghost" title="Paste (items on clipboard) as ghost objects" />
   </tal:block>
   </td>
 </tr>

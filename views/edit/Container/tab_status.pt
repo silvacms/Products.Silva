@@ -24,7 +24,7 @@
                   border container/table_border">
 <tr class="topcontrols">
 <td align="left" colspan="6">
-<input class="button" type="submit" name="tab_status_export:method" value="Export all..." title="Export all items in this overview" style="float:right;"/>
+<input class="button" type="submit" name="tab_status_export:method" value=" Export all..." title="Export all items in this overview" style="float:right;"/>
 <a href="treelink" title="Up to containing publication"
   tal:condition="python:model != model.get_root()"
   tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/tab_status'">
@@ -46,7 +46,7 @@
 <th align="left">Preview</th>
 <th align="right" width="12%" nowrap="1">New&nbsp;version<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="8" border="0" /></th>
 <th align="left" width="9%">Publish&nbsp;date&nbsp;</th>
-<th align="right" width="8%">Doc&nbsp;</th>
+<th align="right" width="8%">Public&nbsp;</th>
 </tr>
 
 <span tal:replace="nothing"> ______________ local default row ______________ </span>
@@ -341,7 +341,7 @@ function toggleSelect() {
 &nbsp;
 <input class="button" type="submit" name="tab_status_revoke:method" value="Revoke approval" title="Withdraw approval of new versions" />
 &nbsp;
-<input class="warningbutton" type="submit" name="tab_status_close:method" value="Close" title="Close published items" />
+<input class="warningbutton" type="submit" name="tab_status_close:method" value="Close public" title="Close published items" />
 </td>
 
 <td align="right" colspan="3" nowrap="1">
