@@ -1,16 +1,23 @@
 #a -*- coding: utf-8 -*-
+# Python
 import os, sys, re
 from os.path import join
+from zipfile import ZipFile, BadZipfile
+
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
+# Zope
+from Products.ParsedXML.ParsedXML import ParsedXML
+from DateTime import DateTime
+# Silva
 from Products.Silva.Ghost import manage_addGhost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.Link import manage_addLink
-from Products.ParsedXML.ParsedXML import ParsedXML
-from DateTime import DateTime
+from Products.Silva.adapters import zipfileexport, archivefileimport, xmlsource
+from Products.Silva.Image import Image
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_xml_folder_export(self):
@@ -43,7 +50,6 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals('</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><content><default><auto_toc id="index"><metadata><set id="silva-content"><silva-content:maintitle>This is &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime type="datetime">', part8)
         self.assertEquals('</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:keywords/><silva-extra:lastauthor>test_user_1_</silva-extra:lastauthor><silva-extra:location>http://nohost/root/testfolder/testfolder2/index</silva-extra:location><silva-extra:modificationtime type="datetime">', part9)
         self.assertEquals('</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata></auto_toc></default></content></folder></content></folder></silva>', part10)
-
 
     def test_xml_ghost_export(self):
         testfolder = self.add_folder(
@@ -185,13 +191,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals('</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:keywords/><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:location>http://nohost/root/testfolder/testfolder2/test_link</silva-extra:location><silva-extra:modificationtime type="datetime">', part11)
         self.assertEquals('</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><url>http://www.snpp.com/</url></content></link></content></folder></content></folder></silva>', part12)
 
-    def test_zip_export(self):
-        from Products.Silva.silvaxml import xmlexport
-        from Products.Silva.adapters import zipfileexport
-        from Products.Silva.adapters import archivefileimport
-        from Products.Silva.Image import Image
-        from zipfile import ZipFile, BadZipfile
-        directory = os.getcwd()
+    def test_xml_folder_with_assets_export(self):
         testfolder = self.add_folder(
             self.root,
             'testfolder',
@@ -207,6 +207,35 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'test_link',
             'This is a test link, you insensitive clod!',
             'http://www.snpp.com/')
+        directory = os.getcwd()
+        zip_in = open(join(directory,'data','test.zip'))
+        adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
+        succeeded, failed = adapter.importArchive(zip_in)
+        get_transaction().commit(1)
+        # We just see if we can call the 'getXML()' on the xmlsource adapter
+        # without failure. This will test/prove that we *do* need to provide
+        # an ExportInfo object to the exporter.exportToString() in the
+        # xmlsource adapter.
+        adapted = xmlsource.getXMLSourceAdapter(testfolder)
+        self.assert_(adapted.getXML())
+
+    def test_zip_export(self):
+        testfolder = self.add_folder(
+            self.root,
+            'testfolder',
+            'This is <boo>a</boo> testfolder',
+            policy_name='Auto TOC')
+        testfolder2 = self.add_folder(
+            testfolder,
+            'testfolder2',
+            'This is &another; testfolder',
+            policy_name='Auto TOC')
+        manage_addLink(
+            testfolder2,
+            'test_link',
+            'This is a test link, you insensitive clod!',
+            'http://www.snpp.com/')
+        directory = os.getcwd()
         zip_in = open(join(directory,'data','test.zip'))
         adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
         succeeded, failed = adapter.importArchive(zip_in)
