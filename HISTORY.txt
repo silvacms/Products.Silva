@@ -3,6 +3,17 @@ See also LICENSE.txt
 
 Silva changes
 
+  Under development
+
+    Bugs fixed
+
+         - Fixed two issues with the SQLDataSource and integer fields: 
+          the code doesn't try to convert the contents of the field to
+          unicode anymore if it's not a plain string (fails with integers)
+          and the code doesn't change the contents of the field to '' 
+          anymore when it's something else than None (previously it checked
+          whether it resolved to true instead of checking for None).
+
   0.9.2.2
 
     Bugs Fixed
