@@ -28,8 +28,12 @@ def initializeXMLExportRegistry():
     from Products.Silva.AutoTOC import AutoTOC
     from Products.Silva.Indexer import Indexer
     exporter = theXMLExporter
-    exporter.registerNamespace('silva-content', 'http://infrae.com/namespaces/metadata/silva')
-    exporter.registerNamespace('silva-extra', 'http://infrae.com/namespaces/metadata/silva-extra')
+    exporter.registerNamespace(
+        'silva-content',
+        'http://infrae.com/namespaces/metadata/silva')
+    exporter.registerNamespace(
+        'silva-extra',
+        'http://infrae.com/namespaces/metadata/silva-extra')
     exporter.registerProducer(SilvaExportRoot, SilvaExportRootProducer)
     exporter.registerProducer(Folder, FolderProducer)
     exporter.registerProducer(Link, LinkProducer)
@@ -57,7 +61,8 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
         set_ids.sort()
         for set_id in set_ids:
             prefix, namespace = binding.collection[set_id].getNamespace()
-            if namespace != 'http://infrae.com/namespaces/metadata/silva' and namespace != 'http://infrae.com/namespaces/metadata/silva-extra':
+            if (namespace != 'http://infrae.com/namespaces/metadata/silva' and
+                namespace != 'http://infrae.com/namespaces/metadata/silva-extra'):
                 self.handler.startPrefixMapping(prefix, namespace)
             self.startElement('set', {'id': set_id})
             keys = binding._getData(set_id).keys()
@@ -371,12 +376,19 @@ class SilvaExportRoot:
         
 class SilvaExportRootProducer(xmlexport.BaseProducer):
     def sax(self):
-        self.startElement('silva', {'datetime': self.context.getDateTime().HTML4(), 'path': '/'.join(self.context.getExportable().getPhysicalPath()), 'url': self.context.getExportable().absolute_url(), 'silva_version': self.context.getSilvaProductVersion()})
+        self.startElement(
+            'silva',
+            {'datetime': self.context.getDateTime().HTML4(),
+             'path': '/'.join(self.context.getExportable().getPhysicalPath()),
+             'url': self.context.getExportable().absolute_url(),
+             'silva_version': self.context.getSilvaProductVersion()})
         self.subsax(self.context.getExportable())
         self.endElement('silva')
         
 class ExportSettings(xmlexport.BaseSettings):
-    def __init__(self, asDocument=True, outputEncoding='utf-8', workflow=True, allVersions=True, withSubPublications=True, otherContent=True):
+    def __init__(self, asDocument=True, outputEncoding='utf-8',
+                 workflow=True, allVersions=True,
+                 withSubPublications=True, otherContent=True):
         xmlexport.BaseSettings.__init__(self, asDocument, outputEncoding)
         self._workflow = workflow
         self._all_versions = allVersions
