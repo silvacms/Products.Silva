@@ -23,7 +23,7 @@
 
 <script tal:replace="nothing"> _______ cursor focus scripts _______ </script>
 <script type="text/javascript"
-  tal:condition="not:exists:template/focus_field">
+  tal:condition="python:location and location == 'Edit'">
   <!--
   function focusCursor() {
     if (document && document.focusbox && document.focusbox.data) {
@@ -33,7 +33,7 @@
   // -->
 </script>
 <script type="text/javascript"
-  tal:condition="exists:template/focus_field">
+  tal:condition="python:location and location == 'Add'">
   <!--
   function focusCursor() {
     if (document && document.focusbox && document.focusbox.field_object_id) {
@@ -61,7 +61,7 @@
 <body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
   tal:attributes="onload python: test(template.id == 'tab_edit_bxe',
                                  'BX_load(\'%s/bxe/bxe_config.xml\')' % (model.absolute_url()),
-                                 test(view.has_focus_box(template.id),
+                                 test(location and (location == 'Add' or location == 'Edit'),
                                  'focusCursor()',
                                  nothing))">
     <tal:block replace="nothing">Previous onload tests facilitate Bitflux editor support</tal:block>
