@@ -351,7 +351,7 @@
                     <td>
                       <a class="image"
                         tal:attributes="
-                          href string:${asset_url}/edit/tab_edit;
+                          href python:here.get_editor_link(asset);
                           title asset/meta_type;">
                         <img tal:replace="structure python:view.render_icon(asset)" />
                       </a>
