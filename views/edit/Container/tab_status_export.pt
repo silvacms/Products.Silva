@@ -48,7 +48,8 @@
           ______________ export feedback ______________
         </span>
         <div class="feedback">
-          <b><span i18n:translate="items_selected_for_export">Items to export</span>:</b><br />
+          <span class="subhead"
+            i18n:translate="items_selected_for_export">items to export:</span><br />
           <table width="100%" border="0">
             <tr tal:repeat="ref refs">
               <tal:block define="obj python: request['model'].resolve_ref(ref); path python: '/'.join(obj.getPhysicalPath())">
@@ -148,7 +149,7 @@
                   />
                 </td>
                 <td i18n:translate="if_not_checked_the_published_version_is_exported">
-                  If not checked the published version is exported
+                  If not checked the published version is exported.
                 </td>
               </tr>
 
@@ -166,7 +167,7 @@
                   />
                 </td>
                 <td i18n:translate="check_to_include_closed_content">
-                  Check to include closed content in the export
+                  Check to include closed content in the export.
                 </td>
               </tr>
             </tbody>
@@ -295,7 +296,7 @@
           />
         </td>
         <td i18n:translate="if_not_checked_the_published_version_is_exported">
-          If not checked the published version is exported
+          If not checked the published version is exported.
         </td>
       </tr>
 
@@ -313,7 +314,7 @@
           />
         </td>
         <td i18n:translate="check_to_include_closed_content">
-          Check to include closed content in the export
+          Check to include closed content in the export.
         </td>
       </tr>
 

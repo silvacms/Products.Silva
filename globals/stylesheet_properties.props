@@ -108,7 +108,7 @@ inputBackground:string=#d5e7e7
 inputBorder:string=1px solid #797f7f
 
 buttonWeight:string=normal
-controlBackground:string=#afcccf
+controlBackground:string=#b8c9da
 
 standaloneButtonBackground:string=#556474
 standaloneButtonPadding:string=0em

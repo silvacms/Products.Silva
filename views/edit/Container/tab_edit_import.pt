@@ -116,7 +116,7 @@
           />
         </td>
         <td i18n:translate="choose_xml_file_to_import">
-          Choose an XML file to import (must be valid Silva XML)
+          Choose an XML file to import (must be valid Silva XML).
         </td>
       </tr>
 
@@ -196,14 +196,14 @@
           />
         </td>
         <td i18n:translate="choose_archive_file_to_import">
-          Choose an zip file to import and convert to Assets
+          Choose a zip file to import and convert to Assets.
         </td>
       </tr>
 
       <tr class="odd">
         <td class="align-right">
           <span i18n:translate="file_to_upload">
-            title for all assets
+            title for assets
           </span>
         </td>
         <td>
@@ -215,8 +215,8 @@
           />
         </td>
         <td i18n:translate="choose_archive_file_to_import">
-          Optionally provide a title for all Assets which will be created
-          for the contents of the zip file.
+          Provide a title for all Assets created
+          from the contents of the zip file (optional).
         </td>
       </tr>
 
@@ -234,10 +234,10 @@
           />
           <input class="button"
             type="submit"
-            value="import"
+            value="import zip"
             name="import_archive_file:method"
-            title="access key: alt-j"
-            accesskey="j"
+            title="access key: alt-z"
+            accesskey="z"
             i18n:attributes="value title"  
           />
         </td>
@@ -290,7 +290,7 @@
       <tr class="top-controls">
         <td colspan="3">
           <h3 i18n:translate="upload_word_document">
-            upload MSWord document (.doc)
+            upload MSWord document (.doc) for conversion
           </h3>
         </td>
       </tr>
