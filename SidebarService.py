@@ -89,9 +89,9 @@ class SidebarService(SimpleItem):
         url_pos = template.rfind('%s/edit/{__vein_id__}' % focused_url)
         # this requires the class to ALWAYS be before the url
         class_pos = template.rfind('{__class__}', 0, url_pos)
-        template = template[:class_pos] + 'odd' + template[class_pos + 11:]
+        template = template[:class_pos] + 'selected' + template[class_pos + 11:]
 
-        template = template.replace('{__class__}', 'even')
+        template = template.replace('{__class__}', 'unselected')
         template = template.replace('{__vein_id__}', tab_name)
         template = template.replace('{__breadcrumb_vein__}', breadcrumb_vein)
 
