@@ -146,7 +146,7 @@ _______ application specific stylesheet extension _______
   tal:attributes="href view/extension_style_url"
 />
 <script tal:replace="nothing">
-_______ editor hooks _______
+  _______ editor hooks _______
 </script>
 <script language="JavaScript"
   type="text/javascript"
