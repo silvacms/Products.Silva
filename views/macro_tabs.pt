@@ -14,30 +14,31 @@
   breadcrumb_vein breadcrumb_vein | nothing;
 ">
 <!-- Breadcrumbs -->
-  <div class="pathBar">
+  <div class="pathBar" style="height: 20px">
     <span style="float: right; margin-right: 5px;">
-    <a class="idea"
-      style="float: right;"
-      href="globals/reference"
-      title="Silva info: alt-|"
-      accesskey="|"
-    >
-      Silva
-    </a>
+      <a class="idea"      
+        href="globals/reference"
+        title="Silva info: alt-|"
+        accesskey="|"
+        >
+        Silva
+      </a>
     </span>
-    <a class="normal"
-      href=""
-      title="Silva top: alt-/"
-      accesskey="/"
-      tal:attributes="href string:${root_url}/edit/tab_edit"
-    >
-      <img alt="Silva emblem"
-        height="16"
-        width="16"
-        border="0"
-        tal:attributes="src string:${root_url}/globals/silva.gif"
-      />
-    </a>
+    <span style="margin-right: 5px;">
+      <a class="normal"
+        href=""
+        title="Silva top: alt-/"
+        accesskey="/"
+        tal:attributes="href string:${root_url}/edit/tab_edit"
+        >
+        <img alt="Silva emblem"
+          height="16"
+          width="16"
+          border="0"
+          tal:attributes="src string:${root_url}/globals/silva.gif"
+        />
+      </a>
+    </span>
 
     <span tal:replace="breadcrumb_vein">
       Vein
@@ -49,7 +50,7 @@
         accesskey="h"
         tal:content="structure item/get_title_html"
         tal:attributes="href string:${item/absolute_url}/edit/${template/id}"
-      >
+        >
         Name
       </a>
 
