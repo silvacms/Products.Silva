@@ -236,7 +236,6 @@
          
   <xsd:simpleType name="ListType">
     <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="bullet" />
       <xsd:enumeration value="disc" />
       <xsd:enumeration value="circle" />
       <xsd:enumeration value="square" />
@@ -305,6 +304,14 @@
 
 
   <!-- NewsItem -->
+
+  <xsd:complexType name="SilvaNewsitemLink">
+    <xsd:sequence>
+      <xsd:element name="url" type="xsd:string" minOccurs="1" />
+      <xsd:element name="text" type="xsd:string" minOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+
   
   <xsd:complexType name="SilvaNewsitem" abstract="true">
     <xsd:sequence>
@@ -313,9 +320,10 @@
       <xsd:element name="subject" type="xsd:string" maxOccurs="unbounded" />
       <xsd:element name="target_audience" type="xsd:string" 
         maxOccurs="unbounded" />
-      <xsd:element name="embargo_datetime" type="xsd:token" />
-      <xsd:element name="link" type="Link" minOccurs="0" maxOccurs="unbounded" />
-      <xsd:element name="content">
+      <xsd:element name="embargo_datetime" type="xsd:token" minOccurs="0"/>
+      <xsd:element name="link" type="SilvaNewsitemLink" 
+        minOccurs="0" maxOccurs="unbounded" />
+       <xsd:element name="content">
         <xsd:complexType>
           <xsd:sequence>
             <xsd:element name="doc" type="DocumentContent" minOccurs="1"/>
@@ -383,10 +391,10 @@
   
    <xsd:complexType name="EUROration">
     <xsd:complexContent>
-      <xsd:extension base="SilvaNewsitem">
+      <xsd:extension base="EURAgendaItem">
         <xsd:sequence>
           <xsd:element name="subheader" type="xsd:string" />
-          <xsd:element name="PRESSheader" type="xsd:string" />
+          <xsd:element name="pressheader" type="xsd:string" />
           <xsd:element name="academic" type="xsd:string" />
           <xsd:element name="chair" type="xsd:string" />
           <xsd:element name="lead" type="xsd:string" />
@@ -415,7 +423,7 @@
 
    <xsd:complexType name="EURValidictoryLecture">
     <xsd:complexContent>
-      <xsd:extension base="SilvaNewsitem">
+      <xsd:extension base="EURAgendaItem">
         <xsd:sequence>
           <xsd:element name="subheader" type="xsd:string" />
           <xsd:element name="pressheader" type="xsd:string" />
