@@ -29,9 +29,6 @@ class IRenderer(Interface):
     def render(obj):
         """Renders obj; returns the rendering as a string."""
 
-    def getName():
-        """Return the human-readable name of this renderer."""
-
 class IRendererRegistry(Interface):
     """I'm implemented by something that tracks the existence of
     renderers, and the meta types to which they can be applied."""

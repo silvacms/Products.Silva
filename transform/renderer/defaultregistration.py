@@ -8,14 +8,15 @@ except ImportError:
 from Products.Silva.transform.rendererreg import getRendererRegistry
 
 def registerDefaultRenderers():
-    
-    
+
     # don't register XSLT related renderers if no XSLT is installed
     if NO_XSLT:
         return
     
-    from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
-    from Products.Silva.transform.renderer.basicxsltrenderer import BasicXSLTRenderer
+    from Products.Silva.transform.renderer.imagesonrightrenderer import\
+         ImagesOnRightRenderer
+    from Products.Silva.transform.renderer.basicxsltrenderer import\
+         BasicXSLTRenderer
     
     reg = getRendererRegistry()
     
@@ -29,4 +30,3 @@ def registerDefaultRenderers():
         'Images on Right',
         ImagesOnRightRenderer())
 
-        

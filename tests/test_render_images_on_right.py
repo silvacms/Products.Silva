@@ -25,10 +25,6 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         except (BrokenImplementation, DoesNotImplement, BrokenMethodImplementation):
             self.fail("ImagesOnRightRenderer does not implement IRenderer")
 
-    def test_get_renderer_name(self):
-        images_on_right = ImagesOnRightRenderer()
-        self.assertEquals(images_on_right.getName(), "Images on Right")
-
     def test_renders_images_on_right(self):
         importfolder = self.add_folder(
             self.root,

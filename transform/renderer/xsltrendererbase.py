@@ -35,7 +35,6 @@ class XSLTRendererBase(Acquisition.Implicit):
     security.declareObjectPublic()
 
     def __init__(self):
-        self._name = ''
         self._stylesheet_path = None
         self._stylesheet = None
         self._error_handler = ErrorHandler()
@@ -82,10 +81,6 @@ class XSLTRendererBase(Acquisition.Implicit):
         result.freeDoc()
 
         return result_string
-
-    security.declareProtected("View", "getName")
-    def getName(self):
-        return self._name
 
     def _generateXSLTPath(self, path):
         """generate a path to the xslt file in a form that libxslt understands"""

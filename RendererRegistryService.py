@@ -10,6 +10,8 @@ from Products.Silva.transform.rendererreg import getRendererRegistry
 import SilvaPermissions
 from helpers import add_and_edit
 
+OLD_STYLE_RENDERER = 'Do not use new-style renderer'
+
 class RendererRegistryService(SimpleItem.SimpleItem):
     """An addable Zope product which registers information
     about content renderers."""
@@ -40,58 +42,83 @@ class RendererRegistryService(SimpleItem.SimpleItem):
         "www/serviceRendererRegistryDefaultRenderersEdit", globals())
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getFormRenderersList')
-    def getFormRenderersList(self, meta_type):
-        result = ['(Default)']
-        for renderer_name in self.getRendererNamesForMetaType(meta_type):
-            result.append(renderer_name)
-        return result
-    
-    security.declareProtected(
         SilvaPermissions.ViewManagementScreens, 'manage_editDefaultRenderers')
     def manage_editDefaultRenderers(self, REQUEST=None):
         """Save the changes to the default renderers."""
 
         for meta_type in self.getRegisteredMetaTypes():
             field_name = meta_type.replace(" ", "_")
-            self.registerDefaultRenderer(meta_type, REQUEST.get(field_name, None))
+            self.registerDefaultRenderer(
+                meta_type,
+                REQUEST.get(field_name, None))
 
         return self.manage_default_renderers()
 
-    def registerDefaultRenderer(self, meta_type, renderer_name):
-        if renderer_name == '(None)':
-            renderer_name = None
-        self._default_renderers[meta_type] = renderer_name
-        self._p_changed = 1
+    security.declarePublic('getFormRenderersList')
+    def getFormRenderersList(self, meta_type):
+        return ['(Default)'] + self.getRendererNamesForMetaType(meta_type)
        
+    security.declarePublic('doesRendererExistForMetaType')
+    def doesRendererExistForMetaType(self, meta_type, renderer_name):
+        """Returns true if a renderer is registered for a meta type.
+
+        Rendererer is always known if it's old style.
+        """
+        d = self._getRendererDict(meta_type)
+        if d is None:
+            return False
+        if renderer_name == OLD_STYLE_RENDERER:
+            return True
+        return d.has_key(renderer_name)
+    
     security.declarePrivate('getRenderer')
     def getRenderer(self, meta_type, renderer_name):
         """Get renderer registered for meta_type/renderer_name combination.
 
         If renderer_name is None, the default renderer name is looked up
         first.
+
+        If renderer name is the old style renderer, None is returned,
+        triggering a fall-back onto the old style renderer.
         
         If no renderers can be found for meta_type, or specifically named
-        renderer cannot be found for this meta_type, None is returned.
+        renderer cannot be found for this meta_type, None is returned,
+        triggering the fall-back as well.
         """
+        if renderer_name == OLD_STYLE_RENDERER:
+            return None
         if renderer_name is None:
             renderer_name = self._default_renderers.get(meta_type)
         renderer_dict = self._getRendererDict(meta_type)
         if renderer_dict is None:
             return None
         return renderer_dict.get(renderer_name)
-              
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
+
+    security.declareProtected(
+        SilvaPermissions.ViewManagementScreens, 'registerDefaultRenderer')
+    def registerDefaultRenderer(self, meta_type, renderer_name):
+        if renderer_name == '(Default)':
+            renderer_name = None
+        self._default_renderers[meta_type] = renderer_name
+        self._p_changed = 1
+ 
+    security.declareProtected(SilvaPermissions.ViewManagementScreens, 
         "getRendererNamesForMetaType")
     def getRendererNamesForMetaType(self, meta_type):
         """Get a list of all renderer names registered for meta_type.
+
+        Returns the empty list if no renderers are registered at all.
+        Always adds the old style renderer otherwise.
         """
         # XXX sorting alphabetically, might want to order this explicitly
         renderer_names = self._getRendererDict(meta_type, {}).keys()
+        if not renderer_names:
+            return []
         renderer_names.sort()
+        renderer_names = [OLD_STYLE_RENDERER] + renderer_names
         return renderer_names
    
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
+    security.declareProtected(SilvaPermissions.ViewManagementScreens, 
         "getRendererNamesForMetaType")
     def getRegisteredMetaTypes(self):
         """Get a list of all meta types that have renderers registered.
@@ -100,17 +127,14 @@ class RendererRegistryService(SimpleItem.SimpleItem):
         meta_types.sort()
         return meta_types
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-        "getDefaultRendererNameForMetaType")
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+         "getDefaultRendererNameForMetaType")
     def getDefaultRendererNameForMetaType(self, meta_type):
         """Get the default renderer registered for the meta type.
         
         If no default renderer is registered return None.
         """
         return self._default_renderers.get(meta_type)
-
-    def doesRendererExistForMetaType(self, meta_type, renderer_name):
-        return self._getRendererDict(meta_type, {}).has_key(renderer_name)
     
     # PRIVATE
     def _getRendererDict(self, meta_type, default=None):
