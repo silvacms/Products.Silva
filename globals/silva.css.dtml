@@ -641,13 +641,25 @@ textarea {
   text-transform: none;
 }
 
+input.store, select.store {
+  font: &dtml-inputFont;;
+  color : &dtml-inputFontColor;;
+  background : &dtml-inputBackground;;
+  width: 90%;
+  margin-top: 1px;
+  margin-bottom: 1px; /* IE bug fix */
+  padding: 0.1em;
+  border: &dtml-inputBorder;;
+}
+
 /* 
 * the selector works only for standard compatible browsers like mozilla, so
 * IE ignore this definition below
 */
-td>textarea.expand, td>input.expand[type=text] {
+td>input.store, td>textarea.store, td>select.store {
   width: 100%;
 }
+
 textarea.readable {
   font: 100% Verdana, Helvetica, Arial, sans-serif;
 }
@@ -665,6 +677,11 @@ select {
     font: &dtml-inputFont;;
   font-size: 90%;
   line-height : 96%;
+}
+
+select.store {
+  font-size: 90%;
+  line-height: 96%;
 }
 
 select.transport {
