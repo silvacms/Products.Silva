@@ -25,6 +25,8 @@ class SidebarService(SimpleItem):
         {'label':'Edit', 'action':'manage_sidebarServiceEditTab'},
         ) + SimpleItem.manage_options
 
+    security.declareProtected(
+        'View management screens', 'manage_sidebarServiceEditTab')
     manage_sidebarServiceEditTab = PageTemplateFile(
         'www/sidebarServiceEditTab', globals(), 
         __name__='manage_sidebarServiceEditTab')
@@ -46,8 +48,7 @@ class SidebarService(SimpleItem):
             self.cache_container_id = id
             msg = 'Id changed'
 
-        return self.manage_sidebarServiceEditTab(
-            manage_tabs_message=msg)
+        return self.manage_sidebarServiceEditTab(manage_tabs_message=msg)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render')
