@@ -1,6 +1,6 @@
 
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -10,14 +10,17 @@ import SilvaTestCase
 from Products.Silva.adapters import subscribable
 from Products.Silva import MAILHOST_ID, MAILDROPHOST_AVAILABLE
 
-import mocksmtpserver
+import mocksmtpserver,asyncore
 
 if MAILDROPHOST_AVAILABLE:
     from Testing import ZopeTestCase
     ZopeTestCase.installProduct('MaildropHost')
 
 from Products.Silva import subscriptionerrors as errors    
-    
+   
+def _patched_send(*args, **kwargs):
+    return
+   
 class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
     """Test the Subscription Service.
     """
@@ -27,15 +30,13 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         self.folder = self.add_folder(self.root, 'folder', u'Test Folder')
         self.ghost = self.add_ghost(self.root, 'ghost', 'contenturl')
         self.link = self.add_link(self.root, 'link', u'Test Link', 'url')
-        # will be used by Mail(drop)Host
-        #self.smtpserver = mocksmtpserver.MockSMTPServer()
-        #mailhostservice = getattr(self.root, MAILHOST_ID)
-        #mailhostservice.smtp_host = 'localhost'
-        #mailhostservice.smtp_port = 8025
+        mailhost = self.root[MAILHOST_ID]
+        self._old_send = mailhost._send
+        mailhost._send = _patched_send
     
     def beforeTearDown(self):
-        #self.smtpserver.close()
-        pass
+        mailhost = self.root[MAILHOST_ID]
+        mailhost._send = self._old_send
 
     def test_requestSubscription(self):
         # XXX only test the exception-raising code paths, since I don't
