@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.15 $
+$Revision: 1.16 $
 
 Silva changes
 
@@ -10,6 +10,8 @@ Silva changes
 
       - A Silva File object to store arbitrary file in either ZODB or on
         the filesystem.
+
+      - Improved Access tab user interface.
 
       - First implementation of group access. Groups can be assigned
         local roles and managed from Silva. The groups system is only
