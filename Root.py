@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.52 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -70,13 +70,15 @@ class Root(Publication):
         """
         return self.aq_inner
 
-    # FIXME: should be renamed to something else, indicating we get a url
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'silva_root')
-    def silva_root(self):
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_root_url')
+    def get_root_url(self):
         """Get url of root of site.
         """
         return self.aq_inner.absolute_url()
+
+    # FIXME: Being deprecated, will be deleted in the near future
+    silva_root = get_root_url
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
