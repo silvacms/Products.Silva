@@ -150,7 +150,7 @@
                 tal:attributes="
                   class obj/status_style | default;
                   href string:${obj_url}/edit/tab_preview;
-                  title string:preview ${obj/id};
+                  title python:here.tab_status_get_preview_title(obj['id']);
                   ">
                 <tal:block condition="obj/is_default | nothing">
                   <em i18n:translate="">
