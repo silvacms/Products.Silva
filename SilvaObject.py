@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.111 2005/01/20 13:55:26 jw Exp $
+# $Id: SilvaObject.py,v 1.112 2005/03/10 21:31:59 clemens Exp $
 
 # python
 from types import StringType
@@ -473,7 +473,7 @@ class SilvaObject(Security, ViewCode):
 
     def HEAD(self, REQUEST, RESPONSE):
         """ assumes the content type is text/html;
-            override HEAD for clases where this is wrong!
+            override HEAD for classes where this is wrong!
         """
         mod_time = rfc1123_date ( self.get_modification_datetime() )
         RESPONSE.setHeader('Content-Type', 'text/html')
