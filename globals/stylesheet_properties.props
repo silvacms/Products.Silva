@@ -49,8 +49,8 @@ mainLinkColor:string=#384798
 pathBarBackground:string=#2b303a
 
 mainTabBackdrop:string=#7b90a6
-mainTabBackground:string=#848bb4
-mainTabBackgroundDark:string=#7a8ea6
+mainTabBackground:string=#7a83a6
+mainTabBackgroundTwilight:string=#848bb4
 mainTabBackgroundRecede:string=#9baec9
 mainTabBackgroundSelected:string=#afc5db
 mainTabBackgroundSelectedMatch:string=#a9bbe6
@@ -112,19 +112,19 @@ inputBorder:string=1px solid #797f7f
 buttonWeight:string=normal
 controlBackground:string=#afcccf
 
-standaloneButtonBackground:string=#3f4a74
+standaloneButtonBackground:string=#27324f
 standaloneButtonPadding:string=0.1em 0em 0em 0em
-standaloneButtonBorder:string=1px solid #99b4cf
+standaloneButtonBorder:string=1px solid #848fb3
 standaloneButtonFontColor:string=#d9f3f1
 
-contextButtonBackground:string=#397456
+contextButtonBackground:string=#2d5b44
 contextButtonPadding:string=0.1em 0em 0em 0em
-contextButtonBorder:string=1px solid #99cfb5
+contextButtonBorder:string=1px solid #709c88
 contextButtonFontColor:string=#d9f3e2
 
-destructiveButtonBackground:string=#397374
+destructiveButtonBackground:string=#2d5b5b
 destructiveButtonPadding:string=0em 2em 0.1em 2em
-destructiveButtonBorder:string=1px solid #cdb1a3
+destructiveButtonBorder:string=1px solid #a79085
 destructiveButtonFontColor:string=#e6c7b8
 
 cancelButtonBackground:string=#666668
