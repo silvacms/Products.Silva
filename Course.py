@@ -6,6 +6,7 @@ from DateTime import DateTime
 from Globals import InitializeClass
 import SilvaPermissions
 # Silva
+from EditorSupport import EditorSupport
 from VersionedContent import VersionedContent
 import Interfaces
 from Products.ParsedXML.ParsedXML import ParsedXML
@@ -14,7 +15,7 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from helpers import add_and_edit
 from cgi import escape
 
-class Course(VersionedContent):
+class Course(VersionedContent, EditorSupport):
     """Silva Course.
     """
     security = ClassSecurityInfo()

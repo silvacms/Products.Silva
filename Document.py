@@ -7,13 +7,13 @@ import SilvaPermissions
 
 # Silva
 from VersionedContent import VersionedContent
-import ForgivingParser
 import Interfaces
+from EditorSupport import EditorSupport
+
 # misc
 from helpers import add_and_edit
-from cgi import escape
 
-class Document(VersionedContent):
+class Document(VersionedContent, EditorSupport):
     """Silva Document.
     """
     security = ClassSecurityInfo()
@@ -162,146 +162,6 @@ class Document(VersionedContent):
  #       folder = self.to_folder()
  #       # paste stuff into the folder
  #       folder.action_paste(REQUEST)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'render_text_as_html')
-    def render_text_as_html(self, node):
-        """Render textual content as HTML.
-        """
-        result = []
-        for child in node.childNodes:
-            if child.nodeType == child.TEXT_NODE:
-                result.append(escape(child.data, 1))
-                continue
-            if child.nodeType != child.ELEMENT_NODE:
-                continue
-            if child.nodeName == 'strong':
-                result.append('<strong>')
-                for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
-                result.append('</strong>')
-            elif child.nodeName == 'em':
-                result.append('<em>')
-                for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
-                result.append('</em>')
-            elif child.nodeName == 'link':
-                result.append('<a href="%s">' %
-                              escape(child.getAttribute('url'), 1))
-                for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
-                result.append('</a>')
-            elif child.nodeName == 'ref':
-                result.append('<a name="%s">' %
-                              escape(child.getAttribute('name'), 1))
-                for subchild in child.childNodes:
-                    result.append(escape(subchild.data, 1))
-                result.append('</a>')
-            else:
-                raise "Unknown element: %s" % child.nodeName
-        return ''.join(result)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'render_text_as_editable')
-    def render_text_as_editable(self, node):
-        """Render textual content as editable text.
-        """
-        result = []
-        for child in node.childNodes:
-            if child.nodeType == child.TEXT_NODE:
-                result.append(child.data)
-                continue
-            if child.nodeType != child.ELEMENT_NODE:
-                continue
-            if child.nodeName == 'strong':
-                result.append('**')
-                for subchild in child.childNodes:
-                    result.append(subchild.data)
-                result.append('**')
-            elif child.nodeName == 'em':
-                result.append('++')
-                for subchild in child.childNodes:
-                    result.append(subchild.data)
-                result.append('++')
-            elif child.nodeName == 'link':
-                result.append('__')
-                for subchild in child.childNodes:
-                    result.append(subchild.data)
-                result.append('|')
-                result.append(child.getAttribute('url'))
-                result.append('__')
-            elif child.nodeName == 'ref':
-                result.append('[[')
-                for subchild in child.childNodes:
-                    result.append(subchild.data)
-                result.append('|')
-                result.append(child.getAttribute('name'))
-                result.append(']]')
-            else:
-                raise "Unknown element: %s" % child.nodeName
-
-        return ''.join(result)
-    
-    _strongStructure = ForgivingParser.Structure(['**', '**'])
-    _emStructure = ForgivingParser.Structure(['++', '++'])
-    _linkStructure = ForgivingParser.Structure(['__', '|', '__'])
-    _refStructure = ForgivingParser.Structure(['[[', '|', ']]'])
-    
-    _parser = ForgivingParser.ForgivingParser([
-        _strongStructure,
-        _emStructure,
-        _linkStructure,
-        _refStructure])
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'replace_text')
-    def replace_text(self, node, text):
-        """Replace text in a text containing node.
-        """
-        #text = escape(text, 1)
-        
-        # parse the data
-        result = self._parser.parse(text)
-
-        # get actual DOM node
-        node = node._node
-        doc = node.ownerDocument
-        
-        # remove all old subnodes of node
-        # FIXME: hack to make copy of all childnodes
-        children = [child for child in node.childNodes]
-        children.reverse()  
-        for child in children:
-            node.removeChild(child)
-            
-        # now use tokens in result to add them to XML
-        for structure, data in result:
-            if structure is None:
-                # create a text node, data is plain text
-                newnode = doc.createTextNode(data)
-                node.appendChild(newnode)
-            elif structure is Document._strongStructure:
-                newnode = doc.createElement('strong')
-                newnode.appendChild(doc.createTextNode(data[0]))
-                node.appendChild(newnode)
-            elif structure is Document._emStructure:
-                newnode = doc.createElement('em')
-                newnode.appendChild(doc.createTextNode(data[0]))
-                node.appendChild(newnode)
-            elif structure is Document._linkStructure:
-                link_text, link_url = data
-                newnode = doc.createElement('link')
-                newnode.appendChild(doc.createTextNode(link_text))
-                newnode.setAttribute('url', link_url)
-                node.appendChild(newnode) 
-            elif structure is Document._refStructure:
-                ref_text, ref_name = data
-                newnode = doc.createElement('ref')
-                newnode.appendChild(doc.createTextNode(ref_text))
-                newnode.setAttribute('name', ref_name)
-                node.appendChild(newnode) 
-            else:
-                raise "Unknown structure: %s" % structure
 
 InitializeClass(Document)
 
