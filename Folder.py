@@ -149,6 +149,9 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def action_rename(self, orig_id, new_id):
         """Change id of object with id orig_id.
         """
+        # check if new_id is valid
+        if not self.is_id_valid(new_id):
+            return
         # check if renaming (which in essence is the deletion of a url)
         # is allowed
         if not self.is_delete_allowed(orig_id):
@@ -293,7 +296,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         else:
             return 1
 
-    _id_re = re.compile(r'^[a-zA-Z]\w*$')
+    _id_re = re.compile(r'^[a-zA-Z]\w*[a-zA-Z0-9]+$')
     
     def is_id_valid(self, id):
         """Check whether id is valid.

@@ -91,7 +91,7 @@ manage_addGhostVersionForm = PageTemplateFile("www/ghostversionAdd", globals(),
 
 def manage_addGhostVersion(self, id, content_url, REQUEST=None):
     """Add a Ghost version."""
-    if self.is_id_valid(id):
+    if not self.is_id_valid(id):
         return
     object = GhostVersion(id, content_url)
     self._setObject(id, object)
