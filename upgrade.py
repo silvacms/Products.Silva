@@ -8,11 +8,11 @@ def from09to091(self, root):
     """
     id = root.id
     # Put a copy of the current Silva Root in a backup folder.
-    backup_id = id + '_09'
-    self.manage_addFolder(backup_id)
-    cb = self.manage_copyObjects([id])
-    backup_folder = getattr(self, backup_id)
-    backup_folder.manage_pasteObjects(cb_copy_data=cb)
+    #backup_id = id + '_09'
+    #self.manage_addFolder(backup_id)
+    #cb = self.manage_copyObjects([id])
+    #backup_folder = getattr(self, backup_id)
+    #backup_folder.manage_pasteObjects(cb_copy_data=cb)
     # upgrade xml in the site
     upgrade_xml_09to091(root)
     # upgrade member objects in the site if they're still using the old system
@@ -168,10 +168,13 @@ def upgrade_list_titles_in_parsed_xml(top):
         if child.nodeName == 'image':
             if child.hasAttribute('image_id'):
                 id = child.getAttribute('image_id')
-                container = top.get_container()
-                image = getattr(container, id)
+                # XXX somehow, this way the image is not found...
+                image = getattr(top, id, None)
+                newpath = id
+                if image:
+                    newpath = unicode('/'.join(image.getPhysicalPath()))
                 child.removeAttribute('image_id')
-                child.setAttribute('path', unicode('/'.join(image.getPhysicalPath())))
+                child.setAttribute('path', newpath)
             elif child.hasAttribute('image_path'):
                 path = child.getAttribute('image_path')
                 newpath = path
@@ -184,7 +187,7 @@ def upgrade_list_titles_in_parsed_xml(top):
                             image = top.restrictedTraverse(path[1:].split('/'))
                             newpath = '/'.join(image.getPhysicalPath())
                         except:
-                            raise
+                            newpath = path 
                 child.removeAttribute('image_path')
                 child.setAttribute('path', newpath)
         if child.nodeName == 'table':
