@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: virtualhosting.py,v 1.2 2003/11/03 18:23:24 jw Exp $
+# $Id: virtualhosting.py,v 1.3 2003/11/04 20:13:01 faassen Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
@@ -55,12 +55,11 @@ class VirtualHostingAdapter(adapter.Adapter):
         return root
 
     def containsVirtualRoot(self):
-        """ Return true if object points to an object within
-        the context of a virtual host. False otherwise.
+        """Return true if object contains the current virtual host root.
         """
         root_path = self.getVirtualRootPhysicalPath()
         if root_path is None:
-            return 1
+            return 0
         object_path = self.context.getPhysicalPath()
         return pathContains(object_path, root_path)
 
