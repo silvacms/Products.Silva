@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.40 $
+# $Revision: 1.41 $
 
 # Zope
 from DateTime import DateTime
@@ -9,6 +9,7 @@ from Globals import InitializeClass
 import ExtensionClass
 # Silva
 import SilvaPermissions
+from Products.Silva import mangle
 
 from interfaces import IVersioning, IPublishable
 
@@ -756,11 +757,7 @@ class Versioning:
 
 
 def _format_date_helper(date):
-    # XXX cut & paste from service_utils/backend_datetime_to_str
-    return "%02d %s %04d %02d:%02d" % \
-           (date.day(), date.aMonth().lower(), date.year(),
-            date.hour(), date.minute() )
-
+    return mangle.DateTime(date).toStr()
 
 InitializeClass(Versioning)
 
