@@ -1,10 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
+# Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
+from DateTime import DateTime
 # Silva
 from helpers import add_and_edit
 import SilvaPermissions
@@ -30,7 +32,8 @@ class ExtensionService(SimpleItem.SimpleItem):
     def __init__(self, id, title):
         self.id = id
         self.title = title
-
+        self._refresh_datetime = DateTime()
+        
     # MANIPULATORS
 
     security.declareProtected('View management screens', 'install')
@@ -57,6 +60,7 @@ class ExtensionService(SimpleItem.SimpleItem):
         """
         self.uninstall(name)
         self.install(name)
+        self._refresh_datetime = DateTime()
         return self.manage_main(manage_tabs_message='%s refreshed' % name)
 
     security.declareProtected('View management screens', 'refresh_all')
@@ -117,6 +121,13 @@ class ExtensionService(SimpleItem.SimpleItem):
         root = self.aq_inner.aq_parent
         return extensionRegistry.is_installed(name, root)
 
+    security.declareProtected('View management screens',
+                              'get_refresh_datetime')
+    def get_refresh_datetime(self):
+        """Get datetime of last refresh.
+        """
+        return self._refresh_datetime
+    
 InitializeClass(ExtensionService)
 
 manage_addExtensionServiceForm = PageTemplateFile(

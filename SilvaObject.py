@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.63 2003/02/14 15:48:13 guido Exp $
+# $Id: SilvaObject.py,v 1.64 2003/02/15 20:34:22 faassen Exp $
 
 # python
 from types import StringType
@@ -197,7 +197,52 @@ class SilvaObject(Security):
         """Render this with the public view. If there is no viewable,
         should return something indicating this.
         """
-        return self.service_view_registry.render_view(view_type, self)
+        # XXX hack to make cache only work with view_type public
+        if view_type == 'public':
+            data = self._get_cached_data()
+            # if cached data was found, return it
+            if data is not None:
+                # print "fetched data from cache!", self.absolute_url()
+                return data
+        # okay, no data in cache, so render
+        data = self.service_view_registry.render_view(view_type, self)
+        # if we're cacheable, store data with datetime, otherwise erase cache
+        if self.is_cacheable():
+            self._cached_datetime = DateTime()
+            self._cached_data = data
+        else:
+            self._cached_data = None
+        # finally return rendered data
+        return data
+
+    def _get_cached_data(self):
+        # try to look for cached data
+        data = getattr(self.aq_base, '_cached_data', None)
+        # if we found no cached data, return
+        if data is None:
+            return data
+        # if the data was cached before last publication, we're
+        # out of date
+        # XXX introduces dependency on Versioning, move this?
+        _cached_datetime = getattr(self.aq_base, '_cached_datetime')
+        if _cached_datetime < self.get_public_version_publication_datetime():
+            self._cached_data = None
+            return None
+        # if the data was cached before the last refresh, we're out
+        # of date as well
+        if _cached_datetime < self.service_extensions.get_refresh_datetime():
+            self._cached_data = None
+            return None
+        # we can safely use the cached data
+        return data
+                
+    security.declareProtected(SilvaPermissions.View, 'is_cacheable')
+    def is_cacheable(self):
+        """Return true if the result of the view method can be safely
+        cached.
+        """
+        # by default nothing is safely cacheable
+        return 0
     
     # these help the UI that can't query interfaces directly
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 from ISecurity import ISecurity
 
 class ISilvaObject(ISecurity):
@@ -95,6 +95,12 @@ class ISilvaObject(ISecurity):
         """
         pass
 
+    def is_cacheable():
+        """Return true if the public view of this object can be safely cached.
+        This means the public view should not contain any dynamically
+        generated content.
+        """
+        
     def get_xml():
         """Render this object as XML, return as string in UTF-8 encoding.
         """

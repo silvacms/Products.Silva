@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.55 $
+# $Revision: 1.56 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -125,6 +125,15 @@ class Document(VersionedContent):
             return self.get_title()
         return self._metadata.get(name, None)
 
+    security.declareProtected(SilvaPermissions.View, 'is_cacheable')
+    def is_cacheable(self):
+        """Return true if this document is cacheable.
+        That means the document contains no dynamic elements like
+        code, datasource or toc.
+        """
+        # XXX hack, should check for dynamic content in public view
+        return 1
+        
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
     def to_xml(self, context):
