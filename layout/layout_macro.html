@@ -35,7 +35,7 @@
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <!-- Access navigation links - remove if not needed for better performance -->
-  <tal:block define="surround here/get_navigation_links | nothing">
+  <tal:block define="surround here/get_document_navigation_links | nothing">
     <tal:repeat repeat="link surround/keys">
      <tal:condition condition="python:surround[link] != '..'">
       <link tal:attributes="rel link; href python:surround[link].absolute_url()"
