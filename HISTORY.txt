@@ -9,6 +9,12 @@ Silva changes
 
       - Preliminary Epoz (NG) integration for SilvaDocument.
 
+    Bugs fixed
+
+      - When run with Python 2.3 (at the point of writing not yet
+        recommended by Infrae), suppress source code encoding warnings when
+        starting up.
+
   0.9.3.4
   
     Bugs fixed
