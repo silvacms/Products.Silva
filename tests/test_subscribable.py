@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -101,7 +101,7 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(expected, contexts)
         
     def test_getSubscriptions(self):
-        d = {'foo@bar.com':None, 'baz@bar.com':None, 'qux@bar.com':None}
+        d = {'foo@bar.baz':None, 'baz@bar.baz':None, 'qux@bar.baz':None}
         self.doc.__subscriptions__ = OOBTree(d)
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
@@ -118,7 +118,7 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
     def test_subscribe(self):
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
-        l = ['foo@bar.com', 'baz@bar.com', 'qux@bar.com']
+        l = ['foo@bar.baz', 'baz@bar.baz', 'qux@bar.baz']
         l.sort()
         for addr in l:
             subscr.subscribe(addr)
@@ -130,7 +130,7 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
     def test_unsubscribe(self):
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
-        d = {'foo@bar.com':None, 'baz@bar.com':None, 'qux@bar.com':None}
+        d = {'foo@bar.baz':None, 'baz@bar.baz':None, 'qux@bar.baz':None}
         self.doc.__subscriptions__ = OOBTree(d)
         for addr in d.keys():
             subscr.unsubscribe(addr)
@@ -142,13 +142,13 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         # We just test whether two subsequently generated tokens are not
         # identical
         subscr = subscribable.getSubscribable(self.doc)
-        token1 = subscr.generateConfirmationToken('foo@bar.com')
-        token2 = subscr.generateConfirmationToken('foo2@bar.com')
+        token1 = subscr.generateConfirmationToken('foo@bar.baz')
+        token2 = subscr.generateConfirmationToken('foo2@bar.baz')
         self.assertNotEquals(token1, token2)
 
     def test_isValidSubscription(self):
         subscr = subscribable.getSubscribable(self.doc)
-        addr = "foo@bar.com"
+        addr = "foo@bar.baz"
         token = subscr.generateConfirmationToken(addr)
         self.assertEquals(True, subscr.isValidSubscription(addr, token))
         # Subsequent use of the same token is not valid
@@ -156,12 +156,12 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         # Invalid token is not valid (duh!)
         self.assertEquals(
             False, subscr.isValidSubscription(addr, token + 'foobar'))
-        addr = "foob@bar.com"
+        addr = "foob@bar.baz"
         self.assertEquals(False, subscr.isValidSubscription(addr, token))
 
     def test_isValidCancellation(self):
         subscr = subscribable.getSubscribable(self.doc)
-        addr = "foo@bar.com"
+        addr = "foo@bar.baz"
         token = subscr.generateConfirmationToken(addr)
         self.assertEquals(True, subscr.isValidCancellation(addr, token))
         # Subsequent use of the same token is not valid
@@ -169,12 +169,12 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         # Invalid token is not valid (duh!)
         self.assertEquals(
             False, subscr.isValidCancellation(addr, token + 'foobar'))
-        addr = "foob@bar.com"
+        addr = "foob@bar.baz"
         self.assertEquals(False, subscr.isValidCancellation(addr, token))
 
     def test_isSubscribed(self):
         subscr = subscribable.getSubscribable(self.doc)
-        addr = "foo@bar.com"
+        addr = "foo@bar.baz"
         subscr.subscribe(addr)
         self.assert_(subscr.isSubscribed(addr))
 

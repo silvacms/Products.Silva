@@ -20,4 +20,5 @@ except errors.SubscriptionError, e:
         message=_(e), subscr_emailaddress=request['emailaddress'])
 
 return context.subscriptions(
-    message=_('Confirmation request for subscription has been emailed'))
+    message=_('Confirmation request for subscription has been emailed'),
+    show_form=False)

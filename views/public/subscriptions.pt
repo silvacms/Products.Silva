@@ -19,6 +19,7 @@
     define="
       model request/model;
       title model/get_title;
+      show_form options/show_form | python: True;
       feedback options/message | nothing;
       subscr_emailaddress options/subscr_emailaddress | nothing; 
       cancel_emailaddress options/cancel_emailaddress | nothing; 
@@ -28,6 +29,7 @@
     <div tal:condition="feedback" class="feedback" tal:content="feedback">
       feedback message
     </div>
+    <tal:block condition="show_form"> 
     <form method="POST" name="form" action="subscription_request" enctype="multipart/form-data">
       <table class="listing">
         <thead>
@@ -121,7 +123,7 @@
           </tr>
         </tfoot>
       </table>
-    </form>
+    </form></tal:block>
   </tal:block>
 </metal:block>
 </metal:block>
