@@ -278,7 +278,8 @@ _______ manual close section here _______
                 </td>
                 <td style="white-space: nowrap">
                   <a tal:content="modificationtime" 
-                      tal:attributes="href python:'%s/edit/tab_view' % version.absolute_url()">
+                      tal:attributes="href python:('%s/edit/tab_status_view_version?version=%s' % 
+                                                    (model.absolute_url(), version.id))">
                     modificationtime
                   </a>
                 </td>
@@ -303,17 +304,7 @@ _______ manual close section here _______
               </tal:block>
             </tr>
           </tbody>
-          <tfoot tal:define="approveables python: 'unapproved' in version_status_list;
-                              closeables python: 'public' in version_status_list;
-                              revokeables python: 'last_closed' in version_status_list;
-                              rejectables python: 'unapproved' in version_status_list;
-                              expireables closeables;
-                              new_versionables python: len(version_status_list);
-                              redisplay_timing_form request/redisplay_timing_form | 
-                                                    options/redisplay_timing_form | 
-                                                    python: 1;
-                              "
-          >
+          <tfoot>
             <tr tal:condition="versions">
               <th class="listing-left"
                 colspan="2">
