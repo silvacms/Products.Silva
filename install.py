@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.8 2004/04/29 11:40:59 faassen Exp $
+# $Id: install.py,v 1.97.4.9.4.9 2004/04/29 15:48:19 roman Exp $
 """Install for Silva Core
 """
 # Python
@@ -393,7 +393,7 @@ def configureMembership(root):
     ids = root.objectIds()
     if 'service_members' not in ids:
         root.manage_addProduct['Silva'].manage_addSimpleMemberService(
-            'service_members', 'Silva Membership Service')
+            'service_members')
         
     if 'Members' not in ids:
         root.manage_addFolder('Members')
