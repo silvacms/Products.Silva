@@ -6,7 +6,7 @@
   <!-- Links to favicon and stylesheet -->
   <link rel="shortcut icon" href="globals/favicon.ico" />
   <link rel="stylesheet" href="frontend.css" type="text/css" />
-  <link rel="up" href="../" title="Up one level" />
+  <link rel="up" href="../../edit" title="Up one level" />
 </head>
 
 <body>

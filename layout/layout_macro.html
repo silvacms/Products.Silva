@@ -1,4 +1,4 @@
-<!-- _______ Silva version 0.9.3.0 _______ -->
+<!-- _______ Silva version 1.0a _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
@@ -35,15 +35,16 @@
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <!-- Access navigation links - if any are not needed remove for better performance -->
-  <link rel="top" title="Up to top of publication" 
-    tal:condition="python:here.meta_type != 'Silva Root'"
-    tal:attributes="href python:here.get_publication().absolute_url()" />
-  <link rel="up" href="../" title="Up a level" 
-    tal:condition="python:here.meta_type != 'Silva Root'" />
   <tal:define define="
+    not_top python:here.meta_type != 'Silva Root';
     previousnext here/previous_next; 
     previous python: previousnext[0];
     next python:previousnext[1]">
+  <link rel="top" title="Up to top of publication" 
+    tal:condition="not_top"
+    tal:attributes="href python:here.get_publication().absolute_url()" />
+  <link rel="up" href="../" title="Up a level" 
+    tal:condition="not_top" />
   <link rel="previous" title="Previous document" 
     tal:condition="previous"
     tal:attributes="href previous/absolute_url" />
@@ -52,6 +53,8 @@
     tal:attributes="href next/absolute_url" />
   </tal:define>
   <!-- /End access navigation links -->
+  <link rel="copyright" title="Copyright"
+    tal:attributes="href here/copyright/absolute_url | nothing" />
   <link rel="alternate" type="application/rss+xml" href="./rss" title="RSS" />
   <!-- /End related links -->
   <!-- Begin stylesheets -->
@@ -59,7 +62,8 @@
     tal:attributes="href here/frontend.css/absolute_url | nothing" />
   <link metal:define-slot="style" tal:omit-tag="" />
   <!-- /End stylesheets -->
-  <script metal:define-slot="script" type="text/javascript" tal:omit-tag="">
+  <script metal:define-slot="script" type="text/javascript"
+    tal:replace="nothing">
     <!-- script slot -->
   </script>
 </head>
