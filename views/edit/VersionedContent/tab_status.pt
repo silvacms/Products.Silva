@@ -250,17 +250,16 @@ _______ manual close section here _______
           </thead>
           <tbody>
             <tr>
-              <th>&#xa0;</th>
+              <th width="1%">&#xa0;</th>
               <th width="25%">modification time</th>
               <th width="25%">publication time</th>
               <th width="25%">expiration time</th>
-              <th>last author</th>
-              <th>creator</th>
+              <th width="1%">last author</th>
+              <th width="1%">creator</th>
               <th>version status</th>
             </tr>
             <tr  tal:repeat="version versions">
-              <tal:block define="metadata python: here.get_metadata(version);
-                                  times python: here.tab_status_version_times(version);
+              <tal:block define="times python: here.tab_status_version_times(version);
                                   modificationtime python: times[0];
                                   publicationtime python:times[1];
                                   expirationtime python: times[2];
@@ -329,8 +328,8 @@ _______ manual close section here _______
                   type="submit"
                   name="tab_status_delete_versions:method"
                   value="delete"
-                  title="access key: alt-r"
-                  accesskey="r"
+                  title="there's no undo: alt-d"
+                  accesskey="d"
                   onclick="if (!confirm('Are you sure?')) return false"
                   i18n:attributes="value title"
                 />
@@ -338,8 +337,8 @@ _______ manual close section here _______
                   type="submit"
                   name="tab_status_revert_to_old:method"
                   value="copy as editable"
-                  title="access key: alt-r"
-                  accesskey="r"
+                  title="create a new editable version of the selected old one: alt-f"
+                  accesskey="f"
                   i18n:attributes="value title"
                 />
               </td>
