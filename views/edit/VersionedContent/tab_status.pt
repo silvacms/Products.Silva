@@ -1,6 +1,6 @@
 <!-- ___________________________ start index_html ___________________________ -->
 <tal:block define="global breadcrumb_vein string:Status;
-                   global silva_permissions view/get_silva_permissions;
+                   global silva_permissions here/get_silva_permissions;
                    " />
 <html metal:use-macro="here/macro_index/macros/master">
 
