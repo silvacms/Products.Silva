@@ -10,7 +10,18 @@
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
 <h2>Add new <span tal:replace="request/meta_type" /></h2>
-
+<script type="text/javascript" language="JavaScript">
+<!--
+// Called from body onload() method which is defined in the
+// macro_index. It focusses the appropiate form field.
+function focus_editor() {
+  // Hardcoded path to form element. Needs improvement.
+  if (document && document.focusbox && document.focusbox.field_object_id) {
+      document.focusbox.field_object_id.focus();
+    }
+}
+//-->
+</script>
 <form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
 <table width="96%" cellspacing="0" cellpadding="5" border="0"

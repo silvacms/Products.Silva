@@ -1,6 +1,6 @@
-<div metal:define-macro="edit_view" tal:omit-tag="">
-<init tal:omit-tag="" 
-  tal:define="global silva_root here/silva_root;
+<metal:block define-macro="edit_view">
+<tal:block 
+  define="global silva_root here/silva_root;
     global node request/node;
     global wr_name request/wr_name;
     global node_path python:node.getNodePath('widget');
@@ -39,4 +39,4 @@
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_end" tal:omit-tag="" />
 </table>
 </form>
-</div>
+</metal:block>

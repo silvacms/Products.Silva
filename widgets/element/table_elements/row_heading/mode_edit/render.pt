@@ -5,7 +5,8 @@
 <div metal:fill-slot="edit_input" tal:omit-tag="">
   <table width="100%" cellspacing="0"  border="0">
     <tr tal:attributes="colspan here/get_columns"  valign="top"><td>
-      <textarea name="data" cols="80" rows="2" wrap="soft" style="width:100%;"
+      <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
+      <textarea id="data" name="data" cols="80" rows="2" wrap="soft" style="width:100%;"
         tal:content="here/text_editable_content"></textarea><!--(rowh_mode_e)-->
     </td></tr>
   </table>
