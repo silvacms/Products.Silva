@@ -314,7 +314,7 @@
                       </label>
                       <label style="text-transform: none" title="editor" tal:attributes="for identifier"
                         tal:content="structure python: mangle.String.centeredTruncate(asset.id, 30)"
-                        i18n:attributes="title"
+                        i18n:attributes="title content-editor;"
                       >
                         id
                       </label>
