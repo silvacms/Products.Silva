@@ -35,7 +35,7 @@
           <span tal:replace="nothing">
             _____________________ sidebar subtable _____________________
           </span>
-          <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_metadata', breadcrumb_vein)" />
+          <span tal:replace="structure python: view.service_sidebar.render(model, 'settings_addables', breadcrumb_vein)" />
         </td>
         <td class="main">
 

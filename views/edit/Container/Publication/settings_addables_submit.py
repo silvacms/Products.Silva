@@ -25,14 +25,14 @@ addables = result['addables']
 
 # if nothing changes, we're done
 if will_be_acquired and currently_acquired:
-    return context.settings_addables(message_type="alert", message="Addable settings remain acquired.")
+    return context.settings_addables(message_type="alert", message="Addable settings have not changed and remain acquired.")
 
 # now update the settings (if we have to)
 if will_be_acquired:
-    changed_metadata.append(('acquire'))
+    changed_metadata.append(('acquire setting'))
     model.set_silva_addables_allowed_in_publication(None)
 else:
-    changed_metadata.append(('addables list'))
+    changed_metadata.append(('list of allowed addables'))
     model.set_silva_addables_allowed_in_publication(addables)
 
 return context.settings_addables(message_type="feedback", message="Addable settings changed for: %s"%(context.quotify_list(changed_metadata)))
