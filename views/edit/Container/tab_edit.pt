@@ -104,7 +104,7 @@
                     accesskey="i"
                     i18n:attributes="title"
                   >
-                    <span i18n:translate="import">Import</span>...
+                    <span i18n:translate="import">import</span>...
                   </a>
                 </td>
               </tr>

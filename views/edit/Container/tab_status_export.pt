@@ -95,9 +95,8 @@
                       href="tab_edit_import"
                       title="over to the import screen: alt-i"
                       accesskey="i"
-                      i18n:attributes="title"
-                      i18n:translate="import">
-                      Import...
+                      i18n:attributes="title">
+                      <span i18n:translate="import">import</span>...
                     </a>
                   <h3 i18n:translate="export_to_silva_xml">
                     Export to Silva XML (.slv)
