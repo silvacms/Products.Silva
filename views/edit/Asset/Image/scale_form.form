@@ -28,7 +28,7 @@
           <orientation>horizontal</orientation>
         </values>
         <tales>
-          <default>form/REQUEST/model/getWebFormat | string:JPEG</default>
+          <default>python: form.REQUEST.model.getWebFormat() or 'JPEG'</default>
         </tales>
         <messages>
           <message name="external_validator_failed">Sorry, the form content failed validation.</message>
@@ -55,7 +55,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
-          <default>form/REQUEST/model/getWebScale | string:100%</default>
+          <default>python: form.REQUEST.model.getWebScale() or '100%'</default>
         </tales>
         <messages>
           <message name="external_validator_failed">Sorry, the form content failed validation.</message>

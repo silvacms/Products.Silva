@@ -28,7 +28,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
-          <default>form/REQUEST/model/get_title</default>
+          <default>python: form.REQUEST.model.get_title()</default>
         </tales>
       </field>
       <field><id>connection_id</id> <type>ListField</type>
@@ -47,8 +47,8 @@
           <extra></extra>
         </values>
         <tales>
-          <default>form/get_connection_id</default>
-          <items>form/connection_ids</items>
+          <default>python: form.get_connection_id()</default>
+          <items>python: form.connection_ids()</items>
         </tales>
       </field>
       <field><id>data_encoding</id> <type>StringField</type>
@@ -69,7 +69,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
-          <default>form/REQUEST/model/get_data_encoding</default>
+          <default>python: form.REQUEST.model.get_data_encoding()</default>
         </tales>
       </field>
       <field><id>parameters</id> <type>TextAreaField</type>
@@ -94,7 +94,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
-          <default>form/get_parameters</default>
+          <default>python: form.get_parameters()</default>
         </tales>
       </field>
       <field><id>statement</id> <type>TextAreaField</type>
@@ -120,7 +120,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
-          <default>form/get_statement</default>
+          <default>python: form.get_statement()</default>
         </tales>
       </field>
       </fields>
