@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.14 2003/08/22 08:36:00 zagy Exp $
+# $Id: GhostFolder.py,v 1.15 2003/08/27 08:40:06 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -46,6 +46,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     def haunt(self):
         """populate the the ghost folder with ghosts
         """
+        # XXX: this method is to long and should be splitted
         haunted = self._get_content()
         if haunted is None:
             return
@@ -53,51 +54,94 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
             return
         ghost = self
         assert IContainer.isImplementedBy(haunted)
-        object_list = [(h, ghost) for h in haunted.objectValues()]
+        object_list = self._haunt_diff(haunted, ghost)
+        
         while object_list:
-            haunted, ghost = object_list[0]
+            # breadth first search
+            h_container, h_id, g_container, g_id = object_list[0]
             del(object_list[0])
-            if hasattr(ghost.aq_base, haunted.id):
-                old_ghost = getattr(ghost, haunted.id, None)
+            if h_id is None:
+                # object was removed from haunted, so just remove it and 
+                # continue
+                g_container.manage_delObjects([g_id])
+                continue
+            h_ob = h_container._getOb(h_id)
+            if g_id is None:
+                # object was added to haunted
+                g_ob = None
             else:
-                old_ghost = None
-            if IContainer.isImplementedBy(haunted):
-                if old_ghost is not None:
-                    if IContainer.isImplementedBy(old_ghost):
-                        new_ghost = old_ghost
+                # object is there but may have changed
+                g_ob = g_container._getOb(g_id)
+            if IContainer.isImplementedBy(h_ob):
+                if g_ob is not None:
+                    if IContainer.isImplementedBy(g_ob):
+                        # no need to change
+                        g_ob_new = g_ob
                     else:
-                        ghost.manage_delObjects([haunted.id])
-                        old_ghost = None
-                if old_ghost is None:
+                        g_container.manage_delObjects([h_id])
+                        g_ob = None
+                if g_ob is None:
                     ghost.manage_addProduct['Silva'].manage_addFolder(
-                        haunted.id, '[no title]', 0)
-                    new_ghost = getattr(ghost, haunted.id)
-                object_list += [(h, new_ghost)
-                    for h in haunted.objectValues()]
-            elif IContent.isImplementedBy(haunted):
-                if haunted.meta_type == 'Silva Ghost':
-                    content_url = haunted.get_content_url()
+                        h_id, '[no title]', 0)
+                    g_ob_new = g_container._getOb(h_id)
+                object_list += self._haunt_diff(h_ob, g_ob_new)
+            elif IContent.isImplementedBy(h_ob):
+                if h_ob.meta_type == 'Silva Ghost':
+                    content_url = h_ob.get_content_url()
                 else:
-                    content_url = '/'.join(haunted.getPhysicalPath())
-                if old_ghost is not None:
-                    if old_ghost.meta_type == 'Silva Ghost':
-                        old_ghost.create_copy()
-                        version = old_ghost.getLastVersion()
+                    content_url = '/'.join(h_ob.getPhysicalPath())
+                if g_ob is not None:
+                    if g_ob.meta_type == 'Silva Ghost':
+                        # we already have a ghost sitting there, create a new
+                        g_ob.create_copy()
+                        version = g_ob.getLastVersion()
                         version.set_content_url(content_url)
                     else:
-                        ghost.manage_delObjects([haunted.id])
-                        old_ghost = None
-                if old_ghost is None:
-                    ghost.manage_addProduct['Silva'].manage_addGhost(
-                     haunted.id, content_url)
+                        g_container.manage_delObjects([h_id])
+                        g_ob = None
+                if g_ob is None:
+                    g_container.manage_addProduct['Silva'].manage_addGhost(
+                     h_id, content_url)
             else:
-                if old_ghost is not None:
-                    ghost.manage_delObjects([haunted.id])
-                new_ghost = haunted._getCopy(ghost)
-                ghost._setObject(haunted.id, new_ghost)
+                # this is anything else -- copy it. We cannot check if it was 
+                # modified and if copying is really necessary.
+                if g_ob is not None:
+                    g_container.manage_delObjects([h_id])
+                g_ob_new = h_ob._getCopy(g_container)
+                g_container._setObject(h_id, g_ob_new)
         self._publish_ghosts()
         self._invalidate_sidebar(self)
-                
+
+    def _haunt_diff(self, haunted, ghost):
+        h_ids = list(haunted.objectIds())
+        g_ids = list(ghost.objectIds())
+        h_ids.sort()
+        g_ids.sort()
+        ids = []
+        while h_ids or g_ids:
+            h_id = None
+            g_id = None
+            if h_ids:
+                h_id = h_ids[0]
+            if g_ids:
+                g_id = g_ids[0]
+            if h_id == g_id or h_id is None or g_id is None:
+                ids.append((h_id, g_id))
+                if h_ids:
+                    del h_ids[0]
+                if g_ids:
+                    del g_ids[0]
+            elif h_id < g_id:
+                ids.append((h_id, None))
+                del h_ids[0]
+            elif h_id > g_id:
+                ids.append((None, g_id))
+                del g_ids[0]
+        objects = [ (haunted,h_id, ghost, g_id)
+            for (h_id, g_id) in ids ]
+        return objects
+        
+
     security.declareProtected(SilvaPermissions.View,'get_link_status')
     def get_link_status(self, content=None):
         """return an error code if this version of the ghost is broken.
