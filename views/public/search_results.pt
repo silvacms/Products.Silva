@@ -35,7 +35,6 @@
               <tr class="top-controls">
                 <td colspan="3">
                   <h3>
-                    Search interface
                   </h3>
                 </td>
               </tr>
@@ -45,19 +44,23 @@
               <tr>
                 <th class="align-right"
                   width="12%">
-                  Element
+                  Object
                 </th>
                 <th>
-                  Content
                 </th>
                 <th width="40%">
-                  Note
                 </th>
               </tr>
 
               <tr tal:repeat="result view/perform_search">
                 <td colspan="3"
-                  tal:content="result">
+                  tal:define="
+                    doc result/getObject;
+                    url doc/silva_object_url;
+                    ">
+                  <a href="#"
+                    tal:content="string:${doc/get_title_or_id} (${url})"
+                    tal:attributes="href url" />
                 </td>
               </tr>
 
@@ -67,13 +70,6 @@
               <tr class="controls">
                 <td class="align-right"
                   colspan="3">
-                  <input class="button"
-                    type="submit"
-                    name="search_results:method"
-                    value="Find"
-                    title="access key: alt-f"
-                    accesskey="s"
-                  />
                 </td>
               </tr>
             </tfoot>

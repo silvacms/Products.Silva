@@ -13,10 +13,17 @@ except FormValidationError, e:
 
 query = {'version_status': 'public',}
 
-if hasattr(result, 'maintitle'):
-    query['silvamaintitle'] = result['maintitle']
+title = result.get('maintitle')
+if title:
+    query['silvamaintitle'] = title
 
-if hasattr(result, 'fulltext'):
-    query['fulltext'] = result['fulltext']
+fulltext = result.get('fulltext')
+if fulltext:
+    query['fulltext'] = fulltext
 
+metatype = result.get('metatypes')
+if metatype:
+    query['meta_type'] = metatype
+
+#raise str(query)
 return catalog(query)
