@@ -599,7 +599,7 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
   line-height : 96%;
 
   color : &dtml-nightShade;;;
-  background : &dtml-shade70;;
+  background : &dtml-shade96;;
   border : 1px solid &dtml-shade60;;
 }
 

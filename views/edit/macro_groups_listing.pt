@@ -47,8 +47,13 @@
       <!-- this form deliberately has no submit buttons; filled in in slots -->
       <form action="."
         method="POST">
+        <h2>
+          <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Group')" />
+          Available groups:
+        </h2>
+
         <table class="listing">
-          <thead>
+          <!-- thead>
             <tr>
               <td class="top"
                 style="white-space: nowrap;">
@@ -57,7 +62,7 @@
                 </h2>
               </td>
             </tr>
-          </thead>
+          </thead -->
 
           <tr class="top-controls">
             <td>

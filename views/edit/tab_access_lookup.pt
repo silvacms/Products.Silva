@@ -182,31 +182,28 @@
         </form>
       </td>
     <!-- __________________________ selection ______________________________ -->
-      <td>
-          <!-- Clipboard -->
-          <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
-            <metal:block fill-slot="clipboard_lookup_action">
-              <!-- fill slot to suppress lookup button -->
-            </metal:block>
-            <metal:block fill-slot="clipboard_actions">
-              &nbsp;
-              <a class="buttonlink" 
-                accesskey="u"
-                title="Return to the top of the access tab with this selection - ctrl-u"
-                style="float: right;"
-                href="lookup_back_link"
-                tal:attributes="href here/lookup_back_link">
-                Use selection...
-              </a>
-              <input class="warningbutton"
-                accesskey="d"
-                name="lookup_remove_from_selection:method"
-                style="float: left;"
-                title="Remove users from your selection: alt-d"
-                type="submit"
-                value="Deselect" />
-            </metal:block>
+      <td class="align-left">
+        <!-- Clipboard -->
+        <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
+          <metal:block fill-slot="clipboard_lookup_action">
+            <a class="navigation" 
+              style="float: right;"
+              accesskey="u"
+              title="Return to the top of the access tab with this clipboard - ctrl-u"
+              href="lookup_back_link"
+              tal:attributes="href here/lookup_back_link">
+              Use current clipboard...
+            </a>
           </metal:block>
+          <metal:block fill-slot="clipboard_actions">
+            <input class="warning"
+              accesskey="d"
+              name="lookup_remove_from_selection:method"
+              title="Remove users from your clipboard: alt-d"
+              type="submit"
+              value="Remove from clipboard" />
+          </metal:block>
+        </metal:block>
       </td>
     <!-- ________________________ end selection ____________________________ -->
     </tr>

@@ -16,18 +16,19 @@
         method="POST"
         tal:define="
           clipboard_members python:view.lookup_get_selection().keys();">
+        <h2>
+          <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Simple Member')" />
+          User lookup clipboard:
+        </h2>
         <table class="listing"
           width="100%">
-          <thead>
+          <!-- thead>
             <tr>
               <td class="top"
-                style="white-space: nowrap;">
-                <h2>
-                  User lookup clipboard:
-                </h2>
+                style="white-space: nowrap;">                
               </td>
             </tr>
-          </thead>
+          </thead -->
           <tr class="top-controls">
             <td>
               <metal:block define-slot="clipboard_lookup_action">
@@ -46,7 +47,7 @@
               <select class="clipboard"
                 style="width: 100%"
                 multiple="multiple"
-                name="groups:list"
+                name="userids:list"
                 size="10">
                 <tal:block condition="clipboard_members">
                   <option disabled="disabled"
@@ -54,7 +55,7 @@
                     Select user(s)...
                   </option>
                   <tal:block repeat="userid clipboard_members">
-                    <option value="userid"                  
+                    <option value="userid"
                       tal:define="member python: model.sec_get_member(userid);"
                       tal:content="member/fullname"
                       tal:attributes="value member/userid;">
