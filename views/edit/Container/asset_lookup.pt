@@ -160,11 +160,11 @@ function setReference() {
 </tal:block>
 <tr class="controls">
   <td colspan="4" align="left">
-    <input type="button" class="cancelbutton" name="cancel" value="Cancel" title="Cancel Operation" 
+    <input type="button" class="cancelbutton" name="cancel" value="Cancel" title="Cancel operation - alt-c" accesskey="c"
       onclick="window.close();return false;" />
   </td>
   <td colspan="4" align="right">
-    <input type="button" class="button" name="place" value="Place reference" title="Insert a reference to this asset" 
+    <input type="button" class="button" name="place" value="Place reference" title="Insert a reference to this asset - alt-p" accesskey="p" 
       onclick="setReference();return false;" 
       tal:condition="python:len(assets)" />
   </td>
