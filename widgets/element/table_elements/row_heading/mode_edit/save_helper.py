@@ -10,5 +10,6 @@
 request = context.REQUEST
 node = request.node
 data = request['data']
+editorsupport = context.service_editorsupport
 
-node.get_content().replace_heading(node, data)
+editorsupport.replace_heading(node, data)

@@ -19,7 +19,7 @@ firstNode = childNodes[0]
 
 viewer = context.service_editor.getViewer()
 if firstNode.nodeName == 'p':
-    result.append(node.render_text_as_html(firstNode))
+    result.append(context.service_editorsupport.render_text_as_html(firstNode))
 elif firstNode.nodeName == 'image':
     result.append(viewer.getWidget(firstNode).render_simple())
 else:

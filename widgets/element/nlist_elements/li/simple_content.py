@@ -7,8 +7,9 @@
 ##parameters=node
 ##title=
 ##
+editorsupport = context.service_editorsupport
 for child in node.childNodes:
     if child.nodeType == node.ELEMENT_NODE:
         break
 content = node.get_content()
-return content.render_text_as_editable(child)
+return editorsupport.render_text_as_editable(child)

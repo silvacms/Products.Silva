@@ -4,6 +4,7 @@
 from Globals import package_home
 import os
 
+import EditorSupportNested
 from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
 
@@ -358,7 +359,10 @@ def configureXMLWidgets(root):
 
     # now register all widgets
     registerCoreWidgets(root)
-
+    
+    # add editor support service
+    EditorSupportNested.manage_addEditorSupport(root)
+    
 def registerCoreWidgets(root):
     """ register the core widgets at the corresponding registries.
     this function assumes the registries already exist.

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.37 $
+# $Revision: 1.38 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -10,6 +10,7 @@ from DateTime import DateTime
 from IPublication import IPublication
 # Silva
 from Publication import Publication
+import EditorSupportNested
 import SilvaPermissions
 import install
 # misc
@@ -25,6 +26,12 @@ class Root(Publication):
     meta_type = "Silva Root"
 
     __implements__ = IPublication
+
+    def __setstate__(self, state):
+        Root.inheritedAttribute('__setstate__')(self, state)
+        ses = getattr(self, 'service_editorsupport', None)
+        if ses is None:
+            EditorSupportNested.manage_addEditorSupport(self)
 
     # MANIPULATORS
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -12,7 +12,6 @@ from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from Products.Silva.IVersionedContent import IVersionedContent
 # Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva.EditorSupportNested import EditorSupport
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import Version
 from Products.ParsedXML.ParsedXML import ParsedXML
@@ -20,7 +19,7 @@ from Products.Silva.helpers import add_and_edit, translateCdata
 # misc
 from cgi import escape
 
-class CatalogedDemoObject(CatalogedVersionedContent, EditorSupport):
+class CatalogedDemoObject(CatalogedVersionedContent):
     """Silva CatalogedDemoObject.
     """
     security = ClassSecurityInfo()

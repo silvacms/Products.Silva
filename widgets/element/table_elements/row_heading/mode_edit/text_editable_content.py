@@ -8,4 +8,5 @@
 ##title=
 ##
 node = context.REQUEST.node
-return node.get_content().render_heading_as_editable(node)
+editorsupport = context.service_editorsupport
+return editorsupport.get_content().render_heading_as_editable(node)

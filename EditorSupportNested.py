@@ -1,22 +1,28 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
-from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
-import SilvaPermissions
+# $Revision: 1.10 $
 import re
 from sys import exc_info
 from xml.parsers.expat import ExpatError
+
+from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
+from OFS.SimpleItem import SimpleItem
 from Products.ParsedXML.ParsedXML import ParsedXML
-import StringIO
+
+import SilvaPermissions
 
 class EditorSupportError(Exception):
     pass
 
-class EditorSupport:
-    """XML editor support.
-    """
+class EditorSupport(SimpleItem):
+    """XML editor support. """
+    
     security = ClassSecurityInfo()
+    meta_type = 'Silva Editor Support Service'
+    
+    def __init__(self, id):
+        self.id = id
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_text_as_html')
@@ -396,3 +402,10 @@ class EditorSupport:
                 raise ExpatError, message
 
 InitializeClass(EditorSupport)
+
+
+def manage_addEditorSupport(container):
+    "editor support service factory"
+    id = 'service_editorsupport'
+    container._setObject(id, EditorSupport(id))
+

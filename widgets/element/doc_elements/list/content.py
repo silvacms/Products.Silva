@@ -9,8 +9,10 @@
 ##
 node = context.REQUEST.node
 content = node.get_content()
-texts = [content.render_text_as_html(child) for child in node.childNodes if 
-         child.nodeType == node.ELEMENT_NODE and child.nodeName == 'li']
+texts = [context.service_editorsupport.render_text_as_html(child) 
+            for child in node.childNodes 
+            if child.nodeType == node.ELEMENT_NODE and child.nodeName == 'li'
+        ]
 if node.hasAttribute('type'):
     type = node.output_convert_html(node.getAttribute('type'))
 else:

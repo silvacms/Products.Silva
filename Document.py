@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.48 $
+# $Revision: 1.49 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -14,7 +14,6 @@ from IVersionedContent import IVersionedContent
 # Silva
 import SilvaPermissions
 from VersionedContent import VersionedContent
-from EditorSupportNested import EditorSupport
 from helpers import add_and_edit, translateCdata
 
 # For XML-Conversions for editors
@@ -27,7 +26,7 @@ from Products.ParsedXML.PrettyPrinter import _translateCdata
 
 icon="www/silvadoc.gif"
 
-class Document(VersionedContent, EditorSupport):
+class Document(VersionedContent):
     """Silva Document.
     """
     security = ClassSecurityInfo()

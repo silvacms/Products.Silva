@@ -8,4 +8,4 @@
 ##title=
 ##
 node = context.REQUEST.node
-return node.render_text_as_html(node)
+return context.service_editorsupport.render_text_as_html(node)

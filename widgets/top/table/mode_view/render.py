@@ -33,7 +33,9 @@ for child in node.childNodes:
                     for p_node in field.childNodes:
                         if p_node.nodeType == node.ELEMENT_NODE:
                             break
-                    content = node.render_text_as_html(p_node)
+                    content = \
+                        context.service_editorsupport.render_text_as_html(
+                            p_node)
                 else:
                     context.service_editor.setViewer('service_sub_previewer')
                     content = context.service_editor.getViewer().getWidget(field).render()
@@ -50,8 +52,9 @@ for child in node.childNodes:
             """<tr>\n%s\n</tr>""" % '\n'.join(row_data))
     if child.nodeName == 'row_heading':
         table_data.append(
-            """<tr class="rowheading">\n<td colspan="%s">\n  %s\n</td>\n</tr>""" % (
-            nr_of_columns, node.render_heading_as_html(child)))
+            '<tr class="rowheading">\n<td colspan="%s">\n  %s\n</td>\n</tr>' % (
+            nr_of_columns, 
+            context.service_editorsupport.render_heading_as_html(child)))
 
 table = []
 table.append("""<table class="silvatable %s" width="100%%" cellspacing="0" cellpadding="3px">""" % (type))

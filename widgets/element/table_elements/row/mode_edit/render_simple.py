@@ -7,9 +7,12 @@
 ##parameters=node
 ##title=
 ##
+editorsupport = context.service_editorsupport
 # find p first (FIXME: inefficient)
 for child in node.childNodes:
   if child.nodeType == node.ELEMENT_NODE:
     break
 node = child
-return '<textarea cols="20" rows="2" wrap="soft" style="width:100%%;" name="%s">%s</textarea>' % (node.getNodePath('widget'), node.render_text_as_editable(node))
+return '''<textarea cols="20" rows="2" wrap="soft" style="width:100%%;" 
+    name="%s">%s</textarea>''' % (node.getNodePath('widget'), 
+        editorsupport.render_text_as_editable(node))

@@ -8,4 +8,5 @@
 ##title=
 ##
 node = context.REQUEST.node
-return node.render_text_as_editable(node)
+editorsupport = context.service_editorsupport
+return editorsupport.render_text_as_editable(node)

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.52 $
+# $Revision: 1.53 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -14,6 +14,7 @@ import SimpleMembership
 import ExtendedMembership
 import DocmaService
 import Group
+import EditorSupportNested
 # enable Formulator support for FileSystemSite
 from Products.Formulator import FSForm
 # so we can register directories for FileSystemSite
@@ -79,6 +80,7 @@ def initialize(context):
         DocmaService.DocmaService,
         constructors = (DocmaService.manage_addDocmaServiceForm,
                         DocmaService.manage_addDocmaService),
+        icon="www/service_docma.png",
         )
 
     # register xml import functions

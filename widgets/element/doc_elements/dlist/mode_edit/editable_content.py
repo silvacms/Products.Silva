@@ -8,13 +8,16 @@
 ##title=
 ##
 node = context.REQUEST.node
+editorsupport = context.service_editorsupport
 retval = ''
 for child in node.childNodes:
     if child.nodeType != node.ELEMENT_NODE:
         continue
     if child.nodeName == 'dt':
-        retval += node.render_text_as_editable(child).strip() + '\r\n'
+        retval += editorsupport.render_text_as_editable(child).strip() + \
+            '\r\n'
     elif child.nodeName == 'dd':
-        retval += node.render_text_as_editable(child).strip() + '\r\n\r\n'
+        retval += editorsupport.render_text_as_editable(child).strip() + \
+            '\r\n\r\n'
 
 return retval

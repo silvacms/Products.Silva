@@ -10,6 +10,7 @@
 request = context.REQUEST
 node = request.node
 model = node.get_content()
+editorsupport = context.service_editorsupport
 
 if request['what'] != 'list':
     context.element_switch()
@@ -47,5 +48,5 @@ doc = node.ownerDocument
 items = data.split('\r\n\r\n')
 for item in items:
    li = doc.createElement('li')
-   model.replace_text(li, item)
+   editorsupport.replace_text(li, item)
    node.appendChild(li)

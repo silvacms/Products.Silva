@@ -7,6 +7,7 @@
 ##parameters=
 ##title=
 ##
+editorsupport = context.service_editorsupport
 request = context.REQUEST
 node = request.node
 
@@ -17,4 +18,4 @@ if request['what'] != 'pre':
 # don't need to conver this, later on we will convert it in replace_text()
 data = request['data']
 
-node.get_content().replace_pre(node, data)
+editorsupport.replace_pre(node, data)

@@ -9,26 +9,27 @@
 ##
 request = context.REQUEST
 node = request.node
+editorsupport = context.service_editorsupport
 
 if request['what'] != 'p':
     context.element_switch()
     return
 
-# don't need to conver this, later on we will convert it in replace_text()
+# don't need to convert this, later on we will convert it in replace_text()
 data = request['data']
 type = request['element_type']
 
 # split into number of text items
 items = data.strip().split("\r\n\r\n")
 # replace text in node
-node.get_content().replace_text(node, items[0])
+editorsupport.replace_text(node, items[0])
 # if necessary, add new paragraphs
 if len(items) > 1:
     doc = node.ownerDocument
     next = node.nextSibling
     for item in items[1:]:
         p = doc.createElement('p')
-        node.get_content().replace_text(p, item)
+        editorsupport.replace_text(p, item)
         node.parentNode.insertBefore(p, next)
 
 # special case of element switching:
@@ -38,7 +39,7 @@ if getattr(request,'element_switched',None):
       doc = node.ownerDocument
       p = doc.createElement('p')
       p.setAttribute('type','lead')
-      node.get_content().replace_heading(p, title)
+      editorsupport.replace_heading(p, title)
       node.parentNode.insertBefore(p, node)
 
 node.setAttribute('type', type)

@@ -10,6 +10,7 @@
 request = context.REQUEST
 node = request.node
 model = node.get_content()
+editorsupport = context.service_editorsupport
 
 if request['what'] != 'dlist':
     context.element_switch()
@@ -51,11 +52,11 @@ items = data.split('\r\n\r\n')
 for item in items:
     pair = item.split('\r\n')
     dt = doc.createElement('dt')
-    model.replace_text(dt, pair[0])
+    editorsupport.replace_text(dt, pair[0])
     node.appendChild(dt)
     dd = doc.createElement('dd')
     if len(pair) > 1:
-        model.replace_text(dd, ' '.join(pair[1:]))
+        editorsupport.replace_text(dd, ' '.join(pair[1:]))
     else:
-        model.replace_text(dd, '')
+        editorsupport.replace_text(dd, '')
     node.appendChild(dd)

@@ -7,6 +7,7 @@
 ##parameters=node, title
 ##title=save title in <title> tag
 ##
+editorsupport = context.service_editorsupport
 doc = node.documentElement
 
 title_node = None
@@ -23,4 +24,4 @@ if title_node==None:
   title_node = doc.createElement('title')
   node.insertBefore(title_node, node.firstChild)
 
-node.get_content().replace_heading(title_node, title)
+editorsupport.replace_heading(title_node, title)
