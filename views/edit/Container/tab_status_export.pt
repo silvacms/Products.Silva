@@ -62,8 +62,11 @@
           </tr>
 
           <tr class="controls">
-            <td colspan="3" align="right">
-                <input class="button" type="submit" name="download_xml:method" value=" Export " />
+            <td>
+                <input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
+            </td>
+            <td colspan="2" align="right">
+                <input class="button" type="submit" name="download_xml:method" value=" Export "  title="Access key: alt-e" accesskey="e"/>
             </td>
           </tr>
         </table>
