@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.31 2005/03/14 23:00:20 clemens Exp $
+# $Id: mangle.py,v 1.32 2005/04/04 19:58:28 clemens Exp $
 # Python
 import string
 import re
@@ -490,13 +490,6 @@ class _String:
 
 module_security.declarePublic('String')
 String = _String()
-
-module_security.declarePublic('convertOutputForI18Nname')
-def convertOutputForI18Nname(text):
-    """Very ugly hack to get around a problem with i18n:name
-       which expects plain strings as input, not unicode strings
-    """
-    return text.encode(String._default_encoding)
 
 def generateAnchorName(s):
     """Generate a valid name for an anchor.
