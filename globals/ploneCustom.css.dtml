@@ -322,7 +322,6 @@ table.listing tr.fixed, td.fixed {
 
 table.listing th {
     text-align: left;
-    color: #dbf3f6;
     color: &dtml-listingHeaderFontColor;;
     background: #71969a;
     background: &dtml-listingHeaderBackground;; 
@@ -348,14 +347,13 @@ table.listing th.empty {
     border-bottom: &dtml-listingBorder;;
 }
 
+/* these alignment selectors are used in frontent.css too */
 table.listing th.align-left, table.listing td.align-left {
   text-align: left;
 }
-
 table.listing th.align-center, table.listing td.align-center {
   text-align: center;
 }
-
 table.listing th.align-right, table.listing td.align-right {
   text-align: right;
 }
@@ -674,6 +672,14 @@ input.cancel {
 label {
   color : #403f80; 
   text-transform : &dtml-textTransform;;
+}
+
+tr.inter-controls label {
+  color: &dtml-listingHeaderFontColor;;
+}
+
+th label {
+  color: &dtml-listingHeaderFontColor;;
 }
 
 label.default {
