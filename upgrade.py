@@ -13,10 +13,10 @@ def from09to091(self, root):
     cb = self.manage_copyObjects([id])
     backup_folder = getattr(self, backup_id)
     backup_folder.manage_pasteObjects(cb_copy_data=cb)
-    # upgrade member objects in the site if they're still using the old system
-    upgrade_memberobjects(root)
     # upgrade xml in the site
     upgrade_xml_09to091(root)
+    # upgrade member objects in the site if they're still using the old system
+    upgrade_memberobjects(root)
     
 def from086to09(self, root):
     """Upgrade Silva from 0.8.6(.1) to 0.9.
@@ -165,6 +165,28 @@ def upgrade_list_titles_in_parsed_xml(top):
                 if list_child.nodeType == list_child.TEXT_NODE:
                     continue
                 upgrade_list_titles_in_parsed_xml(list_child)
+        if child.nodeName == 'image':
+            if child.hasAttribute('image_id'):
+                id = child.getAttribute('image_id')
+                container = top.get_container()
+                image = getattr(container, id)
+                child.removeAttribute('image_id')
+                child.setAttribute('path', unicode('/'.join(image.getPhysicalPath())))
+            elif child.hasAttribute('image_path'):
+                path = child.getAttribute('image_path')
+                newpath = path
+                try:
+                    image = top.restrictedTraverse(path.split('/'))
+                    newpath = '/'.join(image.getPhysicalPath())
+                except:
+                    if path[0] == '/':
+                        try:
+                            image = top.restrictedTraverse(path[1:].split('/'))
+                            newpath = '/'.join(image.getPhysicalPath())
+                        except:
+                            raise
+                child.removeAttribute('image_path')
+                child.setAttribute('path', newpath)
         if child.nodeName == 'table':
             for table_child in child.childNodes:
                 if table_child.nodeType == table_child.TEXT_NODE:
@@ -207,11 +229,11 @@ upgrade_registry = UpgradeRegistry()
 # Some upgrade stuff
 def upgrade_document(obj):
     for o in obj.objectValues():
-        upgrade_list_titles_in_parsed_xml(o)
+        upgrade_list_titles_in_parsed_xml(o.documentElement)
 
 def upgrade_demoobject(obj):
     for o in obj.objectValues():
-        upgrade_list_titles_in_parsed_xml(o.content)
+        upgrade_list_titles_in_parsed_xml(o.content.documentElement)
 
 upgrade_registry.register('Silva Document', upgrade_document)
 upgrade_registry.register('Silva DemoObject', upgrade_demoobject)
