@@ -37,3 +37,7 @@ Silva
 
   Silva is extensible with new document types and other types of
   content objects.
+
+License
+  
+  Silva comes under the BSD license. See LICENSE.txt
