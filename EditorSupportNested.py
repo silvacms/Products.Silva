@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -254,24 +254,25 @@ class EditorSupport(SimpleItem):
                     target = '_blank'
                 st = st.replace(match.group(0), 
                     '%s<link url="%s" target="%s">%s</link>' % (
-                        match.group(1), 
-                        match.group(3), 
-                        target, 
-                        match.group(2)))
+                        self.replace_xml_entities(match.group(1)), 
+                        self.replace_xml_entities(match.group(3)), 
+                        self.replace_xml_entities(target), 
+                        self.replace_xml_entities(match.group(2))))
             else:
                 st = st.replace(match.group(0), 
                     '%s<link url="%s">%s</link>' % (
-                        match.group(1), 
-                        match.group(3), 
-                        match.group(2)))
+                        self.replace_xml_entities(match.group(1)), 
+                        self.replace_xml_entities(match.group(3)), 
+                        self.replace_xml_entities(match.group(2))))
         while 1:
             match = self.p_INDEX.search(st)
             if not match:
                 break
             st = st.replace(match.group(0), 
-                '%s<index name="%s">%s</index>' % (match.group(1), 
-                    match.group(3), 
-                    match.group(2)))
+                '%s<index name="%s">%s</index>' % (
+                    self.replace_xml_entities(match.group(1)), 
+                    self.replace_xml_entities(match.group(3)), 
+                    self.replace_xml_entities(match.group(2))))
         st = st.replace('\n', '<br/>')
         st = self.input_convert(st).encode('UTF8')
         node = node._node
