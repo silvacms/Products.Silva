@@ -18,13 +18,10 @@ def check_reserved_ids(obj):
             illegal_urls += check_reserved_ids(o)
     return illegal_urls
 
-illegal_url_template = '''<html>
-<body>
+illegal_url_template = '''
 The following objects have an id that is illegal in
 Silva, and need to be renamed in order for the upgrade to continue:<br /><br />
 %s
-</body>
-</html>
 '''
 
 def from091to092(self, root):
