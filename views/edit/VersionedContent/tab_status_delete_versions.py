@@ -22,13 +22,11 @@ if len(request['versions']) == len(adapter.getVersionIds()):
     
 result = adapter.deleteVersions(request['versions'])
 
-message_type = 'feedback'
 messages = []
 for id, error in result:
     if error is not None:
-        message_type = 'error'
-        messages.append('could not delete %s: %s' % (id, error))
+        messages.append('<span class="error">could not delete %s: %s</span>' % (id, error))
     else:
         messages.append('deleted %s' % id)
 
-return view.tab_status(message_type=message_type, message=', '.join(messages).capitalize())
+return view.tab_status(message_type="feedback", message=', '.join(messages).capitalize())

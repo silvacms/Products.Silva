@@ -155,9 +155,6 @@ class VersionManagementAdapter(adapter.Adapter):
             delids.append(id)
             ret.append((id, None))
         delret = self.context.manage_delObjects(delids)
-        # XXX somehow the transaction needs to be committed manually, can we 
-        # fix that??
-        get_transaction().commit()
         return ret
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
@@ -240,6 +237,41 @@ class VersionManagementAdapter(adapter.Adapter):
     def getVersionCreatorInfo(self, versionid):
         version = self.getVersionById(versionid)
         return self.context.sec_get_member(version.getOwner().getUserName())
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'getVersionStatus')
+    def getVersionStatus(self, versionid):
+        """Returns the status of a version as a string
+
+            return value can be one of the following strings:
+
+                unapproved
+                pending
+                approved
+                published
+                last_closed
+                closed
+        """
+        if (self.context._unapproved_version[0] is not None and 
+                self.context._unapproved_version[0] == versionid):
+            if self.context.is_version_approval_requested():
+                return 'pending'
+            else:
+                return 'unapproved'
+        elif (self.context._approved_version[0] is not None and
+                self.context._approved_version[0] == versionid):
+            return 'approved'
+        elif (self.context._public_version[0] is not None and 
+                self.context._public_version[0] == versionid):
+            return 'published'
+        else:
+            if self.context._previous_versions:
+                if self.context._previous_versions[-1] == versionid:
+                    return 'last_closed'
+                elif versionid in self.context._previous_versions:
+                    return 'closed'
+        raise VersioningError, 'no such version'
+
 
     def _createUniqueId(self):
         # for now we use self.context._version_count, we may
