@@ -12,8 +12,8 @@
 
     type model/meta_type;
     url model/absolute_url;
-    title model/get_title_editable;
-    
+    title python: test(model.get_title_editable() == '', model.id, model.get_title_editable());
+
     root_url model/get_root_url;
     global publication model/get_publication;
     global containing_publication publication/../get_publication | publication;
