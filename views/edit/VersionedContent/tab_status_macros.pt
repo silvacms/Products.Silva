@@ -34,7 +34,7 @@ A previous request for approval has been rejected / withdrawn by
    the message of the requester ...
 </comment>
 The last message related to this is:
-<pre tal:content="python:model.get_approval_request_message()" />
+<div class="message" tal:content="python:model.get_approval_request_message()" />
 </td>
 </tr>
 
@@ -99,7 +99,7 @@ has requested approval at
 <span tal:replace="structure python:here.service_utils.backend_datetime_to_str(model.get_approval_request_datetime())">some date</span>
 <span taol:omit-tag="" tal:condition="python:model.get_approval_request_message()">
 with the following comments:
-<pre tal:content="python:model.get_approval_request_message()" />
+<div class="message" tal:content="python:model.get_approval_request_message()" />
 </span>
 </td></tr>
 <tr>
@@ -356,3 +356,4 @@ If necessary, the published version of this content can be manually closed (take
 </form>
 </div>
 _____________________ /manual close _____________________________________________
+
