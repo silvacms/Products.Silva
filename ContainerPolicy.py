@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8.6.1 $
+# $Revision: 1.8.6.1.16.1 $
 # Python
 from bisect import insort_right
 
@@ -32,7 +32,6 @@ class ContainerPolicyRegistry(SimpleItem):
 
     security = ClassSecurityInfo()
     id = 'service_containerpolicy'
-    title = 'Silva ContainerPolicy Registry'
     meta_type = 'Silva Container Policy Registry'
 
     manage_options = (
