@@ -180,40 +180,26 @@ to be written is very minimal.
 Once your stylesheet is done, you need to build a renderer that uses
 it. For example take a look at imagesonrightrenderer.py::
 
- #!/usr/bin/python
- import os
-
- # Zope
- from Globals import InitializeClass
-
  # Silva
  from Products.Silva.transform.renderer.xsltrendererbase import XSLTRendererBase
 
  class ImagesOnRightRenderer(XSLTRendererBase):
      def __init__(self):
-         XSLTRendererBase.__init__(self)
-
-         # for creating your own renderer, copying this file, and
-         # modifying the self._name and the filename of the stylesheet
-         # should be enough
-
-         self._name = 'Images on Right'
-         self._stylesheet_path = os.path.join(
-             os.path.dirname(os.path.abspath(__file__)),
-             "images_to_the_right.xslt")
-         self._stylesheet = None
-
- InitializeClass(ImagesOnRightRenderer)
+         XSLTRendererBase.__init__(self, 'images_on_the_right.xslt', __file__)
 
 All this really does is make a 'wrapper' for your stylesheet and gives
-it a name to use in Silva, so that it can be registered.
-
+it a name to use in Silva, so that it can be registered. All the real
+work is done in the XSLTRendererBase base class. You need to pass the
+special __file__ name to instruct the renderer base to look for the
+stylesheet in the directory the module is in. This is just a special
+name that is available in Python modules.
 
 3. Registering the Renderer
 ===========================
 
 All you have to do now is register the renderer with Silva. This
-happens in the __init__.py of your extension. Add an import statement like::
+happens in the __init__.py of your extension. Add an import statement
+like::
 
 from Products.SilvaRendererDemo.demorenderers import DemoDocumentRenderer
 
@@ -232,20 +218,39 @@ for your own renderer and modify the initialize method to register it::
 4. Using the Renderer
 =====================
 
-There are two ways to use your renderer in Silva. For a specific
-document you can switch between renderers om the properties screen by 
-changing the 'content renderer'.  The preview, public preview and public 
-view will start using the selected renderer.
+There are two ways to use your renderer in Silva: select a renderer
+for a specific content object, or select a renderer as a global policy
+for all objects of a type (except those which have a specific renderer
+selected).
 
-Content can also use a default renderer. You can set the default
-renderer by going to the 'services' tab in your Silva root, clicking
-on 'service renderer registry'. Switching the default renderer for a type
-will affect all content of that type in your Silva instance that is set to 
-use the "(Default)" renderer.
+For a specific content object you can switch between renderers om the
+properties screen by changing the 'content renderer'. Note that this
+option is only available if there are alternative renderers available
+for this object at all. The preview, public preview and public view
+will start using the selected renderer. These renderers are associated
+with the version for versioned content, so changing the renderer only
+affects the public presentation of an object after the object has been
+published.
 
-Try switching the default renderer for Silva Document Version from
-'Do Not Use New-Style Renderers', that causes the old XMLWidget rendering
-system to be used, to 'Normal View (XSLT)', that uses the fancy newfangled
-XSLT rendering. The results should look 100% identical, but you may find
-that the latter gives you a significant speed improvement, especially
-for larger documents.
+All content that has renderers registered for it can also be
+explicitly selected not use the new-style renderer but the "old" Silva
+system instead. This can be selected by using 'Do not use new-style
+renderer'. 
+
+Finally, the default option is set to '(Default)'. This instructs the
+system to use the global policy for this content object. The default
+global policy for all objects is to use the old-style renderer.
+
+To change the global policy for a particular content type, go to the
+'services' tab in your Silva root, and click on
+'service_renderer_registry'. Switching the default renderer for a type
+will affect all content of that type in your Silva instance that is
+set to use the "(Default)" renderer. Again, you can only switch
+renderers if any alternatives are registered for that content type.
+
+Try switching the default renderer for Silva Document from 'Do not use
+new-style renderer', that causes the old XMLWidget rendering system to
+be used, to 'Basic XSLT Renderer', that uses the XSLT rendering. The
+results should look 100% identical, but you may find that the latter
+gives you a significant speed improvement, especially for larger
+documents.
