@@ -1,10 +1,13 @@
 model = context.REQUEST.model
-assets = model.get_assets()
+objects = model.objectItems()
 groups = []
 
-for asset in assets:
-    if asset.meta_type in ['Silva Group', 'Silva Virtual Group',]:
-        groups.append(asset)
+for id, object in objects:
+    try:
+        if object.meta_type in ['Silva Group', 'Silva Virtual Group',]:
+            groups.append(object)
+    except AttributeError, ae:
+        pass
 
 groups = [group for group in groups if group.isValid()]
 return groups
