@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.41 $
+# $Revision: 1.42 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -138,7 +138,7 @@ class Document(VersionedContent, EditorSupport):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'store_xml')
     def store_xml(self, xml):
-        """Store xml in this object (should be utf8-encoded). 
+        """Store xml in this object (must be utf8-encoded). 
         """
         version = self.get_editable()
         if version is None:
