@@ -2,7 +2,7 @@
 <metal:block fill-slot="edit_input">
 <span class="textarea">
   <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
-  <textarea style="width:100%" id="data" name="data" cols="65" rows="10" wrap="soft" tal:attributes="rows here/get_lines" tal:content="here/editable_content">Content</textarea>
+  <textarea style="width:100%" id="data" name="data" cols="65" rows="10" wrap="soft" tal:attributes="rows here/get_lines" tal:content="structure here/editable_content">Content</textarea>
 </span>
 </metal:block>
 <metal:block fill-slot="element_controls">

@@ -9,7 +9,7 @@
 </div>
 <div class="textarea">
   <textarea style="width:100%" id="data" name="data" cols="65" rows="10" wrap="soft" 
-    tal:attributes="rows here/get_lines" tal:content="here/editable_content">Content</textarea>
+    tal:attributes="rows here/get_lines" tal:content="structure here/editable_content">Content</textarea>
 </div>
 </metal:block>
 <metal:block fill-slot="element_controls">
