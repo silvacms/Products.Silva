@@ -8,7 +8,6 @@ if __name__ == '__main__':
 import SilvaTestCase
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
-from Products.SilvaMetadata.Compatibility import getToolByName
 from Products.Silva.silvaxml import silva_import
 from Products.Silva.silvaxml.xmlimport import SaxImportHandler
 
@@ -47,7 +46,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             document_version.get_title(),
             'This is (surprise!) a document'
             )
-        metadata_service = getToolByName(document_version, 'portal_metadata')
+        metadata_service = self.root.service_metadata
         binding = metadata_service.getMetadata(document_version)
         self.assertEquals(
             binding._getData('silva-extra').data['location'],
@@ -80,7 +79,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             linkversion2.get_title(),
             'unapproved title'
             )
-        metadata_service = getToolByName(linkversion, 'portal_metadata')
+        metadata_service = self.root.service_metadata
         binding = metadata_service.getMetadata(linkversion)
         self.assertEquals(
             binding._getData('silva-extra').data['creator'],
