@@ -57,11 +57,11 @@
     <metal:block define-macro="listing_no_style">      
       <form action="."
         method="POST">
-        <h2 class="info">
+        <h3 class="info">
           <img tal:replace="structure python:view.render_icon_by_meta_type(group_meta_type)" />
           <span i18n:translate="existing" tal:omit-tag="">existing</span>
           <span tal:replace="structure group_type | nothing">type</span> groups
-        </h2>
+        </h3>
         <table class="listing"
           style="margin-bottom:0em;">
           <thead>

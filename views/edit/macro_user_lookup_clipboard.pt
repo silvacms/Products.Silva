@@ -16,10 +16,10 @@
         method="POST"
         tal:define="
           clipboard_members python:view.lookup_get_selection().keys();">
-        <h2 class="info">
+        <h3 class="info">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Simple Member')" />
           <span i18n:translate="user_clipboard" tal:omit-tag="">user clipboard</span>
-        </h2>
+        </h3>
         <table class="listing"
           style="margin-bottom:0.5em;">
           <thead>
