@@ -9,7 +9,7 @@
 <title metal:define-slot="title">Reference</title>
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="stylesheet" href="base.css" />
-<link rel="stylesheet" href="globals/silva_.css" />
+<link rel="stylesheet" href="silva.css" />
 </head>
 
 <body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0">
