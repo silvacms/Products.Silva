@@ -44,7 +44,7 @@ Installing Silva
 
 Using Silva
 
-  After installing Silva in your Zope, you can go there by an URL such as:
+  After installing Silva in your Zope, you can go there by an URL such as::
 
     http://mysite.org/silva
  
@@ -52,10 +52,11 @@ Using Silva
   page.
 
   To see Silva in its full glory, type /edit after the url (you can do 
-  this for any Silva object):
+  this for any Silva object)::
 
     http://mysite.org/silva/edit
 
 License
   
-  Silva comes under the BSD license. See LICENSE.txt
+  Silva is released under the BSD license. See 'LICENSE.txt'.
+

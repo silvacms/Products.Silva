@@ -19,11 +19,11 @@ Installing Silva
   
       The Silva product can be found here:
 
-        http://www.zope.org/Members/faassen/Silva
+        "Silva":http://www.zope.org/Members/faassen/Silva
 
       or just download:
 
-        http://www.zope.org/Members/faassen/Silva/Silva-0.8.tgz
+        "Silva-0.8.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.8.tgz
   
     XMLWidgets (0.8)
 
@@ -33,11 +33,11 @@ Installing Silva
 
       XMLWidgets can be found here:
 
-        http://www.zope.org/Members/faassen/XMLWidgets
+        "XMLWidgets":http://www.zope.org/Members/faassen/XMLWidgets
 
       or just download:
 
-        http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.tgz
+        "XMLWidgets-0.8.tgz":http://www.zope.org/Members/faassen/XMLWidgets/XMLWidgets-0.8.tgz
 
     ParsedXML (1.3.0)
 
@@ -53,11 +53,11 @@ Installing Silva
 
       ParsedXML can be found here:
  
-        http://www.zope.org/Members/faassen/ParsedXML
+        "ParsedXML":http://www.zope.org/Members/faassen/ParsedXML
 
       or just download:
 
-        http://www.zope.org/Members/faassen/ParsedXML/ParsedXML-1.3.0.tgz
+        "ParsedXML-1.3.0.tgz":http://www.zope.org/Members/faassen/ParsedXML/ParsedXML-1.3.0.tgz
    
     Formulator (1.2.0)
 
@@ -66,11 +66,11 @@ Installing Silva
 
       Formulator can be found here:
 
-        http://www.zope.org/Members/faassen/Formulator
+        "Formulator":http://www.zope.org/Members/faassen/Formulator
 
       or just download:
 
-        http://www.zope.org/Members/faassen/Formulator-1.2.0.tgz
+        "Formulator-1.2.0.tgz":http://www.zope.org/Members/faassen/Formulator-1.2.0.tgz
 
   Silva services (ZODB)
 
@@ -96,11 +96,11 @@ Installing Silva
 
     You can find it here:
 
-      http://www.zope.org/Members/faassen/Silva
+      "Silva":http://www.zope.org/Members/faassen/Silva
 
     or just download:
 
-      http://www.zope.org/Members/faassen/Silva/silva-0.8.zexp.gz
+      "silva-0.8.zexp.gz":http://www.zope.org/Members/faassen/Silva/silva-0.8.zexp.gz
 
     First unpack 'silva-0.8.zexp.gz' to get a 'silva-0.8.zexp'
     file. Then place this in your Zope's 'import' directory, and then
