@@ -48,7 +48,6 @@ def get_xml_id(node):
     id = None
     for attr in node._attributes:
         if attr[1] == u'id':
-            print attr
             id = attr[4].encode('cp1252')
     if not id:
         raise Exception, 'No id found'
