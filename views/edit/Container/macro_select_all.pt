@@ -3,7 +3,8 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  >
+  xmlns:i18n="http://xml.zope.org/namespaces/tal/i18n"
+>
 <body>
 <metal:block define-macro="select_all">
   <tal:block define="sid select_id | python:''">
@@ -13,11 +14,12 @@
     id="all"
     title="select all: alt-a"
     tal:attributes="onChange string:toggleSelect('${sid}');;"
+    i18n:attributes="title"
   />
   </tal:block>
   <label for="all"
     accesskey="a">
-    Select <u>a</u>ll
+    <span i18n:translate="select_all">Select <u>a</u>ll</span>
   </label>
   <script type="text/javascript"
     xml:space="preserve">
