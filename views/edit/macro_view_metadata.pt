@@ -15,13 +15,14 @@
     truncatable python:['location'];
   ">
   <tal:block 
-    condition="content"
     define="
       metadata_category category | string:;
       binding python: view.get_metadata(content, category=metadata_category) or nothing;
+      setnames binding/setNames | nothing;
       is_container request/model/implements_container | nothing;
-      form_errors options/form_errors | nothing;
-      ">
+      form_errors options/form_errors | nothing;"
+    condition="python: content and setnames"
+    >
     <table class="listing"
       tal:condition="binding">
       <thead>
@@ -42,7 +43,7 @@
         </tr>
       </thead>
       <tbody>
-        <tal:block repeat="set_name binding/setNames">
+        <tal:block repeat="set_name setnames">
           <tr tal:replace="nothing">
             ______________ top controls row ______________
           </tr>
