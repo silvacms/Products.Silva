@@ -68,6 +68,9 @@ Silva changes
           restrictions.  Redid the user interface and underlying code
           for setting this.
 
+        - Added API to membership system so that extra columns can be
+          defined for lookup results by plugin membership components.
+
     Bugs fixed
 
         - Fixed rare or edge-case situations in the Publish tab. UI
