@@ -43,7 +43,8 @@
               cellspacing="0"
               tal:define="
                 members view/get_members;
-                global revokeables python:None">
+                global revokeable_roles python:None;
+                global revokeable_groups python:None">
               <thead>
                 <tr>
                   <td class="top"
@@ -114,7 +115,8 @@
                         tal:attributes="
                           value python:'%s||%s' % (userid, local);
                           id string:revoke_${userid}" 
-                        tal:define="global revokeables string:1" /><br tal:condition="not:repeat/local/end" />
+                        tal:define="global revokeable_roles string:1"
+                       /><br tal:condition="not:repeat/local/end" />
                     </tal:block>
                   </td>
                 </tr>
@@ -156,7 +158,7 @@
                     title="revoke selected role(s) from selected user(s)"
                     type="submit"
                     value="Revoke role" 
-                    tal:condition="revokeables"
+                    tal:condition="revokeable_roles"
                   />
                 </td>
               </tr>
@@ -377,7 +379,9 @@
                             value=""
                             tal:attributes="
                               value python:'%s||%s' % (group, local);
-                              id string:revoke_${group};" /><br tal:condition="not:repeat/local/end" />
+                              id string:revoke_${group};"
+                            tal:define="global revokeable_groups string:1"
+                          /><br tal:condition="not:repeat/local/end" />
                         </tal:block>
                       </td>
                     </tr>
@@ -409,7 +413,8 @@
                           name="access_assign_to_group:method"
                           title="assign a local role to selected user(s)"
                           type="submit"
-                          value="Assign role to group" />
+                          value="Assign role to group"
+                        />
                       </tal:block>
                     </td>
                     <td class="align-right">
@@ -418,7 +423,8 @@
                         title="revoke selected role(s) from selected group(s)"
                         type="submit"
                         value="Revoke role from group" 
-                        tal:condition="groups" />
+                        tal:condition="revokeable_groups"
+                      />
                     </td>
                   </tr>
                 </table>
