@@ -1,11 +1,6 @@
-<?xml version="1.0"?>
 <toolbar>
-<!--
-	<icon paramname="GETHTMLDATAURL">
-		<iconfile>icons/save.gif</iconfile>
+	<icon paramname="NEW">
 	</icon>
--->
-	<separator />
 	<icon paramname="CUT">
 	</icon>
 	<icon paramname="COPY">
@@ -14,8 +9,6 @@
 	</icon>
 	<icon paramname="INSERTTEXT">
 	</icon>
-	<separator />
-	<choice paramname="PARAGRAPHSTYLE" />
 	<separator />
 	<icon paramname="BOLD">
 		<iconfile>icons/bold.gif</iconfile>
@@ -52,16 +45,8 @@
 	<icon paramname="LINK">
 		<iconfile>icons/link.gif</iconfile>
 	</icon>
-<!--
-	<icon paramname="BOOKMARK">
-		<iconfile>icons/bookmark.gif</iconfile>
-	</icon>
-
 	<icon paramname="IMAGE">
 	</icon>
-	<icon paramname="HR">
-	</icon>
--->
 	<icon paramname="SPECIALCHARACTER">
 		<iconfile>icons/charmap.gif</iconfile>
 	</icon>
@@ -71,10 +56,6 @@
 	<icon paramname="SHOWNALLCHAR">
 		<iconfile>icons/shownallchar.gif</iconfile>
 	</icon>
-<!--
-	<icon paramname="PROPERTIESDIALOG">
-	</icon>
--->
 	<separator />
 	<!-- <urlicon paramname="UPLOADIMAGE">
 		<iconfile>icons/java.gif</iconfile>
