@@ -13,13 +13,16 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.2 2003/05/12 14:32:23 jw Exp $    
+$Id: Metadata.py,v 1.3 2003/05/20 15:13:46 hazmat Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
 from Products.SilvaMetadata.Import import import_metadata
 from Products.SilvaMetadata.Access import registerAccessHandler, invokeAccessHandler
+from Products.SilvaMetadata.Initialize import registerInitHandler
+from Products.SilvaMetadata import Binding
 from Products.Silva.Versioning import Versioning
+
 
 #################################
 ### handlers and thin wrappers for metadata
@@ -44,14 +47,21 @@ def import_metadata_handler(container, content, node):
 
     return None
 
-
-def ghost_access_handler(tool, content_type, content):
+def ghost_access_handler(tool, content_type, content, defer_mode):
 
     return invokeAccessHandler(
         tool,
-        content._get_content()
+        content._get_content(),
+        defer_mode
         )
+
+def folder_initialize_handler(content, bind_data):
     
+    bind_data[Binding.ObjectDelegateEditable]    = 'get_default_editable'
+    bind_data[Binding.ObjectDelegatePreviewable] = 'get_default_previewable'
+    bind_data[Binding.ObjectDelegateViewable]    = 'get_default_viewable'
+
+    return bind_data
 
 #################################
 ### registration
@@ -60,6 +70,7 @@ def initialize_metadata():
     register_core_types()
     register_import_initializers()
     register_access_handlers()
+    register_initialize_handlers()
 
 def register_core_types():
     """
@@ -111,3 +122,13 @@ def register_access_handlers():
     """
     from Products.Silva.Ghost import GhostVersion
     registerAccessHandler(GhostVersion.meta_type, ghost_access_handler)
+
+def register_initialize_handlers():
+    """
+    deal with silva containers and index deferal
+    """
+    from Products.Silva.Folder import Folder
+    from Products.Silva.Publication import Publication
+    
+    registerInitHandler(Folder.meta_type, folder_initialize_handler)
+    registerInitHandler(Publication.meta_type, folder_initialize_handler)
