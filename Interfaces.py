@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.33 $
+# $Revision: 1.34 $
 import Interface
 
 class Security(Interface.Base):
@@ -83,38 +83,31 @@ class Security(Interface.Base):
         """
         pass
 
-    def sec_get_group_info(self, userid):
-        """Get information for group.
-        FIXME: describe which info fields exist.
+    def sec_get_local_defined_groups(self):
+        """Get the list of groups with locally defined roles.
         """
         pass
 
-    def sec_get_local_defined_groupids(self):
-        """Get the list of groupids with locally defined roles, or None
+    def sec_get_local_roles_for_group(self, group):
+        """Get a list of local roles that are defined for a group here.
         """
         pass
 
-    def sec_get_local_roles_for_groupid(self, groupid):
-        """Get a list of local roles that a groupid has here, or None
+    def sec_get_upward_defined_groups(self):
+        """Get the list of groups with roles defined in a higer
+        level of the tree.
         """
         pass
 
-    def sec_get_upward_defined_groupids(self):
-        """Get the list of groupids with roles defined in a higer
-        level of the tree, or None
+    def sec_get_upward_roles_for_group(self, group):
+        """Get the roles that a group has here, defined in a higer
+        level of the tree.
         """
         pass
 
-    def sec_get_upward_roles_for_groupid(self, groupid):
-        """Get the roles that a groupid has here, defined in a higer
-        level of the tree, or None
-        """
-        pass
-
-    def sec_get_downward_defined_groupids(self):
-        """Get the list of groupids with roles defined in a lower
-        level of the tree (these users do not have rights on this
-        local level), or None
+    def sec_get_downward_defined_groups(self):
+        """Get the list of groups with roles defined in a lower
+        level of the tree.
         """
         pass
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -19,6 +19,8 @@ class Security:
 
     _last_author_userid = None
     _last_author_info = None
+
+    __ac_local_groups__ = None
     
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
@@ -233,5 +235,49 @@ class Security:
         """
         self._last_author_userid = self.REQUEST.AUTHENTICATED_USER.getUserName()
         self._last_author_info = self.sec_get_user_info(self._last_author_userid)
-        
+
+    def sec_get_local_defined_groups(self):
+        local_groups = self.__ac_local_groups__
+        if local_groups is None:
+            return []
+        return local_groups.getMappings().keys()
+
+    def sec_get_local_roles_for_group(self, group):
+        local_gropus = self.__ac_local_groups__
+        if local_groups is None:
+            return []
+        return local_groups.getMappings().get(group, [])
+
+    def sec_get_upward_defined_groups(self):
+        parent = self.aq_inner.aq_parent
+        groups = {}
+        while Interfaces.Container.isImplementedBy(parent):
+            for group in parent.sec_get_local_defined_groups():
+                groups[group] = 1
+            parent = parent.aq_parent
+        return groups.keys()
+    
+    def sec_get_upward_roles_for_group(self, group):
+        parent = self.aq_inner.aq_parent
+        if not Interfaces.Container.isImplementedBy(parent):
+            return []
+        # XXX incorrect, should loop
+        return parent.sec_get_local_roles_for_group(group)
+
+    def sec_get_downward_defined_groups(self):
+        d = {}
+        self._sec_get_downward_defined_groups_helper(d)
+        return d.keys()
+    
+    def _sec_get_downward_defined_groups_helper(self, d):
+        for group in self.sec_get_local_defined_groups():
+            d[group] = 1
+        if Interfaces.Container.isImplementedBy(self):
+            for item in self.get_ordered_publishables():
+                item._sec_get_downward_defined_groups_helper(d)
+            for item in self.get_nonactive_publishables():
+                item._sec_get_downward_defined_groups_helper(d)
+            for item in self.get_assets():
+                item._sec_get_downward_defined_groups_helper(d)
+                
 InitializeClass(Security)
