@@ -134,8 +134,8 @@
                 <th i18n:translate="">
                   author
                 </th>
-                <th class="nosort listing-right" i18n:translate="">
-                  &nbsp;&nbsp;Shift
+                <th class="nosort listing-right">
+                  &nbsp;&nbsp;<span i18n:translate="">shift</span>
                 </th>
               </tr>
 
@@ -285,7 +285,7 @@
                           tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item_info/item_id}"
                           i18n:attributes="title"
                         >
-                          <img alt="Move down"
+                          <img alt="move down"
                             border="0"
                             height="12"
                             width="16"
@@ -297,7 +297,7 @@
                           tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item_info/item_id}"
                           i18n:attributes="title"
                         >
-                          <img alt="Move up"
+                          <img alt="move up"
                             border="0"
                             height="12"
                             width="16"
