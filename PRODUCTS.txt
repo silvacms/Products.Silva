@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.16 $
+CVS:        $Revision: 1.17 $
 
 Introduction
 ------------
@@ -136,6 +136,13 @@ A DOM-compliant storage for XML documents. Used by
 SilvaDocument. XMLWidgets integrates with it.
 
 http://www.infrae.com/download/ParsedXML
+
+PlacelessTranslationService 1.0 (DI)
+------------------------------------
+
+Translation service which can be used by Silva. It is safe to
+deinstall it, though -- Silva will continue to work with the English
+user interface.
 
 Groups 0.4 (I)
 --------------

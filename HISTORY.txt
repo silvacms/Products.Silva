@@ -8,7 +8,7 @@ Silva changes
     Features added
 
       - Silva has been i18n-ed. (Works with Placeless Translation Service
-        1.0)
+        1.0). There's an English, German and Dutch version of Silva now.
 
       - Subscriptions feature: visitors can now easily subscribe to 
         publish events of VersionedContent objects (like Silva Documents).

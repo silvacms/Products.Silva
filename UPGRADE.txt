@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.48 $
+CVS:        $Revision: 1.49 $
 
 Introduction
 ------------
@@ -89,6 +89,10 @@ upgrades".
 
 This upgrade will add and update an index in the service_catalog and it will
 trigger an update on all existing Indexer objects in the Silva site.
+
+If you want to enable the Silva UI in different languages, install
+PlacelessTranslationService 1.0. This is included in the Silva-all
+distribution.
 
 If you want to enable the new (since 1.1) XSLT support, please see the
 section "XSLT Support" in INSTALL.txt.
