@@ -2,7 +2,17 @@ Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Silva changes
+  
+  1.0 (release candidate 2)
 
+    Bugs fixed
+
+      - Empty index elements [[]] are now longer accepted.
+
+      - Fixed bug in default layout template in accessibility
+        (previous/next) links.
+
+      - Closed content is publishable in publish tab.
 
   1.0 (release candidate 1)
 
