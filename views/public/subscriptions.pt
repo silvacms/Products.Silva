@@ -41,7 +41,7 @@
             value="subscribe"
             title="access key: alt-s"
             accesskey="c"
-            i18n:attributes="title value"
+            i18n:attributes="title;value"
           />
         </td>
       </tr>
@@ -87,7 +87,7 @@
             value="unsubscribe"
             title="access key: alt-u"
             accesskey="c"
-            i18n:attributes="title value"
+            i18n:attributes="title;value"
           />
         </td>
       </tr>
