@@ -1,0 +1,134 @@
+ <div class="margins"
+  tal:define="
+    view here;
+    model request/model;
+    root_url model/get_root_url;
+    title model/get_title_editable;
+    breadcrumb_vein string:Edit;
+    has_access here/has_change_access_permission;">
+  <tal:block condition="has_access">
+    <tal:block condition="model/isValid | nothing">
+      <h3>
+        <a href="tab_access"
+          title="Back to Groups"
+          tal:attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()"
+	   i18n:attributes="title">
+          <img alt="Up to top of Access tab"
+            border="0"
+            height="16"
+            width="16"
+            tal:attributes="src string:${root_url}/globals/left.gif" />
+          Back
+        </a>
+      </h3>
+      <h2>
+        <span tal:replace="model/meta_type">
+          Meta type
+      </span><span i18n:translate="for" tal:omit-tag=""> for </span>
+        <span class="document-title">
+          &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+        </span>
+      </h2>
+
+      <h3 i18n:translate="virtual_group_members">
+        Virtual Group &#8216;members&#8217;
+      </h3>
+      <!-- Defined ip groups listing -->
+      <metal:block use-macro="view/macro_groups_listing/macros/ip_groups_listing">
+        <metal:block fill-slot="listing_actions">
+          <input class="button"
+            name="copy_ipranges_from_ipgroups:method"
+            title="Copy groups as defined on selected virtual group(s)."
+            type="submit"
+            value="Copy from virtual group(s)" 
+	    i18n:attributes="title value"/>
+        </metal:block>
+      </metal:block>
+    
+      <form method="post" action=".">
+        <table>
+          <tr>
+            <td>
+              Address
+            </td>
+            <td>
+              <input type="text" name="iprange">
+            </td>
+            <td>
+              Can be: IP, IP-IP, IP/Netmask (10.1.1.1, 10.1.1.1-10.1.1.255, 
+              10.1.1.0/24, 10.1.1.0/255.255.255.0)
+            </td>
+          </tr>
+        </table>
+        <input class="button"
+          name="add_iprange_to_ipgroup:method"
+          title="Add"
+          type="submit"
+          value="Add"
+          />
+      </form>
+      
+      <!-- Group listing table -->
+      <form action="."
+        method="POST">
+        <table class="borders top bottom left right"
+          border="0"
+          cellpadding="5"
+          cellspacing="0"
+          style="empty-cells:show;"
+          tal:define="ipranges model/listIPRanges">
+          <tr align="left"
+            valign="top">
+            <th>
+              <b>
+                IP
+              </b>
+            </th>
+          </tr>
+          <tal:block repeat="iprange ipranges">
+            <tr valign="top"
+              tal:define="
+                oddrow repeat/iprange/odd;"
+              tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
+              <td align="left">
+                <input name="ipranges:list"
+                  type="checkbox"
+                  value="iprange"
+                  tal:attributes="value iprange" />
+                &nbsp;
+                <b tal:content="iprange">
+                  groupname
+                </b>
+              </td>
+            </tr>
+          </tal:block>
+          <tr class="focus"
+            tal:condition="not:ipranges">
+            <td>
+              <i i18n:translate="XXX">
+                IP Group does not contain any IPs
+              </i>
+            </td>
+          </tr>
+          <tr class="controls-cycle"
+            valign="top">
+            <td align="left">
+              <input class="warningbutton"
+                name="remove_iprange_from_ipgroup:method"
+                title="Remove selected range(s) from this ip group."
+                type="submit"
+                value="Remove ranges"
+		i18n:attributes="title value"
+                onClick="return confirm('Really remove?')"
+                tal:condition="ipranges" />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </tal:block>
+
+    <tal:block condition="not:model/isValid | nothing">
+      "Things to do when virtual groups is not in it original location"
+    </tal:block>
+  </tal:block>
+</div>

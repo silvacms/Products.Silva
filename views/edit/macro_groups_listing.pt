@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   >
-<!-- start of 3 Funky macro definitions to reuse the listing -->
+<!-- start of 4 Funky macro definitions to reuse the listing -->
 <metal:block define-macro="normal_groups_listing">
   <tal:block define="groups view/service_groups/listNormalGroups | nothing">
     <metal:block use-macro="here/macro_groups_listing/macros/listing">
@@ -28,6 +28,16 @@
   </tal:block>
 </metal:block>
 
+<metal:block define-macro="ip_groups_listing">
+  <tal:block define="groups view/service_groups/listIPGroups | nothing">
+    <metal:block use-macro="here/macro_groups_listing/macros/listing">
+      <metal:block fill-slot="actions" >
+        <metal:block define-slot="listing_actions" />
+      </metal:block>
+    </metal:block>
+  </tal:block>
+</metal:block>
+  
 <metal:block define-macro="all_groups_listing">
   <tal:block define="groups view/service_groups/listAllGroups | nothing">
     <metal:block use-macro="here/macro_groups_listing/macros/listing">
@@ -37,7 +47,7 @@
     </metal:block>
   </tal:block>
 </metal:block>
-<!-- end of 3 Funky macro definitions to reuse the listing -->
+<!-- end of 4 Funky macro definitions to reuse the listing -->
 
 <!-- actual macro where layout is done -->
 <!-- this form deliberately has no submit buttons; filled in in slots -->

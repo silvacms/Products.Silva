@@ -38,7 +38,7 @@ if not id_check == id.OK:
     return view.add_form(message_type="error",
         message=view.get_id_status_text(id))
 
-if groups_service.isGroup(id):
+if groups_service.isGroup(str(id)):
     return view.add_form(
         message_type="error", 
         message=\
@@ -47,6 +47,8 @@ if groups_service.isGroup(id):
 <br />
 In contrast to other Silva Objects, (Virtual) Group IDs must be unique 
 within a complete Silva instance.""" % view.quotify(id))
+
+id = str(id)
 
 # process data in result and add using validation result
 object = context.add_submit_helper(model, id, title, result)

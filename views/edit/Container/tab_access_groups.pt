@@ -176,178 +176,88 @@
 <tal:block replace="nothing">
   _____________________ groups creation table _____________________
 </tal:block>
-<table class="invisible">
-  <tbody>
-    <tr>
-      <tal:block replace="nothing">
-        _____________________ add normal group _____________________
-      </tal:block>
-      <td class="invisible">
-        <form name="focusbox" 
-          action="add_object_submit" 
-          method="POST" 
-          enctype="multipart/form-data">
-          <table class="listing">
-            <thead>
-              <tr class="top-controls">
-                <td colspan="2">
-                  <h3 i18n:translate="add_normal_group">
-                    Add a normal group
-                  </h3>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th colspan="2">
-                  <i i18n:translate="group_defined_by_list_users">
-                    a group defined by a list of users
-                  </i>
-                </th>
-              </tr>
-              <tr class="even">
-                <td class="align-right"
-                  width="10%">
-                  id<span class="warning">*</span>
-                </td>
-                <td style="width: 20em;">
-                  <input size="20" 
-                    type="text" 
-                    name="field_object_id" 
-                    value="" 
-                    style="width:100%;"
-                  />
-                </td>
-              </tr>
-              <tr class="odd">
-                <td class="align-right">
-                  <span i18n:translate="title"
-                    tal:omit-tag="">
-                    title
-                  </span>
-                <td>
-                  <input size="20" 
-                    type="text" 
-                    name="field_object_title" 
-                    value="" 
-                    style="width:100%;"
-                  />
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr class="controls">
-                <td class="align-right"
-                  colspan="2">
-                  <input type="hidden" 
-                    name="meta_type" 
-                    value="Silva Group" />
-                  <input class="button" 
-                    type="submit" 
-                    name="add_submit" 
-                    value="add" 
-                    title="access key: alt-a" 
-                    accesskey="a" 
-                    i18n:attributes="title value"
-                  />
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </form>
-      </td>
-      <td class="invisible">
-        &nbsp;&nbsp;
-      </td>
-      <tal:block replace="nothing">
-        _____________________ create virtual group _____________________
-      </tal:block>
-      <td class="invisible">
-        <form name="focusbox" 
-          action="add_object_submit" 
-          method="POST" 
-          enctype="multipart/form-data">
-          <table class="listing">
-            <thead>
-              <tr class="top-controls">
-                <td colspan="2">
-                  <h3 i18n:translate="create_virtual_group">
-                    Create a virtual group
-                  </h3>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th colspan="2">
-                  <i i18n:translate="group_defined_by_list_groups">
-                    a group defined by a list of normal groups
-                  </i>
-                </th>
-              </tr>
-              <tr class="even">
-                <td class="align-right"
-                  width="10%">
-                  id<span class="warning">*</span>
-                </td>
-                <td style="width: 20em;">
-                  <input size="20" 
-                    type="text" 
-                    name="field_object_id" 
-                    value="" 
-                    style="width:100%;"
-                  />
-                </td>
-              </tr>
-              <tr class="odd">
-                <td class="align-right">
-                  <span i18n:translate="title"
-                    tal:omit-tag="">
-                    title
-                  </span>
-                <td>
-                  <input size="20" 
-                    type="text" 
-                    name="field_object_title" 
-                    value="" 
-                    style="width:100%;"
-                  />
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr class="controls">
-                <td class="align-right"
-                  colspan="2">
-                  <input type="hidden" 
-                    name="meta_type" 
-                    value="Silva Virtual Group"
-                  />
-                  <input class="button" 
-                    type="submit" 
-                    name="add_submit" 
-                    value="create"
-                    title="access key: alt-c" 
-                    accesskey="c" 
-                    i18n:attributes="title value"
-                  />
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </form>
-      </td>
-    </tr>
-  </tbody>
-</table>
-         
-      </td>
-    </tr>
-  </tbody>
-</table>
-  
-
-  
+  <tal:block replace="nothing">
+    _____________________ add group _____________________
+  </tal:block>
+  <form name="focusbox" 
+    action="add_object_submit" 
+    method="POST" 
+    enctype="multipart/form-data">
+    <table class="listing">
+      <thead>
+        <tr class="top-controls">
+          <td colspan="2">
+            <h3 i18n:translate="add_group">
+              Add a group
+            </h3>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="even">
+          <td class="align-right"
+            width="10%">
+            id<span class="warning">*</span>
+          </td>
+          <td style="width: 20em;">
+            <input size="20" 
+              type="text" 
+              name="field_object_id" 
+              value="" 
+              style="width:100%;"
+            />
+          </td>
+        </tr>
+        <tr class="odd">
+          <td class="align-right">
+            <span i18n:translate="title"
+              tal:omit-tag="">
+              title
+            </span>
+          <td>
+            <input size="20" 
+              type="text" 
+              name="field_object_title" 
+              value="" 
+              style="width:100%;"
+            />
+          </td>
+        </tr>
+        <tr class="even">
+          <td class="align-right">
+            type<span class="warning">*</span>
+          </td>
+          <td>
+            <select name="meta_type">
+              <option value="Silva Group">
+                Group: a group defined by a list of users
+              </option>
+              <option value="Silva Virtual Group">
+                Virtual Group: a group defined by a list of normal groups
+              </option>
+              <option value="Silva IP Group">
+                IP Group: a group based on ip addresses
+              </option>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="controls">
+          <td class="align-right"
+            colspan="2">
+            <input class="button" 
+              type="submit" 
+              name="add_submit" 
+              value="add" 
+              title="access key: alt-a" 
+              accesskey="a" 
+              i18n:attributes="title value"
+            />
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
   
 <tal:block replace="nothing">
   <h3>

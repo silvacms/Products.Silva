@@ -188,6 +188,9 @@ def configureMetadata(root):
         {'type':'Silva Simple Content',     'chain':'silva-content, silva-extra'},
         {'type':'Silva Semi Ghost', 'chain': 'silva-content, silva-extra'},
         {'type': 'Silva AutoTOC', 'chain': 'silva-content, silva-extra'},
+        {'type':'Silva Group',               'chain':'silva-content, silva-extra'},
+        {'type':'Silva Virtual Group',              'chain':'silva-content, silva-extra'},
+        {'type':'Silva IP Group',              'chain':'silva-content, silva-extra'},
         )
     mapping.editMappings(default, tm)
 
@@ -468,16 +471,26 @@ def registerGroupsViews(reg):
         'edit', 'Silva Group', ['edit', 'Asset', 'Groups', 'Group'])
     reg.register(
         'edit', 'Silva Virtual Group', ['edit', 'Asset', 'Groups', 'VirtualGroup'])
+    reg.register(
+        'edit', 'Silva IP Group', ['edit', 'Asset', 'Groups', 'IPGroup'])
     reg.register('add', 'Silva Group', ['add', 'Groups', 'Group'])
     reg.register('add', 'Silva Virtual Group', ['add', 'Groups', 'VirtualGroup'])
+    reg.register('add', 'Silva IP Group', ['add', 'Groups', 'IPGroup'])
 
 def unregisterViews(reg):
     for meta_type in ['Silva Folder',
-                      'Silva Publication', 'Silva Ghost', 'Silva Image',
-                      'Silva DemoObject', 'Silva File', 'Silva Indexer',
+                      'Silva Publication',
+                      'Silva Ghost',
+                      'Silva Image',
+                      'Silva DemoObject',
+                      'Silva File',
+                      'Silva Indexer',
                       'Silva Simple Content',
-                      'Silva SQL Data Source', 'Silva Group', 
-                      'Silva Virtual Group', 'Silva Ghost Folder']:
+                      'Silva SQL Data Source',
+                      'Silva Group',
+                      'Silva Virtual Group',
+                      'Silva IP Group',
+                      'Silva Ghost Folder']:
         reg.unregister('edit', meta_type)
         reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)

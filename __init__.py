@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.87 $
+# $Revision: 1.88 $
 
 import Metadata
 import Folder, Root
@@ -21,6 +21,7 @@ import EmailMessageService
 import DocmaService
 import Group
 import VirtualGroup
+import IPGroup
 import SidebarCache
 import SidebarService
 import UnicodeSplitter # To make the splitter register itself
@@ -41,7 +42,7 @@ def initialize(context):
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
         Folder, Root, Publication, Ghost, Image, File, SimpleContent,
-        Indexer, SQLDataSource, DemoObject, Group, VirtualGroup,
+        Indexer, SQLDataSource, DemoObject, Group, VirtualGroup, IPGroup,
         GhostFolder, SemiGhost, AutoTOC],
         install, depends_on=None)
 
