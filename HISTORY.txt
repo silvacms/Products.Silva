@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.26 $
+$Revision: 1.47.2.27 $
 
 Silva changes
 
@@ -24,6 +24,9 @@ Silva changes
         - Ghosts of Documents containing a TOC will render this TOC with
           the Ghost's container context and not with the container context
           of the target Document.
+
+        - Fixed unwanted aquisition behaviour of Ghost paths and other
+          improvements in the Ghost code.
 
   0.9.1.2
 
