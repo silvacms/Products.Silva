@@ -5,6 +5,10 @@ Silva changes
 
   Development
 
+    Features added:
+
+      - Added support for Kupu 1.2 (this is now the required version).
+
     Bugs fixed:
 
       - Fixed bug so it is now possible to run unit tests for Silva extensions.

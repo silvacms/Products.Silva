@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.1.1
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.11.2.2 $
+CVS:        $Revision: 1.11.2.3 $
 
 Introduction
 ------------
@@ -102,8 +102,8 @@ parser.
 
 http://www.infrae.com/download/Sprout
 
-Kupu 1.1.2 (DI)
----------------
+Kupu 1.2rc2 (DI)
+----------------
 
 Kupu is a client-side WYSIWYG editor. If kupu is installed, Silva
 allows users to use kupu in addition to the forms-based editor to edit
