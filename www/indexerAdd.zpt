@@ -7,7 +7,7 @@
 Add Silva Index
 </p>
 
-<form action="manage_addCourse" method="post">
+<form action="manage_addIndexer" method="post">
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">

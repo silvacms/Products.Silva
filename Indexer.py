@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.1 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -24,17 +24,17 @@ except ImportError:
     
 icon = "www/silvageneric.gif"
 
-class Index(Content, SimpleItem):
-    """Index asset.
+class Indexer(Content, SimpleItem):
+    """Indexer asset.
     """
     security = ClassSecurityInfo()
 
-    meta_type = "Silva Index"
+    meta_type = "Silva Indexer"
 
     __implements__ = IContent
 
     def __init__(self, id, title):
-        Index.inheritedAttribute('__init__')(self, id, title)
+        Indexer.inheritedAttribute('__init__')(self, id, title)
         self._index = None
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -50,7 +50,7 @@ class Index(Content, SimpleItem):
         """Update the index.
         """
         if not XPATH_AVAILABLE:
-            print "Silva Index: cannot update index as xml.xpath not installed."
+            print "Silva Indexer: cannot update index as xml.xpath not installed."
             return
         result = {}
         # get status tree from folder by acquisition
@@ -83,16 +83,16 @@ class Index(Content, SimpleItem):
                 result.setdefault(node.getAttribute('name'), {})[
                     object.content_url()] = object.get_content()
 
-InitializeClass(Index)
+InitializeClass(Indexer)
 
-manage_addIndexForm = PageTemplateFile("www/indexAdd", globals(),
-                                       __name__='manage_addIndexForm')
+manage_addIndexerForm = PageTemplateFile("www/indexerAdd", globals(),
+                                         __name__='manage_addIndexerForm')
 
-def manage_addIndex(self, id, title, REQUEST=None):
-    """Add an index."""
+def manage_addIndexer(self, id, title, REQUEST=None):
+    """Add an indexer."""
     if not self.is_id_valid(id):
         return
-    object = Index(id, title)
+    object = Indexer(id, title)
     self._setObject(id, object)
     add_and_edit(self, id, REQUEST)
     return ''

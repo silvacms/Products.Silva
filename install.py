@@ -192,7 +192,7 @@ def registerViews(reg):
     reg.register('edit', 'Silva Image', ['edit', 'Asset', 'Image'])
     reg.register('edit', 'Silva DemoObject', ['edit', 'VersionedContent', 'DemoObject'])
     reg.register('edit', 'Silva File', ['edit', 'Asset', 'File'])
-    reg.register('edit', 'Silva Index', ['edit', 'Content', 'Index'])
+    reg.register('edit', 'Silva Indexer', ['edit', 'Content', 'Indexer'])
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
@@ -203,7 +203,7 @@ def registerViews(reg):
     reg.register('public', 'Silva Image', ['public', 'Image'])
     reg.register('public', 'Silva DemoObject', ['public', 'DemoObject'])
     reg.register('public', 'Silva File', ['public', 'File'])
-    reg.register('public', 'Silva Index', ['public', 'Index'])
+    reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
     
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
@@ -213,12 +213,12 @@ def registerViews(reg):
     reg.register('add', 'Silva Image', ['add', 'Image'])
     reg.register('add', 'Silva DemoObject', ['add', 'DemoObject'])
     reg.register('add', 'Silva File', ['add', 'File'])
-    reg.register('add', 'Silva Index', ['add', 'Index'])
+    reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
 
 def unregisterViews(reg):
     for meta_type in ['Silva Folder', 'Silva Document',
                       'Silva Publication', 'Silva Ghost', 'Silva Image',
-                      'Silva DemoObject', 'Silva File', 'Silva Index']:
+                      'Silva DemoObject', 'Silva File', 'Silva Indexer']:
         reg.unregister('edit', meta_type)
         reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)

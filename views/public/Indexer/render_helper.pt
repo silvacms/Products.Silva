@@ -1,0 +1,27 @@
+<h3>Index</h3>
+
+<table tal:define="model request/model; view here;
+                   items model/get_index">
+  <tr tal:condition="python: items != None">
+	<th class="transparent" align="left">
+	Terms
+	</th>
+	<th class="transparent" align="left">
+	Links
+	</th>
+  </tr>
+
+  <tr valign="top" tal:repeat="entry items">
+	<td tal:content="python:model.output_convert_html(entry[0])"
+	  tal:condition="python:len(entry) != 0">
+  </td>
+  <td tal:content="structure python:view.render_links(entry[1])">
+  </td>
+  </tr>
+
+  <tr valign="top" tal:condition="python: items == None">
+  <td colspan="2">
+  No index items listed or found. Perhaps go to the edit tab and run the indexer.
+	</td>
+  </tr>
+</table>
