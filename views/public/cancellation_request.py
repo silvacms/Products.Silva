@@ -11,14 +11,21 @@ if content is None:
 
 try:
     service.requestCancellation(content, request['emailaddress'])
+except errors.NotSubscribableError, e:
+    return context.subscriptions_ui(
+        message=_('content is not subscribable'), 
+        subscr_emailaddress=request['emailaddress'])
+except errors.InvalidEmailaddressError, e:
+    return context.subscriptions_ui(
+        message=_('emailaddress not valid'), 
+        subscr_emailaddress=request['emailaddress'])
 except (errors.AlreadySubscribedError, errors.NotSubscribedError), e:
     # We just pretend to have sent email in order not to expose
     # any information on the validity of the emailaddress
     pass
-except errors.SubscriptionError, e:
-    return context.subscriptions_ui(
-        message=_(e), cancel_emailaddress=request['emailaddress'])
 
-return context.subscriptions_ui(
-    message=_('Confirmation request for cancellation has been emailed'),
-    show_form=False)
+mailedmessage = _(
+    'Confirmation request for cancellation has been emailed to ${emailaddress}')
+mailedmessage.set_mapping({'emailaddress', request['emailaddress']})
+
+return context.subscriptions_ui(message=mailedmessage, show_form=False)
