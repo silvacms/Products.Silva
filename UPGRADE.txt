@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.36.8.12.8.1 $
+CVS:        $Revision: 1.36.8.12.8.2 $
 
 Introduction
 ------------
@@ -110,6 +110,12 @@ Because some API changes in Silva might break the layout templates and
 scripts in the Silva root, you should take a good look at these new
 versions if you have any problems with your current templates.
 
+In particular, ``frontend.css`` changes regularly. If you haven't
+changed this stylesheet just remove the old version and rename
+``default_frontend.css`` to ``frontend.css``. If you see red text in
+the SMI or preview this is a signal that your ``frontend.css`` should be
+updated, since you're missing key selectors for content display.
+
 If you are using the default layout (most likely not), or for some
 other reason can safely through away your old layout, you can have the
 new layout installed directly. First, delete or rename the following
@@ -121,6 +127,10 @@ standard_error_message, standard_unauthorized_message
 Then go to ``service_extensions`` and click ``install default
 layout``. The new versions of the default layout should now be
 installed.
+
+For more info about layouts see:
+
+http://www.infrae.com/products/silva/docs/SiteManager#templates
 
 Reserved ids
 ------------

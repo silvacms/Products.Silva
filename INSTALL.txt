@@ -1,230 +1,140 @@
+================
+Installing Silva
+================
+
+Meta
+----
+
 Copyright (c) 2002, 2003, 2004 Infrae. All rights reserved.
 See also LICENSE.txt
 
-Meta::
+Valid for:  Silva 1.0.x
+Author:     Martijn Faassen
+Email:      faassen@infrae.com
+CVS:        $Revision: 1.40.8.8.8.2 $
 
-  Valid for:  Silva 1.0.x
-  Author:     Martijn Faassen, Jan-Wijbrand Kolman
-  Email:      faassen@infrae.com, jw@infrae.com
-  CVS:        $Revision: 1.40.8.8.8.1 $
+Introduction
+------------
 
-Installing Silva
+If you're on Linux or Unix, or if you want to install Silva in an
+already existing Zope install on Windows, just read on. If you are
+installing Silva on Windows to just get a quick look however, please
+take a look at the section `The easy way on Windows`_ below for a
+really easy way to get Silva up and running. If you are upgrading an
+existing release of Silva, please consult UPGRADE.txt. If you have any
+problems after an install, consult TROUBLESHOOTING.txt.
 
-  NOTE: If you are upgrading from a previous version of Silva, please
-  see "UPGRADE.txt":http://www.zope.org/Members/infrae/Silva/UPGRADE.txt
+Checklist for Zope administrators
+---------------------------------
 
-  If you have problems installing Silva, please consult
-  TROUBLESHOOTING.txt.
+Here is a quick checklist what to do to install Silva:
 
-  Silva depends on a set of file-system Python products for Zope for
-  its core functionality. There will also be a number of services
-  installed in the Zope Object Database; since release 0.8.6 this
-  takes place automatically from the filesystem.
+* You need Zope 2.6.4 with Python 2.1. Zope 2.7 with Python 2.3 will
+  likely work but is not yet officially supported by Infrae.
 
-  These Silva products come as .tgz files, and need to be unpacked in
-  the Zope's Products directory (usually
-  [path/to/Zope]/lib/python/Products or [path/to/instancehome]/Products).
-  Restart Zope after unpacking to finish the installation.
+* Download and install PyXML_ for the Python that Zope uses. PyXML
+  0.8.3 works.
 
-  After this restart you should have a bunch of Silva objects in your
-  Zope add list. Pick 'Silva Root' and add it (for instance to your
-  Zope root). This should now automatically create a Silva instance
-  with services and so on installed. If you go to
-  'http://yourzope/yoursilva/edit' you will see the Silva Management
-  Interface.
+* Download an appropriate Silva ``-all.tgz`` for the version you want
+  from `the Silva download area on zope.org`_ and unpack it into your
+  Zope's ``Products`` directory. Be aware the the ordering of the
+  releases gets messed up by zope.org, so be sure you get the latest
+  one. For a list of what is contained in the Silva distribution and
+  other extension products you can install, see PRODUCTS.txt.
 
-  If you ever install a Silva extension, go to the
-  'service_extensions' service in your Silva root using the Zope
-  management screens. You should see the extension listed and you can
-  install it into that Silva instance using the 'install' button.
+* Restart Zope.
 
-  Silva Requirements (install in your Products directory)
+* In the Zope Management Interface (ZMI), select 'Silva Root' from the
+  add list and create a Silva root. Enter the root by clicking on it
+  in the ZMI.
 
-    Silva (1.0)
+* Selecting the 'Silva /edit...' tab in the ZMI gets you to the Silva
+  UI.  Selecting 'View' either in the ZMI or in Silva shows you the
+  public presentation of this site.
 
-      Silva implements the behavior for the Silva objects, such as
-      Folders, Publications, and Documents. Also implements some
-      basic functionality for the editing of Silva documents. Since
-      version 0.8.6 this also contains the views and widgets in
-      separate subdirectories.
-  
-      The Silva product can be found here:
+You should now be done installing Silva. In the next section we'll go
+into everything in much more detail.
 
-        "Silva":http://www.zope.org/Members/infrae/Silva
+.. _PyXML: http://pyxml.sourceforge.net
 
-      Also available there is a "all" tarball, which includes all required
-      Products for a Silva setup (but not including Groups, ExtFile, 
-      SilvaExternalSources and LDAP integration code).
+.. _`the Silva download area on zope.org`:http://www.zope.org/Members/infrae/Silva
 
-    SilvaViews (0.9)
+The easy way on Windows
+-----------------------
 
-      The infrastructure used by Silva to attach views to content objects.
+Infrae maintains a Silva installer for Windows. This automatically
+installs Silva, Zope and Python and all required dependencies for you
+on your system. This is a great way to try out Silva.
 
-        "SilvaViews":http://www.zope.org/Members/infrae/SilvaViews
+When you are planning to run Silva in production you may want to set
+it all up by yourselves nonetheless. While it is more work, it should
+make maintenance more easy, and it makes it far more easy to combine
+Silva with other Zope Products. In addition, Infrae does not yet keep
+the windows installer releases as up to date as the source code
+releases.
 
-    Formulator (1.6.2)
+The Silva Windows installer can be found here:
 
-      A system for the construction and validation of web forms, used
-      by Silva's views.
+http://www.zope.org/Members/infrae/SilvaWindowsInstaller
 
-      Formulator can be found here:
+Optional extensions
+===================
 
-        "Formulator":http://www.zope.org/Members/faassen/Formulator
+Groups
+------
 
-    FileSystemSite (1.4) - not released yet at the time writing, but
-    included in the "all" tarball.
+To start using the groups in Silva, a Groups Service needs to be
+installed. Once the Groups filesystem product is installed, such a
+service can be added to the Silva Root via the ZMI. This service
+should have 'service_groups' for its id. After this you should be able
+to use Groups.
 
-      A system for keeping PageTemplates, PythonScripts and so on on
-      the filesystem. This allows us to maintain the view code for
-      Silva on the filesystem, which should make both version control
-      and deployment easier.
+http://www.zope.org/Members/infrae/Groups
 
-      FileSystemSite can be found here:
+ExtFile
+-------
 
-        "FileSystemSite":http://www.zope.org/Members/philikon/FileSystemSite
+If the ExtFile product is properly installed, Silva can use it to
+store Silva File objects in the file system instead of the ZODB.  To
+let Silva use the ExtFile product, you can change settings using the
+service_files object available in the services tab in the Silva
+root. 
 
-    SilvaMetadata (0.7.6)
+Note that enabling/disabling ExtFile storage does not change the
+storage of the already present Silva File objects. It has no effect to
+the Silva Image objects either, as they are stored in the ZODB in any
+case. More information is available in ``docs/FileObject.stx``.
 
-      Silva Metadata can be used to create metadata sets and
-      associate these with Zope object types. The metadata can be
-      configured to be cataloged automatically. It is integrated with
-      Silva (since version 0.9.2) and has a CMF compatibility layer.
+http://www.zope.org/Members/shh/ExtFile
 
-      SilvaMetadata can be found here:
+Note that version 1.4.2 or later of ExtFile is required.
 
-        "SilvaMetadata":http://www.zope.org/Members/infrae/SilvaMetadata
+Installing Silva with LDAP support
+----------------------------------
 
-    ProxyIndex (1.1.2)
+Silva can work together with LDAPUserFolder so that users in an LDAP
+database can be looked up and authorized as Silva authors and editors.
 
-      ProxyIndex is a plugin catalog index. It uses a TALES
-      expression instead of an attribute lookup/call to retrieve the
-      value to index from an object. The value retrieved can then be
-      indexed by any available plugin index.
+To make Silva integrate well with a particular LDAP server with a
+particular schema, a separate Member extension product must be created
+for your site that pulls its information from LDAP. In addition a new
+Group service can be created so that Group information as well is
+pulled out of LDAP.
 
-      ProxyIndex can be found here:
+If you need LDAP integration for Silva, please contact Infrae
+(info@infrae.com).
 
-        "ProxyIndex":http://www.zope.org/Members/infrae/ProxyIndex
+Installing Silva on a ZEO cluster
+---------------------------------
 
-    Annotations (0.4.3)
+When setting up Silva on a ZEO cluster, certain information needs to
+be shared between servers. A non-undoable storage needs to be set up
+for this.
 
-      Annotations is a generic way to add information to arbitrary
-      Zope objects. It is used by Silva Metadata to store metadata.
+If you want to set up Silva on a ZEO cluster, please contact Infrae
+(info@infrae.com).
 
-      Annotations can be found here:
+In case of problems
+-------------------
 
-        "Annotations":http://www.zope.org/Members/infrae/Annotations
-
-    SilvaDocument (1.0)
-
-      Silva Document contains the functionality implementing the Silva
-      Document object and editor. It is optional, but in order to do
-      something useful with Silva out of the box, this needs to be
-      installed.
-
-      SilvaDocument can be found here:
-
-        "SilvaDocument":http://www.zope.org/Members/infrae/SilvaDocument
-
-    XMLWidgets (0.10.3)
-
-      A system that builds on top of ParsedXML to assist in the
-      rendering of editor, as well as in the generation of the HTML
-      for the public pages.
-
-      XMLWidgets can be found here:
-
-        "XMLWidgets":http://www.zope.org/Members/infrae/XMLWidgets
-
-    ParsedXML (1.3.1)
-
-      A system that allows the storage of XML documents in the Zope
-      Object Database. Allows DOM access as well as ways to construct
-      references to individual nodes. Silva Document uses this to
-      store its data.
-
-      ParsedXML depends on the PyXML library for some of its
-      operation; the Python interpreter that is used to run Zope must
-      have access to a recent version of PyXML (0.7 works. 0.8.1
-      should also work, but let us know!).
-
-      ParsedXML can be found here:
- 
-        "ParsedXML":http://www.zope.org/Members/faassen/ParsedXML
-
-    Groups (0.4)
-
-      If you want to take advantage of Groups support, please
-      download and install the Groups product, here:
-  
-       "Groups":http://www.zope.org/Members/infrae/Groups
-
-      Groups support is optional; Silva should run without the Groups
-      product installed. Groups use a rather hackish technique called
-      'monkey patching' to hook groups support into the Silva core,
-      and this may conflict with other products that do the same. If
-      you get strange behavior, removing the Groups product and
-      restarting Zope will safely remove it.
-
-      To start using the Groups definitions, a "Groups Service" is
-      needed. Once the Groups Filesystem Product is installed, such a
-      service can be added to the Silva Root via the ZMI. This
-      service should have 'service_groups' for its id.
-
-    SilvaExternalSources (0.2)
-
-      If this is installed, Silva Documents gain functionality to 
-      include data coming from external sources into itself. This
-      replaces the code source and SQL Data Source functionality.
-  
-      SilvaExternalSources can be downloaded from here:
-      
-        http://www.zope.org/Members/infrae/SilvaExternalSources
-        
-    ExtFile (1.2.0)
-
-      If you plan to manage large upload files with Silva, which
-      should not be stored in the ZODB but the plain file system, you
-      may consider installing the ExtFile product from here:
-
-        "ExtFile":http://zope.org/Members/shh/ExtFile/1.2.0/ExtFile-1.2.0.tar.gz
-       
-      This product is optional; see "Installing Silva with ExtFile"
-      below. You may want to look into the README.txt of ExtFile at
-      installation time, and possibly adapt the undo handling. (This
-      should not be changed afterwards.)
-
-  Installing Silva with LDAP support
-
-    Silva can work together with LDAPUserFolder (1.2 at this point in
-    time has been tested) so that users in an LDAP database can be
-    looked up and authorized as Silva authors and editors.
-
-    To make Silva integrate well with a particular LDAP server with a
-    particular schema, a separate Member extension product must be
-    created for your site that pulls its information from LDAP. At
-    the moment we don't have a demo of this available yet, but we
-    will try to put one online soon.
- 
-  Installing Silva with ExtFile support.
-
-    If the ExtFile product is properly installed, Silva can use it to
-    store Silva File objects in the file system instead of the ZODB.
-    To let Silva use the ExtFile product, you can change settings
-    using the service_files object available in the services tab in
-    the Silva root.
-
-    Note that enabling/disabling ExtFile storage does not change the
-    storage of the already present Silva File objects. It has no
-    effect to the Silva Image objects either, as they are stored in
-    the ZODB in any case. More information is available in the
-    'docs/FileObject.stx'.
-
-  Installing Silva on a ZEO cluster
-
-    Since Silva depends heavily on sessions, these also need to be
-    shared throughout the cluster; this can be done by mounting a
-    non-undoable storage into the main storage that will be used
-    specifically as a store for session data.
-
-    For more information on this, see 'docs/ZeoClusterNotes.stx' and
-    'docs/ZeoClusterNotes2.stx'.
+Please consult TROUBLESHOOTING.txt if you run into any trouble.
