@@ -16,10 +16,15 @@ Silva changes
           be both converted to JPEG or PNG and arbitary scaled for web
           presentation. The high resolution image can be used for printing. 
 
- 	- Asset references and code element references will now be relative
+        - Asset references and code element references will now be relative
           paths if the Assets are in the same container the Document is in,
           or in a subc ntainer of this container. If not, the path will be
           an absolute path.
+
+        - Docma queue viewer is now on both import and export screen. On import
+          only Silva XML files are shown, on export only Word documents.
+
+        - Export screen prefills email address and description.
 
     Bugs Fixed
 
