@@ -117,7 +117,6 @@
         <img border="0"
            height="9"
            width="9"
-           alt="/\"
            tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url"
         />
       </a>
@@ -141,7 +140,6 @@
         <img border="0"
            height="9"
            width="9"
-           alt="^"
            tal:attributes="src python: '%s/globals/up_level.gif' % root_url"
         />
       </a>
