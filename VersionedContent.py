@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.37 $
+# $Revision: 1.38 $
 
 # Python
 from StringIO import StringIO
@@ -194,26 +194,24 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         # object is not published
         # XXX is_verson_published check triggers workflow update; necessary?
         if (cached_datetime is None or
-             cached_datetime <=
-             self.get_public_version_publication_datetime() or
-             cached_datetime <=
-             self.service_extensions.get_refresh_datetime() or
+             cached_datetime <= self.get_public_version_publication_datetime() or
+             cached_datetime <= self.service_extensions.get_refresh_datetime() or
              not self.is_version_published()):
 
             # render the original way
             data = VersionedContent.inheritedAttribute('view')(self, view_type)
             if self.is_cacheable():
                 # caching the data is allowed
-                cached_datetime = DateTime()
-                cached_data = data
+                self._cached_data[view_type] = data, DateTime()
+                self._cached_data = self._cached_data
             else:
-                # clear cache explicitly otherwise
-                cached_datetime = None
-                cached_data = None
-            # store new cached data (or create empty cache)
-            self._cached_data[view_type] = cached_data, cached_datetime
-            self._cached_data = self._cached_data
-  
+                # remove from cache if caching is not allowed
+                # only remove if there is something to remove,
+                # avoiding creating a transaction each time
+                if self._cached_data.has_key(view_type):
+                    del self._cached_data[view_type]
+                    self._cached_data = self._cached_data
+
         return data
         
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
