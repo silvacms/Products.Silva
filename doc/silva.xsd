@@ -12,7 +12,7 @@
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-      $Id: silva.xsd,v 1.7 2002/12/30 10:42:01 zagy Exp $
+      $Id: silva.xsd,v 1.8 2002/12/30 10:45:31 zagy Exp $
     
       Silva XML schema
       Copyright 2002 Infrae
@@ -69,6 +69,7 @@
         <xsd:element name="toc" type="TableOfContents" />
         <xsd:element name="pre" type="xsd:string" />
         <xsd:element name="externaldata" type="ExternalData" />   
+        <xsd:element name="dlist' type="DefinitionList" />
       </xsd:choice>
     </xsd:sequence>
   </xsd:complexType>
@@ -350,6 +351,14 @@
         </xsd:sequence>
       </xsd:choice>
     </xsd:sequence>
+    <xsd:attribute name="type">
+      <xsd:simpleType> 
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="normal" />
+          <xsd:enumeration value="compact" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
   </xsd:complexType>
 
 
