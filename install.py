@@ -146,7 +146,7 @@ def is_installed(root):
 
 def configureMetadata(root):
     from os import path
-    from Products.PortalAnnotations.Extensions.SilvaInstall import install as install_annotations
+    from Products.Annotations.Extensions.SilvaInstall import install as install_annotations
     from Products.SilvaMetadata.Extensions.SilvaInstall import install as install_metadata
     from Globals import package_home
     
