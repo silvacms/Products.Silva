@@ -7,7 +7,6 @@
     global wr_name request/wr_name;
     global mode here/get_mode;
     global is_embedded is_embedded | nothing;
-    global insert_now insert_now | nothing;
     global edit_or_nest python:test(wr_name == 'service_nlist_editor', 'nest_element.gif', 'edit_element.gif');
     global color python:test(is_embedded, 'focus', 'frontend');
     global content_cell_class python:test(mode == 'done', 'post-focus', color);
