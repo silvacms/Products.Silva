@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.49 $
+# $Revision: 1.50 $
 
 # Zope
 from DateTime import DateTime
@@ -91,17 +91,17 @@ class Versioning:
         self._update_publication_status()
         if self._unapproved_version == empty_version:
             raise VersioningError,\
-                  'There is no unapproved version to approve.'
+                  _('There is no unapproved version to approve.')
         if self._approved_version != empty_version:
             raise VersioningError,\
-                  'There already is an approved version.'
+                  _('There already is an approved version.')
         if self._unapproved_version[1] is None:
             raise VersioningError,\
-                  'Cannot approve version without publication datetime.'
+                  _('Cannot approve version without publication datetime.')
         if IPublishable.isImplementedBy(self):
             if not self.can_approve():
                 raise VersioningError,\
-                      'Cannot approve version; not allowed.'
+                      _('Cannot approve version; not allowed.')
         # turn any publication dates in the past into now
         # this is to avoid odd caching behavior
         if not self._unapproved_version[1].isFuture():
@@ -673,6 +673,7 @@ class Versioning:
     def get_next_version_status(self):
         """Get status of next version.
         """
+        # XXX i18n - should we translate these?
         if self.get_unapproved_version() is not None:
             if self.is_version_approval_requested():
                 return "request_pending"
