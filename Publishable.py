@@ -28,14 +28,11 @@ class Publishable:
     def deactivate(self):
         if not self.can_deactivate():
             return
-        if Interfaces.Versioning.isImplementedBy(self):
-            # if we want to deactivate an approved version, revoke
-            # approval first
-            if self.is_version_approved():
-                self.unapprove_version() 
+        # we can deactivate, but we should unapprove everything that
+        # is approved
+        _unapprove_helper(self)
+        # now set the flag
         self._active_flag = 0
-        # FIXME: should we deactivate all contents if this is a container?
-
         # refresh container of parent (may be parent itself)
         # we use parent so we don't get *this* publishable container
         self.aq_parent.get_container()._refresh_ordered_ids(self)
@@ -94,4 +91,16 @@ class Publishable:
         # all containers were active, so we can indeed approve
         return 1
 
+def _unapprove_helper(object):
+    """Unapprove object and anything unapprovable contained by it.
+    """
+    if Interfaces.Versioning.isImplementedBy(object):
+        # if we want to deactivate an approved version, revoke
+        # approval first
+        if object.is_version_approved():
+            object.unapprove_version()
+    if Interfaces.Container.isImplementedBy(object):
+        for item in object.get_ordered_publishables():
+            _unapprove_helper(item)
+    
 InitializeClass(Publishable)

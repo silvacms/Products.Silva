@@ -71,6 +71,27 @@ class PublishableTestCase(unittest.TestCase):
         self.document.deactivate()
         self.assert_(not self.document.is_version_approved())
 
+    def test_activation_approved2(self):
+        # if we deactivate a folder unapprove everything inside
+        self.folder.manage_addProduct['Silva'].manage_addFolder('subfolder', 'Subfolder')
+        subfolder = self.folder.subfolder
+        subfolder.manage_addProduct['Silva'].manage_addDocument('subsubdoc', 'Subsubdoc')
+        subsubdoc = subfolder.subsubdoc
+        # we can deactivate it still
+        self.assert_(self.folder.can_deactivate())
+        # but now we approve something inside
+        subsubdoc.set_unapproved_version_publication_datetime(
+            DateTime() + 1)
+        subsubdoc.approve_version()
+        # we can still deactivate it
+        self.assert_(self.folder.can_deactivate())
+        # deactivate it
+        self.folder.deactivate()
+        # the subsubdoc should be unapproved
+        self.assert_(not subsubdoc.is_version_approved())
+        self.assert_(not subsubdoc.is_version_published())
+        self.assert_(subsubdoc.get_unapproved_version())
+        
     def test_folder_activation(self):
         # we can deactivate folder if it is not published
         self.folder.deactivate()
@@ -85,7 +106,7 @@ class PublishableTestCase(unittest.TestCase):
         self.assert_(not self.folder.can_deactivate())
         self.folder.deactivate()
         self.assert_(self.folder.is_active())
-
+    
     def test_folder_activation2(self):
         # we can't publish something in an inactive folder
         self.folder.deactivate()
