@@ -326,16 +326,28 @@ def convert_document_092(obj):
             # bypass this document, as upgrade seems to be done already
             return
 
+    used_ids = []
     for version in ['unapproved', 'approved', 'public', 'last_closed']:
+        print 'Testing for', version, 'on', obj.absolute_url()
         v = getattr(obj, 'get_%s_version' % version)()
         if v is not None:
+            print 'Going to replace', version
+            print 'Version before upgrade:', getattr(obj, 'get_%s_version' % version)()
             xml = get_version_xml(obj, v)
             newver = DocumentVersion(v, obj._title)
             newver.content.manage_edit(xml)
             setattr(obj, v, newver)
+            used_ids.append(v)
+            print 'Version after upgrade:', getattr(obj, 'get_%s_version' % version)()
 
     obj._previous_versions = None
             
+    # remove all the unconverted versions
+    for o in obj.objectValues('Silva Document Version'):
+        if o not in used_ids:
+            print 'Going to delete obsolete version', o.absolute_url()
+            obj.manage_deleteObjects([o.id])
+
 upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
 
 # converting the data of the object to unicode will mostly (if not only)
@@ -408,16 +420,16 @@ def unicode_and_metadata_092(obj):
         for object in objects:
             binding = ms.getMetadata(object)
             if binding is None:
-                print 'Binding object:', object.meta_type
+                #print 'Binding object:', object.meta_type
                 continue
             if set_name in binding.getSetNames():
                 errors = binding._setData(values, set_id=set_name, reindex=0)
-                if errors:
-                    print 'Errors on setting metadata values', str(values).encode('ascii', 'ignore'), 'on set', set_name, 'for object on url', object.absolute_url(), ':', errors
-                else:
-                    print 'Set metadata values', str(values).encode('ascii', 'replace'), 'on set', set_name, 'for object on url', object.absolute_url()
-            else:
-                print 'Skipping meta_data values', str(values).encode('ascii', 'replace'), 'on set', set_name, 'for object on url', object.absolute_url()
+                #if errors:
+                #    print 'Errors on setting metadata values', str(values).encode('ascii', 'ignore'), 'on set', set_name, 'for object on url', object.absolute_url(), ':', errors
+                #else:
+                #    print 'Set metadata values', str(values).encode('ascii', 'replace'), 'on set', set_name, 'for object on url', object.absolute_url()
+            #else:
+            #    print 'Skipping meta_data values', str(values).encode('ascii', 'replace'), 'on set', set_name, 'for object on url', object.absolute_url()
 
 upgrade_registry.register('Silva Root', unicode_and_metadata_092, '0.9.2')
 upgrade_registry.register('Silva Folder', unicode_and_metadata_092, '0.9.2')
@@ -458,7 +470,7 @@ def replace_container_title_092(obj):
         title = unicode(title, 'cp1252', 'replace')
     default = obj.get_default()
     if default is not None:
-        print 'Setting title', title.encode('ascii', 'replace'), 'on default of', obj.id
+        #print 'Setting title', title.encode('ascii', 'replace'), 'on default of', obj.id
         # because this code is called *before* the folder is traversed,
         # the versionedcontent objects are still old style here, so we don't
         # have to go through all kinds of trouble to get all the versions
@@ -473,16 +485,16 @@ def replace_object_title_092(obj):
     """
     #print 'Replace object title for', obj.id
     if not '_title' in obj.aq_base.__dict__.keys():
-        print 'No title available on', obj.absolute_url()
+        #print 'No title available on', obj.absolute_url()
         return
     if obj is obj.aq_parent.get_default():
         return
-    print obj.absolute_url()
+    #print obj.absolute_url()
     title = obj.aq_inner._title
-    print 'Title:', title.encode('ascii', 'replace')
-    print 'Plain title attribute:', obj.aq_inner.title
-    print dir(obj.aq_inner)
-    print obj.aq_base.__dict__
+    #print 'Title:', title.encode('ascii', 'replace')
+    #print 'Plain title attribute:', obj.aq_inner.title
+    #print dir(obj.aq_inner)
+    #print obj.aq_base.__dict__
     del obj.aq_inner._title
     if type(title) != type(u''):
         title = unicode(title, 'cp1252', 'replace')
@@ -546,4 +558,33 @@ upgrade_registry.register('Silva Document Version', catalog_092, '0.9.2')
 upgrade_registry.register('Silva DemoObject Version', catalog_092, '0.9.2')
 upgrade_registry.register('Silva Ghost Version', catalog_092, '0.9.2')
 
+# helper methods for no-bullet list conversion
+def get_text_from_node(node):
+    nodelist = []
+    for child in node.childNodes:
+        if child.nodeType == 3 or child.nodeType == 6:
+            nodelist.append(child)
+    return nodelist
 
+def replace_list(node):
+    for child in node.childNodes:
+        if child.nodeName == u'list' and child.getAttribute('type') == u'none':
+            print 'No bulleted lists'
+            p = child.createElement('p')
+            for sc in child.childNodes:
+                if sc.nodeName == 'li':
+                    textnodes = get_text_from_node(sc)
+                    for textnode in textnodes:
+                        p.appendChild(textnode)
+                    breaknode = child.createElement('br')
+                    p.appendChild(breaknode)
+            node.replaceChild(p, child)
+        elif child.hasChildNodes():
+            replace_list(child)
+
+def convert_no_bullet_lists_092(obj):
+    topnode = obj.content.documentElement
+    replace_list(topnode)
+
+upgrade_registry.register('Silva Document Version', convert_no_bullet_lists_092, '0.9.2')
+upgrade_registry.register('Silva DemoObject Version', convert_no_bullet_lists_092, '0.9.2')
