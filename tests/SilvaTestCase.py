@@ -203,6 +203,9 @@ def setupSilvaRoot(app, id='root', quiet=0):
         factory = app.manage_addProduct['TemporaryFolder']
         factory.constructTemporaryFolder('temp_folder', '')
         noSecurityManager()
+        # work around for issue 611:
+        get_transaction().commit()
+        root.service_extensions.refresh('SilvaDocument')
         get_transaction().commit()
         if not quiet:
             ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
