@@ -63,7 +63,7 @@
 
       <tr class="odd">
         <td class="field-title">
-          Information<span class="warning">*</span>
+          Information
         </td>
         <td>
           <input tal:replace="structure python:view.form.info.render(editable.info())" />
