@@ -1,7 +1,18 @@
-Version of this document: $Revision: 1.5 $
+Version of this document: $Revision: 1.6 $
 
 Silva changes
- 
+
+  0.8.2
+
+    Features Added
+   
+     - Some changes to Ghosts to make them work properly with virtual hosts.
+
+    Bugs Fixed
+
+     - Some bug fixes to make plain Content objects (non-versioned) work
+       better.
+       
   0.8.1
 
     Features Added
