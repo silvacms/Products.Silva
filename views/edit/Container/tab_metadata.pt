@@ -44,7 +44,7 @@
                   <td class="top">
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />                      
-                      &#xab;<tal:block content="title" />&#xbb;
+                      properties of &#xab;<tal:block content="title" />&#xbb;
                     </h2>
                   </td>
                 </tr>
