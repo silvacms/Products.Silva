@@ -376,11 +376,10 @@
                     roles defined here
                   </th>
                 </tr>
-                <tal:block repeat="ugroup groups">
+                <tal:block repeat="group groups">
                   <tr
                     tal:define="
-                      group python: unicode(ugroup, 'latin1', 'ignore');
-                      iterate repeat/ugroup/odd"
+                      iterate repeat/group/odd"
                     tal:attributes="class python: iterate and 'odd' or 'even';">
                     <td class="align-left">
                       <input name="groups:list"

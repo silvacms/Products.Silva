@@ -28,6 +28,7 @@ revoked = []
 map = model.sec_get_groupsmapping()
 if map:
     for group, role in extract_groups_and_roles(revoke_roles):
+        group = unicode(group, 'UTF-8')
         map.revokeRolesFromGroup(group, [role])
         revoked.append((group, role))
 
