@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.59 $
+# $Revision: 1.60 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -163,12 +163,15 @@ class Publication(Folder.Folder):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed_in_publication')
     def get_silva_addables_allowed_in_publication(self):
-        addables = self._addables_allowed_in_publication
-        if addables is None:
-            # get addables of parent
-            return self.aq_parent.get_silva_addables_allowed_in_publication()
-        else:
-            return addables
+        current = self
+        root = self.get_root()
+        while 1:
+            addables = current._addables_allowed_in_publication
+            if addables is not None:
+                return addables
+            elif current == root:
+                return self.get_silva_addables_all()
+            current = current.aq_parent
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_silva_addables_acquired')
