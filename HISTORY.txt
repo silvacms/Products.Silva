@@ -7,6 +7,9 @@ Silva changes
 
     Features Added
 
+        - Bulk import of files (for FIle Assets) and/or images (for Image
+          Assets) using a zipfile.
+
         - New metadata architecture, which provides multiple configurable
           metadata sets. Sets can defined on a per object type basis and
           uses the catalog to make this metadata searchable.
