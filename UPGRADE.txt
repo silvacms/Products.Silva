@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.36.8.12.8.13 $
+CVS:        $Revision: 1.36.8.12.8.14 $
 
 Introduction
 ------------
@@ -21,9 +21,6 @@ major version upgrades of Silva. For information about particular
 upgrade issues please read the ``Upgrade issues``_ section of this
 document. Reading this is strongly recommended! If you still run into
 trouble, please consult TROUBLESHOOTING.txt.
-
-The Silva 1.0rc4 release should support upgrades from Silva
-0.9.3. Please test this and tell us how it works.
 
 Upgrades
 ========
@@ -85,7 +82,8 @@ Steps to take during a major Silva upgrade:
 Upgrading from Silva 0.9.3 to Silva 1.0
 ---------------------------------------
 
-The instructions in the "Major upgrades" section should be followed.
+The instructions in the "Major upgrades" section should be
+followed. In addition, read this section for special details.
 
 If you are using ExtFile for image storage, upgrading to version 1.4.2
 of ExtFile is required.
