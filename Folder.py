@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.52 $
+# $Revision: 1.53 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -339,15 +339,18 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 continue
             if self._is_silva_addable(addable_dict):
                 result.append(addable_dict)
+        result.sort()
         return result
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_all')
     def get_silva_addables_all(self):
-        return [addable_dict['name']
+        result = [addable_dict['name']
                 for addable_dict in self.filtered_meta_types()
                 if self._is_silva_addable(addable_dict)]
-    
+        result.sort()
+        return result
+
     def _is_silva_addable(self, addable_dict):
         """Given a dictionary from filtered_meta_types, check whether this
         specifies a silva addable.
