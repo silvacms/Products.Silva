@@ -17,13 +17,14 @@
   tal:condition="python:hasattr(here, 'extension_style_url')"
   tal:attributes="href python:here.extension_style_url()" />
 
-<style tal:define="tab_color view/local_style"
-  tal:condition="tab_color"
-  tal:content="structure tab_color">color container tabs green</style>
+<style tal:define="local_style view/local_style"
+  tal:condition="local_style"
+  tal:content="structure local_style">color container tabs green</style>
 
 <script tal:replace="nothing"> _______ cursor focus scripts _______ </script>
+
 <script type="text/javascript"
-  tal:condition="python:location and location == 'Edit'">
+  tal:condition="python:location == 'Edit'">
   <!--
   function focusCursor() {
     if (document && document.focusbox && document.focusbox.data) {
@@ -33,7 +34,7 @@
   // -->
 </script>
 <script type="text/javascript"
-  tal:condition="python:location and location == 'Add'">
+  tal:condition="python:location == 'Add'">
   <!--
   function focusCursor() {
     if (document && document.focusbox && document.focusbox.field_object_id) {
@@ -61,7 +62,7 @@
 <body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
   tal:attributes="onload python: test(template.id == 'tab_edit_bxe',
                                  'BX_load(\'%s/bxe/bxe_config.xml\')' % (model.absolute_url()),
-                                 test(location and (location == 'Add' or location == 'Edit'),
+                                 test(location == 'Add' or location == 'Edit',
                                  'focusCursor()',
                                  nothing))">
     <tal:block replace="nothing">Previous onload tests facilitate Bitflux editor support</tal:block>
