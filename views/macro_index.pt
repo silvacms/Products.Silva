@@ -222,6 +222,7 @@ function handle_default_action(element, event, action)
       title="Leave Silva and view the public page: alt-:"
       accesskey=":"
       tal:attributes="href url"
+      i18n:attributes="title"
       i18n:translate="index_preview_public">
       see public version
     </a>
@@ -243,7 +244,8 @@ function handle_default_action(element, event, action)
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
         userWindow.focus();;
         return false;;"
-      i18n:translate="index_user_setting">
+        i18n:translate="index_user_setting"
+        i18n:attributes="title">
       <img border="0"
         height="9"
         width="9"
@@ -256,7 +258,8 @@ function handle_default_action(element, event, action)
     <a href="logout"
       accesskey="q"
       title="Logout of Silva: alt-q"
-      i18n:translate="index_logout">
+      i18n:translate="index_logout"
+      i18n:attributes="title">
       logout
       <tal:block tal:condition="here/get_user_role"
         i18n:name="role"

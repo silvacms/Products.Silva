@@ -83,7 +83,8 @@
       <tr class="even">
         <td class="align-right"
           width="10%">
-          id<span class="warning">*</span>
+          <tal:block i18n:translate="">id</tal:block>
+          <span class="warning">*</span>
         </td>
         <td style="width: 50%;">
           <input class="store"
@@ -93,24 +94,26 @@
             size="20" 
           />
         </td>
-        <td>
+        <td i18n:translate="add_form_object_id_description">
           No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;
         </td>
       </tr>
       <tr class="odd">
         <td class="align-right">
-          type<span class="warning">*</span>
+          <tal:block i18n:translate="">type</tal:block>
+          <span class="warning">*</span>
         </td>
         <td>
           <select class="store"
             name="meta_type">
-            <option value="Silva Group">
+            <option value="Silva Group" i18n:translate="silva_group">
               Group: a group defined by a list of users
             </option>
-            <option value="Silva Virtual Group">
+            <option value="Silva Virtual Group"
+            i18n:translate="virtual_group">
               Virtual Group: a group defined by a list of normal groups
             </option>
-            <option value="Silva IP Group">
+            <option value="Silva IP Group" i18n:translate="ip_group">
               IP Group: a group based on ip addresses
             </option>
           </select>

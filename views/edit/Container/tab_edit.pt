@@ -226,6 +226,7 @@
                         tal:condition="item_info/has_modification_time"
                         tal:attributes="href string:${item_info/item_url}/edit/tab_metadata"
                         tal:content="structure item_info/modification_time"
+                        i18n:attributes="title"
                       >
                         date
                       </a>
@@ -233,7 +234,7 @@
                         title="properties"
                         tal:condition="not:item_info/has_modification_time"
                         tal:attributes="href string:${item_info/item_url}/edit/tab_metadata"
-                        i18n:translate="n/a"
+                        i18n:attributes="title"
                       >
                       <i>n/a</i>
                       </a>
@@ -386,13 +387,16 @@
                         tal:condition="asset_info/has_modification_time"
                         tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata"
                         tal:content="structure asset_info/modification_time"
+                        i18n:attributes="title"
                         >
                          date
                       </a>
                       <a class="closed"
                         title="properties"
                         tal:condition="not: asset_info/has_modification_time"
-                        tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata">
+                        tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata"
+                        i18n:attributes="title"
+                        >
                         <i i18n:translate="unknown">
                           unknown
                         </i>
@@ -439,7 +443,8 @@
                         <select class="manipulator"
                           name="new_position"
                           title="move selected items to"
-                          tal:define="length python: len(publishables) - test(default_document, 1, 0)">
+                          tal:define="length python: len(publishables) - test(default_document, 1, 0)"
+                          i18n:attributes="title">
                           <option value="position">
                             <span i18n:translate="position">position</span>:
                           </option>

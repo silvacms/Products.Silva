@@ -38,7 +38,8 @@
         <a class="transport"
           href="settings_addables"
           title="change the addables allowed in this publication: alt-a"
-          accesskey="c">
+          accesskey="c"
+          i18n:attributes="title">
           <tal:block i18n:translate="">
           configure <u>a</u>ddables...
           </tal:block>
@@ -112,7 +113,8 @@
               style="float:left;"
               href="copy_layout_submit"
               title="copy the layout into the Publication in order to customize it"
-              i18n:translate="layout_customize">
+              i18n:translate="layout_customize"
+              i18n:attributes="title layout_customize_desc;">
               customize layout
             </a>
           </tal:block>
