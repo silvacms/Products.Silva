@@ -25,8 +25,12 @@ class Security:
         """
         old_roles = self.get_local_roles_for_userid(userid)
         roles = [role for role in old_roles if role not in revoke_roles]
-        self.manage_setLocalRoles(userid, roles)
-    
+        if len(roles) > 0:
+            self.manage_setLocalRoles(userid, roles)
+        else:
+            # if no more roles, remove user completely
+            self.sec_remove(userid)
+            
     # ACCESSORS
     def sec_get_userids(self):
         """Get the userids that have local roles here that we care about.
