@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: assetdata.py,v 1.2 2004/07/22 15:44:44 eric Exp $
+# $Id: assetdata.py,v 1.3 2004/12/22 18:00:52 jw Exp $
 #
 
 # XXX These asset adapters are a temporary solution and will not be
@@ -40,7 +40,11 @@ class ImageData(adapter.Adapter):
     __implements__ = interfaces.IAssetData
 
     def getData(self):
-        image = self.context.image
+        image = getattr(self.context, 'hires_image', None)
+        if image is None:
+            # Fallback to 'normal' image, which, if there isn't a hires
+            # version, should be the original.
+            image = self.context.image
         if image.meta_type == 'Image': # OFS.Image.Image
             return str(image.data)
         elif image.meta_type == 'ExtImage': # ExtFile.ExtImage.ExtImage
