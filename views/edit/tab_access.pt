@@ -133,12 +133,12 @@
         <th align="right"
           style="border-left: 1px solid black; border-right: 1px solid black;">
           <b>
-            Upward defined Roles
+            Upward defined roles
           </b>
         </th>
         <th align="right">
           <b>
-            Local Roles
+            Local roles
           </b>
         </th>
       </tr>
@@ -451,12 +451,12 @@
             <th align="right"
               style="border-left: 1px solid black; border-right: 1px solid black;">
               <b>
-                Upward defined Roles
+                Upward defined roles
               </b>
             </th>
             <th align="right">
               <b>
-                Local Roles
+                Local roles
               </b>
             </th>
           </tr>
