@@ -1,0 +1,472 @@
+msgid ""
+msgstr "Project-Id-Version: Silva\n"
+"POT-Creation-Date: 2003-05-11 08:05+CET\n"
+"PO-Revision-Date: 2003-05-11 08:05+CET\n"
+"Last-Translator:  <>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+#: from views/edit/Container/tab_access_groups.pt
+#.   <input class="button"
+#.     type="submit"
+#.     name="add_submit"
+#.     value="add"
+#.     title="access key: alt-a"
+#.     accesskey="a"
+#.     i18n:attributes="title value"
+#.   />
+#  Don't translate 'alt-a', since this is a keyboard shortcut
+msgid "access key: alt-a"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <input class="cancel"
+#.     style="float: left;"
+#.     type="button"
+#.     value="cancel"
+#.     title="access key: alt-c"
+#.     accesskey="c"
+#.     onClick="history.back()"
+#.     i18n:attributes="value title"
+#.   />
+#: from views/edit/Container/tab_edit_rename.pt
+#.
+#: from views/edit/Container/tab_status_export.pt:
+#.
+#  Don't translate 'alt-c', since this is a keyboard shortcut
+msgid "access key: alt-c"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <input class="button"
+#.     type="submit"
+#.     value="import"
+#.     name="tab_edit_import_xml:method"
+#.     title="access key: alt-i"
+#.     accesskey="i"
+#.     i18n:attributes="value title"
+#.   />
+#  Don't translate 'alt-i', since this is a keyboard shortcut
+msgid "access key: alt-i"
+msgstr ""
+
+#: from views/edit/Container/tab_access_groups.pt
+#.   <input class="button"
+#.     type="submit"
+#.     name="add_submit"
+#.     value="add"
+#.     title="access key: alt-a"
+#.     accesskey="a"
+#.     i18n:attributes="value title"
+#.   />
+msgid "add"
+msgstr ""
+
+#: from views/edit/Container/tab_access_groups.pt
+#.   <b i18n:translate="add_normal_group">
+#.     Add a normal group
+#.   </b>
+msgid "add_normal_group"
+msgstr ""
+
+#: from views/edit/Container/tab_access_groups.pt
+#.   <b i18n:translate="add_virtual_group">
+#.     Add a virtual group
+#.   </b>
+msgid "add_virtual_group"
+msgstr ""
+
+#: from views/edit/Container/tab_access_groups.pt
+#.   <a href="tab_access"
+#.     title="up to top of Access tab"
+#.     i18n:attributes="title"
+#.     i18n:translate="back"
+#.   >
+#.     Back
+#.   </a>
+msgid "back"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <input type="file"
+#.     name="importfile"
+#.     size="40"
+#.     title="browse for a file on your disk"
+#.     i18n:attributes="title"
+#.   />
+msgid "browse for a file on your disk"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <input class="cancel"
+#.     style="float: left;"
+#.     type="button"
+#.     value="cancel"
+#.     title="access key: alt-c"
+#.     accesskey="c"
+#.     onClick="history.back()"
+#.     i18n:attributes="value title"
+#.   />
+#: from views/edit/Container/tab_edit_rename.pt
+#.
+#: from views/edit/Container/tab_status_export.pt
+#.
+msgid "cancel"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <td align="right" i18n:translate="choose_word_file_to_upload">
+#.     Choose a Word file to upload. It'll be converted and appear in the list of processed items below.
+#.     It can be imported anywhere in Silva.
+#.   </td>
+msgid "choose_word_file_to_upload"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <td i18n:translate="choose_xml_file_to_import">
+#.     Choose an XML file to import (must be valid Silva XML)
+#.   </td>
+msgid "choose_xml_file_to_import"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <th i18n:translate="content">
+#.     Content
+#.   </th>
+msgid "content"
+msgstr ""
+
+#: from views/edit/Container/docma_queue.pt
+#.   <span i18n:translate="current_job">Current job</span>:
+#.   <span tal:replace="processingident" />
+#: from views/edit/Container/tab_edit_import.pt
+#.   <span i18n:translate="current_job">Current job</span>:
+#.   <span tal:replace="processingident" />
+msgid "current_job"
+msgstr ""
+
+#: from views/edit/Container/tab_access_groups.pt
+#.   <input class="warningbutton"
+#.     accesskey="d"
+#.     title="delete selected groups: alt-d"
+#.     type="submit"
+#.     value="delete"
+#.     onClick="return confirm('Really delete?')"
+#.     tal:condition="groups"
+#.     i18n:attributes="title value onClick"
+#.   />
+msgid "delete"
+msgstr ""
+
+#: from views/edit/Container/tab_access_groups.pt
+#.   <input class="warningbutton"
+#.     accesskey="d"
+#.     title="delete selected groups: alt-d"
+#.     type="submit"
+#.     value="delete"
+#.     onClick="return confirm('Really delete?')"
+#.     tal:condition="groups"
+#.     i18n:attributes="title value onClick"
+#.   />
+#  Don't translate 'alt-d', since this is a keyboard shortcut
+msgid "delete selected groups: alt-d"
+msgstr ""
+
+#: from views/edit/Container/docma_queue.pt
+#.   <span i18n:translate="description">
+#.     Description
+#.   </span>:
+#: from views/edit/Container/tab_edit_import.pt
+#.   <td class="align-right" i18n:translate="description">
+#.     description
+#.   </td>
+msgid "description"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <td i18n:translate="description_shown_in_queue">
+#.     This description will be shown in the queue and the list of processed items.
+#.   </td>
+msgid "description_shown_in_queue"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <img class="icon"
+#.     border="0"
+#.     width="16"
+#.     height="16"
+#.     alt="docma icon"
+#.     tal:attributes="src string:${root_url}/globals/docma.gif"
+#.     i18n:attributes="alt"
+#.   />
+msgid "docma icon"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <span i18n:translate="docma_facilities">
+#.     docma facilities
+#.   </span>
+msgid "docma_facilities"
+msgstr ""
+
+#: from views/edit/Container/docma_queue.pt
+#.   <th align="right" width="1%" i18n:translate="download">
+#.      Download
+#.   </th>
+#: from views/edit/Container/tab_edit_import.pt
+#.   <th class="align-right" width="10%" i18n:translate="download">
+#.     Download
+#.   </th>
+msgid "download"
+msgstr ""
+
+#: from views/edit/Container/tab_access_groups.pt
+#.   <a class="blacklink"
+#.     href="asset"
+#.     title="edit this group"
+#.     tal:attributes="href string:${group/absolute_url}/edit"
+#.     i18n:attributes="title">
+#.     <tal:block replace="group/id">
+#.       id
+#.     </tal:block>
+#.   </a>
+msgid "edit this group"
+msgstr ""
+
+#: from views/edit/Container/tab_edit_import.pt
+#.   <th width="15%" i18n:translate="element">
+#.     Element
+#.   </th>
+msgid "element"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "email_address"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "email_will_be_sent"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "estimated_time"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "export"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "file_to_upload"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "group_defined_by_list_groups"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "group_defined_by_list_users"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "group_definitions"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "groups_defined_in_folder"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "import"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "import and remove"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+#  Don't translate 'alt-m', since this is a keyboard shortcut
+msgid "import to the current location and remove from the list: alt-m"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+#  Don't translate 'alt-p', since this is a keyboard shortcut
+msgid "import to the current location: alt-p"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "import_in"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "import_silva_xml"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "job_id"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "job_number"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "job_owner"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "list_proccessed_items"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "no_jobs_in_queue"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "no_jobs_queue"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "no_processed_jobs"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "note"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "only"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+#  Don't translate 'alt-e', since this is a keyboard shortcut
+msgid "over to the export screen: alt-e"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "owner"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "queue_items_process"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "queue_of_items"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "refresh_queue_lists"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+#  Don't translate 'alt-r', since this is a keyboard shortcut
+msgid "reload to update the queue lists: alt-r"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "remove"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+#  Only translate *Really remove?*, the rest must remain unchanged.
+msgid "return confirm('Really remove?')"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "seconds"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "select all"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "select all items: alt-a"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+#  Don't translate 'alt-a', since this is a keyboard shortcut
+msgid "select all: alt-a"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "status"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+#  Don't translate 'alt-x', since this is a keyboard shortcut
+msgid "there's no undo: alt-x"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "title"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "type"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "up to top of Access tab"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "upload"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+#  Don't translate 'alt-u', since this is a keyboard shortcut
+msgid "upload a Word document from your local drive: alt-u"
+msgstr ""
+
+#: from views/edit/Container/
+#.
+msgid "upload_word_document"
+msgstr ""

@@ -1,0 +1,2405 @@
+# Gettext Message File for default.
+# Joachim Schmitz  <js@aixtraware.de>, 2003
+msgid ""
+msgstr ""
+"Project-Id-Version: Silva\n"
+"POT-Creation-Date: 2003-08-30 12:09default\n"
+"PO-Revision-Date: 2004-06-17 12:28+0200\n"
+"Last-Translator: Roman Joost <roman@infrae.com>\n"
+"Language-Team: Name <email>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: de\n"
+"Language-name: Deutsch\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: silva\n"
+
+# tabs
+msgid "preview"
+msgstr "Vorschau"
+
+msgid "help"
+msgstr "Hilfe"
+
+msgid "access"
+msgstr "Zugriff"
+
+msgid "select_all"
+msgstr "<u>a</u>lles auswählen"
+
+msgid "editor"
+msgstr "Editor"
+
+msgid "publish"
+msgstr "Publizieren"
+
+msgid "publishing actions"
+msgstr "Veröffentlichungseinstellungen"
+
+msgid "publish_modify"
+msgstr "Bearbeiten / Vorschau"
+
+msgid "publish_revision"
+msgstr "Korrektur"
+
+msgid "publish_pub_due"
+msgstr "Veröffentlichungstermin"
+
+msgid "publish_exp_due"
+msgstr "Verfallsdatum"
+
+msgid "publish_published"
+msgstr "publiziert"
+
+msgid "publish_dateformat"
+msgstr "Tag / Monat / Jahr &nbsp; 23:59" 
+
+msgid "publish_time"
+msgstr "veröffentlichen am:"
+
+msgid "publish_exp_time"
+msgstr "verfällt am:"
+
+msgid "publish_now"
+msgstr "sofort veröffentlichen?"
+
+msgid "set timing"
+msgstr "Zeitvorgaben speichern"
+
+msgid "publish_empty"
+msgstr "Leere Felder bedeuten kein Verfallsdatum"
+
+msgid "publish_manual_close"
+msgstr "schließen der veröffentlichten Version"
+
+msgid "publish_manual_close_description"
+msgstr "Die veröffentlichte Version kann, sofern nötig, wieder manuell"
+" geschlossen werden. Außerdem wird der Eintrag aus dem öffentlichen"
+" Verzeichnis entfernt."
+
+msgid "close published version"
+msgstr "öffentliche Version schließen"
+
+msgid "published_content"
+msgstr "Inhalt ist veröffentlicht"
+
+msgid "published_content_description"
+msgstr "Dieser Inhalt ist veröffentlicht.<br /> Auf Wunsch kann"
+" im <a href=\"tab_edit\" title=\"editor\">Editor</a> an einer neuen" 
+" Kopie weiter gearbeitet werden."
+
+msgid "public version"
+msgstr "veröffentlichte Version"
+
+msgid "closed_content"
+msgstr "Inhalt geschlossen"
+
+msgid "closed_content_description"
+msgstr "Dieser Inhalt war veröffentlicht, wurde aber geschlossen.<br/>"
+"Auf Wunsch kann im <a href=\"tab_edit\" title=\"editor\">Editor</a> an"
+" einer Kopie weiter gearbeitet werden."
+
+msgid "select_all"
+msgstr "<u>a</u>lles auswählen"
+
+msgid "reject"
+msgstr "Ablehnen"
+
+msgid "reject pending request for approval: alt-j"
+msgstr "Wartende Veröffentlichungsanfrage ablehnen: alt-j"
+
+msgid "revoke"
+msgstr "Widerrufen"
+
+msgid "break lock"
+msgstr "Sperre entfernen"
+
+msgid "publish_break_lock_description"
+msgstr "<b>Hinweis: </b> Dieser Inhalt wird zur Zeit von einem anderen"
+" Benutzer verändert und ist, um Konflikte zu vermeiden, gesperrt."
+
+msgid "create new version"
+msgstr "neue Version erstellen"
+
+msgid "publish_create_newversion"
+msgstr "<b>Hinweis:</b> Es existiert bereits eine veröffentlichte, oder"
+" geschlossene Version diesen Inhalts. Veränderungen können nur durch"
+" Erstellen einer neuen Version gemacht werden."
+
+msgid "revoke approval"
+msgstr "Genehmigung widerrufen"
+
+msgid "'first un-approve' this item in order to edit: alt-r"
+msgstr "Widerrufen der Genehmigung des Dokumentes: alt-r"
+
+msgid "note_revoke_approval"
+msgstr "<b>Hinweis: </b> Diese Version wurde für die Veröffentlichung"
+" genehmigt, aber nicht veröffentlicht. Um Änderungen"
+" vorzunehmen, muss die Genehmigung widerrufen werden."
+
+msgid "withdraw request"
+msgstr "Anfrage zurücknehmen"
+
+msgid "withdraw a request for approval in order to edit: alt-w"
+msgstr "Anfrage auf Genehmigung zum bearbeiten zurücknehmen: alt-w"
+
+msgid "note_withdraw_request"
+msgstr "<b>Hinweis: </b>Derzeit besteht eine Anfrage zur Genehmigung für"
+" die Veröffentlichung des Dokumentes. Um Änderungen vorzunehmen, muss die"
+" Anfrage widerrufen werden."
+
+msgid "withdraw approval of approved versions: alt-v"
+msgstr "Genehmigte Veröffentlichungen widerrufen: alt-v"
+
+msgid "close"
+msgstr "Schließen"
+
+msgid "close published items: alt-c"
+msgstr "Veröffentlichte Dokumente schliessen: alt-c"
+
+msgid "member-data-of"
+msgstr "Benutzereinstellungen von $name"
+
+msgid "new version"
+msgstr "Neue Version"
+
+msgid "create new versions of published docs: alt-n"
+msgstr "Neue Versionen der veröffentlichten Dokumente erstellen: alt-n"
+
+msgid "change timings"
+msgstr "Zeiten ändern"
+
+msgid "change publish and expiration times: alt-s"
+msgstr "Veröffentlichungs- und Verfallsdaten ändern: alt-s"
+
+msgid "open to public"
+msgstr "Veröffentlichen"
+
+msgid "approve or publish new versions: alt-o"
+msgstr "Genehmigen oder Veröffentlichen von neuen Versionen: alt-o"
+
+msgid "existing_pub_version"
+msgstr "vorhandene veröffentlichte Version"
+
+msgid "existing_pub_version_description"
+msgstr "Hinweis: <span class=\"warning\">Eine ältere Version diesen Inhalts"
+" ist zur Zeit veröffentlicht.</span><br \> Durch veröffentlichen dieser"
+" Version wird die derzeit öffentliche Version überschrieben."
+
+msgid "revert_previous"
+msgstr "Arbeitskopie mit veröffentlichte Version ersetzen"
+
+msgid "revert_previous_description"
+msgstr "Die derzeit bearbeitete Version kann durch die ältere"
+" veröffentlichte Version ersetzt werden. Dieser Schritt kann <b>nicht"
+" wieder rückgängig</b> gemacht werden."
+
+msgid "approve_request"
+msgstr "Bestätige"
+
+msgid "approve_request_approval"
+msgstr "Anfrage auf Genehmigung"
+
+msgid "approve_request_newversion"
+msgstr "und anlegen einer neuen Version"
+
+msgid "approve_request_closed"
+msgstr "und schließen der Version"
+
+msgid "draft"
+msgstr "Entwurf"
+
+msgid "pending"
+msgstr "wartend"
+
+msgid "approved"
+msgstr "genehmigt"
+
+msgid "export..."
+msgstr "Exportieren"
+
+msgid "export this Publication: alt-e"
+msgstr "diese Publikation exportieren: alt-e"
+
+msgid "publish_clear_exp"
+msgstr "Verfallsdatum löschen"
+
+msgid "file_to_upload"
+msgstr "Datei hochladen"
+
+msgid "subject"
+msgstr "Betreff"
+
+msgid "contents"
+msgstr "Inhalte"
+
+msgid "modified"
+msgstr "geändert"
+
+msgid "modify"
+msgstr "ändern"
+
+msgid "view"
+msgstr "Vorschau"
+
+msgid "shift"
+msgstr "verschieben"
+
+msgid "public preview"
+msgstr "publizierte Vorschau"
+
+msgid "characteristic"
+msgstr "Merkmal"
+
+msgid "full name"
+msgstr "Vollständiger Name"
+
+msgid "email address"
+msgstr "E-Mail Adresse"
+
+msgid "preferred editor"
+msgstr "bevorzugter Editor"
+
+# upload form
+msgid "form_file_title"
+msgstr "Datei hochladen"
+
+msgid "browse"
+msgstr "Durchsuchen"
+
+msgid "upload file"
+msgstr "Hochladen"
+
+#. image cropping
+msgid "form_image_title_title"
+msgstr "Titel"
+
+msgid "cropping"
+msgstr "Zuschneiden"
+
+msgid "crop_size_title"
+msgstr "Grössen"
+
+msgid "crop_size_description"
+msgstr "Schneide das Bild mit ausgewählten Größen zu."
+
+msgid "crop_x_description"
+msgstr "Die x Koordinate des Zuschneide Zentrums"
+
+msgid "crop_y_description"
+msgstr "Die y Koordinate des Zuschneide Zentrums"
+
+msgid "scale_web_format_description"
+msgstr "Bildformat für die Web-Darstellung"
+
+msgid "scale_web_format_title"
+msgstr "Bildformat"
+
+msgid "scale_web_scaling_title"
+msgstr "Skalierung"
+
+msgid "scale_web_scaling_description"
+msgstr ""
+"Bildskalierung zur Anzeige im Web: Benutzen Sie Breite x Höhe in"
+"Pixeln, oder eine Prozentangabe (100x200, 40%)."
+
+# main page
+msgid "index_contact"
+msgstr "Kontakt:"
+
+msgid "no name"
+msgstr "nicht Verfügbar"
+
+msgid "index_preview_public"
+msgstr "zur veröffentlichten Version"
+
+msgid "Leave Silva and view the public page: alt-:"
+msgstr "Silva verlassen und veröffentlichte Seite sehen: alt-:"
+
+msgid "index_user_setting"
+msgstr "Benutzereinstellungen"
+
+msgid "index_logout"
+msgstr "($role) $userid abmelden"
+
+msgid "jump to zope top: alt-`"
+msgstr "in das ZMI wechseln: alt-`"
+
+msgid "jump to silva root in zodb: alt-*"
+msgstr "in den Silva ZMI Ordner wechseln: alt-*"
+
+msgid "jump to silva services in zodb: alt-§"
+msgstr "in den Silva Services Ordner wechseln: alt-§"
+
+# add form
+msgid "add_form_object_id_title"
+msgstr "Id"
+
+msgid "add_form_object_id_description"
+msgstr "Bitte verwenden Sie keine speziellen Zeichen (z.B. Umlaute), ausser"
+" `_´ or `-´ or `.´"
+
+msgid "add_form_object_title_title"
+msgstr "Titel"
+
+msgid "add_form_object_title_description"
+msgstr "Der Titel ist öffentlich sichtbar und wird als Link in Indexen"
+" verwendet."
+
+msgid "add_form_file_title"
+msgstr "Datei"
+
+msgid "add_form_file_description"
+msgstr "<b>Tip:</b> Sind Id und Titel nicht ausgefüllt, wird "
+"automatisch der Dateiname als Id und Titel verwendet."
+
+msgid "add_form_policy_name_title"
+msgstr "erstes Objekt"
+
+msgid "add_form_policy_name_description"
+msgstr "Wählen Sie ein Eintrag, der als erstes Objekt im Ordner angelegt"
+" werden soll"
+
+msgid "add_form_content_url_description"
+msgstr "Der Ort des originalen Inhalts."
+
+msgid "reference..."
+msgstr "Verweis..."
+
+msgid "find the content this ghost should refer to: alt-r"
+msgstr "Bestimmen Sie den Inhalt, auf den das Ghostobjekt verweisen soll: alt-r"
+
+msgid "ghost_originate_folder"
+msgstr "Bestimmen Sie den Inhalt, auf den das Ghost-Objekt verweisen soll. "
+"Die Erstellung des Objektes ist Abhängig von der im Verweisordner "
+"befindlichen Inhalte."
+
+msgid "ghost_title"
+msgstr "Ghost von &#xab;$name&#xbb;"
+
+msgid "ghostfolder_title"
+msgstr "Ghost Ordner von &#xab;${ghostfolder_id}&#xbb;"
+
+msgid "Locate item to refer to: alt-r"
+msgstr "Objekt suchen, auf das verwiesen werden soll: alt-r"
+
+msgid "ghost_path_to_original"
+msgstr "Pfad zum Original (beginnt mit &#8216;/&#8217;)."
+
+msgid "ghost_link_editor"
+msgstr "Verweis auf die Editorseite des Originals."
+
+msgid "ghost_link_content"
+msgstr "Verweis auf die Inhaltsseite des Originals"
+
+msgid "save reference"
+msgstr "Verweis speichern"
+
+msgid "public_preview"
+msgstr "Publikationsvorschau"
+
+msgid "see the content in the public layout: alt-;"
+msgstr "Vorschau des Dokumentes: alt-;"
+
+#.   <th colspan="2" align="left" width="7%">
+#.   Attributes
+#.   </th>
+#: from ../Silva/views/add/Groups/add_form.pt
+msgid "attributes"
+msgstr "Attribute"
+######### 
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. fieldId: web_format -- Attribute: description
+#.
+#, Original msgstr "Image format for web."
+msgid "image format for web."
+msgstr "Bildformat im Internet."
+
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. fieldId: web_format -- Attribute: title
+#.
+#, Original msgstr "Web format"
+msgid "web format"
+msgstr "Internetformat"
+
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. message: external_validator_failed
+#.
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. message: external_validator_failed
+#.
+#, Original msgstr "Message: external_validator_failed: Sorry, the form content failed validation."
+msgid "external_validator_failed"
+msgstr ""
+
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. message: required_not_found
+#.
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. message: required_not_found
+#.
+#, Original msgstr "Message: required_not_found: Input is required but no input given."
+msgid "required_not_found"
+msgstr "keine Eingabe für Pflichtfeld"
+
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. message: unknown_selection
+#.
+#, Original msgstr "Message: unknown_selection: You selected an item that was not in the list."
+msgid "unknown_selection"
+msgstr ""
+
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. fieldId: web_scaling -- Attribute: default
+#.
+#, Original msgstr "100%"
+msgid "100%"
+msgstr ""
+
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. fieldId: web_scaling -- Attribute: description
+#.
+#, Original msgstr "
+#	  Image scaling for web: use width x height in pixels, or a percentage (100x200, 40%)."
+msgid "image-scaling-description"
+msgstr "Bildskalierung im Internet: als Breite x Höhe in Pixel oder"
+" als Prozentangabe (100x200, 40%)"
+
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. fieldId: web_scaling -- Attribute: title
+#.
+#, Original msgstr "Scaling"
+msgid "scaling"
+msgstr "Skalierung"
+
+#: From /ZP/Products/Silva/views/edit/Asset/Image/scale_form.form
+#. message: too_long
+#.
+#, Original msgstr "Message: too_long: Too much input was given."
+msgid "too_long"
+msgstr ""
+###################
+
+
+#       <field><id>web_format</id> <type>RadioField</type>
+#          <description>Image format for web.</description>
+##msgid "scale_form-web_format-description"
+##msgstr "Bildformat im Web."
+
+#.   <input name="edit_cancel" onclick="history.back()" title="access key: alt-c" accesskey="c" type="button" class="cancel" value=" Cancel " />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid " Cancel "
+msgstr " Abbrechen "
+
+#.   <input name="download_xml_selected:method" title="access key: alt-e" accesskey="e" type="submit" class="button" value=" Export " />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid " Export "
+msgstr " Export "
+
+#.   <input type="button" class="button" value=" Save " onclick="window.opener.saveHelper(); window.close()" />
+#: from ../Silva/views/edit/promptWindow.pt
+msgid "save"
+msgstr "Speichern"
+
+msgid "save + enter"
+msgstr "Speichern + Hineinwechseln"
+
+msgid "save + edit"
+msgstr "Speichern + Bearbeiten"
+
+msgid "save + edit index"
+msgstr "Speichern + Index Bearbeiten"
+#.   <input style="float:right;" title="Send request for role: alt-s" accesskey="s" type="submit" class="button" value=" Send request " />
+#: from ../Silva/views/public/request_roles.pt
+msgid " Send request "
+msgstr "Rolle anfordern: alt-s"
+
+#.   <input name="add_submit" title="Access key: alt-a" accesskey="a" type="submit" class="button" value=" Add " />
+#: from ../Silva/views/add/Groups/add_form.pt
+msgid "Access key: alt-a"
+msgstr "Kurzwahl: alt-a"
+
+#.   <input name="add_groups_to_virtualgroup:method" type="submit" class="button" value="Add to virtual group" title="Add selected group(s) to this virtual group." />
+#: from ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "Add selected group(s) to this virtual group."
+msgstr "ausgewählte Gruppe(n) zu dieser virtuellen Gruppe hinzufügen"
+
+#.   <input name="add_users_to_group:method" type="submit" class="button" value="Add to group" title="Add selected user(s) to this group." />
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "Add selected user(s) to this group."
+msgstr "ausgewählte Benutzer zu dieser Gruppe hinzufügen"
+
+#.   <input style="float:right;" title="add checked users to clipboard: alt-a" accesskey="a" type="submit" class="button" value="Add to clipboard" tal:condition="python:lookup_result and len(lookup_result) > 3" />
+#.   <input accesskey="a" type="submit" class="button" value="Add to clipboard" title="add checked users to clipboard: alt-a" tal:condition="lookup_result" />
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "add to clipboard"
+msgstr "Benutzer zur Zwischenablage hinzufügen"
+
+#.   <input name="add_users_to_group:method" type="submit" class="button" value="Add to group" title="Add selected user(s) to this group." />
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "Add to group"
+msgstr "zur Gruppe hinzufügen"
+
+#.   <input name="add_groups_to_virtualgroup:method" type="submit" class="button" value="Add to virtual group" title="Add selected group(s) to this virtual group." />
+#: from ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "Add to virtual group"
+msgstr "zur virtuellen Gruppe hinzufügen"
+
+msgid "existing ${type} groups"
+msgstr "vorhandene ${type} Gruppen"
+
+msgid "type"
+msgstr "Typ"
+
+msgid "silva_group"
+msgstr "Gruppe: definiert durch eine Liste von Benutzern"
+
+msgid "virtual_group"
+msgstr "Virtuelle Gruppe: definiert durch eine Liste von Gruppen"
+
+msgid "ip_group"
+msgstr "IP Gruppe: definiert durch eine Liste von IP Adressen"
+#.   <a href="tab_access" title="Back to Groups" attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()">
+#.             <img width="16" alt="Up to top of Access tab" border="0" height="16" attributes="src string:${root_url}/globals/left.gif" />
+#.   	<span omit-tag="">Back</span>
+#.           </a>
+#.   <a href="tab_access" title="Back to Groups" attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()">
+#.             <img width="16" alt="Up to top of Access tab" border="0" height="16" attributes="src string:${root_url}/globals/left.gif" />
+#.             Back
+#.           </a>
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+#: ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "Back to Groups"
+msgstr "zurück zu den Gruppen"
+
+
+#.   <input name="add_groups_from_virtualgroup_to_virtualgroup:method" type="submit" class="button" value="Copy from virtual group(s)" title="Copy groups as defined on selected virtual group(s)." />
+#: from ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "Copy from virtual group(s)"
+msgstr "aus den virtuellen Gruppen kopieren"
+
+#.   <input name="add_groups_from_virtualgroup_to_virtualgroup:method" type="submit" class="button" value="Copy from virtual group(s)" title="Copy groups as defined on selected virtual group(s)." />
+#: from ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "Copy groups as defined on selected virtual group(s)."
+msgstr "Gruppen aus ausgewählten virtuellen Gruppen kopieren"
+
+#.   <input name="add_users_from_group_to_group:method" type="submit" class="button" value="Copy users from group(s)" title="Copy members as defined on selected group(s)." />
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "Copy members as defined on selected group(s)."
+msgstr "Mitglieder die in ausgewählten Gruppen definiert sind kopieren"
+
+#.   <input name="add_users_from_group_to_group:method" type="submit" class="button" value="Copy users from group(s)" title="Copy members as defined on selected group(s)." />
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "Copy users from group(s)"
+msgstr "Benutzer aus Gruppen kopieren"
+
+#.   <input name="tab_access_deny_access:method" title="access key: alt-d" accesskey="d" type="submit" class="warning" value="Deny role" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "Deny role"
+msgstr "Rolle ablehnen"
+
+#.   <input name="tab_status_silva2word:method" title="export the selection to Word: alt-d" accesskey="d" type="submit" class="button" value="Export to Docma" />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "Export to Docma"
+msgstr "zu Docma exportieren"
+
+#.   <input name="tab_access_allow_and_approve:method" title="access key: alt-a" accesskey="a" type="submit" class="button" value="Grant and approve" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "Grant and approve"
+msgstr "zuweisen und gewähren"
+
+#.   <input name="tab_access_allow_access:method" title="access key: alt-g" accesskey="g" type="submit" class="button" value="Grant role" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "Grant role"
+msgstr "Rolle zuweisen"
+
+#.   <input name="remove_groups_from_virtualgroup:method" onclick="return confirm('Really remove?')" title="Remove selected group(s) from this virtual group." type="submit" class="warningbutton" value="Remove groups" condition="groupids" />
+#: from ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "Remove groups"
+msgstr "Gruppen entfernen"
+
+#.   <input name="remove_groups_from_virtualgroup:method" onclick="return confirm('Really remove?')" title="Remove selected group(s) from this virtual group." type="submit" class="warningbutton" value="Remove groups" condition="groupids" />
+#: from ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "Remove selected group(s) from this virtual group."
+msgstr "ausgewählte Gruppen aus dieser virtuellen Gruppe entfernen"
+
+#.   <input name="remove_users_from_group:method" onclick="return confirm('Really remove?')" title="Remove selected user(s) from this group: alt-r" accesskey="r" type="submit" class="warningbutton" value="Remove users" condition="userids" />
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "Remove selected user(s) from this group: alt-r"
+msgstr "ausgewählte Benutzer aus dieser Gruppe entfernen: alt-r"
+
+#.   <input style="float: right;" name="lookup_remove_from_selection:method" title="remove users from the clipboard: alt-r" accesskey="r" type="submit" class="warning" value="Remove user" />
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "Remove user"
+msgstr "Benutzer löschen"
+
+#.   <input name="remove_users_from_group:method" onclick="return confirm('Really remove?')" title="Remove selected user(s) from this group: alt-r" accesskey="r" type="submit" class="warningbutton" value="Remove users" condition="userids" />
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "Remove users"
+msgstr "Löschen"
+
+#.   <input name="access_revoke_from_user:method" type="submit" class="warning" value="Revoke role" title="revoke selected role(s) from selected user(s)" tal:condition="revokeable_roles" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "Revoke role"
+msgstr "Role zurücknehmen"
+
+#.   <input name="access_revoke_from_group:method" type="submit" class="warning" value="Revoke role from group" title="revoke selected role(s) from selected group(s)" tal:condition="revokeable_groups" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "Revoke role from group"
+msgstr "Role von der Gruppe zurücknehmen"
+
+#.   <input name="submit:method" title="access key: alt-s" accesskey="s" type="submit" class="button" value="Save properties" />
+#: from ../Silva/views/edit/Asset/macro_asset_edit.pt
+msgid "Save properties"
+msgstr "Eigenschaften speichern"
+
+#.   <input accesskey="s" type="submit" class="button" value="Search" title="access key: alt-s" />
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "Search"
+msgstr "suchen"
+
+#.   <input style="float:right;" title="Send request for role: alt-s" accesskey="s" type="submit" class="button" value=" Send request " />
+#: from ../Silva/views/public/request_roles.pt
+msgid "Send request for role: alt-s"
+msgstr "Anfrage nach einer Rolle senden: alt-s"
+
+#.   <input type="submit" class="button" value="Set ip restriction" title="restrict access to specified IP addresses" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "Set ip restriction"
+msgstr "IP Einschränkung setzen"
+
+#.   <input type="submit" class="button" value="Set restriction" title="restrict access to users with a specific role" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "Set restriction"
+msgstr "Einschränkung setzen"
+
+#.   <img width="9" alt="Up one level" border="0" height="9" tal:attributes="src string:${root_url}/globals/up_level.gif" />
+#: from ../Silva/views/edit/macro_vein_navigation.pt
+msgid "Up one level"
+msgstr "eine Ebene nach oben"
+
+#.   <img width="9" alt="Up to containing Publication" border="0" height="9" tal:attributes="src python: model_is_publication and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
+#: from ../Silva/views/edit/macro_vein_navigation.pt
+msgid "Up to containing Publication"
+msgstr "zur einschließenden Publikation"
+
+#.   <img width="16" alt="Up to top of Access tab" border="0" height="16" attributes="src string:${root_url}/globals/left.gif" />
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "Up to top of Access tab"
+msgstr "nach oben zum Access Tab"
+
+#.   <input accesskey="u" type="submit" class="button" value="Update index" title="access key: alt-u" />
+#: from ../Silva/views/edit/Content/Indexer/edit.pt
+msgid "Update index"
+msgstr "Index neu erstellen"
+
+#.   <input name="tab_access_allow_and_approve:method" title="access key: alt-a" accesskey="a" type="submit" class="button" value="Grant and approve" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "access key: alt-a"
+msgstr "Kurzwahl: alt-a"
+
+#.   <input name="edit_cancel" onclick="history.back()" title="access key: alt-c" accesskey="c" type="button" class="cancel" value=" Cancel " />
+#.   <input name="scale_submit:method" title="access key: alt-c" accesskey="c" type="submit" class="button" value="Change format/scale" />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+#: ../Silva/views/edit/Asset/Image/edit.pt
+msgid "access key: alt-c"
+msgstr "Kurzwahl: alt-c"
+
+#.   <input name="tab_access_deny_access:method" title="access key: alt-d" accesskey="d" type="submit" class="warning" value="Deny role" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "access key: alt-d"
+msgstr "Kurzwahl: alt-d"
+
+#.   <input name="download_xml_selected:method" title="access key: alt-e" accesskey="e" type="submit" class="button" value=" Export " />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "access key: alt-e"
+msgstr "Kurzwahl: alt-e"
+
+#.   <input name="tab_access_allow_access:method" title="access key: alt-g" accesskey="g" type="submit" class="button" value="Grant role" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "access key: alt-g"
+msgstr "Kurzwahl: alt-g"
+
+#.   <input name="save_metadata:method" title="access key: alt-s" accesskey="s" type="submit" class="button" value=" Save metadata " />
+#.   <input accesskey="s" type="submit" class="button" value="Search" title="access key: alt-s" />
+#.   <input name="submit:method" title="access key: alt-s" accesskey="s" type="submit" class="button" value="Save properties" />
+#: from ../Silva/views/edit/macro_metadata.pt ../Silva/views/edit/lookup_ui.pt
+#: ../Silva/views/edit/Asset/macro_asset_edit.pt
+msgid "access key: alt-s"
+msgstr "Kurzwahl: alt-s"
+
+
+#.   <input name="upload_submit:method" title="access key: alt-u" accesskey="u" type="submit" class="button" value="Upload file" />
+#.   <input accesskey="u" type="submit" class="button" value="Update index" title="access key: alt-u" />
+#: from ../Silva/views/edit/Asset/macro_asset_edit.pt
+#: ../Silva/views/edit/Content/Indexer/edit.pt
+msgid "access key: alt-u"
+msgstr "Kurzwahl: alt-u"
+
+msgid "access key: alt-i"
+msgstr "Kurzwahl: alt-i"
+
+msgid "access key: alt-z"
+msgstr "Kurzwahl: alt-z"
+
+msgid "access key: alt-1"
+msgstr "Kurzwahl: alt-1"
+
+msgid "access key: alt-2"
+msgstr "Kurzwahl: alt-2"
+
+msgid "access key: alt-3"
+msgstr "Kurzwahl: alt-3"
+
+msgid "access key: alt-4"
+msgstr "Kurzwahl: alt-4"
+
+msgid "access key: alt-5"
+msgstr "Kurzwahl: alt-5"
+
+msgid "access key: alt-6"
+msgstr "Kurzwahl: alt-6"
+
+msgid "access key: alt-7"
+msgstr "Kurzwahl: alt-7"
+
+msgid "access key: alt-8"
+msgstr "Kurzwahl: alt-8"
+
+msgid "access key: alt-9"
+msgstr "Kurzwahl: alt-9"
+
+msgid "access key: alt-0"
+msgstr "Kurzwahl: alt-0"
+
+msgid "access key: alt-r"
+msgstr "Kurzwahl: alt-r"
+
+msgid "access key: alt-l"
+msgstr "Kurzwahl: alt-l"
+
+msgid "access key: alt-o"
+msgstr "Kurzwahl: alt-o"
+
+msgid "access key: alt-e"
+msgstr "Kurzwahl: alt-e"
+#.   <h3>
+#.                        Access restriction by Role
+#.                       </h3>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "access_restrictions_by_role"
+msgstr "Zugangsbeschränkungen nach Rolle"
+
+#.   <th>
+#.                     Acquired content
+#.                   </th>
+#: from ../Silva/views/edit/macro_metadata.pt
+msgid "acquired_content"
+msgstr "akquirierter Inhalt"
+
+msgid "acquired_layout"
+msgstr "akquiriertes Layout"
+
+#.   <input style="float:right;" title="add checked users to clipboard: alt-a" accesskey="a" type="submit" class="button" value="Add to clipboard" tal:condition="python:lookup_result and len(lookup_result) > 3" />
+#.   <input accesskey="a" type="submit" class="button" value="Add to clipboard" title="add checked users to clipboard: alt-a" tal:condition="lookup_result" />
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "add checked users to clipboard: alt-a"
+msgstr "ausgewählte Benutzer zum Clipbord hinzufügen: alt-a"
+
+#.   <span>Add new</span>
+#: from ../Silva/views/add/Groups/add_form.pt
+msgid "add_new"
+msgstr "hinzufügen"
+
+#.   <td>
+#.           Addresses are formatted for copying and pasting 
+#.           in the &#8216;To:&#8217; field of an email message.
+#.           <br />
+#.           <textarea wrap="soft" style="width:100%" rows="5" name="data" cols="60" tal:content="view/tab_access_get_emails" />
+#.         </td>
+#: from ../Silva/views/edit/tab_access_authorized_below.pt
+msgid "addresses_are_formatted_for_copying"
+msgstr ""
+
+#.   <span tal:omit-tag="">
+#.   		  All objects on this and lower levels can be restricted for access from specific IP ranges.</span>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "all_objects_on_level_can_be_restricted"
+msgstr ""
+"Auf alle Objekte auf dieser oder unterhalb dieser Ebene kann der Zugriff "
+"nach IP eingeschränkt werden"
+
+#.   <option value="Anonymous" tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
+#.                           Anonymous
+#.                         </option>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "anonymous"
+msgstr "anonym"
+
+#.   <input name="access_assign_to_user:method" type="submit" class="button" value="Assign role" title="assign a local role to selected user(s)" />
+#.   <input name="access_assign_to_user:method" type="submit" class="button" value="Assign" title="assign a local role to selected user(s)" />
+#.   <input name="access_assign_to_group:method" type="submit" class="button" value="Assign role to group" title="assign a local role to selected user(s)" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "assign a local role to selected user(s)"
+msgstr "ausgewählten Benutzern eine lokale Rolle zuweisen"
+
+#.   <input name="access_assign_to_group:method" type="submit" class="button" value="Assign" title="assign selected role to selected group(s)" />
+#: from ../Silva/views/edit/tab_access.pt
+#, fuzzy
+msgid "assign selected role to selected group(s)"
+msgstr "ausgewählte Gruppen löschen: alt-d"
+
+
+#.   <option value="Authenticated" tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">
+#.                           Authenticated
+#.                         </option>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "authenticated"
+msgstr "autorisiert"
+
+#.   <h3>Authorized users below this level</h3>
+#: from ../Silva/views/edit/Container/Publication/tab_info.pt
+msgid "authorized_users_below"
+msgstr "Benutzer mit Berechtigung unterhalb dieser Ebene"
+
+#.   <span omit-tag="">Available groups</span>
+#: from ../Silva/views/edit/macro_groups_listing.pt
+msgid "available_groups"
+msgstr "verfügbare Gruppen"
+
+#.   <div class="navigation-border">
+#.                       bac<u>k</u>...
+#.                     </div>
+#.   <span omit-tag="">Back</span>
+#: from ../Silva/views/edit/lookup_ui.pt
+#: ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "back"
+msgstr "zurück"
+
+#.   <td>
+#.                     Check to include closed content in the export.
+#.                   </td>
+#.   <td>
+#.             Check to include closed content in the export.
+#.           </td>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "check_to_include_closed_content"
+msgstr "markieren, um nicht öffentlichen Inhalt mit zu exportieren"
+
+#.   <td class="align-right">
+#.             choose a template
+#.           </td>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "choose_a_template"
+msgstr "Vorlage auswählen"
+
+#.   <span>Choose role(s) to request</span>
+#: from ../Silva/views/public/request_roles.pt
+#, fuzzy
+msgid "choose_roles"
+msgstr "Rollen für Anfrage auswählen"
+
+#.   <span define="global new_versionables python: closed and 1 or new_versionables;">
+#.                 closed
+#.               </span>
+#: from ../Silva/views/edit/Container/tab_status.pt
+msgid "closed"
+msgstr "geschlossen"
+
+#.   <b class="warning">This is a closed version. You see it, but the public won't!</b>
+#: from ../Silva/views/edit/tab_preview.pt
+msgid "closed_message"
+msgstr "Diese ist eine alte Version. Sie sehen sie, aber die Allgemeinheit nicht"
+
+#.   <th align="left">
+#.   Content
+#.   </th>
+#.   <th>
+#.                   Content
+#.                 </th>
+#.   <th>
+#.                     Content
+#.                   </th>
+#.   <th>
+#.             Content
+#.           </th>
+#.   <th colspan="2">
+#.             Content
+#.           </th>
+#.   <th>
+#.               Content
+#.             </th>
+#: from ../Silva/views/add/Groups/add_form.pt
+#: ../Silva/views/edit/macro_metadata.pt
+#: ../Silva/views/edit/Container/tab_status_export.pt
+#: ../Silva/views/edit/Asset/macro_asset_edit.pt
+#: ../Silva/views/edit/Asset/Image/edit.pt
+msgid "content"
+msgstr "Inhalt"
+
+#.   <th style="font-size:90%" tal:condition="clipboard_members">
+#.                   Ctrl-click to multi-select
+#.                 </th>
+#.   <th style="font-size:90%" condition="groups">
+#.                   Ctrl-click to multi-select
+#.                 </th>
+#: from ../Silva/views/edit/macro_user_lookup_clipboard.pt
+#: ../Silva/views/edit/macro_groups_listing.pt
+msgid "ctrl_click_multi-select"
+msgstr "Strg+Klick für Mehrfachauswahl"
+
+#.   <h3>
+#.                         Define restriction by IP address
+#.                       </h3>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "define_restrictions_by_ip_address"
+msgstr "Beschränkungen nach IP-Adresse festlegen"
+
+#.   <td class="align-right">
+#.             description
+#.           </td>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "description"
+msgstr "Bezeichnung"
+
+#.   <td>
+#.             This description will be shown in the queue and the list of processed items.
+#.           </td>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "description_shown_in_queue"
+msgstr "Bezeichnung in Warteschlange"
+
+#.   <img width="16" alt="docma icon" border="0" class="icon" height="16" tal:attributes="src string:${root_url}/globals/docma.gif" />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "docma icon"
+msgstr "Docma Icon"
+
+#.   <span>docma facilities</span>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "docma_facilities"
+msgstr "Docma facilities"
+
+#.   <th width="30%" class="align-right">
+#.                   Element
+#.                 </th>
+#.   <th class="align-right">
+#.                     Element
+#.                   </th>
+#.   <th width="12%" class="align-right">
+#.             Element
+#.           </th>
+#.   <th width="12%" class="align-right">
+#.               Element
+#.             </th>
+#: from ../Silva/views/edit/macro_metadata.pt
+#: ../Silva/views/edit/Asset/macro_asset_edit.pt
+#: ../Silva/views/edit/Asset/Image/edit.pt
+msgid "element"
+msgstr "Element"
+
+#.   <th style="width:60%;">
+#.                     email
+#.                   </th>
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "email"
+msgstr "E-Mail"
+
+#.   <span>email address</span>
+#.   <span>e-mail address</span>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+#: ../Silva/views/public/request_roles.pt
+msgid "email_address"
+msgstr "E-Mail Adresse"
+
+#.   <span>email addresses for</span>
+#: from ../Silva/views/edit/tab_access_authorized_below.pt
+#, fuzzy
+msgid "email_addresses_for"
+msgstr "E-Mail Adressen für"
+
+#.   <td>
+#.             An e-mail will be sent to you when the item is processed.
+#.           </td>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "email_will_be_sent"
+msgstr "Sie erhalten eine E-Mail, wenn die Bearbeitung abgeschlossen ist"
+
+#.   <input name="tab_status_silva2word:method" title="export the selection to Word: alt-d" accesskey="d" type="submit" class="button" value="Export to Docma" />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "export the selection to Word: alt-d"
+msgstr "ausgewähltes nach Word exportieren: alt-d"
+
+#.   <label for="export_closed_content">
+#.                       Export closed content?
+#.                     </label>
+#.   <label for="docma_export_closed_content">
+#.               Export closed content?
+#.             </label>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "export_closed_content?"
+msgstr "nicht öffentlichen Inhalt mit exportieren ?"
+
+#.   <span>export from</span>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "export_from"
+msgstr "exportieren von"
+
+#.   <label for="export_last_version">
+#.                       Export newest versions?
+#.                     </label>
+#.   <label for="docma_export_last_version">
+#.               Export newest versions?
+#.             </label>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "export_newest_versions?"
+msgstr "neueste Version exportieren?"
+
+#.   <h3>
+#.               Export to Docma (.doc)
+#.             </h3>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "export_to_docma"
+msgstr "zu Docma exportieren"
+
+#.   <h3>
+#.                       Export to Silva XML (.slv)
+#.   	                </h3>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "export_to_silva_xml"
+msgstr "zu Silva-XML exportieren"
+
+msgid "export xml"
+msgstr "XML exportieren"
+
+#: from ../Silva/views/edit/Asset/Image/edit.pt
+msgid "file_size"
+msgstr "Dateigröße"
+
+msgid "file_mime_type"
+msgstr "MIME Typ"
+
+msgid "image_thumbnailing"
+msgstr "Miniaturbild erstellen"
+
+msgid "file_system_path"
+msgstr "Datei-Ordner"
+
+msgid "format_and_scaling"
+msgstr "Format und Skalierung"
+
+msgid "image_format"
+msgstr "Dateiformat"
+
+msgid "image"
+msgstr " "
+
+msgid "image_dimension"
+msgstr "Größe"
+
+msgid "scaled"
+msgstr "skaliert"
+
+msgid "cropped"
+msgstr "zugeschnitten"
+
+msgid "scaled to"
+msgstr "skaliert auf"
+
+msgid "cropped to"
+msgstr "zugeschnitten auf"
+
+msgid "crop image"
+msgstr "Bild zuschneiden"
+
+msgid "set crop coordinates"
+msgstr "Zuschneidekoordinaten setzen"
+
+msgid "specify the center of the area to crop by clicking in the image: alt-o"
+msgstr "Die Zuschneidekoordinaten durch Klicken auf das Bild setzen: Alt-o"
+
+msgid "change format/scale"
+msgstr "Format ändern/skalieren"
+
+msgid "image_orientation"
+msgstr "Seitenverhältnis"
+
+msgid "square"
+msgstr "Quadrat"
+
+msgid "portrait"
+msgstr "Hochformat"
+
+msgid "Landscape"
+msgstr "Querformat"
+
+msgid "image_info"
+msgstr "Bildinformation"
+
+#. Metadata
+msgid "metadata_dateformat"
+msgstr "Datumsformat: Tag/Monat/Jahr &nbsp; 23:59"
+
+msgid "metadata_acquireable"
+msgstr "&#134; akquirierbar"
+
+#.   <input name="save_metadata:method" title="access key: alt-s" accesskey="s" type="submit" class="button" value=" Save metadata " />
+#: from ../Silva/views/edit/macro_metadata.pt
+msgid "save metadata"
+msgstr "Metadaten speichern"
+
+msgid "Subject of content in this area."
+msgstr "Der Betreff des Inhalts."
+
+msgid "keywords"
+msgstr "Stichworte"
+
+msgid "Keywords relating to content."
+msgstr "Stichworte die auf den Inhalt Beziehung nehmen."
+
+msgid "Description of content in this area."
+msgstr "Eine Beschreibung des Inhalts."
+
+msgid "comment"
+msgstr "Kommentar"
+
+msgid "Internal comments."
+msgstr "für interne Kommentare"
+
+
+msgid "creation time"
+msgstr "Erstellungsdatum"
+
+msgid "Automatically set."
+msgstr "automatisch gesetzt"
+
+msgid "modification time"
+msgstr "Änderungsdatum"
+
+msgid "publication time"
+msgstr "Veröffentlichungsdatum"
+
+msgid "expiration time"
+msgstr "Verfallsdatum"
+
+msgid "creator"
+msgstr "Urheber"
+
+msgid "User who last edited this content."
+msgstr "Benutzer, welcher zuletzt diesen Inhalt bearbeitete."
+
+msgid "last author"
+msgstr "letzter Autor"
+
+msgid "Resource location of this content."
+msgstr "Referenzierender Ort dieses Inhalts."
+
+msgid "contact name"
+msgstr "Kontaktname"
+
+msgid "Name of contact person."
+msgstr "Name einer Kontaktperson."
+
+msgid "contact email"
+msgstr "Kontakt E-Mail"
+
+msgid "Email address of contact person."
+msgstr "E-Mail Adresse der Kontaktperson."
+
+msgid "short title"
+msgstr "Kurztitel"
+
+msgid "title"
+msgstr "Titel"
+
+msgid "Title of content."
+msgstr "Titel des Inhalts."
+
+msgid "configure <u>a</u>ddables..."
+msgstr "Erweiterungen <konfigurieren ..."
+
+msgid "change the addables allowed in this publication: alt-a"
+msgstr "erlaubten Erweiterungen für diese Publikation konfigurieren: alt-a"
+
+msgid "layout"
+msgstr "Layout"
+
+msgid "layout_layout_title"
+msgstr "Layout"
+
+msgid "layout_layout_description"
+msgstr "Wählen Sie eines der installierten Layout Vorlagen."
+
+msgid "layout_copied"
+msgstr "Die Vorlagen wurden für die Anpassung kopiert."
+
+msgid "layout_customize"
+msgstr "Layout anpassen"
+
+msgid "copy the layout into the Publication in order to customize it"
+msgstr "Das Layout in eine Publikation kopieren, um es anzupassen."
+
+msgid "save layout"
+msgstr "Layout auswählen"
+
+msgid "No own layout, get acquired"
+msgstr "Kein eigenes Layout"
+
+msgid "addables_acquire_addables_title"
+msgstr "Aquirieren"
+
+msgid "addables_acquire_addables_description"
+msgstr ""
+"Bei ausgewählten Kontrollkästchen, werden Erweiterungen von nächst, höherer Ebene akquiriert."
+" Klicken Sie, um nachfolgende Erweiterungen auszuwählen."
+
+msgid "addables_addables_title"
+msgstr "Erweiterungen"
+
+msgid "addables_addables_description"
+msgstr ""
+"Ist 'Aquirieren' nicht gewählt, gelten die ausgewählten Erweiterungen für diese Veröffentlichung."
+" Ansonsten werden Erweiterungen von nächst, höherer Ebene akquiriert."
+
+msgid "save addables settings"
+msgstr "Erweiterungseinstellungen speichern"
+
+msgid "save addable settings for this publication: alt-a"
+msgstr "Speichern der Erweiterungseinstellungen für diese Veröffentlichung: ALT-a"
+#.   <span>for</span>
+#.   <span omit-tag="">for</span>
+#.   <span omit-tag=""> for </span>
+#: from ../Silva/views/edit/macro_metadata.pt
+#: ../Silva/views/edit/Asset/Groups/Group/edit.pt
+#: ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "for"
+msgstr "für"
+
+
+
+#.   <span>for public version of
+#.                     &#171;<span tal:replace="string:${title}">title</span>&#187;
+#.                   </span>
+#: from ../Silva/views/edit/tab_metadata.pt
+msgid "for_public_version_of"
+msgstr ""
+
+
+#.   <span>full name</span>
+#: from ../Silva/views/public/request_roles.pt
+msgid "full_name"
+msgstr "Vollständiger Name"
+
+#.   <h3>
+#.                       Grant or revoke local roles for users
+#.                     </h3>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "grant_revoke_local_roles"
+msgstr "Zuweisen oder Zurücksetzen von lokalen Rollen für Benutzer"
+
+#.   <h3>
+#.                           Grant or revoke local roles for groups of users
+#.                         </h3>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "grant_revoke_local_roles_for_groups"
+msgstr "Zuweisen oder Zurücksetzen von lokalen Rollen für Gruppen von Benutzern"
+
+#.   <i>
+#.                   Group does not have any members
+#.                 </i>
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "group_has_no_member"
+msgstr "Gruppe hat keine Mitglieder"
+
+#.   <h3>
+#.           Group members
+#.         </h3>
+#: from ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "group_members"
+msgstr "Gruppen Mitglieder"
+
+#.   <span tal:omit-tag="">group roles for</span>
+#: from ../Silva/views/edit/tab_access.pt
+#, fuzzy
+msgid "group_roles_for"
+msgstr "Gruppen Rollen für"
+
+msgid "groups_in"
+msgstr "Gruppen in"
+
+msgid "add_group"
+msgstr "Gruppe hinzufügen"
+
+#.   <th>
+#.                         Groupname
+#.                       </th>
+#.   <b>
+#.                   Groupname
+#.                 </b>
+#: from ../Silva/views/edit/tab_access.pt
+#: ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "groupname"
+msgstr "Gruppenname"
+
+#.   <a style="float: right;" href="tab_access_groups" class="navigation" accesskey="g" title="groups administration: alt-g">
+#.                       <u>G</u>roups admin...
+#.                     </a>
+#: from ../Silva/views/edit/macro_groups_listing.pt
+msgid "groups administration: alt-g"
+msgstr "Gruppen Verwaltung: alt-g"
+
+#.   <a style="float: right;" href="tab_access_groups" class="navigation" accesskey="g" title="groups administration: alt-g">
+#.                       <u>G</u>roups admin...
+#.                     </a>
+#: from ../Silva/views/edit/macro_groups_listing.pt
+msgid "groups_admin"
+msgstr "Gruppen-Administrator"
+
+#.   <span class="warning">A Groups Service is not installed</span>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "groups_service_not_defined"
+msgstr "Gruppen Service nicht definiert"
+
+#.   <span>
+#.   		  You are seeing this message because the Silva Groups 
+#.   		  extension is installed on the file system, 
+#.   		  but a Groups Service hasn't been added to this Silva 
+#.   		  instance. To install one, go to the 
+#.   		  <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services">Silva Root in the ZMI</a>, choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>.
+#.   		No further configuration is necessary.</span>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "groups_service_not_defined_explanation"
+msgstr "Sie sehen diese Meldung, weil die \"Silva Groups\"-Erweiterung  zwar"
+" im Dateisystem installiert ist, aber die \"Silva Groups\"-Erweiterung nicht"
+" zu dieser Silva-Instance hinzugefügt wurde. Um dies zu tun, gehen Sie zur"
+" <a href=\"\" class=\"underline\" tal:attributes=\"href string:${root_url}/manage_services\">Silva Root im  ZMI</a>,"
+" wählen &#8220;Groups Service&#8221; aus der Add Liste und vergeben als Id"
+" <code>service_groups</code>. Eine weitere Konfiguration ist nicht notwendig."
+
+#.   <li>If new content has been added, click &#8220;update index&#8221; (in large publications this may take a while).</li>
+#: from ../Silva/views/edit/Content/Indexer/edit.pt
+msgid "if_new_content_has_been_added"
+msgstr "bei großen Publikationen kann es ein Weilchen dauern"
+
+#.   <td>
+#.                     If not checked the published version is exported.
+#.                   </td>
+#.   <td>
+#.             If not checked the published version is exported.
+#.           </td>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "if_not_checked_the_published_version_is_exported"
+msgstr "falls nicht ausgewählt, wird die veröffentlichte Version exportiert"
+
+#.   <span>import</span>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "import"
+msgstr "Importieren"
+
+#.   <label for="with_sub_publications">
+#.                       Include sub publications?
+#.                     </label>
+#.   <label for="docma_with_sub_publications">
+#.               Include sub publications?
+#.             </label>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "include_sub_publications?"
+msgstr "Unterpublikation einfügen"
+
+#.   <li>An index is not editable.  To view the index go to the <a class="underline" attributes="href string:tab_preview">preview screen</a>.</li>
+#: from ../Silva/views/edit/Content/Indexer/edit.pt
+msgid "index_not_editable"
+msgstr ""
+
+#.   <span>Info for </span>
+#: from ../Silva/views/edit/Container/Publication/tab_info.pt
+msgid "info_for"
+msgstr "Informationen für"
+
+#.   <th>
+#.                       Is approved
+#.                     </th>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "is_approved"
+msgstr "ist erlaubt"
+
+#.   <span tal:omit-tag="">is acquired from above</span>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "is_aquired_from_above"
+msgstr "von oberer Ebene übernommen"
+
+#.   <span class="subhead">items to export:</span>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "items_selected_for_export"
+msgstr "für Export ausgewählte Items "
+
+#.   <td>
+#.                     List email addresses of all users from this level down.
+#.                   </td>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "list_all_email_addresses_from_level_down"
+msgstr "alle Email-Adressen ab dieser Ebene abwärts listen"
+
+#.   <a accesskey="e" href="tab_access_authorized_below" class="navigation" title="retrieve a comma separated list of user email addresses">
+#.                       &nbsp;List <u>e</u>mail addresses...
+#.                     </a>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "list_email_addresses"
+msgstr "Email Adressen listen"
+
+#.   <h3>
+#.                      List user email addresses
+#.                     </h3>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "list_user_email_addresses"
+msgstr "Email Adressen listen"
+
+#.   <h3>
+#.             Listing of all authorized users below this level 
+#.           </h3>
+#: from ../Silva/views/edit/tab_access_authorized_below.pt
+msgid "listing_of_all_users_below"
+msgstr "Liste der autorisierten Benutzer unterhalb dieser Ebene"
+
+#.   <a style="float:right;" href="lookup" class="navigation" accesskey="l" title="lookup users: alt-l">
+#.                       Lookup users...
+#.                     </a>
+#: from ../Silva/views/edit/macro_user_lookup_clipboard.pt
+msgid "lookup users: alt-l"
+msgstr "Benutzer auswählen: alt-l"
+
+#.   <a style="float:right;" href="lookup" class="navigation" accesskey="l" title="lookup users: alt-l">
+#.                       Lookup users...
+#.                     </a>
+#: from ../Silva/views/edit/macro_user_lookup_clipboard.pt
+msgid "lookup_users"
+msgstr "Benutzer auswählen..."
+
+#.   <title>membership</title>
+#.   <h2>membership</h2>
+#: from ../Silva/views/public/request_roles.pt
+msgid "membership"
+msgstr "Mitgliedschaft"
+
+#.   <span>Metadata set</span>
+#: from ../Silva/views/edit/macro_metadata.pt
+msgid "metadata_set"
+msgstr "Metadaten Gruppe"
+
+msgid "metadata_label"
+msgstr "Metadaten"
+
+msgid "metadata"
+msgstr "Metadaten"
+
+msgid "metadata for &#xab;${metadata_title}&#xbb;"
+msgstr "Metadaten von &#xab;${metadata_title}&#xbb;"
+
+msgid "properties_of"
+msgstr "Eigenschaften von &#xab;${property_title}&#xbb;"
+
+#.   <td>
+#.                     name (or part of name)
+#.                   </td>
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "name_or_part_of"
+msgstr "Name oder Teil des Namens"
+
+#.   <option class="disabled" condition="not:groups">
+#.                       No groups available
+#.                     </option>
+#: from ../Silva/views/edit/macro_groups_listing.pt
+msgid "no_groups_available"
+msgstr "keine Gruppen verfügbar"
+
+#.   <td colspan="3">
+#.                         No groups with (local) roles
+#.                       </td>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "no_groups_with_local_roles"
+msgstr "keine Gruppen mit lokalen Rollen verfügbar"
+
+#.   <td colspan="3">
+#.                       No roles requested
+#.                     </td>
+#: from ../Silva/views/edit/tab_access.pt
+#, fuzzy
+msgid "no_roles_requested"
+msgstr "keine Rollen angefragt"
+
+#.   <i>
+#.                       No search results
+#.                     </i>
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "no_search_results"
+msgstr "Suche ohne Ergebnis"
+
+#.   <option disabled="disabled" class="disabled" value="None" tal:condition="not:clipboard_members">
+#.                       No users on clipboard
+#.                     </option>
+#: from ../Silva/views/edit/macro_user_lookup_clipboard.pt
+msgid "no_users_on_clipboard"
+msgstr "keine Benutzer in Zwischenablage"
+
+#.   <td colspan="3">
+#.                     No users with local roles
+#.                   </td>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "no_users_with_local_roles"
+msgstr "keine Benutzer mit lokalen Rollen verfügbar"
+
+#.   <th width="25%">
+#.                     Note
+#.                   </th>
+#.   <th>
+#.                     Note
+#.                   </th>
+#.   <th width="40%">
+#.             Note
+#.           </th>
+#.   <th width="40%">
+#.               Note
+#.             </th>
+#: from ../Silva/views/edit/macro_metadata.pt
+#: ../Silva/views/edit/Container/tab_status_export.pt
+#: ../Silva/views/edit/Asset/Image/edit.pt
+msgid "note"
+msgstr "Anmerkung"
+
+#.   <p condition="not: model/canScale">
+#.         Note: Silva can provide image scaling and conversion with the help of PIL 
+#.         (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
+#.       <span>PIL doesn't seem to be installed.</span>
+#.       </p>
+#: from ../Silva/views/edit/Asset/Image/edit.pt
+msgid "note_silva_can_provide_image_scaling"
+msgstr "Anmerkung: Silva benutzt PIL"
+"(<a href=\"http://www.pythonware.com/products/pil/\">Python Imaging Library</a>)."
+" zum Skalieren und Konvertieren von Bildern. PIL scheint nicht installiert zu sein."
+
+#.   <li>Note that <span class="warning">the index only displays links to published content</span>, so the list may be empty if nothing is published.</li>
+#: from ../Silva/views/edit/Content/Indexer/edit.pt
+msgid "note_that_index"
+msgstr ""
+
+#.   <th align="left">
+#.   Notes
+#.   </th>
+#.   <th colspan="3">
+#.             notes
+#.           </th>
+#: from ../Silva/views/add/Groups/add_form.pt
+#: ../Silva/views/edit/Content/Indexer/edit.pt
+msgid "notes"
+msgstr "Anmerkungen"
+
+msgid "settings"
+msgstr "Einstellungen"
+
+#.   <th class="align-right">
+#.                     Options
+#.                   </th>
+#.   <th class="align-right">
+#.             Options
+#.           </th>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "options"
+msgstr "Optionen"
+
+#.   <a style="float: right;" href="tab_edit_import" class="navigation" accesskey="i" title="over to the import screen: alt-i">
+#.                         <span>import</span>...
+#.                       </a>
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "over to the import screen: alt-i"
+msgstr "zur Import-Ansicht wechseln"
+
+#.   <h3>Pending requests for roles</h3>
+#: from ../Silva/views/edit/tab_access.pt
+#, fuzzy
+msgid "pending_requests_for_roles"
+msgstr "Request Rollen an dieser Stelle"
+
+#.   <span>PIL doesn't seem to be installed.</span>
+#: from ../Silva/views/edit/Asset/Image/edit.pt
+msgid "pil_not_installed"
+msgstr "PIL ist nicht installiert."
+
+#.   <p condition="not: notice">
+#.           Please fill in the following fields.
+#.           <br /><br />
+#.       </p>
+#: from ../Silva/views/public/request_roles.pt
+msgid "please_fill_following_fields"
+msgstr "bitte die folgenden Felder ausfüllen"
+
+#.   <h3>
+#.               Properties
+#.             </h3>
+#: from ../Silva/views/edit/Asset/macro_asset_edit.pt
+msgid "properties"
+msgstr "Eigenschaften"
+
+#.   <span tal:omit-tag="">public view access restrictions for</span>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "public_view_access_restrictions"
+msgstr "Zugangsbeschränkungen für den öffentlichen Zugriff auf"
+
+#.   <input name="export_delete:method" onclick="return confirm('Really remove?')" title="there's no undo: alt-x" accesskey="x" type="submit" class="warning" value="remove" />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "remove"
+msgstr "entfernen"
+
+#.   <input style="float: right;" name="lookup_remove_from_selection:method" title="remove users from the clipboard: alt-r" accesskey="r" type="submit" class="warning" value="Remove user" />
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "remove users from the clipboard: alt-r"
+msgstr "Benutzer vom Clipbord entfernen: alt-r"
+
+#.   <h4>
+#.       Request roles at this location
+#.     </h4>
+#: from ../Silva/views/public/request_roles.pt
+msgid "request_roles"
+msgstr "Rollen für diesen Bereich anfordern"
+
+#.   <th>
+#.                       Requested role
+#.                     </th>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "requested role"
+msgstr "für diesen Bereich angeforderte Rolle"
+
+#.   <span>This site does not allow requests for roles</span>
+#: from ../Silva/views/public/request_roles.pt
+msgid "requests_for_roles_not_allowed"
+msgstr "Diese Site erlaubt keine Requests nach Rollen"
+
+#.   <input type="submit" class="button" value="Set ip restriction" title="restrict access to specified IP addresses" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "restrict access to specified IP addresses"
+msgstr "Zugang einschränken nach bestimmten IP Adressen"
+
+#.   <input type="submit" class="button" value="Set restriction" title="restrict access to users with a specific role" />
+#: from ../Silva/views/edit/tab_access.pt
+msgid "restrict access to users with a specific role"
+msgstr "Zugang nur erlauben für Benutzer mit bestimmten Rollen"
+
+#.   <a accesskey="e" href="tab_access_authorized_below" class="navigation" title="retrieve a comma separated list of user email addresses">
+#.                       &nbsp;List <u>e</u>mail addresses...
+#.                     </a>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "retrieve a comma separated list of user email addresses"
+msgstr "eine Komma-getrennte Liste der Email-Adressen abrufen"
+
+#.   <input name="export_delete:method" onclick="return confirm('Really remove?')" title="there's no undo: alt-x" accesskey="x" type="submit" class="warning" value="remove" />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "return confirm('Really remove?')"
+msgstr "wirklich löschen ? (return)"
+
+#.   <a accesskey="k" href="parent screen" title="return to previous screen: alt-k" tal:attributes="href here/lookup_back_link">
+#.                     <div class="navigation-border">
+#.                       bac<u>k</u>...
+#.                     </div>
+#.                   </a>
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "return to previous screen: alt-k"
+msgstr "zurück zum vorherigen Bildschirm"
+
+
+#.   <input style="float:right;" title="Send request for role: alt-s" accesskey="s" type="submit" class="button" value=" Send request " />
+#: from ../Silva/views/public/request_roles.pt
+msgid "s"
+msgstr "s"
+
+#.   <span>scaled</span>
+#: from ../Silva/views/edit/Asset/Image/edit.pt
+msgid "scaled"
+msgstr "skaliert"
+
+#.   <h3>
+#.                       Search results
+#.                     </h3>
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "search_results"
+msgstr "Suchergebnis"
+
+#.   <a accesskey="v" href="" class="underline" title="see the original image" attributes="href string:${model/absolute_url}/hires_image">
+#.                 view unscaled image
+#.             </a>
+#: from ../Silva/views/edit/Asset/Image/edit.pt
+msgid "see the original image"
+msgstr "original ansehen"
+
+#.   <select class="manipulator" name="role" title="select a role to assign">
+#.                         <option value="Anonymous" tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
+#.                           Anonymous
+#.                         </option>
+#.                         <option value="Viewer" tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">
+#.                           Viewer
+#.                         </option>
+#.                         <option value="Authenticated" tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">
+#.                           Authenticated
+#.                         </option>
+#.                       </select>
+#: from ../Silva/views/edit/tab_access.pt
+#, fuzzy
+msgid "select a role to assign"
+msgstr "Rolle zur Zuweisung auswählen"
+
+#.   <option disabled="disabled" class="disabled" value="None">
+#.                         select groups:
+#.                       </option>
+#: from ../Silva/views/edit/macro_groups_listing.pt
+#, fuzzy
+msgid "select_groups"
+msgstr "Gruppen auswählen"
+
+#.   <option value="None">
+#.                           select role:
+#.                         </option>
+#.   <option value="None">
+#.                     select role:
+#.                   </option>
+#.   <option value="None">
+#.                               select role:
+#.                             </option>
+#.   <option value="None">
+#.                       select role:
+#.                     </option>
+#: from ../Silva/views/edit/tab_access.pt
+#, fuzzy
+msgid "select_role"
+msgstr "Rolle auswählen"
+
+#.   <option disabled="disabled" class="disabled" value="None">
+#.                         select users:
+#.                       </option>
+#: from ../Silva/views/edit/macro_user_lookup_clipboard.pt
+msgid "select_users"
+msgstr "Benutzer auswählen"
+
+#.   <h3>
+#.               Session timeout
+#.             </h3>
+#: from ../Silva/views/edit/promptWindow.pt
+msgid "session_timeout"
+msgstr "Zeitüberschreitung"
+
+#.   <td>
+#.                       Setting an access restriction here affects all objects on this and lower levels.
+#.                     </td>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "access_setting_restriction"
+msgstr "Zugangsbeschränkungen betreffen Objekte unterer Ebenen, einschliesslich der aktuellen Ebene."
+
+#.   <span tal:omit-tag="">The current restriction</span>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "access_current_restriction"
+msgstr "aktuelle Einschränkungen"
+
+#: from ../Silva/views/edit/tab_access.pt
+#: ../Silva/views/edit/Asset/Groups/Group/edit.pt
+msgid "username"
+msgstr "Benutzername"
+
+#.   <span tal:omit-tag="">utilities</span>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "utilities"
+msgstr "Hilfsprogramme"
+
+msgid "revoke selected role(s) from selected group(s)"
+msgstr "ausgewählte Rolle(n) für ausgewählte Gruppe(n) widerrufen"
+
+msgid "revoke selected role(s) from selected user(s)"
+msgstr "ausgewählte Rolle(n) für ausgewählte Benutzer widerrufen"
+
+msgid "roles_defined_above"
+msgstr "Rollen höherer Ebenen"
+
+msgid "roles_defined_here"
+msgstr "Rollen aktueller Ebene"
+
+msgid "access_public_open"
+msgstr "Öffentlich zugänglich"
+
+msgid "Viewer"
+msgstr "Betrachter"
+
+msgid "Viewer +"
+msgstr "Betrachter +"
+
+msgid "Viewer ++"
+msgstr "Betrachter ++"
+
+msgid "Authenticated"
+msgstr "Autorisiert"
+
+msgid "access_acquired"
+msgstr "(akquiriert)."
+
+msgid "acquire restriction"
+msgstr "Beschränkung übernehmen"
+
+msgid "cancel the access restriction at this level, making it inherit from above"
+msgstr "Zugangsbeschränkungen von oberer Ebene übernehmen."
+
+msgid "access_select_role"
+msgstr "Rolle wählen:"
+
+msgid "assign_role"
+msgstr "Rolle zuweisen"
+
+msgid "select a role to assign"
+msgstr "Rolle für die Zuweisung auswählen."
+
+msgid "assign"
+msgstr "zuweisen"
+
+msgid "Assign role"
+msgstr "Rolle der Gruppe zuweisen"
+
+msgid "Assign role to group"
+msgstr "Rolle der Gruppe zuweisen"
+
+msgid "assign role"
+msgstr "Rolle zuweisen"
+
+msgid "assign a local role to selected user(s)"
+msgstr "Rolle ausgewählten Benutzern zuweisen."
+
+msgid "revoke role"
+msgstr "Zuweisung zurücksetzen"
+
+msgid "revoke selected role(s) from selected user(s)"
+msgstr "Rollenzuweisung für ausgewählte Benutzer zürucksetzen."
+#, Fuzzy
+msgid "select a role to assign"
+msgstr "Rolle für die Zuweisung auswählen."
+
+msgid "restrict access to users with a specific role"
+msgstr "Zugangsbeschränkung für bestimmte Benutzerrollen."
+
+msgid "set restriction"
+msgstr "Beschränkung festlegen"
+
+msgid "restrict access to users with a specific role"
+msgstr "Zugangsbeschränkung speziellen Benutzerrollen zuweisen."
+
+#: from ../Silva/views/edit/macro_role_options.pt
+msgid "public silva roles"
+msgstr "Öffentliche Silva Rollen"
+
+msgid "select role:"
+msgstr "Rolle wählen"
+
+msgid "silva roles"
+msgstr "Silva Rollen"
+
+msgid "zope roles"
+msgstr "Zope Rollen"
+
+msgid "Reader"
+msgstr "Leser"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Editor"
+msgstr "Redakteur"
+
+msgid "ChiefEditor"
+msgstr "Chefredakteur"
+
+msgid "access_status"
+msgstr "Status von &#xab;$title&#xbb;"
+
+msgid "access_export_description"
+msgstr "Das Dokument als Silva XML über die Export-Ansicht exportieren, oder"
+" &#8211; sollte <a"
+" href=\"http://www.infrae.com/products/docma\">DocmaServer</a> installiert"
+" sein &#8211; in ein anderes Format konvertieren."
+
+msgid "access_export_noversion"
+msgstr "Es existiert keine neue Version, so dass die veröffentlichte"
+" Version für den Export benutzt wird."
+
+msgid "export_document"
+msgstr "&#xab;${export_id}&#xbb; exportieren"
+
+msgid "access_publish_time"
+msgstr "Publikationszeitpunkt"
+
+msgid "access_expiration"
+msgstr "Verfallsdatum"
+
+#.   <input name="export_delete:method" onclick="return confirm('Really remove?')" title="there's no undo: alt-x" accesskey="x" type="submit" class="warning" value="remove" />
+#: from ../Silva/views/edit/Container/tab_status_export.pt
+msgid "there's no undo: alt-x"
+msgstr "es gibt kein Undo: alt-x"
+
+#.   <input accesskey="u" type="submit" class="button" value="Update index" title="access key: alt-u" />
+#: from ../Silva/views/edit/Content/Indexer/edit.pt
+msgid "u"
+msgstr "u"
+
+#.   <a accesskey="]" href="../../edit/tab_edit" class="up" title="up one level: alt-]" tal:attributes="href string:../../edit/${vein_id}" tal:condition="not: model_is_root">
+#.                       <img width="9" alt="Up one level" border="0" height="9" tal:attributes="src string:${root_url}/globals/up_level.gif" />
+#.                     </a>
+#: from ../Silva/views/edit/macro_vein_navigation.pt
+msgid "up one level: alt-]"
+msgstr "eine Ebene hoch: alt-]"
+
+#.   <a accesskey="[" class="top" title="up to containing publication: alt-[" tal:attributes="href python: model_is_publication and (containing_publication.absolute_url() + '/edit/' + vein_id) or (publication.absolute_url() + '/edit/' + vein_id)" tal:condition="not: model_is_root">
+#.                       <img width="9" alt="Up to containing Publication" border="0" height="9" tal:attributes="src python: model_is_publication and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
+#.                     </a>
+#: from ../Silva/views/edit/macro_vein_navigation.pt
+msgid "up to containing publication: alt-["
+msgstr "zur einschließenden Publikation: alt-["
+
+#.   <a accesskey="u" href="parent screen" title="up to parent screen: alt-u" tal:attributes="href active_tab">
+#.                     <div class="navigation-border" tal:content="structure string:<u>u</u>p to ${parent_screen_name}...">
+#.                       parent screen
+#.                     </div>
+#.                   </a>
+#: from ../Silva/views/edit/macro_vein_navigation.pt
+msgid "up to parent screen: alt-u"
+msgstr "zur Ausgangsebene: alt-u"
+
+msgid "reload screen"
+msgstr "Ansicht neu laden"
+
+msgid "up to top of publication"
+msgstr "zur Ausgangsebene"
+
+msgid "up to top of publication: alt-!"
+msgstr "zur Ausgangsebene: alt-!"
+
+msgid "up to top of publication: alt-@"
+msgstr "zur Ausgangsebene: alt-@"
+
+msgid "up to top of publication: alt-#"
+msgstr "zur Ausgangsebene: alt-#"
+
+msgid "up to top of publication: alt-$"
+msgstr "zur Ausgangsebene: alt-$"
+
+msgid "up a level: alt-6"
+msgstr "eine Ebene hoch: alt-6"
+
+msgid "up a level: alt-7"
+msgstr "eine Ebene hoch: alt-7"
+#.   <h3>
+#.               Upload
+#.             </h3>
+#: from ../Silva/views/edit/Asset/macro_asset_edit.pt
+msgid "upload"
+msgstr "hochladen"
+
+#.   <a style="float: right;" href="lookup_back_link" class="navigation" accesskey="u" title="return to the access screen with this clipboard: alt-u" tal:attributes="href here/lookup_back_link">
+#.                 <u>U</u>se clipboard...
+#.               </a>
+#: from ../Silva/views/edit/lookup_ui.pt
+#, fuzzy
+msgid "use_clipboard"
+msgstr "Benutzer Clipbord"
+
+#.   <th>
+#.                     user
+#.                   </th>
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "user"
+msgstr "Benutzer"
+
+#.   <span tal:omit-tag="">user clipboard</span>
+#: from ../Silva/views/edit/macro_user_lookup_clipboard.pt
+msgid "user_clipboard"
+msgstr "Benutzer Zwischenablage"
+
+#.   <span tal:omit-tag="">user roles for</span>
+#: from ../Silva/views/edit/tab_access.pt
+msgid "user_roles_for"
+msgstr "Benutzer Rollen für"
+
+#.   <h3>
+#.                       User search
+#.                     </h3>
+#: from ../Silva/views/edit/lookup_ui.pt
+msgid "user_search"
+msgstr "Suche nach Benutzer"
+
+
+#.   <a accesskey="v" href="" class="underline" title="see the original image" attributes="href string:${model/absolute_url}/hires_image">
+#.                 view unscaled image
+#.             </a>
+#: from ../Silva/views/edit/Asset/Image/edit.pt
+msgid "view_unscaled_image"
+msgstr "Bild in orginal Größe"
+
+
+#.   <i>
+#.                   Virtual Group does not have any "member groups"
+#.                 </i>
+#: from ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "virtual_group_does_not_have_member_groups"
+msgstr "diese virtuelle Gruppe hat keine Mitgliedsgruppen"
+
+#.   <h3>
+#.           Virtual Group &#8216;members&#8217;
+#.         </h3>
+#: from ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+msgid "virtual_group_members"
+msgstr "Mitglieder der virtuellen Gruppe"
+
+#.   <td colspan="2" class="feedback">
+#.             In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; to save any changes, or &#8216;cancel&#8217; to go back to the editor and save manually (or not at all).
+#.           </td>
+#: from ../Silva/views/edit/promptWindow.pt
+msgid "working_session_is_going_to_expire"
+msgstr "Arbeitssitzung endet bald"
+
+#: from ../Silva/views/edit/Container/tab_edit.pt
+msgid "rename..."
+msgstr "Umbenennen..."
+
+#~ msgid "Access key: alt-c"
+#~ msgstr "Kurzwahl: alt-c"
+
+msgid "move"
+msgstr "Verschieben"
+
+
+msgid "cancel"
+msgstr "Abbrechen"
+
+msgid "cancel operation: alt-c"
+msgstr "Vorgang abbrechen: alt-c"
+
+msgid "copy"
+msgstr "Kopieren"
+
+msgid "cut"
+msgstr "Ausschneiden"
+
+msgid "delete"
+msgstr "Löschen"
+
+msgid "Optional title for all assets"
+msgstr "Optionaler Titel für alle Anlagen"
+
+#~ msgid "Paste"
+#~ msgstr "Einfügen"
+
+#~ msgid "Paste ghost"
+#~ msgstr "Geist einfügen"
+
+#~ msgid "Select all"
+#~ msgstr "Alles auswählen"
+
+#~ msgid "access key: alt-i"
+#~ msgstr "Kurzwahl: alt-i"
+
+#~ msgid "access key: alt-p"
+#~ msgstr "Kurzwahl: alt-p"
+
+#~ msgid "add"
+#~ msgstr "neu"
+
+#~ msgid "add a new item - alt-n"
+#~ msgstr "neues Item hinzufügen - alt-n"
+
+#~ msgid "add_normal_group"
+#~ msgstr "Gruppe hinzufügen"
+
+msgid "addable_settings_for"
+msgstr "Erweiterungseinstellungen für"
+
+msgid "aspect"
+msgstr "Aspekt"
+
+#~ msgid "author"
+#~ msgstr "Autor"
+
+msgid "browse"
+msgstr "durchsuchen"
+
+msgid "browse for a file on your disk"
+msgstr "Datei auf Festplatte suchen"
+
+msgid "create"
+msgstr "Erstelle"
+
+#~ msgid "changes_the_title_of_the_folder"
+#~ msgstr "ändert den Titel des Ordners"
+
+#~ msgid "click_name_to_create_object"
+#~ msgstr "auf Namen clicken um Objekt zu erstellen"
+
+msgid "copy items: alt-c"
+msgstr "Objekte kopieren: alt-x"
+
+#~ msgid "create_an_object"
+#~ msgstr "Objekt erstellen"
+
+#, fuzzy
+#~ msgid "create_virtual_group"
+#~ msgstr "virtuelle Gruppe hinzufügen"
+
+#~ msgid "current_job"
+#~ msgstr "aktueller Job"
+
+
+msgid "download"
+msgstr "Download"
+
+msgid "edit"
+msgstr "Bearbeiten"
+
+msgid "end"
+msgstr "Ende"
+
+msgid "estimated_time"
+msgstr "geschätzte Dauer"
+
+msgid "export"
+msgstr "Exportieren"
+
+msgid "cut items: alt-x"
+msgstr "Objekte ausschneiden: alt-x"
+
+msgid "ghost_folder_contents"
+msgstr "Ghost Ordner Inhalte"
+
+msgid "resync ghost folder"
+msgstr "Ghost Ordner angleichen"
+
+msgid "re-synchronize with content from the source folder: alt-e"
+msgstr "Inhalt von Quellordner angleichen: alt-e"
+
+#~ msgid "group_defined_by_list_groups"
+#~ msgstr "Gruppe definiert durch Gruppen-Liste"
+
+#~ msgid "group_defined_by_list_users"
+#~ msgstr "Gruppe definiert durch Benutzer-Liste"
+
+#~ msgid "group_definitions"
+#~ msgstr "Gruppendefinitionen"
+
+#~ msgid "import XML data - alt-i"
+#~ msgstr "XML-Daten importieren: alt-i"
+
+#~ msgid "import to the current location and remove from the list: alt-m"
+#~ msgstr "an diese Stelle importieren und aus der Liste entfernen: alt-m"
+
+msgid "groups_located_in_folder"
+msgstr "definierte Gruppen in diesem Ordner"
+
+msgid "import_in"
+msgstr "importieren in"
+
+msgid "import_silva_xml"
+msgstr "Silva-XML importieren"
+
+
+msgid "import_zip_file"
+msgstr "ZIP-Archiv importieren"
+
+msgid "locate_xml_file_to_import"
+msgstr "Silva XML-Datei für Import auswählen."
+
+msgid "locate_archive_file_to_import"
+msgstr "Archiv für Import auswählen"
+
+msgid "title_for_assets"
+msgstr "Optionaler Titel für alle Anlagen"
+
+msgid "provide_optional_title_for_assets"
+msgstr "Alle Anlagen mit optionalen Titel versehen."
+
+msgid "recreate_subdirs"
+msgstr "Unterordner"
+
+msgid "recreate_subdirs_with_silva_folders"
+msgstr "Ordnerstruktur des ZIP-Archivs durch Silva Ordner nachbilden."
+
+msgid "import zip"
+msgstr "ZIP importieren"
+
+msgid "id"
+msgstr "Id"
+
+
+#~ msgid "job_id"
+#~ msgstr "Job-Id"
+
+#~ msgid "job_number"
+#~ msgstr "Job-Nummer"
+
+#~ msgid "job_owner"
+#~ msgstr "Job-Owner"
+
+#~ msgid "key-export_to_word"
+#~ msgstr "Keys nach Word exportieren"
+
+#~ msgid "key-import"
+#~ msgstr "Keys importieren"
+
+#~ msgid "list_proccessed_items"
+#~ msgstr "liste bearbeitete Items"
+
+#~ msgid "list_processed_items"
+#~ msgstr "Liste der bearbeiteten Items"
+
+
+#, fuzzy
+#~ msgid "locate_word_file_to_upload"
+#~ msgstr "Word-Datei zum Upload auswählen"
+
+
+#~ msgid "logout_link"
+#~ msgstr "Abmelde Link"
+
+#, fuzzy
+#~ msgid "modifier"
+#~ msgstr "von"
+
+#~ msgid "name"
+#~ msgstr "Name"
+
+
+msgid "new"
+msgstr "neu"
+
+msgid "new..."
+msgstr "neu..."
+
+msgid "move selected items to"
+msgstr "ausgewählte Objekte verschieben nach"
+
+msgid "move selected items into position: alt-m"
+msgstr "ausgewählte Objekte nach Position verschieben: alt-m"
+
+msgid "Change your settings: alt-~"
+msgstr "Benutzereinstellungen ändern: alt-~"
+
+msgid "Logout of Silva: alt-q"
+msgstr "aus Silva abmelden: alt-q"
+
+msgid "move down"
+msgstr "nach unten"
+
+msgid "move up"
+msgstr "nach oben"
+
+msgid "problem"
+msgstr "Problem"
+
+msgid "place reference..."
+msgstr "Verweis setzen"
+
+msgid "insert a reference to this asset: alt-p"
+msgstr "Verweis auf diese Anlage setzen: alt-p"
+
+msgid "n/a"
+msgstr "n.v."
+#~ msgid "no_content_objects_in_folder"
+#~ msgstr "keine Objekte im Ordner"
+
+#~ msgid "no_groups_defined_in_folder"
+#~ msgstr "keine Gruppen im Ordner definiert"
+
+#~ msgid "no_items_to_rename"
+#~ msgstr "nichts umzubenennen"
+
+#~ msgid "no_jobs_in_queue"
+#~ msgstr "keine Jobs in Warteschlange"
+
+#~ msgid "no_processed_jobs"
+#~ msgstr "keine fertigen Jobs"
+
+msgid "no_title"
+msgstr "kein Titel"
+
+#~ msgid "not_authorized"
+#~ msgstr "nicht autorisiert"
+
+#~ msgid "old"
+#~ msgstr "alt"
+
+#~ msgid "only"
+#~ msgstr "nur"
+
+msgid "over to the export screen: alt-e"
+msgstr "zur Export-Ansicht wechseln: alt-e"
+
+#~ msgid "owner"
+#~ msgstr "Owner"
+
+#~ msgid "paste (items on clipboard) as ghost objects: alt-g"
+#~ msgstr "Einfügen der Items im Clipbord als Geister Objekte: alt-g"
+
+#~ msgid "paste items: alt-v"
+#~ msgstr "Item einfügen: alt-v"
+
+#~ msgid "position"
+#~ msgstr "Position"
+
+
+#~ msgid "queue_items_process"
+#~ msgstr "Warteschlange Items Process"
+
+#~ msgid "queue_of_items"
+#~ msgstr "Warteschlange der Items"
+
+#~ msgid "refresh_queue_lists"
+#~ msgstr "Warteschlangenliste refresch"
+
+#~ msgid "reload to update the queue lists: alt-r"
+#~ msgstr "neu laden um Warteschlange upzudaten: alt-r"
+
+msgid "rename and retitle items: alt-r"
+msgstr "Objekte umbenennen: alt-r"
+
+msgid "there's no undo: alt-d"
+msgstr "es gibt kein Undo: alt-d"
+
+msgid "select all: alt-a"
+msgstr "alles auswählen: alt-a"
+
+msgid "select a new item: alt-s"
+msgstr "neues Objekt hinzufügen: alt-s"
+
+#~ msgid "rename_objects_in"
+#~ msgstr "Objekte umbenennen in"
+
+#, fuzzy
+#~ msgid "return confirm('Really delete?')"
+#~ msgstr "wirklich löschen ? (return)"
+
+#~ msgid "seconds"
+#~ msgstr "Sekunden"
+
+#~ msgid "select"
+#~ msgstr "auswählen"
+
+#~ msgid "select all items: alt-a"
+#~ msgstr "alle Items auswählen: alt-a"
+
+
+#~ msgid "silva_doc"
+#~ msgstr "Silva-Dokumentation"
+
+#~ msgid "status"
+#~ msgstr "Status"
+
+
+
+
+
+#~ msgid "unknown"
+#~ msgstr "unbekannt"
+
+#~ msgid "upload a Word document from your local drive: alt-u"
+#~ msgstr "upload eines Word-Dokument von der lokalen Platte: alt-u"
+
+#~ msgid "upload_word_document"
+#~ msgstr "Word-Dokument hochladen"

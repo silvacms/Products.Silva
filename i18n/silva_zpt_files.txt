@@ -1,0 +1,109 @@
+# HELP:
+# '_finished_' indicates that the file has been completely i18ned
+# '_locked by name_ indicates the user 'name' is working with this file, so better that nobody touches it until user 'name' releases the lock
+
+103 ZPT files to parse.
+
+[001 of 103] - ../Silva/globals/help.pt
+_finished by js_ [002 of 103] - ../Silva/globals/index_macro.pt
+_locked by js_ [003 of 103] - ../Silva/globals/reference.pt
+_finished by js_ [004 of 103] - ../Silva/resources/request_processed.pt
+_finished by js_ [005 of 103] - ../Silva/resources/sidebar_template.pt
+_locked by __gotcha_ [006 of 103] - ../Silva/views/add/add_form.pt
+_finished_ by js_ [007 of 103] - ../Silva/views/add/Groups/add_form.pt
+_finished by js_ [008 of 103] - ../Silva/views/edit/Asset/File/edit.pt
+_finished by js_ [009 of 103] - ../Silva/views/edit/Asset/macro_asset_edit.pt
+_finished by js_ [010 of 103] - ../Silva/views/edit/Asset/tab_edit.pt
+_locked by js_ todo onClick [011 of 103] - ../Silva/views/edit/Asset/Groups/Group/edit.pt
+_locked by js_ todo onClick [012 of 103] - ../Silva/views/edit/Asset/Groups/VirtualGroup/edit.pt
+_finished by js_ [013 of 103] - ../Silva/views/edit/Asset/Image/edit.pt
+_finished by js_ [014 of 103] - ../Silva/views/edit/Asset/SQLDataSource/edit.pt
+_finished by js_ [015 of 103] - ../Silva/views/edit/asset_lookup.pt
+_finished by js_ [016 of 103] - ../Silva/views/edit/hyperlink_lookup.pt
+_finished by js_ [017 of 103] - ../Silva/views/edit/lookup_ui.pt
+_finished by js_ [018 of 103] - ../Silva/views/edit/macro_groups_listing.pt
+_finished by js_ [019 of 103] - ../Silva/views/edit/macro_metadata.pt
+_finished by js_ [020 of 103] - ../Silva/views/edit/macro_user_lookup_clipboard.pt
+_finished by js_ [021 of 103] - ../Silva/views/edit/macro_vein_navigation.pt
+_finished by js_ [022 of 103] - ../Silva/views/edit/promptWindow.pt
+_finished by js_ [023 of 103] - ../Silva/views/edit/tab_access.pt
+_finished by js_ [024 of 103] - ../Silva/views/edit/tab_access_authorized_below.pt
+_finished by js_ [025 of 103] - ../Silva/views/edit/tab_metadata.pt
+_finished by js_ [026 of 103] - ../Silva/views/edit/tab_preview.pt
+_finished by js_ [027 of 103] - ../Silva/views/edit/tab_preview_iframe.pt
+_finished_ [028 of 103] - ../Silva/views/edit/Container/docma_queue.pt
+_finished_ *JavaScript code needs i18n support* [029 of 103] - ../Silva/views/edit/Container/macro_select_all.pt
+_finished_ [030 of 103] - ../Silva/views/edit/Container/tab_access_groups.pt
+_finished_ [031 of 103] - ../Silva/views/edit/Container/tab_edit.pt
+_finished_ [032 of 103] - ../Silva/views/edit/Container/tab_edit_import.pt
+_locked by josechaso_ [033 of 103] - ../Silva/views/edit/Container/tab_edit_new.pt
+_locked by josechaso_ [034 of 103] - ../Silva/views/edit/Container/tab_edit_rename.pt
+_locked by josechaso_ [035 of 103] - ../Silva/views/edit/Container/tab_metadata.pt
+_locked by josechaso_ [036 of 103] - ../Silva/views/edit/Container/tab_status.pt
+_locked by josechaso_ [037 of 103] - ../Silva/views/edit/Container/tab_status_export.pt
+_finished_ [038 of 103] - ../Silva/views/edit/Container/Publication/settings_addables.pt
+_finished_ [039 of 103] - ../Silva/views/edit/Container/Publication/tab_info.pt
+_finished_ [040 of 103] - ../Silva/views/edit/Content/tab_edit.pt
+_finished_ [041 of 103] - ../Silva/views/edit/Content/Indexer/edit.pt
+_finished_ [042 of 103] - ../Silva/views/edit/Content/SimpleContent/edit.pt
+_locked by js_ [043 of 103] - ../Silva/views/edit/Member/SimpleMember/tab_edit.pt
+_locked by js_ [044 of 103] - ../Silva/views/edit/VersionedContent/DemoObject/normal_edit.pt
+_locked by js_ [045 of 103] - ../Silva/views/edit/VersionedContent/tab_edit.pt
+_locked by js_ [046 of 103] - ../Silva/views/edit/VersionedContent/tab_edit_bxe.pt
+_locked by js_ [047 of 103] - ../Silva/views/edit/VersionedContent/tab_edit_eopro.pt
+_locked by js_ [048 of 103] - ../Silva/views/edit/VersionedContent/tab_edit_eopro_config.pt
+_locked by js_ [049 of 103] - ../Silva/views/edit/VersionedContent/tab_edit_eopro_toolbar.pt
+_locked by js_ [050 of 103] - ../Silva/views/edit/VersionedContent/tab_edit_xopus.pt
+_locked by js_ [051 of 103] - ../Silva/views/edit/VersionedContent/tab_status.pt
+_locked by js_ [052 of 103] - ../Silva/views/edit/VersionedContent/tab_status_macros.pt
+_locked by js_ [053 of 103] - ../Silva/views/edit/VersionedContent/Ghost/edit.pt
+_locked by js_ [054 of 103] - ../Silva/views/edit/VersionedContent/Ghost/tab_metadata.pt
+_finished_ [055 of 103] - ../Silva/views/logout.pt
+_locked by js_ [056 of 103] - ../Silva/views/macro_index.pt
+_locked by js_ [057 of 103] - ../Silva/views/macro_no_tabs.pt
+_locked by js_ [058 of 103] - ../Silva/views/macro_tabs.pt
+_locked by js_ _finished_ [059 of 103] - ../Silva/views/public/AutoTOC/render_helper.pt
+_finished_ [060 of 103] - ../Silva/views/public/request_roles.pt
+_locked by js_ [061 of 103] - ../Silva/views/public/search.pt
+_locked by js_ [062 of 103] - ../Silva/views/public/search_results.pt
+_locked by js_ [063 of 103] - ../Silva/views/public/DemoObject/render_helper.pt
+_locked by js_ [064 of 103] - ../Silva/views/public/Folder/render_preview.pt
+_locked by js_ [065 of 103] - ../Silva/views/public/Folder/render_view.pt
+_locked by js_ [066 of 103] - ../Silva/views/public/Indexer/render_helper.pt
+_locked by js_ [067 of 103] - ../Silva/views/public/SimpleContent/render_helper.pt
+_finished_ [068 of 103] - ../Silva/www/autoTOCAdd.zpt
+_finished_ [069 of 103] - ../Silva/www/catalogedDemoObjectAdd.zpt
+_finished_ [070 of 103] - ../Silva/www/catalogedDemoObjectVersionAdd.zpt
+_finished_ [071 of 103] - ../Silva/www/contactInfoAdd.zpt
+_finished_ [072 of 103] - ../Silva/www/containerPolicyEdit.zpt
+_finished_ [073 of 103] - ../Silva/www/demoObjectAdd.zpt
+_finished_ [074 of 103] - ../Silva/www/demoObjectVersionAdd.zpt
+_finished_ [075 of 103] - ../Silva/www/emailMessageServiceEdit.zpt
+*lot of recoding needed* [076 of 103] - ../Silva/www/extensionServiceEdit.zpt
+[077 of 103] - ../Silva/www/fileAdd.zpt
+[078 of 103] - ../Silva/www/filesServiceAdd.zpt
+[079 of 103] - ../Silva/www/filesServiceEdit.zpt
+[080 of 103] - ../Silva/www/folderAdd.zpt
+[081 of 103] - ../Silva/www/folderEdit.zpt
+[082 of 103] - ../Silva/www/ghostAdd.zpt
+[083 of 103] - ../Silva/www/ghostFolderAdd.zpt
+[084 of 103] - ../Silva/www/ghostversionAdd.zpt
+[085 of 103] - ../Silva/www/groupAdd.zpt
+[086 of 103] - ../Silva/www/groupEdit.zpt
+[087 of 103] - ../Silva/www/imageAdd.zpt
+[088 of 103] - ../Silva/www/indexerAdd.zpt
+[089 of 103] - ../Silva/www/multiViewRegistryAdd.zpt
+[090 of 103] - ../Silva/www/publicationAdd.zpt
+[091 of 103] - ../Silva/www/rootAdd.zpt
+[092 of 103] - ../Silva/www/semiGhostAdd.zpt
+[093 of 103] - ../Silva/www/serviceDocmaAdd.zpt
+[094 of 103] - ../Silva/www/serviceDocmaEditTab.zpt
+[095 of 103] - ../Silva/www/serviceDocmaInfoTab.zpt
+[096 of 103] - ../Silva/www/serviceEmailMessageServiceAdd.zpt
+[097 of 103] - ../Silva/www/sidebarServiceAdd.zpt
+[098 of 103] - ../Silva/www/sidebarServiceEditTab.zpt
+[099 of 103] - ../Silva/www/simpleMemberAdd.zpt
+[100 of 103] - ../Silva/www/simpleMemberServiceAdd.zpt
+[101 of 103] - ../Silva/www/simpleMemberServiceEdit.zpt
+[102 of 103] - ../Silva/www/virtualGroupAdd.zpt
+_finished_ [103 of 103] - ../Silva/www/virtualGroupEdit.zpt
