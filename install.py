@@ -12,8 +12,9 @@ from Products.Silva.fssite import minimalpath, expandpath
 
 from Products.ProxyIndex.ProxyIndex import RecordStyle
     
-from Products.Silva.ContainerPolicy import \
-    NothingPolicy, SimpleContentPolicy, SemiGhostPolicy, AutoTOCPolicy
+from Products.Silva.ContainerPolicy import NothingPolicy 
+from Products.Silva.AutoTOC import AutoTOCPolicy
+
 from SimpleMembership import SimpleMemberService
 
 def add_fss_directory_view(obj, name, base, *args):
@@ -183,29 +184,22 @@ def configureMetadata(root):
         fh = open(xml_file, 'r')
         collection.importSet(fh)    
 
-    if not 'silva-publication' in collection.objectIds():
-        xml_file = path.join(silva_docs, 'silva-publication.xml')
-        fh = open(xml_file, 'r')
-        collection.importSet(fh)
-    
     # (re) set the default type mapping
     mapping = root.service_metadata.getTypeMapping()
     default = ''
     tm = (
         {'type':'Silva Ghost Version',      'chain':''},
-        {'type':'Silva Folder',             'chain':'silva-extra'},
+        {'type':'Silva Folder',             'chain':'silva-content, silva-extra'},
         {'type':'Silva File',               'chain':'silva-content, silva-extra'},
         {'type':'Silva Image',              'chain':'silva-content, silva-extra'},
         {'type':'Silva Indexer',            'chain':'silva-content, silva-extra'},
-        {'type':'Silva Publication',        'chain':'silva-extra, silva-publication'},
-        {'type':'Silva Root',               'chain':'silva-extra, silva-publication'},
+        {'type':'Silva Publication',        'chain':'silva-content, silva-extra'},
+        {'type':'Silva Root',               'chain':'silva-content, silva-extra'},
         {'type':'Silva SQL Data Source',    'chain':'silva-content, silva-extra'},
-        {'type':'Silva Simple Content',     'chain':'silva-content, silva-extra'},
-        {'type':'Silva Semi Ghost', 'chain': 'silva-content, silva-extra'},
-        {'type': 'Silva AutoTOC', 'chain': 'silva-content, silva-extra'},
-        {'type':'Silva Group',               'chain':'silva-content, silva-extra'},
-        {'type':'Silva Virtual Group',              'chain':'silva-content, silva-extra'},
-        {'type':'Silva IP Group',              'chain':'silva-content, silva-extra'},
+        {'type': 'Silva AutoTOC',           'chain':'silva-content, silva-extra'},
+        {'type':'Silva Group',              'chain':'silva-content, silva-extra'},
+        {'type':'Silva Virtual Group',      'chain':'silva-content, silva-extra'},
+        {'type':'Silva IP Group',           'chain':'silva-content, silva-extra'},
         )
     mapping.editMappings(default, tm)
 
@@ -440,14 +434,14 @@ def registerViews(reg):
                  ['edit', 'Asset', 'File'])
     reg.register('edit', 'Silva Indexer',
                  ['edit', 'Content', 'Indexer'])
-    reg.register('edit', 'Silva Simple Content',
-                 ['edit', 'Content', 'SimpleContent'])
     reg.register('edit', 'Silva SQL Data Source',
                  ['edit', 'Asset', 'SQLDataSource'])
     reg.register('edit', 'Silva Simple Member',
                  ['edit', 'Member', 'SimpleMember'])
     reg.register('edit', 'Silva Ghost Folder',
-        ['edit', 'Container', 'GhostFolder'])
+                 ['edit', 'Container', 'GhostFolder'])
+    reg.register('edit', 'Silva AutoTOC', 
+                 ['edit', 'Content', 'AutoTOC'])
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
@@ -457,11 +451,9 @@ def registerViews(reg):
     reg.register('public', 'Silva Image', ['public', 'Image'])
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
-    reg.register('public', 'Silva Simple Content', ['public', 'SimpleContent'])
     reg.register('public', 'Silva SQL Data Source',
                  ['public', 'SQLDataSource'])
     reg.register('public', 'Silva Ghost Folder', ['public', 'Folder'])
-    reg.register('public', 'Silva Semi Ghost', ['public', 'SemiGhost'])
     reg.register('public', 'Silva AutoTOC', ['public', 'AutoTOC'])
 
     # add
@@ -471,9 +463,9 @@ def registerViews(reg):
     reg.register('add', 'Silva Image', ['add', 'Image'])
     reg.register('add', 'Silva File', ['add', 'File'])
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
-    reg.register('add', 'Silva Simple Content', ['add', 'SimpleContent'])
     reg.register('add', 'Silva SQL Data Source', ['add', 'SQLDataSource'])
     reg.register('add', 'Silva Ghost Folder', ['add', 'GhostFolder'])
+    reg.register('add', 'Silva AutoTOC', ['add', 'AutoTOC'])
 
 def registerGroupsViews(reg):
     """Register groups views on registry.
@@ -496,7 +488,6 @@ def unregisterViews(reg):
                       'Silva DemoObject',
                       'Silva File',
                       'Silva Indexer',
-                      'Silva Simple Content',
                       'Silva SQL Data Source',
                       'Silva Group',
                       'Silva Virtual Group',
@@ -595,21 +586,12 @@ def configureContainerPolicies(root):
         root.manage_addProduct['Silva'] \
             .manage_addContainerPolicyRegistry()
     cpr = root.service_containerpolicy
-    cpr.register('None', NothingPolicy)
-    cpr.register('Simple Content', SimpleContentPolicy)
-    cpr.register('First Published', SemiGhostPolicy)
-    cpr.register('Auto TOC', AutoTOCPolicy)
-
-    # set default container policy
-    binding = root.service_metadata.getMetadata(root)
-    binding.setValues('silva-publication', {
-        'defaultdocument_policy': 'Simple Content',
-    })
-    
+    cpr.register('None', NothingPolicy, 0)
+    cpr.register('Auto TOC', AutoTOCPolicy, 0)
 
 def installSilvaDocument(root):
     # installs Silva Document if available
-    # see issue #536
+    # see issue #536 and #611
     from Products.Silva.ExtensionRegistry import extensionRegistry
     if 'SilvaDocument' in extensionRegistry.get_names():
         extensionRegistry.install('SilvaDocument', root)

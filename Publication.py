@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.52 $
+# $Revision: 1.53 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -136,15 +136,18 @@ InitializeClass(Publication)
 manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),
                                              __name__='manage_addPublicationForm')
 
-def manage_addPublication(self, id, title, create_default=1, REQUEST=None):
+def manage_addPublication(
+    self, id, title, create_default=1, policy_name='None', REQUEST=None):
     """Add a Silva publication."""
     if not mangle.Id(self, id).isValid():
         return
     object = Publication(id)
     self._setObject(id, object)
     object = getattr(self, id)
+    object.set_title(title)
     if create_default:
-        self.service_containerpolicy.createDefaultDocument(object, title)
+        policy = self.service_containerpolicy.getPolicy(policy_name)
+        policy.createDefaultDocument(object, title)
     add_and_edit(self, id, REQUEST)
     return ''
 

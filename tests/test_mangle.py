@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.4 2003/10/10 15:19:51 gotcha Exp $
+# $Id: test_mangle.py,v 1.5 2003/10/16 16:08:41 jw Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -18,9 +18,10 @@ class MangleIdTest(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
         self.folder = folder = self.addObject(self.silva, 'Folder', 'fold',
             title='fold', create_default=0)
-        self.addObject(folder, 'SimpleContent', 'a_content',
-            title='a_content')
-        self.addObject(folder, 'File', 'an_asset', title='an_asset',
+        self.addObject(
+            folder, 'AutoTOC', 'a_content', title='a_content')
+        self.addObject(
+            folder, 'File', 'an_asset', title='an_asset', 
             file=StringIO("foobar"))
     
     def test_validate(self):

@@ -27,16 +27,16 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.doc1 = doc1 = self.add_document(self.root, 'doc1', 'Doc1')
         self.doc2 = doc2 = self.add_document(self.root, 'doc2', 'Doc2')
         self.doc3 = doc3 = self.add_document(self.root, 'doc3', 'Doc3')
-        self.folder4 = folder4 = self.add_folder(self.root,
-                          'folder4', 'Folder4')
-        self.folder5 = folder5 = self.add_folder(self.root,
-                          'folder5', 'Folder5')
-        self.subdoc = subdoc = self.add_document(folder4,
-                          'subdoc', 'Subdoc')
-        self.subfolder = subfolder = self.add_folder(folder4,
-                          'subfolder', 'Subfolder')
-        self.subsubdoc = subsubdoc = self.add_document(subfolder,
-                          'subsubdoc', 'Subsubdoc')
+        self.folder4 = folder4 = self.add_folder(
+            self.root, 'folder4', 'Folder4', policy_name='Auto TOC')
+        self.folder5 = folder5 = self.add_folder(
+            self.root, 'folder5', 'Folder5', policy_name='Auto TOC')
+        self.subdoc = subdoc = self.add_document(
+            folder4, 'subdoc', 'Subdoc')
+        self.subfolder = subfolder = self.add_folder(
+            folder4, 'subfolder', 'Subfolder', policy_name='Auto TOC')
+        self.subsubdoc = subsubdoc = self.add_document(
+            subfolder, 'subsubdoc', 'Subsubdoc')
 
     def test_copy1(self):
         self.root.action_copy(['doc1'], self.app.REQUEST)

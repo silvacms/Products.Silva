@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.47 $
+# $Revision: 1.48 $
 
 # Python
 from StringIO import StringIO
@@ -64,6 +64,13 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         self._cached_data = {}
 
     # ACCESSORS
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'can_set_title')    
+    def can_set_title(self):
+        """Check to see if the title can be set
+        """
+        return not not self.get_editable()
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                              'get_title')
     def get_title(self):

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.1 2003/07/29 13:17:15 zagy Exp $
+# $Id: AutoTOC.py,v 1.2 2003/10/16 16:08:40 jw Exp $
 
 # Zope
 from Globals import InitializeClass
@@ -18,6 +18,8 @@ from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 from Products.Silva.interfaces import IContent, IContainerPolicy
 from Products.Silva.helpers import add_and_edit
+
+icon = "www/silvageneric.gif"
 
 class AutoTOC(Content, SimpleItem):
     """Automatically displays table of contents"""
@@ -43,6 +45,11 @@ class AutoTOC(Content, SimpleItem):
     def is_deletable(self):
         """always deletable"""
         return 1
+
+    def can_set_title(self):        
+        """always settable"""
+        # XXX: we badly need Publishable type objects to behave right.
+        return 1
     
 InitializeClass(AutoTOC)
 
@@ -56,7 +63,17 @@ def manage_addAutoTOC(self, id, title, REQUEST=None):
     object = AutoTOC(id)
     self._setObject(id, object)
     object = getattr(self, id)
-    binding = self.service_metadata.getMetadata(object)
-    binding.setValues('silva-extra', {'title': title})
+    object.set_title(title)
     add_and_edit(self, id, REQUEST)
     return ''
+
+class _AutoTOCPolicy(Persistent):
+
+    __implements__ = IContainerPolicy
+
+    def createDefaultDocument(self, container, title):
+        container.manage_addProduct['Silva'].manage_addAutoTOC(
+            'index', title)
+        container.index.sec_update_last_author_info()
+
+AutoTOCPolicy = _AutoTOCPolicy()

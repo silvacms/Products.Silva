@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 
 from bisect import insort_right
 
@@ -35,7 +35,7 @@ class ExtensionRegistry:
     def register(
         self, name, description, context, modules, install_module,
         depends_on='Silva'):
-
+        
         self._extensions[name] = (description, install_module, depends_on)
         # try to order based on dependencies
         self._orderExtensions()

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.144 $
+# $Revision: 1.145 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -120,62 +120,14 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             elif IContainer.isImplementedBy(obj):
                 obj._update_contained_documents_status()
     
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title')
-    def get_title(self):
-        """Get title.
-        """
-        default = self.get_default()
-        if default is None:
-            return ""
-        return default.get_title()
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title_editable')
-    def get_title_editable(self):
-        """Get title of editable.
-        """
-        default = self.get_default()
-        if default is None:
-            return ""
-        return default.get_title_editable()
-    
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_short_title')
-    def get_short_title(self):
-        """Get short title.
-        """
-        default = self.get_default()
-        if default is None:
-            return ""
-        short_title = default.get_short_title()
-        if not short_title:
-            return self.get_title()
-        return short_title
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_short_title_editable')
-    def get_short_title_editable(self):
-        """Get short title of editable.
-        """
-        default = self.get_default()
-        if default is None:
-            return ""
-        short_title_editable = default.get_short_title_editable()
-        if not short_title_editable:
-            return self.get_title_editable()
-        return short_title_editable
-    
     # MANIPULATORS
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_title')
-    def set_title(self, title):
-        """Change title of editable version of index.
+
+    security.declarePrivate('titleMutationTrigger')
+    def titleMutationTrigger(self):
+        """This trigger is called upon save of Silva Metadata. More
+        specifically, when the silva-content - defining titles - set is 
+        being editted for this object.
         """
-        default = self.get_default()
-        if default is None:
-            return
-        default.set_title(title)
         self._invalidate_sidebar(self)
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -555,6 +507,20 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         container._ordered_ids = container_ordered_ids
         
     # ACCESSORS
+    
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'can_set_title')    
+    def can_set_title(self):
+        """Check to see if the title can be set by user, meaning:
+        * he is Editor/ChiefEditor/Manager, or
+        * he is editor _and_ the Folder does not contain published content
+          or approved content recursively (self.is_published()).
+        """
+        user = self.REQUEST.AUTHENTICATED_USER
+        if user.has_permission(SilvaPermissions.ApproveSilvaContent, self):
+            return 1
+        
+        return not self.is_published() and not self.is_approved()
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables')
@@ -639,7 +605,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_approved')
     def is_approved(self):
-        # Folder is approved if anything inside is published
+        # Folder is approved if anything inside is approved
         default = self.get_default()
         if default and self.get_default().is_approved():
             return 1
@@ -812,14 +778,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         if IContainer.isImplementedBy(self):
             default = self.get_default()
             if default is not None:
-                # XXX have to access the view layer here which I don't like.
-                # But in fact I think this whole method is view code.
-                view_registry = self.service_view_registry
-                view = view_registry.get_view('public', default.meta_type)
-                # if there is *NO* visibility info, the document *IS* visible
-                visible = getattr(view, 'visible', lambda x: 1)
-                if visible(default):
-                    l.append((indent, default))
+                l.append((indent, default))
 
         for item in self.get_ordered_publishables():
             l.append((indent, item))
@@ -949,17 +908,20 @@ InitializeClass(Folder)
 manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
                                         __name__='manage_addFolderForm')
 
-def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
+def manage_addFolder(
+    context, id, title, create_default=1, policy_name='None', REQUEST=None):
     """Add a Folder."""
 
-    if not mangle.Id(self, id).isValid():
+    if not mangle.Id(context, id).isValid():
         return
-    object = Folder(id)
-    self._setObject(id, object)
-    object = getattr(self, id)
+    folder = Folder(id)
+    context._setObject(id, folder)
+    folder = getattr(context, id)
+    folder.set_title(title)
     if create_default:
-        self.service_containerpolicy.createDefaultDocument(object, title)
-    helpers.add_and_edit(self, id, REQUEST)
+        policy = context.service_containerpolicy.getPolicy(policy_name)
+        policy.createDefaultDocument(folder, title)
+    helpers.add_and_edit(context, id, REQUEST)
     return ''
 
 def xml_import_handler(object, node, factory=None):

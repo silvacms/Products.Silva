@@ -1,4 +1,9 @@
 ##parameters=content
+
+# This is a first evolutionary step towards improved
+# default content and folder title handling...
+# ...and it is rather ugly for now.
+
 from Products.SilvaMetadata.Exceptions import BindingError
 
 if content is None:
@@ -27,8 +32,12 @@ isViewable = binding.isViewable
 isEditable = binding.isEditable
 value = binding.get
 
+# Special case for titles.. ugh.
 pt_binding = {}
-pt_binding['setNames'] = set_names = binding.getSetNames()
+pt_binding['setNames'] = set_names = list(binding.getSetNames())
+if not content.can_set_title():
+    if 'silva-content' in set_names:
+        set_names.remove('silva-content')
 
 # Build a dict for use in the pagetemplate,
 # format:
@@ -48,19 +57,12 @@ pt_binding['setNames'] = set_names = binding.getSetNames()
 #         },
 #   set2:...
 # }
-for set_name in set_names:
+for set_name in set_names:    
     pt_binding[set_name] = set = {}
     set['setTitle'] = binding.getSet(set_name).getTitle() or set_name
     # Filter for viewable items
     set['elementNames'] = element_names = binding.getElementNames(
         set_name, mode='view')
-        
-    # XXX: hack - this check should go in the element's guard
-    if set_name == 'silva-content':
-        xtra_editable_check = content.can_set_title()        
-    else:
-        xtra_editable_check = 1
-        
     # Per element:
     for element_name in element_names:
         set[element_name] = element = {}
@@ -70,22 +72,31 @@ for set_name in set_names:
         if isAcquired(set_name, element_name):
             element['isAcquired'] = 1
         else:
-            element['isAcquired'] = 0        
+            element['isAcquired'] = 0
+            
+        bound_element = binding.getElement(set_name, element_name)
+            
         # isEditable, render
-        # XXX: using the afformentioned hack...
-        if isEditable(set_name, element_name) and xtra_editable_check:
-            element['isEditable'] = 1 #isEditable(set_name, element_name)
-            element['render'] = renderEdit(set_name, element_name)
+        if isEditable(set_name, element_name):
+            element['isEditable'] = isEditable(set_name, element_name)
+            element['render'] = renderEdit(set_name, element_name)            
+            # Special case for titles.. ugh.
+            if set_name == 'silva-content':
+                default = content.get_default()
+                if not default is None:
+                    default = default.get_viewable() or default.get_editable()
+                    if not default is None:
+                        b = ms.getMetadata(default)
+                        value = b.get(set_name, element_name)
+                        element['render'] = bound_element.renderEdit(value=value)
         else:
             # show a field, when it is read-only *and not* acquired (since
             # it then is show in the acquired content column anyway).
-            element['isEditable'] = 0
             if not element['isAcquired']:
                 element['render'] = element['view']
             else:
                 element['render'] = None
         # isRequired, isAcquirable, description, title
-        bound_element = binding.getElement(set_name, element_name)
         element['isAcquireable'] = bound_element.isAcquireable()        
         element['isRequired'] = bound_element.isRequired()
         element['description'] = bound_element.Description()

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.95 2003/10/10 12:07:57 faassen Exp $
+# $Id: SilvaObject.py,v 1.96 2003/10/16 16:08:40 jw Exp $
 
 # python
 from types import StringType
@@ -187,6 +187,13 @@ class SilvaObject(Security, ViewCode):
         """
         return self.get_title_or_id()
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'can_set_title')    
+    def can_set_title(self):
+        """Check to see if the title can be set
+        """
+        return 1
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):

@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.105 $
+# $Revision: 1.106 $
 
 import ContainerPolicy
 
@@ -23,7 +23,6 @@ def initialize(context):
     import Indexer
     import SQLDataSource
     import GhostFolder
-    import SemiGhost
     import AutoTOC
     import install
     import helpers # to execute the module_permission statements
@@ -43,11 +42,12 @@ def initialize(context):
     import SidebarService
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
+
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
-        Folder, Root, Publication, Ghost, Image, File, SimpleContent,
+        Folder, Root, Publication, Ghost, Image, File, 
         Indexer, SQLDataSource, Group, VirtualGroup, IPGroup,
-        GhostFolder, SemiGhost, AutoTOC],
+        GhostFolder, AutoTOC],
         install, depends_on=None)
 
     context.registerClass(

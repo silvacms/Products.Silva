@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.76 $
+# $Revision: 1.77 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -265,7 +265,7 @@ def manage_addRoot(self, id, title, REQUEST=None):
 
     # now set it all up
     install.installFromScratch(object)
-
+    object.set_title(title)
     # XXX no sample content this way as SilvaDocument is a separate
     # product now..needs to be fixed
     #create_published_demo_index(object, title, REQUEST)

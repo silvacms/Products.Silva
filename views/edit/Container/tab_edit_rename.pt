@@ -70,10 +70,16 @@
             title
           </td>
           <td>
-            <span tal:replace="object/get_title_editable | object/getId" />
+            <span tal:replace="
+              object/get_title_editable | object/get_title | object/getId"
+            />
           </td>
           <td width="45%"
-              tal:define="is_title_editable python:view.is_title_editable(object)">
+              tal:define="
+                title object/get_title_editable | object/get_title;
+                is_title_editable object/can_set_title;
+                "
+              >
             <input
               type="text"
               name="name"
@@ -82,19 +88,15 @@
               tal:condition="is_title_editable"
               tal:attributes="
                 name string:title_${object/getId}; 
-                value object/get_title_editable;" />
-            <span class="error"
-                tal:condition="not: is_title_editable">
-              This folder's title can only be changed via it's default
-              document.
-            </span>
+                value title;
+                " 
+            />
+              <tal:block 
+                content="title"
+                condition="not: is_title_editable" 
+              />
           </td>
           <td>
-            <span class="error" 
-              tal:condition="python: object.getId() == 'index'"
-              i18n:translate="changes_the_title_of_the_folder">
-              Changes the title of the folder!
-            </span>
           </td>
         </tr>
         <tr class="divider"

@@ -1,6 +1,8 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
+# Python
+from bisect import insort_right
 
 # zope
 from Globals import InitializeClass
@@ -13,12 +15,24 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.Silva import SilvaPermissions
 from Products.Silva.interfaces import IContainerPolicy, IContainer
 
+# XXX: can these "helper" classes for ordering be refactored in something
+# more generic? See also ExtensionRegistry.Addable.
+class _Policy:
+    def __init__(self, name, priority):
+        self._name = name
+        self._priority = priority
+        
+    def __cmp__(self, other):
+        sort = cmp(self._priority, other._priority)
+        if sort == 0:
+            sort = cmp(self._name, other._name)
+        return sort
+
 class ContainerPolicyRegistry(SimpleItem):
 
     security = ClassSecurityInfo()
     id = 'service_containerpolicy'
     title = 'Silva ContainerPolicy Registry'
-
 
     manage_options = (
         {'label': 'Edit', 'action': 'manage_main'},
@@ -35,17 +49,18 @@ class ContainerPolicyRegistry(SimpleItem):
 
             raises KeyError if policy doesn't exist
         """
-        return self._policies[name]
+        return self._policies[name][0]
     
     def listPolicies(self):
-        names = self._policies.keys()
-        names.sort()
-        return names
+        sorted_policies = []
+        for key, value in self._policies.items():
+            insort_right(sorted_policies, _Policy(key, value[1]))
+        return [p._name for p in sorted_policies]
     
-    def register(self, name, policy):
+    def register(self, name, policy, priority=0.0):
         """register policy"""
         assert IContainerPolicy.isImplementedBy(policy)
-        self._policies[name] = policy
+        self._policies[name] = (policy, priority)
         self._p_changed = 1
 
     def unregister(self, name):
@@ -56,29 +71,12 @@ class ContainerPolicyRegistry(SimpleItem):
             pass
         self._p_changed = 1
         
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-        'createDefaultDocument')
-    def createDefaultDocument(self, container, title):
-        """Create an index according to container policy.
-        """
-        assert IContainer.isImplementedBy(container)
-        # we use aq_parent here because without:
-        # if it's a publication, self would be returned, which's metadata
-        #   is not set yet
-        # if it's a folder it's not the right thing anyway, so it doesn't hurt
-        publication = container.aq_parent.get_publication()
-        binding = container.service_metadata.getMetadata(publication)
-        policy_name = binding.get('silva-publication',
-            element_id='defaultdocument_policy')
-        policy = self.getPolicy(policy_name)
-        policy.createDefaultDocument(container, title)
 InitializeClass(ContainerPolicyRegistry)
 
 def manage_addContainerPolicyRegistry(dispatcher):
     cpr = ContainerPolicyRegistry()
     dispatcher._setObject(cpr.id, cpr)
     return ''
-
 
 class _NothingPolicy(Persistent):
 
@@ -89,40 +87,3 @@ class _NothingPolicy(Persistent):
         
 NothingPolicy = _NothingPolicy()
     
-class _SimpleContentPolicy(Persistent):
-    
-    # XXX: after Python 2.2 can be used, this should become a Singleton
-    
-    __implements__ = IContainerPolicy
-
-    def createDefaultDocument(self, container, title):
-        assert IContainer.isImplementedBy(container)
-        container.manage_addProduct['Silva'].manage_addSimpleContent(
-            'index', title)
-        container.index.sec_update_last_author_info()
-        
-SimpleContentPolicy = _SimpleContentPolicy()
-    
-
-class _SemiGhostPolicy(Persistent):
-    __implements__ = IContainerPolicy
-
-    def createDefaultDocument(self, container, title):
-        assert IContainer.isImplementedBy(container)
-        container.manage_addProduct['Silva'].manage_addSemiGhost(
-            'index', title)
-        container.index.sec_update_last_author_info()
-SemiGhostPolicy = _SemiGhostPolicy()
-
-
-class _AutoTOCPolicy(Persistent):
-
-    __implements__ = IContainerPolicy
-
-    def createDefaultDocument(self, container, title):
-        container.manage_addProduct['Silva'].manage_addAutoTOC(
-            'index', title)
-        container.index.sec_update_last_author_info()
-AutoTOCPolicy = _AutoTOCPolicy()
-
-

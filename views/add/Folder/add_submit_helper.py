@@ -7,5 +7,8 @@
 ##parameters=model, id, title, result
 ##title=
 ##
-model.manage_addProduct['Silva'].manage_addFolder(id, title)
+policy_name = result['policy_name']
+model.manage_addProduct['Silva'].manage_addFolder(
+    id, title, policy_name=policy_name)
+    
 return getattr(model, id)

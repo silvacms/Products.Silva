@@ -7,8 +7,6 @@
 ##parameters=model, id, title, result
 ##title=
 ##
-policy_name = result['policy_name']
-model.manage_addProduct['Silva'].manage_addPublication(
-    id, title, policy_name=policy_name)
-    
-return getattr(model, id)
+model.manage_addProduct['Silva'].manage_addAutoTOC(id, title)
+toc = getattr(model, id)
+return toc
