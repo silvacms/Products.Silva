@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53 $
+# $Revision: 1.54 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -165,18 +165,18 @@ class SilvaObject(Security):
         return self
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
-    def preview(self):
-        """Render this with the public view. If this is no previewable,
+    def preview(self, view_type='public'):
+        """Render this as preview with the public view. If this is no previewable,
         should return something indicating this.
         """
-        return self.service_view_registry.render_preview('public', self)
+        return self.service_view_registry.render_preview(view_type, self)
 
     security.declareProtected(SilvaPermissions.View, 'view')
-    def view(self):
-        """Render this with the public view. If there is no previewable,
+    def view(self, view_type='public'):
+        """Render this with the public view. If there is no viewable,
         should return something indicating this.
         """
-        return self.service_view_registry.render_view('public', self)
+        return self.service_view_registry.render_view(view_type, self)
     
     # these help the UI that can't query interfaces directly
 
