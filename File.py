@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27.8.1.6.6 $
+# $Revision: 1.27.8.1.6.7 $
 
 # Python
 import os
@@ -130,7 +130,8 @@ class File(Asset):
         for name, value in kw.items():
             named.append('%s="%s"' % (escape(name), escape(value)))
         named = ' '.join(named)
-        return '<a href="%s" alt="%s" %s />' % (src, escape(title), named)
+        return '<a href="%s" alt="%s" %s>%s</a>' % (
+            src, escape(title), named, self.get_title_or_id())
     
     security.declareProtected(SilvaPermissions.View, 'get_download_link')
     # XXX deprecated, method left for backwards compatibility
