@@ -64,7 +64,25 @@ class Course(VersionedContent, EditorSupport):
         #    return self.get_container().get_title()
         #else:
         #    return self._title
-                        
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_xml')
+    def to_xml(self, f):
+        version_id = self.get_public_version()
+        if version_id is None:
+            return
+        version = getattr(self, version_id)
+        f.write('<silva_course>')
+        for key, value in version._data.items():
+            f.write('<%s>%s</%s>' % (key, value, key))
+        f.write('<content>')
+        version.content.documentElement.writeStream(f)
+        f.write('</content>')
+        f.write('<goal>')
+        version.content.documentElement.writeStream(f)
+        f.write('</goal>')
+        f.write('</silva_course>')
+        
 InitializeClass(Course)
 
 class CourseVersion(SimpleItem.SimpleItem):

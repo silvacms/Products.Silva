@@ -2,6 +2,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
 from UserManagement import user_management
+import Interfaces
 
 class Security:
     """Can be mixed in with an object to support Silva security.
@@ -10,6 +11,9 @@ class Security:
     Zope's security methods. (ugly..)
     """
     security = ClassSecurityInfo()
+
+    _last_author_userid = None
+    _last_author_info = None
     
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -93,15 +97,27 @@ class Security:
         return user_management.get_user_info(self, userid)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'sec_get_last_author_userid')
-    def sec_get_last_author_userid(self):
-        """Get the last author id.
+                              'sec_get_last_author_info')
+    def sec_get_last_author_info(self):
+        """Get the info of the last author (provide at least cn and
+        userid).
         """
-        # get the last transaction
-        last_transaction = self.undoable_transactions(0, 1)
-        if len(last_transaction) == 0:
-            return None
-        return last_transaction[0]['user_name']
-        
+        # containers have no author
+        if Interfaces.Container.isImplementedBy(self):
+            return { 'cn': '', 'userid': None }
+
+        # unknown author if none assigned yet
+        if not self._last_author_userid:
+            return { 'cn': 'Unknown author', 'userid': None }
+        # authorwise get cached author info
+        return self._last_author_info
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'sec_set_last_author_info')
+    def sec_update_last_author_info(self):
+        """Update the author info with the current author.
+        """
+        self._last_author_userid = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        self._last_author_info = self.sec_get_user_info(self._last_author_userid)
         
 InitializeClass(Security)
