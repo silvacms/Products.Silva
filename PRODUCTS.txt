@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.2 $
+CVS:        $Revision: 1.3 $
 
 Introduction
 ------------
@@ -92,7 +92,7 @@ available plugin index. Used by SilvaMetadata.
 
 http://www.zope.org/Members/infrae/ProxyIndex
 
-SilvaDocument 1.0 (DE)
+SilvaDocument 1.1 (DE)
 ----------------------
 
 Silva extension for XML-based documents. Contains a through the web
@@ -147,20 +147,16 @@ for more details).
 
 http://www.zope.org/Members/shh/ExtFile
 
-SilvaExternalSources 0.8 (E)
+SilvaExternalSources 1.0 (E)
 ----------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
 from arbitrary Python sources, SQL databases or CSV (comma separated
 values) can be shown inside SilvaDocuments.
 
-NOTE: At the time of this writing, we haven't yet released a version
-of SilvaExternalSources that has been fully tested with Silva 1.0,
-though we do have a beta.
-
 http://www.zope.org/Members/infrae/SilvaExternalSources
 
-SilvaNews 0.9 (E)
+SilvaNews 1.0 (E)
 -----------------
 
 SilvaNews builds on Silva and SilvaDocument to provide News
