@@ -3,6 +3,7 @@ from StringIO import StringIO
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass
+from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.IVersion import IVersion
@@ -121,4 +122,14 @@ class Version(SimpleItem):
         return xmlinput
 
 InitializeClass(Version)
+
+# CatalogPathAware is the second inherited superclass and Version (which 
+# inherits from SimpleItem) the first. This way Version's manage_* methods 
+# override CatalogPathAware's, which is exactly what we want, since 
+# cataloging is done by VersionedContent (a superclass of the container).
+class CatalogedVersion(Version, CatalogPathAware):
+    """Superclass for cataloged version objects"""
+    default_catalog = 'service_catalog'
+
+InitializeClass(CatalogedVersion)
 
