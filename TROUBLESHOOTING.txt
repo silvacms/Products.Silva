@@ -1,0 +1,183 @@
+
+Installation problems
+
+  The Silva (and XMLWidgets and ParsedXML) Product is broken after installation.
+
+    Most of the installation problems do have their source in an improper
+    installation of the PyXML python module.
+
+    Usually this can be diagnosed by the following lines in the error
+    message one gets after a Zope start::  
+
+      ImportError: cannot import name expat
+
+ 
+    Another symptom is that one gets the following error when trying to
+    add a Silva Root::
+ 
+       Error Type: AttributeError
+       Error Value: StartDoctypeDeclHandler
+
+    This is a problem occurring frequently with binary distributions of
+    Zope; as the writing of this the corresponding issue in the
+    collector is still pending, see http://collector.zope.org/Zope/678/view
+
+    You can test for a proper PyXML installation by typing in the
+    following lines into the python interpreter used to run Zope::
+
+       from xml.parsers import expat
+
+    (The full path to the python binary can be found in the
+    shell script or batch file used to start Zope.)
+
+    If the above statement fails with an ImportError, please try to fix
+    the PyXML installation. Usually getting the version form the
+    PyXML project home page  http://pyxml.sourceforge.net 
+    helps fixing the problem.
+
+    If this does not help, or is not an option for some reason,
+    a possible workaround is to create a file "pyexpat.py"
+    in the directory 'lib/python2.1/xml/parsers' of the Zope
+    installation, containing only the line:: 
+
+      from _xmlplus.parsers.pyexpat import *
+
+    or
+
+      from Shared.DC.xml.pyexpat import *
+
+    (or wherever the "pyexpat" module has been installed).
+
+
+
+  After installing the Silva Product and restarting Zope, the server
+  does not respond to HTTP request.
+
+    This problem has been reported when using some binary distributions
+    for the Debian Linux distribution. The server seems to start
+    properly according to its own event log, but does not send any
+    response to HTTP requests.
+
+    The source of this problem is not known. The recommended work around
+    is to use Python and Zope versions build from source.
+    Especially for the operation systems where this issue has been
+    reported this is rather painless; see
+    e.g. http://www.infrae.com/products/silva/docs/SysAdmin/LinuxInstallation
+
+   
+ "AttributeError: _add_ordered_id"
+
+    This happens if one imports the "demo.zexp" ouside a Silva Root.
+    Please first create a Silva Root via the ZMI and import the
+    demo.zexp inside the Silva Root.
+
+
+  Brokenness after upgrading Silva to a newer version
+
+    Most of the problems after upgrading Silva are caused by missing
+    product refresh via the 'service_extensions' object in the Silva Root.
+    Please check with the instructions in the 'UPGRADE.txt' of the 
+    installed release, if You need to run a refresh after upgrading.
+
+    Major releases usually need a content upgrade, too. This is also
+    available via the 'service_extensions' by the 'upgrade content'
+    button.
+
+    Please try at least a 'refresh all' from the 'service_extensions'
+    before reporting any problems with upgrading.
+
+    Also please note in case of several Silva Roots within one Zope
+    instance You need to run the upgrade for all Silva Roots separately
+    after installation of an upgrades Silva version.
+
+
+
+Problems when using Silva 
+
+
+  Errors when editing a Silva Document via the SMI
+
+    If the session got lost while editing a Document via the SMI some
+    inconvenient error message may occur. 
+    The session loss may happen for the following reasons:
+
+      - The session timed out due to a longer period of inactivity
+      - The session cookie has not been stored by the browser
+      - The Zope server has been restarted, wiping out all current sessions
+
+    If this happens to You as an editor, follow these steps to recover:
+
+      - use the "back button" to get a view of the "Editor" page
+      - click on the "Editor" tab to get a fresh session cookie
+      - proceed with editing; You may need to reopen the section You
+        currently wanted to edit.
+
+    If this does not help getting rid of the error, please check if Your
+    browser accepts cookies from the Zope server, and if You really got
+    a cookie from the server when entering the "Editor" page.
+
+    In any case the latest edits will be lost.
+
+
+    Site managers may want to increase the session timeout to avoid
+    problems due to the first reason. The session timeout can be configured
+    in the '/temp_folder/session_data' object in a default Zope
+    installation.
+
+    *XXX* These settings get lost after a Zope restart. Any more
+    persistent way to fix this?
+
+
+  "KeyError" in the user lookup view of the "Access" tab
+
+     This is a session loss error for similar reasons as for errors
+     in the "Editor" tab discussed in the first item of this section.
+
+
+  When inserting/saving/deleting, etc something in the "Editor" tab, the
+  browser seems to reload the next page infinitely
+
+    This is a known issue when using Opera, see
+    http://issues.infrae.com/silva/issue285
+    Currently there is no known fix or workaround, sorry.
+    Please use another web browser for editing contents.
+
+
+  "AttributeError: is_id_valid" or other errors when adding a Silva
+  object via the ZMI
+
+    Most probably the source of the error is that You have added
+    a Silva object outside of a Silva Root. You cannot add most
+    Silva objects outside a Silva Root object, as they rely on the
+    infrastructure supported by the Silva Root object.
+
+    Some special objects cannot be added via the ZMI even inside a Silva
+    Root; they only should be created automatically by an installation
+    script.
+
+    Normally one should only create a Silva  Root object via the ZMI and
+    add other objects via the SMI inside this Silva Root object.
+
+
+  "UnicodeError: ordinal not in range(128)"
+
+    This may happen due to an undiscovered bug in Silva. Actually all
+    bugs of this type should be fixed since 0.9.2, but if you see the error
+    message it is likely one of them escaped.
+
+    These bugs are somewhat complicated to track down. Please check the
+    issue tracker at http://issues.infrae.com/silva for open issues
+    with the topic "encoding".
+
+    If there are no issues related to this, You may want to ask for help
+    on silva-dev@lists.infrae.com. It would help a lot, if You could
+    provide a *.zexp exported file of the content object triggering the
+    error.
+
+
+  Exporting Silva objects in XML format via the ZMI fails:
+  "TypeError: object has read-only attributes"
+
+    This simply does not work. Please use either the "Export"
+    functionality in the *SMI* available from the "Status" tab,
+    or export the object via the usual *.zexp format
