@@ -73,6 +73,7 @@ class CourseVersion(SimpleItem.SimpleItem):
     def __init__(self, id):
         self.id = id
         self.title = id
+        self._data = {}
         self._goal = ParsedXML(id, '<doc></doc>')
         self._content = ParsedXML(id, '<doc></doc>')
         
