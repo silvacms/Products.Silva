@@ -27,7 +27,8 @@
 
 <form method="POST" name="form" action=".">
   <table class="listing">
-    <thead>
+    <thead
+      tal:define="meta_type model/meta_type">
       <tal:block replace="nothing">
         ______________ vein + title row ______________
       </tal:block>
@@ -37,7 +38,7 @@
           <h2>
             <img tal:replace="structure icon" />
             <span style="text-transform:lowercase;"
-              tal:content="model/meta_type">Meta type</span> 
+              tal:content="meta_type">Meta type</span> 
             &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
           </h2>
         </td>
@@ -47,8 +48,10 @@
       </tal:block>
       <tr class="top-controls">
         <td colspan="2">
-          <h3 i18n:translate="properties">
-            properties
+          <h3 i18n:translate="title_metadata">
+            <span tal:replace="python: meta_type == 'Silva SQL Data Source' and 'settings' or 'title metadata'">
+              subhead - temporary hack until SQL Data Source is gone
+            </span>
           </h3>
         </td>
       </tr>
