@@ -19,14 +19,14 @@
       <h3>
         Group members
       </h3>
-      <!-- Defind groups listing -->
+      <!-- Defined groups listing -->
       <metal:block use-macro="view/macro_groups_listing/macros/listing">
         <metal:block fill-slot="listing_actions">
           <input class="button"
             name="add_users_from_group_to_group:method"
-            title="Add members as defined on selected group(s)."
+            title="Copy members as defined on selected group(s)."
             type="submit"
-            value="Add users from group(s)" />
+            value="Copy users from group(s)" />
         </metal:block>
       </metal:block>
       <!-- Clipboard -->        
@@ -79,7 +79,7 @@
             tal:condition="not:userids">
             <td>
               <i>
-                Groups does not have any members
+                Group does not have any members
               </i>
             </td>
           </tr>

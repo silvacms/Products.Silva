@@ -5,7 +5,7 @@ model = request.model
 view = context
 
 if not userids:
-    return view.tab_access(
+    return view.tab_edit(
         message_type="error", 
         message="No users selected, so none removed.")
 

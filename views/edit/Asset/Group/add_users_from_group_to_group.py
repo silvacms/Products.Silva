@@ -4,8 +4,10 @@ request = context.REQUEST
 model = request.model
 view = context
 
+userids = {}
+
 if not groups:
-    return view.tab_access(
+    return view.tab_edit(
         message_type="error", 
         message="No group(s) selected, so nothing to use to add users.")
 
@@ -19,6 +21,5 @@ def handle_groups(groups):
             for userid in groups_service.listUsersInZODBGroup(group):
                 userids[userid] = 1
 
-userids = {}
 handle_groups(groups)
 return view.add_users_to_group(userids=userids.keys())
