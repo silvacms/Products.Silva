@@ -31,14 +31,14 @@
       tal:attributes="href string:${root_url}/edit/tab_edit"
       >
       <img alt="Silva emblem"
-        height="16"
-        width="16"
+        height="14"
+        width="14"
         border="0"
         tal:attributes="src string:${root_url}/globals/silva.gif"
       />
     </a>
 
-    <span tal:replace="breadcrumb_vein">Vein</span><a name="top">:</a>
+    <span tal:replace="nothing">Vein</span><a name="top"> </a>
     
     <tal:block tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
 
