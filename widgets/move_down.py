@@ -8,6 +8,10 @@
 ##title=
 ##
 node = context.REQUEST.node
+
+if not node.get_content().sec_create_lock():
+    return context.redirect()
+
 node.get_content().sec_update_last_author_info()
 n = node
 while 1:

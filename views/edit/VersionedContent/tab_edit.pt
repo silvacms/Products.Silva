@@ -5,15 +5,15 @@
 <!-- ___________________________ start index_html/slot main ___________________________ -->
 
 <tal:block tal:define="dummy python:model.security_trigger();
-                       global could_lock model/sec_create_lock;
+                       global is_locked model/sec_is_locked;
                        global unapproved_version model/get_unapproved_version;
                        global request_pending python:model.is_version_approval_requested();" />
 
-<model tal:condition="python:unapproved_version and not request_pending and could_lock"
+<model tal:condition="python:unapproved_version and not request_pending and not is_locked"
          tal:replace="structure view/edit">Content</model>
 
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
-<tal:block tal:condition="python:unapproved_version and not could_lock">
+<tal:block tal:condition="python:unapproved_version and is_locked">
 <div class="feedback"><span class="warning">
 <b>Note: </b>This object is already being edited by another user, and is temporarily locked.
 </span>

@@ -12,6 +12,9 @@ wr_name = context.REQUEST.wr_name
 if not context.is_allowed(wr_name, node, what):
     return
 
+if not node.get_content().sec_create_lock():
+    return context.redirect()
+
 # create new node
 doc = node.ownerDocument
 new = doc.createElement(what)

@@ -10,6 +10,9 @@
 
 request = context.REQUEST
 node = request.node
+if not node.get_content().sec_create_lock():
+    return context.redirect()
+
 node.get_content().sec_update_last_author_info()
 
 context.save_helper()
