@@ -90,7 +90,7 @@ class SecurityTestCase(unittest.TestCase):
                                self.doc1.sec_get_userids())
 
     def test_sec_get_roles(self):
-        self.assertSameEntries(['Author', 'Editor', 'ChiefEditor', 'Manager'],
+        self.assertSameEntries(['Reader', 'Author', 'Editor', 'ChiefEditor', 'Manager'],
                                self.sroot.sec_get_roles())
         
 def test_suite():
