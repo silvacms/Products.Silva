@@ -125,7 +125,8 @@
                 <td class="align-left"
                   colspan="2">
                   <tal:block tal:condition="members">
-                    <select name="assign_role"
+                    <select class="manipulator"
+                      name="assign_role"
                       title="select a role to assign">
                       <option value="None">
                         select role:
@@ -243,7 +244,8 @@
           <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
             <div style="text-align:right;"
               metal:fill-slot="clipboard_actions">
-              <select name="assign_role"
+              <select class="manipulator"
+                name="assign_role"
                 style="float:left;"
                 title="select a role to assign">
                 <option value="None">
@@ -392,7 +394,8 @@
                     <td class="align-left"
                       colspan="2">
                       <tal:block tal:condition="groups">
-                        <select name="assign_role"
+                        <select class="manipulator"
+                          name="assign_role"
                           title="select a role to assign">
                           <option value="None">
                             select role:
@@ -429,7 +432,8 @@
           <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
             <div style="text-align:right;"
               metal:fill-slot="listing_actions">
-              <select name="assign_role"
+              <select class="manipulator"
+                name="assign_role"
                 style="float:left;"
                 title="select a role to assign">
                 <option value="None">
@@ -492,7 +496,8 @@
               <tfoot>
                 <tr class="controls">
                   <td class="align-right">
-                    <select name="role"
+                    <select class="manipulator"
+                      name="role"
                       title="select a role to assign"
                       tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', nothing)">
                       <option value="Anonymous"
