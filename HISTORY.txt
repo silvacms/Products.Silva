@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.18 $
+$Revision: 1.47.2.19 $
 
 Silva changes
 
@@ -12,6 +12,8 @@ Silva changes
 	  than the userids. This is useful in LDAP setups where the
 	  userid may contain characters illegal in URLs, such as the @
 	  sign.
+
+        - Edit on pro transformations up to date.
 	  
   0.9.1
 
