@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.33.2.1 $
+$Revision: 1.33.2.2 $
 
 Silva changes
 
@@ -11,6 +11,9 @@ Silva changes
       - After deleting a finished DocmaServer job, you are redirected 
         to an existing page.
 
+      - The (still disabled) externaldata element was registered wrong
+        when enabled; fixed this (if you uncomment the code to enable it).
+  
   0.9
 
     Features Added
