@@ -1,4 +1,4 @@
-import Document, Folder, Root, ViewRegistry, Publication #, Ghost
+import Document, Folder, Root, ViewRegistry, Publication, Ghost
 
 def initialize(context):
      context.registerClass(
@@ -26,11 +26,12 @@ def initialize(context):
           constructors = (Publication.manage_addPublicationForm,
                           Publication.manage_addPublication)
           )
-     #context.registerClass(
-     #     Ghost.Ghost,
-     #     constructors = (Ghost.manage_addGhostForm,
-     #                     Ghost.manage_addGhost)
-     #     )
+
+     context.registerClass(
+          Ghost.Ghost,
+          constructors = (Ghost.manage_addGhostForm,
+                          Ghost.manage_addGhost)
+          )
      
      context.registerClass(
           ViewRegistry.ViewRegistry,

@@ -56,13 +56,16 @@ class SilvaObject:
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'preview')
     def preview(self):
-        """Render this with the public view. This will presumably use
-        get_viewable() to get the information for the public version.
+        """Render this with the public view. If this is no previewable,
+        should return something indicating this.
         """
         return self.service_view_registry.render_preview('public', self)
 
     security.declareProtected(SilvaPermissions.View, 'view')
     def view(self):
+        """Render this with the public view. If there is no previewable,
+        should return something indicating this.
+        """
         return self.service_view_registry.render_view('public', self)
     
     # these help the UI that can't query interfaces directly

@@ -1,6 +1,8 @@
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # Silva
 from VersionedContent import VersionedContent
 import Interfaces
@@ -39,39 +41,17 @@ class Ghost(VersionedContent):
         """
         return DateTime.DateTime(2002, 1, 1, 12, 0)
 
-    #def get_previewable(self):
-    #    ghost_version = Ghost.inheritedAttribute('get_previewable')(self)
-    #    if ghost_version is None:
-    #        return None
-    #    return ghost_version._get_content().get_viewable()
+InitializeClass(Ghost)
 
-    def preview(self):
-        version = self.get_previewable()
-        if version is None:
-            return None
-        content = version._get_content()
-        if content is None:
-            return None
-        return content.preview()
-        
-    def view(self):
-        version = self.get_viewable()
-        if version is None:
-            return None
-        content = version._get_content()
-        if content is None:
-            return None
-        return content.view()
-
-Globals.InitializeClass(Ghost)
-
-class GhostVersion(SimpleItem.Item):
-
+class GhostVersion(SimpleItem.SimpleItem):
+    meta_type = 'Silva Ghost Version'
+    
     def __init__(self, id, content_url):
         self.id = id
         self._content_url = content_url
 
     def set_content_url(self, content_url):
+        # FIXME: should never ever be allowed to point to a ghost
         self._content_url = content_url
 
     def get_content_url(self):
@@ -84,7 +64,15 @@ class GhostVersion(SimpleItem.Item):
         if self._content_url is None:
             return None
         return self.getPhysicalRoot().unrestrictedTraverse(self._content_url)
-        
+
+    def render(self):
+        """Render this version (which is what we point at)
+        """
+        # FIXME: should only call view if we are allowed to by content
+        # FIXME what if content is None?
+        # what if we get circular ghosts?
+        return self._get_content().view()
+    
 manage_addGhostForm = PageTemplateFile("www/ghostAdd", globals(),
                                        __name__='manage_addGhostForm')
 
@@ -94,7 +82,7 @@ def manage_addGhost(self, id, content_url, REQUEST=None):
     self._setObject(id, object)
     object = getattr(self, id)
     # add first version
-    object.manage_addProduct['Silva'].manage_addGhostVersion('0', content_url)
+    object._setObject('0', GhostVersion('0', content_url))
     object.create_version('0', None, None)
     add_and_edit(self, id, REQUEST)
     return ''

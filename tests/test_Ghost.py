@@ -1,22 +1,59 @@
 import unittest
 import Zope
 from Products.Silva import Interfaces
+from Products.Silva.SilvaObject import SilvaObject
 from DateTime import DateTime
+from Products.Silva.Document import Document
+from Products.ParsedXML.ParsedXML import ParsedXML
+from Products.Silva.Ghost import Ghost, GhostVersion
 
 def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
     return getattr(object, id)
 
+# need to monkey patch preview and view
 def preview(self):
-    pass
+    return render(self, self.get_previewable())
 
 def view(self):
-    pass
+    return render(self, self.get_viewable())
+
+def render(object, version):
+    if version is None:
+        return '%s no view' % object.id
+    if object.meta_type == 'Silva Ghost':
+        return version.render()
+    else:
+        return "%s %s" % (object.id, version.id)
+
+# awful HACK
+def _getCopyParsedXML(self, container):
+    """A hack to make copy & paste work (used by create_copy())
+    """
+    return ParsedXML(self.id, self.index_html())
+
+def _getCopyGhostVersion(self, container):
+    return GhostVersion(self.id, self.get_content_url())
+
+def _verifyObjectPaste(self, ob):
+    return
 
 class GhostTestCase(unittest.TestCase):
     """Test the Ghost object.
     """
     def setUp(self):
+        # monkey patch so we don't depend on service_view_registry when
+        # unit testing
+        self.oldpreview = SilvaObject.preview
+        self.oldview = SilvaObject.view
+        SilvaObject.preview = preview
+        SilvaObject.view = view
+        # awful HACK to support manage_clone
+        ParsedXML._getCopy = _getCopyParsedXML
+        Document._verifyObjectPaste = _verifyObjectPaste
+        GhostVersion._getCopy = _getCopyGhostVersion
+        Ghost._verifyObjectPaste = _verifyObjectPaste
+        
         get_transaction().begin()
         self.connection = Zope.DB.open()
         self.root = self.connection.root()['Application']
@@ -33,37 +70,90 @@ class GhostTestCase(unittest.TestCase):
         self.subdoc2 = subdoc2 = add_helper(publication5, 'Document', 'subdoc2', 'Subdoc2')
 
     def tearDown(self):
+        SilvaObject.preview = self.oldpreview
+        SilvaObject.view = self.oldview
+        
         get_transaction().abort()
         self.connection.close()
 
     def test_ghost(self):
-        ghost = self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
-                                                                      '/root/doc1')
-        self.assertEquals('', ghost.preview())
-        self.assertEquals(None, ghost.view())
+        self.sroot.manage_addProduct['Silva'].manage_addGhost('ghost1',
+                                                              '/root/doc1')
+        ghost = getattr(self.sroot, 'ghost1')
+        
+        # there is no version published at all there
+        self.assertEquals('doc1 no view', ghost.preview())
+        self.assertEquals('ghost1 no view', ghost.view())
 
-        self.assertEquals('/root/doc1', ghost.get_editable())
-        self.assert_(not ghost.get_previewable())
-        self.assert_(not ghost.get_viewable())
-        self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
+        # approve version of thing we point to
+        self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
         self.doc1.approve_version()
-        self.assertEquals('0', ghost.get_previewable().id)
+
+        # since there is still no published version, preview and view return
+        # None
+        self.assertEquals('doc1 no view', ghost.preview())
+        self.assertEquals('ghost1 no view', ghost.view())
+
+        # this should publish doc1
+        self.doc1.set_approved_version_publication_datetime(DateTime() - 1)
+        
+        self.assertEquals('doc1 0', ghost.preview())
+        self.assertEquals('ghost1 no view', ghost.view())
+
+        # publish ghost version
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
-        self.assert_(not ghost.get_editable())
-        self.assertEquals('0', ghost.get_previewable().id)
-        self.assertEquals('0', ghost.get_viewable().id)
+
+        self.assertEquals('doc1 0', ghost.preview())
+        self.assertEquals('doc1 0', ghost.view())
+
+        # make new version of doc1 ('1')
+        self.doc1.REQUEST = None
         self.doc1.create_copy()
-        # nothing should've changed for ghost
-        self.assert_(not ghost.get_editable())
-        self.assertEquals('Doc1', ghost.get_previewable().title())
-        self.assertEquals('Doc1', ghost.get_viewable().title())
-        # we're breaking into the implementation by looking at the version
-        # id here..
+
+        # shouldn't affect what we're ghosting
+        self.assertEquals('doc1 0', ghost.preview())
+        self.assertEquals('doc1 0', ghost.view())
+
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc1.approve_version()
-        self.as
+
+        # now we're ghosting the version 1
+        self.assertEquals('doc1 1', ghost.preview())
+        self.assertEquals('doc1 1', ghost.view())
+
+        # create new version of ghost
+        ghost.REQUEST = None
+        ghost.create_copy()
+        ghost.get_editable().set_content_url('/root/doc2')
+
+        self.assertEquals('doc2 no view', ghost.preview())
+        self.assertEquals('doc1 1', ghost.view())
+
+        # publish doc2
+        self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
+        self.doc2.approve_version()
+
+        self.assertEquals('doc2 0', ghost.preview())
+        self.assertEquals('doc1 1', ghost.view())
+
+        # approve ghost again
+        ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
+        ghost.approve_version()
+
+        self.assertEquals('doc2 0', ghost.preview())
+        self.assertEquals('doc2 0', ghost.view())
+
+        # publish a ghost pointing to something that hasn't a published
+        # version
+        ghost.create_copy()
+        ghost.get_editable().set_content_url('/root/doc3')
+        ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
+        ghost.approve_version()
+        self.assertEquals('doc3 no view', ghost.preview())
+        self.assertEquals('doc3 no view', ghost.view())
         
+    # FIXME test broken links
         
 def test_suite():
     suite = unittest.TestSuite()
