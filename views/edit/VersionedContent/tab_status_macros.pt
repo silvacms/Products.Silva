@@ -121,16 +121,6 @@ day/month/year 23:59
   </td>
 </tr>
 
-<tr class="odd"       tal:replace="nothing">
-<td class="align-right">
-&nbsp;
-</td>
-<td class="align-right">
-<!-- label for="expires_flag" title="access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label><field
-    tal:replace="structure python:view.tab_status_form_author.expires_flag.render(REQUEST=request)" / -->
-</td>
-</tr>
-
 <tr class="controls">
 <td colspan="2" class="align-right">
 <input type="submit" value=" Request approval " class="button" title="access key: alt-r" accesskey="r" />
@@ -249,17 +239,6 @@ Notes
 </td>
 <td style="vertical-align:middle;">
 Empty indicates no expiration.
-</td>
-</tr>
-
-<span tal:replace="nothing"> ******* XXX Fixme: set expiration if filled in (and delete this :) ******* </span>
-<tr class="even" tal:replace="nothing">
-<td class="align-right">
-&nbsp;
-</td>
-<td class="align-right">
-<label for="expires_flag" title="access key: alt-x" accesskey="x">Turn on e<u>x</u>piration time?&nbsp;</label><field
-    tal:replace="structure python:view.tab_status_form_editor.expires_flag.render(REQUEST=request)" />
 </td>
 </tr>
 
