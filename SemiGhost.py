@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # Zope
 from OFS.SimpleItem import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -48,6 +48,14 @@ class SemiGhost(Content, SimpleItem):
         """Render view of this version (which is what we point at)
         """
         return self.render_preview()
+
+    def is_published(self):
+        """SemiGhost is published if there is a published content in its
+            container
+        """
+        if self._get_content() is None:
+            return 0
+        return 1
 
 InitializeClass(SemiGhost)
 
