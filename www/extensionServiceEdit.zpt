@@ -1,20 +1,20 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.9 $
+Version of this file: $Revision: 1.10 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
-<h3>
+<h3 i18n:translate="config_silva_extension_products">
   Configure Silva Extension Products:
 </h3>
 
-<h3>General actions</h3>
+<h3 i18n:translate="general_actions">general actions</h3>
 <form action="." method="POST">
-  <input type="submit" name="refresh_all:method" value="refresh all" />
+  <input type="submit" name="refresh_all:method" value="refresh all" i18n:attributes="value"/>
   <input type="submit" name="upgrade_all:method" value="upgrade content" onclick="if (!confirm('This will upgrade all Silva content, and may take a long time on a large site.\nThis is, however, necessary to make old Silva content work with new versions.\nAre you sure you want to continue?')) return false;" />
   <span class="std-text">(Software - <span tal:replace="python:here.get_root().get_silva_software_version()">version</span> /
    Content - <span tal:replace="python:here.get_root().get_silva_content_version()">version</span>)</span>
@@ -30,14 +30,18 @@ Version of this file: $Revision: 1.9 $
       tal:attributes="value module_name" />
     <input type="submit" name="install:method" value="install"
       tal:define="blerk python:test(here.is_installed(module_name), 'uninstall', 'install')"
-      tal:attributes="name string:${blerk}:method; value blerk;" />
-    <input type="submit" name="refresh:method" value="refresh" tal:condition="python:here.is_installed(module_name)" />    
+      tal:attributes="name string:${blerk}:method; value blerk;" 
+      i18n:attributes="value"/>
+    <input type="submit" name="refresh:method" value="refresh" tal:condition="python:here.is_installed(module_name)" 
+      i18n:attributes="value"/>    
   </form>
   <form action="." method="POST" tal:condition="python:module_name =='Silva'">
     <input type="hidden" name="name" value="value"
       tal:attributes="value module_name" />
-    <input type="submit" name="install_layout:method" value="install default layout" />    
-    <input type="submit" name="refresh:method" value="refresh" />
+    <input type="submit" name="install_layout:method" value="install default layout" 
+      i18n:attributes="value"/>    
+    <input type="submit" name="refresh:method" value="refresh" 
+      i18n:attributes="value"/>
   </form>
 
 </div>

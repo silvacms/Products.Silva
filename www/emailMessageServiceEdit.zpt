@@ -1,14 +1,14 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.3 $
+Version of this file: $Revision: 1.4 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
-<h3>Manage E-mail Message Service</h3>
+<h3 i18n:translate="manage_email_message_service">Manage E-mail Message Service</h3>
 
 <form action="manage_edit" method="post">
 <table cellspacing="0" cellpadding="2" border="0">
