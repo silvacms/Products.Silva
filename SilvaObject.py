@@ -229,31 +229,6 @@ class SilvaObject(Security):
         #        self.REQUEST.AUTHENTICATED_USER.getUserName())
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_refs_xml')
-    def get_xml_for_objects(self, objects, with_sub_publications=0, last_version=0):
-        """Get XML-Document in UTF8-Encoding for a list of object references
-
-        Note that you get a full document with a processing instruction.
-        if you want to get "raw" xml, use the 'to_xml' machinery.
-        """
-        context = XMLExportContext()
-        context.f = StringIO()
-        context.with_sub_publications = with_sub_publications
-        context.last_version = not not last_version
-        w = context.f.write
-        # construct xml and return UTF8-encoded string
-        w(u'<?xml version="1.0" encoding="UTF-8" ?>\n')
-        w(u'<silva xmlns="%s" '
-            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'xsi:schemaLocation="%s %s">' % (self._xml_namespace,
-                self._xml_namespace, self._xml_schema))
-        for obj in objects:
-            obj.to_xml(context)
-        w(u'</silva>')
-        result = context.f.getvalue()
-        return result.encode('UTF-8') 
-    
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_xml')
     def get_xml(self, with_sub_publications=0, last_version=0):
         """Get XML-Document in UTF8-Encoding for object (recursively).

@@ -277,7 +277,6 @@ if (document.forms[0]) {
   }
 //-->
 </script>
-<input class="button" type="submit" name="tab_status_export_selected_start:method" value="Export selected" title="Export selected files to XML: alt-p" accesskey="p" />
 </td>
 <tal:editors-tab condition="silva_permissions/ApproveSilvaContent">
 <td class="widebody" align="right" colspan="2">
