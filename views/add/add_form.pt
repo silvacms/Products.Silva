@@ -72,7 +72,7 @@ id: no spaces or special characters besides an underscore (_).
 
 <tr class="controls">
 <td colspan="2">
-<input class="cancelbutton" type="button" name="cancel" value=" Cancel " onClick="history.back()" />
+<input class="cancelbutton" type="submit" name="add_cancel" value=" Cancel " />
 </td>
 <td colspan="2" align="right">
 <input class="button" type="submit" name="add_submit" value=" Add " />
