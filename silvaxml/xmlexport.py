@@ -168,7 +168,7 @@ class VersionedContentXMLSource(SilvaBaseXMLSource):
             self._workflow_version(version, 'approved', reader, settings)
         version = self.context.get_public_version_data()
         if version[0]:
-            self._workflow_version(version, 'published', reader, settings)
+            self._workflow_version(version, 'public', reader, settings)
         for version in self.context.get_previous_versions_data():
             self._workflow_version(version, 'closed', reader, settings)
         self._endElement(reader, 'workflow')
