@@ -241,7 +241,7 @@
       </th>
       <th class="align-right"
         colspan="3">
-        day / month / year &nbsp;23:59
+        <span tal:condition="python:approveables or revokeables">day / month / year &nbsp;23:59</span>
       </th>
       <th>
       </th>
