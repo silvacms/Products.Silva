@@ -4,7 +4,7 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    breadcrumb_vein string:Edit;
+    breadcrumb_vein string:Editor;
     ">
 
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
@@ -115,7 +115,7 @@
               <td>
                 <span tal:replace="structure python:field.get_value('description')">
                   comments here (field description)
-                </span>&nbsp;
+                </span>
               </td>
             </tr>
           </tal:define>

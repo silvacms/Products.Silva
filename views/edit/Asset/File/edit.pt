@@ -4,7 +4,7 @@
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    breadcrumb_vein string:Edit;
+    breadcrumb_vein string:Editor;
 ">
 
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
@@ -14,12 +14,11 @@
     <h3 class="info">
       <img tal:replace="structure icon" /> File info
     </h3>
-    <tal:block
-        tal:define="path model/getFileSystemPath"
-        tal:condition="path"><br />
-        <span class="subhead"><b>File system path</b><br /></span>
-        <span tal:replace="structure python: '/<wbr>'.join(path.split('/'))" />
-    </tal:block>
+    <p tal:define="path model/getFileSystemPath"
+      tal:condition="path">
+      <span class="subhead"><b>file system path</b><br /></span>
+      <span tal:replace="structure python: ' / '.join(path.split('/'))" />
+    </p>
   </div>
 </metal:fill-slot>
 
