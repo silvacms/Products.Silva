@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.106 2004/10/08 17:19:37 guido Exp $
+# $Id: SilvaObject.py,v 1.107 2004/11/25 16:55:02 guido Exp $
 
 # python
 from types import StringType
@@ -24,6 +24,8 @@ from Products.Silva.adapters.renderable import getRenderableAdapter
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 
 from Products.SilvaMetadata.Exceptions import BindingError
+
+from Products.Silva.i18n import translate as _
 
 class XMLExportContext:
     """Simple context class used in XML export.
@@ -314,7 +316,9 @@ class SilvaObject(Security, ViewCode):
                                 'view_version')
     def view_version(self, view_type, version):
         if version is None:
-            return 'Sorry, this %s version is not viewable.' % self.meta_type
+            msg = _('Sorry, this ${meta_type} version is not viewable.')
+            msg.set_mapping({'meta_type': self.meta_type})
+            return msg
         result = getRenderableAdapter(version).view()
         if result is not None:
             return result
@@ -322,7 +326,9 @@ class SilvaObject(Security, ViewCode):
         try:
             view = self.service_view_registry.get_view(view_type, version.meta_type)
         except KeyError:
-            raise NoViewError, 'no %s view defined' % view_type
+            msg = _('no ${view_type} view defined')
+            msg.set_mapping({'view_type': view_type})
+            raise NoViewError, msg
         else:
             return view.render()
 

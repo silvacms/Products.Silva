@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.83 $
+# $Revision: 1.84 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -18,6 +18,8 @@ import os
 from Products.Silva.Metadata import export_metadata
 
 from interfaces import IRoot, IVersionedContent, IContainer
+
+from Products.Silva.i18n import translate as _
 
 icon="www/silva.png"
 
@@ -219,7 +221,7 @@ class Root(Publication):
         and updates the status accordingly
         """
         if not getattr(self, 'service_catalog', None):
-            return 'No catalog found!'
+            return _('No catalog found!')
         
         # first get all approved objects that should be published
         query = {'silva-extrapublicationtime': DateTime(),
@@ -241,7 +243,7 @@ class Root(Publication):
             ob = item.getObject()
             ob.object()._update_publication_status()
 
-        return 'Status updated'
+        return _('Status updated')
 
     security.declarePublic('recordError')
     def recordError(self, message_type, message):

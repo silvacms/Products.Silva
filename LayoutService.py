@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 
 # Zope
 from OFS import SimpleItem
@@ -16,6 +16,8 @@ import LayoutRegistry
 import install
 import whrandom
 import copy
+
+from Products.Silva.i18n import translate as _
 
 class LayoutService(SimpleItem.SimpleItem):
     meta_type = 'Silva Layout Service'
@@ -46,14 +48,18 @@ class LayoutService(SimpleItem.SimpleItem):
         """Install layout
         """
         layoutRegistry.install(self.get_root(), name)
-        return self.manage_main(manage_tabs_message='%s installed' % name)
+        msg = _("${name} installed")
+        msg.set_mapping({'name': name})
+        return self.manage_main(manage_tabs_message=msg)
 
     security.declareProtected('View management screens', 'uninstall')
     def uninstall(self, name):
         """Uninstall extension
         """
         layoutRegistry.uninstall(self.get_root(), name)
-        return self.manage_main(manage_tabs_message='%s uninstalled' % name)
+        msg = _("${name} uninstalled")
+        msg.set_mapping({'name': name})
+        return self.manage_main(manage_tabs_message=msg)
 
     security.declareProtected('View management screens', 'refresh')
 
@@ -63,7 +69,9 @@ class LayoutService(SimpleItem.SimpleItem):
         self.uninstall(name)
         self.install(name)
         self._refresh_datetime = DateTime()
-        return self.manage_main(manage_tabs_message='%s refreshed' % name)
+        msg = _("${name} refreshed")
+        msg.set_mapping({'name': name})
+        return self.manage_main(manage_tabs_message=msg)
 
     security.declareProtected('View management screens', 'refresh_all')
     def refresh_all(self):
@@ -71,7 +79,8 @@ class LayoutService(SimpleItem.SimpleItem):
         """
         for name in self.get_installed_names():
             self.refresh(name)
-        return self.manage_main(manage_tabs_message='All layouts have been refreshed')
+        msg = _('All layouts have been refreshed')
+        return self.manage_main(manage_tabs_message=msg)
 
     # ACCESSORS
 

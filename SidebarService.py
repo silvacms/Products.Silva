@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SidebarService.py,v 1.18 2004/07/21 11:40:40 jw Exp $
+# $Id: SidebarService.py,v 1.19 2004/11/25 16:55:02 guido Exp $
 # Zope
 from OFS.SimpleItem import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -14,6 +14,8 @@ from helpers import add_and_edit
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 # Silva interfaces
 from interfaces import ISidebarService
+
+from Products.Silva.i18n import translate as _
 
 class SidebarService(SimpleItem):
     """Service for sidebar cache"""
@@ -49,10 +51,10 @@ class SidebarService(SimpleItem):
         # check validity
         if getattr(self.aq_inner, id, None) is None:
             # not valid
-            msg = 'Id does not provide for an existing cache container'
+            msg = _('Id does not provide for an existing cache container')
         else:
             self.cache_container_id = id
-            msg = 'Id changed'
+            msg = _('Id changed')
 
         return self.manage_sidebarServiceEditTab(manage_tabs_message=msg)
 
