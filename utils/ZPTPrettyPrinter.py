@@ -4,7 +4,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
 # Author: Jan-Wijbrand Kolman (jw@infrae.com)
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 #
 # Issues:
 #  * Testing, testing, testing. It would be rather horrible to 
@@ -21,6 +21,8 @@
 #    XML libs.
 #  * NEWLINE on different OS's
 #  * Javascript in TALES: escape the ';'"
+#  * The '&' in entities are escapes now, to get the entity in unparsed
+#    shape back in the resulting xhtml - is there a better way?
 #
 # ToDos:
 #  * More testing
