@@ -16,8 +16,10 @@ def add_fss_directory_view(obj, name, base, *args):
     
     obj         where the new directory-object will be accessible
     name        name of the new zope object
-    base        dirname(base) is taken as the base for the following relative path
-    *args       directory names which form the relative path to our content directory
+    base        dirname(base) is taken as the base for the following
+                relative path
+    *args       directory names which form the relative path
+                to our content directory
 
     This method tries to provide a sane interface independent of FSS
     path munging.
@@ -179,9 +181,11 @@ def configureSecurity(root):
     for add_permission in add_permissions:
         root.manage_permission(add_permission, all_author)
 
-    # everybody may view root by default XXX (is this bad in case of upgrade/refresh)
+    # everybody may view root by default XXX
+    # (is this bad in case of upgrade/refresh)
     root.manage_permission('View',
-                           all_reader + ['Anonymous', 'Authenticated', 'Viewer'])
+                           all_reader +
+                           ['Anonymous', 'Authenticated', 'Viewer'])
     # person with viewer role can do anything that anonymous does + has
     # additional right to view when anonymous can't. This means zope
     # should fall back on permissions for anonymous in case viewer does
@@ -243,7 +247,8 @@ def configureMembership(root):
         root.manage_addFolder('Members')
 
     if 'service_messages' not in ids:
-        root.manage_addProduct['Silva'].manage_addEmailMessageService('service_messages', 'Service for Messages')
+        root.manage_addProduct['Silva'].manage_addEmailMessageService(
+            'service_messages', 'Service for Messages')
 
 # helpers to add various objects to the root from the layout directory
 # these won't add FS objects but genuine ZMI managed code
@@ -294,19 +299,32 @@ def registerViews(reg):
     """Register core views on registry.
     """
     # edit
-    reg.register('edit', 'Silva Folder', ['edit', 'Container', 'Folder'])
-    reg.register('edit', 'Silva Document', ['edit', 'VersionedContent', 'Document'])
-    reg.register('edit', 'Silva Root', ['edit', 'Container', 'Publication'])
-    reg.register('edit', 'Silva Publication', ['edit', 'Container', 'Publication'])
-    reg.register('edit', 'Silva Ghost', ['edit', 'VersionedContent', 'Ghost'])
-    reg.register('edit', 'Silva Image', ['edit', 'Asset', 'Image'])
-    reg.register('edit', 'Silva DemoObject', ['edit', 'VersionedContent', 'DemoObject'])
-    reg.register('edit', 'Silva File', ['edit', 'Asset', 'File'])
-    reg.register('edit', 'Silva Indexer', ['edit', 'Content', 'Indexer'])
-    reg.register('edit', 'Silva SQL Data Source', ['edit', 'Asset', 'SQLDataSource'])
-    reg.register('edit', 'Silva Group', ['edit', 'Asset', 'Group'])
-    reg.register('edit', 'Silva Virtual Group', ['edit', 'Asset', 'VirtualGroup'])
-    reg.register('edit', 'Silva Extended Member', ['edit', 'Member', 'ExtendedMember'])
+    reg.register('edit', 'Silva Folder',
+                 ['edit', 'Container', 'Folder'])
+    reg.register('edit', 'Silva Document',
+                 ['edit', 'VersionedContent', 'Document'])
+    reg.register('edit', 'Silva Root',
+                 ['edit', 'Container', 'Publication'])
+    reg.register('edit', 'Silva Publication',
+                 ['edit', 'Container', 'Publication'])
+    reg.register('edit', 'Silva Ghost',
+                 ['edit', 'VersionedContent', 'Ghost'])
+    reg.register('edit', 'Silva Image',
+                 ['edit', 'Asset', 'Image'])
+    reg.register('edit', 'Silva DemoObject',
+                 ['edit', 'VersionedContent', 'DemoObject'])
+    reg.register('edit', 'Silva File',
+                 ['edit', 'Asset', 'File'])
+    reg.register('edit', 'Silva Indexer',
+                 ['edit', 'Content', 'Indexer'])
+    reg.register('edit', 'Silva SQL Data Source',
+                 ['edit', 'Asset', 'SQLDataSource'])
+    reg.register('edit', 'Silva Group',
+                 ['edit', 'Asset', 'Group'])
+    reg.register('edit', 'Silva Virtual Group',
+                 ['edit', 'Asset', 'VirtualGroup'])
+    reg.register('edit', 'Silva Extended Member',
+                 ['edit', 'Member', 'ExtendedMember'])
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
@@ -318,7 +336,8 @@ def registerViews(reg):
     reg.register('public', 'Silva DemoObject', ['public', 'DemoObject'])
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
-    reg.register('public', 'Silva SQL Data Source', ['public', 'SQLDataSource'])
+    reg.register('public', 'Silva SQL Data Source',
+                 ['public', 'SQLDataSource'])
 
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
@@ -357,10 +376,13 @@ def configureXMLWidgets(root):
     root.manage_addProduct['XMLWidgets'].manage_addEditorService(
         'service_editor')
     # create the services for XMLWidgets
-    for name in ['service_doc_editor', 'service_doc_previewer', 'service_doc_viewer',
+    for name in ['service_doc_editor', 'service_doc_previewer',
+                 'service_doc_viewer',
                  'service_field_editor', 'service_field_viewer',
-                 'service_nlist_editor', 'service_nlist_previewer', 'service_nlist_viewer',
-                 'service_sub_editor', 'service_sub_previewer', 'service_sub_viewer',
+                 'service_nlist_editor', 'service_nlist_previewer',
+                 'service_nlist_viewer',
+                 'service_sub_editor', 'service_sub_previewer',
+                 'service_sub_viewer',
                  'service_table_editor', 'service_table_viewer']:
         root.manage_addProduct['XMLWidgets'].manage_addWidgetRegistry(name)
 
@@ -395,7 +417,8 @@ def registerDocEditor(root):
     for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table',
                      'nlist', 'dlist', 'code', 'externaldata']:
         wr.addWidget(nodeName,
-                     ('service_widgets', 'element', 'doc_elements', nodeName, 'mode_normal'))
+                     ('service_widgets', 'element', 'doc_elements',
+                           nodeName, 'mode_normal'))
 
     wr.setDisplayName('doc', 'Title')
     wr.setDisplayName('p', 'Paragraph')
@@ -422,7 +445,8 @@ def registerDocViewer(root):
 
     for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist',
                  'table', 'dlist', 'code', 'externaldata']:
-        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
+        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
+                                 name, 'mode_view'))
 
 def registerDocPreviewer(root):
     wr = root.service_doc_previewer
@@ -430,12 +454,17 @@ def registerDocPreviewer(root):
 
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
-    for name in ['p', 'list', 'heading', 'pre', 'nlist', 'table', 'dlist', 'externaldata']:
-        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
+    for name in ['p', 'list', 'heading', 'pre', 'nlist', 'table',
+                 'dlist', 'externaldata']:
+        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
+                                 name, 'mode_view'))
 
-    wr.addWidget('toc', ('service_widgets', 'element', 'doc_elements', 'toc', 'mode_preview'))
-    wr.addWidget('image', ('service_widgets', 'element', 'doc_elements', 'image', 'mode_preview'))
-    wr.addWidget('code', ('service_widgets', 'element', 'doc_elements', 'code', 'mode_preview'))
+    wr.addWidget('toc', ('service_widgets', 'element', 'doc_elements',
+                             'toc', 'mode_preview'))
+    wr.addWidget('image', ('service_widgets', 'element', 'doc_elements',
+                                'image', 'mode_preview'))
+    wr.addWidget('code', ('service_widgets', 'element', 'doc_elements',
+                               'code', 'mode_preview'))
 
 def registerFieldEditor(root):
     wr = root.service_field_editor
@@ -445,7 +474,8 @@ def registerFieldEditor(root):
 
     for nodeName in ['p', 'heading', 'list', 'image', 'nlist']:
         wr.addWidget(nodeName,
-                     ('service_widgets', 'element', 'doc_elements', nodeName, 'mode_normal'))
+                     ('service_widgets', 'element', 'doc_elements',
+                           nodeName, 'mode_normal'))
 
     wr.setDisplayName('p', 'Paragraph')
     wr.setDisplayName('heading', 'Heading')
@@ -462,7 +492,8 @@ def registerFieldViewer(root):
     wr.addWidget('doc', ('service_widgets', 'top', 'field', 'mode_view'))
 
     for name in ['p', 'list', 'heading', 'image', 'nlist']:
-        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
+        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
+                                  name, 'mode_view'))
 
 def registerNListEditor(root):
     wr = root.service_nlist_editor
@@ -472,10 +503,12 @@ def registerNListEditor(root):
     
     for nodeName in ['li']:
         wr.addWidget(nodeName, 
-                     ('service_widgets', 'element', 'nlist_elements', nodeName, 'mode_normal'))
+                     ('service_widgets', 'element', 'nlist_elements',
+                           nodeName, 'mode_normal'))
         
-    # XXX title needs a dummy treatment; otherwise the top/invalidate_cache_helper barfs
-    # when trying to invalidate the cache for the list <title> tag
+    # XXX title needs a dummy treatment;
+    # otherwise the top/invalidate_cache_helper barfs
+    # when trying to invalidate the cache for the list <title> tag.
     # the referenced widget does not need to exist as it is _never_ used
     wr.addWidget('title',  ('service_widgets', 'dummy') )
 
@@ -492,7 +525,8 @@ def registerNListPreviewer(root):
     wr.addWidget('nlist', ('service_widgets', 'top', 'nlist', 'mode_view'))
     
     for name in ['li']:
-        wr.addWidget(name, ('service_widgets', 'element', 'nlist_elements', name, 'mode_view'))
+        wr.addWidget(name, ('service_widgets', 'element', 'nlist_elements',
+                                name, 'mode_view'))
 
 def registerNListViewer(root):
     wr = root.service_nlist_viewer
@@ -501,7 +535,8 @@ def registerNListViewer(root):
     wr.addWidget('nlist', ('service_widgets', 'top', 'nlist', 'mode_view'))
     
     for name in ['li']:
-        wr.addWidget(name, ('service_widgets', 'element', 'nlist_elements', name, 'mode_view'))
+        wr.addWidget(name, ('service_widgets', 'element', 'nlist_elements',
+                                 name, 'mode_view'))
 
 def registerSubEditor(root):
     wr = root.service_sub_editor
@@ -513,7 +548,8 @@ def registerSubEditor(root):
     
     for nodeName in ['p', 'heading', 'list', 'image', 'nlist', 'pre', 'dlist']:
         wr.addWidget(nodeName, 
-                     ('service_widgets', 'element', 'doc_elements', nodeName, 'mode_normal'))
+                     ('service_widgets', 'element', 'doc_elements',
+                           nodeName, 'mode_normal'))
         
     wr.setDisplayName('p', 'Paragraph')
     wr.setDisplayName('heading', 'Heading')
@@ -524,7 +560,8 @@ def registerSubEditor(root):
     wr.setDisplayName('dlist', 'Definition list')
 
     for nodeName in ('doc', 'li', 'field'):
-        wr.setAllowed(nodeName,  ['p', 'heading', 'list', 'nlist', 'image', 'pre', 'dlist'])
+        wr.setAllowed(nodeName,  ['p', 'heading', 'list', 'nlist', 'image',
+                                     'pre', 'dlist'])
 
 def registerSubPreviewer(root):
     wr = root.service_sub_previewer
@@ -535,11 +572,14 @@ def registerSubPreviewer(root):
     wr.addWidget('field', ('service_widgets', 'top', 'sub', 'mode_view'))
     
     for name in ['p', 'list', 'heading', 'nlist', 'pre', 'dlist']:
-        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
+        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
+                                 name, 'mode_view'))
         
-    # why mode_preview??
-    #wr.addWidget('image', ('service_widgets', 'element', 'doc_elements', 'image', 'mode_preview'))
-    wr.addWidget('image', ('service_widgets', 'element', 'doc_elements', 'image', 'mode_view'))
+    # XX originally used mode_preview here, why?
+    #wr.addWidget('image', ('service_widgets', 'element', 'doc_elements',
+    #                           'image', 'mode_preview'))
+    wr.addWidget('image', ('service_widgets', 'element', 'doc_elements',
+                                'image', 'mode_view'))
 
 def registerSubViewer(root):
     wr = root.service_sub_viewer
@@ -550,7 +590,8 @@ def registerSubViewer(root):
     wr.addWidget('field', ('service_widgets', 'top', 'sub', 'mode_view'))
     
     for name in ['p', 'list', 'heading', 'image', 'nlist', 'pre', 'dlist']:
-        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
+        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
+                                 name, 'mode_view'))
 
 def registerTableEditor(root):
     wr = root.service_table_editor
@@ -560,7 +601,9 @@ def registerTableEditor(root):
     
     for nodeName in ['row', 'row_heading']:
         wr.addWidget(nodeName, 
-                     ('service_widgets', 'element', 'table_elements', nodeName, 'mode_normal'))
+                     ('service_widgets', 'element', 'table_elements',
+                           nodeName, 'mode_normal'))
+
     # add a field that doesn't do any displaying, just for sub editor invocation
     wr.addWidget('field',
                  ('service_widgets', 'element', 'table_elements', 'field'))
@@ -577,7 +620,8 @@ def registerTableViewer(root):
     wr.addWidget('table', ('service_widgets', 'top', 'table', 'mode_view'))
     
     for name in ['row', 'row_heading']:
-        wr.addWidget(name, ('service_widgets', 'element', 'table_elements', name, 'mode_view'))
+        wr.addWidget(name, ('service_widgets', 'element', 'table_elements',
+                                 name, 'mode_view'))
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
