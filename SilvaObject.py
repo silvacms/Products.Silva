@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.77 2003/05/16 15:26:00 jw Exp $
+# $Id: SilvaObject.py,v 1.78 2003/05/16 16:43:40 jw Exp $
 
 # python
 from types import StringType
@@ -83,8 +83,7 @@ class SilvaObject(Security, ViewCode):
         """
         self._title = title
         if self.id == 'index':
-            container = self.get_container()
-            container._invalidate_sidebar(container)
+            self.get_container()._invalidate_sidebar(container)
         
     # ACCESSORS
 
@@ -110,10 +109,7 @@ class SilvaObject(Security, ViewCode):
     def get_title_editable(self):
         """Get the title of the editable version if possible.
         """
-        editable = self.get_editable()
-        if editable is None:
-            return self.get_title()
-        return editable.get_title()
+        return self.get_title()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title_or_id_editable')
@@ -121,11 +117,8 @@ class SilvaObject(Security, ViewCode):
         """Get the title of the editable version if possible, or id if
         not available.
         """
-        editable = self.get_editable()
-        if editable is None:
-            return self.get_title_or_id()
-        return editable.get_title_or_id()
-    
+        return self.get_title_or_id()
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):

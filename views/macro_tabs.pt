@@ -43,7 +43,7 @@
     <tal:block tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
 
       <a href="url"
-        tal:content="python: item.getProperty('short_title') or item.get_title()"
+        tal:content="python: item.getProperty('short_title') or item.get_title_editable()"
         tal:attributes="href string:${item/absolute_url}/edit/${template/id}"
         >
         Name
