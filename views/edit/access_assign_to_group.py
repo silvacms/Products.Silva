@@ -20,6 +20,7 @@ if not groups:
 map = model.sec_get_or_create_groupsmapping()
 assigned = []
 for group in groups:
+    group = unicode(group, 'UTF-8')
     map.assignRolesToGroup(group, [assign_role])
     assigned.append((group, assign_role))
 
