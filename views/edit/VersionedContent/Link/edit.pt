@@ -32,17 +32,16 @@
       </tal:block>
       <tr>
         <td class="top"
-          colspan="3">
+          colspan="2">
           <h2>
             <img tal:replace="structure python:view.render_icon(model)" />
             <span style="text-transform:lowercase;"
-              tal:content="model/meta_type">Meta type</span> 
+              tal:content="model/meta_type">meta_type</span> 
             &#xab;<tal:block content="model/get_title_or_id_editable" />&#xbb;
           </h2>
         </td>
       </tr>
     </thead>
-
 
     <tbody>
       <tr>
@@ -51,8 +50,7 @@
           i18n:translate="attributes">
           attributes
         </th>
-        <th colspan="2"
-          i18n:translate="content">
+        <th i18n:translate="content">
           content
         </th>
       </tr>
@@ -61,20 +59,20 @@
         <td class="align-right">
           link url
         </td>
-      <td colspan="2">
-        <input style="width:100%;"
-          type="text"
-          name="url"
-          tal:attributes="value python:request.model.get_editable().get_url()"
-        />
-      </td>
+        <td>
+          <input style="width:100%;"
+            type="text"
+            name="url"
+            tal:attributes="value python:request.model.get_editable().get_url()"
+          />
+        </td>
       </tr>
     </tbody>
 
     <tfoot>
       <tr class="controls">
         <td class="align-right"
-          colspan="3">
+          colspan="2">
           <input class="button"
             type="submit"
             value="change link"
