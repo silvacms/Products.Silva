@@ -7,11 +7,11 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )">
 
 /*
-**  Silva style sheet classes
+**  Silva version 0.9.3.0
 **
-**  The view crew at Infrae - all seasons of 2003
-**  Thanks to Alexander Limi (limi@plone.org) - October 2002
-**  In turn, thanks to Geir Bækholt, Stian Søiland for input and guidance.
+**  The view crew at Infrae - all seasons of 2003, 2004
+**    Thanks to Alexander Limi (limi@plone.org) - October 2002
+**      In turn, thanks to Geir Bækholt, Stian Søiland for input and guidance.
 **
 */
 
