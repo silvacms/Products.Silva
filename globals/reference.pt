@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- ______________ Silva 0.9.1 ______________ -->
+<!-- ______________ Silva 0.9.2 ______________ -->
 <html metal:use-macro="here/index_macro/macros/master">
 <title metal:fill-slot="title">Reference</title>
 <div metal:fill-slot="main" tal:omit-tag="">
@@ -76,7 +76,7 @@ Many thanks go to <a href="mailto:verster@daz.eur.nl">Hans Verster</a> at the Er
 
 <p>
 <span class="subhead">
-Silva v0.9.1</span><br />
+Silva v0.9.2</span><br />
 Copyright &#xa9; 2002, 2003 Infrae. All rights reserved.
 </p>
 
