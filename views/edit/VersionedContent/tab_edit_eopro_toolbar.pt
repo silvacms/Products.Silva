@@ -31,18 +31,32 @@
 	<icon paramname="INSERTCOLUMN">
 	</icon>
 	<separator />
-	<icon paramname="BULLETS">
-		<iconfile>icons/list.gif</iconfile>
+        <icon paramname="UNORDEREDLIST"> 
+        	<iconfile>icons/disculist.gif</iconfile> 
+        	<subicon paramname="DISCUNORDEREDLIST"> 
+                   <iconfile>icons/disculist.gif</iconfile>
+                </subicon> 
+                <subicon paramname="CIRCLEUNORDEREDLIST"> 
+                    <iconfile>icons/circleulist.gif</iconfile>
+		</subicon> 
+		<subicon paramname="SQUAREUNORDEREDLIST"> 
+			<iconfile>icons/squareulist.gif</iconfile> 
+		</subicon> 
 	</icon>
-	<icon paramname="ORDEREDLIST">
-		<iconfile>icons/olist.gif</iconfile>
+
+	<icon paramname="ORDEREDLIST"> 
+		<iconfile>icons/numberolist.gif</iconfile> 
+		<subicon paramname="LOWERALPHAORDEREDLIST"> 
+			<iconfile>icons/lowerolist.gif</iconfile> 
+		</subicon> 
+		<subicon paramname="UPPERALPHAORDEREDLIST"> 
+			<iconfile>icons/upperolist.gif</iconfile> 
+		</subicon> 
+		<subicon paramname="NUMBEREDORDEREDLIST"> 
+			<iconfile>icons/numberolist.gif</iconfile> 
+		</subicon> 
 	</icon>
-	<icon paramname="UNORDEREDLIST">
-		<iconfile>icons/list.gif</iconfile>
-	</icon>
-	<icon paramname="ALPHABETLIST">
-		<iconfile>icons/alist.gif</iconfile>
-	</icon>
+
 	<icon paramname="DECINDENT">
 		<iconfile>icons/decindent.gif</iconfile>
 	</icon>
@@ -64,11 +78,12 @@
 	<icon paramname="SHOWNALLCHAR">
 		<iconfile>icons/shownallchar.gif</iconfile>
 	</icon>
+<!--
 	<separator />
 	<icon paramname="ALIGN">
 		<iconfile>icons/left1.gif;icons/center1.gif;icons/right1.gif</iconfile>
 	</icon>
-	<!-- <urlicon paramname="UPLOADIMAGE">
+	<urlicon paramname="UPLOADIMAGE">
 		<iconfile>icons/java.gif</iconfile>
 		<url>http://isa-dev-ws-02/all/images/imageupload.htm</url>
 		<target>_upload</target>
@@ -77,6 +92,7 @@
 		<iconfile>icons/bookmark.gif</iconfile>
 		<classname>com.isa.awt.dialog.BookmarkDialogWrapper</classname>
 	</dlgicon>
-	<separator /> -->
+	<separator /> 
+-->
 	<icon paramname="help" />
  </toolbar>
