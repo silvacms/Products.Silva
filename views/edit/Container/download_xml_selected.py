@@ -26,6 +26,6 @@ data = model.get_xml_for_objects(objects, with_sub_publications, export_last_ver
 RESPONSE.setHeader('Content-Type', 'application/download')
 RESPONSE.setHeader('Content-Length', len(data))
 RESPONSE.setHeader('Content-Disposition',
-			   'attachment;filename=silva_export_%s.slv' % DateTime().strftime('%Y-%m-%d'))
+                   'attachment;filename=%s_export_%s.slv' % (model.id, DateTime().strftime('%Y-%m-%d')))
 
 return data
