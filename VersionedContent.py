@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 
 # Zope
 from OFS import Folder
@@ -10,7 +10,7 @@ from DateTime import DateTime
 
 # Silva
 import SilvaPermissions
-from Versioning import Versioning, VersioningError
+from Versioning import Versioning
 from Content import Content
 
 class VersionedContent(Content, Versioning, Folder.Folder):
@@ -24,33 +24,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     _cached_data = None
     
     # MANIPULATORS
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'create_copy')
-    def create_copy(self):
-        """Create new version of public version.
-        """
-        if self.get_next_version() is not None:
-            return    
-        # get id of public version to copy
-        version_id_to_copy = self.get_public_version()
-        # if there is no public version, get id of last closed version
-        # (which should always be there)
-        if version_id_to_copy is None:
-            version_id_to_copy = self.get_last_closed_version()
-            # there is no old version left!
-            if version_id_to_copy is None:
-                # FIXME: could create new empty version..
-                raise  VersioningError, "Should never happen!"
-        # copy published version
-        new_version_id = str(self._version_count)
-        self._version_count = self._version_count + 1
-        # FIXME: this only works if versions are stored in a folder as
-        # objects; factory function for VersionedContent objects should
-        # create an initial version with name '0', too.
-        # only testable in unit tests after severe hacking..
-        self.manage_clone(getattr(self, version_id_to_copy),
-                          new_version_id, self.REQUEST)
-        self.create_version(new_version_id, None, None)
     
     # ACCESSORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
