@@ -88,6 +88,11 @@ ul.tips-nested {
 
 /* ____________________________________________________________ forms _____ */
 
+
+div.fixIE6widget {
+    width : 96%;
+}
+
 input:focus, textarea:focus { 
   color : #333355; 
   background : #e3f0e4 none; 

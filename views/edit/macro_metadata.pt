@@ -177,8 +177,10 @@
                   <tal:block replace="nothing">
                     ___ element widget column ___
                   </tal:block>
-                  <td tal:content="structure element/render">
-                    Element edit widget
+                  <td>
+                      <div class="fixIE6widget" tal:content="structure element/render">
+                          Element edit widget
+                      </div>
                   </td>
                   <tal:block replace="nothing">
                     ___ element acquired value column ___
