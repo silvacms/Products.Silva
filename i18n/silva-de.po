@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Thu Nov 25 20:30:35 2004\n"
+"POT-Creation-Date: Fri Nov 26 15:49:35 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -307,6 +307,86 @@ msgstr ""
 
 #: /adapters/version_management.py:257
 msgid "no such version ${version}"
+msgstr ""
+
+#: /doc/silva-content.xml:31
+msgid "Title of content."
+msgstr ""
+
+#: /doc/silva-content.xml:92
+msgid "a.k.a. &#8216;navigation title&#8217;."
+msgstr ""
+
+#: /doc/silva-content.xml:95
+msgid "short title"
+msgstr ""
+
+#: /doc/silva-extra.xml:100
+msgid "Keywords relating to content."
+msgstr ""
+
+#: /doc/silva-extra.xml:165
+msgid "Description of content in this area."
+msgstr ""
+
+#: /doc/silva-extra.xml:229
+msgid "comment"
+msgstr ""
+
+#: /doc/silva-extra.xml:230
+msgid "Internal comments."
+msgstr ""
+
+#: /doc/silva-extra.xml:296
+msgid "creation time"
+msgstr ""
+
+#: /doc/silva-extra.xml:297 /doc/silva-extra.xml:360 /doc/silva-extra.xml:547
+msgid "Automatically set."
+msgstr ""
+
+#: /doc/silva-extra.xml:34
+msgid "subject"
+msgstr ""
+
+#: /doc/silva-extra.xml:35
+msgid "Subject of content in this area."
+msgstr ""
+
+#: /doc/silva-extra.xml:608
+msgid "User who last edited this content."
+msgstr ""
+
+#: /doc/silva-extra.xml:668
+msgid "url"
+msgstr ""
+
+#: /doc/silva-extra.xml:670
+msgid "Resource location of this content."
+msgstr ""
+
+#: /doc/silva-extra.xml:724
+msgid "Name of contact person."
+msgstr ""
+
+#: /doc/silva-extra.xml:727
+msgid "contact name"
+msgstr ""
+
+#: /doc/silva-extra.xml:785
+msgid "Email address of contact person."
+msgstr ""
+
+#: /doc/silva-extra.xml:788
+msgid "contact email"
+msgstr ""
+
+#: /doc/silva-extra.xml:99
+msgid "keywords"
+msgstr ""
+
+#: /doc/silva-publication.xml:21
+msgid "Default Document Policy"
 msgstr ""
 
 #: /icon.py:55
@@ -1512,7 +1592,7 @@ msgstr ""
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:164
 #: /views/edit/Container/tab_edit_import.pt:342
-#: /views/edit/Container/tab_status_export.pt:433
+#: /views/edit/Container/tab_status_export.pt:433 /doc/silva-extra.xml:164
 msgid "description"
 msgstr "Bezeichnung"
 
@@ -2131,7 +2211,7 @@ msgstr "alt"
 msgid "new"
 msgstr "neu"
 
-#: /views/edit/Container/tab_edit_rename.pt:72
+#: /views/edit/Container/tab_edit_rename.pt:72 /doc/silva-content.xml:34
 msgid "title"
 msgstr "Titel"
 
@@ -2203,7 +2283,7 @@ msgid "access key: alt-x"
 msgstr "Kurzwahl: alt-x"
 
 #: /views/edit/Container/tab_status.pt:328
-#: /views/edit/VersionedContent/tab_status.pt:254
+#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:485
 msgid "expiration time"
 msgstr "Verfallsdatum"
 
@@ -2784,19 +2864,19 @@ msgstr ""
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:252
+#: /views/edit/VersionedContent/tab_status.pt:252 /doc/silva-extra.xml:359
 msgid "modification time"
 msgstr "Änderungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:253
+#: /views/edit/VersionedContent/tab_status.pt:253 /doc/silva-extra.xml:422
 msgid "publication time"
 msgstr "Veröffentlichungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:255
+#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:606
 msgid "last author"
 msgstr "letzter Autor"
 
-#: /views/edit/VersionedContent/tab_status.pt:256
+#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:545
 msgid "creator"
 msgstr "Urheber"
 

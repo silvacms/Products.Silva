@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 25 20:30:35 2004\n"
+"POT-Creation-Date: Fri Nov 26 15:49:35 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -130,8 +130,9 @@ msgstr ""
 #: /Image.py:234
 msgid ""
 "'${scale} is not a valid scale identifier. At least one number is required."
-msgstr "'${scale}' is geen geldige schaalwaarde. Tenminste één getalwaarde "
-"is vereist."
+msgstr ""
+"'${scale}' is geen geldige schaalwaarde. Tenminste één getalwaarde is "
+"vereist."
 
 #: /Image.py:259
 msgid "'${crop} is not a valid crop identifier"
@@ -143,8 +144,7 @@ msgstr "'${crop}' is een onmogelijke afsnijdwaarde"
 
 #: /Image.py:344
 msgid "Low resolution image in original format is not supported"
-msgstr "Lage resolutie afbeelding is niet ondersteund in het originele "
-"formaat"
+msgstr "Lage resolutie afbeelding is niet ondersteund in het originele formaat"
 
 #: /Image.py:423
 msgid "square"
@@ -180,7 +180,9 @@ msgstr "Geen id gevonden"
 
 #: /ImporterRegistry.py:70
 msgid "can't only register initializer for tag_name *or* as a default"
-msgstr "kan niet alleen een 'initializer' registreren voor 'tag_name' *of* als standaard"
+msgstr ""
+"kan niet alleen een 'initializer' registreren voor 'tag_name' *of* als "
+"standaard"
 
 #: /LayoutService.py:51
 msgid "${name} installed"
@@ -249,8 +251,9 @@ msgstr "Geen versie beschikbaar die nog niet is goedgekeurd"
 
 #: /Versioning.py:274 /Versioning.py:323 /Versioning.py:353
 msgid "There is no unapproved version to request approval for."
-msgstr "Er is geen versie die nog niet is goedgekeurd waar goedkeuring "
-"voor kan worden aangevraagd."
+msgstr ""
+"Er is geen versie die nog niet is goedgekeurd waar goedkeuring voor kan "
+"worden aangevraagd."
 
 #: /Versioning.py:278
 msgid "The version is already requested for approval."
@@ -315,6 +318,86 @@ msgstr "Kan niet alle versies verwijderen"
 #: /adapters/version_management.py:257
 msgid "no such version ${version}"
 msgstr "versie bestaat niet ${version}"
+
+#: /doc/silva-content.xml:31
+msgid "Title of content."
+msgstr "Titel van inhoud."
+
+#: /doc/silva-content.xml:92
+msgid "a.k.a. &#8216;navigation title&#8217;."
+msgstr "ook wel &#8216;navigatie-titel&#8217;."
+
+#: /doc/silva-content.xml:95
+msgid "short title"
+msgstr "korte titel"
+
+#: /doc/silva-extra.xml:100
+msgid "Keywords relating to content."
+msgstr "Steekwoorden gerelateerd aan inhoud."
+
+#: /doc/silva-extra.xml:165
+msgid "Description of content in this area."
+msgstr "Omschrijving van inhoud"
+
+#: /doc/silva-extra.xml:229
+msgid "comment"
+msgstr "opmerking"
+
+#: /doc/silva-extra.xml:230
+msgid "Internal comments."
+msgstr "Interne opmerkingen"
+
+#: /doc/silva-extra.xml:296
+msgid "creation time"
+msgstr "aanmaak-tijdstip"
+
+#: /doc/silva-extra.xml:297 /doc/silva-extra.xml:360 /doc/silva-extra.xml:547
+msgid "Automatically set."
+msgstr "Automatisch ingesteld."
+
+#: /doc/silva-extra.xml:34
+msgid "subject"
+msgstr "onderwerp"
+
+#: /doc/silva-extra.xml:35
+msgid "Subject of content in this area."
+msgstr "Onderwerp van inhoud."
+
+#: /doc/silva-extra.xml:608
+msgid "User who last edited this content."
+msgstr "Gebruiker die deze inhoud het laatst heeft bewerkt."
+
+#: /doc/silva-extra.xml:668
+msgid "url"
+msgstr "url"
+
+#: /doc/silva-extra.xml:670
+msgid "Resource location of this content."
+msgstr "Bronlocatie van deze inhoud."
+
+#: /doc/silva-extra.xml:724
+msgid "Name of contact person."
+msgstr "Naam contactpersoon."
+
+#: /doc/silva-extra.xml:727
+msgid "contact name"
+msgstr "naam contact"
+
+#: /doc/silva-extra.xml:785
+msgid "Email address of contact person."
+msgstr "E-mailadres van contactpersoon."
+
+#: /doc/silva-extra.xml:788
+msgid "contact email"
+msgstr "e-mail contact"
+
+#: /doc/silva-extra.xml:99
+msgid "keywords"
+msgstr "steekwoorden"
+
+#: /doc/silva-publication.xml:21
+msgid "Default Document Policy"
+msgstr "Standaard Documentbeleid"
 
 #: /icon.py:55
 msgid "Icon not found"
@@ -443,8 +526,9 @@ msgstr "id"
 
 #: /views/add/Folder/form.form:30
 msgid "form_add_folder_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/Folder/form.form:50
 msgid "form_add_folder_object_title_title"
@@ -452,8 +536,9 @@ msgstr "titel"
 
 #: /views/add/Folder/form.form:51
 msgid "form_add_folder_object_title_description"
-msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
-"voor de link in indexen."
+msgstr ""
+"The titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de link "
+"in indexen."
 
 #: /views/add/Folder/form.form:62
 msgid "form_add_folder_policy_name_description"
@@ -489,8 +574,9 @@ msgstr "id"
 
 #: /views/add/Ghost/form.form:30
 msgid "form_add_ghost_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/Ghost/form.form:48
 msgid "form_add_ghost_content_url_title"
@@ -518,8 +604,9 @@ msgstr "id"
 
 #: /views/add/GhostFolder/form.form:30
 msgid "form_add_ghostfolder_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/GhostFolder/form.form:48
 msgid "form_add_ghostfolder_content_url_title"
@@ -545,8 +632,9 @@ msgstr "id"
 
 #: /views/add/Groups/form.form:30
 msgid "form_add_groups_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/Groups/form.form:48
 msgid "form_add_groups_object_title_title"
@@ -568,8 +656,9 @@ msgstr "id"
 
 #: /views/add/Image/form.form:30
 msgid "form_add_image_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/Image/form.form:50
 msgid "form_add_image_object_title_title"
@@ -593,8 +682,9 @@ msgstr "id"
 
 #: /views/add/Indexer/form.form:30
 msgid "form_add_indexer_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/Indexer/form.form:50
 msgid "form_add_indexer_object_title_title"
@@ -602,8 +692,9 @@ msgstr "titel"
 
 #: /views/add/Indexer/form.form:51
 msgid "form_add_indexer_object_title_description"
-msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
-"voor de link in indexen."
+msgstr ""
+"The titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de link "
+"in indexen."
 
 #: /views/add/Link/form.form:28
 msgid "form_add_link_object_id_title"
@@ -611,8 +702,9 @@ msgstr "id"
 
 #: /views/add/Link/form.form:30
 msgid "form_add_link_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/Link/form.form:51
 msgid "form_add_link_object_title_title"
@@ -620,8 +712,9 @@ msgstr "titel"
 
 #: /views/add/Link/form.form:52
 msgid "form_add_link_object_title_description"
-msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
-"voor de link in indexen."
+msgstr ""
+"The titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de link "
+"in indexen."
 
 #: /views/add/Link/form.form:71
 msgid "form_add_link_url_title"
@@ -637,8 +730,9 @@ msgstr "id"
 
 #: /views/add/Publication/form.form:30
 msgid "form_add_publication_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/Publication/form.form:50
 msgid "form_add_publication_object_title_title"
@@ -646,13 +740,14 @@ msgstr "titel"
 
 #: /views/add/Publication/form.form:51
 msgid "form_add_publication_object_title_description"
-msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
-"voor de link in indexen."
+msgstr ""
+"The titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de link "
+"in indexen."
 
 #: /views/add/Publication/form.form:62
 msgid "form_add_publication_policy_name_description"
-msgstr "Welk type object moet er worden toegevoegd na het aanmaken van de "
-"folder."
+msgstr ""
+"Welk type object moet er worden toegevoegd na het aanmaken van de folder."
 
 #: /views/add/Publication/form.form:70
 msgid "form_add_publication_policy_name_title"
@@ -664,8 +759,9 @@ msgstr "id"
 
 #: /views/add/SimpleContent/form.form:30
 msgid "form_add_simplecontent_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/SimpleContent/form.form:50
 msgid "form_add_simplecontent_object_title_title"
@@ -673,8 +769,9 @@ msgstr "titel"
 
 #: /views/add/SimpleContent/form.form:51
 msgid "form_add_simplecontent_object_title_description"
-msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
-"voor de link in indexen."
+msgstr ""
+"The titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de link "
+"in indexen."
 
 #: /views/add/add_form.pt:37
 msgid "create ${TOC_or_meta_type}"
@@ -756,8 +853,9 @@ msgstr "id"
 
 #: /views/add/form.form:30
 msgid "default_form_add_object_id_description"
-msgstr "Geen spaties of speciale tekens behalve &#8216;_&#8217;, "
-"&#8216;-&#8217; of &#8216;.&#8217;"
+msgstr ""
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/add/form.form:50
 msgid "default_form_add_object_title_title"
@@ -765,8 +863,9 @@ msgstr "titel"
 
 #: /views/add/form.form:51
 msgid "default_form_add_object_title_description"
-msgstr "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt "
-"voor de link in indexen."
+msgstr ""
+"The titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de link "
+"in indexen."
 
 #: /views/add/get_id_status_text.py:24
 msgid ""
@@ -1150,11 +1249,11 @@ msgstr "PIL lijkt niet geïnstalleerd te zijn."
 
 #: /views/edit/Asset/Image/form.form:29
 msgid "form_image_title_title"
-msgstr ""
+msgstr "titel"
 
 #: /views/edit/Asset/Image/form.form:31
 msgid "form_image_title_description"
-msgstr ""
+msgstr "Niet verplicht, maar nuttig."
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:124
 msgid "instructions"
@@ -1235,8 +1334,9 @@ msgstr "schaal"
 
 #: /views/edit/Asset/Image/scale_form.form:56
 msgid "scale_web_scaling_description"
-msgstr "Afbeelding schalen voor het web: gebruik breedte x hoogte in "
-"pixels (100x200), of de maat van één as (100x*), of een percentage (40%)."
+msgstr ""
+"Afbeelding schalen voor het web: gebruik breedte x hoogte in pixels "
+"(100x200), of de maat van één as (100x*), of een percentage (40%)."
 
 #: /views/edit/Asset/Image/scale_form.form:77
 msgid "scale_web_crop_title"
@@ -1244,9 +1344,10 @@ msgstr "afsnijden"
 
 #: /views/edit/Asset/Image/scale_form.form:84
 msgid "scale_web_crop_description"
-msgstr "Afbeelding afsnijden/uitsnijden voor het web: gebruik de knop "
-"&amp;#8216;afsnijdcoördinaten instellen&amp;#8217;, of voer X1xY1-X2xY2 "
-"in om de afsnijdmaten te definiëren."
+msgstr ""
+"Afbeelding afsnijden/uitsnijden voor het web: gebruik de knop &amp;#8216;"
+"afsnijdcoördinaten instellen&amp;#8217;, of voer X1xY1-X2xY2 in om de "
+"afsnijdmaten te definiëren."
 
 #: /views/edit/Asset/Image/scale_submit.py:12
 msgid "Scaling and/or format changed"
@@ -1448,9 +1549,9 @@ msgstr "overerven"
 
 #: /views/edit/Container/Publication/settings_addables_form.form:25
 msgid "addables_acquire_addables_description"
-msgstr "Indien aangevinkt, worden de toevoeg-instellingen overgeërfd van "
-"boven. Niet aanvinken als toevoeg-instellingen hieronder gewijzigd moeten "
-"kunnen worden."
+msgstr ""
+"Indien aangevinkt, worden de toevoeg-instellingen overgeërfd van boven. Niet "
+"aanvinken als toevoeg-instellingen hieronder gewijzigd moeten kunnen worden."
 
 #: /views/edit/Container/Publication/settings_addables_form.form:39
 msgid "addables_addables_title"
@@ -1458,9 +1559,10 @@ msgstr "toevoegbare items"
 
 #: /views/edit/Container/Publication/settings_addables_form.form:41
 msgid "addables_addables_description"
-msgstr "Als 'overerven' niet is aangevinkt, bepalen deze instellingen wat "
-"voor items in deze publicatie mogen worden toegevoegd. Anders worden de "
-"toevoeg-instellingen overgeërfd van de bovenliggende publicatie."
+msgstr ""
+"Als 'overerven' niet is aangevinkt, bepalen deze instellingen wat voor items "
+"in deze publicatie mogen worden toegevoegd. Anders worden de toevoeg-"
+"instellingen overgeërfd van de bovenliggende publicatie."
 
 #: /views/edit/Container/Publication/settings_addables_submit.py:34
 msgid "Addable settings have not changed and remain acquired."
@@ -1571,7 +1673,7 @@ msgstr "importeren naar de huidige locatie en uit de lijst verwijderen: alt-m"
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:164
 #: /views/edit/Container/tab_edit_import.pt:342
-#: /views/edit/Container/tab_status_export.pt:433
+#: /views/edit/Container/tab_status_export.pt:433 /doc/silva-extra.xml:164
 msgid "description"
 msgstr "omschrijving"
 
@@ -2225,7 +2327,7 @@ msgstr "oud"
 msgid "new"
 msgstr "nieuw"
 
-#: /views/edit/Container/tab_edit_rename.pt:72
+#: /views/edit/Container/tab_edit_rename.pt:72 /doc/silva-content.xml:34
 msgid "title"
 msgstr "titel"
 
@@ -2297,7 +2399,7 @@ msgid "access key: alt-x"
 msgstr "sneltoets: alt-x"
 
 #: /views/edit/Container/tab_status.pt:328
-#: /views/edit/VersionedContent/tab_status.pt:254
+#: /views/edit/VersionedContent/tab_status.pt:254 /doc/silva-extra.xml:485
 msgid "expiration time"
 msgstr "verlooptijdstip"
 
@@ -2740,9 +2842,10 @@ msgstr "favoriete editor"
 
 #: /views/edit/Member/SimpleMember/memberform.form:71
 msgid "simplemember_form_editor_description"
-msgstr "Kies 'forms editor' voor de formulier-gebaseerde editor, of 'kupu' "
-"voor de Kupu WYSIWYG editor (vereist Internet Explorer 5.5+, Netscape 7+ "
-"of Mozilla 1.3.1+)"
+msgstr ""
+"Kies 'forms editor' voor de formulier-gebaseerde editor, of 'kupu' voor de "
+"Kupu WYSIWYG editor (vereist Internet Explorer 5.5+, Netscape 7+ of Mozilla "
+"1.3.1+)"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:27
 msgid "fullname updated"
@@ -2904,19 +3007,19 @@ msgstr "Versie goedgekeurd."
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr "versies beheren van &#xab;${export_id}&#xbb;"
 
-#: /views/edit/VersionedContent/tab_status.pt:252
+#: /views/edit/VersionedContent/tab_status.pt:252 /doc/silva-extra.xml:359
 msgid "modification time"
 msgstr "modificatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status.pt:253
+#: /views/edit/VersionedContent/tab_status.pt:253 /doc/silva-extra.xml:422
 msgid "publication time"
 msgstr "publicatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status.pt:255
+#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:606
 msgid "last author"
 msgstr "laatste auteur"
 
-#: /views/edit/VersionedContent/tab_status.pt:256
+#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:545
 msgid "creator"
 msgstr "aangemaakt"
 
@@ -3117,8 +3220,8 @@ msgid ""
 "This message will remain visible in the status screen for other authors and "
 "editors."
 msgstr ""
-"Deze boodschap zal zichtbaar blijven in het scherm 'status' voor andere auteurs "
-"en redacteuren."
+"Deze boodschap zal zichtbaar blijven in het scherm 'status' voor andere "
+"auteurs en redacteuren."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:138
 msgid "content publish ti<u>m</u>e:"
@@ -3284,10 +3387,10 @@ msgid ""
 "withdrawing the request; if this person for example made an empty reject, "
 "this is the message of the requester ..."
 msgstr ""
-"de laatste boodschap hoeft niet noodzakelijkerwijs door de persoon geschreven te "
-"zijn die de aanvraag intrekt; als deze persoon bijvoorbeeld een lege "
-"afwijzing heeft gemaakt, is dit de boodschap van degene die de aanvraag heeft "
-"ingediend..."
+"de laatste boodschap hoeft niet noodzakelijkerwijs door de persoon "
+"geschreven te zijn die de aanvraag intrekt; als deze persoon bijvoorbeeld "
+"een lege afwijzing heeft gemaakt, is dit de boodschap van degene die de "
+"aanvraag heeft ingediend..."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:86
 msgid ""
@@ -4352,8 +4455,9 @@ msgstr "inhoudstype"
 
 #: /views/public/search_form.form:101
 msgid "public_search_form_metatype_description"
-msgstr "Selecteer één of meer (met de ctrl-toets) objecttypen om in te "
-"zoeken. Als er niets is geselecteerd, wordt in alle typen gezocht."
+msgstr ""
+"Selecteer één of meer (met de ctrl-toets) objecttypen om in te zoeken. Als "
+"er niets is geselecteerd, wordt in alle typen gezocht."
 
 #: /views/public/search_form.form:28
 msgid "public_search_form_fulltext_title"
@@ -4377,8 +4481,7 @@ msgstr "alleen sub-boom"
 
 #: /views/public/search_form.form:78
 msgid "public_search_form_search_subtree_description"
-msgstr "Aanvinken om zoekopdracht te beperken to de sub-boom van deze "
-"inhoud."
+msgstr "Aanvinken om zoekopdracht te beperken to de sub-boom van deze inhoud."
 
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
