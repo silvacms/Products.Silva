@@ -1,6 +1,27 @@
-Version of this document: $Revision: 1.6 $
+Version of this document: $Revision: 1.7 $
 
 Silva changes
+
+  0.8.3
+
+    Features Added
+
+    Bugs Fixed
+
+     - Presentation Pagetemplates: 
+
+        * Cleanup of index_html
+
+        * Removed "base" tag from layout_macro.html, fixed "script" tag,
+        fixed "link" tag
+
+        * Changed call for "view_method" in content.html (thanks to
+        Clemens Klein-Robbenhaar)
+
+        * Changed spelling for override.html (thanks to Clemens Klein-
+        Robbenhaar)
+
+        * Various (cosmetic) changes in view/preview/tab-preview layout  
 
   0.8.2
 
