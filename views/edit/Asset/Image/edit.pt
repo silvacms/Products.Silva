@@ -6,12 +6,15 @@
     root_url model/get_root_url;
     title model/get_title_editable;
     vein string:editor;
+    transf model/get_transformation;
     "
   i18n:domain="silva">
-
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
 
 <metal:fill-slot fill-slot="info">
+  <script type="text/javascript"
+          tal:attributes="src view/cropping.js/absolute_url">
+  </script>
   <div class="info">
     <h3>
       <img tal:replace="structure icon" /> image info
@@ -27,9 +30,9 @@
             img_width python: model.getDimensions()[0];
             img_height python: model.getDimensions()[1];
             "
-          tal:on-error="string: unknown"
+            tal:on-error="string: unknown"
           tal:replace="string:${img_width}x${img_height} pixels"
-        />
+          />
       </p> 
       <p tal:condition="model/hires_image">
         <span class="subhead">format</span><br />
@@ -40,16 +43,30 @@
         image_height python: model.getDimensions()[1];
         scale_width python: model.getCanonicalWebScale()[0];
         scale_height python: model.getCanonicalWebScale()[1];
+        cropped_width python: model.getCroppedSize()[0];
+        cropped_height python: model.getCroppedSize()[1];
+        is_cropped model/cropped;
         ">
         <span class="subhead">dimensions</span><br />
         <span tal:on-error="string: unknown"
           tal:replace="string:${image_width}x${image_height} pixels"
-          /><tal:condition condition="python:
+          />
+          <tal:condition condition="python:
             image_width != scale_width and
-            image_height != scale_height">,<br />scaled to 
-          <span tal:on-error="string: unknown"
-            tal:replace="string:${scale_width}x${scale_height} pixels"
-            /></tal:condition>
+            image_height != scale_height or
+            image_width != cropped_width and
+            image_height != cropped_height">,<br />
+            <span tal:content="transf">scaled</span> to 
+            
+            <span tal:condition="is_cropped" 
+            tal:replace="string:${cropped_width}x${cropped_height} pixels"
+            />
+          
+            <span tal:condition="not:is_cropped"
+              tal:on-error="string: unknown"
+              tal:replace="string:${scale_width}x${scale_height} pixels"
+              />
+          </tal:condition>
       </p>
       <p>
         <span class="subhead">original</span><br />
@@ -59,7 +76,7 @@
           tal:attributes="href string:${model/absolute_url}?hires"
           i18n:attributes="title"
           i18n:translate="view_unscaled_image">
-          view unscaled image
+          view un<span tal:content="transf">scaled</span> image
         </a>
       </p>
     </tal:block>
@@ -81,7 +98,7 @@
           <span 
             tal:attributes="title string: ${scaled_size}"
             tal:content="python:mangle.Bytes(scaled_size)" /> 
-            <span i18n:translate="scaled">scaled</span>
+            <span tal:content="transf" i18n:translate="scaled">scaled</span>
           </tal:condition>
       </tal:block>
     </p>
@@ -91,7 +108,7 @@
         <span class="subhead"><b i18n:translate="file_system_path">file system path</b><br /></span>
         <span tal:replace="structure python:  ' / '.join(path.split('/'))" />
       </p>
-    </tal:block>
+      </tal:block>
   </div>
 </metal:fill-slot>
 
@@ -158,6 +175,82 @@
               value="change format/scale"
               title="access key: alt-c"
               accesskey="c"
+              i18n:attributes="title value"
+            />
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+
+  <form method="POST"
+    name="form"
+    action="."
+    enctype="multipart/form-data"
+    tal:condition="model/canScale">
+  <table class="listing">
+    <thead>
+      <tal:block replace="nothing">
+        ______________ top controls row ______________
+      </tal:block>
+      <tr class="top-controls">
+        <td colspan="3">
+          <h3 i18n:translate="thumbnailing">
+            thumbnailing 
+          </h3>
+        </td>
+      </tr>
+    </thead>
+    <tbody tal:define="fields view/crop_form/get_fields">
+      <tr>
+        <th class="align-right"
+          width="12%"
+          i18n:translate="element">
+          element
+        </th>
+        <th i18n:translate="content">
+          content
+        </th>
+        <th width="40%" i18n:translate="note">
+          note
+        </th>
+      </tr>
+      <tal:repeat repeat="field fields">
+        <tal:define define="iterate repeat/field/odd">
+          <tr tal:attributes="class python:iterate and 'odd' or 'even'">
+            <td class="field-title">
+              <span tal:replace="python:field['title']">
+                title</span><span class="warning"
+                tal:condition="python:field.is_required()">*</span>
+            </td>
+            <td>
+              <input tal:replace="structure python:field.render_from_request(request)" />
+            </td>
+            <td>
+              <span tal:replace="structure python:field.get_value('description')">
+                comments here (field description)
+              </span>
+            </td>
+          </tr>
+        </tal:define>
+      </tal:repeat>
+    </tbody>
+      <tfoot>
+        <tr class="controls">
+          <td class="align-right"
+            colspan="3">
+            <input class="button"
+              type="button"
+              value="set crop coordinates"
+              title="lets you specify x and y values by clicking in the
+              image"
+              tal:define="asset_context python:request.model"
+              tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))" />
+            <input class="button"
+              type="submit"
+              name="crop_submit:method"
+              value="crop image"
+              title="no access key"
               i18n:attributes="title value"
             />
           </td>

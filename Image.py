@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.6 2004/04/07 17:40:34 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.7 2004/04/09 14:08:53 roman Exp $
 
 # Python
 import re, string 
@@ -59,6 +59,7 @@ class Image(Asset):
     web_scale = '100%'
     web_format = 'JPEG'
     web_formats = ('JPEG', 'GIF', 'PNG')
+    cropped = False
     
     def __init__(self, id, title):
         Image.inheritedAttribute('__init__')(self, id, title)
@@ -126,7 +127,29 @@ class Image(Asset):
             self.web_scale = web_scale
         if self.hires_image is not None and update_cache:
             self._createWebPresentation()
-        
+    
+    def cropImage(self, size, x, y):
+        """crops the image
+
+            width (int): width of the cropped image
+            heigth (int): height of the cropped image
+            
+        """
+        cropbbox = self.getCropBBox(size, x, y)
+        try:
+            image = self._getPILImage(self.hires_image)
+        except ValueError:
+            # XXX: warn the user, no scaling or converting has happend
+            self.image = self.hires_image
+            return
+        web_image_data = StringIO()
+        web_image = image.crop(cropbbox)
+        web_image = self._prepareWebFormat(web_image)
+        web_image.save(web_image_data, self.web_format)
+        self.cropped = True
+        self.image = OFS.Image.Image(
+            'image', self.get_title(), web_image_data)
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
     def set_image(self, file):
@@ -167,8 +190,13 @@ class Image(Asset):
         else:
             width = int(m.group(1))
             height = int(m.group(2))
-        return width, height            
+        return width, height
    
+    security.declareProtected(SilvaPermissions.View, 'getCroppedSize(self)')
+    def getCroppedSize(self):
+        """returns (width, height) of web image"""
+        return self.image.width, self.image.height
+    
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
     def getDimensions(self):
         """returns width, heigt of (hi res) image
@@ -189,7 +217,7 @@ class Image(Asset):
         if not (isinstance(width, IntType) and isinstance(height, IntType)):
             image = self._getPILImage(self.hires_image)
             width, height = image.size
-        return width, height            
+        return width, height
 
     security.declareProtected(SilvaPermissions.View, 'getFormat')
     def getFormat(self):
@@ -257,11 +285,45 @@ class Image(Asset):
         """
         return '%s' % self.web_scale
 
+    def getCropBBox(self, size, x, y):
+        """returns the crop bounding box and sets the croping values"""
+      
+        m = self.re_WidthXHeight.match(size)
+        if m is None:
+            raise ValueError, "'%s' is not a valid crop identifier" % size
+        try:
+            width = int(m.group(1))
+            height = int(m.group(2))
+        except AttributeError:
+            # the bbox should be a square
+            height = width
+        
+        # the users gave us the upper left corner, but he wants the middle
+        # of the cropping box
+        width = width/2
+        height = height/2
+        
+        return [x - width, y - width, x + width, y + height]
+    
     security.declareProtected(SilvaPermissions.View, 'canScale')
     def canScale(self):
         """returns if scaling/converting is possible"""
         return havePIL
+   
+    security.declareProtected(SilvaPermissions.View, 'canCrop')
+    def canCrop(self, size, x, y):
+        """ returns True if cropping is possible """
+       
+        cropbbox = self.getCropBBox(size, x, y)
+        image = self._getPILImage(self.hires_image)
+        bbox = image.getbbox()
 
+        if cropbbox[0] >= bbox[0] and cropbbox[1] >= bbox[1]\
+        and cropbbox[2] <= bbox[2] and cropbbox[3] <= bbox[3]:
+           return True 
+
+        return False
+      
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'getFileSystemPath')
     def getFileSystemPath(self):
@@ -271,7 +333,6 @@ class Image(Asset):
             return None
         return image.get_filename()
 
-    
     def _getPILImage(self, img):
         """return PIL of an image
 
@@ -291,6 +352,7 @@ class Image(Asset):
             get_transaction().abort()
             raise
         return image
+    
 
     def _createWebPresentation(self):
         width, height = self.getCanonicalWebScale()
@@ -299,10 +361,11 @@ class Image(Asset):
         except ValueError:
             # XXX: warn the user, no scaling or converting has happend
             self.image = self.hires_image
-            return    
+            return
         if self.web_scale == '100%' and image.format == self.web_format:
             self.image = self.hires_image
             return
+        self.cropped = False
         web_image_data = StringIO()
         web_image = image.resize((width, height), PIL.Image.BICUBIC)
         web_image = self._prepareWebFormat(web_image)
@@ -356,6 +419,13 @@ class Image(Asset):
     
     def get_scaled_file_size(self):
         return self.image.get_size()
+
+    def get_transformation(self):
+        """image cropped or scaled"""
+        # maybe this isn't as good as I thought XXX
+        if self.cropped:
+            return "cropped"
+        return "scaled"
 
 InitializeClass(Image)
     
