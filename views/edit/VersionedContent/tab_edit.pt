@@ -185,28 +185,28 @@
           }
         "></script>
 
-        <h1>Links</h1>
+        <h1>Link</h1>
 
         <div id="epoz-toolbox-addlink"></div>
         <div id="epoz-toolbox-editlink"></div>
         <div style="text-align: center">
 
           <form name="epoz_link_form" onsubmit="return false;">
+          <input type="button" class="transport" onclick="getLink(); return false;" value="get link reference..." />
           <input type="text" id="epoz-link-input" name="epoz_link_href" style="width: 96%" />
-          <input type="button" class="button" value="Use link from input" id="epoz-link-button" />
-          <input type="button" class="button" onclick="getLink(); return false;" value="Find link" />
+          <input type="button" class="button" value="insert link" id="epoz-link-button" />
           </form><br />
 
         </div>
 
 
-        <h1>Indexes</h1>
+        <h1>Index item</h1>
 
         <div style="text-align: center">
 
           <form name="epoz_index_form" onsubmit="return false;">
           <input type="text" id="epoz-index-input" name="epoz_index_href" style="width: 96%" />
-          <input type="button" class="button" value="Use index" id="epoz-index-button" />
+          <input type="button" class="button" value="insert index" id="epoz-index-button" />
           </form>
 
         </div>
@@ -252,12 +252,12 @@
         "></script>
 
 
-        <h1>Images</h1>
+        <h1>Image</h1>
 
         <div style="text-align: center">
         
           <form name="epoz_image_form">
-            <input type="button" class="button" onclick="getImage()" value="Find image" />
+            <input type="button" class="transport" onclick="getImage()" value="get image reference..." />
           </form>
 
         </div>
@@ -267,18 +267,18 @@
       <div class="epoz-toolbox" id="epoz-toolbox-tables" metal:fill-slot="epoz_toolbox_tables">
         <!-- start epoz toolbox tables -->
         
-        <h1 i18n:translate="table-inspector">Tables</h1>
+        <h1 i18n:translate="table-inspector">Table</h1>
 
         <table width="100%" style="color: black">
           <tbody>
             <tr>
-              <td>Table Class</td>
+              <td>Table class</td>
               <td>
-                <select id="epoz-table-classchooser">
-                  <option value="plain">Plain</option>
-                  <option value="list">List</option>
-                  <option value="grid">Grid</option>
-                  <option value="datagrid">Datagrid</option>
+                <select class="manipulator" id="epoz-table-classchooser">
+                  <option value="plain">plain</option>
+                  <option value="list">list</option>
+                  <option value="grid">grid</option>
+                  <option value="datagrid">datagrid</option>
                 </select>
               </td>
             </tr>
@@ -302,39 +302,39 @@
                     </tr>
                     <tr>
                       <td></td>
-                      <td><button id="epoz-table-addtable-button">Add</button></td>
+                      <td><button class="button" id="epoz-table-addtable-button">add</button></td>
                     </tr>
                   </table>
                 </div>
                 <div id="epoz-toolbox-edittable">
                   <table width="100%" style="color: black">
                     <tr>
-                      <td>Col Align</td>
+                      <td>Column align</td>
                       <td>
-                        <select id="epoz-table-alignchooser">
-                          <option value="left">Left</option>
-                          <option value="center">Center</option>
-                          <option value="right">Right</option>
+                        <select class="manipulator" id="epoz-table-alignchooser">
+                          <option value="left">left</option>
+                          <option value="center">center</option>
+                          <option value="right">right</option>
                           </select>
                       </td>
                     </tr>
                     <tr>
                       <td>Column</td>
                       <td>
-                          <button id="epoz-table-addcolumn-button">Add</button>
-                          <button id="epoz-table-delcolumn-button">Remove</button>
+                          <button class="button" id="epoz-table-addcolumn-button">add</button>
+                          <button class="button" id="epoz-table-delcolumn-button">remove</button>
                       </td>
                     </tr>
                     <tr>
                       <td>Row</td>
                       <td>
-                        <button id="epoz-table-addrow-button">Add</button> 
-                        <button id="epoz-table-delrow-button">Remove</button></td>
+                        <button class="button" id="epoz-table-addrow-button">add</button> 
+                        <button class="button" id="epoz-table-delrow-button">remove</button></td>
                     </tr>
                     <tr>
                       <td>Cleanup</td>
                       <td>
-                        <button id="epoz-table-fix-button">Fix</button>
+                        <button class="button" id="epoz-table-fix-button">fix</button>
                       </td>
                   </table>
                 </div>
