@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.100 $
+# $Revision: 1.101 $
 
 import Metadata
 import Folder, Root
@@ -32,12 +32,15 @@ import ContainerPolicy
 from Products.Silva import icon
 from Products.Silva import upgrade_imports
 
-# enable Formulator support for FileSystemSite
+# enable Formulator support for FileSystemSite/CMFCore
+# XXX shouldn't be necessary anymore with CVS Formulator
 from Products.Formulator import FSForm
-# so we can register directories for FileSystemSite
-from Products.FileSystemSite.DirectoryView import registerDirectory, \
-    registerFileExtension
-from Products.FileSystemSite.FSImage import FSImage
+
+# import FileSystemSite functionality
+# (use CMFCore if FileSystemSite is not installed)
+from Products.Silva.fssite import registerDirectory, registerFileExtension
+from Products.Silva.fssite import FSImage
+    
 # enable .ico support for FileSystemSite
 registerFileExtension('ico', FSImage)
 

@@ -3,59 +3,69 @@ See also LICENSE.txt
 
 Silva changes
 
-
   Under development
+
+    Features Added
+
+        - Added IP Groups. This replaces the `restriction by IP
+          address' text area in tab_access.
+          
+        - Ghosts have a `get reference' button now.
+    
+        - Siva Files now have their icon dependent on the
+          content. I.e. you get a pdf icon if you uploaded a pf
+          file. Currently there are icons for PDF, Word, Excel and
+          PowerPoint.
+        
+        - Added GhostFolder: While a ghost haunts a content objects a
+          GhostFolder haunts a container.
+
+        - service_utils went away. All functionality moved to
+          mangle.py
+    
+        - Checks for valid IDs are all moved to a separate module.
+
+        - Removed Silva Document and editor functionality from the
+          core into its own product, SilvaDocument.
+
+        - Added functionality to use CMFCore DirectoryView
+          infrastructure instead of FileSystemSite, through the
+          fssite.py module. Importing from the CMFCore is turned off
+          right now, though.
+
+          All uses of FileSystemSite functionality in Silva should now
+          import through this module.
 
     Bugs fixed
 
         - Renaming publishables no longer changes ordering (issue 635)
 
-        - In the Docma queues, the fullname of the job owner is now shown
-          instead of the userid, which was seen as a security issue by
-          some customers.
+        - In the Docma queues, the fullname of the job owner is now
+          shown instead of the userid, which was seen as a security
+          issue by some customers.
 
-        - Fixed two issues with the SQLDataSource and integer fields: 
+        - Fixed two issues with the SQLDataSource and integer fields:
           the code doesn't try to convert the contents of the field to
-          unicode anymore if it's not a plain string (fails with integers)
-          and the code doesn't change the contents of the field to '' 
-          anymore when it's something else than None (previously it checked
-          whether it resolved to true instead of checking for None).
+          unicode anymore if it's not a plain string (fails with
+          integers) and the code doesn't change the contents of the
+          field to '' anymore when it's something else than None
+          (previously it checked whether it resolved to true instead
+          of checking for None).
 
         - Fixed unicode issue when deleting a table column
-
-    Features Added
-
-        - Added IP Groups. This replaces the `restriction by IP address' text
-          area in tab_access.
-          
-        - Ghosts have a `get reference' button now.
-    
-        - Siva Files now have their icon dependent on the content. I.e. you 
-          get a pdf icon if you uploaded a pf file. Currently there are icons
-          for PDF, Word, Excel and PowerPoint.
-        
-        - Added GhostFolder: While a ghost haunts a content objects a
-          GhostFolder haunts a container.
-
-        - service_utils went away. All functionality moved to mangle.py
-    
-        - Checks for valid IDs are all moved to a separate module.
-
-        - Removed Silva Document and editor functionality from the core
-          into its own product, SilvaDocument.
 
   0.9.2.2
  
     Bugs Fixed
-                                                                                                    
+                                                                       
         - get CSS style iteration right for containers only containing
           Assets (which otherwise would break the container view).
-                                                                                                    
-        - Add a silva root in the ploneCustom style sheet for the tabbar
-          background images (which would not display if the silva root
-          folder did not have 'silva' for id and be located directly in
-          the zope root).
-                                                                                                    
+                                                                            
+        - Add a silva root in the ploneCustom style sheet for the
+          tabbar background images (which would not display if the
+          silva root folder did not have 'silva' for id and be located
+          directly in the zope root).
+                                                                              
         - Be less aggressive about trying to add a Unicode Whitespace
           splitter, and accept if one is already there.
 

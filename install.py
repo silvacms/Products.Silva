@@ -7,10 +7,11 @@ import zLOG
 from OFS.Uninstalled import BrokenClass
 
 import File
-from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
-from Products.FileSystemSite.utils import minimalpath, expandpath
-from Products.ProxyIndex.ProxyIndex import RecordStyle
+from Products.Silva.fssite import manage_addDirectoryView
+from Products.Silva.fssite import minimalpath, expandpath
 
+from Products.ProxyIndex.ProxyIndex import RecordStyle
+    
 from Products.Silva.ContainerPolicy import \
     NothingPolicy, SimpleContentPolicy, SemiGhostPolicy, AutoTOCPolicy
 from SimpleMembership import SimpleMemberService
@@ -59,16 +60,16 @@ def add_fss_directory_view(obj, name, base, *args):
     # -- end sanity check --
 
     # -- sanity check because of FSS 1.1 createDirectoryView bug --
-    try:
-        from Products.FileSystemSite.DirectoryView import _dirreg
-        info = _dirreg.getDirectoryInfo(path)
-    except:
-        pass
-    else:
-        # XXX need to comment this out to make tests run in INSTANCE_HOME
-        # situation..
-        if info is None:
-            raise ValueError('Not a FSS registered directory: %s' % path)
+##     try:
+##         from Products.FileSystemSite.DirectoryView import _dirreg
+##         info = _dirreg.getDirectoryInfo(path)
+##     except:
+##         pass
+##     else:
+##         # XXX need to comment this out to make tests run in INSTANCE_HOME
+##         # situation..
+##         if info is None:
+##             raise ValueError('Not a FSS registered directory: %s' % path)
 
     # -- end sanity check because of FSS 1.1 bug --
 
