@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -60,6 +60,9 @@ def unapprove_close_helper(object):
         if object.is_version_published():
             object.close_version()
     if IContainer.isImplementedBy(object):
+        default = object.get_default()
+        if default:
+            unapprove_close_helper(default)
         for item in object.get_ordered_publishables():
             unapprove_close_helper(item)
 
