@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.5
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.14 $
+  CVS:        $Revision: 1.15 $
 
 Upgrading Silva 0.8.4 to 0.8.5
 
@@ -122,4 +122,55 @@ Upgrading Silva 0.8.4 to 0.8.5
     templates used for presentation of the public website (see
     previous section).
 
+    Additionally the upgrade script will patch all content objects of type
+    'Silva Document' to work with the upgraded widgets just installed by the
+    script. If you have defined your own content types you may want to check
+    the next section, too.
 
+
+  Upgrading your custom content types
+
+    If you do not use any other content types but the ones delivered 
+    with Silva, you can safely skip this section.
+
+    As noted at the top of this text, the upgrade changes the rendering 
+    of list titles; previously these have been stored in the 'title'
+    attribute of the 'list' tag while they are now stored in a separate
+    'title' element nested inside the 'list' tag.
+    
+    If you have defined some custom content types by yourself, which
+    make use of the list rendering widgets in:
+   
+      - '/silva/service_widgets/top/nlist'
+
+      - '/silva/service_widgets/element/doc_elements/list'
+
+      - '/silva/service_widgets/element/nlist_elements/li'
+
+    you may want to upgrade the content objects of your custom content 
+    types, too.
+
+    Most probably this will be the case if your content types inherit
+    from the Silva 'Document.py'. Please check your content types XML Widgets
+    Registry setup scripts.
+
+    To upgrade your content types please edit the file 
+    /silva_upgrade_0.8.5/utils/upgrade_list_title, around line 32.
+    This should read::
+
+      elif obj.meta_type in ['Silva Document']:
+
+    Please change this by listing the custom content types which need
+    to be upgraded, e.g.::
+
+      elif obj.meta_type in ['Silva Document', 'My Content Type']:
+
+    If your custom content types do bind other tags but the 'list' and
+    'nlist' tags to the widgets in the folders listed above, please
+    do add them in line 3, too.
+
+    If you forgot to migrate your content types, the list titles of the
+    corresponding contents will not be rendered. If this happens
+    you can list the affected content types as indicated above and rerun
+    the upgrade. It does not hurt if the script tries to upgrade
+    content types twice, as it recognizes already upgraded contents.
