@@ -28,10 +28,10 @@ for id, error in result:
     if error is not None:
         msg = _('<span class="error">could not delete ${id}: ${error}</span>')
         msg.mapping = {'id': id, 'error': error}
-        messages.append(str(msg))
+        messages.append(unicode(msg))
     else:
         msg = _('deleted ${id}')
         msg.mapping = {'id': id}
-        messages.append(str(msg))
+        messages.append(unicode(msg))
 
 return view.tab_status(message_type="feedback", message=', '.join(messages).capitalize())

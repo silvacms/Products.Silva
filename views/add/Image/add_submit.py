@@ -1,5 +1,6 @@
 from Products.Silva import mangle
 from Products.Silva.interfaces import IAsset
+from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
 view = context
@@ -29,7 +30,7 @@ file = result['file']
 # do some additional validation
 if not file or not getattr(file, 'filename', None):
     return view.add_form(message_type="error",
-        message="Empty or invalid file.")
+        message=_("Empty or invalid file."))
 
 # if we don't have the right id, reject adding
 id_check = id.cook().validate()
@@ -64,6 +65,10 @@ if mode_asset:
 if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
+    message = _("Added ${meta_type} ${id}.")
+    message.mapping = {
+        'meta_type': object.meta_type,
+        'id': view.quotify(id)}
     return view.tab_edit(
         message_type="feedback",
-        message="Added %s %s." % (object.meta_type, view.quotify(id)))
+        message=message)

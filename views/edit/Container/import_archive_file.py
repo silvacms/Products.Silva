@@ -1,4 +1,5 @@
 from Products.Silva.adapters import archivefileimport, zipfileimport
+from Products.Silva.i18n import translate as _
 
 view = context
 request = view.REQUEST
@@ -7,7 +8,7 @@ model = request.model
 archive = request.get('importfile', None)
 if archive is None or not archive:
     return view.tab_edit_import(
-        message_type='error', message='Select a file for upload.')
+        message_type='error', message=_('Select a file for upload.'))
         
 
 recreate = request.get('recreate_dirs', None)
@@ -22,19 +23,25 @@ try:
         importer = archivefileimport.getArchiveFileImportAdapter(model)
         succeeded, failed = importer.importArchive(archive, title, recreate)
 except archivefileimport.BadZipfile, e:
-    msg = 'Something bad with the zipfile; ' + str(e)
+    msg = unicode(_('Something bad with the zipfile;')) + ' ' + str(e)
     message_type='alert'
 else:
     msg = []
     message_type='feedback'
-    if succeeded:    
-        msg.append('added %s' % view.quotify_list(succeeded))
+    if succeeded:  
+        message = _('added ${succeeded}')
+        message.mapping = {'succeeded': view.quotify_list(succeeded)}
+        msg.append(unicode(message))
     else:
         message_type='alert'
 
     if failed:
-        msg.append('<span class="warning">could not add: %s</span>' % view.quotify_list(failed))
+        message = _('<span class="warning">could not add: ${failed}</span>')
+        message.mapping = {'failed': view.quotify_list(failed)}
+        msg.append(unicode(message))
     msg = ' '.join(msg)
 
 return view.tab_edit(
-    message_type=message_type, message='Finished importing: %s' % msg)
+    message = _('Finished importing: ${msg}')
+    message.mapping = {'msg': msg}
+    message_type=message_type, message=message)

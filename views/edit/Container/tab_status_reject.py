@@ -52,12 +52,12 @@ if approved_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Rejected request for approval for: ${ids}')
     message.mapping = {'ids': view.quotify_list(approved_ids)}
-    msg.append(str(message))
+    msg.append(unicode(message))
 
 if not_approved:
     message = _('<span class="error">Not rejected: ${ids}</span>')
     message.mapping = {'ids': view.quotify_list_ext(not_approved)}
-    msg.append(str(message))
+    msg.append(unicode(message))
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

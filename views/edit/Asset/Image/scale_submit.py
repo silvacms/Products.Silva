@@ -1,4 +1,6 @@
 from Products.Formulator.Errors import ValidationError, FormValidationError
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 
@@ -7,7 +9,7 @@ try:
 except FormValidationError, e:
     return view.tab_edit(message_type="error", message=context.render_form_errors(e))
 
-msg = ['Scaling and/or format changed']
+msg = [unicode(_('Scaling and/or format changed'))]
 msg_type = 'feedback'
 
 if model.canScale():

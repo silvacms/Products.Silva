@@ -1,3 +1,4 @@
+from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
 view = context
@@ -8,4 +9,4 @@ model.copy_layout()
 return view.tab_metadata(
     form_errors={},
     message_type='feedback',
-    message='Layout copied')
+    message=_('Layout copied'))

@@ -1,5 +1,7 @@
 from Products.Silva import mangle
 from Products.Formulator.Errors import ValidationError, FormValidationError
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 
@@ -11,7 +13,7 @@ except FormValidationError, e:
 model.sec_update_last_author_info()
 model.set_title(mangle.entities(result['image_title']))
 
-msg = ['Properties changed']
+msg = _('Properties changed')
 msg_type = 'feedback'
 
 # is this still in use?
@@ -21,4 +23,4 @@ if (model.canScale() and
     model.set_web_presentation_properties(
         result['web_format'], result['web_scaling'])
     
-return view.tab_edit(message_type=msg_type, message=' '.join(msg))
+return view.tab_edit(message_type=msg_type, message=msg)

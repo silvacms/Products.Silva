@@ -46,11 +46,11 @@ if closed_ids:
     request.set('redisplay_timing_form', 0)
     message = 'Closed: ${ids}'
     message.mapping = {'ids': view.quotify_list(closed_ids)}
-    msg.append(str(message))
+    msg.append(unicode(message))
 
 if not_closed:
     message = '<span class="error">could not close: ${ids}</span>'
     message.mapping = {'ids': view.quotify_list_ext(not_closed)}
-    msg.append(str(message))
+    msg.append(unicode(message))
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

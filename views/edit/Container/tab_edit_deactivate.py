@@ -7,10 +7,12 @@
 ##parameters=ids=None
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 if ids is None:
-    return view.tab_edit(message_type="feedback", message="Nothing was selected, so nothing is deactivated.")
+    return view.tab_edit(message_type="feedback", message=_("Nothing was selected, so nothing is deactivated."))
 
 deactivated = []
 not_deactivated = []
@@ -25,12 +27,17 @@ for id in ids:
 
 if deactivated:
    if not_deactivated:
-      message = 'Content %s deactivated, <span class="error">but could not deactivate %s.</span>' % (
-          view.quotify_list(deactivated), view.quotify_list(not_deactivated))
+      message = _('Content ${deactivated} deactivated, <span class="error">but could not deactivate ${not_deactivated}.</span>')
+      message.mapping = {
+          'deactivated': view.quotify_list(deactivated),
+          'not_deactivated': view.quotify_list(not_deactivated)
+          }
    else:
-      message = 'Content %s deactivated.' % view.quotify_list(deactivated)
+      message = _('Content ${deactivated} deactivated.')
+      message.mapping ={'deactivated': view.quotify_list(deactivated)}
 else:
-   message = 'Could not deactivate %s.' % view.quotify_list(not_deactivated)
+   message = _('Could not deactivate ${not_deactivated}.')
+   message.mapping = {'not_deactivated': view.quotify_list(not_deactivated)}
    message_type = 'error'
    
 return view.tab_edit(message_type=message_type, message=message)

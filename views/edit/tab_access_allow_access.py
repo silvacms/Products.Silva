@@ -24,7 +24,7 @@ for userid, role in [r.split('|') for r in request['requests']]:
         return view.tab_access(message_type='error', message=e) 
     msg = _('&#xab;${user_id}&#xbb; allowed the ${role} role')
     msg.mapping = {'user_id': userid, 'role': role}
-    messages.append(str(msg))
+    messages.append(unicode(msg))
 
 model.send_messages()
 

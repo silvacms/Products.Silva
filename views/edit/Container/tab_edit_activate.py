@@ -7,10 +7,12 @@
 ##parameters=ids=None
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 if ids is None:
-    return view.tab_edit(message_type="error", message="Nothing was selected, so nothing is activated.")
+    return view.tab_edit(message_type="error", message=_("Nothing was selected, so nothing is activated."))
 
 activated = []
 not_activated = []
@@ -25,12 +27,17 @@ for id in ids:
 
 if activated:
    if not_activated:
-      message = 'Content %s activated, <span class="error">but could not activate %s.</span>' % (
-          view.quotify_list(activated), view.quotify_list(not_activated))
+      message = _('Content ${activated} activated, <span class="error">but could not activate ${not_activated}.</span>')
+      message.mapping = {
+          'activated': view.quotify_list(activated),
+          'not_activated': view.quotify_list(not_activated)
+          }
    else:
-      message = 'Content %s activated.' % view.quotify_list(activated)
+      message = _('Content ${activated} activated.')
+      message.mapping = {'activated': view.quotify_list(activated)}
 else:
-   message = 'Could not activate %s.' % view.quotify_list(not_activated)
+   message = _('Could not activate ${not_activated}.')
+   message.mapping = {'not_activated': view.quotify_list(not_activated)}
    message_type = 'error'
 
 return view.tab_edit(message_type=message_type, message=message)

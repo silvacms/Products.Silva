@@ -7,10 +7,16 @@
 ##parameters=id
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 result = model.move_object_down(id)
 if result:
-    return view.tab_edit(message_type="feedback", message="Moved %s down." % view.quotify(id))
+    message = _("Moved ${id} down.")
+    message.mapping = {'id': view.quotify(id)}
+    return view.tab_edit(message_type="feedback", message=message)
 else:
-    return view.tab_edit(message_type="error", message="Could not move %s down." % view.quotify(id))
+    message = _("Could not move ${id} down.")
+    message.mapping = {'id': view.quotify(id)}
+    return view.tab_edit(message_type="error", message=message)

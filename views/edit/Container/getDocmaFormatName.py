@@ -1,11 +1,12 @@
 ##parameters=format
-# $Id: getDocmaFormatName.py,v 1.3 2003/05/12 09:11:21 kitblake Exp $
+# $Id: getDocmaFormatName.py,v 1.4 2004/11/16 18:18:52 eric Exp $
+from Products.Silva.i18n import translate as _
 
 formats = {
-    'silva': 'Silva XML',
-    'word': 'Word document',
+    'silva': _('Silva XML'),
+    'word': _('Word document'),
 }
 
-return formats.get(format, 'unknown format')
+return formats.get(format, _('unknown format'))
 
 

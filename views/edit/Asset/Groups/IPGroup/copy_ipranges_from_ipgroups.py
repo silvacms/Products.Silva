@@ -1,18 +1,22 @@
 ##parameters=groups=[]
+from Products.Silva.i18n import translate as _
+
 request = context.REQUEST
 model = request.model
 view = context
 
 if not groups:
     return view.tab_edit(
-        message_type="error", message="No group selected, so nothing copied.")
+        message_type="error",
+        message=_("No group selected, so nothing copied."))
 
 copied = model.copyIPRangesFromIPGroups(groups)
 if copied:
-    message = "Range(s) %s added." % view.quotify_list(copied)
+    message = _("Range(s) ${copied} added.")
+    message.mapping = {'copied': view.quotify_list(copied)}
     type = 'feedback'
 else:
-    message = "Nothing copied."
+    message = _("Nothing copied.")
     type = 'error'
 return view.tab_edit(message_type=type, message=message)
 

@@ -7,12 +7,14 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 if model.get_link_status() != model.LINK_OK:
     return view.tab_edit(message_type="error",
-        message="Ghost Folder was not synchronized, because the target is "\
-            "invalid.")
+        message=_("Ghost Folder was not synchronized, because the target"\
+        "is invalid."))
 model.haunt()
 return view.tab_edit(message_type="feedback",
-    message="Ghost Folder synchronized")
+    message=_("Ghost Folder synchronized"))

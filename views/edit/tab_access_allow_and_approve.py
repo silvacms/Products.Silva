@@ -22,7 +22,7 @@ for userid, role in [r.split('|') for r in request['requests']]:
     model.allow_role(userid, role)
     msg = _('&#xab;${user_id}&#xbb; approved and allowed the ${role} role')
     msg.mapping = {'user_id': userid, 'role': role}
-    messages.append(str(msg))
+    messages.append(unicode(msg))
 
 model.send_messages()
 

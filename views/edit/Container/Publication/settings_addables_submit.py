@@ -8,6 +8,7 @@
 ##title=
 ##
 from Products.Formulator.Errors import ValidationError, FormValidationError
+from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
 form = context.settings_addables_form
@@ -16,7 +17,10 @@ changed_metadata = []
 try:
     result = form.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return context.settings_addables(message_type="error", message='%s' % context.render_form_errors(e))
+    return context.settings_addables(
+        message_type="error",
+        message='%s' % context.render_form_errors(e)
+        )
 
 currently_acquired = model.is_silva_addables_acquired()
 
@@ -25,7 +29,10 @@ addables = result['addables']
 
 # if nothing changes, we're done
 if will_be_acquired and currently_acquired:
-    return context.settings_addables(message_type="error", message="Addable settings have not changed and remain acquired.")
+    return context.settings_addables(
+        message_type="error",
+        message=_("Addable settings have not changed and remain acquired.")
+        )
 
 # now update the settings (if we have to)
 if will_be_acquired:
@@ -35,4 +42,8 @@ else:
     changed_metadata.append(('list of allowed addables'))
     model.set_silva_addables_allowed_in_publication(addables)
 
-return context.settings_addables(message_type="feedback", message="Addable settings changed for: %s"%(context.quotify_list(changed_metadata)))
+message = _("Addable settings changed for: ${changed_metadata}")
+message.mapping = {
+    'changed_metadata': context.quotify_list(changed_metadata)
+    }
+return context.settings_addables(message_type="feedback", message=message)

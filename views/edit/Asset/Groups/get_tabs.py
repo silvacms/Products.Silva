@@ -9,8 +9,10 @@
 ##
 # define:
 # name, id/None, up_id, toplink_accesskey, tab_accesskey, uplink_accesskey
-tabs = [('edit', 'tab_edit', 'tab_edit', '!', '1', '6'),
-        ('groups', None, 'tab_access_groups', '@', '2', '7'),
+from Products.Silva.i18n import translate as _
+
+tabs = [(_('edit'), 'tab_edit', 'tab_edit', '!', '1', '6'),
+        (_('groups'), None, 'tab_access_groups', '@', '2', '7'),
        ]
 
 return tabs

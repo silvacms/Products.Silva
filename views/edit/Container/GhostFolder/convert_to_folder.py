@@ -7,6 +7,8 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 
@@ -16,5 +18,5 @@ model.to_folder()
 model = getattr(parent, id)
 context.REQUEST.set('model', model)
 return model.edit['tab_edit'](message_type="feedback",
-    message="Ghost Folder has been replaced by a folder")
+    message=_("Ghost Folder has been replaced by a folder"))
 

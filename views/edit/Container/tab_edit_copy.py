@@ -7,12 +7,15 @@
 ##parameters=ids=None
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 model = context.REQUEST.model
 view = context
 
 if ids is None:
-    return view.tab_edit(message_type="error", message="Nothing was selected, so nothing was copied.")
+    return view.tab_edit(message_type="error", message=_("Nothing was selected, so nothing was copied."))
 
 model.action_copy(ids, context.REQUEST)
-message = "Placed %s on the clipboard for copying." % view.quotify_list(ids)
+message = _("Placed ${ids} on the clipboard for copying.")
+message.mapping = {'ids': view.quotify_list(ids)}
 return view.tab_edit(message_type="feedback", message=message)

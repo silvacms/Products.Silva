@@ -2,6 +2,7 @@
 # but no other way to override than to copy code *ugh*.
 
 from Products.Silva import mangle
+from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
 view = context
@@ -35,13 +36,14 @@ if not id_check == id.OK:
         message=view.get_id_status_text(id))
 
 if groups_service.isGroup(str(id)):
+    message=_("""There's already a Group with the name ${id} in this Silva
+        site.<br />In contrast to other Silva objects, Group IDs must be
+        unique within a Silva instance.""")
+    message.mapping = {'id': view.quotify(id)}
     return model.edit['tab_access_groups'](
         message_type="error", 
-        message=\
-"""There's already a Group with the name %s in this Silva site. 
-<br />
-In contrast to other Silva objects, Group IDs must be unique 
-within a Silva instance.""" % view.quotify(id))
+        message=message
+        )
 
 id = str(id)
 
@@ -55,6 +57,11 @@ object.sec_update_last_author_info()
 if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
+    message = _("Added ${meta_type} ${id}.")
+    message.mapping = {
+        'meta_type': object.meta_type,
+        'id': view.quotify(id)}
     return model.edit['tab_access_groups'](
         message_type="feedback", 
-        message="Added %s %s." % (object.meta_type, view.quotify(id)))
+        message=message
+        )

@@ -7,12 +7,14 @@
 ##parameters=delete_after_import=0
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 view = context
 request = view.REQUEST
 model = request.model
 
 if not request.has_key('storageids') or not request['storageids']:
-    return view.tab_edit_import(message_type='error', message='Select one or more jobs to import')
+    return view.tab_edit_import(message_type='error', message=_('Select one or more jobs to import'))
 
 errors = []
 for item in request['storageids']:
@@ -31,6 +33,8 @@ for item in request['storageids']:
             model.manage_addProduct['Silva'].manage_addFile('doc_%s.doc' % sid, 'Docma Word Document %s' % sid, data)
 
 if errors:
-    return view.tab_edit_import(message_type='error', message='The following errors have occured during import: %s' % ', '.join(errors))
+    message = 'The following errors have occured during import: ${errors}'
+    message.mapping = {'errors': ', '.join(errors)}
+    return view.tab_edit_import(message_type='error', message=message)
 else:
-    return view.tab_edit(message_type='feedback', message='Finished importing')
+    return view.tab_edit(message_type='feedback', message=_('Finished importing'))

@@ -7,6 +7,7 @@
 ##parameters=
 ##title=Lookup the container to start listing assets
 ##
+
 request = context.REQUEST
 model = request.model
 assert model.meta_type == 'Silva Ghost Folder', '%r is no ghost folder' % model

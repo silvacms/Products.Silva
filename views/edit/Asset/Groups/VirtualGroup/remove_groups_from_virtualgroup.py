@@ -1,4 +1,5 @@
 ##parameters=groupids=None
+from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
@@ -7,14 +8,16 @@ view = context
 if not groupids:
     return view.tab_edit(
         message_type="error", 
-        message="No groups selected, so none removed.")
+        message=_("No groups selected, so none removed."))
 
 removed = []
 for groupid in groupids:
     model.removeGroup(groupid)
     removed.append(groupid)
 
+message = _("Group(s) ${removed} removed from group.")
+message.mapping = {'removed': view.quotify_list(removed)}
 return view.tab_edit(
     message_type="feedback", 
-    message="Group(s) %s removed from group." % view.quotify_list(removed))
+    message=message)
 

@@ -5,6 +5,7 @@ REQUEST = context.REQUEST
 
 # validate form
 from Products.Formulator.Errors import ValidationError, FormValidationError
+from Products.Silva.i18n import translate as _
 try:
     result = view.layout_form.validate_all(REQUEST)
 except FormValidationError, e:
@@ -15,9 +16,9 @@ except FormValidationError, e:
 layout_name = result['layout']
 model.set_layout(layout_name)
 if layout_name:
-    message='Layout saved.'
+    message=_('Layout saved.')
 else:
-    message='Layout has been removed.'
+    message=_('Layout has been removed.')
 
 return view.tab_metadata(
     form_errors={},

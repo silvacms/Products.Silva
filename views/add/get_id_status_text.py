@@ -4,6 +4,7 @@
 # returns string
 
 from Products.Silva import mangle
+from Products.Silva.i18n import translate as _
 
 # backward compatibility (for now)
 if same_type(id, ""):
@@ -13,32 +14,44 @@ view = context
 status_code = id.validate()
 
 if status_code ==id.CONTAINS_BAD_CHARS:
-    return """Sorry, strange characters are in the id. It should only contain 
-        letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or 
-        &#8216;.&#8217;<br />
-        Spaces are not allowed in Internet addresses, and the id should start 
-        with a letter or digit."""
+    return _("""Sorry, strange characters are in the id. It should only
+        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or 
+        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, 
+        and the id should start with a letter or digit.""")
 elif status_code == id.RESERVED_PREFIX:
     # FIXME: needs to know about the prefix
     prefix = str(id).split('_')[0]+'_'
-    return """Sorry, ids starting with %s are reserved for internal use.<br />
-        Please use another id.""" % view.quotify(prefix)
+    message = _("""Sorry, ids starting with ${prefix} are reserved for
+        internal use.<br />Please use another id.""")
+    message.mapping = {'prefix': view.quotify(prefix)}
+    return message
 elif status_code == id.RESERVED:
-    return """Sorry, the id %s is reserved for internal use.<br />
-        Please use another id.""" % view.quotify(id)
+    message = _("""Sorry, the id ${id} is reserved for internal use.<br />
+        Please use another id.""")
+    message.mapping = {'id': view.quotify(id)}
+    return message
 elif status_code == id.IN_USE_CONTENT:
-    return """There is already an object with the id %s in this folder.<br />
-        Please use a different one.""" % view.quotify(id)
+    message = _("""There is already an object with the id ${id} in this 
+        folder.<br />Please use a different one.""")
+    message.mapping = {'id': view.quotify(id)}
+    return message
 elif status_code == id.IN_USE_ASSET:
-    return """There is already an asset with the id %s in this folder.<br />
-Please use another id.""" % view.quotify(id)
+    message = _("""There is already an asset with the id ${id} in this 
+        folder.<br />Please use another id.""")
+    message.mapping = {'id': view.quotify(id)}
+    return message
 elif status_code == id.RESERVED_POSTFIX:
-    return """Sorry, the id %s ends with invalid characters.<br />
-Please use another id.""" % view.quotify(id)
+    message = _("""Sorry, the id ${id} ends with invalid characters.<br />
+        Please use another id.""")
+    message.mapping = {'id': view.quotify(id)}
+    return message
 
 # this should not happen
-return """(Internal Error): An invalid status %s occured while checking the 
-    id %s.<br />
-    Please contact the person responsible for this Silva installation or 
-    file a bug report.""" % (view.quotify(status_code), view.quotify(id))
-
+message = _("""(Internal Error): An invalid status ${status_code} occured 
+    while checking the id ${id}.<br />Please contact the person responsible 
+    for this Silva installation or file a bug report.""")
+message.mapping = {
+    'status_code': view.quotify(status_code), 
+    'id': view.quotify(id)
+    }
+return message

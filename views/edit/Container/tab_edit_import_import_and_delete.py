@@ -7,6 +7,8 @@
 ##parameters=delete_after_import=0
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 view = context
 request = view.REQUEST
 model = request.model
@@ -14,7 +16,7 @@ model = request.model
 model.security_trigger()
 
 if not request.has_key('storageids') or not request['storageids']:
-    return view.tab_edit_import(message_type='error', message='Select one or more jobs to import')
+    return view.tab_edit_import(message_type='error', message=_('Select one or more jobs to import'))
 
 errors = []
 for item in request['storageids']:
@@ -34,11 +36,15 @@ for item in request['storageids']:
         try:
             model.manage_addProduct['Silva'].manage_addFile(newid, 'Docma Word Document %s' % sid, data)
         except:
-            return view.tab_edit_import(message_type='error', message='Could not import %s' % newid)
+            message = _('Could not import ${newid}')
+            message.mapping = {'newid': newid}
+            return view.tab_edit_import(message_type='error', message=message)
         else:
             model.service_docma.delete_finished_job(str(request['AUTHENTICATED_USER']), int(sid))
 
 if errors:
-    return view.tab_edit_import(message_type='error', message='The following errors have occured during import: %s' % ', '.join(errors))
+    message = 'The following errors have occured during import: ${errors}'
+    message.mapping = {'errors': ', '.join(errors)}
+    return view.tab_edit_import(message_type='error', message=message)
 else:
-    return view.tab_edit_import(message_type='feedback', message='Finished importing')
+    return view.tab_edit_import(message_type='feedback', message=_('Finished importing'))
