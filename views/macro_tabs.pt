@@ -28,7 +28,7 @@
   tal:attributes="href tab_info/toplink_url;"
 ><img tal:attributes="src python: test(model.meta_type == 'Silva Publication', silva_root+'/globals/up_publication.gif', silva_root+'/globals/up_tree.gif')" width="19" height="14" border="0" /></a></td>
 <td align="center" width="75"
-  tal:attributes="class python:test(is_selected_tab, 'tab-up', 'tab');">
+  tal:attributes="class python:test(is_selected_tab, test(item[1] == active_tab, 'tab-recede', 'tab-up'), 'tab');">
 <a class="" href=""
   tal:attributes="href tab_info/tab_url;
                 class python:test(is_selected_tab, 'tab-up', 'tab');"
