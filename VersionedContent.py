@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.52.8.2 $
+# $Revision: 1.52.8.3 $
 
 # Python
 from StringIO import StringIO
@@ -246,12 +246,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     def _get_cached_data(self, cache_key):
         cached_data = self._cached_data.get(cache_key, None)
         if cached_data is not None:
-            # XXX: This can be removed if the caches are cleared after an
-            # upgrade.
-            if not isinstance(cached_data, CachedData):
-                del self._cached_data[cache_key]
-                self._p_changed = 1
-                return None
             # If cache is still valid, serve it.
             # XXX: get_public_version_publication_datetime *and*
             # is_version_published trigger workflow updates; necessary?
