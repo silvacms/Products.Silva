@@ -14,7 +14,7 @@ class ViewCode:
     moved to Product code to optimize Silva
     """
     security = ClassSecurityInfo()
-    
+
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_editor_link')
     def get_editor_link(self, target):
@@ -27,7 +27,7 @@ class ViewCode:
             tab = 'tab_preview'
 
         return '%s/edit/%s' % (target.absolute_url(), tab)
-   
+
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'render_icon')
     def render_icon(self, obj=None, meta_type='Unknown'):
@@ -39,7 +39,7 @@ class ViewCode:
             icon_path = '%s/globals/silvageneric.gif' % self.REQUEST['BASE2']
             return tag % {'icon_path': icon_path, 'alt': meta_type}
         try:
-            icon_path = '%s/%s' % (self.REQUEST['BASE1'], 
+            icon_path = '%s/%s' % (self.REQUEST['BASE1'],
                 icon.registry.getIcon(obj))
         except icon.RegistryError:
             icon_path = getattr(aq_base(obj), 'icon', None)
@@ -83,11 +83,11 @@ class ViewCode:
                 status = 'approved'
 
             if public == 'published':
-                public_status = 'published'               
+                public_status = 'published'
             elif public == 'closed':
                 public_status = 'closed'
 
-            if not status: 
+            if not status:
                 status_style = public_status.lower()
                 status = 'none'
             else:
@@ -139,13 +139,13 @@ class ViewCode:
             result.append(d)
             i += 1
         return result
-    
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_processed_asset_tree')
     def get_processed_assets(self):
         result = []
         render_icon = self.render_icon
-  
+
         for asset in self.get_assets():
             title = asset.get_title()
             modification_datetime = asset.get_modification_datetime()
@@ -166,8 +166,8 @@ class ViewCode:
                 d['blacklink_class'] = 'closed'
             result.append(d)
         return result
-                
-        
+
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'get_processed_status_tree')
     def get_processed_status_tree(self):
         tree = self.get_status_tree()
@@ -176,7 +176,7 @@ class ViewCode:
             obj = item[1]
             infodict = {}
             ret.append(infodict)
-            
+
             infodict['indent'] = indent = item[0]
             infodict['id'] = mangle.String.truncate(obj.id, 22)
 
@@ -193,11 +193,11 @@ class ViewCode:
             infodict['title'] = obj.get_title_editable()
             infodict['meta_type'] = obj.meta_type
             infodict['absolute_url'] = obj.absolute_url()
-            infodict['icon'] = self.render_icon(obj)            
-            
+            infodict['icon'] = self.render_icon(obj)
+
             infodict['implements_content'] = obj.implements_content()
             if infodict['implements_content']:
-                infodict['is_default'] = obj.is_default()                                
+                infodict['is_default'] = obj.is_default()
                 infodict['container_meta_type'] = obj.get_container().meta_type
 
             infodict['implements_container'] = obj.implements_container()
@@ -224,11 +224,11 @@ class ViewCode:
                 if datetime:
                     str_datetime = mangle.DateTime(datetime).toShortStr()
                     infodict['next_version_expiration_datetime'] = str_datetime
-                    
+
                 datetime = obj.get_public_version_expiration_datetime()
                 if datetime:
                     str_datetime = mangle.DateTime(datetime).toDateStr()
                     infodict['public_version_expiration_datetime'] = str_datetime
         return ret
-            
+
 InitializeClass(ViewCode)

@@ -26,10 +26,6 @@ class RenderImagesOnRightTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals(images_on_right.getName(), "Images on Right")
 
     def test_renders_images_on_right(self):
-        # FIXME: this is just testing against dummy output for now
-        # as what's important first off is that the overall architecture
-        # works. FIX THIS TEST once the stylesheet is actually called by
-        # the renderer.
         importfolder = self.add_folder(
             self.root,
             'silva_xslt',
@@ -39,16 +35,16 @@ class RenderImagesOnRightTest(SilvaTestCase.SilvaTestCase):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
-        source_file = open("data/test_document.xml")
+        source_file = open("data/test_document2.xml")
         importer.importFromFile(
             source_file, result = importfolder,
             settings = test_settings, info = test_info)
         source_file.close()
-
+        # XXX get a (which?) version
         obj = self.root.silva_xslt.test_document
 
         images_on_right = RenderImagesOnRight()
-        self.assertEquals(images_on_right.render(obj), "images on right")
+        self.assertEquals(images_on_right.render(obj), '<?xml version="1.0"?>\n<table><tr><td valign="top">unapproved<h2 class="heading">This is a rendering test</h2><p xmlns:doc="http://infrae.com/ns/silva_document" xmlns:silva="http://infrae.com/ns/silva" class="p">This is a test of the XSLT rendering functionality.</p></td><td valign="top"><a href="bar.html"><img src="foo"/></a><br/></td></tr></table>\n')
 
 
 if __name__ == '__main__':

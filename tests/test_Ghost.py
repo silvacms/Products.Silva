@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -63,7 +63,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # this should publish doc1
         self.doc1.set_approved_version_publication_datetime(DateTime() - 1)
         # ghost=0, doc=1
-        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
             ghost.preview())
         self.assertEquals('Sorry, this document is not published yet.',
             ghost.view())
@@ -73,9 +73,9 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost.approve_version()
 
         # ghost=1, doc=1
-        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
             ghost.preview())
-        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
             ghost.view())
 
             
@@ -84,18 +84,18 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.doc1.set_title('Doc1 1')
 
         # shouldn't affect what we're ghosting
-        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
             ghost.preview())
-        self.assertEquals(u'<h2 class="heading">Doc1</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
             ghost.view())
 
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc1.approve_version()
 
         # now we're ghosting the version 1
-        self.assertEquals(u'<h2 class="heading">Doc1 1</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
             ghost.preview())
-        self.assertEquals(u'<h2 class="heading">Doc1 1</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
             ghost.view())
 
         # create new version of ghost
@@ -104,16 +104,16 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         self.assertEquals(u'This ghost is broken. (/root/doc2)',
             ghost.preview())
-        self.assertEquals(u'<h2 class="heading">Doc1 1</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
             ghost.view())
 
         # publish doc2
         self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc2.approve_version()
 
-        self.assertEquals(u'<h2 class="heading">Doc2</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
             ghost.preview())
-        self.assertEquals(u'<h2 class="heading">Doc1 1</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
             ghost.view())
 
 
@@ -121,9 +121,9 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
 
-        self.assertEquals(u'<h2 class="heading">Doc2</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
             ghost.preview())
-        self.assertEquals(u'<h2 class="heading">Doc2</h2> \n\n',
+        self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
             ghost.view())
 
         # publish a ghost pointing to something that hasn't a published

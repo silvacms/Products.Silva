@@ -36,6 +36,18 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
                     meta_type = 'Silva Document Version'),
                 RenderImagesOnRight))
 
+    def test_get_default_renderer_name(self):
+        # XXX: unlike the above tests, this code is actually hitting
+        # the placeful registry. the problem here is that I meant for
+        # placeful registry code to be a very thin wrapper around the
+        # "normal" Python code, but things didn't actually work out
+        # that way.
+        #
+        # maybe a second file will have to be created for the testing
+        # of the service itself.
+        registry = self.root.service_renderer_registry
+        self.assertEqual(registry.getDefaultRendererName(), "Basic HTML")
+
 if __name__ == '__main__':
     framework()
 else:

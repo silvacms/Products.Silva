@@ -1,3 +1,4 @@
+import Globals
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.adapters import adapter
 from Products.Silva.transform.interfaces import IXMLSource
@@ -13,3 +14,9 @@ class XMLSourceAdapter(adapter.Adapter):
         exporter = xmlexport.theXMLExporter
         exportRoot = xmlexport.SilvaExportRoot(self.context)
         return exporter.exportToString(exportRoot, settings)
+
+Globals.InitializeClass(XMLSourceAdapter)
+
+def getXMLSourceAdapter(context):
+    return XMLSourceAdapter(context).__of__(context)
+    

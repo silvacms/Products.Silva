@@ -746,7 +746,7 @@
      <value key="description"></value>
      <value key="whitespace_preserve"></value>
      <value key="extra"></value>
-     <value key="items">python:[[x.getName(), x.getName()] for x in form.service_renderer_registry.getRenderersForMetaType("Silva Document Version")]</value>
+     <value key="items">python:[['(Default)', '(Default)']] + [[x.getName(), x.getName()] for x in form.service_renderer_registry.getRenderersForMetaType("Silva Document Version")]</value>
    </field_tales>
    <field_messages>
      <message name="external_validator_failed">The input failed the external validator.</message>

@@ -1,3 +1,4 @@
+import Globals
 from Products.Silva.adapters import adapter
 from Products.Silva.transform.interfaces import IRenderable
 from Products.Silva.transform.Exceptions import InvalidRendererError
@@ -19,3 +20,9 @@ class RenderableAdapter(adapter.Adapter):
 
     def getMetaType(self):
         pass
+
+Globals.InitializeClass(RenderableAdapter)
+
+def getRenderableAdapter(context):
+    return RenderableAdapter(context).__of__(context)
+    

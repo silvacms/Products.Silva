@@ -8,6 +8,7 @@ from AccessControl import ClassSecurityInfo
 # Silva
 from Products.Silva.transform.RendererRegistry import RendererRegistry
 from Products.Silva.transform.renderers.RenderImagesOnRight import RenderImagesOnRight
+from Products.Silva.transform.renderers.BasicHTMLRenderer import BasicHTMLRenderer
 from helpers import add_and_edit
 
 class RendererRegistryService(SimpleItem.SimpleItem):
@@ -28,8 +29,20 @@ class RendererRegistryService(SimpleItem.SimpleItem):
         # and customers don't pay for coding elegance. a more sound way
         # of relating this, Zope-specific code to the normal Python renderer
         # registry code should definintely be revisted after the Aug 16 demo.
-        REGISTRY = {'Silva Document Version' : [RenderImagesOnRight().__of__(self)]}
+        REGISTRY = {'Silva Document Version' : [
+            RenderImagesOnRight().__of__(self), BasicHTMLRenderer().__of__(self)]}
         return REGISTRY[meta_type]
+
+    def getRendererByName(self, name, meta_type):
+        meta_type_renderers = self.getRenderersForMetaType(meta_type)
+        for r in meta_type_renderers:
+            if r.getName() == name:
+                return r
+
+        return None
+
+    def getDefaultRendererName(self):
+        return "Basic HTML"
 
 InitializeClass(RendererRegistryService)
 

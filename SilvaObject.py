@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.101 2004/07/22 15:44:44 eric Exp $
+# $Id: SilvaObject.py,v 1.102 2004/08/12 12:46:09 eric Exp $
 
 # python
 from types import StringType
@@ -36,7 +36,7 @@ class SilvaObject(Security, ViewCode):
 
     # FIXME: this is for backward compatibility with old objects
     _title = "No title yet"
-    
+
     # allow edit view on this object
     edit = ViewAttribute('edit', 'tab_edit')
 
@@ -57,7 +57,7 @@ class SilvaObject(Security, ViewCode):
         self.id = id
         self._title = title
         self._v_creation_datetime = DateTime()
-        
+
     def __repr__(self):
         return "<%s instance %s>" % (self.meta_type, self.id)
 
@@ -88,8 +88,8 @@ class SilvaObject(Security, ViewCode):
             old = binding.get('silva-extra', element_id=elem)
             if old is None:
                 timings[elem] = ctime
-        binding.setValues('silva-extra', timings)        
-            
+        binding.setValues('silva-extra', timings)
+
     def manage_beforeDelete(self, item, container):
         self._beforeDelete_helper(item, container)
 
@@ -117,7 +117,7 @@ class SilvaObject(Security, ViewCode):
     security.declarePrivate('titleMutationTrigger')
     def titleMutationTrigger(self):
         """This trigger is called upon save of Silva Metadata. More
-        specifically, when the silva-content - defining titles - set is 
+        specifically, when the silva-content - defining titles - set is
         being editted for this object.
         """
         if self.id == 'index':
@@ -196,12 +196,12 @@ class SilvaObject(Security, ViewCode):
         return self.get_title_or_id()
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'can_set_title')    
+        SilvaPermissions.ChangeSilvaContent, 'can_set_title')
     def can_set_title(self):
         """Check to see if the title can be set
         """
         return 1
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):
@@ -209,7 +209,7 @@ class SilvaObject(Security, ViewCode):
         version = self.get_previewable()
         return self.service_metadata.getMetadataValue(
             version, 'silva-extra', 'creationtime')
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
     def get_modification_datetime(self, update_status=1):
@@ -217,19 +217,19 @@ class SilvaObject(Security, ViewCode):
         version = self.get_previewable()
         return self.service_metadata.getMetadataValue(
             version, 'silva-extra', 'modificationtime')
-       
+
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_breadcrumbs')
     def get_breadcrumbs(self, ignore_index=1):
         """Get information used to display breadcrumbs. This is a
-        list of items from the Silva Root or the object being the root of 
+        list of items from the Silva Root or the object being the root of
         the virtual host - which ever comes first.
         """
         adapter = getVirtualHostingAdapter(self)
         root = adapter.getVirtualRoot()
         if root is None:
             root = self.get_root()
-            
+
         result = []
         item = self
         while ISilvaObject.isImplementedBy(item):
@@ -238,13 +238,13 @@ class SilvaObject(Security, ViewCode):
                     result.append(item)
             else:
                 result.append(item)
-                
+
             if item == root: # XXX does equality always work in Zope?
                 break
             item = item.aq_parent
         result.reverse()
         return result
-    
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
     def get_editable(self):
@@ -259,7 +259,7 @@ class SilvaObject(Security, ViewCode):
         versioning).
         """
         return self
-    
+
     security.declareProtected(SilvaPermissions.View, 'get_viewable')
     def get_viewable(self):
         """Get the publically viewable version (may be the object itself if
@@ -287,9 +287,9 @@ class SilvaObject(Security, ViewCode):
                               'implements_publishable')
     def implements_publishable(self):
         return IPublishable.isImplementedBy(self)
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'implements_asset')  
+                              'implements_asset')
     def implements_asset(self):
         return IAsset.isImplementedBy(self)
 
@@ -307,12 +307,12 @@ class SilvaObject(Security, ViewCode):
                               'implements_publication')
     def implements_publication(self):
         return IPublication.isImplementedBy(self)
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_root')
     def implements_root(self):
         return IRoot.isImplementedBy(self)
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_versioning')
     def implements_versioning(self):
@@ -326,7 +326,7 @@ class SilvaObject(Security, ViewCode):
     security.declareProtected(
         SilvaPermissions.ViewAuthenticated, 'security_trigger')
     def security_trigger(self):
-        """This is equivalent to activate_security_hack(), however this 
+        """This is equivalent to activate_security_hack(), however this
         method's name is less, er, hackish... (e.g. when visible in error
         messages and trace-backs).
         """
@@ -348,13 +348,13 @@ class SilvaObject(Security, ViewCode):
         adapter = zipfileExport.getZipfileExportAdapter(self)
         result = adapter.exportToZip(self, settings)
         return result
-    
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'is_deletable')
     def is_deletable(self):
         """always deletable"""
         return 1
-        
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_xml')
     def get_xml(self, with_sub_publications=0, last_version=0):
@@ -381,8 +381,8 @@ class SilvaObject(Security, ViewCode):
         self.to_xml(context)
         w(u'</silva>')
         result = context.f.getvalue()
-        return result.encode('UTF-8') 
-    
+        return result.encode('UTF-8')
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_xml_for_objects')
     def get_xml_for_objects(self, objects, with_sub_publications=0, last_version=0):
@@ -406,21 +406,21 @@ class SilvaObject(Security, ViewCode):
             obj.to_xml(context)
         w(u'</silva>')
         result = context.f.getvalue()
-        return result.encode('UTF-8') 
-    
+        return result.encode('UTF-8')
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'to_xml') 
+                              'to_xml')
     def to_xml(self, context):
         """Handle unknown objects. (override in subclasses)
         """
-        context.f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))      
+        context.f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'is_deletable')
     def is_deletable(self):
         """always deletable"""
         return 1
-        
+
     def HEAD(self, REQUEST, RESPONSE):
         """ assumes the content type is text/html;
             override HEAD for clases where this is wrong!
@@ -428,5 +428,5 @@ class SilvaObject(Security, ViewCode):
         mod_time = rfc1123_date ( self.get_modification_datetime() )
         RESPONSE.setHeader('Content-Type', 'text/html')
         RESPONSE.setHeader('Last-Modified', mod_time)
-        
+
 InitializeClass(SilvaObject)
