@@ -566,9 +566,9 @@ class IContent(ISilvaObject, IPublishable):
         pass
 
     def get_indexables():
-        """Return a list of ParsedXML documents (that can be indexed
+        """Return a list of versions (that can be cataloged
         in various ways). May return the empty list if there is nothing
-        to index.
+        to catalog.
         """
         pass
 
