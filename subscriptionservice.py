@@ -105,6 +105,7 @@ class SubscriptionService(Folder.Folder):
         return adapted.isSubscribable()
     
     security.declareProtected(SilvaPermissions.View, 'requestSubscription')
+    _ = lambda x: x
     def requestSubscription(self, content, emailaddress):
         # Send out request for subscription
         # NOTE: no doc string, so, not *publishable* TTW        
@@ -112,10 +113,10 @@ class SubscriptionService(Folder.Folder):
         adapted = subscribable.getSubscribable(content)
         # see if content is subscribable
         if adapted is None or not adapted.isSubscribable(): 
-            raise errors.SubscriptionError('content is not subscribable')
+            raise errors.SubscriptionError(_('content is not subscribable'))
         # validate address
         if not self._isValidEmailaddress(emailaddress):
-            raise errors.SubscriptionError('emailaddress not valid')
+            raise errors.SubscriptionError(_('emailaddress not valid'))
         # generate confirmation token using adapter
         token = adapted.generateConfirmationToken(emailaddress)
         # check if not yet subscribed
