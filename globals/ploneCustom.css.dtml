@@ -49,7 +49,7 @@ pre {
 
 div.pathBar {
   font-size: 90%;
-    color: &dtml-shade70;;
+    color: &dtml-shade68;;
     background-image: url(/silva/globals/sky.gif);
     background-repeat: repeat-x;
     background-color: #39424d;
@@ -76,7 +76,7 @@ div.pathBar a:hover {
 }
 
 div.pathBar a.manage {
-	color: &dtml-shade64;;
+	color: &dtml-shade60;;
     margin-left: 0.5em ! important;
 }
 

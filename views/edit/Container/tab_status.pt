@@ -197,7 +197,7 @@
                     ______________ publication time controls ______________
                   </tal:block>
                   <td class="align-right"
-                  style="vertical-align:bottom;"
+                  style="vertical-align:middle;"
                     colspan="2">
                     <span class="widebody">
                       date format: day/month/year&nbsp;23:59
@@ -221,7 +221,7 @@
                     ______________ expiration time controls ______________
                   </tal:block>
                   <td class="align-right"
-                    style="vertical-align:bottom;"
+                    style="vertical-align:middle;"
                     colspan="2">
                     <span class="widebody">
                       expiration time is optional
@@ -237,7 +237,7 @@
                     <tal:block replace="structure python:view.tab_status_form.expiration_datetime.render()" />
                   </td>
                   <td class="align-right"
-                    style="white-space:nowrap; vertical-align:bottom;">
+                    style="white-space:nowrap; vertical-align:middle;">
                     <tal:block condition="may_approve_content">
                       <label 
                         for="publish_now_flag" 

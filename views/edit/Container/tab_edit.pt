@@ -87,7 +87,6 @@
                       >
                       Import...
                     </a>
-
                   </td>
                 </tr>
               </thead>
@@ -360,7 +359,7 @@
                   <tal:block replace="nothing">
                     ______________ controls ______________
                   </tal:block>
-                  <td colspan="99">
+                  <td colspan="6">
                     <tal:block condition="may_change_content">
                       <tal:block tal:condition="python:(default_document or publishables or assets)">
                         <div style="float: left; margin-left:0.2em;">
