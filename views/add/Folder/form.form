@@ -56,7 +56,7 @@
       <field><id>policy_name</id> <type>ListField</type>
         <values>
           <alternate_name></alternate_name>
-          <css_class></css_class>
+          <css_class>inputter</css_class>
           <description>Choose an item to be created within the folder.</description>
           <external_validator></external_validator>
           <extra></extra>
