@@ -41,10 +41,10 @@
   </td>
   <td align="right">
     <form action="." name="silvaObjects" method="POST">
-      <tal:block condition="not:silva_permissions/ChangeSilvaContent">
+      <tal:block condition="python: not silva_permissions['ChangeSilvaContent'] or filter == 'Asset'">
         &nbsp;
       </tal:block>
-      <tal:block condition="silva_permissions/ChangeSilvaContent">
+      <tal:block condition="python:silva_permissions['ChangeSilvaContent'] and filter != 'Asset'">
         <input class="button" type="submit" name="add_object:method" 
           value=" New:" title="Add a new item: alt-n" accesskey="n" 
           tal:attributes="value string: New: ${filter} "
