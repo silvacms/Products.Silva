@@ -88,8 +88,6 @@ def manage_addViewRegistry(self, id, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
-_marker = []
-
 class ViewAttribute(Acquisition.Implicit):
     def __init__(self, view_type):
         self._view_type = view_type
