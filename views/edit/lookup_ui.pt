@@ -71,8 +71,8 @@
                 <td class="top" colspan="2">
                   <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
-                    user lookup at:                
-                    &#xab;<span tal:replace="string:${model/get_title_editable}">title</span>&#xbb;
+                    user lookup at
+                    &#xab;<span tal:replace="string:${model/get_title_or_id_editable}">title</span>&#xbb;
                   </h2>
                 </td>
               </tr>
@@ -159,8 +159,13 @@
                     <input name="userids:list"
                       type="checkbox"
                       value=""
-                      tal:attributes="value member/userid" />
-                    <span tal:content="member/fullname" />
+                      tal:attributes="
+                        value member/userid;
+                        id member/userid" />
+                    <label tal:content="member/fullname" 
+                      tal:attributes="for member/userid">
+                      username
+                    </label>
                   </td>
                   <td>
                     <span tal:replace="member/email | no_entry" />
@@ -218,7 +223,7 @@
             <input class="warning"
               name="lookup_remove_from_selection:method"
               type="submit"
-              value="Remove user"
+              value="remove user"
               title="remove users from the clipboard: alt-r"
               accesskey="r"
                i18n:attributes="value title"
