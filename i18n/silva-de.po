@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-17 11:02+0100\n"
+"PO-Revision-Date: 2004-12-17 12:51+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -2950,7 +2950,7 @@ msgstr "Version bereits genehmigt"
 
 #: /views/edit/Container/tab_status_approve.py:55
 msgid "content object or one of its containers is deactivated"
-msgstr ""
+msgstr "Inhaltsobjekt oder einer seiner Container ist deaktiviert."
 
 #: /views/edit/Container/tab_status_approve.py:66
 msgid "version already public"
@@ -2974,7 +2974,7 @@ msgstr "Einstellungen für ${ids} geändert"
 
 #: /views/edit/Container/tab_status_change_settings.py:108
 msgid "<span class=\"error\">could not change settings on: ${ids}</span>"
-msgstr ""
+msgstr "<span class=\"error\">Einstellungen konnten nicht geändert werden für: ${ids}</span>"
 
 #: /views/edit/Container/tab_status_change_settings.py:15
 msgid "Nothing was selected, so no settings were changed."
@@ -2982,11 +2982,11 @@ msgstr "Es war nichts ausgewähl, folglich wurden keine Einstellungen verändert
 
 #: /views/edit/Container/tab_status_change_settings.py:34
 msgid "No publication nor expiration time nor any of the flags were set."
-msgstr ""
+msgstr "Keine Veröffentlichungs- bzw. Verfallszeit und keines der Flags gessetzt."
 
 #: /views/edit/Container/tab_status_change_settings.py:60
 msgid "no next or public version available"
-msgstr ""
+msgstr "Keine nächste oder öffentliche Version verfügbar"
 
 #: /views/edit/Container/tab_status_change_settings.py:64
 msgid "cannot change publication time of already public versions."
@@ -3130,11 +3130,11 @@ msgstr "Vorschau ${id}"
 
 #: /views/edit/Container/tab_status_new_version.py:15
 msgid "Nothing was selected, so no new version was created."
-msgstr ""
+msgstr "Es war nicht ausgewählt, folglich wurde keine neue Version angelegt."
 
 #: /views/edit/Container/tab_status_new_version.py:39
 msgid "already has a next version"
-msgstr ""
+msgstr "Nächste Version ist bereits vorhanden"
 
 #: /views/edit/Container/tab_status_new_version.py:46
 msgid "Created a new version for: ${ids}"
@@ -3146,16 +3146,16 @@ msgstr "Neu Version konnte nicht erzeugt werden für: ${ids}"
 
 #: /views/edit/Container/tab_status_reject.py:15
 msgid "Nothing was selected, so no approval was rejected."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde keine Bewilligung abgelehnt."
 
 #: /views/edit/Container/tab_status_reject.py:42
 #: /views/edit/Container/tab_status_withdraw.py:32
 msgid "no approval requested"
-msgstr ""
+msgstr "Es wurde keine Bewilligung angefragt"
 
 #: /views/edit/Container/tab_status_reject.py:52
 msgid "Rejected request for approval for: ${ids}"
-msgstr ""
+msgstr "Bewilligungsanfrage abgelehnt für: ${ids}"
 
 #: /views/edit/Container/tab_status_reject.py:57
 msgid "Not rejected: ${ids}"
@@ -3163,11 +3163,11 @@ msgstr "Nicht abgelehnt: ${ids}"
 
 #: /views/edit/Container/tab_status_request_approval.py:15
 msgid "Nothing was selected, so no approval was requested."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde keine Bewilligung angefragt."
 
 #: /views/edit/Container/tab_status_request_approval.py:58
 msgid "approval already requested"
-msgstr ""
+msgstr "Bewilligung war bereits angefragt"
 
 #: /views/edit/Container/tab_status_request_approval.py:68
 msgid "no publication time set"
@@ -3175,23 +3175,23 @@ msgstr "Keine Veröffentlichungszeit gesetzt"
 
 #: /views/edit/Container/tab_status_revoke.py:15
 msgid "Nothing was selected, so no approval was revoked."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde keine Bewilligung zurückgezogen."
 
 #: /views/edit/Container/tab_status_revoke.py:39
 msgid "it's not approved, or it's already published"
-msgstr ""
+msgstr "Nicht bewilligt oder bereits publiziert"
 
 #: /views/edit/Container/tab_status_revoke.py:46
 msgid "Revoked approval of: ${ids}"
-msgstr ""
+msgstr "Bewilligung zurückgezogen für: ${ids}"
 
 #: /views/edit/Container/tab_status_revoke.py:51
 msgid "Could not revoke approval of: ${ids}"
-msgstr ""
+msgstr "Bewilligung konnte nicht zurückgezogen werden für: ${ids}"
 
 #: /views/edit/Container/tab_status_silva2word.py:20
 msgid "No items were selected, so nothing is exported"
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts exportiert"
 
 #: /views/edit/Container/tab_status_silva2word.py:35
 #: /views/edit/VersionedContent/tab_status_silva2word.py:25
