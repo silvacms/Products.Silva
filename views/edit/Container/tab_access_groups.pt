@@ -179,8 +179,10 @@
                       tal:attributes="value group/id;" />
                     <a class="blacklink"
                       href="asset"
-                      title="Edit this group"
-                      tal:attributes="href string:${group/absolute_url}/edit">
+                      title="Edit"
+                      tal:attributes="
+                        href string:${group/absolute_url}/edit;
+                        title group/meta_type">
                       <img tal:replace="structure python:view.render_icon(group.meta_type)" />
                     </a>
                   </td>

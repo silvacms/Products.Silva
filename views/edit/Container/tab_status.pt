@@ -57,7 +57,7 @@
 <input type="checkbox" name="refs:list" value="value"
   tal:define="ref python:model.create_ref(model.get_default())"
   tal:attributes="value ref; checked python:test(here.is_item_in_ids(ref),'checked','')" />
-<a href="default" title="Edit..."
+<a href="default" title="Silva Document"
   tal:attributes="href python:model.get_default().absolute_url() + '/edit/tab_edit'">
 <img tal:replace="structure python:view.render_icon(model.get_default().meta_type)" /></a>
 </td>
@@ -129,7 +129,9 @@
   tal:condition="python:item.implements_versioning()"
   tal:attributes="value ref; checked python:test(here.is_item_in_ids(ref),'checked','')" />
 <a href="edit" title="Edit..."
-  tal:attributes="href string:${item/absolute_url}/edit/tab_edit">
+  tal:attributes="
+    href string:${item/absolute_url}/edit/tab_edit;
+    title item/meta_type">
 <img tal:replace="structure python:view.render_icon(item.meta_type)" />
 </a>
 </td>
