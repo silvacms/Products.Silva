@@ -1,4 +1,4 @@
-Version of this document: $Revision: 1.2 $
+Version of this document: $Revision: 1.3 $
 
 Setting up Squid Caching [1] in a ZEO Cluster [7]
 
@@ -79,63 +79,65 @@ Setting up Squid Caching [1] in a ZEO Cluster [7]
         A minimal Squid configuration ([2] and [3]) follows. This
         configuration ignores most configuration options for tuning cache
         performance, file locations, RAM usage etc., which are not in
-        the scope of this document.
-
-        [Conf] Minimal configuration::
-            ## Squid port
-            http_port 80
+        the scope of this document::
+            
+          ## Squid port
+          http_port 80
     
-            ## ACL's taken from standard Squid conf
-            acl all src 0.0.0.0/0.0.0.0
-            acl localhost src 127.0.0.1/255.255.255.255
+          ## ACL's taken from standard Squid conf
+          acl all src 0.0.0.0/0.0.0.0
+          acl localhost src 127.0.0.1/255.255.255.255
     
-            ## ACL for cache peers in network:
-            acl peers_src src node-1.domain.tld node-2.domain.tld ... node-N.domain.tld
-            acl peers_dst dst node-1.domain.tld node-2.domain.tld ... node-N.domain.tld
+          ## ACL for cache peers in network:
+          acl peers_src src node-1.domain.tld node-2.domain.tld \
+                                                       ... node-N.domain.tld
+          acl peers_dst dst node-1.domain.tld node-2.domain.tld \
+                                                       ... node-N.domain.tld
 
-            ## ACL for public 
-            acl public_access dst virtualhost-1.domain.tld virtualhost-2.domain.tld ... virtualhost-N.domain.tld
-            acl public_access_port port 80 8080
+          ## ACL for public 
+          acl public_access dst virtualhost-1.domain.tld virtualhost-2.domain.tld \
+                                                     ... virtualhost-N.domain.tld
+          acl public_access_port port 80 8080
 
-            ## Define cache siblings. Comment the lines which point to cache
-            ## node "itself":
-            ##cache_peer node-1.domain.tld sibling 80 3130 no-digest proxy-only
-            ##cache_peer_access node-1.domain.tld allow public_access
-            ##cache_peer_access node-1.domain.tld deny all
+          ## Define cache siblings. Comment the lines which point to cache
+          ## node "itself":
+          ##cache_peer node-1.domain.tld sibling 80 3130 no-digest proxy-only
+          ##cache_peer_access node-1.domain.tld allow public_access
+          ##cache_peer_access node-1.domain.tld deny all
 
-            cache_peer node-2.domain.tld sibling 80 3130 no-digest proxy-only
-            cache_peer_access node-2.domain.tld allow public_access
-            cache_peer_access node-2.domain.tld deny all
+          cache_peer node-2.domain.tld sibling 80 3130 no-digest proxy-only
+          cache_peer_access node-2.domain.tld allow public_access
+          cache_peer_access node-2.domain.tld deny all
 
-            ...
+          ...
 
-            cache_peer node-N.domain.tld sibling 80 3130 no-digest proxy-only
-            cache_peer_access node-N.domain.tld allow public_access
-            cache_peer_access node-N.domain.tld deny all
+          cache_peer node-N.domain.tld sibling 80 3130 no-digest proxy-only
+          cache_peer_access node-N.domain.tld allow public_access
+          cache_peer_access node-N.domain.tld deny all
 
-            ## Allow ICP communication between cache peers
-            icp_access allow peers_src
+          ## Allow ICP communication between cache peers
+          icp_access allow peers_src
 
-            ## FIXME: not sure about this option
-            prefer_direct off
+          ## FIXME: not sure about this option
+          prefer_direct off
 
-            ## Host being accelerated
-            httpd_accel_host 127.0.0.1
-            httpd_accel_single_host on
-            httpd_accel_port 8080
+          ## Host being accelerated
+          httpd_accel_host 127.0.0.1
+          httpd_accel_single_host on
+          httpd_accel_port 8080
 
-            ## Proxy on, needed to make cache peers intercommunicate
-            ## Without proper security measures, this could result in an "open
-            ## proxy". 
-            httpd_accel_with_proxy on
+          ## Proxy on, needed to make cache peers intercommunicate
+          ## Without proper security measures, this could result in an "open
+          ## proxy". 
+          httpd_accel_with_proxy on
 
-            ## Keeps information for Apache; needed for virtual hosting       
-            httpd_accel_uses_host_header on
+          ## Keeps information for Apache; needed for virtual hosting       
+          httpd_accel_uses_host_header on
                                                                    
-            ## Final access control
-            http_access allow peers_src peers_dst
-            http_access allow public_access public_access_port
-            http_access deny all
+          ## Final access control
+          http_access allow peers_src peers_dst
+          http_access allow public_access public_access_port
+          http_access deny all
         
     HTTP Response headers
 
@@ -174,29 +176,20 @@ Setting up Squid Caching [1] in a ZEO Cluster [7]
 
     References
 
-        [1] "Squid Caching Proxy":
-            http://www.squid-cache.org/
+        [1] "Squid Caching Proxy":http://www.squid-cache.org/
 
-        [2] "Squid configuration":
-            http://squid.visolve.com/squid24s1/contents.htm
+        [2] "Squid configuration":http://squid.visolve.com/squid24s1/contents.htm
             
-        [3] "Squid User Guide":
-            http://squid-docs.sourceforge.net/latest/html/book1.htm
+        [3] "Squid User Guide":http://squid-docs.sourceforge.net/latest/html/book1.htm
 
-        [4] "HTTP Caching and Zope":
-            http://www.zope.org/Members/htrd/howto/caching
+        [4] "HTTP Caching and Zope":http://www.zope.org/Members/htrd/howto/caching
 
-        [5] "Squid as an Accelerator for Zope":
-            http://www.zope.org/Members/htrd/howto/squid
+        [5] "Squid as an Accelerator for Zope":http://www.zope.org/Members/htrd/howto/squid
 
-        [6] "VirtualHosting, HTTPS, Apache and Zope":
-            http://url-not-yet-there
+        [6] "VirtualHosting, HTTPS, Apache and Zope":http://www.infrae.com/products/silva/docs/sysadmin/apache_notes
         
-        [7] "ZEO Clusters":
-            http://url-not-yet-there
+        [7] "ZEO Clusters":http://www.infrae.com/products/silva/docs/sysadmin/zeo_cluster_notes
     
-        [8] "RFC 2616 HTTP/1.1":
-            http://www.ietf.org/rfc/rfc2616.txt
+        [8] "RFC 2616 HTTP/1.1":http://www.ietf.org/rfc/rfc2616.txt
 
-        [9] "RFC 1123 Requirements for Internet Hosts -- Application and Support":
-            http://www.ietf.org/rfc/rfc1123.txt
+        [9] "RFC 1123 Requirements for Internet Hosts, Application and Support":http://www.ietf.org/rfc/rfc1123.txt

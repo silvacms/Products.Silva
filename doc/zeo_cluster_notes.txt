@@ -1,4 +1,4 @@
-Version of this document: $Revision: 1.7 $
+Version of this document: $Revision: 1.8 $
 
 Setting up a ZEO Cluster with session tracking.
 
@@ -192,12 +192,12 @@ Setting up a ZEO Cluster with session tracking.
 
         [A4] Session tracking & ZEO:
                 
-                * http://www.zope.org/Members/randy/ZEO-Sessions
+                http://www.zope.org/Members/randy/ZEO-Sessions
 
-                * http://www.zope.org/Members/jgrewen/ZEO%20with%20CoreSessionTracking
+                http://www.zope.org/Members/jgrewen/ZEO%20with%20CoreSessionTracking
                     %20and%20a%20mounted%20Berkeley%20session%20DB
 
-                * http://www.zope.org/Members/mcdonc/HowTos/UseExternalMountWithCST
+                http://www.zope.org/Members/mcdonc/HowTos/UseExternalMountWithCST
 
         [A5] Berkeley Storage Wiki and code:
                 http://www.zope.org/Wikis/ZODB/BerkeleyStorage
