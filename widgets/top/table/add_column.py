@@ -20,7 +20,10 @@ for row in node.childNodes:
 
     row.appendChild(field)
 
-node.setAttribute('columns', node.input_convert(str(int(node.getAttribute('columns')) + 1))
+node.setAttribute(
+    'columns', 
+    node.input_convert(str(int(node.getAttribute('columns')) + 1)) )
+
 if node.hasAttribute('column_info'):
     node.setAttribute('column_info', node.getAttribute('column_info') + u' L:1')
 

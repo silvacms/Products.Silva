@@ -25,5 +25,8 @@ metatype = result.get('metatypes')
 if metatype:
     query['meta_type'] = metatype
 
+path = model.getPhysicalPath()
+query['path'] = '/'.join(path)
+
 #raise str(query)
 return catalog(query)
