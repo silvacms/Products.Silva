@@ -1,6 +1,6 @@
 <div class="margins" tal:define="view here; model request/model">
 
-<h2><span tal:replace="model/meta_type">Meta type</span> for <span class="document-title" tal:content="structure string:&#xab;${model/get_title_html}&#xbb;">title here</span></h2>
+<h2><span tal:replace="model/meta_type">Meta type</span> for <span class="document-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span></h2>
 
 <tal:block define="global fields python:view.form.get_fields()" />
 
