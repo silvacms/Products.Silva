@@ -14,8 +14,20 @@
 
 <tal:define define="global fields python:view.tab_metadata_form.get_fields()" />
 
-<div class="focus-box"
-  style="padding-top:8px;">
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <td class="left">
+        <span tal:replace="nothing">
+          _____________________ sidebar subtable _____________________
+        </span>
+          <span tal:replace="structure python: view.service_sidebar.render(model, 'tab_metadata', breadcrumb_vein)" />
+      </td>
+      <td class="main">
+        <tal:block replace="nothing">
+          _____________________ main subtable _____________________
+        </tal:block>
+
 <form method="POST" name="form" action="tab_metadata_submit">
 <table class="listing">
 <thead>
@@ -211,11 +223,16 @@
   </tbody>
 
   <tfoot>
-    <tr class="divider">
-      <td colspan="2">
+    <tr class="controls">
+      <td colspan="3">
       </td>
     </tr>
   </tfoot>
+</table>
+
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 </metal:block>
