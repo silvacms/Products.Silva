@@ -22,8 +22,10 @@
 <br><small>Note: This will only work if your platform supports "LiveConnect" (newer browsers do)</small>
 </form>
 <hr>
-        <APPLET code="EditorApplet" codeBase="/silva/eopro" id="myEditor" name="myEditor"
-                archive="edit-on-pro-signed.jar,ssce.jar" width="1024"  height="500" VIEWASTEXT MAYSCRIPT>
+        <APPLET code="EditorApplet" id="myEditor" name="myEditor"
+                archive="edit-on-pro-signed.jar,ssce.jar" width="1024"  height="500" VIEWASTEXT MAYSCRIPT
+                tal:attributes="codeBase template/eopro/absolute_url"
+        >
 <!--
             <PARAM NAME="gethtmldataurl" tal:attributes="VALUE python: 'tab_edit_eopro_submit'">
 
