@@ -1,11 +1,7 @@
-<grammar xmlns="http://relaxng.org/ns/structure/1.0"
-         xmlns:silva="http://xml.infrae.com/silva/1.0"
-         xmlns:doc="http://xml.infrae.com/silva/document/1.0"
-         xmlns:metadata_silva="http://xml.infrae.com/silva/metadata/silva/1.0"
-         xmlns:metadata_silva-extra="http://xml.infrae.com/silva/metadata/silva-extra/1.0">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
 
   <start>
-    <element name="silva:silva">
+    <element name="silva">
       <!-- The starting point for the export/import. Can be 
            a Silva Root, Publication, Folder or Document./-->
       <attribute name="url"><text /></attribute>
@@ -22,7 +18,7 @@
 
   <define name="SilvaRoot">
     <!-- A Silva Root element. Can contain other Silva content/-->
-    <element name="silva:root">
+    <element name="root">
       <attribute name="id"><text /></attribute>
       <ref name="metadata" /> 
       <ref name="contained" />
@@ -31,7 +27,7 @@
 
   <define name="SilvaFolder">
     <!-- A Silva Root element. Can contain other Silva content/-->
-    <element name="silva:folder">
+    <element name="folder">
       <attribute name="id"><text /></attribute>
       <ref name="metadata" />
       <ref name="contained" />
@@ -40,7 +36,7 @@
 
   <define name="SilvaPublication">
     <!-- A Silva Publiaction element. Can contain other Silva content/-->
-    <element name="silva:publication">
+    <element name="publication">
       <attribute name="id"><text /></attribute>
       <ref name="metadata" />
       <ref name="contained" />
@@ -49,65 +45,74 @@
 
   <define name="SilvaDocument">
     <!-- A Silva Document element./-->
-    <element name="silva:document">
-      <attribute name="id"><text /></attribute>
-      <optional>
-        <ref name="workflow" />
-      </optional>
-      <element name="silva:versions">
-        <oneOrMore>
-          <element name="silva:content">
-            <attribute name="version_id"><text /></attribute>
-            <ref name="metadata" />
-            <ref name="document" />
-          </element>
-        </oneOrMore>
-      </element>
-    </element> 
-  </define>
-
-  <define name="SilvaLink">
-    <!-- A Silva Link element./-->
-    <element name="silva:link">
+    <element name="document">
       <attribute name="id"><text /></attribute>
       <optional>
         <ref name="workflow" />
       </optional>
       <oneOrMore>
-        <element name="silva:content">
-          <attribute name="id"><text /></attribute>
-          <ref name="metadata" />
-          <ref name="link" />
-        </element>
+        <ref name="SilvaDocumentVersion" />
       </oneOrMore>
+    </element> 
+  </define>
+
+  <define name="SilvaDocumentVersion">
+    <element name="content">
+      <attribute name="version_id"><text /></attribute>
+      <ref name="metadata" />
+      <ref name="document" />
+    </element>
+  </define>
+
+  <define name="SilvaLink">
+    <!-- A Silva Link element./-->
+    <element name="link">
+      <attribute name="id"><text /></attribute>
+      <optional>
+        <ref name="workflow" />
+      </optional>
+      <oneOrMore>
+        <ref name="SilvaLinkVersion" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="SilvaLinkVersion">
+    <element name="content">
+      <attribute name="version_id"><text /></attribute>
+      <ref name="metadata" />
+      <ref name="link" />
     </element>
   </define>
 
   <define name="SilvaGhost">
     <!-- A Silva Ghost element. Ghosts are really links to other content./-->
-    <element name="silva:ghost">
+    <element name="ghost">
       <attribute name="id"><text /></attribute>
       <optional>
         <ref name="workflow" />
       </optional>
       <oneOrMore>
-        <element name="silva:content">
-          <element name="silva:version">
-            <attribute name="id"><text /></attribute>
-            <ref name="metadata" />
-            <choice>
-              <ref name="SilvaDocument" />
-              <ref name="SilvaLink" />
-            </choice>
-          </element>
-        </element>
+        <ref name="SilvaGhostVersion" />
       </oneOrMore>
     </element>
   </define>
-  
+
+  <define name="SilvaGhostVersion">
+    <element name="content">
+      <attribute name="version_id"><text /></attribute>
+      <element name="metatype"><text /></element>
+      <element name="haunted_url"><text /></element>
+      <choice>
+        <ref name="SilvaDocumentVersion" />
+        <ref name="SilvaLinkVersion" />
+      </choice>
+    </element>
+  </define>
+    
   <define name="SilvaGhostFolder">
     <!-- A Silva Ghost Folder element. Ghost Folders are really links to other folders./-->
-    <element name="silva:ghost_folder">
+    <element name="ghost_folder">
       <attribute name="id"><text /></attribute>
       <choice>
         <ref name="SilvaPublication" />
@@ -132,8 +137,8 @@
   </define>
 
   <define name="metadata">
-    <element name="silva:metadata">
-      <element name="silva:title"><text /></element>
+    <element name="metadata">
+      <element name="title"><text /></element>
       <zeroOrMore>
         <ref name="set" />
       </zeroOrMore>
@@ -154,7 +159,7 @@
   </define>
     
   <define name="set">
-    <element name="silva:set">
+    <element name="set">
       <zeroOrMore>
         <ref name="anyElement" />
       </zeroOrMore>
