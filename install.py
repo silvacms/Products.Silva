@@ -790,13 +790,7 @@ def setup_catalog(silva_root):
         ]
 
     for field_name, field_type in indexes:
-        # drop silva defined text indexes in deference to zctextindex
-        # XXX: what does this do?? If a TextIndex is found in the indexes to
-        # create, it is dropped from the catalog?? 
-        if field_type in ('TextIndex',):
-            catalog.delIndex(field_name)
-
-        elif field_name in existing_indexes:
+        if field_name in existing_indexes:
             continue
 
         # special handling for argument passing to zctextindex
