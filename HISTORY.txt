@@ -17,6 +17,9 @@ Silva changes
       - Code and data sources no longer incorrectly copy their parameters 
         into the result html.
 
+      - Images in SilvaDocuments now get their widths, heights and titles
+        in the xml export, which fixes some bugs in the xslt rendering.
+
   1.1
 
     Features added
