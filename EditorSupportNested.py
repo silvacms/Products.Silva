@@ -1,10 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
-import ForgivingParser
 import re
 from Products.ParsedXML.ParsedXML import ParsedXML
 import StringIO
@@ -38,6 +37,14 @@ class EditorSupport:
                 result.append('<em>')
                 result.append(self.render_text_as_html(child))
                 result.append('</em>')
+            elif child.nodeName == 'super':
+                result.append('<sup>')
+                result.append(self.render_text_as_html(child))
+                result.append('</sup>')
+            elif child.nodeName == 'sub':
+                result.append('<sub>')
+                result.append(self.render_text_as_html(child))
+                result.append('</sub>')
             elif child.nodeName == 'link':
                 result.append('<a href="%s">' %
                               output_convert(child.getAttribute('url')))
@@ -101,6 +108,14 @@ class EditorSupport:
                 result.append('++')
                 result.append(self.render_text_as_editable(child))
                 result.append('++')
+            elif child.nodeName == 'super':
+                result.append('^^')
+                result.append(self.render_text_as_editable(child))
+                result.append('^^')
+            elif child.nodeName == 'sub':
+                result.append('~~')
+                result.append(self.render_text_as_editable(child))
+                result.append('~~')
             elif child.nodeName == 'link':
                 result.append('((')
                 result.append(self.render_text_as_editable(child))
@@ -140,8 +155,7 @@ class EditorSupport:
                 continue
             if child.nodeName == 'index':
                 result.append('[[')
-                for subchild in child.childNodes:
-                    result.append(subchild.data)
+                result.append(self.render_heading_as_editable(child))
                 result.append('|')
                 result.append(child.getAttribute('name'))
                 result.append(']]')
@@ -153,12 +167,19 @@ class EditorSupport:
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_text')
     def replace_text(self, node, st):
-        """This is an alternative implementation of Martijn's textparser"""
+        """'Parse' the markup to XML. Instead of tokenizing this method uses
+        Regular Expressions, which do not make it more neat but do improve simplicity.
+        """
         st = self.replace_xml_entities(st)
-        st = st.replace('\r', '')
+        # Replace those stupid Windows linebreaks, take care of Mac's ones as well...
+        if st.find('\n') == -1 and st.find('\r') > -1:
+            # No \n's but we do have \r's, so we're retrieving from a Mac, I presume
+            st = st.replace('\r', '\n')
+        else:
+            st = st.replace('\r', '')
         st = st.replace('\n\n', '</p><p>')
-        tags = {'__': 'underline', '**': 'strong', '++': 'em'}
-        reg = re.compile(r"(_{2}|\*{2}|\+{2})(.*?)\1", re.S)
+        tags = {'__': 'underline', '**': 'strong', '++': 'em', '^^': 'super', '~~': 'sub'}
+        reg = re.compile(r"(_{2}|\*{2}|\+{2}|\^{2}|~{2})(.*?)\1", re.S)
         reg_a = re.compile(r"\({2}(.*?)\|(.*?)\){2}", re.S)
         reg_i = re.compile(r"\[{2}(.*?)\|(.*?)\]{2}", re.S)
         while 1:
@@ -191,14 +212,19 @@ class EditorSupport:
         newdom = ParsedXML(doc, '<p>%s</p>' % st)
 
         for child in newdom.childNodes:
-            self._parse_into(doc, node, child)
+            self._replace_helper(doc, node, child)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_heading')
     def replace_heading(self, node, st):
-        """This is an alternative implementation of Martijn's textparser"""
+        """'Parse' the markup into XML using regular expressions
+        """
         st = self.replace_xml_entities(st)
-        st = st.replace('\r', '')
+        if st.find('\n') == -1 and st.find('\r') > -1:
+            # No \n's but we do have \r's, so we're retrieving from a Mac, I presume
+            st = st.replace('\r', '\n')
+        else:
+            st = st.replace('\r', '')
         reg_i = re.compile(r"\[{2}(.*?)\|(.*?)\]{2}", re.S)
         while 1:
             match = reg_i.search(st)
@@ -220,10 +246,12 @@ class EditorSupport:
         newdom = ParsedXML(doc, '<h2>%s</h2>' % st)
 
         for child in newdom.childNodes:
-            self._parse_into(doc, node, child)
+            self._replace_helper(doc, node, child)
 
-    def _parse_into(self, doc, node, newdoc):
-        """Method to recursively add all children of newdoc to node"""
+    def _replace_helper(self, doc, node, newdoc):
+        """Method to recursively add all children of newdoc to node. Used by replace_text and
+        replace_heading
+        """
         for child in newdoc.childNodes:
             if child.nodeType == 3:
                 newnode = doc.createTextNode(child.nodeValue)
@@ -233,12 +261,13 @@ class EditorSupport:
                 for i in range(child.attributes.length):
                     newnode.setAttribute(child.attributes.item(i).name, child.attributes.item(i).value)
                 node.appendChild(newnode)
-                self._parse_into(doc, newnode, child)
+                self._replace_helper(doc, newnode, child)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'replace_pre')
     def replace_pre(self, node, text):
-        """Replace text in a heading containing node.
+        """Replace text in a heading containing node. Does not do much since no markup
+        is allowed in preformatted block
         """
         # first preprocess the text, collapsing all whitespace
         # FIXME: does it make sense to expect cp437, which is
@@ -263,23 +292,6 @@ class EditorSupport:
         newNode = doc.createTextNode(text)
         node.appendChild(newNode)
 
-    # XXX should really be in a better place, like some kind of editor
-    # support service
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'split_silva_html')
-    def split_silva_html(self, html, min_characters):
-        """Split html into two blocks. There'll be at least min_characters
-        in the first block, and the rest will be in the second block.
-        If the second block will be larger than the first, the html
-        is split equally instead.
-        """
-        l = len(html)
-        if l - min_characters < min_characters:
-            i = _find_split_point(html, min_characters)
-        else:
-            i = _find_split_point(html, l/2)
-        return html[:i], html[i:]
-
     security.declarePublic('replace_xml_entities')
     def replace_xml_entities(self, text):
         """Replace all disallowed characters with XML-entities"""
@@ -289,16 +301,5 @@ class EditorSupport:
         text = text.replace('"', '&quot;')
 
         return text
-
-# do never split at a heading, so h2/h3 not included
-tags = ['p', 'ol', 'ul', 'table']
-split_pattern = re.compile("(%s)" % '|'.join(
-    ['</%s>' % tag for tag in tags]))
-def _find_split_point(html, approximate_point):
-    r = split_pattern.search(html, approximate_point)
-    if r is not None:
-        return r.end()
-    else:
-        return len(html)
 
 InitializeClass(EditorSupport)
