@@ -225,7 +225,6 @@ class VersionManagementAdapter(adapter.Adapter):
                 last_closed
                 closed
         """
-        print versionid
         if (self.context._unapproved_version[0] is not None and 
                 self.context._unapproved_version[0] == versionid):
             if self.context.is_version_approval_requested():
