@@ -10,6 +10,6 @@ class SilvaMessageIDUnicode(MessageIDUnicode):
         """
         self.mapping = mapping
 
-def SilvaMessageIDFactory(ustr, default=None):
-    return SilvaMessageIDUnicode(ustr, domain='silva')
+def SilvaMessageIDFactory(ustr, domain='silva'):
+    return SilvaMessageIDUnicode(ustr, domain)
     

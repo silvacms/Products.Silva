@@ -48,6 +48,6 @@ class DummyMessageID:
     def __str__(self):
         return self.translate()
 
-def DummyMessageIDFactory(input, default=None):
+def DummyMessageIDFactory(input, domain=None):
     return DummyMessageID(input)
 
