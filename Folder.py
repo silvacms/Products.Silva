@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.55 $
+# $Revision: 1.56 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -197,7 +197,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         deletable_ids = [id for id in ids if self.is_delete_allowed(id)]
         # FIXME: need to do unit tests for this
         # FIXME: would this lead to a sensible user interface?
-        self.manage_cutObjects(deletable_ids, REQUEST)
+	if len(deletable_ids) > 0:
+          self.manage_cutObjects(deletable_ids, REQUEST)
         
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'action_copy')
@@ -221,11 +222,17 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         # copy-paste operation
         # items on clipboard should be unapproved & closed, but
         # only the *copies*
+        # (actually in case of a cut-paste the original
+        # should not be approved, too)
         ids = []
         for item in self.cb_dataItems():
             #item.set_title(item.get_title())
-            ids.append(item.id)
-            
+            if op == 0 or item.get_container().is_delete_allowed(item.id):
+                ids.append(item.id)
+
+        if len(ids) == 0:
+            return
+        
         if op == 0:
             # also update title of index documents
             copy_ids = ids
