@@ -346,9 +346,9 @@ def convert_document_092(obj):
             upgrade_doc_version(obj, v)
 
     if obj._previous_versions is not None:
-        # the first element of previous versions is last_closed,
+        # the last element of previous versions is last_closed,
         # so that's done already
-        for versionid, pdt, edt in obj._previous_versions[1:]:
+        for versionid, pdt, edt in obj._previous_versions[:-1]:
             upgrade_doc_version(obj, versionid)
             
     # remove all the unconverted versions
