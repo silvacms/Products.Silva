@@ -18,7 +18,11 @@ Silva changes
 
     Bugs Fixed
 
-        - Put your 0.9.2 specific bug fixes here..
+        - Fixed some bugs with copy/cut and paste: when an object is not
+          allowed somewhere, it's now not possible to paste it there anymore,
+          and also the id of the object to be pasted is now changed until
+          it's unique (in the past, a bug in creating a unique id kept the
+          status of a document 'public' in some cases).
 	
   0.9.1
 
