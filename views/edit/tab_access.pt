@@ -31,93 +31,33 @@
   <h4>
     Grant or revoke local roles for users
   </h4>
-<!-- Clipboard -->
-  <div class="hilight borders top bottom left right"
-    style="padding: 0.5em; width: 30%; float: right; margin: 0em 0em 2em 1em;"
-    tal:define="
-      clipboard_members view/lookup_get_selection;">
 
-    <form action="."
-      method="POST">
+  <!-- Clipboard -->
+  <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
+    <metal:block fill-slot="clipboard_actions">
+      <select name="assign_role">
+        <option value="None">
+          Select role...
+        </option>
+        <option value="role"
+          tal:repeat="role model/sec_get_roles"
+          tal:content="role"
+          tal:attributes="value role">
+          Role name
+        </option>
+      </select>
+      &nbsp;
+      <input class="button"
+        name="access_assign_to_user:method"
+        title="Assign a local role to selected user(s)."
+        type="submit"
+        value="Assign" />
+    </metal:block>
+  </metal:block>
 
-      <table border="0"
-        cellpadding="5"
-        cellspacing="0"
-        width="100%">
-        <tr align="left">
-          <td colspan="2">
-            <div style="float: right;">
-              <input name="referer"
-                type="hidden"
-                value="tab_access" />
-              <input class="button"
-                accesskey="l"
-                name="lookup:method"
-                title="Lookup and select users to add to groups... - alt-l"
-                type="submit"
-                value="Lookup..." />
-            </div>
-            <div>
-              <b>
-                User lookup clipboard:
-              </b>
-            </div>
-          </td>
-        </tr>
-        <tr tal:repeat="member python:clipboard_members.values()">
-          <td width="1%">
-            <input name="userids:list"
-              type="checkbox"
-              value="userid"
-              tal:attributes="value member/userid" />
-          </td>
-          <td tal:content="member/fullname">
-            Name
-          </td>
-        </tr>
-        <tr tal:condition="not:clipboard_members">
-          <td>
-            <i>
-              No users on "Lookup Clipboard"
-            </i>
-          </td>
-        </tr>
-        <tr valign="top">
-          <td align="left"
-            colspan="2">
-
-            <tal:block condition="clipboard_members">
-              <select name="assign_role">
-                <option value="None">
-                  Select role...
-                </option>
-                <option value="role"
-                  tal:repeat="role model/sec_get_roles"
-                  tal:content="role"
-                  tal:attributes="value role">
-                  Role name
-                </option>
-              </select>
-              &nbsp;
-              <input class="button"
-                name="access_assign_to_user:method"
-                title="Assign a local role to selected user(s)."
-                type="submit"
-                value="Assign" />
-            </tal:block>
-
-          </td>
-        </tr>
-      </table>
-
-    </form>
-
-  </div>
-<!-- Role assignment table -->
-
+  <!-- Role assignment table -->
   <form action="."
     method="POST">
-
     <table class="borders top bottom left right"
       border="0"
       cellpadding="5"
@@ -234,7 +174,7 @@
 
   </form>
 
-<!-- Pending role requests -->
+  <!-- Pending role requests -->
 
   <tal:block condition="allow_subscription">
     <h4>
@@ -273,7 +213,7 @@
         <tal:block repeat="req requested_roles">
           <tr tal:define="
               oddrow repeat/req/odd;
-              member python:model.sec_get_members_for_userids(req[0]);
+              member python:model.sec_get_member(req[0]);
               requested_role python:req[1];"
             tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
             <td style="border-left: 1px solid black; border-right: 1px solid black;"
@@ -359,85 +299,33 @@
         </p>
       </div>
     </div>
-    <!-- Defind groups listing -->
-
+    
     <tal:block condition="python:getattr(here, 'service_groups', None)">
-      <div class="hilight borders top bottom left right"
-        style="padding: 0.5em; width: 30%; float: right; margin: 0em 0em 2em 1em;">
+      <!-- Defind groups listing -->
+      <metal:block use-macro="view/macro_groups_listing/macros/listing">
+        <metal:block fill-slot="listing_actions">
+          <select name="assign_role">
+            <option value="None">
+              Select role...
+            </option>
+            <option define="lastclass string:focus-cycle"
+              value="role"
+              tal:repeat="role model/sec_get_roles"
+              tal:content="role"
+              tal:attributes="value role">
+              Role name
+            </option>
+          </select>
+          &nbsp;
+          <input class="button"
+            name="access_assign_to_group:method"
+            title="Assign selected role to selected group(s)."
+            type="submit"
+            value="Assign" />
+        </metal:block>
+      </metal:block>
 
-        <form action="."
-          method="POST">
-
-          <table border="0"
-            cellpadding="3"
-            cellspacing="0"
-            tal:define="groups view/list_all_groups">
-            <tr align="left">
-              <td>
-                <b>
-                  Existing groups:
-                </b>
-                <br />
-
-                <tal:block condition="groups">
-                  (use the ctrl-key for a multi-select)
-                </tal:block>
-
-              </td>
-            </tr>
-            <tr valign="top"
-              tal:condition="groups">
-              <td>
-                <select multiple="multiple"
-                  name="groups:list"
-                  size="10">
-                  <option disabled="disabled"
-                    value="None">
-                    Select group...
-                  </option>
-                  <option value="group"
-                    tal:repeat="group groups"
-                    tal:content="group"
-                    tal:attributes="value group">
-                    Group
-                  </option>
-                </select>
-                <br />
-                <br />
-                <select name="assign_role">
-                  <option value="None">
-                    Select role...
-                  </option>
-                  <option define="lastclass string:focus-cycle"
-                    value="role"
-                    tal:repeat="role model/sec_get_roles"
-                    tal:content="role"
-                    tal:attributes="value role">
-                    Role name
-                  </option>
-                </select>
-                &nbsp;
-                <input class="button"
-                  name="access_assign_to_group:method"
-                  title="Assign selected role to selected group(s)."
-                  type="submit"
-                  value="Assign" />
-              </td>
-            </tr>
-            <tr tal:condition="not:groups">
-              <td>
-                <i>
-                  No groups available
-                </i>
-              </td>
-            </tr>
-          </table>
-
-        </form>
-
-      </div>
       <!-- Role assignment table -->
-
       <form action="."
         method="POST">
 

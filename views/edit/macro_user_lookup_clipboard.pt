@@ -1,0 +1,63 @@
+<metal:block define-macro="clipboard">
+  <div class="hilight borders top bottom left right"
+    style="padding: 0.5em; width: 30%; float: right; margin: 0em 0em 2em 1em;">
+    <metal:block define-macro="clipboard_no_style">
+      <form action="."
+        method="POST"
+        tal:define="
+          clipboard_members view/lookup_get_selection;">
+        <table border="0"
+          cellpadding="5"
+          cellspacing="0"
+          width="100%">
+          <tr align="left">
+            <td colspan="2">
+              <div style="float: right;">
+                <input name="referer"
+                  type="hidden"
+                  value="tab_access" />
+                <input class="button"
+                  accesskey="l"
+                  name="lookup:method"
+                  title="Lookup and select users to add to groups... - alt-l"
+                  type="submit"
+                  value="Lookup..." />
+              </div>
+              <div>
+                <b>
+                  User lookup clipboard:
+                </b>
+              </div>
+            </td>
+          </tr>
+          <tr tal:repeat="member python:clipboard_members.values()">
+            <td width="1%">
+              <input name="userids:list"
+                type="checkbox"
+                value="userid"
+                tal:attributes="value member/userid" />
+            </td>
+            <td tal:content="member/fullname">
+              Name
+            </td>
+          </tr>
+          <tr tal:condition="not:clipboard_members">
+            <td>
+              <i>
+                No users on "Lookup Clipboard"
+              </i>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td align="left"
+              colspan="2">
+              <tal:block condition="clipboard_members">
+                <metal:block define-slot="clipboard_actions" />
+              </tal:block>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </metal:block>
+  </div>
+</metal:block>
