@@ -32,22 +32,21 @@
           <span class="subhead">format</span><br />
           <span tal:replace="model/web_format">format</span> image
         </p>
-        <p>
+        <p tal:define="
+          image_width python: model.getDimensions()[0];
+          image_height python: model.getDimensions()[1];
+          scale_width python: model.getCanonicalWebScale()[0];
+          scale_height python: model.getCanonicalWebScale()[1];
+        ">
           <span class="subhead">dimensions</span><br />
-          <span tal:define="
-            img_width python: model.getDimensions()[0];
-            img_height python: model.getDimensions()[1];
-            "
-            tal:on-error="string: unknown"
-            tal:replace="string:${img_width}x${img_height}"
-            />, scaled to 
-            <span tal:define="
-              img_width python: model.getCanonicalWebScale()[0];
-              img_height python: model.getCanonicalWebScale()[1];
-              "
-              tal:on-error="string: unknown"
-              tal:replace="string:${img_width}x${img_height}"
-            />
+          <span tal:on-error="string: unknown"
+            tal:replace="string:${image_width}x${image_height}"
+            /><tal:condition condition="python:
+              image_width != scale_width and
+              image_height != scale_height">, scaled to 
+            <span tal:on-error="string: unknown"
+              tal:replace="string:${scale_width}x${scale_height}"
+              /></tal:condition>
         </p>
         <p>
           <span class="subhead">original</span><br />
@@ -73,13 +72,15 @@
       <span class="subhead"><b>file size</b><br /></span>
       <span 
         tal:attributes="title string: ${size} Bytes"
-        tal:content="python:view.convertBytesToHumanReadable(size)" /> Bytes
+        tal:content="python:view.convertBytesToHumanReadable(size)" />
       <tal:block tal:condition="model/canScale">
          <br />
-        (<span 
-          tal:attributes="title string: ${scaled_size} Bytes"
-          tal:content="python:view.convertBytesToHumanReadable(scaled_size)" /> 
-        Bytes scaled)
+         <tal:condition condition="python: size != scaled_size">
+          <span 
+            tal:attributes="title string: ${scaled_size}"
+            tal:content="python:view.convertBytesToHumanReadable(scaled_size)" /> 
+          scaled
+          </tal:condition>
       </tal:block>
     </p>
     <tal:block tal:condition="python:user.has_role(['Manager'], model)">
@@ -152,9 +153,9 @@
             <input class="button"
               type="submit"
               name="scale_submit:method"
-              value="Set format and scale"
-              title="access key: alt-s"
-              accesskey="s"
+              value="Change format/scale"
+              title="access key: alt-c"
+              accesskey="c"
             />
           </td>
         </tr>
