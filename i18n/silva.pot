@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue Nov 30 13:14:17 2004\n"
+"POT-Creation-Date: Tue Nov 30 13:19:34 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -2503,6 +2503,10 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:95
 msgid "over to the import screen: alt-i"
+msgstr ""
+
+#: /views/edit/Container/tab_status_get_modify_title.py:12
+msgid "modify ${meta_type}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_get_name.py:15

@@ -139,7 +139,7 @@
             <div style="float: left;">
               <a class="icon"
                 tal:attributes="href string:${obj_url}/edit/tab_edit;
-                title string:modify ${obj/meta_type};
+                title python: here.tab_status_get_modify_title(obj['meta_type']);
                 ">
                 <img tal:replace="structure obj/icon" />
               </a>

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Tue Nov 30 13:14:17 2004\n"
-"PO-Revision-Date: 2004-11-30 13:15+0100\n"
+"POT-Creation-Date: Tue Nov 30 13:19:34 2004\n"
+"PO-Revision-Date: 2004-11-30 13:20+0100\n"
 "Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -2646,6 +2646,10 @@ msgstr "exporteren uit &#xab;${title}&#xbb;"
 #: /views/edit/Container/tab_status_export.pt:95
 msgid "over to the import screen: alt-i"
 msgstr "naar het scherm 'importeren': alt-i"
+
+#: /views/edit/Container/tab_status_get_modify_title.py:12
+msgid "modify ${meta_type}"
+msgstr "bewerk ${meta_type}"
 
 #: /views/edit/Container/tab_status_get_name.py:15
 msgid "${id} of ${parent_id}"
