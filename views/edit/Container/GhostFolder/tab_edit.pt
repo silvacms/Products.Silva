@@ -90,7 +90,7 @@
         <th>
           Content
         </th>
-        <th width="40%">
+        <th width="30%">
           Note
         </th>
       </tr>
@@ -157,17 +157,10 @@
       <tr class="controls">
         <td class="align-right" 
           colspan="3">
-          <input class="button"  tal:replace="nothing"
-            type="submit"
-            name="sync:method"
-            value="resync ghost folder"
-            title="re-synchronize with content from the source folder: alt-r"
-            accesskey="r"
-          />
           <input class="button"
             type="submit"
             name="submit:method"
-            value="Save path"
+            value="save reference"
             title="access key: alt-s"
             accesskey="s"
           />
@@ -177,7 +170,12 @@
   </table>
        
 <tal:block replace="nothing">
-  ____________________________ temporary listing test ____________________________
+  ____________________________ contents listing ____________________________
+</tal:block>
+<tal:block replace="nothing">
+  ______________ Fixme: this listing duplicates code of the Contents screen,
+  but it's so adjusted it may not make sense to macro it. Once this is final
+  the replace="nothing"s should be removed ______________
 </tal:block>
 
 <table class="listing"
@@ -212,8 +210,8 @@
             type="submit"
             name="sync:method"
             value="resync ghost folder"
-            title="re-synchronize with content from the source folder: alt-r"
-            accesskey="r"
+            title="re-synchronize with content from the source folder: alt-e"
+            accesskey="e"
             tal:condition="not:link_status"
           />
         </div>
@@ -251,7 +249,8 @@
     </tal:block>
     <tr class="odd"
       tal:condition="python: not(default_document or publishables or assets)">
-      <td colspan="5" i18n:translate="no_content_objects_in_folder">
+      <td colspan="5" 
+        i18n:translate="no_content_objects_in_folder">
         There is no content here.
       </td>
     </tr>

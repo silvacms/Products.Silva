@@ -31,9 +31,9 @@
     version     python:model.get_editable();
     link_status python:here.get_ghost_link_status_text(version);
     content_url python:version.get_content_url();
- ">
+">
  
- <table class="listing">
+  <table class="listing">
     <thead>
       <tal:block replace="nothing">
         ______________ vein + title row ______________
@@ -52,7 +52,7 @@
     <tbody>
       <tr>
         <th class="align-right"
-          width="12%">
+          width="15%">
           Attributes
         </th>
         <th>
@@ -63,15 +63,18 @@
         </th>
       </tr>
 
-      <tr class="even" valign="top">
-        <td class="align-right">
-         <script type="text/javascript"
-           tal:content="structure here/reference.js" />
-
-          <input type="button" class="navigation" value="Path..."
+      <tr class="even">
+        <td class="field-title">
+          <script type="text/javascript"
+            tal:content="structure here/reference.js" />
+          <input class="navigation" 
+            type="button" 
+            value="reference..."
+            title="Locate item to refer to: alt-r"
+            accesskey="r"
             tal:define="asset_context python:here.get_start_container();"
             tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Content&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
-            /><span class="required">*</span>
+            /><span class="warning">*</span>
         </td>
         <td>
           <input style="width:100%;"
@@ -126,7 +129,7 @@
           <input class="button"
             type="submit"
             name="form_submitted"
-            value="Save ghost"
+            value="save reference"
             title="access key: alt-s"
             accesskey="s"
           />
