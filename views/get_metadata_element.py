@@ -15,5 +15,7 @@ try:
 except BindingError, be:
     # No binding found..
     return None
+if binding is None:
+    return None
 
 return binding.get(set_name, element_name)
