@@ -7,7 +7,7 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )">
 
 /*
-**  Silva version v1.0a
+**  Silva version v1.0b
 **
 **  The view crew at Infrae - all seasons of 2003, 2004
 **    Thanks to Alexander Limi (limi@plone.org) - October 2002
