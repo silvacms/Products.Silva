@@ -9,7 +9,8 @@
   >
 
 <metal:block define-macro="clipboard">
-  <div class="info">
+  <div class="info"
+    style="padding-bottom:0;">
     <metal:block define-macro="clipboard_no_style">
       <form action="."
         method="POST"

@@ -198,7 +198,7 @@
               style="float: right;"
               name="lookup_remove_from_selection:method"
               type="submit"
-              value="Remove"
+              value="Remove user"
               title="remove users from the clipboard: alt-r"
               accesskey="r"
             />

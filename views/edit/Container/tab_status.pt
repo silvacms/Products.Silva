@@ -136,7 +136,8 @@
             </div>
             <div style="padding-left: 19px;"
               tal:define="title obj/title">
-              <a title="preview"
+              <a class="blacklink"
+                title="preview"
                 tal:attributes="
                   class obj/status_style | default;
                   href string:${obj_url}/edit/tab_preview;">
@@ -303,7 +304,8 @@
     </tal:block>
     <tr class="controls"
       tal:condition="may_approve_content">
-      <td colspan="3">
+      <td colspan="3"
+        style="border-style:none;">
         <input class="button"
           style="background:#8f7f01;"
           type="submit"
@@ -365,7 +367,8 @@
       <tal:block replace="nothing">
         ______________ author controls ______________
       </tal:block>
-      <td colspan="4">
+      <td colspan="4"
+        style="border-style:none;">
         <input class="button"
           style="background:#8f7f01;"
           type="submit"
