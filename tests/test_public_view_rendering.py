@@ -40,7 +40,7 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         silva_extra = pm.getMetadata(version)
         silva_extra.setValues("silva-extra", {'renderer_name' : "Images on Right"})
 
-        self.assertEqual(obj.preview(), '<?xml version="1.0"?>\n<table><tr><td valign="top"><h2 class="heading">This is a rendering test</h2><p xmlns:doc="http://infrae.com/ns/silva_document" xmlns:silva="http://infrae.com/ns/silva" class="p">This is a test of the XSLT rendering functionality.</p></td><td valign="top"/></tr></table>\n')
+        self.assertEqual(obj.preview(), '<?xml version="1.0"?>\n<table><tr><td valign="top"><h2 class="heading">This is a rendering test</h2><p class="p">This is a test of the XSLT rendering functionality.</p></td><td valign="top"/></tr></table>\n')
 
     def test_render_public_view(self):
         importfolder = self.add_folder(
@@ -67,7 +67,7 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(obj.view(), "Sorry, this document is not published yet.")
         obj.set_unapproved_version_publication_datetime(DateTime())
         obj.approve_version()
-        self.assertEqual(obj.view(), '<?xml version="1.0"?>\n<table><tr><td valign="top"><h2 class="heading">This is a rendering test</h2><p xmlns:doc="http://infrae.com/ns/silva_document" xmlns:silva="http://infrae.com/ns/silva" class="p">This is a test of the XSLT rendering functionality.</p></td><td valign="top"/></tr></table>\n')
+        self.assertEqual(obj.view(), '<?xml version="1.0"?>\n<table><tr><td valign="top"><h2 class="heading">This is a rendering test</h2><p class="p">This is a test of the XSLT rendering functionality.</p></td><td valign="top"/></tr></table>\n')
 
 
 if __name__ == '__main__':

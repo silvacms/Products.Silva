@@ -161,6 +161,18 @@
     <a href="{@url}"><xsl:apply-templates mode="text-content" /></a>
   </xsl:template>
   
+  <xsl:template match="doc:abbr" mode="text-content">
+    <abbr title="{@title}">
+      <xsl:copy-of select="./node()" />
+    </abbr>
+  </xsl:template>
+    
+  <xsl:template match="doc:acronym" mode="text-content">
+    <acronym title="{@title}">
+      <xsl:copy-of select="./node()" />
+    </acronym>
+  </xsl:template>
+    
   <xsl:template match="doc:image[@link]">
     <a href="{@link}">
       <img src="{@path}" />
