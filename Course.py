@@ -78,7 +78,9 @@ class CourseVersion(SimpleItem.SimpleItem):
         self.id = id
         self.title = title 
         self._data = { 'course_title' : title}
-
+        self.goal = ParsedXML('goal', '<doc></doc>')
+        self.content = ParsedXML('content', '<doc></doc>')
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_data')
     def set_data(self, dict):
