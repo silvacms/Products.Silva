@@ -32,16 +32,11 @@ div.tabs a.recede {
   border-bottom: #8b939b 1px solid;
 }
 
-/* yellowjacket b3d4bf */
-div.tabs a.interim {
-  background: #729b7b;
-}
-
 div.tabs a:hover {
   background: &dtml-contentTabBackgroundSelected;;
 }
 
-div.riverBar {
+div.flowBar {
   background: &dtml-contentTabBackgroundSelected;;
 }
 
@@ -58,7 +53,7 @@ table.listing tr.top-controls h3 {
 }
 
 div.footer {
-  background: &dtml-contentTabBackgroundSelected;;
+  background: &dtml-listingTopBackgroundContent;;
 }
 
 
