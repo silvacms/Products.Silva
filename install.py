@@ -160,7 +160,8 @@ def configureSecurity(root):
         'Add Silva Folders',
         'Add Silva Ghost Versions',
         'Add Silva Ghosts',
-        'Add Silva Images'
+        'Add Silva Images',
+        'Add Silva SQL Data Sources',
         ]
     
     for add_permission in add_permissions:
@@ -259,6 +260,8 @@ def registerViews(reg):
     reg.register('edit', 'Silva DemoObject', ['edit', 'VersionedContent', 'DemoObject'])
     reg.register('edit', 'Silva File', ['edit', 'Asset', 'File'])
     reg.register('edit', 'Silva Indexer', ['edit', 'Content', 'Indexer'])
+    #Uncomment to enable the experimental Data Source / Data Element 
+    #reg.register('edit', 'Silva SQL Data Source', ['edit', 'Asset', 'SQLDataSource'])
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder'])
@@ -280,11 +283,14 @@ def registerViews(reg):
     reg.register('add', 'Silva DemoObject', ['add', 'DemoObject'])
     reg.register('add', 'Silva File', ['add', 'File'])
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
+    #Uncomment to enable the experimental Data Source / Data Element
+    #reg.register('add', 'Silva SQL Data Source', ['add', 'SQLDataSource'])
 
 def unregisterViews(reg):
     for meta_type in ['Silva Folder', 'Silva Document',
                       'Silva Publication', 'Silva Ghost', 'Silva Image',
-                      'Silva DemoObject', 'Silva File', 'Silva Indexer']:
+                      'Silva DemoObject', 'Silva File', 'Silva Indexer',
+                      'Silva SQL Data Source',]:
         reg.unregister('edit', meta_type)
         reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)
@@ -335,7 +341,8 @@ def registerDocEditor(root):
     
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_normal'))
 
-    for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table', 'nlist', 'dlist', 'code']:
+    for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table', 
+                     'nlist', 'dlist', 'code', 'dataelement']:
         wr.addWidget(nodeName, 
                      ('service_widgets', 'element', 'doc_elements', nodeName, 'mode_normal'))
 
@@ -350,8 +357,15 @@ def registerDocEditor(root):
     wr.setDisplayName('nlist', 'Complex list')
     wr.setDisplayName('dlist', 'Definition list')
     wr.setDisplayName('code', 'Code Element')
+    #Uncomment to enable the experimental Data Source / Data Element
+    #wr.setDisplayName('dataelement', 'Data Element')
     
-    wr.setAllowed('doc', ['p', 'heading', 'list', 'pre', 'nlist', 'table', 'image', 'toc', 'dlist', 'code'])
+    wr.setAllowed('doc', ['p', 'heading', 'list', 'pre', 'nlist', 'table', 
+                  'image', 'toc', 'dlist', 'code'])
+    #Uncomment to enable the experimental Data Source / Data Element
+    #wr.setAllowed('doc', ['p', 'heading', 'list', 'pre', 'nlist', 'table', 
+    #              'image', 'toc', 'dlist', 'code', 'dataelement'])
+
 
 def registerDocViewer(root):
     wr = root.service_doc_viewer
@@ -359,7 +373,8 @@ def registerDocViewer(root):
     
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
-    for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist', 'table', 'dlist', 'code']:
+    for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist', 
+                 'table', 'dlist', 'code', 'dataelement']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
 
 def registerDocPreviewer(root):
@@ -368,7 +383,7 @@ def registerDocPreviewer(root):
     
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
     
-    for name in ['p', 'list', 'heading', 'pre', 'nlist', 'table', 'dlist']:
+    for name in ['p', 'list', 'heading', 'pre', 'nlist', 'table', 'dlist', 'dataelement']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements', name, 'mode_view'))
 
     wr.addWidget('toc', ('service_widgets', 'element', 'doc_elements', 'toc', 'mode_preview'))
