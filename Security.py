@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.29 $
+# $Revision: 1.30 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -13,7 +13,7 @@ from UserManagement import user_management
 
 # Are groups available?
 try:
-    from Products.Groups.ZGroups import ZGroupsMapping
+    from Products.Groups.ZGroupsMapping import ZGroupsMapping
     groups_enabled = 1
 except ImportError:
     groups_enabled = 0
@@ -457,7 +457,7 @@ class Security:
         mappings object. If not, clear the __ac_local_groups__ attribute
         for efficiency.
         """
-        if groups_enabled and self.__ac_local_groups__:
+        if self.__ac_local_groups__:
             if not self.__ac_local_groups__.getMappings():
                 self.__ac_local_groups__ = None
 
