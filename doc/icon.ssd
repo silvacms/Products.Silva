@@ -1,0 +1,571 @@
+Storage 
+{
+	{ Format 1.33 }
+	{ GeneratedFrom TSSD-version-2.20 }
+	{ WrittenBy zagy }
+	{ WrittenOn "" }
+}
+
+Document 
+{
+	{ Type "Static Structure Diagram" }
+	{ Name icon.ssd }
+	{ Author zagy }
+	{ CreatedOn "" }
+	{ Annotation "" }
+	{ Hierarchy False }
+}
+
+Page 
+{
+	{ PageOrientation Portrait }
+	{ PageSize A4 }
+	{ ShowHeaders False }
+	{ ShowFooters False }
+	{ ShowNumbers False }
+}
+
+Scale 
+{
+	{ ScaleValue 1 }
+}
+
+# GRAPH NODES
+
+SSDClassNode 1
+{
+	{ Name "ISilvaObject" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< interface >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 2
+{
+	{ Name "IconRegistry" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 4 }
+	{ Operation "+ getIcon(class_or_instance)" }
+	{ Operation "+ registerAdapter(class, adapter)" }
+	{ Operation "+ registerIcon(identifier, icon)" }
+	{ Operation "- getAdapter(class_or_instance)" }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 5
+{
+	{ Name "SilvaFileAdapter" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 1 }
+	{ Operation "+ getIconIdentifier()" }
+	{ Stereotype "<< adapter >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 6
+{
+	{ Name "IIcon" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 1 }
+	{ Operation "+ getIconIdentifier()" }
+	{ Stereotype "<< interface >>" }
+	{ Properties "{ - }" }
+}
+
+Note 7
+{
+	{ Name "identifier:\r('meta_type', 'Silva Document'),\r('mime_type', 'application/pdf'),\rwhatever" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+Comment 24
+{
+	{ Name "$Id: icon.ssd,v 1.1 2003/08/18 11:56:00 zagy Exp $" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+SSDClassNode 26
+{
+	{ Name "ISilvaFile" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< interface >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 27
+{
+	{ Name "MetaTypeAdapter" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 1 }
+	{ Operation "+ getIconIdentifier()" }
+	{ Stereotype "<< adapter >>" }
+	{ Properties "{ - }" }
+}
+
+Note 38
+{
+	{ Name "checks for content's mime type\rfalls back to meta type" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+Note 39
+{
+	{ Name "uses object's \rmeta_type" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+# GRAPH EDGES
+
+CommentLink 11
+{
+	{ Name "" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 7 }
+	{ Subject2 2 }
+}
+
+SSDGeneralizationEdge 28
+{
+	{ Name "implements" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 5 }
+	{ Subject2 6 }
+}
+
+SSDGeneralizationEdge 29
+{
+	{ Name "adapts" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 5 }
+	{ Subject2 26 }
+}
+
+SSDGeneralizationEdge 30
+{
+	{ Name "implements" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 27 }
+	{ Subject2 6 }
+}
+
+SSDGeneralizationEdge 31
+{
+	{ Name "adapts" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 27 }
+	{ Subject2 1 }
+}
+
+CommentLink 40
+{
+	{ Name "" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 38 }
+	{ Subject2 5 }
+}
+
+CommentLink 41
+{
+	{ Name "" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 39 }
+	{ Subject2 27 }
+}
+
+# VIEWS AND GRAPHICAL SHAPES
+
+View 12
+{
+	{ Index "0" }
+	{ Parent 0 }
+}
+
+SSDSingleClassBox 13
+{
+	{ View 12 }
+	{ Subject 1 }
+	{ Position 510 100 }
+	{ Size 80 39 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype True }
+	{ ShowProperties False }
+}
+
+SSDTripleClassBox 14
+{
+	{ View 12 }
+	{ Subject 2 }
+	{ Position 120 370 }
+	{ Size 159 110 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDTripleClassBox 17
+{
+	{ View 12 }
+	{ Subject 5 }
+	{ Position 240 240 }
+	{ Size 98 71 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype True }
+	{ ShowProperties False }
+}
+
+SSDTripleClassBox 19
+{
+	{ View 12 }
+	{ Subject 6 }
+	{ Position 330 110 }
+	{ Size 101 71 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype True }
+	{ ShowProperties False }
+}
+
+NoteBox 22
+{
+	{ View 12 }
+	{ Subject 7 }
+	{ Position 90 490 }
+	{ Size 168 56 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Left }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+Line 23
+{
+	{ View 12 }
+	{ Subject 11 }
+	{ FromShape 22 }
+	{ ToShape 14 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 Empty }
+	{ Points 2 }
+	{ Point 97 462 }
+	{ Point 106 425 }
+	{ NamePosition 88 441 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle WideDotted }
+	{ FixedName True }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+TextBox 25
+{
+	{ View 12 }
+	{ Subject 24 }
+	{ Position 220 520 }
+	{ Size 20 20 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Invisible }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+Line 32
+{
+	{ View 12 }
+	{ Subject 28 }
+	{ FromShape 17 }
+	{ ToShape 19 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 WhiteTriangle }
+	{ Points 2 }
+	{ Point 265 205 }
+	{ Point 305 146 }
+	{ NamePosition 274 170 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+SSDSingleClassBox 33
+{
+	{ View 12 }
+	{ Subject 26 }
+	{ Position 150 110 }
+	{ Size 80 39 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype True }
+	{ ShowProperties False }
+}
+
+Line 34
+{
+	{ View 12 }
+	{ Subject 29 }
+	{ FromShape 17 }
+	{ ToShape 33 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 WhiteTriangle }
+	{ Points 2 }
+	{ Point 215 205 }
+	{ Point 164 130 }
+	{ NamePosition 200 162 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+Line 35
+{
+	{ View 12 }
+	{ Subject 30 }
+	{ FromShape 36 }
+	{ ToShape 19 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 WhiteTriangle }
+	{ Points 2 }
+	{ Point 420 215 }
+	{ Point 360 146 }
+	{ NamePosition 400 174 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+SSDTripleClassBox 36
+{
+	{ View 12 }
+	{ Subject 27 }
+	{ Position 450 250 }
+	{ Size 118 71 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype True }
+	{ ShowProperties False }
+}
+
+Line 37
+{
+	{ View 12 }
+	{ Subject 31 }
+	{ FromShape 36 }
+	{ ToShape 13 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 WhiteTriangle }
+	{ Points 2 }
+	{ Point 464 215 }
+	{ Point 502 120 }
+	{ NamePosition 471 164 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+NoteBox 42
+{
+	{ View 12 }
+	{ Subject 38 }
+	{ Position 320 330 }
+	{ Size 165 40 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+Line 43
+{
+	{ View 12 }
+	{ Subject 40 }
+	{ FromShape 42 }
+	{ ToShape 17 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 Empty }
+	{ Points 2 }
+	{ Point 302 310 }
+	{ Point 272 276 }
+	{ NamePosition 297 287 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle WideDotted }
+	{ FixedName True }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+NoteBox 44
+{
+	{ View 12 }
+	{ Subject 39 }
+	{ Position 500 340 }
+	{ Size 83 40 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+Line 45
+{
+	{ View 12 }
+	{ Subject 41 }
+	{ FromShape 44 }
+	{ ToShape 36 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 Empty }
+	{ Points 2 }
+	{ Point 489 320 }
+	{ Point 470 286 }
+	{ NamePosition 491 299 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle WideDotted }
+	{ FixedName True }
+	{ Font "-*-helvetica-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
