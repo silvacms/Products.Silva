@@ -3,26 +3,6 @@ See also LICENSE.txt
 
 Silva changes
 
-  0.9.3.2
-
-    Bugs fixed
-
-      - Make render_icon create absolute URLs again for better
-        cacheability.
-
-      - Fixed the silva parser where a specific portnumber in the URL
-        would not get recognized.
-
-      - Improved link parser for anchors and query fragments.
-
-  0.9.3.1
-
-    Bugs fixed
-
-      - Improvements in the upgrade code, esp. for large databases. 
-    
-      - Fixed bug in displaying the "allowed" addables.
-
   0.9.3
 
     Features Added
@@ -182,6 +162,11 @@ Silva changes
 
         - Can add a new Silva root with non-ascii (latin1) characters
           in the title.
+
+        - Fixed acquisition for viewing locally defined roles on Silva
+          objects. (For instance: if user1 has editor role on pub1, and not
+          on pub2, viewing /pub1/pub2/foo/tab_access shouldn't show user1
+          as an editor, and now doesn't)
 
   0.9.2.6
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74.4.7 $
+# $Revision: 1.74.4.8 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -315,7 +315,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for userid in parent.sec_get_local_defined_userids():
                 userids[userid] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return userids.keys()
 
     security.declareProtected(
@@ -329,7 +329,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for role in parent.sec_get_local_roles_for_userid(userid):
                 roles[role] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return roles.keys()
         
     security.declareProtected(
@@ -413,7 +413,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for group in parent.sec_get_local_defined_groups():
                 groups[group] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return groups.keys()
 
     security.declareProtected(
@@ -427,7 +427,7 @@ class Security(AccessManager):
         while IContainer.isImplementedBy(parent):
             for role in parent.sec_get_local_roles_for_group(group):
                 roles[role] = 1
-            parent = parent.aq_parent
+            parent = parent.aq_inner.aq_parent
         return roles.keys()
 
     security.declareProtected(
