@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.34 $
+# $Revision: 1.35 $
 
 # Python
 from StringIO import StringIO
@@ -237,18 +237,27 @@ class CatalogedVersionedContent(VersionedContent):
     def manage_afterAdd(self, item, container):
         CatalogedVersionedContent.inheritedAttribute('manage_afterAdd')(self, item, container)
         for version in self._get_indexable_versions():
-            getattr(self, version).reindex_object()
+            # FIXME: what if e.g. version '0' got removed
+            # but there is a content object with the id '0' in the
+            # acquisition path? will this be indexed instead?
+            version_object = getattr(self, version, None)
+            if version_object is not None:
+                version_object.reindex_object()
 
     def manage_afterClone(self, item):
         CatalogedVersionedContent.inheritedAttribute('manage_afterClone')(self, item)
         for version in self._get_indexable_versions():
-            getattr(self, version).reindex_object()
+            version_object = getattr(self, version, None)
+            if version_object is not None:
+                version_object.reindex_object()
 
     # Override this method from superclasses so we can remove all versions from the catalog
     def manage_beforeDelete(self, item, container):
         CatalogedVersionedContent.inheritedAttribute('manage_beforeDelete')(self, item, container)
         for version in self._get_indexable_versions():
-            getattr(self, version).unindex_object()
+            version_object = getattr(self, version, None)
+            if version_object is not None:
+                version_object.unindex_object()
 
     def _get_indexable_versions(self):
         ret = []
