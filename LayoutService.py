@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 
 # Zope
 from OFS import SimpleItem
@@ -194,7 +194,7 @@ class LayoutService(SimpleItem.SimpleItem):
             else:
                 return publication
         else:
-            return None
+            return publication
 
     def get_layout_description(self, publication):
         if self.has_layout(publication):

@@ -118,7 +118,7 @@
 <tal:block tal:condition="python: options['error_type'] == 'NotFound'">
 <!-- _____________________ 404 error message  _____________________ -->
 <!-- _____________________ Silva version 0.9.3.0 __________________ -->
-<html metal:use-macro="here/layout_macro.html/macros/layout"
+<html metal:use-macro="here/get_layout_macro"
   tal:define="mangle python:modules['Products'].Silva.mangle;">
 <head>
 <title metal:fill-slot="title" 

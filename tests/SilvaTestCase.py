@@ -174,8 +174,8 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
         return getattr(object, id)
 
-    def add_ghost(self, object, id, title):
-        return self._add_helper(object, 'Ghost', id, title)
+    def add_ghost(self, object, id, content_url):
+        return self._add_helper(object, 'Ghost', id, content_url)
 
     def add_image(self, object, id, title, **kw):
         return self._add_helper(object, 'Image', id, title, **kw)

@@ -294,9 +294,6 @@ def configureSecurity(root):
     # chief editor can customize a layout
     root.manage_permission('Add Page Templates', roleinfo.CHIEF_ROLES)
     root.manage_permission('Add Folders', roleinfo.CHIEF_ROLES)
-#    root.manage_permission('Add Images', roleinfo.CHIEF_ROLES)
-#    root.manage_permission('Add DTML Methods', roleinfo.CHIEF_ROLES)
-
 
     # chief editors and up may also place groups and Datasources.
     root.manage_permission('Add Silva Groups', roleinfo.CHIEF_ROLES)
@@ -352,11 +349,11 @@ def configureLayout(root, default_if_existent=0):
     default_ if the id already exists in the root.
     """
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
-               'standard_error_message', 'standard_unauthorized_message', ]:
+               'standard_error_message', 'standard_unauthorized_message',]:
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
     for id in ['index_html.py', 'preview_html.py',
-               'get_metadata_element.py']:
+               'get_metadata_element.py', 'get_layout_macro.py', ]:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
 
     add_helper(root, 'frontend.css', globals(), dtml_add_helper, default_if_existent)
