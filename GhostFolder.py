@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.15 2003/08/27 08:40:06 zagy Exp $
+# $Id: GhostFolder.py,v 1.16 2003/09/15 15:23:11 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -21,10 +21,11 @@ from Products.Silva import mangle
 from Products.Silva.Metadata import export_metadata
 from Products.Silva.Publishable import Publishable
 from Products.Silva.Versioning import VersioningError
+from Products.Silva.icon import Adapter
 
 from Products.Silva.interfaces import \
     IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
-    IPublication, ISilvaObject
+    IPublication, ISilvaObject, IGhostFolder, IIcon
 
 icon = 'www/silvaghostfolder.gif'
 
@@ -32,7 +33,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     """GhostFolders are used to haunt folders."""
 
     meta_type = 'Silva Ghost Folder'
-    __implements__ = IContainer, IGhost
+    __implements__ = IContainer, IGhost, IGhostFolder
     security = ClassSecurityInfo()
 
     _active_flag = 1
@@ -283,4 +284,17 @@ def xml_import_handler(object, node):
         factory(object, id, title, content_url)
     ghostfolder = Folder.xml_import_handler(object, node, factory=f)
     return ghostfolder
-       
+      
+
+class GhostFolderIconAdapter(Adapter):
+   
+    __implements__ = IIcon
+    __adapts__ = IGhostFolder
+
+    def getIconIdentifier(self):
+        kind = 'folder'
+        gf = self.adapted
+        if gf.implements_publication():
+            kind = 'publication'
+        return ('ghostfolder', kind)
+    

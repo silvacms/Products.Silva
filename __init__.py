@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.92 $
+# $Revision: 1.93 $
 
 import Metadata
 import Folder, Root
@@ -149,6 +149,7 @@ def initialize_icons():
     icon.registry.registerAdapter(icon.MetaTypeClassAdapter, 0)
     icon.registry.registerAdapter(icon.MetaTypeAdapter, 5)
     icon.registry.registerAdapter(icon.SilvaFileAdapter, 10)
+    icon.registry.registerAdapter(GhostFolder.GhostFolderIconAdapter, 11)
     mimeicons = [
         ('audio/aiff', 'file_aiff.png'),
         ('audio/x-aiff', 'file_aiff.png'),
@@ -191,7 +192,11 @@ def initialize_icons():
         ('video/quicktime', 'file_quicktime.png'),
         ('video/x-dv', 'file_quicktime.png'),
     ]
+    ri = icon.registry.registerIcon
     for mimetype, icon_name in mimeicons:
-        icon.registry.registerIcon(('mime_type', mimetype),
-            'www/%s' % icon_name, File.__dict__)
+        ri(('mime_type', mimetype), 'www/%s' % icon_name, File.__dict__)
+    ri(('ghostfolder', 'folder'), 'www/silvaghostfolder.gif',
+        GhostFolder.__dict__)
+    ri(('ghostfolder', 'publication'), 'www/silvaghostpublication.gif',
+        GhostFolder.__dict__)
 

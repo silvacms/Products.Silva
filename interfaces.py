@@ -1064,7 +1064,7 @@ class IContainerPolicy(Interface):
     
 
 class IGhost(Interface):
-    """Marker interface for ghosts"""
+    """Interface for ghosts (and ghost folders)"""
 
     def get_content_url():
         """return haunted object's url"""
@@ -1072,6 +1072,10 @@ class IGhost(Interface):
     def _factory(container, id, content_url):
         """call factory method in container context"""
 
+
+class IGhostFolder(Interface):
+    """Marker interface for ghost folders"""
+    
 
 class IIcon(Interface):
     # XXX I don't like the name
@@ -1084,4 +1088,3 @@ class IIcon(Interface):
         """
 
 
-    
