@@ -6,7 +6,6 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 # Silva
-from ViewRegistry import ViewAttribute
 from SilvaObject import SilvaObject
 from Publishable import Publishable
 import Copying
@@ -23,10 +22,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     meta_type = "Silva Folder"
 
     __implements__ = Interfaces.Container
-    
-    # allow edit view on this object
-    edit = ViewAttribute('edit')
-    
+        
     def __init__(self, id, title):
         self.id = id
         self._title = title

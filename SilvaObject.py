@@ -2,12 +2,16 @@ import Interfaces
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
+from ViewRegistry import ViewAttribute
 
 class SilvaObject:
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()
 
+    # allow edit view on this object
+    edit = ViewAttribute('edit')
+    
     def __repr__(self):
         return "<%s instance %s>" % (self.meta_type, self.id)
 
@@ -28,12 +32,13 @@ class SilvaObject:
     #                          'title')
     #def _get_title_helper(self):
     #    return self.get_title() # get_title() can be defined on subclass
-    #title = ComputedAttribute(_get_title_helper)
+    #title = ComputedAttribute(_zget_title_helper)
 
-    def get_model(self):
-        """Get the model. Can be used with acquisition to get
-        the 'nearest' model from the view."""
-        return self.aq_inner
+    #def get_model(self):
+    #    """Get the model. Can be used with acquisition to get
+    #    the 'nearest' model from the view."""
+    #    print self.aq_chain
+    #    return self #.aq_parent # inner
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')

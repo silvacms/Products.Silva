@@ -41,12 +41,12 @@ class Root(Publication):
         """
         return self.aq_inner
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'get_view')
-    def get_view(self, view_type, obj):
-        """Get a view for an object from the view registry.
-        """
-        return self.service_view_registry.wrap(view_type, obj)
+    #security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+    #                          'get_view')
+    #def get_view(self, view_type, obj):
+    #    """Get a view for an object from the view registry.
+    #    """
+    #    return self.service_view_registry.wrap(view_type, obj)
     
 InitializeClass(Root)
 

@@ -6,7 +6,6 @@ from Globals import InitializeClass
 import SilvaPermissions
 
 # Silva
-from ViewRegistry import ViewAttribute
 from VersionedContent import VersionedContent
 import ForgivingParser
 import Interfaces
@@ -22,10 +21,7 @@ class Document(VersionedContent):
     meta_type = "Silva Document"
 
     __implements__ = Interfaces.VersionedContent
-     
-    # allow edit view on this object
-    edit = ViewAttribute('edit')
-    
+         
     manage_options = (
         ( {'label':'Edit', 'action':'manage_editForm'},
           {'label':'Preview', 'action':'manage_previewForm'},

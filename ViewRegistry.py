@@ -82,11 +82,11 @@ class ViewRegistry(Folder.Folder):
                         self.view_types[view_type][obj.meta_type]).
                 __of__(obj).render_view())
     
-    def wrap(self, view_type, obj):
-        """Wrap object in view (wrapping skin)
-        """
-        return getattr(self,
-                       self.view_types[view_type][obj.meta_type]).__of__(obj)
+    #def wrap(self, view_type, obj):
+    #    """Wrap object in view (wrapping skin)
+    #    """
+    #    return getattr(self,
+    #                   self.view_types[view_type][obj.meta_type]).__of__(obj)
     
         #return obj.__of__(getattr(
         #    self, self.view_types[view_type][obj.meta_type]))
@@ -111,6 +111,12 @@ class ViewAttribute(Acquisition.Implicit):
             
     def __getitem__(self, name):
         """
-        """    
-        return getattr(self.get_view(self._view_type, self.aq_parent), name)
+        """
+        self.REQUEST['model'] = model = self.aq_parent
+        view_registry = self.service_view_registry
+        result = getattr(view_registry,
+                         view_registry.view_types[self._view_type][model.meta_type])
+        return getattr(result, name)
+    
+        #return getattr(self.get_view(self._view_type, self.aq_parent), name)
 
