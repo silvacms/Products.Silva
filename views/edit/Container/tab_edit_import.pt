@@ -160,7 +160,7 @@
               border="0"
               width="16"
               height="16"
-              alt="Docma icon" 
+              alt="docma icon" 
               tal:attributes="src string:${root_url}/globals/docma.gif"
               i18n:attributes="alt"
             />
@@ -367,7 +367,7 @@
                 <!--
                   if (document.forms[0])
                   {
-                    document.write('<input class="button" type="submit" value="Select all" value="submit" name="selectButton" value="Select all" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false" i18n:attributes="value title">');
+                    document.write('<input class="button" type="submit" value="select all" value="submit" name="selectButton" value="select all" title="select all items: alt-a" accesskey="a" onClick="toggleSelect(); return false" i18n:attributes="value title">');
                   }
                 //-->
               </script>
@@ -380,7 +380,7 @@
                 <input class="warning" 
 		  type="submit" 
 		  name="tab_edit_import_delete:method" 
-		  value="Remove" 
+		  value="remove" 
 		  title="there's no undo: alt-x" 
 		  accesskey="x" 
 		  onClick="return confirm('Really remove?')"
@@ -389,7 +389,7 @@
                 <input class="button" 
 		  type="submit" 
 		  name="tab_edit_import_import_and_delete:method" 
-		  value="Import and remove" 
+		  value="import and remove" 
 		  title="import to the current location and remove from the list: alt-m" 
 		  accesskey="m"
 		  i18n:attributes="value title"
