@@ -228,7 +228,7 @@ class FolderXMLSource(SilvaBaseXMLSource):
     """
     def _sax(self, reader, settings):
         self._startElement(reader, 'folder', {'id':self.context.id})
-        title = self.context.get_title()
+        self._metadata(reader, settings)
         self._startElement(reader, 'content', {})
         for object in self.context.get_ordered_publishables():
             if (IPublication.isImplementedBy(object) and 
@@ -253,9 +253,7 @@ class DocumentVersionXMLSource(VersionXMLSource):
     def _sax(self, reader, settings):
         self._startElement(
             reader, 'content', {'version_id': self.context.id})
-        self._startElement(reader, 'title', {})
-        reader.characters(self.context.title)
-        self._endElement(reader, 'title')
+        self._metadata(reader, settings)
         node = self.context.content.documentElement
         self._sax_node(node, reader, settings)
         self._endElement(reader, 'content')
