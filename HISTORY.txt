@@ -5,6 +5,10 @@ Silva changes
 
   1.x (under development)
 
+    Features added
+
+	  - Implemented get_public_tree_all(depth) method.
+
     Bugs fixed
 
       - Silva File and Image asset use settings from the 'nearest' (by
