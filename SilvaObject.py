@@ -158,4 +158,14 @@ class SilvaObject(Security):
     def implements_versioned_content(self):
         return Interfaces.VersionedContent.isImplementedBy(self)
 
+    # HACK
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'activate_security_hack')
+    def activate_security_hack(self):
+        """This does nothing at all, except that calling this apparently
+        as a side effect activates security on this object enough so you
+        can check what roles a user has.
+        """
+        pass
+   
 InitializeClass(SilvaObject)
