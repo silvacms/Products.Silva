@@ -38,7 +38,7 @@
           </tal:block>
 
           <tal:block 
-            define="version python: model.get_viewable()"
+            define="version python: model.implements_versioning() and model.get_viewable()"
             condition="version">
             <metal:block use-macro="here/macro_metadata/macros/view_table">
               <h2 metal:fill-slot="table_title">
