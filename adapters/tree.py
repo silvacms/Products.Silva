@@ -13,11 +13,18 @@ class TreeNode(adapter.Adapter):
     def getObject(self):
         return self.context
 
+    def hasChildNodes(self):
+        return False
+    
     def getChildNodes(self):
-        for i in []:
+        for i in []: # 'empty' iterator
             yield i
 
 class ContainerTreeNode(TreeNode):
+    
+    def hasChildNodes(self):
+        return not not self.context._ordered_ids
+    
     def getChildNodes(self):
         for obj in self.context.get_ordered_publishables():
             yield getTreeNodeAdapter(obj)
@@ -26,3 +33,4 @@ def getTreeNodeAdapter(context):
     if IContainer.isImplementedBy(context):
         return ContainerTreeNode(context).__of__(context) 
     return TreeNode(context).__of__(context)
+

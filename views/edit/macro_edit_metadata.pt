@@ -86,69 +86,78 @@
               </th>
             </tr>
             <tal:block repeat="element_name binding/?set_name/elementNames">
-              <tr 
-                tal:define="
+              <tal:block 
+                define="
                   element binding/?set_name/?element_name;
                   element_error form_errors/?set_name/?element_name | nothing;
                   iterate repeat/element_name/odd;"
-                tal:attributes="
-                  class python:element_error and 'alert' or iterate and 'odd' or 'even';">
-                <tal:block replace="nothing">
-                  ___ element name column ___
-                </tal:block>
-                <td class="align-right">
-                  <tal:block content="element/title" i18n:translate="">
-                    Element name
+                >
+                <tal:block 
+                  condition="element/hidden"
+                  replace="structure element/render"
+                />
+                <tr                
+                  tal:condition="not: element/hidden"
+                  tal:attributes="
+                    class python:element_error and 'alert' or iterate and 'odd' or 'even';"
+                  >
+                  <tal:block replace="nothing">
+                    ___ element name column ___
                   </tal:block>
-                  <span class="warning"
-                    tal:condition="element/isRequired">
-                    *
-                  </span>
-                </td>
-                <tal:block replace="nothing">
-                  ___ element widget column ___
-                </tal:block>
-                <td tal:define="                        
-                  data python: element['render'] or element['view'];
-                  data python: element_name in truncatable and ct(data, 50) or data;
-                  "
-                  tal:condition="
-                    python: element['isEditable'] or not element['isAcquired']"
-                  tal:content="
-                    structure data">
-                  element edit widget
-                </td>
-                <tal:block replace="nothing">
-                  ___ element acquired value column ___
-                </tal:block>
-                <td>
-                  <tal:block 
-                    define="
-                      data element/view;
-                      data python: element_name in truncatable and ct(data, 50) or data;"
-                    condition="element/isAcquired"
-                    replace="structure data" />
-                  <sup tal:condition="element/isAcquireable" i18n:translate="">
-                    &#134;
-                  </sup>
-                  <tal:block condition="not: element/isAcquired">
-                    &nbsp;
+                  <td class="align-right">
+                    <tal:block content="element/title" i18n:translate="">
+                      Element name
+                    </tal:block>
+                    <span class="warning"
+                      tal:condition="element/isRequired">
+                      *
+                    </span>
+                  </td>
+                  <tal:block replace="nothing">
+                    ___ element widget column ___
                   </tal:block>
-                </td>
-                <tal:block replace="nothing">
-                  ___ element desc. column ___
-                </tal:block>
-                <td>
-                  <tal:block content="structure element/description" i18n:translate="">
-                    Element description
+                  <td tal:define="                        
+                    data python: element['render'] or element['view'];
+                    data python: element_name in truncatable and ct(data, 50) or data;
+                    "
+                    tal:condition="
+                      python: element['isEditable'] or not element['isAcquired']"
+                    tal:content="
+                      structure data">
+                    element edit widget
+                  </td>
+                  <tal:block replace="nothing">
+                    ___ element acquired value column ___
                   </tal:block>
-                  <span class="error"
-                    tal:condition="element_error"
-                    i18n:translate=""
-                    tal:content="element_error">
-                  </span>
-                </td>
-              </tr>
+                  <td>
+                    <tal:block 
+                      define="
+                        data element/view;
+                        data python: element_name in truncatable and ct(data, 50) or data;"
+                      condition="element/isAcquired"
+                      replace="structure data" />
+                    <sup tal:condition="element/isAcquireable" i18n:translate="">
+                      &#134;
+                    </sup>
+                    <tal:block condition="not: element/isAcquired">
+                      &nbsp;
+                    </tal:block>
+                  </td>
+                  <tal:block replace="nothing">
+                    ___ element desc. column ___
+                  </tal:block>
+                  <td>
+                    <tal:block content="structure element/description" i18n:translate="">
+                      Element description
+                    </tal:block>
+                    <span class="error"
+                      tal:condition="element_error"
+                      i18n:translate=""
+                      tal:content="element_error">
+                    </span>
+                  </td>
+                </tr>
+              </tal:block>
             </tal:block>
           </tal:block>
           <tr tal:condition="python: set_name == 'silva-extra'">

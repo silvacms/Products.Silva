@@ -109,7 +109,7 @@ for set_name in set_names:
         element['isAcquireable'] = bound_element.isAcquireable()
         element['isRequired'] = bound_element.isRequired()
         element['description'] = bound_element.Description()
-
         element['title'] = bound_element.Title()
+        element['hidden'] = bool(bound_element.field.get_value('hidden'))
 
 return pt_binding
