@@ -1,8 +1,33 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.12 $
+$Revision: 1.13 $
 
 Silva changes
+
+  0.8.4
+
+    Features Added
+
+      - Further split of non-core objects, improving API interfaces for
+      readability.
+
+      - A Silva File object to store arbitrary file in either ZODB or on
+      the filesystem.
+
+      - First implementation of Group access definitions.
+
+    Bugs Fixed
+
+      - Less restrictive object id validation (underscore and period is
+      allowed).
+
+      - Sorting "addables" lists.
+
+      - Paste as ghost for a folder now also ghosts the index.
+
+      - Improved object rename functionality.
+
+      - Code cosmetics.
 
   0.8.3
 
