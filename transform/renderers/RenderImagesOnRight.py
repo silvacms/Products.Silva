@@ -1,11 +1,19 @@
 #!/usr/bin/python
 
+from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
+import Acquisition
+
 from Products.Silva.transform.interfaces import IRenderer
 
-class RenderImagesOnRight(object):
+class RenderImagesOnRight(Acquisition.Implicit):
 
     __implements__ = IRenderer
 
+    security = ClassSecurityInfo()
+    security.declareObjectPublic()
+
+    security.declareProtected("View", "render")
     def render(self, obj):
         # FIXME: this is obviously just a stub implementation, as the
         # hard(ish) part is getting the architecture working together,
@@ -14,5 +22,8 @@ class RenderImagesOnRight(object):
         # out a bit.
         return "images on right"
 
+    security.declareProtected("View", "getName")
     def getName(self):
         return "Images on Right"
+
+InitializeClass(RenderImagesOnRight)
