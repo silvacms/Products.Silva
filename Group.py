@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -11,6 +11,10 @@ from Asset import Asset
 import SilvaPermissions
 # misc
 from helpers import add_and_edit
+try:
+    from Products.Groups.GroupsErrors import GroupsError, BeforeDeleteException
+except ImportError, ie:
+    pass
 
 class Group(Asset):
     security = ClassSecurityInfo()
@@ -30,11 +34,15 @@ class Group(Asset):
         Group.inheritedAttribute('__init__')(self, id, title)
         self._group_name = group_name
         
-    def manage_beforeDelete(self, item, container):
+    def manage_beforeDelete(self, item, container):        
         Group.inheritedAttribute('manage_beforeDelete')(self, item, container)
         if self.isValid():
             # the real group is only deleted if the asset is valid
-            self.service_groups.removeNormalGroup(self._group_name)
+            try:
+                self.service_groups.removeNormalGroup(self._group_name)        
+            except GroupsError, ge:
+                # Raise a BeforeDeleteException to get the deletion canceled.
+                raise BeforeDeleteException, ge
    
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'isValid')
