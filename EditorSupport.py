@@ -4,6 +4,9 @@ import SilvaPermissions
 import ForgivingParser
 from cgi import escape
 
+class EditorSupportError(Exception):
+    pass
+
 class EditorSupport:
     """XML editor support.
     """
@@ -47,7 +50,7 @@ class EditorSupport:
                 for subchild in child.childNodes:
                     result.append(escape(subchild.data, 1))
             else:
-                raise "Unknown element: %s" % child.nodeName
+                raise EditorSupportError, "Unknown element: %s" % child.nodeName
         return ''.join(result)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -92,7 +95,7 @@ class EditorSupport:
                     result.append(subchild.data)
                 result.append('}}')
             else:
-                raise "Unknown element: %s" % child.nodeName
+                raise EditorSupportError, "Unknown element: %s" % child.nodeName
 
         return ''.join(result)
     
@@ -161,7 +164,7 @@ class EditorSupport:
                 newnode.appendChild(doc.createTextNode(data[0]))
                 node.appendChild(newnode)
             else:
-                raise "Unknown structure: %s" % structure
+                raise EditorSupportError, "Unknown structure: %s" % structure
 
     def normalize_whitespace(self, s):
         """Collapse all whitespace in string to single spaces.
