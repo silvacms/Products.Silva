@@ -20,6 +20,11 @@ Silva changes
       - Images in SilvaDocuments now get their widths, heights and titles
         in the xml export, which fixes some bugs in the xslt rendering.
 
+      - Tables should have a width of 100%, but this got removed in 1.0
+
+      - Nested lists only worked in the xslt renderers when the outer list 
+        was bulleted. Nested lists can now have any type normal lists can.
+
   1.1
 
     Features added
