@@ -64,7 +64,7 @@
           tal:attributes="src view/cropping.js/absolute_url">
       </script>
       <script type="text/javascript">
-        //<!CDATA[[
+        //<![CDATA[
 
           function setDraggableSize(width, height) {
             var draggable = document.getElementById('draggable');
@@ -154,7 +154,7 @@
       </div>
 
       <script type="text/javascript">
-        //<!CDATA[[
+        //<![CDATA[
         
           cropper = new Cropper('draggable', 
                                   'dragbar', 
