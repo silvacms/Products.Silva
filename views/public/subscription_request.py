@@ -6,7 +6,7 @@ service = context.service_subscriptions
 
 content = context.restrictedTraverse(request['path'], None)
 if content is None:
-    return context.subscriptions(
+    return context.subscriptions_ui(
         message=_('Path does not lead to a content object'))
 
 try:
@@ -16,9 +16,9 @@ except (errors.AlreadySubscribedError, errors.NotSubscribedError), e:
     # any information on the validity of the emailaddress
     pass
 except errors.SubscriptionError, e:
-    return context.subscriptions(
+    return context.subscriptions_ui(
         message=_(e), subscr_emailaddress=request['emailaddress'])
 
-return context.subscriptions(
+return context.subscriptions_ui(
     message=_('Confirmation request for subscription has been emailed'),
     show_form=False)
