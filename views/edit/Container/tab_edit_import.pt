@@ -28,38 +28,50 @@
         <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
           <tr>
-            <td colspan="3">
+            <td colspan="4">
               <h3>Import Silva XML (.slv)
 	      </h3>
             </td>
           </tr>
 
-          <tr class="topcontrols">
-            <td style="background:#c0dbe0;" align="left" colspan="3">
-              <img src="pixel.gif" width="1px" height="14px"
-                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+          <tr>
+            <th align="left" width="15%">
+              Element
+            </th>
+            <th align="right" width="1%">
               &nbsp;
-            </td>
+            </th>
+            <th align="left">
+              Content
+            </th>
+            <th align="left" width="30%">
+              Note
+            </th>
           </tr>
 
           <tr class="focus-cycle" valign="top">
             <td align="left">
                 File to upload:
             </td>
+            <td align="right">
+            <span class="warning">
+              *
+            </span>
+            </td>
             <td align="left">
                 <input type="file" size="40" name="importfile" />
             </td>
-            <td align="right" width="35%">
+            <td>
                 Choose an XML file to import (must be valid Silva XML)
             </td>
           </tr>
 
           <tr class="controls">
             <td>
-                <input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
+                <button class="cancel" type="submit" name="edit_cancel" onClick="history.back()" title="Access key: alt-c" accesskey="c"> <u>C</u>ancel </button>
             </td>
-            <td colspan="2" align="right">
-                <input class="button" type="submit" name="tab_edit_import_xml:method" value=" Import " title="Access key: alt-i" accesskey="i" />
+            <td colspan="3" align="right">
+                <button type="submit" name="tab_edit_import_xml:method" value="tab_edit_import_xml:method" title="Access key: alt-i" accesskey="i"> <u>I</u>mport </button>
             </td>
           </tr>
         </table>
@@ -71,7 +83,6 @@
 
 </table>
 <br />
-&nbsp;<a href="#" onClick="document.location = 'tab_edit_import'; return false;">&lt;&lt; refresh this page &gt;&gt;</a><br />
 <br />
 <table width="100%" cellspacing="0" cellpadding="5" border="0" tal:condition="docma_running">
   <tr>
@@ -81,7 +92,7 @@
         <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
           <tr>
-            <td colspan="3">
+            <td colspan="4">
               <h3>Upload Word document (.doc)
                 <img src="pixel.gif" width="1px" height="14px"
                      tal:attributes="src string:${silva_root}/globals/pixel.gif" />
@@ -89,29 +100,46 @@
             </td>
           </tr>
 
-          <tr class="topcontrols">
-            <td style="background:#b0cbd0;" align="left" colspan="3">
-              <img src="pixel.gif" width="1px" height="14px"
-                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
+          <tr>
+            <th align="left" width="15%">
+              Element
+            </th>
+            <th align="right" width="1%">
               &nbsp;
-            </td>
+            </th>
+            <th align="left">
+              Content
+            </th>
+            <th align="left" width="30%">
+              Note
+            </th>
           </tr>
 
           <tr class="focus-cycle" valign="top">
-            <td align="left" width="20%">
+            <td align="left">
                 File to upload:
             </td>
-            <td align="left">
-                <input type="file" name="importfile" />
+            <td align="right">
+            <span class="warning">
+              *
+            </span>
             </td>
-            <td align="right" width="35%">
+            <td align="left">
+                <input type="file" size="40" name="importfile" />
+            </td>
+            <td align="right">
                 Choose a Word file to upload. Note that this file will be processed and then placed on the list of finished items, so you can import it anywhere in Silva.
             </td>
           </tr>
 
           <tr class="focus-cycle" valign="top">
-            <td align="left" width="20%">
+            <td align="left">
                 E-mail address:
+            </td>
+            <td align="right">
+            <span class="warning">
+              *
+            </span>
             </td>
             <td align="left">
                 <input type="text" name="email" style="width: 100%" />
@@ -122,8 +150,13 @@
           </tr>
 
           <tr class="focus-cycle" valign="top">
-            <td align="left" width="20%">
+            <td align="left">
                 Description:
+            </td>
+            <td align="right">
+            <span class="warning">
+              &nbsp;
+            </span>
             </td>
             <td align="left">
                 <textarea name="description"></textarea>
@@ -134,8 +167,8 @@
           </tr>
 
           <tr class="controls">
-            <td colspan="3" align="right">
-                <input class="button" type="submit" name="tab_edit_import_docma:method" value=" Import " />
+            <td colspan="4" align="right">
+                <button type="submit" name="tab_edit_import_docma:method" value="tab_edit_import_docma:method" title="Upload a Word document from your local drive - alt u" accesskey="u"> <u>U</u>pload </button>
             </td>
           </tr>
         </table>
@@ -164,7 +197,7 @@
       <tal:block tal:condition="python: processingident != 0">
         <table width="100%" cellspacing="0" cellpadding="0" class="feedback">
           <tr>
-            <td>Current job: <span tal:replace="processingident" /></td>
+            <td>Current&nbsp;job: <span tal:replace="processingident" /></td>
           </tr>
           <tr>
             <td>Owner: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /></td>
@@ -191,19 +224,17 @@
           </tr>
 
           <tr class="topcontrols">
-            <td style="background:#c0dbe0;" align="left" colspan="5">
-              <img src="pixel.gif" width="1px" height="14px"
-                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-              &nbsp;
+            <td align="right" colspan="5">
+              <a class="buttonlink" href="#" onClick="document.location = 'tab_edit_import'; return false;" title="Reload to update the queue lists - alt r" accesskey="r"> <u>R</u>efresh queue lists </a>
             </td>
           </tr>
 
           <tr>
-            <th align="left" width="8%">Job Id:</th>
-            <th align="left" width="15%">Job Owner:</th>
+            <th align="left" width="8%">Job&nbsp;id:</th>
+            <th align="left" width="15%">Job&nbsp;owner:</th>
             <th align="left">Description:</th>
             <th align="left" width="15%">Status:</th>
-            <th align="left" width="10%">Estimated Time:</th>
+            <th align="left" width="10%">Estimated&nbsp;time:</th>
           </tr>
 
           <tr tal:repeat="job queue" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
@@ -243,16 +274,8 @@
             </td>
           </tr>
 
-          <tr class="topcontrols">
-            <td style="background:#b0cbd0;" align="left" colspan="4">
-              <img src="pixel.gif" width="1px" height="14px"
-                tal:attributes="src string:${silva_root}/globals/pixel.gif" />
-              &nbsp;
-            </td>
-          </tr>
-
           <tr>
-            <th align="left" colspan="2" width="8%">Job Id:</th>
+            <th align="left" colspan="2" width="8%">Job&nbsp;id:</th>
             <th align="left" width="10%">Type:</th>
             <th align="left">Description:</th>
           </tr>
@@ -275,7 +298,7 @@
               <!--
                 if (document.forms[0])
                 {
-                  document.write('<input class="button" type="button" name="selectButton" value="Select all" title="Select all items in this folder" onClick="toggleSelect(); return false">');
+                  document.write('<input class="button" type="submit" value="submit" value="submit" name="selectButton" value="Select all" title="Select all items in this folder" onClick="toggleSelect(); return false">');
                 }
               //-->
             </script>
