@@ -1,1 +1,1 @@
-return context.REQUEST.node.get_content().get_title()
+return context.REQUEST.node.get_version().get_title()
