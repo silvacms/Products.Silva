@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.83.2.3 2003/09/12 14:13:43 guido Exp $
+# $Id: SilvaObject.py,v 1.83.2.4 2003/11/24 19:59:00 clemens Exp $
 
 # python
 from types import StringType
@@ -44,6 +44,9 @@ class SilvaObject(Security, ViewCode):
     
     # allow edit view on this object
     edit = ViewAttribute('edit', 'tab_edit')
+
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'edit')
 
     # and public as well
     public = ViewAttribute('public', 'render_view')
