@@ -69,7 +69,7 @@ If this content should expire, set the time.&nbsp;
 &nbsp;
 </td>
 <td align="right">
-Turn on expiration time?&nbsp;<field
+<label for="expires_flag">Turn on expiration time?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_author.expires_flag.render(REQUEST=request)" />
 </td>
 </tr>
@@ -196,7 +196,7 @@ If this content should expire, set the time.&nbsp;
 &nbsp;
 </td>
 <td align="right">
-Turn on expiration time?&nbsp;<field
+<label for="expires_flag">Turn on expiration time?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_editor.expires_flag.render(REQUEST=request)" />
 </td>
 </tr>
@@ -206,7 +206,7 @@ Turn on expiration time?&nbsp;<field
 &nbsp;
 </td>
 <td align="right">
-Publish right now?&nbsp;<field
+<label for="publish_now_flag">Publish right now?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_editor.publish_now_flag.render(REQUEST=request)" />
 </td>
 </tr>
@@ -263,7 +263,7 @@ If this content should expire, set the time.&nbsp;
 &nbsp;
 </td>
 <td align="right">
-Turn on expiration time?&nbsp;<field
+<label for="expires_flag">Turn on expiration time?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_change_settings.expires_flag.render(model.get_next_version_expiration_datetime() is not None)" />
 </td>
 </tr>
@@ -272,7 +272,7 @@ Turn on expiration time?&nbsp;<field
 <td align="left">&nbsp;
 </td>
 <td align="right">
-Publish right now?&nbsp;<field
+<label for="publish_now_flag">Publish right now?&nbsp;</label><field
     tal:replace="structure python:view.tab_status_form_change_settings.publish_now_flag.render()" />
 </td>
 </tr>

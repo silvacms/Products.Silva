@@ -89,11 +89,14 @@
               <input name="userids:list"
                 type="checkbox"
                 value="userid"
-                tal:attributes="value userid" />
+                tal:attributes="
+                  value userid;
+                  id userid;" />
               &nbsp;
-              <b tal:content="fullname">
+              <b><label tal:content="fullname"
+                tal:attributes="for fullname">
                 username
-              </b>
+              </label></b>
             </td>
             <td align="right"
               style="border-left: 1px solid Black; border-right: 1px solid Black;"
@@ -105,14 +108,18 @@
             </td>
             <td align="right">
               <tal:block repeat="local python:model.sec_get_local_roles_for_userid(userid)">
-                <tal:block content="local" />
+                <label tal:content="local" 
+                  tal:attributes="for string:revoke_${userid}">
+                  local
+                </label>
                 &nbsp;
                 <input class="warningbox"
                   name="revoke_roles:list"
                   type="checkbox"
                   value=""
                   tal:attributes="
-                    value python:'%s||%s' % (userid, local);" /><br tal:condition="not:repeat/local/end" />                
+                    value python:'%s||%s' % (userid, local);
+                    id string:revoke_${userid}" /><br tal:condition="not:repeat/local/end" />
               </tal:block>
             </td>
           </tr>
@@ -199,10 +206,13 @@
                 valign="top">
                 <input name="requests:list"
                   type="checkbox"
-                  tal:attributes="value python: '|'.join(req)" />
-                <b tal:content="member/userid">
+                  tal:attributes="
+                    value python: '|'.join(req);
+                    id member/userid;" />
+                <b><label tal:content="member/userid" 
+                  tal:attributes="for member/userid">
                   name
-                </b>
+                </label></b>
               </td>
               <td style="border-left: 1px solid black; border-right: 1px solid black;"
                 tal:content="requested_role">
@@ -274,7 +284,7 @@
         </div>
       </div>
       <tal:block condition="python:getattr(here, 'service_groups', None)">
-      <!-- Defind groups listing -->
+      <!-- Defined groups listing -->
         <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
           <metal:block fill-slot="listing_actions">
             <select name="assign_role">
@@ -333,11 +343,14 @@
                   <input name="groups:list"
                     type="checkbox"
                     value="group"
-                    tal:attributes="value group" />
+                    tal:attributes="
+                      value group;
+                      id group;" />
                   &nbsp;
-                  <b tal:content="group">
+                  <b><label tal:content="group"
+                    tal:attributes="for group">
                     group
-                  </b>
+                  </label></b>
                 </td>
                 <td align="right"
                   style="border-left: 1px solid black; border-right: 1px solid black;">
@@ -349,14 +362,18 @@
                 </td>
                 <td align="right">
                   <tal:block repeat="local python:model.sec_get_local_roles_for_group(group)">
-                    <tal:block content="local" />
+                    <label tal:content="local" 
+                      tal:attributes="for string:revoke_${group}">
+                      local
+                    </label>
                     &nbsp;
                     <input class="warningbox"
                       name="revoke_roles:list"
                       type="checkbox"
                       value=""
                       tal:attributes="
-                        value python:'%s||%s' % (group, local);" /><br tal:condition="not:repeat/local/end" />                    
+                        value python:'%s||%s' % (group, local);
+                        id string:revoke_${group};" /><br tal:condition="not:repeat/local/end" />
                   </tal:block>
                 </td>
               </tr>

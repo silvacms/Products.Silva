@@ -63,7 +63,7 @@
           <title>Expire flag</title>
           <description>Turn on expiration time?</description>
           <external_validator></external_validator>
-          <extra></extra>
+          <extra>id="expires_flag"</extra>
         </values>
         <tales>
         </tales>
@@ -77,7 +77,7 @@
           <title>Publish now</title>
           <description></description>
           <external_validator></external_validator>
-          <extra></extra>
+          <extra>id="publish_now_flag"</extra>
         </values>
         <tales>
         </tales>

@@ -82,7 +82,7 @@
           <title>Expire flag</title>
           <description>Turn on expiration time?</description>
           <external_validator></external_validator>
-          <extra></extra>
+          <extra>id="expires_flag"</extra>
         </values>
         <tales>
           <default>python:field.REQUEST.model.get_unapproved_version_expiration_datetime() and 1 or 0</default> 

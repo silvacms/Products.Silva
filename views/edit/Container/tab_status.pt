@@ -283,7 +283,7 @@ Expiration time:&nbsp;
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
 </td>
 <td class="widebody" align="right" colspan="2">
-Set&nbsp;expiration&nbsp;time?&nbsp;
+<label for="expires_flag">Set&nbsp;expiration&nbsp;time?&nbsp;</label>
 <field tal:replace="structure python:view.tab_status_form.expires_flag.render(REQUEST=request)" />
 </td>
 </tal:editors-tab>
@@ -304,7 +304,7 @@ Publish time:&nbsp;
 </td>
 <td class="widebody" align="right" colspan="2"
   tal:condition="silva_permissions/ApproveSilvaContent">
-Publish&nbsp;right&nbsp;now?&nbsp;
+<label for="publish_now_flag">Publish&nbsp;right&nbsp;now?&nbsp;</label>
 <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
 </td>
 </tal:editors-tab>

@@ -63,7 +63,7 @@
           <css_class></css_class>
           <default type="int">0</default>
           <title>Expire flag</title>
-          <extra></extra>
+          <extra>id="expires_flag"</extra>
           <description>Turn on expiration time?</description>
           <external_validator></external_validator>
         </values>
@@ -78,7 +78,7 @@
           <css_class></css_class>
           <default type="int">0</default>
           <title>Publish now</title>
-          <extra></extra>
+          <extra>id="publish_now_flag"</extra>
           <description></description>
           <external_validator></external_validator>
         </values>
