@@ -65,7 +65,7 @@
     <img tal:attributes="src string:${root_url}/globals/pixel.gif" width="1" height="16" />
     <a href="top" title="Up to publication top" 
       tal:define="url python:model.get_publication().absolute_url()"
-      tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><img tal:replace="structure python:view.render_icon(model.get_publication().meta_type)" /></a>
+      tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><img tal:replace="structure python:view.render_icon(model.get_publication())" /></a>
       <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
         tal:attributes="href python:'%s/edit/asset_lookup?filter=%s' % (url, filter)"><span tal:replace="structure python:model.get_publication().get_title_html()">Publication top</span></a>
   </td>
