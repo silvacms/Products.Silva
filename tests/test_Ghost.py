@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.23 $
+# $Revision: 1.24 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -94,11 +94,11 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_ghost(self):
         self.root.manage_addProduct['Silva'].manage_addGhost('ghost1',
-                                                              '/silva/doc1')
+                                                              '/root/doc1')
         ghost = getattr(self.root, 'ghost1')
         
         # there is no version published at all there
-        self.assertEquals('This ghost is broken. (/silva/doc1)', ghost.preview())
+        self.assertEquals('This ghost is broken. (/root/doc1)', ghost.preview())
         self.assertEquals('Sorry, this document is not published yet.', ghost.view())
 
         # approve version of thing we point to
@@ -107,20 +107,20 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         # since there is still no published version, preview and view return
         # None
-        self.assertEquals('This ghost is broken. (/silva/doc1)', ghost.preview())
+        self.assertEquals('This ghost is broken. (/root/doc1)', ghost.preview())
         self.assertEquals('Sorry, this document is not published yet.', ghost.view())
 
         # this should publish doc1
         self.doc1.set_approved_version_publication_datetime(DateTime() - 1)
         
-        self.assertEquals('This ghost is broken. (/silva/doc1)', ghost.preview())
+        self.assertEquals('This ghost is broken. (/root/doc1)', ghost.preview())
         self.assertEquals('Sorry, this document is not published yet.', ghost.view())
 
         # publish ghost version
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
 
-        self.assertEquals('This ghost is broken. (/silva/doc1)', ghost.preview())
+        self.assertEquals('This ghost is broken. (/root/doc1)', ghost.preview())
         self.assertEquals("This 'ghost' document is broken. Please inform the site administrator.", ghost.view())
 
         # make new version of doc1 ('1')
