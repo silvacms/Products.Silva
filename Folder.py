@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.76 $
+# $Revision: 1.77 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -355,6 +355,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
 
     def _to_folder_or_publication_helper(self, to_folder):
         container = self.aq_parent
+        container_ordered_ids = container._ordered_ids[:]
         orig_id = self.id
         convert_id = 'convert__%s' % orig_id
         if to_folder:
@@ -400,6 +401,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         container.manage_delObjects([self.id])
         # and rename the copy
         container.manage_renameObject(convert_id, orig_id)
+        # now restore ordered ids of container to original state
+        container._ordered_ids = container_ordered_ids
         
     # ACCESSORS
 
