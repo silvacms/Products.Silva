@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-16 12:45+0100\n"
+"PO-Revision-Date: 2004-12-16 14:31+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgid ""
 "       automatic resyncing. Note that when a folder is\n"
 "       ghosted, assets &#8211; such as Images and Files &#8211; are copied\n"
 "       (physically duplicated) while documents are ghosted."
-msgstr ""
+msgstr "Ghost-Ordner sind vergleichbar zu Ghost-Objekten, verweisen aber auf Ordner.Der Vorteil der Ghost-Ordner ist, daß sie mit dem Original synchronisert bleiben, entweder durch manuelles oder automatisches Synchronisieren.Beachten Sie, daß beim Erzeugen eines Ghost-Ordners die Anlagen, wie Bilder und Dateien, kopiert (physikalisch dupliziert) werden,während Dokumente über Ghost-Objekte abgebildet werden."
 
 #: /Image.py:216
 msgid "'${scale}' is not a valid scale identifier. Probably a percent symbol is missing."
@@ -109,7 +109,7 @@ msgstr "Quadrat"
 
 #: /Image.py:428
 msgid "landscape"
-msgstr ""
+msgstr "Querformat"
 
 #: /Image.py:429
 msgid "portrait"
@@ -131,7 +131,7 @@ msgid ""
 "       and underlying folders and publications (note that it only indexes \n"
 "       documents that are published).\n"
 "    "
-msgstr ""
+msgstr "Es können Indizes angelegt werden, die wie die Indizes in Büchern funktionieren.Verweise müssen durch das Platzieren von Indexmarkierungen in den Text kenntlich gemacht werden(diese Indexmarkierungen werden auch in die Printformate exportiert).Die Indizierer erfassen alle markierten Einträge im aktuellen und den darunterliegenden Ordnern bzw. Publikationen(beachten Sie, daß nur publizierte Dokumente indiziert werden)."
 
 #: /Link.py:29
 msgid ""
@@ -139,7 +139,7 @@ msgid ""
 "       outside of Silva &#8211; in a Table of Contents. The content of a Link \n"
 "       is simply a hyperlink, beginning with &#8220;http://....&#8221;.\n"
 "    "
-msgstr ""
+msgstr "Ein Link ermöglicht das einfügen von Verweisen auf externe Sites &#8211; außerhalb von Silva &#8211; in Inhaltsverzeichnisse.Der Inhalt eines Links ist ein Hzperlink, der mit &#8220;http://....&#8221; anfängt."
 
 #: /Publication.py:27
 msgid ""
@@ -151,7 +151,7 @@ msgid ""
 "       determine which core and pluggable objects are available. For\n"
 "       complex sites, sub-publications can be nested.\n"
 "    "
-msgstr ""
+msgstr "Publikationen dienen als hauptsächliche Organisationseinheit einer Silva-Site.Sie vergleichbar mit Heftern und können Ordner, Dokumente und Anlagen beinhalten.Publikationen sind undurchsichtig. Sie stellen eine Schwelle bei der Anzeige dar, da sie nur die inhalte der aktuellen Publikation anzeigen.Dies hält die Übersichtsbildschirme einfach.Publikationen besitzen Konfigurationseinstellungen die festlegen welche eingebauten oder aus Erweiterungen stammenden Objekttypen in ihnen verfügbar sind.Für komplexe Sites können Publikationen auch geschachtelt werden."
 
 #: /SilvaObject.py:319
 msgid "Sorry, this ${meta_type} version is not viewable."
@@ -1628,11 +1628,11 @@ msgstr ""
 
 #: /views/edit/Container/GhostFolder/convert_to_folder.py:21
 msgid "Ghost Folder has been replaced by a folder"
-msgstr ""
+msgstr "Ghost-Ordner wurde durch einen Ordner ersetzt"
 
 #: /views/edit/Container/GhostFolder/convert_to_publication.py:21
 msgid "Ghost Folder has been replaced by a publication"
-msgstr ""
+msgstr "Ghost-Ordner wurde durch eine Publikation ersetzt"
 
 #: /views/edit/Container/GhostFolder/get_tabs.py:17
 #: /views/edit/Container/get_tabs.py:17
