@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Fri Nov 19 18:31:18 2004\n"
-"PO-Revision-Date: 2004-11-23 11:12+0100\n"
+"PO-Revision-Date: 2004-11-23 12:00+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -2853,7 +2853,7 @@ msgstr "Genehmigung widerrufen"
 
 #: /views/edit/macro_metadata.pt:399
 msgid "create a new version of this content: alt-n"
-msgstr ""
+msgstr "Neue Version dieses Inhalts erzeugen: alt-n"
 
 #: /views/edit/macro_metadata.pt:399
 #: /views/edit/Container/tab_status.pt:393
@@ -2865,12 +2865,12 @@ msgstr "Neue Version"
 #: /views/edit/macro_metadata.pt:42
 #: /views/edit/macro_metadata.pt:287
 msgid "metadata ${for_title}"
-msgstr ""
+msgstr "metadaten ${for_title}"
 
 #: /views/edit/macro_metadata.pt:68
 #: /views/edit/macro_metadata.pt:302
 msgid "metadata set"
-msgstr ""
+msgstr "Metadatensatz"
 
 #: /views/edit/macro_metadata.pt:73
 #: /views/edit/macro_metadata.pt:307
@@ -2918,7 +2918,7 @@ msgstr ""
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup users..."
-msgstr ""
+msgstr "Benutzer suchen..."
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup users: alt-l"
@@ -2926,15 +2926,15 @@ msgstr "Benutzer auswählen: alt-l"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:45
 msgid "ctrl-click to multi-select"
-msgstr ""
+msgstr "Strg-Klick für Mehrfachauswahl"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:60
 msgid "select users:"
-msgstr ""
+msgstr "Ausgewählte Benutzer:"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:75
 msgid "No users on clipboard"
-msgstr ""
+msgstr "Keine Benutzer in der Zwischenablage"
 
 #: /views/edit/macro_vein_navigation.pt:62
 #: /views/edit/macro_vein_navigation.pt:69
@@ -2952,7 +2952,7 @@ msgstr "Ansicht neu laden"
 
 #: /views/edit/promptWindow.pt:21
 msgid "session timeout"
-msgstr ""
+msgstr "Zeitüberschreitung der Sitzung"
 
 #: /views/edit/promptWindow.pt:27
 msgid "In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;cancel&#8217; (alt-c) to do nothing, or save manually."
@@ -2960,27 +2960,27 @@ msgstr ""
 
 #: /views/edit/promptWindow.pt:35
 msgid "cancel the automatic save action: alt-c"
-msgstr ""
+msgstr "Automatisches Speichern abbrechen: alt-c"
 
 #: /views/edit/promptWindow.pt:44
 msgid " save "
-msgstr ""
+msgstr "Speichern"
 
 #: /views/edit/promptWindow.pt:44
 msgid "save the document you were working on: alt-s"
-msgstr ""
+msgstr "Das gerade bearbeitete Dokument speichern: alt-s"
 
 #: /views/edit/save_metadata.py:30
 msgid "The data that was submitted did not validate properly."
-msgstr ""
+msgstr "Die vorgelegten Daten konnten nicht validiert werden."
 
 #: /views/edit/save_metadata.py:33
 msgid "Metadata saved."
-msgstr ""
+msgstr "Metadaten gespeichert."
 
 #: /views/edit/show_local.py:19
 msgid "This is the ${meta_type} \"${id}\""
-msgstr ""
+msgstr "Das ist ${meta_type} \"${id}\""
 
 #: /views/edit/show_local.py:24
 msgid "in"
@@ -3218,7 +3218,7 @@ msgstr "EMail Adresse für"
 
 #: /views/edit/tab_access_authorized_below.pt:59
 msgid "listing of all authorized users below this level"
-msgstr ""
+msgstr "Auflistung aller autorisierten Benutzer unterhalb dieser Ebene"
 
 #: /views/edit/tab_access_authorized_below.pt:70
 msgid "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; field of an email message. <br /> <textarea class=\"store\" name=\"data\" cols=\"60\" rows=\"5\" wrap=\"soft\"></textarea>"
