@@ -150,7 +150,7 @@ msgstr "notes"
 #: /views/edit/VersionedContent/tab_status_macros.pt:277
 #: /views/edit/VersionedContent/tab_status_macros.pt:543
 msgid "access key: alt-c"
-msgstr "access key: alt-c"
+msgstr "sneltoets: alt-c"
 
 #: /views/add/add_form.pt:80 /views/add/Ghost/add_form.pt:87
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/asset_lookup.pt:233
@@ -167,7 +167,7 @@ msgstr "cancel"
 #: /views/edit/Container/GhostFolder/tab_edit.pt:143
 #: /views/edit/VersionedContent/Ghost/edit.pt:134
 msgid "access key: alt-s"
-msgstr "access key: alt-s"
+msgstr "sneltoets: alt-s"
 
 #: /views/add/add_form.pt:89 /views/add/Ghost/add_form.pt:96
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/macro_metadata.pt:169
@@ -184,7 +184,7 @@ msgstr "save"
 #: /views/edit/Container/tab_status_export.pt:178
 #: /views/edit/VersionedContent/tab_status.pt:237
 msgid "access key: alt-e"
-msgstr "access key: alt-e"
+msgstr "sneltoets: alt-e"
 
 #: /views/add/get_id_status_text.py:17
 msgid ""
@@ -831,7 +831,7 @@ msgstr "save layout"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:122
 msgid "access key: alt-l"
-msgstr "access key: alt-l"
+msgstr "sneltoets: alt-l"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:27
 msgid "change Publication into Folder: alt-c"
@@ -1142,7 +1142,7 @@ msgstr "einde"
 #: /views/edit/Container/tab_status.pt:343
 #: /views/edit/VersionedContent/tab_status_macros.pt:503
 msgid "access key: alt-p"
-msgstr "access key: alt-p"
+msgstr "sneltoets: alt-p"
 
 #: /views/edit/Container/tab_edit.pt:485
 msgid "move selected items into position: alt-m"
@@ -1323,7 +1323,7 @@ msgstr "Locate an XML file to import (must be valid Silva XML)."
 #: /views/edit/Container/tab_edit_import.pt:125
 #: /views/edit/VersionedContent/tab_status_macros.pt:339
 msgid "access key: alt-i"
-msgstr "access key: alt-i"
+msgstr "sneltoets: alt-i"
 
 #: /views/edit/Container/tab_edit_import.pt:151
 msgid "import and extract zip archive (.zip)"
@@ -1372,7 +1372,7 @@ msgstr "import zip"
 #: /views/edit/Container/tab_edit_import.pt:234
 #: /views/edit/Container/tab_status_export.pt:261
 msgid "access key: alt-z"
-msgstr "access key: alt-z"
+msgstr "sneltoets: alt-z"
 
 #: /views/edit/Container/tab_edit_import.pt:271
 #: /views/edit/Container/tab_status_export.pt:300
@@ -1547,7 +1547,7 @@ msgstr "rename"
 #: /views/edit/VersionedContent/tab_status_macros.pt:436
 #: /views/edit/VersionedContent/tab_status_macros.pt:472
 msgid "access key: alt-r"
-msgstr "access key: alt-r"
+msgstr "sneltoets: alt-r"
 
 #: /views/edit/Container/tab_edit_rename.pt:31
 msgid "rename objects in &#xab;${title}&#xbb;"
@@ -1624,11 +1624,11 @@ msgstr "p<u>u</u>blish&nbsp;now?"
 #: /views/edit/VersionedContent/tab_status_macros.pt:258
 #: /views/edit/VersionedContent/tab_status_macros.pt:357
 msgid "access key: alt-u"
-msgstr "access key: alt-u"
+msgstr "sneltoets: alt-u"
 
 #: /views/edit/Container/tab_status.pt:324
 msgid "access key: alt-x"
-msgstr "access key: alt-x"
+msgstr "sneltoets: alt-x"
 
 #: /views/edit/Container/tab_status.pt:324
 #: /views/edit/VersionedContent/tab_status.pt:254
@@ -1717,7 +1717,7 @@ msgstr "publishing actions"
 
 #: /views/edit/Container/tab_status.pt:89
 msgid "modify / preview"
-msgstr "modify / preview"
+msgstr "bewerken / bekijken"
 
 #: /views/edit/Container/tab_status.pt:92
 msgid "revision"
@@ -2346,12 +2346,12 @@ msgstr "content publish ti<u>m</u>e:"
 #: /views/edit/VersionedContent/tab_status_macros.pt:138
 #: /views/edit/VersionedContent/tab_status_macros.pt:320
 msgid "access key: alt-m"
-msgstr "access key: alt-m"
+msgstr "sneltoets: alt-m"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:157
 #: /views/edit/VersionedContent/tab_status_macros.pt:223
 msgid "access key: alt-i (some platforms)"
-msgstr "access key: alt-i (some platforms)"
+msgstr "sneltoets: alt-i (sommige platforms)"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:157
 #: /views/edit/VersionedContent/tab_status_macros.pt:223
@@ -2374,7 +2374,7 @@ msgstr "current timings"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:205
 msgid "access key: alt-m (some platforms)"
-msgstr "access key: alt-m (some platforms)"
+msgstr "sneltoets: alt-m (sommige platforms)"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:205
 msgid "publish ti<u>m</u>e:"
@@ -2415,7 +2415,7 @@ msgstr "Empty indicates no expiration."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:374
 msgid "access key: alt-o"
-msgstr "access key: alt-o"
+msgstr "sneltoets: alt-o"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:397
 msgid "${action} request"
@@ -3099,7 +3099,7 @@ msgstr "No roles have been requested."
 
 #: /views/edit/tab_access.pt:252
 msgid "access key: alt-d"
-msgstr "access key: alt-d"
+msgstr "sneltoets: alt-d"
 
 #: /views/edit/tab_access.pt:252
 msgid "deny role"
@@ -3107,7 +3107,7 @@ msgstr "deny role"
 
 #: /views/edit/tab_access.pt:264
 msgid "access key: alt-g"
-msgstr "access key: alt-g"
+msgstr "sneltoets: alt-g"
 
 #: /views/edit/tab_access.pt:264
 msgid "grant role"
@@ -3115,7 +3115,7 @@ msgstr "grant role"
 
 #: /views/edit/tab_access.pt:272
 msgid "access key: alt-a"
-msgstr "access key: alt-a"
+msgstr "sneltoets: alt-a"
 
 #: /views/edit/tab_access.pt:272
 msgid "Grant and approve"
@@ -3464,7 +3464,7 @@ msgstr "Zope manage_main: alt-."
 
 #: /views/macro_tabs.pt:79
 msgid "Silva access keys: alt-?"
-msgstr "Silva access keys: alt-?"
+msgstr "Silva sneltoetsen: alt-?"
 
 #: /views/public/Ghost/preview/render.py:15
 msgid "This ghost is broken. (${haunted_url})"
