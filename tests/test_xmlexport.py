@@ -175,7 +175,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_zip_export(self):
         from Products.Silva.silvaxml import xmlexport
-        from Products.Silva.adapters import zipfileExport
+        from Products.Silva.adapters import zipfileexport
         from Products.Silva.adapters import archivefileimport
         from Products.Silva.Image import Image
         from zipfile import ZipFile, BadZipfile
@@ -203,7 +203,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # fallback kicks in
         xmlexport.theXMLExporter._mapping[Image] = None
         settings = xmlexport.ExportSettings()
-        adapter = zipfileExport.getZipfileExportAdapter(testfolder)
+        adapter = zipfileexport.getZipfileExportAdapter(testfolder)
         result = adapter.exportToZip(testfolder, settings)
         f = open('test_export.zip', 'wb')
         f.write(result)

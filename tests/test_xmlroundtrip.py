@@ -15,7 +15,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_xml_roundtrip(self):
         from StringIO import StringIO
         from Products.Silva.silvaxml import xmlexport
-        from Products.Silva.adapters import zipfileExport
+        from Products.Silva.adapters import zipfileexport
         from Products.Silva.Image import Image
         from zipfile import ZipFile, BadZipfile
         importfolder = self.add_folder(
@@ -54,7 +54,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         testfolder = importfolder.testfolder
         xmlexport.initializeXMLExportRegistry()
         settings = xmlexport.ExportSettings()
-        adapter = zipfileExport.getZipfileExportAdapter(testfolder)
+        adapter = zipfileexport.getZipfileExportAdapter(testfolder)
         result = adapter.exportToZip(testfolder, settings)
         f = open('test_export.zip', 'wb')
         f.write(result)

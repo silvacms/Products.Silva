@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.102 2004/08/12 12:46:09 eric Exp $
+# $Id: SilvaObject.py,v 1.103 2004/08/26 14:02:43 eric Exp $
 
 # python
 from types import StringType
@@ -19,7 +19,7 @@ from interfaces import ISilvaObject, IContent, IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent
 # Silva adapters
-from Products.Silva.adapters import zipfileExport
+from Products.Silva.adapters import zipfileexport
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 
 from Products.SilvaMetadata.Exceptions import BindingError
@@ -345,7 +345,7 @@ class SilvaObject(Security, ViewCode):
         settings = xmlexport.ExportSettings()
         settings.setWithSubPublications(with_sub_publications)
         settings.setLastVersion(last_version)
-        adapter = zipfileExport.getZipfileExportAdapter(self)
+        adapter = zipfileexport.getZipfileExportAdapter(self)
         result = adapter.exportToZip(self, settings)
         return result
 
