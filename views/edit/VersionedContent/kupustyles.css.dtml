@@ -12,13 +12,11 @@
 
 div.kupu-fulleditor {
   font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
-  border: solid 3px ButtonHighlight;
   margin: 0em;
   height: 100%;
 }
 
 div.kupu-fulleditor .kupu-editorframe {
-  margin-right: 20em;
 }
 
 div.kupu-smalleditor .kupu-editorframe {
@@ -130,18 +128,16 @@ div.kupu-tb select:hover {
 div.kupu-editorframe {
   margin-left: 0em;
   margin-bottom: 0em;
-  border: solid 1px #6c797f;
 }
 
 #kupu-editor {
-  width: 98%;
   height: 580px;
   margin-left: 0em;
   margin-bottom: 0em;
   border: solid 1px #6c797f;
 }
 
-#kupu-toolboxes-field {
+.kupu-toolboxes {
   font-size: 1em;
   background: #cedae8;
   margin-right: 0em;
@@ -180,6 +176,7 @@ div.kupu-tooltray {
   /* background: #cedae8; */
   margin: 0;
   padding: 0.6em 0.3em 0.8em 0.5em; 
+  color: #333;
 }
 
 div.kupu-toolbox-label, span.kupu-toolbox-searchterm, 
@@ -250,11 +247,10 @@ div#kupu-fgcolorchooser div:hover {
   display: none;
 }
 
-#kupu-toolbox-extsource .extsourceform input {
-  width: 16em;
+#kupu-toolbox-extsource #extsourceform input {
+  width: 14em;
 }
 
-#kupu-toolbox-extsource .extsourceform select {
-  width: 16em;
+#kupu-toolbox-extsource #extsourceform select {
+  width: 14em;
 };
-
