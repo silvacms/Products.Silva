@@ -1161,7 +1161,7 @@ msgstr "verplaatsen"
 
 #: /views/edit/Container/tab_edit.pt:494
 msgid "rename and retitle items: alt-r"
-msgstr "rename and retitle items: alt-r"
+msgstr "items van naam en titel veranderen: alt-r"
 
 #: /views/edit/Container/tab_edit.pt:494
 msgid "rename..."
@@ -1193,7 +1193,7 @@ msgstr "plakken"
 
 #: /views/edit/Container/tab_edit.pt:537
 msgid "paste (items on clipboard) as ghost objects: alt-g"
-msgstr "plak (items op clipboard) als ghost objecten: alt-g"
+msgstr "items op clipboard als ghost objecten plakken: alt-g"
 
 #: /views/edit/Container/tab_edit.pt:537
 msgid "paste ghost"
@@ -1202,7 +1202,7 @@ msgstr "ghost plakken"
 #: /views/edit/Container/tab_edit.pt:547
 #: /views/edit/VersionedContent/tab_status.pt:324
 msgid "there's no undo: alt-d"
-msgstr "there's no undo: alt-d"
+msgstr "items verwijderen (er is geen undo): alt-d"
 
 #: /views/edit/Container/tab_edit.pt:69
 msgid "new..."
@@ -3408,27 +3408,27 @@ msgstr ""
 
 #: /views/macro_index.pt:224
 msgid "Leave Silva and view the public page: alt-:"
-msgstr ""
+msgstr "Silva verlaten en publieke pagina bekijken: alt-:"
 
 #: /views/macro_index.pt:224
 msgid "see public version"
-msgstr ""
+msgstr "publieke versie bekijken"
 
 #: /views/macro_index.pt:243
 msgid "Change your settings: alt-~"
-msgstr ""
+msgstr "Verander je instellingen: alt-~"
 
 #: /views/macro_index.pt:256
 msgid "user settings"
-msgstr ""
+msgstr "gebruikersinstellingen"
 
 #: /views/macro_index.pt:260
 msgid "Logout of Silva: alt-q"
-msgstr ""
+msgstr "Silva uitloggen: alt-q"
 
 #: /views/macro_index.pt:269
 msgid "logout ${role} ${userid}"
-msgstr ""
+msgstr "uitloggen ${role} ${userid}"
 
 #: /views/macro_index.pt:275
 msgid "request access"
