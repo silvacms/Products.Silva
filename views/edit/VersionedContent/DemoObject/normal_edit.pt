@@ -82,7 +82,7 @@
         <td class="empty"
           colspan="2">
           <div class="message"
-            style="border-style:solid;">
+            style="background:#eceeee;border-style:none;">
             <p tal:replace="structure here/get_content" />
             <p tal:condition="not: here/get_content"
               tal:replace="structure string:(nothing filled in)" />
