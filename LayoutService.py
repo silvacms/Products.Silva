@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 
 # Zope
 from OFS import SimpleItem
@@ -89,7 +89,7 @@ class LayoutService(SimpleItem.SimpleItem):
         return [name for name in self.get_names()
                 if self.is_installed(name)]
     
-    NOLAYOUT = 'No layout, select one !'
+    NOLAYOUT = 'Select a layout for this area:'
 
     def get_installed_for_select(self):
         result = [(self.NOLAYOUT, '')]

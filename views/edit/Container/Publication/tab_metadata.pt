@@ -16,7 +16,9 @@
 <metal:block fill-slot="main">
 <metal:use use-macro="view/Container/tab_metadata/macros/master">
 <metal:fill fill-slot="more_control">
-<form tal:condition="here/service_layouts/get_installed_names" method="POST" action=".">
+<form method="POST"
+  action="."
+  tal:condition="here/service_layouts/get_installed_names">
   <table class="listing">
     <thead>
       <tr tal:replace="nothing">
@@ -41,8 +43,8 @@
         <th i18n:translate="content">
           content
         </th>
-        <th i18n:translate="acquired_content">
-           acquired content
+        <th i18n:translate="acquired_layout">
+           acquired layout
         </th>
         <th width="25%"
           i18n:translate="note">
@@ -52,31 +54,33 @@
       <tal:define define="field python:here.layout_form.get_field('layout')">
       <tr class="odd">
         <td class="align-right">
-          <span tal:replace="python:field['title'].lower()">
+          <span tal:replace="python:field['title']">
             title
           </span><span class="warning" tal:condition="python:field.is_required()">*</span>
         </td>
-        <td><p tal:condition="model/layout_copied">Layout has been copied in order to customize it !</p>
-            <input tal:replace="structure python:field.render(model.get_own_layout(), request)" />
+        <td>
+          <p tal:condition="model/layout_copied">Layout has been copied for customization.</p>
+          <input tal:replace="structure python:field.render(model.get_own_layout(), request)" />
         </td>
         <td>
-            <sup>&#134;</sup><span tal:condition="not:model/get_own_layout" tal:replace="string:(${model/get_layout_description})" />
+          <span tal:condition="not:model/get_own_layout" tal:replace="string:${model/get_layout_description}" /><sup>&#134;</sup>
         </td>
-        <td><span tal:replace="structure string:${field/description}&nbsp;" />
+        <td>
+          <span tal:replace="structure string:${field/description}&nbsp;" />
         </td>
       </tr>
       </tal:define>
       <tr class="controls">
         <td class="align-right"
           colspan="4">
-                      <tal:block condition="python:model.get_layout() and not model.layout_copied()">
-                        <a class="button"
-                          style="float:left;"
-                          href="copy_layout_submit"
-                          title="Copy the layout into the Publication if you want to customize it">
-                        copy layout
-                        </a>
-                      </tal:block>
+          <tal:block condition="python:model.get_layout() and not model.layout_copied()">
+            <a class="button"
+              style="float:left;"
+              href="copy_layout_submit"
+              title="copy the layout into the Publication in order to customize it">
+              customize layout
+            </a>
+          </tal:block>
           <input class="button"
             type="submit"
             name="layout_submit:method"

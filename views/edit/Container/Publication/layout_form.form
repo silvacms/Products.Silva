@@ -26,7 +26,7 @@
           <default></default>
           <title>layout</title>
           <truncate type="int">0</truncate>
-          <description>Choose among installed layout templates</description>
+          <description>Choose among the installed layout templates.</description>
           <extra>style="width:100%;"</extra>
           <unicode>1</unicode>
           <whitespace_preserve type="int">1</whitespace_preserve>

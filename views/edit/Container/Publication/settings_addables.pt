@@ -88,7 +88,7 @@
                     <tr valign="top"
                       tal:attributes="class python:oddrow and 'even' or 'odd'">
                       <td class="align-right">
-                        <span tal:replace="structure python: field.title().lower()">title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
+                        <span tal:replace="structure python: field.title()">title</span><span class="warning" tal:condition="python:field.is_required()">*</span>
                       </td>
                       <td>
                         <input tal:replace="structure python:field.render(value=model.getProperty(field.id))" />
