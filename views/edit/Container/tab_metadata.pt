@@ -1,9 +1,12 @@
 <!-- ___________________________ start index_html ___________________________ -->
 <tal:block define="global breadcrumb_vein string:Metadata;" />
-<html  metal:use-macro="here/macro_index/macros/master">
+<html metal:use-macro="here/macro_index/macros/master">
 <div class="margins"
   metal:fill-slot="main">
 <!-- ___________________________ start index_html/slot main ___________________________ -->
+<tal:block define="
+  global silva_permissions here/get_silva_permissions;
+  " />
 
 <h2><img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
@@ -12,10 +15,24 @@
 <init tal:omit-tag=""
   tal:define="global fields python:view.tab_metadata_form.get_fields()" />
 
-<form method="POST" name="form" action="tab_metadata_submit">
+<form method="POST" name="form" action=".">
 <table width="96%" cellspacing="0" cellpadding="3" border="0"
   tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
     cellpadding container/table_cellpadding; border container/table_border">
+<tr class="topcontrols" valign="bottom">
+  <td colspan="3">
+    <span class="tablehead3">Container metadata</span>
+  <td align="right">
+    <tal:block condition="python:silva_permissions['ApproveSilvaContent']">
+      <tal:block condition="python:model.meta_type == 'Silva Folder'">
+      &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_to_publication:method" value="Convert to publication" title="Change Folder into Publication" />
+      </tal:block>
+      <tal:block condition="python:model.meta_type == 'Silva Publication'">
+      &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_to_folder:method" value="Convert to folder" title="Change Publication into Folder" />
+      </tal:block>
+    </tal:block>
+</tr>
+
 <tr>
   <th align="left" width="15%">
     Element
@@ -67,7 +84,7 @@
 <tr class="controls">
   <td colspan="4" align="right">
     <input class="button" type="submit"
-      name="form_submitted" value=" change item "
+      name="tab_metadata_submit:method" value=" change item "
       tal:attributes="value string: Save metadata " />
   </td>
 </tr>

@@ -38,14 +38,6 @@
     <tal:block condition="not:silva_permissions/ChangeSilvaContent">
     &nbsp;
     </tal:block>
-    <tal:block condition="python:silva_permissions['ApproveSilvaContent']">
-      <tal:block condition="python:model.meta_type == 'Silva Folder'">
-      &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_to_publication:method" value="Convert to publication" title="Change Folder into Publication" />
-      </tal:block>
-      <tal:block condition="python:model.meta_type == 'Silva Publication'">
-      &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_to_folder:method" value="Convert to folder" title="Change Publication into Folder" />
-      </tal:block>
-    </tal:block>
     <tal:block condition="silva_permissions/ChangeSilvaContent">
     &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_import:method" value="Import..." title="Import XML data" />&nbsp;&nbsp;
     <select name="meta_type"

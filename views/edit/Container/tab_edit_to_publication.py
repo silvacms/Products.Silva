@@ -1,4 +1,4 @@
-## Script (Python) "tab_edit_copy"
+## Script (Python) "tab_edit_to_publication"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -20,4 +20,4 @@ model.to_publication()
 model = getattr(parent, id)
 context.REQUEST.set('model', model)
 message = "Changed into publication"
-return model.edit['tab_edit'](message_type="feedback", message=message)
+return model.edit['tab_metadata'](message_type="feedback", message=message)
