@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.14 $
+$Revision: 1.47.2.15 $
 
 Silva changes
 
@@ -58,6 +58,9 @@ Silva changes
 
         - Fixed bug which cause the upgrade of all content to crash on
           CatalogedVersionedContent objects (e.g. SilvaNews NewsItems)
+
+        - Chief editors could not add Groups or Virtual groups due to
+          incorrect security settings; fixed.
 
   0.9.1 beta
 
