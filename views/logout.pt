@@ -11,7 +11,7 @@
 <!-- __________________________ feedback start _________________________ -->
 <div class="margins">
 <div class="feedback" style="width:55%">
-  To <b>actually</b> logout, wait 5 seconds or hit this <a href="/manage_zmi_logout">logout link</a>. <br />
+  To <b>actually</b> logout, wait 5 seconds or hit this <a href="/manage_zmi_logout" title="Access key: alt-l" accesskey="l"><u>l</u>ogout link</a>. <br />
   When the login dialog appears, choose <b>"Cancel"</b>!
 </div>
 </div>
