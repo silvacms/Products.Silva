@@ -105,68 +105,13 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
   <tr>
     <td>
 
-      <tal:block tal:condition="python: processingident != 0">
-        <table width="100%" cellspacing="0" cellpadding="0" class="feedback">
-          <tr>
-            <td>Current job: <span tal:replace="processingident" /></td>
-          </tr>
-          <tr>
-            <td>Owner: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /></td>
-          </tr>
-          <tr>
-            <td>Description: <span tal:replace="python: view.service_docma.get_ident_description(processingident)" /></td>
-          </tr>
-        </table>
-      </tal:block>
-
-      <form action="." enctype="multipart/form-data" method="POST">
-
-        <table width="100%" cellpadding="3" cellspacing="0">
-
-        <tal:block condition="nothing"> ________ Docma Queue ________ </tal:block>
-
-          <tr>
-            <td colspan="5">
-              <h3>Queue of items to process</h3>
-            </td>
-          </tr>
-
-          <tr>
-            <th align="left" width="8%">Job&nbsp;id</th>
-            <th align="left" width="15%">Job&nbsp;owner</th>
-            <th align="left">Description</th>
-            <th align="left" width="15%">Status</th>
-            <th align="left" width="10%">Estimated&nbsp;time</th>
-          </tr>
-
-          <tr tal:repeat="job queue" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
-            <td align="left" tal:content="job">JobId</td>
-            <td align="left" tal:content="python: view.service_docma.get_ident_owner(job)">Owner</td>
-            <td align="left" tal:content="python: view.service_docma.get_ident_description(job)">Description</td>
-            <td align="left" tal:content="python: view.service_docma.get_status(job)">Status</td>
-            <td align="left" tal:content="python: '%s seconds' % view.service_docma.get_estimated_time_for_ident(job)">Estimated time</td>
-          </tr>
-
-          <tr class="focus" tal:condition="python: len(queue) == 0">
-            <td align="left" colspan="5">There are no jobs in the queue</td>
-          </tr>
-
-          <tr>
-            <td class="divider" colspan="5"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="3" /></td>
-          </tr>
-
-        </table>
-
-      </form>
-
-      <br /><br />
-
       <form action="." method="POST">
         <table width="100%" cellspacing="0" cellpadding="3" border="0">
 
           <tr>
             <td colspan="3">
-              <h3>Export to Docma (.doc)</h3>
+              <h3><img tal:attributes="src string:${silva_root}/globals/docma.gif" width="16" height="16" border="0" alt="Docma icon" />&nbsp;
+	        Export to Docma (.doc)</h3>
             </td>
           </tr>
 
@@ -231,6 +176,62 @@ Export options for <span class="folder-title" tal:content="structure string:&#xa
                 &nbsp;&nbsp;<input class="button" type="submit" name="tab_status_silva2word:method" value="Export to Docma" title="Export the current container to Word: alt-d" accesskey="d" />
             </tal:block>
             </td>
+          </tr>
+
+        </table>
+
+      </form>
+
+      <tal:block tal:condition="python: processingident != 0">
+        <table width="100%" cellspacing="0" cellpadding="0" class="feedback">
+          <tr>
+            <td>Current job: <span tal:replace="processingident" /></td>
+          </tr>
+          <tr>
+            <td>Owner: <span tal:replace="python: view.service_docma.get_ident_owner(processingident)" /></td>
+          </tr>
+          <tr>
+            <td>Description: <span tal:replace="python: view.service_docma.get_ident_description(processingident)" /></td>
+          </tr>
+        </table>
+      </tal:block>
+
+      <br /><br />
+
+      <form action="." enctype="multipart/form-data" method="POST">
+
+        <table width="100%" cellpadding="3" cellspacing="0">
+
+        <tal:block condition="nothing"> ________ Docma Queue ________ </tal:block>
+
+          <tr>
+            <td colspan="5">
+              <h3>Queue of items to process</h3>
+            </td>
+          </tr>
+
+          <tr>
+            <th align="left" width="8%">Job&nbsp;id</th>
+            <th align="left" width="15%">Job&nbsp;owner</th>
+            <th align="left">Description</th>
+            <th align="left" width="15%">Status</th>
+            <th align="left" width="10%">Estimated&nbsp;time</th>
+          </tr>
+
+          <tr tal:repeat="job queue" tal:define="class python:test(lastclass == 'focus', 'focus-cycle', 'focus'); lastclass class" tal:attributes="class class">
+            <td align="left" tal:content="job">JobId</td>
+            <td align="left" tal:content="python: view.service_docma.get_ident_owner(job)">Owner</td>
+            <td align="left" tal:content="python: view.service_docma.get_ident_description(job)">Description</td>
+            <td align="left" tal:content="python: view.service_docma.get_status(job)">Status</td>
+            <td align="left" tal:content="python: '%s seconds' % view.service_docma.get_estimated_time_for_ident(job)">Estimated time</td>
+          </tr>
+
+          <tr class="focus" tal:condition="python: len(queue) == 0">
+            <td align="left" colspan="5">There are no jobs in the queue</td>
+          </tr>
+
+          <tr>
+            <td class="divider" colspan="5"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="3" /></td>
           </tr>
 
         </table>
