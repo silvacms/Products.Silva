@@ -7,10 +7,16 @@
 ##parameters=
 ##title=Request approval
 ##
+from Products.Formulator.Errors import FormValidationError
+
 model = context.REQUEST.model
 view = context
 
-result = view.tab_status_form_author.validate_all(context.REQUEST)
+try:
+    result = view.tab_status_form_author.validate_all(context.REQUEST)
+except FormValidationError, e:
+    return view.tab_status(message_type="error",
+                           message=view.render_form_errors(e))
 
 # check for status
 message=None
