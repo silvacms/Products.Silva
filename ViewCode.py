@@ -74,26 +74,31 @@ class ViewCode:
         if self.implements_versioning():
             next_status = self.get_next_version_status()
             public = self.get_public_version_status()
+            status_style = None
 
             if next_status == 'no_next_version':
                 pass
             elif next_status == 'not_approved':
                 status = _('draft')
+                status_style = 'draft'
             elif next_status == 'request_pending':
                 status = _('pending')
+                status_style = 'pending'
             elif next_status == 'approved':
                 status = _('approved')
+                status_style = 'approved'
 
             if public == 'published':
                 public_status = _('published')
+                if not status_style:
+                    status_style = 'published'
             elif public == 'closed':
                 public_status = _('closed')
+                if not status_style:
+                    status_style = 'published'
 
             if not status:
-                status_style = str(public_status).lower()
                 status = _('none')
-            else:
-                status_style = str(status).lower()
 
         return (status, status_style, public_status)
 
