@@ -49,6 +49,10 @@ Silva changes
 
       - Some small usability and bug fixes in Kupu
 
+      - The File asset behaves more like the Image asset, where the URL
+        to the object now will return the actual data. This obsoletes
+        the need for URL's like "path/to/some/file/download'.
+
   1.0a1
 
     Was not a public release.

@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.27.8.1 $
+# $Revision: 1.27.8.1.6.1 $
 
 # Python
 import os
@@ -47,8 +47,6 @@ class File(Asset):
     
     def __init__(self, id, title):
         File.inheritedAttribute('__init__')(self, id, title)
-        # Anticipating hook:
-        self._direct_download = 1
 
     # ACCESSORS
 
@@ -73,37 +71,8 @@ class File(Asset):
         """
         return self._file.content_type
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_download_url')
-    def get_download_url(self):
-        """Obtain the public URL the public could use to download this file
-        """
-        return self.absolute_url()
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_download_link')
-    def get_download_link(
-        self, title_attr='', name_attr='', class_attr='', style_attr=''):
-        """Obtain a complete HTML hyperlink by which the public can download
-        this file. FIXME: Is this method really needed?
-        """
-        attrs = []
-        if title_attr:
-            attrs.append('title="%s"' % title_attr)
-        if name_attr:
-            attrs.append('name="%s"' % name_attr)
-        if class_attr:
-            attrs.append('class="%s"' % class_attr)
-        if style_attr:
-            attrs.append('style="%"' % style_attr)
-        attrs = ' '.join(attrs)
-        link_text = self.get_title() or self.id
-        return '<a %s href="%s">%s</a>' % (
-            attrs, self.get_download_url(), link_text)
-
     # Overide SilvaObject.to_xml().
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'to_xml')
+    security.declareProtected(SilvaPermissions.ReadSilvaContent, 'to_xml')
     def to_xml(self, context):
         """Overide from SilvaObject
         """
@@ -111,24 +80,20 @@ class File(Asset):
             '<file id="%s" url=%s>%s</file>' % (
             self.id, self.get_download_url(), self._title))
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'download')
-    def download(self, REQUEST):
-        """Wrap around _file object
+    security.declareProtected(SilvaPermissions.View, 'index_html')
+    def index_html(self, view_method=None, REQUEST=None):
+        """ view (download) file data
+        
+        view_method: parameter is set by preview_html (for instance) but
+        ignored here.
         """
         REQUEST.RESPONSE.setHeader(
             'Content-Disposition', 'inline;filename=%s' % (self.get_filename()))
         return self._index_html_helper(REQUEST)
-
-    # Overide index_html in public presentation templates.
-    security.declareProtected(
-        SilvaPermissions.View, 'index_html')
-    def index_html(self, REQUEST=None):
-        """Get to file
-        """
-        if not self._direct_download:
-            return self.view()
-        return self.download(REQUEST=REQUEST)        
+    
+    security.declareProtected(SilvaPermissions.View, 'download')
+    # for backwards compatibility - do we need that here?
+    download = index_html
 
     # MODIFIERS
 
@@ -137,8 +102,8 @@ class File(Asset):
     def set_file_data(self, file):
         """Set data in _file object
         """
-        self._set_file_data_helper(file)
         self._p_changed = 1
+        self._set_file_data_helper(file)        
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'getFileSystemPath')
@@ -151,7 +116,6 @@ class File(Asset):
         return f.get_filename()
         # this would be relative to repository:
         return '/'.join(f.filename)
-
 
     def manage_FTPget(self, *args, **kwargs):
         return self._file.manage_FTPget(*args, **kwargs)
