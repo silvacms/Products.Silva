@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.52 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -37,12 +37,11 @@ class Publication(Folder.Folder):
 
     _addables_allowed_in_publication = None
 
-    layout = None
+    layout_key = None
 
     def __init__(self, id):
         Publication.inheritedAttribute('__init__')(
             self, id)
-        self.layout = None
         self.layout_key = None
     
     # MANIPULATORS
@@ -55,8 +54,8 @@ class Publication(Folder.Folder):
         service_layouts = self.get_root().service_layouts
         if service_layouts.has_layout(self):
             service_layouts.remove_layout(self)
-        self.layout = layout_name
-        layout = service_layouts.setup_layout(self.layout, self)
+        if layout_name:
+            layout = service_layouts.setup_layout(layout_name, self)
     
     def get_layout_key(self):
         return self.layout_key
@@ -79,6 +78,8 @@ class Publication(Folder.Folder):
 
     def manage_afterClone(self, item):
         Folder.Folder.inheritedAttribute('manage_afterClone')(self, item)
+        service_layouts = self.get_root().service_layouts
+        service_layouts.clone_layout(self)
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -86,9 +87,10 @@ class Publication(Folder.Folder):
     def get_layout(self):
         """Get template layout.
         """
-        if not hasattr(self, "layout"):
-            self.layout = None
-        return self.layout
+        if not hasattr(self, "layout_key"):
+            self.layout_key = None
+        service_layouts = self.get_root().service_layouts
+        return service_layouts.get_layout_name(self)
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')

@@ -32,7 +32,7 @@
           <whitespace_preserve type="int">1</whitespace_preserve>
         </values>
         <tales>
-            <items>form/service_layouts/get_installed_names</items>
+            <items>form/service_layouts/get_installed_for_select</items>
         </tales>
       </field>
       </fields>
