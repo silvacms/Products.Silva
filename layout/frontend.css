@@ -21,6 +21,13 @@ h6 {
   color : #676767;
 }
 
+/* defines the width of the text in the preview, help, etc */
+.readable {
+  max-width : 40em;
+  /* for IE5 */
+  width : 512px;
+}
+
 /* highlighting index links */
 /* keep this if you markup text with index elements, this overrides the highlighting in the edit tab */
 a.index-element {

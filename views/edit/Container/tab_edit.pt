@@ -42,7 +42,7 @@
     <tal:block condition="silva_permissions/ChangeSilvaContent">
       <input class="button" type="submit" name="add_object:method" value=" New:" title="Add a new item: alt-n" accesskey="n" />
       <select name="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();"  title="Select a new item: alt-s" accesskey="s">
-        <option value="None" disabled="disabled">Select...</option>
+        <option value="None">Select...</option>
         <tal:block tal:repeat="addable model/get_silva_addables">
         <option tal:attributes="value addable/name" tal:content="addable/name"></option>
         </tal:block>
@@ -153,17 +153,16 @@
                       class python:view.get_status_style(default)"
       tal:content="string: ${default/id} of...">
       index
-    </a>
-    <span tal:condition="python:default.is_version_published() or default.is_version_approved()" tal:omit-tag="">
-      <img tal:attributes="src string:${silva_root}/globals/checkmark.gif" width="10" height="10" border="0" alt="Content approved or published" />
+    </a><span tal:omit-tag=""
+           tal:condition="python:default.is_version_published() or default.is_version_approved()"><img tal:attributes="src string:${silva_root}/globals/checkmark.gif" width="10" height="10" border="0" alt="Content approved or published" />
     </span>
   </td>
   <span tal:replace="nothing"> _______ title cell _______ </span>
   <td>
     <a class="blacklink" title="Preview"
+      tal:condition="python:default.get_title_html() != ''"
       tal:attributes="href string:${default/absolute_url}/edit/tab_preview">
-      <span tal:replace="structure default/get_title_html"
-        tal:condition="python:default.get_title_html() != ''">title</span>
+      <span tal:replace="structure default/get_title_html">title</span>
     </a>
   </td>
   <span tal:replace="nothing"> _______ modification date cell _______ </span>
@@ -210,19 +209,18 @@
       tal:attributes="href python:here.get_editor_link(item);
       class python:view.get_status_style(item)">
       <span tal:replace="item/id">id</span>
-    </a>
-    <span tal:condition="python:item.implements_versioned_content()
+    </a><span tal:omit-tag=""
+           tal:condition="python:item.implements_versioned_content()
                          and (item.is_version_published()
-                         or item.is_version_approved())">
-      <img tal:attributes="src string:${silva_root}/globals/checkmark.gif" width="10" height="10" border="0" alt="Content approved or published" title="Content is approved or published" />
+                         or item.is_version_approved())"><img tal:attributes="src string:${silva_root}/globals/checkmark.gif" width="10" height="10" border="0" alt="Content approved or published" title="Content is approved or published" />
     </span>
   </td>
   <span tal:replace="nothing"> _______ title cell _______ </span>
   <td>
     <a class="blacklink" title="Preview"
+      tal:condition="python:item.get_title_html() != ''"
       tal:attributes="href string:${item/absolute_url}/edit/tab_preview">
-      <span tal:replace="structure item/get_title_html"
-        tal:condition="python:item.get_title_html() != ''">title</span>
+      <span tal:replace="structure item/get_title_html">title</span>
     </a>
   </td>
   <span tal:replace="nothing"> _______ modification date cell _______ </span>

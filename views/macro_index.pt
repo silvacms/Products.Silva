@@ -73,14 +73,19 @@
 
 <span tal:replace="nothing"> _______ white space + jump to top _______ </span>
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
-<tr>
+<tr tal:attributes="bgcolor python: test(template.id == 'tab_preview', '#d1d4d8', None)">
 <td width="2%">
-<br /><a href="#top" title="jump to top: alt-t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
+<a href="#top" title="jump to top: alt-t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
 </td>
-<td colspan="3">
+<td valign="bottom" colspan="3">
+  <tal:block condition="python: template.id == 'tab_preview'">
+  <span tal:replace="nothing"> _______ link to see page in public/local style, if in use _______ </span>
+  <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="12" height="16" border="0" alt="spacer" />
+  <span class="widebody" style="color: #333333"><a tal:attributes="href string:${model/absolute_url}/preview_html" title="See the complete public layout: alt-;" accesskey=";" target="_blank">Presentation preview</a></span>
+  </tal:block>
 </td>
 <td width="2%">
-<br /><a href="#top" title="jump to top: alt-t" accesskey="t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
+<a href="#top" title="jump to top: alt-t" accesskey="t"><img tal:attributes="src string:${silva_root}/globals/up_to_top_gray.gif" width="16" height="16" border="0" alt="jump to top" /></a>
 </td>
 </tr>
 
@@ -100,14 +105,16 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 </span>
 </td>
 <td class="tab-up" align="center" width="36%">
-<span class="breadcrumb">
-<a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email',nothing)"><span class="index-link" tal:content="model/contact_email | nothing"></span></a>
+<span class="breadcrumb"
+  tal:condition="python: getattr(model, 'contact_email', '') != ''">
+  Email:
+  <a tal:attributes="href python:'mailto:%s'% getattr(model, 'contact_email', nothing)"><span class="index-link" tal:content="model/contact_email | nothing"></span></a>
 </span>
 &nbsp;&nbsp;
 </td>
 <td class="tab-up" align="right" width="30%">
 <span class="breadcrumb">
-<a title="Leave Silva and see the published version: alt-\" accesskey="\"
+<a title="Leave Silva and see the published version: alt-:" accesskey=":"
   tal:attributes="href model/absolute_url">See public version</a>
 </span>
 </td>
@@ -130,10 +137,10 @@ Contact: <a tal:attributes="href python:'mailto:%s'%getattr(model,'contact_email
 </a>
 </td>
 <td class="footer" align="center" width="36%">
-<a class="footer" href="public/request_roles"
+<a class="footer" href="public/request_roles" title="Request an additional role in this location: alt-," accesskey=","
   tal:condition="python: hasattr(view, 'service_members') and view.service_members.allow_subscription()">
-    Request additional role
-  </a>
+  Request access
+</a>
 </td>
 <td class="footer" align="right" width="30%">
 <a class="footer" href="logout" title="Logout of Silva: alt-q" accesskey="q">Logout&nbsp;<span tal:condition="here/get_user_role" tal:replace="structure string:${here/get_user_role}&nbsp;" /><span tal:replace="userid" /></a>

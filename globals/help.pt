@@ -8,7 +8,7 @@ Silva access keys</h2>
 
 <ul class="tips">
 <li>
-The access key on your system may be 'alt' or something else.
+The access key on your system may be 'alt' or something else. (IE users have to to hit the access key and then return for hyperlinks.)
 </li>
 <li>
 Hover over the link or button to see a tool tip with the key.
@@ -25,9 +25,14 @@ b &nbsp; Jump to bottom of page<br />
 h &nbsp; Help
 </p>
 <p class="leadedbody">
-<span class="subhead">Footer</span><br />
-\ &nbsp; See public page<br />
+<span class="subhead">Footer page info row</span><br />
+; &nbsp; See presentation preview (only in preview tab)<br />
+: &nbsp; See public page<br />
+</p>
+<p class="leadedbody">
+<span class="subhead">Footer user row</span><br />
 ~ &nbsp; User settings<br />
+, &nbsp; Request access<br />
 q &nbsp; Logout
 </p>
 <p class="leadedbody">

@@ -282,7 +282,7 @@ if (document.forms[0]) {
 <field tal:replace="structure python:view.tab_status_form.expiration_datetime.render(REQUEST=request)" />
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />
 </td>
-<td class="widebody" align="right" colspan="2">
+<td class="widebody" align="right" colspan="2" nowrap="nowrap">
 <label for="expires_flag" title="Access key: alt-x" accesskey="x">Set&nbsp;e<u>x</u>piration&nbsp;time?&nbsp;</label>
 <field tal:replace="structure python:view.tab_status_form.expires_flag.render(REQUEST=request)" />
 </td>

@@ -364,7 +364,6 @@ input.button {
   border-top : 1px solid #a2c9cc;
   border-right : 1px solid #a2c9cc;
   border-bottom : 1px solid #a2c9cc;
-  cursor : crosshair;
 }
 
 input.warningbutton {
@@ -377,8 +376,7 @@ input.warningbutton {
   border-top : 1px solid #d7acac;
   border-right : 1px solid #d7acac;
   border-bottom : 1px solid #d7acac;
-  cursor : crosshair;
-}
+} 
 
 input.cancelbutton {
   font-size : 11px; 
@@ -390,7 +388,6 @@ input.cancelbutton {
   border-top : 1px solid #cccccc;
   border-right : 1px solid #cccccc;
   border-bottom : 1px solid #cccccc;
-  cursor : crosshair;
 }
 
 /* submit buttons */
@@ -679,6 +676,12 @@ a.index-element {
   background-color : #aa0000;
   text-decoration : none;
 }
+a.idea:link,a.idea:visited {
+  font-size : 10px; 
+  font-weight : normal; 
+  font-family : verdana, arial, helvetica, sans-serif;
+  color : #634d82;
+}
 
 
 /* ________________________________________________________ nomenclature _____ */
@@ -803,7 +806,9 @@ h2.worksheet {
 }
 
 .readable {
-  max-width:40em;"
+  max-width : 40em;
+  /* for IE5 */
+  width : 512px;
 }
 
 /* development note */

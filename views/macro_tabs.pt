@@ -1,4 +1,4 @@
-<div metal:define-macro="tabs" tal:omit-tag="">
+<html metal:define-macro="tabs" tal:omit-tag="">
 <tal:block
  tal:define="global tabs view/get_authorized_tabs;
              global active_tab active_tab | nothing;
@@ -17,38 +17,39 @@
 <table border="0" cellpadding="0" cellspacing="0">
 <tr valign="bottom">
 <tal:block tal:repeat="item tabs">
-<tal:block tal:define="tab_info python:view.get_tab_info(item);
-                       is_selected_tab python:tab_info['tab_id'] == template.id or item[1] == active_tab;
-		       top_key tab_info/toplink_accesskey | nothing;
-		       tab_key tab_info/tab_accesskey | nothing;
-		       up_key tab_info/uplink_accesskey | nothing;
-		       ">
+<tal:block tal:define="
+  tab_info python:view.get_tab_info(item);
+  is_selected_tab python:tab_info['tab_id'] == template.id or item[1] == active_tab;
+  top_key tab_info/toplink_accesskey | nothing;
+  tab_key tab_info/tab_accesskey | nothing;
+  up_key tab_info/uplink_accesskey | nothing;
+  ">
 
 <td><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="20" height="1" /></td>
 
 <td class="tab"><a href="" class="tree" title=""
   tal:condition="tab_info/toplink_url"
   tal:attributes="href tab_info/toplink_url;
-                  title string:Up to top of Publication: alt-${top_key};
-                  accesskey top_key;
-		  "><img tal:attributes="src python: test(model.meta_type == 'Silva Publication', silva_root+'/globals/up_publication.gif', silva_root+'/globals/up_tree.gif')" width="19" height="14" border="0" /></a></td>
+  title string:Up to top of Publication: alt-${top_key};
+  accesskey top_key;
+  "><img tal:attributes="src python: test(model.meta_type == 'Silva Publication', silva_root+'/globals/up_publication.gif', silva_root+'/globals/up_tree.gif')" width="19" height="14" border="0" /></a></td>
 <td align="center" width="75"
   tal:attributes="class python:test(is_selected_tab, active_tab and 'tab-recede' or 'tab-up', 'tab');">
 <a class="" href=""
   tal:content="structure string:&nbsp;&nbsp;${tab_info/tab_name}&nbsp;&nbsp;"
   tal:attributes="href tab_info/tab_url;
-                  class python:test(is_selected_tab, 'tab-up', 'tab');
-                  title string:Access key: alt-${tab_key};
-                  accesskey tab_key;
-                  ">Tab Name
+  class python:test(is_selected_tab, 'tab-up', 'tab');
+  title string:Access key: alt-${tab_key};
+  accesskey tab_key;
+  ">Tab Name
 </a>
 </td>
 <td class="tab"><a href="" class="tree" title="Up a level"
   tal:condition="tab_info/uplink_url"
   tal:attributes="href tab_info/uplink_url;
-                  title string:Up a level: alt-${up_key};
-                  accesskey up_key;
-                  "><img tal:attributes="src string:${silva_root}/globals/up_level.gif" width="19" height="14"  border="0" /></a></td>
+  title string:Up a level: alt-${up_key};
+  accesskey up_key;
+  "><img tal:attributes="src string:${silva_root}/globals/up_level.gif" width="19" height="14"  border="0" /></a></td>
 </tal:block>
 </tal:block>
 </tr>
@@ -69,9 +70,9 @@
 
 </td>
 <td class="tab-bg" align="right">
-<a href="globals/reference" title="Silva info: alt-|" accesskey="|"
+<a class="idea" href="globals/reference" title="Silva info: alt-|" accesskey="|"
   tal:attributes="href string:${silva_root}/globals/reference">
-<span class="idea">Silva&nbsp;&nbsp;</span>
+  Silva&nbsp;&nbsp;
 </a>
 </td>
 </tr>
@@ -98,27 +99,20 @@
 </repeat>
 <tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'], object=here)">
   &nbsp;
-  <a href="" title="Zope manage_main: alt-." accesskey="."
-    tal:attributes="href python:'%s/manage_main' % model.absolute_url()"><span class="idea">/manage...</span></a>
+  <a class="idea" href="" title="Zope manage_main: alt-." accesskey="."
+    tal:attributes="href python:'%s/manage_main' % model.absolute_url()">/manage...</a>
 <tal:block replace="nothing"> ___________ Start hook for the experimental WYSIWYG editor integration ___________ </tal:block>
-<tal:block condition="
-    python:model.meta_type == 'Silva Document'
-           and hasattr(here, 'bxe')">
+<tal:block condition="python:model.meta_type == 'Silva Document' and hasattr(here, 'bxe')">
   &nbsp;experimental:&nbsp;
-  <a href="" tal:attributes="href python:'%s/edit/tab_edit_bxe' % model.absolute_url()"><span class="idea">/bxe edit...</span></a>
+  <a class="idea" href="" tal:attributes="href python:'%s/edit/tab_edit_bxe' % model.absolute_url()">/bxe edit...</a>
 </tal:block>
-
-<tal:block condition="
-    python:model.meta_type == 'Silva Document'
-           and hasattr(here, 'xopus')">
+<tal:block condition="python:model.meta_type == 'Silva Document' and hasattr(here, 'xopus')">
   &nbsp;experimental:&nbsp;
-  <a href="" tal:attributes="href python:'%s/edit/tab_edit_xopus' % model.absolute_url()"><span class="idea">/xopus edit</span></a>
+  <a class="idea" href="" tal:attributes="href python:'%s/edit/tab_edit_xopus' % model.absolute_url()">/xopus edit</a>
 </tal:block>
-<tal:block condition="
-    python:model.meta_type == 'Silva Document'
-           and hasattr(here, 'eopro')">
+<tal:block condition="python:model.meta_type == 'Silva Document' and hasattr(here, 'eopro')">
   &nbsp;experimental:&nbsp;
-  <a href="" tal:attributes="href python:'%s/edit/tab_edit_eopro' % model.absolute_url()"><span class="idea">/eopro edit</span></a>
+  <a class="idea" href="" tal:attributes="href python:'%s/edit/tab_edit_eopro' % model.absolute_url()">/eopro edit</a>
 </tal:block>
 
 <tal:block replace="nothing"> ____________ End hook for the experimental WYSIWYG editor integration ____________ </tal:block>
@@ -145,4 +139,4 @@
 <td class="tab-edge" colspan="5"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
 </tr>
 </table>
-</div>
+</html>
