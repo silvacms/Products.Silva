@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.29 $
+# $Revision: 1.30 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -22,7 +22,9 @@ def _rotten_index_helper(folder):
     """ helper for test_rotten_index """
     folder.manage_addDocument('index','DTML Document to trigger an error')
 
-
+def sort_addables(a, b):
+    """Sorts addables by name"""
+    return cmp(a['name'], b['name'])
 
 class ContainerBaseTestCase(unittest.TestCase):
 
@@ -331,10 +333,15 @@ class AddableTestCase(ContainerBaseTestCase):
         l = ['Bar', 'Baz', 'Foo', 'Qux']
         l.sort()
         self.assertEquals(l, self.folder4.get_silva_addables_allowed())
-        self.assertEquals(l, self.get_meta_types(self.folder4.get_silva_addables()))
+
+        adbs = self.folder4.get_silva_addables()
+        adbs.sort(sort_addables)
+        self.assertEquals(l, self.get_meta_types(adbs))
         # modify so we explicitly allow only a few objects
         Folder.get_silva_addables_allowed = get_silva_addables_allowed_hack
-        self.assertEquals(['Bar', 'Foo'], self.get_meta_types(self.folder4.get_silva_addables()))
+        adbs = self.folder4.get_silva_addables()
+        adbs.sort(sort_addables)
+        self.assertEquals(['Bar', 'Foo'], self.get_meta_types(adbs))
   
     def test_silva_addables_all(self):
         l = ['Bar', 'Baz', 'Foo', 'Qux']
@@ -347,32 +354,44 @@ class AddableTestCase(ContainerBaseTestCase):
         l.sort()
         self.assertEquals(['Foo', 'Bar'], self.sroot.get_silva_addables_allowed())
         self.assertEquals(['Foo', 'Bar'], self.folder4.get_silva_addables_allowed())
-        self.assertEquals(l, self.get_meta_types(self.folder4.get_silva_addables()))
+        adbs = self.folder4.get_silva_addables()
+        adbs.sort(sort_addables)
+        self.assertEquals(l, self.get_meta_types(adbs))
         self.sroot.set_silva_addables_allowed_in_publication(None)
         t = ['Foo', 'Bar', 'Baz', 'Qux']
         t.sort()
-        self.assertEquals(t, self.folder4.get_silva_addables_allowed())
-        self.assertEquals(t, self.get_meta_types(self.folder4.get_silva_addables()))
+        adbsa = self.folder4.get_silva_addables_allowed()
+        adbsa.sort()
+        self.assertEquals(t, adbsa)
+        adbs = self.folder4.get_silva_addables()
+        adbs.sort(sort_addables)
+        self.assertEquals(t, self.get_meta_types(adbs))
 
     def test_silva_addables_in_publication_acquire(self):
         self.sroot.set_silva_addables_allowed_in_publication(['Foo', 'Bar'])
         l = ['Foo', 'Bar']
         l.sort()
-        self.assertEquals(l, self.get_meta_types(
-                          self.publication5.get_silva_addables()))
+        adbs = self.publication5.get_silva_addables()
+        adbs.sort(sort_addables)
+        self.assertEquals(l, self.get_meta_types(adbs))
         self.publication5.set_silva_addables_allowed_in_publication(['Baz', 'Qux'])
         self.assertEquals(0,
                           self.publication5.is_silva_addables_acquired())
-        self.assertEquals(['Baz', 'Qux'],
-                          self.get_meta_types(self.publication5.get_silva_addables()))
+        adbs = self.publication5.get_silva_addables()
+        adbs.sort(sort_addables)
+        self.assertEquals(['Baz', 'Qux'], self.get_meta_types(adbs))
         self.publication5.set_silva_addables_allowed_in_publication(None)
-        self.assertEquals(l, self.get_meta_types(self.publication5.get_silva_addables()))
+        adbs = self.publication5.get_silva_addables()
+        adbs.sort(sort_addables)
+        self.assertEquals(l, self.get_meta_types(adbs))
         self.assertEquals(1,
                           self.publication5.is_silva_addables_acquired())
         self.sroot.set_silva_addables_allowed_in_publication(None)
         t = ['Foo', 'Bar', 'Baz', 'Qux']
         t.sort()
-        self.assertEquals(t, self.get_meta_types(self.publication5.get_silva_addables()))
+        adbs = self.publication5.get_silva_addables()
+        adbs.sort(sort_addables)
+        self.assertEquals(t, self.get_meta_types(adbs))
         self.assertEquals(1,
                           self.sroot.is_silva_addables_acquired())
         
