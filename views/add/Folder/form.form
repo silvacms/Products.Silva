@@ -57,7 +57,7 @@
         <values>
           <alternate_name></alternate_name>
           <css_class></css_class>
-          <description>What type of object should be added after creating the folder.</description>
+          <description>Choose an item to be created within the folder.</description>
           <external_validator></external_validator>
           <extra></extra>
           <extra_item></extra_item>
@@ -65,7 +65,7 @@
           <items type="list">[]</items>
           <required type="int">1</required>
           <size type="int">5</size>
-          <title>First item</title>
+          <title>first item</title>
           <unicode type="int">0</unicode>
           <view_separator><br /></view_separator>
           <first_item type="int">1</first_item>

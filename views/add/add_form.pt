@@ -42,10 +42,12 @@
 
 <tbody>
   <tr>
-    <th class="align-right" i18n:translate="attributes">
+    <th class="align-right"
+      i18n:translate="attributes">
       attributes
     </th>
-    <th style="width:50%;" i18n:translate="content">
+    <th style="width:50%;"
+      i18n:translate="content">
       content
     </th>
     <th i18n:translate="notes">
@@ -56,7 +58,7 @@
   <tal:define define="iterate repeat/field/odd">
   <tr tal:attributes="class python:test(iterate, 'odd', 'even')">
     <td class="align-right">
-      <span tal:replace="python:field['title'].lower()">
+      <span tal:replace="python:field['title']">
         title
       </span><span class="warning" tal:condition="python:field.is_required()">*</span>
     </td>
