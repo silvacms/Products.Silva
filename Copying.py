@@ -1,3 +1,4 @@
+# Version: $Revision: 1.2 $
 # helper module hiding all the details of cut/copy/paste support
 
 from OFS import CopySupport, Moniker

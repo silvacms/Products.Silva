@@ -1,3 +1,4 @@
+# Version: $Revision: 1.4 $
 import Interfaces
 from SilvaObject import SilvaObject
 from Globals import InitializeClass

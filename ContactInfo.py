@@ -1,3 +1,4 @@
+# Version: $Revision: 1.8 $
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile

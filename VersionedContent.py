@@ -1,3 +1,4 @@
+# Version: $Revision: 1.10 $
 from Content import Content
 from Versioning import Versioning, VersioningError
 from OFS import Folder

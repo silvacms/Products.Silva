@@ -1,3 +1,4 @@
+# Version: $Revision: 1.31 $
 import Interface
 
 class Security(Interface.Base):

@@ -1,4 +1,4 @@
-
+# Version: $Revision: 1.3 $
 class TocSupport:
     """Mixin for Silva Objects to give them TOC Support.
     """

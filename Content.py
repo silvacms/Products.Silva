@@ -1,3 +1,4 @@
+# Version: $Revision: 1.9 $
 import Interfaces
 from SilvaObject import SilvaObject
 from Publishable import Publishable

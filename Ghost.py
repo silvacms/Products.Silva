@@ -1,3 +1,4 @@
+# Version: $Revision: 1.39 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo

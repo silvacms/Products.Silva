@@ -1,3 +1,4 @@
+# Version: $Revision: 1.23 $
 import Document, Folder, Root, ViewRegistry,\
        Publication, Ghost, Image, DemoAddable
 

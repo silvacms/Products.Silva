@@ -1,3 +1,4 @@
+# Version: $Revision: 1.4 $
 import types
 
 try:

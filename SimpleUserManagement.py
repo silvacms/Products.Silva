@@ -1,4 +1,4 @@
-
+# Version: $Revision: 1.7 $
 class SimpleUserManagement:
 
     def find_users(self, object, search_string):

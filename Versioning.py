@@ -1,3 +1,4 @@
+# Version: $Revision: 1.9 $
 from DateTime import DateTime
 import Interfaces
 from AccessControl import ClassSecurityInfo

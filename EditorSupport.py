@@ -1,3 +1,4 @@
+# Version: $Revision: 1.13 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions

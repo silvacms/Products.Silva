@@ -1,3 +1,4 @@
+# Version: $Revision: 1.11 $
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner

@@ -1,3 +1,4 @@
+# Version: $Revision: 1.2 $
 from Products.ParsedXML.ParsedXML import ParsedXML
 
 class XMLImporterError(Exception):

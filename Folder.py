@@ -1,3 +1,4 @@
+# Version: $Revision: 1.47 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner

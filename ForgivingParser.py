@@ -1,3 +1,4 @@
+# Version: $Revision: 1.2 $
 import string
 
 class EventHandler:

@@ -1,3 +1,4 @@
+# Version: $Revision: 1.32 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
