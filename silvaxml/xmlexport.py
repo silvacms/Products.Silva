@@ -83,6 +83,7 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
                 else:
                     self.startElementNS(namespace, key)
                 if value:
+                    print 'value', repr(value)
                     self.handler.characters(value)
                 self.endElementNS(namespace, key)
             self.endElement('set')

@@ -142,7 +142,7 @@ class IAddables(Interface):
     def setAddables(addables):
         """set the the Metatypes that are addable to this container."""
             
-class IIndexable:
+class IIndexable(Interface):
     def getTitle():
         """returns the title of the indexable."""
 
@@ -151,3 +151,6 @@ class IIndexable:
 
     def getIndexes():
         """returns the indexes for a certain object, or an empty list."""
+
+class IMetadataAdapter(Interface):
+    pass
