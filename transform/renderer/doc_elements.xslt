@@ -204,13 +204,49 @@
   </xsl:template>
     
   <xsl:template match="doc:image[@link]">
-    <a href="{@link}">
-      <img src="{@path}" />
-    </a>
+    <xsl:choose>
+      <xsl:when test="@link_to_hires=1">
+        <a href="{@link}" target="{@target}?hires">
+          <xsl:choose>
+            <xsl:when test="starts-with(@alignment, 'image-')">
+              <div class="{@alignment}">
+                <img src="{@path}" title="{@title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+              </div>
+            </xsl:when>
+            <xsl:otherwise>
+              <img src="{@path}" title="{@title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </a>
+      </xsl:when>
+      <xsl:otherwise>
+        <a href="{@link}" target="{@target}">
+          <xsl:choose>
+            <xsl:when test="starts-with(@alignment, 'image-')">
+              <div class="{@alignment}">
+                <img src="{@path}" title="{@title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+              </div>
+            </xsl:when>
+            <xsl:otherwise>
+              <img src="{@path}" title="{@title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </a>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="doc:image[not(@link)]">
-    <img src="{@path}" />
+    <xsl:choose>
+      <xsl:when test="starts-with(@alignment, 'image-')">
+        <div class="{@alignment}">
+          <img src="{@path}" title="{@title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+        </div>
+      </xsl:when>
+      <xsl:otherwise>
+        <img src="{@path}" title="{@title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="doc:underline" mode="text-content">
