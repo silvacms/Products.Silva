@@ -12,23 +12,19 @@
  ---------------------------
 
  the above source and target arguments are "versioned type
- identifiers".  Additionally they can have a representation
- type with   such as 'minidom:xml-1.0' or 
- 'silvaxml-0.9.0', 'docma-0.5', 
- 'eonprohtml-1.', 
- 'parsedxml', 'minidom',
- 'unicode' or whatever.
+ identifiers" such as 'silvaxml-0.9.0'. 
 
- a versioned identifier is an identifier with an
- appended version string such as '-1.0' or '-0.8.7' etc.
-
- so a versioned identifier string always has the format.
+ a versioned identifier string always has the format.
 
      some_id-x.y.z
 
  Each versioned identifier implies exactly one representation. 
  This restriction is neccesary to allow sane chaining of 
- converters. 
+ converters.  If you have a converter that can take several
+ "types" such as minidom, parsedxml, or plain xml-strings 
+ than you have to register different converters.  I am 
+ working on an easier scheme regarding 'representation'
+ conversions.  
 """
 
 from __future__ import nested_scopes
