@@ -108,6 +108,11 @@ setTimeout('handleTimeout()', document.timeout * 1000, '');
   tal:condition="python: not model.implements_container()"
   tal:attributes="href string:${root_url}/globals/silvaContentStyle.css"
 />
+<link href="globals/widgetEditor.css"
+  rel="stylesheet"
+  tal:condition="python: not model.implements_container() and template.id == 'tab_edit'"
+  tal:attributes="href string:${root_url}/globals/widgetEditor.css"
+/>
 <link href="frontend.css"
   rel="stylesheet"
   tal:condition="python:template.id == 'tab_preview'"

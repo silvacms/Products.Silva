@@ -347,7 +347,7 @@
           value="Export to Docma"
           title="export the selection to Word: alt-d"
           accesskey="d"
-          i18n:attributes="value title"
+          i18n:attributes="value title accesskey:key-export_to_word"
         />
         </tal:block>
         </td>

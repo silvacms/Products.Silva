@@ -142,6 +142,7 @@
                   <tal:block define="
                     is_default python: item.id == 'index';
                     item_url item/absolute_url;
+                    status_style python:item.get_object_status()[1];
                     oddrow repeat/item/odd">
                     <tr tal:attributes="class python:oddrow and 'odd' or 'even'">
                       <tal:block replace="nothing">
@@ -175,7 +176,8 @@
                           title="edit"
                           tal:content="item/id"
                           tal:attributes="
-                            href python:here.get_editor_link(item);">
+                            href python:here.get_editor_link(item);
+                            class status_style;">
                           id
                         </a>
                         <img alt="content approved or published"
@@ -198,7 +200,7 @@
                           title="preview"
                           tal:attributes="
                             href string:${item_url}/edit/tab_preview;
-                            class python:item.get_object_status()[1];"
+                            class status_style;"
                           tal:define="title python:(item.get_title_editable() or default)"
                           tal:content="title">
                           <i>no title</i>

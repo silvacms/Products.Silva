@@ -491,7 +491,7 @@
                   <td class="top">
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure python:view.render_icon(model)" />
-                      Public view access restrictions for &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                      public view access restrictions for &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
                     </h2>
                   </td>
                 </tr>

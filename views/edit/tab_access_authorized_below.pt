@@ -1,53 +1,93 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html tal:omit-tag=""
-    lang="en"
-    xml:lang="en"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:metal="http://xml.zope.org/namespaces/metal"
-    xmlns:notal="http://www.infrae.com/silva/notal"
-    xmlns:tal="http://xml.zope.org/namespaces/tal"
-    tal:define="
-      active_tab string:tab_access;
-      breadcrumb_vein string:Emails;"
-  >
-  <metal:block use-macro="here/macro_index/macros/master">
-    <div class="margins" metal:fill-slot="main">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  tal:define="
+    active_tab string:tab_access;
+    breadcrumb_vein string:Emails;
+    global parent_screen_name string:Access;
+">
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
 
-      <h3><a href="tab_access" title="Up to top of Access tab">
-        <img width="9" height="9" border="0" alt="Up to top of Access tab"
-          tal:attributes="src string:${root_url}/globals/up_gray.gif" />
-        Access
-      </a>
-      </h3>
-      <h2 class="worksheet"><img src="%s" width="16" height="16" alt="%s"
-        tal:replace="structure python:view.render_icon(model)" />&nbsp;
-        Authorized users below this level
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <td class="left">
+        <tal:block replace="nothing">
+          _____________________ sidebar subtable _____________________
+        </tal:block>
+        <metal:block use-macro="view/macro_parent_screen_navigation/macros/parent" />
+        <tal:block tal:replace="structure python: view.service_sidebar.render(model, 'tab_status', breadcrumb_vein)" />
+      </td>
+      <td class="main">
+        <tal:block replace="nothing">
+          _____________________ main subtable _____________________
+        </tal:block>
+
+<table class="listing">
+  <thead>
+    <tr tal:replace="nothing"> ______________ vein + title row ______________ </tr>
+    <tr>
+      <td class="top" colspan="3">
+      <h2>
+        <img tal:replace="structure python:view.render_icon(model)" />
+        Authorized users below this level <span tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title</span>
       </h2>
-      <div class="hilight borders top bottom left right"
-        style="padding: 0.5em; margin: 1em 3%; 2em 3%;">
-        <tal:check
-          condition="python:user.has_permission('Change Silva access', model)">
-          <!-- this form deliberately has no submit button -->
-          <form action="." method="POST">
-            <table cellspacing="0" cellpadding="3" border="0">
-              <tr>
-                <td colspan="2" align="left">
-                  <b>Email addresses</b>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Addresses are formatted for copying and pasting 
-                  in the &#8216;To:&#8217; field of an email message.
-                  <br />
-                  <textarea name="data" cols="78" rows="5" wrap="soft" 
-                    tal:content="view/tab_access_get_emails" />
-                </td>
-              </tr>
-            </table>
-          </form>
-        </tal:check>
-      </div>
-    </div>
-  </metal:block>
-  </html>
+      </td>
+    </tr>
+  </thead>
+
+<form action="." method="POST"
+  tal:condition="python:user.has_permission('Change Silva access', model)">
+  <!-- this form deliberately has no submit button -->
+  <tbody>
+    <tr class="top-controls">
+      <td>
+        <h3>
+          Email addresses
+        </h3>
+      </td>
+    </tr>
+
+    <tr class="even">
+      <td>
+        Addresses are formatted for copying and pasting 
+        in the &#8216;To:&#8217; field of an email message.
+        <br />
+        <textarea style="width:100%"
+          name="data"
+          cols="60"
+          rows="5"
+          wrap="soft" 
+          tal:content="view/tab_access_get_emails" />
+      </td>
+    </tr>
+  </tbody>
+</form>
+
+  <tfoot>
+    <tr class="controls">
+      <td>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+</metal:block>
+</metal:block>
+</html>

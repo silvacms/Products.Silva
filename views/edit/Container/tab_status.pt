@@ -229,8 +229,7 @@
                   </tal:block>
                   <td class="align-right"
                     colspan="5">                    
-                    <label class="widebody"
-                      title="access key: alt-m" 
+                    <label title="access key: alt-m" 
                       accesskey="m">
                       publish time:
                     </label>
@@ -244,9 +243,7 @@
                         for="publish_now_flag" 
                         title="access key: alt-u" 
                         accesskey="u">
-                        <span class="widebody">
-                          p<u>u</u>blish&nbsp;now?
-                        </span>
+                        p<u>u</u>blish&nbsp;now?
                       </label>
                       <field tal:replace="structure python:view.tab_status_form.publish_now_flag.render()" />
                     </tal:block>
@@ -258,8 +255,7 @@
                   </tal:block>
                   <td class="align-right"
                     colspan="5">
-                    <label class="widebody"
-                      title="access key: alt-x" 
+                    <label title="access key: alt-x" 
                       accesskey="x">
                       expiration time:
                     </label>
@@ -334,7 +330,7 @@
                   <tal:block replace="nothing">
                     ______________ author controls ______________
                   </tal:block>
-                  <td colspan="5">
+                  <td colspan="4">
                     <input class="button"
                       style="background:#8f7f01;"
                       type="submit"
@@ -359,7 +355,8 @@
                       accesskey="n"
                     />
                   </td>
-                  <td class="align-right">
+                  <td class="align-right"
+                    colspan="2">
                     <input class="button"
                       type="submit"
                       name="tab_status_request_approval:method"
