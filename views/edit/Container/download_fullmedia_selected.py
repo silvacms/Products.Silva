@@ -6,6 +6,8 @@
 ##parameters=with_sub_publications=0, export_last_version=0
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 view = context
 request = view.REQUEST
 RESPONSE = view.REQUEST.RESPONSE
@@ -14,12 +16,12 @@ model = request.model
 from DateTime import DateTime
 
 if not request.has_key('refs') or not request['refs']:
-    return view.tab_status(message_type='error', message='No items were selected, so no content will be exported')
+    return view.tab_status(message_type='error', message=_('No items were selected, so no content will be exported'))
 
 refs = request['refs'].split('||')
 
 if len(refs) > 1:
-    return view.tab_status(message_type='error', message='Currently, fullmedia export only supports one item at a time.')
+    return view.tab_status(message_type='error', message=_('Currently, fullmedia export only supports one item at a time.'))
 
 object = model.resolve_ref(refs[0])
 
