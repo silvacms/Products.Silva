@@ -12,6 +12,32 @@
     " 
   i18n:domain="silva">
 <metal:block use-macro="here/layout_macro.html/macros/layout">
+
+<metal:block fill-slot="meta">
+  <tal:block define="binding python:here.get_metadata_for_version(request.version)">
+    <meta name="subject"
+      tal:define="subject python: binding['silva-extra']['subject'] or nothing"
+      tal:condition="subject"
+      tal:attributes="content subject" />
+    <meta name="description"
+      tal:define="description python: binding['silva-extra']['content_description'] or nothing"
+      tal:condition="description"
+      tal:attributes="content description" />
+    <meta name="keywords"
+      tal:define="keywords python: binding['silva-extra']['keywords'] or nothing"
+      tal:condition="keywords"
+      tal:attributes="content keywords" />
+    <meta name="contact.name"
+      tal:define="name python: binding['silva-extra']['contactname'] or nothing"
+      tal:condition="name"
+      tal:attributes="content name" />
+    <meta name="contact.email"
+      tal:define="email python: binding['silva-extra']['contactemail'] or nothing"
+      tal:condition="email"
+      tal:attributes="content email" />
+  </tal:block>
+</metal:block>
+  
 <metal:block fill-slot="main"
   tal:define="
     view here;

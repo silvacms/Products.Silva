@@ -1,10 +1,10 @@
-## Script (Python) "tab_status_revoke"
+## Script (Python) "get_metadata_for_version"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=
+##parameters=versionid
 ##title=Revoke approval of approved content
 ##
 view = context
@@ -15,4 +15,5 @@ from Products.Silva.adapters.version_management import \
                             getVersionManagementAdapter
 adapter = getVersionManagementAdapter(model)
 version = adapter.getVersionById(request.version)
-return model.view_version('preview', version)
+
+return view.service_metadata.getMetadata(version)
