@@ -153,7 +153,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         if not self.is_user(userid):
             return None
         # get member, add it if it doesn't exist yet
-        members = self.Members.aq_inner
+        members = self.Members.aq_inner.aq_explicit
         member = getattr(members, userid, None)
         if member is None:
             members.manage_addProduct['Silva'].manage_addSimpleMember(userid)
