@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -142,7 +142,8 @@ class PublishableTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_is_published3(self):
         # first publish default
-        self.folder.get_default().set_unapproved_version_publication_datetime(DateTime() - 1)
+        self.folder.get_default().set_unapproved_version_publication_datetime(
+            DateTime() - 1)
         self.folder.get_default().approve_version()
         self.assert_(self.folder.is_published())
         # now close default
