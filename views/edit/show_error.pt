@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="global vein string:edit;"
+  i18n:domain="silva">
+
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
+
+<form action="."
+  method="POST"
+  name="silvaObjects"
+  tal:define="
+    error_type here/REQUEST/error_type;
+    error_message here/REQUEST/error_message;
+">
+  <table class="columns columns2">
+    <tbody>
+      <tr>
+        <tal:block replace="nothing">
+          _____________________ sidebar _____________________
+        </tal:block>
+        <td class="left">
+          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />
+            </metal:fill-slot>
+          </metal:use-macro>
+        </td>
+
+        <tal:block replace="nothing">
+          _____________________ main _____________________
+        </tal:block>
+        <td class="main">
+
+          <table class="listing"
+            id="sortable">
+            <thead>
+              <tal:block replace="nothing">
+                ______________ vein + title row ______________
+              </tal:block>
+              <tr>
+                <td class="top"
+                  colspan="6">
+                  <h2 tal:attributes="title string:id: ${model/id}">
+                    <img tal:replace="structure python:view.render_icon(model)" />
+                    &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                  </h2>
+                </td>
+              </tr>
+
+              <tal:block replace="nothing">
+                ______________ top controls row ______________
+              </tal:block>
+            </thead>
+
+            <tbody>
+              <tr class="top-controls">
+                <th colspan="6">
+                  An exception has occurred:
+                </th>
+              </tr>
+              <tr>
+                <td colspan="6" class="even">
+                  Error type: <span style="font-weight: bold;" tal:content="error_type" />
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" class="odd">
+                  Error message: <span style="font-weight: bold;" tal:content="structure error_message" />
+                </td>
+              </tr>
+            </tbody>
+            <tfoot tal:condition="silva_permissions/ChangeSilvaViewRegistry">
+              <tr class="controls">
+                <td colspan="6" class="align-right">
+                  <form>
+                    <input type="submit"
+                          class="button"
+                          value="Go to errorlog"
+                          tal:attributes="onclick python:'document.location = \'%s/error_log/manage_main\';; return false;;' % view.silva_root()"
+                          />
+                  </form>   
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+</metal:block>
+</metal:block>
+</html>
