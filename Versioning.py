@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
+# $Revision: 1.32 $
 # Zope
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
@@ -106,13 +106,21 @@ class Versioning:
             self._request_for_approval_info = self._request_for_approval_info
         self._reindex_version(self._approved_version)
 
+        # fix publication time settings; publication times in the past
+        # are moved to the present to avoid strance cache behaviour.
+        # XXX this is actually needed by VersionedContent
+        publication_datetime = self._approved_version[1]
+        publish_now = not (publication_datetime.isFuture())
+        if publish_now and 1:
+            self._approved_version = \
+                                   (self._approved_version[0],
+                                    DateTime(),
+                                    self._approved_version[2])
         # send messages
         info = self._get_editable_rfa_info()
         if info.requester is None:
             return # no requester found, so don't send messages
-        publication_datetime = self._approved_version[1]
-        # XXX publication_datetime is never None here ... really ?
-        if publication_datetime.isPast():
+        if publish_now:
             publication_date_str="The version has been published right now.\n"
         else:
             publication_date_str = 'The version will be published at %s\n' % \
@@ -238,7 +246,7 @@ class Versioning:
         if You do not want to change the information.
         """
         if self._request_for_approval_info == empty_request_for_approval_info:
-            self._request_for_approval_info =  RequestForApprovalInfo()
+            self._request_for_approval_info = RequestForApprovalInfo()
         else:
             # Zope should be notified that it has changed
             self._request_for_approval_info = self._request_for_approval_info
@@ -452,7 +460,7 @@ class Versioning:
         The implementation cleans the message
         if a new version is created.
         """
-        # very weak restriction ... allows to call this method
+        # very weak check ... allows to call this method
         # before or after requesting approval, or the like.
         if self.get_next_version() is None:
             raise VersioningError, \
