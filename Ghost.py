@@ -30,7 +30,7 @@ class Ghost(VersionedContent):
     def title(self):
         """Get title.
         """
-        ghost_version = Ghost.inheritedAttribute('get_viewable')(self)
+        ghost_version = self.get_viewable()
         if ghost_version is None:
             return 'no title available'
         return ghost_version._get_content().title()
