@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.23 $
+# $Revision: 1.24 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -315,14 +315,6 @@ class Security:
         for userid in userids:
             d[userid] = self.sec_get_user_info(userid)
         return d
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_group_info')
-    def sec_get_group_info(self, userid):
-        """Get information for group.
-        FIXME: describe which info fields exist.
-        """
-        pass
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_groups')
