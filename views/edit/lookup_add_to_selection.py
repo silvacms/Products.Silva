@@ -11,7 +11,7 @@ for userid in userids:
     member = model.sec_get_member(userid)
     if member is None:
         continue
-    selection[userid] = member
+    selection[userid] = 1
 
 return view.tab_access_lookup(
     message_type="feedback", 
