@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.1 2004/04/02 12:46:29 jw Exp $
+# $Id: Image.py,v 1.50.4.1.6.2 2004/04/06 09:50:36 zagy Exp $
 
 # Python
 import re, string 
@@ -65,6 +65,15 @@ class Image(Asset):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'image')
     
+    security.declareProtected(SilvaPermissions.View, 'index_html')
+    def index_html(self, REQUEST, RESPONSE):
+        """view image data"""
+        img = self.image
+        if REQUEST.QUERY_STRING == 'hires':
+            img = self.hires_image
+        return img.index_html(REQUEST, RESPONSE)
+
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
     def set_title(self, title):
@@ -117,7 +126,7 @@ class Image(Asset):
         format = self.getFormat()
         if format in self.web_formats:
             self.web_format = format
-        self._createWebPresentation()            
+        self._createWebPresentation()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_zope_image')
@@ -320,7 +329,7 @@ class Image(Asset):
     
     def get_scaled_file_size(self):
         return self.image.get_size()
-    
+
 InitializeClass(Image)
     
 manage_addImageForm = PageTemplateFile(
