@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.9.1.9
+  Valid for:  Silva 0.9.1.10
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26.2.11 $
+  CVS:        $Revision: 1.26.2.12 $
 
 Installing Silva
 
@@ -46,7 +46,7 @@ Installing Silva
 
   Silva Requirements (install in your Products directory)
 
-    Silva (0.9.1.9)
+    Silva (0.9.1.10)
 
       Silva implements the behavior for the Silva objects, such as
       Folders, Publications, and Documents. Also implements some basic
@@ -60,13 +60,13 @@ Installing Silva
 
       or just download:
 
-        "Silva-0.9.1.9.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.9.tgz
+        "Silva-0.9.1.10.tgz":http://www.zope.org/Members/faassen/Silva/Silva-0.9.1.10.tgz
   
     XMLWidgets (0.8.4)
 
       A system that builds on top of ParsedXML to assist in the
       rendering of editor, as well as in the generation of the HTML
-      for the public pages. Note that never versions of XMLWidgets
+      for the public pages. Note that newer versions of XMLWidgets
       won't work properly with Silva 0.9.1; you need 0.8.4.
 
       XMLWidgets can be found here:
