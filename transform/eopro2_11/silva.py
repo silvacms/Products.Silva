@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.12 $'
+__version__='$Revision: 1.13 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -82,9 +82,9 @@ class heading(SilvaElement):
             )
 
 class p(SilvaElement):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.p(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             silva_type=self.attrs.get('type')
             )
 
@@ -161,54 +161,54 @@ class nlist(list):
 
 class li(SilvaElement):
     """ list items """
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.li(
-            self.content.convert(*args, **kwargs)
+            self.content.convert(context)
             )
 
 class strong(SilvaElement):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.b(
-            self.content.convert(*args, **kwargs)
+            self.content.convert(context)
             )
 
 class underline(SilvaElement):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.u(
-            self.content.convert(*args, **kwargs)
+            self.content.convert(context)
             )
 
 class em(SilvaElement):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.i(
-            self.content.convert(*args, **kwargs)
+            self.content.convert(context)
             )
 
 class super(SilvaElement):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.font(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             color='aqua'
             )
 
 class sub(SilvaElement):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.font(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             color='blue'
             )
 
 class link(SilvaElement):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.a(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             href=self.attrs['url']
         )
 
 class image(SilvaElement):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.img(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             src=self.attrs['image_path'].content+'/image'
             )
 
@@ -216,16 +216,16 @@ class pre(SilvaElement):
     def compact(self):
         return self
 
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.pre(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
         )
 
 class table(SilvaElement):
-    def convert(self, context, *args, **kwargs):
+    def convert(self, context):
         #context['table']=self
         t = html.table(
-            self.content.convert(context, *args, **kwargs),
+            self.content.convert(context),
             self.backattr(),
             cols=self.attrs.get('columns'),
             #border=self.attrs.get('type') != 'plain' and '1' or None
@@ -234,16 +234,16 @@ class table(SilvaElement):
         return t
    
 class row(SilvaElement):
-    def convert(self, context, *args, **kwargs):
+    def convert(self, context):
         return html.tr(
-            self.content.convert(context, *args, **kwargs),
+            self.content.convert(context),
             #colspan = context['table'].attrs.get('columns')
         )
   
 class field(SilvaElement):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return html.td(
-            self.content.convert(*args, **kwargs)
+            self.content.convert(context)
         )
 
 

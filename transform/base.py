@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.8 $'
+__version__='$Revision: 1.9 $'
 
 # look ma, i only have these dependencies 
 # and with python2.2 even they would vanish
@@ -85,7 +85,7 @@ class Frag(Node, List):
             else:
                 List.append(self, other)
 
-    def convert(self, context, *args, **kwargs):
+    def convert(self, context):
         frag = self.__class__()
         pre = Frag()
         post = Frag(self)
@@ -93,7 +93,7 @@ class Frag(Node, List):
             node = post.pop(0)
             context['pre_nodes']=pre
             context['post_nodes']=post
-            frag.append(node.convert(context, *args, **kwargs))
+            frag.append(node.convert(context))
             pre.append(node)
         return frag
 
@@ -214,7 +214,7 @@ class Element(Node):
     def find_all_partitions(self, *args, **kwargs):
         return self.content.find_all_partitions(*args, **kwargs)
 
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return self
 
     def asBytes(self, encoding='UTF-8'):
@@ -291,7 +291,7 @@ class CharacterData(Node):
     def extract_text(self):
         return self.content
 
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return self
 
     def __eq__(self, other):

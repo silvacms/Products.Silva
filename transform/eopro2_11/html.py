@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14 $'
+__version__='$Revision: 1.15 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -61,19 +61,19 @@ def move_h5_into_list(self):
             #print "moved h5=",h5.asBytes(), "into", tag.asBytes()#name()
 
 class html(Element):
-    def convert(self, context, *args, **kwargs):
+    def convert(self, context):
         """ forward to the body element ... """
         bodytag = self.find('body')[0]
-        return bodytag.convert(context, *args, **kwargs)
+        return bodytag.convert(context)
 
 class head(Element):
-    def convert(self, context, *args, **kwargs):
+    def convert(self, context):
         """ ignore """
         return u''
 
 class body(Element):
     "html-body element"
-    def convert(self, context, *args, **kwargs):
+    def convert(self, context):
         """ contruct a silva_document with id and title
             either from information found in the html-nodes 
             or from the context (where silva should have
@@ -93,62 +93,62 @@ class body(Element):
         return silva.silva_document(
                 silva.title(title),
                 silva.doc(
-                    rest.convert(context, *args, **kwargs)
+                    rest.convert(context)
                 ),
                 id = id
             )
 
 class h1(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.heading(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             type='normal'
         )
 
 class h2(Element):
     ""
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.heading(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             type="normal"
             )
 
 class h3(Element):
     ""
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.heading(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             type="normal"
             )
 
 class h4(Element):
     ""
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.heading(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             type="sub"
             )
 
 class h5(Element):
     """ List heading """
-    def convert(self, context, *args, **kwargs):
+    def convert(self, context):
         """ return a normal heading. note that the h5-to-title
             conversion is done by the html list-tags themselves. 
             Thus h5.convert is only called if there is no
             list context and therefore converted to a subheading.
         """
         return silva.heading(
-            self.content.convert(context, *args, **kwargs),
+            self.content.convert(context),
             type="sub",
             )
 
 class h6(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         """ this only gets called if the user erroronaously
             used h6 somewhere 
         """
         return silva.heading(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             type="sub",
             )
 
@@ -156,15 +156,15 @@ class p(Element):
     """ the html p element can contain nodes which are "standalone"
         in silva-xml. 
     """
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         pre,img,post = self.find_and_partition('img')
         type = self.attrs.get('silva_type', None)
         if pre:
-            pre = silva.p(pre.convert(*args, **kwargs), type=type)
+            pre = silva.p(pre.convert(context), type=type)
         if img:
-            img = img.convert(*args, **kwargs)
+            img = img.convert(context)
         if post:
-            post = silva.p(post.convert(*args, **kwargs), type=type)
+            post = silva.p(post.convert(context), type=type)
 
         if not (pre or img or post):
             pre = silva.p(type=type)
@@ -188,49 +188,49 @@ class ul(Element):
     """
     default_types = ('disc','circle','square','none')
 
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         move_h5_into_list(self)
 
-        if self.is_dlist():
-            return self.convert_dlist(*args, **kwargs)
-        elif self.is_nlist():
-            return self.convert_nlist(*args, **kwargs)
+        if self.is_dlist(context):
+            return self.convert_dlist(context)
+        elif self.is_nlist(context):
+            return self.convert_nlist(context)
         else:
-            return self.convert_list(*args, **kwargs)
+            return self.convert_list(context)
 
-    def is_nlist(self):
+    def is_nlist(self, context):
         for i in self.find(ignore=lambda x: x.name()=='h5').compact():
             if i.name()!='li':
                 return 1
 
-    def convert_list(self, *args, **kwargs):
+    def convert_list(self, context):
         type = self.get_type()
 
-        h5, title = self.get_title(*args, **kwargs)
+        h5, title = self.get_title(context)
         ignorefunc= h5 and h5.__eq__ or None
 
         return silva.list(
             title,
-            self.find(ignore=ignorefunc).convert(*args, **kwargs),
+            self.find(ignore=ignorefunc).convert(context),
             type=type
         )
 
 
-    def convert_nlist(self, *args, **kwargs):
+    def convert_nlist(self, context):
 
         type = self.get_type()
-        h5, title = self.get_title(*args, **kwargs)
+        h5, title = self.get_title(context)
         ignorefunc= h5 and h5.__eq__ or None
 
         #res = silva.nlist(
         #    title,
-        #    self.find(ignore=ignorefunc).convert(*args, **kwargs),
+        #    self.find(ignore=ignorefunc).convert(context),
         ##    type=type
         #)
 
         lastli = None
         content = Frag()
-        for tag in self.find(ignore=ignorefunc).convert(*args, **kwargs):
+        for tag in self.find(ignore=ignorefunc).convert(context):
             name = tag.name()
             if name == 'li':
                 lastli = tag
@@ -279,7 +279,7 @@ class ul(Element):
             type = self.default_types[0]
         return type
 
-    def get_title(self, *args, **kwargs):
+    def get_title(self, context):
         h5_tag = self.find(tag=h5)
         #print "found h5 in", self.name(), ":", h5_tag.asBytes()
         if not h5_tag:
@@ -292,24 +292,24 @@ class ul(Element):
                     li.content.remove(h5_tag)
                     if not li.extract_text().strip():
                         self.content.remove(li)
-                    return h5_tag, silva.title(h5_tag.content.convert(*args, **kwargs))
+                    return h5_tag, silva.title(h5_tag.content.convert(context))
             return None, silva.title()
         else:
-            return h5_tag[0], silva.title(h5_tag[0].content.convert(*args, **kwargs))
+            return h5_tag[0], silva.title(h5_tag[0].content.convert(context))
 
-    def is_dlist(self, *args, **kwargs):
+    def is_dlist(self, context):
         for item in self.find('li'):
             font = item.find('font')
             if len(font)>0 and font[0].attrs.get('color')=='green':
                 return 1
         
-    def convert_dlist(self, *args, **kwargs):
+    def convert_dlist(self, context):
         tags = []
-        h5, title = self.get_title(*args, **kwargs)
+        h5, title = self.get_title(context)
         for item in self.find('li'):
             pre,font,post = item.find_and_partition('font')
             if font and font.attrs['color']=='green':
-                tags.append(silva.dt(font.content.convert(*args,**kwargs)))
+                tags.append(silva.dt(font.content.convert(context)))
             else:
                 tags.append(silva.dt())
 
@@ -319,7 +319,7 @@ class ul(Element):
                 except AttributeError:
                     pass
 
-            tags.append(silva.dd(post.convert(*args, **kwargs)))
+            tags.append(silva.dd(post.convert(context)))
 
         return silva.dlist(
             title,
@@ -333,33 +333,33 @@ class ol(ul):
     default_types = ('1','a','i')
 
 class li(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         move_h5_into_list(self)
 
         return silva.li(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             )
 
 class b(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.strong(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             )
 
 class i(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.em(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             )
 
 class u(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.underline(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             )
 
 class font(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         color = self.attrs.get('color')
         tag = {'aqua': silva.super, 
                'green': silva.dt,
@@ -367,32 +367,32 @@ class font(Element):
                }.get(color)
         if tag:
             return tag(
-                self.content.convert(*args, **kwargs)
+                self.content.convert(context)
             )
         else:
-            return self.content.convert(*args, **kwargs)
+            return self.content.convert(context)
 
 class a(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.link(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             url=self.attrs['href']
             )
 
 class img(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         from urlparse import urlparse
         src = self.attrs['src'].content
         src = urlparse(src)[2]
         if src.endswith('/image'):
             src = src[:-len('/image')]
         return silva.image(
-            self.content.convert(*args, **kwargs),
+            self.content.convert(context),
             image_path=src
             )
 
 class br(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.p(
             "",
             type='normal'
@@ -402,33 +402,33 @@ class pre(Element):
     def compact(self):
         return self
 
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.pre(
-            self.content.convert(*args, **kwargs)
+            self.content.convert(context)
         )
 
 class table(Element):
-    def convert(self, context, *args, **kwargs):
+    def convert(self, context):
         rows = self.content.find('tr')
         if len(rows)>0:
             cols = len(rows[0].find('td'))
         return silva.table(
-                self.content.convert(context, *args, **kwargs),
+                self.content.convert(context),
                 columns=self.attrs.get('cols', cols),
                 column_info = self.attrs.get('silva_column_info'),
                 type=self.attrs.get('silva_type')
             )
 
 class tr(Element):
-    def convert(self, context, *args, **kwargs):
+    def convert(self, context):
         return silva.row(
-            self.content.convert(context, *args, **kwargs)
+            self.content.convert(context)
         )
 
 class td(Element):
-    def convert(self, *args, **kwargs):
+    def convert(self, context):
         return silva.field(
-            self.content.convert(*args, **kwargs)
+            self.content.convert(context)
         )
 
 """
