@@ -249,7 +249,7 @@
 
             <form name="kupu_link_form" onsubmit="return false;">
               <input type="button" class="transport" style="margin-bottom:0.2em;" onclick="getLink(); return false;" value="get link reference..." />
-              <input type="text" id="kupu-link-input" name="kupu_link_href" style="margin-left:0.2em; width:96%" />
+              <input class="store" type="text" id="kupu-link-input" name="kupu_link_href" style="margin-left:0.2em; width:96%" />
               <input type="button" class="button" value="insert link" id="kupu-link-button" />
             </form>
 
@@ -263,7 +263,7 @@
           <div class="kupu-tooltray">
 
             <form name="kupu_index_form" onsubmit="return false;">
-              <input type="text" id="kupu-index-input" name="kupu_index_href" style="margin-left:0.2em; width:96%" />
+              <input class="store" type="text" id="kupu-index-input" name="kupu_index_href" style="margin-left:0.2em; width:96%" />
               <input type="button" class="button" value="insert index" id="kupu-index-addbutton" />
               <input type="button" class="button" value="update index" id="kupu-index-updatebutton" />
               <input type="button" class="button" value="delete index" id="kupu-index-deletebutton" />
@@ -352,8 +352,8 @@
           <div class="kupu-tooltray">
 
             <form name="kupu-citation-form">
-              author: <input type="text" id="kupu-citation-authorinput" /><br />
-              source: <input type="text" id="kupu-citation-sourceinput" /><br />
+              author <input class="store" type="text" id="kupu-citation-authorinput" style="width:81%" /><br />
+              source <input class="store" type="text" id="kupu-citation-sourceinput" style="width:81%" /><br />
               <input type="button" class="transport" value="insert citation" id="kupu-citation-addbutton" />
               <input type="button" class="button" value="update citation" id="kupu-citation-updatebutton" />
               <input type="button" class="warning" value="delete citation" id="kupu-citation-deletebutton" />
@@ -493,7 +493,7 @@
         
           <h1 i18n:translate="typographical-characters">typographical characters</h1>
           <div class="kupu-tooltray">
-            &nbsp;&euro; &#145; &#146; &#147; &#148; &#171; &#187; &#8211; &#8212;
+            &nbsp;&euro; &#8218; &#145; &#146; &#132; &#147; &#148; &#171; &#187; &#8212; &#8211; &#183;
           </div>
 
         </div>
