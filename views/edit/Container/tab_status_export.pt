@@ -5,6 +5,7 @@
                   global lastclass string:focus-cycle;
                   global silva_permissions here/get_silva_permissions;
                   global breadcrumb_vein string:Status;
+                  global dummy view/security_trigger;
                   " />
 
 <!-- ____________________________ start index_html ____________________________ -->
