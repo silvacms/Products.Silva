@@ -290,7 +290,7 @@
                         title="select this asset"
                         tal:attributes="
                           for identifier;
-                          title string:choose this ${item/meta_type};
+                          title string:choose this ${asset/meta_type};
                           ">
                         <img tal:replace="structure python:view.render_icon(asset)" />
                         <tal:block tal:replace="asset/id">
@@ -360,10 +360,10 @@
                 <input class="navigation"
                   type="button"
                   name="place"
-                  value="place reference"
+                  value="place reference..."
                   title="insert a reference to this asset: alt-p"
-                  i18n:attributes="title value"
                   accesskey="p" 
+                  i18n:attributes="title value"
                   onclick="setReference();return false;" 
                   tal:condition="publishables"
                 />
