@@ -37,8 +37,10 @@ try:
     from Products import PlacelessTranslationService
 except ImportError:
     make_translation_service = lambda x: None
+    cp_id = None
 else:
     make_translation_service = PlacelessTranslationService.make_translation_service
+    cp_id = PlacelessTranslationService.cp_id
 
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
@@ -92,15 +94,11 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         self.beforeSetUp()
         self.app = self._app()
         self.silva = self.root = self.getRoot()
-        make_translation_service(self.app)
         self.catalog = self.silva.service_catalog
         if self._configure_root:
             self._setupRootUser()
             self.login()
             self.app.REQUEST.AUTHENTICATED_USER=self.app.acl_users.getUser(ZopeTestCase._user_name)
-        if hasattr(Publish, '_requests'):
-            # PlacelessTranslationService stores a list of requests on Publish
-            Publish._requests[get_ident()] = self.app.REQUEST
         self.afterSetUp()
 
     def tearDown(self):
@@ -220,6 +218,13 @@ def setupSilvaRoot(app, id='root', quiet=0):
 
 # Create a Silva site in the test (demo-) storage
 app = ZopeTestCase.app()
+# create a translation service (if PlacelessTranslationService is installed)
+make_translation_service(app)
+if hasattr(Publish, '_requests'):
+    # PlacelessTranslationService stores a list of requests on Publish
+    Publish._requests[get_ident()] = app.REQUEST
 setupSilvaRoot(app, id='root')
 ZopeTestCase.close(app)
-
+# remove the translation service if it was installed
+if cp_id is not None:
+    app.manage_delObjects([cp_id])
