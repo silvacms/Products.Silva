@@ -114,7 +114,7 @@
           state obj/status_style | nothing;
           global rejectables python: test(state == 'pending', 1, rejectables);
           global revokeables python: test(state == 'approved', 1, revokeables);
-          global approveables python: test(state == 'draft' or state == 'closed', 1, approveables);
+          global approveables python: test(state == 'draft', 1, approveables);
           global new_versionables python: test(state == 'closed', 1, new_versionables);"
         tal:attributes="
           class python: iterate and 'odd' or 'even';">
@@ -213,7 +213,7 @@
             <tal:block
               define="
                 global closeables python: 1;
-                global new_versionables python: 1"
+                global new_versionables python: state != 'pending' and state != 'approved'"
               condition="start_time"
               replace="
                 python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
@@ -222,7 +222,8 @@
           <tal:block 
             condition="python: public_status == 'closed'"> 
             <span i18n:translate="closed"
-              define="global new_versionables python: closed and 1 or new_versionables;">
+              define="
+                global new_versionables python: closed and (state != 'pending' and state != 'approved') or new_versionables;">
               closed
             </span>
           </tal:block>
@@ -250,13 +251,17 @@
       </th>
       <th class="align-right"
         colspan="3">
-        <span tal:condition="python:approveables or revokeables">day / month / year &nbsp;23:59</span>
+        <span tal:condition="
+          python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)">
+          day / month / year &nbsp;23:59
+        </span>
       </th>
       <th>
       </th>
     </tr>
     <tr class="controls inter-controls"
-      tal:condition="python:approveables or revokeables">
+      tal:condition="
+        python: approveables or ((revokeables or rejectables) and may_approve_content)">
       <tal:block replace="nothing">
         ______________ publication time controls ______________
       </tal:block>
@@ -297,7 +302,8 @@
       </td>
     </tr>
     <tr class="controls inter-controls"
-      tal:condition="python:approveables or revokeables or closeables">
+      tal:condition="
+        python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)">
       <tal:block replace="nothing">
         ______________ expiration time controls ______________
       </tal:block>
@@ -378,7 +384,8 @@
           value="Change timings"
           title="change publish and expiration times for selected objects: alt-s"
           accesskey="s"
-          tal:condition="python:approveables or revokeables or closeables"
+          tal:condition="
+            python: approveables or closeables or revokeables or rejectables"
         />
       </td>
       <td class="align-right">
@@ -397,7 +404,7 @@
       <tal:block replace="nothing">
         ______________ author controls ______________
       </tal:block>
-      <td colspan="4"
+      <td colspan="3"
         style="border-style:none;">
         <input class="reject"
           type="submit"
@@ -426,6 +433,16 @@
       </td>
       <td class="align-right"
         colspan="2">
+        <input class="button"
+          name="tab_status_change_settings:method"
+          type="submit"
+          value="Change timings"
+          title="change publish and expiration times for selected objects: alt-s"
+          accesskey="s"
+          tal:condition="python: approveables"
+        />
+      </td>
+      <td class="align-right">
         <input class="button"
           type="submit"
           name="tab_status_request_approval:method"

@@ -20,15 +20,17 @@ except FormValidationError, e:
         message_type="error", 
         message=view.render_form_errors(e))
 
-#publish_now_flag = result['publish_now_flag']
-#publish_datetime = result['publish_datetime']
-#expires_flag = result['expires_flag']
-#expiration_datetime = result['expiration_datetime']
+publish_datetime = result['publish_datetime']
+publish_now_flag = result['publish_now_flag']
+expiration_datetime = result['expiration_datetime']
+clear_expiration_flag = result['clear_expiration']
 
 #if not publish_now_flag and not publish_datetime:
-#    return view.tab_status(message_type="error", message="First set a publish time")
+#    return view.tab_status(
+#        message_type="error", 
+#        message="First set a publish time")
  
-#now = DateTime()
+now = DateTime()
 
 msg = []
 approved_ids = []
@@ -53,12 +55,20 @@ for ref in refs:
         not_approved.append((get_name(obj),'approval already requested'))
         not_approved_refs.append(ref)
         continue
-    #if publish_now_flag:
-    #    obj.set_unapproved_version_publication_datetime(now)
-    #else:
-    #    obj.set_unapproved_version_publication_datetime(publish_datetime)
-    #if expires_flag:
-    #    obj.set_unapproved_version_expiration_datetime(expiration_datetime)
+    # publish
+    if publish_now_flag:
+        obj.set_unapproved_version_publication_datetime(now)
+    elif publish_datetime:
+        obj.set_unapproved_version_publication_datetime(publish_datetime)
+    elif not obj.get_unapproved_version_publication_datetime():
+        # no date set, neither on unapproved version nor in tab_status form
+        not_approved.append((get_name(obj), 'no publication time set'))
+        continue
+    # expire
+    if clear_expiration_flag:
+        obj.set_unapproved_version_expiration_datetime(None)
+    elif expiration_datetime:
+        obj.set_unapproved_version_expiration_datetime(expiration_datetime)
 
     message = '''\
 Request for approval via a bulk request in the publish screen of /%s
