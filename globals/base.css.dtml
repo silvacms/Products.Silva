@@ -125,10 +125,12 @@ tr.focus-fixed, td.focus-fixed {
     background : #c1c2c8;
 }
 
+/* not in use */
 tr.focus-light, th.focus-light, td.focus-light {
   background : #e5e6ec;
 }
 
+/* not in use */
 tr.focus-light-cycle, td.focus-light-cycle {
   background : #eaecf1;
 }
