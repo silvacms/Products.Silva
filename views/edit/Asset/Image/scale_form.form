@@ -66,6 +66,35 @@
           <message name="too_long">Too much input was given.</message>
         </messages>
       </field>
+      <field><id>web_crop</id> <type>StringField</type>
+        <values>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>cropping</title>
+          <alternate_name></alternate_name>
+          <unicode type="int">0</unicode>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">16</display_width>
+          <extra>id="web_crop"</extra>
+          <truncate type="int">0</truncate>
+          <description i18n="image-cropping-description">
+              Image cropping for web: define use X1xY1-X2xY2 do define a cropping box or click the 'set crop co-ordinates' button.
+          </description>
+          <unicode>1</unicode>
+        </values>
+        <tales>
+          <default>python: form.REQUEST.model.getWebCrop()</default>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">Sorry, the form content failed validation.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="too_long">Too much input was given.</message>
+        </messages>
+      </field>
       </fields>
     </group>
   </groups>

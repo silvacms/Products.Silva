@@ -16,40 +16,23 @@
         body {
         background: #91989b;
         }
+        
         #draggable {
         background-color: transparent;
         position: absolute;
-        z-index: 1;
+        }
+        
+        table {
         border: 1px dashed #73868c;
-        /*-moz-opacity: 0.50;*/
+        background-color: white;
+        FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
+        -moz-opacity: 0.5;
         }
         
         #dragbar, #additional_draggable {
         color: #73868c;
         text-align: center;
         cursor: move;
-        }
-        
-        /* IE
-        #additional_draggable {
-        background-color: white;
-        FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
-        } */
-        /* mozilla 
-        table {
-        background-color: transparent;
-        }
-        
-        table:active {
-        background-color: white;
-        -moz-opacity: 0.5;
-        }
-        */
-        
-        table{
-        background-color: white;
-        -moz-opacity: 0.5;
-        FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
         }
         
         #handle {
@@ -99,6 +82,23 @@
 
 
       </style>
+      <!--[if IE 6]>
+      <style type="text/css">
+        #additional_draggable {
+        background-color: white;
+        FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
+        border: 1px dashed #73868c;
+        }
+       
+        table {
+          border: 0;
+          background-color: transparent;
+        }
+        tr.foot{
+        background-color: white;
+        }
+      </style>
+      <![endif]-->
     </metal:block>
     <metal:block fill-slot="main"
       tal:define="model python:request.model;">
@@ -118,47 +118,49 @@
         
         //]]>
         </script>
-        <div class="info" style='width: 180px; top: 0px; left: 0px; position: absolute; '>
-          <h3>predefined sizes:</h3>
+        <div class="info" style='width: 180px; top: 0px; left: 0px;
+        position: absolute; '>
+          
+          <h3>instructions</h3>
+          <p>
+            Drag the window below to the image region which should be cropped.
+            You can resize the window with the handle on the lower right
+            corner. If you're done, you can click the submit button below or 
+            double click in the window to set your coordinates and close the
+            cropping tool.
+          </p>
+          
+          <h3>predefined sizes</h3>
           <ul style="list-item-style: none">
             <li>
               <a href="#" class="button" 
               onclick="setDraggableSize(50, 50)"
               title="50x50 pixels">
-                50x50 Pixel
+                50x50 pixel
               </a>
             </li>
             <li>
               <a href="#" class="button"
               onclick="setDraggableSize(75, 75)"
               title="75x75 pixels">
-                75x75 Pixel
+                75x75 pixel
               </a>
             </li>
             <li>
               <a href="#" class="button"
               onclick="setDraggableSize(100, 100)" 
               title="100x100 pixels">
-                100x100 Pixel
+                100x100 pixel
               </a>
             </li>
             <li>
               <a href="#" class="button"
               onclick="setDraggableSize(250, 250)" 
               title="250x250 pixels">
-                250x250 Pixel
+                250x250 pixel
               </a>
             </li>
           </ul>
-          
-          <h3>information</h3>
-          <p>
-            Drag the window below to the image region which should be cropped.
-            You can resize the window with the handle on the lower right
-            corner. If you're done, you can use the submit button below or a
-            double click in the window to submit your coordinates and close the
-            window.
-          </p>
           
           <input class="transport" 
               type="button" 
@@ -171,45 +173,37 @@
         </div>
         <div style="top: 0px; margin-left: 200px;">
           <div class="info" id="ground">
-            <h3>Dragwindow</h3>
+            <h3>drag window</h3>
           </div>
           <div id="draggable" 
-        style="position: absolute; 
-          min-width: 25px;
-          width: 150px; 
-          min-height: 25px; 
-          height: 100px;
-          top: 370px;
-          left: 30px">
+            style="position: absolute; 
+              min-width: 25px;
+              width: 150px; 
+              min-height: 25px; 
+              height: 100px;
+              top: 380px;
+              left: 30px">
             <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-              <thead>
                 <tr>
-                  <th id="dragbar" 
-                  style="height: 20px;position:
-                  absolute;"
-                  colspan="2"
-                  onclick="this.blur()">
-                  </th>
+                  <td id="dragbar" 
+                    style="height: 20px; position: absolute;"
+                    colspan="2"
+                    onclick="this.blur()">
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
                 <tr height="100%">
                   <td colspan="2" id="additional_draggable">&nbsp;
                   </td>
                 </tr>
-                <tr>
+                <tr class="foot">
                   <td> &nbsp; </td>
                   <td width="14" height="14" style="padding: 0px;">
                     <div id="handle" style="width: 10px; height: 10px;">&nbsp;</div>
                   </td>
                 </tr>
-              </tbody>
             </table>
           </div>
-          <img id="image"  
-          tal:attributes="src string:${model/absolute_url}/hires_image;
-                          alt model/title_or_id"
-        /> 
+          <img tal:replace="structure python:model.tag(id='image', hires=1)" />
         </div>
         
         <script type="text/javascript">

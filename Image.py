@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.50.4.1.6.25 2004/05/18 10:12:32 zagy Exp $
+# $Id: Image.py,v 1.50.4.1.6.26 2004/05/27 13:38:24 zagy Exp $
 
 # Python
 import re, string
@@ -54,6 +54,7 @@ class Image(Asset):
     
     re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
+    re_box = re.compile(r'^([0-9]+)[Xx]([0-9]+)-([0-9]+)[Xx]([0-9]+)')
     
     thumbnail_size = 120
 
@@ -62,6 +63,7 @@ class Image(Asset):
     web_scale = '100%'
     web_format = 'JPEG'
     web_formats = ('JPEG', 'GIF', 'PNG')
+    web_crop = ''
 
     _web2ct = {
         'JPEG': 'image/jpeg',
@@ -148,12 +150,13 @@ class Image(Asset):
         if self.image:
             self.image.title = self.get_title()
 
-    def set_web_presentation_properties(self, web_format, web_scale):
+    def set_web_presentation_properties(self, web_format, web_scale, web_crop):
         """sets format and scaling for web presentation
 
             web_format (str): either JPEG or PNG (or whatever other format 
                 makes sense, must be recognised by PIL)
             web_scale (str): WidthXHeight or nn.n%
+            web_crop (str): X1xY1-X2xY2, crop-box or empty for no cropping
 
             raises ValueError if web_scale cannot be parsed.
 
@@ -173,6 +176,11 @@ class Image(Asset):
         if self.web_scale != web_scale:
             update_cache = 1
             self.web_scale = web_scale
+        # check if web_crop can be parsed:
+        cropbox = self.getCropBox(web_crop)
+        if self.web_crop != web_crop:
+            update_cache = 1
+            self.web_crop = web_crop
         if self.hires_image is not None and update_cache:
             self._createDerivedImages()
    
@@ -213,8 +221,14 @@ class Image(Asset):
             if m is None:
                 raise ValueError, ("'%s' is not a valid scale identifier. "
                     "Probably a percent symbol is missing.") % (scale, )
+            cropbox = self.getCropBox()
+            if cropbox:
+                x1, y1, x2, y2 = cropbox
+                width = x2 - x1
+                height = y2 - y1
+            else:
+                width, height = self.getDimensions()
             percentage = float(m.group(1))/100.0
-            width, height = self.getDimensions()
             width = int(width * percentage)
             height = int(height * percentage)
         else:
@@ -234,6 +248,43 @@ class Image(Asset):
                 width = int(width)
                 height = int(height)
         return width, height
+
+    security.declareProtected(SilvaPermissions.View, 'getCropBox')
+    def getCropBox(self, crop=None):
+        """return crop box"""
+        if crop is None:
+            crop = self.web_crop
+        crop = crop.strip()
+        if crop == '':
+            return None
+        m = self.re_box.match(crop)
+        if m is None:
+            raise ValueError, "'%s' is not a valid crop identifier" % (crop, )
+        x1 = int(m.group(1))
+        y1 = int(m.group(2))
+        x2 = int(m.group(3))
+        y2 = int(m.group(4))
+        if x1 > x2 and y1 > y2:
+            s = x1
+            x1 = x2
+            x2 = s
+            s = y1
+            y1 = y2
+            y2 = s
+        cropbox = (x1, y1, x2, y2)
+        image = self._getPILImage(self.hires_image)
+        bbox = image.getbbox()
+        if x1 < bbox[0]:
+            x1 = bbox[0]
+        if y1 < bbox[1]:
+            y1 = bbox[1]
+        if x2 > bbox[2]:
+            x2 = bbox[2]
+        if y2 > bbox[3]:
+            y2 = bbox[3]
+        if x1 >= x2 or y1 >= y2:
+            raise ValueError, "'%s' defines an impossible croping" % (crop, )
+        return (x1, y1, x2, y2)
 
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
     def getDimensions(self, img=None):
@@ -341,6 +392,12 @@ class Image(Asset):
         """
         return '%s' % self.web_scale
 
+    security.declareProtected(SilvaPermissions.View, 'getWebCrop')
+    def getWebCrop(self):
+        """Return crop identifier
+        """
+        return '%s' % self.web_crop
+
     security.declareProtected(SilvaPermissions.View, 'canScale')
     def canScale(self):
         """returns if scaling/converting is possible"""
@@ -408,13 +465,15 @@ class Image(Asset):
 
     def _createWebPresentation(self):
         width, height = self.getCanonicalWebScale()
+        cropbox = self.getCropBox()
         try:
             image = self._getPILImage(self.hires_image)
         except ValueError:
             # XXX: warn the user, no scaling or converting has happend
             self.image = self.hires_image
             return
-        if self.web_scale == '100%' and image.format == self.web_format:
+        if (self.web_scale == '100%' and image.format == self.web_format and
+                not self.web_crop):
             # there image is neither scaled nor changed in format, just use
             # the same one
             if self.image is not None and not self._image_is_hires():
@@ -425,7 +484,10 @@ class Image(Asset):
             if self.image is not None and self._image_is_hires():
                 self.image = None
         web_image_data = StringIO()
-        image = image.resize((width, height), PIL.Image.ANTIALIAS)
+        if cropbox:
+            image = image.crop(cropbox)
+        if self.web_scale != '100%':
+            image = image.resize((width, height), PIL.Image.ANTIALIAS)
         image = self._prepareWebFormat(image)
         image.save(web_image_data, self.web_format)
         ct = self._web2ct[self.web_format]
@@ -553,8 +615,6 @@ class Image(Asset):
             if w <= 0 or h <= 0:
                 raise ValueError, "Could not identify image type."
         return w, h
-            
-            
 
     def _get_image_data(self, img):
         """return file like object of image's data"""

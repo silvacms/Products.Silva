@@ -13,7 +13,7 @@ msg_type = 'feedback'
 if model.canScale():
     try:
         model.set_web_presentation_properties(
-            result['web_format'], result['web_scaling'])
+            result['web_format'], result['web_scaling'], result['web_crop'])
     except ValueError, e:
         msg = [str(e)]
         msg_type = 'error'

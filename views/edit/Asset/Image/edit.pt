@@ -10,7 +10,10 @@
   i18n:domain="silva">
 <metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
 
-<metal:fill-slot fill-slot="info">
+ <metal:fill-slot fill-slot="info">
+  <script type="text/javascript"
+          tal:attributes="src view/cropping.js/absolute_url">
+  </script>
   <div class="info">
     <h3 i18n:translate="image_info">
       <img tal:replace="structure icon" /> image info
@@ -164,7 +167,19 @@
       </tbody>
       <tfoot>
         <tr class="controls">
-          <td colspan="3" class="align-right">
+          <td></td>
+          <td>
+            <input class="transport"
+              type="button"
+              value="set crop coordinates..."
+              title="specify the center of the area to crop by clicking in the image: alt-o"
+              accesskey="o"
+              tal:define="asset_context python:request.model"
+              tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+              i18n:attributes="title value"
+              />
+          </td>
+          <td class="align-right">
             <input class="button"
               type="submit"
               name="scale_submit:method"
