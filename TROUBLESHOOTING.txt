@@ -136,8 +136,6 @@ Installation problems
       context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;charset=utf-8')
 
 
-
-
 Problems when using Silva 
 
 
@@ -273,6 +271,19 @@ Problems when using Silva
     This simply does not work. Please use either the "Export"
     functionality in the *SMI* available from the "Status" tab, or
     export the object via the usual *.zexp format
+
+  Objects from a freshly installed Silva extension are not in the list of 
+  addables
+  
+    When the list of 'allowed addables' (which meta-types are allowed to be 
+    added to the current publication and it's children) is set for an object
+    (you can set those in the Settings tab of publications), a list of objects
+    that *are* allowed to be added is stored on the publication. This means 
+    that if a new extension is installed, the meta-types of the extension are 
+    not in those lists. Each object on which the allowed addables is not set 
+    to 'acquire' will have to be modified manually to allow adding the meta
+    types of the extension product. Hopefully this will be changed in a later
+    version of Silva.
 
 
 Unicode Problems In-Depth
