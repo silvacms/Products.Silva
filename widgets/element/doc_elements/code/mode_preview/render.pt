@@ -1,3 +1,1 @@
-<div tal:omit-tag="" tal:define="code here/content">
-  <div tal:omit-tag="" tal:replace="structure python:path('here/%s' %code)">code</div>
-</div>
+<tal:block replace="structure here/render_code" />

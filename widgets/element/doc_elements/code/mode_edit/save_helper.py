@@ -8,13 +8,9 @@
 ##title=
 ##
 request = context.REQUEST
-if not request.has_key('code'):
-  return ''
-
 node = request.node
-
-# don't need to conver this, later on we will convert it in replace_text()
-code = request['code']
-
-# replace text in node
-node.get_content().replace_text(node, code)
+if request.has_key('path'):
+    path = request['path']
+else:
+    path = '' 
+node.setAttribute('path', node.input_convert(path))

@@ -1,9 +1,6 @@
-<div metal:use-macro="container/macro_normal_view/macros/normal_view">
-<div metal:fill-slot="node_content" tal:omit-tag=""
-     tal:define="code_title python:path(string('here/%s/title_or_id' %here.content()))">
-  <content tal:condition="here/content"
-           tal:replace="python:string('%s [%s]' %(code_title, here.content()))" />
-  <content tal:condition="not:here/content"
-           tal:replace="structure string:<span class=&quot;warning&quot;>Empty code element</span>" />
-</div>
-</div>
+<metal:block use-macro="container/macro_normal_view/macros/normal_view">
+  <metal:block fill-slot="node_content">
+  <tal:block replace="structure here/content" />
+  </metal:block>
+</metal:block>
+
