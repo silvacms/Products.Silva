@@ -10,7 +10,6 @@ else:
     renderer = content
 
 # Setting Headers first
-context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;charset=utf-8')
 context.REQUEST.RESPONSE.setHeader('Cache-Control','max-age=300')
 
 # By default, the prefered view method is 'view()', unless

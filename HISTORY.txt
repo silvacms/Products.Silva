@@ -1,12 +1,18 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.22 $
+$Revision: 1.47.2.23 $
 
 Silva changes
 
   0.9.1.2
 
     Features Added
+
+        - Backport of the Hi-res images support.
+
+        - Backport of the multipe file repositories ability.
+
+        - Backport of single Document import/export.
 
 	- Asset references and code element references will now be relative
           paths if the Assets are in the same container the Document is in,
@@ -20,6 +26,11 @@ Silva changes
           anymore, and also the id of the object to be pasted is now
           changed until it's unique (in the past, a bug in creating a
           unique id kept the status of a document 'public' in some cases).
+
+        - Intermediate fix where an local roles mapping for an non-existing
+          userid would display "Unknown User" and could not be deleted.
+
+        - Past to ghost of Publications exposed two bugs. Fixed now. 
 
   0.9.1.1
 
