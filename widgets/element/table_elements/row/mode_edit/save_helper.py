@@ -7,19 +7,17 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
+request = context.REQUEST
+row = request.node
 editorsupport = context.service_editorsupport
-#columns = int(node.parentNode.getAttribute('columns'))
-
-for child in tuple(node.childNodes):
-   if child.nodeType != node.ELEMENT_NODE:
-       continue
-   try:
-       # find p
-       for p_node in child.childNodes:
-           if p_node.nodeType == node.ELEMENT_NODE:
-               break
-       data = context.REQUEST[p_node.getNodePath('widget')]
-       editorsupport.replace_text(p_node, data)
-   except KeyError:
-       pass
+node = row.firstChild
+while node:
+    is_simple = context.is_field_simple(node)
+    if not is_simple:
+        node = node.nextSibling
+        continue
+    p_node = node.firstChild
+    data = request[p_node.getNodePath('widget')]
+    editorsupport.replace_text(p_node, data)
+    node = node.nextSibling
+    
