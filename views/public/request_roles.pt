@@ -4,7 +4,8 @@
 </head>
 <body>
 <metal:block fill-slot="main">
-<tal:block condition="python: hasattr(here, 'service_members') and here.service_members.allow_subscription()">
+<tal:block define="trigger here/security_trigger"
+  condition="python: hasattr(here, 'service_members') and here.service_members.allow_subscription()">
 
 <h2>Membership</h2>
 
