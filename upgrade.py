@@ -2,7 +2,7 @@ from __future__ import nested_scopes
 from ISilvaObject import ISilvaObject
 from IContainer import IContainer
 from IVersionedContent import IVersionedContent, ICatalogedVersionedContent
-from IVersion import IVersion
+from IVersion import IVersion, ICatalogedVersion
 from Membership import NoneMember, noneMember 
 
 def from091to092(self, root):
@@ -132,16 +132,6 @@ def upgrade_memberobjects(obj):
         if IContainer.isImplementedBy(o):
             upgrade_memberobjects(o)
 
-def upgrade_using_registry(obj, version):
-    """Upgrades obj recursively for a specific Silva version
-    """
-    for o in obj.objectValues():
-        mt = o.meta_type
-        if upgrade_registry.is_registered(mt, version):
-            upgrade = upgrade_registry.get_meta_type(mt, version)(o)
-        if IContainer.isImplementedBy(o):
-            upgrade_using_registry(o, version)
-
 def upgrade_list_titles_in_parsed_xml(top):
     for child in top.childNodes:
         if child.nodeName in ('list', 'nlist', 'dlist'):
@@ -208,6 +198,27 @@ def upgrade_list_titles_in_parsed_xml(top):
                         continue
                     upgrade_list_titles_in_parsed_xml(field)
         
+#-----------------------------------------------------------------------------
+# Upgrade registry, this will be used to upgrade versions >= 0.9.1
+#-----------------------------------------------------------------------------
+
+def upgrade_using_registry(obj, version):
+    """Upgrades obj recursively for a specific Silva version
+    """
+    for o in obj.objectValues():
+        mt = o.meta_type
+        if upgrade_registry.is_registered(mt, version):
+            for upgrade in upgrade_registry.get_meta_type(mt, version):
+                res = upgrade(o)
+                # sometimes upgrde methods will replace objects, if so the
+                # new object should be returned so that can be used for the rest
+                # of the upgrade chain instead of the old (probably deleted) one
+                if res:
+                    o = res
+        if hasattr(o, 'objectValues'):
+            print 'Going to descend into', o.id
+            upgrade_using_registry(o, version)
+
 class UpgradeRegistry:
     """Here people can register upgrade methods for their objects
     """
@@ -221,15 +232,17 @@ class UpgradeRegistry:
         when the upgrade script encounters an object of the specified
         meta_type.
         """
-        if self.__registry.has_key(meta_type) and self.__registry[meta_type].has_key(version):
-            raise Exception, 'Meta type %s already registered for version %s!' % (meta_type, version)
         if not self.__registry.has_key(meta_type):
             self.__registry[meta_type] = {}
-        self.__registry[meta_type][version] = upgrade_handler
+        if not self.__registry[meta_type].has_key(version):
+            self.__registry[meta_type][version] = []
+        self.__registry[meta_type][version].append(upgrade_handler)
 
     def get_meta_type(self, meta_type, version):
-        """Return the registered upgrade_handler of meta_type
+        """Return the registered upgrade_handlers of meta_type
         """
+        print 'Going to return upgrades for %s: %s' % (meta_type, version)
+        print 'Upgrades:', self.__registry[meta_type][version]
         return self.__registry[meta_type][version]
 
     def is_registered(self, meta_type, version):
@@ -267,6 +280,7 @@ upgrade_registry.register('Silva DemoObject', upgrade_demoobject_091, '0.9.1')
 # convert old style documents (with ParsedXML as version) to new style ones (where
 # ParsedXML is an attribute of Version)
 def convert_document_092(obj):
+    print 'Converting document',  obj.id
     from StringIO import StringIO
     from random import randrange
     from string import lowercase
@@ -289,7 +303,7 @@ def convert_document_092(obj):
             break
 
     parent.manage_renameObject(obj.id, uniqueid)
-    parent.manage_addProduct['Silva'].manage_addDocument(oldid, obj.get_title())
+    parent.manage_addProduct['Silva'].manage_addDocument(oldid, obj._title)
 
     newobj = getattr(parent, oldid)
     
@@ -359,7 +373,90 @@ def convert_document_092(obj):
                 obj.get_unapproved_version_expiration_datetime())
         getattr(newobj, str(newobj.get_unapproved_version())).content.manage_edit(xml)
 
-    
     parent.manage_delObjects([uniqueid])
-    
+    print 'Unique id %s is deleted' % uniqueid
+
+    return newobj
+
 upgrade_registry.register('Silva Document', convert_document_092, '0.9.2')
+
+def catalog_092(obj):
+    """Do initial catalogin of objects"""
+    print 'Catalog'
+    if ((IVersion.isImplementedBy(obj) or ICatalogedVersion.isImplementedBy(obj)) and
+            obj.id not in obj.aq_parent._get_indexable_versions()):
+        return
+    obj.index_object()
+    
+upgrade_registry.register('Silva Root', catalog_092, '0.9.2')
+upgrade_registry.register('Silva Folder', catalog_092, '0.9.2')
+upgrade_registry.register('Silva Publication', catalog_092, '0.9.2')
+upgrade_registry.register('Silva Document Version', catalog_092, '0.9.2')
+upgrade_registry.register('Silva DemoObject Version', catalog_092, '0.9.2')
+upgrade_registry.register('Silva Ghost Version', catalog_092, '0.9.2')
+
+def replace_container_title_092(obj):
+    """Move te title to the metadata
+    
+    Is a bit of a hairball situation, since the
+    title should be set on all the versions
+    of the default document, if one of those is
+    available. If not, the title should just be
+    removed
+    """
+    print 'Replace container'
+    if not hasattr(obj, '_title'):
+        return
+    title = obj._title
+    del obj._title
+    if type(title) != type(u''):
+        title = unicode(title, 'cp1252', 'replace')
+    default = obj.get_default()
+    if default is not None:
+        # the versionedcontent objects are still old style here, so we don't
+        # have to go through all kinds of trouble to get all the versions
+        # for those kind of objects
+        default._title = title
+
+def replace_object_title_092(obj):
+    """Move the title to the metadata
+
+    If the object is a default document, pass because
+    it should be/has been set by the folder method
+    """
+    print 'Replace object title for', obj.id
+    if not hasattr(obj, '_title'):
+        return
+    if obj is not obj.aq_parent.get_default():
+        title = obj._title
+        del obj._title
+        if type(title) != type(u''):
+            title = unicode(title, 'cp1252', 'replace')
+        if (IVersionedContent.isImplementedBy(obj) or
+                ICatalogedVersionedContent.isImplementedBy(obj)):
+            versions = []
+            for version in ['_unapproved_version', '_approved_version',
+                            '_public_version']:
+                v = getattr(obj, version)
+                if v[0] is not None:
+                    versions.append(v)
+                print version
+            if obj._previous_versions is not None:
+                versions += obj._previous_versions
+            for version in versions:
+                print getattr(obj, version[0])
+                getattr(obj, version[0]).set_title(title)
+        else:
+            obj.set_title(title)
+
+upgrade_registry.register('Silva Root', replace_container_title_092, '0.9.2')
+upgrade_registry.register('Silva Publication', replace_container_title_092, '0.9.2')
+upgrade_registry.register('Silva Folder', replace_container_title_092, '0.9.2')
+upgrade_registry.register('Silva Document', replace_object_title_092, '0.9.2')
+upgrade_registry.register('Silva DemoObject', replace_object_title_092, '0.9.2')
+upgrade_registry.register('Silva File', replace_object_title_092, '0.9.2')
+upgrade_registry.register('Silva Image', replace_object_title_092, '0.9.2')
+upgrade_registry.register('Silva SQL Data Source', replace_object_title_092, '0.9.2')
+upgrade_registry.register('Silva Indexer', replace_object_title_092, '0.9.2')
+
+
