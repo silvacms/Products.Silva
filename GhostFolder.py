@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.16 2003/09/15 15:23:11 zagy Exp $
+# $Id: GhostFolder.py,v 1.17 2003/09/18 13:56:01 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -56,7 +56,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         ghost = self
         assert IContainer.isImplementedBy(haunted)
         object_list = self._haunt_diff(haunted, ghost)
-        
+       
         while object_list:
             # breadth first search
             h_container, h_id, g_container, g_id = object_list[0]
@@ -82,10 +82,10 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                         g_container.manage_delObjects([h_id])
                         g_ob = None
                 if g_ob is None:
-                    ghost.manage_addProduct['Silva'].manage_addFolder(
+                    g_container.manage_addProduct['Silva'].manage_addFolder(
                         h_id, '[no title]', 0)
                     g_ob_new = g_container._getOb(h_id)
-                object_list += self._haunt_diff(h_ob, g_ob_new)
+                object_list.extend(self._haunt_diff(h_ob, g_ob_new))
             elif IContent.isImplementedBy(h_ob):
                 if h_ob.meta_type == 'Silva Ghost':
                     content_url = h_ob.get_content_url()
@@ -114,6 +114,22 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         self._invalidate_sidebar(self)
 
     def _haunt_diff(self, haunted, ghost):
+        """diffes two containers
+
+            haunted: IContainer, container to be haunted
+            ghost: IContainer, ghost
+        
+            returns list of tuple:
+            [(haunted, h_id, ghost, g_id)]
+            whereby 
+                h_id is the haunted object's id or None if a ghost exists but
+                    no object to be haunted
+                g_id is the ghost's id or None if the ghost doesn't exist but
+                    has to be created
+                haunted and ghost are the objects passed in
+        """
+        assert IContainer.isImplementedBy(haunted)
+        assert IContainer.isImplementedBy(ghost)
         h_ids = list(haunted.objectIds())
         g_ids = list(ghost.objectIds())
         h_ids.sort()
