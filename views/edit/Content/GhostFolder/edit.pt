@@ -6,6 +6,7 @@
     global editable model/get_editable;
     title model/get_title_editable;
     breadcrumb_vein string:Editor;
+    template_id string:tab_edit;
 ">
 
 <table class="columns columns2">
