@@ -71,7 +71,7 @@ Turn on expiration time?&nbsp;<field
 
 <tr class="controls">
 <td colspan="3" align="right">
-<input type="submit" value=" Request approval " class="button" />
+<input type="submit" value=" Request approval " class="button" title="Access key: alt-r" accesskey="r" />
 </td>
 </tr>
 </table>
@@ -124,7 +124,7 @@ The message may be viewed by interested authors.
 &nbsp;
 </td>
 <td align="right" width="40%">
-<input type="submit" value=" Withdraw approval " class="button"
+<input type="submit" value=" Withdraw approval " class="button"  title="Access key: alt-r" accesskey="r"
   tal:attributes="value python:test(silva_permissions['ApproveSilvaContent'],' Reject approval request ',' Withdraw approval request ')" />
 </td>
 </tr>
@@ -200,7 +200,7 @@ Publish right now?&nbsp;<field
 
 <tr class="controls">
 <td colspan="2" align="right">
-<input class="button" type="submit" value="Approve content" class="button" />
+<input class="button" type="submit" value="Approve content" class="button" title="Access key: alt-a" accesskey="a" />
 </td> 
 </tr>
 
@@ -223,7 +223,7 @@ This message will be sent to <a href="mailto:fritz@web.eur.nl">fritz@web.eur.nl<
 
 <tr class="controls" tal:replace="nothing">
 <td colspan="2" align="right">
-<input type="submit" name="tab_status_approve_email:method" value="Approve content + send email" class="button" />
+<input type="submit" name="tab_status_approve_email:method" value="Approve content + send email" class="button" title="Access key: alt-s" accesskey="s" />
 </td>
 </tr>
 </table>
@@ -288,7 +288,7 @@ Publish right now?&nbsp;<field
 
 <tr class="controls">
 <td colspan="3" align="right">
-<input type="submit" value=" Change settings " class="button" />
+<input type="submit" value=" Change settings " class="button"  title="Access key: alt-c" accesskey="c" />
 </td>
 </tr>
 </table>
@@ -320,7 +320,7 @@ If further editing is required, first revoke the approval.
 &nbsp;
 </td>
 <td align="right" width="40%">
-<input type="submit" value=" Revoke approval " class="button" />
+<input type="submit" value=" Revoke approval " class="button" title="Access key: alt-r" accesskey="r" />
 </td>
 </tr>
 </table>
@@ -349,7 +349,7 @@ If necessary, the published version of this content can be manually closed (take
 </tr>
 <tr class="controls">
 <td align="right">
-<input class="button" type="submit" value=" Close published version " />
+<input class="button" type="submit" value=" Close published version " title="Access key: alt-c" accesskey="c" />
 </td>
 </tr>
 </table>
