@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -254,50 +254,51 @@ class AddableTestCase(ContainerBaseTestCase):
         return [addable['name'] for addable in addables]
     
     def test_get_silva_addables(self):
-        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
-                          self.folder4.get_silva_addables_allowed())
-        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
-                          self.get_meta_types(self.folder4.get_silva_addables()))
+        l = ['Bar', 'Baz', 'Foo', 'Qux']
+        l.sort()
+        self.assertEquals(l, self.folder4.get_silva_addables_allowed())
+        self.assertEquals(l, self.get_meta_types(self.folder4.get_silva_addables()))
         # modify so we explicitly allow only a few objects
         Folder.get_silva_addables_allowed = get_silva_addables_allowed_hack
-        self.assertEquals(['Foo', 'Bar'], self.get_meta_types(self.folder4.get_silva_addables()))
+        self.assertEquals(['Bar', 'Foo'], self.get_meta_types(self.folder4.get_silva_addables()))
   
     def test_silva_addables_all(self):
-        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
-                          self.sroot.get_silva_addables_all())
+        l = ['Bar', 'Baz', 'Foo', 'Qux']
+        l.sort()
+        self.assertEquals(l, self.sroot.get_silva_addables_all())
         
     def test_silva_addables_in_publication_allowed(self):
         self.sroot.set_silva_addables_allowed_in_publication(['Foo', 'Bar'])
-        self.assertEquals(['Foo', 'Bar'],
-                          self.sroot.get_silva_addables_allowed())
-        self.assertEquals(['Foo', 'Bar'],
-                          self.folder4.get_silva_addables_allowed())
-        self.assertEquals(['Foo', 'Bar'],
-                          self.get_meta_types(self.folder4.get_silva_addables()))
+        l = ['Foo', 'Bar']
+        l.sort()
+        self.assertEquals(['Foo', 'Bar'], self.sroot.get_silva_addables_allowed())
+        self.assertEquals(['Foo', 'Bar'], self.folder4.get_silva_addables_allowed())
+        self.assertEquals(l, self.get_meta_types(self.folder4.get_silva_addables()))
         self.sroot.set_silva_addables_allowed_in_publication(None)
-        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
-                          self.folder4.get_silva_addables_allowed())
-        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
-                          self.get_meta_types(self.folder4.get_silva_addables()))
+        t = ['Foo', 'Bar', 'Baz', 'Qux']
+        t.sort()
+        self.assertEquals(t, self.folder4.get_silva_addables_allowed())
+        self.assertEquals(t, self.get_meta_types(self.folder4.get_silva_addables()))
 
     def test_silva_addables_in_publication_acquire(self):
         self.sroot.set_silva_addables_allowed_in_publication(['Foo', 'Bar'])
-        self.assertEquals(['Foo', 'Bar'],
-                          self.get_meta_types(
-            self.publication5.get_silva_addables()))
+        l = ['Foo', 'Bar']
+        l.sort()
+        self.assertEquals(l, self.get_meta_types(
+                          self.publication5.get_silva_addables()))
         self.publication5.set_silva_addables_allowed_in_publication(['Baz', 'Qux'])
         self.assertEquals(0,
                           self.publication5.is_silva_addables_acquired())
         self.assertEquals(['Baz', 'Qux'],
                           self.get_meta_types(self.publication5.get_silva_addables()))
         self.publication5.set_silva_addables_allowed_in_publication(None)
-        self.assertEquals(['Foo', 'Bar'],
-                          self.get_meta_types(self.publication5.get_silva_addables()))
+        self.assertEquals(l, self.get_meta_types(self.publication5.get_silva_addables()))
         self.assertEquals(1,
                           self.publication5.is_silva_addables_acquired())
         self.sroot.set_silva_addables_allowed_in_publication(None)
-        self.assertEquals(['Foo', 'Bar', 'Baz', 'Qux'],
-                          self.get_meta_types(self.publication5.get_silva_addables()))
+        t = ['Foo', 'Bar', 'Baz', 'Qux']
+        t.sort()
+        self.assertEquals(t, self.get_meta_types(self.publication5.get_silva_addables()))
         self.assertEquals(1,
                           self.sroot.is_silva_addables_acquired())
         
