@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.60 $
+# $Revision: 1.61 $
 
 # Python
 from StringIO import StringIO
@@ -181,30 +181,24 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         return getattr(self, version_id)
 
     security.declareProtected(SilvaPermissions.View, 'view')
-    def view(self, view_type='public'):
+    def view(self):
         """
         """
-        # XXX view_type=edit or add does not work anyway, but...
-        if view_type in ('edit','add'):
-            return VersionedContent.inheritedAttribute('view')(
-                self, view_type)
-        
         # XXX the "suppress_title" hack in the
         # SilvaDocument widget/top/doc/mode_view
         # makes it necessary to bypass the cache here
         if self.REQUEST.other.get('suppress_title'):
-            return VersionedContent.inheritedAttribute('view')(
-                self, view_type)
+            return VersionedContent.inheritedAttribute('view')(self)
         
         adapter = getVirtualHostingAdapter(self)
-        cache_key = (view_type, adapter.getVirtualHostKey())
+        cache_key = ('public', adapter.getVirtualHostKey())
         
         data = self._get_cached_data(cache_key)
         if data is not None:
             return data
                         
         # No cache or not valid anymore, so render.
-        data = VersionedContent.inheritedAttribute('view')(self, view_type)
+        data = VersionedContent.inheritedAttribute('view')(self)
         # See if the previous cacheability check is still valid,
         # if not, see if we can cache at all.
         publicationtime = self.get_public_version_publication_datetime()

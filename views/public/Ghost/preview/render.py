@@ -1,4 +1,4 @@
-## Script (Python) "render_preview"
+## Script (Python) "render"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -7,9 +7,8 @@
 ##parameters=
 ##title=
 ##
-model = context.REQUEST.model
-version = model.get_previewable()
-result = version.render_preview()
+version = context.REQUEST.model
+result = version.render_view()
 if result is None:
    return "This ghost is broken. (%s)" % version.get_haunted_url()
 else:

@@ -1,4 +1,4 @@
-## Script (Python) "render_view"
+## Script (Python) "render"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -7,10 +7,7 @@
 ##parameters=
 ##title=
 ##
-model = context.REQUEST.model
-version = model.get_viewable()
-if version is None:
-  return "Sorry, this document is not published yet."
+version = context.REQUEST.model
 result = version.render_view()
 if result is None:
    return "This 'ghost' document is broken. Please inform the site administrator."

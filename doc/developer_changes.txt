@@ -28,6 +28,31 @@ From 1.1 to 1.2:
     * editor_content - the main editor content area, showing for instance
       the forms editor or kupu.
 
+* The public view directory layout changed due to some change in the way
+  we register views. For some functionality on the VersionManagementAdapter,
+  we needed to get a rendered version, which wasn't allowed the way the views
+  were previously set up (fetching the version happened in the render scripts,
+  each script would render a specific version).
+
+  Changes:
+
+    * instead of registering a 'public' view for VersionedContent objects, 
+      they are now registered for Version objects, the view assumes 
+
+    * instead of 2 scripts 'render_view' and 'render_preview' only 'render'
+      is called for both view and preview, if you want to make a distinction
+      between the two you can register a new view_type called 'preview' to
+      another subdirectory and place a 'render' script in that, the general
+      pattern is that if you want to use only 1 script you place it directly
+      in the 'public/<meta_type>' directory, if you want to have seperate
+      scripts for view and preview, create a 'view' and 'preview' directory
+      in that dir ('public/<meta_type>/view' and 'public/<meta_type>/preview')
+
+    * the 'model' variable in the render script does not point to the 
+      VersionedContent object anymore, but instead it refers to the Version
+      object (of course it still refers to the object itself in case the
+      object is not of a versioned type)
+
 From 1.0 to 1.1:
 
 * The previously deprecated method 'archive_file_import' on Folder.py and

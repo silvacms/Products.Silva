@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.103 2004/09/30 13:05:15 jw Exp $
+# $Id: install.py,v 1.104 2004/10/08 17:19:37 guido Exp $
 """Install for Silva Core
 """
 # Python
@@ -471,16 +471,16 @@ def registerViews(reg):
                  ['edit', 'Content', 'AutoTOC'])
     
     # public
-    reg.register('public', 'Silva Folder', ['public', 'Folder'])
-    reg.register('public', 'Silva Publication', ['public', 'Folder'])
-    reg.register('public', 'Silva Root', ['public', 'Folder'])
-    reg.register('public', 'Silva Ghost', ['public', 'Ghost'])
-    reg.register('public', 'Silva Link', ['public', 'Link'])
-    reg.register('public', 'Silva Image', ['public', 'Image'])
+    reg.register('public', 'Silva Folder', ['public', 'Folder', 'view'])
+    reg.register('public', 'Silva Publication', ['public', 'Folder', 'view'])
+    reg.register('public', 'Silva Root', ['public', 'Folder', 'view'])
+    reg.register('public', 'Silva Ghost Version', ['public', 'Ghost', 'view'])
+    reg.register('public', 'Silva Link Version', ['public', 'Link'])
+    reg.register('public', 'Silva Image', ['public', 'Image', 'view'])
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
-    reg.register('public', 'Silva Ghost Folder', ['public', 'Folder'])
-    reg.register('public', 'Silva AutoTOC', ['public', 'AutoTOC'])
+    reg.register('public', 'Silva Ghost Folder', ['public', 'Folder', 'view'])
+    reg.register('public', 'Silva AutoTOC', ['public', 'AutoTOC', 'view'])
 
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
@@ -492,6 +492,15 @@ def registerViews(reg):
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
     reg.register('add', 'Silva Ghost Folder', ['add', 'GhostFolder'])
     reg.register('add', 'Silva AutoTOC', ['add', 'AutoTOC'])
+
+    # preview
+    reg.register('preview', 'Silva Folder', ['public', 'Folder', 'preview'])
+    reg.register('preview', 'Silva Publication', ['public', 'Folder', 'preview'])
+    reg.register('preview', 'Silva Root', ['public', 'Folder', 'preview'])
+    reg.register('preview', 'Silva Ghost Version', ['public', 'Ghost', 'preview'])
+    reg.register('preview', 'Silva Image', ['public', 'Image', 'preview'])
+    reg.register('preview', 'Silva Ghost Folder', ['public', 'Folder', 'preview'])
+    reg.register('preview', 'Silva AutoTOC', ['public', 'AutoTOC', 'preview'])
 
 def registerGroupsViews(reg):
     """Register groups views on registry.
@@ -507,9 +516,9 @@ def registerGroupsViews(reg):
     reg.register('add', 'Silva IP Group', ['add', 'Groups', 'IPGroup'])
 
 def unregisterViews(reg):
+    # plain add, edit and public
     for meta_type in ['Silva Folder',
                       'Silva Publication',
-                      'Silva Ghost',
                       'Silva Image',
                       'Silva DemoObject',
                       'Silva File',
@@ -521,6 +530,20 @@ def unregisterViews(reg):
         reg.unregister('edit', meta_type)
         reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)
+    # versioned objects (where version is registered for public)
+    for meta_type in ['Silva Ghost',
+                        'Silva Link']:
+        reg.unregister('edit', meta_type)
+        reg.unregister('add', meta_type)
+        reg.unregister('public', '%s Version' % meta_type)
+    # preview
+    for meta_type in ['Silva Folder', 
+                        'Silva Publication', 
+                        'Silva Root',
+                        'Silva Image',
+                        'Silva Ghost Folder',
+                        'Silva AutoTOC']:
+        reg.unregister('preview', meta_type)
     reg.unregister('edit', 'Silva Root')
     reg.unregister('public', 'Silva Root')
     reg.unregister('edit', 'Silva Simple Member')

@@ -1,4 +1,4 @@
-## Script (Python) "render_preview"
+## Script (Python) "render_view"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -7,7 +7,6 @@
 ##parameters=
 ##title=
 ##
-model = context.REQUEST.model
-version = model.get_previewable()
+version = context.REQUEST.model
 return version.redirect()
 

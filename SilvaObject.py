@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.105 2004/10/08 12:26:42 guido Exp $
+# $Id: SilvaObject.py,v 1.106 2004/10/08 17:19:37 guido Exp $
 
 # python
 from types import StringType
@@ -29,6 +29,9 @@ class XMLExportContext:
     """Simple context class used in XML export.
     """
     pass
+
+class NoViewError(Exception):
+    """no view defined"""
 
 class SilvaObject(Security, ViewCode):
     """Inherited by all Silva objects.
@@ -287,34 +290,41 @@ class SilvaObject(Security, ViewCode):
         return getattr(self, '_renderer_name', None)
     
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
-    def preview(self, view_type='public'):
+    def preview(self):
         """Render this as preview with the public view. If this is no previewable,
         should return something indicating this.
         """
         content = self.get_previewable()
-        if content is not None:
-            result = self._view_helper(content)
-            if result is not None:
-                return result
-        return self.service_view_registry.render_preview(view_type, self)
-
+        try:
+            result = self.view_version('preview', content)
+        except NoViewError:
+            # fallback to public 'render' script if no preview available
+            result = self.view_version('public', content)
+        return result
+        
     security.declareProtected(SilvaPermissions.View, 'view')
-    def view(self, view_type='public'):
+    def view(self):
         """Render this with the public view. If there is no viewable,
         should return something indicating this.
         """
         content = self.get_viewable()
-        if content is not None:
-            result = self._view_helper(content)
-            if result is not None:
-                return result
-        return self.service_view_registry.render_view(view_type, self)
+        return self.view_version('public', content)
 
-    def _view_helper(self, version):
+    security.declareProtected(SilvaPermissions.ReadSilvaContent, 
+                                'view_version')
+    def view_version(self, view_type, version):
+        if version is None:
+            return 'Sorry, this %s version is not viewable.' % self.meta_type
         result = getRenderableAdapter(version).view()
         if result is not None:
             return result
-        return None
+        self.REQUEST.model = version
+        try:
+            view = self.service_view_registry.get_view(view_type, version.meta_type)
+        except KeyError:
+            raise NoViewError, 'no %s view defined' % view_type
+        else:
+            return view.render()
 
     # these help the UI that can't query interfaces directly
 

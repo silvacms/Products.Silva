@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
+# $Revision: 1.32 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -45,8 +45,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # ghost=0, doc=0
         self.assertEquals('This ghost is broken. (/root/doc1)',
             ghost.preview())
-        self.assertEquals('Sorry, this document is not published yet.',
-            ghost.view())
+        self.assertEquals('Sorry', ghost.view()[:5])
 
         # approve version of thing we point to
         self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
@@ -57,16 +56,14 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # ghost=0, doc=0
         self.assertEquals('This ghost is broken. (/root/doc1)',
             ghost.preview())
-        self.assertEquals('Sorry, this document is not published yet.',
-            ghost.view())
+        self.assertEquals('Sorry', ghost.view()[:5])
 
         # this should publish doc1
         self.doc1.set_approved_version_publication_datetime(DateTime() - 1)
         # ghost=0, doc=1
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
             ghost.preview())
-        self.assertEquals('Sorry, this document is not published yet.',
-            ghost.view())
+        self.assertEquals('Sorry', ghost.view()[:5])
 
         # publish ghost version
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)

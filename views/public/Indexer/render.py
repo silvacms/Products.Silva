@@ -7,8 +7,5 @@
 ##parameters=
 ##title=
 ##
-model = context.REQUEST.model
-version = model.get_viewable()
-if version is None:
-   return "Sorry, this index is not published yet."
+version = context.REQUEST.model
 return context.render_helper(version=version)
