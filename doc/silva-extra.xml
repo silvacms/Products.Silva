@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+
+<metadata_set id="silva-extra" ns_uri="http://infrae.com/namespaces/metadata/silva-extra" ns_prefix="silva-extra">
+  <metadata_element id="subject">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>TextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="hidden" type="int" value="0" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="max_length" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="external_validator" type="str" value="" />
+        <value key="required" type="int" value="0" />
+        <value key="css_class" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="title" type="str" value="Subject" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="max_lines" type="str" value="" />
+        <value key="height" type="int" value="5" />
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="Subject of this content area." />
+   </field_values>
+   <field_tales>
+     <value key="alternate_name"></value>
+     <value key="hidden"></value>
+     <value key="unicode"></value>
+     <value key="max_linelength"></value>
+     <value key="max_lines"></value>
+     <value key="width"></value>
+     <value key="external_validator"></value>
+     <value key="height"></value>
+     <value key="required"></value>
+     <value key="css_class"></value>
+     <value key="default"></value>
+     <value key="title"></value>
+     <value key="description"></value>
+     <value key="max_length"></value>
+     <value key="extra"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
+   </field_messages>
+   <index_args>
+     <value key="lexicon_id">silva_lexicon</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="index_type">Cosine Measure</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="comment">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>TextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="hidden" type="int" value="0" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="max_length" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="external_validator" type="str" value="" />
+        <value key="required" type="int" value="0" />
+        <value key="css_class" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="title" type="str" value="Comment" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="max_lines" type="str" value="" />
+        <value key="height" type="int" value="5" />
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="Additional comments on  this content." />
+   </field_values>
+   <field_tales>
+     <value key="alternate_name"></value>
+     <value key="hidden"></value>
+     <value key="unicode"></value>
+     <value key="max_linelength"></value>
+     <value key="max_lines"></value>
+     <value key="width"></value>
+     <value key="external_validator"></value>
+     <value key="height"></value>
+     <value key="required"></value>
+     <value key="css_class"></value>
+     <value key="default"></value>
+     <value key="title"></value>
+     <value key="description"></value>
+     <value key="max_length"></value>
+     <value key="extra"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
+   </field_messages>
+   <index_args>
+     <value key="lexicon_id">silva_lexicon</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="index_type">Cosine Measure</value>
+   </index_args>
+  </metadata_element>
+</metadata_set>
