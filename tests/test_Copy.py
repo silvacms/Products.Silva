@@ -140,11 +140,13 @@ class CopyTestCase(unittest.TestCase):
 
     def test_delete1(self):
         # just delete doc1, it should work
+        self.assert_(self.sroot.is_delete_allowed('doc1'))
         self.sroot.action_delete(['doc1'])
         self.assert_(not hasattr(self.sroot, 'doc1'))
 
     def test_delete2(self):
         # just delete folder4, it should work
+        self.assert_(self.sroot.is_delete_allowed('folder4'))
         self.sroot.action_delete(['folder4'])
         self.assert_(not hasattr(self.sroot, 'folder4'))
         
@@ -153,6 +155,7 @@ class CopyTestCase(unittest.TestCase):
         self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
         self.doc1.approve_version()
         # now try to delete it (shouldn't be possible)
+        self.assert_(not self.sroot.is_delete_allowed('doc1'))
         self.sroot.action_delete(['doc1'])
         # should still be there
         self.assert_(hasattr(self.sroot, 'doc1'))
@@ -162,6 +165,7 @@ class CopyTestCase(unittest.TestCase):
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc1.approve_version()
         # now try to delete it (shouldn't be possible)
+        self.assert_(not self.sroot.is_delete_allowed('doc1'))
         self.sroot.action_delete(['doc1'])
         # should still be there
         self.assert_(hasattr(self.sroot, 'doc1'))
@@ -170,6 +174,7 @@ class CopyTestCase(unittest.TestCase):
         # approve
         self.subdoc.set_unapproved_version_publication_datetime(DateTime() + 1)
         self.subdoc.approve_version()
+        self.assert_(not self.sroot.is_delete_allowed('folder4'))
         self.sroot.action_delete(['folder4'])
         # should still be there, as it contains an approved subdoc
         self.assert_(hasattr(self.sroot, 'folder4'))
@@ -178,9 +183,22 @@ class CopyTestCase(unittest.TestCase):
         # approve & published
         self.subdoc.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.subdoc.approve_version()
+        self.assert_(not self.sroot.is_delete_allowed('folder4'))
         self.sroot.action_delete(['folder4'])
         # should still be there, as it contains a published subdoc
         self.assert_(hasattr(self.sroot, 'folder4'))
+
+    def test_rename1(self):
+        self.sroot.action_rename('doc1', 'docrenamed')
+        self.assert_(not hasattr(self.sroot, 'doc1'))
+        self.assert_(hasattr(self.sroot, 'docrenamed'))
+
+    def test_rename2(self):
+        self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
+        self.doc1.approve_version()
+        self.sroot.action_rename('doc1', 'docrenamed')
+        self.assert_(hasattr(self.sroot, 'doc1'))
+        self.assert_(not hasattr(self.sroot, 'docrenamed'))
         
 def test_suite():
     suite = unittest.TestSuite()

@@ -141,18 +141,19 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 object.refresh_active_publishables()
         self._ordered_ids = ids
 
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_rename')
-    def action_rename(self, ref, id, title):
-        """Rename object moniker refers to.
+    def action_rename(self, orig_id, new_id):
+        """Change id of object with id orig_id.
         """
-        object = Copying.resolve_ref(self.getPhysicalRoot(), ref)
+        # check if renaming (which in essence is the deletion of a url)
+        # is allowed
+        if not self.is_delete_allowed(orig_id):
+            return
         # first change id if necessary
-        if object.id != id:
-            parent = object.aq_inner.aq_parent
-            parent.manage_renameObject(object.id, id)
-        # now change title
-        object.set_title(title)
+        if orig_id != new_id:
+            self.manage_renameObject(orig_id, new_id)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_delete')
@@ -161,12 +162,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """
         # check whether deletion is allowed
         for id in ids:
-            object = getattr(self, id)
-            if Interfaces.Publishable.isImplementedBy(object):
-                if object.is_published():
-                    return
-                if object.is_approved():
-                    return
+            if not self.is_delete_allowed(id):
+                return
         self.manage_delObjects(ids)
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -176,12 +173,8 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
         """
         # check whether deletion is allowed
         for id in ids:
-            object = getattr(self, id)
-            if Interfaces.Publishable.isImplementedBy(object):
-                if object.is_published():
-                    return
-                if object.is_approved():
-                    return
+            if not self.is_delete_allowed(id):
+                return
         # FIXME: need to do unit tests for this
         # FIXME: would this lead to a sensible user interface?
         self.manage_cutObjects(ids, REQUEST)
@@ -259,6 +252,21 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
             if object.is_approved():
                 return 1
         return 0
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'is_delete_allowed')
+    def is_delete_allowed(self, id):
+        """Delete is only allowed if the object with id:
+           - does not have an approved version
+           - does not have a published version
+           - if it is a container, does not contain anything of the
+             above, recursively
+        """
+        object = getattr(self, id)
+        if Interfaces.Publishable.isImplementedBy(object):
+            return not object.is_published() and not object.is_approved()
+        else:
+            return 1
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_default')
