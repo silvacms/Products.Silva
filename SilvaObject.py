@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.45 $
+# $Revision: 1.46 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -221,7 +221,6 @@ class SilvaObject(Security):
         self.to_xml(context)
         # XXX HACK
         result = context.f.getvalue()
-        print "Result get_xml:", result.encode('UTF-8')
         return result.encode('UTF-8') #return f.getvalue()
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
