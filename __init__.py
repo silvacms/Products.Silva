@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.107 $
+# $Revision: 1.108 $
 
 import ContainerPolicy
 
@@ -19,7 +19,7 @@ def initialize(context):
 # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
     import Folder, Root
-    import Publication, Ghost, Image, File, SimpleContent
+    import Publication, Ghost, Image, File, SimpleContent, Link
     import Indexer
     import SQLDataSource
     import GhostFolder
@@ -42,10 +42,10 @@ def initialize(context):
     import SidebarService
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
-
+    
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
-        Folder, Root, Publication, Ghost, Image, File, 
+        Folder, Root, Publication, Ghost, Image, File, Link, 
         Indexer, SQLDataSource, Group, VirtualGroup, IPGroup,
         GhostFolder, AutoTOC],
         install, depends_on=None)

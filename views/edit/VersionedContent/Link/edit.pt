@@ -1,0 +1,5 @@
+<form action="submit" method="POST">
+<p>Link URL: <input type="text" name="url" tal:attributes="value python:request.model.get_editable().get_url()" /></p>
+<p><input type="submit" value=" change link" /></p>
+</form>
+
