@@ -345,11 +345,25 @@ class GhostFolderXMLSource(SilvaBaseXMLSource):
     """
     def _sax(self, reader, settings):
         self._startElement(reader, 'ghost_folder', {'id': self.context.id})
+        self._metadata(reader, settings)
         self._startElement(reader, 'content', {})
         content = self.context.get_haunted_unrestricted()
+        contenttype = self.context.get_haunted_unrestricted().meta_type
+        self._startElement(reader, 'metatype', {})
+        reader.characters(contenttype)
+        self._endElement(reader, 'metatype')
+        self._startElement(reader, 'haunted_url', {})
+        reader.characters(self.context.get_haunted_url())
+        self._endElement(reader, 'haunted_url')
         if content is None:
             return
-        getXMLSource(content)._sax(reader, settings)
+        self._startElement(reader, 'content', {})
+        for object in content.get_ordered_publishables():
+            if (IPublication.isImplementedBy(object) and 
+                    not self.context.with_sub_publications):
+                continue
+            getXMLSource(object)._sax(reader, settings)
+        self._endElement(reader, 'content')      
         self._endElement(reader, 'content')      
         self._endElement(reader, 'ghost_folder')      
 

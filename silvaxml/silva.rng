@@ -114,10 +114,11 @@
     <!-- A Silva Ghost Folder element. Ghost Folders are really links to other folders./-->
     <element name="ghost_folder">
       <attribute name="id"><text /></attribute>
-      <choice>
-        <ref name="SilvaPublication" />
-        <ref name="SilvaFolder" />
-      </choice>
+      <element name="content">
+        <element name="metatype"><text /></element>
+        <element name="haunted_url"><text /></element>
+        <ref name="contained" />
+      </element>
     </element>
   </define>
   
