@@ -161,9 +161,10 @@
                   <tal:block replace="nothing">
                     ___ element name column ___
                   </tal:block>
-                  <td class="field-title"
-                    tal:content="element/title">
-                    Element name
+                  <td class="field-title">
+                    <span tal:replace="element/title">
+                      Element name
+                    </span>
                     <span class="warning"
                       tal:condition="element/isRequired">
                       *
