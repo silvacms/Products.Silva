@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.9.46.1 $
 """
 This module defines a class and an instance of the importer_registry,
 a place to register xml_import_handlers. The handlers should be
@@ -8,7 +8,7 @@ registered at runtime (by adding some code in the __init__.py's of
 products that want to support XML-importing) by calling
 importer_registry.register_tag(<tag_name>, <function_reference>),
 where <tag_name> is the name of the main tag of the objecttype's
-xml-ecport (e.g.  silva_publication, silva_folder or silva_document)
+xml-export (e.g.  silva_publication, silva_folder or silva_document)
 and <function_reference> is a reference to the function that will
 create the actual object. The function will have to support 2
 arguments: object, the object in which the new object will be placed,
