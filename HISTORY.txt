@@ -1,6 +1,6 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.41 $
+$Revision: 1.47.2.42 $
 
 Silva changes
 
@@ -10,6 +10,9 @@ Silva changes
 
       - Support for external editor is now complete, users don't have to
         manually setup anything anymore to use it.
+
+    Bugs Fixed
+
       - Fixed bug in the upgrade script that lead to an AttbributeError
         on '_allow_authentication_requests'
 
