@@ -50,7 +50,7 @@ class Member(Persistent, Acquisition.Implicit):
 Globals.InitializeClass(Member)
 
 class CachedMember(Persistent, Acquisition.Implicit):
-    """A memberobject returned by cloneMember
+    """A member object returned by cloneMember
     """
 
     __implements__ = IMember
@@ -108,7 +108,7 @@ class NoneMember(Persistent, Acquisition.Implicit):
     def fullname(self):
         """fullname
         """
-        return 'Unknown User'
+        return 'unknown user'
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'email')
