@@ -162,6 +162,11 @@ def configureMetadata(root):
         fh = open(xml_file, 'r')
         collection.importSet(fh)    
 
+    if not 'silva-publication' in collection.objectIds():
+        xml_file = path.join(silva_docs, 'silva-publication.xml')
+        fh = open(xml_file, 'r')
+        collection.importSet(fh)
+    
     # (re) set the default type mapping
     mapping = root.service_metadata.getTypeMapping()
     default = ''
@@ -172,9 +177,10 @@ def configureMetadata(root):
         {'type':'Silva File',               'chain':'silva-content, silva-extra'},
         {'type':'Silva Image',              'chain':'silva-content, silva-extra'},
         {'type':'Silva Indexer',            'chain':'silva-content, silva-extra'},
-        {'type':'Silva Publication',        'chain':'silva-extra'},
-        {'type':'Silva Root',               'chain':'silva-extra'},
+        {'type':'Silva Publication',        'chain':'silva-extra, silva-publication'},
+        {'type':'Silva Root',               'chain':'silva-extra, silva-publication'},
         {'type':'Silva SQL Data Source',    'chain':'silva-content, silva-extra'},
+        {'type':'Silva Simple Content',     'chain':'silva-content, silva-extra'},
         )
 
     mapping.editMappings(default, tm)
@@ -408,6 +414,8 @@ def registerViews(reg):
                  ['edit', 'Asset', 'File'])
     reg.register('edit', 'Silva Indexer',
                  ['edit', 'Content', 'Indexer'])
+    reg.register('edit', 'Silva Simple Content',
+                 ['edit', 'Content', 'SimpleContent'])
     reg.register('edit', 'Silva SQL Data Source',
                  ['edit', 'Asset', 'SQLDataSource'])
     reg.register('edit', 'Silva Simple Member',
@@ -422,6 +430,7 @@ def registerViews(reg):
     reg.register('public', 'Silva DemoObject', ['public', 'DemoObject'])
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
+    reg.register('public', 'Silva Simple Content', ['public', 'SimpleContent'])
     reg.register('public', 'Silva SQL Data Source',
                  ['public', 'SQLDataSource'])
 
@@ -433,6 +442,7 @@ def registerViews(reg):
     reg.register('add', 'Silva DemoObject', ['add', 'DemoObject'])
     reg.register('add', 'Silva File', ['add', 'File'])
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
+    reg.register('add', 'Silva Simple Content', ['add', 'SimpleContent'])
     reg.register('add', 'Silva SQL Data Source', ['add', 'SQLDataSource'])
 
 def registerGroupsViews(reg):
@@ -449,6 +459,7 @@ def unregisterViews(reg):
     for meta_type in ['Silva Folder',
                       'Silva Publication', 'Silva Ghost', 'Silva Image',
                       'Silva DemoObject', 'Silva File', 'Silva Indexer',
+                      'Silva Simple Content',
                       'Silva SQL Data Source', 'Silva Group', 
                       'Silva Virtual Group']:
         reg.unregister('edit', meta_type)

@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.11 2003/07/02 13:56:18 faassen Exp $    
+$Id: Metadata.py,v 1.12 2003/07/11 22:34:51 faassen Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
@@ -82,7 +82,8 @@ def register_core_types():
     from Products.Silva.Publication import Publication
     from Products.Silva.Root import Root
     from Products.Silva.SQLDataSource import SQLDataSource
-
+    from Products.Silva.SimpleContent import SimpleContent
+    
     registerTypeForMetadata(DemoObjectVersion.meta_type)
     registerTypeForMetadata(GhostVersion.meta_type)
     registerTypeForMetadata(Folder.meta_type)
@@ -92,7 +93,8 @@ def register_core_types():
     registerTypeForMetadata(Publication.meta_type)
     registerTypeForMetadata(Root.meta_type)
     registerTypeForMetadata(SQLDataSource.meta_type)    
-
+    registerTypeForMetadata(SimpleContent.meta_type)
+    
     #################################
     ## Metadata can be applied to these, but there is no smi interface,
     ## and its not appropriate for systems getting properties from ldap

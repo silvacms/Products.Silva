@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.117 $
+# $Revision: 1.118 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -15,6 +15,7 @@ from SilvaObject import SilvaObject
 from Publishable import Publishable
 import Copying
 import SilvaPermissions
+import ContainerPolicy
 import validate
 # misc
 import helpers
@@ -940,12 +941,8 @@ def manage_addFolder(self, id, title, create_default=1, REQUEST=None):
     object = Folder(id)
     self._setObject(id, object)
     object = getattr(self, id)
-    # add doc
-    if create_default and self.service_extensions.is_installed('SilvaDocument'):
-        object.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'index', title)
-    if hasattr(object,'index'):
-        object.index.sec_update_last_author_info()
+    if create_default:
+        ContainerPolicy.create_index(object, id, title)    
     helpers.add_and_edit(self, id, REQUEST)
     return ''
 

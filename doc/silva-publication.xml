@@ -1,0 +1,37 @@
+<metadata_set id="silva-publication" ns_uri="http://infrae.com/namespaces/metadata/silva-publication" ns_prefix="silva-publication">
+<title></title>
+<description></description>
+  <metadata_element id="index_policy">
+   <index_type>KeywordIndex</index_type>
+   <index_p>0</index_p>
+   <field_type>ListField</field_type>
+   <acquire_p>1</acquire_p>
+   <read_only_p>0</read_only_p>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+       <value key="title" type="str" value="Index Policy" />
+       <value key="size" type="int" value="1" />
+   </field_values>
+   <field_tales>
+     <value key="items">python:['Silva Document', 'Simple Index', 'None']</value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+</metadata_set>
