@@ -695,8 +695,8 @@ a.index-element {
 /* hard rule */
 div.rule {
   border-top : 1px solid #888888;
-  margin: 2em 0em 0em 0em;
-  clear: both;
+  margin : 2em 0em 0em 0em;
+  clear : both;
 }
 
 .worksheet {
