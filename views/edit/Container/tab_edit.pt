@@ -274,8 +274,6 @@ There are no active content objects in this folder.
 <tr class="controls-cycle"
   tal:condition="python:len(publishables)">
   <td colspan="8">
-    <input tal:condition="python:silva_permissions['ApproveSilvaContent'] and len(publishables)" tal:replace="nothing"
-      class="button" type="submit" name="tab_edit_deactivate:method" value="Deactivate" title="Remove items from the publication Table of Contents" />
     <tal:block condition="python:len(publishables) > 1 and silva_permissions['ApproveSilvaContent']"><span class="widebody">Move selected items to position:</span>
     <select name="new_position" title="Choose new position: alt-p" accesskey="p">
       <tal:block repeat="item publishables">
