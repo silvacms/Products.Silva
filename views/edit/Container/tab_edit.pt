@@ -175,7 +175,7 @@
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
   <td> 
-    <a class="blacklink" title="Down to Publish tab of item"
+    <a class="blacklink" title="Down to Status tab of item"
       tal:attributes="href string:${default/absolute_url}/edit/tab_status"><span tal:replace="python:default.sec_get_last_author_info().fullname()">
     Author</span></a>
   </td>
@@ -237,7 +237,7 @@
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
   <td>
-    <a class="blacklink" title="Down to Publish tab of item"
+    <a class="blacklink" title="Down to Status tab of item"
       tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
       tal:attributes="href string:${item/absolute_url}/edit/tab_status"
       tal:content="python:item.sec_get_last_author_info().fullname()">
