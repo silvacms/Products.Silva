@@ -251,3 +251,11 @@ div#kupu-fgcolorchooser div:hover {
   display: none;
 }
 
+#kupu-toolbox-extsource .extsourceform input {
+  width: 16em;
+}
+
+#kupu-toolbox-extsource .extsourceform select {
+  width: 16em;
+};
+

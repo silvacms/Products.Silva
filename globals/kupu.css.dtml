@@ -97,6 +97,10 @@ citation {
   background-color: white;
 }
 
+div.externalsource {
+  background-color: yellow;
+}
+
 /* _________________________________________________ silva table styles _____ */
 
 table {
