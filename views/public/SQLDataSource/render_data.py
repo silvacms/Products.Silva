@@ -41,11 +41,16 @@ for row in data:
     row_data = []
     col = 0
     for field in row:
-        if not field:
+        # XXX filters out int(0) as well!!
+        if field is None:
             field = ''
+        elif not same_type(field, '') and not same_type(field, u''):
+            field = str(field)
+        elif same_type(field, ''):
+            field = unicode(field, data_encoding, 'replace')
         col += 1        
         row_data.append(
-            u"""<td align="%s">\n  %s\n</td>""" % (u'left', unicode(field, data_encoding, 'replace') ))
+            u"""<td align="%s">\n  %s\n</td>""" % (u'left', field))
     rownr += 1
     if rownr % 2: cssclass = u"odd"
     else: cssclass = u"even"
