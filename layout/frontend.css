@@ -388,6 +388,7 @@ div.header a.icon {
   border-color: black;
   border-style: solid;
   border-right-width: 1px;
+  padding-right: 2.3em;
 }
 
 .preview_compare_right {
