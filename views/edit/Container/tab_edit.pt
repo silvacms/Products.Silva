@@ -64,13 +64,14 @@
      <span tal:replace="nothing"> ______________ publication header ______________ </span>
       <tr>
         <td class="border"
-          tal:attributes="class python:test(model == model.get_publication(), 'hilight', 'focus-fixed')">
+          tal:define="publication python:model.get_publication()"
+          tal:attributes="class python:test(model == publication, 'hilight', 'focus-fixed')">
           <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" />
           <a href="top" title="Up to publication top"
-            tal:define="url python:model.get_publication().absolute_url()"
-            tal:attributes="href string:${url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(model.get_publication().meta_type)" /></a>
-          <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
-            tal:attributes="href string:${url}/edit/tab_edit"><span tal:replace="structure python:model.get_publication().get_title_or_id_html()">Publication top</span></a>
+            tal:define="url python:publication.absolute_url()"
+            tal:attributes="href string:${url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(publication.meta_type)" /></a>
+          <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:publication.absolute_url()"
+            tal:attributes="href string:${url}/edit/tab_edit"><span tal:replace="structure python:publication.getProperty('short_title') or publication.get_title_or_id_html()">Publication top</span></a>
         </td>
       </tr>
 
