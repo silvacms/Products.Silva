@@ -1,6 +1,6 @@
 # Copyright (c) 2003, 2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.5.52.1 2004/04/01 12:42:25 faassen Exp $
+# $Id: icon.py,v 1.5.52.2 2004/04/01 16:29:45 guido Exp $
 
 """Sivla icon registry"""
 
@@ -42,11 +42,17 @@ class _IconRegistry:
             identifier = ('ghostfolder', kind)      
         elif IFile.isImplementedBy(object):
             identifier = ('mime_type', object.get_mime_type())
-        elif (ISilvaObject.isImplementedBy(object) or
-              ISilvaObject.isImplementedByInstancesOf(object)):
+        elif ISilvaObject.isImplementedBy(object):
             identifier = ('meta_type', object.meta_type)
         else:
-            raise RegistryError, "Icon not found"
+            try:
+                # if this call gets an object rather then a class as
+                # argument it will raise an AttributeError on __hash__
+                ISilvaObject.isImplementedByInstancesOf(object)
+            except AttributeError:
+                raise RegistryError, "Icon not found"
+            else:
+                identifier = ('meta_type', object.meta_type)
         return self.getIconByIdentifier(identifier)
 
     def getIconByIdentifier(self, identifier):
