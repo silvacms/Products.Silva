@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-17 16:02+0100\n"
+"PO-Revision-Date: 2004-12-17 17:07+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -269,7 +269,7 @@ msgstr "Eine vorhergehende Version hat breits diese Id (${id})."
 #: /Versioning.py:94
 #: /views/edit/VersionedContent/tab_edit_publish.py:12
 msgid "There is no unapproved version to approve."
-msgstr ""
+msgstr "Es existier keine nicht bewilligte Version die bewilligt werden könnte."
 
 #: /Versioning.py:97
 msgid "There already is an approved version."
@@ -552,7 +552,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:54
 msgid "Global keys that are always available"
-msgstr ""
+msgstr "Kurzwahlen, die überall verügbar sind"
 
 #: /globals/accesskeys.pt:57
 msgid "${general}<br /> t &nbsp; Jump to top of page<br /> b &nbsp; Jump to bottom of page<br /> / &nbsp; Jump to top of Silva (Silva icon)<br /> ? &nbsp; Access keys and shortcuts"
@@ -1325,7 +1325,7 @@ msgstr "Gruppenname"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:97
 msgid "This Virtual Group does not have any &#8216;member groups&#8217;."
-msgstr ""
+msgstr "Diese virtuelle Gruppe beinhaltet keine Gruppen."
 
 #: /views/edit/Asset/Groups/VirtualGroup/remove_groups_from_virtualgroup.py:11
 msgid "No groups selected, so none removed."
@@ -1846,7 +1846,7 @@ msgstr "Kurzwahl: alt-l"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:27
 msgid "change Publication into Folder: alt-c"
-msgstr ""
+msgstr "Publikation in Ordner umwandeln: alt-c"
 
 # Default: "c"
 #: /views/edit/Container/Publication/tab_metadata.pt:40
@@ -1868,7 +1868,7 @@ msgstr "Layout"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:89
 msgid "acquired layout"
-msgstr ""
+msgstr "erworbenes Layout"
 
 #: /views/edit/Container/docma_queue.pt:100
 msgid "${estimated_time} &nbsp;seconds"
@@ -1876,11 +1876,11 @@ msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:113
 msgid "There are no jobs in the queue."
-msgstr ""
+msgstr "Es sind keine Aufträge in der Warteschlange."
 
 #: /views/edit/Container/docma_queue.pt:145
 msgid "list of processed items ${format}"
-msgstr ""
+msgstr "Liste der bearbeiteten Einträge ${format}"
 
 #: /views/edit/Container/docma_queue.pt:160
 #: /views/edit/Container/tab_access_groups.pt:101
@@ -1895,11 +1895,11 @@ msgstr "Download"
 
 #: /views/edit/Container/docma_queue.pt:20
 msgid "current job"
-msgstr ""
+msgstr "Aktueller Auftrag"
 
 #: /views/edit/Container/docma_queue.pt:202
 msgid "There are no processed jobs."
-msgstr ""
+msgstr "Es gibt keine bearbeiteten Aufträge."
 
 #: /views/edit/Container/docma_queue.pt:22
 msgid "owner"
@@ -1928,7 +1928,7 @@ msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:239
 msgid "import to the current location and remove from the list: alt-m"
-msgstr ""
+msgstr "An die aktuelle Position importieren und aus der Liste entfernen: alt-m "
 
 #: /views/edit/Container/docma_queue.pt:239
 msgid "import and remove"
@@ -1945,7 +1945,7 @@ msgstr "Bezeichnung"
 
 #: /views/edit/Container/docma_queue.pt:246
 msgid "import to the current location: alt-p"
-msgstr ""
+msgstr "An die aktuelle Position importieren: alt-p"
 
 # Default: "p"
 #: /views/edit/Container/docma_queue.pt:246
@@ -1971,20 +1971,20 @@ msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:40
 msgid "<u>r</u>efresh queue lists"
-msgstr ""
+msgstr "Warteschlangenliste auffrischen"
 
 #: /views/edit/Container/docma_queue.pt:50
 msgid "queue of items to process"
-msgstr ""
+msgstr "Warteschlange der zu bearbeitenden Aufträge"
 
 #: /views/edit/Container/docma_queue.pt:62
 #: /views/edit/Container/docma_queue.pt:155
 msgid "job id"
-msgstr ""
+msgstr "Auftrags-Id"
 
 #: /views/edit/Container/docma_queue.pt:67
 msgid "job owner"
-msgstr ""
+msgstr "Auftragseigentümer"
 
 #: /views/edit/Container/docma_queue.pt:75
 msgid "estimated time"
@@ -1994,21 +1994,21 @@ msgstr "Geschätzte Zeit"
 #: /views/edit/Container/download_pdf_selected.py:21
 #: /views/edit/Container/download_xml_selected.py:20
 msgid "No items were selected, so no content will be exported"
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wird nichts exportiert."
 
 #: /views/edit/Container/download_fullmedia_selected.py:24
 msgid "Currently, fullmedia export only supports one item at a time."
-msgstr ""
+msgstr "Im Augenblick unterstützt Full-Meda Export nur einen Eintrag zur Zeit."
 
 #: /views/edit/Container/export_delete.py:20
 #: /views/edit/Container/tab_edit_import_delete.py:19
 msgid "Select one or more jobs to delete"
-msgstr ""
+msgstr "Wählen Sie einen oder mehrere Einträge zum Löschen aus"
 
 #: /views/edit/Container/export_delete.py:26
 #: /views/edit/Container/tab_edit_import_delete.py:25
 msgid "Job deleted"
-msgstr ""
+msgstr "Auftrag gelöscht"
 
 #: /views/edit/Container/getDocmaFormatName.py:10
 msgid "unknown format"
@@ -2169,7 +2169,7 @@ msgstr "XML oder Zip Datei importieren: alt-i"
 #: /views/edit/Container/tab_edit.pt:100
 #: /views/edit/Container/tab_status_export.pt:90
 msgid "import..."
-msgstr ""
+msgstr "Import..."
 
 #: /views/edit/Container/tab_edit.pt:126
 #: /views/edit/Container/tab_edit.pt:192
@@ -2286,11 +2286,11 @@ msgstr "Einfügen"
 
 #: /views/edit/Container/tab_edit.pt:539
 msgid "paste (items on clipboard) as ghost objects: alt-g"
-msgstr ""
+msgstr "Einfügen (der Objekte in der Zwischenablage) als Ghost-Objekte: alt-g"
 
 #: /views/edit/Container/tab_edit.pt:539
 msgid "paste ghost"
-msgstr ""
+msgstr "Ghost-Objekt einfügen"
 
 # Default: "g"
 #: /views/edit/Container/tab_edit.pt:539
@@ -2308,7 +2308,7 @@ msgstr "neu..."
 
 #: /views/edit/Container/tab_edit.pt:69
 msgid "add a new item - alt-n"
-msgstr ""
+msgstr "Neuen Eintrag hinzufügen: alt-n"
 
 # Default: "n"
 #: /views/edit/Container/tab_edit.pt:69
@@ -2414,7 +2414,7 @@ msgstr "Kurzwahl: alt-i"
 
 #: /views/edit/Container/tab_edit_import.pt:146
 msgid "import and extract zip archive (.zip)"
-msgstr ""
+msgstr "ZIP Archiv importieren und auspacken"
 
 #: /views/edit/Container/tab_edit_import.pt:181
 msgid "Locate a zip file containing Assets to import or a zip file created by a full media export."
@@ -3110,7 +3110,7 @@ msgstr "Zu exportierende Einträge:"
 
 #: /views/edit/Container/tab_status_export.pt:84
 msgid "export from &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Exportieren aus &#xab;${title}&#xbb;"
 
 #: /views/edit/Container/tab_status_export.pt:90
 msgid "over to the import screen: alt-i"
@@ -3548,7 +3548,7 @@ msgstr "Veröffentlichte Version existiert"
 
 #: /views/edit/VersionedContent/tab_status.pt:83
 msgid "Note: an older version of this content is online.<br /> Publishing this version will replace the public version."
-msgstr ""
+msgstr "Anmerkung: eine ältere Version dieses Inhaltes ist online. <br /> Publizieren dieser Version wird die öffentliche Version ersetzen."
 
 #: /views/edit/VersionedContent/tab_status.pt:93
 msgid "Content is closed"
@@ -3556,7 +3556,7 @@ msgstr "Inhalt wurde geschlossen."
 
 #: /views/edit/VersionedContent/tab_status.pt:96
 msgid "This content was once published but is now closed.<br /> If you wish you can make an editable copy in the ${editor}."
-msgstr ""
+msgstr "Dieser Inhalt war einmal veröfentlicht ist aber jetzt geschlossen. <br /> Wenn Sie wünschen, können Sie eine bearbeitbare Kopie im ${edit} erzeugen."
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
 msgid "There is no approved version."
@@ -3613,12 +3613,12 @@ msgstr "Nachricht an Redakteur"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:128
 msgid "This message will remain visible in the status screen for other authors and editors."
-msgstr ""
+msgstr "Diese Nachricht bleibt für andere Autoren und Redakteure im Zustandsschirm sichtbar."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
 #: /views/edit/VersionedContent/tab_status_macros.pt:335
 msgid "content publish ti<u>m</u>e"
-msgstr ""
+msgstr "Publikationszeit"
 
 # Default: "m"
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
@@ -3640,7 +3640,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:234
 #: /views/edit/VersionedContent/tab_status_macros.pt:354
 msgid "expiratio<u>n</u> time"
-msgstr ""
+msgstr "Verfallszeit"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:170
 #: /views/edit/VersionedContent/tab_status_macros.pt:245
@@ -4009,7 +4009,7 @@ msgstr "Sie müssen hier einen Pfad eingeben."
 
 #: /views/edit/get_ghost_link_status_text.py:18
 msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to does not exist."
-msgstr ""
+msgstr "Das Objekt &#xab;${haunted_url}&#xbb;, auf das dieses Ghost-Objekt verweist, existiert nicht."
 
 #: /views/edit/get_ghost_link_status_text.py:21
 msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is a container."
