@@ -1,6 +1,6 @@
 <tal:block define="
   global active_tab string:tab_edit;
-  global location string:Add;
+  global breadcrumb_vein string:Add;
   " />
 
 <!-- ___________________________ start index_html ___________________________ -->

@@ -1,5 +1,5 @@
 <!-- ___________________________ start index_html ______________________ -->
-<tal:block define="global location string:Contents;" />
+<tal:block define="global breadcrumb_vein string:Contents;" />
 <html metal:use-macro="here/macro_index/macros/master">
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ____________________________ -->

@@ -2,7 +2,7 @@
 <tal:block
  tal:define="global tabs view/get_authorized_tabs;
              global active_tab active_tab | nothing;
-             global location location | nothing;
+             global breadcrumb_vein breadcrumb_vein | nothing;
              selected_tab_id template/id;
              ">
 
@@ -76,7 +76,7 @@ Tab Name
 <td class="tab-up" width="2%"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" /></td>
 <td class="tab-up">
 <div class="breadcrumb">
-<span tal:replace="location">Location</span>:&nbsp;&nbsp;
+<span tal:replace="breadcrumb_vein">Vein</span>:&nbsp;&nbsp;
 </div>
 </td>
 

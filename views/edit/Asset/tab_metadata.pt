@@ -1,5 +1,5 @@
 <!-- ___________________________ start index_html ___________________________ -->
-<tal:block define="global location string:Metadata;" />
+<tal:block define="global breadcrumb_vein string:Metadata;" />
 <html  metal:use-macro="here/macro_index/macros/master">
 
 <div class="margins"

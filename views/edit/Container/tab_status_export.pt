@@ -1,5 +1,6 @@
 <init tal:omit-tag=""
-  tal:define="global active_tab string:tab_status" />
+  tal:define="global active_tab string:tab_status;
+              global breadcrumb_vein string:Export;" />
 
 <!-- ____________________________ start index_html ____________________________ -->
 <html metal:use-macro="here/macro_index/macros/master">

@@ -1,4 +1,4 @@
-<tal:block define="global location string:Metadata;" />
+<tal:block define="global breadcrumb_vein string:Metadata;" />
 <!-- ___________________________ start index_html ___________________________ -->
 <html  metal:use-macro="here/macro_index/macros/master">
 
