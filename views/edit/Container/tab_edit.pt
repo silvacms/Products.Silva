@@ -238,7 +238,7 @@
                     </tal:block>
                     <td>
                       <a style="float:right"
-                        title="see public version..."
+                        title="content approved, or published..."
                         tal:attributes="
                           href item_info/item_url;"
                         i18n:attributes="title">
