@@ -18,7 +18,7 @@ messages = []
 for userid, role in [r.split('|') for r in request['requests']]:
     view.service_members.get_member(userid).approve()
     model.allow_role(userid, role)
-    messages.append('%s approved and allowed the %s role' % (userid, role))
+    messages.append('&#xab;%s&#xbb; approved and allowed the %s role' % (userid, role))
 
 model.send_messages()
 

@@ -17,7 +17,7 @@ if not request.has_key('requests') or not request['requests']:
 messages = []
 for userid, role in [r.split('|') for r in request['requests']]:
     model.deny_role(userid, role)
-    messages.append('%s has been denied the %s role' % (userid, role))
+    messages.append('&#xab;%s&#xbb; has been denied the %s role' % (userid, role))
 
 model.send_messages()
 

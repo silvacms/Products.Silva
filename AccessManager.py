@@ -23,10 +23,10 @@ class AccessManager:
         # search for the username of the first chief-editor for this object
         ces = self.sec_get_nearest_of_role('ChiefEditor')
         if not ces:
-            raise Exception, 'No ChiefEditors available!'
+            raise Exception, 'Sorry, no ChiefEditors are available to receive the request.'
         for role in roles:
             for ce in ces:
-                message = 'User with id %s request the %s role on object %s.\nGo to %s/edit/tab_access to process the request.' % (userid, role, self.aq_inner.absolute_url(), self.aq_inner.absolute_url())
+                message = '\'%s\' has requested the %s role at this location:\n%s.\n\nGo to %s/edit/tab_access\nto process the request.' % (userid, role, self.aq_inner.absolute_url(), self.aq_inner.absolute_url())
                 self.service_messages.send_message(userid, ce, 'Access request', message)
         self.service_messages.send_pending_messages()
 
@@ -52,9 +52,9 @@ class AccessManager:
         self._requested_roles.remove((userid, role))
         ces = self.sec_get_nearest_of_role('ChiefEditor')
         if not ces:
-            raise Exception, 'No ChiefEditors available!'
+            raise Exception, 'No ChiefEditors are available to receive the request.'
         for ce in ces:
-            self.service_messages.send_message(ce, userid, 'Access granted', 'The role of %s has been assigned to you on object %s' % (role, self.aq_inner.absolute_url()))
+            self.service_messages.send_message(ce, userid, 'Access granted', 'The %s role has been assigned to you at this location:\n%s\nGet to work.' % (role, self.aq_inner.absolute_url()))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'deny_role')
@@ -62,9 +62,9 @@ class AccessManager:
         """Denies the role and send an e-mail to the user"""
         ces = self.sec_get_nearest_of_role('ChiefEditor')
         if not ces:
-            raise Exception, 'No ChiefEditors available!'
+            raise Exception, 'No ChiefEditors are available to receive the request.'
         for ce in ces:
-            self.service_messages.send_message(ce, userid, 'Access denied', 'The role of %s has been denied to you on object %s' % (role, self.aq_inner.absolute_url()))
+            self.service_messages.send_message(ce, userid, 'Access denied', 'The %s role has been denied for this location:\n %s\nYou can appeal.' % (role, self.aq_inner.absolute_url()))
         self._requested_roles.remove((userid, role))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
@@ -98,7 +98,7 @@ class AccessManager:
     def add_user(self, userid, password):
         """Adds the user to the userfolder. Note that the user will not get a memberobject using this method"""
         if not hasattr(self, 'service_members') or not self.service_members.allow_subscription():
-            raise Exception, 'Subscription to the site not allowed!'
+            raise Exception, 'Subscription to this site is not allowed.'
         userfolder = self.acl_users.aq_inner
         userfolder.userFolderAddUser(userid, password, [], [])
 
