@@ -184,19 +184,23 @@
         <tal:block replace="nothing">
           _______ publication datetime cell _______
         </tal:block>
-        <td class="align-right"
-          tal:content="structure obj/next_version_publication_datetime | nothing">
-          21 oct 2001 18:18
+        <td class="align-right">
+          <span
+            tal:content="structure obj/next_version_publication_datetime | nothing" 
+            tal:attributes="class obj/status_style | default;"
+          />
         </td>
         <tal:block replace="nothing">
           _______ expiration datetime cell _______
         </tal:block>
-        <td class="align-right"
-          tal:define="
-            expire_time obj/next_version_expiration_datetime | nothing;
-            global expireables python:expire_time and 1 or expireables;"
-          tal:content="structure expire_time">
-          21 oct 2001 18:18
+        <td class="align-right">
+          <span
+            tal:define="
+              expire_time obj/next_version_expiration_datetime | nothing;
+              global expireables python:expire_time and 1 or expireables;"
+            tal:content="structure expire_time" 
+            tal:attributes="class obj/status_style | default;"
+          />
         </td>
         <tal:block replace="nothing">
           _______ public version cell _______
