@@ -1,6 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
+
+from Products.Silva import icon
+
 
 class ExtensionRegistry:
 
@@ -42,6 +45,13 @@ class ExtensionRegistry:
                     getattr(module, 'manage_add%sForm' % version_classname),
                     getattr(module, 'manage_add%s' % version_classname)),
                     )
+        icon_path = getattr(module, 'icon', None)
+        if icon_path:
+            icon.registry.registerIcon(
+                ('meta_type', getattr(module, classname).meta_type),
+                icon_path,
+                module.__dict__)
+                
     
     def _orderExtensions(self):
         """Reorder extensions based on depends_on constraints.
