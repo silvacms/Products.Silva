@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.55 $
+# $Revision: 1.56 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -11,6 +11,7 @@ from Products.Silva.ImporterRegistry import importer_registry
 from ExtensionRegistry import extensionRegistry
 import ExtensionService
 import SimpleMembership
+import EmailMessageService
 import DocmaService
 import Group
 import VirtualGroup
@@ -72,9 +73,9 @@ def initialize(context):
         )
 
     context.registerClass(
-        SimpleMembership.EmailMessageService,
-        constructors = (SimpleMembership.manage_addEmailMessageServiceForm,
-                        SimpleMembership.manage_addEmailMessageService),
+        EmailMessageService.EmailMessageService,
+        constructors = (EmailMessageService.manage_addEmailMessageServiceForm,
+                        EmailMessageService.manage_addEmailMessageService),
         )
 
     context.registerClass(

@@ -48,19 +48,6 @@ class IMemberService(Base):
         """Returns the url of the subscription form
         """
     
-class IMemberMessageService(Base):
-    
-    def send_message(from_memberid, to_memberid, subject, message):
-        """Send a message from one member to another.
-        """
-
-    def send_pending_messages():
-        """Send all pending messages.
-
-        This needs to be called at the end of a request otherwise any
-        messages pending may be lost.
-        """
-    
 # there is also expected to be a 'Members' object that is traversable
 # to a Member object. Users can then modify information in the member
 # object (if they have the permissions to do so, but the user associated
