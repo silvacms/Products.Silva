@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.15.2.1 $
 import unittest
 import Zope
 import time
@@ -173,14 +173,13 @@ class VersionedContentTestCase(unittest.TestCase):
         self.document.set_unapproved_version_publication_datetime(DateTime()-1)
         time.sleep(0.1)
         # expire after 1 second .... ugly, may fail on slow computers
-        self.document.set_unapproved_version_expiration_datetime(DateTime()+1.0/(3600.0*24.0))
-        date = self.document.get_unapproved_version_expiration_datetime()
+        self.document.set_unapproved_version_expiration_datetime(DateTime()+2.0/(3600.0*24.0))
         self.document.approve_version()
         self.assertEquals(viewable, self.document.view())
         self.assertEquals(viewable, self.document.view())
-
-        # print 'waiting for expiry ...'
-        time.sleep(1.5)
+        
+	# print 'waiting for expiry ...'
+        time.sleep(2.5)
 
         self.assertEquals(not_viewable, self.document.view())
         self.assertEquals(not_viewable, self.document.view())
