@@ -109,7 +109,7 @@
     <li>Use &#8220;get image reference...&#8221; (alt-g) to locate an image, or type in the full path.
     </li>
     <li>
-      Set a URL to make this image a link (alt-l). For other sites, prepend &#8216;http://&#8217; to the address.
+      Set a URL to make this image a link (alt-l). To link to other sites, prepend &#8216;http://&#8217; to the address.
     </li>
     <li>
       Set an optional target for the link. Turning on &#8220;new window&#8221; inserts &#8216;_blank&#8217; after saving.
