@@ -34,6 +34,14 @@ class Image(Asset):
         """Set the image object.
         """
         self.image = OFS.Image.Image('image', 'No image title', file)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_zope_image')
+    def set_zope_image(self, zope_img):
+        """Set the image object with zope image.
+        """
+        self.image = zope_img
+
     
 InitializeClass(Image)
     
