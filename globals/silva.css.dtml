@@ -40,6 +40,9 @@ pre {
   color : #473f69; 
 }
 
+/* for IE 5 compatibility */
+p.nobullet {
+}
 
 /* _________________________________________________________ table definitions _____ */
 table.silvatable {

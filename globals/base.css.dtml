@@ -6,7 +6,7 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
-/* _________________________ style sheet voor Silva backend _________________________ */
+/* _____________________ style sheet voor Silva backend ______________________ */
 
 /* standard bg color, change in overide stylesheet */ 
 body {
@@ -24,7 +24,7 @@ body {
 }
 
 
-/* _________________________________________________________ element typography _____ */
+/* __________________________________________________ element typography _____ */
 
 p {
   font-size : 11px;
@@ -97,14 +97,8 @@ h5 {
   line-height : 16px;
 }
 
-.column-heading, .column-spanheading {
-  font-weight : bold; 
-  font-family : verdana, arial, helvetica, sans-serif; 
-  color : #444444; 
-}
 
-
-/* __________________________________________________ table style definitions _____ */
+/* _____________________________________________ table style definitions _____ */
 
 tr.focus, th.focus, td.focus {
   background : #d0d0d0;
@@ -187,8 +181,14 @@ td.hilight {
   background : transparent;
 }
 
+.column-heading, .column-spanheading {
+  font-weight : bold; 
+  font-family : verdana, arial, helvetica, sans-serif; 
+  color : #444444; 
+}
 
-/* _____________________________________________________________ list styles _____ */
+
+/* _________________________________________________________ list styles _____ */
 
 
 ul {
@@ -223,11 +223,11 @@ ol.i {
 }
 
 ol.A {
-  list-style-type : upper-latin;
+  list-style-type : upper-alpha;
 }
 
 ol.a {
-  list-style-type : lower-latin;
+  list-style-type : lower-alpha;
 }
 
 dt {
@@ -257,7 +257,7 @@ ul.tips-nested {
 }
 
 
-/* ___________________________________________________ form style definitions _____ */
+/* ______________________________________________ form style definitions _____ */
 
 form {
   margin : 0px;
@@ -411,7 +411,7 @@ input[type="checkbox"]:hover, input[type="radio"]:hover {
 }
 
 
-/* ______________________________________________________ tab bar definition _____ */  
+/* __________________________________________________ tab bar definition _____ */  
 
 /* was 36445b */
 td.tab-bg {
@@ -507,7 +507,7 @@ td.tab a.tree:hover {
 }
 
 
-/* _________________________________________________________ link definitions _____ */
+/* ____________________________________________________ link definitions _____ */
 
 a:link {
   color : #000080;
@@ -531,7 +531,7 @@ a.tree:hover img {
 
 /* _______ pseudo form button selectors, matches button style _______ */
 a.buttonlink {
-  font-size : 10px; 
+  font-size : 11px; 
   font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif;
   color : #bce4ee; 
@@ -565,7 +565,7 @@ a.index-element {
 }
 
 
-/* _____________________________________________________________ nomenclature _____ */
+/* ________________________________________________________ nomenclature _____ */
 /* Selectors have names spelled as a single word, even if two words are used, such  */
 /* as 'blacklink'. When a variation is created, the variation name is separated by  */
 /* a dash, such as 'blacklink-underline'. Do NOT use underscores, for some reason   */
@@ -574,7 +574,12 @@ a.index-element {
 /* want to puzzle over what something like 'undln' means (don't use UNIX mumble :)  */
 
 
-/* _____________________________________________________________ local styles _____ */
+/* ________________________________________________________ local styles _____ */
+
+/* hard rule */
+div.rule {
+  border-top : 1px solid #888888;
+}
 
 .worksheet {
   margin-left: 3%;
