@@ -1,16 +1,85 @@
-<html metal:use-macro="here/layout_macro.html/macros/layout"
-      >
-<head>
-  <title>Search</title>
-</head>
-<body>
-<metal:block fill-slot="main">
-<tal:block define="dummy here/set_content_type" />
-<h2>Results of your query <span tal:replace="python:unicode(here.REQUEST['query'], 'utf-8')" /></h2>
-<tal:block repeat="res here/perform_search">
-<a tal:attributes="href python: '/'.join(res.object_path)" 
-    tal:content="python:'%s (%s)' % (res.getObject().get_title(), '/'.join(res.object_path))" />
-</tal:block>
-</metal:block>
-</body>
+<html metal:use-macro="here/layout_macro.html/macros/layout">
+  <head>
+    <title>Search</title>
+  </head>
+  <body>
+      <metal:block fill-slot="main"
+        tal:define="
+          view here;
+          model request/model;
+          icon python:view.render_icon(model);
+          content_type here/set_content_type;"
+        >
+        <tal:block define="dummy here/set_content_type" />
+        <form method="POST" name="form" action=".">
+          <table class="listing">
+            <thead>
+              <tal:block replace="nothing">
+                ______________ vein + title row ______________
+              </tal:block>
+              <tr>
+                <td class="top"
+                  colspan="3">
+                  <h2>
+                    <img tal:replace="structure icon" />
+                    Items found in
+                    <span style="text-transform:lowercase;"
+                      tal:content="model/meta_type">Meta type</span> 
+                      &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+                  </h2>
+                </td>
+              </tr>
+              <tal:block replace="nothing">
+                ______________ top controls row ______________
+              </tal:block>
+              <tr class="top-controls">
+                <td colspan="3">
+                  <h3>
+                    Search interface
+                  </h3>
+                </td>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th class="align-right"
+                  width="12%">
+                  Element
+                </th>
+                <th>
+                  Content
+                </th>
+                <th width="40%">
+                  Note
+                </th>
+              </tr>
+
+              <tr tal:repeat="result view/perform_search">
+                <td colspan="3"
+                  tal:content="result">
+                </td>
+              </tr>
+
+            </tbody>
+
+            <tfoot>
+              <tr class="controls">
+                <td class="align-right"
+                  colspan="3">
+                  <input class="button"
+                    type="submit"
+                    name="search_results:method"
+                    value="Find"
+                    title="access key: alt-f"
+                    accesskey="s"
+                  />
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
+
+    </metal:block>
+  </body>
 </html>

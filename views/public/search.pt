@@ -1,16 +1,104 @@
 <html metal:use-macro="here/layout_macro.html/macros/layout">
-<head>
-  <title>Search</title>
-</head>
-<body>
-<metal:block fill-slot="main">
-<tal:block define="dummy here/set_content_type" />
-<h2>Search the public pages</h2>
-<form action="search_results" method="post">
-Searchterm:<br />
-<input type="text" name="query" /><br />
-<input type="submit" value="Search" />
-</form>
-</metal:block>
-</body>
+  <head>
+    <style media="all"
+      type="text/css"
+      metal:fill-slot="style">
+      @import url(globals/plone.css);
+      @import url(globals/ploneCustom.css);
+    </style>
+    <title>Search</title>
+  </head>
+  <body>
+    <metal:block fill-slot="main"
+      tal:define="
+        view here;
+        model request/model;
+        icon python:view.render_icon(model);
+        content_type here/set_content_type;"
+      >
+      <tal:block define="dummy here/set_content_type" />
+      <form method="POST" name="form" action=".">
+        <table class="listing">
+          <thead>
+            <tal:block replace="nothing">
+              ______________ vein + title row ______________
+            </tal:block>
+            <tr>
+              <td class="top"
+                colspan="3">
+                <h2>
+                  <img tal:replace="structure icon" />
+                  Search in 
+                  <span style="text-transform:lowercase;"
+                    tal:content="model/meta_type">Meta type</span> 
+                    &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+                </h2>
+              </td>
+            </tr>
+            <tal:block replace="nothing">
+              ______________ top controls row ______________
+            </tal:block>
+            <tr class="top-controls">
+              <td colspan="3">
+                <h3>
+                  Search interface
+                </h3>
+              </td>
+            </tr>
+          </thead>
+
+          <tbody tal:define="fields view/search_form/get_fields">
+            <tr>
+              <th class="align-right"
+                width="12%">
+                Element
+              </th>
+              <th>
+                Content
+              </th>
+              <th width="40%">
+                Note
+              </th>
+            </tr>
+
+            <tal:repeat repeat="field fields">
+              <tal:define define="iterate repeat/field/odd">
+                <tr tal:attributes="class python:iterate and 'even' or 'odd'">
+                  <td class="field-title">
+                    <span tal:replace="python:field['title']">
+                      Title</span><span class="warning"
+                      tal:condition="python:field.is_required()">*</span>
+                  </td>
+                  <td>
+                    <input tal:replace="structure python:field.render()" />
+                  </td>
+                  <td>
+                    <span tal:replace="structure python:field.get_value('description')">
+                      comments here (field description)
+                    </span>&nbsp;
+                  </td>
+                </tr>
+              </tal:define>
+            </tal:repeat>
+          </tbody>
+
+          <tfoot>
+            <tr class="controls">
+              <td class="align-right"
+                colspan="3">
+                <input class="button"
+                  type="submit"
+                  name="search_results:method"
+                  value="Find"
+                  title="access key: alt-f"
+                  accesskey="s"
+                />
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </form>
+
+    </metal:block>
+  </body>
 </html>
