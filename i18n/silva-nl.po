@@ -3369,7 +3369,7 @@ msgstr ""
 
 #: /views/macro_index.pt:132
 msgid "jump to zope root: alt-z"
-msgstr ""
+msgstr "naar zope root: alt-z"
 
 #: /views/macro_index.pt:132
 msgid "zroot..."
@@ -3381,11 +3381,11 @@ msgstr ""
 
 #: /views/macro_index.pt:141
 msgid "jump to silva root in zodb: alt-'"
-msgstr ""
+msgstr "naar silva root: alt-'"
 
 #: /views/macro_index.pt:150
 msgid "jump to silva services: alt-`"
-msgstr ""
+msgstr "naar silva services: alt-`"
 
 #: /views/macro_index.pt:150
 msgid "sservices..."
