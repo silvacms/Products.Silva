@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74.4.6 $
+# $Revision: 1.74.4.7 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -258,6 +258,15 @@ class Security(AccessManager):
             userid = security.getUser().getUserName()
             version._last_author_userid = userid
             version._last_author_info = self.sec_get_member(userid).aq_base
+            # XXX perfomance issue?
+            try:
+                binding = self.service_metadata.getMetadata(version)
+            except BindingError:
+                return
+            if binding is None:
+                return
+            now = DateTime()
+            binding.setValues('silva-extra', {'modificationtime': now})        
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_get_creator_info')

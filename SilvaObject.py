@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.98.4.1 2004/01/05 09:51:39 faassen Exp $
+# $Id: SilvaObject.py,v 1.98.4.2 2004/01/12 10:50:56 jw Exp $
 
 # python
 from types import StringType
@@ -62,7 +62,15 @@ class SilvaObject(Security, ViewCode):
     # MANIPULATORS
     def manage_afterAdd(self, item, container):
         self._afterAdd_helper(item, container)
-       
+        self._set_creation_datetime()
+
+    def _afterAdd_helper(self, item, container):
+        container._add_ordered_id(item)
+        if self.id == 'index':
+            container = self.get_container()
+            container._invalidate_sidebar(container)
+
+    def _set_creation_datetime(self):
         timings = {}
         ctime = getattr(self, '_v_creation_datetime', None)
         if ctime is None:
@@ -78,15 +86,8 @@ class SilvaObject(Security, ViewCode):
             old = binding.get('silva-extra', element_id=elem)
             if old is None:
                 timings[elem] = ctime
-        binding.setValues('silva-extra', timings)
-        
-
-    def _afterAdd_helper(self, item, container):
-        container._add_ordered_id(item)
-        if self.id == 'index':
-            container = self.get_container()
-            container._invalidate_sidebar(container)
-    
+        binding.setValues('silva-extra', timings)        
+            
     def manage_beforeDelete(self, item, container):
         self._beforeDelete_helper(item, container)
 
