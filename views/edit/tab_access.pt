@@ -136,7 +136,7 @@
                     &nbsp;
                     <input class="button"
                       name="access_assign_to_user:method"
-                      title="Assign a local role to selected user(s)."
+                      title="assign a local role to selected user(s)"
                       type="submit"
                       value="Assign role to user" />
                   </tal:block>
@@ -144,7 +144,7 @@
                 <td class="align-right">
                   <input class="warning"
                     name="access_revoke_from_user:method"
-                    title="Revoke selected role(s) from selected user(s)."
+                    title="revoke selected role(s) from selected user(s)"
                     type="submit"
                     value="Revoke role from user" 
                     tal:condition="members" />
@@ -243,7 +243,7 @@
               <input class="button"
                 style="float:right;"
                 name="access_assign_to_user:method"
-                title="Assign a local role to selected user(s)."
+                title="assign a local role to selected user(s)"
                 type="submit"
                 value="Assign" />
               <select name="assign_role">
@@ -409,7 +409,7 @@
                         &nbsp;
                         <input class="button"
                           name="access_assign_to_group:method"
-                          title="Assign a local role to selected user(s)."
+                          title="assign a local role to selected user(s)"
                           type="submit"
                           value="Assign role to group" />
                       </tal:block>
@@ -417,7 +417,7 @@
                     <td class="align-right">
                       <input class="warning"
                         name="access_revoke_from_group:method"
-                        title="Revoke selected role(s) from selected group(s)."
+                        title="revoke selected role(s) from selected group(s)"
                         type="submit"
                         value="Revoke role from group" 
                         tal:condition="groups" />
@@ -434,7 +434,7 @@
             <input class="button"
               style="float:right;"
               name="access_assign_to_group:method"
-              title="Assign selected role to selected group(s)."
+              title="assign selected role to selected group(s)"
               type="submit"
               value="Assign" />
             <select name="assign_role">
@@ -509,7 +509,7 @@
                     <input class="button"
                       type="submit"
                       value="Set restriction"
-                      title="Restrict access to users with a specific role"
+                      title="restrict access to users with a specific role"
                       tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')" />
                   </td>
                 </tr>
@@ -550,7 +550,7 @@
                     <input class="button"
                       type="submit"
                       value="Set restriction"
-                      title="Restrict access to specified IP addresses" />
+                      title="restrict access to specified IP addresses" />
                   </td>
                 </tr>
               </table>
@@ -579,7 +579,7 @@
                 <td>
                   <a class="buttonlink"
                     href="tab_access_authorized_below"
-                    title="Get a comma separated list of user email addresses">
+                    title="get a comma separated list of user email addresses">
                     List email addresses
                   </a>
                 </td>

@@ -96,6 +96,7 @@ div.tabs {
     background-color: &dtml-mainTabBackdrop;;
     background-image: url(/silva/globals/skyrise.gif);
     background-repeat: repeat-x;
+    border-bottom-color: #636da6;
     padding: 0em 0em 0em 15px;
 }
 
@@ -174,8 +175,8 @@ div.tabs a.normal {
 div.riverBar {
   height : 0.3em;
   background: &dtml-mainTabBackgroundSelected;;
-  border-bottom: &dtml-shade50; 1px solid;
   margin-bottom: 0;
+  border-bottom: #636da6 1px solid;
   border-collapse: collapse;
 }
 
@@ -200,7 +201,7 @@ div.footer a {
 }
 
 img.icon {
-    margin-right: 0.2em;
+    margin-right: 0em;
 }
 
 
@@ -314,13 +315,22 @@ table.listing tr.controls-1 {
     background-color: #648589;
 }
 
-table.listing tr.fixed, td.fixed {
-    background-color: &dtml-shade78;;
+tr.unselected, td.unselected {
+  background-color: &dtml-evenRowBackground;;
+}
+
+tr.selected, td.selected {
+  background-color: &dtml-oddRowBackground;;
 }
 
 tr.divider, th.divider, td.divider {
   height : 0.1em;
   background-color: #648589;
+}
+
+/* not in use */
+table.listing tr.fixed, td.fixed {
+    background-color: &dtml-shade78;;
 }
 
 table.listing th {
@@ -449,25 +459,17 @@ table.sublisting {
 
 /* ______________ sidebar navigation ______________ */
 
-tr.unselected, td.unselected {
-  background-color: &dtml-evenRowBackground;;
-}
-
-tr.selected, td.selected {
-  background-color: &dtml-oddRowBackground;;
-}
-
-table.listing th img {
-    vertical-align: bottom;
-    padding: 0;
-}
-
 table.listing th.top {
   color: #e3eef0;
   background: #71969a;
   padding: 0 0 0 0;
-  vertical-align: middle;
+  vertical-align: bottom;
   text-align: center;
+}
+
+table.listing th.top img {
+    vertical-align: bottom;
+    padding: 0;
 }
 
 table.listing th.top a.normal:link {
@@ -756,7 +758,7 @@ div.feedback {
     background: #f3f3d9;
     border: &dtml-messageBorder;;
     border-style: solid solid solid solid;
-    margin: 0;
+    margin: -1px 0 0 0;
     padding: 0.1em 9px 0.2em 9px;
   border-collapse: collapse;
 }
@@ -766,7 +768,7 @@ div.alert {
     background: #f7d1d1;
     border: &dtml-messageBorder;;
     border-style: solid solid solid solid;
-    margin: 0;
+    margin: -1px 0 0 0;
     padding: 0.1em 9px 0.1em 9px;
   border-collapse: collapse;
 }

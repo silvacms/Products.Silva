@@ -102,7 +102,7 @@
                     type="submit"
                     value="Search"
                     accesskey="s"                      
-                    title="Search: alt-s"
+                    title="access key: alt-s"
                   />
                 </td>
               </tr>
@@ -120,8 +120,8 @@
                   <input class="button"
                     style="float:right;"
                     type="submit"
-                    value="Add to selection"
-                    title="Add checked users to your selection list on the right - ctrl-a"
+                    value="Add to clipboard"
+                    title="add checked users to clipboard: alt-a"
                     accesskey="a"                      
                     tal:condition="python:lookup_result and len(lookup_result) > 3">
                   <h3>
@@ -175,9 +175,9 @@
                   colspan="2">
                   <input class="button"
                     type="submit"
-                    value="Add to selection"
+                    value="Add to clipboard"
+                    title="add checked users to clipbaord: alt-a"
                     accesskey="a"                      
-                    title="Add checked users to your selection list on the right - ctrl-a"
                     tal:condition="lookup_result"
                   />
                 </td>
@@ -194,7 +194,7 @@
             <a class="navigation" 
               style="float: right;"
               accesskey="u"
-              title="Return to the access screen with this clipboard - ctrl-u"
+              title="return to the access screen with this clipboard: alt-u"
               href="lookup_back_link"
               tal:attributes="href here/lookup_back_link">
               <u>U</u>se current clipboard...
@@ -205,7 +205,7 @@
               name="lookup_remove_from_selection:method"
               type="submit"
               value="Remove from clipboard"
-              title="Remove users from your clipboard: alt-r"
+              title="remove users from the clipboard: alt-r"
               accesskey="r"
             />
           </metal:block>

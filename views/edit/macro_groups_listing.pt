@@ -69,9 +69,9 @@
               <metal:block define-slot="groups_admin_action">
                 <a class="navigation" 
                   style="float: right;"
-                  accesskey="g"
-                  title="Groups administration... - alt-g"
                   href="tab_access_groups"
+                  title="groups administration: alt-g"
+                  accesskey="g"
                   tal:condition="python:model_is_container and group_service">
                   <u>G</u>roups administration...
                 </a>

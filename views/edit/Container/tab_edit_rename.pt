@@ -109,8 +109,8 @@
 <tfoot>
   <tr class="controls">
     <td colspan="4">
-      <input class="button" style="float:right;" type="submit" value=" Rename " title="Access key: alt-r" accesskey="r" />
-      <input class="cancel" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
+      <input class="button" style="float:right;" type="submit" value=" Rename " title="access key: alt-r" accesskey="r" />
+      <input class="cancel" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="access key: alt-c" accesskey="c" />
     </td>
   </tr>
 </tfoot>

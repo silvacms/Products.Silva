@@ -10,7 +10,7 @@
     type="checkbox"
     value="whatever"
     id="all"
-    title="Select all: alt-a"
+    title="select all: alt-a"
     onChange="toggleSelect();"
   />
   <label for="all"

@@ -123,11 +123,11 @@
             <tfoot>
               <tr class="controls">
                 <td>
-                  <input class="cancel" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
+                  <input class="cancel" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="access key: alt-c" accesskey="c" />
                 </td>
                 <td class="align-right"
                   colspan="2">
-                  <input class="button" type="submit" name="download_xml:method" value=" Export " title="Access key: alt-e" accesskey="e" />
+                  <input class="button" type="submit" name="download_xml:method" value=" Export " title="access key: alt-e" accesskey="e" />
                 </td>
               </tr>
             </tfoot>
@@ -146,7 +146,7 @@
 
 <div tal:replace="nothing" comment="scrap until Docma is running again">
 
-<h3><a href="tab_status" title="Up to Publish tab">
+<h3><a href="tab_status" title="up to Publish tab">
     <img tal:attributes="src string:${root_url}/globals/up_gray.gif" width="9" height="9" border="0" alt="Up to top of Edit tab" />
     Publish
   </a>
@@ -213,10 +213,10 @@
 
           <tr class="controls">
             <td>
-                <input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="Access key: alt-c" accesskey="c" />
+                <input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " onClick="history.back()" title="access key: alt-c" accesskey="c" />
             </td>
             <td colspan="2" align="right">
-                <input class="button" type="submit" name="download_xml:method" value=" Export " title="Access key: alt-e" accesskey="e" />
+                <input class="button" type="submit" name="download_xml:method" value=" Export " title="access key: alt-e" accesskey="e" />
             </td>
           </tr>
         </table>
@@ -309,7 +309,7 @@
           <tr class="controls">
             <td colspan="3" align="right">
             <tal:block condition="may_change_content">
-                &nbsp;&nbsp;<input class="button" type="submit" name="tab_status_silva2word:method" value="Export to Docma" title="Export the current container to Word: alt-d" accesskey="d" />
+                &nbsp;&nbsp;<input class="button" type="submit" name="tab_status_silva2word:method" value="Export to Docma" title="export the current container to Word: alt-d" accesskey="d" />
             </tal:block>
             </td>
           </tr>
@@ -383,7 +383,7 @@
 
 <h3 class="worksheet">
   <a href="tab_edit_import"
-    title="Over to Import screen: alt-i"
+    title="over to Import screen: alt-i"
     accesskey="i">
     <img alt="Over to Export screen"
       border="0"

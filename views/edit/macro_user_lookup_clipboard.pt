@@ -33,7 +33,7 @@
               <metal:block define-slot="clipboard_lookup_action">
                 <a class="navigation" 
                   accesskey="l"
-                  title="Lookup users... - alt-l"
+                  title="lookup users: alt-l"
                   style="float: right;"
                   href="lookup">
                   <u>L</u>ookup users...
