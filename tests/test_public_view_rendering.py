@@ -10,7 +10,7 @@ from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.transform.rendererreg import getRendererRegistry
 
-expected_html = '<?xml version="1.0"?>\n<table><tr><td valign="top"><h2 class="heading">This is a rendering test</h2><p class="p">This is a test of the XSLT rendering functionality.</p></td><td valign="top"/></tr></table>\n'
+expected_html = '<table><tr>\n<td valign="top">\n<h2 class="heading">This is a rendering test</h2>\n<p class="p">This is a test of the XSLT rendering functionality.</p>\n</td>\n<td valign="top"></td>\n</tr></table>\n'
 expected_html2 = '<h2 class="heading">This is a rendering test</h2>\n\n<p class="p">This is a test of the XSLT rendering functionality.</p>\n\n\n               \n\n'
 
 class FakeRenderer:
