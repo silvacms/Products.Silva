@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.10 2003/05/24 13:20:23 kitblake Exp $
+# $Id: DocmaService.py,v 1.11 2003/06/04 16:05:55 guido Exp $
 
 from __future__ import nested_scopes
 
@@ -137,17 +137,9 @@ class DocmaService(SimpleItem):
 
     security.declareProtected(Permissions.access_contents_information, 'get_estimated_time_for_ident')
     def get_estimated_time_for_ident(self, ident):
-        """Returns the estimated time before ident is finished"""
+        """Returns the time it will take for a certain process is done"""
         server = xmlrpclib.Server("http://%s:%s" % (self._host, self._port))
-        i = server.getIdentIndex(ident)
-        if i == -1:
-            if server.getJobStatus(ident) == 'processing':
-                return server.getEstimatedRuntime()
-            else:
-                return 0
-        else:
-            # add 1 because of list-ids starting with 0, then 1 for the processing job
-            return 1 # server.getEstimatedRuntime() * (server.getIdentIndex(ident) + 2)
+        return int(server.getEstimatedIdentTime(ident))
 
     security.declareProtected(Permissions.access_contents_information, 'get_queue')
     def get_queue(self):
