@@ -10,7 +10,7 @@
 <metal:slot fill-slot="main">
 <tal:block define="
     global view here;
-    global dummy view/security_trigger;
+    global dummy model/security_trigger;
     global fields view/memberform/get_fields;
     global silva_permissions here/get_silva_permissions;
     global message_type request/SESSION/message_type | nothing;
