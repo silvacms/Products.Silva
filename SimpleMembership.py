@@ -2,6 +2,7 @@ from IMembership import IMember, IMemberService
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from Membership import cloneMember
 import Globals
 import SilvaPermissions
 from helpers import add_and_edit
@@ -17,7 +18,8 @@ class SimpleMember(SimpleItem.SimpleItem):
         self.id = id
         self._fullname = None
         self._email = None
-
+        self._departments = None
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_fullname')
     def set_fullname(self, fullname):
@@ -27,26 +29,48 @@ class SimpleMember(SimpleItem.SimpleItem):
                               'set_email')
     def set_email(self, email):
         self._email = email
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_departments')
+    def set_departments(self, departments):
+        self._departments = departments
         
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'userid')
     def userid(self):
+        """userid
+        """
         return self.id
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'fullname')
     def fullname(self):
+        """fullname
+        """
+        if self._fullname is None:
+            return self.id
         return self._fullname
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'email')
     def email(self):
+        """email
+        """
         return self._email
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'departments')
+    def departments(self):
+        """departments
+        """
+        return self._departments
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_approved')
     def is_approved(self):
+        """is_approved
+        """
         return 1
     
 Globals.InitializeClass(SimpleMember)
@@ -100,7 +124,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         if member is None:
             members.manage_addProduct['Silva'].manage_addSimpleMember(userid)
             member = getattr(members, userid)
-        return member
+        return cloneMember(member).__of__(self)
 
 Globals.InitializeClass(SimpleMemberService)
 

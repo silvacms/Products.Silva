@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 import Interface
 
 class ISecurity(Interface.Base):
@@ -82,9 +82,8 @@ class ISecurity(Interface.Base):
         """
         pass
     
-    def sec_get_user_info(userid):
-        """Get information for userid.
-        FIXME: describe which info fields exist.
+    def sec_get_member(userid):
+        """Get member object for user id.
         """
         pass
 

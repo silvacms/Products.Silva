@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.41 $
+# $Revision: 1.42 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -9,7 +9,7 @@ from DateTime import DateTime
 from IContainer import IContainer
 # Silva
 import SilvaPermissions
-from UserManagement import user_management
+from Membership import noneMember
 # Groups
 try:
     # Are groups available?
@@ -276,42 +276,44 @@ class Security:
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_find_users')
-    def sec_find_users(self, userid):
+    def sec_find_users(self, search_string):
         """Find users in user database.
         """
-        return user_management.find_users(self, userid)
+        members = []
+        for member in self.service_members.find_members(search_string):
+            members.append(member)
+        return members
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'sec_get_user_info')  
-    def sec_get_user_info(self, userid):
-        """Get information for userid. FIXME: describe which info fields
-        exist.
+                              'sec_get_member')  
+    def sec_get_member(self, userid):
+        """Get information for userid.
         """
-        return user_management.get_user_info(self, userid)
+        return self.service_members.get_member(userid)
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'sec_get_last_author_info')
     def sec_get_last_author_info(self):
-        """Get the info of the last author (provide at least cn and
-        userid).
+        """Get the info of the last author (this is a IMember object)
         """
         # containers have no author
         if IContainer.isImplementedBy(self):
-            return { 'cn': '', 'userid': None }
-
-        # unknown author if none assigned yet
-        if not self._last_author_userid:
-            return { 'cn': 'Unknown author', 'userid': None }
-        # authorwise get cached author info
-        return self._last_author_info
-
+            return noneMember.__of__(self)
+        
+        # get cached author info (may be None)
+        info = self._last_author_info
+        if info is None:
+            return noneMember.__of__(self)
+        else:
+            return info
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_set_last_author_info')
     def sec_update_last_author_info(self):
         """Update the author info with the current author.
         """
         self._last_author_userid = self.REQUEST.AUTHENTICATED_USER.getUserName()
-        self._last_author_info = self.sec_get_user_info(self._last_author_userid)
+        self._last_author_info = self.sec_get_member(self._last_author_userid)
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_userids')
@@ -385,11 +387,12 @@ class Security:
                 item._sec_get_downward_defined_userids_helper(d)
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_userinfos_for_userids')
-    def sec_get_userinfos_for_userids(self, userids):
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_members_for_userids')
+    def sec_get_members_for_userids(self, userids):
         d = {}
+        
         for userid in userids:
-            d[userid] = self.sec_get_user_info(userid)
+            d[userid] = self.sec_get_member(userid)
         return d
 
     security.declareProtected(

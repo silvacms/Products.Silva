@@ -11,8 +11,8 @@
 
 <form>
 <span class="textarea">
-<textarea name="data" cols="65" rows="12" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="userinfo python:model.sec_get_user_info(userid)"
-    tal:condition="userinfo/mail | nothing" tal:replace="userinfo/mail">
+<textarea name="data" cols="65" rows="12" wrap="soft"><repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep"><span tal:define="member python:model.sec_get_member(userid)"
+    tal:condition="member/email | nothing" tal:replace="member/email">
 userid
 </span><span tal:omit-tag="" tal:condition="not:repeat/userid/end">, </span></repeat></textarea>
 </span>
@@ -20,8 +20,8 @@ userid
 
 <ul tal:replace="nothing">
 <repeat tal:omit-tag="" tal:repeat="userid model/sec_get_userids_deep">
-<li tal:define="userinfo python:model.sec_get_user_info(userid)"
-    tal:condition="userinfo/mail | nothing" tal:content="userinfo/mail">
+<li tal:define="member python:model.sec_get_member(userid)"
+    tal:condition="member/email | nothing" tal:content="member/email">
 userid
 </li>
 </repeat>

@@ -18,9 +18,9 @@
 <!-- _________________________ START WORKSHEET _________________________ -->
 <tal:block
   define="
-    all_userinfos view/access_get_all_userinfos;
-    global local_userinfos all_userinfos/local;
-    global upward_userinfos all_userinfos/upward;" />
+    all_members view/access_get_all_members;
+    global local_members all_members/local;
+    global upward_members all_members/upward;" />
 <!-- ______________________ USERS AND ROLES ____________________________ -->
 <table width="100%" cellspacing="0" cellpadding="5" border="0">
 <tr align="left" valign="top">
@@ -42,7 +42,7 @@
   </td>
 </tr>
 <tr class="focus"
-  tal:condition="not:upward_userinfos">
+  tal:condition="not:upward_members">
   <td>
     <i>No users defined above</i>
   </td>
@@ -50,18 +50,18 @@
     &nbsp;
   </td>
 </tr>
-<tal:block repeat="userinfo upward_userinfos">
+<tal:block repeat="member upward_members">
 <tr class="focus"
-  tal:define="oddrow repeat/userinfo/odd"
+  tal:define="oddrow repeat/member/odd"
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
   <td align="left" width="50%">
     <input type="checkbox" name="userids:list" value="userid"
-      tal:attributes="value userinfo/uid" />
-    <b tal:content="userinfo/cn" />
+      tal:attributes="value member/userid" />
+    <b tal:content="member/fullname" />
   </td>
   <td align="right" width="50%">
     <i>has role(s): </i>
-    <b tal:repeat="role python:model.sec_get_upward_roles_for_userid(userinfo['uid'])"
+    <b tal:repeat="role python:model.sec_get_upward_roles_for_userid(member.userid())"
       tal:content="role" />&nbsp;
   </td>
 </tr>
@@ -107,19 +107,19 @@
     Revoke user's roles.
   </td>
 </tr>
-<tal:block repeat="userinfo local_userinfos">
+<tal:block repeat="member local_members">
 <tal:block
-  condition="userinfo"
+  condition="member"
   define="
-    local_roles python:model.sec_get_local_roles_for_userid(userinfo['uid']);
-    upward_roles python:model.sec_get_upward_roles_for_userid(userinfo['uid']);
-    oddrow repeat/userinfo/odd">
+    local_roles python:model.sec_get_local_roles_for_userid(member.userid());
+    upward_roles python:model.sec_get_upward_roles_for_userid(member.userid());
+    oddrow repeat/member/odd">
 <tr class="focus"
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
   <td align="left">
     <input type="checkbox" name="userids:list" value="userid"
-      tal:attributes="value python:userinfo['uid']" />
-    <b tal:content="python:userinfo['cn']" />
+      tal:attributes="value python:member.userid()" />
+    <b tal:content="python:member.fullname()" />
   </td>
   <td align="right">
     <i tal:condition="python:local_roles or upward_roles">has role(s):</i>
@@ -153,19 +153,19 @@
   </td>
   <td align="right" width="1%">
     <input type="checkbox" class="warningbox" name="revoke_roles:list" value=""
-      tal:attributes="value python:'%s||%s' % (userinfo['uid'], role);" />
+      tal:attributes="value python:'%s||%s' % (member.userid(), role);" />
   </td>
 </tr>
 </tal:block>
 </tal:block>
 <tr class="focus-cycle">
   <td>
-    <i tal:condition="not:local_userinfos">No local user access defined</i>&nbsp;
+    <i tal:condition="not:local_members">(no local user access defined)</i>&nbsp;
   </td>
   <td align="right" colspan="2">
     <input type="submit" class="warningbutton" name="access_revoke_from_user:method" value="Revoke"
       title="Revoke selected role(s) from selected user(s)."
-      tal:condition="local_userinfos" />
+      tal:condition="local_members" />
   </td>
 </tr>
 <tr class="controls">

@@ -15,10 +15,10 @@ if userids is None:
 
 selection = view.lookup_get_selection()
 for userid in userids:
-    userinfo = model.sec_get_user_info(userid)
-    if userinfo is None:
+    member = model.sec_get_member(userid)
+    if member is None:
         continue
-    selection[userid] = userinfo
+    selection[userid] = member
 
 return view.tab_access_lookup(
     message_type="feedback", 

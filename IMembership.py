@@ -14,6 +14,10 @@ class IMember(Base):
         """Return users's email address if known, None otherwise.
         """
 
+    def departments():
+        """Return list of departments user is in, or None if no such information.
+        """
+        
     def is_approved():
         """Return true if this member is approved. Unapproved members
         may face restrictions on the Silva site.

@@ -4,10 +4,10 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=userinfo
+##parameters=member
 ##title=
 ##
-if not userinfo.has_key('ou'):
+if not member.departments():
     return '-'
 else:
-    return ', '.join(userinfo['ou'])
+    return ', '.join(member.departments())

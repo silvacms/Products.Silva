@@ -149,7 +149,7 @@ function setReference() {
     <span tal:condition="python:asset.get_modification_datetime() == None" tal:omit-tag="">&nbsp;</span>
   </td>
 <span tal:replace="nothing"> _______ author cell _______ </span>
-  <td tal:content="python:asset.sec_get_last_author_info()['cn']">
+  <td tal:content="python:asset.sec_get_last_author_info().fullname()">
     author name
   </td>
   <td>

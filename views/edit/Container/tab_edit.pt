@@ -173,7 +173,7 @@
     <span tal:condition="python:default.get_modification_datetime() == None">&nbsp;</span>
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
-  <td tal:content="python:default.sec_get_last_author_info()['cn']">
+  <td tal:content="python:default.sec_get_last_author_info().fullname()">
     Author
   </td>
   <span tal:replace="nothing"> _______ shift _______ </span>
@@ -233,12 +233,8 @@
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
   <td>
-    <span tal:content="python:item.sec_get_last_author_info()['cn']">
+    <span tal:content="python:item.sec_get_last_author_info().fullname()">
     author&nbsp;name</span>
-    <span tal:condition="python:item.sec_get_last_author_info()['cn'] == ''">
-      <a class="graylink" title="Down to Publish tab of container"
-        tal:attributes="href string:${item/absolute_url}/edit/tab_status">Publish</a>
-    </span>
   </td>
   <span tal:replace="nothing"> _______ shift _______ </span>
   <td width="36px" align="right" tal:condition="silva_permissions/ApproveSilvaContent">
@@ -340,7 +336,7 @@ There are no active content objects in this folder.
     <span tal:condition="python:item.get_modification_datetime() == None" tal:omit-tag="">&nbsp;</span>
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
-  <td tal:content="python:item.sec_get_last_author_info()['cn']">
+  <td tal:content="python:item.sec_get_last_author_info().fullname()">
     author name
   </td>
   <td>
@@ -409,7 +405,7 @@ There are no active content objects in this folder.
     <span tal:condition="python:asset.get_modification_datetime() == None" tal:omit-tag="">&nbsp;</span>
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
-  <td tal:content="python:asset.sec_get_last_author_info()['cn']">
+  <td tal:content="python:asset.sec_get_last_author_info().fullname()">
     author name
   </td>
   <td>

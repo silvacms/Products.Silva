@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -254,9 +254,9 @@ class ContainerTestCase(ContainerBaseTestCase):
         # issue 47: index created by test user
         # XXX should strip the '(not in ldap)' if using LDAPUserManagement?
         self.assertEquals('TestUser',
-                          self.folder4.index.sec_get_last_author_info()['cn'] )
+                          self.folder4.index.sec_get_last_author_info().userid())
         self.assertEquals('TestUser',
-                          self.publication5.index.sec_get_last_author_info()['cn'] )
+                          self.publication5.index.sec_get_last_author_info().userid())
         # delete default object
         self.folder4.action_delete(['index'])
         self.assertEquals(None, self.folder4.get_default())

@@ -119,9 +119,10 @@ comments here (field description)
     Last author:
   </td>
   <td>&nbsp;</td>
-  <td tal:define="author_info model/sec_get_last_author_info">
-    <a tal:attributes="href python:'mailto:%s' % test(author_info, author_info.get('mail', ''), '')"><span tal:replace="author_info/cn | None" /></a>
+  <td tal:define="author_info model/sec_get_last_author_info" tal:condition="author_info">
+    <a tal:attributes="href author_info/email"><span tal:replace="author_info/fullname" /></a>
   </td>
+  <td tal:condition="not:model/sec_get_last_author_info">&nbsp;</td>
   <td>&nbsp;</td>
 </tr>
 <tr valign="top">
