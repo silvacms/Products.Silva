@@ -23,6 +23,6 @@ class WidgetsRenderer(Acquisition.Implicit):
 
     security.declareProtected("View", "getName")
     def getName(self):
-        return "Basic HTML"
+        return "Normal View (XMLWidgets)"
 
 InitializeClass(WidgetsRenderer)

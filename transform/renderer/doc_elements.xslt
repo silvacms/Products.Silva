@@ -4,6 +4,12 @@
   xmlns:doc="http://infrae.com/ns/silva_document"
   xmlns:silva="http://infrae.com/ns/silva"
   version="1.0">
+  <!--  
+  For your own renderers for Silva Documents, import this stylesheet and
+  override where necessary. It is better not to modify this stylesheet
+  directly. See images_to_the_right.xslt for a documented example.
+  -->
+  
   <xsl:preserve-space elements="heading p pre li em strong super sub underline link" />
   
   <xsl:template match="doc:heading[@type='normal']">

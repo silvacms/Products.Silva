@@ -48,7 +48,7 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
         registry = self.root.service_renderer_registry
         self.assertEqual(
             registry.getDefaultRendererNameForMetaType("Silva Document Version"),
-            "Basic HTML")
+            "Normal View (XMLWidgets)")
         self.assertEqual(
             registry.getDefaultRendererNameForMetaType("Foobar"),
             None)

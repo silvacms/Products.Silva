@@ -26,7 +26,7 @@ class RendererRegistryService(SimpleItem.SimpleItem):
     def __init__(self, id, title):
         self.id = id
         self.title = title
-        self.default_renderer = {'Silva Document Version' : "Basic HTML"}
+        self.default_renderer = {'Silva Document Version' : "Normal View (XMLWidgets)"}
 
     def getRendererRegistry(self):
         # XXX: nasty hack for now, because I can't assign the registry to a simple
@@ -54,7 +54,7 @@ class RendererRegistryService(SimpleItem.SimpleItem):
     def manage_editDefaultRenderers(self, REQUEST=None):
         """Save the changes to the default renderers."""
         if not hasattr(self, 'default_renderer'):
-                self.default_renderer = {'Silva Document Version' : "Basic HTML"}
+                self.default_renderer = {'Silva Document Version' : "Normal View (XMLWidgets)"}
 
         for meta_type in self.getRegisteredContentTypes():
             field_name = meta_type.replace(" ", "_")
@@ -84,7 +84,7 @@ class RendererRegistryService(SimpleItem.SimpleItem):
 
     def getDefaultRendererNameForMetaType(self, meta_type):
         if not hasattr(self, 'default_renderer'):
-            self.default_renderer = {'Silva Document Version' : "Basic HTML"}
+            self.default_renderer = {'Silva Document Version' : "Normal View (XMLWidgets)"}
             self._p_changed = 1
         return self.default_renderer.get(meta_type, None)
 
