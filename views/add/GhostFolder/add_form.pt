@@ -62,7 +62,7 @@
         <script type="text/javascript"
           tal:content="structure here/reference.js" />
         <input type="button"
-          class="navigation"
+          class="transport"
           value="reference..."
           title="find the folder this ghost should refer to: alt-r"
           accesskey="r"

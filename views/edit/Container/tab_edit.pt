@@ -70,7 +70,7 @@
               <tr class="top-controls">
                 <td colspan="6">
                   <div style="float: left;" tal:condition="may_change_content">
-                  <input class="navigation"
+                  <input class="transport"
                     name="add_object:method"
                     type="submit"
                     value="new..."
@@ -85,7 +85,7 @@
                     i18n:attributes="title"
                   >
                   </label>
-                  <select class="navigation"
+                  <select class="transport"
                     name="meta_type"
                     title="select a new item - alt-s"
                     tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
@@ -101,7 +101,7 @@
                     </tal:block>
                   </select>
                   </div>
-                  <a class="navigation"
+                  <a class="transport"
                     style="float: right;"
                     href="tab_edit_import"
                     title="import XML data - alt-i"
@@ -495,7 +495,7 @@
                         />
                       </div>
                       &nbsp;
-                      <input class="navigation"
+                      <input class="transport"
                         name="tab_edit_rename_start:method"
                         type="submit"
                         value="rename..."

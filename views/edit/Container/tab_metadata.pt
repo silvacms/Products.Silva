@@ -74,7 +74,7 @@
                           convert to folder
                         </a>
                       </tal:block>
-                      <a class="navigation"
+                      <a class="transport"
                         href="settings_addables"
                         title="change the addables allowed in this publication: alt-a"
                         accesskey="c"

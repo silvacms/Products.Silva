@@ -68,7 +68,7 @@
         <h3 style="float:left;">
           publishing actions
         </h3>
-        <input class="navigation"
+        <input class="transport"
           name="tab_status_export:method"
           type="submit"
           accesskey="e"

@@ -26,7 +26,7 @@
             <tr class="top-controls">
               <td>
                 <metal:block define-slot="clipboard_lookup_action">
-                  <a class="navigation" 
+                  <a class="transport" 
                     style="float:right;"
                     href="lookup"
                     title="lookup users: alt-l" 

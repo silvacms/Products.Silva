@@ -87,7 +87,7 @@
         <tbody>
           <tr>
             <td style="padding:0;">
-              <a class="navigation"
+              <a class="transport"
                 href="/error_log/manage_main"
                 title="see the error log"
                 accesskey="m"

@@ -646,7 +646,7 @@
             <tr class="controls">
               <td class="align-right"
                 style="padding-top:0.3em;padding-bottom:0.3em;">
-                <a class="navigation"
+                <a class="transport"
                   href="tab_access_authorized_below"
                   title="retrieve a comma separated list of user email addresses"
                   accesskey="e"

@@ -552,8 +552,8 @@ td.selected {
 
 td.unselected {
   background: &dtml-evenRowBackground;;
-  border-top: 1px solid &dtml-evenRowBackground;;
-  border-bottom: px solid &dtml-evenRowBackground;;
+  border-top: 1px solid &dtml-shade74;;
+  border-bottom: none;
 }
 
 td.unselected:hover { 
@@ -655,7 +655,7 @@ select {
   line-height : 96%;
 }
 
-select.navigation {
+select.transport {
   color: &dtml-standaloneButtonFontColor;;
   background : &dtml-standaloneButtonBackground;;
   font-size: 90% ! important;
@@ -683,7 +683,7 @@ input[type="checkbox"] {
  
 /* Plone buttons, "ported" to Silva class names */
 
-input.navigation {
+input.transport {
   font-size: 95%;
     font-weight: &dtml-buttonWeight;;
   color: &dtml-standaloneButtonFontColor;;
@@ -816,9 +816,9 @@ table.listing a.button:hover {
   cursor : pointer;
 }
 
-/* _______ navigation between screens _______ */
+/* _______ transport between screens _______ */
 
-table.listing a.navigation:link {
+table.listing a.transport:link {
   font-size: 100%;
   font-weight: &dtml-buttonWeight;;
   color: &dtml-standaloneButtonFontColor;;
@@ -828,7 +828,7 @@ table.listing a.navigation:link {
   padding: 0em 1em 0.1em 1em;
   text-decoration : none;
 }
-table.listing a.navigation:visited {
+table.listing a.transport:visited {
   font-size: 100%;
   font-weight: &dtml-buttonWeight;;
   color: &dtml-standaloneButtonFontColor;;
@@ -838,7 +838,7 @@ table.listing a.navigation:visited {
   padding: 0em 1em 0.1em 1em;
   text-decoration : none;
 }
-table.listing a.navigation:hover {
+table.listing a.transport:hover {
   color : #e5fffe; 
   background : #74748b; 
   border-color : #99b4cf;
@@ -865,12 +865,12 @@ table.listing td.parent a:hover {
   background : #53538b;
 }
 
-table.listing div.navigation-border {
+table.listing div.transport-border {
   padding-bottom : 1px;
   border: &dtml-standaloneButtonBorder;;
 }
 
-table.listing div.navigation-border:hover {
+table.listing div.transport-border:hover {
   color : #bfffd3; 
   background : #53538b;
 }
@@ -1089,13 +1089,13 @@ input:focus:hover, textarea:focus:hover {
 }
 
 /* cool glow: 53538b */
-input.navigation[type="submit"]:hover, button[type="button"]:hover { 
+input.transport[type="submit"]:hover, button[type="button"]:hover { 
   color : #e5fffe; 
   background : #74748b; 
   border-color : #99b4cf;
 }
 
-input.navigation[type="submit"]:focus {
+input.transport[type="submit"]:focus {
   color : #e9f7ff;
   background : #7a83a6;
 }

@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   tal:define="
     global vein string:status;
-  ">
+">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="
@@ -19,7 +19,7 @@
     published python:model.get_public_version() is not None;
     closed python:model.get_public_version_status() == 'closed';
     next python:model.get_next_version() is not None;
-    " >
+">
 
 <table class="columns columns3">
   <tbody>

@@ -57,7 +57,7 @@
       <tal:block tal:condition="python:field.getId() == 'content_url'">
         <script type="text/javascript"
            tal:content="structure here/reference.js" />
-        <input class="navigation"
+        <input class="transport"
           type="button"
           value="reference..."
           title="find the content this ghost should refer to: alt-r"

@@ -70,7 +70,7 @@
               tal:condition="python: model_is_container and group_service">
               <td>
                 <metal:block define-slot="groups_admin_action">
-                  <a class="navigation" 
+                  <a class="transport" 
                     style="float: right;"
                     href="tab_access_groups"
                     title="groups administration: alt-g"

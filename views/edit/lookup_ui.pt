@@ -35,7 +35,7 @@
       <td class="left">
 
         <span tal:replace="nothing">
-          ______________ parent screen navigation ______________
+          ______________ parent screen transport ______________
         </span>
         <table class="listing">
           <thead>
@@ -46,7 +46,7 @@
                   accesskey="k"
                   i18n:attributes="title"
                   tal:attributes="href here/lookup_back_link">
-                  <div class="navigation-border" i18n:translate="back">
+                  <div class="transport-border" i18n:translate="back">
                     bac<u>k</u>...
                   </div>
                 </a>
@@ -209,7 +209,7 @@
         <!-- Clipboard -->
         <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
           <metal:block fill-slot="clipboard_lookup_action">
-            <a class="navigation" 
+            <a class="transport" 
               style="float: right;"
               accesskey="u"
               title="return to the access screen with this clipboard: alt-u"

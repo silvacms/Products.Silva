@@ -103,7 +103,7 @@
            <td class="field-title">
               <script type="text/javascript"
                 tal:content="structure here/reference.js" />
-              <input class="navigation" 
+              <input class="transport" 
                 type="button" 
                 value="reference..."
                 title="Locate item to refer to: alt-r"

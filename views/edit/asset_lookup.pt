@@ -78,7 +78,7 @@
                     <tal:block content="string:${base_type}s" />
                   </h3>
                   <tal:block condition="python:silva_permissions['ChangeSilvaContent'] and isMetaType">
-                    <input class="navigation"
+                    <input class="transport"
                       type="submit"
                       name="add_object:method" 
                       title="add a new item: alt-n"

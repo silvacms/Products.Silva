@@ -37,7 +37,7 @@
     <thead>
       <tr class="top-controls">
         <td colspan="5">
-          <a class="navigation"
+          <a class="transport"
             style="float: right;"
             title="reload to update the queue lists: alt-r"
             accesskey="r"
