@@ -65,7 +65,7 @@
     </tal:block>
     <tr class="top-controls">
       <td colspan="6" class="align-right">
-        <h3 style="float:left;">
+        <h3 style="float:left;" i18n:translate="">
           publishing actions
         </h3>
         <input class="transport"
@@ -76,6 +76,7 @@
           tal:attributes="
             value string: export...;
             title string:export this ${type}: alt-e;"
+          i18n:attributes="value title"
 	       />
       </td>
     </tr>
@@ -85,19 +86,19 @@
       <th class="listing-left">
         &nbsp;
       </th>
-      <th>
+      <th i18n:translate="publish_modify">
         modify / preview
       </th>
-      <th class="align-right">
+      <th class="align-right" i18n:translate="publish_revision">
         revision
       </th>
-      <th class="align-right">
+      <th class="align-right" i18n:translate="publish_pub_due">
         publication due
       </th>
-      <th class="align-right">
+      <th class="align-right" i18n:translate="publish_exp_due">
         expiration due
       </th>
-      <th class="align-right">
+      <th class="align-right" i18n:translate="publish_published">
         published
       </th>
     </tr>
@@ -171,7 +172,8 @@
             tal:attributes="
               class obj/status_style | default;
               href string:${obj_url}/edit/tab_status;">
-            <tal:block replace="obj/status" />
+              <tal:block content="obj/status" i18n:translate="">
+              </tal:block>
           </a>
           <a class="closed"
             title="publish"
@@ -256,7 +258,7 @@
       <th class="align-right"
         colspan="3">
         <span tal:condition="
-          python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)">
+          python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)" i18n:translate="publish_dateformat">
           day / month / year &nbsp;23:59
         </span>
       </th>
@@ -273,7 +275,7 @@
         style="padding-right:0.5em;"
         colspan="5">
         <label title="access key: alt-m" 
-          accesskey="m">
+          accesskey="m" i18n:translate="publish_time">
           publish time
         </label>
         <tal:block
@@ -291,7 +293,7 @@
           <label 
             for="publish_now_flag" 
             title="access key: alt-u" 
-            accesskey="u">
+            accesskey="u" i18n:translate="publish_now">
             p<u>u</u>blish&nbsp;now?
           </label>
           <tal:block 
@@ -315,7 +317,7 @@
          style="padding-right:0.5em;"
         colspan="5">
         <label title="access key: alt-x" 
-          accesskey="x">
+          accesskey="x" i18n:translate="publish_exp_time">
           expiration time
         </label>
         <tal:block 
@@ -333,7 +335,8 @@
           condition="python: may_approve_content and expireables">
           <label for="clear_expiration"
             title="access key: alt-p"
-            accesskey="p">
+            accesskey="p"
+            i18n:translate="publish_clear_exp">
             clear&nbsp;ex<u>p</u>iration
           </label>
           <field tal:replace="structure view/tab_status_form/clear_expiration/render" />        
@@ -354,6 +357,7 @@
           title="reject pending request for approval: alt-j"
           accesskey="j"
           tal:condition="rejectables"
+          i18n:attributes="value title"
         />
         <input class="revoke"
           type="submit"
@@ -362,6 +366,7 @@
           title="withdraw approval of approved versions: alt-v"
           accesskey="v"
           tal:condition="revokeables"
+          i18n:attributes="value title"
         />
         <input class="close"
           type="submit"
@@ -370,6 +375,7 @@
           title="close published items: alt-c"
           accesskey="c"
           tal:condition="closeables"
+          i18n:attributes="value title"
         />
         <input class="button" 
           type="submit" 
@@ -378,6 +384,7 @@
           title="create new versions of published docs: alt-n" 
           accesskey="n"
           tal:condition="new_versionables"
+          i18n:attributes="value title"
         />
       </td>
       <td class="align-right"
@@ -389,6 +396,7 @@
           title="change publish and expiration times: alt-s"
           accesskey="s"
           tal:condition="python: approveables or closeables or revokeables or rejectables"
+          i18n:attributes="value title"
         />
       </td>
       <td class="align-right">
@@ -399,6 +407,7 @@
           title="approve or publish new versions: alt-o"
           accesskey="o"
           tal:condition="python: approveables or rejectables"
+          i18n:attributes="value title"
         />
       </td>
     </tr>

@@ -140,9 +140,10 @@
                     ___ element name column ___
                   </tal:block>
                   <td class="align-right">
-                    <span tal:replace="element/title">
-                      Element name
-                    </span>
+                    <tal:block content="element/title"
+                    i18n:translate="">
+                    Element name
+                    </tal:block>
                     <span class="warning"
                       tal:condition="element/isRequired">
                       *
@@ -182,7 +183,7 @@
                     ___ element desc. column ___
                   </tal:block>
                   <td>
-                    <tal:block content="structure element/description">
+                    <tal:block i18n:translate="" content="structure element/description">
                       Element description
                     </tal:block>
                     <span class="error"
@@ -196,10 +197,10 @@
             <tr tal:condition="python: set_name != 'silva-content'">
               <th class="align-right">
               </th>
-              <th>
+              <th i18n:translate="metadata_dateformat">
                 date format: day / month / year &nbsp;23:59 
               </th>
-              <th>
+              <th i18n:translate="metadata_acquireable">
                 &#134; acquireable
               </th>
               <th>
@@ -294,7 +295,8 @@
                   ___ element name column ___
                 </tal:block>
                 <td class="align-right"
-                  tal:content="element/title">
+                  tal:content="element/title"
+                  i18n:translate="">
                   Element name
                 </td>
                 <tal:block replace="nothing">

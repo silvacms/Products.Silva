@@ -6,9 +6,11 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:properties;
-    ">
+    "
+    i18n:domain="silva">
 
 <!-- properties (aka tab_metadata) for Publications: XXX Fixme:
      isn't this duplicated code from the same pt above? -->
@@ -37,7 +39,9 @@
           href="settings_addables"
           title="change the addables allowed in this publication: alt-a"
           accesskey="c">
+          <tal:block i18n:translate="">
           configure <u>a</u>ddables...
+          </tal:block>
         </a>
       </td>
     </tr>
@@ -54,7 +58,8 @@
       </tr>
       <tr>
         <td class="top" colspan="4">
-          <h2 tal:attributes="title string:id: ${model/id}">
+          <h2 tal:attributes="title string:id: ${model/id}"
+            i18n:attributes="title">
             <img tal:replace="structure python:view.render_icon(model)" />                      
             layout
           </h2>
@@ -87,7 +92,8 @@
           </span><span class="warning" tal:condition="python:field.is_required()">*</span>
         </td>
         <td>
-          <p tal:condition="model/layout_copied">Layout has been copied for customization.</p>
+          <p tal:condition="model/layout_copied"
+          i18n:translate="layout_copied">Layout has been copied for customization.</p>
           <input tal:replace="structure python:field.render(model.get_own_layout(), request)" />
         </td>
         <td>
@@ -105,7 +111,8 @@
             <a class="button"
               style="float:left;"
               href="copy_layout_submit"
-              title="copy the layout into the Publication in order to customize it">
+              title="copy the layout into the Publication in order to customize it"
+              i18n:translate="layout_customize">
               customize layout
             </a>
           </tal:block>
@@ -117,6 +124,7 @@
             accesskey="l"
             tal:define="js string:return confirm('Really remove copied layout?')"
             tal:attributes="onclick python:(model.layout_copied() and js) or ''"
+            i18n:attributes="value"
           />
         </td>
       </tr>

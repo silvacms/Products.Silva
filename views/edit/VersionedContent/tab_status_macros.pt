@@ -204,7 +204,15 @@ If this content should expire, set the time.
 <tr>
   <th class="align-right"
     colspan="2">
-    <span class="widebody"><label for="publish_now_flag" title="access key: alt-u" accesskey="u">clear ex<u>p</u>iration?</label></span>
+    <span class="widebody">
+      <label 
+        for="publish_now_flag" 
+        title="access key: alt-u" 
+        accesskey="u"
+        i18n:translate="publish_clear_exp"
+        >clear ex<u>p</u>iration?
+    </label>
+  </span>
     <field tal:replace="structure python:view.tab_status_form_change_settings.clear_expiration.render()" />
   </th>
 </tr>

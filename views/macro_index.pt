@@ -178,11 +178,12 @@ function handle_default_action(element, event, action)
     name python: view.get_metadata_element('silva-extra', 'contactname');
     email python: view.get_metadata_element('silva-extra', 'contactemail');
     ">
-  <div style="float: left;">     
-    contact:
+    <div style="float: left;"> 
+      <tal:block i18n:translate="index_contact">contact:</tal:block>
     <a shape="rect"
-      tal:attributes="href string:mailto:${email}">
-      <span tal:replace="python: name or email or 'no name'" />
+      tal:attributes="href string:mailto:${email}"
+      tal:content="python: name or email or 'no name'"
+      i18n:translate="">
     </a>
   </div>
   <div style="float: right;">
@@ -190,7 +191,7 @@ function handle_default_action(element, event, action)
       title="Leave Silva and view the public page: alt-:"
       accesskey=":"
       tal:attributes="href url"
-    >
+      i18n:translate="index_preview_public">
       see public version
     </a>
   </div>
@@ -211,7 +212,7 @@ function handle_default_action(element, event, action)
         onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
         userWindow.focus();;
         return false;;"
-    >
+      i18n:translate="index_user_setting">
       <img border="0"
         height="9"
         width="9"
@@ -224,13 +225,12 @@ function handle_default_action(element, event, action)
     <a href="logout"
       accesskey="q"
       title="Logout of Silva: alt-q"
-    >
+      i18n:translate="index_logout">
       logout
-      <span tal:condition="here/get_user_role"
-        tal:replace="
-          structure string:${here/get_user_role}"
-      />
-      <span tal:replace="userid" />
+      <tal:block tal:condition="here/get_user_role"
+        i18n:name="role"
+        tal:content="structure string:${here/get_user_role}" />
+      <tal:block i18n:name="userid" tal:content="userid" />
     </a>
   </div>
   <a name="bottom">

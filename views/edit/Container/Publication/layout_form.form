@@ -6,6 +6,8 @@
   <action></action>
   <enctype>None</enctype>
   <method>POST</method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>layout</i18n>
 
   <groups multiple="true">
     <group>
@@ -32,7 +34,7 @@
           <whitespace_preserve type="int">1</whitespace_preserve>
         </values>
         <tales>
-            <items>form/service_layouts/get_installed_for_select</items>
+          <items>form/service_layouts/get_installed_for_select</items>
         </tales>
       </field>
       </fields>
