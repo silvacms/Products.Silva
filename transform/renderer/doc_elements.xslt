@@ -296,7 +296,7 @@
   </xsl:template>
 
   <xsl:template match="doc:toc">
-    <xsl:copy-of select="./doc:rendered_html/@*|node()" />
+    <xsl:apply-templates />
   </xsl:template>
 
   <xsl:template match="doc:cite">
