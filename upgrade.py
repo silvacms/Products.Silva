@@ -424,9 +424,6 @@ def unicode_and_metadata_092(obj):
                 # XXX do we really want to continue on errors here instead of an exception?
                 new_value = unicode(old_value, 'cp1252', 'replace')
             values[new_name] = new_value
-        # FIXME: formulator wants utf-8 for validation ...
-        for key in values.keys():
-            values[key] = values[key].encode('utf-8')
         # now set it
         # if an object is a VersionedContent, walk through all versions, else just
         # set it to the current version
