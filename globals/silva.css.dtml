@@ -105,6 +105,9 @@ div.tabs {
     background-color: &dtml-mainTabBackdrop;;
   margin : 0;
     padding: 0 16px 0 16px;
+    border-width: 1px;
+    border-style: none none solid none;
+  border-bottom-color: &dtml-shade80;;
 }
 
 div.tabs a {
@@ -222,10 +225,9 @@ div.flowBar {
   display : block;
     /* IE workaround */
     font-size : 20%;
-    height : 1.8em;
+    height : 1.5em;
   width : 100%;
-  min-height : 4px;
-  max-height : 0.4em;
+  min-height : 3px;
   background: &dtml-mainTabBackgroundSelected;;
   margin: 0;
   padding: 0;
