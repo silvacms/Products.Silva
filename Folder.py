@@ -310,9 +310,11 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
     def get_default(self):
         """Get the default content object of the folder.
         """
-        # NOTE: another dependency on hardcoded name 'default'
-        return getattr(self.aq_base, 'default', None)
-
+        if not hasattr(self.aq_base, 'default'):
+            return None
+        else:
+            return getattr(self, 'default')
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
     def get_modification_datetime(self):
