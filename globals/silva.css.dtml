@@ -653,7 +653,6 @@ table.interlisting {
 
 .focus-rectangle {
   /* for IE5 */
-  /*XXX is it witdh or the whole class ?*/
   width : 96%; /* for IE6 */
   max-width : 98%;
   margin : 0 7px;
@@ -680,35 +679,37 @@ input {
 }
  
 textarea {
-    width: 93%;
+    font: &dtml-inputFont;;
     color : &dtml-inputFontColor;;
   background : &dtml-inputBackground;;
     padding: 0.1em;
     border: &dtml-inputBorder;;  
-    font: &dtml-inputFont;;
-  text-transform: none;
-}
-
-/* 
-* the selector works only for standard compatible browsers like mozilla, so
-* IE ignore this definition below
-*/
-td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget {
-  width: 100%;
 }
 
 textarea.readable {
   font: 100% Verdana, Helvetica, Arial, sans-serif;
 }
 
-input.inputter, select.inputter {
+input.store, select.store {
+  font: &dtml-inputFont;;
   color : &dtml-inputFontColor;;
   background : &dtml-inputBackground;;
   margin-top: 1px;
   margin-bottom: 1px; /* IE bug fix */
   padding: 0.1em;
   border: &dtml-inputBorder;;
-  font: &dtml-inputFont;;
+}
+
+input.store, textarea.store {
+  width: 90%;
+}
+
+/* 
+* this selector works only for standard compatible browsers like mozilla, so
+* IE ignores this definition below
+*/
+td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget, td>input.store, td>textarea.store {
+  width: 100%;
 }
 
 select {
@@ -1178,7 +1179,7 @@ ul.tips-nested {
 
 
 .fixIE6widget {
-  width : 96%;
+  width : 90%;
 }
 
 input:focus, textarea:focus { 

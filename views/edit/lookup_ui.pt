@@ -93,11 +93,11 @@
                 </td>
                 <td class="align-right"
                   style="width:70%;">
-                  <input class="inputter"
+                  <input class="store"
                     name="name"
-                    style="width:100%;"
                     type="text"
-                    value="" />
+                    value=""
+                  />
                 </td>
               </tr>
               <tr class="controls">

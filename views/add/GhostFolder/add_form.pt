@@ -43,7 +43,7 @@
       attributes
     </th>
     <th style="width:50%;">
-      <div class="fixIE6widget">content</div>
+      content
     </th>
     <th i18n:translate="notes">
       notes
@@ -70,9 +70,8 @@
           /><span class="warning" tal:condition="python:field.is_required()">*</span>
       </tal:block>
     </td>
-    <td><div class="fixIE6widget" tal:content="structure python:field.render_from_request(request)">
+    <td tal:content="structure python:field.render_from_request(request)">
       <input />
-        </div>
     </td>
     <td>
       <span tal:content="structure string:${field/description}&nbsp;"

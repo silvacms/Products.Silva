@@ -197,7 +197,8 @@
           </span>
         </td>
         <td>
-          <input type="text"
+          <input class="store"
+            type="text"
             name="title"
             size="40"
             title="Optional title for all assets"
@@ -298,8 +299,8 @@
           i18n:translate="element">
           element
         </th>
-        <th>
-            <div i18n:translate="content" class="fixIE6widget">content</div>
+        <th i18n:translate="content">
+          content
         </th>
         <th width="40%"
           i18n:translate="note">
@@ -323,13 +324,13 @@
         <td class="align-right">
           <span i18n:translate="email_address">email address</span><span class="warning">*</span>
         </td>
-        <td><div class="fixIE6widget">
-          <input class="fixIE6widget"
+        <td>
+          <input class="store"
             type="text"
             name="email"
             tal:attributes="
               value python:here.service_members.get_member(user.getUserName()).email() or ''"
-          /></div>
+          />
         </td>
         <td i18n:translate="email_will_be_sent">
           An e-mail will be sent to you when the item is processed.
@@ -340,10 +341,10 @@
         <td class="align-right" i18n:translate="description">
           description
         </td>
-        <td><div class="fixIE6widget">
+        <td>
           <textarea name="description"
-            class="fixIE6widget"
-          ></textarea></div>
+            class="store"
+          ></textarea>
         </td>
         <td i18n:translate="description_shown_in_queue">
           This description will be shown in the queue and the list of processed items.

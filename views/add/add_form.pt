@@ -46,8 +46,9 @@
       i18n:translate="aspect">
       aspect
     </th>
-    <th style="width:50%;">
-      <div class="fixIE6widget" i18n:translate="content">content</div>
+    <th style="width:50%;"
+      i18n:translate="content">
+      content
     </th>
     <th i18n:translate="notes">
     notes
@@ -61,9 +62,8 @@
         title
       </span><span class="warning" tal:condition="python:field.is_required()">*</span>
     </td>
-    <td><div class="fixIE6widget" tal:content="structure python:field.render_from_request(request)">
-            <input />
-        </div>
+    <td>
+      <input tal:replace="structure python:field.render_from_request(request)" />
     </td>
     <td tal:content="structure string:${field/description}&nbsp;">
       note

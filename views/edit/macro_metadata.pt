@@ -151,18 +151,15 @@
                   <tal:block replace="nothing">
                     ___ element widget column ___
                   </tal:block>
-                  <td>
-                    <div class="fixIE6widget"
-                      tal:define="                        
-                        data python: element['render'] or element['view'];
-                        data python: element_name in truncatable and ct(data, 50) or data;
-                        "
-                      tal:condition="
-                        python: element['isEditable'] or not element['isAcquired']"
-                      tal:content="
-                        structure data">
-                      Element edit widget
-                    </div>
+                  <td tal:define="                        
+                    data python: element['render'] or element['view'];
+                    data python: element_name in truncatable and ct(data, 50) or data;
+                    "
+                    tal:condition="
+                      python: element['isEditable'] or not element['isAcquired']"
+                    tal:content="
+                      structure data">
+                    element edit widget
                   </td>
                   <tal:block replace="nothing">
                     ___ element acquired value column ___

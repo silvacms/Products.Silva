@@ -10,7 +10,7 @@
     global vein string:editor;
     refresh_time python:19 * 60;
     member python:here.service_members.get_member(here.REQUEST.AUTHENTICATED_USER.getUserName());
-    editor python: member and member.editor() or 'field_editor';
+    editor python: member and member.editor() or 'forms_editor';
     active_editor string:kupu;
   ">
 <metal:block use-macro="here/macro_index/macros/master">
@@ -83,7 +83,7 @@
     <tal:condition condition="python:model.meta_type == 'Silva Document' and hasattr(view, 'kupu')">
     <a title="edit with the kupu WYSIWYG editor: alt-("
       accesskey="("
-      tal:content="python: test(active, 'kupu', ' kupu editor...')"
+      tal:content="python: test(active, 'kupu editor', ' kupu editor...')"
       tal:attributes="
         class python: test(active, 'selected', None);
         href python: '%s/edit?editor=kupu' % model.absolute_url()">
@@ -91,10 +91,10 @@
     <div class="air"> </div>
     <a title="edit with the forms editor: alt-)"
       accesskey=")"
-      tal:content="python: test(active, ' field editor...', 'field editor')"
+      tal:content="python: test(active, 'forms editor...', 'forms editor')"
       tal:attributes="
         class python: test(active, None, 'selected');
-        href python: '%s/edit?editor=field_editor' % model.absolute_url()">
+        href python: '%s/edit?editor=forms_editor' % model.absolute_url()">
     </a>
     </tal:condition>
     <a title="see the content in the public layout: alt-;"
@@ -287,8 +287,8 @@
         // Called from getAssetReference
         function openAssetLookupWindow(url_to_open) {
           // Do the opening
-          width = 585;
-          height = 300;
+          width = 760;
+          height = 500;
           leftPos = (screen.width - width) / 2;
           topPos = (screen.height - height) / 2;
           aspects = 'toolbar=yes,status=yes,scrollbars=yes,resizable=yes,width='+width+',height='+height+',left='+leftPos+',top='+topPos;
