@@ -343,8 +343,8 @@
         <td><div class="fixIE6widget">
           <textarea name="description"
             class="fixIE6widget"
-          ></textarea>
-        </td></div>
+          ></textarea></div>
+        </td>
         <td i18n:translate="description_shown_in_queue">
           This description will be shown in the queue and the list of processed items.
         </td>
