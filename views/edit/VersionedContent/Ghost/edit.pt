@@ -7,7 +7,6 @@
     title model/get_title_editable;
     breadcrumb_vein string:Editor;
 ">
-
 <table class="columns columns3">
   <tbody>
     <tr>
@@ -32,7 +31,8 @@
     link_status python:here.get_ghost_link_status_text(version);
     content_url python:version.get_content_url();
  ">
-  <table class="listing">
+ 
+ <table class="listing">
     <thead>
       <tal:block replace="nothing">
         ______________ vein + title row ______________
@@ -64,7 +64,13 @@
 
       <tr class="even" valign="top">
         <td class="field-title">
-          Path
+         <script type="text/javascript"
+           tal:content="structure here/reference.js" />
+
+          <input type="button" class="navigation" value="Path..."
+            tal:define="asset_context python:here.get_start_container();"
+            tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Content&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+            />
           <span class="required">*</span>
         </td>
         <td>

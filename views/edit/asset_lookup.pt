@@ -16,6 +16,7 @@
     objects python:model.get_tree();
     silva_permissions here/get_silva_permissions;
     filter request/filter | request/SESSION/filter | string:Asset;
+    isMetaType python:filter not in ('Asset', 'Content');
     asset_context request/asset_context | request/SESSION/asset_context | string:/;
     dummy python: request.SESSION.set('filter', filter);
     dummy python: request.SESSION.set('asset_context', asset_context);
@@ -47,7 +48,7 @@
           style="margin:0;"
           id="sortable"
           tal:define="
-            global assets python:test((filter == 'Asset'), model.get_assets(), model.get_assets_of_type('Silva %s'%filter));
+            global assets python:here.asset_lookup_get_objects(filter);
             empty python:len(assets) == 0">
           <thead>
             <tal:block replace="nothing">
@@ -73,7 +74,7 @@
                   <h3 style="float:left;">
                     <tal:block content="string:${filter}s" />
                   </h3>
-                  <tal:block condition="python:silva_permissions['ChangeSilvaContent'] and filter != 'Asset'">
+                  <tal:block condition="python:silva_permissions['ChangeSilvaContent'] and isMetaType">
                     <input class="navigation"
                       type="submit"
                       name="add_object:method" 
@@ -84,7 +85,7 @@
                     <input type="hidden"
                       id="meta_type"
                       name="meta_type"
-                      tal:attributes="value string:Silva ${filter}"
+                      tal:attributes="value filter"
                     />
                     <input type="hidden"
                       name="mode_asset:int"
