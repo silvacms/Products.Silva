@@ -208,7 +208,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'This is a test link, you insensitive clod!',
             'http://www.snpp.com/')
         directory = os.getcwd()
-        zip_in = open(join(directory,'data','test.zip'))
+        zip_in = open(join(directory,'data','test1.zip'))
         adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
         succeeded, failed = adapter.importArchive(zip_in)
         get_transaction().commit(1)
@@ -236,7 +236,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'This is a test link, you insensitive clod!',
             'http://www.snpp.com/')
         directory = os.getcwd()
-        zip_in = open(join(directory,'data','test.zip'))
+        zip_in = open(join(directory,'data','test1.zip'))
         adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
         succeeded, failed = adapter.importArchive(zip_in)
         get_transaction().commit(1)

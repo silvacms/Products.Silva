@@ -30,6 +30,10 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
         # a hard deadline in place, things have to keep moving.  in an
         # ideal world, the output compared against would be a string
         # literal, of course.
+        # XXX: Not only does it suck, but it fails in a very small number
+        # of cases: If the second changes between the exportToString and
+        # the getXML, the expected_xml != the output of the getXML. 
+        # AIEIEIEIIIEIIEIEEE!
         obj = self.root.silva_xslt.test_document
         settings = xmlexport.ExportSettings()
         exporter = xmlexport.theXMLExporter

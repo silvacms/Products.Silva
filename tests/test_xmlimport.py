@@ -35,7 +35,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         source_file.close()
         folder = importfolder.testfolder.testfolder2
         self.assertEquals(
-            u'another; testfolder',
+            u'This is &another; testfolder',
             folder.get_title())
         
     def test_link_import(self):

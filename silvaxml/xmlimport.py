@@ -435,7 +435,11 @@ class URLHandler(SilvaBaseHandler):
 
 class ImportSettings(xmlimport.BaseSettings):
     def __init__(self):
-        xmlimport.BaseSettings.__init__(self, ignore_not_allowed=True)
+        xmlimport.BaseSettings.__init__(
+            self,
+            ignore_not_allowed=True,
+            import_filter_factory=collapser.CollapsingHandler
+            )
 
 class ImportInfo:
     def __init__(self):
