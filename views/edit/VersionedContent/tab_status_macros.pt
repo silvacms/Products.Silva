@@ -20,13 +20,23 @@
   >
   <br />
   <p style="margin-top:0.3em; margin-bottom:0.2em;">
-  <span class="subhead">
-    Publication
-    <tal:block condition="end_time">
-      and expiration
-    </tal:block>
-    time of public version<sup>&nbsp;</sup>
+
+  <span class="subhead" tal:condition="end_time" i18n:translate="publication_public_expire_time">
+    Publication and expiration time of public version <sup>&nbsp;</sup>
   </span>
+
+  <span class="subhead" tal:condition="not:end_time" i18n:translate="publication_public_time">
+    Publication time of public version <sup>&nbsp;</sup>
+  </span>
+
+<!--   <span class="subhead" i18n:translate="publication_public_time"> -->
+<!--     Publication -->
+<!--     <tal:block condition="end_time" i18n:translate="publication_public_expire_time"> -->
+<!--       and expiration -->
+<!--     </tal:block> -->
+<!--     time of public version<sup>&nbsp;</sup> -->
+<!--   </span> -->
+
   <br />
   <tal:block
     replace="

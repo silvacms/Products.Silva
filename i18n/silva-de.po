@@ -35,6 +35,12 @@ msgstr "Editor"
 msgid "publish"
 msgstr "Publizieren"
 
+msgid "publication_public_time"
+msgstr "Veröffentlichungszeitpunkt der öffentlichen Version"
+
+msgid "publication_public_expire_time"
+msgstr "Veröffentlichungs-/Verfallszeitpunkt der öffentlichen Version"
+
 msgid "publishing actions"
 msgstr "Veröffentlichungseinstellungen"
 
@@ -56,8 +62,12 @@ msgstr "publiziert"
 msgid "unapproved"
 msgstr "nicht genehmigt"
 
+
+msgid "create a new editable version of the selected old one: alt-f"
+msgstr "Neue editierbare Version der ausgewählten alten Version erzeugen: alt-f"
+
 msgid "draft"
-msgstr "skizze"
+msgstr "entwurf"
 
 msgid "approved"
 msgstr "genehmigt"
