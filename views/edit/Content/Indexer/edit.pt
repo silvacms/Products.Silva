@@ -65,16 +65,6 @@
       <tr class="controls">
         <td class="align-right"
           colspan="3">
-          <input class="cancel"
-            style="float:left;"
-            type="button"
-            name="edit_cancel"
-            value="Cancel"
-            title="access key: alt-c"
-            accesskey="c"
-            onClick="history.back()"
-            i18n:attributes="value title accesskey"
-          />
           <input class="button"
             type="submit"
             value="Update index"
@@ -87,5 +77,10 @@
     </tfoot>
   </table>
 </form>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 </html>

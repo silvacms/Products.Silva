@@ -114,19 +114,8 @@
 
     <tfoot>
       <tr class="controls">
-        <td>
-          <input class="cancel"
-            type="button"
-            name="edit_cancel" 
-            value=" Cancel " 
-            title="Access key: alt-c" 
-            accesskey="c" 
-            onClick="history.back()"
-            tal:condition="python: template.id == 'edit'"
-          />
-        </td>
         <td class="align-right" 
-          colspan="2">
+          colspan="3">
           <input class="button"
             type="submit"
             name="form_submitted"
