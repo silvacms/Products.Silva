@@ -22,6 +22,14 @@ class SilvaObject:
 
     # ACCESSORS
 
+    # create 'title' attribute for some Zope compatibility (still shouldn't set
+    # titles in properties tab though)
+    #security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    #                          'title')
+    #def _get_title_helper(self):
+    #    return self.get_title() # get_title() can be defined on subclass
+    #title = ComputedAttribute(_get_title_helper)
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):
