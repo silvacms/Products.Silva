@@ -10,11 +10,6 @@
 <link rel="stylesheet" href="globals/silva.css" tal:attributes="href here/globals/silva.css/absolute_url" />
 <link rel="stylesheet" href="frontend.css" tal:attributes="href here/frontend.css/absolute_url"
   tal:condition="python:template.id == 'tab_preview'" />
-<style type="text/css" media="all"
-  tal:content="string:
-    @import url(${here/globals/extra.css/absolute_url});
-    ">  
-</style>
 <script tal:replace="nothing"> _______ application specific stylesheet extension _______ </script>
 <link rel="stylesheet" href="ext_stylesheet"
   tal:condition="python:hasattr(here, 'extension_style_url')" 
