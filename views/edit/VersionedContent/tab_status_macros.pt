@@ -208,11 +208,10 @@ Notes
 
 <span tal:replace="nothing"> _______ Editor approves _______ </span>
 <div class="focus-box"
-  style="padding-top:1em;"
+  style="padding-top:0;"
   metal:define-macro="approve_new">
 <form action="tab_status_approve" method="POST">
-<table class="listing"
-  style="margin-bottom:0em;">
+<table class="listing sublisting">
 <tr class="top-controls">
 <td colspan="2">
 <h3>Approve request for approval<span tal:condition="python:may_change_content and unapproved and published"> of new version</span></h3>
@@ -289,7 +288,7 @@ Empty indicates no expiration.
 
 <span tal:replace="nothing"> _______ Author/Editor withdraws/rejects request for  approval _______ </span>
 <div class="focus-box"
-  style="padding-top:1em;"
+  style="padding-top:0;"
   metal:define-macro="withdraw_request_approval">
 <form action="tab_status_withdraw" method="POST">
 <table class="listing">
@@ -348,7 +347,7 @@ The message may be viewed by interested authors.
 
 <span tal:replace="nothing"> _______ Revoke approval _______ </span>
 <div class="focus-box"
-  style="padding-top:1em;"
+  style="padding-top:0;"
   metal:define-macro="revoke_approval">
 <form action="tab_status_revoke" method="POST">
 <table class="listing">
@@ -385,7 +384,7 @@ If further editing is required, first revoke the approval.
 
 <span tal:replace="nothing"> _______ Revert to previous _______ </span>
 <div class="focus-box"
-  style="padding-top:1em;"
+  style="padding-top:0;"
   metal:define-macro="revert_to_previous">
 <form action="tab_status_revert_to_previous" method="POST">
 <table class="listing">
@@ -419,7 +418,7 @@ The current editable version can be replaced with the previous (published) versi
 
 <span tal:replace="nothing"> _______ Manual close _______ </span>
 <div class="focus-box"
-  style="margin-top:0;padding-top:0;"
+  style="padding-top:0;"
   metal:define-macro="manual_close">
 <form action="tab_status_close" method="POST">
 <table class="listing">

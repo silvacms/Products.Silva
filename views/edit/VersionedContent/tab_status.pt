@@ -147,7 +147,7 @@ _______ manual close section here _______
 </check>
 
 
-<span tal:replace="nothing"> _____________________ export _____________________ </span>
+<span tal:replace="nothing"> _____________________ export table _____________________ </span>
     <div class="focus-box"
       style="margin-top:0em;">
       <form action="." enctype="multipart/form-data" method="POST">

@@ -57,12 +57,12 @@ mainTabBackgroundNotSelected:string=black
 
 headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
 headingFontColor:string=#444446
-headingSize1:string=150%
-headingSize2:string=135%
-headingSize3:string=120%
-headingSize4:string=110%
-headingSize5:string=105%
-headingSize6:string=100%
+headingSize1:string=140%
+headingSize2:string=125%
+headingSize3:string=110%
+headingSize4:string=105%
+headingSize5:string=100%
+headingSize6:string=95%
 
 descriptionFont:string=bold 80% Verdana, Helvetica, Arial, sans-serif
 
