@@ -100,7 +100,7 @@ requiredField:string=url(required.gif) right no-repeat
 textTransform:string=lowercase
 noBorder:string=none
 evenRowBackground:string=#c6d2dd
-oddRowBackground:string=#000000
+oddRowBackground:string=#d7e4f0
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 inputFontColor:string=#333767
