@@ -85,7 +85,7 @@
               </tal:block>
               <tr>
                 <td class="top"
-                  colspan="6">
+                  colspan="5">
                   <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
                     &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
@@ -99,7 +99,7 @@
                 where there is no "place reference" button - nasty javascript needed.
               </tal:block>
               <tr class="top-controls" tal:replace="nothing">
-                <td colspan="6">
+                <td colspan="5">
                   <div style="float: left;"
                     tal:condition="may_change_content">
                   <input class="transport"
@@ -166,7 +166,7 @@
               </tal:block>
               <tr class="odd"
                 tal:condition="python: not(default_document or publishables or assets)">
-                <td colspan="6" i18n:translate="no_content_objects_in_folder">
+                <td colspan="5" i18n:translate="no_content_objects_in_folder">
                   There is no content here.
                 </td>
               </tr>
@@ -319,9 +319,9 @@
                         id
                       </label>
 
-                    <tal:block condition="python: hasattr(view, 'externalEditLink_')">
-                      <span tal:replace="structure python: view.externalEditLink_(asset)" />
-                    </tal:block>
+                      <tal:block condition="python: hasattr(view, 'externalEditLink_')">
+                        <span tal:replace="structure python: view.externalEditLink_(asset)" />
+                      </tal:block>
 
                     </td>
                     <tal:block replace="nothing">
@@ -362,12 +362,6 @@
                       tal:define="last_author python:(asset.sec_get_last_author_info().fullname() or default)">
                       unknown
                     </td>
-                    <tal:block replace="nothing">
-                      _______ move symbols (none) _______
-                    </tal:block>
-                    <td>
-                      &nbsp;
-                    </td>
                   </tr>
                 </tal:block>
               </tal:block>
@@ -378,7 +372,7 @@
                 ______________ controls ______________
               </tal:block>
               <tr class="controls">
-                <td colspan="6" class="align-right">
+                <td colspan="5" class="align-right">
                   <tal:block condition="may_change_content">
                     <tal:block tal:condition="python:(default_document or publishables or assets)">
                       <input class="transport"
