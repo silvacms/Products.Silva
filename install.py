@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.9.4.18 2004/06/01 09:44:31 guido Exp $
+# $Id: install.py,v 1.97.4.9.4.19 2004/06/24 17:43:14 guido Exp $
 """Install for Silva Core
 """
 # Python
@@ -406,6 +406,7 @@ def add_helper(root, id, info, add_func, default_if_existent=0, folder='layout')
     if default_if_existent and hasattr(root.aq_base, id):
         id = 'default_' + id
     text = read_file(filename, info, folder)
+    text = text.replace('{__silva_version__}', root.get_silva_product_version())
     add_func(root, id, text)
 
 def pt_add_helper(root, id, text):
