@@ -445,7 +445,7 @@ def unicode_and_metadata_092(obj):
     for set_name, el_name_mapping in set_el_name_mapping.items():
         for old_name, new_name in el_name_mapping.items():
             #print 'Testing for', old_name, 'on object', obj.absolute_url()
-            old_value = obj.getProperty(old_name)
+            old_value = obj.aq_inner.getProperty(old_name)
             if old_value is None:
                 old_value = getattr(obj.aq_inner, old_name, None)
                 if old_value is None:
