@@ -48,11 +48,14 @@
       </tal:block>
       <td class="main">
 
-<form id="group_assets"
-  name="group_assets"
-  action="tab_access_groups_delete"
-  method="post"
-  tal:define="groups view/get_locally_defined_groups">
+<tal:block replace="nothing">
+  _____________________ add group _____________________
+</tal:block>
+<form 
+  method="POST" 
+  action="add_object_submit" 
+  name="focusbox" 
+  enctype="multipart/form-data">
   <table class="listing">
     <thead>
       <tr tal:replace="nothing">
@@ -68,6 +71,88 @@
           </h2>
         </td>
       </tr>
+      <tr class="top-controls">
+        <td colspan="3">
+          <h3 i18n:translate="add_group">
+            create a group
+          </h3>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="even">
+        <td class="align-right"
+          width="10%">
+          id<span class="warning">*</span>
+        </td>
+        <td style="width: 50%;">
+          <input class="store"
+            type="text" 
+            value="" 
+            name="field_object_id" 
+            size="20" 
+          />
+        </td>
+        <td>
+          No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;
+        </td>
+      </tr>
+      <tr class="odd">
+        <td class="align-right">
+          type<span class="warning">*</span>
+        </td>
+        <td>
+          <select class="store"
+            name="meta_type">
+            <option value="Silva Group">
+              Group: a group defined by a list of users
+            </option>
+            <option value="Silva Virtual Group">
+              Virtual Group: a group defined by a list of normal groups
+            </option>
+            <option value="Silva IP Group">
+              IP Group: a group based on ip addresses
+            </option>
+          </select>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="controls">
+        <td class="align-right"
+          colspan="3">
+          <input class="button" 
+            type="submit" 
+            name="add_submit" 
+            value="save" 
+            title="access key: alt-s" 
+            accesskey="s" 
+            i18n:attributes="title value"
+          />
+          <input class="button"
+            type="submit"
+            name="add_edit_submit"
+            value="save + edit"
+            title="access key: alt-e"
+            accesskey="e"
+            i18n:attributes="title value"
+          />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+<form id="group_assets"
+  name="group_assets"
+  action="tab_access_groups_delete"
+  method="post"
+  tal:define="groups view/get_locally_defined_groups">
+  <table class="listing">
+    <thead>
       <tr class="top-controls">
         <td colspan="5">
           <h3 i18n:translate="groups_located_in_folder">
@@ -169,91 +254,6 @@
             onclick="return confirm('Really delete?')"
             i18n:attributes="title value onclick"
             tal:condition="groups"
-          />
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-</form>
-
-<tal:block replace="nothing">
-  _____________________ add group _____________________
-</tal:block>
-<form 
-  method="POST" 
-  action="add_object_submit" 
-  name="focusbox" 
-  enctype="multipart/form-data">
-  <table class="listing">
-    <thead>
-      <tr class="top-controls">
-        <td colspan="3">
-          <h3 i18n:translate="add_group">
-            add a group
-          </h3>
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="even">
-        <td class="align-right"
-          width="10%">
-          id<span class="warning">*</span>
-        </td>
-        <td style="width: 50%;">
-          <input class="store"
-            type="text" 
-            value="" 
-            name="field_object_id" 
-            size="20" 
-          />
-        </td>
-        <td>
-          No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;
-        </td>
-      </tr>
-      <tr class="odd">
-        <td class="align-right">
-          type<span class="warning">*</span>
-        </td>
-        <td>
-          <select class="store"
-            name="meta_type">
-            <option value="Silva Group">
-              Group: a group defined by a list of users
-            </option>
-            <option value="Silva Virtual Group">
-              Virtual Group: a group defined by a list of normal groups
-            </option>
-            <option value="Silva IP Group">
-              IP Group: a group based on ip addresses
-            </option>
-          </select>
-        </td>
-        <td>
-          &nbsp;
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr class="controls">
-        <td class="align-right"
-          colspan="3">
-          <input class="button" 
-            type="submit" 
-            name="add_submit" 
-            value="save" 
-            title="access key: alt-s" 
-            accesskey="s" 
-            i18n:attributes="title value"
-          />
-          <input class="button"
-            type="submit"
-            name="add_edit_submit"
-            value="save + edit"
-            title="access key: alt-e"
-            accesskey="e"
-            i18n:attributes="title value"
           />
         </td>
       </tr>
