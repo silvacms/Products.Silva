@@ -1,3 +1,5 @@
+Version of this document: $Revision: 1.7 $
+
 Installing Silva
 
   Silva depends on a set of file-system Python products for Zope for

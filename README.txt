@@ -1,3 +1,5 @@
+Version of this document: $Revision: 1.6 $
+
 Silva
 
   Silva is a Zope-based web application designed for the creation and
@@ -59,4 +61,3 @@ Using Silva
 License
   
   Silva is released under the BSD license. See 'LICENSE.txt'.
-
