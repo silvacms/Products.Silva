@@ -435,8 +435,8 @@ class ClearEditorCache:
     __implements__ = IUpgrader
 
     def upgrade(self, root):
-        if hasattr(root, 'service_editor'):
-            editor_service = getattr(root, 'service_editor')
+        editor_service = getattr(root, 'service_editor', None)
+        if editor_service is not None:
             cache = editor_service._get_editor_cache()
             zLOG.LOG('Silva', zLOG.INFO, 'Clear Editor Service cache')
             cache.clear()
