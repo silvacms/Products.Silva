@@ -127,7 +127,6 @@ def install(root):
 
     # add or update service metadata
     configureMetadata(root)
-
     
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -145,6 +144,7 @@ def is_installed(root):
     return hasattr(root.service_views, 'Silva')
 
 def configureMetadata(root):
+    print 'Configuring metadata'
     from os import path
     from Products.Annotations.Extensions.SilvaInstall import install as install_annotations
     from Products.SilvaMetadata.Extensions.SilvaInstall import install as install_metadata
@@ -764,11 +764,7 @@ def setup_catalog(silva_root):
     columns = [
         'id', 
         'meta_type', 
-        'object_path', 
-        'publication_datetime',
-        'expiration_datetime', 
-        'version_status', 
-        'object_type'
+        'silva_object_url',
         ]
 
     for column_name in columns:
@@ -780,13 +776,9 @@ def setup_catalog(silva_root):
     indexes = [
         ('id', 'FieldIndex'),
         ('meta_type', 'FieldIndex'),
-        ('object_path', 'KeywordIndex'),
         ('path', 'PathIndex'),
         ('fulltext', 'ZCTextIndex'),        
-        ('creation_datetime', 'DateIndex'),        
-        ('publication_datetime', 'FieldIndex'),
         ('version_status', 'FieldIndex'),
-        ('object_type', 'FieldIndex')
         ]
 
     for field_name, field_type in indexes:
