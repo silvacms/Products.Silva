@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h2 {
-  font-size : 150%;
+  font-size : 160%;
   margin-top : 0.5em;
 }
 
@@ -215,7 +215,7 @@ td.even table td {
 
 /* override default indent */
 ul {
-  padding-left: 1.4em; 
+  padding-left: 1.7em; 
   margin : 0.5em 0em;
 }
 
