@@ -1,17 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
-
-# Zope
+# $Revision: 1.18 $
+from Content import Content
+from Versioning import Versioning, VersioningError
 from OFS import Folder
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from DateTime import DateTime
-
-# Silva
 import SilvaPermissions
-from Versioning import Versioning, VersioningError
-from Content import Content
 
 class VersionedContent(Content, Versioning, Folder.Folder):
     security = ClassSecurityInfo()
@@ -19,9 +14,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     # there is always at least a single version to start with,
     # created by the object's factory function
     _version_count = 1
-
-    _cached_datetime = None
-    _cached_data = None
     
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -116,38 +108,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         if version_id is None:
             return None # There is no public document
         return getattr(self, version_id)
-
-    security.declareProtected(SilvaPermissions.View, 'view')
-    def view(self, view_type='public'):
-        """
-        """
-        if view_type != 'public':
-            return VersionedContent.inheritedAttribute('view')(self, view_type)
-
-        if (self._cached_datetime is None or
-                self._cached_datetime < self.get_public_version_publication_datetime() or
-                self._cached_datetime < self.service_extensions.get_refresh_datetime()):
-            data = VersionedContent.inheritedAttribute('view')(self, view_type)
-            self._cached_datetime = DateTime()
-            if self.is_cacheable():
-                self._cached_data = data
-            else:
-                self._cached_data = None
-        else:
-            data = self._cached_data
-            if data is None:
-                data = VersionedContent.inheritedAttribute('view')(self, view_type)
-
-        return data
         
-    security.declareProtected(SilvaPermissions.View, 'is_cacheable')
-    def is_cacheable(self):
-        """Return true if the result of the view method can be safely
-        cached.
-        """
-        # by default nothing is safely cacheable
-        return 0
-    
 InitializeClass(VersionedContent)
 
 class CatalogedVersionedContent(VersionedContent):

@@ -6,7 +6,7 @@
 <!-- ____________________________ start index_html/slot main ___________________________ -->
 
 <tal:block define="
-  global objects python:model.get_processed_status_tree(model);
+  global objects python:model.get_status_tree();
   global silva_permissions view/get_silva_permissions" />
 
 <div class="margins">
@@ -117,107 +117,107 @@
   tal:repeat="obj objects">
 <cycle tal:define="oddrow repeat/obj/odd" tal:omit-tag="">
 <tr class="focus-cycle"
-  tal:define="indent obj/indent;
-              ref obj/ref"
+  tal:define="indent python:obj[0];
+              item python:obj[1];
+              ref python:model.create_ref(item)"
   tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
 
 <span tal:replace="nothing"> _______ checkbox + icon _______ </span>
 <td align="right" nowrap="1">
 <input type="checkbox" name="refs:list" value="value"
-  tal:condition="obj/implements_versioning"
+  tal:condition="python:item.implements_versioning()"
   tal:attributes="value ref; checked python:test(here.is_item_in_ids(ref),'checked','')" />
 <a href="edit" title="Edit..."
   tal:attributes="
-    href string:${obj/absolute_url}/edit/tab_edit;
-    title obj/meta_type">
-<img tal:replace="structure python:view.render_icon(obj['meta_type'])" />
+    href string:${item/absolute_url}/edit/tab_edit;
+    title item/meta_type">
+<img tal:replace="structure python:view.render_icon(item.meta_type)" />
 </a>
 </td>
 
 <span tal:replace="nothing"> _______ id cell _______ </span>
 <td valign="top">
 <a title="Edit..."
-  tal:condition="python:obj['id'] != 'index'"
-  tal:attributes="href string:${obj/absolute_url}/edit;
-                  class obj/status_style"
-  tal:define="id obj/id"
-  tal:content="python: test(len(id) > 20, '%s...' % id[:17], id)">id
+  tal:condition="python:item.id != 'index'"
+  tal:attributes="href string:${item/absolute_url}/edit;
+                  class python:view.get_status_style(item)"
+  tal:content="python:here.service_utils.truncate(item.id, 20)">id
 </a>
 <a title="Edit..."
-  tal:condition="python:obj['id'] == 'index'"
-  tal:attributes="href string:${obj/absolute_url}/edit;
-                  class obj/status_style">index of...
+  tal:condition="python:item.id == 'index'"
+  tal:attributes="href string:${item/absolute_url}/edit;
+                  class python:view.get_status_style(item)">index of...
 </a>
 </td>
 
 <span tal:replace="nothing"> _______ title cell _______ </span>
 <td valign="top">
-<tal:block condition="python:obj['title_html'] != ''">
+<tal:block condition="python:item.get_title_html() != ''">
 
 <img tal:replace="nothing" width="12px" height="12px" align="left"
   tal:attributes="width python:'%spx' % str(indent * 32 + 32);
                   src string:${silva_root}/globals/pixel.gif" />
 
 <a class="blacklink position-relative" title="Preview..."
-  tal:attributes="href string:${obj/absolute_url}/edit/tab_preview;
+  tal:attributes="href string:${item/absolute_url}/edit/tab_preview;
                   style python:'left:%s%%' % str(indent*8)"
-  tal:condition="python:not obj['container_meta_type'] == 'Silva Publication'
-                        or not obj['id'] == 'index'">
-<span tal:replace="structure obj/title_html">title</span>
+  tal:condition="python:not item.get_container().meta_type == 'Silva Publication'
+                        or not item.id == 'index'">
+<span tal:replace="structure item/get_title_html">title</span>
 </a>
 
 <a class="blacklink" title="Preview..."
-  tal:attributes="href string:${obj/absolute_url}/edit/tab_preview"
-  tal:condition="python:obj['container_meta_type'] == 'Silva Publication'
-                        and obj['id'] == 'index'">
-<b tal:content="structure string:${obj/get_title_html}">title</b>
+  tal:attributes="href string:${item/absolute_url}/edit/tab_preview"
+  tal:condition="python:item.get_container().meta_type == 'Silva Publication'
+                        and item.id == 'index'">
+<b tal:content="structure string:${item/get_title_html}">title</b>
 </a>
 </tal:block>
 
-<tal:block condition="python:obj['title_html'] == ''">
+<tal:block condition="python:item.get_title_html() == ''">
 &nbsp;
 </tal:block>
 </td>
 
 <span tal:replace="nothing"> _______ version cell _______ </span>
 <td align="right" valign="top">
-<tal:block condition="obj/implements_versioning">
+<tal:block condition="item/implements_versioning">
 <tal:block
-  define="unpublished_status obj/next_version_status;
-  published_status obj/public_version_status"
-  condition="python:obj['container_meta_type'] != 'Silva Publication'
-                    or obj['id'] != 'index'">
+  define="unpublished_status item/get_next_version_status;
+  published_status item/get_public_version_status"
+  condition="python:item.get_container().meta_type != 'Silva Publication'
+                    or item.id != 'index'">
 <a class="redlink" title="Down to Publish tab of item"
   tal:condition="python:unpublished_status == 'not_approved'"
-  tal:attributes="href string:${obj/absolute_url}/edit/tab_status">Not&nbsp;approved</a>
+  tal:attributes="href string:${item/absolute_url}/edit/tab_status">Not&nbsp;approved</a>
 <a class="yellowlink" title="Down to Publish tab of item"
   tal:condition="python:unpublished_status == 'request_pending'"
-  tal:attributes="href string:${obj/absolute_url}/edit/tab_status">Pending</a>
+  tal:attributes="href string:${item/absolute_url}/edit/tab_status">Pending</a>
 <a class="greenlink" title="Down to Publish tab of item"
   tal:condition="python:unpublished_status == 'approved'"
-  tal:attributes="href string:${obj/absolute_url}/edit/tab_status">Approved</a>
+  tal:attributes="href string:${item/absolute_url}/edit/tab_status">Approved</a>
 <a class="bluelink" title="Down to Publish tab of item"
   tal:condition="python:unpublished_status == 'no_next_version'
                         and published_status != 'closed'"
-  tal:attributes="href string:${obj/absolute_url}/edit/tab_status">None</a>
+  tal:attributes="href string:${item/absolute_url}/edit/tab_status">None</a>
 <a class="graylink" title="Down to Publish tab of item"
   tal:condition="python:unpublished_status == 'no_next_version'
                         and published_status == 'closed'"
-  tal:attributes="href string:${obj/absolute_url}/edit/tab_status">None</a>
+  tal:attributes="href string:${item/absolute_url}/edit/tab_status">None</a>
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0"
-  tal:condition="python:obj['id'] != 'index'" />
+  tal:condition="python:item.id != 'index'" />
 <a href="folder" title="Down to Publish tab of folder"
-  tal:condition="python:obj['id'] == 'index'"
-  tal:attributes="href string:${obj/absolute_url}/../edit/tab_status">
+  tal:condition="python:item.id == 'index'"
+  tal:attributes="href string:${item/absolute_url}/../edit/tab_status">
 <img tal:attributes="src string:${silva_root}/globals/silvafolder.gif" width="16" height="16" border="0" alt="Down to Publish tab of folder" /></a>
 </tal:block>
 <span tal:replace="nothing">
 <!-- this could be more efficient if we change get_status_tree (delete below and scrap condition above) -->
 </span>
-<tal:block condition="python:obj['container_meta_type'] == 'Silva Publication'
-                             and obj['id'] == 'index'">
+<tal:block condition="python:item.get_container().meta_type == 'Silva Publication'
+                             and item.id == 'index'">
 <a class="graylink" title="Down to Publish tab of publication"
-  tal:attributes="href string:${obj/absolute_url}/../edit/tab_status">See
+  tal:attributes="href string:${item/absolute_url}/../edit/tab_status">See
 <img tal:attributes="src string:${silva_root}/globals/silvapublication.gif" width="16" height="16" border="0" alt="Down to Publish tab of folder" /></a>
 </tal:block>
 </tal:block>
@@ -225,21 +225,21 @@
 
 <span tal:replace="nothing"> _______ publish date cell _______ </span>
 <td valign="top">
-<tal:block condition="obj/implements_versioning">
-<span tal:condition="python:obj['next_version_publication_datetime'] != None"
-  tal:replace="structure python:view.service_utils.backend_short_datetime_to_str(obj['next_version_publication_datetime'])" tal:omit-tag="">21 oct 2001 18:18</span>
-<span tal:condition="python:obj['next_version_publication_datetime'] == None"
+<tal:block condition="item/implements_versioning">
+<span tal:condition="python:item.get_next_version_publication_datetime() != None"
+  tal:replace="structure python:view.service_utils.backend_short_datetime_to_str(item.get_next_version_publication_datetime())" tal:omit-tag="">21 oct 2001 18:18</span>
+<span tal:condition="python:item.get_next_version_publication_datetime() == None"
   tal:omit-tag="">&nbsp;</span>
 </tal:block>
 </td>
 
 <span tal:replace="nothing"> _______ public link cell _______ </span>
 <td align="right">
-<tal:block condition="obj/implements_versioning">
-<tal:block define="published_status obj/public_version_status">
+<tal:block condition="item/implements_versioning">
+<tal:block define="published_status item/get_public_version_status">
 <a class="bluelink" href="public.html" title="See the public version"
   tal:condition="python:published_status == 'published'"
-  tal:attributes="href string:${obj/absolute_url}">&nbsp;Published</a>
+  tal:attributes="href string:${item/absolute_url}">&nbsp;Published</a>
 <span tal:condition="python:published_status == 'no_public_version'"
   tal:replace="structure string:&nbsp;">None</span>
 <span title="Public version is closed"

@@ -1,58 +1,55 @@
 <!-- ___________________________ start index_html ______________________ -->
-<tal:block define="global breadcrumb_vein string:Contents;" />
-<html metal:use-macro="here/macro_index/macros/master">
+<html  metal:use-macro="here/macro_index/macros/master">
 <div metal:fill-slot="main" tal:omit-tag="">
 <!-- ___________________________ start index_html/slot main ____________________________ -->
 
 <tal:block define="
   global objects python:model.get_tree();
-  global silva_permissions here/get_silva_permissions;
-  dummy model/security_trigger;
-  global addables model/get_silva_addables;
-  " />
+  global silva_permissions here/get_silva_permissions" />
+
 <div class="margins">
-  <h2><img tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
-    Contents of: <span class="folder-title" tal:content="structure string:${model/id}&nbsp;&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
+  <h2><img src="%s" width="16" height="16" alt="%s" 
+        tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    Contents of <span class="folder-title" tal:content="structure string:&laquo;${model/get_title_html}&raquo;">title here</span>
   </h2>
 </div>
+
 <form action="." name="silvaObjects" method="POST">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
+  <tr>
+    <td class="divider" width="3" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
+  </tr>
+
 <span tal:replace="nothing"> ______________ framing table header ______________ </span>
-<tr class="topcontrols" valign="bottom">
+<tr class="topcontrols" valign="bottom"> 
   <!-- top row of complete table with sidebar -->
   <td width="22%" nowrap="1">
-    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication: alt-[" accesskey="["
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><a href="treelink" title="Up to containing publication"
       tal:condition="python:model != model.get_root()"
       tal:attributes="href python:model.aq_parent.get_publication().absolute_url() + '/edit/tab_edit'"><img width="16" height="16" border="0" alt="Up to containing Publication" hspace="3"
       tal:attributes="src python:test(model.get_publication() == model, '%s/globals/up_publication_gray.gif'%silva_root, '%s/globals/up_tree_gray.gif'%silva_root)" /></a>
-    <span class="tablehead3">Publication</span>
-    <a href="../../edit/tab_edit" title="Up one level: alt-]" accesskey="]"
+    <span class="back3">Publication</span>
+    <a href="../../edit/tab_edit" title="Up one level"
       tal:condition="python:model != model.get_root()"><img tal:attributes="src string:${silva_root}/globals/up_level_gray.gif" width="16" height="16" border="0" alt="Up one level" hspace="5" /></a>
   </td>
-  <td><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
+  <td class="divider"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="22" /></td>
   <td>
-    <tal:block condition="not:silva_permissions/ChangeSilvaContent">
-    &nbsp;
-    </tal:block>
-    <tal:block condition="silva_permissions/ChangeSilvaContent">&#8201;
-      <input class="button" type="submit" name="add_object:method" value=" New..." title="Add a new item: alt-n" accesskey="n" />
-      <label for="meta_type" title="Access key: alt-s" accesskey="s"> </label>
-      <select name="meta_type" id="meta_type" onChange="JavaScript:silvaObjects['add_object:method'].click();"  title="Select a new item: alt-s">
-        <option value="None">Add:</option>
-        <tal:block tal:repeat="addable addables">
-        <option tal:attributes="value addable/name" tal:content="addable/name"></option>
-        </tal:block>
-      </select>
-    </tal:block>
+    <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="3" height="16" /><img src="%s" width="16" height="16" alt="%s" 
+      tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
+    <span class="back3"><span tal:replace="model/id">id</span>
   </td>
   <td align="right">
-    <tal:block condition="silva_permissions/ChangeSilvaContent">
-      <input class="button" type="submit" name="tab_edit_import:method" value=" Import..." title="Import XML data: alt-i" accesskey="i" />&nbsp;
-    </tal:block>
+    <select name="meta_type"
+      tal:attributes="onChange string:location.href='${model/absolute_url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value">
+      <option value="" disabled>Select...</option>
+      <tal:block tal:repeat="addable model/get_silva_addables">
+        <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])" 
+               tal:attributes="value addable/name" tal:content="addable/name"></option>
+       </tal:block>
+    </select>
+    &nbsp;
+    <input class="button" type="submit" name="add_object:method" value=" Add " title="Add an object to this folder" />&nbsp;&nbsp;
   </td>
-</tr>
-<tr>
-  <td class="divider" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="2" /></td>
 </tr>
 
 <span tal:replace="nothing"> _____________________ sidebar _____________________ </span>
@@ -61,37 +58,38 @@
   <td>
     <!-- inner table for sidebar -->
     <table cellspacing="0" cellpadding="1" border="0" width="100%">
-     <span tal:replace="nothing"> ______________ publication header ______________ </span>
+<span tal:replace="nothing"> ______________ publication header ______________ </span>
       <tr>
-        <td class="border"
-          tal:attributes="class python:test(model == model.get_publication(), 'hilight', 'focus-fixed')" tal:define="url python:model.get_publication().absolute_url()">
+        <th align="left"
+          tal:attributes="class python:test(model == model.get_publication(), 'focus-light', nothing)">
           <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="16" />
-          <a href="top" title="Up to publication top"
-            tal:attributes="href string:${url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(model.get_publication().meta_type)" /></a>
-          <a class="blacklink" href="top" title="Up to publication top"
-            tal:attributes="href string:${url}/edit/tab_edit"><span tal:replace="structure python:model.get_publication().get_title_or_id_html()">Publication top</span></a>
-        </td>
+          <a href="top" title="Up to publication top" 
+            tal:define="url python:model.get_publication().absolute_url()"
+            tal:attributes="href string:${url}/edit/tab_edit"><img tal:attributes="src string:${silva_root}/globals/silvapublication.gif" width="16" height="16" border="0" alt="Silva Publication" /></a>
+          <a class="blacklink" href="top" title="Up to publication top" tal:define="url python:model.get_publication().absolute_url()"
+            tal:attributes="href string:${url}/edit/tab_edit"><span tal:replace="structure python:model.get_publication().get_title_html()">Publication top</span></a>
+        </th>
       </tr>
 
-      <span tal:replace="nothing"> ______________ pub folders ______________ </span>
+<span tal:replace="nothing"> ______________ pub folders ______________ </span>
       <rowset tal:omit-tag=""
         tal:repeat="indent_item python:model.get_publication().get_container_tree()">
-        <tr tal:define="item python:indent_item[1]; indent python:indent_item[0];
+        <tr tal:define="item python:indent_item[1]; indent python:indent_item[0]; 
           oddrow repeat/indent_item/odd">
-          <td class="hilight"
-            tal:attributes="class python:test(model == item, 'hilight', 'focus')">
-            <div tal:attributes="style python:'margin-left:'+str(indent * 16 + 5)" tal:define="url item/absolute_url">
-              <a href="folder" title="Manage..."
-                tal:attributes="
-                  href string:${url}/edit/tab_edit;
-                  title string:Manage '${item/id}'"><img src="%s" width="16" height="16" alt="%s"
-                tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
-              <a class="blacklink" href="title" title="id"
-                tal:attributes="href string:${url}/edit/tab_edit;
-                                title string:id: ${item/id}">
-                <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_or_id_html()">no title</span>
-              </a>
-            </div>
+          <td class="highlight"
+            tal:attributes="class python:test(model == item, 'focus-light', 'focus')">
+            <img width="5" height="5" tal:attributes="width python:indent * 16 + 5; src string:${silva_root}/globals/pixel.gif" />
+            <span no-class="position-relative"
+              no-tal:attributes="style python:'left:%s%%' % str(indent*3)">
+            <a href="folder" title="Manage folder"
+              tal:attributes="href string:${item/absolute_url}/edit/tab_edit"><img src="%s" width="16" height="16" alt="%s" 
+              tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
+            <a class="blacklink" href="title" title="id"
+              tal:attributes="href string:${item/absolute_url}/edit/tab_edit;
+                              title string:id: ${item/id}">
+              <span tal:replace="structure python:item.getProperty('short_title') or item.get_title_html()">no title</span>
+            </a>
+            </span>
           </td>
         </tr>
       </rowset>
@@ -107,7 +105,7 @@
 <table cellspacing="0" cellpadding="3" border="0" width="100%">
 <span tal:replace="nothing"> ______________ listing header ______________ </span>
 <tr tal:condition="python:len(objects) != 0 or model.get_default()">
-  <th align="right" width="1%">
+  <th align="left" width="1%">
     #
   </th>
   <th align="left" width="2%">
@@ -120,50 +118,48 @@
     Preview
   </th>
   <th align="left" width="15%">
-    Last&nbsp;modified
+    Modified&nbsp;date
   </th>
   <th align="left" width="15%">
     Author
   </th>
   <th align="right" width="2%">
-    &nbsp;&nbsp;&nbsp;&nbsp;Shift&nbsp;
+    Shift&nbsp;&nbsp;
   </th>
 </tr>
 
 <span tal:replace="nothing"> ______________ default row ______________ </span>
 <!-- default -->
-<tr class="focus-fixed" tal:condition="model/get_default">
-<tal:block tal:define="default model/get_default; url default/absolute_url">
+<tr class="focus" tal:condition="model/get_default" tal:define="default model/get_default">
   <span tal:replace="nothing"> _______ position cell _______ </span>
   <td align="right">
     0
   </td>
   <span tal:replace="nothing"> _______ checkbox + icon cell _______ </span>
   <td nowrap="1">
-    <input type="checkbox" name="ids:list" value="value"
+    <input type="checkbox" name="ids:list" value="value" 
       tal:attributes="value default/id" />
     <a href="index" title="Edit this item"
-      tal:attributes="
-        href python:here.get_editor_link(default);
-        title default/meta_type"><img tal:replace="structure python:view.render_icon(default.meta_type)" /></a>
+      tal:attributes="href python:default.absolute_url()+ '/edit/tab_edit'"><img tal:replace="structure python:view.render_icon(default.meta_type)" /></a>
   </td>
   <span tal:replace="nothing"> _______ id cell _______ </span>
   <td>
     <a class="blacklink" href="default" title="Edit"
-      tal:attributes="href python:here.get_editor_link(default);
-                      class python:view.get_status_style(default)"
-      tal:content="structure string: ${default/id}&nbsp;of...">
+      tal:attributes="href python:default.absolute_url() + '/edit/tab_edit';
+                      class python:view.get_status_style(default)" 
+      tal:content="string: ${default/id} of...">
       index
-    </a><span tal:omit-tag=""
-           tal:condition="python:default.is_version_published() or default.is_version_approved()"><img tal:attributes="src string:${silva_root}/globals/checkmark.gif" width="10" height="10" border="0" alt="Content approved or published" />
+    </a>
+    <span tal:condition="python:default.is_version_published() or default.is_version_approved()" tal:omit-tag="">
+      <img tal:attributes="src string:${silva_root}/globals/checkmark.gif" width="10" height="10" border="0" alt="Content approved or published" />
     </span>
   </td>
   <span tal:replace="nothing"> _______ title cell _______ </span>
   <td>
     <a class="blacklink" title="Preview"
-      tal:condition="python:default.get_title_html() != ''"
-      tal:attributes="href string:${url}/edit/tab_preview">
-      <span tal:replace="structure default/get_title_html">title</span>
+      tal:attributes="href string:${default/absolute_url}/edit/tab_preview">
+      <span tal:replace="structure default/get_title_html"
+        tal:condition="python:default.get_title_html() != ''">title</span>
     </a>
   </td>
   <span tal:replace="nothing"> _______ modification date cell _______ </span>
@@ -173,58 +169,54 @@
     <span tal:condition="python:default.get_modification_datetime() == None">&nbsp;</span>
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
-  <td> 
-    <a class="blacklink" title="Down to Status tab of item"
-      tal:attributes="href string:${url}/edit/tab_status"><span tal:replace="python:default.sec_get_last_author_info().fullname()">
-    Author</span></a>
+  <td tal:content="python:default.sec_get_last_author_info()['cn']">
+    Author
   </td>
-  <span tal:replace="nothing"> _______ shift _______ </span>
+  <span tal:replace="nothing"> _______ move buttons _______ </span>
   <td>
     &nbsp;
   </td>
-</tal:block>
 </tr>
 
 <span tal:replace="nothing"> _____________________ publishables _____________________ </span>
 
 <span tal:replace="nothing"
-  tal:define="global publishables python:model.get_ordered_publishables()">
+  tal:define="global publishables python:model.get_ordered_publishables()"> 
   ______________ listing iteration ______________ </span>
-<!-- iteration over ordered publishables -->
 <rowset tal:omit-tag="" tal:repeat="item publishables">
-<cycle tal:omit-tag="" tal:define="oddrow repeat/item/odd; item_url item/absolute_url; model_url model/absolute_url">
-<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
+<cycle tal:omit-tag="" tal:define="oddrow repeat/item/odd">
+<!-- iteration over ordered publishables -->
+<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
   <span tal:replace="nothing"> _______ position cell _______ </span>
   <td align="right" tal:content="repeat/item/number">
     #
   </td>
   <span tal:replace="nothing"> _______ checkbox + icon cell _______ </span>
   <td nowrap="1">
-    <input type="checkbox" name="ids:list" value="value"
+    <input type="checkbox" name="ids:list" value="value" 
       tal:attributes="value item/id" />
-    <a href="object" title="Edit"
-      tal:attributes="
-        href python:here.get_editor_link(item);
-        title item/meta_type"><img tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
+    <a href="object" title="Edit" 
+      tal:attributes="href string:${item/absolute_url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
   </td>
   <span tal:replace="nothing"> _______ id cell _______ </span>
   <td>
     <a title="Edit"
-      tal:attributes="href python:here.get_editor_link(item);
+      tal:attributes="href string:${item/absolute_url}/edit/tab_edit; 
       class python:view.get_status_style(item)">
       <span tal:replace="item/id">id</span>
-    </a><span tal:omit-tag=""
-           tal:condition="python:item.implements_versioned_content()
+    </a>
+    <span tal:condition="python:item.implements_versioned_content()
                          and (item.is_version_published()
-                         or item.is_version_approved())"><img tal:attributes="src string:${silva_root}/globals/checkmark.gif" width="10" height="10" border="0" alt="Content approved or published" title="Content is approved or published" />
+                         or item.is_version_approved())">
+      <img tal:attributes="src string:${silva_root}/globals/checkmark.gif" width="10" height="10" border="0" alt="Content approved or published" title="Content is approved or published" />
     </span>
   </td>
   <span tal:replace="nothing"> _______ title cell _______ </span>
   <td>
     <a class="blacklink" title="Preview"
-      tal:condition="python:item.get_title_html() != ''"
-      tal:attributes="href string:${item_url}/edit/tab_preview">
-      <span tal:replace="structure item/get_title_html">title</span>
+      tal:attributes="href string:${item/absolute_url}/edit/tab_preview">
+      <span tal:replace="structure item/get_title_html"
+        tal:condition="python:item.get_title_html() != ''">title</span>
     </a>
   </td>
   <span tal:replace="nothing"> _______ modification date cell _______ </span>
@@ -232,34 +224,23 @@
     <span tal:condition="python:item.get_modification_datetime() != None"
       tal:replace="structure python:view.service_utils.backend_short_datetime_to_str(item.get_modification_datetime())">21 oct 2001 18:18</span>
     <span tal:condition="python:item.get_modification_datetime() == None" tal:omit-tag="">
-    &nbsp;
-    </span>
+<a class="graylink" title="Down to Publish tab of publication"
+  tal:attributes="href string:${item/absolute_url}/edit/tab_status">
+<img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" alt="Down to Publish tab of folder" /></a>
+</span>
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
   <td>
-    <a class="blacklink" title="Down to Status tab of item"
-      tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
-      tal:attributes="href string:${item_url}/edit/tab_status"
-      tal:content="python:item.sec_get_last_author_info().fullname()">
-      author&nbsp;name
-    </a>
-    <a class="graylink" title="Down to Publish tab of container"
-      tal:condition="python:item.implements_container()"
-      tal:attributes="href string:${item_url}/edit/tab_status">
-      n/a
-    </a>
-    <span 
-      tal:condition="python:item.implements_content()and not item.implements_versioned_content()"
-      tal:replace="python:item.sec_get_last_author_info().fullname()">
-      author name
-    </span>
+    <span tal:content="python:item.sec_get_last_author_info()['cn']">
+    author&nbsp;name</span>
+    <span tal:condition="python:item.sec_get_last_author_info()['cn'] == ''">&nbsp;</span>
   </td>
-  <span tal:replace="nothing"> _______ shift _______ </span>
+  <span tal:replace="nothing"> _______ move buttons _______ </span>
   <td width="36px" align="right" tal:condition="silva_permissions/ApproveSilvaContent">
     <a href="" title="Move down"
-      tal:attributes="href string:${model_url}/edit/tab_edit_move_down?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/down.gif" width="16" height="12" alt="Move down" border="0" /></a>
+      tal:attributes="href string:${model/absolute_url}/edit/tab_edit_move_down?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/down.gif" width="16" height="12" alt="Move down" border="0" /></a>
     <a href="" title="Move up"
-      tal:attributes="href string:${model_url}/edit/tab_edit_move_up?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/up.gif" width="16" height="12" alt="Move up" border="0" /></a>
+      tal:attributes="href string:${model/absolute_url}/edit/tab_edit_move_up?id=${item/id}"><img tal:attributes="src string:${silva_root}/globals/up.gif" width="16" height="12" alt="Move up" border="0" /></a>
   </td>
   <td width="36px" align="right" tal:condition="not:silva_permissions/ApproveSilvaContent">
   </td>
@@ -268,7 +249,7 @@
 </rowset>
 
 <span tal:replace="nothing"> ______________ if no active publishables in this folder ______________ </span>
-<tr class="focus"
+<tr class="focus-light" 
   tal:condition="python:len(objects) == 0 and not model.get_default()">
 <td colspan="6">
 <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="12" />&nbsp;
@@ -276,25 +257,30 @@ There are no active content objects in this folder.
 </td>
 </tr>
 
-<span tal:replace="nothing"> ______________ move ______________ </span>
+<span tal:replace="nothing"> ______________ deactivate + move + P <-> F ______________ </span>
 <tr class="controls-cycle"
   tal:condition="python:len(publishables)">
-  <td colspan="8"
-    tal:condition="python:len(publishables) >= 2 and silva_permissions['ApproveSilvaContent']"><span class="widebody"><label for="new_position" title="Access key: alt-p" accesskey="p">Move selected items to <u>p</u>osition:</label></span>
-    <select name="new_position" id="new_position" title="Choose new position: alt-p">
+  <td colspan="8">
+    <input tal:condition="python:silva_permissions['ApproveSilvaContent'] and len(publishables)" 
+      class="button" type="submit" name="tab_edit_deactivate:method" value="Deactivate" title="Remove items from the publication Table of Contents" />                
+    <tal:block condition="python:len(publishables) > 1 and silva_permissions['ApproveSilvaContent']">&nbsp;&nbsp;<span class="widebody">Move selected item(s) to position:</span>
+    <select name="new_position">
       <tal:block repeat="item publishables">
       <option value="0" tal:attributes="value repeat/item/number"
         tal:content="repeat/item/number" />
       </tal:block>
-      <option value="0"
+      <option value="0"                     
         tal:attributes="value python:len(publishables) + 1">end</option>
-    </select>&nbsp;&nbsp;
-    <input tal:condition="silva_permissions/ApproveSilvaContent" class="button" type="submit" 
-      name="tab_edit_move_to:method" value=" Move " title="Move items into selected position: alt-m" accesskey="m" />&nbsp;
+    </select>&nbsp;&nbsp;&nbsp;
+    <input tal:condition="silva_permissions/ApproveSilvaContent"
+      class="button" type="submit" name="tab_edit_move_to:method" value="Move" title="Move item(s) into selected position" />&nbsp;&nbsp;
+    </tal:block>
+    <input tal:replace="nothing" class="button" type="submit" name="transform_folder_to_pub:method" value="Folder <-> Pub" title="Transform folders to publications and back" />
+    <span tal:condition="python:len(publishables) <= 1">&nbsp;</span>
   </td>
 </tr>
 
-<span tal:replace="nothing"> _____________________ deactivated (and deprecated)_____________________ </span>
+<span tal:replace="nothing"> _____________________ deactivated _____________________ </span>
 
 <span tal:replace="nothing"
   tal:define="global nonactives python:model.get_nonactive_publishables()">
@@ -310,21 +296,21 @@ There are no active content objects in this folder.
 
 <tal:block repeat="item nonactives">
 <tal:block define="oddrow repeat/item/odd">
-<tr class="focus-cycle"
+<tr class="focus-cycle" 
   tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
   <td>
     &nbsp;
   </td>
   <span tal:replace="nothing"> _______ checkbox + icon cell _______ </span>
   <td nowrap="1">
-    <input type="checkbox" name="ids:list" value="value"
+    <input type="checkbox" name="ids:list" value="value" 
       tal:attributes="value item/id" />
     <a href="object" title="Edit this (nonactive) item"
-      tal:attributes="href python:here.get_editor_link(item)"><img tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
+      tal:attributes="href string:${item/absolute_url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(item.meta_type)" /></a>
   </td>
    <td>
     <a title="Edit"
-      tal:attributes="href python:here.get_editor_link(item);
+      tal:attributes="href string:${item/absolute_url}/edit/tab_edit; 
       class python:view.get_status_style(item)">
       <span tal:replace="item/id">id</span>
     </a>
@@ -337,6 +323,7 @@ There are no active content objects in this folder.
   <span tal:replace="nothing"> _______ title cell _______ </span>
   <td>
     <a class="blacklink" title="Preview"
+ 
       tal:attributes="href string:${item/absolute_url}/edit/tab_preview">
       <span tal:replace="structure item/get_title_html"
         tal:condition="python:item.get_title_html() != ''">title</span>
@@ -349,8 +336,8 @@ There are no active content objects in this folder.
     <span tal:condition="python:item.get_modification_datetime() == None" tal:omit-tag="">&nbsp;</span>
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
-  <td tal:content="python:item.sec_get_last_author_info().fullname()">
-    author name
+  <td tal:content="python:item.sec_get_last_author_info()['cn']">    
+    author name 
   </td>
   <td>
     &nbsp;
@@ -364,7 +351,7 @@ There are no active content objects in this folder.
   <td colspan="8">
     <input tal:condition="silva_permissions/ApproveSilvaContent"
       class="button" type="submit" name="tab_edit_activate:method" value="Activate" title="Return items to the publication Table of Contents" />
-  </td>
+  </td> 
 </tr>
 
 </rowgroup>
@@ -385,23 +372,21 @@ There are no active content objects in this folder.
 
 <rowset tal:omit-tag="" tal:repeat="asset assets">
 <cycle tal:omit-tag="" tal:define="oddrow repeat/asset/odd">
-<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus-cycle', 'focus')">
+<tr class="focus-cycle" tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
   <td>
     &nbsp;
   </td>
   <span tal:replace="nothing"> _______ checkbox + icon cell _______ </span>
   <td nowrap="1">
-    <input type="checkbox" name="ids:list" value="value"
+    <input type="checkbox" name="ids:list" value="value" 
       tal:attributes="value asset/id" />
     <a href="asset" title="Edit this asset"
-      tal:attributes="
-        href python:here.get_editor_link(asset);
-        title asset/meta_type"><img tal:replace="structure python:view.render_icon(asset.meta_type)" /></a>
+      tal:attributes="href string:${asset/absolute_url}/edit/tab_edit"><img tal:replace="structure python:view.render_icon(asset.meta_type)" /></a>
   </td>
   <span tal:replace="nothing"> _______ id + title cell _______ </span>
-  <td>
+  <td> 
     <a class="blacklink" href="asset" title="Edit this asset"
-      tal:attributes="href python:here.get_editor_link(asset)">
+      tal:attributes="href string:${asset/absolute_url}/edit/tab_edit">
       <span tal:replace="asset/id">id</span>
     </a>
   </td>
@@ -420,7 +405,7 @@ There are no active content objects in this folder.
     <span tal:condition="python:asset.get_modification_datetime() == None" tal:omit-tag="">&nbsp;</span>
   </td>
   <span tal:replace="nothing"> _______ author cell _______ </span>
-  <td tal:content="python:asset.sec_get_last_author_info().fullname()">
+  <td tal:content="python:asset.sec_get_last_author_info()['cn']">
     author name
   </td>
   <td>
@@ -434,25 +419,25 @@ There are no active content objects in this folder.
 <span tal:replace="nothing"> ______________ controls ______________ </span>
 <tr class="controls">
   <td colspan="8" align="left">
-  <tal:block tal:condition="python:(model.get_default() or len(publishables) or len(assets) or len(nonactives))">
+	<tal:block tal:condition="python:(model.get_default() or len(publishables) or len(assets) or len(nonactives))">
   <script type="text/javascript">
-  <!--
+  <!-- 
   if (document.forms[0]) {
-    document.write('<input class="button" type="button" name="selectButton" value="Select all" title="Select all items in this folder: alt-a" accesskey="a" onClick="toggleSelect(); return false">')
+    document.write('<input class="button" type="button" name="selectButton" value="Select all" title="Select all items in this folder" onClick="toggleSelect(); return false">')
   }
   //-->
-  </script>
+  </script>	
   <tal:block condition="silva_permissions/ChangeSilvaContent">
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_rename:method" value="Rename..." title="Rename and retitle an item: alt-r" accesskey="r" />
-  &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_edit_delete:method" value=" Delete " title="There's no undo: alt-d" accesskey="d" onClick="return confirm('Really delete?')" />
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_cut:method" value=" Cut " title="Cut items: alt-x" accesskey="x" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_rename:method" value="Rename" title="Rename and retitle an item" />
+  &nbsp;&nbsp;<input class="warningbutton" type="submit" name="tab_edit_delete:method" value="Delete" title="There's no undo" onClick="return confirm('Really delete?')" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_cut:method" value="Cut" title="Cut items" />  
   </tal:block>
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_copy:method" value=" Copy " title="Copy items: alt-c" accesskey="c" />
-  </tal:block>
-  <tal:block condition="python:request.has_key('__cp') and silva_permissions['ChangeSilvaContent']">
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste:method" value=" Paste " title="Paste items: alt-v" accesskey="v" />
-  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste_to_ghost:method" value="Paste ghost" title="Paste (items on clipboard) as ghost objects: alt-g" accesskey="g" />
-  </tal:block>
+	&nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_copy:method" value="Copy" title="Copy items" />
+	</tal:block>
+	<tal:block condition="python:request.has_key('__cp') and silva_permissions['ChangeSilvaContent']">
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste:method" value="Paste" title="Paste items" />
+  &nbsp;&nbsp;<input class="button" type="submit" name="tab_edit_paste_to_ghost:method" value="Paste as ghost" title="Paste (items on clipboard) as ghost objects" />
+	</tal:block>
   </td>
 </tr>
 </table>
@@ -461,12 +446,12 @@ There are no active content objects in this folder.
 </tr>
 
 <tr>
-  <td class="divider" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="3" /></td>
+  <td class="divider" colspan="4"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="1" height="1" /></td>
 </tr>
 </table>
 </form>
 <script type="text/javascript">
-    <!--
+    <!-- 
     isSelected = false;
 
     function toggleSelect() {
@@ -482,11 +467,11 @@ There are no active content objects in this folder.
           document.silvaObjects.elements[i].checked = false ;
         isSelected = false;
         document.silvaObjects.selectButton.value = "Select all";
-        return isSelected;
+        return isSelected;       
       }
     }
     //-->
-</script>
+    </script>
 
 <!-- ___________________________ end index_html/slot main ____________________________ -->
 </div>
