@@ -1,13 +1,13 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import unittest
 import Zope
 from DateTime import DateTime
 from Testing import makerequest
 from Products.Silva.Document import Document
 from Products.ParsedXML.ParsedXML import ParsedXML
-from test_SilvaObject import hack_add_user
+from test_SilvaObject import hack_create_user
 
 # awful HACK
 def _getCopy(self, container):
@@ -20,7 +20,8 @@ def _verifyObjectPaste(self, ob):
 
 class VersionedContentTestCase(unittest.TestCase):
     def setUp(self):
-        
+
+      try:
         # awful HACK to support manage_clone
         ParsedXML._getCopy = _getCopy
         Document._verifyObjectPaste = _verifyObjectPaste
@@ -28,13 +29,17 @@ class VersionedContentTestCase(unittest.TestCase):
         get_transaction().begin()
         self.connection = Zope.DB.open()
         self.root = makerequest.makerequest(self.connection.root()['Application'])
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_add_user(self.root.REQUEST)
         self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
         self.sroot = self.root.root
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_create_user(self.sroot)
         add = self.sroot.manage_addProduct['Silva']
         add.manage_addDocument('document', 'Document')
         self.document = self.sroot.document
+      except:
+          import traceback
+          traceback.print_exc()
+          raise
         
     def tearDown(self):
         get_transaction().abort()

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 import unittest
 import Zope
 from Products.Silva import Document, Folder, Ghost
@@ -8,7 +8,7 @@ from Testing import makerequest
 from DateTime import DateTime
 from Products.ParsedXML.ParsedXML import ParsedXML
 import ZPublisher
-from test_SilvaObject import hack_add_user
+from test_SilvaObject import hack_create_user
 
 def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
@@ -39,7 +39,7 @@ def _getCopyFolder(self, container):
     return result
 
 def _getCopyGhost(self, container):
-    # ghost need their own monkeypath, too
+    # ghost need their own monkeypatch, too
     result = Ghost.Ghost(self.id)
     result.set_title(self.get_title())
     result = result.__of__(container)
@@ -51,6 +51,12 @@ def _getCopyGhost(self, container):
     result._previous_versions = self._previous_versions 
     return result
 
+def _getCopyGhostVersion(self, container):
+    # ghost version want a monkeypatch, too
+    result = Ghost.GhostVersion(self.id)
+    result = result.__of__(container)
+    return result
+
 def _verifyObjectPaste(self, ob):
     return
 
@@ -58,21 +64,23 @@ class CopyTestCase(unittest.TestCase):
     """Test cut/copy/test/delete.
     """
     def setUp(self):
+      try:
         Document.Document._getCopy = _getCopyDocument
         ParsedXML._getCopy = _getCopyParsedXML
         Folder.Folder._getCopy = _getCopyFolder
         Folder.Folder._verifyObjectPaste = _verifyObjectPaste
         Document.Document._verifyObjectPaste = _verifyObjectPaste
         Ghost.Ghost._getCopy = _getCopyGhost
+        Ghost.GhostVersion._getCopy = _getCopyGhostVersion
         Ghost.Ghost._verifyObjectPaste = _verifyObjectPaste
         
         get_transaction().begin()
         self.connection = Zope.DB.open()
         self.root = makerequest.makerequest(self.connection.root()['Application'])
         self.REQUEST = self.root.REQUEST
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_add_user(self.REQUEST)
         self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_create_user(self.sroot)
         # dummy manage_main so that copy succeeds
         self.sroot.manage_main = lambda *foo, **bar: None
         self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
@@ -85,6 +93,11 @@ class CopyTestCase(unittest.TestCase):
         self.subdoc = subdoc = add_helper(folder4, 'Document', 'subdoc', 'Subdoc')
         self.subfolder = subfolder = add_helper(folder4, 'Folder', 'subfolder', 'Subfolder')
         self.subsubdoc = subsubdoc = add_helper(subfolder, 'Document', 'subsubdoc', 'Subsubdoc')
+      except:
+          import traceback
+          traceback.print_exc()
+          raise
+          
     
     def tearDown(self):
         get_transaction().abort()
@@ -162,25 +175,20 @@ class CopyTestCase(unittest.TestCase):
         self.assert_(self.subdoc.is_version_published())
 
 
-# XXX argh, I have no idea how to make this work; I wonder why it worked
-# before -- I keep getting a low level error involving _p_jar.importFile(f)
-##     def test_copy7(self):
-##         # add 'TestUser' so it's a known member in SimpleMembership
-##         #self.root.manage_addUserFolder()
-##         #self.root.acl_users.userFolderAddUser('TestUser', 'TestUser', [], [])
-##         # test for issue 92: pasted ghosts have unknown author
-##         add_helper(self.sroot.folder4, 'Ghost', 'ghost6', 'Test Ghost')
-##         self.sroot.folder4.ghost6.sec_update_last_author_info()
-##         self.assertEquals('TestUser', self.sroot.folder4.ghost6.sec_get_last_author_info().fullname())
-##         # copy ghost to folder 4 and check author
-##         # XXX maybe we should rename the user inbetween ?
-##         self.sroot.folder4.action_copy(['ghost6'], self.REQUEST)
-##         self.sroot.folder5.action_paste(self.REQUEST)
-##         self.assertEquals('TestUser', self.sroot.folder5.ghost6.sec_get_last_author_info().fullname())
-##         # move ghost to root and check author        
-##         self.sroot.folder4.action_cut(['ghost6'], self.REQUEST)
-##         self.sroot.action_paste(self.REQUEST)
-##         self.assertEquals('TestUser', self.sroot.ghost6.sec_get_last_author_info().fullname())
+    def test_copy7(self):
+        # test for issue 92: pasted ghosts have unknown author
+        add_helper(self.sroot.folder4, 'Ghost', 'ghost6', 'Test Ghost')
+        self.sroot.folder4.ghost6.sec_update_last_author_info()
+        self.assertEquals('TestUser', self.sroot.folder4.ghost6.sec_get_last_author_info().fullname())
+        # copy ghost to folder 4 and check author
+        # XXX maybe we should rename the user inbetween ?
+        self.sroot.folder4.action_copy(['ghost6'], self.REQUEST)
+        self.sroot.folder5.action_paste(self.REQUEST)
+        self.assertEquals('TestUser', self.sroot.folder5.ghost6.sec_get_last_author_info().fullname())
+        # move ghost to root and check author        
+        self.sroot.folder4.action_cut(['ghost6'], self.REQUEST)
+        self.sroot.action_paste(self.REQUEST)
+        self.assertEquals('TestUser', self.sroot.ghost6.sec_get_last_author_info().fullname())
         
 
     def test_cut1(self):

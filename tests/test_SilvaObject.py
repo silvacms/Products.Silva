@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 import unittest
 import Zope
 #import ZODB
@@ -11,21 +11,30 @@ from AccessControl.User import SimpleUser
 #from Products.Silva import Document, Folder, Root #, Ghost, Publication
 
 # Awful hack: add an authenticated user into the request.
-def hack_add_user(REQUEST):
+def hack_create_user(silva_root):
+    silva_root.manage_addUserFolder()
     # maybe add some testing roles here ?
-    REQUEST.AUTHENTICATED_USER=SimpleUser(name='TestUser',password='TestUserPasswd', roles =(), domains=())
+    silva_root.acl_users.userFolderAddUser(name='TestUser', password='TestUserPasswd', roles=(), domains=())
+    
+    REQUEST = silva_root.REQUEST
+    REQUEST.AUTHENTICATED_USER=silva_root.acl_users.getUser('TestUser')
+
+    
 
 class SilvaObjectTestCase(unittest.TestCase):
     """Test the SilvaObject interface.
     """
     def setUp(self):
+      try:
         get_transaction().begin()
         self.connection = Zope.DB.open()
         self.root = makerequest.makerequest(self.connection.root()['Application'])
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_add_user(self.root.REQUEST)        
         self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
         self.sroot = self.root.root
+
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_create_user(self.sroot)
+        
         add = self.sroot.manage_addProduct['Silva']
         add.manage_addDocument('document',
                                'Document')
@@ -44,6 +53,11 @@ class SilvaObjectTestCase(unittest.TestCase):
         self.subfolder = self.folder.subfolder
         self.subfolder.manage_addProduct['Silva'].manage_addDocument('subsubdoc', 'Subsubdoc')
         self.subsubdoc = self.subfolder.subsubdoc
+      except:
+          import traceback
+          traceback.print_exc()
+          raise
+
         
     def tearDown(self):
         get_transaction().abort()

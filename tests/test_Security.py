@@ -1,12 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 import unittest
 import Zope
 from DateTime import DateTime
 from Testing import makerequest
 from Products.Silva import Document, Folder
-from test_SilvaObject import hack_add_user
+from test_SilvaObject import hack_create_user
 
 def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(
@@ -17,12 +17,13 @@ class SecurityTestCase(unittest.TestCase):
     """Test the Security interface.
     """
     def setUp(self):
+      try:
         get_transaction().begin()
         self.connection = Zope.DB.open()
         self.root = makerequest.makerequest(self.connection.root()['Application'])
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_add_user(self.root.REQUEST)
         self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_create_user(self.sroot)
         self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
         self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
         self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
@@ -33,7 +34,8 @@ class SecurityTestCase(unittest.TestCase):
         self.subfolder = subfolder = add_helper(folder4, 'Folder', 'subfolder', 'Subfolder')
         self.subsubdoc = subsubdoc = add_helper(subfolder, 'Document', 'subsubdoc', 'Subsubdoc')
         # add a user folder
-        self.sroot.manage_addUserFolder()
+        # alrady done by hack_create_user, actually
+        # self.sroot.manage_addUserFolder()
         # add some users
         self.sroot.acl_users.userFolderAddUser('foo', 'silly', 'Anonymous', [])
         self.sroot.acl_users.userFolderAddUser('bar', 'sillytoo', 'Anonymous', [])
@@ -41,6 +43,11 @@ class SecurityTestCase(unittest.TestCase):
         # that will be returned by sec_get_roles()
         self.sroot._addRole('Author')
         self.sroot._addRole('Editor')
+      except:
+          import traceback
+          traceback.print_exc()
+          raise
+
         
     def tearDown(self):
         get_transaction().abort()

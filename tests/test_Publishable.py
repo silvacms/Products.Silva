@@ -1,22 +1,23 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 import unittest
 import Zope
 from DateTime import DateTime
 from Testing import makerequest
 from Products.Silva.Versioning import VersioningError
-from test_SilvaObject import hack_add_user
+from test_SilvaObject import hack_create_user
 
 class PublishableTestCase(unittest.TestCase):
     def setUp(self):
+      try:
         get_transaction().begin()
         self.connection = Zope.DB.open()
         self.root = makerequest.makerequest(self.connection.root()['Application'])
-        # awful hack: add a user who may own the 'index' of the test containers
-        hack_add_user(self.root.REQUEST)
         self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
         self.sroot = self.root.root
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_create_user(self.sroot)
         add = self.sroot.manage_addProduct['Silva']
         add.manage_addDocument('document', 'Document')
         add.manage_addFolder('folder', 'Folder')
@@ -24,7 +25,11 @@ class PublishableTestCase(unittest.TestCase):
         self.folder = self.sroot.folder
         self.folder.manage_addProduct['Silva'].manage_addDocument('subdoc', 'Document')
         self.subdoc = self.folder.subdoc
-        
+      except:
+          import traceback
+          traceback.print_exc()
+          raise
+
     def tearDown(self):
         get_transaction().abort()
         self.connection.close()

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -11,12 +11,11 @@ from Products.Silva.SilvaObject import SilvaObject
 from Testing import makerequest
 from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
-from test_SilvaObject import hack_add_user
+from test_SilvaObject import hack_create_user
 
 def add_helper(object, typename, id, title):
     getattr(object.manage_addProduct['Silva'], 'manage_add%s' % typename)(id, title)
     return getattr(object, id)
-
 
 
 def _rotten_index_helper(folder):
@@ -29,6 +28,7 @@ class ContainerBaseTestCase(unittest.TestCase):
 
 
     def setUp(self):
+      try:
         get_transaction().begin()
         self.connection = Zope.DB.open()
         self.root = makerequest.makerequest(self.connection.root()['Application'])
@@ -36,10 +36,10 @@ class ContainerBaseTestCase(unittest.TestCase):
         # make it work with SimpleMembership by creating a user. This way,
         # member object will be automatically created, so that the last
         # author username is indeed 'TestUser'
-        self.root.acl_users.userFolderAddUser('TestUser', 'TestUser', [], [])
+        #self.root.acl_users.userFolderAddUser('TestUser', 'TestUser', [], [])
         # awful hack: add a user who may own the 'index' of the test containers
-        hack_add_user(self.REQUEST)
         self.sroot = sroot = add_helper(self.root, 'Root', 'root', 'Root')
+        hack_create_user(self.sroot)
         self.doc1 = doc1 = add_helper(sroot, 'Document', 'doc1', 'Doc1')
         self.doc2 = doc2 = add_helper(sroot, 'Document', 'doc2', 'Doc2')
         self.doc3 = doc3 = add_helper(sroot, 'Document', 'doc3', 'Doc3')
@@ -51,6 +51,10 @@ class ContainerBaseTestCase(unittest.TestCase):
         self.subsubdoc = subsubdoc = add_helper(subfolder, 'Document', 'subsubdoc', 'Subsubdoc')
         self.subdoc2 = subdoc2 = add_helper(publication5, 'Document', 'subdoc2', 'Subdoc2')
         self._orig_manage_addIndexHook = Products.Silva.Folder.manage_addIndexHook
+      except:
+          import traceback
+          traceback.print_exc()
+          raise          
 
         
     def tearDown(self):

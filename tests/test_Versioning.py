@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 import unittest
 import Zope
 #import ZODB
@@ -9,22 +9,49 @@ from DateTime import DateTime
 from Products.Silva import Versioning
 from OFS import SimpleItem
 from Testing import makerequest
-from test_SilvaObject import hack_add_user
+from test_SilvaObject import hack_create_user
 
 class ZODBVersioning(Versioning.Versioning,  SimpleItem.SimpleItem):
-    # awful hack a verisoning implementation which also may have a REQUEST associated
-    # interstingly it works w/o having an id, aquisition parent, etc.
-    pass
+    # awful hack a versioning implementation which also may have a REQUEST associated
+    # interestingly it works w/o having an id, acquisition parent, etc.
+
+    # I hope you will not find this type in the add list of the ZMI ;-)
+    meta_type='ZODB Hack Versioning'
+
+    def reindex_object(self):
+        """ needed, as this is called by a folders manage_afterAdd """
+        pass
+
+
+def manage_addZODBVersioning(self, id):
+    object = ZODBVersioning(id, 'Test dummy')
+    self._setObject(id, object)
+    return ''
+    
 
 class VersioningTestCase(unittest.TestCase):
     def setUp(self):
-        pass
+      try:
+        get_transaction().begin()
+        self.connection = Zope.DB.open()
+        self.root = makerequest.makerequest(self.connection.root()['Application'])
+        self.root.manage_addProduct['Silva'].manage_addRoot('root', 'Root')
+        self.sroot = self.root.root
+        # awful hack: add a user who may own the 'index' of the test containers
+        hack_create_user(self.sroot)
+        manage_addZODBVersioning(self.sroot, 'versioning')
+        
+      except:
+          import traceback
+          traceback.print_exc()
+          raise
 
     def tearDown(self):
-        pass
+        get_transaction().abort()
+        self.connection.close()
 
     def test_workflow1(self):
-        versioning = Versioning.Versioning()
+        versioning = self.sroot.versioning
         # no public version yet
         self.assertEqual(versioning.get_public_version(),
                          None)
@@ -73,7 +100,8 @@ class VersioningTestCase(unittest.TestCase):
                          None)
 
     def test_workflow2(self):
-        versioning = Versioning.Versioning()
+        versioning = self.sroot.versioning
+        # versioning = Versioning.Versioning()
         # no public version yet
         self.assertEqual(versioning.get_public_version(),
                          None)
@@ -126,7 +154,8 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_unapproved_version(), 'second')
 
     def test_workflow4(self):
-        versioning = Versioning.Versioning()
+        versioning = self.sroot.versioning
+        #versioning = Versioning.Versioning()
  
         # create new version
         versioning.create_version('first', DateTime() + 1, DateTime() + 2)
@@ -189,10 +218,7 @@ class VersioningTestCase(unittest.TestCase):
 
     def test_workflow6(self):
         true=1
-        # we need a request with an user here
-        self.versioning = makerequest.makerequest(ZODBVersioning())
-        hack_add_user(self.versioning.REQUEST)
-        
+        self.versioning = self.sroot.versioning        
         # test request for approval
         self._check_version_state()
         self.versioning.create_version('0', DateTime() + 10, None)
@@ -227,8 +253,7 @@ class VersioningTestCase(unittest.TestCase):
 
     def test_illegal_request_approval(self):
         # test if all kind of VersioningError are actually raised
-        self.versioning = makerequest.makerequest(ZODBVersioning())
-        hack_add_user(self.versioning.REQUEST)
+        self.versioning = self.sroot.versioning
 
         try:
             self.versioning.request_version_approval('Request message')
