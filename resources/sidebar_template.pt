@@ -45,9 +45,8 @@
           </a>
           <a class="normal"
             style="padding-left: 0.4em;"
-            title="reload screen"
-            tal:attributes="
-              href string:${model/absolute_url}/edit/{__vein_id__};">
+            href="{__absolute_url__}"
+            title="reload screen">
             {__breadcrumb_vein__}
           </a>
         </th>
@@ -70,7 +69,7 @@
             href="top"
             title="up to top of publication"
             tal:attributes="href publication_url"
-            tal:content="structure publication/get_title_html">
+            tal:content="structure python: publication.getProperty('short_title') or publication.get_title_html()">
             Publication
           </a>
         </td>
@@ -97,7 +96,7 @@
                 tal:attributes="
                   href string:${item_url}/edit/{__vein_id__};
                   title string:id: ${item/id};"
-                tal:define="title python:(item.get_title_html() or default)"
+                tal:define="title python: (item.getProperty('short_title') or item.get_title_html() or default)"
                 tal:content="structure title">
                 <i>no title</i>
               </a>
