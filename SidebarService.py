@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SidebarService.py,v 1.16 2003/11/03 23:17:56 clemens Exp $
+# $Id: SidebarService.py,v 1.17 2003/11/05 13:13:05 faassen Exp $
 # Zope
 from OFS.SimpleItem import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -70,9 +70,6 @@ class SidebarService(SimpleItem):
             # If the virtual host points inside the publication, 
             # use that point as 'publication' to start from.
             pub = adapter.getVirtualRoot()
-
-        if pub is None:
-            pub = self.get_root()
         
         abs_url = pub.absolute_url()
         ph_path = pub.getPhysicalPath()
