@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.4
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.14 $
+  CVS:        $Revision: 1.15 $
 
 Installing Silva
 
@@ -140,6 +140,11 @@ Installing Silva
     directly under the Zope root and is named 'silva', but it should
     be possible to change this by altering some properties in the
     Silva root.
+
+    To start using the Groups definitions, a "Groups Service" is needed.
+    Once the Groups Filesystem Product is installed, such a service can be
+    added to the Silv Root via the ZMI. This service should have
+    'service_groups' for its id.
 
   Installing Silva with LDAP support
 
