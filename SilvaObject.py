@@ -54,6 +54,13 @@ class SilvaObject:
         """
         return self
 
+    security.declareProtected(SilvaPermissions.View, 'render')
+    def render(self):
+        """Render this with the public view. This will presumably use
+        get_viewable() to get the information for the public version.
+        """
+        return self.service_view_registry.render('public', self)
+    
     # these help the UI that can't query interfaces directly
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

@@ -59,8 +59,8 @@ def manage_addRoot(self, id, title, REQUEST=None):
     self._setObject(id, object)
     object = getattr(self, id)
     # add all services
-    silva = object.manage_addProduct['Silva']
-    silva.manage_addViewRegistry('service_view_registry')
+    #silva = object.manage_addProduct['Silva']
+    #silva.manage_addViewRegistry('service_view_registry')
 
     add_and_edit(self, id, REQUEST)
     return ''

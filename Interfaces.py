@@ -54,6 +54,13 @@ class SilvaObject(Interface.Base):
         """
         pass
 
+    def render(self):
+        """Render this object using the public view defined in the view registry.
+        This should use methods on the object itself and the version object
+        obtained by get_previewable() to render the object to HTML.
+        """
+        pass
+    
     def get_viewable(self):
         """Get the publically viewable version (may be the object itself if
         no versioning).
