@@ -30,8 +30,10 @@
   </div>
 </tal:condition>
 
-<form action="." method="POST"
-  tal:attributes="action python:model.absolute_url()+'/edit'" accepted-charset="UTF-8"
+<form action="." 
+  method="POST"
+  accepted-charset="UTF-8"
+  tal:attributes="action python:model.absolute_url()+'/edit'" 
   tal:condition="may_change_content">
   <table class="listing"
     style="margin-bottom:0;">
@@ -128,75 +130,5 @@
   <tal:comment condition="nothing">Add read only view here?</tal:comment>
 </div>
 
-
-
-
-
-
-
-
-
-<div class="margins"                           tal:replace="nothing">
-
-<h2>Member data of &#xab;<span tal:replace="model/id" />&#xbb;</h2>
-
-<tal:block condition="may_change_content">
-
-<form action="." method="POST" tal:attributes="action python:model.absolute_url()+'/edit'" accepted-charset="UTF-8">
-<table border="0" cellspacing="0" cellpadding="3">
-  <tr>
-    <th colspan="2" align="left">Descriptor</th>
-    <th align="left">Content</th>
-  </tr>
-
-  <tr tal:repeat="field fields" tal:attributes="class python:test(repeat['field'].odd, 'focus', 'focus-cycle')">
-    <td tal:content="field/title">
-    </td>
-    <td><span class="warning" tal:content="structure python: test(field.is_required(), '*', default)">&nbsp;</span>
-    </td>
-    <td>
-      <span tal:replace="structure python: field.render(getattr(model, field.id)())" />
-    </td>
-  </tr>
-
-  <tr class="controls-cycle">
-    <td colspan="2">
-      &nbsp;
-    </td>
-    <td align="right" valign="bottom">
-      <span class="widebody">Approved member?&nbsp;</span>
-      <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')">&nbsp;</span>
-      <input class="button" type="submit" name="approve_visitor:method" value="Approve now"
-        title="Approve member: alt-a" accesskey="a"
-        tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != user.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()" />
-    </td>
-  </tr>
-
-  <tr class="controls">
-    <td align="left" colspan="2">
-      <input type="button" class="cancelbutton" name="close" value="  Close  " 
-          title="Close window: alt-c" accesskey="c"
-          onclick="window.close();return false;" 
-      />
-    </td>
-    <td align="right">
-      <input class="button" type="submit" 
-             name="save_memberdata:method"
-             value="   Save   "
-             title="Save member data: alt-s" accesskey="s"
-      />
-    </td>
-  </tr>
-</table>
-</form>
-
-</tal:block>
-
-<tal:block condition="not:silva_permissions/ChangeSilvaAccess">
-  <h3>Dear <span tal:content="python:user.getId()" /><br />
-You are not allowed to edit membership data of member <span tal:content="model/id" /></h3>
-  <tal:comment condition="nothing">Add read only view here?</tal:comment>
-</tal:block>
-</div>
 </metal:slot>
 </html>
