@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.8.5
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.13 $
+  CVS:        $Revision: 1.14 $
 
 Upgrading Silva 0.8.4 to 0.8.5
 
@@ -20,6 +20,10 @@ Upgrading Silva 0.8.4 to 0.8.5
   directly; things may break if you try. To be safe you could first
   upgrade 0.8 to 0.8.3 to 0.8.4 before upgrading to 0.8.5 (see the
   instructions in Silva 0.8.4 for more information).
+
+  NOTE: The upgrade scripts from 0.8.4 to 0.8.5 will upgrade all content
+  containing lists to the new XML format where the title attribute is
+  changed to a title element.
 
   Silva Filesystem Products
 

@@ -1,6 +1,6 @@
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.17 $
+$Revision: 1.18 $
 
 Silva changes
 
@@ -30,7 +30,9 @@ Silva changes
 
       - Removed non functional button from "tab_publish".
 
-      - List title attribute migrated to title element in lists.
+      - List title attribute migrated to title element in lists (the
+      upgrade scripts from 0.8.4 to 0.8.5 will upgrade all content
+      containing lists to this new XML format).
 
       - Display an informational message, if some view is not properly
       registered
