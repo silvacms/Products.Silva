@@ -44,7 +44,7 @@ for ref in refs:
         not_approved_refs.append(ref)
         continue
     obj.set_approval_request_message('''
-Withdraw request for approval via bulk request in the publish tab of /%s
+Request for approval was rejected via a bulk operation in the publish tab of /%s
 (Automatically generated message)''' % model.absolute_url(1))
     obj.withdraw_version_approval()
     approved_ids.append(obj.id)
@@ -52,9 +52,9 @@ Withdraw request for approval via bulk request in the publish tab of /%s
 context.REQUEST.set('refs', [])
 
 if approved_ids:
-    msg.append( 'Rejected approval request for: %s' % view.quotify_list(approved_ids))
+    msg.append( 'Rejected request for approval for: %s' % view.quotify_list(approved_ids))
 
 if not_approved:
-    msg.append( '<span class="error">No rejection of: %s</span>' % view.quotify_list_ext(not_approved))
+    msg.append( '<span class="error">No rejection occured for: %s</span>' % view.quotify_list_ext(not_approved))
 
 return view.tab_status(message_type='feedback', message=('<br />'.join(msg)) )

@@ -14,7 +14,7 @@ from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(message_type='error', message='Nothing selected, so no approval requested')
+    return view.tab_status(message_type='error', message='Nothing was selected, so no approval was requested')
 
 try:
     result = view.tab_status_form.validate_all(context.REQUEST)
@@ -27,7 +27,7 @@ expires_flag = result['expires_flag']
 expiration_datetime = result['expiration_datetime']
 
 if not publish_now_flag and not publish_datetime:
-    return view.tab_status(message_type="error", message="No publication datetime set.")
+    return view.tab_status(message_type="error", message="First set a publish time")
  
 now = DateTime()
 
