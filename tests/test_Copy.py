@@ -43,7 +43,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         # now do the paste action
         self.root.action_paste(self.app.REQUEST)
         # should have a copy now with same title
-        self.assertEquals('Doc1', self.root.copy_of_doc1.get_title())
+        self.assertEquals('Doc1', self.root.copy_of_doc1.get_title_editable())
 
     def test_copy2(self):
         # approve version
@@ -113,7 +113,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
     def test_copy7(self):
         # test for issue 92: pasted ghosts have unknown author
         self.add_ghost(self.root.folder4, 'ghost6', 'Test Ghost')
-        self.root.folder4.ghost6.sec_update_last_author_info()
+        self.root.folder4.ghost6.sec_update_last_author_info()        
         self.assertEquals(
             'test_user_1_',
             self.root.folder4.ghost6.sec_get_last_author_info().fullname())
