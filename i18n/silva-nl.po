@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Tue Dec  7 13:08:53 2004\n"
+"POT-Creation-Date: Tue Dec  7 17:26:17 2004\n"
 "PO-Revision-Date: 2004-12-07 13:27+0100\n"
 "Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -308,15 +308,14 @@ msgstr "Kan niet alle versies verwijderen"
 msgid "no such version ${version}"
 msgstr "versie bestaat niet ${version}"
 
-# Default: "i"
-#: /default/layout_macro.html.pt:55 /globals/accesskeys.pt:26
-#: /layout/layout_macro.html:100
-msgid "info_accesskey"
-msgstr "i"
-
-#: /default/layout_macro.html.pt:55 /layout/layout_macro.html:100
+#: /default/layout_macro.html.pt:55
 msgid "Silva info on the Infrae site: alt-i"
 msgstr "Informatie over Silva op de Infrae site: alt-i"
+
+# Default: "i"
+#: /default/layout_macro.html.pt:55 /globals/accesskeys.pt:26
+msgid "info_accesskey"
+msgstr "i"
 
 #: /doc/silva-content.xml:31
 msgid "Title of content."
@@ -400,9 +399,9 @@ msgid ""
 "&nbsp; Delete<br /> x &nbsp; Cut<br /> c &nbsp; Copy<br /> v &nbsp; "
 "Paste<br /> g &nbsp; Paste as ghost"
 msgstr ""
-"${listing_footer}<br /> a &nbsp; Selecteer alles<br /> r &nbsp; Hernoem<br /> d "
-"&nbsp; Verwijder<br /> x &nbsp; Knip<br /> c &nbsp; Kopieër<br /> v &nbsp; "
-"Plak<br /> g &nbsp; Plak als Ghost"
+"${listing_footer}<br /> a &nbsp; Selecteer alles<br /> r &nbsp; Hernoem<br /"
+"> d &nbsp; Verwijder<br /> x &nbsp; Knip<br /> c &nbsp; Kopieër<br /> v "
+"&nbsp; Plak<br /> g &nbsp; Plak als Ghost"
 
 #: /globals/accesskeys.pt:104 /globals/accesskeys.pt:129
 msgid "Listing footer"
@@ -4092,6 +4091,14 @@ msgstr "Teruggevallen op vorige versie."
 msgid "This content is not approved."
 msgstr "Deze inhoud is niet goedgekeurd."
 
+#: /views/edit/VersionedContent/tab_status_view_versions.pt:55
+msgid "Older version (${version_id})"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_view_versions.pt:59
+msgid "Newer version (${version_id})"
+msgstr ""
+
 #: /views/edit/VersionedContent/tab_status_view_versions_start.py:18
 msgid "You didn't select any versions."
 msgstr "Je hebt geen versies geselecteerd."
@@ -4976,12 +4983,12 @@ msgstr ""
 #: /views/edit/tab_metadata.pt:55 /views/edit/Container/tab_metadata.pt:68
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions: alt-m"
-msgstr "abonnementen beheren: alt-m"
+msgstr "emailnotificaties beheren: alt-m"
 
 #: /views/edit/tab_metadata.pt:55 /views/edit/Container/tab_metadata.pt:68
 #: /views/edit/Container/Publication/tab_metadata.pt:48
 msgid "manage subscriptions..."
-msgstr "abonnementen beheren..."
+msgstr "emailnotificaties beheren..."
 
 #: /views/edit/tab_metadata.pt:88
 msgid "metadata ${for_approved_version_of_title}"
@@ -5004,7 +5011,6 @@ msgid "public&nbsp;preview..."
 msgstr "publieke&nbsp;preview..."
 
 #: /views/edit/tab_preview.pt:45
-#: /views/edit/VersionedContent/tab_status_view_versions.pt:51
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr ""
 "Dit is een gesloten versie. Die is hier zichtbaar, maar niet voor het "
@@ -5028,32 +5034,31 @@ msgstr "nu publiceren"
 msgid "clear expiration"
 msgstr "verloop-tijdstip wissen"
 
-# Default: "This object is not subscribable content."
 #: /views/edit/tab_subscriptions.pt:114
-msgid "not_subscribable"
+msgid "This object is not subscribable content."
 msgstr ""
 
-# Default: "Subscriptions edit for"
 #: /views/edit/tab_subscriptions.pt:54
-msgid "subscription_settings"
+msgid "Subscriptions edit for ${title}"
 msgstr ""
 
 #: /views/edit/tab_subscriptions.pt:98
 msgid "Save"
-msgstr ""
+msgstr "Opslaan"
 
 #: /views/edit/tab_subscriptions_form.form:33
 msgid "Subscribable"
-msgstr ""
+msgstr "Emailnotificatie mogelijk"
 
 #: /views/edit/tab_subscriptions_form.form:51
 msgid ""
 "List of email addresses (one per line) currently subscribed to this content."
 msgstr ""
+"Lijst van emailadressen (één per regel) die emailnotificaties ontvangen."
 
 #: /views/edit/tab_subscriptions_form.form:61
 msgid "Subscriptions"
-msgstr ""
+msgstr "Geabonneerde emailadressen"
 
 #: /views/get_tab_info.py:25
 msgid "up a level: alt-${key}"
@@ -5435,6 +5440,10 @@ msgstr "Volgende &gt;&gt;"
 #: /views/render_form_errors.py:15
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+# Default: "This object is not subscribable content."
+#~ msgid "not_subscribable"
+#~ msgstr "Voor dit object zijn geen emailnotificaties mogelijk"
 
 #~ msgid "see the original image"
 #~ msgstr "zie de originele afbeelding"

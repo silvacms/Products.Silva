@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Tue Dec  7 13:08:53 2004\n"
+"POT-Creation-Date: Tue Dec  7 17:26:17 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -287,14 +287,13 @@ msgstr ""
 msgid "no such version ${version}"
 msgstr ""
 
-# Default: "i"
-#: /default/layout_macro.html.pt:55 /globals/accesskeys.pt:26
-#: /layout/layout_macro.html:100
-msgid "info_accesskey"
+#: /default/layout_macro.html.pt:55
+msgid "Silva info on the Infrae site: alt-i"
 msgstr ""
 
-#: /default/layout_macro.html.pt:55 /layout/layout_macro.html:100
-msgid "Silva info on the Infrae site: alt-i"
+# Default: "i"
+#: /default/layout_macro.html.pt:55 /globals/accesskeys.pt:26
+msgid "info_accesskey"
 msgstr ""
 
 #: /doc/silva-content.xml:31
@@ -3931,6 +3930,14 @@ msgstr ""
 msgid "This content is not approved."
 msgstr ""
 
+#: /views/edit/VersionedContent/tab_status_view_versions.pt:55
+msgid "Older version (${version_id})"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_view_versions.pt:59
+msgid "Newer version (${version_id})"
+msgstr ""
+
 #: /views/edit/VersionedContent/tab_status_view_versions_start.py:18
 msgid "You didn't select any versions."
 msgstr ""
@@ -4816,7 +4823,6 @@ msgid "public&nbsp;preview..."
 msgstr "Vorschau der öffentlichen Version"
 
 #: /views/edit/tab_preview.pt:45
-#: /views/edit/VersionedContent/tab_status_view_versions.pt:51
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr ""
 "Dies ist eine geschloßene Version. Sie können sie siehen, aber die "
@@ -4840,14 +4846,12 @@ msgstr ""
 msgid "clear expiration"
 msgstr ""
 
-# Default: "This object is not subscribable content."
 #: /views/edit/tab_subscriptions.pt:114
-msgid "not_subscribable"
+msgid "This object is not subscribable content."
 msgstr ""
 
-# Default: "Subscriptions edit for"
 #: /views/edit/tab_subscriptions.pt:54
-msgid "subscription_settings"
+msgid "Subscriptions edit for ${title}"
 msgstr ""
 
 #: /views/edit/tab_subscriptions.pt:98

@@ -10,9 +10,9 @@
         <td colspan="3">
           <h3 i18n:translate="subscription_settings">
             Subscribe for 
-            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+            &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
           </h3>
-          <p>
+          <p i18n:translate="">
             you'll get an confirmation message...
           </p>
         </td>
@@ -21,7 +21,7 @@
     <tbody>
       <tr class="odd">
         <td class="field-title">
-          <span>emailaddress</span><span class="warning">*</span>
+          <span i18n:translate="">emailaddress</span><span class="warning">*</span>
         </td>
         <td>
           <input type="text" name="emailaddress" size="40" />
@@ -54,11 +54,11 @@
     <thead>
       <tr class="top-controls">
         <td colspan="3">
-          <h3 i18n:translate="subscription_settings">
+          <h3 i18n:translate="">
             Unsubscribe for 
-            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+            &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
           </h3>
-          <p>
+          <p i18n:translate="">
             you'll get an confirmation message...
           </p>
         </td>
@@ -67,7 +67,7 @@
     <tbody>
       <tr class="odd">
         <td class="field-title">
-          <span>emailaddress</span><span class="warning">*</span>
+          <span i18n:translate="">emailaddress</span><span class="warning">*</span>
         </td>
         <td>
           <input type="text" name="emailaddress" size="40" />

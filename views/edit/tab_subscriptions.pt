@@ -52,8 +52,8 @@
                   <thead>
                     <tr class="top-controls">
                       <td colspan="3">
-                        <h3 i18n:translate="subscription_settings">
-                          Subscriptions edit for <tal:block replace="title" />
+                        <h3 i18n:translate="">
+                          Subscriptions edit for <tal:block i18n:name="title" replace="title" />
                         </h3>
                       </td>
                     </tr>
@@ -65,10 +65,10 @@
                         i18n:translate="element">
                         element
                       </th>
-                      <th i18n:translate="content">
+                      <th i18n:translate="">
                         content
                       </th>
-                      <th width="40%" i18n:translate="note">
+                      <th width="40%" i18n:translate="">
                         note
                       </th>
                     </tr>
@@ -115,7 +115,7 @@
 
             <tal:block 
               condition="not:subscribable"
-              i18n:translate="not_subscribable"
+              i18n:translate=""
               >
               This object is not subscribable content.
             </tal:block>
