@@ -10,6 +10,8 @@ import SilvaPermissions
 from interfaces import IVersionedContent, IVersion
 import mangle
 from helpers import add_and_edit
+from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
+from Products.Silva.Metadata import export_metadata
 
 icon = "www/link.png"
 
@@ -27,6 +29,30 @@ class Link(CatalogedVersionedContent):
     def __init__(self, id):
         Link.inheritedAttribute('__init__')(self, id)
         self.id = id
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'to_xml')
+    def to_xml(self, context):
+        """Render object to XML.
+        """
+        f = context.f
+
+        if context.last_version == 1:
+            version_id = self.get_next_version()
+            if version_id is None:
+                version_id = self.get_public_version()
+        else:
+            version_id = self.get_public_version()
+
+        if version_id is None:
+            return
+            
+        version = getattr(self, version_id)
+        f.write('<silva_link id="%s">' % self.id)
+        f.write('<title>%s</title>' % version.get_title())
+        f.write('<url>%s</url>' % version.get_url())
+        export_metadata(version, context)
+        f.write('</silva_link>')
 
 InitializeClass(Link)
 
@@ -98,3 +124,20 @@ def manage_addLinkVersion(self, id, title, url, REQUEST=None):
     self._getOb(id).set_title(title)
     add_and_edit(self, id, REQUEST)
     return ''
+
+def xml_import_handler(object, node):
+    id = get_xml_id(node)
+    title = get_xml_title(node)
+    url = ''
+    for child in node.childNodes:
+        if child.nodeName == u'url':
+            url = child.childNodes[0].nodeValue;
+   
+    id = str(mangle.Id(object, id).unique())
+    object.manage_addProduct['Silva'].manage_addLink(id, title, url)
+    
+    newdoc = getattr(object, id)
+    newdoc.sec_update_last_author_info()
+    
+    return newdoc
+
