@@ -75,9 +75,9 @@ class SidebarService(SimpleItem):
         del storage._path_mapping[ph_path]
 
     def _get_storage(self, create=1):
-        storage = getattr(self.aq_inner.silva_cache, 'silva_sidebar_cache', None)
+        storage = getattr(self.aq_inner.temp_folder, 'silva_sidebar_cache', None)
         if storage is None and create:
-            cache_container = self.aq_inner.silva_cache
+            cache_container = self.aq_inner.temp_folder
             cache_container.silva_sidebar_cache = SidebarCache('silva_sidebar_cache')
             # Trigger persistence machinery
             cache_container._p_changed = 1
