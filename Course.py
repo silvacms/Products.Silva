@@ -85,14 +85,12 @@ class CourseVersion(SimpleItem.SimpleItem):
         self.id = id
         self.title = title 
         self._data = { 'course_title' : title}
-        self.goal = ParsedXML(id, '<doc></doc>')
-        self.content = ParsedXML(id, '<doc></doc>')
+        self.xml = ParsedXML(id, '<doc><goal /><content /></doc>')
+        #self.content = ParsedXML(id, '<doc></doc>')
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'goal')
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'content')
-    
+                              'xml')
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_data')
     def set_data(self, dict):
@@ -110,16 +108,6 @@ class CourseVersion(SimpleItem.SimpleItem):
         """Get the data dictionary.
         """
         return self._data
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_goal')
-    def get_goal(self):
-        return self._goal
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_content')
-    def get_content(self):
-        return self._content
     
 InitializeClass(CourseVersion)
 
