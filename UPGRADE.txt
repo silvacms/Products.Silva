@@ -6,13 +6,13 @@ Meta::
   Valid for:  Silva 0.9.1
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26.2.2 $
+  CVS:        $Revision: 1.26.2.3 $
 
 Upgrading from 0.9.1 beta to 0.9.1
  
   There shouldn't be any problems, though do a 'refresh all' to make
-  sure. If you are using Groups, do upgrade from Groups 0.3 to Groups
-  0.3.1 as it contains a bugfix. Groups can be found here:
+  sure. If you are using Groups, please upgrade from Groups 0.3 to
+  Groups 0.3.1 as it contains a bugfix. Groups can be found here:
 
   "Groups 0.3.1":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz.
 
@@ -31,7 +31,15 @@ Upgrading Silva 0.9.0.x to 0.9.1
   installing Silva please look at 'INSTALL.txt'.
 
   NOTE: It makes of course sense to make a backup of Silva before
-  trying to upgrade!
+  trying to upgrade! Silva used to make a backup copy automatically
+  but in effect this copying action takes place *after* updating some
+  Silva code. This causes the upgrade to fail in some cases (notably
+  with Silva News which uses the catalog, and backup copying triggers
+  a re-cataloging). In order to evade these problems we have disabled
+  the creation of the backup copy from the upgrade code. Instead you
+  need to do a backup copy *before* you upgrade the product code and
+  restart Zope. The simplest way to make sure you have a functional
+  backup is to backup the whole ZODB; make a copy of 'var/Data.fs'.
 
   NOTE: The Groups functionality is changing. With this release existing
   Group definitions are still working but not directly accessible. To get
