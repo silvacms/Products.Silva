@@ -1,7 +1,7 @@
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
-from Products.Silva import user_management
+from UserManagement import user_management
 
 class Security:
     """Can be mixed in with an object to support Silva security.
