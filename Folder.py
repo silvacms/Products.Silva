@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.108 $
+# $Revision: 1.109 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -31,6 +31,7 @@ import urllib
 from sys import exc_info
 
 from Products.Silva.ImporterRegistry import get_importer, xml_import_helper, get_xml_id, get_xml_title
+from Products.Silva.ImportArchive import import_archive_helper
 from Products.Silva.Metadata import export_metadata
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.ParsedXML.ParsedXML import createDOMDocument
@@ -895,6 +896,18 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
                 obj, info, tb = exc_info()
                 raise Exception, info, tb
             import_root = import_root.nextSibling
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'archive_file_import')
+    def archive_file_import(self, file, title=''):
+        """Import archive file (currently zip format) and
+        create Assets from its contents. Use given title for 
+        all assets created
+        """
+        #try:
+        return import_archive_helper(self, file, title)
+        #except Exception:
+        #    raise
 
     security.declarePublic('url_encode')
     def url_encode(self, string):

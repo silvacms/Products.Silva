@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 
 # Python
 import os
@@ -193,18 +193,14 @@ bad_chars =  r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?ƒ≈¡¿¬√‰Â·‡‚„«Á…» À∆ÈËÍÎÊÕÃŒœÌÏÓÔ—Ò
 good_chars = r"""_____________________________AAAAAAaaaaaaCcEEEEEeeeeeIIIIiiiiNnOOOOOOooooooSssUUUUuuuuYYyyZz"""
 TRANSMAP = string.maketrans(bad_chars, good_chars)
 
-def manage_addFile(self, id='', title='', file=''):
+def manage_addFile(self, id, title, file):
     """Add a File
     """
-    id, _title = Image.cookId(id, title, file)
-    #    ^
-    #    |  
-    #    +-- The cooked title is not used for creating file objects.
-    
     # Copy code from ExtFile, but we don't want a dependency per se:
+    id, _title = Image.cookId(id, title, file)
     id = string.translate(id.encode('ascii'), TRANSMAP)
     if not self.is_id_valid(id):
-        return None 
+        return 
 
     # Switch storage type:
     service_files = getattr(self.get_root(), 'service_files', None)

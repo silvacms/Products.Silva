@@ -1,9 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.32 2003/05/28 10:44:13 guido Exp $
+# $Id: Image.py,v 1.33 2003/05/29 11:35:02 jw Exp $
 
 # Python
-import re
+import re, string 
 from cStringIO import StringIO
 from types import StringType, IntType
 from zipfile import ZipFile
@@ -276,28 +276,31 @@ InitializeClass(Image)
 manage_addImageForm = PageTemplateFile(
     "www/imageAdd", globals(), __name__='manage_addImageForm')
 
+# FIXME: Image and File Assets should be refactored - they share quite
+# some functionality which can be generalized.
+#
+# Copy code from ExtFile, but we don't want a dependency per se:
+bad_chars =  r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?ÄÅÁÀÂÃäåáàâãÇçÉÈÊËÆéèêëæÍÌÎÏíìîïÑñÖÓÒÔÕØöóòôõøŠšßÜÚÙÛüúùûİŸıÿ"""
+good_chars = r"""_____________________________AAAAAAaaaaaaCcEEEEEeeeeeIIIIiiiiNnOOOOOOooooooSssUUUUuuuuYYyyZz"""
+TRANSMAP = string.maketrans(bad_chars, good_chars)
+
 def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image."""
+
+    # Copy code from ExtFile, but we don't want a dependency per se:
+    id, _title = OFS.Image.cookId(id, title, file)
+    id = string.translate(id.encode('ascii'), TRANSMAP)
+
     if not context.is_id_valid(id):
         return
-    object = Image(id, title)
-    context._setObject(id, object)
-    object = getattr(context, id)
+    img = Image(id, title)
+    context._setObject(id, img)
+    img = getattr(context, id)
     # FIXME: Ugh. I get unicode from formulator but this will not validate
     # when using the metadata system. So first make it into utf-8 again..
-    object.set_title(title.encode('utf-8'))
+    img.set_title(title.encode('utf-8'))
     if file:
-        object.set_image(file)
+        img.set_image(file)
 
     add_and_edit(context, id, REQUEST)
-    return ''
-
-def manage_addImageBatch(context, title, file=None, REQUEST=None):
-    """Add Images in batch"""
-    zipfile = ZipFile(file)
-    namelist = zipfile.namelist()
-    for name in namelist:
-        img_file = zipfile.read(name)
-        context.manage_addProducts['Silva'].manage_addImage(
-            name, img_title, img_file)
-    return namelist
+    return img

@@ -71,15 +71,15 @@
       </tr>
       <tr class="top-controls">
         <td colspan="3">
-            <a class="navigation"
-              style="float: right;"
-              href="tab_status_export"
-              title="over to the export screen: alt-e"
-              accesskey="e"
-              i18n:attributes="title"
-              i18n:translate="export">
-                Export...
-            </a>
+          <a class="navigation"
+            style="float: right;"
+            href="tab_status_export"
+            title="over to the export screen: alt-e"
+            accesskey="e"
+            i18n:attributes="title"
+            i18n:translate="export">
+            Export...
+          </a>
           <h3 i18n:translate="import_silva_xml">
             import Silva XML (.slv)
           </h3>
@@ -120,36 +120,136 @@
         </td>
       </tr>
 
-    <tr class="controls">
-      <td class="align-right"
-        colspan="3">
-        <input class="cancel"
-          style="float: left;"
-          type="button"
-          value="cancel"
-          title="access key: alt-c"
-          accesskey="c"
-          onClick="history.back()"
-          i18n:attributes="value title"
-        />
-        <input class="button"
-          type="submit"
-          value="import"
-          name="tab_edit_import_xml:method"
-          title="access key: alt-i"
-          accesskey="i"
-          i18n:attributes="value title"  
-        />
-      </td>
-     </tr>
+      <tr class="controls">
+        <td class="align-right"
+          colspan="3">
+          <input class="cancel"
+            style="float: left;"
+            type="button"
+            value="cancel"
+            title="access key: alt-c"
+            accesskey="c"
+            onClick="history.back()"
+            i18n:attributes="value title"
+          />
+          <input class="button"
+            type="submit"
+            value="import"
+            name="tab_edit_import_xml:method"
+            title="access key: alt-i"
+            accesskey="i"
+            i18n:attributes="value title"  
+          />
+        </td>
+      </tr>
     </tbody>
-   </table>
-  </form>
+  </table>
+</form>
+
+<tal:block replace="nothing">
+  ____________________________ upload zip file____________________________
+</tal:block>
+
+<form action="." enctype="multipart/form-data" method="POST">
+  <table class="listing">
+    <thead>
+      <tr tal:replace="nothing">
+        ______________ vein + title row ______________
+      </tr>
+      <tr class="top-controls">
+        <td colspan="3">
+          <h3 i18n:translate="import_silva_xml">
+            import zip archive file (.zip)
+          </h3>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <th class="align-right"
+          width="15%"
+          i18n:translate="element">
+          Element
+        </th>
+        <th i18n:translate="content">
+          Content
+        </th>
+        <th width="40%"
+          i18n:translate="note">
+          Note
+        </th>
+      </tr>
+
+      <tr class="odd">
+        <td class="align-right">
+          <span i18n:translate="file_to_upload">
+            file to upload
+          </span><span class="warning">*</span>
+        </td>
+        <td>
+          <input type="file"
+            name="importfile"
+            size="40"
+            title="browse for a file on your disk"
+            i18n:attributes="title"
+          />
+        </td>
+        <td i18n:translate="choose_archive_file_to_import">
+          Choose an zip file to import and convert to Assets
+        </td>
+      </tr>
+
+      <tr class="odd">
+        <td class="align-right">
+          <span i18n:translate="file_to_upload">
+            title for all assets
+          </span>
+        </td>
+        <td>
+          <input type="text"
+            name="title"
+            size="40"
+            title="Optional title for all assets"
+            i18n:attributes="title"
+          />
+        </td>
+        <td i18n:translate="choose_archive_file_to_import">
+          Optionally provide a title for all Assets which will be created
+          for the contents of the zip file.
+        </td>
+      </tr>
+
+      <tr class="controls">
+        <td class="align-right"
+          colspan="3">
+          <input class="cancel"
+            style="float: left;"
+            type="button"
+            value="cancel"
+            title="access key: alt-c"
+            accesskey="c"
+            onClick="history.back()"
+            i18n:attributes="value title"
+          />
+          <input class="button"
+            type="submit"
+            value="import"
+            name="import_archive_file:method"
+            title="access key: alt-j"
+            accesskey="j"
+            i18n:attributes="value title"  
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
 
 
-<span tal:replace="nothing">
+<tal:block replace="nothing">
   ____________________________ docma facilities ____________________________
-</span>
+</tal:block>
 
 <tal:condition condition="docma_running">
 

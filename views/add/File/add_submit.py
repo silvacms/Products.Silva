@@ -41,20 +41,31 @@ else:
 if id:
     id_check = check_valid_id(model, id)
     if not id_check == IdCheckValues.ID_OK:
-        return view.add_form(message_type="error", message=view.get_id_status_text(id, id_check))
+        return view.add_form(
+            message_type="error", message=view.get_id_status_text(id, id_check))
 
 # process data in result and add using validation result
 file = result['file']
 
 if not file or not getattr(file,'filename',None):
-      return view.add_form(message_type="error", message="Empty, misspelled or invalid file, filename or filepath.")
+      return view.add_form(
+          message_type="error", 
+          message="Empty, misspelled or invalid file, filename or filepath.")
+
+# try to cope with absence of title in form
+if result.has_key('object_title'):
+    title = result['object_title']
+    del result['object_title']
+else:
+    title = ""
 
 object = model.manage_addProduct['Silva'].manage_addFile(id, title, file)
 
 if object is None:
     # something went wrong with the id check
     id, id_check = check_valid_id_file(model,id, file)
-    return view.add_form(message_type="error", message=view.get_id_status_text(id, id_check))
+    return view.add_form(
+        message_type="error", message=view.get_id_status_text(id, id_check))
 
 # update last author info in new object
 object.sec_update_last_author_info()
@@ -66,5 +77,6 @@ if not id:
 if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
-     return model.edit['tab_edit'](message_type="feedback", 
-                                   message="Added %s %s." % (object.meta_type, view.quotify(id)))
+     return model.edit['tab_edit'](
+         message_type="feedback", 
+         message="Added %s %s." % (object.meta_type, view.quotify(id)))
