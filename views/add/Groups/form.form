@@ -25,7 +25,7 @@
           <default></default>
           <title>id</title>
           <truncate type="int">0</truncate>
-          <description>id: no spaces or special characters besides an underscore ("_") or a period (".")</description>
+          <description>Don't use spaces or special characters besides "_" or "-" or "."</description>
           <extra>style="width:100%;"</extra>
           <unicode>0</unicode>
         </values>

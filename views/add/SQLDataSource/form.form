@@ -25,7 +25,7 @@
           <default></default>
           <title>id</title>
           <truncate type="int">0</truncate>
-          <description>id: no spaces or special characters besides an underscore ("_") or a period (".")</description>
+          <description>Don't use spaces or special characters besides "_" or "-" or "."</description>
           <extra>style="width:100%;"</extra>
           <unicode>1</unicode>
         </values>
@@ -64,7 +64,7 @@
           <default></default>
           <title>connection_id</title>
           <first_item type="int">0</first_item>
-          <description>Select the id of the database connection to use</description>
+          <description>Select the id of the database connection to use.</description>
           <extra></extra>
         </values>
         <tales>
@@ -109,7 +109,7 @@
             Parameter definitions for query, each on a new line. &lt;br /&gt; 
             Syntax:&lt;code&gt;type : name : default value : description &lt;/code&gt; 
           </description>
-          <extra></extra>
+          <extra>style="width:100%;"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -134,7 +134,7 @@
             Pay special attention to &lt;code&gt;&amp;lt;dtml-var&amp;gt;&lt;/code&gt; vs. 
             &lt;code&gt;&amp;lt;dtml-sqlvar&amp;gt;&lt;/code&gt; usage.
           </description>
-          <extra></extra>
+          <extra>style="width:100%;"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
