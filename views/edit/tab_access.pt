@@ -591,8 +591,7 @@
             tal:define="
               is_closed model/sec_is_closed_to_public;
               minimal_role model/sec_minimal_view_role;">
-          <table class="listing sublisting"
-            style>
+          <table class="listing sublisting">
             <thead>
               <tal:block replace="nothing">
                 ______________ vein + title row _______________
