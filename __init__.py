@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.112.6.6.6.7 $
+# $Revision: 1.112.6.6.6.8 $
 
 import ContainerPolicy
 
@@ -145,7 +145,6 @@ def initialize(context):
     except ImportError:
         pass
     else:
-        print 'kupu imported'
         registerDirectory('%s/common' % os.path.dirname(kupu.__file__), globals())
         registerDirectory('%s/silva' % os.path.dirname(kupu.__file__), globals())
 
