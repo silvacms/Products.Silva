@@ -6,10 +6,10 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
 </dtml-let>
 
+/* _____________________ style sheet voor Silva backend ______________________ */
+
 /* ----- for debugging ------ */
 /* {border: 1px dotted red; } */
-
-/* _____________________ style sheet voor Silva backend ______________________ */
 
 /* standard bg color, change in overide stylesheet */ 
 body {
@@ -129,7 +129,7 @@ tr.focus-cycle, th.focus-cycle, td.focus-cycle {
 
 /* was b0b0b0 */
 tr.focus-fixed, td.focus-fixed {
-    background : #d0d0d0;
+    background : #c0c0c0;
 }
 
 tr.focus-light, th.focus-light, td.focus-light {
@@ -207,12 +207,6 @@ td.rowhead {
   color : #e0e4e8; 
   background : transparent;
 } 
-
-.column-heading, .column-spanheading {
-  font-weight : bold; 
-  font-family : verdana, arial, helvetica, sans-serif; 
-  color : #444444; 
-}
 
 
 /* _________________________________________________________ list styles _____ */
@@ -579,7 +573,7 @@ td.tab a:hover img {
   text-decoration : none;
 }
 
-/* sigh, IE5 doesn't highlight images */
+/* IE5 doesn't highlight images, oh well */
 td.tab a.tree:hover {
   background : #b0cbd0;
   text-decoration : none;
@@ -593,6 +587,7 @@ td.tab a.tree:hover {
 }
 
 /* __________________________________________________ footer definition _____ */  
+
 td.footer {
   font-size : 11px;
   background : #404452;
@@ -616,7 +611,6 @@ a.footer:hover {
   color : #a3edf3;
   text-decoration : none;
 }
-
 
 
 /* ____________________________________________________ link definitions _____ */
