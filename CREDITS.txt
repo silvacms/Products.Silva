@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 0.8.4
+  Valid for:  Silva 0.8.6
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.12 $
+  CVS:        $Revision: 1.13 $
 
 Silva is developed by Infrae (http://www.infrae.com). Initial (and
 continued) development was for the Erasmus University Rotterdam
@@ -19,17 +19,18 @@ Infrae Silva team:
   Jan-Wijbrand Kolman <jw@infrae.com>
   Guido Wesdorp <guido@infrae.com>
 
-Thanks to:
-    
-  Clemens Klein-Robbenhaar for various bug reports,
-  suggestions and useful discussion on the mailinglist.
+External developers:
 
-  Holger Krekel for the CVS hosting and other development support.
+  Holger Krekel <hpk@devel.trillke.net>
+  Clemens Klein-Robbenaar <robbenhaar@espresto.com>
+  
+Thanks to:
 
   Jim Washington for fixing <script /> and <meta /> in
   layout_macro.html.
 
-  The guys at ETH in Zurich for their feedback and support and examples.
+  The people at ETH in Zurich for their feedback and support and
+  examples.
 
 Many thanks go to Hans Verster <verster@daz.eur.nl> at the Erasmus
 University Rotterdam for his vision and support.
