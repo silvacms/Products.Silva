@@ -173,10 +173,14 @@ div.tabs a.normal {
 /* ________________________________________ river bar (or sidewalk :) _____ */
 
 div.riverBar {
-  font-size : 90%;
-  height : 0.3em;
+  /* IE workaround */
+  font-size : 30%;
+  min-height : 3px;
+  height : 1em;
+  max-height : 0.3em;
   background: &dtml-mainTabBackgroundSelected;;
   margin-bottom: 0;
+  padding: 0;
   border-bottom: #636da6 1px solid;
   border-collapse: collapse;
 }
