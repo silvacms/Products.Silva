@@ -566,9 +566,11 @@ class IContent(ISilvaObject, IPublishable):
         pass
 
     def get_indexables():
-        """Return a list of versions (that can be cataloged
-        in various ways). May return the empty list if there is nothing
-        to catalog.
+        """ Return a list of versions (that can be indexed in various ways). 
+        May return the empty list if there is nothing to index.  
+
+        NOTE: This is "indexables" in the book index sense, not in catalog 
+        sense.
         """
         pass
 
