@@ -77,10 +77,10 @@
         </a>
       </p>
       <p tal:condition="model/hires_image" 
-        tal:define="orientation model/getOrientation">
+        tal:define="orientation model/getOrientation; klass model/getOrientationClass">
         <span class="subhead" i18n:translate="">orientation</span><br />
-        <span tal:content="orientation" 
-          tal:attributes="class string:${orientation} orientation"
+        <span tal:content="orientation"
+          tal:attributes="class string:${klass} orientation"
           >Square</span>
       </p>
     </tal:block>
