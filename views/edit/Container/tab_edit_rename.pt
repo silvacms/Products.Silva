@@ -55,7 +55,12 @@
             id
           </td>
           <td>
-            <span tal:replace="object/getId" />&nbsp;
+            <span 
+              tal:define="
+                objId object/getId"
+              tal:replace="
+                python: mangle.String.centeredTruncate(objId, 30)" />
+              &nbsp;
           </td>
           <td>
             <input type="text" name="name" style="width: 100%" value="value"
@@ -68,8 +73,13 @@
             title
           </td>
           <td>
-            <span tal:replace="
-              object/get_title_editable | object/get_title | object/getId"
+            <span               
+              tal:define="
+                title object/get_title_editable | object/get_title | object/getId"
+              tal:content="
+                python: mangle.String.centeredTruncate(title, 30)"
+              tal:attributes="
+                title title"
             />
           </td>
           <td tal:define="
