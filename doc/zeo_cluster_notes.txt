@@ -1,4 +1,4 @@
-Version of this document: $Revision: 1.6 $
+Version of this document: $Revision: 1.7 $
 
 Setting up a ZEO Cluster with session tracking.
 
@@ -39,14 +39,14 @@ Setting up a ZEO Cluster with session tracking.
         'front-end', or 'load balancing' server is put in place. End users
         connnect to the Balancer, which transparently maps the requests to
         one of the Clients. Typically the Client and Server nodes are kept
-        on a private network, where this Balancer acts as a 'bridge'
+        on a private network, where this Balancer acts as a "bridge"
         between the public and this private network.
 
-        Most web applications keep track of the end users 'state' within
-        the application. Webapplication may do so by 'tagging' the end
+        Most web applications keep track of the end users "state" within
+        the application. Webapplication may do so by "tagging" the end
         user web browser with a cookie. This cookie merely provides an
         identifying number to the webapplication. With this ID the
-        application keeps a 'session object' per end user. This session
+        application keeps a 'session' object per end user. This session
         object is a generic container to store end user states within the
         application.
 
@@ -72,10 +72,15 @@ Setting up a ZEO Cluster with session tracking.
         This setup requires:
         
           * latest (stable) versions ZEO, Zope and Python2.1
+
           * (obviously) a ZEO Cluster setup
+
           * a partitioned ZODB                
+
           * the Berkely DB libraries
+
           * Berkeley DB bindings for Zope/Python
+
           * the External Mount product
 
     Rough instructions
@@ -85,18 +90,18 @@ Setting up a ZEO Cluster with session tracking.
           * Setup a ZEO Server, and, preferably more than one, ZEO
           Client(s) all able to use the ExternalMount product.
 
-          * Setup a 'scratch' Zope instance backed by a Berkeley DB with
+          * Setup a "scratch" Zope instance backed by a Berkeley DB with
           at least one user defined folder. This will create a 'bootstrap'
           Berkeley DB for later use.
 
-          * Setup the Server to use both the 'main' ZODB FileStorage and
+          * Setup the Server to use both the "main" ZODB FileStorage and
           the BerkeleyStorage. This BerkeleyStorage will store the
-          'session' objects. Put the 'bootstrapped' Berkeley DB in the
+          session objects. Put the "bootstrapped" Berkeley DB in the
           directory where the Server is instructed to find it.
 
           * Create an 'ExternalMethod' in one of the Clients 'Extensions'
           directory. This 'ExternalMethod' will later 'mount' the
-          'session' database
+          session database
 
           * Start the Cluster. Use the ZMI of one of the running Clients
           to add a 'Mount via ExternalMethod'. Point this Mount to the
@@ -104,7 +109,7 @@ Setting up a ZEO Cluster with session tracking.
           created folder in the 'bootstrapped' session BD. This folder is
           mounted and available to store objects.
 
-          * Create a 'Transient Object Container' in this 'mounted' folder
+          * Create a 'Transient Object Container' in this mounted folder
           and instruct the 'session_data_manager' to store its session
           data in this 'Transient Container'. Since data in this container
           is actually centrally persisited in the Berkeley DB, these
@@ -119,7 +124,7 @@ Setting up a ZEO Cluster with session tracking.
 
     Berkeley ZODB Storage
 
-        The 'out of the box' ZODB backend is called 'FileStorage'. By
+        The "out of the box" ZODB backend is called 'FileStorage'. By
         design, this backend is a versionable and undoable persistent
         storage for (Zope) objects. Each change to an object is appended
         to the database file, which, unless this database is 'packed'
@@ -133,7 +138,7 @@ Setting up a ZEO Cluster with session tracking.
 
         A setup like this needs a working installation of the Berkeley DB
         version 3 libraries, Python bindings to these libraries and a Zope
-        interfaces to be able to make use of this DB (see [A6], [A9], [A10]).
+        interfaces to be able to make use of this DB (see [A6], [A8], [A9]).
 
         A 'custom_zodb.py' (see [B1]) file in the Zope instance directory
         (see [A1]) instructs Zope to use this BerkeleyStorage instead of the
@@ -186,9 +191,13 @@ Setting up a ZEO Cluster with session tracking.
                 http://www.zope.org/About/
 
         [A4] Session tracking & ZEO:
-                http://www.zope.org/Members/randy/ZEO-Sessions
-                http://www.zope.org/Members/jgrewen/ZEO%20with%20CoreSessionTracking%20and%20a%20mounted%20Berkeley%20session%20DB
-                http://www.zope.org/Members/mcdonc/HowTos/UseExternalMountWithCST
+                
+                * http://www.zope.org/Members/randy/ZEO-Sessions
+
+                * http://www.zope.org/Members/jgrewen/ZEO%20with%20CoreSessionTracking
+                    %20and%20a%20mounted%20Berkeley%20session%20DB
+
+                * http://www.zope.org/Members/mcdonc/HowTos/UseExternalMountWithCST
 
         [A5] Berkeley Storage Wiki and code:
                 http://www.zope.org/Wikis/ZODB/BerkeleyStorage
@@ -217,13 +226,15 @@ Setting up a ZEO Cluster with session tracking.
           env = os.path.join('var', 'bsddb3Storage')
           Storage = Packless(name='BerkeleyStorage', env=env)
 
-        [B2] 'StorageConfig.py'::
+        [B2] 'StorageConfig.py' ::
 
           import os
           import ZODB.FileStorage
           from bsddb3Storage.Packless import Packless
-          main_storage = ZODB.FileStorage.FileStorage(os.path.join('var', 'Data.fs'),)
-          session_storage = Packless(name='BerkeleyStorage', env=os.path.join('var', 'bsddb3Storage'))
+          main_storage = ZODB.FileStorage.FileStorage(
+                                            os.path.join('var', 'Data.fs'),)
+          session_storage = Packless(
+           name='BerkeleyStorage', env=os.path.join('var', 'bsddb3Storage'))
 
         [B3] 'start_zeo' script::
 
@@ -245,7 +256,8 @@ Setting up a ZEO Cluster with session tracking.
 
           import ZODB, ZEO.ClientStorage
           def mountSessionData():
-          return ZODB.DB(ZEO.ClientStorage.ClientStorage(('192.168.1.20', 9000), storage='sessiondata'))
+          return ZODB.DB(ZEO.ClientStorage.ClientStorage(
+                             ('192.168.1.20', 9000), storage='sessiondata'))
 
         [B5] Add 'Mount via ExternalMethod' 'object', fill in parameters::
 

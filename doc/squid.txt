@@ -1,4 +1,4 @@
-Version of this document: $Revision: 1.1 $
+Version of this document: $Revision: 1.2 $
 
 Setting up Squid Caching [1] in a ZEO Cluster [7]
 
@@ -82,61 +82,60 @@ Setting up Squid Caching [1] in a ZEO Cluster [7]
         the scope of this document.
 
         [Conf] Minimal configuration::
+            ## Squid port
+            http_port 80
+    
+            ## ACL's taken from standard Squid conf
+            acl all src 0.0.0.0/0.0.0.0
+            acl localhost src 127.0.0.1/255.255.255.255
+    
+            ## ACL for cache peers in network:
+            acl peers_src src node-1.domain.tld node-2.domain.tld ... node-N.domain.tld
+            acl peers_dst dst node-1.domain.tld node-2.domain.tld ... node-N.domain.tld
 
-        ## Squid port
-        http_port 80
+            ## ACL for public 
+            acl public_access dst virtualhost-1.domain.tld virtualhost-2.domain.tld ... virtualhost-N.domain.tld
+            acl public_access_port port 80 8080
 
-        ## ACL's taken from standard Squid conf
-        acl all src 0.0.0.0/0.0.0.0
-        acl localhost src 127.0.0.1/255.255.255.255
+            ## Define cache siblings. Comment the lines which point to cache
+            ## node "itself":
+            ##cache_peer node-1.domain.tld sibling 80 3130 no-digest proxy-only
+            ##cache_peer_access node-1.domain.tld allow public_access
+            ##cache_peer_access node-1.domain.tld deny all
 
-        ## ACL for cache peers in network:
-        acl peers_src src node-1.domain.tld node-2.domain.tld ... node-N.domain.tld
-        acl peers_dst dst node-1.domain.tld node-2.domain.tld ... node-N.domain.tld
+            cache_peer node-2.domain.tld sibling 80 3130 no-digest proxy-only
+            cache_peer_access node-2.domain.tld allow public_access
+            cache_peer_access node-2.domain.tld deny all
 
-        ## ACL for public 
-        acl public_access dst virtualhost-1.domain.tld virtualhost-2.domain.tld ... virtualhost-N.domain.tld
-        acl public_access_port port 80 8080
+            ...
 
-        ## Define cache siblings. Comment the lines which point to cache
-        ## node "itself":
-        ##cache_peer node-1.domain.tld sibling 80 3130 no-digest proxy-only
-        ##cache_peer_access node-1.domain.tld allow public_access
-        ##cache_peer_access node-1.domain.tld deny all
+            cache_peer node-N.domain.tld sibling 80 3130 no-digest proxy-only
+            cache_peer_access node-N.domain.tld allow public_access
+            cache_peer_access node-N.domain.tld deny all
 
-        cache_peer node-2.domain.tld sibling 80 3130 no-digest proxy-only
-        cache_peer_access node-2.domain.tld allow public_access
-        cache_peer_access node-2.domain.tld deny all
+            ## Allow ICP communication between cache peers
+            icp_access allow peers_src
 
-        ...
+            ## FIXME: not sure about this option
+            prefer_direct off
 
-        cache_peer node-N.domain.tld sibling 80 3130 no-digest proxy-only
-        cache_peer_access node-N.domain.tld allow public_access
-        cache_peer_access node-N.domain.tld deny all
+            ## Host being accelerated
+            httpd_accel_host 127.0.0.1
+            httpd_accel_single_host on
+            httpd_accel_port 8080
 
-        ## Allow ICP communication between cache peers
-        icp_access allow peers_src
+            ## Proxy on, needed to make cache peers intercommunicate
+            ## Without proper security measures, this could result in an "open
+            ## proxy". 
+            httpd_accel_with_proxy on
 
-        ## FIXME: not sure about this option
-        prefer_direct off
-
-        ## Host being accelerated
-        httpd_accel_host 127.0.0.1
-        httpd_accel_single_host on
-        httpd_accel_port 8080
-
-        ## Proxy on, needed to make cache peers intercommunicate
-        ## Without proper security measures, this could result in an "open
-        ## proxy". 
-        httpd_accel_with_proxy on
-
-        ## Keeps information for Apache; needed for virtual hosting       
-        httpd_accel_uses_host_header on
+            ## Keeps information for Apache; needed for virtual hosting       
+            httpd_accel_uses_host_header on
                                                                    
-        ## Final access control
-        http_access allow peers_src peers_dst
-        http_access allow public_access public_access_port
-        http_access deny all
+            ## Final access control
+            http_access allow peers_src peers_dst
+            http_access allow public_access public_access_port
+            http_access deny all
         
     HTTP Response headers
 
