@@ -1046,4 +1046,13 @@ class ISidebarService(Interface):
     def invalidate(obj):
         """Invalidate the cache for a specific object
         """
-        
+
+
+class IContainerPolicy(Interface):
+    """Policy for container's default documents"""
+
+    def createDefaultDocument(container, title):
+        """create default document in given container"""
+    
+
+    

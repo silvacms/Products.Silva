@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.78 $
+# $Revision: 1.79 $
 import Metadata
 import Folder, Root
 import Publication, Ghost, Image, File, SimpleContent
@@ -21,6 +21,7 @@ import VirtualGroup
 import SidebarCache
 import SidebarService
 import UnicodeSplitter # To make the splitter register itself
+import ContainerPolicy
 
 # enable Formulator support for FileSystemSite
 from Products.Formulator import FSForm
@@ -87,7 +88,12 @@ def initialize(context):
                         SidebarService.manage_addSidebarService),
         icon = ""
         )
-
+    context.registerClass(
+        ContainerPolicy.ContainerPolicyRegistry,
+        constructors = (ContainerPolicy.manage_addContainerPolicyRegistry, ),
+        icon = ""
+        )
+        
     # register xml import functions
     # we let the xml import functionality of Publication handle any root elements, since a Silva instance can not import another root
     importer_registry.register_tag('silva_root', Publication.xml_import_handler)

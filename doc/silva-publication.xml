@@ -1,7 +1,7 @@
 <metadata_set id="silva-publication" ns_uri="http://infrae.com/namespaces/metadata/silva-publication" ns_prefix="silva-publication">
 <title></title>
 <description></description>
-  <metadata_element id="index_policy">
+  <metadata_element id="defaultdocument_policy">
    <index_type>KeywordIndex</index_type>
    <index_p>0</index_p>
    <field_type>ListField</field_type>
@@ -18,11 +18,11 @@
      <expr></expr>
    </write_guard>
    <field_values>
-       <value key="title" type="str" value="Index Policy" />
+       <value key="title" type="str" value="Default Document Policy" />
        <value key="size" type="int" value="1" />
    </field_values>
    <field_tales>
-     <value key="items">python:['Silva Document', 'Simple Content', 'None']</value>
+        <value key="items">python:form.get_root().service_containerpolicy.listPolicies()</value>
    </field_tales>
    <field_messages>
      <message name="external_validator_failed">The input failed the external validator.</message>

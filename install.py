@@ -8,6 +8,7 @@ from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
 from Products.ProxyIndex.ProxyIndex import RecordStyle
 
+from Products.Silva.ContainerPolicy import NothingPolicy, SimpleContentPolicy
 from SimpleMembership import SimpleMemberService
 
 def add_fss_directory_view(obj, name, base, *args):
@@ -120,6 +121,8 @@ def install(root):
 
     # add or update service metadata
     configureMetadata(root)
+    
+    configureContainerPolicies(root)
     
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -242,8 +245,8 @@ def configureMiscServices(root):
     # do the same for the sidebar service
     if not hasattr(root, 'service_sidebar'):
         root.manage_addProduct['Silva'] \
-            .manage_addSidebarService('service_sidebar', 'Silva Content Tree Navigation')
-
+            .manage_addSidebarService('service_sidebar', 
+            'Silva Content Tree Navigation')
 
 def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.
@@ -549,6 +552,16 @@ def setup_catalog(silva_root):
     # if the silva root has an index_object attribute, add it to the catalog
     if hasattr(silva_root, 'index_object'):
         silva_root.index_object()
+
+def configureContainerPolicies(root):
+    # create container policy registry
+    if not hasattr(root, 'service_containerpolicy'):
+        root.manage_addProduct['Silva'] \
+            .manage_addContainerPolicyRegistry()
+    cpr = root.service_containerpolicy
+    cpr.register('None', NothingPolicy)
+    cpr.register('Simple Content', SimpleContentPolicy)
+
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
