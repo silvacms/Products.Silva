@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -32,7 +32,31 @@ class DemoObject(VersionedContent, EditorSupport):
         the constructor of the parent).
         """
         DemoObject.inheritedAttribute('__init__')(self, id, title)
-    
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'to_xml')
+    def to_xml(self, context):
+        """Returns this object as XML"""
+        f = context.f
+        if context.last_version == 1:
+            version_id = self.get_next_version()
+            if version_id is None:
+                version_id = self.get_public_version()
+        else:
+            version_id = self.get_public_version()
+
+        if version_id is None:
+            return
+
+        version = getattr(self, version_id)
+        f.write('<silva_demoobject id="%s">' % self.id)
+        f.write('<title>%s</title>' % translateCdata(self.get_title()))
+        f.write('<info>%s</info>' % version.info())
+        f.write('<number>%s</number>' % version.number())
+        f.write('<date>%s</date>' % version.date())
+        version.content.documentElement.writeStream(f)
+        f.write('</silva_demoobject>')
+
 InitializeClass(DemoObject)
 
 class DemoObjectVersion(SimpleItem.SimpleItem):
@@ -47,8 +71,10 @@ class DemoObjectVersion(SimpleItem.SimpleItem):
         """
         self.id = id
         self._info = ''
+        self._number = 0
+        self._date = DateTime()
         self.content = ParsedXML('content', '<doc></doc>')
-        
+
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_demo_data')
@@ -58,28 +84,47 @@ class DemoObjectVersion(SimpleItem.SimpleItem):
         self._info = info
         self._number = number
         self._date = date
-        
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'info')
     def info(self):
         """Get the info for this version.
         """
         return self._info
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_info')
+    def set_info(self, value):
+        """Sets info"""
+        self._info = value
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'number')
     def number(self):
         """Get the number for this version.
         """
         return self._number
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_number')
+    def set_number(self, value):
+        """Sets number"""
+        self._number = value
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'date')
     def date(self):
         """Get the date for this version.
         """
         return self._date
-    
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'set_date')
+    def set_date(self, value):
+        if type(value) != DateTime:
+            value = DateTime(value)
+        self._date = value
+
 InitializeClass(DemoObjectVersion)
 
 manage_addDemoObjectForm = PageTemplateFile("www/demoObjectAdd", globals(),
