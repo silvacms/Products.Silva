@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 18 16:07:32 2004\n"
+"POT-Creation-Date: Thu Nov 18 16:16:52 2004\n"
 "PO-Revision-Date: 2004-11-17 18:17+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -2990,24 +2990,18 @@ msgid "No users on clipboard"
 msgstr "Geen gebruikers op clipboard"
 
 #: /views/edit/macro_vein_navigation.pt:62
-msgid "up one level: alt-]"
-msgstr "up one level: alt-]"
-
 #: /views/edit/macro_vein_navigation.pt:69
-msgid "up one level"
-msgstr "up one level"
+msgid "up one level: alt-]"
+msgstr "een niveau naar boven: alt-]"
 
 #: /views/edit/macro_vein_navigation.pt:76
-msgid "up to containing publication: alt-["
-msgstr "up to containing publication: alt-["
-
 #: /views/edit/macro_vein_navigation.pt:82
-msgid "up to containing publication"
-msgstr "up to containing publication"
+msgid "up to containing publication: alt-["
+msgstr "omhoog naar omvattende publication: alt-["
 
 #: /views/edit/macro_vein_navigation.pt:89
 msgid "reload screen"
-msgstr "reload screen"
+msgstr "scherm herladen"
 
 #: /views/edit/promptWindow.pt:21
 msgid "session timeout"
@@ -3509,4 +3503,3 @@ msgstr ""
 "</ul>\n"
 "</dd>\n"
 "</dl>\n"
-
