@@ -46,7 +46,7 @@ class EditorSupport:
                     result.append(output_convert(subchild.data))
                     result.append('</u>')
             elif child.nodeName == 'index':
-                result.append('<a name="%s">' %
+                result.append('<a class="index-element" name="%s">' %
                               output_convert(child.getAttribute('name')))
                 for subchild in child.childNodes:
                     result.append(output_convert(subchild.data))
@@ -54,6 +54,30 @@ class EditorSupport:
             #elif child.nodeName == 'person':
             #    for subchild in child.childNodes:
             #        result.append(output_convert(subchild.data, 1))
+            else:
+                raise EditorSupportError, "Unknown element: %s" % child.nodeName
+        return ''.join(result)
+
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'render_heading_as_html')
+    def render_heading_as_html(self, node):
+        """Render heading content as HTML.
+        """
+        result = []
+        output_convert = self.output_convert_html
+        for child in node.childNodes:
+            if child.nodeType == child.TEXT_NODE:
+                result.append(output_convert(child.data))
+                continue
+            if child.nodeType != child.ELEMENT_NODE:
+                continue
+            if child.nodeName == 'index':
+                result.append('<a class="index-element" name="%s">' %
+                              output_convert(child.getAttribute('name')))
+                for subchild in child.childNodes:
+                    result.append(output_convert(subchild.data))
+                result.append('</a>')
             else:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
         return ''.join(result)
@@ -108,6 +132,30 @@ class EditorSupport:
                 raise EditorSupportError, "Unknown element: %s" % child.nodeName
             
         return self.output_convert_editable(''.join(result))
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'render_heading_as_editable')
+    def render_heading_as_editable(self, node):
+        """Render textual content as editable text.
+        """
+        result = []
+        for child in node.childNodes:
+            if child.nodeType == child.TEXT_NODE:
+                result.append(child.data)
+                continue
+            if child.nodeType != child.ELEMENT_NODE:
+                continue
+            if child.nodeName == 'index':
+                result.append('[[')
+                for subchild in child.childNodes:
+                    result.append(subchild.data)
+                result.append('|')
+                result.append(child.getAttribute('name'))
+                result.append(']]')
+            else:
+                raise EditorSupportError, "Unknown element: %s" % child.nodeName
+            
+        return self.output_convert_editable(''.join(result))
     
     _strongStructure = ForgivingParser.Structure(['**', '**'])
     _emStructure = ForgivingParser.Structure(['++', '++'])
@@ -121,6 +169,9 @@ class EditorSupport:
         _emStructure,
         _linkStructure,
         _underlineStructure,
+        _indexStructure])
+
+    _headingParser = ForgivingParser.ForgivingParser([
         _indexStructure])
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -183,5 +234,49 @@ class EditorSupport:
             #    node.appendChild(newnode)
             else:
                 raise EditorSupportError, "Unknown structure: %s" % structure
-    
+
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'replace_heading')
+    def replace_heading(self, node, text):
+        """Replace text in a heading containing node.
+        """
+        # first preprocess the text, collapsing all whitespace
+        # FIXME: does it make sense to expect cp437, which is
+        # windows only?
+        text = self.input_convert(text)
+        
+        # parse the data
+        result = self._headingParser.parse(text)
+
+        # get actual DOM node
+        node = node._node
+        doc = node.ownerDocument
+        
+        # remove all old subnodes of node
+        # FIXME: hack to make copy of all childnodes
+        children = [child for child in node.childNodes]
+        children.reverse()  
+        for child in children:
+            node.removeChild(child)
+
+        # now use tokens in result to add them to XML
+        for structure, data in result:
+            if structure is None:
+                # create a text node, data is plain text
+                newnode = doc.createTextNode(data)
+                node.appendChild(newnode)
+            elif structure is self._indexStructure:
+                index_text, index_name = data
+                newnode = doc.createElement('index')
+                newnode.appendChild(doc.createTextNode(index_text))
+                newnode.setAttribute('name', index_name)
+                node.appendChild(newnode)
+            #elif structure is self._personStructure:
+            #    newnode = doc.createElement('person')
+            #    newnode.appendChild(doc.createTextNode(data[0]))
+            #    node.appendChild(newnode)
+            else:
+                raise EditorSupportError, "Unknown structure: %s" % structure
+
 InitializeClass(EditorSupport)

@@ -204,8 +204,8 @@ class SilvaObject(Security):
         f = StringIO(u'<?xml version="1.0" ?>\n')
         self.to_xml(f)
         # XXX HACK
-        result = ''.join(map(str, f.buflist))
-        return result #return f.getvalue()
+        result = ''.join(f.buflist)
+        return result.encode('UTF-8') #return f.getvalue()
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml') 
