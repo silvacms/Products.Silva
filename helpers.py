@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva interfaces
@@ -35,15 +35,21 @@ _reserved_ids = (
     'Members', 
     'REQUEST',
     'acl_users',
+    'cached',
+    'cancel',
     'code_source', 
+    'content',
     'content.html', 
+    'delete',
     'edit',
+    'elements',
     'form',
     'fulltext',
     'getBatch',
     'getDocmaFormatName',
     'globals',
     'index_html', 
+    'insert',
     'layout_macro.html',
     'logout',
     'lookup',
@@ -54,10 +60,13 @@ _reserved_ids = (
     'promptWindow',
     'quotify',
     'redirect',
+    'render',
+    'save',
     'search',
     'standard_error_message', 
     'standard_unauthorized_message',
     'submit',
+    'up',
      )
 
 module_security.declarePublic('escape_entities')
