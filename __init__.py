@@ -1,6 +1,6 @@
-# Version: $Revision: 1.23 $
+# Version: $Revision: 1.24 $
 import Document, Folder, Root, ViewRegistry,\
-       Publication, Ghost, Image, DemoAddable
+       Publication, Ghost, Image, DemoObject
 
 def initialize(context):
     context.registerClass(
@@ -57,16 +57,16 @@ def initialize(context):
         )
 
     context.registerClass(
-        DemoAddable.DemoAddable,
-        constructors = (DemoAddable.manage_addDemoAddableForm,
-                        DemoAddable.manage_addDemoAddable),
+        DemoObject.DemoObject,
+        constructors = (DemoObject.manage_addDemoObjectForm,
+                        DemoObject.manage_addDemoObject),
         icon="www/silvademo.gif"
         )
 
     context.registerClass(
-        DemoAddable.DemoAddableVersion,
-        constructors = (DemoAddable.manage_addDemoAddableVersionForm,
-                        DemoAddable.manage_addDemoAddableVersion),
+        DemoObject.DemoObjectVersion,
+        constructors = (DemoObject.manage_addDemoObjectVersionForm,
+                        DemoObject.manage_addDemoObjectVersion),
         icon="www/silvademo.gif"
         )
 
