@@ -601,7 +601,8 @@ table.sublisting {
 
 .focus-rectangle {
   /* for IE5 */
-  width : 100%;
+  /*XXX is it witdh or the whole class ?*/
+  width : 96%; /* for IE6 */
   max-width : 98%;
   margin : 0 8px;
   padding-top: 8px;
@@ -1082,7 +1083,7 @@ ul.tips-nested {
 /* ____________________________________________________________ forms _____ */
 
 
-div.fixIE6widget {
+.fixIE6widget {
     width : 96%;
 }
 
