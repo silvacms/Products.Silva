@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.36.2.1 2003/07/02 09:36:11 guido Exp $
+# $Id: Image.py,v 1.36.2.2 2005/01/10 17:46:12 guido Exp $
 
 # Python
 import re, string 
@@ -289,6 +289,8 @@ class Image(Asset):
     def content_type(self):
         return self.image.content_type
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'PUT')
     def PUT(self, REQUEST, RESPONSE):
         """Handle HTTP PUT requests"""
         return self.image.PUT(REQUEST, RESPONSE)
