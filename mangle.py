@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.19.8.3.6.1 2004/04/29 16:50:04 roman Exp $
+# $Id: mangle.py,v 1.19.8.3.6.2 2004/05/21 11:48:02 guido Exp $
 # Python
 import string
 import re
@@ -82,6 +82,8 @@ class Id:
         'globals',
         'index_html',
         'insert',
+        'kupu',
+        'kupu_silva',
         'layout_macro.html',
         'logout',
         'lookup',
