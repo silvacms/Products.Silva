@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 import unittest
 import Zope
 Zope.startup()
@@ -150,7 +150,7 @@ class GhostTestCase(unittest.TestCase):
         self.assertEquals('doc1 0', ghost.view())
 
         # make new version of doc1 ('1')
-        self.doc1.REQUEST = None
+        #self.doc1.REQUEST = {}
         self.doc1.create_copy()
 
         # shouldn't affect what we're ghosting

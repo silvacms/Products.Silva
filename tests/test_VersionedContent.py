@@ -1,8 +1,9 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 import unittest
 import Zope
+import time
 Zope.startup()
 
 from DateTime import DateTime
@@ -90,7 +91,7 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(document.get_viewable().id, '0')
         # now create a copy of the public version
         # fake present of REQUEST
-        document.REQUEST = None
+        #document.REQUEST = {}
         document.create_copy()
         self.assertEquals(document.get_editable().id, '1')
         self.assertEquals(document.get_previewable().id, '1')
@@ -113,7 +114,7 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(document.get_viewable(), None)
         # now create a copy of the last closed version
         # fake present of REQUEST
-        document.REQUEST = None
+        #document.REQUEST = None
         document.create_copy()
         self.assertEquals(document.get_editable().id, '1')
         self.assertEquals(document.get_previewable().id, '1')
@@ -136,7 +137,7 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(document.get_viewable(), None)
         # now create a copy of the last closed version
         # fake present of REQUEST
-        document.REQUEST = None
+        #document.REQUEST = None
         document.create_copy()
         self.assertEquals(document.get_editable().id, '1')
         self.assertEquals(document.get_previewable().id, '1')
@@ -158,9 +159,8 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(viewable, self.document.view())
 
         # wait one tick more until closing
-        date = DateTime()
-        while DateTime() <= date:
-            pass        
+        time.sleep(0.1)
+        
         self.document.close_version()
         self.assertEquals(None, self.document.get_public_version())
         self.assertEquals(not_viewable, self.document.view())
@@ -170,6 +170,7 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(not_viewable, self.document.view())
 
         self.document.set_unapproved_version_publication_datetime(DateTime()-1)
+        time.sleep(0.1)
         # expire after 1 second .... ugly, may fail on slow computers
         self.document.set_unapproved_version_expiration_datetime(DateTime()+1.0/(3600.0*24.0))
         date = self.document.get_unapproved_version_expiration_datetime()
@@ -178,8 +179,8 @@ class VersionedContentTestCase(unittest.TestCase):
         self.assertEquals(viewable, self.document.view())
 
         # print 'waiting for expiry ...'
-        while DateTime() <= date:
-            pass     
+        time.sleep(1.5)
+
         self.assertEquals(not_viewable, self.document.view())
         self.assertEquals(not_viewable, self.document.view())
         
