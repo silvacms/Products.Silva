@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 def create_index(container, id, title):
     """Create an index according to container policy.
@@ -14,8 +14,10 @@ def create_index(container, id, title):
             container.manage_addProduct['SilvaDocument'].manage_addDocument(
                 'index', title)
             container.index.sec_update_last_author_info()
-    elif index_policy == 'Simple Index':
-        pass
+    elif index_policy == 'Simple Content':
+        container.manage_addProduct['Silva'].manage_addSimpleContent(
+            'index', title)
+        container.index.sec_update_last_author_info()
     else:
         # do nothing
         pass

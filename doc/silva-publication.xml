@@ -22,7 +22,7 @@
        <value key="size" type="int" value="1" />
    </field_values>
    <field_tales>
-     <value key="items">python:['Silva Document', 'Simple Index', 'None']</value>
+     <value key="items">python:['Silva Document', 'Simple Content', 'None']</value>
    </field_tales>
    <field_messages>
      <message name="external_validator_failed">The input failed the external validator.</message>

@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -10,6 +10,7 @@ from OFS.SimpleItem import SimpleItem
 # Silva
 from Content import Content
 from interfaces import IContent
+import SilvaPermissions
 from helpers import add_and_edit
 
 icon="www/silvageneric.gif"
@@ -35,5 +36,8 @@ def manage_addSimpleContent(self, id, title, REQUEST=None):
         return
     object = SimpleContent(id, title)
     self._setObject(id, object)
+    content = self._getOb(id)
+    content.set_title(title)
+    
     add_and_edit(self, id, REQUEST)
     return ''
