@@ -73,7 +73,7 @@ comments here (field description)
 
 <tr class="controls">
 <td colspan="4" align="right">
-<input class="button" type="submit"
+<input class="button" type="submit" title="Access key: alt-s" accesskey="s"
        name="form_submitted" value=" change item "
        tal:attributes="value string: Save metadata " />
 </td>
