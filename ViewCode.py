@@ -98,7 +98,7 @@ class ViewCode:
             ret.append(infodict)
             
             infodict['indent'] = indent = item[0]
-            infodict['id'] = self.truncate(obj.id, 22)
+            infodict['id'] = mangle.String.truncate(obj.id, 22)
 
             # do not smash the smi because one object is broken
             if obj.meta_type[:6] == 'Broken':
