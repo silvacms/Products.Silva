@@ -103,9 +103,21 @@ class GhostVersion(SimpleItem.SimpleItem):
         # FIXME: should this be a bare exception? should catch all traversal failures..
         except:
             return None
-        
-    def render(self):
-        """Render this version (which is what we point at)
+    
+    def render_preview(self):
+        """Render preview of this version (which is what we point at)
+        """
+        # FIXME: should only call view if we are allowed to by content
+        # FIXME what if content is None?
+        # what if we get circular ghosts?
+        content = self._get_content()
+        if content is None:
+            return None # public render code of ghost should give broken message
+        else:
+            return content.preview()
+
+    def render_view(self):
+        """Render view of this version (which is what we point at)
         """
         # FIXME: should only call view if we are allowed to by content
         # FIXME what if content is None?
