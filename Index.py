@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -21,7 +21,7 @@ icon = "www/silvageneric.gif"
 
 class Index(Content, SimpleItem):
     """Index asset.
-    """    
+    """
     security = ClassSecurityInfo()
 
     meta_type = "Silva Index"
@@ -74,7 +74,7 @@ class Index(Content, SimpleItem):
             for node in nodes:
                 result.setdefault(node.getAttribute('name'), {})[
                     object.content_url()] = object.get_content()
-                
+
 InitializeClass(Index)
 
 manage_addIndexForm = PageTemplateFile("www/indexAdd", globals(),
