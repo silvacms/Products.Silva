@@ -48,7 +48,7 @@ not_renamed = []
 while 1:
     objects_changed = 0
     for item in items:
-        if not model.is_id_valid(item[1]):
+        if not model.is_id_valid(item[1], allow_dup=1):
             messages.append('&#xab;%s&#xbb; could not be renamed to %s (invalid id)' % (item[0], item[1]))
             message_type = 'error'
         elif not item[1] in model.objectIds():
