@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 18 14:22:46 2004\n"
+"POT-Creation-Date: Thu Nov 18 15:58:21 2004\n"
 "PO-Revision-Date: 2004-11-17 18:17+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -663,7 +663,7 @@ msgstr "Image updated."
 #: /views/edit/VersionedContent/Link/get_tabs.py:16
 #: /views/edit/get_authorized_tabs.py:15 /views/edit/get_authorized_tabs.py:19
 #: /views/edit/hyperlink_lookup.pt:313 /views/edit/Container/tab_edit.pt:128
-#: /views/edit/Container/tab_edit.pt:205 /views/edit/Container/tab_edit.pt:381
+#: /views/edit/Container/tab_edit.pt:205 /views/edit/Container/tab_edit.pt:382
 #: /views/edit/Container/GhostFolder/tab_edit.pt:223
 #: /views/edit/Container/GhostFolder/tab_edit.pt:311
 #: /views/edit/Container/GhostFolder/tab_edit.pt:428
@@ -678,7 +678,7 @@ msgstr "bekijken"
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:19
 #: /views/edit/VersionedContent/Link/get_tabs.py:17
 #: /views/edit/Container/tab_edit.pt:219 /views/edit/Container/tab_edit.pt:228
-#: /views/edit/Container/tab_edit.pt:396 /views/edit/Container/tab_edit.pt:405
+#: /views/edit/Container/tab_edit.pt:397 /views/edit/Container/tab_edit.pt:406
 msgid "properties"
 msgstr "eigenschappen"
 
@@ -715,6 +715,7 @@ msgstr "inhoud"
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:21
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
 #: /views/edit/hyperlink_lookup.pt:243 /views/edit/Container/tab_edit.pt:255
+#: /views/edit/Container/tab_edit.pt:264
 #: /views/edit/Container/tab_status.pt:170
 #: /views/edit/Container/tab_status.pt:179
 #: /views/edit/Container/GhostFolder/tab_edit.pt:352
@@ -1049,7 +1050,7 @@ msgid "delete selected groups: alt-d"
 msgstr "delete selected groups: alt-d"
 
 #: /views/edit/Container/tab_access_groups.pt:252
-#: /views/edit/Container/tab_edit.pt:547
+#: /views/edit/Container/tab_edit.pt:548
 #: /views/edit/VersionedContent/tab_status.pt:324
 msgid "delete"
 msgstr "verwijderen"
@@ -1109,97 +1110,89 @@ msgstr "importeren..."
 msgid "modify"
 msgstr "bewerken"
 
-#: /views/edit/Container/tab_edit.pt:137
-msgid "&nbsp;&nbsp;Shift"
-msgstr "&nbsp;&nbsp;Shift"
+#: /views/edit/Container/tab_edit.pt:138
+msgid "shift"
+msgstr "herordenen"
 
 #: /views/edit/Container/tab_edit.pt:241
 msgid "content approved, or published..."
 msgstr "content approved, or published..."
 
-#: /views/edit/Container/tab_edit.pt:282
+#: /views/edit/Container/tab_edit.pt:283 /views/edit/Container/tab_edit.pt:288
 msgid "move down"
-msgstr "move down"
+msgstr "naar beneden"
 
-#: /views/edit/Container/tab_edit.pt:287
-msgid "Move down"
-msgstr "Move down"
-
-#: /views/edit/Container/tab_edit.pt:294
+#: /views/edit/Container/tab_edit.pt:295 /views/edit/Container/tab_edit.pt:300
 msgid "move up"
-msgstr "move up"
+msgstr "naar boven"
 
-#: /views/edit/Container/tab_edit.pt:299
-msgid "Move up"
-msgstr "Move up"
-
-#: /views/edit/Container/tab_edit.pt:454
+#: /views/edit/Container/tab_edit.pt:455
 msgid "move selected items to"
 msgstr "geselecteerde items verplaatsen naar"
 
-#: /views/edit/Container/tab_edit.pt:460
+#: /views/edit/Container/tab_edit.pt:461
 msgid "position"
 msgstr "positie"
 
-#: /views/edit/Container/tab_edit.pt:471
+#: /views/edit/Container/tab_edit.pt:472
 msgid "end"
 msgstr "einde"
 
-#: /views/edit/Container/tab_edit.pt:478
+#: /views/edit/Container/tab_edit.pt:479
 #: /views/edit/Container/tab_status.pt:343
 #: /views/edit/VersionedContent/tab_status_macros.pt:503
 msgid "access key: alt-p"
 msgstr "access key: alt-p"
 
-#: /views/edit/Container/tab_edit.pt:484
+#: /views/edit/Container/tab_edit.pt:485
 msgid "move selected items into position: alt-m"
 msgstr "verplaats geselecteerde items naar positie: alt-m"
 
-#: /views/edit/Container/tab_edit.pt:484
+#: /views/edit/Container/tab_edit.pt:485
 msgid "move"
 msgstr "verplaatsen"
 
-#: /views/edit/Container/tab_edit.pt:494
+#: /views/edit/Container/tab_edit.pt:495
 msgid "rename and retitle items: alt-r"
 msgstr "items van naam en titel veranderen: alt-r"
 
-#: /views/edit/Container/tab_edit.pt:494
+#: /views/edit/Container/tab_edit.pt:495
 msgid "rename..."
 msgstr "hernoemen..."
 
-#: /views/edit/Container/tab_edit.pt:502
+#: /views/edit/Container/tab_edit.pt:503
 msgid "cut"
 msgstr "knippen"
 
-#: /views/edit/Container/tab_edit.pt:502
+#: /views/edit/Container/tab_edit.pt:503
 msgid "cut items: alt-x"
 msgstr "items knippen: alt-x"
 
-#: /views/edit/Container/tab_edit.pt:513
+#: /views/edit/Container/tab_edit.pt:514
 msgid "copy"
 msgstr "kopieëren"
 
-#: /views/edit/Container/tab_edit.pt:513
+#: /views/edit/Container/tab_edit.pt:514
 msgid "copy items: alt-c"
 msgstr "items kopieëren: alt-c"
 
-#: /views/edit/Container/tab_edit.pt:529
+#: /views/edit/Container/tab_edit.pt:530
 msgid "paste items: alt-v"
 msgstr "items plakken: alt-v"
 
-#: /views/edit/Container/tab_edit.pt:529
+#: /views/edit/Container/tab_edit.pt:530
 msgid "paste"
 msgstr "plakken"
 
-#: /views/edit/Container/tab_edit.pt:537
+#: /views/edit/Container/tab_edit.pt:538
 msgid "paste (items on clipboard) as ghost objects: alt-g"
 msgstr "items op clipboard als ghost objecten plakken: alt-g"
 
-#: /views/edit/Container/tab_edit.pt:537
+#: /views/edit/Container/tab_edit.pt:538
 msgid "paste ghost"
 msgstr "ghost plakken"
 
-#: /views/edit/Container/tab_edit.pt:547
+#: /views/edit/Container/tab_edit.pt:548
 #: /views/edit/VersionedContent/tab_status.pt:324
 msgid "there's no undo: alt-d"
 msgstr "items verwijderen (er is geen undo): alt-d"
@@ -2141,12 +2134,12 @@ msgstr ""
 "changes you need to first revoke the approval."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:137
-msgid "withdraw a request for approval in order to edit: alt-w"
-msgstr "withdraw a request for approval in order to edit: alt-w"
-
-#: /views/edit/VersionedContent/macro_tab_edit.pt:137
 msgid "withdraw request"
 msgstr "withdraw request"
+
+#: /views/edit/VersionedContent/macro_tab_edit.pt:137
+msgid "withdraw a request for approval in order to edit: alt-w"
+msgstr "withdraw a request for approval in order to edit: alt-w"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:148
 msgid ""
@@ -2314,15 +2307,15 @@ msgstr "Closed public version."
 msgid "No versions selected"
 msgstr "No versions selected"
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:22
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:28
 msgid "Can't delete all versions"
 msgstr "Can't delete all versions"
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:29
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:35
 msgid "<span class=\"error\">could not delete ${id}: ${error}</span>"
 msgstr "<span class=\"error\">could not delete ${id}: ${error}</span>"
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:33
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:39
 msgid "deleted ${id}"
 msgstr "deleted ${id}"
 
@@ -2684,14 +2677,14 @@ msgstr "content approved or published"
 #: /views/edit/document_lookup.pt:239 /views/edit/document_lookup.pt:250
 #: /views/edit/document_lookup.pt:348 /views/edit/hyperlink_lookup.pt:228
 #: /views/edit/hyperlink_lookup.pt:248 /views/edit/Container/tab_edit.pt:234
-#: /views/edit/Container/tab_edit.pt:269
+#: /views/edit/Container/tab_edit.pt:270
 #: /views/edit/Container/tab_status.pt:185
 #: /views/edit/Container/GhostFolder/tab_edit.pt:338
 #: /views/edit/Container/GhostFolder/tab_edit.pt:356
 msgid "n/a"
 msgstr "n/a"
 
-#: /views/edit/document_lookup.pt:315 /views/edit/Container/tab_edit.pt:362
+#: /views/edit/document_lookup.pt:315 /views/edit/Container/tab_edit.pt:363
 #: /views/edit/VersionedContent/tab_status.pt:72
 #: /views/edit/VersionedContent/tab_status.pt:96
 msgid "editor"
@@ -2779,7 +2772,7 @@ msgstr "status"
 msgid "&#8211;"
 msgstr "&#8211;"
 
-#: /views/edit/hyperlink_lookup.pt:334 /views/edit/Container/tab_edit.pt:411
+#: /views/edit/hyperlink_lookup.pt:334 /views/edit/Container/tab_edit.pt:412
 #: /views/edit/Container/GhostFolder/tab_edit.pt:452
 msgid "unknown"
 msgstr "unknown"
