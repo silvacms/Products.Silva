@@ -83,6 +83,13 @@ Silva changes
 
         - A number of minor bugs, mainly in UI.
         
+  0.9.1.6
+                                                                                                    
+    Bugs Fixed
+                                                                                                    
+        - Fix bug where viewing content normally restricted by an
+          AccessRestriction, could be viewed via a Ghost.
+
   0.9.1.5
                                                                                                     
     Features Added
