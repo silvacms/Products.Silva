@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Wed Dec  8 18:26:36 2004\n"
-"PO-Revision-Date: 2004-12-14 16:16+0100\n"
+"PO-Revision-Date: 2004-12-15 10:25+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -45,12 +45,12 @@ msgstr ""
 #: /Folder.py:331
 #: /Folder.py:425
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
-msgstr ""
+msgstr "Einfügen von &#xab;${id}&#xbb; ist in diesem Containertyp nicht erlaubt."
 
 #: /Folder.py:389
 #: /Folder.py:421
 msgid "pasted &#xab;${id}&#xbb;"
-msgstr ""
+msgstr "&#xab;${id}&#xbb; eingefügt"
 
 #: /Folder.py:47
 msgid ""
@@ -89,23 +89,23 @@ msgstr ""
 
 #: /Image.py:216
 msgid "'${scale}' is not a valid scale identifier. Probably a percent symbol is missing."
-msgstr ""
+msgstr "${scale} ist kein gültiger Bezeichner. Vielleicht fehlt ein Prozentzeichen."
 
 #: /Image.py:235
 msgid "'${scale} is not a valid scale identifier. At least one number is required."
-msgstr ""
+msgstr "${scale} ist kein gültiger Bezeichner. Mindestens eine Zahl ist notwendig."
 
 #: /Image.py:260
 msgid "'${crop} is not a valid crop identifier"
-msgstr ""
+msgstr "${crop} ist kein gültiger Bezeichner."
 
 #: /Image.py:286
 msgid "'${crop}' defines an impossible cropping"
-msgstr ""
+msgstr "${crop} definiert eine unmögliches Cropping"
 
 #: /Image.py:426
 msgid "square"
-msgstr ""
+msgstr "Quadrat"
 
 #: /Image.py:428
 msgid "landscape"
@@ -120,7 +120,7 @@ msgid ""
 "Web graphics (gif, jpg, png) can be uploaded and inserted in \n"
 "       documents, or used as viewable assets.\n"
 "    "
-msgstr ""
+msgstr "Grafiken (gif, jpg, png) können hochgeladen und in Dokumente eingefügt oder als Anlagen betrachtet werden."
 
 #: /Indexer.py:30
 msgid ""
@@ -184,11 +184,11 @@ msgstr "geschlossen"
 
 #: /Versioning.py:100
 msgid "Cannot approve version without publication datetime."
-msgstr ""
+msgstr "Version kann ohne Publikationszeitpunkt nicht bewilligt werden."
 
 #: /Versioning.py:104
 msgid "Cannot approve version; not allowed."
-msgstr ""
+msgstr "Version kann nicht bewilligt werden; nicht gestattet."
 
 #: /Versioning.py:161
 msgid "No approved version to unapprove."
@@ -3820,28 +3820,28 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
 msgid "There is no unapproved version."
-msgstr ""
+msgstr "Keine nicht genehmigte Version vorhanden."
 
 #: /views/edit/VersionedContent/tab_status_request.py:18
 msgid "Approval has already been requested."
-msgstr ""
+msgstr "Bewilligung wurde bereits beantragt."
 
 #: /views/edit/VersionedContent/tab_status_request.py:37
 msgid "Approval requested."
-msgstr ""
+msgstr "Bewilligung beantragt."
 
 #: /views/edit/VersionedContent/tab_status_revert_to_old.py:16
 msgid "No version selected to copy."
-msgstr ""
+msgstr "Keine Version zum Kopieren ausgewählt."
 
 #: /views/edit/VersionedContent/tab_status_revert_to_old.py:23
 msgid "Can only set 1 version as editable."
-msgstr ""
+msgstr "Es kann nur eine Version bearbeitet werden."
 
 #: /views/edit/VersionedContent/tab_status_revert_to_old.py:31
 #: /views/edit/VersionedContent/tab_status_revert_to_previous.py:17
 msgid "Reverted to previous version."
-msgstr ""
+msgstr "Zur vorherigen Version zurückgekehrt."
 
 #: /views/edit/VersionedContent/tab_status_revoke.py:16
 msgid "This content is not approved."
@@ -3865,27 +3865,27 @@ msgstr "Bitte genau zwei Versionen auswählen."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:42
 msgid "This content is already public. You can close the current public version."
-msgstr ""
+msgstr "Dieser Inhalt ist bereits öffentlich. Sie können die aktuelle öffentliche Version schliessen."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:44
 msgid "This content is already public."
-msgstr ""
+msgstr "Dieser Inhalt ist bereits öffentlich."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:46
 msgid "This content is already approved. You can revoke the approval."
-msgstr ""
+msgstr "Dieser Inhalt ist bereits bewilligt. Sie können die Bewilligung zurücknehmen."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:49
 msgid "No request for approval is pending for this content."
-msgstr ""
+msgstr "Keine Anfrage zur Bewilligung dieses Inhalts vorhanden."
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:61
 msgid "Rejected request for approval"
-msgstr ""
+msgstr "Anfrage auf Bewilligung ablehnen"
 
 #: /views/edit/VersionedContent/tab_status_withdraw.py:63
 msgid "Withdrew request for approval"
-msgstr ""
+msgstr "Bewilligungsanfrage wurde zurückgenommen."
 
 #: /views/edit/access_assign_to_group.py:17
 #: /views/edit/access_assign_to_user.py:15
@@ -3997,7 +3997,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:148
 #: /views/edit/Container/GhostFolder/tab_edit.pt:239
 msgid "There is no content here."
-msgstr ""
+msgstr "Kein Inhalt vorhanden."
 
 #: /views/edit/document_lookup.pt:212
 #: /views/edit/Container/GhostFolder/tab_edit.pt:293
@@ -4033,11 +4033,11 @@ msgstr ""
 
 #: /views/edit/document_lookup.pt:371
 msgid "insert the reference: alt-p"
-msgstr ""
+msgstr "Verweis einfügen: alt-p"
 
 #: /views/edit/get_ghost_link_status_text.py:16
 msgid "You have to enter a path here."
-msgstr ""
+msgstr "Sie müssen hier einen Pfad eingeben."
 
 #: /views/edit/get_ghost_link_status_text.py:18
 msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to does not exist."
@@ -4644,7 +4644,7 @@ msgstr "Bewilligen oder Entziehen von lokalen Rollen"
 
 #: /views/edit/tab_access.pt:722
 msgid "public view access restrictions for &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Zugangsbeschränkungen öffentliche Version für &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_access.pt:74
 #: /views/edit/tab_access.pt:204
@@ -4667,7 +4667,7 @@ msgstr "Hier definierte Rollen"
 
 #: /views/edit/tab_access_acquire_minimum_role_submit.py:14
 msgid "Minimum role to access is now acquired"
-msgstr ""
+msgstr "Minimale Zugangsberechtigung wird nun erworben"
 
 #: /views/edit/tab_access_allow_access.py:17
 #: /views/edit/tab_access_allow_and_approve.py:17
@@ -4701,11 +4701,11 @@ msgstr ""
 
 #: /views/edit/tab_access_minimum_role_submit.py:17
 msgid "Minimum role to access has not changed"
-msgstr ""
+msgstr "Minimale Rolle für Zugriff wurde nicht geändert"
 
 #: /views/edit/tab_access_minimum_role_submit.py:21
 msgid "Minimum role to access is now set to ${role}"
-msgstr ""
+msgstr "Minimale Rolle für Zugriff wurde auf ${role} gesetzt"
 
 #: /views/edit/tab_metadata.pt:109
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
@@ -4765,13 +4765,13 @@ msgstr "Dies ist eine geschloßene Version. Sie können sie siehen, aber die Öf
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:53
 #: /views/edit/VersionedContent/tab_status_form_editor.form:54
 msgid "If this document should expire, set the time."
-msgstr ""
+msgstr "Wenn dieses Dokument verfallen soll, den Zeitpunkt eingeben."
 
 #: /views/edit/tab_status_form.form:67
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:67
 #: /views/edit/VersionedContent/tab_status_form_editor.form:69
 msgid "publish now"
-msgstr ""
+msgstr "Jetzt veröffentlichen"
 
 #: /views/edit/tab_status_form.form:81
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:81
@@ -4780,7 +4780,7 @@ msgstr ""
 
 #: /views/edit/tab_subscriptions.pt:100
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: /views/edit/tab_subscriptions.pt:116
 msgid "This object is not subscribable content."
