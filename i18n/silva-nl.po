@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Mon Nov 29 15:40:07 2004\n"
-"PO-Revision-Date: 2004-11-29 16:00+0100\n"
+"POT-Creation-Date: Mon Nov 29 16:09:45 2004\n"
+"PO-Revision-Date: 2004-11-29 16:11+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -615,15 +615,24 @@ msgstr ""
 "The titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de link "
 "in indexen."
 
-#: /views/add/add_form.pt:37
+#: /views/add/add_form.pt:102 /views/add/Ghost/add_form.pt:106
+#: /views/add/GhostFolder/add_form.pt:114
+#: /views/edit/Container/tab_access_groups.pt:138
+#: /views/edit/Container/tab_status_export.pt:171
+#: /views/edit/Container/tab_status_export.pt:180
+#: /views/edit/VersionedContent/tab_status.pt:237
+msgid "access key: alt-e"
+msgstr "sneltoets: alt-e"
+
+#: /views/add/add_form.pt:39
 msgid "create ${TOC_or_meta_type}"
 msgstr "${TOC_or_meta_type} aanmaken"
 
-#: /views/add/add_form.pt:45
+#: /views/add/add_form.pt:49
 msgid "aspect"
 msgstr "aspect"
 
-#: /views/add/add_form.pt:49 /views/add/Ghost/add_form.pt:43
+#: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:43
 #: /views/add/GhostFolder/add_form.pt:45 /views/edit/macro_metadata.pt:78
 #: /views/edit/macro_metadata.pt:311 /views/edit/Asset/Image/edit.pt:145
 #: /views/edit/Container/tab_edit_import.pt:95
@@ -638,7 +647,7 @@ msgstr "aspect"
 msgid "content"
 msgstr "inhoud"
 
-#: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:46
+#: /views/add/add_form.pt:57 /views/add/Ghost/add_form.pt:46
 #: /views/add/GhostFolder/add_form.pt:48
 #: /views/edit/VersionedContent/tab_status_macros.pt:115
 #: /views/edit/VersionedContent/tab_status_macros.pt:196
@@ -647,7 +656,7 @@ msgstr "inhoud"
 msgid "notes"
 msgstr "notities"
 
-#: /views/add/add_form.pt:80 /views/add/Ghost/add_form.pt:87
+#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:87
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:127
 #: /views/edit/VersionedContent/tab_status_macros.pt:276
@@ -655,14 +664,14 @@ msgstr "notities"
 msgid "access key: alt-c"
 msgstr "sneltoets: alt-c"
 
-#: /views/add/add_form.pt:80 /views/add/Ghost/add_form.pt:87
+#: /views/add/add_form.pt:84 /views/add/Ghost/add_form.pt:87
 #: /views/add/GhostFolder/add_form.pt:96 /views/edit/asset_lookup.pt:233
 #: /views/edit/hyperlink_lookup.pt:359 /views/edit/promptWindow.pt:35
 #: /views/edit/Container/tab_edit_rename.pt:127
 msgid "cancel"
 msgstr "afbreken"
 
-#: /views/add/add_form.pt:89 /views/add/Ghost/add_form.pt:96
+#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/lookup_ui.pt:107
 #: /views/edit/macro_metadata.pt:169 /views/edit/macro_metadata.pt:242
 #: /views/edit/Container/tab_access_groups.pt:130
@@ -672,22 +681,13 @@ msgstr "afbreken"
 msgid "access key: alt-s"
 msgstr "sneltoets: alt-s"
 
-#: /views/add/add_form.pt:89 /views/add/Ghost/add_form.pt:96
+#: /views/add/add_form.pt:93 /views/add/Ghost/add_form.pt:96
 #: /views/add/GhostFolder/add_form.pt:105 /views/edit/macro_metadata.pt:169
 #: /views/edit/macro_metadata.pt:242
 #: /views/edit/Container/tab_access_groups.pt:130
 #: /views/edit/Member/SimpleMember/tab_edit.pt:122
 msgid "save"
 msgstr "opslaan"
-
-#: /views/add/add_form.pt:98 /views/add/Ghost/add_form.pt:106
-#: /views/add/GhostFolder/add_form.pt:114
-#: /views/edit/Container/tab_access_groups.pt:138
-#: /views/edit/Container/tab_status_export.pt:171
-#: /views/edit/Container/tab_status_export.pt:180
-#: /views/edit/VersionedContent/tab_status.pt:237
-msgid "access key: alt-e"
-msgstr "sneltoets: alt-e"
 
 #: /views/add/form.form:28
 msgid "default_form_add_object_id_title"
@@ -829,12 +829,12 @@ msgstr "geselecteerde gebruiker(s) uit deze groep verwijderen: alt-r"
 msgid "remove users"
 msgstr "gebruikers verwijderen"
 
+# JS onclick string, not very nice but it works, make sure to copy JS code 1:1
 #: /views/edit/Asset/Groups/Group/edit.pt:110
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:105
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:108
 #: /views/edit/Container/docma_queue.pt:230
 #: /views/edit/Container/tab_status_export.pt:478
-# JS onclick string, not very nice but it works, make sure to copy JS code 1:1
 msgid "return confirm('Really remove?')"
 msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
 
@@ -1435,10 +1435,12 @@ msgstr "de vormgeving naar de 'Publication' kopiëren om deze aan te passen"
 msgid "customize layout"
 msgstr "vormgeving aanpassen"
 
-#: /views/edit/Container/Publication/tab_metadata.pt:133
 # JS onclick string, not very nice but it works, make sure to copy JS code 1:1
+#: /views/edit/Container/Publication/tab_metadata.pt:133
 msgid "return confirm('Really remove copied layout?')"
-msgstr "return confirm('Weet je zeker dat je de gekopieerde vormgeving wilt verwijderen?')"
+msgstr ""
+"return confirm('Weet je zeker dat je de gekopieerde vormgeving wilt "
+"verwijderen?')"
 
 #: /views/edit/Container/Publication/tab_metadata.pt:133
 #: /views/edit/Container/Publication/tab_metadata.pt:144
@@ -1520,12 +1522,12 @@ msgid "remove"
 msgstr "verwijderen"
 
 #: /views/edit/Container/docma_queue.pt:238
-msgid "import and remove"
-msgstr "importeren en verwijderen"
-
-#: /views/edit/Container/docma_queue.pt:238
 msgid "import to the current location and remove from the list: alt-m"
 msgstr "importeren naar de huidige locatie en uit de lijst verwijderen: alt-m"
+
+#: /views/edit/Container/docma_queue.pt:238
+msgid "import and remove"
+msgstr "importeren en verwijderen"
 
 #: /views/edit/Container/docma_queue.pt:24
 #: /views/edit/Container/docma_queue.pt:71
@@ -1663,9 +1665,9 @@ msgstr "Er zijn geen groepen gedefinieerd op deze locatie."
 msgid "delete selected groups: alt-d"
 msgstr "geselecteerde groepen verwijderen: alt-d"
 
+# JS onclick string, not very nice but it works, make sure to copy JS code 1:1
 #: /views/edit/Container/tab_access_groups.pt:252
 #: /views/edit/Container/tab_edit.pt:548
-# JS onclick string, not very nice but it works, make sure to copy JS code 1:1
 msgid "return confirm('Really delete?')"
 msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
 
@@ -2897,8 +2899,8 @@ msgstr "aangemaakt"
 msgid "version status"
 msgstr "versie-status"
 
-#: /views/edit/VersionedContent/tab_status.pt:324
 # JS onclick string, not very nice but it works, make sure to copy JS code 1:1
+#: /views/edit/VersionedContent/tab_status.pt:324
 msgid "if (!confirm('Are you sure?')) return false"
 msgstr "if (!confirm('Weet je het zeker?')) return false"
 
@@ -3248,8 +3250,8 @@ msgstr ""
 msgid "revert to previous"
 msgstr "terugvallen op vorige"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:511
 # JS onclick string, not very nice but it works, make sure to copy JS code 1:1
+#: /views/edit/VersionedContent/tab_status_macros.pt:511
 msgid "return confirm('Really revert ?')"
 msgstr "return confirm('Weet je zeker dat je terug wilt vallen?')"
 
@@ -3498,59 +3500,55 @@ msgstr "Hier moet een pad worden ingevoerd."
 
 #: /views/edit/get_ghost_link_status_text.py:18
 msgid ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to does        not "
-"exist."
+"The object &#xab;${haunted_url}&#xbb; the ghost points to does not exist."
 msgstr ""
 "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst bestaat "
 "niet exist."
 
 #: /views/edit/get_ghost_link_status_text.py:21
 msgid ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is a        "
-"container."
+"The object &#xab;${haunted_url}&#xbb; the ghost points to is a container."
 msgstr ""
 "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is een "
 "container."
 
 #: /views/edit/get_ghost_link_status_text.py:24
 msgid ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is        itself a "
-"ghost."
+"The object &#xab;${haunted_url}&#xbb; the ghost points to is itself a ghost."
 msgstr ""
 "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is zelf "
 "een 'ghost'."
 
 #: /views/edit/get_ghost_link_status_text.py:27
 msgid ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is        not a "
-"content object."
+"The object &#xab;${haunted_url}&#xbb; the ghost points to is not a content "
+"object."
 msgstr ""
 "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is geen "
 "inhoudsobject."
 
 #: /views/edit/get_ghost_link_status_text.py:30
 msgid ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is a        "
-"content object."
+"The object &#xab;${haunted_url}&#xbb; the ghost points to is a content "
+"object."
 msgstr ""
 "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is een "
 "inhoudsobject."
 
 #: /views/edit/get_ghost_link_status_text.py:33
 msgid ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points to is        not a "
-"container."
+"The object &#xab;${haunted_url}&#xbb; the ghost points to is not a container."
 msgstr ""
 "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is geen "
 "container."
 
 #: /views/edit/get_ghost_link_status_text.py:36
 msgid ""
-"The object &#xab;${haunted_url}&#xbb; the ghost points is        either the "
+"The object &#xab;${haunted_url}&#xbb; the ghost points to is either the "
 "ghost itself or an ancestor of the ghost."
 msgstr ""
-"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is ofwel "
-"de 'ghost' zelf of een 'ancestor' van de 'ghost'."
+"Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is "
+"ofwel de 'ghost' zelf of een 'ancestor' van de 'ghost'."
 
 #: /views/edit/get_ghost_link_status_text.py:39
 msgid "The ghost is in an undefined state."

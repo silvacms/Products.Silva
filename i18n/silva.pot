@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 29 15:40:07 2004\n"
+"POT-Creation-Date: Mon Nov 29 16:09:45 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -576,15 +576,25 @@ msgstr ""
 msgid "form_add_simplecontent_object_title_description"
 msgstr ""
 
-#: /views/add/add_form.pt:37
+#: /views/add/add_form.pt:102
+#: /views/add/Ghost/add_form.pt:106
+#: /views/add/GhostFolder/add_form.pt:114
+#: /views/edit/Container/tab_access_groups.pt:138
+#: /views/edit/Container/tab_status_export.pt:171
+#: /views/edit/Container/tab_status_export.pt:180
+#: /views/edit/VersionedContent/tab_status.pt:237
+msgid "access key: alt-e"
+msgstr ""
+
+#: /views/add/add_form.pt:39
 msgid "create ${TOC_or_meta_type}"
 msgstr ""
 
-#: /views/add/add_form.pt:45
+#: /views/add/add_form.pt:49
 msgid "aspect"
 msgstr ""
 
-#: /views/add/add_form.pt:49
+#: /views/add/add_form.pt:53
 #: /views/add/Ghost/add_form.pt:43
 #: /views/add/GhostFolder/add_form.pt:45
 #: /views/edit/macro_metadata.pt:78
@@ -602,7 +612,7 @@ msgstr ""
 msgid "content"
 msgstr ""
 
-#: /views/add/add_form.pt:53
+#: /views/add/add_form.pt:57
 #: /views/add/Ghost/add_form.pt:46
 #: /views/add/GhostFolder/add_form.pt:48
 #: /views/edit/VersionedContent/tab_status_macros.pt:115
@@ -612,7 +622,7 @@ msgstr ""
 msgid "notes"
 msgstr ""
 
-#: /views/add/add_form.pt:80
+#: /views/add/add_form.pt:84
 #: /views/add/Ghost/add_form.pt:87
 #: /views/add/GhostFolder/add_form.pt:96
 #: /views/edit/Asset/Image/edit.pt:187
@@ -622,7 +632,7 @@ msgstr ""
 msgid "access key: alt-c"
 msgstr ""
 
-#: /views/add/add_form.pt:80
+#: /views/add/add_form.pt:84
 #: /views/add/Ghost/add_form.pt:87
 #: /views/add/GhostFolder/add_form.pt:96
 #: /views/edit/asset_lookup.pt:233
@@ -632,7 +642,7 @@ msgstr ""
 msgid "cancel"
 msgstr ""
 
-#: /views/add/add_form.pt:89
+#: /views/add/add_form.pt:93
 #: /views/add/Ghost/add_form.pt:96
 #: /views/add/GhostFolder/add_form.pt:105
 #: /views/edit/lookup_ui.pt:107
@@ -645,7 +655,7 @@ msgstr ""
 msgid "access key: alt-s"
 msgstr ""
 
-#: /views/add/add_form.pt:89
+#: /views/add/add_form.pt:93
 #: /views/add/Ghost/add_form.pt:96
 #: /views/add/GhostFolder/add_form.pt:105
 #: /views/edit/macro_metadata.pt:169
@@ -653,16 +663,6 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:130
 #: /views/edit/Member/SimpleMember/tab_edit.pt:122
 msgid "save"
-msgstr ""
-
-#: /views/add/add_form.pt:98
-#: /views/add/Ghost/add_form.pt:106
-#: /views/add/GhostFolder/add_form.pt:114
-#: /views/edit/Container/tab_access_groups.pt:138
-#: /views/edit/Container/tab_status_export.pt:171
-#: /views/edit/Container/tab_status_export.pt:180
-#: /views/edit/VersionedContent/tab_status.pt:237
-msgid "access key: alt-e"
 msgstr ""
 
 #: /views/add/form.form:28
@@ -1451,11 +1451,11 @@ msgid "remove"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:238
-msgid "import and remove"
+msgid "import to the current location and remove from the list: alt-m"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:238
-msgid "import to the current location and remove from the list: alt-m"
+msgid "import and remove"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:24
@@ -3291,31 +3291,31 @@ msgid "You have to enter a path here."
 msgstr ""
 
 #: /views/edit/get_ghost_link_status_text.py:18
-msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to does        not exist."
+msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to does not exist."
 msgstr ""
 
 #: /views/edit/get_ghost_link_status_text.py:21
-msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is a        container."
+msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is a container."
 msgstr ""
 
 #: /views/edit/get_ghost_link_status_text.py:24
-msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is        itself a ghost."
+msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is itself a ghost."
 msgstr ""
 
 #: /views/edit/get_ghost_link_status_text.py:27
-msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is        not a content object."
+msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a content object."
 msgstr ""
 
 #: /views/edit/get_ghost_link_status_text.py:30
-msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is a        content object."
+msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is a content object."
 msgstr ""
 
 #: /views/edit/get_ghost_link_status_text.py:33
-msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is        not a container."
+msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a container."
 msgstr ""
 
 #: /views/edit/get_ghost_link_status_text.py:36
-msgid "The object &#xab;${haunted_url}&#xbb; the ghost points is        either the ghost itself or an ancestor of the ghost."
+msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is either the ghost itself or an ancestor of the ghost."
 msgstr ""
 
 #: /views/edit/get_ghost_link_status_text.py:39
