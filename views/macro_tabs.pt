@@ -34,7 +34,7 @@
         height="14"
         width="14"
         border="0"
-        tal:attributes="src string:${root_url}/globals/silva.gif"
+        tal:attributes="src string:${root_url}/globals/silva_icon_corner.gif"
       />
     </a>
 
@@ -84,7 +84,7 @@
   <!-- Help link -->
   <div class="tabs">
       <a class="normal"
-        style="float:right; margin-right:6px; padding-left: 0.8em; padding-right: 0em;"
+        style="float:right; margin-right:6px; padding-left:0.8em; padding-right:0em;"
         title="Silva help: alt-h"
         accesskey="h"
         tal:condition="exists:here/help_url"
