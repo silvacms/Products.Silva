@@ -26,6 +26,9 @@ Silva changes
         version of the image, instead of pointing to <image>/hires_image
         they now point to <image>?hires.
 
+      - Minor problem where the image edit form in the form editor didn't recognize
+        a link as one to the hires version of the image.
+
   1.0 (release candidate 4)
 
     Bugs fixed
