@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_ServiceLayouts.py,v 1.11 2003/11/10 17:08:50 gotcha Exp $
+# $Id: test_ServiceLayouts.py,v 1.12 2003/11/12 14:25:36 gotcha Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -102,7 +102,7 @@ class TestServiceLayouts(SilvaTestCase.SilvaTestCase):
     def checkNoLayout(self, pub):
         self.failIf(self.service_layouts.has_layout(pub))
         self.failIf(pub.get_layout())     
-        self.assertEqual(pub.get_layout_folder(), pub)     
+        self.failIf(pub.get_layout_folder())     
 
     def checkNoOwnLayout(self, pub):
         self.failIf(self.service_layouts.has_own_layout(pub))

@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 
 # Zope
 from OFS import SimpleItem
@@ -186,16 +186,15 @@ class LayoutService(SimpleItem.SimpleItem):
         else:
             return None
 
-    def get_layout_folder(self, context):
-        pub = context.get_publication()
-        if self.has_layout(pub):
-            if not self.layout_copied(pub):
-                layout_name = self.get_layout_name(pub)
+    def get_layout_folder(self, publication):
+        if self.has_layout(publication):
+            if not self.layout_copied(publication):
+                layout_name = self.get_layout_name(publication)
                 return layoutRegistry.get_layout_folder(self.get_root(), layout_name)
             else:
-                return context
+                return publication
         else:
-            return context
+            return None
 
     def get_layout_description(self, publication):
         if self.has_layout(publication):

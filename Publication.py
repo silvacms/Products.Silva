@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.57 $
+# $Revision: 1.58 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -83,8 +83,8 @@ class Publication(Folder.Folder):
     def layout_copied(self):
         return self.service_layouts.layout_copied(self)
 
-    def get_layout_folder(self, context):
-        return self.service_layouts.get_layout_folder(context)
+    def get_layout_folder(self):
+        return self.service_layouts.get_layout_folder(self)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_silva_addables_allowed_in_publication')
