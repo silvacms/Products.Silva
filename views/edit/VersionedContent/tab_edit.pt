@@ -9,7 +9,8 @@
   tal:define="
     global vein string:editor;
     refresh_time python:19 * 60;
-    editor python:here.service_members.get_member(here.REQUEST.AUTHENTICATED_USER.getUserName()).editor();
+    member python:here.service_members.get_member(here.REQUEST.AUTHENTICATED_USER.getUserName());
+    editor python: member and member.editor() or 'field_editor';
   ">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="metatype_css">
