@@ -42,7 +42,12 @@
     </metal:block>
     <metal:fill fill-slot="actual_table">
       <tal:block define="version model">
-        <metal:block use-macro="here/macro_metadata/macros/view_table" />
+        <metal:block use-macro="here/macro_metadata/macros/view_table">
+          <h2 metal:fill-slot="table_title">
+            <img tal:replace="structure python:view.render_icon(model)" />
+            metadata of &#8216;original&#8217;
+          </h2>
+        </metal:block>
       </tal:block>
     </metal:fill>
   </metal:block>
