@@ -12,9 +12,8 @@
     active_tab string:tab_status_export;
     parent_screen_name string:Publish;
     docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
-    lastclass string:divider;
     refs request/refs | python:[request['model'].create_ref(request['model'])];
-    ">
+">
 
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
@@ -131,7 +130,7 @@
                 <td class="align-center">
                   <input type="checkbox" name="export_last_version" />
                 </td>
-                <td i18n:translate="if_not_checked_the_newest_version_is_exported">
+                <td i18n:translate="if_not_checked_the_published_version_is_exported">
                   If not checked the published version is exported
                 </td>
               </tr>
@@ -190,7 +189,7 @@
 <tal:define define="
   global userid view/REQUEST/AUTHENTICATED_USER;
   global queue view/service_docma/get_queue;
-  global finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid));
+  global qls python:len(queue) != 0;
   global processingident view/service_docma/get_processing_ident;" />
 
 <form action="." enctype="multipart/form-data" method="POST">
@@ -263,7 +262,7 @@
         <td>
           <input type="checkbox" name="export_last_version" />
         </td>
-        <td i18n:translate="if_not_checked_the_newest_version_is_exported">
+        <td i18n:translate="if_not_checked_the_published_version_is_exported">
           If not checked the published version is exported
         </td>
       </tr>
@@ -357,9 +356,26 @@
 </form>
 
 <span tal:replace="nothing">
-  _____________________ docma queue + processing table + finished jobs _____________________
+  _____________________ docma queue: processing list + finished jobs _____________________
 </span>
-<tal:replace replace="structure python:here.docma_queue(format='word', refresh_page='tab_status_export')" />
+<tal:define define="
+    format string:word;
+    refresh_page string:tab_status_export;
+">
+<metal:use-macro use-macro="here/docma_queue/macros/listings">
+<metal:fill-slot fill-slot="manipulators">
+  <input class="warning"
+    accesskey="x"
+    name="export_delete:method"
+    onClick="return confirm('Really remove?')"
+    title="there's no undo: alt-x"
+    type="submit"
+    value="remove" 
+    i18n:attributes="onClick value title"
+  />
+</metal:fill-slot>
+</metal:use-macro>
+</tal:define>
 
 </tal:condition>
 
