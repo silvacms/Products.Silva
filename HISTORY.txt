@@ -84,6 +84,9 @@ Silva changes
                                                                                                     
     Features Added
                                                                                                     
+        - Added support for ExternalEditor, Silva Files and Images can now
+          be edited using your favorite editor.
+
         - Bulk import of files (for File Assets) and/or images (for Image
           Assets) using a zipfile. Note though, that the 091 id
           checking is less tolerant compared to the 092 id checking.
