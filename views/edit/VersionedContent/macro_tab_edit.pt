@@ -22,7 +22,8 @@
  <metal:block define-slot="editor_refresher" />
 </metal:block>
 
-<metal:block metal:fill-slot="middleground">
+<metal:block metal:fill-slot="middleground"
+              tal:define="unapproved_version model/get_unapproved_version">
   <div class="middleground">
 
     <metal:block define-slot="editor_selection" />
@@ -34,14 +35,28 @@
       i18n:attributes="title">
       public&nbsp;preview...
     </a>
+
+    <tal:block define="permissions view/get_silva_permissions;
+                        have_approve_permission permissions/ApproveSilvaContent | nothing">
+      <a title="publish the unapproved version: alt-:"
+        accesskey=":"
+        class="button"
+        tal:attributes="href string:${model/absolute_url}/edit/tab_edit_publish"
+        i18n:translate="publish_now"
+        i18n:attributes="title"
+        tal:condition="python: unapproved_version and have_approve_permission">
+        open&nbsp;to&nbsp;public&nbsp;now...
+      </a>
+    </tal:block>
+
   </div>
 </metal:block>
 
 <metal:block fill-slot="main"
   tal:define="
     is_locked model/sec_is_locked;
-    unapproved_version model/get_unapproved_version;
     request_pending python:model.is_version_approval_requested();
+    unapproved_version model/get_unapproved_version;
 ">
 
 <span tal:replace="nothing"> _________ show editor ____ </span>

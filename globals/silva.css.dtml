@@ -266,6 +266,23 @@ div.middleground a:hover {
   text-decoration: none;
 }
 
+div.middleground a.button {
+  color: &dtml-manipulatorFontColor;;
+  background : &dtml-manipulatorBackground;;
+}
+
+input.warning {
+  font-size: 95%;
+    font-weight: &dtml-buttonWeight;;
+  color : &dtml-destructiveFontColor;; 
+  background : &dtml-destructiveBackground;;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: &dtml-manipulatorPadding;;
+  border: &dtml-destructiveBorder;;
+    cursor: pointer;
+}
+
+}
 
 /* ___________________________________________________________ footer _____ */
 
