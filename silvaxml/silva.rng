@@ -1,5 +1,8 @@
-<grammar xmlns="http://relaxng.org/ns/structure/1.0">
-
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+  ns="http://infrae.com/ns/silva"
+  xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
+  xmlns:silva-extra="http://eric.van-der-vlist.com/ns/person">
   <start>
     <element name="silva">
       <!-- The starting point for the export/import. Can be 
@@ -141,7 +144,6 @@
 
   <define name="metadata">
     <element name="metadata">
-      <element name="title"><text /></element>
       <zeroOrMore>
         <ref name="set" />
       </zeroOrMore>
@@ -154,8 +156,8 @@
         <element name="version">
           <attribute name="id"><text /></attribute>
           <element name="status"><text /></element>
-          <element name="publication_date"><text /></element>
-          <element name="expiration_date"><text /></element>
+          <element name="publication_datetime"><text /></element>
+          <element name="expiration_datetime"><text /></element>
         </element>
       </zeroOrMore>
     </element>
@@ -163,6 +165,7 @@
     
   <define name="set">
     <element name="set">
+      <attribute name="id"><text /></attribute>
       <zeroOrMore>
         <ref name="anyElement" />
       </zeroOrMore>

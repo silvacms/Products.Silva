@@ -54,7 +54,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'http://nohost/root/testfolder/test_document')
         doc = document_version.content.documentElement.__str__()
         self.assertEquals(doc,
-        u'<doc>\n            <p>\n            <em foo="bar">\u627f\u8afe\u5e83\u544a\uff0a\u65e2\u306b\u3001\uff12\u5104\u3001\uff13\u5104\u3001\uff15\u5104\uff19\u5343\u4e07\u5186\u53ce\u5165\u8005\u304c\u7d9a\u51fa<strong>boo</strong>\n              baz</em>\n            </p>\n          </doc>')
+        u'<doc>\n            <p>\n            <em>\u627f\u8afe\u5e83\u544a\uff0a\u65e2\u306b\u3001\uff12\u5104\u3001\uff13\u5104\u3001\uff15\u5104\uff19\u5343\u4e07\u5186\u53ce\u5165\u8005\u304c\u7d9a\u51fa<strong>boo</strong>\n              baz</em>\n            </p>\n          </doc>')
         
     def test_link_import(self):
         importfolder = self.add_folder(
