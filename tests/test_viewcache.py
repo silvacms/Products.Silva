@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -9,11 +9,9 @@ import SilvaTestCase
 
 import time
 from DateTime import DateTime
-from Products.Silva.SilvaObject import SilvaObject
-from Products.SilvaDocument.Document import Document, DocumentVersion
 
 SECOND_IN_DAYS = 1.0 / (24 * 60 * 60)
-SECOND = 1
+SECOND = 1.0
 
 class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
@@ -140,11 +138,15 @@ class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
         doc.create_copy()
         dom2 = doc.get_editable().content
         dom2.documentElement.appendChild(dom2.createElement('heading'))
-        doc.set_unapproved_version_publication_datetime(now + SECOND_IN_DAYS/5.0)
+        # XXX two seconds hereunder could be too short on very slow machines
+        # and make this test fail
+        DELAY = SECOND * 2
+        doc.set_unapproved_version_publication_datetime(now + DELAY *
+        SECOND_IN_DAYS)
         doc.approve_version()        
         self.assert_(doc.is_cached())
         self.assertEquals(data, doc.view())
-        time.sleep(SECOND/4.0)
+        time.sleep(DELAY)
         self.assert_(not doc.is_cached())
         self.assertNotEquals(data, doc.view())
 
@@ -193,6 +195,7 @@ class ViewCacheVirtualHostTestCase(ViewCacheTestCase):
         doc.set_unapproved_version_publication_datetime(now - 1)
         doc.approve_version()        
         self.assert_(not doc.is_cached())
+        import pdb; pdb.set_trace()
         data1 = doc.view()
         self.assert_(doc.is_cached())
         # Get REQUEST in shape for different virtual host

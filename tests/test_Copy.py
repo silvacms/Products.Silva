@@ -6,6 +6,7 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
+from Testing import ZopeTestCase
 
 from Products.Silva import Folder, Ghost, Root
 from Products.SilvaDocument import Document
@@ -112,23 +113,32 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_copy7(self):
         # test for issue 92: pasted ghosts have unknown author
-        self.add_ghost(self.root.folder4, 'ghost6', 'Test Ghost')
+        self.add_ghost(self.root.folder4, 'ghost6', '/root/doc1')
+        self.failUnless(self.root.folder4.ghost6)
+        # gotcha this makes the tests pass but I am not sure it is the desired
+        # functionality : test was failing because a ghost on a private doc does
+        # not get metadata !
+        # approve & publish version
+        self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
+        self.doc1.approve_version()
+        self.assert_(self.root.doc1.is_version_published())
+        # gotcha    
         self.root.folder4.ghost6.sec_update_last_author_info()        
         self.assertEquals(
-            'test_user_1_',
+            ZopeTestCase._user_name,
             self.root.folder4.ghost6.sec_get_last_author_info().fullname())
         # copy ghost to folder 4 and check author
         # XXX maybe we should rename the user inbetween ?
         self.root.folder4.action_copy(['ghost6'], self.app.REQUEST)
         self.root.folder5.action_paste(self.app.REQUEST)
         self.assertEquals(
-            'test_user_1_',
+            ZopeTestCase._user_name,
             self.root.folder5.ghost6.sec_get_last_author_info().fullname())
         # move ghost to root and check author        
         self.root.folder4.action_cut(['ghost6'], self.app.REQUEST)
         self.root.action_paste(self.app.REQUEST)
         self.assertEquals(
-            'test_user_1_',
+            ZopeTestCase._user_name,
             self.root.ghost6.sec_get_last_author_info().fullname())
         
 
