@@ -516,7 +516,7 @@ table.listing a.navigation:link {
   background: &dtml-standaloneButtonBackground;;
   border: &dtml-standaloneButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: &dtml-standaloneButtonPadding;;
+  padding: 0em 2em 0.1em 2em;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
 }
@@ -527,7 +527,7 @@ table.listing a.navigation:visited {
   background: &dtml-standaloneButtonBackground;;
   border: &dtml-standaloneButtonBorder;;
   margin: 0.1em 0.2em;
-  padding: &dtml-standaloneButtonPadding;;
+  padding: 0em 2em 0.1em 2em;
   text-decoration : none;
   text-transform: &dtml-textTransform;;
 }

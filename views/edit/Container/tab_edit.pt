@@ -55,7 +55,7 @@
                 </tal:block>
                 <tr class="top-controls">
                   <td colspan="6">
-                    <div style="float: left; margin-left:0.2em; padding:0 0px 0 2px;">
+                    <div style="float: left;">
                     <input class="navigation"
                       name="add_object:method"
                       type="submit"
@@ -299,8 +299,8 @@
                           href="asset"
                           title="edit"
                           tal:attributes="href string:${asset_url}/edit/tab_edit"
-                          tal:content="structure asset/get_title_or_id">
-                          edit
+                          tal:content="structure asset/id">
+                          id
                         </a>
                       </td>
                       <tal:block replace="nothing">
@@ -309,16 +309,9 @@
                       <td>
                         <a class="blacklink"
                           title="preview"
-                          tal:condition="python: title != ''"
-                          tal:content="structure asset/id"
+                          tal:content="structure asset/get_title_html"
                           tal:attributes="href string:${asset_url}/edit/tab_preview">
-                          preview
-                        </a>
-                        <a class="blacklink"
-                          title="preview"
-                          tal:condition="python: title == ''"
-                          tal:attributes="href string:${asset_url}/edit/tab_preview">
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          title
                         </a>
                       </td>
                       <tal:block replace="nothing">
@@ -370,7 +363,7 @@
                   <td colspan="99">
                     <tal:block tal:condition="python:(default_document or publishables or assets)">
                       <tal:block condition="may_change_content">
-                        <div style="float: left; margin-left:0.2em; padding:0 0px 0 2px;">
+                        <div style="float: left; margin-left:0.2em;">
                           <select name="new_position"
                             title="move selected items to">
                             <option value="Position">
