@@ -182,7 +182,8 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     def manage_allowSubscription(self, REQUEST):
         """manage method to set allow_subscription"""
         self.set_allow_subscription(int(REQUEST['allow_subscription']))
-
+        return self.manage_editForm(manage_tabs_message='Changed settings')
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_subscription_url')
     def get_subscription_url(self):
