@@ -24,6 +24,31 @@
 </div>
 
 <div class="public" style="padding-top:0.5em;">
+<h2 style="margin-top:1.4em;">Silva documentation</h2>
+
+<p>
+  The most up to date documentation can be found at:<br />
+  <a href="http://www.infrae.com/products/silva/docs">http://www.infrae.com/products/silva/docs</a>
+</p>
+<p>
+  The same documentation is included in the Silva product in &#8216;plain&#8217; structured text, gracefully degraded for text mode (no links, unicode entities, etc.).
+</p>
+
+<h4>
+  Tip: one click editing
+</h4>
+
+<p>
+  When viewing a public Silva page, switching to the SMI is is easiest if there's a bookmark on your toolbar. Add a bookmark with the following javascript:
+</p>
+<pre>
+  javascript:window.location.pathname=(window.location.pathname +'/edit').replace(/\/\//,'/')
+</pre>
+<p>
+  Or, save this link &#8211; <a href="javascript:window.location.pathname=(window.location.pathname +'/edit').replace(/\/\//,'/')">Silva edit</a> &#8211; as a bookmark. Thanks to ETH Z&uuml;rich for this winner.
+<br /><br />
+</p>
+
 <h2>
   Silva access keys
 </h2>
@@ -162,22 +187,12 @@ If there are two buttons with the same name, the access key for the second is us
   Someday browsers will automatically underline the access key of a link or button. In the meantime, send a mail and complain.
 </p>
 <p>
+  If you wish to create additional docs, the hyperlink of the Silva help link can be changed by altering the the 'help_url' property in the Silva root. See the properties tab in the Zope Management Interface.
+</p>
+<p>
   <span class="subhead">Tip for Mozilla/Netscape users</span><br />
   Using the &#8220;Find As You Type&#8221; feature will make keyboard navigation to hyperlinks &#8211; such as object names &#8211; remarkably easy. See:<br />
   <a href="http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html">http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html</a>
-</p>
-
-<h2 style="margin-top:1.4em;">Silva documentation</h2>
-
-<p>
-  The most up to date documentation can be found at:<br />
-  <a href="http://www.infrae.com/products/silva/docs">http://www.infrae.com/products/silva/docs</a>
-</p>
-<p>
-  The same documentation is included in the Silva product in &#8216;plain&#8217; structured text, gracefully degraded for text mode (no links, unicode entities, etc.).
-</p>
-<p>
-  If you wish to create additional docs, the hyperlink of the Silva help link can be changed by altering the the 'help_url' property in the Silva root. See the properties tab in the Zope Management Interface.
 </p>
 <p>
   <br />
