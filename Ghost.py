@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.86 $
+# $Revision: 1.87 $
 
 # Zope
 from OFS import SimpleItem
@@ -17,8 +17,6 @@ import SilvaPermissions
 # misc
 from helpers import add_and_edit
 import urlparse
-
-from Products.Silva.i18n import translate as _
 
 from interfaces import \
     IVersionedContent, IContainer, IVersion, IContent, IGhost, \
@@ -60,7 +58,7 @@ class GhostBase:
         """
         content = self.get_haunted_unrestricted()
         if content is None:
-            return unicode(_("Ghost target is broken"))
+            return ("Ghost target is broken")
         else:
             return content.get_title()
 
@@ -69,7 +67,7 @@ class GhostBase:
         """
         content = self.get_haunted_unrestricted()
         if content is None:
-            return unicode(_("Ghost target is broken"))
+            return ("Ghost target is broken")
         else:
             return content.get_title_editable()
 
@@ -81,7 +79,7 @@ class GhostBase:
         """        
         content = self.get_haunted_unrestricted()
         if content is None:
-            return unicode(_("Ghost target is broken"))
+            return ("Ghost target is broken")
         else:
             short_title = content.get_short_title()
         if not short_title:
