@@ -92,4 +92,16 @@ class Security:
         """
         return user_management.get_user_info(self, userid)
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'sec_get_last_author_userid')
+    def sec_get_last_author_userid(self):
+        """Get the last author id.
+        """
+        # get the last transaction
+        last_transaction = self.undoable_transactions(0, 1)
+        if len(last_transaction) == 0:
+            return None
+        return last_transaction[0]['user_name']
+        
+        
 InitializeClass(Security)

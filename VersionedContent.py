@@ -42,6 +42,22 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         self.create_version(new_version_id, None, None)
     
     # ACCESSORS
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'sec_get_last_author_userid')
+    def sec_get_last_author_userid(self):
+        """Ask last userid of current transaction under edit.
+        If it doesn't exist, get published version, or last closed.
+        """
+        version_id = (self.get_next_version() or
+                      self.get_public_version() or
+                      self.get_last_closed_version())
+        # get the last transaction
+        last_transaction = getattr(self,
+                                   version_id).undoable_transactions(0, 1)
+        if len(last_transaction) == 0:
+            return None
+        return last_transaction[0]['user_name']
+                                        
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
     def get_modification_datetime(self):
