@@ -2,8 +2,9 @@
   <h2>Index</h2>
   <h4>Notes</h4> 
   <ol>
-    <li>An index is not editable.  To view the index go to the <a class="underlinelink" tal:attributes="href string:tab_preview">preview tab</a>.
-    <li>If new content has been added, click the 'Update index' button (may take a while).
+    <li>An index is not editable.  To view the index go to the <a class="underlinelink" tal:attributes="href string:tab_preview">preview tab</a>. 
+    <li>Note that <span class="warning"> the index only displays links to published content</span>, so the list may be empty if nothing is published.
+    <li>If new content has been added, click the 'Update index' button (in large publications this may take a while).
     <br /><br />
   </ol>
   <form action="tab_edit_update_index">
