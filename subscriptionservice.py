@@ -235,7 +235,7 @@ class SubscriptionService(Folder.Folder):
             contentsubscribedto = subscription.contentSubscribedTo()
             data['subscribedcontenturl'] = contentsubscribedto.absolute_url()
             data['serviceurlforsubscribedcontent'] = \
-                contentsubscribedto.absolute_url() + '/public/subscriptions'
+                contentsubscribedto.absolute_url() + '/public/subscriptions_ui'
             data['toaddress'] = subscription.emailaddress()
             self._sendEmail(template, data)
     
@@ -261,7 +261,7 @@ class SubscriptionService(Folder.Folder):
             content.absolute_url(), action, ref, emailaddress, token)
         data['subscribedcontenturl'] = subscribedcontent.absolute_url()
         data['serviceurlforsubscribedcontent'] = \
-            subscribedcontent.absolute_url() + '/public/subscriptions'
+            subscribedcontent.absolute_url() + '/public/subscriptions_ui'
         self._sendEmail(template, data)
 
     def _sendConfirmationEmail(
