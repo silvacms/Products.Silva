@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Fri Nov 19 18:31:18 2004\n"
-"PO-Revision-Date: 2004-11-22 16:12+0100\n"
+"PO-Revision-Date: 2004-11-23 11:12+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -306,13 +306,13 @@ msgstr ""
 msgid ""
 "There is already an object with the id ${id} in this \n"
 "        folder.<br />Please use a different one."
-msgstr ""
+msgstr "Objekt mit Id ${id} in diesem Ordner bereits vergeben. Bitte eine andere Id wählen."
 
 #: /views/add/get_id_status_text.py:39
 msgid ""
 "There is already an asset with the id ${id} in this \n"
 "        folder.<br />Please use another id."
-msgstr ""
+msgstr "Asset mit Id ${id} in diesem Ordner bereits vergeben. Bitte eine andere Id wählen."
 
 #: /views/add/get_id_status_text.py:44
 msgid ""
@@ -359,7 +359,7 @@ msgstr "Datei hochgeladen."
 
 #: /views/edit/Asset/Groups/Group/add_users_from_group_to_group.py:13
 msgid "No group(s) selected, so nothing to use to add users."
-msgstr ""
+msgstr "Keine Gruppe ausgewählt, folglich können keine Benutzer hinzugefügt werden."
 
 #: /views/edit/Asset/Groups/Group/add_users_from_group_to_group.py:17
 #: /views/edit/Asset/Groups/Group/add_users_to_group.py:22
@@ -444,19 +444,19 @@ msgstr ""
 
 #: /views/edit/Asset/Groups/IPGroup/copy_ipranges_from_ipgroups.py:19
 msgid "Nothing copied."
-msgstr ""
+msgstr "Nichts kopiert."
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:105
 msgid "remove range(s) from this ip group: alt-r"
-msgstr ""
+msgstr "Bereich(e) aus dieser IP-Gruppe entfernen: alt-r"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:105
 msgid "remove ranges"
-msgstr ""
+msgstr "Bereiche entfernen"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:131
 msgid "add an IP address"
-msgstr ""
+msgstr "IP-Adresse hinzufügen"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:139
 msgid "ip range<span class=\"warning\">*</span>"
@@ -468,35 +468,35 @@ msgstr ""
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:161
 msgid "add an ip or an ip range"
-msgstr ""
+msgstr "Ip-Adresse oder Bereich hinzufügen"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:161
 msgid "add ip range"
-msgstr ""
+msgstr "IP-Bereich hinzufügen"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:194
 msgid "transfer ip(s) to this ip group"
-msgstr ""
+msgstr "IP-Adressen in diese IP-Gruppe übertragen"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:194
 msgid "copy ips to ip group"
-msgstr ""
+msgstr "IPs in diese IP-Gruppe kopieren"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:56
 msgid "IPs and IP ranges"
-msgstr ""
+msgstr "IPs und IP-Bereiche"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:98
 msgid "This IP Group does not contain any IPs."
-msgstr ""
+msgstr "Diese IP-Gruppe beinhaltet keine IPs."
 
 #: /views/edit/Asset/Groups/IPGroup/remove_iprange_from_ipgroup.py:11
 msgid "No ip ranges were selected, so nothing was removed."
-msgstr ""
+msgstr "Keine IP-Bereiche ausgewählt, nichts entfernt."
 
 #: /views/edit/Asset/Groups/IPGroup/remove_iprange_from_ipgroup.py:17
 msgid "Range(s) ${removed} removed from the group."
-msgstr ""
+msgstr "Bereich(e) ${removed} wurden aus der Gruppe entfernt."
 
 #: /views/edit/Asset/Groups/VirtualGroup/add_groups_from_virtualgroup_to_virtualgroup.py:13
 msgid "No group(s) selected, so nothing to use to add groups."
@@ -1087,7 +1087,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:116
 msgid "IP Group: a group based on ip addresses"
-msgstr ""
+msgstr "IP-Gruppe: Eine Gruppe basierend auf IP-Adressen"
 
 #: /views/edit/Container/tab_access_groups.pt:138
 msgid "save + edit"
@@ -1095,27 +1095,27 @@ msgstr "Speichern + Bearbeiten"
 
 #: /views/edit/Container/tab_access_groups.pt:161
 msgid "groups located in this folder"
-msgstr ""
+msgstr "Gruppen in diesem Ordner"
 
 #: /views/edit/Container/tab_access_groups.pt:172
 msgid "name"
-msgstr ""
+msgstr "Name"
 
 #: /views/edit/Container/tab_access_groups.pt:184
 msgid "modifier"
-msgstr ""
+msgstr "Modifikator"
 
 #: /views/edit/Container/tab_access_groups.pt:207
 msgid "edit this group"
-msgstr ""
+msgstr "Diese Gruppe bearbeiten"
 
 #: /views/edit/Container/tab_access_groups.pt:243
 msgid "No groups have been defined in this location."
-msgstr ""
+msgstr "An dieser Stelle sind keine Gruppen definiert."
 
 #: /views/edit/Container/tab_access_groups.pt:252
 msgid "delete selected groups: alt-d"
-msgstr ""
+msgstr "Ausgewählte Gruppen löschen: alt-d"
 
 #: /views/edit/Container/tab_access_groups.pt:252
 #: /views/edit/Container/tab_edit.pt:548
@@ -1125,11 +1125,11 @@ msgstr "Löschen"
 
 #: /views/edit/Container/tab_access_groups.pt:70
 msgid "groups in &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Gruppen in &#xab;${title}&#xbb;"
 
 #: /views/edit/Container/tab_access_groups.pt:76
 msgid "create a group"
-msgstr ""
+msgstr "Gruppe anlegen"
 
 #: /views/edit/Container/tab_access_groups.pt:86
 #: /views/edit/Container/tab_edit_rename.pt:54
@@ -1143,7 +1143,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups_delete.py:11
 #: /views/edit/Container/tab_edit_delete.py:19
 msgid "Nothing was selected, so nothing was deleted."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts gelöscht."
 
 #: /views/edit/Container/tab_access_groups_delete.py:23
 msgid "Deleted ${deleted_ids}, <span class=\"error\">but could not delete ${not_deleted_ids}.</span>"
@@ -1155,11 +1155,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups_delete.py:31
 msgid "Could not delete ${not_deleted_ids}."
-msgstr ""
+msgstr "${not_deleted_ids} konnte nicht gelöscht werden."
 
 #: /views/edit/Container/tab_edit.pt:100
 msgid "import xml data or a zip file: alt-i"
-msgstr ""
+msgstr "XML oder Zip Datei importieren: alt-i"
 
 #: /views/edit/Container/tab_edit.pt:100
 #: /views/edit/Container/tab_status_export.pt:95
@@ -1177,7 +1177,7 @@ msgstr "verschieben"
 
 #: /views/edit/Container/tab_edit.pt:241
 msgid "content approved, or published..."
-msgstr ""
+msgstr "Inhalt bewilligt oder veröffentlicht..."
 
 #: /views/edit/Container/tab_edit.pt:283
 #: /views/edit/Container/tab_edit.pt:288
@@ -1195,7 +1195,7 @@ msgstr "ausgewählte Objekte verschieben nach"
 
 #: /views/edit/Container/tab_edit.pt:461
 msgid "position"
-msgstr ""
+msgstr "Position"
 
 #: /views/edit/Container/tab_edit.pt:472
 msgid "end"
@@ -1205,7 +1205,7 @@ msgstr "Ende"
 #: /views/edit/Container/tab_status.pt:348
 #: /views/edit/VersionedContent/tab_status_macros.pt:503
 msgid "access key: alt-p"
-msgstr ""
+msgstr "Kurzwahl: alt-p"
 
 #: /views/edit/Container/tab_edit.pt:485
 msgid "move selected items into position: alt-m"
@@ -1274,11 +1274,11 @@ msgstr "neues Objekt hinzufügen: alt-s"
 
 #: /views/edit/Container/tab_edit.pt:90
 msgid "select:"
-msgstr ""
+msgstr "auswählen:"
 
 #: /views/edit/Container/tab_edit_activate.py:15
 msgid "Nothing was selected, so nothing is activated."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts aktiviert."
 
 #: /views/edit/Container/tab_edit_activate.py:30
 msgid "Content ${activated} activated, <span class=\"error\">but could not activate ${not_activated}.</span>"
@@ -1286,23 +1286,23 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_activate.py:36
 msgid "Content ${activated} activated."
-msgstr ""
+msgstr "Inhalt ${activated} aktiviert."
 
 #: /views/edit/Container/tab_edit_activate.py:39
 msgid "Could not activate ${not_activated}."
-msgstr ""
+msgstr "${not_activated} konnte nicht aktiviert werden."
 
 #: /views/edit/Container/tab_edit_copy.py:16
 msgid "Nothing was selected, so nothing was copied."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts kopiert."
 
 #: /views/edit/Container/tab_edit_copy.py:19
 msgid "Placed ${ids} on the clipboard for copying."
-msgstr ""
+msgstr "${ids} sind in der Zwischenablage zum Kopieren"
 
 #: /views/edit/Container/tab_edit_cut.py:16
 msgid "Nothing was selected, so nothing was cut."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts ausgeschnitten."
 
 #: /views/edit/Container/tab_edit_cut.py:31
 msgid "Placed ${cut_ids} on clipboard for cutting, <span class=\"error\">but could not cut ${not_cut_ids}.</span>"
@@ -1318,7 +1318,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_deactivate.py:15
 msgid "Nothing was selected, so nothing is deactivated."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts deaktiviert."
 
 #: /views/edit/Container/tab_edit_deactivate.py:30
 msgid "Content ${deactivated} deactivated, <span class=\"error\">but could not deactivate ${not_deactivated}.</span>"
@@ -1344,7 +1344,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit_import.pt:176
 #: /views/edit/Container/tab_edit_import.pt:314
 msgid "file to upload"
-msgstr ""
+msgstr "Datei zum Hochladen"
 
 #: /views/edit/Container/tab_edit_import.pt:110
 #: /views/edit/Container/tab_edit_import.pt:179
@@ -1370,7 +1370,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:194
 msgid "title for assets"
-msgstr ""
+msgstr "Titel für XXX"
 
 #: /views/edit/Container/tab_edit_import.pt:199
 msgid "Optional title for all assets"
@@ -1382,7 +1382,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:215
 msgid "subdirectories"
-msgstr ""
+msgstr "Unterverzeichnisse"
 
 #: /views/edit/Container/tab_edit_import.pt:225
 msgid "Recreate the subdirectory structure of a zip file with Assets by adding Silva Folders."
@@ -1457,11 +1457,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import_docma.py:19
 msgid "Select a file for upload"
-msgstr ""
+msgstr "Eine Datei zum Hochladen auswählen"
 
 #: /views/edit/Container/tab_edit_import_docma.py:22
 msgid "You must enter your e-mail address"
-msgstr ""
+msgstr "Sie müssen Ihre E-Mail Adresse eingeben"
 
 #: /views/edit/Container/tab_edit_import_docma.py:32
 msgid "Your job is ${status}. The id of your job is ${id}."
@@ -1487,7 +1487,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import_xml.py:26
 msgid "Data is not valid Silva XML"
-msgstr ""
+msgstr "Die Daten sind kein gültiges Silva-XML"
 
 #: /views/edit/Container/tab_edit_import_xml.py:30
 msgid "Finished importing."
@@ -1543,7 +1543,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_new.pt:83
 msgid "Silva documentation"
-msgstr ""
+msgstr "Silva-Dokumentation"
 
 #: /views/edit/Container/tab_edit_paste.py:16
 msgid "No content available to paste."
@@ -1551,7 +1551,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_rename.pt:119
 msgid "rename"
-msgstr ""
+msgstr "Umbenennen"
 
 #: /views/edit/Container/tab_edit_rename.pt:119
 #: /views/edit/VersionedContent/tab_status_macros.pt:174
@@ -1562,15 +1562,15 @@ msgstr "Kurzwahl: alt-r"
 
 #: /views/edit/Container/tab_edit_rename.pt:31
 msgid "rename objects in &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Objekte in &#xab;${title}&#xbb; umbenennen"
 
 #: /views/edit/Container/tab_edit_rename.pt:39
 msgid "attribute"
-msgstr ""
+msgstr "Merkmal"
 
 #: /views/edit/Container/tab_edit_rename.pt:42
 msgid "old"
-msgstr ""
+msgstr "alt"
 
 #: /views/edit/Container/tab_edit_rename.pt:45
 msgid "new"
@@ -1582,11 +1582,11 @@ msgstr "Titel"
 
 #: /views/edit/Container/tab_edit_rename.pt:77
 msgid "no title"
-msgstr ""
+msgstr "Kein Titel"
 
 #: /views/edit/Container/tab_edit_rename_start.py:13
 msgid "Nothing was selected, so nothing can be renamed."
-msgstr ""
+msgstr "Es war nichts ausgewählt, folglich wurde nichts umbenannt."
 
 #: /views/edit/Container/tab_edit_to_folder.py:17
 msgid "Can only change Publications into Folders"
@@ -1594,15 +1594,15 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_to_folder.py:24
 msgid "Changed into folder"
-msgstr ""
+msgstr "In Ordner umgewandelt"
 
 #: /views/edit/Container/tab_edit_to_publication.py:17
 msgid "Can only change Folders into Publications"
-msgstr ""
+msgstr "Es können nur Ordner in Publikationen umgewandelt werden"
 
 #: /views/edit/Container/tab_edit_to_publication.py:24
 msgid "Changed into publication"
-msgstr ""
+msgstr "In Publikation umgewandelt"
 
 #: /views/edit/Container/tab_status.pt:101
 msgid "published"
@@ -1626,11 +1626,11 @@ msgstr "geschlossen"
 
 #: /views/edit/Container/tab_status.pt:252
 msgid "There are no publishable items here."
-msgstr ""
+msgstr "Es sind hier keine veröffentlichbaren Dinge."
 
 #: /views/edit/Container/tab_status.pt:270
 msgid "day / month / year"
-msgstr ""
+msgstr "Tag / Monat / Jahr"
 
 #: /views/edit/Container/tab_status.pt:285
 msgid "publish time"
@@ -1649,7 +1649,7 @@ msgstr "Kurzwahl: alt-u"
 
 #: /views/edit/Container/tab_status.pt:329
 msgid "access key: alt-x"
-msgstr ""
+msgstr "Kurzwahl: alt-x"
 
 #: /views/edit/Container/tab_status.pt:329
 #: /views/edit/VersionedContent/tab_status.pt:254
@@ -1712,11 +1712,11 @@ msgstr "Veröffentlichen"
 
 #: /views/edit/Container/tab_status.pt:434
 msgid "withdraw"
-msgstr ""
+msgstr "Zurücknehmen"
 
 #: /views/edit/Container/tab_status.pt:434
 msgid "withdraw pending request for approval: alt-w"
-msgstr ""
+msgstr "Ausstehnende Anfrage zurückziehen: alt-w"
 
 #: /views/edit/Container/tab_status.pt:443
 msgid "revoke approval of approved versions: alt-v"
@@ -2704,7 +2704,7 @@ msgstr "Metadaten"
 #: /views/edit/Container/docma_queue.pt:79
 #: /views/edit/Container/GhostFolder/tab_edit.pt:345
 msgid "status"
-msgstr ""
+msgstr "Zustand"
 
 #: /views/edit/hyperlink_lookup.pt:287
 msgid "&#8211;"
@@ -2714,43 +2714,43 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:412
 #: /views/edit/Container/GhostFolder/tab_edit.pt:452
 msgid "unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #: /views/edit/lookup_add_to_selection.py:20
 msgid "Users selected."
-msgstr ""
+msgstr "Benutzer ausgewählt."
 
 #: /views/edit/lookup_add_to_selection.py:9
 msgid "No users selected."
-msgstr ""
+msgstr "Keine Benutzer ausgewählt."
 
 #: /views/edit/lookup_remove_from_selection.py:18
 msgid "Users removed from selection."
-msgstr ""
+msgstr "Benutzer aus der Auswahl entfernt."
 
 #: /views/edit/lookup_remove_from_selection.py:9
 msgid "No users removed."
-msgstr ""
+msgstr "Keine Benutzer entfernt."
 
 #: /views/edit/lookup_search.py:16
 msgid "No search string supplied."
-msgstr ""
+msgstr "Kein Suchbegriff eingegeben."
 
 #: /views/edit/lookup_search.py:19
 msgid "Search string '${string}' is too short. Please try a longer search string."
-msgstr ""
+msgstr "Suchbegriff '$[string}' is zu kurz. Bitte längeren Suchbegriff versuchen."
 
 #: /views/edit/lookup_search.py:27
 msgid "No users found for search string '${string}'."
-msgstr ""
+msgstr "Keine Benutzer gefunden bei Suche nach '${string}'."
 
 #: /views/edit/lookup_search.py:33
 msgid "Searched for '${string}'."
-msgstr ""
+msgstr "Suche nach '${string}'."
 
 #: /views/edit/lookup_ui.pt:107
 msgid "search"
-msgstr ""
+msgstr "Suche"
 
 #: /views/edit/lookup_ui.pt:127
 #: /views/edit/lookup_ui.pt:196
@@ -2764,7 +2764,7 @@ msgstr "Benutzer zur Zwischenablage hinzufügen"
 
 #: /views/edit/lookup_ui.pt:135
 msgid "search results"
-msgstr ""
+msgstr "Suchergebnisse"
 
 #: /views/edit/lookup_ui.pt:144
 msgid "user"
@@ -2776,7 +2776,7 @@ msgstr "E-Mail"
 
 #: /views/edit/lookup_ui.pt:185
 msgid "No search results."
-msgstr ""
+msgstr "Keine Suchergebnisse."
 
 #: /views/edit/lookup_ui.pt:215
 msgid "return to the access screen with this clipboard: alt-u"
@@ -2792,7 +2792,7 @@ msgstr "Benutzer vom Clipbord entfernen: alt-r"
 
 #: /views/edit/lookup_ui.pt:227
 msgid "remove user"
-msgstr ""
+msgstr "Benutzer entfernen"
 
 #: /views/edit/lookup_ui.pt:45
 msgid "return to previous screen: alt-k"
@@ -2808,11 +2808,11 @@ msgstr ""
 
 #: /views/edit/lookup_ui.pt:82
 msgid "user search"
-msgstr ""
+msgstr "Benutzersuche"
 
 #: /views/edit/lookup_ui.pt:91
 msgid "name (or part of name)"
-msgstr ""
+msgstr "Name (oder Teil des Namens)"
 
 #: /views/edit/macro_metadata.pt:132
 msgid "&#134;"
@@ -2820,11 +2820,11 @@ msgstr ""
 
 #: /views/edit/macro_metadata.pt:157
 msgid "date format: day / month / year &nbsp;23:59"
-msgstr ""
+msgstr "Datumsformat: Tag / Monat / Jahr &nbsp; 23:59"
 
 #: /views/edit/macro_metadata.pt:160
 msgid "&#134; acquireable"
-msgstr ""
+msgstr "&#134; erwerbbar"
 
 #: /views/edit/macro_metadata.pt:195
 #: /views/edit/macro_metadata.pt:354
@@ -2885,7 +2885,7 @@ msgstr "Element"
 
 #: /views/edit/macro_metadata.pt:81
 msgid "acquired content"
-msgstr ""
+msgstr "Erworbener Inhalt"
 
 #: /views/edit/macro_metadata.pt:84
 #: /views/edit/tab_access.pt:568
@@ -2910,7 +2910,7 @@ msgstr "alles auswählen: alt-a"
 
 #: /views/edit/macro_select_all.pt:22
 msgid "select <u>a</u>ll"
-msgstr ""
+msgstr "<u>a</u>lles auswählen"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:24
 msgid "user clipboard"
@@ -2988,7 +2988,7 @@ msgstr ""
 
 #: /views/edit/tab_access.pt:139
 msgid "No users with local roles are defined here."
-msgstr ""
+msgstr "Es sind hier keine Benutzer mit lokalen Rollen definiert."
 
 #: /views/edit/tab_access.pt:151
 msgid "assign_role"
@@ -3009,7 +3009,7 @@ msgstr "Rolle wählen"
 
 #: /views/edit/tab_access.pt:160
 msgid "assign role"
-msgstr ""
+msgstr "Rolle zuweisen"
 
 #: /views/edit/tab_access.pt:160
 #: /views/edit/tab_access.pt:308
@@ -3023,11 +3023,11 @@ msgstr "ausgewählte Rolle(n) für ausgewählte Benutzer widerrufen"
 
 #: /views/edit/tab_access.pt:170
 msgid "revoke role"
-msgstr ""
+msgstr "Rolle entziehen"
 
 #: /views/edit/tab_access.pt:199
 msgid "pending requests for roles"
-msgstr ""
+msgstr "Asstehende Anfragen für Rollen"
 
 #: /views/edit/tab_access.pt:206
 msgid "requested role"
@@ -3035,11 +3035,11 @@ msgstr "für diesen Bereich angeforderte Rolle"
 
 #: /views/edit/tab_access.pt:209
 msgid "is approved"
-msgstr ""
+msgstr "ist bewilligt"
 
 #: /views/edit/tab_access.pt:245
 msgid "No roles have been requested."
-msgstr ""
+msgstr "Es sind keine Rollen beantragt worden."
 
 #: /views/edit/tab_access.pt:252
 msgid "access key: alt-d"
@@ -3047,7 +3047,7 @@ msgstr "Kurzwahl: alt-d"
 
 #: /views/edit/tab_access.pt:252
 msgid "deny role"
-msgstr ""
+msgstr "Rolle ablehnen"
 
 #: /views/edit/tab_access.pt:264
 msgid "access key: alt-g"
@@ -3055,7 +3055,7 @@ msgstr "Kurzwahl: alt-g"
 
 #: /views/edit/tab_access.pt:264
 msgid "grant role"
-msgstr ""
+msgstr "Rolle bewilligen"
 
 #: /views/edit/tab_access.pt:272
 msgid "access key: alt-a"
@@ -3072,7 +3072,7 @@ msgstr "zuweisen"
 
 #: /views/edit/tab_access.pt:330
 msgid "A Groups Service is not installed"
-msgstr ""
+msgstr "Ein Gruppendienst ist nicht installiert."
 
 #: /views/edit/tab_access.pt:334
 msgid "Silva Root in the ZMI"
@@ -3084,11 +3084,11 @@ msgstr ""
 
 #: /views/edit/tab_access.pt:355
 msgid "group roles"
-msgstr ""
+msgstr "Gruppenrollen"
 
 #: /views/edit/tab_access.pt:362
 msgid "grant or revoke local roles for groups"
-msgstr ""
+msgstr "Bewilligen oder Entziehen von lokalen Rollen für Gruppen"
 
 #: /views/edit/tab_access.pt:368
 msgid "groupname"
@@ -3100,11 +3100,11 @@ msgstr ""
 
 #: /views/edit/tab_access.pt:439
 msgid "No groups with (local) roles."
-msgstr ""
+msgstr "Keine Gruppen mit (lokalen) Rollen."
 
 #: /views/edit/tab_access.pt:460
 msgid "assign role to group"
-msgstr ""
+msgstr "Gruppe eine Rolle zuweisen"
 
 #: /views/edit/tab_access.pt:470
 msgid "revoke selected role(s) from selected group(s)"
@@ -3112,7 +3112,7 @@ msgstr "ausgewählte Rolle(n) für ausgewählte Gruppe(n) widerrufen"
 
 #: /views/edit/tab_access.pt:470
 msgid "revoke role from group"
-msgstr ""
+msgstr "Gruppe eine Rolle entziehen"
 
 #: /views/edit/tab_access.pt:509
 #, fuzzy
@@ -3121,7 +3121,7 @@ msgstr "ausgewählte Gruppen löschen: alt-d"
 
 #: /views/edit/tab_access.pt:548
 msgid "public view access restrictions for"
-msgstr ""
+msgstr "Zugangsbeschränkung öffentliche Version für"
 
 #: /views/edit/tab_access.pt:557
 #: /views/edit/tab_access.pt:730
@@ -3149,7 +3149,7 @@ msgstr "Zugangsbeschränkungen betreffen Objekte unterer Ebenen, einschliesslich
 
 #: /views/edit/tab_access.pt:59
 msgid "user roles for &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Benutzerrollen für &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_access.pt:593
 msgid "acquire restriction"
@@ -3169,7 +3169,7 @@ msgstr "Zugang nur erlauben für Benutzer mit bestimmten Rollen"
 
 #: /views/edit/tab_access.pt:65
 msgid "grant or revoke local roles for users"
-msgstr ""
+msgstr "Bewilligen oder Entziehen von lokalen Rollen"
 
 #: /views/edit/tab_access.pt:721
 msgid "public view access restrictions for &#xab;${title}&#xbb;"
@@ -3242,12 +3242,12 @@ msgstr ""
 
 #: /views/edit/tab_metadata.pt:53
 msgid "for approved version of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "für die bestätigte Version von &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_metadata.pt:72
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:43
 msgid "for public version of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "für die öffentliche Version von &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:31
@@ -3290,7 +3290,7 @@ msgstr ""
 
 #: /views/logout.pt:43
 msgid "When the login dialog appears, choose <b>\"Cancel\"</b>"
-msgstr ""
+msgstr "Wenn der Logindialg erscheint, <b>Abbruch</b> wählen."
 
 #: /views/logout.pt:9
 msgid "logout"
@@ -3310,7 +3310,7 @@ msgstr "Silva Copyrightinformationen"
 
 #: /views/macro_index.pt:132
 msgid "jump to zope root: alt-z"
-msgstr ""
+msgstr "Gehe zu Zope-Root: alt-z"
 
 #: /views/macro_index.pt:132
 msgid "zroot..."
@@ -3326,7 +3326,7 @@ msgstr ""
 
 #: /views/macro_index.pt:150
 msgid "jump to silva services: alt-`"
-msgstr ""
+msgstr "Gehe zu Silva-Services: alt-`"
 
 #: /views/macro_index.pt:150
 msgid "sservices..."
@@ -3349,7 +3349,7 @@ msgstr "Silva verlassen und veröffentlichte Seite sehen: alt-:"
 
 #: /views/macro_index.pt:226
 msgid "see public version"
-msgstr ""
+msgstr "Siehe öffentliche Version"
 
 #: /views/macro_index.pt:245
 msgid "Change your settings: alt-~"
@@ -3369,7 +3369,7 @@ msgstr "Logout ${role} ${userid}"
 
 #: /views/macro_index.pt:277
 msgid "request access"
-msgstr ""
+msgstr "Zugang beantragen"
 
 #: /views/macro_index.pt:94
 msgid "Up to Silva top"
@@ -3381,7 +3381,7 @@ msgstr "eine Ebene nach oben"
 
 #: /views/macro_index.pt:99
 msgid "Help with access keys"
-msgstr ""
+msgstr "Hilfe zu Kurzwahlen"
 
 #: /views/macro_tabs.pt:21
 msgid "Silva info: alt-|"
@@ -3389,7 +3389,7 @@ msgstr ""
 
 #: /views/macro_tabs.pt:30
 msgid "Silva top: alt-/"
-msgstr ""
+msgstr "Silva"
 
 #: /views/macro_tabs.pt:60
 msgid "&middot; manage..."
@@ -3397,7 +3397,7 @@ msgstr ""
 
 #: /views/macro_tabs.pt:60
 msgid "Zope manage_main: alt-."
-msgstr ""
+msgstr "Zope manage_main: alt-."
 
 #: /views/macro_tabs.pt:79
 msgid "Silva access keys: alt-?"
@@ -3409,7 +3409,7 @@ msgstr ""
 
 #: /views/public/Ghost/view/render.py:15
 msgid "This 'ghost' document is broken. Please inform the site administrator."
-msgstr ""
+msgstr "Diese 'Geist' document ist fehlerhaft. Bitte informieren Sie den Administrator der Site."
 
 #: /views/public/request_roles_submit.py:14
 msgid "You must enter your full name and your e-mail address"
@@ -3421,7 +3421,7 @@ msgstr "Fehler: ${error}"
 
 #: /views/public/request_roles_submit.py:26
 msgid "Roles requested. You will receive an e-mail from the Chief Editor or Manager as soon as your request is processed."
-msgstr ""
+msgstr "Rollen beantragt. Sie werden eine E-Mail vom Chefeditor oder Manager erhalten, sobald ihr Antrag bearbeitet wurde."
 
 #: /views/public/request_roles_submit.py:9
 msgid "No roles were selected."
