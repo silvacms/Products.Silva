@@ -6,7 +6,7 @@
 
 <head>
 <!-- delete this title slot to use the automatic document title in layout_macro.html -->
-<title metal:fill-slot="title" tal:content="here/get_title_html">Local or custom title (in content.html)</title>
+<title metal:fill-slot="title" tal:content="here/get_title_or_id_html">Local or custom title (in content.html)</title>
 
 <!-- add custom meta tags -->
 <metal:block fill-slot="meta">
@@ -16,7 +16,7 @@
 <!-- define custom stylesheet -->
 <metal:block fill-slot="style">
   <!-- Start style slot -->
-  <link rel="stylesheet" href="frontend.css" type="text/css" tal:attributes="href here/frontend.css/absolute_url" />
+  <link rel="stylesheet" href="frontend.css" type="text/css" tal:attributes="href here/frontend.css/absolute_url | nothing" />
   <!-- End style slot -->
 </metal:block>
 
