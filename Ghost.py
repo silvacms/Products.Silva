@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.67 $
+# $Revision: 1.68 $
 
 # Zope
 from OFS import SimpleItem
@@ -40,6 +40,7 @@ class GhostBase:
     LINK_NO_CONTENT = 5 # link points to something which is not a content
     LINK_CONTENT = 6 # link points to content
     LINK_NO_FOLDER = 7 # link doesn't point to a folder
+    LINK_CIRC = 8 # Link results in a ghost haunting itself 
 
     # those should go away
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,

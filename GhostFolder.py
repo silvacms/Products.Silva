@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.5 2003/08/06 06:42:57 zagy Exp $
+# $Id: GhostFolder.py,v 1.6 2003/08/06 07:19:31 zagy Exp $
 
 #zope
 import OFS.Folder
@@ -39,6 +39,8 @@ class GhostFolder(GhostBase, Folder.Folder):
         """
         haunted = self._get_content()
         if haunted is None:
+            return
+        if self.get_link_status() != self.LINK_OK:
             return
         ghost = self
         assert IContainer.isImplementedBy(haunted)
@@ -104,8 +106,29 @@ class GhostFolder(GhostBase, Folder.Folder):
             return self.LINK_CONTENT
         if not IContainer.isImplementedBy(content):
             return self.LINK_NO_FOLDER
+        if self.isReferencingSelf(content):
+            return self.LINK_CIRC
         return self.LINK_OK
                 
+    def isReferencingSelf(self, content=None):
+        """returns True if ghost folder references self or a ancestor of self
+        """
+        if content is None:
+            content = self._get_content(check=0)
+        if content is None:
+            # if we're not referncing anything it is not a circ ref for sure
+            return 0
+        content_path = content.getPhysicalPath()
+        chain = self.aq_chain[:]
+        while chain:
+            ancestor = chain[0]
+            del(chain[0])
+            if ancestor.getPhysicalPath() == content_path:
+                return 1
+        return 0
+
+        
+    
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'to_publication')
     def to_publication(self):

@@ -30,6 +30,10 @@ elif status == ghost_version.LINK_CONTENT:
 elif status == ghost_version.LINK_NO_FOLDER:
   return 'The object &#xab;%s&#xbb; the ghost points to is not a container.' % \
     ghost_version.get_content_url()
+elif status == ghost_version.LINK_CIRC:
+    return 'The object &#xab;%s&#xbb; the ghost points is either the ghost ' \
+        'itself or an ancestor of the ghost.' % \
+        ghost_version.get_content_url()
 return 'The ghost is in an undefined state.'
 
 
