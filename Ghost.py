@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.56 $
+# $Revision: 1.57 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -96,7 +96,7 @@ class GhostVersion(Version):
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
-    def set_title(self):
+    def set_title(self, title):
         """Don't do a thing.
         """
         pass
