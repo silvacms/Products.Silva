@@ -95,7 +95,9 @@
 <metal:block define-macro="edit_table">
   <tal:block define="
     content version;">
-    <form method="POST" name="form" action="."
+    <form method="POST"
+      action="."
+      name="form"
       tal:condition="content"
       tal:define="
         binding python: view.get_metadata_binding(content) or nothing;
@@ -122,7 +124,7 @@
           <tal:block repeat="set_name binding/setNames">
             <tal:block define="set_errors form_errors/?set_name | nothing">
               <tr tal:condition="not:repeat/set_name/start">
-                <td class="divider"
+                <td class="top divider"
                   colspan="4">
                 </td>
               </tr>
@@ -182,6 +184,9 @@
                     <tal:block 
                       condition="element/isAcquired"
                       replace="structure element/view" />
+                    <sup tal:condition="element/isAcquireable">
+                      &#134;
+                    </sup>
                     <tal:block condition="not: element/isAcquired">
                       &nbsp;
                     </tal:block>
@@ -201,6 +206,18 @@
                 </tr>
               </tal:block>
             </tal:block>
+            <tr tal:condition="python: set_name != 'silva-content'">
+              <th class="align-right">
+              </th>
+              <th>
+                date format: year / month / day &nbsp;23:59
+              </th>
+              <th>
+                &#134; acquireable
+              </th>
+              <th>
+              </th>
+            </tr>
             <tr class="controls">
               <td class="align-right"
                 colspan="4">
