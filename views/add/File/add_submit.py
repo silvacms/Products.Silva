@@ -7,6 +7,8 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.helpers import check_valid_id, check_valid_id_file, IdCheckValues
+
 model = context.REQUEST.model
 view = context
 REQUEST = context.REQUEST
@@ -36,8 +38,10 @@ else:
     title = ""
 
 # if we don't have the right id, reject adding
-if id and (not model.is_id_valid(id)):
-    return view.add_form(message_type="error", message="%s is not a valid id." % view.quotify(id))
+if id:
+    id_check = check_valid_id(model, id)
+    if not id_check == IdCheckValues.ID_OK:
+        return view.add_form(message_type="error", message=view.get_id_status_text(id, id_check))
 
 # process data in result and add using validation result
 file = result['file']
@@ -46,6 +50,11 @@ if not file or not getattr(file,'filename',None):
       return view.add_form(message_type="error", message="Empty, misspelled or invalid file, filename or filepath.")
 
 object = model.manage_addProduct['Silva'].manage_addFile(id, title, file)
+
+if object is None:
+    # something went wrong with the id check
+    id, id_check = check_valid_id_file(model,id, file)
+    return view.add_form(message_type="error", message=view.get_id_status_text(id, id_check))
 
 # update last author info in new object
 object.sec_update_last_author_info()
