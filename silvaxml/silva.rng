@@ -60,7 +60,8 @@
     <element name="content">
       <attribute name="version_id"><text /></attribute>
       <ref name="metadata" />
-      <ref name="document" />
+      <!-- XXX href needs to change once a stable silva document schema is on infrae.com /-->
+	  <externalRef href="silva_document.rng"/>
     </element>
   </define>
 
@@ -169,119 +170,6 @@
 
   <define name="link">
     <element name="url"><text /></element>
-  </define>
-  
-  <define name="document">
-    <zeroOrMore>
-      <choice>
-        <element name="doc:p">
-          <attribute name="type"><text /></attribute>
-          <ref name="inline" />
-        </element>
-        <element name="doc:list">
-          <attribute name="type"><text /></attribute>
-          <zeroOrMore>
-            <element name="doc:li">
-              <ref name="inline" />
-            </element>
-          </zeroOrMore>
-        </element>
-        <element name="doc:heading">
-          <attribute name="type"><text /></attribute>
-          <ref name="inline_heading" />
-        </element>
-        <element name="doc:toc">
-          <optional>
-            <attribute name="toc_depth"><text /></attribute>
-          </optional>
-        </element>
-        <element name="doc:dlist">
-          <attribute name="type"><text /></attribute>
-          <zeroOrMore>
-            <element name="doc:dt"><ref name="inline" /></element>
-            <element name="doc:dd"><ref name="inline" /></element>
-          </zeroOrMore>
-        </element>
-        <element name="doc:code">
-          <attribute name="path"><text /></attribute>
-        </element>
-        <element name="doc:pre"><text /></element>
-        <element name="doc:external_data">
-          <attribute name="path"><text /></attribute>
-          <optional>
-            <attribute name="type"><text /></attribute>
-          </optional>
-          <optional>
-            <attribute name="show_headings"><text /></attribute>
-          </optional>
-          <optional>
-            <attribute name="show_caption"><text /></attribute>
-          </optional>
-          <zeroOrMore>
-            <element name="doc:parameter">
-              <attribute name="key" />
-              <attribute name="value" />
-            </element>
-          </zeroOrMore>
-        </element>
-        <element name="doc:image">
-          <attribute name="path"><text /></attribute>
-          <optional>
-            <attribute name="alignment"><text /></attribute>
-          </optional>
-          <optional>
-            <attribute name="link"><text /></attribute>
-          </optional>
-        </element>
-      </choice>
-    </zeroOrMore>
-  </define>
-
-  <define name="inline">
-    <zeroOrMore>
-      <choice>
-        <text />
-        <element name="doc:strong">
-          <ref name="inline" />
-        </element>
-        <element name="doc:em">
-          <ref name="inline" />
-        </element>
-        <element name="doc:underline">
-          <ref name="inline" />
-        </element>
-        <element name="doc:super">
-          <ref name="inline" />
-        </element>
-        <element name="doc:sub">
-          <ref name="inline" />
-        </element>
-        <!-- can a link contain other inline text?? -->
-        <element name="doc:link">
-          <attribute name="url"><text /></attribute>
-          <optional>
-            <attribute name="target"><text /></attribute>
-          </optional>
-          <ref name="inline" />
-        </element>
-        <element name="doc:index">
-          <attribute name="name"><text /></attribute>
-          <ref name="inline" />
-        </element>
-      </choice>
-    </zeroOrMore>
-  </define>
-
-  <define name="inline_heading">
-    <zeroOrMore>
-      <choice>
-        <text />
-        <element name="doc:index">
-          <attribute name="name"><text /></attribute>
-          <text />
-        </element>
-      </choice>
-    </zeroOrMore>
   </define>
 
   <define name="anyElement">

@@ -1,0 +1,294 @@
+<?xml version="1.0" ?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:doc="http://xml.infrae.com/document/0.9.3">
+  <start>
+    <ref name="document" />
+  </start>
+
+  <define name="document">
+    <element name="doc:doc">
+      <zeroOrMore>
+        <ref name="root" />
+      </zeroOrMore>
+    </element>
+  </define>
+  <!-- first I'll do the containment rules, then a list of individual elements,
+        then the table element and last are the attributes -->
+
+  <!-- toplevel elements allowed on root -->
+  <define name="root">
+    <choice>
+      <ref name="toplevel" />
+      <ref name="table" />
+    </choice>
+  </define>
+
+  <!-- toplevel elements that can be located everywhere in the tree -->
+  <define name="toplevel">
+    <choice>
+      <ref name="heading" />
+      <ref name="p" />
+      <ref name="pre" />
+      <ref name="image" />
+      <ref name="list" />
+      <ref name="nlist" />
+      <ref name="dlist" />
+      <ref name="toc" />
+      <ref name="code" />
+      <ref name="external_data" />
+    </choice>
+  </define>
+
+  <!-- inline markup -->
+  <define name="markup">
+    <choice>
+      <ref name="em" />
+      <ref name="strong" />
+      <ref name="super" />
+      <ref name="sub" />
+      <ref name="underline" />
+      <ref name="br" />
+      <ref name="link" />
+      <ref name="index" />
+      <text />
+    </choice>
+  </define>
+
+  <define name="textmarkup">
+    <choice>
+      <ref name="em" />
+      <ref name="strong" />
+      <ref name="super" />
+      <ref name="sub" />
+      <ref name="underline" />
+      <ref name="br" />
+      <text />
+    </choice>
+  </define>
+
+  <define name="headingmarkup">
+    <choice>
+      <ref name="em" />
+      <ref name="super" />
+      <ref name="sub" />
+      <ref name="link" />
+      <ref name="index" />
+      <text />
+    </choice>
+  </define>
+
+  <!-- individual elements -->
+  
+  <define name="heading">
+    <element name="doc:heading">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <ref name="headingmarkup" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="p">
+    <element name="doc:p">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+  </define>
+  
+  <define name="pre">
+    <element name="doc:pre">
+      <oneOrMore>
+        <text />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="image">
+    <element name="doc:image">
+      <ref name="someAttributes" />
+    </element>
+  </define>
+
+  <define name="list">
+    <element name="doc:list">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <ref name="listitem" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="nlist">
+    <element name="doc:nlist">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <ref name="nlistitem" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="dlist">
+    <element name="doc:dlist">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <ref name="dlistpair" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="toc">
+    <element name="doc:toc">
+      <ref name="someAttributes" />
+    </element>
+  </define>
+
+  <define name="code">
+    <element name="doc:code">
+      <ref name="someAttributes" />
+    </element>
+  </define>
+
+  <define name="external_data">
+    <element name="doc:external_data">
+      <ref name="someAttributes" />
+    </element>
+  </define>
+
+  <define name="listitem">
+    <element name="doc:li">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+  </define>
+  
+  <define name="nlistitem">
+    <element name="doc:li">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <ref name="toplevel" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="dlistpair">
+    <element name="doc:dt">
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+    <element name="doc:dd">
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="em">
+    <element name="doc:em">
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+  </define>
+  
+  <define name="strong">
+    <element name="doc:strong">
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+  </define>
+  
+  <define name="super">
+    <element name="doc:super">
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+  </define>
+  
+  <define name="sub">
+    <element name="doc:sub">
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+  </define>
+  
+  <define name="underline">
+    <element name="doc:underline">
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="link">
+    <element name="doc:link">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <ref name="textmarkup" />
+      </oneOrMore>
+    </element>
+  </define>
+  
+  <define name="index">
+    <element name="doc:index">
+      <ref name="someAttributes" />
+    </element>
+  </define>
+
+  <define name="br">
+    <element name="doc:br">
+      <empty />
+    </element>
+  </define>
+
+  <!-- table elements -->
+  <define name="table">
+    <element name="doc:table">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <choice>
+          <ref name="tableheading" />
+          <ref name="tablerow" />
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="tableheading">
+    <element name="doc:row_heading">
+      <oneOrMore>
+        <ref name="markup" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="tablerow">
+    <element name="doc:row">
+      <ref name="someAttributes" />
+      <oneOrMore>
+        <element name="doc:field">
+          <zeroOrMore>
+            <ref name="toplevel" />
+          </zeroOrMore>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  
+  <!-- define a general attribute rule, so we can skip the attrs for now... -->
+  <define name="someAttributes">
+    <zeroOrMore>
+      <attribute>
+        <anyName />
+      </attribute>
+    </zeroOrMore>
+  </define>
+  
+</grammar>
