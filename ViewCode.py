@@ -109,7 +109,6 @@ class ViewCode:
                             'implements_versioning'):
                     infodict[key]=''
                 continue
-            
 
             infodict['title'] = obj.get_title_editable()
             infodict['meta_type'] = obj.meta_type
@@ -118,8 +117,7 @@ class ViewCode:
             
             infodict['implements_content'] = obj.implements_content()
             if infodict['implements_content']:
-                infodict['is_default'] = obj.is_default()
-                infodict['ref'] = self.create_ref(obj)                
+                infodict['is_default'] = obj.is_default()                                
                 infodict['container_meta_type'] = obj.get_container().meta_type
 
             infodict['implements_container'] = obj.implements_container()
@@ -130,6 +128,7 @@ class ViewCode:
                 infodict['status'] = status
                 infodict['status_style'] = style
                 infodict['public_status'] = public_status
+                infodict['ref'] = self.create_ref(obj)
 
                 datetime = obj.get_next_version_publication_datetime()
                 if datetime:
