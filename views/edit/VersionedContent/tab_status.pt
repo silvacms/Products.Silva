@@ -108,6 +108,8 @@ _______ manual close section here _______
 </div>
 </check>
 
+<br />
+
 <form action="." method="POST">
   <table width="96%" cellspacing="0" cellpadding="3" border="0">
     <tr>
@@ -124,7 +126,7 @@ _______ manual close section here _______
 
     <tr class="focus-cycle" valign="top">
       <td>
-         Export this document as Silva XML, 
+         Export this document via the export screen as Silva XML, 
          or - if the <a href="http://www.infrae.com/products/docma">DocmaServer</a>
          is installed - convert it to a Word document.
       </td>
