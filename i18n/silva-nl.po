@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 25 18:40:07 2004\n"
+"POT-Creation-Date: Thu Nov 25 18:53:20 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -105,16 +105,17 @@ msgstr "url ${url} ontvangen terwijl we unicode werd verwacht"
 msgid "implemented in subclasses"
 msgstr "geïmplementeerd in subclasses"
 
-#: /Group.py:136 /IPGroup.py:119
+#: /Group.py:136 /IPGroup.py:119 /VirtualGroup.py:122
 msgid "There is no service_groups"
 msgstr "Er is geen 'service_groups' gevonden"
 
-#: /Group.py:138 /IPGroup.py:121
+#: /Group.py:138 /IPGroup.py:121 /VirtualGroup.py:124
 msgid "There is already a group of that name."
 msgstr "Er bestaat al een groep met deze naam."
 
 #: /Group.py:80 /Group.py:88 /Group.py:111 /Group.py:120 /IPGroup.py:62
-#: /IPGroup.py:90 /IPGroup.py:101
+#: /IPGroup.py:90 /IPGroup.py:101 /VirtualGroup.py:68 /VirtualGroup.py:94
+#: /VirtualGroup.py:104
 msgid "Zombie group asset"
 msgstr "Zombie groep asset"
 
@@ -215,6 +216,119 @@ msgstr ""
 
 #: /SilvaObject.py:329
 msgid "no ${view_type} view defined"
+msgstr ""
+
+#: /Versioning.py:100
+msgid "Cannot approve version without publication datetime."
+msgstr ""
+
+#: /Versioning.py:104
+msgid "Cannot approve version; not allowed."
+msgstr ""
+
+#: /Versioning.py:161
+msgid "No approved version to unapprove."
+msgstr ""
+
+#: /Versioning.py:189
+msgid "No public version to close."
+msgstr ""
+
+#: /Versioning.py:216 /Versioning.py:237
+msgid "Should never happen!"
+msgstr ""
+
+#: /Versioning.py:241 /adapters/version_management.py:81
+#: /adapters/version_management.py:89
+msgid "No unapproved version available"
+msgstr ""
+
+#: /Versioning.py:274 /Versioning.py:323 /Versioning.py:353
+msgid "There is no unapproved version to request approval for."
+msgstr ""
+
+#: /Versioning.py:278
+msgid "The version is already requested for approval."
+msgstr ""
+
+#: /Versioning.py:327 /Versioning.py:357
+msgid "The version is not requested for approval."
+msgstr ""
+
+#: /Versioning.py:377 /Versioning.py:390
+msgid "No unapproved version."
+msgstr ""
+
+#: /Versioning.py:403 /Versioning.py:424
+msgid "No approved version."
+msgstr ""
+
+#: /Versioning.py:406
+msgid "Must specify publication datetime."
+msgstr ""
+
+#: /Versioning.py:437
+msgid "No public version."
+msgstr ""
+
+#: /Versioning.py:464 /Versioning.py:483
+msgid "No next version."
+msgstr ""
+
+#: /Versioning.py:497
+msgid "There is no version to add messages for."
+msgstr ""
+
+#: /Versioning.py:59
+msgid "There is an approved version already; unapprove it. (${id})"
+msgstr ""
+
+#: /Versioning.py:63
+msgid "There already is an unapproved version (${id})."
+msgstr ""
+
+#: /Versioning.py:69
+msgid "The public version has that id already (${id})."
+msgstr ""
+
+#: /Versioning.py:75
+msgid "A previous version has that id already (${id})."
+msgstr ""
+
+#: /Versioning.py:94 /views/edit/VersionedContent/tab_edit_publish.py:12
+msgid "There is no unapproved version to approve."
+msgstr "Er is geen nog niet goedgekeurde versie om goed te keuren."
+
+#: /Versioning.py:97
+msgid "There already is an approved version."
+msgstr ""
+
+#: /adapters/version_management.py:113
+msgid "Can not delete all versions"
+msgstr ""
+
+#: /adapters/version_management.py:257
+msgid "no such version ${version}"
+msgstr ""
+
+#: /icon.py:55
+msgid "Icon not found"
+msgstr ""
+
+#: /icon.py:63
+msgid "No icon for ${identifier}"
+msgstr ""
+
+#: /icon.py:84
+msgid "The product ${product} doesn't exist"
+msgstr ""
+
+#: /mangle.py:139
+msgid "id must be str or unicode (${id})"
+msgstr ""
+
+#: /mangle.py:311
+msgid "obj_context is not list type"
 msgstr ""
 
 #: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:62
@@ -991,12 +1105,12 @@ msgid "ghost folder contents"
 msgstr "'ghost folder' inhoud"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:197
-msgid "resync ghost folder"
-msgstr "'ghost folder' hersynchroniseren"
-
-#: /views/edit/Container/GhostFolder/tab_edit.pt:197
 msgid "re-synchronize with content from the source folder: alt-e"
 msgstr "hersynchroniseren met de inhoud van de bronfolder: alt-e"
+
+#: /views/edit/Container/GhostFolder/tab_edit.pt:197
+msgid "resync ghost folder"
+msgstr "'ghost folder' hersynchroniseren"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:54
 msgid "ghost folder of &#xab;${title}&#xbb;"
@@ -2438,10 +2552,6 @@ msgstr "Goedkeuring ingetrokken."
 #: /views/edit/VersionedContent/tab_edit_break_lock.py:14
 msgid "Lock broken"
 msgstr "Blokkade verbroken"
-
-#: /views/edit/VersionedContent/tab_edit_publish.py:12
-msgid "There is no unapproved version to approve."
-msgstr "Er is geen nog niet goedgekeurde versie om goed te keuren."
 
 #: /views/edit/VersionedContent/tab_edit_publish.py:24
 msgid "Version approved."
