@@ -693,7 +693,7 @@ textarea {
 * the selector works only for standard compatible browsers like mozilla, so
 * IE ignore this definition below
 */
-td>textarea, td>input[type=text] {
+td>textarea.expand, td>input.expand[type=text] {
   width: 100%;
 }
 
