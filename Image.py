@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.54 2004/08/24 14:50:40 jw Exp $
+# $Id: Image.py,v 1.55 2004/09/30 08:20:57 jw Exp $
 
 # Python
 import re, string
@@ -544,6 +544,8 @@ class Image(Asset):
             # it later to get the a working absolute_url()
             image.id = self.getId()
             file.seek(0)
+            # ensure consistent mimetype assignment by deleting content-type header
+            fix_content_type_header(file)
             image.manage_file_upload(file, content_type=content_type)
             image = image.aq_base
             # set the actual id (so that absolute_url works)

@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
+# $Revision: 1.32 $
 
 # Python
 import os
@@ -13,7 +13,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from mimetypes import guess_extension
-from helpers import add_and_edit
+from helpers import add_and_edit, fix_content_type_header
 from webdav.WriteLockInterface import WriteLockInterface
 # Silva
 from Asset import Asset
@@ -191,6 +191,8 @@ class ZODBFile(File):
         self._file = Image.File(id, title, '')        
 
     def _set_file_data_helper(self, file):
+        # ensure consistent mimetype assignment by deleting content-type header
+        fix_content_type_header(file)
         self._file.manage_upload(file=file)
 
     def _index_html_helper(self, REQUEST):
@@ -210,6 +212,8 @@ class FileSystemFile(File):
         self._file._repository = cookPath(repository)
 
     def _set_file_data_helper(self, file):
+        # ensure consistent mimetype assignment by deleting content-type header
+        fix_content_type_header(file)
         self._file.manage_file_upload(file=file)
 
     def _index_html_helper(self, REQUEST):

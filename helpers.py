@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva 
@@ -61,4 +61,14 @@ from Products.ParsedXML.PrettyPrinter import _translateCdata, _translateCdataAtt
 translateCdata = _translateCdata
 translateCdataAttr = _translateCdataAttr
 
-
+def fix_content_type_header(uploaded_file):
+    """Deletes the content-type header on the uploaded_file.
+    
+    This ensures consistent mimetype assignment for the Silva application
+    since Zope will now fallback to the Python database for resolving
+    a mimetype.
+    """
+    if hasattr(uploaded_file, 'headers'):
+        if uploaded_file.headers.has_key('content-type'):            
+            del uploaded_file.headers['content-type']
+            
