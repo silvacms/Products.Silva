@@ -4,6 +4,11 @@ Developer level changes in Silva
 
 From 1.1 to 1.2:
 
+* the 'action_paste' and 'action_paste_to_ghost' methods on Folder have
+  a new signature, instead of returning a list of messages it now returns
+  (message_type, messages) where message_type can be 'feedback' and 'error'
+  and messages is the list that used to be returned.
+
 * tab_edit for VersionedContent views has changed to make use of a new
   macro, ``macro_tab_edit/macros/editor``, instead of
   ``macro_index/macros/master`` directly. ``macro_tab_edit`` does use

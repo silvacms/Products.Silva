@@ -9,6 +9,6 @@
 ##
 model = context.REQUEST.model
 view = context
-message = model.action_paste_to_ghost(context.REQUEST)
+message_type, message = model.action_paste_to_ghost(context.REQUEST)
 
-return view.tab_edit(message_type="feedback", message=message)
+return view.tab_edit(message_type=message_type, message=message)

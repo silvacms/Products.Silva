@@ -17,6 +17,10 @@ Silva changes
         If a visitor is subscribed, he will receive notifications by email
         whenever a publication event for this object is triggered.
 
+      - Fixed color of error display when something could not be pasted.
+        Note: see doc/developer_changes.txt for information about the impact
+        this change had on the API.
+
   1.1.2
 
   1.1.1

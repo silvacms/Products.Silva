@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.163 $
+# $Revision: 1.164 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -306,6 +306,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                               'action_paste')
     def action_paste(self, REQUEST):
         """Paste objects on clipboard.
+
+            Note: the return value of this method has changed in Silva 1.2
         """
         # HACK
         # determine if we're cut-paste or copy-pasting, wish we
@@ -320,6 +322,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         # (actually in case of a cut-paste the original
         # should not be approved, too)
         messages = []
+        message_type = 'feedback'
         ids = []
         for item in self.cb_dataItems():
             if ((op == 0 or item.get_container().is_delete_allowed(item.id)) 
@@ -332,9 +335,10 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                                 'this type of container'))
                 msg.set_mapping({'id': item.id})
                 messages.append(unicode(msg))
+                message_type = 'error'
 
         if len(ids) == 0:
-            return ', '.join(messages).capitalize()
+            return message_type, ', '.join(messages).capitalize()
         
         if op == 0:
             # also update title of index documents
@@ -390,17 +394,20 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             msg.set_mapping({'id': paste_id})
             messages.append(unicode(msg))
         
-        return ', '.join(messages).capitalize()
+        return message_type, ', '.join(messages).capitalize()
             
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_paste')
+                              'action_paste_to_ghost')
     def action_paste_to_ghost(self, REQUEST):
         """Paste what is on clipboard to ghost.
+
+            Note: the return value of this method has changed in Silva 1.2
         """
         # create ghosts for each item on clipboard
         allowed_meta_types = [addable['name'] for 
             addable in self.get_silva_addables()]
         messages = []
+        message_type = 'feedback'
         for item in self.cb_dataItems():
             if item.meta_type in allowed_meta_types:
                 ids = self.objectIds()
@@ -426,7 +433,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                                 'this type of container'))
                 msg.set_mapping({'id': item.id})
                 messages.append(unicode(msg))
-        return ', '.join(messages).capitalize()
+                message_type = 'error'
+        return message_type, ', '.join(messages).capitalize()
 
     def _ghost_paste(self, paste_id, item, REQUEST):
         if canBeHaunted(item):
