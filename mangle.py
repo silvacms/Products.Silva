@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.3 2003/07/24 13:04:18 zagy Exp $
+# $Id: mangle.py,v 1.4 2003/08/06 06:39:20 zagy Exp $
 
 # Python
 import string
@@ -221,11 +221,12 @@ class Id:
             returns self
             raises ValueError if id is not valid
         """
+        self._allow_dup = 1
         if not self.isValid():
             raise ValueError, "The id %r is not valid" % (self._maybe_id, )
         m = self._number_postfix.match(self._maybe_id)
         if m is None:
-            new_id =  '%s2' % (old_id, )
+            new_id =  '%s2' % (self._maybe_id, )
         else:
             name = m.group(1)
             count = int(m.group(2))
