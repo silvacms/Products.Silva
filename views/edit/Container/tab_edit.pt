@@ -139,7 +139,7 @@
               <tr class="odd"
                 tal:condition="python: not(default_document or publishables or assets)">
                 <td colspan="6" i18n:translate="no_content_objects_in_folder">
-                  There are no content objects in this folder.
+                  There is no content here.
                 </td>
               </tr>
 

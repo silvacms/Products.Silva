@@ -17,12 +17,12 @@
   method="POST"
   name="silvaObjects"
   tal:define="
-    members view/get_members;
-    global rejectables python:None;
-    global revokeables python:None;
-    global closeables python:None;
-    global new_versionables python:None;
-    global expireables python:None;
+    global approveables nothing;
+    global rejectables nothing;
+    global revokeables nothing;
+    global closeables nothing;
+    global new_versionables nothing;
+    global expireables nothing;
   ">
   <table class="columns columns2">
     <tbody>
@@ -78,7 +78,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr tal:condition="objects">
       <th class="listing-left">
         &nbsp;
       </th>
@@ -107,7 +107,11 @@
           iterate repeat/obj/odd;
           is_container obj/implements_container | nothing;
           indent_depth python: '%spx' % str(obj['indent'] * 10);
-          obj_url obj/absolute_url;"
+          obj_url obj/absolute_url;
+          state obj/status_style | nothing;
+          global approveables python:test(state == 'draft' or state == 'closed', 1, approveables);
+          global revokeables python:test(state == 'approved', 1, revokeables);
+          global rejectables python:test(state == 'pending', 1, rejectables)"
         tal:attributes="
           class python: iterate and 'odd' or 'even';">
         <td class="listing-left">
@@ -139,7 +143,7 @@
                   <i tal:condition="obj/is_default | nothing">
                     index of
                   </i>
-                  <tal:block replace="title" />
+                  <tal:block replace="title"  />
                   <tal:block condition="python:title == ''">
                     <i>no title</i>
                   </tal:block>
@@ -174,7 +178,7 @@
           21 oct 2001 18:18
         </td>
         <tal:block replace="nothing">
-          _______ closing datetime cell _______
+          _______ expiration datetime cell _______
         </tal:block>
         <td class="align-right"
           tal:content="structure obj/next_version_expiration_datetime | nothing">
@@ -208,9 +212,19 @@
         </td>
       </tr>
     </tal:block>
+    <tal:block replace="nothing">
+      ______________ if empty ______________
+    </tal:block>
+    <tr class="even"
+      tal:condition="not: objects">
+      <td 
+        colspan="6">
+        There are no publishable items here.
+      </td>
+    </tr>
   </tbody>
   <tfoot tal:condition="may_change_content">
-    <tr tal:condition="objects">
+    <tr tal:condition="approveables">
       <th class="listing-left"
         colspan="2">
         <tal:define define="select_id string:refs">
@@ -224,7 +238,8 @@
       <th>
       </th>
     </tr>
-    <tr class="controls inter-controls">
+    <tr class="controls inter-controls"
+      tal:condition="python:approveables or revokeables">
       <tal:block replace="nothing">
         ______________ publication time controls ______________
       </tal:block>
@@ -249,7 +264,8 @@
         </tal:block>
       </td>
     </tr>
-    <tr class="controls inter-controls">
+    <tr class="controls inter-controls"
+      tal:condition="python:approveables or revokeables">
       <tal:block replace="nothing">
         ______________ expiration time controls ______________
       </tal:block>
@@ -284,8 +300,9 @@
           type="submit"
           name="tab_status_reject:method"
           value="Reject" 
-          accesskey="j"
           title="reject pending request for approval of selected objects: alt-j"
+          accesskey="j"
+          tal:condition="rejectables"
         />
         <input class="button"
           style="background:#008c55;"
@@ -294,6 +311,7 @@
           value="Revoke"
           title="withdraw approval of approved versions of selected objects: alt-v"
           accesskey="v"
+          tal:condition="revokeables"
         />
         <input class="button"
           style="background:#202080;"
@@ -321,6 +339,7 @@
           value="Change timings"
           title="change publish and expiration times for selected objects: alt-s"
           accesskey="s"
+          tal:condition="python:approveables or revokeables"
         />
         <input class="button"
           name="tab_status_approve:method"
@@ -328,6 +347,7 @@
           value="Approve"
           title="approve or publish new versions of selected objects: alt-o"
           accesskey="o"
+          tal:condition="approveables"
         />
       </td>
     </tr>
@@ -344,6 +364,7 @@
           value="Withdraw"
           title="withdraw pending request for approval: alt-w"
           accesskey="w"
+          tal:condition="rejectables"
         />
         <input class="button"
           style="background:#008c55;"
@@ -352,6 +373,7 @@
           title="revoke approval of approved versions: alt-v"
           type="submit"
           value="Revoke"
+          tal:condition="revokeables"
         />
         <input class="button" 
           type="submit" 
