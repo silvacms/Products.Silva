@@ -284,14 +284,14 @@
                       name="tab_status_reject:method"
                       value="Reject" 
                       accesskey="j"
-                      title="reject request for approval from author: alt-j"
+                      title="reject pending request for approval: alt-j"
                     />
                     <input class="button"
                       style="background:#007746;"
                       type="submit"
                       name="tab_status_revoke:method"
                       value="Revoke"
-                      title="withdraw approval of new versions: alt-v"
+                      title="withdraw approval of approved versions: alt-v"
                       accesskey="v"
                     />
                     <input class="button" 
@@ -342,14 +342,14 @@
                       type="submit"
                       name="tab_status_withdraw:method"
                       value="Withdraw approval request"
-                      title="withdraw request for approval of new versions: alt-w"
+                      title="withdraw pending request for approval: alt-w"
                       accesskey="w"
                     />
                     <input class="button"
                       style="background:#007746;"
                       accesskey="v"
                       name="tab_status_revoke:method"
-                      title="revoke approval of new versions: alt-v"
+                      title="revoke approval of approved versions: alt-v"
                       type="submit"
                       value="Revoke"
                     />
