@@ -7,7 +7,16 @@ Silva changes
 
     Features added
 
-	  - Implemented get_public_tree_all(depth) method.
+      - XSLT support for rendering Silva objects. See XXX for more
+        information.
+
+      - New parser for SilvaDocument forms-based editor, using a HTML
+        subset instead of the old-style method using special
+        characters.
+
+      - abbrev and acronym support for both forms editor and Kupu.
+
+      - Implemented get_public_tree_all(depth) method.
 
     Bugs fixed
 
@@ -16,6 +25,8 @@ Silva changes
 
       - Do not copy over properties anymore when changing a folder to
         publication or back. Silva does not use properties anymore.
+
+      - Properties tab for Ghost Folder works again.
 
   1.0 final
   
