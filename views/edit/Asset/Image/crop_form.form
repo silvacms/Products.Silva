@@ -100,7 +100,7 @@
           <alternate_name></alternate_name>
           <css_class></css_class>
           <default>0</default>
-          <description>The y coordinate for cropping. To remove cropping change the scaling.</description>
+          <description>The y coordinate for cropping.</description>
           <display_maxwidth></display_maxwidth>
           <display_width type="int">20</display_width>
           <enabled type="int">1</enabled>
