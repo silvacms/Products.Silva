@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global breadcrumb_vein string:Contents;
+    global breadcrumb_vein string:contents;
     "
   i18n:domain="silva">
 
@@ -124,13 +124,13 @@
       <tr class="odd"
         tal:condition="not:link_status">
         <td class="field-title">
-          Link
+          link
         </td>
         <td>
           <a href="original"
             tal:attributes="href python:content_url + '/edit/tab_edit'"
             tal:content="python: model.get_editable().get_title_or_id()">
-            Link
+            link
           </a>
         </td>
         <td>
@@ -141,7 +141,7 @@
       <tr class="odd"
         tal:condition="link_status">
         <td class="field-title">
-          Problem
+          problem
         </td>
         <td class="alert">
           <span class="error"
@@ -239,9 +239,6 @@
       <th i18n:translate="author">
         author
       </th>
-      <th class="nosort listing-right" tal:replace="nothing">
-        &nbsp;&nbsp;Shift
-      </th>
     </tr>
 
     <tal:block replace="nothing">
@@ -270,26 +267,18 @@
             _______ checkbox + position cell _______
           </tal:block>
           <td class="align-right">
-            <input name="ids:list"                        tal:replace="nothing"
-              type="checkbox"
-              value="value"
-              tal:attributes="
-                value item/id;
-                id item/id;"
-              onkeypress="handle_default_action(this, event, 'tab_edit_copy')"
-            />
-            <label 
+            <span 
               tal:condition="default_document"
               tal:content="repeat/item/index"
               tal:attributes="for item/id">
               # with default doc, starts at 0
-            </label>
-            <label 
+            </span>
+            <span 
               tal:condition="not: default_document"
               tal:content="repeat/item/number"
               tal:attributes="for item/id">
               # without default doc, starts at 1
-            </label>
+            </span>
           </td>
           <tal:block replace="nothing">
             _______ id cell _______
@@ -379,35 +368,6 @@
               authorname
             </span>
           </td>
-          <tal:block replace="nothing">
-            _______ move symbols _______
-          </tal:block>
-          <td class="listing-right" tal:replace="nothing">
-            <tal:block replace="nothing">
-              <a class="image"
-                title="move down"
-                tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item/id}"
-                i18n:attributes="title"
-                >
-                <img alt="Move down"
-                  border="0"
-                  height="12"
-                  width="16"
-                  tal:attributes="src string:${root_url}/globals/down.gif" />
-              </a>
-              <a class="image"
-                title="move up"
-                tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item/id}"
-                i18n:attributes="title"
-                >
-                <img alt="Move up"
-                  border="0"
-                  height="12"
-                  width="16"
-                  tal:attributes="src string:${root_url}/globals/up.gif" />
-              </a>
-            </tal:block>
-          </td>
         </tr>
         <tal:block replace="nothing">
           ______________ sync cycling of row colors ______________
@@ -440,18 +400,8 @@
           <tal:block replace="nothing">
             _______ checkbox + position cell _______
           </tal:block>
-          <td class="listing-left">
-            <input name="ids:list"                        tal:replace="nothing"
-              type="checkbox"
-              tal:attributes="
-                value asset/id;
-                id asset/id;"
-            />
-            <label 
-              tal:condition="default_document"
-              tal:attributes="for asset/id">
-              &#8211;
-            </label>
+          <td class="align-right">
+            &#8211;
           </td>
           <tal:block replace="nothing">
             _______ icon + id cell _______
@@ -517,12 +467,6 @@
             tal:define="last_author python:(asset.sec_get_last_author_info().fullname() or default)">
             unknown
           </td>
-          <tal:block replace="nothing">
-            _______ move symbols (none) _______
-          </tal:block>
-          <td tal:replace="nothing">
-            &nbsp;
-          </td>
         </tr>
       </tal:block>
     </tal:block>
@@ -534,126 +478,8 @@
       </td>
     </tr>
   </tfoot>
-  
-  <tfoot tal:replace="nothing">
-    <tal:block replace="nothing">
-      ______________ select all row ______________
-    </tal:block>
-    <tr tal:condition="python:(default_document or publishables or assets)">
-      <th class="controls listing-left"
-        colspan="5">
-        <tal:block define="select_id string:ids">
-          <metal:block use-macro="view/macro_select_all/macros/select_all"/>
-        </tal:block>
-      </th>
-    </tr>
-    <tal:block replace="nothing">
-      ______________ controls ______________
-    </tal:block>
-    <tr class="controls">
-      <td colspan="5">
-        <tal:block condition="may_change_content">
-          <tal:block tal:condition="python:(default_document or publishables or assets)">
-            <div style="float: left; margin-left:0.2em;">
-              <select class="manipulator"
-                name="new_position"
-                title="move selected items to"
-                tal:define="length python: len(publishables) - test(default_document, 1, 0)">
-                <option value="Position">
-                  <span i18n:translate="position">position</span>:
-                </option>
-                <tal:block repeat="item python:range(length)">
-                  <option value="0"                              
-                    tal:content="repeat/item/number"
-                    tal:attributes="value repeat/item/number" />
-                </tal:block>
-                <option value="0"
-                  tal:attributes="value python:len(publishables) + 1"
-                  i18n:translate="end"
-                  >
-                  end
-                </option>
-              </select>
-              <label for="new_position"
-                title="access key: alt-p"
-                accesskey="p"
-                i18n:attributes="title"
-                >
-              </label>
-              <input class="button"
-                name="tab_edit_move_to:method"
-                type="submit"
-                value="Move"
-                title="move selected items into position: alt-m"
-                accesskey="m"
-                i18n:attributes="title"
-              />
-            </div>
-            &nbsp;
-            <input class="button"
-              name="tab_edit_rename_start:method"
-              type="submit"
-              value=" Rename..."
-              title="rename and retitle items: alt-r"
-              accesskey="r" 
-              i18n:attributes="value title"
-            />
-            <input class="button"
-              name="tab_edit_cut:method"
-              type="submit"
-              value="Cut"
-              title="cut items: alt-x"
-              accesskey="x" 
-              i18n:attributes="value title"
-            />                        
-            <input class="button"
-              name="tab_edit_copy:method"
-              type="submit"
-              value="Copy"
-              title="copy items: alt-c"
-              accesskey="c" 
-              i18n:attributes="value title"
-            />
-          </tal:block>
-          <tal:block replace="nothing">
-            ______________ paste (to ghost) controls exist even
-            if there's no content (there should be something on 
-            the clipboard though). ______________
-          </tal:block>
-          <tal:block condition="python:request.has_key('__cp')">
-            <input class="button"
-              name="tab_edit_paste:method"
-              type="submit"
-              value="Paste"
-              title="paste items: alt-v" 
-              accesskey="v" 
-              i18n:attributes="value title"
-            />
-            <input class="button"
-              name="tab_edit_paste_to_ghost:method"
-              type="submit"
-              value="Paste ghost"
-              title="paste (items on clipboard) as ghost objects: alt-g"
-              accesskey="g" 
-              i18n:attributes="value title"
-            />
-          </tal:block>
-          <tal:block tal:condition="python:(default_document or publishables or assets)">
-            <input class="warning"
-              name="tab_edit_delete:method"
-              type="submit"
-              value="Delete"
-              title="there's no undo: alt-d"
-              accesskey="d"
-              onclick="return confirm('Really delete?')"
-              i18n:attributes="onclick value title"
-            />
-          </tal:block>
-        </tal:block>
-      </td>
-    </tr>
-  </tfoot>
 </table>
+
 </form>
 
       </td>
