@@ -8,6 +8,8 @@ Silva changes
 
     Features added
 
+      - Silva handles now GET and HEAD request responses correctly
+
       - Kupu, a WYSIWYG editor for Silva Document. This editor offers
         a load of new features:
 
