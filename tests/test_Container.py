@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 import unittest
 import Zope
 from Products.Silva.IContent import IContent
@@ -50,7 +50,6 @@ class ContainerBaseTestCase(unittest.TestCase):
         self.subfolder = subfolder = add_helper(folder4, 'Folder', 'subfolder', 'Subfolder')
         self.subsubdoc = subsubdoc = add_helper(subfolder, 'Document', 'subsubdoc', 'Subsubdoc')
         self.subdoc2 = subdoc2 = add_helper(publication5, 'Document', 'subdoc2', 'Subdoc2')
-        self._orig_manage_addIndexHook = Products.Silva.Folder.manage_addIndexHook
       except:
           import traceback
           traceback.print_exc()
@@ -58,7 +57,6 @@ class ContainerBaseTestCase(unittest.TestCase):
 
         
     def tearDown(self):
-        Products.Silva.Folder.manage_addIndexHook = self._orig_manage_addIndexHook
         get_transaction().abort()
         self.connection.close()
         
@@ -274,10 +272,12 @@ class ContainerTestCase(ContainerBaseTestCase):
         """ test for issue 85: if default is something odd, is_published should not create endless loop.
         actually this has been an issue if the "index" does not have a "is_published"
         and acquired it from container itself, causing the endless loop."""
-        # XXX actually this does test the manage_addIndexHook works, too
-        # this should be done by a different test
-        Products.Silva.Folder.manage_addIndexHook = _rotten_index_helper
+
         self.sroot.manage_addProduct['Silva'].manage_addFolder('folder6','Folder with broken index')
+        folder = self.sroot.folder6
+        folder.manage_delObjects(['index'])
+        folder.manage_addDocument('index','DTML Document to trigger an error')
+
         self.assert_(self.sroot.folder6.get_default())
         self.assertRaises(AttributeError, self.sroot.folder6.is_published)
 
