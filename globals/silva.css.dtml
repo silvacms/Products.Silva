@@ -152,6 +152,7 @@ div.tabs a:hover {
 
 div.tabs a.selected {
     /* The selected tab. There's only one of these */
+    color: &dtml-mainTabFontColorSelected;;
     background: &dtml-mainTabBackgroundSelected;;
     border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
@@ -359,6 +360,8 @@ table.listing tr.controls {
 
 table.listing tr.top-controls {
   background: &dtml-listingTopControlsBackground;;
+  /* in case it's empty */
+  height : 0.2em;
 }
 
 table.listing tr.even {
@@ -478,12 +481,6 @@ table.listing tr.controls td, tr.inter-controls td {
 
 table.listing td.field-title {
   text-align : right;
-}
-
-/* force button floats in table cells without text to line up properly */
-table.listing div.controls {
-  padding: 0.5em 0 0.2em 0;
-  vertical-align: bottom;
 }
 
 /* rename this selector */
@@ -1391,13 +1388,6 @@ a.closed:hover {
   font-family : verdana, arial, helvetica, sans-serif;
   color: #333767;
   line-height : 1.8em;
-} 
-
-.control-label {
-  font-size : 90%;
-  font-family : verdana, arial, helvetica, sans-serif;
-  text-align : left;
-  color : #dddddd; 
 } 
 
 .idea {
