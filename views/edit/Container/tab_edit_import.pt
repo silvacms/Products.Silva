@@ -204,7 +204,7 @@
 
       <tr class="odd">
         <td class="align-right">
-          <span i18n:translate="file_to_upload">
+          <span i18n:translate="title_for_assets">
             title for assets
           </span>
         </td>
@@ -216,7 +216,7 @@
             i18n:attributes="title"
           />
         </td>
-        <td i18n:translate="choose_archive_file_to_import">
+        <td i18n:translate="provide_optional_title_for_assets">
           Provide an optional title for all Assets created
           from the contents of the zip file.
         </td>
