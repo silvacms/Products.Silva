@@ -101,7 +101,7 @@
   tal:content="structure python: item.getProperty('short_title') or item.get_title_html()">Name</a>
 <span tal:condition="not:repeat/item/end" tal:omit-tag="">/</span>
 </repeat>
-<tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'], object=here)">
+<tal:block condition="python:request.AUTHENTICATED_USER.has_role(['Manager'], object=model)">
   &nbsp;
   <a class="idea" href="" title="Zope manage_main: alt-." accesskey="."
     tal:attributes="href python:'%s/manage_main' % model.absolute_url()">/manage...</a>
