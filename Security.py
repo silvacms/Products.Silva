@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
+# $Revision: 1.32 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -13,7 +13,6 @@ from UserManagement import user_management
 # Groups
 try:
     # Are groups available?
-    from Products.Groups import GroupsPermissions
     from Products.Groups.ZGroupsMapping import ZGroupsMapping    
     from Products.Groups.GroupsErrors import GroupsError
     groups_enabled = 1
@@ -438,11 +437,15 @@ class Security:
             for item in self.get_assets():
                 item._sec_get_downward_defined_groups_helper(d)
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_groupsmapping')
     def sec_get_groupsmapping(self):
         """Return the groupmappings for this object.
         """
         return self.__ac_local_groups__
         
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_get_or_create_groupsmapping')
     def sec_get_or_create_groupsmapping(self):
         """Return the groupmappings for this object. Create one of currently
         no mapping exists.
@@ -454,6 +457,8 @@ class Security:
             self.__ac_local_groups__ = ZGroupsMapping('acl_groups')
         return self.sec_get_groupsmapping()
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaAccess, 'sec_cleanup_groupsmapping')
     def sec_cleanup_groupsmapping(self):
         """If called, check to see whether any mappings are defined in the
         mappings object. If not, clear the __ac_local_groups__ attribute
@@ -476,7 +481,7 @@ class Security:
         return self.REQUEST.AUTHENTICATED_USER.getUserName()
 
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'addZODBGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'addZODBGroup')
     def addZODBGroup(self, group):
         """Add a group to be managed locally.
         """        
@@ -493,7 +498,7 @@ class Security:
         self.service_groups.addGroupToManagedNormalGroups(username, group)
         
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'removeGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'removeGroup')
     def removeZODBGroup(self, group):
         username = self._getUserName()
         self._check_locally_managed_zodb_groups(username, group)
@@ -501,7 +506,7 @@ class Security:
         self.service_groups.removeGroupFromManagedNormalGroups(username, group)
         
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'addUserToZODBGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'addUserToZODBGroup')
     def addUserToZODBGroup(self, userid, group):
         """Add a user to a locally managed group.
         """
@@ -510,7 +515,7 @@ class Security:
         self.service_groups.addUserToZODBGroup(userid, group)
        
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'removeUserFromZODBGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'removeUserFromZODBGroup')
     def removeUserFromZODBGroup(self, userid, group):
         """Remove user from a locally managed group
         """
@@ -519,7 +524,7 @@ class Security:
         self.service_groups.removeUserFromZODBGroup(userid, group)
         
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'addVirtualGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'addVirtualGroup')
     def addVirtualGroup(self, group):
         username = self._getUserName()
         if self.service_groups.getManagedNormalGroups(username).has_key(group):
@@ -530,7 +535,7 @@ class Security:
         self.service_groups.addGroupToManagedVirtualGroups(username, group)
 
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'removeVirtualGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'removeVirtualGroup')
     def removeVirtualGroup(self, group):
         username = self._getUserName()
         self._check_locally_managed_virtual_groups(username, group)
@@ -538,14 +543,14 @@ class Security:
         self.service_groups.removeGroupFromManagedVirtualGroups(username, group)
     
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'addGroupToVirtualGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'addGroupToVirtualGroup')
     def addGroupToVirtualGroup(self, group, virtual_group):
         username = self._getUserName()
         self._check_locally_managed_virtual_groups(username, virtual_group)
         self.service_groups.addGroupToVirtualGroup(group, virtual_group)
         
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'removeGroupFromVirtualGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'removeGroupFromVirtualGroup')
     def removeGroupFromVirtualGroup(self, group, virtual_group):
         username = self._getUserName()
         self._check_locally_managed_virtual_groups(username, virtual_group)
@@ -553,7 +558,7 @@ class Security:
 
     # ACCESSORS FOR GROUPS
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'listLocallyManagedGroups')
+        SilvaPermissions.ChangeSilvaAcces, 'listLocallyManagedGroups')
     def listLocallyManagedZODBGroups(self):
         username = self._getUserName()
         result = self.service_groups.getManagedNormalGroups(username).keys()
@@ -561,7 +566,7 @@ class Security:
         return result
 
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'listLocallyManagedVirtualGroups')
+        SilvaPermissions.ChangeSilvaAcces, 'listLocallyManagedVirtualGroups')
     def listLocallyManagedVirtualGroups(self):
         username = self._getUserName()
         result = self.service_groups.getManagedVirtualGroups(username).keys()
@@ -569,7 +574,7 @@ class Security:
         return result
 
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'listUsersInLocallyManagedGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'listUsersInLocallyManagedGroup')
     def listUsersInLocallyManagedGroup(self, group):
         username = self._getUserName()
         self._check_locally_managed_zodb_groups(username, group)
@@ -578,7 +583,7 @@ class Security:
         return result
 
     security.declareProtected(
-        GroupsPermissions.ChangeGroupMappings, 'listGroupsInLocallyManagedVirtualGroup')
+        SilvaPermissions.ChangeSilvaAcces, 'listGroupsInLocallyManagedVirtualGroup')
     def listGroupsInLocallyManagedVirtualGroup(self, virtual_group):
         username = self._getUserName()
         self._check_locally_managed_virtual_groups(username, virtual_group)
