@@ -3,6 +3,33 @@ See also LICENSE.txt
 
 Silva changes
 
+  0.9.2.5
+
+    Features Added
+
+        - Image elements in a Silva Document now have to possibility to
+          link to the hires version or other URLs with a optional "_target".
+
+    Bugs fixed
+
+        - No Catalog indexes are created for Metadata fields which do not
+          need indexing.
+
+        - Metadata form and acquisition didn't work properly in all cases.
+
+        - UI improvements in tab_edit and tab_publish
+
+        - XML export of folders when the "export last version" option is
+          checked, did not use correct Folder title.
+
+        - Fixed two issues with the SQLDataSource and integer fields:
+          the code doesn't try to convert the contents of the field to
+          unicode anymore if it's not a plain string (fails with
+          integers) and the code doesn't change the contents of the
+          field to '' anymore when it's something else than None
+          (previously it checked whether it resolved to true instead
+          of checking for None).
+
   0.9.2.4
 
     Features Added
