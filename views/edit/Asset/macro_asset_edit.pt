@@ -50,9 +50,7 @@
       <tr class="top-controls">
         <td colspan="2">
           <h3 i18n:translate="identification">
-            <span tal:replace="python: meta_type == 'Silva SQL Data Source' and 'settings' or 'characterization'">
-              subhead (temporary hack until SQL Data Source is gone)
-            </span>
+            characterization
           </h3>
         </td>
       </tr>
