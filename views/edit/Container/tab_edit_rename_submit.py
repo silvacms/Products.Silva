@@ -27,24 +27,26 @@ for key in form.keys():
             messages.append(u'&#xab;%s&#xbb; could not be renamed to %s (invalid id)' % (oldid, unicode(form[key], 'UTF-8')))
             message_type = 'error'
         else:
-            newtitle = form["title_" + oldid]
+            newtitle = form.get("title_" + oldid, None)
             items.append((oldid, newid, newtitle))
 
 # remove the items that are not renamed, change only the title
 to_rename = []
 for item in items:
     if item[0] == item[1]:
+        if item[2] is not None:
             obj = getattr(model, item[0])
             obj.set_title(model.input_convert(item[2]))
-            message_type = 'feedback'
-            messages.append('&#xab;%s&#xbb; renamed successfully' % item[0])
+        message_type = 'feedback'
+        messages.append('&#xab;%s&#xbb; renamed successfully' % item[0])
     else:
         to_rename.append(item)
 
 items = to_rename
 
-# now walk through the list, renaming every item in the list if possible. repeat this procedure as long as names can be replaced,
-# for it is possible a name that was used in the first round became available in the next
+# now walk through the list, renaming every item in the list if possible.
+# repeat this procedure as long as names can be replaced, for it is possible a name that was
+# used in the first round became available in the next
 not_renamed = []
 while 1:
     objects_changed = 0
@@ -55,8 +57,9 @@ while 1:
         elif not item[1] in model.objectIds():
             # The item can be renamed without any problems, so do that
             if item[0] != 'index':
-                obj = getattr(model, item[0])
-                obj.set_title(model.input_convert(item[2]))
+                if item[2] is not None:
+                    obj = getattr(model, item[0])
+                    obj.set_title(model.input_convert(item[2]))
                 if not model.action_rename(item[0], item[1]):
                     message_type = 'error'
                     messages.append('&#xab;%s&#xbb; could not be renamed' % item[0])
@@ -74,8 +77,9 @@ while 1:
                     if message_type is None:
                         message_type = 'feedback'
                     messages.append('&#xab;%s&#xbb; renamed successfully' % item[0])
-                    obj = getattr(model, item[1])
-                    obj.set_title(model.input_convert(item[2]))
+                    if item[2] is not None:
+                        obj = getattr(model, item[1])
+                        obj.set_title(model.input_convert(item[2]))
             objects_changed = 1
         else:
             not_renamed.append(item)
@@ -119,7 +123,8 @@ for item in renamed_now:
         newid = "renamed_" + newid
     obj = getattr(model, tmpid)
     if oldid != 'index':
-        obj.set_title(model.input_convert(item[0][2]))
+        if item[0][2] is not None:
+            obj.set_title(model.input_convert(item[0][2]))
     if not model.action_rename(tmpid, newid):
         message_type = 'error'
         messages.append('&#xab;%s&#xbb; could not be renamed' % oldid)
@@ -127,7 +132,7 @@ for item in renamed_now:
         if message_type is None:
             message_type = 'feedback'
         messages.append('&#xab;%s&#xbb; renamed successfully' % oldid)
-    if oldid == 'index':
+    if oldid == 'index' and item[0][2] is not None:
         # set title of new obj so the title of container does not get affected
         obj = getattr(model, newid)
         obj.set_title(model.input_convert(item[0][2]))

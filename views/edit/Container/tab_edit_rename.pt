@@ -73,23 +73,22 @@
           <td>
             <span tal:replace="object/get_title_editable | object/getId" />
           </td>
-          <td width="45%">
+          <td width="45%"
+              tal:define="is_title_editable python:view.is_title_editable(object)">
             <input
               type="text"
               name="name"
               style="width: 100%"
               value="value"
-              tal:condition="python: object.getId() != 'index'"
+              tal:condition="is_title_editable"
               tal:attributes="
                 name string:title_${object/getId}; 
                 value object/get_title_editable;" />
-            <input
-              type="text"
-              name="name"
-              style="width: 100%"
-              tal:condition="python: object.getId() == 'index'"
-              tal:attributes="name string:title_${object/getId}; 
-                value object/get_title_editable;" />
+            <span class="error"
+                tal:condition="not: is_title_editable">
+              This folder's title can only be changed via it's default
+              document.
+            </span>
           </td>
           <td>
             <span class="error" 

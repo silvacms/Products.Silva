@@ -3,10 +3,11 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=
+##parameters=model=None
 ##title=
 # return default document if available and visible
-model = context.REQUEST.model
+if model is None:
+    model = context.REQUEST.model
 default = model.get_default()
 if default is None:
     return default
