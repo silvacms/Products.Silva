@@ -12,6 +12,9 @@ Silva changes
 
     Bugs Fixed
 
+      - Updated footer of the Silva documentation template, used to mention
+        incorrect Silva and Zope versions.
+
       - Headings are no longer incorrectly discarded by the xslt renderer.
 
       - Code and data sources no longer incorrectly copy their parameters 
