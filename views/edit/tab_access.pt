@@ -449,9 +449,9 @@
     <td valign="top">
         <p>
         Minimal role for viewing this object (and all children):
-        <select name="role" tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', '')">
-          <option value="None" tal:attributes="selected python:test(not is_closed, 'SELECTED', '')">Unauthenticated</option>
-          <option value="Viewer" tal:attributes="selected python:test(is_closed, 'SELECTED', '')">Viewer</option>
+        <select name="role" tal:attributes="disabled python:test(model.sec_is_closed_to_public() > 1, 'disabled', nothing)">
+          <option value="None" tal:attributes="selected python:test(not is_closed, 'SELECTED', nothing)">Unauthenticated</option>
+          <option value="Viewer" tal:attributes="selected python:test(is_closed, 'SELECTED', nothing)">Viewer</option>
         </select>
         </p>
         <p tal:condition="python: is_closed > 1">
