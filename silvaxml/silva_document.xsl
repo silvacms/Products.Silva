@@ -38,26 +38,88 @@
   <h6 class="minor"><xsl:apply-templates mode="text-content" /></h6>
 </xsl:template>
 
-<xsl:template match="p[@type='normal']" mode="text">
-<p><xsl:apply-templates mode="text-content" /></p>
-</xsl:template>
-
 <xsl:template match="p" mode="text">
 <p class="{@type}"><xsl:apply-templates mode="text-content" /></p>
 </xsl:template>
 
-<xsl:template match="list" mode="text">
-<ul class="{@type}">
+<xsl:template match="list[@type='disc']" mode="text">
+<ul class="disc">
   <xsl:apply-templates mode="list" />
 </ul>
+</xsl:template>
+
+<xsl:template match="list[@type='square']" mode="text">
+<ul class="square">
+  <xsl:apply-templates mode="list" />
+</ul>
+</xsl:template>
+
+<xsl:template match="list[@type='circle']" mode="text">
+<ul class="circle">
+  <xsl:apply-templates mode="list" />
+</ul>
+</xsl:template>
+
+<xsl:template match="list[@type='1']" mode="text">
+<ol class="decimal">
+  <xsl:apply-templates mode="list" />
+</ol>
+</xsl:template>
+
+<xsl:template match="list[@type='I']" mode="text">
+<ol class="upper-roman">
+  <xsl:apply-templates mode="list" />
+</ol>
+</xsl:template>
+
+<xsl:template match="list[@type='i']" mode="text">
+<ol class="lower-roman">
+  <xsl:apply-templates mode="list" />
+</ol>
+</xsl:template>
+
+<xsl:template match="list[@type='A']" mode="text">
+<ol class="upper-alpha">
+  <xsl:apply-templates mode="list" />
+</ol>
+</xsl:template>
+
+<xsl:template match="list[@type='a']" mode="text">
+<ol class="lower-alpha">
+  <xsl:apply-templates mode="list" />
+</ol>
+</xsl:template>
+
+<!-- need IE support? -->
+<xsl:template match="list[@type='none']" mode="text">
+<ul class="nobullet">
+  <xsl:apply-templates mode="list" />
+</ul>
+</xsl:template>
+
+<xsl:template match="dlist" mode="text">
+<dl class="dl">
+  <xsl:if test="@type='compact'">
+    <xsl:attribute name="compact">compact</xsl:attribute>
+  </xsl:if>
+  <xsl:apply-templates mode="dlist" />
+</dl>
+</xsl:template>
+
+<xsl:template match="pre" mode="text">
+<pre class="pre"><xsl:apply-templates mode="pre" /></pre>
 </xsl:template>
 
 <xsl:template match="li" mode="list">
 <li><xsl:apply-templates mode="text-content" /></li>
 </xsl:template>
 
-<xsl:template match="pre" mode="text">
-<pre><xsl:apply-templates mode="pre" /></pre>
+<xsl:template match="dt" mode="dlist">
+<dt><xsl:apply-templates mode="text-content" /></dt>
+</xsl:template>
+
+<xsl:template match="dd" mode="dlist">
+<dd><xsl:apply-templates mode="text-content" /></dd>
 </xsl:template>
 
 <xsl:template match="text()" mode="pre">
