@@ -489,19 +489,22 @@ td.tab-bg {
   background : #323c47;
 }
 
-/* mx trans:conta:4a7f6b */
-/* mx trans:39988f */
 td.tab {
   font-size : 1px;
   color : #ffffff;
   background : #67788c;
 }
 
-/* was b8cdd0 bdd0d0 */
 td.tab-up {
   font-size : 1px;
   color : #330033;
   background : #bdc5c8;
+}
+
+td.tab-recede {
+  font-size : 1px;
+  color : #330033;
+  background : #9eaaa9;
 }
 
 td.tab-edge {
