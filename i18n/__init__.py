@@ -13,6 +13,7 @@
 """
 
 try:
-    from silvamessageid import SilvaMessageIDFactory as translate
+    from Products import PlacelessTranslationService
+    from silvamessageid import SilvaMessageIDFactory as translate    
 except ImportError:
     from dummymessageid import DummyMessageIDFactory as translate
