@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.38.2.3 $
+# $Revision: 1.38.2.4 $
 
 # Python
 from StringIO import StringIO
@@ -188,6 +188,11 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         if view_type in ('edit','add'):
             return VersionedContent.inheritedAttribute('view')(self, view_type)
 
+        # XXX the "suppress_title" hack in widget/top/doc/mode_view
+        # makes it necessary to bypass the cache here
+        if self.REQUEST.other.get('suppress_title'):
+            return VersionedContent.inheritedAttribute('view')(self, view_type)
+        
         data, cached_datetime = self._cached_data.get(view_type, (None, None))
 
         # this object is either not cached, or cache expired, or this
