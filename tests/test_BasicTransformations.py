@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 import unittest
 
 # 
@@ -140,6 +140,7 @@ class SilvaXMLObjectParser(unittest.TestCase):
     def test_method_find_and_partition(self):
         doc = '''<doc>
                   <heading type="normal">normal</heading>
+                  <heading type="normal">normal</heading>
                   <p type="normal">p</p>
                   <heading type="sub">sub</heading>
                </doc>'''
@@ -152,7 +153,7 @@ class SilvaXMLObjectParser(unittest.TestCase):
         #print "match",match.asBytes()
         #print "post",repr(post), post.asBytes()
 
-        self.assert_(len(pre)==1)
+        self.assert_(len(pre)==2)
         self.assert_(pre[0].name()=='heading')
         self.assert_(match.name()=='p')
         self.assert_(len(post)==1)
@@ -163,6 +164,16 @@ class SilvaXMLObjectParser(unittest.TestCase):
         self.assert_(not match)
         self.assert_(not post)
         self.assert_(len(post)==0)
+
+    def test_method_match(self):
+        doc = '''<doc>
+                  <heading type="normal">normal</heading>
+                  <p type="normal">p</p>
+               </doc>'''
+        node = self.parser.parse(doc)
+        node = node.compact()
+        node = node.find('doc')[0]
+        self.assertEquals(len(node.find(('heading','p'))), 2)
 
     def test_method_find_and_partition_with_empty_match(self):
         doc = '''<doc>
@@ -177,6 +188,28 @@ class SilvaXMLObjectParser(unittest.TestCase):
         self.assert_(not post and not match)
         self.assert_(pre)
         self.assert_(pre==node.find(None))
+
+    def test_method_find_all_partitions(self):
+        doc = '''<doc>
+                  <p>1p</p>
+                  <heading type="normal">normal</heading>
+                  <heading type="sub">sub</heading>
+                  <p>2p</p>
+               </doc>'''
+
+        node = self.parser.parse(doc)
+        node = node.compact()
+        node = node.find('doc')[0]
+        partition_list = node.find_all_partitions('heading')
+        self.assertEquals(len(partition_list), 2)
+        one,two = partition_list
+        self.assertEquals(len(one[0]), 1)
+        self.assert_(one[1])
+        self.assertEquals(len(one[2]), 2)
+
+        self.assertEquals(len(two[0]), 2)
+        self.assert_(two[1])
+        self.assertEquals(len(two[2]), 1)
 
     def test_method_compact(self):
         node= self.parser.parse(self.basicdoc)

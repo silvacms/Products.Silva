@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.10 $'
+__version__='$Revision: 1.11 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -140,19 +140,24 @@ class list(SilvaElement):
         else:
             tag = html.ul
 
-        node_title = self.find(tag=title)[0]
-        if len(node_title.compact().content)>0:
-            node_title = html.h5(node_title.convert(context))
+        title_tag = self.find(tag=title)[0]
+
+        if len(title_tag.compact().content)>0:
+            title_content = html.h5(title_tag.convert(context))
         else:
-            node_title=Text('')
+            title_content=Text('')
+
         return Frag(
-            node_title,
+            title_content,
             tag(
-                self.find(tag=li).convert(context),
+                self.find(ignore=title_tag.__eq__).compact().convert(context),
                 attrs,
                 silva_type=listtype,
                 )
             )
+
+class nlist(list):
+    pass
 
 class li(SilvaElement):
     """ list items """
@@ -242,8 +247,19 @@ class field(SilvaElement):
         )
 
 
+def mixin_paragraphs(container):
+    """ wrap silva.p node around text"""
+    content = Frag()
+    breaks = 'heading','p','list','dlist','nlist','table'
 
-
+    pre, tag, post = container.find_and_partition(breaks)
+    if pre:
+        content.append(p(*pre))
+    if tag:
+        content.append(tag)
+    if post:
+        content.extend(mixin_paragraphs(post))
+    return content
 
 """ current mapping of silva
 h1  :  not in use, reserved for (future) Silva publication

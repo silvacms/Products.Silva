@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.6 $'
+__version__='$Revision: 1.7 $'
 
 # look ma, i only have these dependencies 
 # and with python2.2 even they would vanish
@@ -34,7 +34,11 @@ from UserDict import UserDict as Dict
 
 class Node:
     def _matches(self, tag):
-        if type(tag) in (type(''),type(u'')):
+        if type(tag) == type(()):
+            for i in tag:
+                if self._matches(i):
+                    return 1
+        elif type(tag) in (type(''),type(u'')):
             return self.name()==tag
         elif tag is None:
             return 1
@@ -107,10 +111,12 @@ class Frag(Node, List):
             node.append(cchild)
         return node
 
-    def find(self, tag=None, ignore=lambda x: None):
+    def find(self, tag=None, ignore=None):
         node = Frag()
         for child in self:
-            if not ignore(child) and child._matches(tag):
+            if ignore and ignore(child):
+                continue
+            if child._matches(tag):
                 node.append(child)
         return node
 
@@ -126,6 +132,16 @@ class Frag(Node, List):
                 break
             pre.append(child)
         return pre,match,post
+
+    def find_all_partitions(self, tag, ignore=lambda x: None):
+        l = []
+        i = 0
+        for child in self:
+            if not ignore(child) and child._matches(tag):
+                l.append((self[:i], child, self[i+1:]))
+            i+=1
+
+        return l
 
     def asBytes(self, encoding='UTF-8'):
         l = []
@@ -194,6 +210,9 @@ class Element(Node):
 
     def find_and_partition(self, *args, **kwargs):
         return self.content.find_and_partition(*args, **kwargs)
+
+    def find_all_partitions(self, *args, **kwargs):
+        return self.content.find_all_partitions(*args, **kwargs)
 
     def convert(self, *args, **kwargs):
         return self
