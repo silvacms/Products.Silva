@@ -18,10 +18,16 @@ adapter = getVersionManagementAdapter(model)
 if not request.has_key('versions'):
     return view.tab_status(message_type="error", message=_("No versions selected"))
 
-if len(request['versions']) == len(adapter.getVersionIds()):
+versions = request['versions']
+if not same_type(versions, []):
+    # request variable is not a list - probably just one checkbox
+    # selected.
+    versions = [versions,]
+
+if len(versions) == len(adapter.getVersionIds()):
     return view.tab_status(message_type="error", message=_("Can't delete all versions"))
     
-result = adapter.deleteVersions(request['versions'])
+result = adapter.deleteVersions(versions)
 
 messages = []
 for id, error in result:

@@ -107,7 +107,7 @@ class VersionManagementAdapter(adapter.Adapter):
             a list of tuples (id, errorstring) (where errorstring is None for
             a successful deletion).
         """
-        if len(ids) == self.getVersionIds():
+        if len(ids) == len(self.getVersionIds()):
             raise VersioningError, 'Can not delete all versions'
         ret = []
         delids = []
