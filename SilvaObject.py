@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.52 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -274,7 +274,9 @@ class SilvaObject(Security):
         # input will be from windows normally, so use that code page
         # FIXME: Is this right?
         # get rid of any weird characters, such as bullets
-        for c in ['\237', '\247', '\267']:
+        for c in ['\237', '\247']:
+	    if s.find(c) > -1:
+		print "Removing:", ord(c)
             s = s.replace(c, '')
         return unicode(' '.join(s.split()), 'cp1252')
 
@@ -286,7 +288,7 @@ class SilvaObject(Security):
         # input will be from windows normally, so use that code page
         # FIXME: Is this right?
         # get rid of any weird characters, such as bullets
-        for c in ['\237', '\247', '\267']:
+        for c in ['\237', '\247']:
             s = s.replace(c, '')
         return unicode(s, 'cp1252')
     
