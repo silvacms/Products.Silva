@@ -3,11 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
-  next version
+  0.9.3.1
 
     Bugs fixed
 
       - Improvements in the upgrade code, esp. for large databases. 
+    
+      - Fixed bug in displaying the "allowed" addables.
 
   0.9.3
 
