@@ -6,13 +6,6 @@ from Membership import NoneMember
 def from09to091(self, root):
     """Upgrade Silva from 0.9 to 0.9.1
     """
-    id = root.id
-    # Put a copy of the current Silva Root in a backup folder.
-    backup_id = id + '_09'
-    self.manage_addFolder(backup_id)
-    cb = self.manage_copyObjects([id])
-    backup_folder = getattr(self, backup_id)
-    backup_folder.manage_pasteObjects(cb_copy_data=cb)
     # upgrade member objects in the site if they're still using the old system
     upgrade_memberobjects(root)
     # upgrade xml in the site
