@@ -8,19 +8,19 @@
   i18n:domain="silva"
   i18n:translate="">Index</h3>
 
-<table class="indexer"
+<table class="silvatable indexer"
   tal:define="model request/model; view here;
                    items model/get_index">
   <tr tal:condition="python: items != None">
 	<th class="transparent" align="left">
 	Terms
 	</th>
-	<th class="transparent" align="left" i18n:translate="">
+	<th i18n:translate="">
 	Links
 	</th>
   </tr>
 
-  <tr valign="top" tal:repeat="entry items">
+  <tr tal:repeat="entry items">
 	<td tal:content="python:entry[0]"
 	  tal:condition="python:len(entry) != 0">
   </td>
