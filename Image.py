@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -15,7 +15,8 @@ import SilvaPermissions
 from helpers import add_and_edit
 
 class Image(Asset):
-    """Image object.
+    """Web graphics (gif, jpg, png) can be uploaded and inserted in Silva
+       documents.
     """    
     security = ClassSecurityInfo()
 

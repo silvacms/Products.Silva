@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.49 $
+# $Revision: 1.50 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -20,7 +20,12 @@ import urlparse
 icon = "www/silvaghost.gif"
 
 class Ghost(VersionedContent):
-    """Ghost object.
+    """Ghosts are special documents which function as a
+       placeholder for a document in another location (like an alias,
+       symbolic link, shortcut, etc.). Unlike a hyperlink, which takes the
+       Visitor to another location, a ghost object keeps the Visitor in the
+       current publication, and the ghost object inherits properties from
+       its location (e.g. layout and stylesheets).  
     """
     
     security = ClassSecurityInfo()

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.85 $
+# $Revision: 1.86 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -37,7 +37,10 @@ from Products.ParsedXML.ExtraDOM import writeStream
 icon="www/silvafolder.gif"
 
 class Folder(SilvaObject, Publishable, Folder.Folder):
-    """Silva Folder.
+    """The presentation of the information within a
+       publication is structured with folders. They determine the visual
+       hierarchy that a Visitor sees as well. Folders on the top level
+       define sections of a publication, subfolders define chapters, etc.
     """
     security = ClassSecurityInfo()
 

@@ -13,6 +13,7 @@
   " />
 
 <div class="margins">
+
 <h2><img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(model.meta_type)" />&nbsp;
   Silva objects available at <span class="folder-title" tal:content="structure string:&#xab;${model/get_title_or_id_html}&#xbb;">title here</span>
@@ -26,7 +27,6 @@
 </tr>
 
 <tr class="topcontrols" valign="bottom">
-  <!-- top row of complete table with sidebar -->
   <td width="22%" nowrap="1">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="2" height="16" /><a href="treelink" title="Up to containing publication: alt-[" accesskey="["
       tal:condition="python:model != model.get_root()"
@@ -100,8 +100,6 @@
 
 <span tal:replace="nothing"> _____________________ objects subtable _____________________ </span>
 
-<form action="." name="silvaObjects" method="POST">
-
 <table cellspacing="0" cellpadding="5" border="0" width="96%" style="margin-left:20px;margin-right:20px;"
   tal:condition="silva_permissions/ChangeSilvaContent">
 <tr valign="top">
@@ -117,15 +115,18 @@
 <tal:repeat repeat="addable model/get_silva_addables">
 <tal:define define="oddrow repeat/addable/odd">
 
-<tr class="focus-cycle" valign="top" tal:attributes="class python:test(oddrow, None, None)">
+<tr class="focus-cycle" valign="bottom"
+ tal:attributes="class python:test(oddrow, None, None)">
   <td width="16">
     <img src="%s" width="16" height="16" alt="%s"
       tal:replace="structure python:view.render_icon(addable['name'])" />
   </td>
   <td>
-    <h4><a href="#" tal:content="addable/name" tal:attributes="href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+')">Addable</a></h4>
-  </td>
-  <td tal:replace="nothing">
+    <h4><a href="#"
+          tal:content="addable/name" 
+          tal:attributes="href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+')">Addable
+         </a>
+    </h4>
   </td>
 </tr>
 
@@ -134,25 +135,22 @@
   <td>
   </td>
   <td>
-    <p class="readable" tal:replace="addable/doc" tal:condition="python: addable.has_key('instance')">
-    Description lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+    <p class="readable"
+     tal:condition="python: addable.has_key('instance')"
+     tal:content="structure addable/doc">
+      Description lorem ipsum dolor....
     <br />
     <br />
     </p>
-  </td>
-  <td tal:replace="nothing">
-    <input class="button" type="submit" name="add_object:method" value=" Add " title="Add a new item: alt-n" accesskey="n" />
   </td>
 </tr>
 </tal:define>
 </tal:repeat>
 </table>
 
-<tal:block condition="not:silva_permissions/ChangeSilvaContent">
-You can't do anything here.
-</tal:block>
-
-</form>
+    <tal:block condition="not:silva_permissions/ChangeSilvaContent">
+    Soryy, ou're not authorized to add anything here.
+    </tal:block>
 
   </td>
 </tr>
@@ -173,8 +171,6 @@ You can't do anything here.
 Following are descriptions of Silva objects that can be added at this location.
 Click the name to add it. For more information about the item see the documentation.
 </p>
-
-<form action="." name="silvaObjects" method="POST">
 
 <table cellspacing="0" cellpadding="3" border="0" width="67%" style="margin-left:3%"
   tal:condition="silva_permissions/ChangeSilvaContent">
@@ -217,7 +213,6 @@ Click the name to add it. For more information about the item see the documentat
 You can't do anything here.
 </tal:block>
 
-</form>
 </div>
 
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -26,7 +26,11 @@ except ImportError:
 icon = "www/silvageneric.gif"
 
 class Indexer(Content, SimpleItem):
-    """Indexer asset.
+    """Indexes can be created which function like an index in the 
+       back of a book. Index codes must be  placed in text (these 
+       will also export to print formats). Indexers cascade
+       downwards, indexing all index items in the current and
+       underlying publications.
     """
     security = ClassSecurityInfo()
 

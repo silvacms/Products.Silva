@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -18,7 +18,12 @@ from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper
 icon="www/silvapublication.gif"
 
 class Publication(Folder):
-    """Publication.
+    """These containers function as the major organizing blocks of a 
+       Silva site. Publications instill a threshold of view, showing
+       only the contents of the current publication (keeping the overview
+       screens manageable) and have configuration settings which, a.o.,
+       determine which core and pluggable objects will be available. For
+       complex publications, sub-publications can be nested.
     """
     security = ClassSecurityInfo()
     

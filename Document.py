@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.52 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -27,7 +27,11 @@ from Products.ParsedXML.PrettyPrinter import _translateCdata
 icon="www/silvadoc.gif"
 
 class Document(VersionedContent):
-    """Silva Document.
+    """A Document is the basic unit of information in Silva. A document
+        can -  much like word processor documents - contain text,
+        lists, tables, headers, subheads, images, etc. Documents can have
+        two (accessible) versions, one online for the public, another in
+        process (editable or approved).
     """
     security = ClassSecurityInfo()
 
