@@ -178,22 +178,20 @@
             </tr>
           </tal:block>
         </tal:block>
+        <tr class="controls">
+          <td class="align-right"
+            colspan="4">
+            <input class="button" 
+              type="submit"
+              name="save_metadata:method"
+              value=" Save metadata "
+              title="access key: alt-s"
+              accesskey="s"
+            />
+          </td>
+        </tr>
       </tal:block>
     </tbody>
-    <tfoot>
-      <tr class="controls">
-        <td class="align-right"
-          colspan="4">
-          <input class="button" 
-            type="submit"
-            name="save_metadata:method"
-            value=" Save metadata "
-            title="access key: alt-s"
-            accesskey="s"
-          />
-        </td>
-      </tr>
-    </tfoot>
   </table>
 </form>
 </metal:block>
