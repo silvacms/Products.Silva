@@ -278,6 +278,7 @@ div.middleground a.button:visited {
 }
 
 div.middleground a.button:hover {
+  color: #424244;
   background: #b3d4bf;
 }
 
