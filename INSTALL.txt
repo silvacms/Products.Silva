@@ -11,7 +11,7 @@ See also LICENSE.txt
 Valid for:  Silva 1.1.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.43 $
+CVS:        $Revision: 1.44 $
 
 Introduction
 ------------
@@ -79,6 +79,19 @@ http://www.infrae.com/download/SilvaWindowsInstaller
 
 Optional extensions
 ===================
+
+XSLT support
+------------
+
+Silva XSLT support is built into Silva, but requires the external
+libraries libxml2 and libxslt with Python bindings to be enabled. We
+have tested with versions libxml2 2.6.11 and libxslt 1.1.8, but newer
+versions should be compatible.
+
+libxml2 and libxslt, including their Python bindings can be found
+here:
+
+http://www.xmlsoft.org/downloads.html
 
 Groups
 ------

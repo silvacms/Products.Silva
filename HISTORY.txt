@@ -7,8 +7,8 @@ Silva changes
 
     Features added
 
-      - XSLT support for rendering Silva objects. See XXX for more
-        information.
+      - XSLT support for rendering Silva objects. See
+        doc/renderers_howto.txt for more information.
 
       - New parser for SilvaDocument forms-based editor, using a HTML
         subset instead of the old-style method using special
