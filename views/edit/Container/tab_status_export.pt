@@ -259,24 +259,34 @@
       </tr>
 
       <tr class="even">
-        <td class="align-right"
-          i18n:translate="include_sub_publications?">
-          include sub publications?
+        <td class="align-right">
+          <label for="docma_with_sub_publications"
+            i18n:translate="include_sub_publications?">
+            Include sub publications?
+          </label>
         </td>
         <td>
-          <input type="checkbox" name="with_sub_publications" />
+          <input type="checkbox"
+            name="with_sub_publications"
+            id="docma_with_sub_publications"
+          />
         </td>
         <td>
         </td>
       </tr>
 
       <tr class="odd">
-        <td class="align-right"
-          i18n:translate="export_newest_versions?">
-          export newest versions?
+        <td class="align-right">
+          <label for="docma_export_last_version"
+            i18n:translate="export_newest_versions?">
+            Export newest versions?
+          </label>
         </td>
         <td>
-          <input type="checkbox" name="export_last_version" />
+          <input type="checkbox"
+            name="export_last_version"
+            id="docma_export_last_version"
+          />
         </td>
         <td i18n:translate="if_not_checked_the_published_version_is_exported">
           If not checked the published version is exported
@@ -284,12 +294,17 @@
       </tr>
 
       <tr class="even">
-        <td class="align-right"
-          i18n:translate="export_closed_content?">
-          export closed content?
+        <td class="align-right">
+          <label for="docma_export_closed_content"
+            i18n:translate="export_closed_content?">
+            Export closed content?
+          </label>
         </td>
         <td>
-          <input type="checkbox" name="export_last_version" />
+          <input type="checkbox"
+            name="export_closed_content"
+            id="docma_export_closed_content"
+          />
         </td>
         <td i18n:translate="check_to_include_closed_content">
           Check to include closed content in the export
