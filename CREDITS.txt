@@ -1,4 +1,4 @@
-Version of this document: $Revision: 1.3 $
+Version of this document: $Revision: 1.4 $
 
 Silva is developed by Infrae (http://www.infrae.com) for the Erasmus
 University Rotterdam (http://www.eur.nl).
@@ -12,6 +12,12 @@ Infrae Silva team:
 Many thanks go to Hans Verster <verster@daz.eur.nl> at the Erasmus
 University Rotterdam for his vision and support.
 
+2002 08 14:
+
+    Thanks to Clemens Klein-Robbenhaar for various bug reports,
+    suggestions and usefull discussion on the mailinglist.
+
 2002 07 12:
+
     Thanx to Jim Washington for fixing <script /> and <meta /> in
     layout_macro.html.

@@ -1,4 +1,4 @@
-Version of this document: $Revision: 1.8 $
+Version of this document: $Revision: 1.9 $
 
 Silva changes
 
@@ -13,6 +13,15 @@ Silva changes
 
     Bugs Fixed
 
+     - ZMI
+
+        * Cleanup of tabs for Silva and XMLWidgets specific objects
+
+     - SMI (Silva Management Interface)
+
+        * Fix and cleanup of tabs_status code (thanks to Clemens Klein-
+	Robbenhaar (a.o.) for reporting)
+
      - Presentation Pagetemplates: 
 
         * Cleanup of index_html
@@ -21,10 +30,10 @@ Silva changes
         fixed "link" tag
 
         * Changed call for "view_method" in content.html (thanks to
-        Clemens Klein-Robbenhaar)
+        Clemens Klein-Robbenhaar for reporting)
 
         * Changed spelling for override.html (thanks to Clemens Klein-
-        Robbenhaar)
+        Robbenhaar for reporting)
 
         * Various (cosmetic) changes in view/preview/tab-preview layout  
 
