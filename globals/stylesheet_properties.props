@@ -122,7 +122,7 @@ contextButtonPadding:string=0.1em 0em 0em 0em
 contextButtonBorder:string=1px solid #99cfb5
 contextButtonFontColor:string=#d9f3e2
 
-destructiveButtonBackground:string=#4b746d
+destructiveButtonBackground:string=#397374
 destructiveButtonPadding:string=0em 2em 0.1em 2em
 destructiveButtonBorder:string=1px solid #cdb1a3
 destructiveButtonFontColor:string=#e6c7b8
@@ -130,7 +130,7 @@ destructiveButtonFontColor:string=#e6c7b8
 cancelButtonBackground:string=#666668
 cancelButtonPadding:string=0em 2em 0.1em 2em
 cancelButtonBorder:string=1px solid #b9c2c1
-cancelButtonFontColor:string=#d6d1e0
+cancelButtonFontColor:string=#ccd7d6
 
 boxBorder:string=1px solid #A3A3A3
 boxHeaderBackground:string=#E5E5E5
