@@ -1,10 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 # Zope
 import Acquisition
 from Acquisition import ImplicitAcquisitionWrapper, aq_base, aq_inner
-from OFS import Folder, SimpleItem, ObjectManager, PropertyManager, FindSupport
+from OFS import Folder, SimpleItem, ObjectManager, PropertyManager, \
+     FindSupport
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
@@ -34,7 +35,8 @@ class ViewRegistry(Folder.Folder):
     
     # needed, as this uses here/manage_page_header
     # which need the "manager" role
-    security.declareProtected('View management screens', 'manage_associationsForm')
+    security.declareProtected('View management screens',
+                              'manage_associationsForm')
 
     def __init__(self, id):
         self.id = id
@@ -150,6 +152,7 @@ def manage_addViewRegistry(self, id, REQUEST=None):
     return ''
 
 class ViewAttribute(Acquisition.Implicit):
+
     def __init__(self, view_type, default_method):
         self._view_type = view_type
         self._default_method = default_method
@@ -168,8 +171,11 @@ class ViewAttribute(Acquisition.Implicit):
 
         if not method_on_view:
             # "Method on view" does not exist: redirect to default method.
+            # XXX may cause endless redirection loop,
+            # if default does not exist.
             self.REQUEST.RESPONSE.redirect(
-                '%s/%s/%s' % (model.absolute_url(), self._view_type, self._default_method))
+                '%s/%s/%s' % (model.absolute_url(), self._view_type,
+                              self._default_method))
             # A return is needed, although the client actually *will*
             # redirect (If the client does not redirect, it should still
             # show the default method on view).
