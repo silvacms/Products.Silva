@@ -25,7 +25,8 @@
 
       <tr class="even">
         <td class="feedback"
-          colspan="2" i18n:translate="working_session_is_going_to_expire">
+          colspan="2"
+          i18n:translate="working_session_is_going_to_expire">
           In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; to save any changes, or &#8216;cancel&#8217; to go back to the editor and save manually (or not at all).
         </td>
       </tr>
