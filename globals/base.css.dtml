@@ -553,7 +553,7 @@ a.buttonlink:hover {
   background : #74748b; 
 }
 a.cancellink {
-  font-size : 10px; 
+  font-size : 11px; 
   font-weight : normal; 
   font-family : verdana, arial, helvetica, sans-serif;
   color : #dddddd; 
