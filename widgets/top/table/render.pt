@@ -59,19 +59,19 @@ Type:
 <select name="element_type" tal:define="type python:here.get_type(node)">
   <option value="plain" 
           tal:attributes="selected python:test(type == 'plain', 'selected', nothing)">
-    Plain table (bold borderless heading row, borderless normal rows)
+    Plain table (bold borderless heading, borderless rows)
   </option>
   <option value="listing" 
           tal:attributes="selected python:test(type == 'listing', 'selected', nothing)">
-    Listing table (bold borderless heading row, horizontal line, borderless normal rows)
+    Listing table (bold borderless heading, horizontal line, borderless rows)
   </option>
   <option value="grid" 
           tal:attributes="selected python:test(type == 'grid', 'selected', nothing)" >
-    Grid table (bold bordered heading row, bordered normal rows)
+    Grid table (bold bordered heading, bordered rows)
   </option>
   <option value="datagrid"
           tal:attributes="selected python:test(type == 'datagrid', 'selected', nothing)">
-    Data grid table (bold borderless heading row, bordered normal rows)
+    Data grid table (bold borderless heading, bordered rows)
   </option>
 </select>
 </td>
