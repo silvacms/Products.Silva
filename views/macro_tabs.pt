@@ -46,8 +46,6 @@
 
     <tal:block tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
       <a href="url"
-        title="Silva help: alt-h"
-        accesskey="h"
         tal:content="structure item/get_title_html"
         tal:attributes="href string:${item/absolute_url}/edit/${template/id}"
         >
@@ -139,10 +137,9 @@
   </div>
 
   <div class="riverBar">
-    <a class="normal"
-      name="top">
+    <a name="top">
       <img border="0"
-        height="2"
+        height="4"
         width="1"
         tal:attributes="src python: '%s/globals/pixel.gif' % root_url" />
     </a>

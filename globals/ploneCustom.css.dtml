@@ -27,6 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 /* darker870: cfd7e1; selected bac1cc; light d4dce6; */
 div.workspace {
   background : #a7adb5;
+  margin: 0;
 }
 
 pre {
@@ -39,6 +40,47 @@ pre {
   width : 512px;
   line-height: 1.3em;
     text-align: left;
+}
+
+
+/* _________________________________________________________ path bar _____ */
+
+div.pathBar {
+  font-size: 90%;
+    color: &dtml-shade70;;
+    background-image: url(/silva/globals/sky.gif);
+    background-repeat: repeat-x;
+    background-color: #39424d;
+    padding: 2px 4px 0 22px;
+    border: 0;
+    vertical-align: bottom;
+    line-height: 1.3em;
+}
+
+div.pathBar a {
+    color: &dtml-shade74;;
+    font-weight: &dtml-mainTabFontWeight;;
+    padding: 0 ! important;
+    margin: 0 ! important;
+    text-transform: none;
+}
+
+div.pathBar a.visited {
+    color: &dtml-shade74;;
+}
+
+div.pathBar a.manage {
+	color: &dtml-shade64;;
+    margin-left: 0.5em ! important;
+}
+
+div.pathBar img {
+  vertical-align: top;
+  margin: -2px 0em 0em -22px;
+}
+
+div.pathBar a.idea {
+  color : #634d82;
 }
 
 
@@ -92,7 +134,7 @@ div.tabs a.recede:hover {
 div.tabs a.left {
     /* The left side of the tab. */
     border-style: solid none none solid;
-  padding: 0em 0em 0em 0.2em;
+  padding: 0em 0em 0em 0.3em;
 }
 
 div.tabs a.left:hover {
@@ -103,7 +145,7 @@ div.tabs a.right {
     /* The right side of the tab. */
     border-style: solid solid none none;
     margin-left: -0.4em;
-  padding: 0em 0em 0em 0.4em;
+  padding: 0em 0em 0em 0.3em;
 }
 
 div.tabs a.right:hover {
@@ -121,50 +163,10 @@ div.tabs a.normal {
 }
 
 
-/* _________________________________________________________ path bar _____ */
-
-div.pathBar {
-  font-size: 90%;
-    color: &dtml-shade70;;
-    background-image: url(/silva/globals/sky.gif);
-    background-repeat: repeat-x;
-    background-color: #39424d;
-    padding: 0em 4px 0em 22px;
-    border: 0;
-    line-height: 130%;
-}
-
-div.pathBar a {
-    color: &dtml-shade74;;
-    font-weight: &dtml-mainTabFontWeight;;
-    padding: 0 ! important;
-    margin: 0 ! important;
-    text-transform: none;
-}
-
-div.pathBar a.visited {
-	color: &dtml-mainTabFontColorSelected;;
-}
-
-div.pathBar a.manage {
-	color: &dtml-shade64;;
-    margin-left: 0.5em ! important;
-}
-
-div.pathBar img {
-  vertical-align: top;
-  margin: 0em 0em 0em -22px;
-}
-
-div.pathBar a.idea {
-  color : #634d82;
-}
-
-
-/* ________________________________________________________ river bar _____ */
+/* ________________________________________ river bar (or sidewalk :) _____ */
 
 div.riverBar {
-  font-size : 22%;
+  height: 4px;
   background: &dtml-mainTabBackgroundSelected;;
   border-bottom: &dtml-shade50; 1px solid;
 }
