@@ -15,16 +15,15 @@ def check_reserved_ids(obj):
         if (ISilvaObject.isImplementedBy(o) and 
                 check_valid_id(obj, str(o.id), 1)):
             print 'Illegal id found:', o.absolute_url()
+            id = o.id
+            while (check_valid_id(obj, id, 1) or
+                    id in obj.objectIds()):
+                id = 'renamed_%s' % id
+            obj.manage_renameObject(oid, id)
             illegal_urls.append(o.absolute_url())
         if IContainer.isImplementedBy(o):
             illegal_urls += check_reserved_ids(o)
     return illegal_urls
-
-illegal_url_template = '''
-The following objects have an id that is illegal in
-Silva, and need to be renamed in order for the upgrade to continue:<br /><br />
-%s
-'''
 
 def from091to092(self, root):
     """Upgrade Silva content from 0.9.1 to 0.9.2
@@ -49,12 +48,6 @@ def from091to092(self, root):
     # first check the object tree for illegal ids, since they will break the upgrade
     illegal_urls = check_reserved_ids(root)
 
-    if illegal_urls:
-        urllist = []
-        for url in illegal_urls:
-            urllist.append('<a href="%(url)s/../manage_main">%(url)s</a><br />' % {'url': url})
-        return illegal_url_template % '\n'.join(urllist)
-
     print 'Going to upgrade'
 
     # set the '_allow_subscription' attribute on servce_members if it isn't there yet
@@ -66,6 +59,9 @@ def from091to092(self, root):
         upgrade_using_registry(root, '0.9.2')
     finally:
         Document.manage_beforeDelete = old_manage_beforeDelete
+
+    return ('Upgrade succeeded, but the following objects have been renamed to '
+                'be able to continue:<br /><br />') + '<br />\n'.join(illegal_urls)
 
 def from09to091(self, root):
     """Upgrade Silva from 0.9 to 0.9.1
