@@ -15,8 +15,6 @@ refresh_page = 'tab_edit_import'
 if request.has_key('refresh_page') and request['refresh_page']:
     refresh_page = request['refresh_page']
 
-return refresh_page
-
 refresh_page = getattr(view, refresh_page)
 
 model.security_trigger()
