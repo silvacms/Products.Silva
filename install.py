@@ -366,11 +366,11 @@ def registerGroupsViews(reg):
     """Register groups views on registry.
     """
     reg.register(
-        'edit', 'Silva Group', ['edit', 'Asset', 'Group'])
+        'edit', 'Silva Group', ['edit', 'Asset', 'Groups', 'Group'])
     reg.register(
-        'edit', 'Silva Virtual Group', ['edit', 'Asset', 'VirtualGroup'])
-    reg.register('add', 'Silva Group', ['add', 'Group'])
-    reg.register('add', 'Silva Virtual Group', ['add', 'VirtualGroup'])
+        'edit', 'Silva Virtual Group', ['edit', 'Asset', 'Groups', 'VirtualGroup'])
+    reg.register('add', 'Silva Group', ['add', 'Groups', 'Group'])
+    reg.register('add', 'Silva Virtual Group', ['add', 'Groups', 'VirtualGroup'])
 
 def unregisterViews(reg):
     for meta_type in ['Silva Folder', 'Silva Document',
