@@ -1,12 +1,20 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.47 $
+$Revision: 1.47.2.48 $
 
 Silva changes
 
   0.9.1.10
 
+    Features Added
+
+      - Import assets from a zipfile now creates Silva Folder for the
+        zipfiles's directory structure.
+
     Bugs Fixed
+
+      - Status tab of VersionedContent object now show publication- and
+        expiration datetimes for the published version.
 
       - There was a problem where files could be downloaded even from
         areas where viewing was restricted. This has been fixed.
