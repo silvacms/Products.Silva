@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.17 2003/10/20 08:35:34 zagy Exp $
+# $Id: mangle.py,v 1.18 2003/11/17 14:46:45 zagy Exp $
 
 # Python
 import string
@@ -104,7 +104,7 @@ class Id:
         IAsset: ('index', )
     }
 
-    _bad_chars = r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?ÄÅÁÀÂÃäåáàâãÇçÉÈÊËÆéèêëæÍÌÎÏíìîïÑñÖÓÒÔÕØöóòôõøŠšßÜÚÙÛüúùûİŸıÿ"""
+    _bad_chars  = r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?ÄÅÁÀÂÃäåáàâãÇçÉÈÊËÆéèêëæÍÌÎÏíìîïÑñÖÓÒÔÕØöóòôõøŠšßÜÚÙÛüúùûİŸıÿ"""
     _good_chars = r"""_____________________________AAAAAAaaaaaaCcEEEEEeeeeeIIIIiiiiNnOOOOOOooooooSssUUUUuuuuYYyyZz"""
     _char_transmap = string.maketrans(_bad_chars, _good_chars)
 
@@ -124,7 +124,7 @@ class Id:
         """
         orig_id = maybe_id
         if type(maybe_id) == UnicodeType:
-            maybe_id = maybe_id.encode('us-ascii', 'replace')
+            maybe_id = maybe_id.encode('latin1', 'replace')
         if type(maybe_id) != StringType:
             raise ValueError, "id must be str or unicode (%r)" % orig_id
         if interface not in self._reserved_ids_for_interface.keys():
