@@ -129,6 +129,46 @@ class VersionManagementAdapter(adapter.Adapter):
                 versions = versions[:-number_to_keep]
             self.context.manage_delObjects(versions)
 
+    # XXX currently the following 2 methods have a very non-optimal 
+    # implementation, hopefully in the future we can change the underlying
+    # Versioning and VersionedContent layers and store these times on the
+    # version objects rather then on the VersionedContent
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'getVersionPublicationTime')
+    def getVersionPublicationTime(self, versionid):
+        if (self.context._unapproved_version[0] is not None and 
+                self.context._unapproved_version[0] == versionid):
+            return self.context._unapproved_version[1]
+        elif (self.context._approved_version[0] is not None and
+                self.context._approved_version[0] == versionid):
+            return self.context._approved_version[1]
+        elif (self.context._public_version[0] is not None and 
+                self.context._public_version[0] == versionid):
+            return self.context._public_version[1]
+        else:
+            if self.context._previous_versions:
+                for verid, pubtime, exptime in self.context._previous_versions:
+                    if verid == versionid:
+                        return pubtime
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'getVersionExpirationTime')
+    def getVersionExpirationTime(self, versionid):
+        if (self.context._unapproved_version[0] is not None and 
+                self.context._unapproved_version[0] == versionid):
+            return self.context._unapproved_version[2]
+        elif (self.context._approved_version[0] is not None and
+                self.context._approved_version[0] == versionid):
+            return self.context._approved_version[2]
+        elif (self.context._public_version[0] is not None and 
+                self.context._public_version[0] == versionid):
+            return self.context._public_version[2]
+        else:
+            if self.context._previous_versions:
+                for verid, pubtime, exptime in self.context._previous_versions:
+                    if verid == versionid:
+                        return exptime
+
     def _createUniqueId(self):
         # for now we use self.context._version_count, we may
         # want to get rid of that nasty trick in the future though...

@@ -258,14 +258,10 @@ _______ manual close section here _______
             </tr>
             <tr  tal:repeat="version versions">
               <tal:block define="metadata python: here.get_metadata(version);
-                                  creationtime python: mangle.DateTime(
-                                      metadata['silva-extra']['creationtime']['value']).toStr();
-                                  modificationtime python: mangle.DateTime(
-                                      metadata['silva-extra']['modificationtime']['value']).toStr();
-                                  publicationtime python: mangle.DateTime(
-                                      version.publication_datetime()).toStr();
-                                  expirationtime python: mangle.DateTime(
-                                      version.expiration_datetime()).toStr();
+                                  times python: here.tab_status_version_times(version);
+                                  modificationtime python: times[0];
+                                  publicationtime python:times[1];
+                                  expirationtime python: times[2];
               ">
                 <td style="white-space: nowrap">
                   <input type="checkbox" 
