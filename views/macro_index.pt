@@ -146,9 +146,9 @@ function handle_default_action(element, event, action)
       </a>
       &nbsp;&nbsp;&nbsp;
       <a class="reveal"
-        title="jump to silva root in zodb: alt-§"
+        title="jump to silva root in zodb: alt-"
         tal:attributes="href string:${root_url}/manage_services"
-        accesskey="§"
+        accesskey=""
         i18n:attributes="title"
         i18n:translate="">
         sservices...
