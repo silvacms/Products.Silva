@@ -104,8 +104,8 @@ span.kupu-tb-buttongroup button.kupu-insertunorderedlist:hover {background-image
 span.kupu-tb-buttongroup button.kupu-insertorderedlist {background-image: url("kupu/kupuimages/numbered.gif"); background-color: #cedae8;}
 span.kupu-tb-buttongroup button.kupu-insertorderedlist:hover {background-image: url("kupu/kupuimages/numbered.gif"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-definitionlist {background-image: url("kupu/kupuimages/definitionlist.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-definitionlist:hover {background-image: url("kupu/kupuimages/definitionlist.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-insertdefinitionlist {background-image: url("kupu/kupuimages/definitionlist.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-insertdefinitionlist:hover {background-image: url("kupu/kupuimages/definitionlist.gif"); background-color: #b3d4bf;}
 
 span.kupu-tb-buttongroup button.kupu-undo {background-image: url("kupu/kupuimages/undo.gif"); background-color: #cedae8;}
 span.kupu-tb-buttongroup button.kupu-undo:hover {background-image: url("kupu/kupuimages/undo.gif"); background-color: #b3d4bf;}
