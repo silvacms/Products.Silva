@@ -1,8 +1,15 @@
 Copyright (c) 2002, 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-$Revision: 1.47.2.27 $
+$Revision: 1.47.2.28 $
 
 Silva changes
+
+  0.9.1.4
+
+    Bugs Fixed
+                                                                                            
+        - get_public_tree() would not do the right thing with the depth-
+          level control argument.
 
   0.9.1.3
 
