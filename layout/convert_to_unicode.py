@@ -1,3 +1,12 @@
+## Script (Python) "convert_to_unicode"
+##bind container=container
+##bind context=context
+##bind namespace=
+##bind script=script
+##bind subpath=traverse_subpath
+##parameters=incoming,charset='UTF-8'
+##title=
+##
 """Python script to convert incoming data to Unicode
 
 Incoming data can either be a single or a multi-dimension datatype.
@@ -17,10 +26,10 @@ def convert_list(l, charset):
         new.append(convert_item(item, charset))
     return new
 
-def convert_dict(d):
+def convert_dict(d, charset):
     """Convert a dict to unicode (recursive)"""
     new = {}
-    for k, v in d.keys():
+    for k, v in d.items():
         new[convert_item(k, charset)] = convert_item(v, charset)
     return new
 
@@ -28,11 +37,11 @@ def convert_dict(d):
 def convert_item(i, charset):
     """Convert an item to unicode"""
     if same_type(i, []):
-        return '[\'%s\']' % '\', \''.join(convert_list(i, charset))
+        return u'[\'%s\']' % '\', \''.join(convert_list(i, charset))
     elif same_type(i, ()):
-        return '(\'%s\')' % '\', \''.join(convert_tuple(i, charset))
+        return u'(\'%s\')' % '\', \''.join(convert_tuple(i, charset))
     elif same_type(i, {}):
-        return '{\'%s\'}' % '\', \''.join(['%s\': \'%s' % (k, v) for k, v in convert_dict(i, charset).items()])
+        return u'{\'%s\'}' % "', '".join(["%s': '%s" % (k, v) for (k, v) in convert_dict(i, charset).items()])
     elif same_type(i, u''):
         return i
     elif same_type(i, ''):
