@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Thu Nov 25 17:49:35 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:50:29 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -620,11 +620,11 @@ msgid "add group(s) to this virtual group."
 msgstr ""
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:164
-msgid "copy from virtual group(s)"
+msgid "transfer groups defined in other virtual groups"
 msgstr ""
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:164
-msgid "transfer groups defined in other virtual groups"
+msgid "copy from virtual group(s)"
 msgstr ""
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:56
@@ -3437,7 +3437,7 @@ msgid "access key: alt-${key}"
 msgstr "Kurzwahl: alt-${key}"
 
 #: /views/logout.pt:36
-msgid "To <b>actually</b> logout, wait 5 seconds or hit this"
+msgid "To <strong>actually</strong> logout, wait 5 seconds or hit this"
 msgstr ""
 
 #: /views/logout.pt:37
@@ -3449,8 +3449,8 @@ msgid "accesskey: alt-l"
 msgstr "Kurzwahl: alt-l"
 
 #: /views/logout.pt:43
-msgid "When the login dialog appears, choose <b>\"Cancel\"</b>"
-msgstr "Wenn der Logindialg erscheint, <b>Abbruch</b> wählen."
+msgid "When the login dialog appears, choose <strong>\"Cancel\"</strong>"
+msgstr ""
 
 #: /views/logout.pt:9
 msgid "logout"
@@ -3485,12 +3485,12 @@ msgid "jump to silva root in zodb: alt-'"
 msgstr ""
 
 #: /views/macro_index.pt:150
-msgid "jump to silva services: alt-`"
-msgstr "Gehe zu Silva-Services: alt-`"
-
-#: /views/macro_index.pt:150
 msgid "sservices..."
 msgstr ""
+
+#: /views/macro_index.pt:150
+msgid "jump to silva services: alt-`"
+msgstr "Gehe zu Silva-Services: alt-`"
 
 #: /views/macro_index.pt:180 /views/macro_index.pt:183
 #: /views/macro_index.pt:193 /views/macro_index.pt:197
@@ -3594,6 +3594,9 @@ msgstr "Keine Rollen ausgewählt."
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
+
+#~ msgid "When the login dialog appears, choose <b>\"Cancel\"</b>"
+#~ msgstr "Wenn der Logindialg erscheint, <b>Abbruch</b> wählen."
 
 #~ msgid "for approved version of &#xab;${title}&#xbb;"
 #~ msgstr "für die bestätigte Version von &#xab;${title}&#xbb;"

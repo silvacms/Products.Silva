@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Nov 25 17:49:35 2004\n"
+"POT-Creation-Date: Thu Nov 25 17:50:29 2004\n"
 "PO-Revision-Date: 2004-11-19 19:44+0100\n"
 "Last-Translator: Martijn Faassen <faassen@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -642,12 +642,12 @@ msgid "add group(s) to this virtual group."
 msgstr "groep(en) aan deze 'virtual group' toevoegen."
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:164
-msgid "copy from virtual group(s)"
-msgstr "uit 'virtual group(s)' kopiëren"
-
-#: /views/edit/Asset/Groups/VirtualGroup/edit.pt:164
 msgid "transfer groups defined in other virtual groups"
 msgstr "gedefinieerde groepen naar andere 'virtual groups' verplaatsen"
+
+#: /views/edit/Asset/Groups/VirtualGroup/edit.pt:164
+msgid "copy from virtual group(s)"
+msgstr "uit 'virtual group(s)' kopiëren"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:56
 msgid "Virtual Group &#8216;members&#8217;"
@@ -3576,36 +3576,37 @@ msgid "access key: alt-${key}"
 msgstr "sneltoets: alt-${key}"
 
 #: /views/logout.pt:36
-msgid "To <b>actually</b> logout, wait 5 seconds or hit this"
-msgstr "Wacht 5 seconden of klik hier, om <strong>echt</strong> uit te loggen."
+msgid "To <strong>actually</strong> logout, wait 5 seconds or hit this"
+msgstr "Wacht 5 seconden of klik hier, om <strong>echt</strong> uit te "
+"loggen."
 
 #: /views/logout.pt:37
 msgid "logout link"
-msgstr ""
+msgstr "uitlog-link"
 
 #: /views/logout.pt:37
 msgid "accesskey: alt-l"
 msgstr "sneltoets: alt-l"
 
 #: /views/logout.pt:43
-msgid "When the login dialog appears, choose <b>\"Cancel\"</b>"
-msgstr "When the login dialog appears, choose <b>\"Cancel\"</b>"
+msgid "When the login dialog appears, choose <strong>\"Cancel\"</strong>"
+msgstr "Kies <strong>\"Cancel\"</strong>, als de login dialoog verschijnt"
 
 #: /views/logout.pt:9
 msgid "logout"
-msgstr "logout"
+msgstr "uitloggen"
 
 #: /views/macro_batch.pt:29
 msgid "&laquo; Previous ${n} items"
-msgstr ""
+msgstr "&laquo; Vorige ${n} items"
 
 #: /views/macro_batch.pt:40
 msgid "Next ${n} items &raquo;"
-msgstr ""
+msgstr "Volgende ${n} items &raquo;"
 
 #: /views/macro_index.pt:100
 msgid "Silva copyright info"
-msgstr ""
+msgstr "Silva copyright info"
 
 #: /views/macro_index.pt:132
 msgid "jump to zope root: alt-z"
@@ -3613,28 +3614,28 @@ msgstr "naar zope root: alt-z"
 
 #: /views/macro_index.pt:132
 msgid "zroot..."
-msgstr ""
+msgstr "zroot..."
 
 #: /views/macro_index.pt:141
 msgid "sroot..."
-msgstr ""
+msgstr "sroot..."
 
 #: /views/macro_index.pt:141
 msgid "jump to silva root in zodb: alt-'"
 msgstr "naar silva root: alt-'"
 
 #: /views/macro_index.pt:150
-msgid "jump to silva services: alt-`"
-msgstr "naar silva services: alt-`"
+msgid "sservices..."
+msgstr "sservices..."
 
 #: /views/macro_index.pt:150
-msgid "sservices..."
-msgstr ""
+msgid "jump to silva services: alt-`"
+msgstr "naar silva services: alt-`"
 
 #: /views/macro_index.pt:180 /views/macro_index.pt:183
 #: /views/macro_index.pt:193 /views/macro_index.pt:197
 msgid "jump to top: alt-t"
-msgstr "naar top springen: alt-t"
+msgstr "naar top: alt-t"
 
 #: /views/macro_index.pt:218
 msgid "contact:"
@@ -3650,7 +3651,7 @@ msgstr "publieke versie bekijken"
 
 #: /views/macro_index.pt:245
 msgid "Change your settings: alt-~"
-msgstr "Verander je instellingen: alt-~"
+msgstr "Je instellingen veranderen: alt-~"
 
 #: /views/macro_index.pt:258
 msgid "user settings"
@@ -3658,7 +3659,7 @@ msgstr "gebruikersinstellingen"
 
 #: /views/macro_index.pt:262
 msgid "Logout of Silva: alt-q"
-msgstr "Silva uitloggen: alt-q"
+msgstr "Uit Silva uitloggen: alt-q"
 
 #: /views/macro_index.pt:271
 msgid "logout ${role} ${userid}"
@@ -3666,19 +3667,19 @@ msgstr "${role} ${userid} uitloggen"
 
 #: /views/macro_index.pt:277
 msgid "request access"
-msgstr ""
+msgstr "toegang aanvragen"
 
 #: /views/macro_index.pt:94
 msgid "Up to Silva top"
-msgstr ""
+msgstr "Naar Silva top"
 
 #: /views/macro_index.pt:97
 msgid "Up one level"
-msgstr ""
+msgstr "Eén niveau omhoog"
 
 #: /views/macro_index.pt:99
 msgid "Help with access keys"
-msgstr ""
+msgstr "Hulp bij sneltoetsen"
 
 #: /views/macro_tabs.pt:21
 msgid "Silva info: alt-|"
@@ -3690,11 +3691,11 @@ msgstr "Silva top: alt-/"
 
 #: /views/macro_tabs.pt:60
 msgid "&middot; manage..."
-msgstr "&middot; manage..."
+msgstr "&middot; beheren..."
 
 #: /views/macro_tabs.pt:60
 msgid "Zope manage_main: alt-."
-msgstr "Zope manage_main: alt-."
+msgstr "Zope 'manage_main': alt-."
 
 #: /views/macro_tabs.pt:79
 msgid "Silva access keys: alt-?"
@@ -3702,35 +3703,43 @@ msgstr "Silva sneltoetsen: alt-?"
 
 #: /views/public/Ghost/preview/render.py:15
 msgid "This ghost is broken. (${haunted_url})"
-msgstr "This ghost is broken. (${haunted_url})"
+msgstr "Deze 'ghost' is gebroken. (${haunted_url})"
 
 #: /views/public/Ghost/view/render.py:15
 msgid "This 'ghost' document is broken. Please inform the site administrator."
-msgstr "This 'ghost' document is broken. Please inform the site administrator."
+msgstr "Dir 'ghost'-document is gebroken. Geef dit a.u.b. door aan de "
+"site-beheerder."
 
 #: /views/public/request_roles_submit.py:14
 msgid "You must enter your full name and your e-mail address"
-msgstr "You must enter your full name and your e-mail address"
+msgstr "Vul uw volledige naam en e-mailadres in"
 
 #: /views/public/request_roles_submit.py:22
 msgid "Error: ${error}"
-msgstr "Error: ${error}"
+msgstr "Fout: ${error}"
 
 #: /views/public/request_roles_submit.py:26
 msgid ""
 "Roles requested. You will receive an e-mail from the Chief Editor or Manager "
 "as soon as your request is processed."
 msgstr ""
-"Roles requested. You will receive an e-mail from the Chief Editor or Manager "
-"as soon as your request is processed."
+"Rollen aangevraagd. Je ontvangt een e-mail van de 'Chief Editor' of "
+"'Manager' zodra de aanvraag verwerkt is."
 
 #: /views/public/request_roles_submit.py:9
 msgid "No roles were selected."
-msgstr "No roles were selected."
+msgstr "Er zijn geen rollen geselecteerd."
 
 #: /views/render_form_errors.py:16
 msgid "Sorry, there are problems with these form fields:"
-msgstr ""
+msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+#~ msgid "To <b>actually</b> logout, wait 5 seconds or hit this"
+#~ msgstr ""
+#~ "Wacht 5 seconden of klik hier, om <strong>echt</strong> uit te loggen."
+
+#~ msgid "When the login dialog appears, choose <b>\"Cancel\"</b>"
+#~ msgstr "When the login dialog appears, choose <b>\"Cancel\"</b>"
 
 # Default: "logout link"
 #~ msgid "logout_link"
