@@ -203,7 +203,8 @@ def configureLayout(root, default=0):
     """Install layout code into root.
     If the default argument is true, ids will be prefixed with default_.
     """
-    for id in ['layout_macro.html', 'content.html', 'rename-to-override.html']:
+    for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
+               'standard_error_message', 'standard_unauthorized_message', ]:
         add_helper(root, id, globals(), zpt_add_helper, default)    
 
     for id in ['index_html.py', 'index_html_restricted.py', 'preview_html.py']:
