@@ -34,7 +34,7 @@
       colspan="3">
     <h2>
       <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />
-        create <span tal:replace="python: request.meta_type.lower()" />
+      create <span tal:replace="python: request.meta_type == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or request.meta_type" />
     </h2>
     </td>
   </tr>
