@@ -10,9 +10,6 @@ Silva changes
       - Silva has been i18n-ed. (Works with Placeless Translation Service
         1.0)
 
-      - Link objects now accept other protocols in the URL too (https,
-        news, ftp, mailto).
-
       - Subscriptions feature: visitors can now easily subscribe to 
         publish events of VersionedContent objects (like Silva Documents).
         If a visitor is subscribed, he will receive notifications by email
@@ -30,6 +27,9 @@ Silva changes
         button.
 
     Bugs fixed
+
+      - Link objects now accept other protocols in the URL too (https,
+        news, ftp, mailto).
 
       - Fixed a bug in the xml importer that could result in loss of text
         data.
