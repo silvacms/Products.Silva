@@ -662,9 +662,7 @@ td.unselected {
 
 td.unselected:hover { 
   color: &dtml-mainTabFontColorSelected;;
-  background: #d2e6f8;
-  border-top: &dtml-listingBorder;;
-  border-bottom: &dtml-listingBorder;;
+  background-color: #dae7fa;
   cursor : pointer;
 } 
 
