@@ -25,11 +25,15 @@ elif type == 'none':
 # A = upper-alpha
 # a = lower-alpha
 # the class attribute should get the new mapping 
+classes_mapping = {'disc':'disc', 'square':'square', 'circle':'circle', 
+                   '1':'decimal', 'I':'upper-roman', 'i':'lower-roman', 
+                   'A':'upper-alpha', 'a':'lower-alpha', }
+mapped_class = classes_mapping[type]
 
 if tag:
     content = ''.join(['<li>%s</li>\n' % text for text in texts])
     return '<%s class="%s">\n%s</%s>' % (
-        tag, type, type, content, tag)
+        tag, mapped_class, content, tag)
 else:
     if texts:
         content = '<br />\n'.join(texts)
