@@ -47,7 +47,6 @@ def initializeXMLSourceRegistry():
     __init__.pies
     """
     reg = theXMLSourceRegistry
-    # XXX todo reg.registerFallbackXMLSource()
     reg.registerXMLSource(File, FileXMLSource)
     reg.registerXMLSource(Folder, FolderXMLSource)
     reg.registerXMLSource(Link, LinkXMLSource)
@@ -82,6 +81,7 @@ class BaseXMLSource:
         """Export self.context to XML Sax-events 
         """
         reader.startPrefixMapping(None, self.ns_default)
+        # XXX start all registered prefixmappings here
         self._startElement(
             reader,
             'silva',
