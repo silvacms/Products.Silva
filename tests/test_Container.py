@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.33 $
+# $Revision: 1.34 $
 import unittest
 import Zope
 Zope.startup()
@@ -135,10 +135,10 @@ class ContainerTestCase(ContainerBaseTestCase):
                           l)
         
     def test_get_status_tree(self):
-        l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
-             (0, self.folder4.index), (1, self.subdoc),
-             (1, self.subfolder.index), (2, self.subfolder.subsubdoc),
-             (0, self.sroot.publication5.index)]
+        l = [(0, self.sroot.index), (0, self.doc1), (0, self.doc2), (0, self.doc3),
+             (0, self.folder4), (1, self.folder4.index), (1, self.subdoc),
+             (1, self.subfolder), (2, self.subfolder.index), (2, self.subfolder.subsubdoc),
+             (0, self.sroot.publication5)]
         self.assertEquals(self.sroot.get_status_tree(),
                           l)
         

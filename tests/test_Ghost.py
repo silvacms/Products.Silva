@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 import unittest
 import Zope
 Zope.startup()
@@ -26,6 +26,9 @@ def view(self, view_type='public'):
 
 def render_preview(self):
     version = self.get_previewable()
+    if version.REQUEST is None:
+        print 'No request'
+        print self.id
     if version is None:
         return '%s no view' % self.id
     if self.meta_type == 'Silva Ghost':
@@ -83,6 +86,7 @@ class GhostTestCase(unittest.TestCase):
         try:
             self.root = makerequest.makerequest(self.connection.root()
                                                 ['Application'])
+            self.REQUEST = self.root.REQUEST
             self.root.REQUEST['URL1'] = ''
             # awful hack: add a user who may own the 'index'
             # of the test containers
@@ -161,7 +165,7 @@ class GhostTestCase(unittest.TestCase):
         self.assertEquals('doc1 1', ghost.view())
 
         # create new version of ghost
-        ghost.REQUEST = None
+        # ghost.REQUEST = None Removed by Guido, 'cause it broke the test, wonder why it was here, though... are the tests still correct now?
         ghost.create_copy()
         ghost.get_editable().set_content_url('/root/doc2')
 
