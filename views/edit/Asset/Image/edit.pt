@@ -56,7 +56,7 @@
             image_width != scale_width and
             image_height != scale_height or
             image_width != cropped_width and
-            image_height != cropped_height">,<br />
+            image_height != cropped_height"><br />
             <span tal:content="transf">scaled</span> to 
             
             <span tal:condition="is_cropped" 
@@ -244,20 +244,24 @@
     </tbody>
       <tfoot>
         <tr class="controls">
-          <td class="align-right"
-            colspan="3">
+          <td>
+          </td>
+          <td>
             <input class="button"
               type="button"
               value="set crop coordinates"
-              title="lets you specify x and y values by clicking in the
-              image"
+              title="specify the center of the area to crop by clicking in the image: alt-o"
+              accesskey="o"
               tal:define="asset_context python:request.model"
               tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))" />
+          </td>
+          <td class="align-right">
             <input class="button"
               type="submit"
               name="crop_submit:method"
               value="crop image"
-              title="no access key"
+              title="access key: alt-r"
+              accesskey="r"
               i18n:attributes="title value"
             />
           </td>
