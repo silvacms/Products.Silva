@@ -300,7 +300,14 @@ Problems when using Silva
     version of Silva.
 
 
-Unicode Problems In-Depth
+  Indexer object doesn't work properly
+
+    If you update the indexer object and get an 'Index updated'
+    message, but the indexer doesn't change anyway, you'll likely have
+    a missing 'xml.xpath' library. This is due to a missing or
+    incomplete installation of PyXML.
+
+  Unicode Problems In-Depth
 
     A computer is only able to work with digits. Therefore a computer
     uses numbers internally to represent characters. In the old days
