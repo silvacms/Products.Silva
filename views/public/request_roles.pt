@@ -3,7 +3,7 @@
   <title>Membership</title>
 </head>
 <body>
-<span tal:content="here/REQUEST/model" />
+
 <metal:block fill-slot="main">
 <tal:block define="dummy python:here.REQUEST.model.security_trigger()"
   condition="python: hasattr(here, 'service_members') and here.service_members.allow_subscription()">
