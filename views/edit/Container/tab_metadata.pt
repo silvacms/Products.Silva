@@ -74,9 +74,7 @@
                           tal:attributes="href string:${url}/edit/tab_subscriptions"
                           i18n:attributes="title;accesskey manage_subscriptions_accesskey"
                           i18n:translate=""
-                          >
-                          manage subscriptions...
-                        </a>
+                          ><u>m</u>anage subscriptions...</a>
                       </tal:block>
                     </metal:block>
                     <tal:block condition="python:type == 'Silva Folder'">

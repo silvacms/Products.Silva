@@ -40,7 +40,7 @@
         <a class="transport"
           href="settings_addables"
           title="change the addables allowed in this publication: alt-a"
-          accesskey="c"
+          accesskey="a"
           i18n:attributes="title;accesskey configure_addables_accesskey"
           i18n:translate="">
           configure <u>a</u>ddables...
@@ -52,9 +52,7 @@
           tal:condition="here/service_subscriptions/subscriptionsEnabled | nothing"
           i18n:attributes="title;accesskey manage_subscriptions_accesskey"
           i18n:translate=""
-          >
-          manage subscriptions...
-        </a>
+          ><u>m</u>anage subscriptions...</a>
       </td>
     </tr>
   </table>
