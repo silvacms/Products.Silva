@@ -78,19 +78,17 @@ class VersionManagementAdapter(adapter.Adapter):
         current_version = self.getUnapprovedVersion()
         # move the current editable version to _previous_versions
         if current_version is not None:
-            # throw away publication and expiration time, they can only get 
-            # in the way later
-            # XXX disabled for now, seems more logical
             current_version_id = current_version.id
-            version_tuple = self.context._unapproved_version # (current_version_id, None, None)
+            version_tuple = self.context._unapproved_version 
             if self.context._previous_versions is None:
                 self.context._previous_versions = []
             self.context._previous_versions.append(version_tuple)
-            self.context._reindex_version(current_version_id)
+            self.context._unindex_version(current_version_id)
         # just hope for the best... scary API
         new_version_id = self._createUniqueId()
         self.context.manage_clone(getattr(self.context, copy_id), new_version_id)
         self.context._unapproved_version = (new_version_id, None, None)
+        self.context._index_version(new_version_id)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'deleteVersion')
