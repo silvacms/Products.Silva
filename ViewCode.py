@@ -95,7 +95,7 @@ class ViewCode:
             elif public == 'closed':
                 public_status = 'closed'
                 if not status_style:
-                    status_style = 'published'
+                    status_style = 'closed'
 
             if not status:
                 status = 'none'
