@@ -167,7 +167,10 @@ Problems when using Silva
 
     There're some reports of unicode problems regarding Silva images when
     when the Localizer Product is installed. So far the only solution found
-    is to uninstall Localizer.
+    is to uninstall Localizer, or set the environment variable
+    LOCALIZER_USE_ZOPE_UNICODE in the script starting Zope.
+    This may break other products relying on Localizer do apply its
+    unicode patches, however.
 
   Error when Adding a Silva Document
     
@@ -252,7 +255,6 @@ Problems when using Silva
     caching policy of your browser; set the caching policy so the
     browser checks for a newer version every time it loads the page.
 
-
   "AttributeError: is_id_valid" or other errors when adding a Silva
   object via the ZMI
 
@@ -320,7 +322,6 @@ Problems when using Silva
     to 'acquire' will have to be modified manually to allow adding the meta
     types of the extension product. Hopefully this will be changed in a later
     version of Silva.
-
 
   Indexer object doesn't work properly
 
