@@ -120,7 +120,7 @@ class GhostContentHandler(BaseHandler):
             if attrs.has_key((None, 'version_id')):
                 id = attrs[(None, 'version_id')]
                 version = GhostContent(id)
-                self._parent.addVersion(version)
+                self._parent._setObject(id, version)
                 self._result = version
 
     def endElementNS(self, name, qname):
