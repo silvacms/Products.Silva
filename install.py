@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.97.4.8 2004/02/27 12:27:31 guido Exp $
+# $Id: install.py,v 1.97.4.9 2004/03/10 22:04:55 clemens Exp $
 """Install for Silva Core
 """
 # Python
@@ -334,6 +334,7 @@ def configureSecurity(root):
     # not have these permissions. That's why we don't have to assign them
     # to viewer.
     root.manage_permission('Add Silva Publications', roleinfo.EDITOR_ROLES)
+    root.manage_permission('Add Silva Ghost Folders', roleinfo.EDITOR_ROLES)
     root.manage_permission('Add Silva Indexers', roleinfo.EDITOR_ROLES)
     root.manage_permission('Approve Silva content', roleinfo.EDITOR_ROLES)
     root.manage_permission('Change Silva access', roleinfo.CHIEF_ROLES)
