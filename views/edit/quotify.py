@@ -7,7 +7,7 @@
 ##parameters=input
 ##title=
 ##
-left_quote = '&#xab;'
-right_quote = '&#xbb;'
+left_quote = u'&#xab;'
+right_quote = u'&#xbb;'
 
-return u'%s%s%s' % (left_quote, input, right_quote)
+return u'%s%s%s' % (left_quote, unicode(input), right_quote)

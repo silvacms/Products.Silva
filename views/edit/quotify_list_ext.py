@@ -10,6 +10,6 @@
 if not ids:
    return ''
 from Products.Silva import mangle
-ids = [u'%s (%s)' % (context.quotify(id[0]), id[1]) for id in ids]
+ids = [u'%s (%s)' % (context.quotify(id[0]), unicode(id[1])) for id in ids]
 return mangle.List(ids)
 

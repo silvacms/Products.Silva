@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-16 15:58+0100\n"
+"PO-Revision-Date: 2004-12-17 11:02+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -560,7 +560,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:58
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: /globals/accesskeys.pt:64
 msgid "<span name=\"changing_screens_with_tabs\"><span class=\"subhead\"><a name=\"nav\">x</a></span></span><br /> The tabs have numbered access keys, starting from one going up to five. You can navigate horizontally accross an item&#8217;s screens by using alt-1, alt-2, and so forth."
@@ -1511,7 +1511,7 @@ msgstr "Skalieren"
 msgid ""
 "\n"
 "\t  Image scaling for web: use width x height in pixels, or one axis length, or a percentage (100x200, 100x*, *x200, 40%)."
-msgstr ""
+msgstr "Bildskalierung: verwenden Sie Breite × Höhe in Punkten (100 × 200) oder nur eine Achse (100 × *, * × 200) oder eine Prozentangabe (40%)."
 
 #: /views/edit/Asset/Image/scale_form.form:77
 msgid "cropping"
@@ -1522,7 +1522,7 @@ msgid ""
 "\n"
 "              Image cropping for web: use the &#8216;set crop coordinates&#8217; button, or enter X1xY1-X2xY2 to define the cropping box.\n"
 "          "
-msgstr ""
+msgstr "Bildbeschneidung: verwenden Sie den &#8216;Beschneidungskoordinaten setzen&#8217; Knopf oder geben Sie X1×Y1-X2×Y2 ein um das Beschneidungsrechteck festzulegen."
 
 #: /views/edit/Asset/Image/scale_submit.py:12
 msgid "Scaling and/or format changed"
@@ -1655,34 +1655,34 @@ msgstr "Publizieren"
 
 #: /views/edit/Container/GhostFolder/submit.py:19
 msgid "Ghost Folder changed but not synchronized, because thenew target is invalid."
-msgstr ""
+msgstr "Ghost-Ordner geändert aber nicht synchronisiert weil das neue Ziel ungültig ist."
 
 #: /views/edit/Container/GhostFolder/submit.py:24
 msgid "Ghost Folder changed."
-msgstr ""
+msgstr "Ghost-Ordner geändert."
 
 #: /views/edit/Container/GhostFolder/sync.py:16
 msgid "Ghost Folder was not synchronized, because the targetis invalid."
-msgstr ""
+msgstr "Ghost-Ordner wurde nicht synchronisiert weil das Ziel ungültig ist."
 
 #: /views/edit/Container/GhostFolder/sync.py:20
 msgid "Ghost Folder synchronized"
-msgstr ""
+msgstr "Ghost-Ordner wurde synchronisiert"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:102
 #: /views/edit/VersionedContent/Ghost/edit.pt:93
 msgid "Path to original (begins with &#8216;/&#8217;)."
-msgstr ""
+msgstr "Pfad zum Original (beginnt mit &#8216;/&#8217;)."
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:109
 #: /views/edit/VersionedContent/Ghost/edit.pt:100
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:64
 msgid "link"
-msgstr ""
+msgstr "Link"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:119
 msgid "Link to contents screen of original."
-msgstr ""
+msgstr "Link zum Inhaltsschirm des Originals."
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:126
 #: /views/edit/VersionedContent/Ghost/edit.pt:117
@@ -1703,7 +1703,7 @@ msgstr "Verweis speichern"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:183
 msgid "ghost folder contents"
-msgstr ""
+msgstr "Inhalt des Ghost-Ordners"
 
 # Default: "e"
 #: /views/edit/Container/GhostFolder/tab_edit.pt:197
@@ -1720,7 +1720,7 @@ msgstr "Ghost Ordner angleichen"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:54
 msgid "ghost folder of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Ghost-Ordner für &#xab;${title}&#xbb;"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:83
 #: /views/edit/VersionedContent/Ghost/edit.pt:74
@@ -1729,7 +1729,7 @@ msgstr "Objekt suchen, auf das verwiesen werden soll: alt-r"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:39
 msgid "convert this ghost folder to a normal folder: alt-c"
-msgstr ""
+msgstr "Diesen Ghost-Ordner in einen normalen Ordner umwandeln: alt-c"
 
 # Default: "c"
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:39
@@ -2966,7 +2966,7 @@ msgstr "Bewilligung von: ${ids}"
 
 #: /views/edit/Container/tab_status_approve.py:95
 msgid "<span class=\"error\">could not approve: ${ids}</span>"
-msgstr ""
+msgstr "<span class=\"error\">konnte nicht bewilligt werden: ${ids} </span>"
 
 #: /views/edit/Container/tab_status_change_settings.py:103
 msgid "Changed settings on: ${ids}"
