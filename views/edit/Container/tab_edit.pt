@@ -131,7 +131,7 @@
                   author
                 </th>
                 <th class="nosort listing-right">
-                  &nbsp;&nbsp;Shift
+                  &nbsp;&nbsp;<span i18n:translate="shift" tal:omit-tag="">Shift</span>span>
                 </th>
               </tr>
 
