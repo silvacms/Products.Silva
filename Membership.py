@@ -60,6 +60,7 @@ class CachedMember(Persistent, Acquisition.Implicit):
         self.id = userid
         self._fullname = fullname
         self._email = email
+        self._is_approved = is_approved
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation, 
                               'userid')
@@ -87,7 +88,7 @@ class CachedMember(Persistent, Acquisition.Implicit):
     def is_approved(self):
         """Returns 0
         """
-        return 0
+        return self._is_approved
 
 class NoneMember(Persistent, Acquisition.Implicit):
     __implements__ = IMember
