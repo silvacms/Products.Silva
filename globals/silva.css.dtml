@@ -721,6 +721,11 @@ select {
   line-height : 96%;
 }
 
+select.store {
+  font-size: 90%;
+  line-height : 96%;
+}
+
 optgroup {
   font-size: 100%;
 }
