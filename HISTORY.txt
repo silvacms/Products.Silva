@@ -7,7 +7,11 @@ Silva changes
 
     Bugs fixed
  
-        - also fulltext index title, not just XML content.
+        - Fulltext also indexes title, not just XML content.
+
+        - Fixed some unicode errors in EmailMessageService
+
+        - Cache is now bypassed if 'suppress_title' is in the request.
 
   0.9.2.5
 
