@@ -1,0 +1,9 @@
+Installation checklist
+======================
+
+Items that should be verified before you install Silva.
+
+Upgrade checklist
+=================
+
+Items of note when upgrading.
