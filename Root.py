@@ -16,7 +16,7 @@ class Root(Publication):
     
     meta_type = "Silva Root"
 
-    __implements__ = Interfaces.Container
+    __implements__ = Interfaces.Publication
     
     # MANIPULATORS
 

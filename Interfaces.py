@@ -322,7 +322,12 @@ class Container(SilvaObject, Publishable):
         show the default object if available.
         """
         pass
-    
+
+class Publication(Container):
+    """An interface supported by publication objects.
+    """
+    pass
+
 class Versioning(Interface.Base):
     """Can be mixed in with an object to support simple versioning.
     This interface only keeps a reference id to the version and the

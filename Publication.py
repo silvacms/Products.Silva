@@ -16,17 +16,17 @@ class Publication(Folder):
     
     meta_type = "Silva Publication"
 
-    __implements__ = Interfaces.Container
+    __implements__ = Interfaces.Publication
 
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')
     def get_publication(self):
-        """Get publication. Can be used with acquisition get the
+        """Get publication. Can be used with acquisition to get
         'nearest' Silva publication.
         """
         return self.aq_inner
-
+    
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'is_transparent')
     def is_transparent(self):
