@@ -13,39 +13,6 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from DateTime import DateTime
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
-
-    def test_xml_document_export(self):
-        testfolder = self.add_folder(
-            self.root,
-            'testfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
-        manage_addDocument(
-            testfolder, 'test_document', 'This is (surprise!) a document')
-        doc = testfolder.test_document
-        doc_edit = doc.get_editable()
-        doc_edit.content = ParsedXML(
-            'test_document',
-            """<?xml version="1.0" encoding="utf-8"?><doc>
-            <node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<node2>boo</node2>
-            baz</node></doc>""")
-        xmlexport.initializeXMLSourceRegistry()
-        # We will now do some horrible, horrible stuff to be able to test
-        # the export, while ignoring the export date, which we can't know
-        # about beforehand. Also I don't see how to get this within 80
-        # columns without a lot of pain.
-        splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-        settings = xmlexport.ExportSettings()
-        part1, part2, part3, part4, part5, part6 = splittor.split(xmlexport.getXMLSource(testfolder).xmlToString(settings))
-        self.assertEquals(part1, '<silva xmlns="http://infrae.com/ns/silva/0.5" xmlns:doc="http://infrae.com/ns/silva_document/1.0" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder" url="http://nohost/root/testfolder" datetime="')
-        self.assertEquals(part2, '"><folder id="testfolder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
-        self.assertEquals(part3, '</silva-extra:modificationtime><silva-extra:creationtime>')
-        self.assertEquals(part4, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><content><document id="test_document"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is (surprise!) a document</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder/test_document</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
-        self.assertEquals(part5, '</silva-extra:modificationtime><silva-extra:creationtime>')
-        self.assertEquals(part6, """</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><doc:doc>
-            <doc:node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<doc:node2>boo</doc:node2>
-            baz</doc:node></doc:doc></content></document></content></folder></silva>""")
-            
     def test_xml_folder_export(self):
         testfolder = self.add_folder(
             self.root,
@@ -188,6 +155,39 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(part7, '</silva-extra:modificationtime><silva-extra:creationtime>')
         self.assertEquals(part8, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><url>http://www.snpp.com/</url></content></link></content></folder></content></folder></silva>')
 
+    # XXX Move to Silva Document
+    def test_xml_document_export(self):
+        testfolder = self.add_folder(
+            self.root,
+            'testfolder',
+            'This is <boo>a</boo> testfolder',
+            policy_name='Auto TOC')
+        manage_addDocument(
+            testfolder, 'test_document', 'This is (surprise!) a document')
+        doc = testfolder.test_document
+        doc_edit = doc.get_editable()
+        doc_edit.content = ParsedXML(
+            'test_document',
+            """<?xml version="1.0" encoding="utf-8"?><doc>
+            <node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<node2>boo</node2>
+            baz</node></doc>""")
+        xmlexport.initializeXMLSourceRegistry()
+        # We will now do some horrible, horrible stuff to be able to test
+        # the export, while ignoring the export date, which we can't know
+        # about beforehand. Also I don't see how to get this within 80
+        # columns without a lot of pain.
+        splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
+        settings = xmlexport.ExportSettings()
+        part1, part2, part3, part4, part5, part6 = splittor.split(xmlexport.getXMLSource(testfolder).xmlToString(settings))
+        self.assertEquals(part1, '<silva xmlns="http://infrae.com/ns/silva/0.5" xmlns:doc="http://infrae.com/ns/silva_document/1.0" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder" url="http://nohost/root/testfolder" datetime="')
+        self.assertEquals(part2, '"><folder id="testfolder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
+        self.assertEquals(part3, '</silva-extra:modificationtime><silva-extra:creationtime>')
+        self.assertEquals(part4, '</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><content><document id="test_document"><workflow><version id="0"><status>unapproved</status><publication_datetime></publication_datetime><expiration_datetime></expiration_datetime></version></workflow><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is (surprise!) a document</silva-content:maintitle><silva-content:shorttitle></silva-content:shorttitle></set><set id="silva-extra"><silva-extra:subject></silva-extra:subject><silva-extra:expirationtime></silva-extra:expirationtime><silva-extra:keywords></silva-extra:keywords><silva-extra:publicationtime></silva-extra:publicationtime><silva-extra:location>http://nohost/root/testfolder/test_document</silva-extra:location><silva-extra:contactemail></silva-extra:contactemail><silva-extra:modificationtime>')
+        self.assertEquals(part5, '</silva-extra:modificationtime><silva-extra:creationtime>')
+        self.assertEquals(part6, """</silva-extra:creationtime><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:contactname></silva-extra:contactname><silva-extra:content_description></silva-extra:content_description><silva-extra:comment></silva-extra:comment></set></metadata><doc:doc>
+            <doc:node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<doc:node2>boo</doc:node2>
+            baz</doc:node></doc:doc></content></document></content></folder></silva>""")
+        
 if __name__ == '__main__':
     framework()
 else:

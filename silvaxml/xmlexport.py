@@ -251,47 +251,6 @@ class FolderXMLSource(SilvaBaseXMLSource):
         self._endElement(reader, 'content')
         self._endElement(reader, 'folder')
 
-class DocumentXMLSource(VersionedContentXMLSource):
-    """Export a Silva Document object to XML.
-    """
-    def _sax(self, reader, settings):
-        self._startElement(reader, 'document', {'id': self.context.id})
-        self._workflow(reader, settings)
-        self._versions(reader, settings)
-        self._endElement(reader, 'document')
-
-class DocumentVersionXMLSource(VersionXMLSource):
-    """Export a version of a Silva Document object to XML.
-    """
-    def _sax(self, reader, settings):
-        self._startElement(
-            reader, 'content', {'version_id': self.context.id})
-        self._metadata(reader, settings)
-        node = self.context.content.documentElement
-        self._sax_node(node, reader, settings)
-        self._endElement(reader, 'content')
-
-    def _sax_node(self, node, reader, settings):
-        """Export child nodes of a (version of a) Silva Document to XML
-        """
-        attributes = {}
-        if node.attributes:
-            for key in node.attributes.keys():
-                attributes[key] = node.attributes[key].value
-        self._startElementNS(reader, SilvaDocumentNS, node.nodeName, attributes)
-        text = ''
-        if node.hasChildNodes():
-            for child in node.childNodes:
-                if child.nodeType == Node.TEXT_NODE:
-                    if child.nodeValue:
-                        reader.characters(child.nodeValue)
-                elif child.nodeType == Node.ELEMENT_NODE:
-                    self._sax_node(child, reader, settings)
-        else:
-            if node.nodeValue:
-                reader.characters(node.nodeValue)
-        self._endElementNS(reader, SilvaDocumentNS, node.nodeName)
-
 class LinkXMLSource(VersionedContentXMLSource):
     """Export a Silva Link object to XML.
     """
@@ -370,6 +329,49 @@ class GhostFolderXMLSource(SilvaBaseXMLSource):
         self._endElement(reader, 'content')      
         self._endElement(reader, 'ghost_folder')      
 
+# XXX Move to SilvaDocument
+
+class DocumentXMLSource(VersionedContentXMLSource):
+    """Export a Silva Document object to XML.
+    """
+    def _sax(self, reader, settings):
+        self._startElement(reader, 'document', {'id': self.context.id})
+        self._workflow(reader, settings)
+        self._versions(reader, settings)
+        self._endElement(reader, 'document')
+
+class DocumentVersionXMLSource(VersionXMLSource):
+    """Export a version of a Silva Document object to XML.
+    """
+    def _sax(self, reader, settings):
+        self._startElement(
+            reader, 'content', {'version_id': self.context.id})
+        self._metadata(reader, settings)
+        node = self.context.content.documentElement
+        self._sax_node(node, reader, settings)
+        self._endElement(reader, 'content')
+
+    def _sax_node(self, node, reader, settings):
+        """Export child nodes of a (version of a) Silva Document to XML
+        """
+        attributes = {}
+        if node.attributes:
+            for key in node.attributes.keys():
+                attributes[key] = node.attributes[key].value
+        self._startElementNS(reader, SilvaDocumentNS, node.nodeName, attributes)
+        text = ''
+        if node.hasChildNodes():
+            for child in node.childNodes:
+                if child.nodeType == Node.TEXT_NODE:
+                    if child.nodeValue:
+                        reader.characters(child.nodeValue)
+                elif child.nodeType == Node.ELEMENT_NODE:
+                    self._sax_node(child, reader, settings)
+        else:
+            if node.nodeValue:
+                reader.characters(node.nodeValue)
+        self._endElementNS(reader, SilvaDocumentNS, node.nodeName)
+        
 class ExportSettings:
     def __init__(self):
         self._workflow = 1

@@ -1,13 +1,15 @@
-from Products.SilvaDocument.Document import manage_addDocument
-from Products.Silva.Ghost import manage_addGhost
+from Products.SilvaDocument.Document import Document, DocumentVersion
+from Products.Silva.Ghost import Ghost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.Folder import manage_addFolder
 from Products.Silva.silvaxml.xmlimport import BaseHandler
-from Products.Silva.Link import Link
+from Products.Silva.Link import Link, LinkVersion
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
 
 NS_URI = 'http://infrae.com/ns/silva/0.5'
+# XXX Move to SilvaDocument
+DOC_NS_URI = 'http://infrae.com/ns/silva_document/1.0'
 
 class SilvaHandler(BaseHandler):
     pass
@@ -140,10 +142,12 @@ class LinkContentHandler(BaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'content'):
             id = attrs[(None, 'version_id')].encode('utf-8')
-            self._parent.manage_addProduct['Silva'].manage_addLinkVersion(
-                id, '', '')
+            if not mangle.Id(self._parent, id).isValid():
+                return
+            version = LinkVersion(id, '')
+            self._parent._setObject(id, version)
             self._result = getattr(self._parent, id)
-
+            
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
             self._result.set_url(self.getData('url'))
@@ -166,3 +170,60 @@ class URLHandler(BaseHandler):
     def characters(self, chrs):
         self._parent_handler.setData('url', chrs)
 
+# XXX Move to SilvaDocument
+class DocumentHandler(BaseHandler):
+    def getOverrides(self):
+        return {
+            (NS_URI, 'content'): DocumentContentHandler
+            }
+
+    def startElementNS(self, name, qname, attrs):
+        if name == (NS_URI, 'document'):
+            id = attrs[(None, 'id')].encode('utf-8')
+            if not mangle.Id(self._parent, id).isValid():
+                return
+            object = Document(id)
+            self._parent._setObject(id, object)
+            self._result = getattr(self._parent, id)
+
+    def EndElementNS(self, name, qname):
+        if name == (NS_URI, 'document'):
+            pass
+        
+class DocumentContentHandler(BaseHandler):
+    def getOverrides(self):
+        return{
+            (DOC_NS_URI, 'doc'): DocElementHandler,
+            }
+
+    def startElementNS(self, name, qname, attrs):
+        if name == (NS_URI, 'content'):
+            id = attrs[(None, 'version_id')].encode('utf-8')
+            if not mangle.Id(self._parent, id).isValid():
+                return
+            version = DocumentVersion(id, '')
+            self._parent._setObject(id, version)
+            self._result = getattr(self._parent, id)
+        
+class DocElementHandler(BaseHandler):
+    def startElementNS(self, name, qname, attrs):
+        if name == (DOC_NS_URI, 'doc'):
+            self._node = self._parent.content.documentElement
+            self._tree = self._parent.content
+        else:
+            child = self._tree.createElement(name[1])
+            self._node.appendChild(child)
+            self._node = child
+        for ns, attr in attrs.keys():
+            self._node.setAttribute(attr, attrs[(ns, attr)])
+            
+    def characters(self, chrs):
+        textNode = self._tree.createTextNode(chrs)
+        self._node.appendChild(textNode)
+
+    def endElementNS(self, name, qname):
+        if name == (DOC_NS_URI, 'doc'):
+            self._node = None
+        else:
+            self._node = self._node.parentNode
+            
