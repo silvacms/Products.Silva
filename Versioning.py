@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.44 $
+# $Revision: 1.44.30.1 $
 
 # Zope
 from DateTime import DateTime
@@ -565,6 +565,15 @@ class Versioning:
         return self._unapproved_version[0]
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_unapproved_version_data')
+    def get_unapproved_version_data(self, update_status=1):
+        """Get all the workflow data of the unapproved version.
+        """
+        if update_status:
+            self._update_publication_status()
+        return self._unapproved_version
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_unapproved_version_publication_datetime')
     def get_unapproved_version_publication_datetime(self, update_status=1):
         """Get publication datetime."""
@@ -589,6 +598,15 @@ class Versioning:
             self._update_publication_status()
         return self._approved_version[0]
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_approved_version_data')
+    def get_approved_version_data(self, update_status=1):
+        """Get all the workflow data of the approved version.
+        """
+        if update_status:
+            self._update_publication_status()
+        return self._approved_version
+    
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_approved_version_publication_datetime')
     def get_approved_version_publication_datetime(self, update_status=1):
@@ -615,6 +633,16 @@ class Versioning:
             self._update_publication_status()
         return self._approved_version[0] or self._unapproved_version[0]
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_next_version_data')
+    def get_next_version_data(self, update_status=1):
+        """Get all workflow data of either approved version if available, or
+        unapproved version if not, or None if no next version.
+        """
+        if update_status:
+            self._update_publication_status()
+        return self._approved_version or self._unapproved_version
+    
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_next_version_publication_datetime')
     def get_next_version_publication_datetime(self, update_status=1):
@@ -656,6 +684,15 @@ class Versioning:
         return self._public_version[0]
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_public_version_data')
+    def get_public_version_data(self, update_status=1):
+        """Get all workflow data of the public version.
+        """
+        if update_status:
+            self._update_publication_status()
+        return self._public_version
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_version_publication_datetime')
     def get_public_version_publication_datetime(self, update_status=1):
         """Get publication datetime."""
@@ -690,6 +727,17 @@ class Versioning:
             return []
         else:
             return [version[0] for version in self._previous_versions]
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_previous_versions_data')
+    def get_previous_versions_data(self):
+        """Get list of workflow data of the previous versions, index 0 most
+        recent.
+        """
+        if self._previous_versions is None:
+            return []
+        else:
+            return [version for version in self._previous_versions]
         
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_last_closed_version')
@@ -778,6 +826,3 @@ def _format_date_helper(date):
     return mangle.DateTime(date).toStr()
 
 InitializeClass(Versioning)
-
-
-
