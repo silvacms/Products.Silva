@@ -76,7 +76,7 @@ else:
     import unittest
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(PublicationAddablesTestCase))
-        suite.addTest(unittest.makeSuite(FolderAddablesTestCase))
+        suite.addTest(unittest.makeSuite(OldAddablesTestCase))
+        suite.addTest(unittest.makeSuite(AddablesAdapterTestCase))
         return suite
     
