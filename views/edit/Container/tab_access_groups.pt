@@ -13,6 +13,7 @@
     global parent_screen_name string:Access;
     "
   i18n:domain="silva">
+
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="
@@ -54,7 +55,8 @@
         ______________ vein + title row ______________
       </tr>
       <tr>
-        <td class="top" colspan="6">
+        <td class="top"
+          colspan="5">
           <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure python:view.render_icon(model)" />
             <span i18n:translate="groups_in">groups in</span>
@@ -63,7 +65,7 @@
         </td>
       </tr>
       <tr class="top-controls">
-        <td colspan="6">
+        <td colspan="5">
           <h3 i18n:translate="groups_located_in_folder">
             Groups located in this folder
           </h3>
@@ -78,7 +80,7 @@
         <th i18n:translate="name">
           name
         </th>
-        <th i18n:translate="title">
+        <th tal:replace="nothing">
           title
         </th>
         <th i18n:translate="type">
@@ -119,7 +121,7 @@
                 </tal:block>
               </a>
             </td>
-            <td>
+            <td tal:replace="nothing">
               <a class="blacklink"
                 title="edit this group"
                 tal:attributes="href string:${group/absolute_url}/edit"
@@ -144,7 +146,7 @@
         </tal:define>
       </tal:repeat>
       <tr class="even">
-        <td colspan="6"
+        <td colspan="5"
           tal:condition="not:groups">
           <span i18n:translate="no_groups_defined_in_folder"
             tal:omit-tag="">
@@ -155,7 +157,7 @@
     </tbody>
     <tfoot>
       <tr class="controls">
-        <td colspan="4">
+        <td colspan="5">
           <input class="warning"
             type="submit"
             value="delete"
@@ -166,54 +168,50 @@
             i18n:attributes="title value onclick"
           />
         </td>
-        <td colspan="2">
-        </td>
       </tr>
     </tfoot>
   </table>
 </form>
 
 <tal:block replace="nothing">
-  _____________________ groups creation table _____________________
+  _____________________ add group _____________________
 </tal:block>
-  <tal:block replace="nothing">
-    _____________________ add group _____________________
-  </tal:block>
-  <form name="focusbox" 
-    action="add_object_submit" 
-    method="POST" 
-    enctype="multipart/form-data">
-    <table class="listing">
-      <thead>
-        <tr class="top-controls">
-          <td colspan="2">
-            <h3 i18n:translate="add_group">
-              Add a group
-            </h3>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="even">
-          <td class="align-right"
-            width="10%">
-            id<span class="warning">*</span>
-          </td>
-          <td style="width: 20em;">
-            <input size="20" 
-              type="text" 
-              name="field_object_id" 
-              value="" 
-              style="width:100%;"
-            />
-          </td>
-        </tr>
-        <tr class="odd">
-          <td class="align-right">
-            <span i18n:translate="title"
-              tal:omit-tag="">
-              title
-            </span>
+<form 
+  method="POST" 
+  action="add_object_submit" 
+  name="focusbox" 
+  enctype="multipart/form-data">
+  <table class="listing">
+    <thead>
+      <tr class="top-controls">
+        <td colspan="2">
+          <h3 i18n:translate="add_group">
+            Add a group
+          </h3>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="even">
+        <td class="align-right"
+          width="10%">
+          id<span class="warning">*</span>
+        </td>
+        <td style="width: 20em;">
+          <input style="width:100%;"
+            type="text" 
+            value="" 
+            name="field_object_id" 
+            size="20" 
+          />
+        </td>
+      </tr>
+      <tr class="odd" tal:replace="nothing">
+        <td class="align-right">
+          <span i18n:translate="title"
+            tal:omit-tag="">
+            title
+          </span>
           <td>
             <input size="20" 
               type="text" 
@@ -222,42 +220,42 @@
               style="width:100%;"
             />
           </td>
-        </tr>
-        <tr class="even">
-          <td class="align-right">
-            type<span class="warning">*</span>
-          </td>
-          <td>
-            <select name="meta_type">
-              <option value="Silva Group">
-                Group: a group defined by a list of users
-              </option>
-              <option value="Silva Virtual Group">
-                Virtual Group: a group defined by a list of normal groups
-              </option>
-              <option value="Silva IP Group">
-                IP Group: a group based on ip addresses
-              </option>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr class="controls">
-          <td class="align-right"
-            colspan="2">
-            <input class="button" 
-              type="submit" 
-              name="add_submit" 
-              value="save group" 
-              title="access key: alt-s" 
-              accesskey="s" 
-              i18n:attributes="title value"
-            />
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  </form>
+      </tr>
+      <tr class="even">
+        <td class="align-right">
+          type<span class="warning">*</span>
+        </td>
+        <td>
+          <select name="meta_type">
+            <option value="Silva Group">
+              Group: a group defined by a list of users
+            </option>
+            <option value="Silva Virtual Group">
+              Virtual Group: a group defined by a list of normal groups
+            </option>
+            <option value="Silva IP Group">
+              IP Group: a group based on ip addresses
+            </option>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="controls">
+        <td class="align-right"
+          colspan="2">
+          <input class="button" 
+            type="submit" 
+            name="add_submit" 
+            value="save group" 
+            title="access key: alt-s" 
+            accesskey="s" 
+            i18n:attributes="title value"
+          />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
 
       </td>
       <tal:block replace="nothing">

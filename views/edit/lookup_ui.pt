@@ -43,7 +43,7 @@
                 <a href="parent screen"
                   title="return to previous screen: alt-k"
                   accesskey="k"
-		  i18n:attributes="title"
+                  i18n:attributes="title"
                   tal:attributes="href here/lookup_back_link">
                   <div class="navigation-border" i18n:translate="back">
                     bac<u>k</u>...
@@ -106,7 +106,7 @@
                     value="Search"
                     accesskey="s"                      
                     title="access key: alt-s"
-		    i18n:attributes="value title"
+                    i18n:attributes="value title"
                   />
                 </td>
               </tr>
@@ -127,7 +127,7 @@
                     value="Add to clipboard"
                     title="add checked users to clipboard: alt-a"
                     accesskey="a"                      
-		    i18n:attributes="value title"
+                    i18n:attributes="value title"
                     tal:condition="python:lookup_result and len(lookup_result) > 3" />
                   <h3 i18n:translate="search_results">
                     Search results
@@ -183,7 +183,7 @@
                     value="Add to clipboard"
                     title="add checked users to clipboard: alt-a"
                     accesskey="a"
-		    i18n:attributes="value title"
+                    i18n:attributes="value title"
                     tal:condition="lookup_result"
                   />
                 </td>
@@ -203,19 +203,18 @@
               title="return to the access screen with this clipboard: alt-u"
               href="lookup_back_link"
               tal:attributes="href here/lookup_back_link"
-	      i18n:translate="use_clipboard">
+              i18n:translate="use_clipboard">
               <u>U</u>se clipboard...
             </a>
           </metal:block>
           <metal:block fill-slot="clipboard_actions">
             <input class="warning"
-              style="float: right;"
               name="lookup_remove_from_selection:method"
               type="submit"
               value="Remove user"
               title="remove users from the clipboard: alt-r"
               accesskey="r"
- 	      i18n:attributes="value title"
+               i18n:attributes="value title"
            />
           </metal:block>
         </metal:block>

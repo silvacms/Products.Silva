@@ -5,7 +5,7 @@ view = context
 
 if not ipranges:
     return view.tab_edit(
-        message_type="error", message="No ip ranges selected, so none removed.")
+        message_type="error", message="No ip ranges were selected, so nothing was removed.")
 removed = []
 for iprange in ipranges:
     model.removeIPRange(iprange)

@@ -16,45 +16,45 @@
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;
   ">
-  <table class="columns columns3"
-    tal:condition="has_access">
-    <tbody>
-      <tr>
-        <tal:block replace="nothing">
-          __________________ sidebar _________________
+<table class="columns columns3"
+  tal:condition="has_access">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        __________________ sidebar _________________
+      </tal:block>
+      <td class="left" rowspan="99">
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
+      </td>
+      <tal:block replace="nothing">
+        __________________ main __________________
+      </tal:block>
+      <td class="main">
+        <tal:block replace="nothing"> 
+          ________________ user roles management ________________ 
         </tal:block>
-        <td class="left" rowspan="99">
-          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
-            <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', breadcrumb_vein)" />
-            </metal:fill-slot>
-          </metal:use-macro>
-        </td>
-        <tal:block replace="nothing">
-          __________________ main __________________
-        </tal:block>
-        <td class="main">
-          <tal:block replace="nothing"> 
-            ________________ user roles management ________________ 
-          </tal:block>
-          <form action="."
-            method="POST"
-            tal:define="
-              members view/get_members;
-              global revokeable_roles nothing;
-              global revokeable_groups nothing">
-            <table class="listing">
-              <thead>
-                <tr>
-                  <td class="top"
-                    colspan="3">
-                    <h2 tal:attributes="title string:id: ${model/id}">
-                      <img tal:replace="structure python:view.render_icon(model)" />
-		      <span i18n:translate="user_roles_for" tal:omit-tag="">user roles for</span>
-                      &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
-                    </h2>
-                  </td>
-                </tr>
+        <form action="."
+          method="POST"
+          tal:define="
+            members view/get_members;
+            global revokeable_roles nothing;
+            global revokeable_groups nothing">
+          <table class="listing">
+            <thead>
+              <tr>
+                <td class="top"
+                  colspan="3">
+                  <h2 tal:attributes="title string:id: ${model/id}">
+                    <img tal:replace="structure python:view.render_icon(model)" />
+                    <span i18n:translate="user_roles_for" tal:omit-tag="">user roles for</span>
+                    &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                  </h2>
+                </td>
+              </tr>
               <tr class="top-controls">
                 <td colspan="3">
                   <h3 i18n:translate="grant_revoke_local_roles">
@@ -72,7 +72,7 @@
                 <th class="align-right" i18n:translate="roles_defined_above">
                   Roles defined above
                 </th>
-		  <th class="align-right" i18n:translate="roles_defined_here">
+                <th class="align-right" i18n:translate="roles_defined_here">
                   Roles defined here
                 </th>
               </tr>
@@ -115,7 +115,7 @@
                           value python:'%s||%s' % (userid, local);
                           id string:revoke_${local}-${userid}" 
                         tal:define="global revokeable_roles python: 1"
-                       /><br tal:condition="not:repeat/local/end" />
+                        /><br tal:condition="not:repeat/local/end" />
                     </tal:block>
                   </td>
                 </tr>
@@ -147,8 +147,8 @@
                       name="access_assign_to_user:method"
                       title="assign a local role to selected user(s)"
                       type="submit"
-                      value="Assign role"
-		      i18n:attributes="title value"
+                      value="assign role"
+                      i18n:attributes="title value"
                     />
                   </tal:block>
                 </td>
@@ -159,7 +159,7 @@
                     type="submit"
                     value="Revoke role"
                     tal:condition="revokeable_roles"
-		    i18n:attributes="title value"
+                    i18n:attributes="title value"
                   />
                 </td>
               </tr>
@@ -169,307 +169,312 @@
         <tal:block replace="nothing"> 
           ____________ pending roles management ____________
         </tal:block>
-          <!-- Pending role requests -->
-          <tal:block condition="allow_authentication_requests">
+        <!-- Pending role requests -->
+        <tal:block condition="allow_authentication_requests">
+          <form action="."
+            method="POST"
+            tal:define="requested_roles model/requested_roles"
+            tal:condition="requested_roles">
+            <table class="listing"
+              border="0"
+              cellpadding="5"
+              cellspacing="0"
+              style="empty-cells:show;">
+              <tr class="top-controls">
+                <td colspan="3">
+                  <h3 i18n:translate="pending_requests_for_roles">Pending requests for roles</h3>
+                </td>
+              </tr>
+              <tr>
+                <th i18n:translate="username">
+                  Username
+                </th>
+                <th i18n:translate="requested role">
+                  Requested role
+                </th>
+                <th i18n:translate="is_approved">
+                  Is approved
+                </th>
+              </tr>
+              <tal:block repeat="req requested_roles">
+                <tr tal:define="
+                  iterate repeat/req/odd;
+                  member python:model.sec_get_member(req[0]);
+                  requested_role python:req[1];"
+                  tal:attributes="class python: iterate and 'odd' or 'even';">
+                  <td>
+                    <input name="requests:list"
+                      type="checkbox"
+                      tal:attributes="
+                        value python: '|'.join(req);
+                        id string:pending_${member/userid};" />
+                      <label tal:content="member/userid" 
+                        tal:attributes="for string:pending_${member/userid}">
+                        name
+                      </label>
+                  </td>
+                  <td tal:content="requested_role">
+                  </td>
+                  <td tal:content="python: test(member.is_approved(), here.gettext('Yes'),here.gettext('No'))">
+                    Yes or No
+                  </td>
+                </tr>
+              </tal:block>
+              <tal:block replace="nothing"> 
+                <!-- shouldn't be needed, since the entire form is conditioned -->
+              </tal:block>
+              <tr class="even"
+                tal:condition="not:requested_roles">
+                <td colspan="3" i18n:translate="no_roles_requested">
+                  No roles requested
+                </td>
+              </tr>
+              <tr class="controls align-right">
+                <td>
+                  <input class="warning"
+                    name="tab_access_deny_access:method"
+                    type="submit"
+                    value="Deny role"
+                    title="access key: alt-d"
+                    accesskey="d"
+                    i18n:attributes="title value"
+                  />
+                </td>
+                <td class="align-right"
+                  colspan="2">
+                  <tal:block tal:condition="requested_roles">
+                    <input class="button"
+                      name="tab_access_allow_access:method"
+                      type="submit"
+                      value="Grant role"
+                      title="access key: alt-g"
+                      i18n:attributes="title value"
+                      accesskey="g"
+                    />
+                    <input class="button"
+                      name="tab_access_allow_and_approve:method"
+                      type="submit"
+                      value="Grant and approve"
+                      title="access key: alt-a"
+                      i18n:attributes="title value"
+                      accesskey="a"
+                    />
+                  </tal:block>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </tal:block>
+      </td>
+      <td class="right">        
+        <tal:block replace="nothing"> 
+          _______________ users clipboard ________________
+        </tal:block>
+        <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
+          <metal:block fill-slot="clipboard_actions">
+            <select class="manipulator"
+              name="assign_role"
+              title="select a role to assign">
+              <option value="None" 
+                i18n:translate="select_role">
+                select role:
+              </option>
+              <option value="role"
+                tal:repeat="role model/sec_get_roles"
+                tal:content="role"
+                tal:attributes="value role">
+                role name
+              </option>
+            </select>
+            <input class="button"
+              name="access_assign_to_user:method"
+              title="assign a local role to selected user(s)"
+              type="submit"
+              value="assign" 
+              i18n:attributes="title value"
+            />
+          </metal:block>
+        </metal:block>          
+      </td>
+    </tr>
+    <tal:block replace="nothing">
+      _______________ group roles management ________________
+    </tal:block>
+    <tr>
+      <td class="main"
+        style="padding-top:2em;">
+        <tal:block condition="python:model.sec_groups_enabled()">
+          <div class="alert"
+            tal:condition="not:group_service">
+            <p>
+              <span class="subhead">
+                <span class="warning" i18n:translate="groups_service_not_defined">A Groups Service is not installed</span>
+              </span><br /><span i18n:translate="groups_service_not_defined_explanation">
+              You are seeing this message because the Silva Groups 
+              extension is installed on the file system, 
+              but a Groups Service hasn't been added to this Silva 
+              instance. To install one, go to the 
+              <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services">Silva Root in the ZMI</a>, choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>. 
+              No further configuration is necessary.</span>
+            </p>
+          </div>
+          <tal:block condition="group_service">
+            <!-- Defined groups listing -->
+            <!-- Role assignment table -->
             <form action="."
-              method="POST"
-              tal:define="requested_roles model/requested_roles"
-              tal:condition="requested_roles">
+              method="POST">
               <table class="listing"
                 border="0"
                 cellpadding="5"
                 cellspacing="0"
-                style="empty-cells:show;">
+                style="empty-cells:show;"
+                tal:define="groups view/get_groups;">
+                <thead>
+                  <tr>
+                    <td class="top"
+                      colspan="3">
+                      <h2 tal:attributes="title string:id: ${model/id}">
+                        <img tal:replace="structure python:view.render_icon(model)" />
+                        <span i18n:translate="group_roles_for" tal:omit-tag="">group roles for</span>
+                        &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
+                      </h2>
+                    </td>
+                  </tr>
+                </thead>
                 <tr class="top-controls">
                   <td colspan="3">
-                    <h3 i18n:translate="pending_requests_for_roles">Pending requests for roles</h3>
+                    <h3 i18n:translate="grant_revoke_local_roles_for_groups">
+                      Grant or revoke local roles for groups of users
+                    </h3>
                   </td>
                 </tr>
-                <tr>
-                  <th i18n:translate="username">
-                    Username
+                <tr tal:condition="groups">
+                  <th i18n:translate="groupname">
+                    Groupname
                   </th>
-                  <th i18n:translate="requested role">
-                    Requested role
+                  <th class="align-right" i18n:translate="roles_defined_above">
+                    Roles defined above
                   </th>
-                  <th i18n:translate="is_approved">
-                    Is approved
+                  <th class="align-right" i18n:translate="roles_defined_here">
+                    Roles defined here
                   </th>
                 </tr>
-                <tal:block repeat="req requested_roles">
-                  <tr tal:define="
-                    iterate repeat/req/odd;
-                    member python:model.sec_get_member(req[0]);
-                    requested_role python:req[1];"
+                <tal:block repeat="ugroup groups">
+                  <tr
+                    tal:define="
+                      group python: unicode(ugroup, 'latin1', 'ignore');
+                      iterate repeat/ugroup/odd"
                     tal:attributes="class python: iterate and 'odd' or 'even';">
-                    <td>
-                      <input name="requests:list"
+                    <td class="align-left">
+                      <input name="groups:list"
                         type="checkbox"
+                        value="group"
                         tal:attributes="
-                          value python: '|'.join(req);
-                          id string:pending_${member/userid};" />
-                        <label tal:content="member/userid" 
-                          tal:attributes="for string:pending_${member/userid}">
-                          name
+                          value group;
+                          id group;" />
+                        &nbsp;
+                        <label tal:content="group"
+                          tal:attributes="for group">
+                          group
                         </label>
+                        <tal:block 
+                          condition="python: group not in group_service.listAllGroups()">
+                          &lt;broken&gt; <!-- XXX replace this by something nice
+                          -->
+                        </tal:block>
                     </td>
-                    <td tal:content="requested_role">
+                    <td class="align-right">
+                      <tal:block repeat="upward python:model.sec_get_upward_roles_for_group(group)">
+                        <i tal:content="upward" />
+                        &nbsp;
+                        <br tal:condition="not:repeat/upward/end" />
+                      </tal:block>
                     </td>
-                    <td tal:content="python: test(member.is_approved(), here.gettext('Yes'),here.gettext('No'))">
-                      Yes or No
+                    <td class="align-right">
+                      <tal:block repeat="local python:model.sec_get_local_roles_for_group(group)">
+                        <label tal:content="local" 
+                          tal:attributes="for string:revoke_${group}">
+                          local
+                        </label>
+                        &nbsp;
+                        <input class="warning-checkbox"
+                          name="revoke_roles:list"
+                          type="checkbox"
+                          value=""
+                          tal:attributes="
+                            value python:'%s||%s' % (group, local);
+                            id string:revoke_${group};"
+                          tal:define="global revokeable_groups python: 1"
+                          /><br tal:condition="not:repeat/local/end" />
+                      </tal:block>
                     </td>
                   </tr>
                 </tal:block>
-                <tal:block replace="nothing"> 
-                  <!-- shouldn't be needed, since the entire form is conditioned -->
-                </tal:block>
                 <tr class="even"
-                  tal:condition="not:requested_roles">
-                  <td colspan="3" i18n:translate="no_roles_requested">
-                    No roles requested
+                  tal:condition="not:groups">
+                  <td colspan="3">
+                    <i i18n:translate="no_groups_with_local_roles">
+                      No groups with (local) roles
+                    </i>
                   </td>
                 </tr>
-                <tr class="controls align-right">
-                  <td>
-                    <input class="warning"
-                      name="tab_access_deny_access:method"
-                      type="submit"
-                      value="Deny role"
-                      title="access key: alt-d"
-                      accesskey="d"
-		      i18n:attributes="title value"
-                    />
-                  </td>
-                  <td class="align-right"
+                <tr class="controls">
+                  <td class="align-left"
                     colspan="2">
-                    <tal:block tal:condition="requested_roles">
+                    <tal:block tal:condition="groups">
+                      <select class="manipulator"
+                        name="assign_role"
+                        title="select a role to assign">
+                        <option value="None"
+                          i18n:translate="select_role">
+                          select role:
+                        </option>
+                        <option value="role"
+                          tal:repeat="role model/sec_get_roles"
+                          tal:content="role"
+                          tal:attributes="value role">
+                          role name
+                        </option>
+                      </select>
                       <input class="button"
-                        name="tab_access_allow_access:method"
+                        name="access_assign_to_group:method"
+                        title="assign a local role to selected user(s)"
                         type="submit"
-                        value="Grant role"
-                        title="access key: alt-g"
-		        i18n:attributes="title value"
-                        accesskey="g"
-                      />
-                      <input class="button"
-                        name="tab_access_allow_and_approve:method"
-                        type="submit"
-                        value="Grant and approve"
-                        title="access key: alt-a"
-		        i18n:attributes="title value"
-                        accesskey="a"
+                        value="assign role to group"
+                        i18n:attributes="title value"
                       />
                     </tal:block>
+                  </td>
+                  <td class="align-right">
+                    <input class="warning"
+                      name="access_revoke_from_group:method"
+                      title="revoke selected role(s) from selected group(s)"
+                      type="submit"
+                      value="revoke role from group" 
+                      tal:condition="revokeable_groups"
+                      i18n:attributes="title value"
+                    />
                   </td>
                 </tr>
               </table>
             </form>
           </tal:block>
-        </td>
-        <td class="right">        
-          <!-- Clipboard -->
-          <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
-            <metal:block fill-slot="clipboard_actions">
-              <select class="manipulator"
-                name="assign_role"
-                style="float:left;"
-                title="select a role to assign">
-                <option value="None" i18n:translate="select_role">
-                  select role:
-                </option>
-                <option value="role"
-                  tal:repeat="role model/sec_get_roles"
-                  tal:content="role"
-                  tal:attributes="value role">
-                  Role name
-                </option>
-              </select>
-              <input class="button"
-                name="access_assign_to_user:method"
-                title="assign a local role to selected user(s)"
-                type="submit"
-                value="Assign" 
-		i18n:attributes="title value"
-		/>
-            </metal:block>
-          </metal:block>          
-        </td>
-      </tr>
-      <tal:block replace="nothing"> 
-        _______________ group roles management ________________
-      </tal:block>
-      <tr>
-        <td class="main"
-          style="padding-top:2em;">
-          <tal:block condition="python:model.sec_groups_enabled()">
-            <div class="alert"
-              tal:condition="not:group_service">
-              <p>
-              <span class="subhead">
-                <span class="warning" i18n:translate="groups_service_not_defined">A Groups Service is not installed</span>
-              </span><br /><span i18n:translate="groups_service_not_defined_explanation">
-		  You are seeing this message because the Silva Groups 
-		  extension is installed on the file system, 
-		  but a Groups Service hasn't been added to this Silva 
-		  instance. To install one, go to the 
-		  <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services">Silva Root in the ZMI</a>, choose &#8220;Groups Service&#8221; from the add list and give it the id <code>service_groups</code>. 
-		No further configuration is necessary.</span>
-              </p>
-            </div>
-            <tal:block condition="group_service">
-              <!-- Defined groups listing -->
-              <!-- Role assignment table -->
-              <form action="."
-                method="POST">
-                <table class="listing"
-                  border="0"
-                  cellpadding="5"
-                  cellspacing="0"
-                  style="empty-cells:show;"
-                  tal:define="groups view/get_groups;">
-                  <thead>
-                    <tr>
-                      <td class="top"
-                        colspan="3">
-                        <h2 tal:attributes="title string:id: ${model/id}">
-                          <img tal:replace="structure python:view.render_icon(model)" />
-			  <span i18n:translate="group_roles_for" tal:omit-tag="">group roles for</span>
-                          &#xab;<span tal:replace="string:${title}">title</span>&#xbb;
-                        </h2>
-                      </td>
-                    </tr>
-                  </thead>
-                  <tr class="top-controls">
-                    <td colspan="3">
-                      <h3 i18n:translate="grant_revoke_local_roles_for_groups">
-                        Grant or revoke local roles for groups of users
-                      </h3>
-                    </td>
-                  </tr>
-                  <tr tal:condition="groups">
-                    <th i18n:translate="groupname">
-                      Groupname
-                    </th>
-                    <th class="align-right" i18n:translate="roles_defined_above">
-                      Roles defined above
-                    </th>
-                    <th class="align-right" i18n:translate="roles_defined_here">
-                      Roles defined here
-                    </th>
-                  </tr>
-                  <tal:block repeat="ugroup groups">
-                    <tr
-                      tal:define="
-                        group python: unicode(ugroup, 'latin1', 'ignore');
-                        iterate repeat/ugroup/odd"
-                      tal:attributes="class python: iterate and 'odd' or 'even';">
-                      <td class="align-left">
-                        <input name="groups:list"
-                          type="checkbox"
-                          value="group"
-                          tal:attributes="
-                            value group;
-                            id group;" />
-                          &nbsp;
-                          <label tal:content="group"
-                            tal:attributes="for group">
-                            group
-                          </label>
-                          <tal:block 
-                            condition="python: group not in group_service.listAllGroups()">
-                            &lt;broken&gt; <!-- XXX replace this by something nice
-                            -->
-                          </tal:block>
-                      </td>
-                      <td class="align-right">
-                        <tal:block repeat="upward python:model.sec_get_upward_roles_for_group(group)">
-                          <i tal:content="upward" />
-                          &nbsp;
-                          <br tal:condition="not:repeat/upward/end" />
-                        </tal:block>
-                      </td>
-                      <td class="align-right">
-                        <tal:block repeat="local python:model.sec_get_local_roles_for_group(group)">
-                          <label tal:content="local" 
-                            tal:attributes="for string:revoke_${group}">
-                            local
-                          </label>
-                          &nbsp;
-                          <input class="warning-checkbox"
-                            name="revoke_roles:list"
-                            type="checkbox"
-                            value=""
-                            tal:attributes="
-                              value python:'%s||%s' % (group, local);
-                              id string:revoke_${group};"
-                            tal:define="global revokeable_groups python: 1"
-                          /><br tal:condition="not:repeat/local/end" />
-                        </tal:block>
-                      </td>
-                    </tr>
-                  </tal:block>
-                  <tr class="even"
-                    tal:condition="not:groups">
-                    <td colspan="3" i18n:translate="no_groups_with_local_roles">
-                      No groups with (local) roles
-                    </td>
-                  </tr>
-                  <tr class="controls">
-                    <td class="align-left"
-                      colspan="2">
-                      <tal:block tal:condition="groups">
-                        <select class="manipulator"
-                          name="assign_role"
-                          title="select a role to assign">
-                          <option value="None" i18n:translate="select_role">
-                            select role:
-                          </option>
-                          <option value="role"
-                            tal:repeat="role model/sec_get_roles"
-                            tal:content="role"
-                            tal:attributes="value role">
-                            Role name
-                          </option>
-                        </select>
-                        <input class="button"
-                          name="access_assign_to_group:method"
-                          title="assign a local role to selected user(s)"
-                          type="submit"
-                          value="Assign role to group"
-			  i18n:attributes="title value"
-                        />
-                      </tal:block>
-                    </td>
-                    <td class="align-right">
-                      <input class="warning"
-                        name="access_revoke_from_group:method"
-                        title="revoke selected role(s) from selected group(s)"
-                        type="submit"
-                        value="Revoke role from group" 
-                        tal:condition="revokeable_groups"
-			i18n:attributes="title value"
-                      />
-                    </td>
-                  </tr>
-                </table>
-              </form>
-            </tal:block>
-          </tal:block>
-        </td>
-        <tal:block replace="nothing"> 
-          _______________ groups clipboard ________________
         </tal:block>
-        <td class="right"
-          style="padding-top:2em ! important;">
-          <tal:condition condition="group_service">
+      </td>
+      <tal:block replace="nothing"> 
+        _______________ groups clipboard ________________
+      </tal:block>
+      <td class="right"
+        style="padding-top:2em ! important;">
+        <tal:condition condition="group_service">
+          <tal:define define="global group_meta_type string:Silva Group">
             <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
-              <div style="text-align:right;"
-                metal:fill-slot="listing_actions">
+              <metal:block fill-slot="listing_actions">
                 <select class="manipulator"
                   name="assign_role"
-                  style="float:left;"
                   title="select a role to assign">
-                  <option value="None" i18n:translate="select_role">
+                  <option value="None"
+                    i18n:translate="select_role">
                     select role:
                   </option>
                   <option value="role"
@@ -484,97 +489,159 @@
                   name="access_assign_to_group:method"
                   value="Assign"
                   title="assign selected role to selected group(s)"
-		  i18n:attributes="title value"
+                  i18n:attributes="title value"
                 />
-              </div>
+              </metal:block>
             </metal:block>
-          </tal:condition>
-        </td>
-      </tr>
+          </tal:define>
+        </tal:condition>
+      </td>
+    </tr>
+    <tal:block replace="nothing"> 
+      _____________________ misc tools ______________________
+    </tal:block>
+    <tr>
       <tal:block replace="nothing"> 
-        _____________________ misc tools ______________________
+        ___________ access restriction by role __________
       </tal:block>
-      <tr>
-        <tal:block replace="nothing"> 
-          ___________ access restriction by role __________
-        </tal:block>
-        <td class="main">
-          <form action="minimal_access_role_submit"
-            method="POST"
-            tal:define="
-              minimal_role model/sec_minimal_view_role;">
-            <table class="listing sublisting">
-              <thead>
-                <tal:block replace="nothing"> 
-                  _____________ vein + title row ______________
-                </tal:block>
-                <tr>
-                  <td class="top">
-                    <h2 tal:attributes="title string:id: ${model/id}">
-                      <img tal:replace="structure python:view.render_icon(model)" />
-		    <span i18n:translate="public_view_access_restrictions" tal:omit-tag="">public view access restrictions for</span> &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
-                    </h2>
-                  </td>
-                </tr>
-                <tal:block replace="nothing"> 
-                  ______________ top controls row _____________
-                </tal:block>
-                <tr class="top-controls">
-                  <td>
-                   <h3 i18n:translate="access_restrictions_by_role">
-                     Access restriction by Role
-                    </h3>
-                  </td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="odd">
-                  <td i18n:translate="setting_an_access_restriction">
-                    Setting an access restriction here affects all objects on this and lower levels.
-                  </td>
-                </tr>
-              </tbody>
+      <td class="main">
+        <form action="minimal_access_role_submit"
+          method="POST"
+          tal:define="
+            minimal_role model/sec_minimal_view_role;">
+          <table class="listing sublisting">
+            <thead>
               <tal:block replace="nothing"> 
-                __________________ controls ___________________
+                _____________ vein + title row ______________
               </tal:block>
-              <tfoot>
-                <tr class="controls">
-                  <td class="align-right">
-                    <select class="manipulator"
-                      name="role"
-                      title="select a role to assign" i18n:attributes="title">
-                      <option value="Anonymous" i18n:translate="anonymous"
-                        tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
-                        Anonymous
-                      </option>
-                      <option value="Viewer" i18n:translate="viewer"
-                        tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">
-                        Viewer
-                      </option>
-                      <option value="Authenticated" i18n:translate="authenticated"
-                        tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">
-                        Authenticated
-                      </option>
-                    </select>
-                    <input class="button"
-                      type="submit"
-                      value="Set restriction"
-                      title="restrict access to users with a specific role"      
-		      i18n:attributes="title value"
-                    />
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </form>
-          <tal:block replace="nothing"> 
-            ____________________ utilities ____________________
-          </tal:block>
-          <form action="minimal_access_role_submit"
-            method="POST"
-            tal:define="
-              is_closed model/sec_is_closed_to_public;
-              minimal_role model/sec_minimal_view_role;">
+              <tr>
+                <td class="top">
+                  <h2 tal:attributes="title string:id: ${model/id}">
+                    <img tal:replace="structure python:view.render_icon(model)" />
+                    <span i18n:translate="public_view_access_restrictions" tal:omit-tag="">public view access restrictions for</span> &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                  </h2>
+                </td>
+              </tr>
+              <tal:block replace="nothing"> 
+                ______________ top controls row _____________
+              </tal:block>
+              <tr class="top-controls">
+                <td>
+                  <h3 i18n:translate="access_restrictions_by_role">
+                    access restriction by role
+                  </h3>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="odd">
+                <td i18n:translate="setting_an_access_restriction">
+                  Setting an access restriction here affects all objects on this and lower levels.
+                </td>
+              </tr>
+            </tbody>
+            <tal:block replace="nothing"> 
+              __________________ controls ___________________
+            </tal:block>
+            <tfoot>
+              <tr class="controls">
+                <td>
+                  <select class="manipulator"
+                    name="role"
+                    title="select a role to assign" i18n:attributes="title">
+                    <option value="Anonymous" i18n:translate="anonymous"
+                      tal:attributes="selected python:test(minimal_role == 'Anonymous', 'SELECTED', nothing)">
+                      Anonymous
+                    </option>
+                    <option value="Viewer" i18n:translate="viewer"
+                      tal:attributes="selected python:test(minimal_role == 'Viewer', 'SELECTED', nothing)">
+                      Viewer
+                    </option>
+                    <option value="Authenticated" i18n:translate="authenticated"
+                      tal:attributes="selected python:test(minimal_role == 'Authenticated', 'SELECTED', nothing)">
+                      Authenticated
+                    </option>
+                  </select>
+                  <input class="button"
+                    type="submit"
+                    value="set restriction"
+                    title="restrict access to users with a specific role"      
+                    i18n:attributes="title value"
+                  />
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
+        <tal:block replace="nothing"> 
+          ____________ access restriction IP address ________
+        </tal:block>
+        <form action="access_restriction_submit"
+          method="POST"
+          tal:define="definition_aquired python:hasattr(model, 'access_restriction') and not model.hasProperty('access_restriction')">
+          <table class="listing">
+            <thead>
+              <tr tal:replace="nothing">
+                ______________ top controls row ______________
+              </tr>
+              <tr class="top-controls">
+                <td colspan="2">
+                  <h3 i18n:translate="define_restrictions_by_ip_address">
+                    define restriction by IP address
+                  </h3>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="odd">
+                <td>
+                  <span i18n:translate="all_objects_on_level_can_be_restricted" tal:omit-tag="">
+                    All objects on this and lower levels can be restricted for access from specific IP ranges.</span>
+                    <span tal:omit-tag="" 
+                      tal:condition="definition_aquired" >
+                      <span i18n:translate="the_current_restriction" tal:omit-tag="">The current restriction</span>
+                      (<code tal:content="python:getattr(model, 'access_restriction')" />) 
+                      <span i18n:translate="is_aquired_from_above" tal:omit-tag="">is acquired from above</span>.
+                    </span>
+                </td>
+              </tr>
+              <tr class="even">
+                <td>
+                  <textarea name="access_restriction"
+                    style="width:100%;"
+                    tal:condition="python:model.hasProperty('access_restriction')"
+                    tal:content="python:model.getProperty('access_restriction')"></textarea>
+                    <textarea name="access_restriction"
+                      style="width:100%;"
+                      tal:condition="python:not model.hasProperty('access_restriction')"></textarea>
+                </td>
+              </tr>
+            </tbody>
+            <tal:block replace="nothing"> 
+              __________________ controls ___________________
+            </tal:block>
+            <tfoot>
+              <tr class="controls">
+                <td>
+                  <input class="button"
+                    type="submit"
+                    value="Set ip restriction"
+                    title="restrict access to specified IP addresses" 
+                    i18n:attributes="title value"
+                  />
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
+        <tal:block replace="nothing"> 
+          ____________________ utilities ____________________
+        </tal:block>
+        <form action="minimal_access_role_submit"
+          method="POST"
+          tal:define="
+            is_closed model/sec_is_closed_to_public;
+            minimal_role model/sec_minimal_view_role;">
           <table class="listing sublisting">
             <thead>
               <tal:block replace="nothing">
@@ -584,7 +651,7 @@
                 <td class="top">
                   <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
-		  <span i18n:translate="utilities" tal:omit-tag="">utilities</span>
+                    <span i18n:translate="utilities" tal:omit-tag="">utilities</span>
                   </h2>
                 </td>
               </tr>
@@ -593,8 +660,8 @@
               </tal:block>
               <tr class="top-controls">
                 <td>
-                 <h3 i18n:translate="list_user_email_addresses">
-                   List user email addresses
+                  <h3 i18n:translate="list_user_email_addresses">
+                    list user email addresses
                   </h3>
                 </td>
               </tr>
@@ -612,27 +679,28 @@
             </tal:block>
             <tfoot>
               <tr class="controls">
-                <td class="align-right">
+                <td class="align-right"
+                  style="padding-top:0.3em;padding-bottom:0.3em;">
                   <a class="navigation"
                     href="tab_access_authorized_below"
                     title="retrieve a comma separated list of user email addresses"
                     accesskey="e"
-		    i18n:attributes="title"
-		     i18n:translate="list_email_addresses"
-                  >
-                    &nbsp;List <u>e</u>mail addresses...
+                    i18n:attributes="title"
+                    i18n:translate="list_email_addresses"
+                    >
+                    &nbsp;list <u>e</u>mail addresses...
                   </a>
                 </td>
               </tr>
             </tfoot>
           </table>
         </form>
-        </td>
-        <td class="right">
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      </td>
+      <td class="right">
+      </td>
+    </tr>
+  </tbody>
+</table>
 </metal:block>
 </metal:block>
 </html>

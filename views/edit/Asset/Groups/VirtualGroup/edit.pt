@@ -1,122 +1,178 @@
- <div class="margins"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
   tal:define="
     view here;
     model request/model;
     root_url model/get_root_url;
     title model/get_title_editable;
-    breadcrumb_vein string:Edit;
+    breadcrumb_vein string:Editor;
+    active_tab string:../../edit/tab_access_groups;
+    parent_screen_name string:Groups;
     has_access here/has_change_access_permission;">
-  <tal:block condition="has_access">
-    <tal:block condition="model/isValid | nothing">
-      <h3>
-        <a href="tab_access"
-          title="Back to Groups"
-          tal:attributes="href python:'%s/edit/tab_access_groups' % model.get_container().absolute_url()"
-	   i18n:attributes="title">
-          <img alt="Up to top of Access tab"
-            border="0"
-            height="16"
-            width="16"
-            tal:attributes="src string:${root_url}/globals/left.gif" />
-          Back
-        </a>
-      </h3>
-      <h2>
-        <span tal:replace="model/meta_type">
-          Meta type
-      </span><span i18n:translate="for" tal:omit-tag=""> for </span>
-        <span class="document-title">
-          &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
-        </span>
-      </h2>
+  
+<table class="columns columns3">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
+      <td class="left"
+        tal:define="template_id string:tab_edit">
+        <tal:block replace="nothing">
+          ______________ parent screen link ______________
+        </tal:block>
+        <metal:block use-macro="view/macro_vein_navigation/macros/parent" />
+        <tal:block replace="nothing">
+          ______________ vein navigation ______________
+        </tal:block>
+        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+      </td>
 
-      <h3 i18n:translate="virtual_group_members">
-        Virtual Group &#8216;members&#8217;
-      </h3>
-      <!-- Defined virtual groups listing -->
-      <metal:block use-macro="view/macro_groups_listing/macros/virtual_groups_listing">
-        <metal:block fill-slot="listing_actions">
-          <input class="button"
-            name="add_groups_from_virtualgroup_to_virtualgroup:method"
-            title="Copy groups as defined on selected virtual group(s)."
-            type="submit"
-            value="Copy from virtual group(s)" 
-	    i18n:attributes="title value"/>
-        </metal:block>
-      </metal:block>
-      <!-- Defined groups listing -->
-      <metal:block use-macro="view/macro_groups_listing/macros/normal_groups_listing">
-        <metal:block fill-slot="listing_actions">
-          <input class="button"
-            name="add_groups_to_virtualgroup:method"
-            title="Add selected group(s) to this virtual group."
-            type="submit"
-            value="Add to virtual group" 
-	    i18n:attributes="title value"/>
-        </metal:block>
-      </metal:block>
+      <tal:block replace="nothing">
+        _____________________ main _____________________
+      </tal:block>
+      <td class="main">
 
-      <!-- Group listing table -->
-      <form action="."
-        method="POST">
-        <table class="borders top bottom left right"
-          border="0"
-          cellpadding="5"
-          cellspacing="0"
-          style="empty-cells:show;"
-          tal:define="groupids model/listGroups">
-          <tr align="left"
-            valign="top">
-            <th>
-              <b i18n:translate="groupname">
-                Groupname
-              </b>
-            </th>
-          </tr>
-          <tal:block repeat="groupid groupids">
-            <tr valign="top"
-              tal:define="
-                oddrow repeat/groupid/odd;"
-              tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
-              <td align="left">
-                <input name="groupids:list"
-                  type="checkbox"
-                  value="groupid"
-                  tal:attributes="value groupid" />
-                &nbsp;
-                <b tal:content="groupid">
-                  groupname
-                </b>
-              </td>
-            </tr>
+<table class="listing">
+  <thead>
+    <tal:block replace="nothing">
+      ______________ vein + title row ______________
+    </tal:block>
+    <tr>
+      <td class="top"
+        colspan="3">
+        <h2>
+          <img tal:replace="structure python:view.render_icon(model)" />
+          <span style="text-transform:lowercase;"
+            tal:content="model/meta_type">Meta type</span> 
+            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
+        </h2>
+      </td>
+    </tr>
+    <tr class="top-controls">
+      <td>
+        <h3>
+          Virtual Group &#8216;members&#8217;
+        </h3>
+      </td>
+    </tr>
+  </thead>
+
+  <tbody tal:condition="has_access">
+    <form action="."
+      method="POST"
+      tal:define="groupids model/listGroups"
+      tal:condition="model/isValid | nothing">
+      <tr>
+        <th tal:condition="groupids"
+          i18n:translate="group name">
+          Group name
+        </th>
+      </tr>
+      <tal:block replace="nothing">
+        ______________ group listing ______________
+      </tal:block>
+        <tal:block repeat="groupid groupids">
+        <tr valign="top"
+          tal:define="iterate repeat/groupid/odd;"
+          tal:attributes="class python: iterate and 'odd' or 'even'">
+          <td>
+            <input class="warningbox"
+              name="groupids:list"
+              type="checkbox"
+              value="groupid"
+              tal:attributes="
+                value groupid;
+                id groupid"
+            />
+            &nbsp;
+            <label tal:content="groupid"
+              tal:attributes="for groupid">
+              group name
+            </label>
+          </td>
+        </tr>
+      </tal:block>
+      <tr class="even"
+        tal:condition="not:groupids">
+        <td>
+          <i i18n:translate="virtual_group_does_not_have_member_groups">
+           This Virtual Group does not have any &#8216;member groups&#8217;.
+          </i>
+        </td>
+      </tr>
+      <tr class="controls">
+        <td>
+          <input class="warning"
+            type="submit"
+            value="remove group"
+            name="remove_groups_from_virtualgroup:method"
+            title="remove selected group(s) from this virtual group: alt-r"
+            accesskey="r"
+            i18n:attributes="title value"
+            onClick="return confirm('Really remove?')"
+            tal:condition="groupids"
+          />
+        </td> 
+      </tr>
+    </form>
+  </tbody>
+</table>
+
+<tal:block condition="not:model/isValid | nothing">
+  "Things to do when virtual groups is not in it original location"
+</tal:block>
+
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ right column _____________________ 
+      </tal:block>
+      <td class="right">
+        <tal:block condition="has_access">
+          <tal:block replace="nothing">
+            ______________ groups clipboard ______________
           </tal:block>
-          <tr class="focus"
-            tal:condition="not:groupids">
-            <td>
-              <i i18n:translate="virtual_group_does_not_have_member_groups">
-                Virtual Group does not have any "member groups"
-              </i>
-            </td>
-          </tr>
-          <tr class="controls-cycle"
-            valign="top">
-            <td align="left">
-              <input class="warningbutton"
-                name="remove_groups_from_virtualgroup:method"
-                title="Remove selected group(s) from this virtual group."
-                type="submit"
-                value="Remove groups"
-		i18n:attributes="title value"
-                onClick="return confirm('Really remove?')"
-                tal:condition="groupids" />
-            </td>
-          </tr>
-        </table>
-      </form>
-    </tal:block>
+          <tal:define define="
+            global group_meta_type string:Silva Group;
+            global group_type nothing;
+            ">
+            <metal:block use-macro="view/macro_groups_listing/macros/normal_groups_listing">
+              <metal:block fill-slot="listing_actions">
+                <input class="button"
+                  name="add_groups_to_virtualgroup:method"
+                  title="add group(s) to this virtual group."
+                  type="submit"
+                  value="add to group" 
+                  i18n:attributes="title value"
+                />
+              </metal:block>
+            </metal:block>
+          </tal:define>
+          <br />
+          <tal:block replace="nothing">
+            ______________ virtual groups clipboard ______________
+          </tal:block>
+          <tal:define define="
+            global group_meta_type string:Silva Virtual Group;
+            global group_type string:virtual;
+            ">
+            <metal:block use-macro="view/macro_groups_listing/macros/virtual_groups_listing">
+              <metal:block fill-slot="listing_actions">
+                <input class="button"
+                  type="submit"
+                  value="copy from virtual group(s)" 
+                  name="add_groups_from_virtualgroup_to_virtualgroup:method"
+                  title="transfer groups defined in other virtual groups"
+                  i18n:attributes="title value"
+                />
+              </metal:block>
+            </metal:block>
+          </tal:define>
+        </tal:block>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-    <tal:block condition="not:model/isValid | nothing">
-      "Things to do when virtual groups is not in it original location"
-    </tal:block>
-  </tal:block>
-</div>
+</html>

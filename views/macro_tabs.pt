@@ -134,7 +134,7 @@
         <a class="right"
           tal:condition="tab_info/uplink_url"
           tal:attributes="href tab_info/uplink_url;
-            title string:Up a level: alt-${up_key};
+            title string:up a level: alt-${up_key};
             accesskey up_key;
           ">
           <img tal:replace="structure here/globals/up_level.gif" />
