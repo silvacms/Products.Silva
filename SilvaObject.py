@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.60 2003/02/11 17:13:41 zagy Exp $
+# $Id: SilvaObject.py,v 1.61 2003/02/12 08:48:04 zagy Exp $
 
 # python
 from types import StringType
@@ -251,8 +251,10 @@ class SilvaObject(Security):
         w(u'<?xml version="1.0" encoding="UTF-8" ?>\n')
         w(u'<silva xmlns="%s" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'xsi:schemaLocation="%s %s">' % (self._xml_namespace,
-                self._xml_namespace, self._xml_schema))
+            'xsi:schemaLocation="%s %s" '
+            'xml:base="%s">' % (self._xml_namespace,
+                self._xml_namespace, self._xml_schema,
+                self.getPhysicalRoot().absolute_url()))
         self.to_xml(context)
         w(u'</silva>')
         result = context.f.getvalue()
