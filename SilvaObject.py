@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.49 $
+# $Revision: 1.50 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -234,7 +234,7 @@ class SilvaObject(Security):
         context = XMLExportContext()
         context.f = StringIO()
         context.with_sub_publications = with_sub_publications
-        context.last_version = last_version
+        context.last_version = not not last_version
 
         # construct xml and return UTF8-encoded string
         context.f.write(u'<?xml version="1.0" encoding="UTF-8" ?>\n')
