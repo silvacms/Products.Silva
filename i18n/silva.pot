@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
+"POT-Creation-Date: Mon Dec 20 16:39:05 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -612,6 +612,36 @@ msgstr ""
 msgid "Listing body"
 msgstr ""
 
+#: /globals/copyright.pt:17
+#: /globals/reference.pt:21
+msgid "access key: alt-b"
+msgstr ""
+
+#: /globals/copyright.pt:17
+#: /globals/reference.pt:21
+#: /views/edit/VersionedContent/tab_status_view_version.pt:52
+msgid "back"
+msgstr ""
+
+#: /globals/copyright.pt:17
+#: /globals/reference.pt:21
+#: /views/edit/lookup_ui.pt:45
+# Default: "b"
+msgid "back_accesskey"
+msgstr ""
+
+#: /globals/copyright.pt:28
+#: /globals/reference.pt:32
+msgid "Silva info: alt-s"
+msgstr ""
+
+#: /globals/copyright.pt:28
+#: /globals/reference.pt:32
+#: /views/macro_tabs.pt:21
+# Default: "s"
+msgid "silva_info_accesskey"
+msgstr ""
+
 #: /globals/reference.pt:100
 msgid "The people at ${eth_zuerich} for their feedback, contributions, and innovation."
 msgstr ""
@@ -634,36 +664,6 @@ msgstr ""
 
 #: /globals/reference.pt:119
 msgid "Silva site"
-msgstr ""
-
-#: /globals/reference.pt:21
-#: /globals/copyright.pt:17
-msgid "access key: alt-b"
-msgstr ""
-
-#: /globals/reference.pt:21
-#: /globals/copyright.pt:17
-#: /views/edit/VersionedContent/tab_status_view_version.pt:52
-msgid "back"
-msgstr ""
-
-#: /globals/reference.pt:21
-#: /globals/copyright.pt:17
-#: /views/edit/lookup_ui.pt:45
-# Default: "b"
-msgid "back_accesskey"
-msgstr ""
-
-#: /globals/reference.pt:32
-#: /globals/copyright.pt:28
-msgid "Silva info: alt-s"
-msgstr ""
-
-#: /globals/reference.pt:32
-#: /globals/copyright.pt:28
-#: /views/macro_tabs.pt:21
-# Default: "s"
-msgid "silva_info_accesskey"
 msgstr ""
 
 #: /globals/reference.pt:38
@@ -3406,7 +3406,7 @@ msgid "open&nbsp;to&nbsp;public&nbsp;now..."
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:41
-msgid "publish the unapproved version: alt-:"
+msgid "publish the unapproved version: alt-o"
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:76
@@ -3485,16 +3485,16 @@ msgid "version status"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status.pt:326
-msgid "compare"
+msgid "compare..."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status.pt:326
-msgid "view the selected versions next to each other"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status.pt:326
-# Default: "c"
+# Default: "="
 msgid "compare_accesskey"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:326
+msgid "view the selected versions next to each other: alt-="
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status.pt:334
@@ -3904,22 +3904,22 @@ msgid "Role(s) revoked"
 msgstr ""
 
 #: /views/edit/asset_lookup.pt:148
-#: /views/edit/hyperlink_lookup.pt:109
 #: /views/edit/document_lookup.pt:150
+#: /views/edit/hyperlink_lookup.pt:109
 msgid "select"
 msgstr ""
 
 #: /views/edit/asset_lookup.pt:151
-#: /views/edit/hyperlink_lookup.pt:112
-#: /views/edit/hyperlink_lookup.pt:199
 #: /views/edit/document_lookup.pt:153
 #: /views/edit/document_lookup.pt:331
+#: /views/edit/hyperlink_lookup.pt:112
+#: /views/edit/hyperlink_lookup.pt:199
 msgid "view"
 msgstr ""
 
 #: /views/edit/asset_lookup.pt:154
-#: /views/edit/hyperlink_lookup.pt:115
 #: /views/edit/document_lookup.pt:156
+#: /views/edit/hyperlink_lookup.pt:115
 #: /views/edit/Container/tab_access_groups.pt:179
 #: /views/edit/Container/tab_edit.pt:132
 #: /views/edit/Container/GhostFolder/tab_edit.pt:226
@@ -3927,8 +3927,8 @@ msgid "modified"
 msgstr ""
 
 #: /views/edit/asset_lookup.pt:157
-#: /views/edit/hyperlink_lookup.pt:118
 #: /views/edit/document_lookup.pt:159
+#: /views/edit/hyperlink_lookup.pt:118
 #: /views/edit/Container/tab_edit.pt:135
 #: /views/edit/Container/GhostFolder/tab_edit.pt:229
 msgid "author"
@@ -3948,21 +3948,21 @@ msgid "cancel operation: alt-c"
 msgstr ""
 
 #: /views/edit/asset_lookup.pt:244
-#: /views/edit/hyperlink_lookup.pt:369
-msgid "insert a reference to this asset: alt-p"
-msgstr ""
-
-#: /views/edit/asset_lookup.pt:244
-#: /views/edit/hyperlink_lookup.pt:369
 #: /views/edit/document_lookup.pt:371
+#: /views/edit/hyperlink_lookup.pt:369
 msgid "place reference..."
 msgstr ""
 
 #: /views/edit/asset_lookup.pt:244
-#: /views/edit/hyperlink_lookup.pt:369
 #: /views/edit/document_lookup.pt:371
+#: /views/edit/hyperlink_lookup.pt:369
 # Default: "p"
 msgid "place_reference_accesskey"
+msgstr ""
+
+#: /views/edit/asset_lookup.pt:244
+#: /views/edit/hyperlink_lookup.pt:369
+msgid "insert a reference to this asset: alt-p"
 msgstr ""
 
 #: /views/edit/asset_lookup.pt:84
@@ -3978,9 +3978,35 @@ msgstr ""
 msgid "map cleared"
 msgstr ""
 
+#: /views/edit/document_lookup.pt:169
+#: /views/edit/hyperlink_lookup.pt:128
+#: /views/edit/Container/tab_edit.pt:148
+#: /views/edit/Container/GhostFolder/tab_edit.pt:239
+msgid "There is no content here."
+msgstr ""
+
 #: /views/edit/document_lookup.pt:212
 #: /views/edit/Container/GhostFolder/tab_edit.pt:293
 msgid "content is approved or published"
+msgstr ""
+
+#: /views/edit/document_lookup.pt:212
+#: /views/edit/hyperlink_lookup.pt:182
+#: /views/edit/Container/tab_edit.pt:247
+msgid "content approved or published"
+msgstr ""
+
+#: /views/edit/document_lookup.pt:239
+#: /views/edit/document_lookup.pt:250
+#: /views/edit/document_lookup.pt:348
+#: /views/edit/hyperlink_lookup.pt:228
+#: /views/edit/hyperlink_lookup.pt:248
+#: /views/edit/Container/tab_edit.pt:235
+#: /views/edit/Container/tab_edit.pt:271
+#: /views/edit/Container/tab_status.pt:190
+#: /views/edit/Container/GhostFolder/tab_edit.pt:338
+#: /views/edit/Container/GhostFolder/tab_edit.pt:356
+msgid "n/a"
 msgstr ""
 
 #: /views/edit/document_lookup.pt:315
@@ -4031,36 +4057,10 @@ msgstr ""
 msgid "The ghost is in an undefined state."
 msgstr ""
 
-#: /views/edit/hyperlink_lookup.pt:128
-#: /views/edit/document_lookup.pt:169
-#: /views/edit/Container/tab_edit.pt:148
-#: /views/edit/Container/GhostFolder/tab_edit.pt:239
-msgid "There is no content here."
-msgstr ""
-
-#: /views/edit/hyperlink_lookup.pt:182
-#: /views/edit/document_lookup.pt:212
-#: /views/edit/Container/tab_edit.pt:247
-msgid "content approved or published"
-msgstr ""
-
 #: /views/edit/hyperlink_lookup.pt:215
 #: /views/edit/tab_metadata.pt:104
 #: /views/edit/Container/GhostFolder/tab_edit.pt:443
 msgid "metadata"
-msgstr ""
-
-#: /views/edit/hyperlink_lookup.pt:228
-#: /views/edit/hyperlink_lookup.pt:248
-#: /views/edit/document_lookup.pt:239
-#: /views/edit/document_lookup.pt:250
-#: /views/edit/document_lookup.pt:348
-#: /views/edit/Container/tab_edit.pt:235
-#: /views/edit/Container/tab_edit.pt:271
-#: /views/edit/Container/tab_status.pt:190
-#: /views/edit/Container/GhostFolder/tab_edit.pt:338
-#: /views/edit/Container/GhostFolder/tab_edit.pt:356
-msgid "n/a"
 msgstr ""
 
 #: /views/edit/hyperlink_lookup.pt:235
@@ -4781,23 +4781,23 @@ msgstr ""
 msgid "Subscribability"
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:151
-msgid "This object is currently ${not} subscribable."
+#: /views/edit/tab_subscriptions.pt:148
+msgid "This object is currently not subscribable."
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:157
-msgid "This object ${is} currently subscribable."
+#: /views/edit/tab_subscriptions.pt:152
+msgid "This object is currently subscribable."
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:168
+#: /views/edit/tab_subscriptions.pt:164
 msgid "Other subscriptions"
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:173
+#: /views/edit/tab_subscriptions.pt:169
 msgid "${numberofsubscriptions} subscription(s) for this object defined above."
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:179
+#: /views/edit/tab_subscriptions.pt:175
 msgid "No other subscriptions for this object."
 msgstr ""
 

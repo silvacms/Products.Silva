@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
+"POT-Creation-Date: Mon Dec 20 16:39:05 2004\n"
 "PO-Revision-Date: 2004-12-07 13:27+0100\n"
 "Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -716,6 +716,30 @@ msgstr ""
 msgid "Listing body"
 msgstr ""
 
+#: /globals/copyright.pt:17 /globals/reference.pt:21
+msgid "access key: alt-b"
+msgstr ""
+
+#: /globals/copyright.pt:17 /globals/reference.pt:21
+#: /views/edit/VersionedContent/tab_status_view_version.pt:52
+msgid "back"
+msgstr "terug"
+
+# Default: "b"
+#: /globals/copyright.pt:17 /globals/reference.pt:21
+#: /views/edit/lookup_ui.pt:45
+msgid "back_accesskey"
+msgstr ""
+
+#: /globals/copyright.pt:28 /globals/reference.pt:32
+msgid "Silva info: alt-s"
+msgstr ""
+
+# Default: "s"
+#: /globals/copyright.pt:28 /globals/reference.pt:32 /views/macro_tabs.pt:21
+msgid "silva_info_accesskey"
+msgstr ""
+
 #: /globals/reference.pt:100
 msgid ""
 "The people at ${eth_zuerich} for their feedback, contributions, and "
@@ -745,30 +769,6 @@ msgstr ""
 
 #: /globals/reference.pt:119
 msgid "Silva site"
-msgstr ""
-
-#: /globals/reference.pt:21 /globals/copyright.pt:17
-msgid "access key: alt-b"
-msgstr ""
-
-#: /globals/reference.pt:21 /globals/copyright.pt:17
-#: /views/edit/VersionedContent/tab_status_view_version.pt:52
-msgid "back"
-msgstr "terug"
-
-# Default: "b"
-#: /globals/reference.pt:21 /globals/copyright.pt:17
-#: /views/edit/lookup_ui.pt:45
-msgid "back_accesskey"
-msgstr ""
-
-#: /globals/reference.pt:32 /globals/copyright.pt:28
-msgid "Silva info: alt-s"
-msgstr ""
-
-# Default: "s"
-#: /globals/reference.pt:32 /globals/copyright.pt:28 /views/macro_tabs.pt:21
-msgid "silva_info_accesskey"
 msgstr ""
 
 #: /globals/reference.pt:38
@@ -3626,8 +3626,8 @@ msgid "open&nbsp;to&nbsp;public&nbsp;now..."
 msgstr "nu&nbsp;publiceren..."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:41
-msgid "publish the unapproved version: alt-:"
-msgstr "niet goedgekeurde versie publiceren: alt-:"
+msgid "publish the unapproved version: alt-o"
+msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:76
 msgid ""
@@ -3705,16 +3705,16 @@ msgid "version status"
 msgstr "versie-status"
 
 #: /views/edit/VersionedContent/tab_status.pt:326
-msgid "compare"
-msgstr "vergelijk"
-
-#: /views/edit/VersionedContent/tab_status.pt:326
-msgid "view the selected versions next to each other"
-msgstr "bekijk geselecteerde versies naast elkaar"
+msgid "compare..."
+msgstr ""
 
 # Default: "c"
 #: /views/edit/VersionedContent/tab_status.pt:326
 msgid "compare_accesskey"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:326
+msgid "view the selected versions next to each other: alt-="
 msgstr ""
 
 # JS onclick string, not very nice but it works, make sure to copy JS code 1:1
@@ -4166,27 +4166,27 @@ msgstr "Rol(len) ingetrokken voor ${list}"
 msgid "Role(s) revoked"
 msgstr "Rol(len) ingetrokken"
 
-#: /views/edit/asset_lookup.pt:148 /views/edit/hyperlink_lookup.pt:109
-#: /views/edit/document_lookup.pt:150
+#: /views/edit/asset_lookup.pt:148 /views/edit/document_lookup.pt:150
+#: /views/edit/hyperlink_lookup.pt:109
 msgid "select"
 msgstr "selecteren"
 
-#: /views/edit/asset_lookup.pt:151 /views/edit/hyperlink_lookup.pt:112
-#: /views/edit/hyperlink_lookup.pt:199 /views/edit/document_lookup.pt:153
-#: /views/edit/document_lookup.pt:331
+#: /views/edit/asset_lookup.pt:151 /views/edit/document_lookup.pt:153
+#: /views/edit/document_lookup.pt:331 /views/edit/hyperlink_lookup.pt:112
+#: /views/edit/hyperlink_lookup.pt:199
 msgid "view"
 msgstr "bekijken"
 
-#: /views/edit/asset_lookup.pt:154 /views/edit/hyperlink_lookup.pt:115
-#: /views/edit/document_lookup.pt:156
+#: /views/edit/asset_lookup.pt:154 /views/edit/document_lookup.pt:156
+#: /views/edit/hyperlink_lookup.pt:115
 #: /views/edit/Container/tab_access_groups.pt:179
 #: /views/edit/Container/tab_edit.pt:132
 #: /views/edit/Container/GhostFolder/tab_edit.pt:226
 msgid "modified"
 msgstr "aangepast"
 
-#: /views/edit/asset_lookup.pt:157 /views/edit/hyperlink_lookup.pt:118
-#: /views/edit/document_lookup.pt:159 /views/edit/Container/tab_edit.pt:135
+#: /views/edit/asset_lookup.pt:157 /views/edit/document_lookup.pt:159
+#: /views/edit/hyperlink_lookup.pt:118 /views/edit/Container/tab_edit.pt:135
 #: /views/edit/Container/GhostFolder/tab_edit.pt:229
 msgid "author"
 msgstr "auteur"
@@ -4203,20 +4203,20 @@ msgstr "Geen ${asset} in deze folder."
 msgid "cancel operation: alt-c"
 msgstr "operatie annuleren: alt-c"
 
-#: /views/edit/asset_lookup.pt:244 /views/edit/hyperlink_lookup.pt:369
-msgid "insert a reference to this asset: alt-p"
-msgstr "een verwijzing naar dit asset invoegen: alt-p"
-
-#: /views/edit/asset_lookup.pt:244 /views/edit/hyperlink_lookup.pt:369
-#: /views/edit/document_lookup.pt:371
+#: /views/edit/asset_lookup.pt:244 /views/edit/document_lookup.pt:371
+#: /views/edit/hyperlink_lookup.pt:369
 msgid "place reference..."
 msgstr "verwijzing plaatsen..."
 
 # Default: "p"
-#: /views/edit/asset_lookup.pt:244 /views/edit/hyperlink_lookup.pt:369
-#: /views/edit/document_lookup.pt:371
+#: /views/edit/asset_lookup.pt:244 /views/edit/document_lookup.pt:371
+#: /views/edit/hyperlink_lookup.pt:369
 msgid "place_reference_accesskey"
 msgstr ""
+
+#: /views/edit/asset_lookup.pt:244 /views/edit/hyperlink_lookup.pt:369
+msgid "insert a reference to this asset: alt-p"
+msgstr "een verwijzing naar dit asset invoegen: alt-p"
 
 #: /views/edit/asset_lookup.pt:84
 msgid "add a new item: alt-n"
@@ -4231,10 +4231,31 @@ msgstr ""
 msgid "map cleared"
 msgstr "'map' leeggemaakt"
 
+#: /views/edit/document_lookup.pt:169 /views/edit/hyperlink_lookup.pt:128
+#: /views/edit/Container/tab_edit.pt:148
+#: /views/edit/Container/GhostFolder/tab_edit.pt:239
+msgid "There is no content here."
+msgstr "Er bevindt zich hier geen inhoud."
+
 #: /views/edit/document_lookup.pt:212
 #: /views/edit/Container/GhostFolder/tab_edit.pt:293
 msgid "content is approved or published"
 msgstr "inhoud is goedgekeurd of gepubliceerd"
+
+#: /views/edit/document_lookup.pt:212 /views/edit/hyperlink_lookup.pt:182
+#: /views/edit/Container/tab_edit.pt:247
+msgid "content approved or published"
+msgstr "inhoud goedgekeurd of gepubliceerd"
+
+#: /views/edit/document_lookup.pt:239 /views/edit/document_lookup.pt:250
+#: /views/edit/document_lookup.pt:348 /views/edit/hyperlink_lookup.pt:228
+#: /views/edit/hyperlink_lookup.pt:248 /views/edit/Container/tab_edit.pt:235
+#: /views/edit/Container/tab_edit.pt:271
+#: /views/edit/Container/tab_status.pt:190
+#: /views/edit/Container/GhostFolder/tab_edit.pt:338
+#: /views/edit/Container/GhostFolder/tab_edit.pt:356
+msgid "n/a"
+msgstr "-"
 
 # Default: "editor"
 #: /views/edit/document_lookup.pt:315 /views/edit/Container/tab_edit.pt:364
@@ -4307,31 +4328,10 @@ msgstr ""
 msgid "The ghost is in an undefined state."
 msgstr "De 'ghost' is in een onbepaalde staat."
 
-#: /views/edit/hyperlink_lookup.pt:128 /views/edit/document_lookup.pt:169
-#: /views/edit/Container/tab_edit.pt:148
-#: /views/edit/Container/GhostFolder/tab_edit.pt:239
-msgid "There is no content here."
-msgstr "Er bevindt zich hier geen inhoud."
-
-#: /views/edit/hyperlink_lookup.pt:182 /views/edit/document_lookup.pt:212
-#: /views/edit/Container/tab_edit.pt:247
-msgid "content approved or published"
-msgstr "inhoud goedgekeurd of gepubliceerd"
-
 #: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:104
 #: /views/edit/Container/GhostFolder/tab_edit.pt:443
 msgid "metadata"
 msgstr "metadata"
-
-#: /views/edit/hyperlink_lookup.pt:228 /views/edit/hyperlink_lookup.pt:248
-#: /views/edit/document_lookup.pt:239 /views/edit/document_lookup.pt:250
-#: /views/edit/document_lookup.pt:348 /views/edit/Container/tab_edit.pt:235
-#: /views/edit/Container/tab_edit.pt:271
-#: /views/edit/Container/tab_status.pt:190
-#: /views/edit/Container/GhostFolder/tab_edit.pt:338
-#: /views/edit/Container/GhostFolder/tab_edit.pt:356
-msgid "n/a"
-msgstr "-"
 
 #: /views/edit/hyperlink_lookup.pt:235 /views/edit/Container/docma_queue.pt:79
 #: /views/edit/Container/GhostFolder/tab_edit.pt:345
@@ -5056,23 +5056,23 @@ msgstr ""
 msgid "Subscribability"
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:151
-msgid "This object is currently ${not} subscribable."
+#: /views/edit/tab_subscriptions.pt:148
+msgid "This object is currently not subscribable."
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:157
-msgid "This object ${is} currently subscribable."
+#: /views/edit/tab_subscriptions.pt:152
+msgid "This object is currently subscribable."
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:168
+#: /views/edit/tab_subscriptions.pt:164
 msgid "Other subscriptions"
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:173
+#: /views/edit/tab_subscriptions.pt:169
 msgid "${numberofsubscriptions} subscription(s) for this object defined above."
 msgstr ""
 
-#: /views/edit/tab_subscriptions.pt:179
+#: /views/edit/tab_subscriptions.pt:175
 msgid "No other subscriptions for this object."
 msgstr ""
 
@@ -5562,6 +5562,15 @@ msgstr ""
 #: /views/render_form_errors.py:15
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+#~ msgid "publish the unapproved version: alt-:"
+#~ msgstr "niet goedgekeurde versie publiceren: alt-:"
+
+#~ msgid "compare"
+#~ msgstr "vergelijk"
+
+#~ msgid "view the selected versions next to each other"
+#~ msgstr "bekijk geselecteerde versies naast elkaar"
 
 #~ msgid "manage subscriptions..."
 #~ msgstr "emailnotificaties beheren..."
