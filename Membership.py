@@ -56,7 +56,7 @@ class CachedMember(Persistent, Acquisition.Implicit):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, userid, fullname, email):
+    def __init__(self, userid, fullname, email, is_approved):
         self.id = userid
         self._fullname = fullname
         self._email = email
@@ -131,4 +131,5 @@ def cloneMember(member):
         return NoneMember()
     return CachedMember(userid=member.userid(),
                   fullname=member.fullname(),
-                  email=member.email())
+                  email=member.email(),
+                  is_approved=member.is_approved())
