@@ -756,7 +756,7 @@ input.close {
   cursor: pointer;
 }
 
-input.inputter {
+input.inputter, select.inputter {
   color : &dtml-inputFontColor;;
   background : &dtml-inputBackground;;
   margin-top: 1px;
