@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: security.py,v 1.4 2003/11/17 12:34:17 faassen Exp $
+# $Id: security.py,v 1.5 2003/11/27 14:18:46 guido Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
@@ -83,7 +83,7 @@ Globals.InitializeClass(ViewerSecurityAdapter)
 # ViewerSecurityAdapter should then be defined for every ISilvaObject
 # (probably we'd define another adapter on IRoot and refactor this one)
 module_security.declareProtected(
-    SilvaPermissions.ApproveSilvaContent,
+    SilvaPermissions.ReadSilvaContent,
     'getViewerSecurityAdapter')
 def getViewerSecurityAdapter(context):
     return ViewerSecurityAdapter(context).__of__(context)

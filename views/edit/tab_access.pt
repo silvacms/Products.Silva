@@ -667,6 +667,80 @@
   </tbody>
 </table>
 
+<table class="columns columns3"
+  tal:condition="not:has_access">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        __________________ sidebar _________________
+      </tal:block>
+      <td class="left" rowspan="99">
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
+      </td>
+      <tal:block replace="nothing">
+        __________________ main __________________
+      </tal:block>
+      <td class="main">
+        <table class="listing sublisting"
+            tal:define="info view/get_viewer_role_info;
+                        selected_role info/selected_role">
+          <thead>
+            <tal:block replace="nothing"> 
+              _____________ vein + title row ______________
+            </tal:block>
+            <tr>
+              <td class="top"
+                colspan="2">
+                <h2 tal:attributes="title string:id: ${model/id}">
+                  <img tal:replace="structure python:view.render_icon(model)" />
+                  <span i18n:translate="public_view_access_restrictions" tal:omit-tag="">public view access restrictions for</span> &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                </h2>
+              </td>
+            </tr>
+            <tal:block replace="nothing"> 
+              ______________ top controls row _____________
+            </tal:block>
+            <tr class="top-controls">
+              <td colspan="2">
+                <h3 i18n:translate="access_restrictions_by_role">
+                  access restriction by role
+                </h3>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th i18n:translate="current_restriction">
+                current restriction
+              </th>
+              <th i18n:translate="note">
+                note
+              </th>
+            </tr>
+            <tr class="even">
+              <td>
+                <i>
+                  <tal:block condition="info/is_public">Open to the public</tal:block>
+                  <tal:block condition="not: info/is_public"
+                    tal:content="selected_role">role</tal:block>
+                  <tal:block condition="info/acquired">(acquired).</tal:block>
+                </i>
+              </td>
+              <td> 
+                An access restriction here affects objects on this and lower levels.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 </metal:block>
 </metal:block>
 </html>
