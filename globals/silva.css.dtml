@@ -225,22 +225,6 @@ div.flowBar {
   clear : all;
 }
 
-div.subBar {
-  display : block;
-    /* IE workaround */
-    font-size : 20%;
-    height : 1em;
-  width : 100%;
-  min-height : 2px;
-  max-height : 0.2em;
-  background: &dtml-subTabBackground;;
-  margin: -1px 0 0 0;
-  padding: 0;
-  border-top: #636da6 1px solid;
-  border-bottom: #434d86 1px solid;
-  clear : all;
-}
-
 
 /* ___________________________________________________________ footer _____ */
 
