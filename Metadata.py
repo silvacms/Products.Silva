@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.5 2003/05/23 14:15:17 jw Exp $    
+$Id: Metadata.py,v 1.6 2003/05/23 14:17:35 jw Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
@@ -125,7 +125,6 @@ def register_initialize_handlers():
     registerInitHandler(None, _initialize_handler)
 
 def _initialize_handler(object, bind_data):
-    print '_initialize_handler called for', object, bind_data
     set_id = 'silva-content'
     set_triggers = {
         'maintitle': 'titleMutationTrigger',
