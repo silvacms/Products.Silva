@@ -43,6 +43,9 @@
                 <customtag name="term" alwaysshow="true"></customtag>
                 <customtag name="desc" alwaysshow="true"></customtag>
                 <customtag name="doctitle" alwaysshow="true" isblockelement="true" isreadonlytag="true"></customtag>
+                <customtag name="codeelement" isreadonlyarea="false" alwaysshow="true" isblockelement="true" isreadonlytag="false"></customtag>
+                <customtag name="toc" isreadonlyarea="false" alwaysshow="true" isblockelement="true" isreadonlytag="false"></customtag>
+                <customtag name="externaldata" isreadonlyarea="false" alwaysshow="true" isblockelement="true" isreadonlytag="true"></customtag>
         </customtags>
         <spellingcheckers>
                 <spellingchecker name="US English" properties="sc-americanenglish.txt" default="true" />

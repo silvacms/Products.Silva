@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.6 $'
+__version__='$Revision: 1.7 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -136,10 +136,10 @@ class list(SilvaElement):
     """ Simple lists """
     def convert(self, context):
         listtype = self.attrs.get('type')
-        listtype = listtype and listtype.lower() or u'none'
+        listtype = listtype or u'none'
 
         attrs = {}
-        if listtype in ['1','i','a']:
+        if listtype in ['1','i','a','A','I']:
             tag = html.ol
             attrs[u'type']=listtype
         elif listtype in (u'disc',u'square',u'circle'):
@@ -264,11 +264,30 @@ class field(SilvaElement):
             self.content.convert(context)
         )
 
+class code(SilvaElement):
+    def convert(self, context):
+        return html.codeelement(
+            '[code at %s]' % self.attrs.get('path'),
+            path = self.attrs.get('path', '')
+        )
+
+class toc(SilvaElement):
+    def convert(self, context):
+        return html.toc(
+            '[table of contents]',
+            toc_depth = self.attrs.get('toc_depth', '-1')
+        )
+
+class externaldata(SilvaElement):
+    def convert(self, context):
+        return html.externaldata(
+            self.content.convert(context)
+        )
 
 def mixin_paragraphs(container):
     """ wrap silva.p node around text"""
     content = Frag()
-    breaks = 'heading','p','list','dlist','nlist','table'
+    breaks = 'heading','p', 'pre', 'list','dlist','nlist','table'
 
     pre, tag, post = container.find_and_partition(breaks)
     if pre:

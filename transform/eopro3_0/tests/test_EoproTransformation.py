@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 import unittest
 
 # 
@@ -188,7 +188,7 @@ class HTML2XML(Base):
         p = doc.find('p')
         self.assertEquals(len(p),3)
         self.assert_(not p[0].extract_text())
-        self.assert_(p[1].extract_text(), 'hallo')
+        self.assertEquals(p[1].extract_text(), 'hallo')
         self.assert_(not p[2].extract_text())
 
 
@@ -254,11 +254,13 @@ class RoundtripWithTidy(Base):
 
         htmlnode = self._check_doc(string_withdoc, ctx)
         self.assert_(len(htmlnode)==1)
-        return htmlnode[0].content
+        return htmlnode.find_one('html').find_one('body')
 
     def _check_doc(self, string, ctx=None):
         ctx = ctx or Context()
         htmlnode = self.transformer.to_target(string, context=ctx)
+        self.assert_(not self.transformer.source_parser.unknown_tags)
+
         html = htmlnode.asBytes()
         self._checkhtml(html)
         silvanode = self.transformer.to_source(html, context=ctx)
@@ -285,6 +287,22 @@ class RoundtripWithTidy(Base):
         htmlnode = silvanode.conv()
         p = htmlnode.find_one('p')
         self.assertEquals(p.extract_text(), ' ')
+
+    def test_codelement(self):
+        frag='<code path="test"></code>'
+        htmlnode = self._check_string(frag)
+        code = htmlnode.find_one('codeelement')
+        self.assertEquals(code.extract_text(), '[code at test]')
+
+    def test_tocelement(self):
+        frag='<toc toc_depth="-1"></toc>'
+        htmlnode = self._check_string(frag)
+        toc = htmlnode.find_one('toc')
+        self.assertEquals(toc.extract_text(), '[table of contents]')
+
+    def test_externaldataelement(self):
+        frag='<externaldata></externaldata>'
+        self._check_string(frag)
 
     def test_workaround_eonpro_corrupt_document(self):
         doc = """
@@ -404,6 +422,23 @@ class RoundtripWithTidy(Base):
         list = htmlnode.find_one('ul')
         self._check_string(simple)
 
+    def test_nlist_but_in_fact_simple_list(self):
+        nlist = '''
+            <nlist type="disc">
+               <li><p>one item</p></li>
+            </nlist>'''
+
+        self._check_string(nlist)
+        #silvanode = self.parse_silvafrag(nlist)
+        #htmlnode = silvanode.conv()
+        #list = htmlnode.find_one('ul')
+#
+#        back = htmlnode.conv()
+#        list = back.find_one('list')
+#        li = list.find_one('li')
+#        self.assert_(not li.find('p'))
+#        self.assertEquals(li.extract_text(), 'one item')
+
     def _check_list(self, source, target=None):
         stag, stype = source.split(':')
         doc = '''
@@ -436,8 +471,14 @@ class RoundtripWithTidy(Base):
     def test_list_a(self):
         self._check_list('list:a', 'ol:a')
 
+    def test_list_A(self):
+        self._check_list('list:A', 'ol:A')
+
     def test_list_i(self):
         self._check_list('list:i', 'ol:i')
+
+    def test_list_I(self):
+        self._check_list('list:I', 'ol:I')
 
     def test_list_1(self):
         self._check_list('list:1', 'ol:1')
@@ -485,8 +526,7 @@ class RoundtripWithTidy(Base):
         """ check that given markups work """
         frag = '<p type="normal"><%(silvatag)s>text</%(silvatag)s></p>' % locals()
 
-        htmlnode = self._check_string(frag)
-        body = htmlnode.find_one('body')
+        body = self._check_string(frag)
         p = body.find_one('p')
         htmlmarkup = p.find_one(htmltag)
         self.assertEquals(htmlmarkup.extract_text(), 'text')
@@ -595,7 +635,21 @@ class RoundtripWithTidy(Base):
 
         self.assert_(pre.compact()==pre)
 
+    def test_pre_in_list(self):
+        nlist = '''<nlist type="disc">
+           <li><p>one</p><pre> pre </pre></li>
+           </nlist>'''
+        self._check_string(nlist)
+
     def _checkhtml(self, html):
+        for this,that in [('doctitle','h2'), 
+                          ('<term>','<p>'),
+                          ('<desc>','<p>'),
+                          ('<toc', '<h6'),
+                          ('<codeelement','<h6'),
+                          ('<externaldata','<h6')]:
+            html = html.replace(this,that)
+
         cmd = 'tidy -eq -utf8'
         try:
             import popen2

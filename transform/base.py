@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.16 $'
+__version__='$Revision: 1.17 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -176,10 +176,12 @@ class Attrs(Dict):
                 return self[name]
             except:
                 raise AttributeError, "attribute %s non-existent" % name
+
     def __contains__(self, name):
         if name.startswith('_'):
             name = name[1:]
         return name in self
+
 
 class Element(Node):
     def __init__(self, *content, **attrs):

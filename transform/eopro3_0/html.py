@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.8 $'
+__version__='$Revision: 1.9 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -161,15 +161,18 @@ class h7(h3):
 
 class p(Element):
     """ the html p element can contain nodes which are "standalone"
-        in silva-xml. 
+        in silva-xml, only "image" currently to be precise. 
+        If such an element is found then we need to pull it out...
     """
     def convert(self, context):
         context.stack.append(self)
-
         pre,img,post = self.find_and_partition('img')
         type = self.attrs.get('silva_type', None)
         if pre:
-            pre = silva.p(pre.convert(context), type=type)
+            #if len(context.stack)>1 and context.stack[-2].name() == 'li':
+            #    pre = pre.convert(context)
+            #else:
+                pre = silva.p(pre.convert(context), type=type)
         if img:
             img = img.convert(context)
         if post:
@@ -223,7 +226,7 @@ class ul(Element):
                 return 1
 
         for i in self.content.flatten():
-            if i.name() in ('ul', 'ol'):
+            if i.name() in ('ul', 'ol','p'):
                 return 1
 
     def convert_list(self, context):
@@ -279,8 +282,8 @@ class ul(Element):
 
     def get_type(self):
         type = self.attrs.get('type', None)
-        if type is not None:
-            type = type.lower()
+        #if type is not None:
+        #    type = type.lower()
 
         if type not in self.default_types:
             type = self.default_types[0]
@@ -308,7 +311,7 @@ class ul(Element):
 
 
 class ol(ul):
-    default_types = ('1','a','i')
+    default_types = ('1','a','i','A','I')
 
 class li(Element):
     def convert(self, context):
@@ -443,11 +446,29 @@ class td(Element):
     def convert(self, context):
         return silva.field(self.convert_inner(context))
 
+class codeelement(Element):
+    def convert(self, context):
+        return silva.code(path=self.attrs.get('path',''))
+
+class toc(Element):
+    def convert(self, context):
+        return silva.toc(toc_depth=self.attrs.get('toc_depth','-1'))
+
+class externaldata(Element):
+    def convert(self, context):
+        return silva.externaldata(self.convert_inner(context))
+
 class Text(base.Text):
     def convert(self, context):
         if context.stack and context.stack[-1].name() == 'td':
             return silva.p(base.Text.convert(self, context))
         return base.Text.convert(self, context)
+
+        #if context.stack and context.stack[-1].name() == 'td':
+        #    return silva.p(base.Text.convert(self, context))
+        #return base.Text.convert(self, context)
+
+
 
 """
 current mapping of tags with silva
