@@ -274,7 +274,7 @@
       </td>
     </tr>
     <tr class="controls inter-controls"
-      tal:condition="python:approveables or revokeables">
+      tal:condition="python:approveables or revokeables or closeables">
       <tal:block replace="nothing">
         ______________ expiration time controls ______________
       </tal:block>
@@ -347,7 +347,7 @@
           value="Change timings"
           title="change publish and expiration times for selected objects: alt-s"
           accesskey="s"
-          tal:condition="python:approveables or revokeables"
+          tal:condition="python:approveables or revokeables or closeables"
         />
         <input class="button"
           name="tab_status_approve:method"
