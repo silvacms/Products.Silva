@@ -1,10 +1,10 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: cleanup.py,v 1.3 2004/07/21 11:40:40 jw Exp $
+# $Id: cleanup.py,v 1.4 2004/09/30 12:24:59 guido Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
-from AccessControl import ModuleSecurityInfo
+from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
 from Products.Silva import interfaces as silvaInterfaces
@@ -31,8 +31,14 @@ threshold = 500 # commit sub transaction after having touched this many objects
 class CleanupAdapter(adapter.Adapter):
     """
     """
+    security = ClassSecurityInfo()
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                                'cleanup')
     def cleanup(self):
-        pass    
+        pass
+
+Globals.InitializeClass(CleanupAdapter)
 
 class VersionedContentCleanupAdapter(CleanupAdapter):
     """ Remove unreachable version objects
@@ -91,8 +97,8 @@ class ContainerCleanupAdapter(CleanupAdapter):
         statistics['endtime'] = DateTime()
         return statistics
     
-module_security.declareProtected(
-    SilvaPermissions.ApproveSilvaContent, 'getCleanupVersionsAdapter')    
+module_security.declareProtected(SilvaPermissions.ViewManagementScreens, 
+                                    'getCleanupVersionsAdapter')    
 def getCleanupVersionsAdapter(context):
     if silvaInterfaces.IContainer.isImplementedBy(context):
         return ContainerCleanupAdapter(context).__of__(context)

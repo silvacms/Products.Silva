@@ -20,6 +20,8 @@ Silva changes
       - Remnants of old archive file import code (for bulk creation of
         assets) has been removed.
 
+      - Fixed access to the cleanup adapter from Python scripts
+
   1.1 beta 2
 
     Features added
