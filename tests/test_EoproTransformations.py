@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 import unittest
 
 # 
@@ -236,10 +236,13 @@ class RoundtripWithTidy(unittest.TestCase):
         try:
             self.assertEquals(silvanode, orignode)
         except:
-            print
+            print "*"*70
             print orignode.asBytes()
+            print "-"*70
             print html
+            print "-"*70
             print silvanode.asBytes()
+            print "*"*70
             raise
         return htmlnode
         
@@ -280,6 +283,38 @@ class RoundtripWithTidy(unittest.TestCase):
         self.assert_(len(list)==1)
         # check no title
         self.assert_(not list[0].find('h5'))
+        # check roundtrip
+        self._check_doc(simple)
+
+    def test_dlist_produces_bold_dword(self):
+        simple = '''
+        <silva_document id="test"><title>doc title</title>
+        <doc>
+           <dlist type="normal"><title>dlist title</title>
+           <dt>term1</dt><dd>description of term1</dd></dlist>
+        </doc>
+        </silva_document>'''
+        htmlnode = self.transformer.to_target(simple)
+        #print "result of dlist"
+        #print htmlnode.asBytes()
+        body = htmlnode.find('body')[0]
+        list = body.find('ul')
+        self.assert_(len(list)==1)
+        # check no title
+        h5 = list[0].find('h5')
+        self.assert_(len(h5)==1)
+        self.assertEquals(h5[0].content.extract_text(), 'dlist title')
+
+        li = list[0].find('li')
+        self.assert_(len(li)==1)
+
+        li = li[0]
+
+        font = li.find('font')
+        self.assert_(len(font)==1)
+        font = font[0]
+        self.assertEquals(font.attrs['color'], 'green')
+
         # check roundtrip
         self._check_doc(simple)
 

@@ -21,12 +21,12 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.5 $'
+__version__='$Revision: 1.6 $'
 
 # look ma, i only have these dependencies 
 # and with python2.2 even they would vanish
-# that's because we work with python objects trees
-# instead of a proprietary format :-)
+# that's because we work quite directly 
+# with python's object and namespace model.
 
 import re 
 from UserList import UserList as List
@@ -114,13 +114,13 @@ class Frag(Node, List):
                 node.append(child)
         return node
 
-    def find_and_partition(self, tag):
+    def find_and_partition(self, tag, ignore=lambda x: None):
         pre,match,post = Frag(), Element(), Frag()
         allnodes = self[:]
 
         while allnodes:
             child = allnodes.pop(0)
-            if child._matches(tag):
+            if not ignore(child) and child._matches(tag):
                 match = child
                 post = Frag(allnodes)
                 break
@@ -293,6 +293,9 @@ class CharacterData(Node):
     def asBytes(self, encoding):
         content = escape_chars(self.content)
         return content.encode(encoding)
+
+    def __str__(self):
+        return self.content
 
 
 class Text(CharacterData):

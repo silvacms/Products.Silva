@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 import unittest
 
 # 
@@ -164,6 +164,19 @@ class SilvaXMLObjectParser(unittest.TestCase):
         self.assert_(not post)
         self.assert_(len(post)==0)
 
+    def test_method_find_and_partition_with_empty_match(self):
+        doc = '''<doc>
+                  <heading type="normal">normal</heading>
+                  <heading type="sub">sub</heading>
+               </doc>'''
+
+        node = self.parser.parse(doc)
+        node = node.compact()
+        node = node.find('doc')[0]
+        pre,match,post = node.find_and_partition('p')
+        self.assert_(not post and not match)
+        self.assert_(pre)
+        self.assert_(pre==node.find(None))
 
     def test_method_compact(self):
         node= self.parser.parse(self.basicdoc)

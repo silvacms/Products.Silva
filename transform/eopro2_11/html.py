@@ -22,7 +22,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.11 $'
+__version__='$Revision: 1.12 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -156,29 +156,78 @@ class p(Element):
         )
 
 class ul(Element):
-    """ list conversions, ugh! """
+    """ list conversions, ugh! 
+
+        this implementation currently is a bit hackish.
+
+        we have to convert back to 
+             normal lists
+             dlists 
+    """
     default_types = ('disc','circle','square','none')
+
     def convert(self, *args, **kwargs):
+        if self.is_dlist():
+            return self.convert_dlist(*args, **kwargs)
+        else:
+            return self.convert_list(*args, **kwargs)
+
+    def convert_list(self, *args, **kwargs):
         type = self.attrs.get('type', None)
         if type is None:
             type = self.attrs.get('silva_type')
         else:
             type = type.content.lower()
+
         if type not in self.default_types:
             type = self.default_types[0]
 
-        h5_tag = self.find(tag=h5)
-        if not h5_tag:
-            title = silva.title()
-            rest = self.find(li)
-        else:
-            title = silva.title(h5_tag[0].content.convert(*args, **kwargs))
-            rest = self.find(li, ignore=h5_tag[0].__eq__)
+        title = self.get_title(*args, **kwargs)
+
         return silva.list(
             title,
-            rest.convert(*args, **kwargs),
+            self.find('li').convert(*args, **kwargs),
             type=type
+        )
+
+    def get_title(self, *args, **kwargs):
+        h5_tag = self.find(tag=h5)
+        if not h5_tag:
+            return silva.title()
+        else:
+            return silva.title(h5_tag[0].content.convert(*args, **kwargs))
+
+    def is_dlist(self, *args, **kwargs):
+        for item in self.find('li'):
+            font = item.find('font')
+            if len(font)>0 and font[0].attrs.get('color')=='green':
+                return 1
+        
+    def convert_dlist(self, *args, **kwargs):
+        tags = []
+        title = self.get_title(*args, **kwargs)
+        for item in self.find('li'):
+            pre,font,post = item.find_and_partition('font')
+            if font and font.attrs['color']=='green':
+                tags.append(silva.dt(font.content.convert(*args,**kwargs)))
+            else:
+                tags.append(silva.dt())
+
+            if post:
+                try: 
+                    post[0].content = post[0].content.lstrip()
+                except AttributeError:
+                    pass
+
+            tags.append(silva.dd(post.convert(*args, **kwargs)))
+
+        return silva.dlist(
+            title,
+            type='normal',
+            *tags
             )
+
+
 
 class ol(ul):
     default_types = ('1','a','i')
@@ -211,6 +260,7 @@ class font(Element):
     def convert(self, *args, **kwargs):
         color = self.attrs.get('color')
         tag = {'aqua': silva.super, 
+               'green': silva.dt,
                'blue': silva.sub,
                }.get(color)
         if tag:

@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.9 $'
+__version__='$Revision: 1.10 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -87,6 +87,43 @@ class p(SilvaElement):
             self.content.convert(*args, **kwargs),
             silva_type=self.attrs.get('type')
             )
+
+class dlist(SilvaElement):
+    """ Simple lists """
+
+    def convert(self, context):
+        #print "checking", self.asBytes()
+        listtype = self.attrs.get('type', 'normal')
+
+        list_title = self.find(tag=title)[0]
+        if len(list_title.compact().content)>0:
+            list_title = html.h5(list_title.content.convert(context))
+        else:
+            list_title=Text('')
+
+        li_list = []
+        for tag,nexttag in zip(self.content, self.content[1:]):
+            if tag.name()=='dt' and nexttag.name()=='dd':
+                li_list.append(
+                    html.li(
+                        tag.convert(context), 
+                        ' ',
+                        nexttag.convert(context)
+                    )
+                )
+        return html.ul(list_title,
+                       *li_list
+                       )
+
+class dt(SilvaElement):
+    """dlist define term"""
+    def convert(self, context):
+        return html.font(self.content.convert(context), color='green')
+
+class dd(SilvaElement):
+    """dlist define term"""
+    def convert(self, context):
+        return self.content.convert(context)
 
 class list(SilvaElement):
     """ Simple lists """
