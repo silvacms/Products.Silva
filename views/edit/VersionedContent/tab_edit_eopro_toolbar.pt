@@ -60,8 +60,9 @@
 	<icon paramname="SHOWNALLCHAR">
 	</icon>
 <!--
-	<separator />  
         <icon paramname="INSERTCUSTOMTAG" />
+        <icon paramname="PROPERTIESDIALOG"/>
+	<separator />  
 	<separator />  
 	<separator />  
 

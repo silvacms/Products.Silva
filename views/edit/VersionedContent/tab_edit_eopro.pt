@@ -65,7 +65,9 @@
         <param name="tablenbspfill" value="false" />
         <param name="inserttext_html" value="true" />
         <param name="standalonemode" value="false" />
-        <param name="stylesheeturl" tal:attributes="value python: getattr(model.globals, 'silva-eopro.css').absolute_url()" /> 
+<!--
+<param name="stylesheeturl" tal:attributes="value python: getattr(model.globals, 'silva-eopro.css').absolute_url()" /> 
+-->
         
       </applet>
 
