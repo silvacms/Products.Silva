@@ -27,6 +27,6 @@ for row in node.childNodes:
 node.setAttribute('columns', node.input_convert(str(columns - 1)))
 if node.hasAttribute('column_info'):
     column_info = node.getAttribute('column_info').split()
-    node.setAttribute('column_info', node.input_convert(' '.join(column_info[:-1])))
+    node.setAttribute('column_info', u' '.join(column_info[:-1]))
 
 return context.redirect()
