@@ -34,7 +34,7 @@
   <!-- Start related links -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
-  <!-- Access navigation links - if any are not needed remove for better performance -->
+  <!-- Access navigation links - remove if not needed for better performance -->
   <tal:define define="
     root python:here.meta_type == 'Silva Root';
     surround here/surroundlinks; 
@@ -67,7 +67,7 @@
   <link rel="alternate" type="application/rss+xml" href="./rss" title="RSS" />
   <!-- /End related links -->
   <!-- Begin stylesheets -->
-  <link rel="stylesheet" href="frontend.css" type="text/css"
+  <link rel="stylesheet" type="text/css"
     tal:attributes="href here/frontend.css/absolute_url | nothing" />
   <link metal:define-slot="style" tal:omit-tag="" />
   <!-- /End stylesheets -->
@@ -94,7 +94,8 @@
       <span class="breadcrumb"
          style="display:block;">
         <span tal:repeat="item python:here.get_breadcrumbs(ignore_index=1)" tal:omit-tag=""> 
-        <a tal:content="python: item.get_short_title() or item.get_title_or_id" tal:attributes="href item/absolute_url">Name</a>
+        <a tal:content="python: item.get_short_title() or item.get_title_or_id()"
+          tal:attributes="href item/absolute_url">Name</a>
         <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
       </span>
       <!-- End top_navigation slot -->
