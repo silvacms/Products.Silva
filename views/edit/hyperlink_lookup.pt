@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/tal/i18n"
+  tal:define="global breadcrumb_vein string:Contents;"
+>
+
+<metal:block use-macro="here/macro_no_tabs/macros/master">
+<metal:block fill-slot="main"
+  tal:define="
+    default_document model/get_default;
+    default_doc_list python: test(default_document, [default_document], []);
+    publishables python: default_doc_list + model.get_ordered_publishables();
+    assets model/get_assets;asset_context request/asset_context | request/SESSION/asset_context | string:/;
+    dummy python: request.SESSION.set('asset_context', asset_context);
+">
+
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
+      <td class="left"
+        style="padding:0;">
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'hyperlink_lookup', breadcrumb_vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ main subtable _____________________
+      </tal:block>
+      <td class="main"
+        style="padding:0;">
+
+        <table class="listing"
+          style="margin:0;"
+          id="sortable">
+          <thead>
+            <tal:block replace="nothing">
+              ______________ vein + title row ______________
+            </tal:block>
+            <tr>
+              <td class="top"
+                colspan="5">
+                <h2 tal:attributes="title string:id: ${model/id}">
+                  <img tal:replace="structure python:view.render_icon(model)" />
+                  &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                </h2>
+              </td>
+            </tr>
+
+            <tal:block replace="nothing">
+              ______________ top controls row ______________
+            </tal:block>
+            <tr class="top-controls">
+              <td class="align-right"
+                colspan="5">
+              </td>
+            </tr>
+          </thead>
+
+          <script language="JavaScript">
+            <!--
+            function setReference() {
+            doc = document.all ? document.all : document;
+            l = doc.mumble_form.mumble.length;
+            if (l) {
+            for (i=0; i<l; i++) {
+            if (doc.mumble_form.mumble[i].checked) {
+            reference = doc.mumble_form.mumble[i];
+            break;
+            }
+            }
+            } else {
+            // Just one radio button available.
+            // So element itself and not a NodeList returned *sigh*.
+            reference = doc.mumble_form.mumble;
+            }
+            // Split from value attribute, since NS4 does not know of a id attribute
+            retrieved = reference.value;
+            splitpos = retrieved.indexOf('||');
+            id = retrieved.substring(0, splitpos)
+            value = retrieved.substring(splitpos + 2, retrieved.length);
+            // Send back id and reference to calling window
+            opener.insertAssetReference(id, value, self);
+            }
+            //-->
+          </script>
+
+          <form name="mumble_form"
+            id="mumble_form">
+            <tbody>
+              <tal:block replace="nothing">
+                ______________ listing header ______________
+              </tal:block>
+              <tr tal:condition="python:(default_document or publishables or assets)">
+                <th class="listing-right">
+                  #&nbsp;
+                </th>
+                <th i18n:translate="select">
+                  Edit
+                </th>
+                <th i18n:translate="view">
+                  View
+                </th>
+                <th i18n:translate="modified">
+                  Modified
+                </th>
+                <th i18n:translate="author">
+                  Author
+                </th>
+              </tr>
+
+              <tal:block replace="nothing">
+                ______________ if no publishables in this folder ______________
+              </tal:block>
+              <tr class="odd"
+                tal:condition="python: not(default_document or publishables or assets)">
+                <td colspan="5" i18n:translate="no_content_objects_in_folder">
+                  There is no content here.
+                </td>
+              </tr>
+
+              <tal:block replace="nothing">
+                ______________ default + publishables ______________
+              </tal:block>
+              <tal:block
+                repeat="item publishables">
+                <tal:block define="
+                  is_default python: item is default_document;
+                  item_url item/absolute_url;
+                  identifier python:'%s||%s' % (item.id, here.obj_lookup_path_mangler(asset_context, item));
+                  status_style python:item.get_object_status()[1];
+                  oddrow repeat/item/odd">
+                  <tr tal:attributes="class python:oddrow and 'odd' or 'even'">
+                    <tal:block replace="nothing">
+                      _______ checkbox + position cell _______
+                    </tal:block>
+                    <td class="listing-left">
+                      <input type="radio"
+                        name="mumble"
+                        tal:attributes="
+                          value identifier;
+                          id identifier;"
+                      />
+                      <label 
+                        tal:condition="default_document"
+                        tal:content="repeat/item/index"
+                        tal:attributes="for identifier">
+                        # with default doc, starts at 0
+                      </label>
+                      <label 
+                        tal:condition="not: default_document"
+                        tal:content="repeat/item/number"
+                        tal:attributes="for identifier">
+                        # without default doc, starts at 1
+                      </label>
+                    </td>
+                    <tal:block replace="nothing">
+                      _______ id cell _______
+                    </tal:block>
+                    <td>
+                      <label style="text-transform:none;"
+                        title="select this asset"
+                        tal:attributes="for identifier">
+                        <img tal:replace="structure python:view.render_icon(item)" />
+                        <tal:block tal:replace="item/id">
+                          id
+                        </tal:block>
+                      </label>
+
+                      <img alt="content approved or published"
+                        border="0"
+                        height="10"
+                        title="content is approved or published"
+                        width="10"
+                        tal:define="
+                          is_published item/is_version_published | nothing;
+                          is_approved item/is_version_approved | nothing"
+                        tal:condition="python:is_published or is_approved"
+                        tal:attributes="src string:${root_url}/globals/checkmark.gif" />
+
+                    </td>
+                    <tal:block replace="nothing">
+                      _______ title cell _______
+                    </tal:block>
+                    <td>
+                      <a class="blacklink"
+                        title="view"
+                        tal:attributes="
+                          href item_url;
+                          class status_style;"
+                        tal:define="title python:(item.get_title() or item.get_title_editable() or default)"
+                        tal:content="title">
+                        <i i18n:translate="no_title">no title</i>
+                      </a>
+                    </td>
+                    <tal:block replace="nothing">
+                      _______ modified date/metadata downlink cell _______
+                    </tal:block>
+                    <td tal:define="modification_time item/get_modification_datetime | nothing">
+                      <span class="blacklink" title="metadata"
+                        tal:condition="modification_time"
+                        tal:attributes="href string:${item_url}/edit/tab_metadata"
+                        tal:content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)"
+                        >
+                        date
+                      </span>
+                      <span class="closed" title="settings"
+                        tal:condition="not:modification_time"
+                        tal:attributes="href string:${item_url}/edit/tab_metadata"
+                        i18n:translate="n/a"
+                        >
+                        <i>n/a</i>
+                      </span>
+                    </td>
+                    <tal:block replace="nothing">
+                      _______ author/status downlink cell _______
+                    </tal:block>
+                    <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
+                      <span class="blacklink" title="status"
+                        tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
+                        tal:attributes="href string:${item_url}/edit/tab_status"
+                        tal:content="structure last_author"
+                        >
+                        authorname
+                      </span>
+                      <span class="closed" title="publish"
+                        tal:condition="python:item.implements_container()"
+                        tal:attributes="href string:${item_url}/edit/tab_status"
+                        i18n:translate="n/a"
+                        >
+                        <i>n/a</i>
+                      </span>
+                      <span 
+                        tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
+                        tal:replace="last_author">
+                        authorname
+                      </span>
+                    </td>
+                  </tr>
+                </tal:block>
+              </tal:block>
+
+              <tal:block replace="nothing">
+                ______________ assets ______________
+              </tal:block>
+              <tal:block 
+                condition="python:len(assets)"
+                repeat="asset assets">
+
+                <tal:block define="
+                  asset_url asset/absolute_url;
+                  oddrow repeat/asset/odd;
+                  identifier python:'%s||%s' % (asset.id, here.obj_lookup_path_mangler(asset_context, asset));
+                  ">
+                  <tr 
+                    tal:define="title python:(asset.get_title())"
+                    tal:attributes="class python:oddrow and 'odd' or 'even'">
+                    <tal:block replace="nothing">
+                      _______ checkbox + position cell _______
+                    </tal:block>
+                    <td class="listing-left">
+                      <input type="radio"
+                        name="mumble"
+                        tal:attributes="
+                          value identifier;
+                          id identifier;"
+                      />
+                      <label 
+                        tal:condition="default_document"
+                        tal:attributes="for identifier">
+                        &#8211;
+                      </label>
+                    </td>
+                    <tal:block replace="nothing">
+                      _______ icon + id cell _______
+                    </tal:block>
+                    <td>
+                      <label style="text-transform:none;"
+                        title="select this asset"
+                        tal:attributes="for identifier">
+                        <img tal:replace="structure python:view.render_icon(asset)" />
+                        <tal:block tal:replace="asset/id">
+                          id
+                        </tal:block>
+                      </label>
+                    </td>
+                    <tal:block replace="nothing">
+                      _______ title cell _______
+                    </tal:block>
+                    <td>
+                      <a class="blacklink"
+                        title="preview"
+                        tal:content="python: asset.get_title() == '' and default or asset.get_title()"
+                        tal:attributes="
+                          href string:${asset_url}/edit/tab_preview;
+                          class python: asset.get_title() == '' and 'closed' or 'blacklink'"
+                        i18n:attributes="title"
+                        >
+                        <i>view</i>
+                      </a>
+                    </td>
+                    <tal:block replace="nothing">
+                      _______ modified date cell _______
+                    </tal:block>
+                    <td tal:define="modification_time asset/get_modification_datetime | nothing">
+                      <tal:block
+                        condition="modification_time"
+                        content="structure python:here.service_utils.backend_short_datetime_to_str(modification_time)">
+                      </tal:block>
+                      <tal:block condition="not:modification_time">
+                        <i i18n:translate="unknown">
+                          unknown
+                        </i>
+                      </tal:block>
+                    </td>
+                    <tal:block replace="nothing">
+                      _______ author cell _______
+                    </tal:block>
+                    <td tal:content="structure last_author"
+                      tal:define="last_author python:(asset.sec_get_last_author_info().fullname() or default)">
+                      unknown
+                    </td>
+                  </tr>
+                </tal:block>
+              </tal:block>
+            </tbody>
+          </form>
+
+          <tfoot>
+            <tal:block replace="nothing">
+              ______________ controls ______________
+            </tal:block>
+            <tr class="controls">
+              <td class="align-right"
+                colspan="5">
+                <input class="cancel"
+                  style="float:left;"
+                  type="button"
+                  name="cancel"
+                  value="Cancel"
+                  title="cancel operation - alt-c"
+                  accesskey="c"
+                  onclick="window.close();return false;"
+                />
+                <input class="button"
+                  type="button"
+                  name="place"
+                  value="Place reference"
+                  title="insert a reference to this asset - alt-p"
+                  accesskey="p" 
+                  onclick="setReference();return false;" 
+                  tal:condition="publishables"
+                />
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</metal:block>
+</metal:block>
+</html>

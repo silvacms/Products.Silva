@@ -5,7 +5,7 @@
 <div align="right">
 <input type="button" class="navigation" name="" value="Add hyperlink..." title="Access key: alt-a" accesskey="a"
   tal:define="container node/get_container"
-  tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?asset_context=%s\', \' ((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % (container.absolute_url(), '/'.join(container.getPhysicalPath()))" />
+  tal:attributes="onclick python:'getAssetReference(\'%s/edit/hyperlink_lookup?asset_context=%s\', \' ((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % (container.absolute_url(), '/'.join(container.getPhysicalPath()))" />
 </div>
 <div class="textarea">
   <textarea style="width:100%" id="data" name="data" cols="65" rows="10" wrap="soft" 

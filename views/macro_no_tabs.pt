@@ -15,19 +15,16 @@
     title model/get_title_editable;
     
     root_url model/get_root_url;
-
-    containing_folder model/..;
-    publication model/get_publication;
-    containing_publication publication/../get_publication | publication;
+    global publication model/get_publication;
+    global containing_publication publication/../get_publication | publication;
     
     content_type view/set_content_type;
+    set_cache_headers view/set_cache_headers;
 
     silva_permissions view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
-    may_change_content silva_permissions/ChangeSilvaContent | nothing;"
-  >
-  
-<span tal:replace="nothing"> ******* XXX: Fixme - this template needs to be stripped ******* </span>
+    may_change_content silva_permissions/ChangeSilvaContent | nothing;
+">
 
 <head>
 <title tal:content="title">
@@ -37,7 +34,7 @@
   rel="shortcut icon"
   tal:attributes="href string:${root_url}/globals/favicon.ico"
 />
-<!-- Plone Stylesheets -->
+<tal:block replace="nothing"> <!-- Plone Stylesheets --> </tal:block>
 <style media="all"
   type="text/css"
   xml:space="preserve"
@@ -53,51 +50,56 @@
 />
 <link href="globals/silvaContentStyle.css"
   rel="stylesheet"
-  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css;"
   tal:condition="python: not model.implements_container()"
+  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css"
 />
+<tal:block replace="nothing"> _______ hook for metatype stylesheet _______ </tal:block>
+<metal:block define-slot="metatype_css" />
+<link href="frontend.css"
+  rel="stylesheet"
+  tal:condition="python:template.id == 'tab_preview'"
+  tal:attributes="href here/frontend.css/absolute_url | nothing"
+/>
+<tal:block replace="nothing"> _______ hook for application specific stylesheet extension _______ </tal:block>
+<metal:block define-slot="extension_css" />
+<tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
+<metal:block define-slot="meta" />
+<metal:block define-slot="refresher" />
 <!-- Plone Javascript -->
 <script type="text/javascript"
   xml:space="preserve"
-  tal:replace="nothing"
   tal:attributes="src string:${root_url}/globals/plone_javascripts.js"
 >
 </script>
-<script xml:space="preserve"
-  tal:replace="nothing"
->
-_______ application specific stylesheet extension _______
+<script language="JavaScript">
+
+// can be attached to formfields so that pressing enter makes the form use
+// a specific action, useful in forms with more than 1 submit button
+function handle_default_action(element, event, action)
+{
+    code = event.which ? event.which : event.keyCode;
+    if (code == 10 || code == 13)
+    {
+        element.form.action = action;
+        element.form.submit();
+    }
+}
+
 </script>
-<link href="ext_stylesheet"
-  rel="stylesheet"
-  tal:condition="view/extension_style_url | nothing"
-  tal:attributes="href view/extension_style_url"
-/>
-<style type="text/css"
-  xml:space="preserve"
-  tal:condition="python: template.id == 'tab_preview'"
->
-div.workspace {background: #e6e6ee;}
-</style>
-<script xml:space="preserve"
-  tal:replace="nothing"
->
-_______ editor hooks _______
-</script>
+<script tal:replace="nothing"> _______ editor hooks _______ </script>
 <script language="JavaScript"
   type="text/javascript"
   xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_bxe'"
-  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url"
->
-
+  tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url | nothing">
 </script>
 <script language="JavaScript"
   type="text/javascript"
   xml:space="preserve"
   tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
-  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url"
+  tal:attributes="src container/xopus/xopus/xopus.js/absolute_url | nothing"
 />
+<span tal:replace="nothing"> _______ XXX Fixme: this needs to be absoluted _______ </span>
 <script language="JavaScript"
   type="text/javascript"
   xml:space="preserve"
@@ -107,51 +109,45 @@ _______ editor hooks _______
 </head>
 <body tal:attributes="onload python: test(template.id == 'tab_edit_bxe', 'BX_load(\'%s/bxe/bxe_config.xml\')' % url, 'if (window.focus_editor) window.focus_editor()')">
 
-<tal:block replace="nothing">
-  Previous onload tests facilitate Bitflux editor support
-</tal:block>
-
 <span tal:replace="nothing">
-<!-- _____________________ start workspace _____________________ -->
+<!-- ____________________________ start workspace ____________________________ -->
 </span>
 <div class="workspace">
 
 <span tal:replace="nothing">
-<!-- _______ start feedback _______ -->
+<!-- ______________ start feedback ______________ -->
 </span>
-<tal:block 
-  define="
-    type options/message_type | request/message_type | nothing;
-    msg options/message | request/message | nothing;"
-  condition="type"
->
+<tal:block define="
+  type options/message_type | request/message_type | nothing;
+  notice options/message | request/message | nothing;"
+  condition="type">
   <div class="feedback"
-    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'"
-  >
-    <span tal:replace="structure msg">
+    style="margin-bottom:0;"
+    tal:attributes="class python:type == 'feedback' and 'feedback' or 'alert'">
+    <span tal:replace="structure notice">
       message
     </span>
-    &nbsp;&nbsp;
-    <span tal:replace="string:(${here/service_utils/backend_now_to_str})"
-      tal:condition="python:type != 'alert'">
+    <span tal:replace="structure string:&nbsp;&nbsp;(${here/service_utils/backend_now_to_str})"
+      tal:condition="python:type == 'feedback'">
       datetime
     </span>
   </div>
 </tal:block>
 <span tal:replace="nothing">
-<!-- _______ end feedback _______ -->
+<!-- ______________ end feedback ______________ -->
 </span>
 
-<!-- ____________________________ main start ___________________________ -->
+<!-- _____________________ main start _____________________ -->
 <div metal:define-slot="main">
   Here the local content (a.k.a. "model") is inserted (this text will be replaced).
 </div>
-<!-- ____________________________ main ends ____________________________ -->
+<!-- _____________________ main ends _____________________ -->
 
 
 <span tal:replace="nothing">
-<!-- _____________________ workspace ends _____________________ -->
+<!-- ____________________________ workspace ends ____________________________ -->
 </span>
 </div>
+
 </body>
 </html>
