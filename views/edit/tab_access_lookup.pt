@@ -144,7 +144,7 @@
                       <span class="subhead">
                         email:
                       </span>
-                      <span tal:replace="member/email | no_entry" />
+                      <span tal:replace="member/email" />
                       <br />
                     </td>
                   </tr>

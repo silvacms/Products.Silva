@@ -1,12 +1,3 @@
-## Script (Python) "save_memberdata"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
 view = context
 request = view.REQUEST
 model = request.model

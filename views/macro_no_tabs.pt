@@ -1,9 +1,17 @@
-<html metal:define-macro="master"
-  tal:define="
-    silva_root here/silva_root;
-    view here;
-    model request/model;
-    ">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+    xml:lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:notal="http://www.infrae.com/silva/notal"
+    xmlns:tal="http://xml.zope.org/namespaces/tal" 
+    metal:define-macro="master"
+    tal:define="
+      silva_root here/silva_root;
+      view here;
+      model request/model;
+     ">
 <head>
 <title tal:content="structure python:model.get_title_html()">Title</title>
 <link rel="shortcut icon" href="globals/favicon.ico"
