@@ -40,6 +40,7 @@
 <metal:fill-slot fill-slot="additional_tools">
   <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
+
 </metal:use-macro>
 
 </html>
