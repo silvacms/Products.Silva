@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.39 $
+# $Revision: 1.40 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -95,6 +95,15 @@ class Root(Publication):
         upgrade.from086to09(self.aq_inner.aq_parent, self)
         return "Upgrade of &laquo;%s&raquo; succeeded.<br /> A backup is in &laquo;%s_086&raquo;.<br />" \
                % (my_id, my_id)
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'upgrade_memberobjects')
+    def upgrade_memberobjects(self):
+        """Upgrades existing authorinfos to use the new membership objects
+        """
+        import upgrade
+        upgrade.upgrade_memberobjects(self)
+        return 'Upgrade of the memberobjects succeeded.'
     
 InitializeClass(Root)
 
