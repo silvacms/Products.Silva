@@ -5,6 +5,10 @@
 <metal:block use-macro="here/macro_index/macros/master">
   <div class="margins"
     metal:fill-slot="main">
+
+    <script type="text/javascript" 
+      tal:content="structure python:here.focus_editor('name')" />
+
     <h3>
       <a href="lookup_back_link"
         title="Up to top of Access tab"
