@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.97 $
+# $Revision: 1.98 $
 # Zope
 import Acquisition
 from Acquisition import aq_inner
@@ -692,7 +692,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
                 continue
             if item.is_transparent():
                 l.append((indent, item))
-                if depth == -1 or depth < indent:
+                if depth == -1 or indent < depth:
                     item._get_container_tree_helper(l, indent + 1, depth)
             else:
                 l.append((indent, item))
@@ -704,7 +704,7 @@ class Folder(SilvaObject, Publishable, Folder.Folder, CatalogPathAware):
             if (IContainer.isImplementedBy(item) and
                 item.is_transparent()):
                 l.append((indent, item))
-                if depth == -1 or depth < indent:
+                if depth == -1 or indent < depth:
                     item._get_public_tree_helper(l, indent + 1, depth)
             else:
                 l.append((indent, item))
