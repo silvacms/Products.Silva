@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -8,7 +8,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
 # Silva interfaces
-from IVersionedContent import IVersionedContent
+from Products.Silva.IVersionedContent import IVersionedContent
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.EditorSupport import EditorSupport
