@@ -94,6 +94,8 @@ def install(root):
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     add_fss_directory_view(root.service_resources, 'Silva', __file__, 'resources')
+    root.service_resources.manage_addFolder('Layouts')
+    
     # also register views
     registerViews(root.service_view_registry)
 
@@ -347,6 +349,8 @@ def configureLayout(root, default_if_existent=0):
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
 
     add_helper(root, 'frontend.css', globals(), dtml_add_helper, default_if_existent)
+    root.manage_addProduct['Silva'].manage_addLayoutService(
+        'service_layouts', 'Silva Layouts Configuration')
 
 def configureMembership(root):
     """Install membership code into root.

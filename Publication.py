@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.46 $
+# $Revision: 1.47 $
 # Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -36,8 +36,23 @@ class Publication(Folder.Folder):
     __implements__ = IPublication
 
     _addables_allowed_in_publication = None
+
+    def __init__(self, id):
+        Publication.inheritedAttribute('__init__')(
+            self, id)
+        self.layout = "myLayout"
     
     # MANIPULATORS
+    
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_layout')
+    def set_layout(self, layout_name):
+        """Set template layout
+        """
+        self.layout = layout_name
+        from LayoutRegistry import layoutRegistry
+        layout = layoutRegistry.get_layout(self.layout)
+        layout.setup(self.get_root(), self)
     
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_silva_addables_allowed_in_publication')
@@ -52,6 +67,15 @@ class Publication(Folder.Folder):
         self._to_folder_or_publication_helper(to_folder=1)
         
     # ACCESSORS
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_layout')
+    def get_layout(self):
+        """Get template layout.
+        """
+        if not hasattr(self, "layout"):
+            self.layout = None
+        return self.layout
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')
     def get_publication(self):

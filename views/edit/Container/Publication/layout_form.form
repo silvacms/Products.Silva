@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+  <title></title>
+  <name>layout_form</name>
+  <action></action>
+  <enctype>None</enctype>
+  <method>POST</method>
+
+  <groups multiple="true">
+    <group>
+      <title>Default</title>
+      <fields multiple="true">
+
+      <field><id>layout</id> <type>ListField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <size type="int">1</size>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
+          <required type="int">0</required>
+          <css_class></css_class>
+          <default></default>
+          <title>Layout</title>
+          <truncate type="int">0</truncate>
+          <description>Choose among installed layout templates</description>
+          <extra>style="width:100%;"</extra>
+          <unicode>1</unicode>
+          <whitespace_preserve type="int">1</whitespace_preserve>
+        </values>
+        <tales>
+            <items>form/service_layouts/get_installed_names</items>
+        </tales>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>
+

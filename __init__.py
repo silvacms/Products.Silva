@@ -1,6 +1,6 @@
 # Copyr2ght (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.97 $
+# $Revision: 1.98 $
 
 import Metadata
 import Folder, Root
@@ -16,6 +16,8 @@ import mangle, batch
 from Products.Silva.ImporterRegistry import importer_registry
 from Products.Silva.ExtensionRegistry import extensionRegistry
 import ExtensionService
+from LayoutRegistry import layoutRegistry
+import LayoutService
 import SimpleMembership
 import EmailMessageService
 import DocmaService
@@ -50,6 +52,13 @@ def initialize(context):
         ExtensionService.ExtensionService,
         constructors = (ExtensionService.manage_addExtensionServiceForm,
                         ExtensionService.manage_addExtensionService),
+        icon = "www/extension_service.gif"
+        )
+
+    context.registerClass(
+        LayoutService.LayoutService,
+        constructors = (LayoutService.manage_addLayoutServiceForm,
+                        LayoutService.manage_addLayoutService),
         icon = "www/extension_service.gif"
         )
 

@@ -4,7 +4,8 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  >
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 <metal:block define-macro="tabs">
 
 <tal:block define="
@@ -21,6 +22,7 @@
         href="globals/reference"
         title="Silva info: alt-|"
         accesskey="|"
+        i18n:attributes="title"
         >
         Silva
       </a>
@@ -30,12 +32,14 @@
       title="Silva top: alt-/"
       accesskey="/"
       tal:attributes="href string:${root_url}/edit/tab_edit"
+      i18n:attributes="title"
       >
       <img alt="Silva emblem"
         height="14"
         width="14"
         border="0"
         tal:attributes="src string:${root_url}/globals/silva_emblem.gif"
+        i18n:attributes="alt"
       />
     </a>
 
@@ -60,6 +64,8 @@
         title="Zope manage_main: alt-."
         accesskey="."
         tal:attributes="href python:'%s/manage_main' % url"
+        i18n:attributes="title"
+        i18n:translate=""
       >
         &middot; manage...
       </a>
@@ -68,6 +74,7 @@
       <tal:block condition="python:model.meta_type == 'Silva Document' and hasattr(here, 'eopro')">
         &nbsp;&nbsp;
         <a tal:attributes="href python:'%s/edit/tab_edit_eopro' % url"
+           i18n:translate=""
         >
           /eopro edit...
         </a>
@@ -87,10 +94,12 @@
       <a class="normal"
         style="float:right; margin-right:6px; padding-left:0.8em; padding-right:0em;"
         title="Silva help: alt-h"
+        i18n:attributes="title"
         accesskey="h"
         target="_blank"
         tal:condition="exists:here/help_url"
         tal:attributes="href string:${here/help_url}"
+        i18n:translate=""
       >
         help
       </a>
@@ -117,8 +126,9 @@
           tal:attributes="href tab_info/tab_url;
             class python:is_selected_tab and (active_tab and 'recede' or 'selected') or '';
             title string:access key: alt-${tab_key};
-            accesskey tab_key;
-          ">
+            accesskey tab_key;"
+          i18n:translate=""
+          >
           Tab Name
         </a>
         <a class="right"

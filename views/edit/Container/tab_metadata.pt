@@ -13,7 +13,7 @@
 <!-- settings (aka tab_metadata) for Container objects -->
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
-
+<metal:define define-macro="master">
   <table class="columns columns2">
     <tbody>
       <tr>
@@ -31,10 +31,12 @@
         <tal:block replace="nothing">
           _____________________ main _____________________
         </tal:block>
+        
         <td class="main">
           <form method="POST" name="form" action=".">
             <table class="listing">
               <thead>
+                  
                 <tr tal:replace="nothing">
                   ______________ vein + title row ______________
                 </tr>
@@ -86,6 +88,8 @@
             </table>
           </form>
 
+          <metal:headslot define-slot="more_control" />
+
           <tal:block define="version model">
             <metal:block use-macro="here/macro_metadata/macros/edit_table" />
           </tal:block>
@@ -93,7 +97,8 @@
       </tr>
     </tbody>
   </table>
-
+  
+</metal:define>
 </metal:block>
 </metal:block>
 </html>
