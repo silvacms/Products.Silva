@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "POT-Creation-Date: Thu Dec 16 10:58:29 2004\n"
-"PO-Revision-Date: 2004-12-20 14:29+0100\n"
+"PO-Revision-Date: 2004-12-20 15:53+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
@@ -3345,7 +3345,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:30
 msgid "ghost of &#xab;${title}&#xbb; (${version_name} version)"
-msgstr ""
+msgstr "Ghost-Objekt von &#xab;${title}&#xbb; (Version ${version_name})"
 
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:51
 msgid "reference"
@@ -3419,14 +3419,14 @@ msgstr "Publizieren der nicht bewilligten Version: alt-:"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:76
 msgid "${note} This object is already being edited by another user, and is temporarily locked."
-msgstr ""
+msgstr "${note} Dieses Objekt wird bereits von einem anderen Benutzer bearbeitet und ist zeitweilig gesperrt."
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:76
 #: /views/edit/VersionedContent/macro_tab_edit.pt:105
 #: /views/edit/VersionedContent/macro_tab_edit.pt:126
 #: /views/edit/VersionedContent/macro_tab_edit.pt:148
 msgid "Note:"
-msgstr ""
+msgstr "Anmerkung: "
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:80
 msgid "Somebody else just edited this item, unlock it: alt-u"
@@ -3443,7 +3443,7 @@ msgstr "Sperre entfernen"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:96
 msgid "work on a new version while the previous one stays online: alt-n"
-msgstr ""
+msgstr "Bearbeiten einer neuen Version, während die vorherige online bleibt: alt-n"
 
 #: /views/edit/VersionedContent/properties_make_copy.py:16
 #: /views/edit/VersionedContent/tab_edit_make_copy.py:16
@@ -3540,7 +3540,7 @@ msgstr "Inhalt ist veröffentlicht"
 
 #: /views/edit/VersionedContent/tab_status.pt:72
 msgid "This content is published (online for the public).<br /> If you wish you can make an editable copy by going to the ${editor}."
-msgstr ""
+msgstr "Dieser Inhalt ist publiziert. <br /> Sie können eine bearbeitbare Kopie erzeugen, wenn Sie zum ${editor} gehen."
 
 #: /views/edit/VersionedContent/tab_status.pt:82
 msgid "Published version exists"
@@ -3634,7 +3634,7 @@ msgstr "Tag / Monat / Jahr &nbsp; 23:59"
 #: /views/edit/VersionedContent/tab_status_macros.pt:158
 #: /views/edit/VersionedContent/tab_status_macros.pt:234
 msgid "access key: alt-i (some platforms)"
-msgstr ""
+msgstr "Kurzwahl: alt-i"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:158
 #: /views/edit/VersionedContent/tab_status_macros.pt:234
@@ -3694,7 +3694,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:273
 msgid "clear ex<u>p</u>iration?"
-msgstr ""
+msgstr "Verfallsdatum löschen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:292
 msgid "change timings"
@@ -3722,7 +3722,7 @@ msgstr "Anfrage"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:428
 msgid "add message on"
-msgstr ""
+msgstr "Nachricht hinzufügen an"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:431
 msgid "rejection"
@@ -3768,7 +3768,7 @@ msgstr "Zur vorherigen Version zurückkehren"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:544
 msgid "The current editable version can be replaced with the previous (published) version. This can not be undone afterwards and will discard all changes made to the current version."
-msgstr ""
+msgstr "Die aktuelle bearbeitbare Version kann durch die vorherige publizierte Version ersetzt werden. Das kann nicht rückgängig gemacht werden und wird alle gemachten Änderungen in der bearbeiteten Version verwerfen."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:552
 msgid "revert to previous"
@@ -4013,31 +4013,31 @@ msgstr "Das Objekt &#xab;${haunted_url}&#xbb;, auf das dieses Ghost-Objekt verwe
 
 #: /views/edit/get_ghost_link_status_text.py:21
 msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is a container."
-msgstr ""
+msgstr "Das Ghost-Objekt &#xab;${haunted_url}&#xbb;  zeigt auf einen Container."
 
 #: /views/edit/get_ghost_link_status_text.py:24
 msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is itself a ghost."
-msgstr ""
+msgstr "Das Ghost-Objekt &#xab;${haunted_url}&#xbb; zeigt auf ein Ghost-Objekt."
 
 #: /views/edit/get_ghost_link_status_text.py:27
 msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a content object."
-msgstr ""
+msgstr "Das Ghost-Objekt &#xab;${haunted_url}&#xbb;  zeigt nicht auf ein Inhaltsobjekt."
 
 #: /views/edit/get_ghost_link_status_text.py:30
 msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is a content object."
-msgstr ""
+msgstr "Das Ghost-Objekt &#xab;${haunted_url}&#xbb; zeigt auf einen Container."
 
 #: /views/edit/get_ghost_link_status_text.py:33
 msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a container."
-msgstr ""
+msgstr "Der Ghost-Ordner &#xab;${haunted_url}&#xbb; zeigt nicht aufeinen Container."
 
 #: /views/edit/get_ghost_link_status_text.py:36
 msgid "The object &#xab;${haunted_url}&#xbb; the ghost points to is either the ghost itself or an ancestor of the ghost."
-msgstr ""
+msgstr "Das Ghost-Objekt &#xab;${haunted_url}&#xbb; zeigt entweder auf sich selbst oder einen seiner Vorfahren."
 
 #: /views/edit/get_ghost_link_status_text.py:39
 msgid "The ghost is in an undefined state."
-msgstr ""
+msgstr "Das Ghost-Objekt ist in einem undefinierten Zustand."
 
 #: /views/edit/hyperlink_lookup.pt:128
 #: /views/edit/document_lookup.pt:169
@@ -4227,7 +4227,7 @@ msgstr ""
 
 #: /views/edit/macro_groups_listing.pt:78
 msgid "groups administration: alt-g"
-msgstr ""
+msgstr "Gruppen verwalten: alt-g"
 
 #: /views/edit/macro_groups_listing.pt:78
 msgid "<u>g</u>roups admin..."
@@ -4410,7 +4410,7 @@ msgstr "Zeitüberschreitung der Sitzung"
 
 #: /views/edit/promptWindow.pt:27
 msgid "In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;cancel&#8217; (alt-c) to do nothing, or save manually."
-msgstr ""
+msgstr "Die Arbeitssitzung für das z.Z. bearbeitete Dokument verfällt in etwa 5 Minuten.Das bedeutet, dass alle nicht gespeicherten Änderungen verloren gehen.Speichern Sie Ihre Arbeit mit &#8216;speichern&#8217; (alt-s ) oder drücken Sie &#8216;Abbrechen&#8217; (alt-c)."
 
 #: /views/edit/promptWindow.pt:35
 msgid "cancel the automatic save action: alt-c"
