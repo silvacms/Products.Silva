@@ -73,8 +73,8 @@
   <tr tal:condition="python:may_change_content and unapproved and published">
     <td class="feedback" colspan="3">
       <span class="subhead">Published version exists</span><br />
-      <span class="warning" tal:condition="may_approve_content">Note: an older version of this content is online.<br /></span>
-      Publishing this version will replace the public version.
+      <span class="warning" tal:condition="may_approve_content">Note: an older version of this content is online.<br />
+      Publishing this version will replace the public version.</span>
       <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
   </tr>
