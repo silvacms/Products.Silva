@@ -140,7 +140,6 @@ boxOddBackground:string=000
 boxHighlight:string=0px solid #000
 
 
-
 listingTopBackground:string=#c4d6e7
 listingTopControlsBackground:string=#616d73
 listingControlsBackground:string=#6c797f
