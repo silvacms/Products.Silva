@@ -36,8 +36,16 @@
   color : #444444; 
 }
 
+p.lead {
+  font-weight : bold;
+}
+
 pre {
+  font-size : 100%; 
   color : #473f69; 
+  background: transparent;
+  padding: 0;
+  border: none;
 }
 
 
@@ -174,9 +182,9 @@ ul.tips {
 }
 
 ul.tips-nested {
-    list-style-image: none; 
+  list-style-image: none; 
   list-style-type : circle;
-  margin-left : 0.1em;
+  margin-left : 0.5em;
   padding-left : 1em;
   line-height : 130%;
 }
