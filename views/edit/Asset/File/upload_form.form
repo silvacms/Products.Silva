@@ -17,13 +17,14 @@
           <display_maxwidth></display_maxwidth>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <display_width type="int">33</display_width>
+          <display_width type="int">44</display_width>
           <css_class></css_class>
           <default></default>
           <title>File</title>
-          <description></description>
+          <description>Find a file on your disk.</description>
           <external_validator></external_validator>
-          <extra>title="Access key: alt-f" accesskey="fo"</extra>
+          <extra>title="access key: alt-f" accesskey="f" style="width:100%;"</extra>
+          <required type="int">1</required>
         </values>
         <tales>
         </tales>

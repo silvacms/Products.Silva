@@ -1,4 +1,4 @@
-## Script (Python) "properties_submit"
+## Script (Python) submit"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -12,7 +12,7 @@ model = context.REQUEST.model
 view = context
 
 try:
-    result = view.properties_form.validate_all(context.REQUEST)
+    result = view.form.validate_all(context.REQUEST)
 except FormValidationError, e:
     return view.tab_edit(message_type="error", message=context.render_form_errors(e))
 model.sec_update_last_author_info()

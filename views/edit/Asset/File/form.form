@@ -25,8 +25,8 @@
           <default></default>
           <title>Title</title>
           <truncate type="int">0</truncate>
-          <description>A descriptive title pays off in the future.</description>
-          <extra></extra>
+          <description>Optional, but useful.</description>
+          <extra>style="width:100%"</extra>
           <unicode>1</unicode>
         </values>
         <tales>

@@ -1,155 +1,16 @@
-<div class="margins" tal:define="view here; model request/model">
+<html tal:omit-tag=""
+  tal:define="
+    view here;
+    model request/model;
+    root_url model/get_root_url;
+    title model/get_title_editable;
+    breadcrumb_vein string:Edit;
+">
 
-<h2><img src="%s" width="16" height="16" alt="%s"
-      tal:replace="structure python:view.render_icon(model)" />&nbsp;
-      <span tal:replace="model/meta_type">Meta type</span> 
-      <span class="document-title">
-        &#xab;<tal:block content="model/get_title_or_id_editable" />&#xbb;
-      </span>
-</h2>
+<metal:use-macro use-macro="view/macro_asset_edit/macros/editor">
+<metal:fill-slot fill-slot="additional_tools">
+<metal:block use-macro="view/macro_asset_edit/macros/uploader" />
+</metal:fill-slot>
+</metal:use-macro>
 
-<init tal:omit-tag=""
-  tal:define="global fields python:view.properties_form.get_fields()" />
-
-<h3>Property</h3>
-
-<form method="POST" name="form" action=".">
-<table width="96%" cellspacing="0" cellpadding="3" border="0"
-  tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
-                  cellpadding container/table_cellpadding; border container/table_border">
-<tr>
-<th align="left">
-Element
-</th>
-<th align="right">
-&nbsp;
-</th>
-<th align="left">
-Content
-</th>
-<th align="left" width="40%">
-Note
-</th>
-</tr>
-
-<fieldset tal:omit-tag=""
-  tal:repeat="field fields">
-<rowset tal:omit-tag=""
-  tal:define="oddrow repeat/field/odd">
-
-<tr class="focus" valign="top"
-  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
-<td align="right">
-<span tal:replace="python:field['title'].capitalize() + ':'">Title</span>
-</td>
-<td align="right">
-<span class="warning"
-  tal:condition="python:field.is_required()">
-*
-</span>
-<span class="logic"
-  tal:condition="not:python:field.is_required()"
-  tal:omit-tag="">
-&nbsp;
-</span>
-</td>
-<td align="left">
-<span tal:replace="nothing">This will go utterly wrong as soon as image grows more than one property</span>
-<input tal:replace="structure python:field.render(model.get_title_editable())" />
-</td>
-<td>
-<span tal:replace="python:field.get_value('description')">
-comments here (field description)
-</span>&nbsp;
-</td>
-</tr>
-
-</rowset>
-</fieldset>
-
-<tr class="controls">
-<td colspan="2">
-<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c"
-  onClick="history.back()" />
-</td>
-<td colspan="2" align="right">
-<input class="button" type="submit" title="Access key: alt-s" accesskey="s"
-  name="properties_submit:method" value=" Save file properties " />
-</td>
-</tr>
-</table>
-</form>
-
-
-<h3>Upload</h3>
-
-<init tal:omit-tag=""
-  tal:define="global fields python:view.upload_form.get_fields()" />
-
-<form method="POST" name="form" action="." enctype="multipart/form-data">
-<table width="96%" cellspacing="0" cellpadding="3" border="0"
-  tal:attributes="width container/table_width; cellspacing container/table_cellspacing;
-                  cellpadding container/table_cellpadding; border container/table_border">
-<tr>
-<th align="left">
-Element
-</th>
-<th align="right">
-&nbsp;
-</th>
-<th align="left">
-Content
-</th>
-<th align="left" width="40%">
-Note
-</th>
-</tr>
-
-<fieldset tal:omit-tag=""
-  tal:repeat="field fields">
-<rowset tal:omit-tag=""
-  tal:define="oddrow repeat/field/odd">
-
-<tr class="focus" valign="top"
-  tal:attributes="class python:test(oddrow, 'focus', 'focus-cycle')">
-<td align="right">
-<span tal:replace="python:field['title'].capitalize() + ':'">Title</span>
-</td>
-<td align="right">
-<span class="warning"
-  tal:condition="python:field.is_required()">
-*
-</span>
-<span class="logic"
-  tal:condition="not:python:field.is_required()"
-  tal:omit-tag="">
-&nbsp;
-</span>
-</td>
-<td align="left">
-<input tal:replace="structure python:field.render()" />
-</td>
-<td>
-<span tal:replace="python:field.get_value('description')">
-comments here (field description)
-</span>&nbsp;
-</td>
-</tr>
-
-</rowset>
-</fieldset>
-
-<tr class="controls">
-<td colspan="2">
-<input class="cancelbutton" type="button" name="edit_cancel" value=" Cancel " title="Access key: alt-c" accesskey="c"
-  onClick="history.back()" />
-</td>
-<td colspan="2" align="right">
-<input class="button" type="submit" title="Access key: alt-u" accesskey="u"
-  name="upload_submit:method" value=" Upload file " />
-</td>
-</tr>
-</table>
-</form>
-
-</div>
+</html>
