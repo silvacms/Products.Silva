@@ -34,6 +34,8 @@ class Version(SimpleItem):
             binding = self.service_metadata.getMetadata(self)
         except BindingError:
             return
+        if binding is None:
+            return
         for elem in ('creationtime', 'modificationtime'):
             old = binding.get('silva-extra', element_id=elem)
             if old is None:
