@@ -7,17 +7,14 @@
 ##parameters=
 ##title=
 ##
+code = context.get_code_object()
+
+if not code:
+    return '<span class="warning">[Code element is broken]</span>'
+
+# this is also done in get_code(), but I need to get to path:
 node = context.REQUEST.node
 path = node.output_convert_html(node.getAttribute('path'))
-code = None
-if path:
-    try:
-        code = node.restrictedTraverse(str(path))
-    except (KeyError, AttributeError):
-        # reference is broken
-        return '<span class="warning">[code element %s cannot be found]</span>' % path
-else:
-    return '<span class="warning">[No code element selected]</span>'
 
 return 'Code element: %s at %s' % (code.title_or_id(), path)
 

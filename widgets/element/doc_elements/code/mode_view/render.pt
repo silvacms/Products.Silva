@@ -1,1 +1,1 @@
-<tal:block replace="structure here/render_code" />
+<tal:block replace="structure here/get_rendered_code" />
