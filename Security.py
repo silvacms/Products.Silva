@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53 $
+# $Revision: 1.54 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -330,7 +330,7 @@ class Security(AccessManager):
         if info is None:
             return noneMember.__of__(self)
         else:
-            return info
+            return info.__of__(self)
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_update_last_author_info')
@@ -340,7 +340,7 @@ class Security(AccessManager):
         userid = self._last_author_userid = (self.REQUEST.
                                              AUTHENTICATED_USER.getUserName())
         # This will already give a cached member
-        self._last_author_info = self.sec_get_member(userid)
+        self._last_author_info = self.sec_get_member(userid).aq_base
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_userids')
