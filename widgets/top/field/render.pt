@@ -6,15 +6,15 @@
 <br />
 <div metal:use-macro="container/macro_normal_view/macros/normal_view">
 <div metal:fill-slot="node_content">
-<table border="0" width="100%">
-<tr>
-  <td width="16">
+<table class="listing" border="0" width="100%">
+<tr class="top-controls">
+  <td class="invisible" width="16">
     <a tal:attributes="href string:${url_start}/up" title="Up to parent: alt-u" accesskey="u"><img tal:attributes="src string:${silva_root}/globals/edit_parent.gif" width="16" height="16" border="0" alt="edit parent" /></a>
   </td>
-  <td class="topcontrols">
-    <span class="tablehead3">&nbsp;Element editor&nbsp;</span>
+  <td>
+    <h3>&nbsp;Element editor&nbsp;</h3>
   </td>
-  <td width="16">
+  <td class="invisible" width="16">
     <a tal:attributes="href string:${url_start}/up" title="Up to parent"><img tal:attributes="src string:${silva_root}/globals/edit_parent.gif" width="16" height="16" border="0" alt="edit parent" /></a>
   </td>
 </tr>
