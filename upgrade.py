@@ -1,6 +1,5 @@
 from __future__ import nested_scopes
 
-
 # zope imports
 import zLOG
 
@@ -30,12 +29,10 @@ class GeneralUpgrader:
     def __repr__(self):
         return "<GeneralUpgrader %r>" % self._upgrade_handler
 
-
 # marker for upgraders to be called for any object
 class AnyMetaType:
     pass
 AnyMetaType = AnyMetaType()
-
 
 class UpgradeRegistry:
     """Here people can register upgrade methods for their objects
@@ -83,7 +80,8 @@ class UpgradeRegistry:
     def upgradeObject(self, obj, version):
         mt = obj.meta_type
         for upgrader in self.getUpgraders(version, mt):
-            zLOG.LOG('Silva', zLOG.BLATHER, 'Upgrading %s' % obj.absolute_url(),
+            zLOG.LOG('Silva', zLOG.BLATHER, 
+                'Upgrading %s' % obj.absolute_url(),
                 'Upgrading with %r' % upgrader)
             # sometimes upgrade methods will replace objects, if so the
             # new object should be returned so that can be used for the rest
@@ -125,7 +123,6 @@ class UpgradeRegistry:
             zLOG.LOG('Silva', zLOG.INFO, 'Upgrading to version %s.' % version)
             self.upgradeTree(root, version)
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrade finished.')
-
         
     def setUp(self, root, version):
         for function in self._setUp.get(version, []):
@@ -142,14 +139,6 @@ class UpgradeRegistry:
         return '.'.join([ str(i) for i in version ])
         
 registry = UpgradeRegistry()
-
-
-
-
-
-
-
-
 
 def check_reserved_ids(obj):
     """Walk through the entire tree to find objects of which the id is not
