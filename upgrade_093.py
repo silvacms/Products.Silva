@@ -326,6 +326,7 @@ class GroupsService:
     __implements__ = IUpgrader
 
     def upgrade(self, obj):
+        zLOG.LOG('Silva', zLOG.INFO, 'Upgrade Groups Service ' + repr(obj))
         if not hasattr(obj, '_ip_groups'):
             obj._ip_groups = {}
         if not hasattr(obj, '_iprange_to_group'):
