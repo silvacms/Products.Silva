@@ -648,18 +648,18 @@ div.feedback {
     color: #555555;
     background: #f3f3d9;
     border: &dtml-messageBorder;;
-    border-style: solid none solid none;
-    margin: 6px 0px -0.2em 0px;
-    padding: 0.2em 8px 0.4em 8px;
+    border-style: none none solid none;
+    margin: 0 0 -0.2em 0;
+    padding: 0.1em 9px 0.2em 9px;
 }
 
 div.alert {
     color: #3c2d50;
     background: #f7d1d1;
     border: &dtml-messageBorder;;
-    border-style: solid none solid none;
-    margin: 6px 0px -0.2em 0px;
-    padding: 0.2em 8px 0.4em 8px;
+    border-style: none none solid none;
+    margin: 0 0 -0.2em 0;
+    padding: 0.1em 9px 0.1em 9px;
 }
 
 div.feedback a {
