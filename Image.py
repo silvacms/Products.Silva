@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.22 2003/02/21 08:38:57 zagy Exp $
+# $Id: Image.py,v 1.23 2003/02/23 18:39:14 kitblake Exp $
 
 # Python
 import re
@@ -31,6 +31,8 @@ try:
     from Products.ExtFile.ExtImage import ExtImage
 except ImportError:  
     pass
+
+icon = "www/silvaimage.gif"
     
 class Image(Asset):
     """Web graphics (gif, jpg, png) can be uploaded and inserted in Silva
