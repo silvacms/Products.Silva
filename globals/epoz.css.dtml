@@ -163,6 +163,10 @@ a {
   color: blue;
 }
 
+a[name] {
+  background-color: yellow;
+}
+
 </dtml-let>
 
 /* end cascade */
