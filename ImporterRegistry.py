@@ -1,17 +1,19 @@
 # Copyright (c) 2002-2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 """
-This module defines a class and an instance of the importer_registry, a place
-to register xml_import_handlers. The handlers should be registered at runtime
-(by adding some code in the __init__.py's of products that want to support
-XML-importing) by calling importer_registry.register_tag(<tag_name>, <function_reference>),
-where <tag_name> is the name of the main tag of the objecttype's xml-ecport (e.g.
-silva_publication, silva_folder or silva_document) and <function_reference> is a
-reference to the function that will create the actual object. The function will
-have to support 2 arguments: object, the object in which the new object will be
-placed, and node, a ParsedXML node which will be used to create the document from.
-the function should return the new object created.
+This module defines a class and an instance of the importer_registry,
+a place to register xml_import_handlers. The handlers should be
+registered at runtime (by adding some code in the __init__.py's of
+products that want to support XML-importing) by calling
+importer_registry.register_tag(<tag_name>, <function_reference>),
+where <tag_name> is the name of the main tag of the objecttype's
+xml-ecport (e.g.  silva_publication, silva_folder or silva_document)
+and <function_reference> is a reference to the function that will
+create the actual object. The function will have to support 2
+arguments: object, the object in which the new object will be placed,
+and node, a ParsedXML node which will be used to create the document
+from.  the function should return the new object created.
 
 ??? why are the registry keys encoded by cp1252 instead of unicode strings
 """
@@ -24,12 +26,19 @@ def encode_key(key, encoding=DEFAULT_ENCODING):
         return key.encode(encoding)
     return key
 
+class Error(Exception):
+    pass
+
 class ImporterRegistry:
-    """This class will contain the registry for importing XML. Do not import or use this
-    class directly, but instead import the instance (importer_registry), then call the
-    register_tag method to register a specific objecttype's xml import handler or
-    import_function to get the handler (should probably only be called by xml_import_helper).
-    You can check whether an objecttag is already registered by calling the keys-method"""
+    """A registry for importing XML.
+
+    Do not import or use this class directly, but instead import the
+    instance (importer_registry), then call the register_tag method to
+    register a specific objecttype's xml import handler or
+    import_function to get the handler (should probably only be called
+    by xml_import_helper).  You can check whether an objecttag is
+    already registered by calling the keys-method.
+    """
 
     def __init__(self):
         self._import_handlers = {}
@@ -43,7 +52,8 @@ class ImporterRegistry:
         key = encode_key(tag_name)
         self._import_handlers[key] = import_function
 
-    def register_initializer(self, initialization_func, tag_name=None, default=None, priority=1000):
+    def register_initializer(self, initialization_func,
+                             tag_name=None, default=None, priority=1000):
         """
         register a function as to initialize objects after
         """
@@ -51,10 +61,13 @@ class ImporterRegistry:
             self._default_initializer.insert(priority, initialization_func)
             
         elif not default and tag_name:
-            initializers = self._object_initializers.setdefault( encode_key( tag_name ), [])
+            initializers = self._object_initializers.setdefault(
+                encode_key(tag_name), [])
             initializers.insert(priority, initialization_func)
         else:
-            raise SyntaxError("can't only register initializer for tag_name *or* as a default")
+            raise Error(
+                "can't only register initializer for tag_name "
+                "*or* as a default")
         
     def get_initializer(self, tag_name):
         initializers =  self._object_initializers.get( encode_key( tag_name ) )
@@ -107,7 +120,7 @@ def get_xml_id(node):
             # the id MUST be ASCII
             id = attr[4].encode('ascii')
     if not id:
-        raise Exception, 'No id found'
+        raise Error, 'No id found'
     return id
 
 def get_xml_title(node):
