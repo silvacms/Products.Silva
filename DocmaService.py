@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.7 2003/03/24 15:18:23 zagy Exp $
+# $Id: DocmaService.py,v 1.8 2003/03/28 09:02:56 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -104,7 +104,8 @@ class DocmaService(SimpleItem):
             return ['Not connected']
         server = xmlrpclib.Server("http://%s:%s" % (self._host, self._port))
         retval = server.getTemplates(self._password)
-
+        if len(retval) == 0:
+            return ['']
         return retval
 
     security.declarePrivate('add_template')
