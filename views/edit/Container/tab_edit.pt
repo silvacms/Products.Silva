@@ -146,6 +146,7 @@
                           tal:attributes="
                             value item/id;
                             id item/id;"
+                          onkeypress="handle_default_action(this, event, 'tab_edit_copy')"
                         />
                         <label tal:content="repeat/item/index"
                           tal:attributes="for item/id">
