@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.1.1
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.26.2.2 $
+  CVS:        $Revision: 1.26.2.3 $
 
 Installing Silva
 
@@ -124,12 +124,12 @@ Installing Silva
   
         "FileSystemSite-1.2.tgz":http://www.zope.org/Members/k_vertigo/Products/FileSystemSite/FileSystemSite-1.2.tgz
 
-    Groups (0.3.1)
+    Groups (0.3.2)
 
       If you want to take advantage of Groups support, please download and
       install the Groups product, here:
   
-       "Groups-0.3.1.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.1.tgz
+        "Groups-0.3.2.tgz":http://www.zope.org/Members/faassen/Groups/Groups-0.3.2.tgz
 
       Groups support is optional; Silva should run without the Groups
       product installed. Groups use a rather hackish technique called
