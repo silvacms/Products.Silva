@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.150.6.3 $
+# $Revision: 1.150.6.4 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -571,7 +571,12 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed')
     def get_silva_addables_allowed(self):
-        return self.get_silva_addables_allowed_in_publication()
+        secman = getSecurityManager()
+        all_addables = extensionRegistry.get_addables()
+        addablenames = self.get_silva_addables_allowed_in_publication()
+        allowed = [i['name'] for i in all_addables if i['name'] in addablenames and 
+                secman.checkPermission('Add %ss' % i['name'], self)]
+        return allowed
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_container')
