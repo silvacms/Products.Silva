@@ -28,9 +28,9 @@
   action="submit"
   tal:condition="model/get_unapproved_version" 
   tal:define="
-  version     python:model.get_editable();
-  link_status python:here.get_link_status_text(version);
-  content_url python:version.get_content_url();
+    version     python:model.get_editable();
+    link_status python:here.get_link_status_text(version);
+    content_url python:version.get_content_url();
  ">
   <table class="listing">
     <thead>
@@ -83,17 +83,17 @@
       <tr class="odd"
         tal:condition="not:link_status">
         <td class="field-title">
-          Link:
+          Link
         </td>
         <td>
           <a href="original"
-            tal:attributes="href python:content_url + '/edit/tab_preview'"
-            tal:content="python:content_url + ' (' + model.get_editable().get_title() + ')'">
+            tal:attributes="href python:content_url + '/edit/tab_edit'"
+            tal:content="python: model.get_editable().get_title()">
             Link
           </a>
         </td>
         <td>
-          &nbsp;<span tal:replace="nothing"> _______ FIXME: add 'Locate original' button _______ </span>
+          Link to edit original.
         </td>
       </tr>
 
@@ -104,7 +104,7 @@
         </td>
         <td class="alert">
           <span class="error"
-          tal:content="structure link_status" />
+            tal:content="structure link_status" />
         </td>
         <td>
           &nbsp;
