@@ -41,7 +41,7 @@ theXMLSourceRegistry = XMLSourceRegistry()
 
 getXMLSource = theXMLSourceRegistry.getXMLSource
 
-SilvaDocumentNS = "http://infrae.com/ns/silva_document/1.0"
+SilvaDocumentNS = "http://infrae.com/ns/silva_document"
 
 def initializeXMLSourceRegistry():
     """Here the actual content types are registered. Non-Silva-Core content
