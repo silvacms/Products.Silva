@@ -5,7 +5,7 @@
 # this tests along with the module is intended to 
 # work with python2.1 and python2.2 or better
 # 
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 import unittest
 
 # 
@@ -133,7 +133,7 @@ class HTML2XML(Base):
         self.assert_(list_node.find('title')[0].extract_text()=='titel')
         self.assert_(len(list_node.find('li'))==2)
 
-    def test_ul_list_conversion(self):
+    def test_ul_list_conversion_with_inline_title(self):
         html_frag="""<ul><h5>titel</h5><li>eins</li><li>zwei</li></ul>"""
         node = self.transformer.target_parser.parse(html_frag)
         self.assert_(not self.transformer.target_parser.unknown_tags)
@@ -144,6 +144,24 @@ class HTML2XML(Base):
         self.assert_(list_node.attrs.has_key('type'))
         self.assert_(list_node.attrs['type']=='disc')
         self.assert_(len(list_node.find('li'))==2)
+
+    def test_ul_list_conversion_with_outer_title(self):
+        html_frag="""<body><h5>titel</h5> <ul><li>eins</li><li>zwei</li></ul></body>"""
+        node = self.transformer.target_parser.parse(html_frag)
+        self.assert_(not self.transformer.target_parser.unknown_tags)
+        node = node.find('body')[0].content
+        #print 
+        #print "source", node.asBytes()
+        result = node.conv()
+        list_node = result.find('list')
+        #print "result", list_node.asBytes()
+        self.assert_(len(list_node)==1)
+        list_node = list_node[0]
+        self.assert_(list_node.attrs.has_key('type'))
+        self.assert_(list_node.attrs['type']=='disc')
+        self.assert_(len(list_node.find('li'))==2)
+        self.assert_(len(list_node.find('title'))==1)
+        self.assert_(list_node.find('title')[0].content[0]==u'titel')
 
     def test_ignore_html(self):
         """ test that a html tag doesn't modify the silva-outcome """

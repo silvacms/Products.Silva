@@ -22,12 +22,12 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
 
 try:
-    from transform.base import Element, Attrs
+    from transform.base import Element, Text
 except ImportError:
-    from Products.Silva.transform.base import Element
+    from Products.Silva.transform.base import Element, Text
 
 import silva
 
@@ -106,13 +106,15 @@ class h5(Element):
         """
         post = context.get('post_nodes',[])
         for item in post:
-            if len(item.content)>0:
+            if hasattr(item, '__class__'):
                 cls = item.__class__
                 if cls is ul or cls is ol:
+                    #print "inserting in list", self.asBytes() 
                     item.content.insert(0, self)
                     return None
-                else:
+                if item.asBytes('utf8').strip():
                     break
+
         return silva.heading(
             self.content.convert(context, *args, **kwargs),
             type="sub",
