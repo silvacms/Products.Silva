@@ -11,7 +11,7 @@ See also LICENSE.txt
 Valid for:  Silva 1.0.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.40.8.8.8.2 $
+CVS:        $Revision: 1.40.8.8.8.3 $
 
 Introduction
 ------------
@@ -122,7 +122,7 @@ Group service can be created so that Group information as well is
 pulled out of LDAP.
 
 If you need LDAP integration for Silva, please contact Infrae
-(info@infrae.com).
+(<info@infrae.com>).
 
 Installing Silva on a ZEO cluster
 ---------------------------------
@@ -132,7 +132,7 @@ be shared between servers. A non-undoable storage needs to be set up
 for this.
 
 If you want to set up Silva on a ZEO cluster, please contact Infrae
-(info@infrae.com).
+(<info@infrae.com>).
 
 In case of problems
 -------------------
