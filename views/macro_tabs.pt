@@ -103,6 +103,12 @@ Tab Name
   &nbsp;experimental:&nbsp;
   <a href="" tal:attributes="href python:'%s/edit/tab_edit_xopus' % model.absolute_url()"><span class="idea">/xopus edit</span></a>
 </tal:block>
+<tal:block condition="
+    python:model.meta_type == 'Silva Document'
+           and hasattr(here, 'eopro')">  
+  &nbsp;experimental:&nbsp;
+  <a href="" tal:attributes="href python:'%s/edit/tab_edit_eopro' % model.absolute_url()"><span class="idea">/eopro edit</span></a>
+</tal:block>
 
 <tal:block replace="nothing"> ____________ End hook for the experimental Bitflux WYSIWYG editor integration ____________ </tal:block>
 </tal:block>

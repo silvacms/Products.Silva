@@ -1,0 +1,129 @@
+<html metal:use-macro="here/macro_index/macros/master">
+<div metal:fill-slot="main" tal:omit-tag="">
+<!-- ___________________________ start index_html/slot main ___________________________ -->
+
+<tal:block tal:define="dummy python:model.security_trigger();
+                       global could_lock model/sec_create_lock;
+                       global unapproved_version model/get_unapproved_version;" />
+      	<div>
+
+<iframe id="RSIFrame"
+  name="RSIFrame"
+  style="width:0px; height:0px; border: 0px"
+  src="blank.html"></iframe>
+
+<hr>
+<form name="myForm" target="RSIFrame" method="POST" tal:attributes="action python: 'tab_edit_eopro_submit'">
+    <input type="button" name="save" value="Save Document to Silva" onClick="functSave();">
+    <input type="button" name="reset" value="Reset Document" onClick="functReload();">
+    <input type="hidden" name="HTMLDATA">
+<br><small>Note: This will only work if your platform supports "LiveConnect" (newer browsers do)</small>
+</form>
+<hr>
+        <APPLET code="EditorApplet" codeBase="/silva/eopro" id="myEditor" name="myEditor"
+                archive="edit-on-pro-signed.jar,ssce.jar" width="1024"  height="500" VIEWASTEXT MAYSCRIPT>
+<!--
+            <PARAM NAME="gethtmldataurl" tal:attributes="VALUE python: 'tab_edit_eopro_submit'">
+
+            <PARAM NAME="get_ok_url" tal:attributes="VALUE python: 'editor_ok_message'">
+            <PARAM NAME="get_ok_target" value="result">
+            <PARAM NAME="get_error_url" tal:attributes="VALUE python: 'editor_status_message?save=failure'">
+            <PARAM NAME="get_error_target" value="result">
+
+
+-->
+            <PARAM NAME="sethtmldataurl" tal:attributes="VALUE python: model.absolute_url()+'/editor_storage'">
+
+            <PARAM NAME="encoding" VALUE="UTF8">
+
+            <PARAM NAME="toolbarurl" tal:attributes="VALUE python: template.tab_edit_eopro_toolbar.absolute_url()">
+			<!-- This is relative to CODEBASE -->
+
+            <PARAM NAME="cabbase" VALUE="edit-on-pro-signed.cab,ssce.cab">
+
+            <PARAM NAME="locale" VALUE="en_US">            <!-- Change this to change UI language e.g de_DE, fr_
+FR, es_ES -->
+            <PARAM NAME="help" VALUE="eophelp/en_US/help_en_US.htm">   <!-- This is relative to CODEBASE, can be
+ changed according to UI language -->
+
+            <PARAM NAME="spellcheckproperties" VALUE="sc-americanenglish.txt">  <!-- This is relative to CODEBAS
+E -->
+
+        <!--    <PARAM NAME="imageroot" VALUE="http://localhost">  Optional - Set this to the reference base of
+relative image SRCs -->
+        <!--    <PARAM NAME="imageproxyurl" VALUE="/cgi-bin/imageproxy.cgi?">  Optional - Set this if you use an
+ unsigned CAB/JAR and want to insert remote images-->
+
+            <PARAM NAME="sourceview" VALUE="true">
+            <PARAM NAME="sourceviewwordwrap" VALUE="true">
+
+            <PARAM NAME="startupscreenbackgroundcolor" value="#e2e9eb">
+
+            <PARAM NAME="defaultfontcolor" VALUE="black">
+  <PARAM NAME="defaultbackgroundcolor" VALUE="#e2e9eb">
+            <PARAM NAME="defaultlinkcolor" VALUE="blue">
+            <PARAM NAME="defaultfontsize" VALUE="12">
+            <PARAM NAME="defaultfontface" VALUE="Serif">
+
+            <PARAM NAME="bodyonly" VALUE="false">
+            <PARAM NAME="textmode" VALUE="false">
+            <PARAM NAME="xhtmlmode" VALUE="true">
+
+            <PARAM NAME="inserttext_html" VALUE="TRUE">
+
+
+            <PARAM NAME="simpletable" VALUE="true">
+            <PARAM NAME="tableNBSPfill" VALUE="true">
+            <PARAM NAME="table_numrows" VALUE="3">
+            <PARAM NAME="table_numcols" VALUE="4">
+            <PARAM NAME="table_overallwidth" VALUE="100%">
+            <PARAM NAME="table_rowheight" VALUE="10">
+            <PARAM NAME="table_colwidth" VALUE="25%">
+
+            <PARAM NAME="ONEDITORLOADED" VALUE="onEditorLoaded">
+        </APPLET>
+
+	
+      </div>
+
+<span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
+<tal:block tal:condition="python:unapproved_version and not could_lock">
+<div class="feedback"><span class="warning">
+<b>Note: </b>This object is already being edited by another user, and is temporarily locked.
+</span>
+</div>
+<div class="margins">
+<form action="tab_edit_break_lock" action="POST"><input class="warningbutton" type="submit" value="Break lock" /></form>
+</div>
+</tal:block>
+
+<span tal:replace="nothing"> _______ make changes in a new version _______ </span>
+<div tal:condition="python: not model.get_next_version()">
+<form action="tab_edit_make_copy" method="POST">
+<div class="feedback">
+<b>Note: </b>There is already a published (or closed) version of this content. Changes can only be made in a new version.
+</div>
+<div class="margins">
+<input class="button" type="submit" value="Create new version" />
+</div>
+</form>
+</div>
+
+<span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
+<div tal:condition="python: model.get_approved_version()">
+<form action="tab_edit_revoke_approval" method="POST">
+<div class="feedback">
+<b>Note: </b>This version is approved but not yet public. In order to make changes you need to first revoke the approval.
+</div>
+<div class="margins">
+<input class="button" type="submit" value="Revoke approval" />
+</div>
+</form> 
+</div>
+
+<!-- ___________________________ end index_html/slot main ___________________________ -->
+</div>
+
+</html>
+<!-- ___________________________ end index_html ___________________________ -->
+

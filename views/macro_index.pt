@@ -36,6 +36,7 @@ function focusCursor() {
 // -->
 </script> 
 <style tal:replace="structure view/local_style">if</style>
+
 <script type="text/javascript" language="JavaScript"
   tal:condition="python: template.id == 'tab_edit_bxe'"
   tal:attributes="src container/bxe/js/bitfluxeditor.js/absolute_url">
@@ -44,6 +45,11 @@ function focusCursor() {
   tal:condition="python: template.id == 'tab_edit_xopus' and hasattr(container, 'xopus')"
   tal:attributes="src container/xopus/xopus/xopus.js/absolute_url">
 </script>
+<script type="text/javascript" language="JavaScript"
+	tal:condition="python: template.id == 'tab_edit_eopro'"
+        tal:content="python: template.tab_edit_eopro_js()">
+</script>
+
 </head>
 <body leftmargin="0" rightmargin="0" topmargin="0" marginwidth="0" marginheight="0"
   tal:attributes="onload python: test(template.id == 'tab_edit_bxe',
