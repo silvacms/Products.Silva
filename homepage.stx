@@ -1,0 +1,43 @@
+Silva is a Zope-based web application designed for the creation and
+management of structured, textual content. Silva allows users to enter
+new documents as well as edit existing documents using a web
+interface.
+
+  * <a href="http://www.infrae.com/products/silva">Silva
+description</a>
+
+  * <a
+href="http://www.infrae.com/products/silva/docs/GlobalOverview/FeatureList">Silva
+features</a>
+
+  * <a
+href="http://lists.sourceforge.net/lists/listinfo/silva-general">Silva
+mailing list</a>
+
+  * <a href="http://www.sf.net/projects/silva">Silva's SourceForge
+project page</a>
+
+  * <a href="http://www.infrae.com/products/silva/docs">Silva
+Documentation</a>. Documentation is also included in the download.
+
+  * <a href="http://www.zope.org/Members/camil7/silvadoc">Silva
+Howtos</a>. Thanks to Clemens Klein-Robbenhaar for these!</li>
+
+  * Besides the general <a href="INSTALL.txt">install notes</a> we
+also have specific installation notes for <a
+href="http://www.infrae.com/products/silva/InstallSilva_onWin2k.pdf">Windows</a>
+as well as for <a
+href="http://www.infrae.com/products/silva/docs/SysAdmin/LinuxInstallation">Linux
+(SUSE) using INSTANCE_HOME</a>
+
+Silva is being developed in open-source fashion by <a
+href="http://www.infrae.com">Infrae</a>. If you or your organization
+have special requirements, Infrae is also available for hire to help
+you with Silva extension, customization and deployment.
+
+**Note:** 
+Information on versions prior to 0.9.2b can be found on the <a
+href="http://www.zope.org/Members/faassen/Silva/">Faassen member
+page</a>.
+
+
