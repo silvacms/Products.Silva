@@ -116,8 +116,8 @@
             i18n:attributes="title"
           />
         </td>
-        <td i18n:translate="choose_xml_file_to_import">
-          Choose an XML file to import (must be valid Silva XML).
+        <td i18n:translate="locate_xml_file_to_import">
+          Locate an XML file to import (must be valid Silva XML).
         </td>
       </tr>
 
@@ -184,9 +184,7 @@
 
       <tr class="odd">
         <td class="align-right">
-          <span i18n:translate="file_to_upload">
-            file to upload
-          </span><span class="warning">*</span>
+          <span i18n:translate="file_to_upload">file to upload</span><span class="warning">*</span>
         </td>
         <td>
           <input type="file"
@@ -196,9 +194,8 @@
             i18n:attributes="title"
           />
         </td>
-        <td i18n:translate="choose_archive_file_to_import">
-          Choose a zip file to import and convert to Assets
-          (file names will become ids).
+        <td i18n:translate="locate_archive_file_to_import">
+          Locate a zip file containing Assets to import (file names will become ids).
         </td>
       </tr>
 
@@ -225,15 +222,6 @@
       <tr class="controls">
         <td class="align-right"
           colspan="3">
-          <input class="cancel"
-            style="float: left;"
-            type="button"
-            value="cancel"
-            title="access key: alt-c"
-            accesskey="c"
-            onClick="history.back()"
-            i18n:attributes="value title"
-          />
           <input class="button"
             type="submit"
             value="import zip"
@@ -319,8 +307,8 @@
         <td>
             <input type="file" size="40" name="importfile" />
         </td>
-        <td align="right" i18n:translate="choose_word_file_to_upload">
-          Choose a Word file to upload. It'll be converted and appear in the list of processed items below. It can be imported anywhere in Silva.
+        <td align="right" i18n:translate="locate_word_file_to_upload">
+          Locate a Word file to upload. It'll be converted and appear in the list of processed items below. It can be imported anywhere in Silva.
         </td>
       </tr>
 
