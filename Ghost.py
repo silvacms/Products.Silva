@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.76 $
+# $Revision: 1.77 $
 
 # Zope
 from OFS import SimpleItem
@@ -58,7 +58,7 @@ class GhostBase:
     def get_title(self):
         """Get title.
         """        
-        content = self._get_content()
+        content = self.get_haunted_unrestricted()
         if content is None:
             return "Ghost target is broken"
         else:
@@ -69,7 +69,7 @@ class GhostBase:
     def get_short_title(self):
         """Get short title.
         """        
-        content = self._get_content()
+        content = self.get_haunted_unrestricted()
         if content is None:
             return "Ghost target is broken"
         else:
@@ -82,8 +82,8 @@ class GhostBase:
 
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_content_url')
-    def set_content_url(self, content_url):
+        SilvaPermissions.ChangeSilvaContent, 'set_haunted_url')
+    def set_haunted_url(self, content_url):
         """Set content url.
         """
         # simplify url
@@ -133,8 +133,8 @@ class GhostBase:
             # if it cannot find the object.
             self._content_path = path_elements
        
-    security.declareProtected(SilvaPermissions.View, 'get_content_url')
-    def get_content_url(self):
+    security.declareProtected(SilvaPermissions.View, 'get_haunted_url')
+    def get_haunted_url(self):
         """Get content url.
         """
         if self._content_path is None:
@@ -156,7 +156,7 @@ class GhostBase:
         """
         raise NotImplementedError, "implemented in subclasses"
         
-    def _get_content_object(self, path, check=1):
+    def _get_object_at(self, path, check=1):
         """Get content object for a url.
         """
         # XXX what if we're pointing to something that cannot be viewed
@@ -175,15 +175,16 @@ class GhostBase:
         if valid is None:
             return content
         return None
-    
-    def _get_content(self, check=1):
+   
+    security.declarePrivate('get_haunted_unrestricted')
+    def get_haunted_unrestricted(self, check=1):
         """Get the real content object.
         """
         path = self._content_path
-        return self._get_content_object(path, check)
+        return self._get_object_at(path, check)
 
-    security.declareProtected(SilvaPermissions.View,'get_content')
-    def get_content(self):
+    security.declareProtected(SilvaPermissions.View,'get_haunted')
+    def get_haunted(self):
         """get the real content object; using restrictedTraverse
         
             returns content object, or None on traversal failure.
@@ -206,7 +207,7 @@ class GhostBase:
         """
         # FIXME what if content is None?
         # what if we get circular ghosts?
-        content = self._get_content()
+        content = self.get_haunted_unrestricted()
         if content is None:
             # public render code of ghost should give broken message
             return None
@@ -252,7 +253,7 @@ class Ghost(CatalogedVersionedContent):
         if version_id is None:
             return
         version = getattr(self, version_id)
-        content = version._get_content()
+        content = version.get_haunted_unrestricted()
         if content is None:
             return
         content.to_xml(context)
@@ -262,7 +263,7 @@ class Ghost(CatalogedVersionedContent):
         version = self.get_viewable()
         if version is None:
             return []
-        content = version._get_content()
+        content = version.get_haunted_unrestricted()
         if content is None:
             return []
         return content.get_indexables()
@@ -282,11 +283,11 @@ class Ghost(CatalogedVersionedContent):
         version = getattr(self, version_id)
         return version
 
-    security.declareProtected(SilvaPermissions.View, 'get_content_url')
-    def get_content_url(self):
+    security.declareProtected(SilvaPermissions.View, 'get_haunted_url')
+    def get_haunted_url(self):
         """return content url of `last' version"""
         version = self.getLastVersion()
-        return version.get_content_url()
+        return version.get_haunted_url()
 
     def _factory(self, container, id, content_url):
         return container.manage_addProduct['Silva'].manage_addGhost(id,
@@ -310,7 +311,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'fulltext')
     def fulltext(self):
-       target = self._get_content()
+       target = self.get_haunted_unrestricted()
        if target:
            public_version = target.get_viewable()
            if public_version and hasattr(public_version.aq_inner, 'fulltext'):
@@ -323,7 +324,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
         returning None means the ghost is Ok.
         """
         if content is None:
-            content = self._get_content(check=0)
+            content = self.get_haunted_unrestricted(check=0)
         if self._content_path is None:
             return self.LINK_EMPTY
         if content is None:
@@ -351,7 +352,7 @@ def manage_addGhost(self, id, content_url, REQUEST=None):
     object._setObject('0', GhostVersion('0'))
     # we need to set content url after we created version, not
     # in constructor, as getPhysicalRoot() won't work there
-    getattr(object, '0').set_content_url(content_url)
+    getattr(object, '0').set_haunted_url(content_url)
     object.create_version('0', None, None)
     add_and_edit(self, id, REQUEST)
     return ''
@@ -363,7 +364,7 @@ def manage_addGhostVersion(self, id,REQUEST=None):
     """Add a Ghost version."""
     object = GhostVersion(id)
     self._setObject(id, object)
-    object.set_content_url(content_url)
+    object.set_haunted_url(content_url)
     add_and_edit(self, id, REQUEST)
     return ''
 
@@ -389,7 +390,7 @@ def ghostFactory(container, id, haunted_object):
     elif IContent.isImplementedBy(haunted_object):
         if haunted_object.meta_type == 'Silva Ghost':
             version = getLastVersionFromGhost(haunted_object)
-            content_url = version.get_content_url()
+            content_url = version.get_haunted_url()
         factory = addProduct.manage_addGhost
     factory(id, content_url)
     ghost = getattr(container, id)

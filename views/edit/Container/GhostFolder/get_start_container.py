@@ -12,7 +12,7 @@ model = request.model
 assert model.meta_type == 'Silva Ghost Folder', '%r is no ghost folder' % model
 status = model.get_link_status()
 if status == model.LINK_OK:
-    content = model.get_content()
+    content = model.get_haunted()
     if content is not None:
         return content.aq_parent.get_container()
 return model.aq_parent.get_container()

@@ -1,6 +1,6 @@
 # Copyright (c) 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.22 2003/10/10 12:07:57 faassen Exp $
+# $Id: GhostFolder.py,v 1.23 2003/10/14 15:51:03 zagy Exp $
 
 from __future__ import nested_scopes
 
@@ -86,13 +86,13 @@ class SyncGhost(Sync):
 
     def _do_update(self):
         content_url = self._get_content_url()
-        old_content_url = self.g_ob.get_content_url()
+        old_content_url = self.g_ob.get_haunted_url()
         if content_url == old_content_url:
             return
         self.g_ob.create_copy()
         version_id = self.g_ob.get_unapproved_version()
         version = getattr(self.g_ob, version_id)
-        version.set_content_url(content_url)
+        version.set_haunted_url(content_url)
 
     def _do_create(self):
         content_url = self._get_content_url()
@@ -100,7 +100,7 @@ class SyncGhost(Sync):
             self.h_id, content_url)
 
     def _get_content_url(self):
-        return  self.h_ob.get_content_url()
+        return  self.h_ob.get_haunted_url()
 
     
 class SyncContent(SyncGhost):
@@ -153,7 +153,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     def haunt(self):
         """populate the the ghost folder with ghosts
         """
-        haunted = self._get_content()
+        haunted = self.get_haunted_unrestricted()
         if haunted is None:
             return
         if self.get_link_status() != self.LINK_OK:
@@ -256,7 +256,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         returning None means the ghost is Ok.
         """
         if content is None:
-            content = self._get_content(check=0)
+            content = self.get_haunted_unrestricted(check=0)
         if self._content_path is None:
             return self.LINK_EMPTY
         if content is None:
@@ -275,7 +275,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         """returns True if ghost folder references self or a ancestor of self
         """
         if content is None:
-            content = self._get_content(check=0)
+            content = self.get_haunted_unrestricted(check=0)
         if content is None:
             # if we're not referncing anything it is not a circ ref for sure
             return 0
@@ -309,7 +309,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     def to_xml(self, context):
         f = context.f
         f.write("<silva_ghostfolder id='%s' content_url='%s'>" % (
-            self.getId(), self.get_content_url()))
+            self.getId(), self.get_haunted_url()))
         self._to_xml_helper(context)
         f.write("</silva_ghostfolder>")
     
@@ -317,20 +317,20 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     # all this is for a nice side bar
     def is_transparent(self):
         """show in subtree? depends on haunted object"""
-        content = self._get_content()
+        content = self.get_haunted_unrestricted()
         if IContainer.isImplementedBy(content):
             return content.is_transparent()
         return 0
     
     def get_publication(self):
         """returns self if haunted object is a publication"""
-        content = self._get_content()
+        content = self.get_haunted_unrestricted()
         if IPublication.isImplementedBy(content):
             return self.aq_inner
         return self.aq_inner.aq_parent.get_publication()
 
     def implements_publication(self):
-        content = self._get_content()
+        content = self.get_haunted_unrestricted()
         if ISilvaObject.isImplementedBy(content):
             return content.implements_publication()
         return 0
@@ -372,7 +372,7 @@ def manage_addGhostFolder(dispatcher, id, content_url, REQUEST=None):
     gf = GhostFolder(id)
     dispatcher._setObject(id, gf)
     gf = getattr(dispatcher, id)
-    gf.set_content_url(content_url)
+    gf.set_haunted_url(content_url)
     add_and_edit(dispatcher, id, REQUEST)
     return ''
 

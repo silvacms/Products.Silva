@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -160,7 +160,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         # create new version of ghost
         ghost.create_copy()
-        ghost.get_editable().set_content_url('/root/doc2')
+        ghost.get_editable().set_haunted_url('/root/doc2')
 
         self.assertEquals(u'This ghost is broken. (/root/doc2)',
             ghost.preview())
@@ -189,7 +189,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # publish a ghost pointing to something that hasn't a published
         # version
         ghost.create_copy()
-        ghost.get_editable().set_content_url('/root/doc3')
+        ghost.get_editable().set_haunted_url('/root/doc3')
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
         self.assertEquals('This ghost is broken. (/root/doc3)',
@@ -203,18 +203,18 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
                                                               '/root/doc1/')
         ghost = getattr(self.root, 'ghost1')
         
-        # issue 41: test if get_content_url works now
-        self.assertEquals('/root/doc1', ghost.get_editable().get_content_url())
+        # issue 41: test if get_haunted_url works now
+        self.assertEquals('/root/doc1', ghost.get_editable().get_haunted_url())
         self.assertEquals(None, ghost.get_editable().get_link_status())
 
         # now delete doc1
         self.root.action_delete(['doc1'])
         # ghost should say 'This ghost is broken'
         self.assertEquals('This ghost is broken. (/root/doc1)', ghost.preview())
-        # issue 41: test get_content_url; should catch KeyError
+        # issue 41: test get_haunted_url; should catch KeyError
         # and return original inserted url
         self.assertEquals('/root/doc1',
-                          ghost.get_previewable().get_content_url())
+                          ghost.get_previewable().get_haunted_url())
         self.assertEqual(GhostVersion.LINK_VOID,
                          ghost.get_editable().get_link_status())
         
@@ -222,17 +222,17 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc2.approve_version()
         ghost.create_copy()
-        ghost.get_editable().set_content_url('/root/doc2')
+        ghost.get_editable().set_haunted_url('/root/doc2')
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
         # now close & delete doc2
         self.doc2.close_version()
         self.root.action_delete(['doc2'])
         self.assertEquals("This 'ghost' document is broken. Please inform the site administrator.", ghost.view())
-        # issue 41: test get_content_url; should catch KeyError
+        # issue 41: test get_haunted_url; should catch KeyError
         # and return original inserted url
         self.assertEquals('/root/doc2',
-                          ghost.get_previewable().get_content_url())
+                          ghost.get_previewable().get_haunted_url())
         self.assertEquals(GhostVersion.LINK_VOID,
                           ghost.get_previewable().get_link_status())
 
@@ -268,15 +268,15 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals('This ghost is broken. (/root/does_not_exist)', ghost.preview())
         self.assertEquals(GhostVersion.LINK_VOID,
                           ghost.get_editable().get_link_status())        
-        ghost.get_editable().set_content_url('/root/folder4')
+        ghost.get_editable().set_haunted_url('/root/folder4')
         self.assertEquals('This ghost is broken. (/root/folder4)', ghost.preview())
         self.assertEquals(GhostVersion.LINK_FOLDER,
                           ghost.get_editable().get_link_status())
-        ghost.get_editable().set_content_url('/root/ghost1')
+        ghost.get_editable().set_haunted_url('/root/ghost1')
         self.assertEquals('This ghost is broken. (/root/ghost1)', ghost.preview())
         self.assertEquals(GhostVersion.LINK_GHOST,
                           ghost.get_editable().get_link_status())
-        ghost.get_editable().set_content_url('/root/image6')
+        ghost.get_editable().set_haunted_url('/root/image6')
         self.assertEquals('This ghost is broken. (/root/image6)', ghost.preview())
         self.assertEquals(GhostVersion.LINK_NO_CONTENT,
   

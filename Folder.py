@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.143 $
+# $Revision: 1.144 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -484,7 +484,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             if ghost.meta_type == 'Silva Ghost Folder':
                 ghost.haunt()
         elif IGhost.isImplementedBy(item):
-            content_url = item.get_content_url()
+            content_url = item.get_haunted_url()
             item._factory(self, paste_id, content_url)
         else:
             # this is an object that just needs to be copied

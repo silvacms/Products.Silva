@@ -11,7 +11,7 @@ model = context.REQUEST.model
 view = context
 if context.REQUEST.has_key('add_cancel'):
     return view.tab_edit()
-model.set_content_url(content_url)
+model.set_haunted_url(content_url)
 if model.get_link_status() != model.LINK_OK:
     return view.tab_edit(message_type="warning",
         message="Ghost Folder changed but not synchronized, because the new "\

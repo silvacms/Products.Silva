@@ -12,7 +12,7 @@ model = request.model
 version = model.get_editable()
 status = version.get_link_status()
 if status == version.LINK_OK:
-    content = version.get_content()
+    content = version.get_haunted()
     if content is not None:
         return content.get_container()
 return model.get_container()

@@ -1077,8 +1077,11 @@ class IContainerPolicy(Interface):
 class IGhost(Interface):
     """Interface for ghosts (and ghost folders)"""
 
-    def get_content_url():
+    def get_haunted_url():
         """return haunted object's url"""
+
+    def get_hanted():
+        """return the haunted object"""
 
     def _factory(container, id, content_url):
         """call factory method in container context"""
