@@ -47,7 +47,7 @@
 </p>
 <p>
   <span class="subhead"><a name="nav">Changing screens with the tabs</a></span><br />
-  The tabs have numbered access keys, starting from one (the first tab) going up to five. You can navigate horizontally accross an item&#8216;s screens by using alt-1, alt-2, and so forth. 
+  The tabs have numbered access keys, starting from one (the first tab) going up to five. You can navigate horizontally accross an item&#8217;s screens by using alt-1, alt-2, and so forth. 
 </p>
 <p>
   Each tab has a toplink, the tall tree on the left side. It takes you to the top of the current publication, within the same &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
@@ -146,7 +146,7 @@ The Metadata, Access, and Status screens as well as their subscreens (such as Lo
     Mozilla and Internet Explorer handle access keys for hyperlinks differently. Mozilla initiates the action (same as clicking the link), whereas Explorer just highlights the link, and then you have to hit return to activate it. Both browsers treat form buttons the same, initiating the action immediately.
   </li>
   <li>
-    Don&#8216;t forget that most browsers use alt-left arrow to go back, and alt-right arrow to go forward.
+    Don&#8217;t forget that most browsers use alt-left arrow to go back, and alt-right arrow to go forward.
   </li>
 </ul>
 <p>
