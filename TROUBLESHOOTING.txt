@@ -163,6 +163,12 @@ Installation problems
 
 Problems when using Silva 
 
+  Unicode problems with Silva Images when Localizer is installed.
+
+    There're some reports of unicode problems regarding Silva images when
+    when the Localizer Product is installed. So far the only solution found
+    is to uninstall Localizer.
+
   Error when Adding a Silva Document
     
     After 0.9.2, Silva Document has been taken out of Silva in its own Product.
