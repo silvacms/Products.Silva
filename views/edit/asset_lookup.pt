@@ -201,7 +201,7 @@ function setReference() {
                 tal:condition="empty">
                 <tal:block tal:replace="nothing"> _______ if no assets _______ </tal:block>
                 <td>
-                  No <span tal:replace="python:filter.lower()">assets</span>s in this folder
+                  <i>No <span tal:replace="python:filter.lower()">assets</span>s in this folder.</i>
                 </td>
               </tr>
             </tbody>

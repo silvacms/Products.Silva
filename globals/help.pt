@@ -31,6 +31,9 @@
   <li>
     Hover over the link or button to see a tooltip with the access key.
   </li>
+  <li>
+    The most useful access keys are for the screen navigation, <a href="#nav">see below</a>.
+  </li>
 </ul>
   
 <h3>Global keys that are always available</h3>
@@ -43,6 +46,16 @@
   h &nbsp; Help
 </p>
 <p>
+  <span class="subhead"><a name="nav">Changing screens with the tabs</a></span><br />
+  The tabs have numbered access keys, starting from one (the first tab) going up to five. You can navigate horizontally accross an item&#8216;s screens by using alt-1, alt-2, and so forth. 
+</p>
+<p>
+  Each tab has a toplink, the tall tree on the left side. It takes you to the top of the current publication, within the same &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
+</p>
+<p>
+  On the right of each tab is an uplink, a small tree that takes you up one level in the same vein. The access keys for the uplinks are the remaining numbers (add five to the access key for the tab). If you are  in a screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. (If there are less than five tabs, you still add five to get the uplink key.
+</p>
+<p>
   <span class="subhead">Footer page info row</span><br />
   : &nbsp; See public page<br />
 </p>
@@ -51,16 +64,6 @@
   ~ &nbsp; User settings<br />
   &nbsp;, &nbsp; Request access<br />
   q &nbsp; Logout
-</p>
-<p>
-  <span class="subhead">Tabs</span><br />
-  The tabs have numbered access keys, starting from one (the first tab) going up to five. You can navigate horizontally accross an item&#8216;s screens by using alt-1, alt-2, and so forth. 
-</p>
-<p>
-  Each tab has a toplink, the tall tree on the left side. It takes you to the top of the current publication, within the same &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
-</p>
-<p>
-  On the right of each tab is an uplink, a small tree that takes you up one level in the same vein. The access keys for the uplinks are the remaining numbers (add five to the access key for the tab). If you are  in a screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. (If there are less than five tabs, you still add five to get the uplink key.
 </p>
 
 <h3>Contents screen (folder or publication)</h3>
