@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Mon Nov 29 19:24:37 2004\n"
+"POT-Creation-Date: Tue Nov 30 11:42:32 2004\n"
 "PO-Revision-Date: 2004-11-25 15:15+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -74,6 +74,30 @@ msgstr ""
 #: /SilvaObject.py:319
 msgid "Sorry, this ${meta_type} version is not viewable."
 msgstr ""
+
+#: /Version.py:207
+msgid "unapproved"
+msgstr ""
+
+#: /Version.py:207
+msgid "approved"
+msgstr ""
+
+#: /Version.py:207
+msgid "last_closed"
+msgstr ""
+
+#: /Version.py:208
+msgid "public"
+msgstr ""
+
+#: /Version.py:208
+msgid "draft"
+msgstr ""
+
+#: /Version.py:208 /views/edit/Container/tab_status.pt:237
+msgid "closed"
+msgstr "geschlossen"
 
 #: /Versioning.py:100
 msgid "Cannot approve version without publication datetime."
@@ -2195,10 +2219,6 @@ msgstr ""
 #: /views/edit/Container/tab_status.pt:221
 msgid "public version"
 msgstr "veröffentlichte Version"
-
-#: /views/edit/Container/tab_status.pt:237
-msgid "closed"
-msgstr "geschlossen"
 
 #: /views/edit/Container/tab_status.pt:251
 msgid "There are no publishable items here."

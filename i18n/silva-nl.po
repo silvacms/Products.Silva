@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Mon Nov 29 19:24:37 2004\n"
+"POT-Creation-Date: Tue Nov 30 11:55:14 2004\n"
 "PO-Revision-Date: 2004-11-29 19:06+0100\n"
 "Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -78,6 +78,30 @@ msgstr "portret"
 #: /SilvaObject.py:319
 msgid "Sorry, this ${meta_type} version is not viewable."
 msgstr "Sorry, deze ${meta_type} versie kan niet bekeken worden."
+
+#: /Version.py:207
+msgid "unapproved"
+msgstr "(nog) niet goedgekeurd"
+
+#: /Version.py:207
+msgid "approved"
+msgstr "goedgekeurd"
+
+#: /Version.py:207
+msgid "last_closed"
+msgstr "laatst gesloten"
+
+#: /Version.py:208
+msgid "public"
+msgstr "publiek"
+
+#: /Version.py:208
+msgid "draft"
+msgstr "klad"
+
+#: /Version.py:208 /views/edit/Container/tab_status.pt:237
+msgid "closed"
+msgstr "gesloten"
 
 #: /Versioning.py:100
 msgid "Cannot approve version without publication datetime."
@@ -2325,10 +2349,6 @@ msgstr "index van"
 #: /views/edit/Container/tab_status.pt:221
 msgid "public version"
 msgstr "publieke versie"
-
-#: /views/edit/Container/tab_status.pt:237
-msgid "closed"
-msgstr "gesloten"
 
 #: /views/edit/Container/tab_status.pt:251
 msgid "There are no publishable items here."
@@ -4898,11 +4918,5 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 #~ "</dd>\n"
 #~ "</dl>\n"
 
-#~ msgid "draft"
-#~ msgstr "draft"
-
 #~ msgid "pending"
 #~ msgstr "pending"
-
-#~ msgid "approved"
-#~ msgstr "approved"

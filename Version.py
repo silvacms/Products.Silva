@@ -91,7 +91,6 @@ class Version(SimpleItem):
         """Returns the status of the current version
         Can be 'unapproved', 'approved', 'public', 'last_closed' or 'closed'
         """
-        # XXX i18n - what do we need to translate here?
         status = None
         unapproved_version = self.get_unapproved_version(0)
         approved_version = self.get_approved_version(0)
@@ -203,4 +202,8 @@ class CatalogedVersion(Version):
         
     
 InitializeClass(CatalogedVersion)
+
+def _(s): pass
+_i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
+                 _('closed'), _('draft'), _('public'),)
 
