@@ -1,109 +1,36 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
-import unittest
-import Zope
+# $Revision: 1.6 $
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
+
+import SilvaTestCase
+
 from Products.Silva.interfaces import IContent
 from Products.Silva.interfaces import ISilvaObject
 from Products.Silva.Folder import Folder
 from Products.Silva.SilvaObject import SilvaObject
-from Testing import makerequest
 from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
 
 from Products.Silva.Root import Root
 
-# XXX this test is broken because DemoObject does not exist
-# anymore.. What versioned content should this test use?
+from Products.SilvaDocument.Document import Document, DocumentVersion
 
-def _getCopy(self, container):
-    """A hack to make copy & paste work (used by create_copy())
-    """
-    version = DemoObjectVersion('test', 'test')
-    version.set_demo_data(self.info(), self.number(), self.date())
-    return version
+# XXX ugh would really like to avoid this..
+Document.cb_isMoveable = lambda self: 1
 
 def _verifyObjectPaste(self, ob):
     return
 
-class CatalogedVersioningTestCase(unittest.TestCase):
-    def setUp(self):
-        # awful HACK to support manage_clone
-        DemoObjectVersion._getCopy = _getCopy
-        DemoObject._verifyObjectPaste = _verifyObjectPaste
-        Root._verifyObjectPaste = _verifyObjectPaste
-        
-        get_transaction().begin()
-        self.connection = Zope.DB.open()
-        #self.root = Zope.app()
-        self.root = self.connection.root()['Application']
-        self.root.manage_addProduct['Silva'].manage_addRoot(
-            'root', 'Root')
-        self.sroot = getattr(self.root, 'root')
-        self.sroot.manage_addProduct['ZCatalog'].manage_addZCatalog(
-            'service_catalog', 'catalog')
-        catalog = self.service_catalog = self.sroot.service_catalog
-        indexes = [
-            ('sources', 'KeywordIndex'),
-            ('creation_datetime', 'FieldIndex'),
-            ('get_approved_version_publication_datetime', 'FieldIndex'),
-            ('get_next_version_publication_datetime', 'FieldIndex'),
-            ('get_public_version_publication_datetime', 'FieldIndex'),
-            ('get_title', 'FieldIndex'),
-            ('id', 'FieldIndex'),
-            ('is_approved', 'FieldIndex'),
-            ('is_published', 'FieldIndex'),
-            ('is_version_approved', 'FieldIndex'),
-            ('is_version_published', 'FieldIndex'),
-            ('meta_type', 'FieldIndex'),
-            ('path', 'PathIndex'),
-            ('subjects', 'KeywordIndex'),
-            ('target_audiences', 'KeywordIndex'),
-
-            # special stuff only for DemoObject
-            ('info', 'FieldIndex'),
-            ('number', 'FieldIndex'),
-            ('date', 'FieldIndex'),
-            ]
-        
-        columns = [
-            'creation_datetime',
-            'get_next_version_expiration_datetime',
-            'get_next_version_publication_datetime',
-            'get_next_version_status',
-            'get_public_version_expiration_datetime',
-            'get_public_version_publication_datetime',
-            'get_public_version_status',
-            'get_title',
-            'id',
-            'meta_type',
-            'object_status',
-            'sec_get_last_author_info',
-            'subjects',
-            'target_audiences',
-            ]
-
-        existing_columns = catalog.schema()
-        existing_indexes = catalog.indexes()
-        
-        for column_name in columns:
-            if column_name in existing_columns:
-                continue
-            catalog.addColumn(column_name)
-
-        for field_name, field_type in indexes:
-            if field_name in existing_indexes:
-                continue
-            catalog.addIndex(field_name, field_type)
-
-        self.sroot.manage_addProduct['Silva'].manage_addDemoObject(
+class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
+    def afterSetUp(self):
+        self.root.manage_addProduct['SilvaDocument'].manage_addDocument(
             'test', 'Test')
-        self.test = getattr(self.sroot, 'test')
+        self.service_catalog = self.root.service_catalog
+        self.test = self.root.test
     
-    def tearDown(self):
-        get_transaction().abort()
-        self.connection.close()
-
     def _objects_to_paths(self, objects):
         result = []
         for object in objects:
@@ -132,23 +59,26 @@ class CatalogedVersioningTestCase(unittest.TestCase):
 
     def assertCatalogEmptyResult(self, **kw):
         result = self.service_catalog.searchResults(**kw)
-        if len(result) != 0:
+        # only result that should exist is root
+        if len(result) != 1:
             self.fail('Catalog results where none expected.')
             
     def test_add(self):
         version = self.test.get_editable()
         self.assertInCatalog([version])
 
-    def test_setData(self):
-        version = self.test.get_editable()
-        self.assertNotInCatalog([version], info='info')
-        version.set_demo_data(
-            info="info", number=1, date=DateTime(2002, 10, 10))
-        self.assertInCatalog([version], info='info')
-        version.set_demo_data(
-            info="info2", number=2, date=DateTime(2002, 10, 10))
-        self.assertInCatalog([version], info='info2')
-        self.assertNotInCatalog([version], info='info')
+# this test cannot work anymore as we moved from DemoObject to
+# Document. We need to figure out what else to do
+##     def test_setData(self):
+##         version = self.test.get_editable()
+##         self.assertNotInCatalog([version], info='info')
+##         version.set_demo_data(
+##             info="info", number=1, date=DateTime(2002, 10, 10))
+##         self.assertInCatalog([version], info='info')
+##         version.set_demo_data(
+##             info="info2", number=2, date=DateTime(2002, 10, 10))
+##         self.assertInCatalog([version], info='info2')
+##         self.assertNotInCatalog([version], info='info')
 
     def test_workflow(self):
         version = self.test.get_editable()
@@ -165,8 +95,6 @@ class CatalogedVersioningTestCase(unittest.TestCase):
         self.test.close_version()
         self.assertEquals('last_closed', version.version_status())
         self.assertInCatalog([version], version_status='last_closed')
-        self.test.REQUEST = None
-
         self.test.create_copy()
         new_version = self.test.get_editable()
         self.assertInCatalog([version], version_status='last_closed')
@@ -184,23 +112,26 @@ class CatalogedVersioningTestCase(unittest.TestCase):
     def test_move(self):
         version = self.test.get_editable()
         self.assertInCatalog([self.test.get_editable()])
-        self.sroot.action_rename('test', 'test2')
-        test2 = self.sroot.test2
+        self.root.action_rename('test', 'test2')
+        test2 = self.root.test2
         self.assertNotInCatalogByPath(['/root/test/0'])
         self.assertInCatalog([test2.get_editable()])
 
     def test_remove(self):
-        self.sroot.action_delete(['test'])
+        self.root.action_delete(['test'])
         self.assertNotInCatalogByPath(['/root/test/0'])
         self.assertCatalogEmptyResult()
         
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(CatalogedVersioningTestCase, 'test'))
-    return suite
-    
-def main():
-    unittest.TextTestRunner().run(test_suite())
+
+if __name__ == '__main__':
+    framework()
+else:
+    import unittest
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(CatalogedVersioningTestCase))
+        return suite
+
 
 if __name__ == '__main__':
     main()
