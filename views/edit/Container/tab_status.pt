@@ -259,12 +259,14 @@
                       value="Create new versions" 
                       title="Create new versions of published docs: alt-n" 
                       accesskey="n" />
+                    &nbsp;
                     <input class="warning"
                       accesskey="c"
                       name="tab_status_close:method"
                       title="close published items: alt-c"
                       type="submit"
                       value="Close public" />
+                    &nbsp;
                   </td>
                   <td class="align-right">
                     <input class="button"
