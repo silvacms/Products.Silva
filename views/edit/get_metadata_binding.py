@@ -1,10 +1,16 @@
 ##parameters=content
+from Products.SilvaMetadata.Exceptions import BindingError
 
 if content is None:
     return None
 
 ms = context.service_metadata
-binding = ms.getMetadata(content)
+
+try:
+    binding = ms.getMetadata(content)
+except BindingError, be:
+    # No binding found..
+    return None
 
 renderEdit = binding.renderElementEdit
 renderView = binding.renderElementView
