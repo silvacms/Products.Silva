@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -100,7 +100,13 @@ class Indexer(Content, SimpleItem):
                 self._get_tree_helper(l, child)
             else:
                 l.append(child)
-                
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'is_published')
+    def is_published(self):
+        # is always published
+        return 1
+        
 InitializeClass(Indexer)
 
 manage_addIndexerForm = PageTemplateFile("www/indexerAdd", globals(),
