@@ -307,6 +307,16 @@ class Folder(SilvaObject, Publishable, Folder.Folder):
                 result.append(object)
         return result
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_assets_of_type')
+    def get_assets_of_type(self, meta_type):
+        result = []
+        for object in self.objectValues():
+            if (Interfaces.Asset.isImplementedBy(object) and
+                object.meta_type == meta_type):
+                result.append(object)
+        return result
+    
     # FIXME: what if the objects returned are not accessible with my
     # permissions? unlikely as my role is acquired?
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

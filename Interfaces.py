@@ -294,6 +294,11 @@ class Container(SilvaObject, Publishable):
         (not in any order).
         """
         pass
+
+    def get_assets_of_type(self):
+        """Get list of assets of a certain meta_type.
+        """
+        pass
     
     def get_tree(self):
         """Get flattened tree of all active publishables.
