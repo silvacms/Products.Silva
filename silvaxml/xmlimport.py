@@ -136,7 +136,7 @@ class BaseHandler:
         # XXX Hardcoded. Will update this to look up the types in a
         # dictionary. 
         if set == 'silva-extra' and value:
-            if key == 'modificationtime' or key == 'creationtime' or key == 'publitiontime' or key == 'expirationtime':
+            if key == 'modificationtime' or key == 'creationtime' or key == 'publicationtime' or key == 'expirationtime':
                 value = DateTime(value)
         self._metadata[set][key] = value
 
