@@ -1,16 +1,20 @@
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
+# See also LICENSE.txt
+# Silva
 from Products.Silva.interfaces import IContent, IGhost, IContainer
+# Silva adapters
 from Products.Silva.adapters import adapter
 from Products.Silva.adapters import interfaces
 
 class TreeNode(adapter.Adapter):
+    
     __implements__ = (interfaces.ITreeNode,)
     
     def getObject(self):
         return self.context
 
     def getChildNodes(self):
-        for object in []:
-            yield object
+        raise StopIteration()
 
 class ContainerTreeNode(TreeNode):
     def getChildNodes(self):
