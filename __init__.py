@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.88 $
+# $Revision: 1.89 $
 
 import Metadata
 import Folder, Root
@@ -150,10 +150,16 @@ def initialize_icons():
     icon.registry.registerAdapter(icon.MetaTypeAdapter, 5)
     icon.registry.registerAdapter(icon.SilvaFileAdapter, 10)
     mimeicons = [
-        ('application/pdf', 'pdficon1.gif'),
+        ('audio/aiff', 'file_aiff.png'),
+        ('audio/wav', 'file_aiff.png'),
         ('application/msword', 'file_doc.png'),
+        ('application/pdf', 'file_pdf.png'),
+        ('application/postscript', 'file_illustrator.png'),
         ('application/vnd.ms-excel', 'file_xls.png'),
         ('application/vnd.ms-powerpoint', 'file_ppt.png'),
+        ('text/plain', 'file_txt.png'),
+        ('video/quicktime', 'file_quicktime.png'),
+        ('video/x-msvideo', 'file_quicktime.png'),
     ]
     for mimetype, icon_name in mimeicons:
         icon.registry.registerIcon(('mime_type', mimetype),
