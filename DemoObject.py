@@ -1,4 +1,4 @@
-# Version: $Revision: 1.3 $
+# Version: $Revision: 1.4 $
 # Zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -43,45 +43,18 @@ class DemoObjectVersion(SimpleItem.SimpleItem):
         """Set id and initialize the ParsedXML tree.
         """
         self.id = id
-        self._title = title
         self._info = ''
         self.content = ParsedXML('content', '<doc></doc>')
         
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_object_title')
-    def set_object_title(self, title):
-        """Set the title for this version.
-        """
-        self._title = title
-        
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_info')
-    def set_info(self, info):
+                              'set_demo_data')
+    def set_demo_data(self, info, number, date):
         """Set the info for this version.
         """
         self._info = info
-        
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_number')
-    def set_number(self, number):
-        """Set the info for this version.
-        """
         self._number = number
-        
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_date')
-    def set_date(self, date):
-        """Set the info for this version.
-        """
         self._date = date
-        
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'title')
-    def object_title(self):
-        """Get the title for this version.
-        """
-        return self._title
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'info')
