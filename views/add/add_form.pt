@@ -1,7 +1,7 @@
 <tal:block define="
   global active_tab string:tab_edit;
   global breadcrumb_vein string:Add;
-  global mode_asset request/mode_asset | nothing;
+  global mode_asset request/mode_asset | python:0;
   global use_macro python: (mode_asset and [here.macro_no_tabs] or 
     [here.macro_index])[0]
   " />
@@ -74,7 +74,7 @@ id: no spaces or special characters besides an underscore (_).
 </td>
 <td colspan="2" align="right">
 <input class="button" type="submit" name="add_submit" value=" Add " title="Access key: alt-a" accesskey="a" />
-<tal:block condition="not: mode_asset" >
+<tal:block condition="python: not mode_asset" >
   &nbsp;&nbsp;<input class="button" type="submit" name="add_edit_submit" value="Add and edit" title="Access key: Alt-e" accesskey="e"
     tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Add and enter ', ' Add and edit ')" />
 </tal:block>
