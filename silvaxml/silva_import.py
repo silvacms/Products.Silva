@@ -131,8 +131,7 @@ class GhostContentHandler(BaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'ghost'):
-            for key in self._metadata.keys():
-                self._result.addMetadata(key, self.getMetadata(key))
+            self.storeMetadata()
 
 class LinkHandler(BaseHandler):
     def getOverrides(self):
@@ -169,6 +168,7 @@ class LinkContentHandler(BaseHandler):
             self._result.set_url(self.getData('url'))
             self._result.set_title(
                 self._metadata['silva-content']['maintitle'])
+            self.storeMetadata()
 
 class StatusHandler(BaseHandler):
     def characters(self, chrs):
@@ -220,6 +220,12 @@ class DocumentContentHandler(BaseHandler):
             version = DocumentVersion(id, '')
             self._parent._setObject(id, version)
             self._result = getattr(self._parent, id)
+
+    def endElementNS(self, name, qname):
+        if name == (NS_URI, 'content'):
+            self._result.set_title(
+                self._metadata['silva-content']['maintitle'])
+            self.storeMetadata()
         
 class DocElementHandler(BaseHandler):
     def startElementNS(self, name, qname, attrs):

@@ -10,7 +10,7 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
 from Products.SilvaMetadata.Compatibility import getToolByName
 from Products.Silva.silvaxml import silva_import
-from Products.Silva.silvaxml.xmlimport import SaxImportHandler, initializeElementRegistry
+from Products.Silva.silvaxml.xmlimport import SaxImportHandler
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_document_import(self):
@@ -19,7 +19,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        initializeElementRegistry()
+        silva_import.initializeElementRegistry()
         source_file = open('data/test_document.xml', 'r')
         handler = SaxImportHandler(importfolder)
         parser = xml.sax.make_parser()
@@ -34,7 +34,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        initializeElementRegistry()
+        silva_import.initializeElementRegistry()
         source_file = open('data/test_link.xml', 'r')
         handler = SaxImportHandler(importfolder)
         parser = xml.sax.make_parser()
