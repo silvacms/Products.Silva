@@ -111,6 +111,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     security = ClassSecurityInfo()
 
     meta_type = 'Silva Simple Member Service'
+    title = 'Silva Membership Service'
     
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},
@@ -123,8 +124,9 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
 
-    def __init__(self, id):
+    def __init__(self, id, title):
         self.id = id
+        self.title = title
         self._allow_subscription = 0
 
     # XXX will be used by access tab and should be opened wider if this
@@ -195,9 +197,9 @@ manage_addSimpleMemberServiceForm = PageTemplateFile(
     "www/simpleMemberServiceAdd", globals(),
     __name__='manage_addSimpleMemberServiceForm')
 
-def manage_addSimpleMemberService(self, id, REQUEST=None):
+def manage_addSimpleMemberService(self, id, title='', REQUEST=None):
     """Add a Simple Member Service."""
-    object = SimpleMemberService(id)
+    object = SimpleMemberService(id, title)
     self._setObject(id, object)
     add_and_edit(self, id, REQUEST)
     return ''
