@@ -1,11 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.71 $
+# $Revision: 1.72 $
 import Metadata
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
-import DemoObject, CatalogedDemoObject, Indexer
+import DemoObject, Indexer
 import SQLDataSource
 import install
 import helpers # to execute the module_permission statements
