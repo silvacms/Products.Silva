@@ -163,6 +163,16 @@ Silva changes
         - Can add a new Silva root with non-ascii (latin1) characters
           in the title.
 
+  0.9.2.6
+
+    Bugs fixed
+
+        - Fulltext also indexes title, not just XML content
+
+        - Fixed some unicode errors in the EmailMessageService.
+
+        - Cache is now bypassed if 'suppress_title' is in the request.
+
   0.9.2.5
 
     Features Added
@@ -193,7 +203,6 @@ Silva changes
         - View caching should now be more efficient as cachability
           check is now only made once for each new publish event. The
           view caching framework now also has some unit tests.
-          
 
   0.9.2.4
 
