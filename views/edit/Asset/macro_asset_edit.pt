@@ -145,8 +145,7 @@
         <th class="align-right"
           width="12%">
         </th>
-        <th colspan="2"
-          i18n:translate="content">
+        <th i18n:translate="content">
           content
         </th>
       </tr>
