@@ -62,7 +62,7 @@
               title="change the addables allowed in this publication: alt-a"
               accesskey="c"
               tal:condition="python:model.meta_type == 'Silva Publication'">
-              Configure <u>a</u>ddables...
+              &nbsp;Configure <u>a</u>ddables...
             </a>
           </div>
           <div class="buttons">
