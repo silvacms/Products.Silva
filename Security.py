@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.74.4.4 $
+# $Revision: 1.74.4.5 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
@@ -251,6 +251,11 @@ class Security(AccessManager):
         security = getSecurityManager()
         self._last_author_userid = userid = security.getUser().getUserName()
         self._last_author_info = author_info = self.sec_get_member(userid).aq_base
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'sec_get_creator_info')
+    def sec_get_creator_info(self):
+        return self.sec_get_member(self.getOwner().getUserName())
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_userids')
