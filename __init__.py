@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.62 $
+# $Revision: 1.63 $
 import ViewRegistry, MultiViewRegistry
 import Document, Folder, Root
 import Publication, Ghost, Image, File
@@ -64,25 +64,28 @@ def initialize(context):
         SimpleMembership.SimpleMemberService,
         constructors = (SimpleMembership.manage_addSimpleMemberServiceForm,
                         SimpleMembership.manage_addSimpleMemberService),
+        icon = "www/members.png"
         )
 
     context.registerClass(
         SimpleMembership.SimpleMember,
         constructors = (SimpleMembership.manage_addSimpleMemberForm,
                         SimpleMembership.manage_addSimpleMember),
+        icon = "www/member.png"
         )
 
     context.registerClass(
         EmailMessageService.EmailMessageService,
         constructors = (EmailMessageService.manage_addEmailMessageServiceForm,
                         EmailMessageService.manage_addEmailMessageService),
+        icon = "www/message_service.gif"
         )
 
     context.registerClass(
         DocmaService.DocmaService,
         constructors = (DocmaService.manage_addDocmaServiceForm,
                         DocmaService.manage_addDocmaService),
-        icon="globals/docma.gif",
+        icon = "www/docma.gif"
         )
 
     # register xml import functions
