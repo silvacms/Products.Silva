@@ -21,7 +21,7 @@
         </h2>
         <table class="listing"
           style="margin-bottom:0.5em;">
-          <tbody>
+          <thead>
             <tr class="top-controls">
               <td>
                 <metal:block define-slot="clipboard_lookup_action">
@@ -36,13 +36,15 @@
               </td>
             </tr>
             <tr class="inter-controls">
-              <td style="font-size:90%"
+              <th style="font-size:90%"
                 tal:condition="clipboard_members">
                 Ctrl-click to multi-select
-              </td>
+              </th>
             </tr>
+          </thead>
+          <tbody>
             <tr valign="top">
-              <td style="padding: 0;">
+              <td style="padding: 0 0 0.5em 0;">
                 <select class="clipboard"
                   multiple="multiple"
                   name="userids:list"
@@ -74,7 +76,7 @@
           </tbody>
           <tfoot>
             <tr class="controls">
-              <td>
+              <td class="align-right">
                 <tal:block condition="clipboard_members">
                   <metal:block define-slot="clipboard_actions" />
                 </tal:block>

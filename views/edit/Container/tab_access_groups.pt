@@ -8,15 +8,334 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/tal/i18n"
   tal:define="
-    global breadcrumb_vein string:Access;
+    global breadcrumb_vein string:Groups;
     global active_tab string:tab_access;
+    global parent_screen_name string:Access;
   ">
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
+<metal:block fill-slot="main"
+  tal:define="allow_subscription model/service_members/allow_subscription | nothing;"
+  tal:condition="view/has_access">
 
-<tal:block define="
-  allow_subscription model/service_members/allow_subscription | nothing;"
-  condition="view/has_access">
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <td class="left">
+        <tal:block replace="nothing">
+          ______________ parent screen link ______________
+        </tal:block >
+        <metal:block use-macro="view/macro_vein_navigation/macros/parent" />
+        <tal:block replace="nothing">
+          ______________ vein navigation ______________
+        </tal:block >
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access_groups', breadcrumb_vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ main subtable _____________________
+      </tal:block>
+      <td class="main">
+
+<form id="group_assets"
+  name="group_assets"
+  action="tab_access_groups_delete"
+  method="post"
+  tal:define="groups view/get_locally_defined_groups">
+  <table class="listing">
+    <thead>
+      <tr tal:replace="nothing">
+        ______________ vein + title row ______________
+      </tr>
+      <tr>
+        <td class="top" colspan="6">
+          <h2 tal:attributes="title string:id: ${model/id}">
+            <img tal:replace="structure python:view.render_icon(model)" />
+            <span i18n:translate="group_definitions_for">group definitions for</span>
+            &#xab;<tal:block content="title" />&#xbb;
+          </h2>
+        </td>
+      </tr>
+      <tr class="top-controls">
+        <td colspan="6">
+          <h3 i18n:translate="group_definitions">
+            Groups located in this folder
+          </h3>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tal:repeat repeat="group groups">
+        <tal:define define="iterate repeat/group/odd">
+          <tr tal:attributes="class python:iterate and 'odd' or 'even'">
+            <td nowrap="1">
+              <input class="warningbox"
+                name="groupids:list"
+                type="checkbox"
+                value=""
+                tal:attributes="value group/id;"
+              />
+              <a class="blacklink"
+                title="Edit"
+                tal:attributes="
+                  href string:${group/absolute_url}/edit;
+                  title group/meta_type">
+                <img tal:replace="structure python:view.render_icon(group)" />
+              </a>
+            </td>
+            <td>
+              <a class="blacklink"
+                title="edit this group"
+                tal:attributes="href string:${group/absolute_url}/edit"
+                i18n:attributes="title">
+                <tal:block replace="group/id">
+                  id
+                </tal:block>
+              </a>
+            </td>
+            <td>
+              <a class="blacklink"
+                title="edit this group"
+                tal:attributes="href string:${group/absolute_url}/edit"
+                i18n:attributes="title">
+                <tal:block replace="group/get_title_or_id">
+                  title
+                </tal:block>                    
+              </a>
+            </td>
+            <td>
+              (<i tal:content="structure group/meta_type">
+              title
+              </i>)
+            </td>
+            <td>
+              <tal:block replace="structure python:view.service_utils.backend_short_datetime_to_str(group.get_modification_datetime()) or default">
+                -
+              </tal:block>
+            </td>
+            <td tal:content="python:group.sec_get_last_author_info().fullname()">
+              author name
+            </td>
+          </tr>
+        </tal:define>
+      </tal:repeat>
+      <tr class="even">
+        <td colspan="6"
+          tal:condition="not:groups">
+          <span i18n:translate="no_groups_defined_in_folder"
+            tal:omit-tag="">
+            No groups have been defined in this location.
+          </span>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="controls">
+        <td colspan="4">
+          <input class="warning"
+            type="submit"
+            value="delete"
+            title="delete selected groups: alt-d"
+            accesskey="d"
+            onClick="return confirm('Really delete?')"
+            tal:condition="groups"
+            i18n:attributes="title value onClick"
+          />
+        </td>
+        <td colspan="2">
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+<tal:block replace="nothing">
+  _____________________ groups creation table _____________________
+</tal:block>
+<table class="invisible">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        _____________________ add normal group _____________________
+      </tal:block>
+      <td class="invisible">
+        <form name="focusbox" 
+          action="add_object_submit" 
+          method="POST" 
+          enctype="multipart/form-data">
+          <table class="listing">
+            <thead>
+              <tr class="top-controls">
+                <td colspan="2">
+                  <h3 i18n:translate="add_normal_group">
+                    Add a normal group
+                  </h3>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th colspan="2">
+                  <i i18n:translate="group_defined_by_list_groups">
+                    (a group defined by a list of users)
+                  </i>
+                </th>
+              </tr>
+              <tr class="even">
+                <td class="align-right"
+                  width="10%">
+                  id
+                  <span class="warning">
+                    *
+                  </span>
+                </td>
+                <td style="width: 20em;">
+                  <input size="20" 
+                    type="text" 
+                    name="field_object_id" 
+                    value="" 
+                    style="width:100%;"
+                  />
+                </td>
+              </tr>
+              <tr class="odd">
+                <td class="align-right">
+                  <span i18n:translate="title"
+                    tal:omit-tag="">
+                    title
+                  </span>
+                <td>
+                  <input size="20" 
+                    type="text" 
+                    name="field_object_title" 
+                    value="" 
+                    style="width:100%;"
+                  />
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="controls">
+                <td class="align-right"
+                  colspan="2">
+                  <input type="hidden" 
+                    name="meta_type" 
+                    value="Silva Group" />
+                  <input class="button" 
+                    type="submit" 
+                    name="add_submit" 
+                    value="add" 
+                    title="access key: alt-a" 
+                    accesskey="a" 
+                    i18n:attributes="title value"
+                  />
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
+      </td>
+      <td class="invisible">
+        &nbsp;&nbsp;
+      </td>
+      <tal:block replace="nothing">
+        _____________________ create virtual group _____________________
+      </tal:block>
+      <td class="invisible">
+        <form name="focusbox" 
+          action="add_object_submit" 
+          method="POST" 
+          enctype="multipart/form-data">
+          <table class="listing">
+            <thead>
+              <tr class="top-controls">
+                <td colspan="2">
+                  <h3 i18n:translate="create_virtual_group">
+                    Create a virtual group
+                  </h3>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th colspan="2">
+                  <i i18n:translate="group_defined_by_list_groups">
+                    (a group defined by a list of normal groups)
+                  </i>
+                </th>
+              </tr>
+              <tr class="even">
+                <td class="align-right"
+                  width="10%">
+                  id
+                  <span class="warning">
+                    *
+                  </span>
+                </td>
+                <td style="width: 20em;">
+                  <input size="20" 
+                    type="text" 
+                    name="field_object_id" 
+                    value="" 
+                    style="width:100%;"
+                  />
+                </td>
+              </tr>
+              <tr class="odd">
+                <td class="align-right">
+                  <span i18n:translate="title"
+                    tal:omit-tag="">
+                    title
+                  </span>
+                <td>
+                  <input size="20" 
+                    type="text" 
+                    name="field_object_title" 
+                    value="" 
+                    style="width:100%;"
+                  />
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="controls">
+                <td class="align-right"
+                  colspan="2">
+                  <input type="hidden" 
+                    name="meta_type" 
+                    value="Silva Virtual Group"
+                  />
+                  <input class="button" 
+                    type="submit" 
+                    name="add_submit" 
+                    value="create"
+                    title="access key: alt-c" 
+                    accesskey="c" 
+                    i18n:attributes="title value"
+                  />
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
+      </td>
+    </tr>
+  </tbody>
+</table>
+         
+      </td>
+    </tr>
+  </tbody>
+</table>
+  
+
+  
+  
+<tal:block replace="nothing">
   <h3>
     <a href="tab_access"
       title="up to top of Access tab"

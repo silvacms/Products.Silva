@@ -239,7 +239,7 @@ div.personalBar img {
 }
 
 
-/* ____________________________________________________ table columns _____ */
+/* ____________________________________________________ columns table _____ */
 
 table.columns {
   border-collapse: collapse;
@@ -276,7 +276,7 @@ table.columns1 {
 }
 
 
-/* ____________________________________________________ table listing _____ */
+/* ____________________________________________________ listing table _____ */
 
 table.listing {
     color: #444444;
@@ -302,6 +302,7 @@ table.listing tfoot {
 table.listing tr.controls {
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
+  text-align : right;
   text-transform: &dtml-textTransform;;
   /* in case it's empty */
   height : 0.2em;
@@ -443,7 +444,7 @@ table.listing td.field-title {
 /* force button floats in table cells 
    without text to line up properly */
 table.listing div.controls {
-  padding: 0.2em 0;
+  padding: 0.5em 0 0.2em 0;
   vertical-align: bottom;
 }
 

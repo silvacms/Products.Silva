@@ -52,7 +52,7 @@
         </h2>
         <table class="listing"
           style="margin-bottom:0.5em;">
-          <tbody>
+          <thead>
             <tr class="top-controls"
               tal:condition="python: model_is_container and group_service">
               <td>
@@ -69,11 +69,13 @@
               </td>
             </tr>
             <tr class="inter-controls">
-              <td style="font-size:90%"
+              <th style="font-size:90%"
                 tal:condition="groups">
                 Ctrl-click to multi-select
-              </td>
+              </th>
             </tr>
+          </thead>
+          <tbody>
             <tr valign="top">
               <td style="padding:0;">
                 <select class="clipboard"

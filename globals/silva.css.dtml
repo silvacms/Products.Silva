@@ -13,6 +13,20 @@
 
 /* _______________________________________________ element typography _____ */
 
+/* ___________________________________________________________ tables _____ */
+
+table.invisible {
+  margin: 0;
+  border: 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.invisible td.invisible {
+  padding: 0;
+}
+
+
 /* ______________________________________________________ align/float _____ */
 
 .image-left {

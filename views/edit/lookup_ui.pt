@@ -27,8 +27,7 @@
         <span tal:replace="nothing">
           ______________ parent screen navigation ______________
         </span>
-        <table class="listing"
-          style="margin-bottom:0;">
+        <table class="listing">
           <thead>
             <tr>
               <td class="parent">
@@ -44,14 +43,12 @@
             </tr>
           </thead>
         </table>
-
-
       </td>
-      <td class="main">
-        <tal:block replace="nothing">
-          _____________________ main subtable _____________________
-        </tal:block>
 
+      <tal:block replace="nothing">
+        _____________________ main subtable _____________________
+      </tal:block>
+      <td class="main">
         <form action="lookup_search"
           method="POST">
           <table class="listing">
@@ -68,9 +65,6 @@
                   </h2>
                 </td>
               </tr>
-            </thead>
-
-            <tbody>
               <tr class="top-controls">
                 <td colspan="2">
                   <h3>
@@ -78,6 +72,9 @@
                   </h3>
                 </td>
               </tr>
+            </thead>
+
+            <tbody>
               <tr class="odd">
                 <td>
                   name (or part of name)
@@ -212,8 +209,7 @@
   </tbody>
 </table>
 
-<div class="worksheet borders top bottom left right"
-  tal:define="global no_entry string:-"
+<div tal:define="global no_entry string:-"
   tal:condition="python:view.has_access()">
 </div>
 

@@ -39,8 +39,8 @@
             method="POST"
             tal:define="
               members view/get_members;
-              global revokeable_roles python:None;
-              global revokeable_groups python:None">
+              global revokeable_roles nothing;
+              global revokeable_groups nothing">
             <table class="listing">
               <thead>
                 <tr>
@@ -112,7 +112,7 @@
                         tal:attributes="
                           value python:'%s||%s' % (userid, local);
                           id string:revoke_${userid}" 
-                        tal:define="global revokeable_roles string:1"
+                        tal:define="global revokeable_roles python: 1"
                        /><br tal:condition="not:repeat/local/end" />
                     </tal:block>
                   </td>
@@ -250,8 +250,7 @@
         <td class="right">        
           <!-- Clipboard -->
           <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
-            <div style="text-align:right;"
-              metal:fill-slot="clipboard_actions">
+            <metal:block fill-slot="clipboard_actions">
               <select class="manipulator"
                 name="assign_role"
                 style="float:left;"
@@ -271,7 +270,7 @@
                 title="assign a local role to selected user(s)"
                 type="submit"
                 value="Assign" />
-            </div>
+            </metal:block>
           </metal:block>          
         </td>
       </tr>
@@ -377,7 +376,7 @@
                             tal:attributes="
                               value python:'%s||%s' % (group, local);
                               id string:revoke_${group};"
-                            tal:define="global revokeable_groups string:1"
+                            tal:define="global revokeable_groups python: 1"
                           /><br tal:condition="not:repeat/local/end" />
                         </tal:block>
                       </td>
