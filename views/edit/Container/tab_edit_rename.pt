@@ -17,13 +17,14 @@
   tal:define="objects view/REQUEST/ids">
 
 <tal:condition condition="python:view.REQUEST.has_key('ids')">
-<div class="focus-rectangle">
+<div class="focus-rectangle"
+  style="padding-top:0;">
   <form action="tab_edit_rename_submit" method="POST">
     <table class="listing">
       <thead>
         <tr>
           <td class="top"
-            colspan="4">
+            colspan="3">
             <h2>
               <img tal:replace="structure python:view.render_icon(model)" />
               <span i18n:translate="rename_objects_in">rename objects in</span>       
@@ -41,11 +42,9 @@
           <th i18n:translate="old">
             old
           </th>
-          <th i18n:translate="new">
+          <th width="66%"
+            i18n:translate="new">
             new
-          </th>
-          <th i18n:translate="notes">
-            notes
           </th>
         </tr>
 
@@ -62,8 +61,6 @@
             <input type="text" name="name" style="width: 100%" value="value"
               tal:attributes="name string:id_${object/getId}; value object/getId" />
           </td>
-          <td>
-          </td>
           </tr>
 
           <tr class="even" valign="top">
@@ -75,12 +72,10 @@
               object/get_title_editable | object/get_title | object/getId"
             />
           </td>
-          <td width="45%"
-              tal:define="
+          <td tal:define="
                 title object/get_title_editable | object/get_title;
                 is_title_editable object/can_set_title;
-                "
-              >
+          ">
             <input
               type="text"
               name="name"
@@ -97,8 +92,6 @@
                 condition="not: is_title_editable" 
               />
           </td>
-          <td>
-          </td>
         </tr>
         <tr class="divider"
           tal:condition="not: repeat/objectid/end">
@@ -111,7 +104,7 @@
 
       <tfoot>
         <tr class="controls">
-          <td colspan="4">
+          <td colspan="3">
             <input class="button"
               style="float:right;"
               type="submit"
