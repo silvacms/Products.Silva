@@ -234,9 +234,8 @@ div.flowBar {
   display : block;
     /* IE workaround */
     font-size : 20%;
-    height : 1.5em;
+    height : 0.3em;
   width : 100%;
-  min-height : 3px;
   background: &dtml-mainTabBackgroundSelected;;
   margin: 0;
   padding: 0;
@@ -757,6 +756,16 @@ input.close {
   cursor: pointer;
 }
 
+input.inputter {
+  color : &dtml-inputFontColor;;
+  background : &dtml-inputBackground;;
+  margin-top: 1px;
+  margin-bottom: 1px; /* IE bug fix */
+  padding: 0.1em;
+  border: &dtml-inputBorder;;
+  vertical-align: middle;
+  font: &dtml-inputFont;;
+}
 
 
 /* _______ form labels _______ */
