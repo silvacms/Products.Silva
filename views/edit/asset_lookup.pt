@@ -16,7 +16,7 @@
     objects python:model.get_tree();
     silva_permissions here/get_silva_permissions;
     filter request/filter | request/SESSION/filter | string:Asset;
-    isMetaType python:filter not in ('Asset', 'Content');
+    isMetaType python:filter in model.get_silva_addables_allowed();
     asset_context request/asset_context | request/SESSION/asset_context | string:/;
     dummy python: request.SESSION.set('filter', filter);
     dummy python: request.SESSION.set('asset_context', asset_context);

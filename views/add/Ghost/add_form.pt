@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="
+    global breadcrumb_vein string:Add;
+    global active_tab string:tab_edit;
+    global mode_asset request/mode_asset | python:0;
+    global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]"
+  i18n:domain="silva">
+<metal:block metal:use-macro="use_macro/macros/master">
+<metal:block fill-slot="main">
+<script type="text/javascript" 
+  tal:content="structure python:here.focus_editor('field_object_id')" />
+
+<div class="focus-rectangle">
+<form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
+<input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
+<input type="hidden" name="mode_asset:int" value="0"
+  tal:attributes="value mode_asset" />
+<table class="listing">
+<thead>
+  <tr>
+    <td class="top location" colspan="3">
+    <h2>
+      <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />&nbsp;
+        create <span tal:replace="python: request.meta_type.lower()" />
+    </h2>
+    </td>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <th class="align-right" i18n:translate="attributes">
+      Attributes
+    </th>
+    <th style="width:50%;" i18n:translate="content">
+      Content
+    </th>
+    <th i18n:translate="notes">
+    Notes
+    </th>
+  </tr>
+
+  <tal:repeat repeat="field here/form/get_fields">
+  <tal:define define="oddrow repeat/field/odd">
+  <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
+    <td class="align-right">
+      <span tal:condition="python:field.getId() != 'content_url'"
+        tal:replace="python:field['title'].lower()" />
+      <tal:block tal:condition="python:field.getId() == 'content_url'">
+         <script type="text/javascript"
+           tal:content="structure here/reference.js" />
+
+          <input type="button" class="navigation" value="Path..."
+            tal:define="asset_context model"
+            tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Content&asset_context=%s\', \'_reference_\', \'focusbox\', \'field_content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+            />
+      </tal:block>
+      <span class="warning" tal:condition="python:field.is_required()">*</span>
+    </td>
+    <td tal:content="structure python:field.render_from_request(request)">
+      <input />
+    </td>
+    <td tal:content="structure string:${field/description}&nbsp;">
+      note
+    </td>
+  </tr>
+  </tal:define>
+  </tal:repeat>
+</tbody>
+
+<tfoot>
+  <tr class="controls">
+    <td class="align-right"
+      colspan="3">
+      <input class="cancel"
+        style="float:left;"
+        type="submit"
+        name="add_cancel"
+        value=" Cancel "
+        title="Access key: alt-c"
+        accesskey="c"
+        i18n:attributes="value title"
+      />
+      <input class="button"
+        type="submit"
+        name="add_submit"
+        value=" Save "
+        title="Access key: alt-s"
+        i18n:attributes="value title"
+        accesskey="s"
+      />
+      <tal:condition condition="python: not mode_asset" >
+      <input class="button"
+        type="submit"
+        name="add_edit_submit"
+        value="Save + edit"
+        title="Access key: alt-e"
+        accesskey="e"
+        tal:attributes="value python:test(here.id in ('Folder','Publication'), ' Save + enter ', ' Save + edit ')"
+      />
+      </tal:condition>
+    </td>
+  </tr>
+</tfoot>
+</table>
+</form>
+
+</metal:block>
+</metal:block>
+</html>
