@@ -451,6 +451,11 @@ def getPropertyOrAttrValue(object, attr):
         object.manage_delProperties(ids=[attr])
     elif hasattr(object.aq_inner, attr):
         value = getattr(object.aq_inner, attr)
+        # if it is not a string, skip it (e.g. when a folder we're
+        # upgrading has content with an id which is also a name in 
+        # the old style metadata.
+        if type(value) != type(u'') or type(value) != type(''):
+            return None
         #if callable(value):
         #    value = value()
         delattr(object.aq_inner, attr)
@@ -472,7 +477,7 @@ def unicode_and_metadata_092(obj):
             # if somehow the string is already unicode (who knows, right :)
             # skip conversion
             new_value = old_value
-            if type(old_value) != type(u' '):
+            if type(old_value) != type(u''):
                 # we are assuming all data is cp1252 here, since that's what we've
                 # been using all along, but maybe some funky custom setups may want
                 # to interfere here...
