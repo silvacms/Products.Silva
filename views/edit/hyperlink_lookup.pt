@@ -369,7 +369,7 @@
                   accesskey="p" 
                   i18n:attributes="title value"
                   onclick="setReference();return false;" 
-                  tal:condition="publishables"
+                  tal:condition="python: publishables or assets"
                 />
               </td>
             </tr>
