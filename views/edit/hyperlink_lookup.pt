@@ -373,7 +373,7 @@
                   title="insert a reference to this asset: alt-p"
                   accesskey="p" 
                   onclick="setReference();return false;" 
-                  tal:condition="publishables"
+                  tal:condition="python: publishables or assets"
                   i18n:attributes="title;value;accesskey place_reference_accesskey"
                 />
               </td>
