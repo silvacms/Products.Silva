@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.88 $
+# $Revision: 1.89 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -209,6 +209,20 @@ class Root(Publication):
         from Products.Silva import upgrade
         upgrade.registry.upgrade(self, from_version, to_version)
         self._content_version = to_version
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                                'upgrade_silva_object')
+    def upgrade_silva_object(self, from_version, object_path):
+        """EXPERIMENTAL partial upgrade functionality
+
+            upgrades a single object (recursively) in the Silva tree
+            rather than the whole Silva root, can be used to upgrade
+            imported content
+        """
+        object = self.restrictedTraverse(object_path)
+        to_version = self.get_silva_software_version()
+        from Products.Silva import upgrade
+        upgrade.registry.upgrade(object, from_version, to_version)
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'status_update')
