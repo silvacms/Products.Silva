@@ -371,6 +371,9 @@
 
   <xsl:template match="doc:field" mode="tablerow-contents">
     <td class="{@class}">
+      <!-- IE doesn't like empty table cells, insert a nbsp if there are
+      no child elements -->
+      <xsl:if test="count(*) = 0">&#160;</xsl:if>
       <xsl:apply-templates />
     </td>
   </xsl:template>
