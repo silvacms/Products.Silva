@@ -282,6 +282,13 @@ div.middleground a.button:hover {
   background: #b3d4bf;
 }
 
+div.middleground a.selected {
+  /* A selected, highlighted button. There should only be one of these. */
+  color: #424244;
+  background: #b6d6f3;
+  border-color: #3d4b67;
+}
+
 input.warning {
   font-size: 95%;
     font-weight: &dtml-buttonWeight;;
