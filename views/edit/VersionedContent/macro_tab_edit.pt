@@ -93,6 +93,10 @@
 <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
 <tal:condition condition="python: not model.get_next_version()">
   <form action="tab_edit_make_copy" method="POST">
+    <input type="hidden"
+      name="came_from_view"
+      tal:attributes="value template/id"
+    />
     <div class="feedback">
       <input class="button"
         style="margin-left:0;"
