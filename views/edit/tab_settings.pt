@@ -111,7 +111,7 @@
                   <td class="align-right" colspan="3">
                     <input class="button" type="submit"
                       value="convert to folder"
-                      name="convert_to_folder:method"
+                      name="tab_edit_to_folder:method"
                       title="change container type to a folder: alt-f"
                       accesskey="f" 
                       i18n:attributes="value;title;accesskey convert_to_folder_accesskey"
@@ -119,7 +119,7 @@
                     />
                     <input class="button" type="submit"
                       value="convert to publication"
-                      name="convert_to_publication:method"
+                      name="tab_edit_to_publication:method"
                       title="change container type to a publication: alt-p"
                       accesskey="p"
                       i18n:attributes="value;title;accesskey convert_to_publication_accesskey"
