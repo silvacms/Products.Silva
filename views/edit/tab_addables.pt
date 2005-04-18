@@ -18,7 +18,8 @@
 <metal:block metal:fill-slot="middleground">
   <div class="middleground">
     <a 
-      title="miscellaneous settings: alt-6" accesskey="6"
+      title="miscellaneous settings: alt-6" 
+      accesskey="6"
       href="tab_settings"
       tal:attributes="href string:${url}/edit/tab_settings"
       i18n:attributes="title;accesskey tab_settings_accesskey"

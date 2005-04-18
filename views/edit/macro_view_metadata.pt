@@ -19,7 +19,8 @@
       metadata_category category | string:;
       binding python: view.get_metadata(content, category=metadata_category) or nothing;
       setnames binding/setNames | nothing;
-      is_container request/model/implements_container | nothing;
+      is_container model/implements_container | nothing;
+      is_versioned model/implements_versioning | nothing;
       form_errors options/form_errors | nothing;"
     condition="python: content and setnames"
     >
@@ -129,7 +130,10 @@
           <td class="align-right"
             colspan="2">
             <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
-            <tal:block condition="python: hasattr(model, 'get_approved_version') and model.get_approved_version() and display_flag == 1">
+            <tal:block 
+              condition="
+                python: is_versioned and model.get_approved_version() and display_flag == 1"
+              >
               <form action="properties_revoke_approval"
                 method="POST">
                 <input 
@@ -143,9 +147,15 @@
               </form>
             </tal:block>
             <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
-            <tal:block condition="python: not hasattr(model, 'get_next_version') or not model.get_next_version()">
-              <form action="properties_make_copy"
-                method="POST">
+            <tal:block 
+              condition="
+                python: is_versioned and not model.get_next_version()"
+              >
+              <form action="tab_edit_make_copy" method="POST">
+                <input type="hidden"
+                  name="came_from_view"
+                  tal:attributes="value template/id"
+                />
                 <input class="button"
                   type="submit"
                   value="new version"
