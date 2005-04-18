@@ -251,7 +251,7 @@
                   <img tal:replace="structure icon" />
                   <tal:block i18n:translate="">layout settings</tal:block>
                   <span i18n:translate="">
-                    for public version of
+                    for published version of
                     &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
                   </span>
                 </h2>

@@ -103,7 +103,7 @@
                   <img tal:replace="structure python:view.render_icon(model)" />
                   <tal:block i18n:translate="">metadata</tal:block>
                   <span tal:condition="not: model/implements_container" i18n:translate="">
-                    for public version of
+                    for published version of
                     &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
                   </span>
                 </h2>
