@@ -15,17 +15,38 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
+<metal:block metal:fill-slot="middleground">
+  <div class="middleground">
+    <a 
+      title="miscellaneous settings: alt-6" accesskey="6"
+      href="tab_settings"
+      tal:attributes="href string:${url}/edit/tab_settings"
+      i18n:attributes="title;accesskey tab_settings_accesskey"
+      i18n:translate=""
+      >
+      settings...
+    </a>
+    <a 
+      class="selected"
+      title="change the addables allowed in this publication: alt-7"
+      accesskey="7"
+      href="" 
+      >
+      addables
+    </a>
+  </div>
+</metal:block>
+  
 <metal:block fill-slot="main">
-
 <tal:block 
   define="
     global view here;
     global model request/model;
-    global fields python:view.settings_addables_form.get_fields();"
+    global fields python:view.tab_addables_form.get_fields();"
   condition="may_approve_content"
 >
 
-<form method="POST" name="form" action="settings_addables_submit">
+<form method="POST" name="form" action="tab_addables_submit">
   <table class="columns columns2">
     <tbody>
       <tr>
@@ -38,7 +59,7 @@
           </tal:block >
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'settings_addables', vein)" />
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_addables', vein)" />
             </metal:fill-slot>
           </metal:use-macro>
         </td>

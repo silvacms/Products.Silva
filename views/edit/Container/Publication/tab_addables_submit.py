@@ -1,4 +1,4 @@
-## Script (Python) "settings_addables_submit"
+## Script (Python) "tab_addables_submit"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -11,13 +11,13 @@ from Products.Formulator.Errors import ValidationError, FormValidationError
 from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
-form = context.settings_addables_form
+form = context.tab_addables_form
 changed_metadata = []
 
 try:
     result = form.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return context.settings_addables(
+    return context.tab_addables(
         message_type="error",
         message='%s' % context.render_form_errors(e)
         )
@@ -29,7 +29,7 @@ addables = result['addables']
 
 # if nothing changes, we're done
 if will_be_acquired and currently_acquired:
-    return context.settings_addables(
+    return context.tab_addables(
         message_type="error",
         message=_("Addable settings have not changed and remain acquired.")
         )
@@ -46,4 +46,4 @@ message = _("Addable settings changed for: ${changed_metadata}")
 message.set_mapping({
     'changed_metadata': context.quotify_list(changed_metadata)
     })
-return context.settings_addables(message_type="feedback", message=message)
+return context.tab_addables(message_type="feedback", message=message)

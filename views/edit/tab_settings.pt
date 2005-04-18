@@ -16,59 +16,34 @@
 <metal:block use-macro="here/macro_index/macros/master">
   
 <metal:block metal:fill-slot="middleground">
-  <div class="middleground"
-    tal:define="
-      isfolder python: type == 'Silva Folder';
-      ispublication python: type == 'Silva Publication' or type == 'Silva Root';
-      isghostfolder python: type == 'Silva Ghost Folder';">
-    <tal:block condition="python: isfolder and may_approve_content">
-      <a class="button"
-        href="tab_edit_to_publication"
-        title="change Folder into Publication: alt-c"
-        accesskey="c"
-        i18n:attributes="title;accesskey covert_to_publication_accesskey"
-        i18n:translate=""
-        ><u>c</u>onvert to publication</a>
-    </tal:block>
-    <tal:block condition="python: ispublication and may_approve_content">
-      <a class="button"
-        href="tab_edit_to_folder"
-        title="change Publication into Folder: alt-c"
-        accesskey="c"
-        tal:condition="python:type != 'Silva Root'"
-        i18n:attributes="title;accesskey convert_to_folder_accesskey"
-        i18n:translate=""
-        ><u>c</u>onvert to folder</a>
-    </tal:block>
-    <tal:block condition="python: isghostfolder and may_approve_content">
-      <tal:block
-        tal:define="
-          editable model/get_editable;
-          link_status python: here.get_ghost_link_status_text(editable);">
-        <a class="button"
-          type="submit" 
-          href="convert_to_folder" 
-          title="convert this ghost folder to a normal folder: alt-c"
-          accesskey="c"
-          tal:condition="not: link_status"
-          i18n:attributes="title;accesskey convert_to_folder_accesskey"
-          ><u>c</u>onvert to folder</a>
-        <a class="button"
-          type="submit" 
-          href="convert_to_publication" 
-          title="convert this ghost folder to a normal publication: alt-p"
-          accesskey="p"
-          tal:condition="not:link_status"
-          i18n:attributes="title;accesskey convert_to_publication_accesskey"
-          >convert to <u>p</u>ublication</a>
-      </tal:block>
-    </tal:block>
+  <div class="middleground">
+    <a 
+      class="selected" 
+      title="miscellaneous settings: alt-6" 
+      accesskey="6"
+      href=""
+      >
+      settings
+    </a>
+    <a 
+      title="change the addables allowed in this publication: alt-7"
+      accesskey="7"
+      tal:define="ispublication python: type == 'Silva Publication' or type == 'Silva Root';"
+      tal:condition="ispublication"
+      tal:attributes="href string:${url}/edit/tab_addables"
+      i18n:attributes="title;accesskey tab_addables"
+      i18n:translate=""
+      >
+      addables...
+    </a>
   </div>
 </metal:block>
-  
+
 <metal:block fill-slot="main">
     <table class="columns columns2"
-      tal:define="icon python:view.render_icon(model)">
+      tal:define="
+        icon python:view.render_icon(model);"
+      >
       <tbody>
         <tr>
           <tal:block replace="nothing">_____________________ sidebar _____________________</tal:block>
@@ -81,21 +56,25 @@
           </td>
           <tal:block replace="nothing">_____________________ main _____________________</tal:block>
           <td class="main">
-            <form action="tab_settings_save_renderer" method="POST">
-            <table class="listing"
-              tal:define="
-                editable model/get_editable;
-                rendererservice context/service_renderer_registry;
-                renderers python: rendererservice.getFormRenderersList(type);"
-              tal:condition="
-                python: editable"
+            
+            <form action="." method="POST">
+              <table class="listing"
+                tal:define="
+                  editable model/get_editable;
+                  isfolder python: type == 'Silva Folder';
+                  ispublication python: type == 'Silva Publication' or type == 'Silva Root';
+                  isghostfolder python: type == 'Silva Ghost Folder';
+                  rendererservice context/service_renderer_registry;
+                  renderers python: rendererservice.getFormRenderersList(type);"
+                tal:condition="
+                  python: editable"
               >
               <thead>
                 <tr>
                   <td class="top" colspan="3">
                     <h2 tal:attributes="title string:id: ${model/id}">
                       <img tal:replace="structure icon" />
-                      <span i18n:translate=""> settings and properties for &#xab;<tal:block 
+                      <span i18n:translate="">settings and properties for &#xab;<tal:block 
                         content="title"
                         i18n:name="title" />&#xbb;</span>
                     </h2>
@@ -103,6 +82,61 @@
                 </tr>
               </thead>
               <tbody>
+                
+                <tr class="top-controls">
+                  <td colspan="3">
+                    <h3>
+                      <span i18n:translate="">container type</span>
+                    </h3>
+                  </td>
+                </tr>
+                <tr class="odd">
+                  <td class="align-right" colspan="3">
+                    <tal:block condition="isghostfolder">
+                      This Ghost Folder can be converted to a normal 
+                      Publication or Folder. All ghosted content will be 
+                      duplicated and can then be edited.
+                    </tal:block>
+                    <tal:block condition="isfolder">
+                      This Silva Folder can be converted to a Publication
+                      (may take awhile if it&#8217;s large).
+                    </tal:block>
+                    <tal:block condition="ispublication">
+                      This Silva Publication can be converted to a Folder
+                      (may take awhile if it&#8217;s large).
+                    </tal:block>
+                  </td>
+                </tr>
+                <tr class="controls">
+                  <td class="align-right" colspan="3">
+                    <input class="button" type="submit"
+                      value="convert to folder"
+                      name="convert_to_folder:method"
+                      title="change container type to a folder: alt-f"
+                      accesskey="f" 
+                      i18n:attributes="value;title;accesskey convert_to_folder_accesskey"
+                      tal:condition="python: ispublication or isghostfolder"
+                    />
+                    <input class="button" type="submit"
+                      value="convert to publication"
+                      name="convert_to_publication:method"
+                      title="change container type to a publication: alt-p"
+                      accesskey="p"
+                      i18n:attributes="value;title;accesskey convert_to_publication_accesskey"
+                      tal:condition="python: isfolder or isghostfolder"
+                    />
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td 
+                    class="divider" 
+                    colspan="3" 
+                    style="background: rgb(196, 214, 231) none repeat scroll 0%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;"
+                    >
+                  </td>
+                </tr>
+                
                 <tr class="top-controls">
                   <td colspan="3">
                     <h3>
@@ -124,14 +158,14 @@
                     note
                   </th>
                 </tr>
-                <tr>
+                <tr class="odd">
                   <td class="align-right">
                     <tal:block i18n:translate="">
                       renderer
                     </tal:block>
                   </td>
                   <td>
-                    <select name="renderer_name_select">
+                    <select class="store" name="renderer_name_select">
                       <tal:block 
                         define="selected_renderer_name python: editable.get_renderer_name()" 
                         repeat="renderer_name renderers">
@@ -146,25 +180,25 @@
                   </td>
                   <td>
                     <tal:block i18n:translate="">
-                      Select a renderer that will be used to render 
-                      this object.
+                      Select a renderer to render this content.
                     </tal:block>
                   </td>
                 </tr>
                 <tr class="controls">
                   <td class="align-right" colspan="3">
                     <input class="button" 
+                      value="change renderer"
+                      name="tab_settings_save_renderer:method"
                       type="submit"
-                      value="save"
-                      title="access key: alt-s"
-                      accesskey="s"
-                      i18n:attributes="value;title;accesskey save_accesskey"
+                      title="change renderer: alt-c"
+                      accesskey="c"
+                      i18n:attributes="value;title;accesskey change_renderer_accesskey"
                     />
                   </td>
                 </tr>
               </tbody>
             </table>
-            </form>
+          </form>
         </td>            
       </tr>
 
