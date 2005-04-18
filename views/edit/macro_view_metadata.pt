@@ -70,9 +70,11 @@
                 element binding/?set_name/?element_name;                  
                 iterate repeat/element_name/odd;
                 show_bottom_border repeat/element_name/end;"
+              tal:condition="not: element/hidden"
               tal:attributes="
                 class python: iterate and 'odd' or 'even';
-                style python: show_bottom_border and 'border-bottom: 1px solid #77858c' or nothing;">
+                style python: show_bottom_border and 'border-bottom: 1px solid #77858c' or nothing;"
+              >
               <tal:block replace="nothing">
                 ___ element name column ___
               </tal:block>
