@@ -146,7 +146,12 @@ class UpgradeRegistry:
         try:
             version_index = versions.index(from_version)
         except ValueError:
-            upgrade_chain = versions[:]
+            zLOG.LOG(
+                'Silva', zLOG.WARNING, 
+                ("Nothing can be done: there's no upgrader registered to "
+                 "upgrade from %s to %s.") % (from_version, to_version)
+                )
+            return
         else:
             upgrade_chain = [ v
                 for (v, i) in zip(versions, range(len(versions)))
