@@ -29,6 +29,7 @@ def silvaDocumentBeforeDeleteDisable(root):
     # can be used in monkeypatched object methods (self is not passed as a variable to
     # those methods)
     from Products.SilvaDocument.Document import Document
+    upgrade_registry = upgrade.registry
     upgrade_registry.old_manage_beforeDelete = Document.manage_beforeDelete
     def manage_beforeDelete_old_style_docs(self, item, container):
         Document.inheritedAttribute('manage_beforeDelete')(self, item,
@@ -37,6 +38,7 @@ def silvaDocumentBeforeDeleteDisable(root):
 
 def silvaDocumentBeforeDeleteEnable(root):
     from Products.SilvaDocument.Document import Document
+    upgrade_registry = upgrade.registry
     Document.manage_beforeDelete = upgrade_registry.old_manage_beforeDelete
     delattr(upgrade_registry, 'old_manage_beforeDelete')
 
