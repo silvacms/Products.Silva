@@ -7,6 +7,9 @@ Silva changes
 
     Bugs fixed
 
+      - Fixed a bug in the upgrade code, which was triggered when the
+        from_version and to_version were equal.
+
       - Fixed issue1270 by monkey patching the TALInterpreter (new monkey.py).
 
       - Added support for Kupu 1.2 (this is now the required version
