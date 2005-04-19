@@ -1,14 +1,14 @@
 <!--
 Copyright (c) 2002-2005 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.6 $
+Version of this file: $Revision: 1.7 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
   tal:replace="structure here/manage_tabs">Tabs</h2>
 
-<h4><a href="../manage_services">Silva Services</a></h4>
-                                                                                                                                                                            
+<h4 tal:define="root here/get_root | nothing" 
+    tal:condition="python:root==here.aq_parent"><a href="../manage_services">Silva Services</a></h4>
   
 <h2 tal:define="
   form_title string:Edit Files Service"
