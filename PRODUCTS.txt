@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.1.4
 Author:     Martijn Faassen, Jan-Wijbrand Kolman, Guido Goldstein
 Email:      faassen@infrae.com, jw@infrae.com, gst@infrae.com
-CVS:        $Revision: 1.11.2.5 $
+CVS:        $Revision: 1.11.2.6 $
 
 Introduction
 ------------
@@ -102,7 +102,7 @@ parser.
 
 http://www.infrae.com/download/Sprout
 
-Kupu 1.2rc2 (DI)
+Kupu 1.2 (DI)
 ----------------
 
 Kupu is a client-side WYSIWYG editor. If kupu is installed, Silva
