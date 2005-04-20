@@ -114,8 +114,10 @@ class LinkVersion(CatalogedVersion):
         """
         u = url.lower()
         p = u.find('://')
-        schema = u[:p]
-        if p < 0:
+        if p < 3:
+            if p >= 0:
+                # remove empty schema
+                url = url[p+3:]
             # prepend http schema
             url = 'http://' + url
         self._url = url
