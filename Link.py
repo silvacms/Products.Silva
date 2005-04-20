@@ -13,6 +13,14 @@ from helpers import add_and_edit
 from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 
+
+# XXX taken from SilvaDocument/mixedcontentsupport.py
+import re
+URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
+_url_match = re.compile(URL_PATTERN)
+
+
+
 icon = "www/link.png"
 
 class Link(CatalogedVersionedContent):
@@ -104,23 +112,38 @@ class LinkVersion(CatalogedVersion):
             response.redirect(self._url)
             return ""
         
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'is_valid_url')
+    def is_valid_url(self, url):
+        if _url_match.match(url):
+            return True
+        return False
+        
     # MANIPULATORS
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_url')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_url')
     def set_url(self, url):
-        """Set the link to the given URL.
-
-        If the link does *not* start with something that looks
-        like a schema (^.*://.*), HTTP is assumed.
-        """
-        u = url.lower()
-        p = u.find('://')
-        if p < 3:
-            if p >= 0:
-                # remove empty schema
-                url = url[p+3:]
-            # prepend http schema
+        if not self.is_valid_url(url):
             url = 'http://' + url
         self._url = url
+
+##     # MANIPULATORS
+##     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_url')
+##     def set_url(self, url):
+##         """Set the link to the given URL.
+
+##         If the link does *not* start with something that looks
+##         like a schema (^.*://.*), HTTP is assumed.
+##         """
+##         u = url.lower()
+##         p = u.find('://')
+##         if p < 3:
+##             if p >= 0:
+##                 # remove empty schema
+##                 url = url[p+3:]
+##             # prepend http schema
+##             url = 'http://' + url
+##         self._url = url
 
 InitializeClass(LinkVersion)
 
