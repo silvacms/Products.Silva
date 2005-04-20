@@ -5,6 +5,10 @@ Silva changes
 
   1.1.4
 
+    Features added:
+
+      - Includes Kupu 1.2 final.
+
     Bugs fixed:
 
       - Fixed a bug in the upgrade code, which was triggered when the
