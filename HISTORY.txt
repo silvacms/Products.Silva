@@ -11,6 +11,9 @@ Silva changes
 
     Bugs fixed:
 
+      - Fixed bug in the Link object where schemes other then http were
+        not recognized. Now http, https, ftp, news and mailto are allowed.
+
       - Fixed a bug in the upgrade code, which was triggered when the
         from_version and to_version were equal.
 

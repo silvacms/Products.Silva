@@ -127,24 +127,6 @@ class LinkVersion(CatalogedVersion):
             url = 'http://' + url
         self._url = url
 
-##     # MANIPULATORS
-##     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_url')
-##     def set_url(self, url):
-##         """Set the link to the given URL.
-
-##         If the link does *not* start with something that looks
-##         like a schema (^.*://.*), HTTP is assumed.
-##         """
-##         u = url.lower()
-##         p = u.find('://')
-##         if p < 3:
-##             if p >= 0:
-##                 # remove empty schema
-##                 url = url[p+3:]
-##             # prepend http schema
-##             url = 'http://' + url
-##         self._url = url
-
 InitializeClass(LinkVersion)
 
 manage_addLinkVersionForm = PageTemplateFile(
