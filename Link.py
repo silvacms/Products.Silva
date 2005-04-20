@@ -107,7 +107,16 @@ class LinkVersion(CatalogedVersion):
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_url')
     def set_url(self, url):
-        if not url.startswith('http://'):
+        """Set the link to the given URL.
+
+        If the link does *not* start with something that looks
+        like a schema (^.*://.*), HTTP is assumed.
+        """
+        u = url.lower()
+        p = u.find('://')
+        schema = u[:p]
+        if p < 0:
+            # prepend http schema
             url = 'http://' + url
         self._url = url
 
