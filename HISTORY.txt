@@ -27,6 +27,13 @@ Silva changes
         correctly. (previously only datetime values were, hackishly, checked
         for.) This requires an update of Formulator.
 
+      - Fixed acquistion problem with ExternalSource objects and Kupu: when
+        adding or updating an ExternalSource object that had an id that 
+        returned another object using acquisition, Kupu would display a 404
+        page instead of the source's form. This has now been fixed: instead
+        of acquisition of the id a full url is used to find the source. 
+        Note that this requires Kupu 1.2.1+.
+
   1.2
 
     Bugs fixed
