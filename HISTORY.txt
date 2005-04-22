@@ -17,6 +17,11 @@ Silva changes
 
       - Fixed issue1246, where the cropbox didn't work correctly.
 
+    Features added
+
+      - Partial upgrades, and experimental (and highly dangerous!) feature
+        that allows upgrading imported Z-exported Silva content.
+
   1.2
 
     Bugs fixed

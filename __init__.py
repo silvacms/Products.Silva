@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.132.4.1 $
+# $Revision: 1.132.4.2 $
 # Zope
 import zLOG
 # Silva
@@ -313,6 +313,16 @@ def initialize_icons():
         ri((klass, kind), 'www/%s' % icon_name, GhostFolder.__dict__)
 
 def initialize_upgrade():
+    # initialize all upgrades so they're available for doing partial upgrades
+    from Products.Silva import upgrade_092
+    upgrade_092.initialize()
+
+    from Products.Silva import upgrade_093
+    upgrade_093.initialize()
+
+    from Products.Silva import upgrade_100
+    upgrade_100.initialize()
+
     from Products.Silva import upgrade_120
     upgrade_120.initialize()
 

@@ -1,7 +1,7 @@
 
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.16.4.1 $
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -21,11 +21,18 @@ class ExtensionService(SimpleItem.SimpleItem):
     
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},
+        {'label':'Partial Upgrades', 'action':'manage_parialUpgradeForm'},
         ) + SimpleItem.SimpleItem.manage_options
 
     security.declareProtected('View management screens', 'manage_editForm')
     manage_editForm = PageTemplateFile(
         'www/extensionServiceEdit', globals(),  __name__='manage_editForm')
+
+    security.declareProtected('View management screens', 
+                                'manage_partialUpgradeForm')
+    manage_partialUpgradeForm = PageTemplateFile(
+                    'www/extensionServicePartialUpgrades', globals(),  
+                    __name__='manage_editForm')
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
@@ -92,7 +99,22 @@ class ExtensionService(SimpleItem.SimpleItem):
         self.get_root().upgrade_silva()
         return self.manage_main(manage_tabs_message=
             "Content upgrade succeeded. See event log for details.")
-    
+
+    security.declareProtected('View management screens', 'upgrade_object')
+    def upgrade_object(self, REQUEST):
+        """Upgrades a single object (recursively)
+
+            Experimental!!
+        """
+        if not REQUEST.has_key('version') or not REQUEST.has_key('path'):
+            return self.manage_partialUpgradeForm(manage_tabs_message=
+                "Content upgrade failed: missing arguments")
+        path = REQUEST['path']
+        version = REQUEST['version']
+        self.get_root().upgrade_silva_object(version, path)
+        return self.manage_partialUpgradeForm(manage_tabs_message=
+            "Content upgrade succeeded. See event log for details.")
+
     security.declareProtected('View management screens', 'install_layout')
     def install_layout(self):
         """Install core layout.
