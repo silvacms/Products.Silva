@@ -1,13 +1,13 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.166 $
+# $Revision: 1.166.4.1 $
 
 # Zope
 from OFS import Folder, SimpleItem
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
-from OFS.CopySupport import _cb_decode # HACK
+from OFS.CopySupport import _cb_decode, _cb_encode # HACK
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
@@ -323,12 +323,12 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         # should not be approved, too)
         messages = []
         message_type = 'feedback'
-        ids = []
+        paths = []
         for item in self.cb_dataItems():
             if ((op == 0 or item.get_container().is_delete_allowed(item.id)) 
                     and item.meta_type in [addable['name'] for 
                         addable in self.get_silva_addables()]):
-                ids.append(item.id)
+                paths.append(item.getPhysicalPath())
             elif item.meta_type not in [addable['name'] for 
                     addable in self.get_silva_addables()]:
                 msg = _(('pasting &#xab;${id}&#xbb; is not allowed in '
@@ -337,55 +337,18 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 messages.append(unicode(msg))
                 message_type = 'error'
 
-        if len(ids) == 0:
+        if len(paths) == 0:
             return message_type, ', '.join(messages).capitalize()
         
-        if op == 0:
-            # also update title of index documents
-            copy_ids = ids
-            # modify ids to copy_to if necessary
-            paste_ids = []
-            ids = self.objectIds()
-            for copy_id in copy_ids:
-                # keep renaming until we have a unique id (like Zope does, 
-                # so copy_of_x and copy2_of_x)
-                i = 0
-                org_copy_id = copy_id
-                while copy_id in ids:
-                    i += 1
-                    add = ''
-                    if i > 1:
-                        add = str(i)
-                    copy_id = 'copy%s_of_%s' % (add, org_copy_id)
-                paste_ids.append(copy_id)
-        else:
-            # cut-paste operation
-            cut_ids = ids
-            # check where we're cutting from
-            cut_container = item.aq_parent.get_container()
-            # if not cutting to the same folder as we came from
-            if self != cut_container:
-                # modify ids to copy_to if necessary
-                paste_ids = []
-                ids = self.objectIds()
-                for cut_id in cut_ids:
-                    # keep renaming until we have a unique id (like Zope 
-                    # does, so copy_of_x and copy2_of_x)
-                    i = 0
-                    org_cut_id = cut_id
-                    while cut_id in ids:
-                        i += 1
-                        add = ''
-                        if i > 1:
-                            add = str(i)
-                        cut_id = 'copy%s_of_%s' % (add, cut_id)
-                    paste_ids.append(cut_id)
-            else:
-                # no changes to cut_ids
-                paste_ids = cut_ids
         # now we do the paste
-        self.manage_pasteObjects(REQUEST=REQUEST)
+        # encode the paths the way they came in, without the removed items
+        # however, the result is a list of mappings with 'new_id' as
+        # one of the keys
+        result = self.manage_pasteObjects(_cb_encode((op, paths)))
+
         # now unapprove & close everything just pasted
+        # first get the newly pasted ids
+        paste_ids = [i['new_id'] for i in result]
         for paste_id in paste_ids:
             object = getattr(self, paste_id)
             helpers.unapprove_close_helper(object)
