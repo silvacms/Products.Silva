@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.1.5
+
+    Bugs fixed:
+
+      - Due to a wrong URL Kupu version 1.1.2 instead of 1.2 was
+        included in the Silva 1.1.4 release. This has been fixed.
+
   1.1.4
 
     Features added:
