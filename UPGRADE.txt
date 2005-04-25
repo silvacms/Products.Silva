@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.49 $
+CVS:        $Revision: 1.49.4.1 $
 
 Introduction
 ------------
@@ -39,6 +39,9 @@ Products before you install the new ones, even for small upgrades.
 If there are problems, please try pressing ``Refresh all`` in
 ``service_extensions``, available in the Zope Management Interface
 under the ``services`` tab in your Silva root.
+
+NOTE: Upgrading from Silva 1.2 to Silva 1.2.1 requires you to upgrade to
+Zope 2.7.5!
 
 Major upgrades
 --------------
@@ -78,6 +81,13 @@ Steps to take during a major Silva upgrade:
   refresh all installed Silva extensions as well as upgrade the Silva
   content that needs upgrading. Note that this will take a while if
   your site is large.
+
+Upgrading from Silva 1.2 to Silva 1.2.1
+---------------------------------------
+
+Even though this is a minor upgrade you will have to update your Zope
+version: Zopes <= 2.7.4 are not supported anymore. Zope 2.7.5 is now
+the recommended version (this due to a change in the Zope core).
 
 Upgrading from Silva 1.1 to Silva 1.2
 -------------------------------------
