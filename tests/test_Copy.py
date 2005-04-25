@@ -140,6 +140,29 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
             self.root.ghost6.sec_get_last_author_info().fullname())
         
 
+    def test_copy8(self):
+        # special test for testing rename behaviour
+        # first create a copy of doc1 and paste it, the new id will be
+        # 'copy_of_doc1'
+        # first publish the doc to make it more exciting ;)
+        self.doc1.set_unapproved_version_publication_datetime(DateTime())
+        self.doc1.approve_version()
+        self.root.action_copy(['doc1'], self.app.REQUEST)
+        self.root.action_paste(self.app.REQUEST)
+        self.assert_(hasattr(self.root, 'copy_of_doc1'))
+
+        # now copy the object again and test the new id, should be
+        # 'copy2_of_doc1' according to Zope 2.7.4+, used to be
+        # 'copy_of_copy_of_doc1'
+        self.root.action_copy(['copy_of_doc1'], self.app.REQUEST)
+        from OFS.CopySupport import _cb_decode # HACK
+        self.root.action_paste(self.app.REQUEST)
+        # this fails in Zope < 2.7.4
+        self.assert_(hasattr(self.root, 'copy2_of_doc1'))
+        self.assertEquals(self.root.copy2_of_doc1.get_editable(), None)
+        self.assertEquals(self.root.copy2_of_doc1.get_viewable(), None)
+        self.assert_(self.root.copy2_of_doc1.get_last_closed() != None)
+
     def test_cut1(self):
         # try to cut object to paste it to the same folder
         self.root.action_cut(['doc1'], self.app.REQUEST)
