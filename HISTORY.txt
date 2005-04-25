@@ -34,6 +34,10 @@ Silva changes
         of acquisition of the id a full url is used to find the source. 
         Note that this requires Kupu 1.2.1+.
 
+      - Fixed issue 1275, copy/paste and cut/paste now queries Zope for the
+        ids it has generated rather than generating them in sync (which was
+        broken due to a change in Zope's renaming behaviour).
+
   1.2
 
     Bugs fixed
