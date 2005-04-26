@@ -11,7 +11,7 @@ See also LICENSE.txt
 Valid for:  Silva 1.2.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.50 $
+CVS:        $Revision: 1.51 $
 
 Introduction
 ------------
@@ -54,6 +54,8 @@ into everything in much more detail.
 
 .. _`the Silva download area`: http://www.infrae.com/download/Silva
 
+Note: there is a document called MAINTENANCE.txt that contains specific
+instructions for system administrators.
 
 The easy way on Windows
 -----------------------
