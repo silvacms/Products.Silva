@@ -12,14 +12,14 @@ Silva changes
 
       - Fixed issue1270 by monkey patching the TALInterpreter (new monkey.py).
 
-      - Added support for Kupu 1.2 (this is now the required version
+      - Added support for Kupu 1.2.1 (this is now the recommended version
         of Kupu).
 
       - Fixed issue1246, where the cropbox didn't work correctly.
 
     Features added
 
-      - Partial upgrades, and experimental (and highly dangerous!) feature
+      - Partial upgrades, an experimental (and highly dangerous!) feature
         that allows upgrading imported Z-exported Silva content.
 
       - Fixed acquistion problem with ExternalSource objects and Kupu: when
