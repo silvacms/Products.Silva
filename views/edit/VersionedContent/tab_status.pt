@@ -39,6 +39,7 @@
           _____________________ main subtable _____________________
         </tal:block>
 
+<form action="." enctype="multipart/form-data" method="POST">
 <table class="listing">
 <thead>
   <tr tal:replace="nothing"> ______________ vein + title row ______________ </tr>
@@ -48,6 +49,22 @@
       <img tal:replace="structure python:view.render_icon(model)" />
       <tal:block i18n:translate="">status of &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;</tal:block>
     </h2>
+    </td>
+  </tr>
+  <tr class="top-controls">
+    <td colspan="7" class="align-right">
+      <h3 style="float:left;" i18n:translate="">
+        publishing actions
+      </h3>
+      <input class="transport"
+              type="submit"
+              tal:attributes="name python: ('%s/edit/tab_status_export:method' % 
+                                '/'.join(request['model'].get_container().getPhysicalPath()))"
+              value="export..."
+              title="access key: alt-e"
+              accesskey="e"
+              i18n:attributes="value;title;accesskey export_accesskey"
+      />
     </td>
   </tr>
 
@@ -126,6 +143,7 @@ change settings section here
 </tbody>
 </table>
 
+</form>
 
 <span tal:replace="nothing"> ______________ sub tables ______________ </span>
 
@@ -229,22 +247,6 @@ _______ manual close section here _______
                       i18n:name="export_id">id</tal:block>&#xbb;
                    </tal:block>
                  </h2>
-              </td>
-            </tr>
-            <tr class="top-controls">
-              <td colspan="7" class="align-right">
-                <h3 style="float:left;" i18n:translate="">
-                  publishing actions
-                </h3>
-                <input class="transport"
-                        type="submit"
-                        tal:attributes="name python: ('%s/edit/tab_status_export:method' % 
-                                          '/'.join(request['model'].get_container().getPhysicalPath()))"
-                        value="export..."
-                        title="access key: alt-e"
-                        accesskey="e"
-                        i18n:attributes="value;title;accesskey export_accesskey"
-                />
               </td>
             </tr>
           </thead>
