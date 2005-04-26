@@ -38,6 +38,11 @@ Silva changes
         ids it has generated rather than generating them in sync (which was
         broken due to a change in Zope's renaming behaviour).
 
+      - Fixed issue 1224, the 'model' variable inside the form of external
+        sources now points to the document in which the code source element
+        was embedded rather than to the code source itself. Note that this
+        requires Kupu 1.2.1 and SilvaExternalSources 0.10.2.
+
   1.2
 
     Bugs fixed
