@@ -17,6 +17,14 @@ Silva changes
 
       - Fixed issue1246, where the cropbox didn't work correctly.
 
+      - Fixed issue1294, moved the published button to a better place.
+
+      - Fixed issue 1275, copy/paste and cut/paste now queries Zope for the
+        ids it has generated rather than generating them in sync (which was
+        broken due to a change in Zope's renaming behaviour).
+
+      - Fixed issue 1198, see MAINTENANCE.txt.
+
     Features added
 
       - Partial upgrades, an experimental (and highly dangerous!) feature
@@ -28,10 +36,6 @@ Silva changes
         page instead of the source's form. This has now been fixed: instead
         of acquisition of the id a full url is used to find the source. 
         Note that this requires Kupu 1.2.1+.
-
-      - Fixed issue 1275, copy/paste and cut/paste now queries Zope for the
-        ids it has generated rather than generating them in sync (which was
-        broken due to a change in Zope's renaming behaviour).
 
       - Fixed issue 1224, the 'model' variable inside the form of external
         sources now points to the document in which the code source element
