@@ -25,17 +25,19 @@ Silva changes
 
       - Fixed issue 1198, see MAINTENANCE.txt.
 
+      - Fixed issue 1124, acquistion problem with ExternalSource objects and
+        Kupu: when adding or updating an ExternalSource object that had an id
+        that returned another object using acquisition, Kupu would display a
+        404 page instead of the source's form. This has now been fixed: instead
+        of acquisition of the id a full url is used to find the source. Also
+        the same bug was fixed for displaying the meta type of the code source
+        object. 
+        Note that this requires Kupu 1.2.1+ and SilvaExternalSources 0.10.2.
+
     Features added
 
       - Partial upgrades, an experimental (and highly dangerous!) feature
         that allows upgrading imported Z-exported Silva content.
-
-      - Fixed acquistion problem with ExternalSource objects and Kupu: when
-        adding or updating an ExternalSource object that had an id that 
-        returned another object using acquisition, Kupu would display a 404
-        page instead of the source's form. This has now been fixed: instead
-        of acquisition of the id a full url is used to find the source. 
-        Note that this requires Kupu 1.2.1+.
 
       - Fixed issue 1224, the 'model' variable inside the form of external
         sources now points to the document in which the code source element
