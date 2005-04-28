@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.88.4.1 $
+# $Revision: 1.88.4.2 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -301,7 +301,7 @@ class Root(Publication):
             raise DocumentationInstallationException, 'Documentation can not be installed since SilvaDocument is not available'
         from adapters.zipfileimport import getZipfileImportAdapter
         importer = getZipfileImportAdapter(self)
-        zipfile = open('%s/doc/silva_docs.zip' % os.path.dirname(__file__), 'r')
+        zipfile = open('%s/doc/silva_docs.zip' % os.path.dirname(__file__), 'rb')
         importer.importFromZip(self, zipfile)
         zipfile.close()
 
