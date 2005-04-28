@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.2.2
+
+    Bugs fixed
+
+      - Fixed a bug in zip file import (which is used to import the silva_docs
+        zip file) that made importing zips fail on Windows.
+
   1.2.1
 
     Bugs fixed
