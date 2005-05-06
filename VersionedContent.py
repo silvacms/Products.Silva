@@ -1,13 +1,13 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.63 $
+# $Revision: 1.64 $
 
 # Python
 from StringIO import StringIO
 
 # Zope
 from OFS import Folder
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from DateTime import DateTime
 from Persistence import Persistent
@@ -16,10 +16,14 @@ import SilvaPermissions
 from Versioning import Versioning
 from Content import Content
 from Versioning import VersioningError
+import mangle
 # Silva adapters
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 # Silva interfaces
 from interfaces import IVersionedContent
+
+from webdav.common import PreconditionFailed, Conflict
+from zExceptions import Forbidden
 
 class CachedData(Persistent):
     """ Persistent cache container
@@ -254,6 +258,104 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         """
         # by default nothing is safely cacheable
         return 0    
+
+    # WebDAV API
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'DELETE')
+    def DELETE(self):
+        """DELETE support"""
+        parent = self.aq_parent.aq_inner
+        if not parent.is_delete_allowed(self.id):
+            raise PreconditionFailed, ('Deleting this object is not allowed '
+                                        'due to its workflow state')
+        parent.action_delete([self.id])
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                                'COPY')
+    def COPY(self):
+        """COPY support"""
+        # perform checks and (if required) remove object to overwrite
+        parent, newid = self.copy_move_helper()
+        # now do the actual copy
+        self.aq_parent.aq_inner.action_copy([self.id], self.REQUEST)
+        result = parent.aq_inner.manage_pasteObjects(self.REQUEST['__cp'])
+        # so the object is copied now, but the id is not right: it's the same
+        # as that of the original one, unless Zope mangled it, check the return
+        # value for the new id and then move the object
+        temp_id = result[0]['new_id']
+        parent.action_rename(temp_id, newid)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'MOVE')
+    def MOVE(self):
+        """MOVE support"""
+        if not self.aq_parent.aq_inner.is_delete_allowed(self.id):
+            raise PreconditionFailed, 'object can not be deleted'
+        # perform checks and (if required) remove object to overwrite
+        parent, newid = self.copy_move_helper()
+        # now do the actual move
+        self.aq_parent.aq_inner.action_cut([self.id], self.REQUEST)
+        result = parent.aq_inner.manage_pasteObjects(self.REQUEST['__cp'])
+        # so the object is copied now, but the id is not right: it's the same
+        # as that of the original one, unless Zope mangled it, check the return
+        # value for the new id and then move the object
+        temp_id = result[0]['new_id']
+        parent.action_rename(temp_id, newid)
+
+    def copy_move_helper(self):
+        """helper method for COPY and MOVE
+        
+            If the 'overwrite' header is set, will remove any content that
+            is currently located on the paste location, and raises an
+            appropriate exception if anything goes wrong. If this passes it
+            returns the physical path of the paste location.
+        """
+        # this is a lot more work than I reckon would be necessary due to
+        # Zope's 'geared towards TTW usage' attitude...
+        destination = self.REQUEST.get_header('destination')
+        path = self.REQUEST.physicalPathFromURL(destination)
+        parentpath = path[:-1]
+        parent = self.restrictedTraverse(parentpath)
+        newlocid = path[-1]
+        isvalid = mangle.Id(parent, newlocid, allow_dup=1).isValid()
+        if not isvalid:
+            raise Forbidden, 'invalid destination id'
+        old = self.restrictedTraverse(path, None)
+        oldexists = (old is not None and old.getPhysicalPath() == tuple(path))
+        secman = getSecurityManager()
+        if self.REQUEST.get_header('overwrite') == 'T':
+            # should delete the location (if it exists and the user is allowed
+            # to do so)
+            if oldexists:
+                if not parent.is_delete_allowed(newlocid):
+                    raise PreconditionFailed, 'could not delete old object'
+                # see if the user has both permission to remove the object,
+                # *and* the permission to add the replacement (else the old
+                # object on the location is gone but the new one isn't placed)
+                is_allowed = (secman.checkPermission(
+                                    SilvaPermissions.ChangeSilvaContent,
+                                    old) and 
+                                secman.checkPermission(
+                                    SilvaPermissions.ChangeSilvaContent,
+                                    parent))
+                if not is_allowed:
+                    raise PreconditionFailed, ('overwriting old object not '
+                                                'allowed')
+                parent.action_delete([newlocid])
+        else:
+            # if there's an old object already on the copy location, bail out
+            if oldexists:
+                raise PreconditionFailed, 'target URL already exists'
+        # see if we're allowed to copy the object to the parent folder
+        is_allowed = secman.checkPermission(
+                                SilvaPermissions.ChangeSilvaContent,
+                                parent)
+        if not is_allowed:
+            # should we raise Unauthorized here instead?
+            raise PreconditionFailed, ('you do not have the write '
+                                        'permission in the copy location')
+
+        return parent, newlocid
 
 InitializeClass(VersionedContent)
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.167 $
+# $Revision: 1.168 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -9,6 +9,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
+from zExceptions import InternalError
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -27,6 +28,7 @@ from sys import exc_info
 from Products.Silva.ImporterRegistry import get_importer, xml_import_helper
 from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
+from Products.Silva.File import file_factory
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
 from Products.ParsedXML.ParsedXML import ParsedXML
@@ -37,6 +39,8 @@ from interfaces import IPublishable, IContent, IGhost
 from interfaces import IVersionedContent, ISilvaObject, IAsset
 from interfaces import IContainer, IPublication, IRoot
 
+from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
+from zExceptions import Forbidden
 
 from Products.Silva.i18n import translate as _
 
@@ -879,6 +883,46 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         to be used in Python scripts and PT's
         """
         return urllib.quote(string)
+
+    security.declarePublic('url_decode')
+    def url_decode(self, string):
+        """A wrapper for the urllib.unquote_plus function"""
+        return urllib.unquote_plus(string)
+
+    # WebDAV
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'manage_FTPget')
+    def manage_FTPget(self):
+        """Overridden because it should raise an exception rather then returning
+            the contents of the index"""
+        raise MethodNotAllowed
+
+    manage_DAVget = manage_FTPget
+
+    security.declarePrivate('MKCOL_handler')
+    def MKCOL_handler(self, name):
+        """WebDAV - create a sub folder"""
+        name = self.url_decode(name)
+        if not mangle.Id(self, name).isValid():
+            raise Forbidden, 'folder id not valid'
+        self.manage_addProduct['Silva'].manage_addFolder(name, name, create_default=1)
+
+    security.declarePrivate('PUT_factory')
+    def PUT_factory(self, name, content_type, body):
+        """WebDAV PUT - create a sub object"""
+        ret = None
+        ct = content_type
+        # XXX nastyness galore! our dear Zope throws in a stringified dict 
+        # sometimes...
+        try:
+            ct = eval(content_type)['Content-Type']
+        except NameError:
+            pass
+        
+        # use the contentObjectFactoryRegistry (what a name!) to get
+        # an object (if possible, else an InternalError will get raised)
+        object = contentObjectFactoryRegistry.getObjectFor(self, name, ct, body)
+        return object
                 
 InitializeClass(Folder)
 

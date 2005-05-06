@@ -257,8 +257,6 @@ class ContainerTestCase(ContainerBaseTestCase):
     def test_is_id_valid(self):
         r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument('__this_is_wrong', 'Wrong')
         self.assert_(not hasattr(self.root, '__this_is_wrong'))
-        r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument('this is wrong too', 'This is wrong')
-        self.assert_(not hasattr(self.root, 'this is wrong too'))
         r = self.root.manage_addProduct['Silva'].manage_addFolder('this$iswrong', 'This is wrong too')
         self.assert_(not hasattr(self.root, 'this$iswrong'))
         r = self.root.manage_addProduct['Silva'].manage_addFolder('.this__', 'Cannot be')

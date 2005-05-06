@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.112 2005/03/10 21:31:59 clemens Exp $
+# $Id: SilvaObject.py,v 1.113 2005/05/06 16:36:17 guido Exp $
 
 # python
 from types import StringType
@@ -10,6 +10,9 @@ from Globals import InitializeClass
 from DateTime import DateTime
 from StringIO import StringIO
 from App.Common import rfc1123_date
+# WebDAV
+from webdav.common import Conflict
+from zExceptions import MethodNotAllowed
 # Silva
 import SilvaPermissions
 from Products.SilvaViews.ViewRegistry import ViewAttribute
@@ -386,7 +389,7 @@ class SilvaObject(Security, ViewCode):
         #        self.REQUEST.AUTHENTICATED_USER.getUserName())
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_xml')
+                              'get_zip')
     def get_zip(self, with_sub_publications=0, last_version=0):
         """Get Zipfile with XML-Document for object, and binary files
         in a subdirectory 'assets'.
@@ -471,6 +474,9 @@ class SilvaObject(Security, ViewCode):
         """always deletable"""
         return 1
 
+    # WebDAV support
+
+    security.declarePublic('HEAD')
     def HEAD(self, REQUEST, RESPONSE):
         """ assumes the content type is text/html;
             override HEAD for classes where this is wrong!
@@ -478,5 +484,34 @@ class SilvaObject(Security, ViewCode):
         mod_time = rfc1123_date ( self.get_modification_datetime() )
         RESPONSE.setHeader('Content-Type', 'text/html')
         RESPONSE.setHeader('Last-Modified', mod_time)
+
+        return ''
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'LOCK')
+    def LOCK(self):
+        """WebDAV locking, for now just raise an exception"""
+        raise Conflict, 'not yet implemented'
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'UNLOCK')
+    def UNLOCK(self):
+        """WebDAV locking, for now just raise an exception"""
+        raise Conflict, 'not yet implemented'
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'MKCOL')
+    def MKCOL(self):
+        """WebDAV MKCOL, only supported by certain subclasses"""
+        raise MethodNotAllowed, 'method not allowed'
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                                'PROPFIND')
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'PROPPATCH')
+    def PROPPATCH(self):
+        """PROPPATCH support, currently just fails"""
+        raise Conflict, 'not yet implemented'
 
 InitializeClass(SilvaObject)

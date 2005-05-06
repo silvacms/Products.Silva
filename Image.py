@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.65 2005/03/02 08:35:50 jw Exp $
+# $Id: Image.py,v 1.66 2005/05/06 16:36:17 guido Exp $
 # Python
 import re, string
 from cStringIO import StringIO
@@ -14,8 +14,11 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
+from Globals import package_home
 from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
+from webdav.common import Conflict
+
 # Silva
 import SilvaPermissions
 from Asset import Asset
@@ -451,7 +454,12 @@ class Image(Asset):
                                 'PUT')
     def PUT(self, REQUEST, RESPONSE):
         """Handle HTTP PUT requests"""
-        return self.image.PUT(REQUEST, RESPONSE)
+        file = REQUEST['BODYFILE']
+        length = REQUEST['CONTENT_LENGTH']
+        if int(length) == 0:
+            print 'bailing out'
+            raise Conflict, 'Zope bug prevents creation of empty images'
+        self.set_image(file)
 
     def HEAD(self, REQUEST, RESPONSE):
         """ forward the request to the underlying image object
@@ -694,7 +702,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     if not id.isValid():
         return
     id = str(id)
-    img = Image(id, title)
+    img = image_factory(context, id, None, file)
     context._setObject(id, img)
     img = getattr(context, id)
     if file:
@@ -736,3 +744,21 @@ from Products.Silva import assetregistry
 mt = mimetypes.types_map.values()
 mt  = [mt for mt in mt if mt.startswith('image')]
 assetregistry.registerFactoryForMimetypes(mt, manage_addImage, 'Silva')
+
+from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
+
+def image_factory(self, id, content_type, body):
+    """Create an Image."""
+    id = mangle.Id(self, id, interface=IAsset)
+    if not id.isValid():
+        return
+    id = str(id)
+    img = Image(id, id).__of__(self)
+    return img
+    
+def _should_create_image(id, content_type, body):
+    return content_type.startswith('image/')
+
+contentObjectFactoryRegistry.registerFactory(
+    image_factory,
+    _should_create_image)

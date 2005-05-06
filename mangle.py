@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.32 2005/04/04 19:58:28 clemens Exp $
+# $Id: mangle.py,v 1.33 2005/05/06 16:36:17 guido Exp $
 # Python
 import string
 import re
@@ -52,7 +52,7 @@ class Id:
     
     
     # does only match strings containig valid chars
-    _valid_id = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.-]*$')
+    _valid_id = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.\- ]*$')
     # finds postfixing number
     _number_postfix = re.compile(r'^(.*?)([0-9]+)$')
     

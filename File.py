@@ -1,13 +1,17 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.38 $
+# $Revision: 1.39 $
 
 # Python
 import os
 import string
 import StringIO
 from cgi import escape
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -25,6 +29,8 @@ from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
 from Products.Silva import upgrade
 from Products.Silva.i18n import translate as _
+from Products.Silva.ContentObjectFactoryRegistry import \
+        contentObjectFactoryRegistry
 # Storages
 from OFS import Image                            # For ZODB storage
 try:                                             #
@@ -252,7 +258,31 @@ def manage_addFile(self, id, title, file):
     """Add a File
     """
     id = mangle.Id(self, id, file=file, interface=IAsset)
+    # try to rewrite the id to make it unique
     id.cook()
+    id = str(id)
+    # the content type is a formality here, the factory expects
+    # it as an arg but doesn't actually use it
+    object = file_factory(self, id, 'application/unknown', file)
+
+    self._setObject(id, object)
+    object = getattr(self, id)
+    object.set_title(title)
+    object._set_file_data_helper(file)
+    return object
+
+def file_factory(self, id, content_type, file):
+    """Add a File
+    """
+    # if this gets called by the contentObjectFactoryRegistry, the last 
+    # argument will be a string
+    # XXX is this useful? do we use 'file' at all (what would 'mangle' want
+    # with it?)
+    if type(file) in (str, unicode):
+        f = StringIO()
+        f.write(file)
+        file = f
+    id = mangle.Id(self, id, file=file, interface=IAsset)
     if not id.isValid():
         return 
     id = str(id)
@@ -263,15 +293,10 @@ def manage_addFile(self, id, title, file):
                         ("There is no service_files. "
                             "Refresh your silva root.")
     if service_files.useFSStorage():        
-        object = FileSystemFile(id, title, service_files.filesystem_path())
+        object = FileSystemFile(id, id, service_files.filesystem_path())
     else:
-        object = ZODBFile(id, title)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    object.set_title(title)
-    object._set_file_data_helper(file)
+        object = ZODBFile(id, id)
     return object
-
 
 class FilesService(SimpleItem.SimpleItem):
     meta_type = 'Silva Files Service'
@@ -440,3 +465,8 @@ def cookPath(path):
             break
     path_items.reverse()        
     return tuple(path_items)
+
+contentObjectFactoryRegistry.registerFactory(
+    file_factory,
+    lambda id, ct, body: True,
+    -1)

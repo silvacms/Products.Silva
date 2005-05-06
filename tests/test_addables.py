@@ -79,4 +79,3 @@ else:
         suite.addTest(unittest.makeSuite(OldAddablesTestCase))
         suite.addTest(unittest.makeSuite(AddablesAdapterTestCase))
         return suite
-    
