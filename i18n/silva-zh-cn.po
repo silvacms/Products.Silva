@@ -1,0 +1,182 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: silva-zh-cn\n"
+"POT-Creation-Date: Tue May 3 14:43:10 2005\n"
+"PO-Revision-Date: 2005-05-03 14:43+0100\n"
+"Last-Translator: Marco Sens\n"
+"Language-Team: marco.sens\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-code: zh-cn\n"
+"Language-name: Chinese Simplified\n"
+"Preferred-encodings: utf-8\n"
+"Domain: silva\n"
+
+msgid "manage..."
+msgstr "管理主界面..."
+
+msgid "contents"
+msgstr "内容"
+
+msgid "preview"
+msgstr "预览"
+
+msgid "properties"
+msgstr "属性"
+
+msgid "access"
+msgstr "权限"
+
+msgid "publish"
+msgstr "发布"
+
+msgid "new..."
+msgstr "新建..."
+
+msgid "select:"
+msgstr "选择:"
+
+msgid "import..."
+msgstr "导入..."
+
+msgid "modify"
+msgstr "修改"
+
+msgid "preview"
+msgstr "预览"
+
+msgid "modified"
+msgstr "修改日期"
+
+msgid "author"
+msgstr "作者"
+
+msgid "shift"
+msgstr "切换"
+
+msgid "no title"
+msgstr "无标题"
+
+msgid "n/a"
+msgstr "-"
+
+msgid "select <u>a</u>ll"
+msgstr "全选"
+
+msgid "select all: alt-a"
+msgstr "全选"
+
+msgid "position"
+msgstr "位置"
+
+msgid "end"
+msgstr "最后一行"
+
+msgid "move"
+msgstr "移动"
+
+msgid "rename..."
+msgstr "重命名…"
+
+msgid "cut"
+msgstr "剪切"
+
+msgid "copy"
+msgstr "复制"
+
+msgid "paste"
+msgstr "粘贴"
+
+msgid "paste ghost"
+msgstr "粘贴快捷对象"
+
+msgid "delete"
+msgstr "删除"
+
+msgid "contact:"
+msgstr "联系人:"
+
+msgid "no name"
+msgstr "佚名"
+
+msgid "view public version"
+msgstr "查看公共版本"
+
+msgid "user settings"
+msgstr "用户设置"
+
+msgid "logout"
+msgstr "注销"
+
+msgid "Manager"
+msgstr "管理员"
+
+msgid "access key:"
+msgstr "访问键:"
+
+msgid "jump to zope root:"
+msgstr "跳至 zope 根目录:"
+
+msgid "jump to silva root in zodb:"
+msgstr "跳至 zodb 中的 silva 根目录:"
+
+msgid "jump to silva services:"
+msgstr "跳至 silva 服务页面:"
+
+msgid "reload screen"
+msgstr "刷新屏幕"
+
+msgid "add a new item:"
+msgstr "添加新项目:"
+
+msgid "select a new item:"
+msgstr "选择新项目:"
+
+msgid "import xml data or a zip file:"
+msgstr "导入 xml 数据或 zip 文件:"
+
+msgid "content approved, or published..."
+msgstr "已批准或已发布的内容..."
+
+msgid "move down"
+msgstr "下移"
+
+msgid "move up"
+msgstr "上移"
+
+msgid "move selected items to"
+msgstr "将选定项目移至"
+
+msgid "move selected items into position:"
+msgstr "将选定项目移至位置:"
+
+msgid "rename and retitle items:"
+msgstr "重命名项目:"
+
+msgid "cut items:"
+msgstr "剪切项目:"
+
+msgid "copy items:"
+msgstr "复制项目:"
+
+msgid "paste items:"
+msgstr "粘贴项目:"
+
+msgid "paste (items on clipboard) as ghost objects:"
+msgstr "粘贴（剪贴簿上的项目）为快捷对象:"
+
+msgid "there's no undo:"
+msgstr "此操作不可撤销:"
+
+msgid "jump to top:"
+msgstr "跳至页首:"
+
+msgid "Leave Silva and view the public page:"
+msgstr "离开 Silva 并查看公共页面:"
+
+msgid "Change your settings:"
+msgstr "更改设置:"
+
+msgid "Logout of Silva:"
+msgstr "注销 Silva:"
