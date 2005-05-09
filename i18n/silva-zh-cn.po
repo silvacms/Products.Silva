@@ -86,7 +86,7 @@ msgid "paste"
 msgstr "粘贴"
 
 msgid "paste ghost"
-msgstr "粘贴 ghost 对象"
+msgstr "粘贴快捷对象"
 
 msgid "delete"
 msgstr "删除"
@@ -161,7 +161,7 @@ msgid "paste items:"
 msgstr "粘贴项目:"
 
 msgid "paste (items on clipboard) as ghost objects:"
-msgstr "粘贴（剪贴簿上的项目）为 ghost 对象:"
+msgstr "粘贴（剪贴簿上的项目）为快捷对象:"
 
 msgid "there's no undo:"
 msgstr "此操作不可撤销:"
