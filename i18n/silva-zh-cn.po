@@ -61,11 +61,14 @@ msgstr "无标题"
 msgid "n/a"
 msgstr "-"
 
-msgid "select all"
+msgid "select <u>a</u>ll"
 msgstr "全选"
 
-msgid "position:"
-msgstr "位置:"
+msgid "select all: alt-a"
+msgstr "全选"
+
+msgid "position"
+msgstr "位置"
 
 msgid "end"
 msgstr "最后一行"
