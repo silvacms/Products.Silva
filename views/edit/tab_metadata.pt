@@ -36,7 +36,7 @@
     </tal:block>
     <tal:block condition="python: ispublication and may_approve_content">
       <a title="change the addables allowed in this publication: alt-a"
-        href="settings_addables"
+        href="tab_addables"
         accesskey="a"
         i18n:attributes="title;accesskey configure_addables_accesskey"
         i18n:translate=""
