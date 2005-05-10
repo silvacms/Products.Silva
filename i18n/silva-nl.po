@@ -3627,7 +3627,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:42
 msgid "open&nbsp;to&nbsp;public&nbsp;now"
-msgstr "nu&nbsp;voor&nbsp;het&nbsp;publiek&nbsp;openen"
+msgstr "nu&nbsp;publiceren"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:42
 msgid "publish the unapproved version: alt-o"
