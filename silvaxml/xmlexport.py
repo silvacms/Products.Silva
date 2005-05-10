@@ -67,11 +67,10 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
                 namespace != NS_SILVA_EXTRA):
                 self.handler.startPrefixMapping(prefix, namespace)
             self.startElement('set', {'id': set_id})
-            keys = binding._getData(set_id).keys()
-            keys.sort()
-            for key in keys:
+            items = binding._getData(set_id).items()
+            items.sort()
+            for key, value in items:
                 field = binding.getElement(set_id, key).field
-                value = binding._getData(set_id)[key]
                 self.startElementNS(namespace, key)
                 field.validator.serializeValue(field, value, self)
                 self.endElementNS(namespace, key)
