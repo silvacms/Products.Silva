@@ -10,6 +10,14 @@
  *
  *****************************************************************************/
 
+<dtml-let last_modified="_.DateTime()-14"
+          expires="_.DateTime()+7"
+          root="get_root_url()">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )">
+
 div.kupu-fulleditor {
   font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0em;
@@ -74,22 +82,22 @@ div.kupu-tb {
   border: none;
 }
 
-span.kupu-tb-buttongroup button.kupu-save {background-image: url("kupu/kupuimages/save.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-save:hover {background-image: url("kupu/kupuimages/save.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-logo {background-image: url("kupu/kupuimages/kupu_icon.gif"); background-color: transparent;}
-span.kupu-tb-buttongroup button.kupu-logo:hover {background-image: url("kupu/kupuimages/kupu_icon.gif");}
+span.kupu-tb-buttongroup button.kupu-save {background-image: url("<dtml-var root>/kupu/kupuimages/save.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-save:hover {background-image: url("<dtml-var root>/kupu/kupuimages/save.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-logo {background-image: url("<dtml-var root>/kupu/kupuimages/kupu_icon.gif"); background-color: transparent;}
+span.kupu-tb-buttongroup button.kupu-logo:hover {background-image: url("<dtml-var root>/kupu/kupuimages/kupu_icon.gif");}
 
-span.kupu-tb-buttongroup button.kupu-bold {background-image: url("kupu/kupuimages/bold.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-bold:hover, span.kupu-tb-buttongroup button.kupu-bold-pressed {background-image: url("kupu/kupuimages/bold.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-italic {background-image: url("kupu/kupuimages/italic.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-italic:hover, span.kupu-tb-buttongroup button.kupu-italic-pressed {background-image: url("kupu/kupuimages/italic.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-underline {background-image: url("kupu/kupuimages/underline.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-underline:hover, span.kupu-tb-buttongroup button.kupu-underline-pressed {background-image: url("kupu/kupuimages/underline.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-bold {background-image: url("<dtml-var root>/kupu/kupuimages/bold.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-bold:hover, span.kupu-tb-buttongroup button.kupu-bold-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/bold.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-italic {background-image: url("<dtml-var root>/kupu/kupuimages/italic.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-italic:hover, span.kupu-tb-buttongroup button.kupu-italic-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/italic.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-underline {background-image: url("<dtml-var root>/kupu/kupuimages/underline.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-underline:hover, span.kupu-tb-buttongroup button.kupu-underline-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/underline.gif"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-subscript {background-image: url("kupu/kupuimages/subscript.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-subscript:hover, span.kupu-tb-buttongroup button.kupu-subscript-pressed {background-image: url("kupu/kupuimages/subscript.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-superscript {background-image: url("kupu/kupuimages/superscript.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-superscript:hover, span.kupu-tb-buttongroup button.kupu-superscript-pressed {background-image: url("kupu/kupuimages/superscript.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-subscript {background-image: url("<dtml-var root>/kupu/kupuimages/subscript.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-subscript:hover, span.kupu-tb-buttongroup button.kupu-subscript-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/subscript.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-superscript {background-image: url("<dtml-var root>/kupu/kupuimages/superscript.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-superscript:hover, span.kupu-tb-buttongroup button.kupu-superscript-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/superscript.gif"); background-color: #b3d4bf;}
 
 span.kupu-tb-buttongroup button.kupu-hilitecolor {display: none;}
 span.kupu-tb-buttongroup button.kupu-forecolor {display: none;}
@@ -103,24 +111,24 @@ span.kupu-tb-buttongroup button.kupu-justifyright {display: none;}
 span.kupu-tb-buttongroup button.kupu-indent {display: none;}
 span.kupu-tb-buttongroup button.kupu-outdent {display: none;}
 
-span.kupu-tb-buttongroup button.kupu-insertunorderedlist {background-image: url("kupu/kupuimages/list.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-insertunorderedlist:hover {background-image: url("kupu/kupuimages/list.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-insertorderedlist {background-image: url("kupu/kupuimages/numbered.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-insertorderedlist:hover {background-image: url("kupu/kupuimages/numbered.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-insertunorderedlist {background-image: url("<dtml-var root>/kupu/kupuimages/list.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-insertunorderedlist:hover {background-image: url("<dtml-var root>/kupu/kupuimages/list.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-insertorderedlist {background-image: url("<dtml-var root>/kupu/kupuimages/numbered.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-insertorderedlist:hover {background-image: url("<dtml-var root>/kupu/kupuimages/numbered.gif"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-insertdefinitionlist {background-image: url("kupu/kupuimages/definitionlist.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-insertdefinitionlist:hover {background-image: url("kupu/kupuimages/definitionlist.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-insertdefinitionlist {background-image: url("<dtml-var root>/kupu/kupuimages/definitionlist.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-insertdefinitionlist:hover {background-image: url("<dtml-var root>/kupu/kupuimages/definitionlist.gif"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-undo {background-image: url("kupu/kupuimages/undo.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-undo:hover {background-image: url("kupu/kupuimages/undo.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-redo {background-image: url("kupu/kupuimages/redo.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-redo:hover {background-image: url("kupu/kupuimages/redo.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-undo {background-image: url("<dtml-var root>/kupu/kupuimages/undo.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-undo:hover {background-image: url("<dtml-var root>/kupu/kupuimages/undo.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-redo {background-image: url("<dtml-var root>/kupu/kupuimages/redo.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-redo:hover {background-image: url("<dtml-var root>/kupu/kupuimages/redo.gif"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-source {background-image: url("kupu/kupuimages/source.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-source {background-image: url("<dtml-var root>/kupu/kupuimages/source.gif"); background-color: #cedae8;}
 
-span.kupu-tb-buttongroup button.kupu-hyperlink {background-image: url("kupu/kupuimages/link.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-hyperlink-pressed {background-image: url("kupu/kupuimages/link.png"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-image {background-image: url("kupu/kupuimages/image.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-hyperlink {background-image: url("<dtml-var root>/kupu/kupuimages/link.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-hyperlink-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/link.png"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-image {background-image: url("<dtml-var root>/kupu/kupuimages/image.png"); background-color: #cedae8;}
 
 div.kupu-tb select {
   color : #333767;
@@ -274,3 +282,5 @@ div#kupu-fgcolorchooser div:hover {
 #kuput-toolbox-extsource #extsourceform textarea {
   width: 14em;
 };
+
+</dtml-let>
