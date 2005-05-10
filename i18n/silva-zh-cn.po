@@ -65,7 +65,7 @@ msgid "select <u>a</u>ll"
 msgstr "全选"
 
 msgid "select all: alt-a"
-msgstr "全选"
+msgstr "全选: alt-a"
 
 msgid "position"
 msgstr "位置"
@@ -106,35 +106,47 @@ msgstr "查看公共版本"
 msgid "user settings"
 msgstr "用户设置"
 
-msgid "logout"
-msgstr "注销"
+msgid "logout ${role} ${userid}"
+msgstr "注销 ${role} ${userid}"
 
 msgid "Manager"
 msgstr "管理员"
 
-msgid "access key:"
-msgstr "访问键:"
+msgid "access key: alt-1"
+msgstr "访问键: alt-1"
 
-msgid "jump to zope root:"
-msgstr "跳至 zope 根目录:"
+msgid "access key: alt-2"
+msgstr "访问键: alt-2"
 
-msgid "jump to silva root in zodb:"
-msgstr "跳至 zodb 中的 silva 根目录:"
+msgid "access key: alt-3"
+msgstr "访问键: alt-3"
 
-msgid "jump to silva services:"
-msgstr "跳至 silva 服务页面:"
+msgid "access key: alt-4"
+msgstr "访问键: alt-4"
+
+msgid "access key: alt-5"
+msgstr "访问键: alt-5"
+
+msgid "jump to zope root: alt-z"
+msgstr "跳至 zope 根目录: alt-z"
+
+msgid "jump to silva root in zodb: alt-'"
+msgstr "跳至 zodb 中的 silva 根目录: alt-'"
+
+msgid "jump to silva services: alt-`"
+msgstr "跳至 silva 服务页面: alt-`"
 
 msgid "reload screen"
 msgstr "刷新屏幕"
 
-msgid "add a new item:"
-msgstr "添加新项目:"
+msgid "add a new item - alt-n"
+msgstr "添加新项目: alt-n"
 
-msgid "select a new item:"
-msgstr "选择新项目:"
+msgid "select a new item: alt-s"
+msgstr "选择新项目: alt-s"
 
-msgid "import xml data or a zip file:"
-msgstr "导入 xml 数据或 zip 文件:"
+msgid "import xml data or a zip file: alt-i"
+msgstr "导入 xml 数据或 zip 文件: alt-i"
 
 msgid "content approved, or published..."
 msgstr "已批准或已发布的内容..."
@@ -148,35 +160,35 @@ msgstr "上移"
 msgid "move selected items to"
 msgstr "将选定项目移至"
 
-msgid "move selected items into position:"
-msgstr "将选定项目移至位置:"
+msgid "move selected items into position: alt-m"
+msgstr "将选定项目移至位置: alt-m"
 
-msgid "rename and retitle items:"
-msgstr "重命名项目:"
+msgid "rename and retitle items: alt-r"
+msgstr "重命名项目: alt-r"
 
-msgid "cut items:"
-msgstr "剪切项目:"
+msgid "cut items: alt-x"
+msgstr "剪切项目: alt-x"
 
-msgid "copy items:"
-msgstr "复制项目:"
+msgid "copy items: alt-c"
+msgstr "复制项目: alt-c"
 
-msgid "paste items:"
-msgstr "粘贴项目:"
+msgid "paste items: alt-v"
+msgstr "粘贴项目: alt-v"
 
-msgid "paste (items on clipboard) as ghost objects:"
-msgstr "粘贴（剪贴簿上的项目）为快捷对象:"
+msgid "paste (items on clipboard) as ghost objects: alt-g"
+msgstr "粘贴（剪贴簿上的项目）为快捷对象: alt-g"
 
-msgid "there's no undo:"
-msgstr "此操作不可撤销:"
+msgid "there's no undo: alt-d"
+msgstr "此操作不可撤销: alt-d"
 
-msgid "jump to top:"
-msgstr "跳至页首:"
+msgid "jump to top: alt-["
+msgstr "跳至页首: alt-["
 
-msgid "Leave Silva and view the public page:"
-msgstr "离开 Silva 并查看公共页面:"
+msgid "Leave Silva and view the public page: alt-:"
+msgstr "离开 Silva 并查看公共页面: alt-:"
 
-msgid "Change your settings:"
-msgstr "更改设置:"
+msgid "Change your settings: alt-~"
+msgstr "更改设置: alt-~"
 
-msgid "Logout of Silva:"
-msgstr "注销 Silva:"
+msgid "Logout of Silva: alt-q"
+msgstr "注销 Silva: alt-q"
