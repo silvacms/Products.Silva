@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002-2005 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.5 $
+Version of this file: $Revision: 1.6 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -37,7 +37,7 @@ Add a Silva Root.
   </tr>
 
   <tr tal:condition="modules/Products/SilvaDocument | nothing">
-    <td align="left" valign="top">
+    <td align="left" valign="top" class="form-text">
     <div class="form-label">
     Add Silva documentation?
     </div>
