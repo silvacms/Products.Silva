@@ -119,8 +119,10 @@ class ViewCode:
         for item in publishables:
             status = item.get_object_status()
             modification_datetime = item.get_modification_datetime()
+            is_editable = status[0] in ['draft', 'pending', 'approved']
             is_published = status[2] == 'published'
             is_approved = status[0] == 'approved'
+            is_closed = status[2] == 'closed'
             is_versioned_content = IVersionedContent.isImplementedBy(item)
             d = {
                 'number': i,
@@ -138,8 +140,10 @@ class ViewCode:
                 'is_container': IContainer.isImplementedBy(item),
                 'is_versioned_content': is_versioned_content,
                 'is_content': IContent.isImplementedBy(item) and not is_versioned_content,
+                'is_editable': is_editable,
                 'is_published': is_published,
                 'is_approved': is_approved,
+                'is_closed': is_closed,
                 'is_published_or_approved': is_published or is_approved,
                 'rendered_icon': render_icon(item),
                 }
