@@ -20,6 +20,9 @@
     default_document model/get_default;
     publishables model/get_processed_items;
     assets model/get_processed_assets;
+    published python:[p for p in publishables if p['is_published']];
+    editables python:[p for p in publishables if p['is_editable']];
+    closed python:[p for p in publishables if p['is_closed']];
     ids options/ids | python: [];
     position request/position | options/position | nothing;
     iterate string:odd;
@@ -98,6 +101,18 @@
                     </tal:block>
                   </select>
                   </div>
+                  <a class="transport"
+                    style="float: right;"
+                    href="tab_status_export"
+                    title="export to xml or convert for export: alt-e"
+                    accesskey="e"
+                    tal:condition="may_change_content"
+                    
+                    i18n:attributes="title;accesskey import_accesskey"
+                    i18n:translate=""
+                  >
+                    export...
+                  </a>
                   <a class="transport"
                     style="float: right;"
                     href="tab_edit_import"
@@ -448,10 +463,16 @@
               </tal:block>
               <tr tal:condition="python:(default_document or publishables or assets)">
                 <th class="controls listing-left"
-                  colspan="6">
+                  colspan="4">
                   <tal:block define="select_id string:ids">
                     <metal:block use-macro="view/macro_select_all/macros/select_all"/>
                   </tal:block>
+                </th>
+                <th class="controls listing-right" colspan="2">
+                  <div tal:condition="published | editables | closed"
+                        i18n:translate="">
+                    publishing actions
+                  </div>
                 </th>
               </tr>
               <tal:block replace="nothing">
@@ -460,6 +481,28 @@
               <tr class="controls">
                 <td colspan="6">
                   <tal:block condition="may_change_content">
+                    <div style="float: right; margin-right: 0.2em;">
+
+                      <input class="close" 
+                              name="tab_edit_close:method" 
+                              value="close" 
+                              title="close published items: alt-c" 
+                              accesskey="c" 
+                              type="submit" 
+                              i18n:attributes="value; title" 
+                              tal:condition="python:published"
+                              />
+                      <input class="executor" 
+                              name="tab_edit_open_now:method" 
+                              value="publish now" 
+                              title="open new versions to the public: alt-p" 
+                              accesskey="p" 
+                              type="submit" 
+                              i18n:attributes="value; title"
+                              tal:condition="python:editables or closed"
+                              />
+                    </div>
+
                     <tal:block tal:condition="python:(default_document or publishables or assets)">
                       <div style="float: left; margin-left:0.2em;">
                         <select class="manipulator"
