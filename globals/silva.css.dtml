@@ -900,6 +900,22 @@ input.cancel {
     cursor: pointer;
 }
 
+input.executor {
+  font-size: 95%;
+  font-weight: normal;
+  color: #b3fffb;
+  background : #284d5b;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: 0 0.2em;
+  border: 1px solid #6bb591;
+  cursor: pointer;
+}
+
+input.executor[type="submit"]:hover { 
+  color : #e5ffec; 
+  background : #4393a3; 
+  border-color : #8dc1a8;
+}
 /* publish screen state coded buttons */
 input.reject {
   font-size: 95%;
