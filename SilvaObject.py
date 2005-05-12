@@ -1,15 +1,17 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.113 2005/05/06 16:36:17 guido Exp $
+# $Id: SilvaObject.py,v 1.114 2005/05/12 13:46:40 guido Exp $
 
 # python
 from types import StringType
+import os
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from DateTime import DateTime
 from StringIO import StringIO
 from App.Common import rfc1123_date
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # WebDAV
 from webdav.common import Conflict
 from zExceptions import MethodNotAllowed
@@ -305,6 +307,38 @@ class SilvaObject(Security, ViewCode):
         except NoViewError:
             # fallback to public 'render' script if no preview available
             result = self.view_version('public', content)
+
+        # XXX there should be a better way to test this...
+        if (self.REQUEST.form.get('show_buttons', False) or 
+                self.REQUEST['URL1'].find('/edit') == -1):
+            # this is a bit nasty: to allow displaying some additional buttons
+            # in preview mode (the 'back' and 'publish now' ones) we add
+            # some HTML to the result before sending it to the browser
+            preview_buttons = getattr(self, '_v_preview_buttons_pt', None)
+            if preview_buttons is None:
+                preview_buttons = self._v_preview_buttons_pt = \
+                        PageTemplateFile(
+                            'www/preview_buttons', globals(),
+                            __name__ = 'preview_buttons').__of__(self)
+            referrer = (self.REQUEST.get('HTTP_REFERER', '').startswith(
+                        self.absolute_url()) and
+                            self.REQUEST.SESSION.get('referrer') or
+                            self.REQUEST.get('HTTP_REFERER', ''))
+            self.REQUEST.SESSION['referrer'] = referrer
+            args = {'message': self.REQUEST.form.get('message', ''),
+                    'message_type': 
+                        self.REQUEST.form.get('message_type', ''),
+                    'unapproved': self.get_unapproved_version() is not None,
+                    'referrer': referrer,
+                    }
+            buttonhtml = preview_buttons(**args)
+            # somehow sometimes REQUEST.form seems to be somewhat
+            # persistent...
+            if self.REQUEST.form.has_key('show_buttons'):
+                del self.REQUEST.form['show_buttons']
+                del self.REQUEST.form['message']
+                del self.REQUEST.form['message_type']
+            result = '%s%s' % (result, buttonhtml)
         return result
         
     security.declareProtected(SilvaPermissions.View, 'view')

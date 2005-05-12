@@ -1,0 +1,69 @@
+<style rel="stylesheet" type="text/css">
+input.transport {
+  font-size: 95%;
+    font-weight: normal;
+  color: #d9f3f1;
+  background: #283365;
+    margin: 0.2em 0.2em 0.1em 0.2em;
+    padding: 0 0.2em;
+  border: 1px solid #8faecf;
+    cursor: pointer;
+}
+input.transport[type="submit"]:hover, button[type="button"]:hover { 
+  color : #e5fffe; 
+  background : #74748b; 
+  border-color : #99b4cf;
+}
+input.executor {
+  font-size: 95%;
+  font-weight: normal;
+  color: #b3fffb;
+  background : #284d5b;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: 0 0.2em;
+  border: 1px solid #6bb591;
+  cursor: pointer;
+}
+input.executor[type="submit"]:hover { 
+  color : #e5ffec; 
+  background : #4393a3; 
+  border-color : #8dc1a8;
+}
+div.message span{
+  background-color: #d9f4eb;
+  border-width: 1px;
+  border-style: solid;
+  padding: 3px;
+}
+span.feedback {
+  color: black;
+}
+span.error {
+  color: red;
+}
+</style>
+<div class="message" 
+      tal:condition="options/message" 
+      style="position:absolute; left:0px; top: 5px; 
+              width: 100%; text-align: center">
+  <span tal:attributes="class options/message_type" 
+        tal:content="options/message" />
+</div>
+<form action="." method="POST">
+<input class="transport"
+  style="position:absolute; top:0px; left:0px;"
+  type="button"
+  value="&lt;"
+  title="back: alt-b"
+  onclick="history.back()"
+  tal:attributes="onclick python:options.has_key('referrer') and 'window.location = \'%s\'' % options['referrer'] or None"
+  accesskey="b" />
+<input class="executor"
+  tal:condition="options/unapproved"
+  style="position:absolute; top:0px; right:0px;"
+  name="edit/preview_open_now:method"
+  type="submit"
+  value="publish now"
+  title="publish this document immediately: alt-p"
+  accesskey="p" />
+</form>
