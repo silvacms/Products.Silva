@@ -177,7 +177,7 @@
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
                     </tal:block>
-                    <td class="listing-left">
+                    <td>
                       <input name="ids:list"
                         type="checkbox"
                         value="value"
@@ -355,7 +355,7 @@
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
                     </tal:block>
-                    <td class="listing-left">
+                    <td>
                       <input name="ids:list"
                         type="checkbox"
                         tal:attributes="
@@ -462,7 +462,7 @@
                 ______________ select all row ______________
               </tal:block>
               <tr tal:condition="python:(default_document or publishables or assets)">
-                <th class="controls listing-left"
+                <th class="controls"
                   colspan="4">
                   <tal:block define="select_id string:ids">
                     <metal:block use-macro="view/macro_select_all/macros/select_all"/>
@@ -481,13 +481,13 @@
               <tr class="controls">
                 <td colspan="6">
                   <tal:block condition="may_change_content">
-                    <div style="float: right; margin-right: 0.2em;">
+                    <div style="float: right;">
 
                       <input class="close" 
                               name="tab_edit_close:method" 
                               value="close" 
-                              title="close published items: alt-c" 
-                              accesskey="c" 
+                              title="close published items: alt-l" 
+                              accesskey="l" 
                               type="submit" 
                               i18n:attributes="value; title" 
                               tal:condition="python:published"
@@ -495,7 +495,7 @@
                       <input class="executor" 
                               name="tab_edit_open_now:method" 
                               value="publish now" 
-                              title="open new versions to the public: alt-p" 
+                              title="publish new versions: alt-p" 
                               accesskey="p" 
                               type="submit" 
                               i18n:attributes="value; title"
