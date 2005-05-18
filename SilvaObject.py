@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.115 2005/05/18 09:40:20 eric Exp $
+# $Id: SilvaObject.py,v 1.116 2005/05/18 09:45:16 guido Exp $
 
 # python
 from types import StringType
@@ -309,8 +309,9 @@ class SilvaObject(Security, ViewCode):
             result = self.view_version('public', content)
 
         # XXX there should be a better way to test this...
-        if (self.REQUEST.form.get('show_buttons', False) or 
-                self.REQUEST['URL1'].find('/edit') == -1):
+        if (self.implements_versioning() and 
+                (self.REQUEST.form.get('show_buttons', False) or 
+                    self.REQUEST['URL1'].find('/edit') == -1)):
             # this is a bit nasty: to allow displaying some additional buttons
             # in preview mode (the 'back' and 'publish now' ones) we add
             # some HTML to the result before sending it to the browser
