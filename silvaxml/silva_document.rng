@@ -55,14 +55,14 @@
   <!-- inline markup -->
   <define name="markup">
     <choice>
+      <ref name="doclink" />
+      <ref name="index" />
       <ref name="em" />
       <ref name="strong" />
       <ref name="super" />
       <ref name="sub" />
       <ref name="underline" />
       <ref name="br" />
-      <ref name="link" />
-      <ref name="index" />
       <ref name="abbreviation" />
       <ref name="acronym" />
       <text />
@@ -86,7 +86,7 @@
       <ref name="em-heading" />
       <ref name="super-heading" />
       <ref name="sub-heading" />
-      <ref name="link-heading" />
+      <ref name="doclink-heading" />
       <ref name="index" />
       <text />
     </choice>
@@ -106,13 +106,7 @@
   <define name="heading">
     <element name="doc:heading">
       <attribute name="type">
-        <choice>
-          <value>normal</value>
-          <value>sub</value>
-          <value>subsub</value>
-          <value>paragraph</value>
-          <value>subparagraph</value>
-        </choice>
+        <text />
       </attribute>
       <oneOrMore>
         <ref name="headingmarkup" />
@@ -122,16 +116,14 @@
 
   <define name="p">
     <element name="doc:p">
-      <attribute name="type">
-        <choice>
-          <value>normal</value>
-          <value>lead</value>
-          <value>annotation</value>
-        </choice>      
-      </attribute>
-      <oneOrMore>
+      <optional>
+        <attribute name="type">
+          <text />
+        </attribute>
+      </optional>
+      <zeroOrMore>
         <ref name="markup" />
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
   
@@ -163,20 +155,13 @@
   
   <define name="image">
     <element name="doc:image">
-      <attribute name="path">
-        <text />
-      </attribute>
-      <attribute name="title">
-        <text />
-      </attribute>
-      <attribute name="link_to_hires">
-        <choice>
-          <value>0</value>
-          <value>1</value>
-        </choice>
-      </attribute>
       <optional>
-        <attribute name="target">
+        <attribute name="alignment">
+          <text />
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="height">
           <text />
         </attribute>
       </optional>
@@ -185,16 +170,23 @@
           <text />
         </attribute>
       </optional>
+      <attribute name="link_to_hires">
+        <text />
+      </attribute>
+      <attribute name="path">
+        <text />
+      </attribute>
       <optional>
-        <attribute name="alignment">
-          <choice>
-            <value>float-left</value>
-            <value>image-left</value>
-            <value>none</value>
-            <value>image-center</value>
-            <value>float-right</value>
-            <value>image-right</value>
-          </choice>
+        <attribute name="target">
+          <text />
+        </attribute>
+      </optional>
+      <attribute name="title">
+        <text />
+      </attribute>
+      <optional>
+        <attribute name="width">
+          <text />
         </attribute>
       </optional>
     </element>
@@ -204,53 +196,32 @@
     <element name="doc:list">
       <attribute name="type">
         <choice>
-          <value>disc</value>
-          <value>square</value>
-          <value>circle</value>
-          <value>1</value>
-          <value>I</value>
-          <value>i</value>
-          <value>A</value>
-          <value>a</value>
-          <value>none</value>
+          <text />
         </choice>
       </attribute>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="listitem" />
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
 
   <define name="nlist">
     <element name="doc:nlist">
       <attribute name="type">
-        <choice>
-          <value>disc</value>
-          <value>square</value>
-          <value>circle</value>
-          <value>1</value>
-          <value>I</value>
-          <value>i</value>
-          <value>A</value>
-          <value>a</value>
-          <value>none</value>
-        </choice>
+        <text />
       </attribute>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="nlistitem" />
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
 
   <define name="dlist">
     <element name="doc:dlist">
       <attribute name="type">
-        <choice>
-          <value>normal</value>
-          <value>compact</value>
-        </choice>
+        <text />
       </attribute>
-      <oneOrMore>
+      <zeroOrMore>
         <element name="doc:dt">
           <oneOrMore>
             <ref name="markup" />
@@ -261,7 +232,7 @@
             <ref name="markup" />
           </oneOrMore>
         </element>
-      </oneOrMore>
+      </zeroOrMore>
     </element>
   </define>
 
@@ -381,32 +352,42 @@
     </element>
   </define>
 
-  <define name="link">
+  <define name="doclink">
     <element name="doc:link">
-      <attribute name="href">
-        <text />
-      </attribute>
       <optional>
         <attribute name="target">
           <text />
         </attribute>
       </optional>
+      <optional>
+        <attribute name="title">
+          <text />
+        </attribute>
+      </optional>
+      <attribute name="url">
+        <text />
+      </attribute>
       <oneOrMore>
         <ref name="textmarkup" />
       </oneOrMore>
     </element>
   </define>
 
-  <define name="link-heading">
+  <define name="doclink-heading">
     <element name="doc:link">
-      <attribute name="href">
-        <text />
-      </attribute>
       <optional>
         <attribute name="target">
           <text />
         </attribute>
       </optional>
+      <optional>
+        <attribute name="title">
+          <text />
+        </attribute>
+      </optional>
+      <attribute name="url">
+        <text />
+      </attribute>
       <oneOrMore>
         <ref name="headingtextmarkup" />
       </oneOrMore>
@@ -418,6 +399,11 @@
       <attribute name="name">
         <text />
       </attribute>
+      <optional>
+        <attribute name="title">
+          <text />
+        </attribute>
+      </optional>
     </element>
   </define>
 
@@ -430,9 +416,9 @@
   <define name="abbreviation">
     <element name="doc:abbr">
       <optional>
-      <attribute name="title">
-        <text />
-      </attribute>
+        <attribute name="title">
+          <text />
+        </attribute>
       </optional>
       <oneOrMore>
         <ref name="textmarkup" />
@@ -456,15 +442,18 @@
   <!-- table elements -->
   <define name="table">
     <element name="doc:table">
+      <attribute name="column_info">
+        <text />
+      </attribute>
       <attribute name="columns">
         <text />
       </attribute>
       <attribute name="type">
         <text />
       </attribute>
-      <attribute name="column_info">
-        <text />
-      </attribute>
+      <zeroOrMore>
+        <ref name="tablecolumn" />
+      </zeroOrMore>
       <oneOrMore>
         <choice>
           <ref name="tableheading" />
@@ -476,6 +465,11 @@
 
   <define name="tableheading">
     <element name="doc:row_heading">
+      <optional>
+        <attribute name="colspan">
+          <text />
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="markup" />
       </oneOrMore>
@@ -484,8 +478,18 @@
 
   <define name="tablerow">
     <element name="doc:row">
+      <optional>
+        <attribute name="class">
+          <text />
+        </attribute>
+      </optional>
       <oneOrMore>
         <element name="doc:field">
+          <optional>
+            <attribute name="class">
+              <text />
+            </attribute>
+          </optional>
           <zeroOrMore>
             <ref name="field" />
           </zeroOrMore>
@@ -494,6 +498,21 @@
     </element>
   </define>
 
+  <define name="tablecolumn">
+    <element name="doc:col">
+      <optional>
+        <attribute name="class">
+          <text />
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="width">
+          <text />
+        </attribute>
+      </optional>
+    </element>
+  </define>
+  
   <!-- define a general attribute rule, so we can skip the attrs for now... -->
   <define name="someAttributes">
     <zeroOrMore>

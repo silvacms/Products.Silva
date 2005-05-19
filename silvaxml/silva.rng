@@ -10,6 +10,7 @@
       <attribute name="url"><text /></attribute>
       <attribute name="path"><text /></attribute>
       <attribute name="datetime"><text /></attribute>
+      <attribute name="silva_version"><text /></attribute>
       <choice>
         <ref name="SilvaRoot" />
         <ref name="SilvaPublication" />
@@ -126,9 +127,46 @@
       </element>
     </element>
   </define>
+
+  <define name="indexer">
+    <element name="indexer">
+      <attribute name="id"><text /></attribute>
+      <ref name="metadata" />
+    </element>
+  </define>
+
+  <define name="imageAsset">
+    <element name="image_asset">
+      <attribute name="id"><text /></attribute>
+      <ref name="metadata" />
+      <element name="asset_id"><text /></element>
+    </element>
+  </define>
+
+  <define name="unknownContent">
+    <element name="unknown_content">
+      <attribute name="id"><text /></attribute>
+      <element name="zexp_id"><text /></element>
+    </element>
+  </define>
+
+  <define name="autoToc">
+    <element name="auto_toc">
+      <attribute name="id"><text /></attribute>
+      <ref name="metadata" />
+    </element>
+  </define>
   
   <define name="contained">
     <element name="content">
+      <optional>
+        <element name="default">
+          <choice>
+            <ref name="SilvaDocument" />
+            <ref name="autoToc" />
+          </choice>
+        </element>
+      </optional>
       <zeroOrMore>
         <choice>
           <ref name="SilvaPublication" />
@@ -137,6 +175,10 @@
           <ref name="SilvaDocument" />
           <ref name="SilvaLink" />
           <ref name="SilvaGhost" />
+          <ref name="imageAsset" />
+          <ref name="indexer" />
+          <ref name="unknownContent" />
+          <ref name="autoToc" />
         </choice>
       </zeroOrMore>
     </element>
