@@ -47,6 +47,10 @@ Silva changes
         was embedded rather than to the code source itself. Note that this
         requires Kupu 1.2.1 and SilvaExternalSources 0.10.2.
 
+      - Fix unicode issues in SilvaDocument (if
+        PlacelessTranslationService is used) by introducing a
+        safeJoin() operation.
+
   1.2
 
     Bugs fixed
