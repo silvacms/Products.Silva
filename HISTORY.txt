@@ -3,6 +3,14 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.2.3
+
+    Bugs fixed
+
+      - Fixed a unicode bug in SilvaDocument where certain
+        combinations of non-ascii characters could sometimes cause
+        problems when PlacelessTranslationService is in use.
+
   1.2.2
 
     Bugs fixed
