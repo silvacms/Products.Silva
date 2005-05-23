@@ -11,8 +11,9 @@ Silva changes
         settings page if PTS is installed. The preference is stored in a
         cookie which expires after one year.
 
-      - Partial upgrades, and experimental (and highly dangerous!) feature
-        that allows upgrading imported Z-exported Silva content.
+      - Partial upgrades, an feature that allows upgrading imported
+        Z-exported Silva content. This feature should be handled with care,
+        as it cannot always be guaranteed to be correct.
 
     Bugs fixed
 
