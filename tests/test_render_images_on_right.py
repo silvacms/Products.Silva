@@ -16,6 +16,8 @@ try:
 except ImportError: 	
     xslt = False
 
+directory = os.path.dirname(__file__)
+
 class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 
     def test_implements_renderer_interface(self):
@@ -39,7 +41,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
-        source_file = open("data/test_document2.xml")
+        source_file = open(os.path.join(directory, "data/test_document2.xml"))
         importer.importFromFile(
             source_file, result = importfolder,
             settings = test_settings, info = test_info)
@@ -58,7 +60,9 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         class BrokenImagesOnRightRenderer(ImagesOnRightRenderer):
             def __init__(self):
                 ImagesOnRightRenderer.__init__(self)
-                self._stylesheet_path = "data/images_to_the_right_broken.xslt"
+                self._stylesheet_path = os.path.join(
+                    directory,
+                    "data/images_to_the_right_broken.xslt")
 
         importfolder = self.add_folder(
             self.root,
@@ -69,7 +73,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
-        source_file = open("data/test_document2.xml")
+        source_file = open(os.path.join(directory, "data/test_document2.xml"))
         importer.importFromFile(
             source_file, result = importfolder,
             settings = test_settings, info = test_info)
