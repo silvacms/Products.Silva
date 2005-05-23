@@ -7,6 +7,9 @@ Silva changes
 
     Features added
 
+      - WebDAV support for Silva. Silva can now be accessed by a WebDAV
+        client.
+
       - Silva users can now set their preferred language on the user
         settings page if PTS is installed. The preference is stored in a
         cookie which expires after one year.
