@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_silvaviews.py,v 1.1 2005/05/04 15:41:54 jw Exp $
+# $Id: test_silvaviews.py,v 1.2 2005/05/23 16:30:21 faassen Exp $
 
 from __future__ import nested_scopes
 
@@ -23,13 +23,12 @@ now = DateTime.DateTime()
 """
 SilvaViewsTest cases:
 
-
 URLs and object paths that try to get to content through the 'edit'
-view namespace of Silva shouldn't work.
+view namespace of Silva shouldn't work, but they do.
 
-These URLs and paths used to work in earlier versions of Silva, but
-posed problems where content objects could 'override' views with the
-same id.
+These URLs and paths have historically worked in Silva, but pose
+problems where content objects could 'override' views with the same
+id.
     
 To make matters worse, older Silva versions could build up path
 references from Silva Documents to for example Silva Images, whith
@@ -37,10 +36,15 @@ repeating '[obj_id]/edit' segments (see the 'path' global used in the
 test cases). These path references are used to 'restrictedTraverse()'
 to objects.
 
-These 'borked' paths and URLs appeared to work correctly, but only due
+These 'borked' paths and URLs appear to work correctly, but only due
 unwanted side effects and specific behaviour of Zope's acquisition.
 
-The decision now is:
+Unfortunately, changing the behavior of Silva right now breaks too
+much to be a sensible change. We've tried various strategies, but decided it
+was too complicated. We've since decided to go back to the behavior as
+it is now, and codify this in a set of tests.
+
+In an ideal world, we might instead do something like this:
 
 * URLs trying to get to content through the '.../edit' namespace
 shouldn't work at all.
@@ -51,14 +55,16 @@ shouldn't work at all.
 * Existing 'borked' paths trying to traverse to content through the
 '.../edit' namespace will not work anymore.
 
-To get the behaviour as described, MultiViewRegistry.get_method_onw_view()
-has been modified: it will only return a view if this view is contained
-in the service_views hierarchy. Thus, is not a n object that was retrieved,
-by acquisistion, from on of service_views' parents.
-
+This could be accomplished by modifying
+MultiViewRegistry.get_method_onw_view() so that it will only return a
+view if this view is contained in the service_views hierarchy. Thus,
+is not an object that was retrieved, by acquisistion, from on of
+service_views' parents. To repeat: we haven't actually done this.
 """
 
+directory = os.path.dirname(__file__)
 
+# a very long path string
 path =  (
     '/root/publication/folder'
     '/doc2/edit/doc2/edit/doc2/edit/doc2/edit/doc2/edit'
@@ -89,7 +95,7 @@ class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
         self.doc2.set_unapproved_version_publication_datetime(now)
         self.doc2.approve_version()
         
-        image_file = open('data/testimage.gif', 'rb')
+        image_file = open(os.path.join(directory, 'data/testimage.gif'), 'rb')
         image_data = image_file.read()
         image_file.seek(0)
         self.publication.manage_addProduct['Silva'].manage_addImage(
@@ -98,20 +104,15 @@ class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
         self.image = self.root.publication.testimage
 
     def test_publish_through_borked_edit_url(self):
-        # Before the SilvaViews fix, this would still not have worked anyway, 
-        # because 'doc2' would not be found in the acq. context of the view.
-        # After the fix, as per the behaviour as described above, it still
-        # won't work.
         response = self.publish(path)
-        self.assertEquals(404, response.getStatus())
-
+        self.assertEquals(200, response.getStatus())
+        # in a hypothetical situation where we'd have made the change,
+        # we would've tested for 404.
+        
     def test_traverse_through_borked_edit_path(self):
-        # Before the SilvaViews fix, this would still not have worked anyway, 
-        # because 'doc2' would not be found in the acq. context of the view.
-        # After the fix, as per the behaviour as described above, it still
-        # won't work.
         object = self.root.restrictedTraverse(path, None)
-        self.assertEquals(None, object)
+        self.assertEquals('testimage', object.id)
+        # In the ideal situation, this would result in None instead
         
     def test_traverse_to_silvadocument_tab_metadata_view(self):
         # In an earlier attempt to get the described behaviour the
@@ -149,21 +150,9 @@ class SilvaViewsTest2(SilvaViewsTest):
         self.doc3.approve_version()
 
     def test_publish_through_borked_edit_url(self):
-        # Before the SilvaViews fix, this would have worked because 'doc2'
-        # would be found in the acq. context of the view - although it is
-        # not actually a view.
-        # After the fix, as per the behaviour as described above, it 
-        # shouldn't work, because the view registry will check to see if
-        # the 'view' found is contained in the service_views hierarchy.
         SilvaViewsTest.test_publish_through_borked_edit_url(self)
 
     def test_traverse_through_borked_edit_path(self):
-        # Before the SilvaViews fix, this would have worked because 'doc2'
-        # would be found in the acq. context of the view - although it is
-        # not actually a view.
-        # After the fix, as per the behaviour as described above, it 
-        # shouldn't work, because the view registry will check to see if
-        # the 'view' found is contained in the service_views hierarchy.
         SilvaViewsTest.test_traverse_through_borked_edit_path(self)
         
 if __name__ == '__main__':
