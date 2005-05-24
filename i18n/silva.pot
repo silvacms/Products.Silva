@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue May 17 16:07:26 2005\n"
+"POT-Creation-Date: Tue May 24 16:27:07 2005\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -146,7 +146,7 @@ msgid ""
 "    "
 msgstr ""
 
-#: /SilvaObject.py:356
+#: /SilvaObject.py:332
 msgid "Sorry, this ${meta_type} version is not viewable."
 msgstr ""
 
@@ -171,7 +171,7 @@ msgid "draft"
 msgstr ""
 
 #: /Version.py:208
-#: /views/edit/Container/tab_status.pt:239
+#: /views/edit/Container/tab_status.pt:251
 msgid "closed"
 msgstr ""
 
@@ -906,9 +906,9 @@ msgstr ""
 #: /views/add/GhostFolder/add_form.pt:45
 #: /views/edit/macro_edit_metadata.pt:77
 #: /views/edit/macro_view_metadata.pt:63
+#: /views/edit/tab_addables.pt:94
 #: /views/edit/tab_settings.pt:153
 #: /views/edit/tab_subscriptions.pt:78
-#: /views/edit/tab_addables.pt:94
 #: /views/edit/Asset/macro_asset_edit.pt:69
 #: /views/edit/Asset/macro_asset_edit.pt:153
 #: /views/edit/Asset/Image/edit.pt:145
@@ -1595,7 +1595,6 @@ msgid "upload_file_accesskey"
 msgstr ""
 
 #: /views/edit/Asset/macro_asset_edit.pt:178
-#: /views/edit/Container/tab_status.pt:306
 #: /views/edit/Content/Indexer/edit.pt:75
 #: /views/edit/VersionedContent/tab_status_macros.pt:254
 #: /views/edit/VersionedContent/tab_status_macros.pt:273
@@ -1637,8 +1636,8 @@ msgstr ""
 #: /views/edit/hyperlink_lookup.pt:243
 #: /views/edit/Container/tab_edit.pt:273
 #: /views/edit/Container/tab_edit.pt:282
-#: /views/edit/Container/tab_status.pt:176
-#: /views/edit/Container/tab_status.pt:185
+#: /views/edit/Container/tab_status.pt:188
+#: /views/edit/Container/tab_status.pt:197
 #: /views/edit/Container/GhostFolder/tab_edit.pt:359
 msgid "publish"
 msgstr ""
@@ -1865,6 +1864,8 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:104
 #: /views/edit/Container/tab_edit.pt:116
 #: /views/edit/Container/tab_edit_import.pt:120
+#: /views/edit/Container/tab_status.pt:73
+#: /views/edit/Container/tab_status.pt:84
 #: /views/edit/Container/tab_status_export.pt:90
 # Default: "p"
 msgid "import_accesskey"
@@ -1958,6 +1959,48 @@ msgstr ""
 msgid "Finished importing: ${msg}"
 msgstr ""
 
+#: /views/edit/Container/open_now.py:21
+#: /views/edit/Container/tab_edit_close.py:27
+#: /views/edit/Container/tab_status_approve.py:49
+#: /views/edit/Container/tab_status_change_settings.py:51
+#: /views/edit/Container/tab_status_close.py:36
+#: /views/edit/Container/tab_status_new_version.py:36
+#: /views/edit/Container/tab_status_reject.py:36
+#: /views/edit/Container/tab_status_request_approval.py:50
+#: /views/edit/Container/tab_status_revoke.py:36
+#: /views/edit/Container/tab_status_withdraw.py:26
+#: /views/edit/VersionedContent/preview_open_now.py:16
+msgid "not a versionable object"
+msgstr ""
+
+#: /views/edit/Container/open_now.py:24
+#: /views/edit/Container/tab_status_approve.py:52
+#: /views/edit/VersionedContent/preview_open_now.py:20
+msgid "version already approved"
+msgstr ""
+
+#: /views/edit/Container/open_now.py:28
+#: /views/edit/Container/tab_status_approve.py:55
+#: /views/edit/VersionedContent/preview_open_now.py:24
+msgid "content object or one of its containers is deactivated"
+msgstr ""
+
+#: /views/edit/Container/open_now.py:39
+#: /views/edit/Container/tab_status_approve.py:67
+#: /views/edit/VersionedContent/preview_open_now.py:29
+msgid "version already public"
+msgstr ""
+
+#: /views/edit/Container/open_now.py:50
+#: /views/edit/Container/tab_status_approve.py:91
+msgid "Approval on: ${ids}"
+msgstr ""
+
+#: /views/edit/Container/open_now.py:55
+#: /views/edit/Container/tab_status_approve.py:96
+msgid "<span class=\"error\">could not approve: ${ids}</span>"
+msgstr ""
+
 #: /views/edit/Container/tab_access_groups.pt:107
 msgid "Group: a group defined by a list of users"
 msgstr ""
@@ -2006,14 +2049,14 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:250
 #: /views/edit/Container/tab_edit.pt:601
 #: /views/edit/VersionedContent/tab_status.pt:336
-# Default: "d"
-msgid "delete_accesskey"
+msgid "delete"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:250
 #: /views/edit/Container/tab_edit.pt:601
 #: /views/edit/VersionedContent/tab_status.pt:336
-msgid "delete"
+# Default: "d"
+msgid "delete_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:67
@@ -2074,6 +2117,7 @@ msgid "Could not delete ${not_deleted_ids}."
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:104
+#: /views/edit/Container/tab_status.pt:73
 msgid "export to xml or convert for export: alt-e"
 msgstr ""
 
@@ -2084,10 +2128,12 @@ msgid "export..."
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:116
+#: /views/edit/Container/tab_status.pt:84
 msgid "import xml data or a zip file: alt-i"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:116
+#: /views/edit/Container/tab_status.pt:84
 #: /views/edit/Container/tab_status_export.pt:90
 msgid "import..."
 msgstr ""
@@ -2123,21 +2169,22 @@ msgid "publishing actions"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:486
-#: /views/edit/Container/tab_status.pt:389
-msgid "close published items: alt-c"
+msgid "close published items: alt-l"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:486
-#: /views/edit/Container/tab_status.pt:389
+#: /views/edit/Container/tab_status.pt:367
 #: /views/edit/Member/SimpleMember/tab_edit.pt:131
 msgid "close"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:495
-msgid "open new versions to the public: alt-p"
+#: /views/edit/Container/tab_status.pt:406
+msgid "publish new versions: alt-p"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:495
+#: /views/edit/Container/tab_status.pt:406
 #: /views/edit/tab_status_form.form:67
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:67
 #: /views/edit/VersionedContent/tab_status_form_editor.form:69
@@ -2162,7 +2209,6 @@ msgid "new_position_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:532
-#: /views/edit/Container/tab_status.pt:353
 #: /views/edit/Container/tab_status_export.pt:166
 #: /views/edit/VersionedContent/tab_status_macros.pt:552
 msgid "access key: alt-p"
@@ -2297,20 +2343,6 @@ msgstr ""
 #: /views/edit/Container/tab_edit_close.py:14
 #: /views/edit/Container/tab_status_close.py:15
 msgid "Nothing was selected, so nothing was closed."
-msgstr ""
-
-#: /views/edit/Container/tab_edit_close.py:27
-#: /views/edit/Container/tab_edit_open_now.py:29
-#: /views/edit/Container/tab_status_approve.py:49
-#: /views/edit/Container/tab_status_change_settings.py:51
-#: /views/edit/Container/tab_status_close.py:36
-#: /views/edit/Container/tab_status_new_version.py:36
-#: /views/edit/Container/tab_status_reject.py:36
-#: /views/edit/Container/tab_status_request_approval.py:50
-#: /views/edit/Container/tab_status_revoke.py:36
-#: /views/edit/Container/tab_status_withdraw.py:26
-#: /views/edit/VersionedContent/preview_open_now.py:16
-msgid "not a versionable object"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_close.py:30
@@ -2496,7 +2528,6 @@ msgid "export"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:68
-#: /views/edit/Container/tab_status.pt:73
 #: /views/edit/VersionedContent/tab_status.pt:59
 # Default: "e"
 msgid "export_accesskey"
@@ -2596,37 +2627,10 @@ msgstr ""
 msgid "Create a ${addable_name}"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_open_now.py:14
+#: /views/edit/Container/tab_edit_open_now.py:9
 #: /views/edit/Container/tab_status_approve.py:15
+#: /views/edit/Container/tab_status_open_now.py:9
 msgid "Nothing was selected, so nothing was approved."
-msgstr ""
-
-#: /views/edit/Container/tab_edit_open_now.py:32
-#: /views/edit/Container/tab_status_approve.py:52
-#: /views/edit/VersionedContent/preview_open_now.py:20
-msgid "version already approved"
-msgstr ""
-
-#: /views/edit/Container/tab_edit_open_now.py:36
-#: /views/edit/Container/tab_status_approve.py:55
-#: /views/edit/VersionedContent/preview_open_now.py:24
-msgid "content object or one of its containers is deactivated"
-msgstr ""
-
-#: /views/edit/Container/tab_edit_open_now.py:47
-#: /views/edit/Container/tab_status_approve.py:66
-#: /views/edit/VersionedContent/preview_open_now.py:29
-msgid "version already public"
-msgstr ""
-
-#: /views/edit/Container/tab_edit_open_now.py:56
-#: /views/edit/Container/tab_status_approve.py:90
-msgid "Approval on: ${ids}"
-msgstr ""
-
-#: /views/edit/Container/tab_edit_open_now.py:61
-#: /views/edit/Container/tab_status_approve.py:95
-msgid "<span class=\"error\">could not approve: ${ids}</span>"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_paste.py:16
@@ -2716,42 +2720,54 @@ msgstr ""
 msgid "Changed into publication"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:100
+#: /views/edit/Container/tab_status.pt:103
+msgid "modify / preview"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:106
+msgid "revision"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:109
+msgid "publication due"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:112
 msgid "expiration due"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:103
+#: /views/edit/Container/tab_status.pt:115
 msgid "published"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:158
+#: /views/edit/Container/tab_status.pt:170
 msgid "index of"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:223
+#: /views/edit/Container/tab_status.pt:235
 msgid "public version"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:253
+#: /views/edit/Container/tab_status.pt:265
 msgid "There are no publishable items here."
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:271
+#: /views/edit/Container/tab_status.pt:283
 msgid "day / month / year"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:286
+#: /views/edit/Container/tab_status.pt:296
 # Default: "m"
 msgid "publish_time_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:286
+#: /views/edit/Container/tab_status.pt:296
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
 #: /views/edit/VersionedContent/tab_status_macros.pt:335
 msgid "access key: alt-m"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:286
+#: /views/edit/Container/tab_status.pt:296
 #: /views/edit/tab_status_form.form:30
 #: /views/edit/VersionedContent/tab_status_form_author.form:50
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
@@ -2759,20 +2775,11 @@ msgstr ""
 msgid "publish time"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:306
-msgid "p<u>u</u>blish&nbsp;now?"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:306
-# Default: "u"
-msgid "publish_now_accesskey"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:334
+#: /views/edit/Container/tab_status.pt:313
 msgid "access key: alt-x"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:334
+#: /views/edit/Container/tab_status.pt:313
 #: /views/edit/VersionedContent/tab_status.pt:258
 #: /views/edit/tab_status_form.form:52
 #: /views/edit/VersionedContent/tab_status_form_author.form:72
@@ -2782,7 +2789,7 @@ msgstr ""
 msgid "expiration time"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:334
+#: /views/edit/Container/tab_status.pt:313
 #: /views/edit/VersionedContent/tab_status_macros.pt:158
 #: /views/edit/VersionedContent/tab_status_macros.pt:234
 #: /views/edit/VersionedContent/tab_status_macros.pt:354
@@ -2790,133 +2797,135 @@ msgstr ""
 msgid "expiration_time_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:353
-# Default: "p"
+#: /views/edit/Container/tab_status.pt:331
+msgid "clear&nbsp;expirati<u>o</u>n"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:331
+# Default: "o"
 msgid "clear_expiration_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:353
-msgid "clear&nbsp;ex<u>p</u>iration"
+#: /views/edit/Container/tab_status.pt:331
+#: /views/edit/VersionedContent/tab_status_macros.pt:394
+msgid "access key: alt-o"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:371
+#: /views/edit/Container/tab_status.pt:349
 msgid "reject pending request for approval: alt-j"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:371
+#: /views/edit/Container/tab_status.pt:349
 # Default: "j"
 msgid "reject_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:371
+#: /views/edit/Container/tab_status.pt:349
 #: /views/edit/VersionedContent/tab_status_macros.pt:417
 msgid "reject"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:380
+#: /views/edit/Container/tab_status.pt:358
 msgid "withdraw approval of approved versions: alt-v"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:380
-#: /views/edit/Container/tab_status.pt:448
+#: /views/edit/Container/tab_status.pt:358
+#: /views/edit/Container/tab_status.pt:433
 msgid "revoke"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:380
-#: /views/edit/Container/tab_status.pt:448
+#: /views/edit/Container/tab_status.pt:358
+#: /views/edit/Container/tab_status.pt:433
 # Default: "v"
 msgid "revoke_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:389
+#: /views/edit/Container/tab_status.pt:367
+msgid "close published items: alt-c"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:367
 #: /views/edit/Member/SimpleMember/tab_edit.pt:131
 # Default: "c"
 msgid "close_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:398
-#: /views/edit/Container/tab_status.pt:457
+#: /views/edit/Container/tab_status.pt:376
+#: /views/edit/Container/tab_status.pt:442
 msgid "create new versions of published docs: alt-n"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:410
-#: /views/edit/Container/tab_status.pt:469
-# Default: "s"
-msgid "set_timing_accesskey"
+#: /views/edit/Container/tab_status.pt:388
+msgid "approve new versions for publication at a later date: alt-l"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:410
-#: /views/edit/Container/tab_status.pt:469
-msgid "change publish and expiration times: alt-s"
+#: /views/edit/Container/tab_status.pt:388
+msgid "approve for later"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:410
-#: /views/edit/Container/tab_status.pt:469
-msgid "set timing"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:421
-msgid "approve or publish new versions: alt-o"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:421
+#: /views/edit/Container/tab_status.pt:388
 #: /views/edit/VersionedContent/macro_tab_edit.pt:42
 #: /views/edit/VersionedContent/tab_status_macros.pt:394
-# Default: "o"
+# Default: "l"
 msgid "open_to_public_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:421
-#: /views/edit/VersionedContent/tab_status_macros.pt:394
-msgid "open to public"
+#: /views/edit/Container/tab_status.pt:397
+msgid "change publish and expiration times: alt-u"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:439
+#: /views/edit/Container/tab_status.pt:397
+msgid "update timing"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:397
+#: /views/edit/Container/tab_status.pt:454
+# Default: "u"
+msgid "set_timing_accesskey"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:424
 msgid "withdraw pending request for approval: alt-w"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:439
+#: /views/edit/Container/tab_status.pt:424
 # Default: "w"
 msgid "withdraw_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:439
+#: /views/edit/Container/tab_status.pt:424
 #: /views/edit/VersionedContent/tab_status_macros.pt:418
 msgid "withdraw"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:448
+#: /views/edit/Container/tab_status.pt:433
 msgid "revoke approval of approved versions: alt-v"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:480
+#: /views/edit/Container/tab_status.pt:454
+msgid "change publish and expiration times: alt-s"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:454
+msgid "set timing"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:465
 msgid "request approval for new versions: alt-r"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:480
+#: /views/edit/Container/tab_status.pt:465
 #: /views/edit/VersionedContent/tab_status_macros.pt:177
 # Default: "r"
 msgid "request_approval_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:480
+#: /views/edit/Container/tab_status.pt:465
 #: /views/edit/VersionedContent/tab_status_macros.pt:177
 msgid "request approval"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:91
-msgid "modify / preview"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:94
-msgid "revision"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:97
-msgid "publication due"
-msgstr ""
-
-#: /views/edit/Container/tab_status_approve.py:76
+#: /views/edit/Container/tab_status_approve.py:77
 msgid "no publication time was set"
 msgstr ""
 
@@ -3115,6 +3124,14 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_request_approval.py:68
 msgid "no publication time set"
+msgstr ""
+
+#: /views/edit/Container/tab_status_request_approval.py:86
+msgid "Request approval for: ${ids}"
+msgstr ""
+
+#: /views/edit/Container/tab_status_request_approval.py:91
+msgid "<span class=\"error\">No request for approval on: ${ids}</span>"
 msgstr ""
 
 #: /views/edit/Container/tab_status_revoke.py:15
@@ -3661,7 +3678,7 @@ msgid "Empty indicates no expiration."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:394
-msgid "access key: alt-o"
+msgid "open to public"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:419
@@ -3959,7 +3976,7 @@ msgstr ""
 #: /views/edit/hyperlink_lookup.pt:248
 #: /views/edit/Container/tab_edit.pt:252
 #: /views/edit/Container/tab_edit.pt:288
-#: /views/edit/Container/tab_status.pt:191
+#: /views/edit/Container/tab_status.pt:203
 #: /views/edit/Container/GhostFolder/tab_edit.pt:327
 #: /views/edit/Container/GhostFolder/tab_edit.pt:363
 msgid "n/a"
@@ -4184,9 +4201,9 @@ msgstr ""
 
 #: /views/edit/macro_edit_metadata.pt:72
 #: /views/edit/macro_view_metadata.pt:59
+#: /views/edit/tab_addables.pt:89
 #: /views/edit/tab_settings.pt:148
 #: /views/edit/tab_subscriptions.pt:73
-#: /views/edit/tab_addables.pt:89
 #: /views/edit/Asset/macro_asset_edit.pt:64
 #: /views/edit/Asset/Image/edit.pt:140
 #: /views/edit/Container/tab_edit_import.pt:86
@@ -4203,9 +4220,9 @@ msgstr ""
 #: /views/edit/macro_edit_metadata.pt:83
 #: /views/edit/tab_access.pt:569
 #: /views/edit/tab_access.pt:742
+#: /views/edit/tab_addables.pt:97
 #: /views/edit/tab_settings.pt:156
 #: /views/edit/tab_subscriptions.pt:81
-#: /views/edit/tab_addables.pt:97
 #: /views/edit/Asset/Image/edit.pt:148
 #: /views/edit/Container/tab_edit_import.pt:94
 #: /views/edit/Container/tab_edit_import.pt:163
@@ -4342,16 +4359,16 @@ msgid "create a new version of this content: alt-n"
 msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:163
-#: /views/edit/Container/tab_status.pt:398
-#: /views/edit/Container/tab_status.pt:457
+#: /views/edit/Container/tab_status.pt:376
+#: /views/edit/Container/tab_status.pt:442
 #: /views/edit/VersionedContent/macro_tab_edit.pt:101
 # Default: "n"
 msgid "new_version_accesskey"
 msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:163
-#: /views/edit/Container/tab_status.pt:398
-#: /views/edit/Container/tab_status.pt:457
+#: /views/edit/Container/tab_status.pt:376
+#: /views/edit/Container/tab_status.pt:442
 #: /views/edit/VersionedContent/macro_tab_edit.pt:101
 msgid "new version"
 msgstr ""
@@ -4665,6 +4682,15 @@ msgstr ""
 msgid "miscellaneous settings: alt-6"
 msgstr ""
 
+#: /views/edit/tab_addables.pt:20
+#: /views/edit/tab_metadata.pt:23
+#: /views/edit/Container/GhostFolder/tab_metadata.pt:20
+#: /views/edit/Container/Publication/tab_addables.pt:20
+#: /views/edit/VersionedContent/Ghost/tab_metadata.pt:20
+# Default: "6"
+msgid "tab_settings_accesskey"
+msgstr ""
+
 #: /views/edit/tab_addables.pt:81
 #: /views/edit/Container/Publication/tab_addables.pt:82
 msgid "addable settings for &#xab;${title}&#xbb;"
@@ -4690,15 +4716,6 @@ msgstr ""
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:20
 msgid "<u>s</u>ettings..."
-msgstr ""
-
-#: /views/edit/tab_metadata.pt:23
-#: /views/edit/tab_addables.pt:20
-#: /views/edit/Container/GhostFolder/tab_metadata.pt:20
-#: /views/edit/Container/Publication/tab_addables.pt:20
-#: /views/edit/VersionedContent/Ghost/tab_metadata.pt:20
-# Default: "p"
-msgid "tab_settings_accesskey"
 msgstr ""
 
 #: /views/edit/tab_metadata.pt:30
@@ -4788,12 +4805,12 @@ msgid "Select a renderer to render this content."
 msgstr ""
 
 #: /views/edit/tab_settings.pt:189
-# Default: "c"
-msgid "change_renderer_accesskey"
+msgid "change renderer"
 msgstr ""
 
 #: /views/edit/tab_settings.pt:189
-msgid "change renderer"
+# Default: "c"
+msgid "change_renderer_accesskey"
 msgstr ""
 
 #: /views/edit/tab_settings.pt:189
