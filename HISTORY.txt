@@ -25,6 +25,12 @@ Silva changes
         update layout templates, or at least, preview_html in the
         Silva root (change 'preview' in it to 'public_preview').
 
+      - Metadata sets can have a 'category' property. This property
+        can be used to define special purpose metadata sets.
+
+      - The minimal_role and category properties are exported and
+        imported to/from the XML metadata set definitions.
+
     Bugs fixed
 
       - Optimizations in xml export: 
