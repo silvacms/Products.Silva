@@ -55,7 +55,7 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
             return
         obj = self.root.silva_xslt.test_document
         obj.set_renderer_name('Images on Right')
-        self.assertEqual(obj.preview(), expected_html)
+        self.assert_(obj.preview().startswith(expected_html))
 
     def test_render_public_view(self):
         if not self._xslt:
@@ -73,9 +73,9 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         registry_service = self.root.service_renderer_registry
         obj = self.root.silva_xslt.test_document
         obj.set_renderer_name(None)
-        self.assertEqual(obj.preview().strip(), expected_html2.strip())
+        self.assert_(obj.preview().strip().startswith(expected_html2.strip()))
         registry_service.registerDefaultRenderer('Silva Document', 'Images on Right')
-        self.assertEqual(obj.preview(), expected_html)
+        self.assert_(obj.preview().startswith(expected_html))
         registry_service.registerDefaultRenderer('Silva Document', None)
 
     def test_add_renderer(self):
@@ -89,7 +89,7 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
             'Fake Renderer',
             FakeRenderer())
         obj.set_renderer_name('Fake Renderer')
-        self.assertEqual(obj.preview(), 'I faked all my renderings.')
+        self.assert_(obj.preview().startswith('I faked all my renderings.'))
         registry.unregisterRenderer('Silva Document', 'Fake Renderer')
         
 if __name__ == '__main__':
