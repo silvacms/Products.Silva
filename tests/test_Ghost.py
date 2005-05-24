@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.36 $
+# $Revision: 1.37 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -43,8 +43,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost = getattr(self.root, 'ghost1')
         # there is no version published at all there
         # ghost=0, doc=0
-        self.assert_(str(ghost.preview()).startswith(
-                'This ghost is broken. (/root/doc1)'))
+        self.assertEquals('This ghost is broken. (/root/doc1)',
+            str(ghost.preview()))
         self.assertEquals('<p>Sorry', str(ghost.view())[:8])
 
         # approve version of thing we point to
@@ -54,15 +54,15 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # since there is still no published version, preview and view return
         # None
         # ghost=0, doc=0
-        self.assert_(str(ghost.preview()).startswith(
-                'This ghost is broken. (/root/doc1)'))
+        self.assertEquals('This ghost is broken. (/root/doc1)',
+            str(ghost.preview()))
         self.assertEquals('<p>Sorry', str(ghost.view())[:8])
 
         # this should publish doc1
         self.doc1.set_approved_version_publication_datetime(DateTime() - 1)
         # ghost=0, doc=1
-        self.assert_(str(ghost.preview()).startswith(
-                u'<h2 class="heading">Doc1</h2>\n\n'))
+        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
+            str(ghost.preview()))
         self.assertEquals('<p>Sorry', str(ghost.view())[:8])
 
         # publish ghost version
@@ -70,8 +70,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost.approve_version()
 
         # ghost=1, doc=1
-        self.assert_(str(ghost.preview()).startswith(
-                u'<h2 class="heading">Doc1</h2>\n\n'))
+        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
+            str(ghost.preview()))
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
             str(ghost.view()))
 
@@ -81,8 +81,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.doc1.set_title('Doc1 1')
 
         # shouldn't affect what we're ghosting
-        self.assert_(str(ghost.preview()).startswith(
-                u'<h2 class="heading">Doc1</h2>\n\n'))
+        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
+            str(ghost.preview()))
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
             str(ghost.view()))
 
@@ -90,8 +90,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.doc1.approve_version()
 
         # now we're ghosting the version 1
-        self.assert_(str(ghost.preview()).startswith(
-                u'<h2 class="heading">Doc1 1</h2>\n\n'))
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
+            str(ghost.preview()))
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
             str(ghost.view()))
 
@@ -103,8 +103,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost.create_copy()
         ghost.get_editable().set_haunted_url('/root/doc2')
 
-        self.assert_(str(ghost.preview()).startswith(
-                u'This ghost is broken. (/root/doc2)'))
+        self.assertEquals(u'This ghost is broken. (/root/doc2)',
+            str(ghost.preview()))
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
             str(ghost.view()))
 
@@ -112,8 +112,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc2.approve_version()
 
-        self.assert_(str(ghost.preview()).startswith(
-                u'<h2 class="heading">Doc2</h2>\n\n'))
+        self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
+            str(ghost.preview()))
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
             str(ghost.view()))
 
@@ -122,8 +122,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
 
-        self.assert_(str(ghost.preview()).startswith(
-                u'<h2 class="heading">Doc2</h2>\n\n'))
+        self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
+            str(ghost.preview()))
         self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
             str(ghost.view()))
 
@@ -133,8 +133,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost.get_editable().set_haunted_url('/root/doc3')
         ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghost.approve_version()
-        self.assert_(str(ghost.preview()).startswith(
-                'This ghost is broken. (/root/doc3)'))
+        self.assertEquals('This ghost is broken. (/root/doc3)',
+            str(ghost.preview()))
         self.assertEquals("This 'ghost' document is broken. Please inform the"
             " site administrator.", str(ghost.view()))
         
@@ -155,8 +155,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # now delete doc1
         self.root.action_delete(['doc1'])
         # ghost should say 'This ghost is broken'
-        self.assert_(str(ghost.preview()).startswith(
-                'This ghost is broken. (/root/doc1)'))
+        self.assertEquals('This ghost is broken. (/root/doc1)', str(ghost.preview()))
         # issue 41: test get_haunted_url; should catch KeyError
         # and return original inserted url
         self.assertEquals('/root/doc1',
@@ -210,23 +209,19 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost = self.add_ghost(self.root, 'ghost1', '/root/does_not_exist')
         self.add_image(self.root, 'image6', 'Test image')
 
-        self.assert_(str(ghost.preview()).startswith(
-                'This ghost is broken. (/root/does_not_exist)'))
+        self.assertEquals('This ghost is broken. (/root/does_not_exist)', str(ghost.preview()))
         self.assertEquals(GhostVersion.LINK_VOID,
                           ghost.get_editable().get_link_status())
         ghost.get_editable().set_haunted_url('/root/folder4')
-        self.assert_(str(ghost.preview()).startswith(
-                'This ghost is broken. (/root/folder4)'))
+        self.assertEquals('This ghost is broken. (/root/folder4)', str(ghost.preview()))
         self.assertEquals(GhostVersion.LINK_FOLDER,
                           ghost.get_editable().get_link_status())
         ghost.get_editable().set_haunted_url('/root/ghost1')
-        self.assert_(str(ghost.preview()).startswith(
-                'This ghost is broken. (/root/ghost1)'))
+        self.assertEquals('This ghost is broken. (/root/ghost1)', str(ghost.preview()))
         self.assertEquals(GhostVersion.LINK_GHOST,
                           ghost.get_editable().get_link_status())
         ghost.get_editable().set_haunted_url('/root/image6')
-        self.assert_(str(ghost.preview()).startswith(
-                'This ghost is broken. (/root/image6)')) 
+        self.assertEquals('This ghost is broken. (/root/image6)', str(ghost.preview()))
         self.assertEquals(GhostVersion.LINK_NO_CONTENT,
             ghost.get_editable().get_link_status())
 
