@@ -8,10 +8,10 @@ Meta
 Copyright (c) 2002-2005 Infrae. All rights reserved.
 See also LICENSE.txt
 
-Valid for:  Silva 1.2.x
+Valid for:  Silva 1.3.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.52 $
+CVS:        $Revision: 1.53 $
 
 Introduction
 ------------
@@ -51,6 +51,9 @@ Here is a quick checklist what to do to install Silva:
 
 You should now be done installing Silva. In the next section we'll go
 into everything in much more detail.
+
+For a set of Silva extensions you may also want to download and
+install the Silva ``-extra`` tarball into your Products directory.
 
 .. _`the Silva download area`: http://www.infrae.com/download/Silva
 

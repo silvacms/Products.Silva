@@ -3,7 +3,9 @@ See also LICENSE.txt
 
 Silva changes
 
-  to be released
+  1.3b3
+
+    Note: there were a few internal betas, this is the first public one.
 
     Features added
 
