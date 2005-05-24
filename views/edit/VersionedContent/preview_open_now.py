@@ -41,5 +41,4 @@ if publish:
 
 request.form['message_type'] = message_type
 request.form['message'] = unicode(message)
-request.form['show_buttons'] = True
 return model.preview_html()

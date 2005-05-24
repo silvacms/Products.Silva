@@ -50,14 +50,25 @@ span.error {
         tal:content="options/message" />
 </div>
 <form action="." method="POST">
+<tal:block condition="options/back_url">
+<input class="transport"
+  style="position:absolute; top:0px; left:0px;"
+  type="button"
+  value="&lt;"
+  title="back: alt-b"
+  tal:attributes="onclick python:'window.location = \'%s\'' % options['back_url']"
+  accesskey="b" />
+</tal:block>
+<tal:block condition="not:options/back_url">
 <input class="transport"
   style="position:absolute; top:0px; left:0px;"
   type="button"
   value="&lt;"
   title="back: alt-b"
   onclick="history.back()"
-  tal:attributes="onclick python:options.has_key('referrer') and 'window.location = \'%s\'' % options['referrer'] or None"
   accesskey="b" />
+</tal:block>
+
 <input class="executor"
   tal:condition="options/unapproved"
   style="position:absolute; top:0px; right:0px;"

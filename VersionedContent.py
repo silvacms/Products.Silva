@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.64 $
+# $Revision: 1.65 $
 
 # Python
 from StringIO import StringIO
@@ -11,6 +11,7 @@ from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from DateTime import DateTime
 from Persistence import Persistent
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # Silva
 import SilvaPermissions
 from Versioning import Versioning
@@ -184,6 +185,50 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             return None # There is no public document
         return getattr(self, version_id)
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'public_preview')
+    def public_preview(self):
+        """Override public preview to add back and publish now button.
+        """
+        # this is a bit nasty: to allow displaying some additional buttons
+        # in preview mode (the 'back' and 'publish now' ones) we add
+        # some HTML to the result before sending it to the browser
+        preview_buttons = PageTemplateFile(
+            'www/preview_buttons', globals(),
+            __name__ = 'preview_buttons').__of__(self)
+
+        REQUEST = self.REQUEST
+        SESSION = REQUEST.SESSION
+
+        # first try to find where we need to go back from session
+        # XXX ugh, this means that once session is set, back behavior can never
+        # be correct again, unless we clear session from the other tab_edit
+        # and tab_preview page where the public preview button exists,
+        # which we do not do right now
+        back_url = SESSION.get('public_preview_back_url', None)
+        if back_url is None:
+            # okay, let's look for the HTTP referer
+            back_url = REQUEST.get('HTTP_REFERER', None)
+            if (back_url is not None and
+                back_url.startswith(self.absolute_url())):
+                # got something, so set in session for next time
+                SESSION['public_preview_back_url'] = back_url
+            else:
+                # if got something odd, we'll
+                # just report we don't have a back_url
+                back_url = None
+        # prepare arguments for preview_buttons page template
+        args = {
+            'message': REQUEST.get('message', ''),
+            'message_type': REQUEST.get('message_type', ''),
+            'unapproved': self.get_unapproved_version() is not None,
+            'back_url': back_url,
+            }
+        # now render html
+        buttonhtml = preview_buttons(**args)
+        # XXX yuck, this doesn't deliver valid HTML by definition..
+        return '%s%s' % (self.preview(), buttonhtml)
+    
     security.declareProtected(SilvaPermissions.View, 'view')
     def view(self):
         """

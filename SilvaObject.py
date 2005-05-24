@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.116 2005/05/18 09:45:16 guido Exp $
+# $Id: SilvaObject.py,v 1.117 2005/05/24 13:23:49 faassen Exp $
 
 # python
 from types import StringType
@@ -11,7 +11,6 @@ from Globals import InitializeClass
 from DateTime import DateTime
 from StringIO import StringIO
 from App.Common import rfc1123_date
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # WebDAV
 from webdav.common import Conflict
 from zExceptions import MethodNotAllowed
@@ -298,49 +297,25 @@ class SilvaObject(Security, ViewCode):
     
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
     def preview(self):
-        """Render this as preview with the public view. If this is no previewable,
-        should return something indicating this.
+        """Render this as preview with the public view.
+
+        If this is no previewable, should return something indicating this.
         """
         content = self.get_previewable()
         try:
-            result = self.view_version('preview', content)
+            return self.view_version('preview', content)
         except NoViewError:
             # fallback to public 'render' script if no preview available
-            result = self.view_version('public', content)
+            return self.view_version('public', content)
 
-        # XXX there should be a better way to test this...
-        if (self.implements_versioning() and 
-                (self.REQUEST.form.get('show_buttons', False) or 
-                    self.REQUEST['URL1'].find('/edit') == -1)):
-            # this is a bit nasty: to allow displaying some additional buttons
-            # in preview mode (the 'back' and 'publish now' ones) we add
-            # some HTML to the result before sending it to the browser
-            preview_buttons = getattr(self, '_v_preview_buttons_pt', None)
-            if preview_buttons is None:
-                preview_buttons = self._v_preview_buttons_pt = \
-                        PageTemplateFile(
-                            'www/preview_buttons', globals(),
-                            __name__ = 'preview_buttons').__of__(self)
-            referrer = (self.REQUEST.get('HTTP_REFERER', '').startswith(
-                        self.absolute_url()) and
-                            self.REQUEST.SESSION.get('referrer') or
-                            self.REQUEST.get('HTTP_REFERER', ''))
-            self.REQUEST.SESSION['referrer'] = referrer
-            args = {'message': self.REQUEST.form.get('message', ''),
-                    'message_type': 
-                        self.REQUEST.form.get('message_type', ''),
-                    'unapproved': self.get_unapproved_version() is not None,
-                    'referrer': referrer,
-                    }
-            buttonhtml = preview_buttons(**args)
-            # somehow sometimes REQUEST.form seems to be somewhat
-            # persistent...
-            if self.REQUEST.form.has_key('show_buttons'):
-                del self.REQUEST.form['show_buttons']
-                del self.REQUEST.form['message']
-                del self.REQUEST.form['message_type']
-            result = '%s%s' % (result, buttonhtml)
-        return result
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'public_preview')
+    def public_preview(self):
+        """Public preview.
+
+        By default this does the same as preview, but can be overridden.
+        """
+        return self.preview()
         
     security.declareProtected(SilvaPermissions.View, 'view')
     def view(self):

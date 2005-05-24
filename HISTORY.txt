@@ -18,6 +18,11 @@ Silva changes
         Z-exported Silva content. This feature should be handled with care,
         as it cannot always be guaranteed to be correct.
 
+      - Public preview mode now has a back button to go back to the
+        Silva UI. Note that in order for this to work, you have to
+        update layout templates, or at least, preview_html in the
+        Silva root (change 'preview' in it to 'public_preview').
+
     Bugs fixed
 
       - Optimizations in xml export: 
