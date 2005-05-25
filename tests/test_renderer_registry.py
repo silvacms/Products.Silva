@@ -11,6 +11,7 @@ xslt = True
 try: 	 
     from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
 except ImportError: 	
+    print 'Error importing Silva renderers'
     xslt = False
 
 class RendererRegistryTest(SilvaTestCase.SilvaTestCase):

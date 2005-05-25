@@ -73,6 +73,9 @@ Silva changes
 
       - Fixed issue 1277, unicode error in membership form saving mechanism.
 
+      - Fixed issue 1288, tab_status_approve should never create copies 
+        anymore without publishing them.
+
   1.2
 
     Bugs fixed
