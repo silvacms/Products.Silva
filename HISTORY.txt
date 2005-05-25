@@ -71,6 +71,8 @@ Silva changes
         PlacelessTranslationService is used) by introducing a
         safeJoin() operation.
 
+      - Fixed issue 1277, unicode error in membership form saving mechanism.
+
   1.2
 
     Bugs fixed
