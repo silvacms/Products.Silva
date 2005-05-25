@@ -34,7 +34,12 @@ Silva changes
       - The minimal_role and category properties are exported and
         imported to/from the XML metadata set definitions.
 
+      - Export button in publish screen was replaced to a more logical 
+        location.
+
     Bugs fixed
+
+      - RNG schemas are up-to-date.
 
       - Optimizations in xml export: 
           * Do not use the wrappers for the dom, but the DOM directly.
@@ -73,8 +78,14 @@ Silva changes
 
       - Fixed issue 1277, unicode error in membership form saving mechanism.
 
+      - Fixed broken i18n:name (string interpolation) in user lookup screen.
+
       - Fixed issue 1288, tab_status_approve should never create copies 
         anymore without publishing them.
+
+      - Fixed issue 1311, some problems with nested lists in Kupu.
+
+      - Fixed issue 1301, Kupu now uses object.get_title() where appropriate.
 
   1.2
 
