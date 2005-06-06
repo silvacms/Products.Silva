@@ -87,6 +87,7 @@ Silva changes
 
       - Fixed issue 1301, Kupu now uses object.get_title() where appropriate.
 
+      - Updated Silva software version number to 1.3
   1.2
 
     Bugs fixed
