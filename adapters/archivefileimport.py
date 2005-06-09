@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: archivefileimport.py,v 1.3 2004/08/17 15:15:19 jw Exp $
+# $Id: archivefileimport.py,v 1.3.20.1 2005/06/09 14:01:01 guido Exp $
 #
 # Python
 import os.path
@@ -56,7 +56,7 @@ class ArchiveFileImportAdapter(adapter.Adapter):
                 # Its a directory entry
                 continue
             
-            if recreatedirs:
+            if recreatedirs and path:
                 dirs = path.split('/')
                 container = self._getSilvaContainer(self.context, dirs)
                 if container is None:

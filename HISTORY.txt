@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  In progress
+
+    Bugs fixed:
+
+      - Backported fix for issue 1227 from the 1.2 branch, which fixes some
+        issues with zip file import.
+
   1.1.5
 
     Bugs fixed:
