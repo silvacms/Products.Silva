@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  Current CVS
+
+    Bugs fixed
+
+      - Fixed a bug in the editor transformations that made that external
+        source form fields couldn't contain non-ascii characters in Kupu.
+
   1.3b3
 
     Note: there were a few internal betas, this is the first public one.
