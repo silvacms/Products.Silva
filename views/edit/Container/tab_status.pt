@@ -27,6 +27,7 @@
     global revokeables nothing;
     global closeables nothing;
     global new_versionables nothing;
+    global republishables nothing;
     global expireables nothing;
   ">
   <table class="columns columns2">
@@ -70,34 +71,36 @@
         <h3 style="float:left;" i18n:translate="">
           publishing actions
         </h3>
-        <a class="transport"
-          style="float: right;"
-          href="tab_status_export"
-          title="export to xml or convert for export: alt-e"
-          accesskey="e"
-          tal:condition="may_change_content"
-          i18n:attributes="title;accesskey import_accesskey"
-          i18n:translate=""
-        >
-          export...
-        </a>
-        <a class="transport"
-          style="float: right;"
-          href="tab_edit_import"
-          title="import xml data or a zip file: alt-i"
-          accesskey="i"
-          tal:condition="may_change_content"
-          i18n:attributes="title;accesskey import_accesskey"
-          i18n:translate=""
-        >
-          import...
-        </a>
+	<div class="controls" 
+	  style="float: right;">
+          <a class="transport"
+            style="margin-right:0.6em;"
+            href="tab_edit_import"
+            title="import xml data or a zip file: alt-i"
+            accesskey="i"
+            tal:condition="may_change_content"
+            i18n:attributes="title;accesskey import_accesskey"
+            i18n:translate=""
+          >
+            import...
+          </a>
+          <a class="transport"
+            href="tab_status_export"
+            title="export to xml or convert for export: alt-e"
+            accesskey="e"
+            tal:condition="may_change_content"
+            i18n:attributes="title;accesskey import_accesskey"
+            i18n:translate=""
+          >
+            export...
+          </a>
+	</div>
       </td>
     </tr>
   </thead>
   <tbody>
     <tr tal:condition="objects">
-      <th class="listing-check">
+      <th class="listing-left">
         &nbsp;
       </th>
       <th i18n:translate="">
@@ -127,10 +130,12 @@
           indent_depth python: '%spx' % str(obj['indent'] * 10);
           obj_url obj/absolute_url;
           state obj/status_style | nothing;
+          public_status obj/public_status | nothing;
           global rejectables python: test(state == 'pending', 1, rejectables);
           global revokeables python: test(state == 'approved', 1, revokeables);
           global approveables python: test(state == 'draft', 1, approveables);
-          global new_versionables python: test(state == 'closed', 1, new_versionables);"
+          global new_versionables python: test(public_status == 'published' or state == 'closed', 1, new_versionables);
+          global republishables python: test(state == 'closed', 1, republishables);"
         tal:attributes="
           class python: iterate and 'odd' or 'even';">
         <td class="listing-left">
@@ -210,6 +215,7 @@
           <span
             tal:content="structure obj/next_version_publication_datetime | nothing"
             tal:attributes="class obj/status_style | default;"
+	    tal:omit-tag="obj/status_style | default"
           />
         </td>
         <tal:block replace="nothing">
@@ -222,6 +228,7 @@
               global expireables python:expire_time and 1 or expireables;"
             tal:content="structure expire_time"
             tal:attributes="class obj/status_style | default;"
+	    tal:omit-tag="obj/status_style | default"
           />
         </td>
         <tal:block replace="nothing">
@@ -240,7 +247,8 @@
             <tal:block
               define="
                 global closeables python: 1;
-                global new_versionables python: state != 'pending' and state != 'approved'"
+                global new_versionables python: state != 'pending' and state != 'approved';
+                global expireables python:end_time and 1 or expireables;"
               condition="start_time"
               replace="
                 python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
@@ -269,7 +277,7 @@
     </tr>
   </tbody>
   <tfoot tal:condition="may_change_content">
-    <tr tal:condition="objects">
+    <tr tal:condition="python: objects and (approveables or revokeables or rejectables or new_versionables)">
       <th class="listing-left"
         colspan="2">
         <tal:define define="select_id string:refs">
@@ -279,7 +287,7 @@
       <th class="align-right"
         colspan="6">
         <span tal:condition="
-          python: approveables or ((closeables or revokeables or rejectables) and may_approve_content)">
+          python: approveables or ((closeables or revokeables or rejectables or republishables) and may_approve_content)">
           <tal:block i18n:translate="">day / month / year</tal:block> &nbsp;(23:59)
         </span>
       </th>
@@ -314,7 +322,7 @@
             accesskey="x"
             i18n:attributes="title;accesskey expiration_time_accesskey"
             i18n:translate="">
-            expiration time
+            &nbsp;expiration time
           </label>
           <tal:block
             condition="redisplay_timing_form"
@@ -391,7 +399,7 @@
           value="approve for later"
           title="approve new versions for publication at a later date: alt-l"
           accesskey="l"
-          tal:condition="python: approveables or rejectables or new_versionables"
+          tal:condition="python: approveables or rejectables or republishables"
           i18n:attributes="value;title;accesskey open_to_public_accesskey"
         />
         <input class="button"
@@ -404,14 +412,14 @@
           i18n:attributes="value;title;accesskey set_timing_accesskey"
         />
         <input class="executor"
-                name="tab_status_open_now:method"
-                value="publish now"
-                title="publish new versions: alt-p"
-                accesskey="p"
-                type="submit"
-                i18n:attributes="value; title"
-                tal:condition="python:approveables or new_versionables"
-                />
+          name="tab_status_open_now:method"
+          value="publish now"
+          title="publish new versions: alt-p"
+          accesskey="p"
+          type="submit"
+          i18n:attributes="value; title"
+          tal:condition="python: approveables or republishables"
+        />
       </td>
     </tr>
     <tr class="controls"
