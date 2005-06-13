@@ -101,33 +101,34 @@
                     </tal:block>
                   </select>
                   </div>
-                  <a class="transport"
-                    style="float: right;"
-                    href="tab_status_export"
-                    title="export to xml or convert for export: alt-e"
-                    accesskey="e"
-                    tal:condition="may_change_content"
-                    
-                    i18n:attributes="title;accesskey import_accesskey"
-                    i18n:translate=""
-                  >
-                    export...
-                  </a>
-                  <a class="transport"
-                    style="float: right;"
-                    href="tab_edit_import"
-                    title="import xml data or a zip file: alt-i"
-                    accesskey="i"
-                    tal:condition="may_change_content"
-                    
-                    i18n:attributes="title;accesskey import_accesskey"
-                    i18n:translate=""
-                  >
-                    import...
-                  </a>
-                  <span
-                     tal:condition="not:may_change_content">&nbsp;</span>
-                </td>
+		  <div class="controls"
+		    style="float:right;">
+                    <a class="transport"
+		      style="margin-right:0.6em;"
+                      href="tab_edit_import"
+                      title="import xml data or a zip file: alt-i"
+                      accesskey="i"
+                      tal:condition="may_change_content"
+                      i18n:attributes="title;accesskey import_accesskey"
+                      i18n:translate=""
+                    >
+                      import...
+                    </a>
+                    <a class="transport"
+                      href="tab_status_export"
+                      title="export to xml or convert for export: alt-e"
+                      accesskey="e"
+                      tal:condition="may_change_content"
+                      i18n:attributes="title;accesskey import_accesskey"
+                      i18n:translate=""
+                    >
+                      export...
+                    </a>
+                    <span tal:condition="not:may_change_content" tal:omit-tag="">
+		     &nbsp;
+		   </span>
+                </div>
+		</td>
               </tr>
             </thead>
 
@@ -152,7 +153,7 @@
                   author
                 </th>
                 <th class="nosort listing-right">
-                  &nbsp;&nbsp;<span i18n:translate="">shift</span>
+                  &nbsp;<span i18n:translate="" omit-tag="">shift</span>&nbsp;
                 </th>
               </tr>
 
@@ -177,7 +178,7 @@
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
                     </tal:block>
-                    <td>
+                    <td class="listing-left">
                       <input name="ids:list"
                         type="checkbox"
                         value="value"
@@ -227,7 +228,7 @@
                           class item_info/status_style;"
                         i18n:attributes="title"
                         tal:content="python:(item_info['title_editable'] or default)">
-                        <em i18n:translate="">no title</em>
+                          <em i18n:translate="">no title</em>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -249,7 +250,7 @@
                         tal:attributes="href string:${item_info/item_url}/edit/tab_metadata"
                         i18n:attributes="title"
                       >
-                      <em i18n:translate="">n/a</em>
+                        <em i18n:translate="">n/a</em>
                       </a>
                     </td>
                     <tal:block replace="nothing">
@@ -258,6 +259,7 @@
                     <td>
                       <a style="float:right"
                         title="content approved, or published..."
+                        tal:condition="item_info/is_published_or_approved"
                         tal:attributes="
                           href item_info/item_url;"
                         i18n:attributes="title">
@@ -265,7 +267,6 @@
                           border="0"
                           width="10"
                           height="10"
-                          tal:condition="item_info/is_published_or_approved"
                           tal:attributes="src string:${root_url}/globals/checkmark.gif"
                           i18n:attributes="alt"
                         />
@@ -290,7 +291,7 @@
                       <span 
                         tal:condition="item_info/is_content"
                         tal:replace="item_info/last_author">
-                        authorname
+                          authorname
                       </span>
                     </td>
                     <tal:block replace="nothing">
@@ -308,7 +309,8 @@
                             height="12"
                             width="16"
                             tal:attributes="src string:${root_url}/globals/down.gif" 
-                            i18n:attributes="alt" />
+                            i18n:attributes="alt"
+			  />
                         </a>
                         <a class="icon"
                           title="move up"
@@ -320,7 +322,8 @@
                             height="12"
                             width="16"
                             tal:attributes="src string:${root_url}/globals/up.gif" 
-                            i18n:attributes="alt"/>
+                            i18n:attributes="alt"
+			  />
                         </a>
                       </tal:block>
                     </td>
@@ -355,7 +358,7 @@
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
                     </tal:block>
-                    <td>
+                    <td class="listing-left">
                       <input name="ids:list"
                         type="checkbox"
                         tal:attributes="
@@ -425,15 +428,15 @@
                         tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata"
                         tal:content="structure asset_info/modification_time"
                         i18n:attributes="title"
-                        >
-                         date
+                      >
+                        date
                       </a>
                       <a class="closed"
                         title="properties"
                         tal:condition="not: asset_info/has_modification_time"
                         tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata"
                         i18n:attributes="title"
-                        >
+                      >
                         <em i18n:translate="">
                           unknown
                         </em>
@@ -462,17 +465,16 @@
                 ______________ select all row ______________
               </tal:block>
               <tr tal:condition="python:(default_document or publishables or assets)">
-                <th class="controls"
+                <th class="controls listing-left"
                   colspan="4">
                   <tal:block define="select_id string:ids">
                     <metal:block use-macro="view/macro_select_all/macros/select_all"/>
                   </tal:block>
                 </th>
                 <th class="controls listing-right" colspan="2">
-                  <div tal:condition="published | editables | closed"
+                  <span tal:condition="published | editables | closed"
                         i18n:translate="">
-                    publishing actions
-                  </div>
+                    publishing actions</span>&nbsp;
                 </th>
               </tr>
               <tal:block replace="nothing">
@@ -482,27 +484,25 @@
                 <td colspan="6">
                   <tal:block condition="may_change_content">
                     <div style="float: right;">
-
                       <input class="close" 
-                              name="tab_edit_close:method" 
-                              value="close" 
-                              title="close published items: alt-l" 
-                              accesskey="l" 
-                              type="submit" 
-                              i18n:attributes="value; title" 
-                              tal:condition="python:published"
-                              />
+                        name="tab_edit_close:method" 
+                        value="close" 
+                        title="close published items: alt-l" 
+                        accesskey="l" 
+                        type="submit" 
+                        i18n:attributes="value; title" 
+                        tal:condition="python:published"
+                      />
                       <input class="executor" 
-                              name="tab_edit_open_now:method" 
-                              value="publish now" 
-                              title="publish new versions: alt-p" 
-                              accesskey="p" 
-                              type="submit" 
-                              i18n:attributes="value; title"
-                              tal:condition="python:editables or closed"
-                              />
+                        name="tab_edit_open_now:method" 
+                        value="publish now" 
+                        title="publish new versions: alt-p" 
+                        accesskey="p" 
+                        type="submit" 
+                        i18n:attributes="value; title"
+                        tal:condition="python:editables or closed"
+                      />
                     </div>
-
                     <tal:block tal:condition="python:(default_document or publishables or assets)">
                       <div style="float: left; margin-left:0.2em;">
                         <select class="manipulator"
