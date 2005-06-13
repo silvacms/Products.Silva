@@ -72,7 +72,6 @@ div.pathBar a {
     color: &dtml-shade26;;
     font-weight: &dtml-mainTabFontWeight;;
     margin: 0;
-    text-transform: none;
 }
 div.pathBar a:visited {
     color: &dtml-shade26;;
@@ -463,12 +462,11 @@ table.listing th {
     border-right: &dtml-listingBorder;;
     font-weight: normal;
     text-align: left;
-    text-transform: &dtml-textTransform;;
     white-space: nowrap;
 }
 
 table.listing th.listing-left {
-  width: 4%;
+  width: 2%;
   text-align: left;
   padding-left: 0.4em;
 }
@@ -543,8 +541,6 @@ table.listing td.listing-left {
 }
 
 table.listing td.listing-right {
-  text-align: right;
-  padding: 0em 0.4em;
   white-space: nowrap;
 }
 
@@ -953,7 +949,6 @@ input.close {
 
 label {
   color : #403f80; 
-  text-transform : &dtml-textTransform;;
 }
 
 tr.controls label, tr.inter-controls label {
@@ -962,10 +957,6 @@ tr.controls label, tr.inter-controls label {
 
 th label {
   color: &dtml-listingHeaderFontColor;;
-}
-
-label.default {
-  text-transform : none;
 }
 
 
@@ -1206,7 +1197,6 @@ table.listing div.message {
   border: &dtml-messageBorder;;
   border-style: solid none solid none;
   border-collapse: collapse;
-  text-transform : none;
 }
 
 
