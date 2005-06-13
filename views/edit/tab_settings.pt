@@ -91,7 +91,7 @@
                   </td>
                 </tr>
                 <tr class="odd">
-                  <td class="align-right" colspan="3">
+                  <td colspan="3">
                     <tal:block condition="isghostfolder">
                       This Ghost Folder can be converted to a normal 
                       Publication or Folder. All ghosted content will be 
@@ -102,7 +102,7 @@
                       (may take awhile if it&#8217;s large).
                     </tal:block>
                     <tal:block condition="ispublication">
-                      This Silva Publication can be converted to a Folder
+                      This Silva Publication can be converted to a Silva Folder
                       (may take awhile if it&#8217;s large).
                     </tal:block>
                   </td>
