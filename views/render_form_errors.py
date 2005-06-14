@@ -10,6 +10,11 @@
 from Products.Silva.i18n import translate as _
 result = []
 for error in validation_error.errors:
+    error_text = error.error_text
+    # if error_text is a MessageIDUnicode instance, call it to transform it to
+    # a plain string first
+    if callable(error_text):
+        error_text = error_text()
     result.append('<li class="error">%s: %s</li>\n' % 
                     (error.field['title'], error.error_text()))
 return ("""<dl style="margin:0; padding:0.3em 0 0.2em 0;"><dt>""" + 
