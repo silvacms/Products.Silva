@@ -42,8 +42,9 @@
     <tal:repeat repeat="link surround/keys">
      <tal:condition condition="python:surround[link] != '..'">
       <link tal:attributes="
-        rel link; href python:surround[link].absolute_url() +
-        (surround[link].get_container() == surround[link] and '/' or '')"
+        rel link; 
+        href python:(surround[link].absolute_url() + 
+            (surround[link].get_container() == surround[link] and '/' or ''))"
           tal:condition="python:surround[link] or None"/>
         </tal:condition>
     </tal:repeat>
