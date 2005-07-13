@@ -1,7 +1,7 @@
 
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -51,7 +51,10 @@ class ExtensionService(SimpleItem.SimpleItem):
         """
         root = self.aq_inner.aq_parent
         extensionRegistry.install(name, root)
-        root.service_view_registry.set_trees(self.get_installed_names())
+        productsWithView = [
+            inst_name for inst_name in self.get_installed_names() 
+            if inst_name in root.service_views.objectIds()]
+        root.service_view_registry.set_trees(productsWithView)
         if REQUEST:
             return self.manage_main(manage_tabs_message='%s installed' % name)
 
@@ -61,10 +64,12 @@ class ExtensionService(SimpleItem.SimpleItem):
         """
         root = self.aq_inner.aq_parent
         extensionRegistry.uninstall(name, root)
-        root.service_view_registry.set_trees(self.get_installed_names())
+        productsWithView = [
+            inst_name for inst_name in self.get_installed_names() 
+            if inst_name in root.service_views.objectIds()]
+        root.service_view_registry.set_trees(productsWithView)
         if REQUEST:
-            return self.manage_main(manage_tabs_message='%s uninstalled' %
-               name)
+            return self.manage_main(manage_tabs_message='%s uninstalled' % name)
 
     security.declareProtected('View management screens', 'refresh')
     def refresh(self, name, REQUEST=None):
