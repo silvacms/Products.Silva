@@ -14,6 +14,8 @@ Silva changes
         caused an AttributeError on service_views when a view-less
         extension, like SilvaLayout, was installed.
 
+      - Cosmetic improvements to the public Indexer rendering.
+
   1.3b3
 
     Note: there were a few internal betas, this is the first public one.
