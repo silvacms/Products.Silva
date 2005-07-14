@@ -1,39 +1,33 @@
-<h3
-  lang="en"
-  xml:lang="en"
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva"
-  i18n:translate="">Index</h3>
+<tal:block 
+  tal:define="model request/model; view here;">
+  <h2
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    tal:content="model/get_title"
+    i18n:domain="silva"
+    i18n:translate="">Index</h2>
 
-<table class="silvatable indexer"
-  tal:define="model request/model; view here;
-                   indexNames model/getIndexNames">
-  <tr tal:condition="python: indexNames != None">
-	<th>
-	Terms
-	</th>
-	<th i18n:translate="">
-	Links
-	</th>
-  </tr>
-
-  <tr tal:repeat="indexName indexNames">
+  <table class="silvatable indexer"
+    tal:define="model request/model; view here;
+                indexNames model/getIndexNames">
+    <tr tal:condition="python: indexNames != None">
+      <th>
+        Terms
+      </th>
+      <th i18n:translate="">
+        Links
+      </th>
+    </tr>
+    <tr tal:repeat="indexName indexNames">
       <tal:block tal:define="indexEntry python: model.getIndexEntry(indexName)">
-  	<td tal:content="indexName">
-    </td>
-    <td 
-      tal:content="structure python:view.render_links(indexName, indexEntry)"
-      >
-    </td>
+        <td tal:content="indexName"/>
+        <td 
+          tal:content="structure python:view.render_links(indexName, indexEntry)"/>
       </tal:block>
-  </tr>
-
-  <tr tal:condition="python: indexNames == None">
-  <td colspan="2" i18n:translate="">
-  No index items listed or found. Perhaps go to the edit tab and run the indexer.
-	</td>
-  </tr>
-</table>
+    </tr>
+    <tr tal:condition="python: indexNames == None">
+      <td colspan="2" i18n:translate="">
+        No index items listed or found. Perhaps go to the edit tab and run the indexer.
+      </td>
+    </tr>
+  </table>
+</tal:block>
