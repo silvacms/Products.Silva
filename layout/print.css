@@ -1,6 +1,6 @@
-/* _________ Stylesheet for {__silva_version__} printing ______________ */
-/* _________ Silva users can adjust their own print styles ___________ */
-/*
+/* _________ Stylesheet for {__silva_version__} printing _________________
+** _________ Silva users can adjust their own print styles _______________
+**
 **  Instructions to set caching headers. Inside comments area to play nicer with CSS editors.
 ** <dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+7" >
 ** <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
@@ -11,8 +11,11 @@
 */
 
 body {
-  color: black;
+  font-size: 9pt;
 }
 
-/* end feed */
+p.annotation, p.author, p.source {
+  font-size: 7pt;
+}
 
+* end feed */

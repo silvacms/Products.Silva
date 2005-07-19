@@ -1021,7 +1021,7 @@ table.listing a.transport:hover {
 
 div.middleground a.executor {
   color: #b3fffb;
-  background : #44797f;
+  background : #417278;
 }
 div.middleground a.executor:hover {
   border-color : #8dc1a8;
