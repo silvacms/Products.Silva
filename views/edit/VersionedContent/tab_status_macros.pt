@@ -289,7 +289,7 @@ If this content should expire, set the time.
 <tr class="inter-controls">
 <td class="align-right"
   colspan="2">
-<input type="submit" value="change timings" class="button"  title="access key: alt-c" accesskey="c" i18n:attributes="value;title"/>
+<input type="submit" value="update timings" class="button"  title="access key: alt-u" accesskey="u" i18n:attributes="value;title"/>
 </td>
 </tr>
 </form>
