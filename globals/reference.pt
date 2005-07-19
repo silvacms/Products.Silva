@@ -1,5 +1,4 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- _______ Silva version 0.9.3.4e _______ -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
@@ -35,7 +34,7 @@
     i18n:attributes="title;accesskey silva_info_accesskey">
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
       tal:attributes="href here/globals/silva_32.png/absolute_url | nothing" /></a>
-      &nbsp;<tal:block i18n:translate=""><tal:block i18n:name="Silva">Silva</tal:block> &#8211; medium independent content management</tal:block>
+      &nbsp;<tal:block i18n:translate=""><span i18n:name="Silva">Silva</span> &#8211; independent content management</tal:block>
 </h2>
 
 <div class="citation"
@@ -97,7 +96,7 @@
 <h4 i18n:translate="">Thanks to....</h4>
 
 <p i18n:translate="">
-  The people at <a href="http://www.ethz.ch/" i18n:name="eth_zuerich">ETH Zürich</a> for their feedback, contributions, and innovation.
+  The people at <a href="http://www.ethz.ch/">ETH Z&uuml;rich</a> for their feedback, contributions, and innovation.
 </p>
 <p i18n:translate="">
   Jan Smith at <a href="http://ozzope.org" i18n:name="ozzope">ozzope.org</a> for advice, hosting the documentation wiki, and her tutorials.
@@ -105,18 +104,16 @@
 <p i18n:translate="">
   Many thanks go to Hans Verster at the <a href="http://www.eur.nl/" i18n:name="eur">Erasmus University Rotterdam</a> for his vision and support.
 </p>
-<p  i18n:translate="">
+<p i18n:translate="">
   <br />
   <br />
-  <span class="subhead" tal:content="here/get_silva_product_version" i18n:name="silva_version"/><br />
-  <a style="float:right; margin-bottom:1em;" 
-    href="http://www.infrae.com/products/silva" 
+  <a href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-i"
     accesskey="i"
     i18n:attributes="title;accesskey info_accesskey"
     i18n:name="silva_icon"
     >
-    <img style="vertical-align:top;"
+    <img style="float:right; margin-top:1.3em;"
       src="powered_by.png" 
       width="64"
       height="16"
@@ -125,7 +122,8 @@
       i18n:attributes="alt"
     />
   </a>
-  &#xa9; Copyright 2001-2004 Infrae. All rights reserved.
+  <span class="subhead" tal:content="here/get_silva_product_version" i18n:name="silva_version"/><br />
+  &#xa9; Copyright 2001-2005 Infrae. All rights reserved.
 </p>
 
 </div>
