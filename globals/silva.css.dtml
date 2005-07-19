@@ -9,7 +9,7 @@
 /*
 **  Silva stylesheet
 **
-**  The view crew at Infrae - all seasons of 2003, 2004
+**  The view crew at Infrae - all seasons of 2003-2005
 **    Thanks to Alexander Limi (limi@plone.org) - October 2002
 **      In turn, thanks to Geir Bækholt, Stian Søiland for input and guidance.
 **
@@ -1015,6 +1015,22 @@ table.listing a.transport:hover {
   background : #74748b; 
   border-color : #99b4cf;
   cursor : pointer;
+}
+
+/* _______ execution button _______ */
+
+div.middleground a.executor {
+  color: #b3fffb;
+  background : #44797f;
+}
+div.middleground a.executor:hover {
+  border-color : #8dc1a8;
+  color : #e5ffec; 
+  background : #4393a3; 
+}
+div.middleground a.executor:active {
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
 }
 
 /* _______ subscreen parent links _______ */
